@@ -19,6 +19,6 @@ Every act matches its plain reference on random cases (2,000 to 4,000 each, 0 fa
 - **The twin hands beyond the half turns** (M5, M6): over Z[i] only the half turns are exact. That is the ring's question, not the operations'.
 - **The draw's fairness** (item 6) is no question of the operations.
 
-**For Sofer's meeting point** (SOFER-ARCHITECTURE-1.md, section 6, item 3): law 9's "digits in the order of their values" stays inside the closed list as a fixed network of min and max (sort4 here). An order-free composition is shorter; the choice is the architect's.
+**For Sofer's meeting point** (SOFER-ARCHITECTURE-1.md, section 6, item 3): law 9's "digits in the order of their values" stays inside the closed list as a fixed network of min and max (sort4 here). The one architect's ruling (derive/architecture/RULING.md) takes the rank count instead, a sum of nonneg bits, with no sort and no law changed.
 
 This is a probe, not the engine: nothing is built before the owner's approval.

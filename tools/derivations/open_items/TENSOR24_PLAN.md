@@ -168,7 +168,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **On every gear the turnover is its kind's T** (item (s), approved at 14:37 UTC). On twin hands that is T = i sigma_y K, and T T = -1, so a twin hand returns only after four turnovers.
 5. **The whole click.**
    - **In the clock:** when a hand's wind completes a full winding, a quantum leaves, and the remainder is booked.
-   - **In the tensors:** q = E div w_c, and a click where q >= 1.
+   - **In the tensors:** q = E div w_c: q quanta click, and the remainder is booked. That is the carry itself, with no if.
    - **OPEN, before the first cut (M2):**
      - light has w_c = 0, a division by 0;
      - a negative wind gives a negative quotient;
@@ -257,7 +257,8 @@ On the owner's word to David: "a generic solution for everything". This is David
    - There are three more kinds there: E1/2, E5/2 and G3/2.
    - **OPEN before the first cut (M5, M6):**
      - only the half turns are exact on the twin hands;
-     - the Spokes build five kinds, and law 7 needs the eight of 2O.
+     - the Spokes build five kinds, and law 7 needs the eight of 2O;
+     - the one architect's finding: in no basis of the twin hands' four integer rows do the third turns act as signed permutations, so no ring alone keeps the 24 bit for bit on them. David's route: carries on what the 24 permute, the axis form (rho, S).
    - The mirrors (the 48) are not in the law.
 4. **The trains:**
    - **light:** A1, one Gaussian integer, spring 0;
@@ -406,17 +407,19 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **every bound a carry:** carry, in algebra/carry.py, and beat, in engine/step.py.
 2. **Five folders:** algebra/ (new: Rule3 and the Gaussian integers), engine/, record/, readings/ and runner/, with decoder/ beside them.
    - The runner does not import the engine. A main.py of about 15 lines passes it the engine's functions.
-3. **The state:** nine arrays, fixed for the whole run: a, b, r and rd for every gear, e for every hand, and go, ph, tb and tn for every Node-clock, that is, 4G + H + 4 integers per Node-clock. Nothing grows at run time, as line 98 sets.
+3. **The state:** ten arrays, fixed for the whole run: a, b, r and rd for every gear, e for every hand, and go, ph, tb, tn and the beat count c for every Node-clock, that is, 4G + H + 5 integers per Node-clock (c added by the one architect's ruling). Nothing grows at run time, as line 98 sets.
 4. **The lines:** about 850 (section 1).
 5. **Loops** stand only in the runner, the decoder and the tests.
 6. **The undo log:** runner/rewind.py alone reads it, for the rewind check. The engine reads no log.
-7. **The two runs:**
+7. **How a Node-clock speaks to another, and the two runs** (the one architect's ruling):
+   - **the rule:** a Node-clock never writes into a neighbour; the word is the Mesh's carry. Each Node-clock holds its beat count c, and its beat is due where each of its six neighbours stands at a count at least c (a product of six nonneg bits, inside the engine). Every allowed due beat advances c and turns the rate dial; the gears step only where the dial ticks, so a stopped clock blocks no one. A neighbour is read as of the reader's count, its now slot or its before slot by its tn;
+   - **the runner** chooses only which due beats fire;
    - **synchronous, the main run:**
      - every dial at the full rate;
      - the bang is the whole board's: every Node-clock at its top in the same round;
      - the clicks break the palindrome.
    - **asynchronous, an option for huge boards:**
-     - every clock beats once in every round;
+     - the same rule with the due beats fired by random masks or by regions;
      - nothing sticks on a Mesh: each end holds only its own two latest slots;
      - regions exchange only their borders (halos);
      - one barrier, at the top.
@@ -432,6 +435,11 @@ On the owner's word to David: "a generic solution for everything". This is David
    - grow the state at run time;
    - write a meaning twice, or pin a value in a test.
 10. **The architect's ruling:** APPROVED WITH CHANGES.
+11. **One architecture** (the owner's word to Sofer, 15:0x UTC: one architect; centralize it): Sofer's SOFER-ARCHITECTURE-1.md (scribe-5) is the frame the owner reads, the design its detail, and the one architect's ruling (derive/architecture/RULING.md, 15:4x UTC) decides where they differed. Beside the rule above it fixes:
+    - the turnover's T^q as a choice by the bit q, not a power;
+    - law 9's sorted draw as a rank count, with no sort and no law changed;
+    - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused;
+    - **the twin hands:** in no basis of their four integer rows do the third turns act as signed permutations, so no ring alone, Z[zeta8] included, keeps the 24 bit for bit on them under element-wise carries. The departure stands until David's route (OPEN 3), and no twin train loads before it.
 
 ## 12. Who builds and when
 
@@ -446,16 +454,22 @@ On the owner's word to David: "a generic solution for everything". This is David
    - David;
    - Animate;
    - a fresh hostile reader.
-4. **The order of the cuts** (the approved design):
-   1. the gate amended, before any line of the new engine;
-   2. the record's schema, with Animate's converter and the decoder in parallel with every cut below;
-   3. algebra/;
-   4. the kind table and the load;
-   5. shift, pull and step, with the comparison harness one act at a time against the head;
-   6. turnover, beat, tick and untick;
-   7. the two clicks;
-   8. the books and the runner, with the rewind check and the asynchronous-against-synchronous test;
-   9. the capability table read on both engines' records, then the switch.
+4. **What is built at each stage** (the owner's word to Sofer, 15:0x UTC; the one architect's ruling, section 6). Clocks first, then tensors, then the 24's operations. No line before stage 0; every test is shown failing on a broken copy; the record, the decoder and Animate's converter run in parallel from stage 0.
+
+   | stage | what is built | its test that can fail | what closes first |
+   | --- | --- | --- | --- |
+   | 0 | the gate amended (algebra/, the closed list in engine/ and readings/, main.py); the three files and their checker; the record's schema; the harness on a trivial engine | the scan refuses a planted if, a literal 2 and a sort; the harness fails on a mutant | the owner's yes on the closed list and the gate |
+   | 1 | algebra/carry.py: carry, nonneg, choose, home and flip, forward and at -1 | the carry exact and unique; q(-p) = -q(p) at both parities; nonneg exact across 0 | items (h) and (e), and the tie rule |
+   | 2 | one clock: a gear with its fine tooth; beat: the rate dial, the count c, the due and allowed bits, tb and tn | the rewind 20 of 20, both ways; a stopped clock beats, its count advances, its gears stand | nothing |
+   | 3 | two clocks over one Mesh: link, the slot read by tn, the arrivals rule; the synchronous pass and random masks | the order test: 40 random masks equal the synchronous pass, rates parted, one clock stopped; its mutant fails | item (u), past or lin |
+   | 4 | the board: the six neighbours from the shape, the gather over the Spokes, the scalar light with its spring | the one-Mesh reach both ways; the formula against a naive loop model; equal to the head on the light, act by act | M1 (N, U_j, J, W+ >= 1); the cap's step; F2, F5 and the horizon; the doubler (g) |
+   | 5 | the ring: the Gaussian integers, the hand, the twin hand | the ring's laws exact; T T = +1 on a hand, -1 on a twin hand | nothing |
+   | 6 | the kinds and the contraction, from the board's shape; the load of the calibre's trains and coupling rows | the characters; a coupling the table lacks gives 0, named by the checker; the rename test | item (a); OPEN 3 before any twin train loads |
+   | 7 | the one act on every train alike | the formula test; the head compared act by act, 0 unexplained differences | M1 on every train; the charge |
+   | 8 | the 24's operations: the 24 on the state; the turnover T = J K per gear, T^q a choice; tick and untick | the 24 turns bit for bit, a board that is no cube as the control; T S T = S^-1 at every teeth count; the rewind through the top 20 of 20; the bang's spread 0 | (w), OPEN 7 |
+   | 9 | the clicks: whole, split, the draw by a rank count, the take, the owed writes; the books | the books closed; the exchange sign on the eight kinds; the draw's distribution; each reading with its second reading | M2; the draw's fairness; the click law's derivation, or its exactness shown again |
+   | 10 | the runner: the rounds, the ledger, the undo log and the rewind check; the asynchronous option (masks, regions, halos) | synchronous and asynchronous with every dial equal: the same record and ledger, byte for byte | lin's formula, if chosen |
+   | 11 | the capability table on both engines' records; then the switch | the table read on both; the end check | every bang shows more, for its row; the owner's word on the switch |
 5. **Before the first cut:** M1, M2, M5 and M6 close.
 
 ## 13. The tests
@@ -609,6 +623,6 @@ On the owner's word to David: "a generic solution for everything". This is David
      - nothing entered the law;
      - his approval of the whole plan is asked for by 15:45 UTC.
    - **Animate:** her approval is asked for by 15:45 UTC.
-   - **The architect:** APPROVED WITH CHANGES (section 11).
+   - **The architect:** APPROVED WITH CHANGES (section 11); the one architect's ruling on Sofer's file and the design, one architecture (section 11, items 7 and 11; section 12, item 4).
    - **The final word of Sofer, David and Animate** on the head for the owner is asked for on #2187 by 15:45 UTC, and is entered here when given.
 4. **The research stopped at 15:00 UTC, on the owner's word.** Everything open is booked by name, and closes in the build.
