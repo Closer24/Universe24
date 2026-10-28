@@ -57,5 +57,43 @@ CHECKED (a1_tension_ratio_nof2_5M_250.txt, a1_tension_ratio_cone_5M_250.txt). F2
   - a toy of the local tick on the course;
   - the twin calibre on this reading.
 
+## 6. For the engine, the law and what it leaves (the owner's word of 2026-10-28, 14:5x UTC)
+
+The owner's word (Hebrew, translated): "OK, pass it on for implementation in the engine, with an explanation of which law changes are needed, and maybe the generic solution, by the same way, for what it does not solve." The Boss builds the engine and Animate writes no engine code (the owner's words of 13:31 and 14:4x UTC). The turnover stays as the owner approved it at 14:37 UTC: T on every gear at the time gear's top, and the clicks carrying the arrow (section 30, item 11 (o) and (s)).
+
+**For the engine (the Boss's, after the plan's approval):**
+1. **The tension's reading** (meshes.factors): t = (Gamma t_ij) div X_ij, where t_ij is the two ends' axis gears' mean and X_ij the two ends' mean stretch at the tick's start. With no min and no max.
+2. **The light cone as the Node-clock's own tick** (David's asynchronous board, one dial per Node-clock):
+   - a clock ticks when its dial carries;
+   - a Mesh rate above the full rate gives more local ticks, and each local tick moves light at most one Mesh;
+   - F2's lower clamp goes with it.
+3. **One operation, written once** (Sofer, 6471863755, item 4): BH-S1's Mesh mask, the local tick's rate 0, QR4's held Meshes, H's cone lapse, F5's rate dial and F2's lower side are the Node-clock's one dial.
+4. **The twin calibre on it** needs no end teeth's fallback if every step moves the stretch at most one dial turn. That is to check by a toy on the asynchronous runner.
+
+**The law's changes** (Sofer's to enter, on the owner's word):
+1. **The Mesh's tension** (The rates, "the tension is the Mesh's"): the axis gear read in the time gear's teeth (the E part over the A1 part), Rule3's carry of Gamma a by X, and not the absolute notch.
+2. **Law 11's list of departures:** F2 struck, its upper side by change 1 and its lower side by change 3.
+3. **The tick and the light cone** (The tick; Postulate 3, lines 29 and 33):
+   - each Node-clock's tick is the carry of its own dial, and light crosses one Mesh per local tick;
+   - line 557's "the value last sent" reads the neighbour where it stands at the reading moment (David's correction).
+4. **The horizon** (line 1610) **and BH-S1** (line 132): a rate of 0 is no tick, the local tick's arithmetic, and the mask and the restore are struck.
+5. **The big law above them, for the owner's list:** every clock's time is the carry of its own dial, and light crosses one Mesh per local tick.
+
+**What it leaves, and a generic candidate for each by the same way** (clocks first, then the tensor, then the 24):
+1. **The local tick itself:**
+   - the check is a toy, the A1 course and the twin calibre on David's asynchronous runner, with the tension's reading and no F2;
+   - Animate's to run if the Boss asks.
+2. **The exchange sign of two equal quanta** (law 7's premise; draft J):
+   - in clocks, two equal clocks are one joint dial (item (t)), and the approved T acts on it;
+   - the candidate is that the exchange of two equal clocks is the full turn of one, T T, the kind's square (Schwinger's route, J's turnover route). The toy holds T T = J J on the board, -1 on the twins, with the rewind exact;
+   - it stays a premise until J derives it.
+3. **The composite's books** (the wind does not add at a fusion; David's correction):
+   - in clocks, the fusion is the joint dial's whole turn, a carry: the composite takes the quotient, and the shortfall s1 (den - p2) + s2 (den - p1) is the carry's remainder, the binding;
+   - by law 11 the remainder stays on the dial or leaves as a click of a whole on the light's train (the mass defect radiated, E = mc^2 at the fusion);
+   - so the books close as quotient plus remainder, as every carry's do (law 8). David's to derive.
+4. **Law 10's missing part** (the owner's direction of 14:37 UTC: "the solution is in the detector's click"; draft K):
+   - data for K: the twin hands are the one big bang's detectors' train;
+   - on the twin calibre at 5,000,000 quanta, the clicks of the run after the turnover bring births at the 7th and 11th bangs, and the eleven bottoms' states are all distinct (ANIMATE-TWIN-TOY.md, 65d9c2ec).
+
 ---
 Animate, reader-5.
