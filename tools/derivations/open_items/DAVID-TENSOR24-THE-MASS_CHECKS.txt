@@ -4,6 +4,8 @@ rerun by David on toys-5 with its own src, each output identical to the helper's
 and fractions; floats only where a ratio is set against an arccos, an arcsin or a continuum formula, and each such line says so.
 Every check carries mutants that must fail, printed beside it. Then the helper's draft with its proofs in full (its text's sign
 in the per-mode identity is e^(+i eps w_k), as the page says), and the sources.
+At the end, the second hand: independent exact probes written from the claims alone (rerun by David, identical): every
+claim holds, every mutant fails, and the per-mode identity's sign is e^(+i eps w) (1,572 of 1,572).
 
 == venv314/bin/python -I -B probes/m1_dispersion.py ==
 C1  the vacuum gearing, the head's integers (readings.gearing at the load 0)
@@ -1777,3 +1779,802 @@ say(f"    world_bang's light at its 64 clocks: wind {min(a for a, _ in pairs):.4
     f"|sweep| {min(b for _, b in pairs):.4f}..{max(b for _, b in pairs):.4f} quanta; largest |wind per quantum / winding - 1| = {dev:.2e}")
 say(f"(run time {time.time() - T0:.1f} s)")
 L.report(L.OUT + "m4_quantum.txt", lines)
+
+== the second hand: venv314/bin/python -I -B p12.py (rerun by David, identical) ==
+Gamma 1000 G 16
+C1a gearing at vacuum == stated (w, R x6, D, S=0): 15 ok, 0 bad of 15 trains
+    trains with pinion^2 + s^2 == rim^2 (s = rates.sine_rim): 14 of 15
+C1b claim: 960 hold, 0 fail of 960 plane waves
+C1b m_grip_no_pinion: 15 hold, 945 fail of 960 plane waves
+C1b m_cos_plus: 0 hold, 960 fail of 960 plane waves
+C1b ctrl_general_disp_mutant_grips: 960 hold, 0 fail of 960 plane waves
+C1b m_sign: 300 hold, 660 fail of 960 plane waves
+C2 identity: 14 hold, 1 fail
+C2 recurrence: 406 hold, 29 fail
+C2 lattice_rest: 84 hold, 6 fail
+C2 m_s1_identity: 0 hold, 15 fail
+C2 m_s1_recurrence: 0 hold, 435 fail
+run 0.8 s
+
+== the second hand: venv314/bin/python -I -B p34.py (rerun by David, identical) ==
+Pythagorean trains used: 10
+C3 cases (sigma != 0): 1572 at 524 rational angles
+C3 e^(+i eps w): 1572 hold, 0 fail;  mutant e^(-i eps w): 0 hold, 1572 fail
+C4 states 200
+C4 bound_fail 0
+C4 equal 50
+C4 equal_kinds {'rest+': 10, 'rest-': 10, 'corner+': 10, 'corner-': 10, 'rest+ & corner+': 10}
+C4 parseval_bad 0
+C4 mode_bound_fail 0
+C4 mode_cases 12800
+C4 m_s1_fail 60
+C4 m_beat_fail 67
+C4 eq_support_bad 0
+C4 mode_eq 82
+run 0.7 s
+
+== the second hand: venv314/bin/python -I -B p56.py (rerun by David, identical) ==
+C5 over 10 trains (counts of holds):
+    k2_coeff_zero_at_a=p/(6s) 10
+    m2*R/w==s/rim 10
+    cT2==cos/3 10
+    float_curv_ok 8
+    m_inertia_no_rim/pinion 0
+    m_beat_for_sine(FLOAT) 0
+    literal 'sine*rim/pinion'==m2 0
+    m2 / (sine * rim/pinion) = {Fraction(3, 1)}
+    toy row 1 / row 0: sine 1838.68  beat(FLOAT) 2623.49  inertia 11341;  beat/sine 1.4268 (row 1), 1.0000000480 (row 0); (inertia ratio)/(sine ratio) 6.168
+    toy row 2 / row 0: sine 1836.15  beat(FLOAT) 2608.27  inertia 10790;  beat/sine 1.4205 (row 2), 1.0000000480 (row 0); (inertia ratio)/(sine ratio) 5.876
+C6: {'unitary': 40, 'hermitian': 40, 'commutes': 40, 'eig_sin': 40, 'm_sign_eig': 0, 'cases': 40, 'ring_cases': 80, 'ring_unitary': 80, 'ring_commutes': 80, 'ring_H2=sin2': 80, 'ring_float_eig_sin': 80, 'ring_m_sign_float': 0, 'ring_m_angle_float': 0}
+run 0.1 s
+
+== the second hand: venv314/bin/python -I -B p79.py (rerun by David, identical) ==
+    pair-shape windings a quantum, toy row 0: 1863.3335
+    pair-shape windings a quantum, toy row 1: 1.0134
+    pair-shape windings a quantum, toy row 2: 1.0148
+C7: {'cases': 560, 'E1==3rim(|z|^2+|z-|^2)': 560, 'bound_fail': 0, 'equal': 88, 'equal_iff_ok': 560, 'pair_cases': 60, 'pair==1/sin': 60, 'm_pair_s+1': 0, 'm_beat(FLOAT)': 0, 'm_no_i_equal': 0}
+C9: {'pairs': 16, 'N==rim^4': 16, 'composite s == sine_rim(Re, rim^2)': 16, 'short_identity': 16, 'books_full_sum': 0, 'beats_add(FLOAT)': 16, 'm_s+1_on_circle': 0, 'm_s+1_sine': 0}
+    universe_bang 14962266816278236 x 14962266816278236: books 0.1621205 of the parts' windings
+    universe_bang 14962266816278236 x 14941680566515936: books 0.1661522 of the parts' windings
+    universe_bang 14962266816278236 x 8137489624680: books 0.9995444 of the parts' windings
+    universe_bang 14941680566515936 x 14941680566515936: books 0.1701783 of the parts' windings
+    universe_bang 14941680566515936 x 8137489624680: books 0.9995482 of the parts' windings
+    universe_bang 8137489624680 x 8137489624680: books 0.9999999 of the parts' windings
+    universe_ga2 15162414850065661 x 15162414850065661: books 0.0076346 of the parts' windings
+    universe_middle 1576609440 x 1576609440: books 0.3057523 of the parts' windings
+    universe_middle 1576609440 x 9669460: books 0.9957511 of the parts' windings
+    universe_middle 9669460 x 9669460: books 0.9999830 of the parts' windings
+    universe_toy 14962266816278236 x 14962266816278236: books 0.1621205 of the parts' windings
+    universe_toy 14962266816278236 x 14941680566515936: books 0.1661522 of the parts' windings
+    universe_toy 14962266816278236 x 8137489624680: books 0.9995444 of the parts' windings
+    universe_toy 14941680566515936 x 14941680566515936: books 0.1701783 of the parts' windings
+    universe_toy 14941680566515936 x 8137489624680: books 0.9995482 of the parts' windings
+    universe_toy 8137489624680 x 8137489624680: books 0.9999999 of the parts' windings
+run 0.1 s
+
+== the second hand: venv314/bin/python -I -B p8.py (rerun by David, identical) ==
+C8 form=flux      teeth vary=True  aniso grips=False: Q kept 4/4 runs; plain sweep kept 0/4 runs (12 ticks each)
+C8 form=flux      teeth vary=False aniso grips=False: Q kept 4/4 runs; plain sweep kept 4/4 runs (12 ticks each)
+C8 form=one-teeth teeth vary=True  aniso grips=False: Q kept 0/4 runs; plain sweep kept 4/4 runs (12 ticks each)
+C8 form=flux      teeth vary=True  aniso grips=True : Q kept 0/4 runs; plain sweep kept 0/4 runs (12 ticks each)
+run 2.3 s
+
+== the second hand: venv314/bin/python -I -B poff.py (rerun by David, identical) ==
+universe_bang 3 states 40 fails 0 equalities with integer s 0 rim^2-p^2-s^2 = 2625219173950632
+
+== common.py (the second hand) ==
+"""Shared helpers for the second hand's probes (exact arithmetic)."""
+import json
+import sys
+from fractions import Fraction as F
+
+SRC = "/home/user/Universe24/src"
+if SRC not in sys.path:
+    sys.path.insert(0, SRC)
+from event_universe.core import rule3, rates  # noqa: E402
+
+WORLDS = "/home/user/Universe24/tests/worlds/"
+FILES = ["universe_bang", "universe_ga2", "universe_middle", "universe_toy"]
+
+
+def trains(with_light=False):
+    """(file, index, pinion, rim, s, key) for every row of the four universe files."""
+    out = []
+    for f in FILES:
+        d = json.load(open(WORLDS + f + ".json"))
+        den = d["integers"]["den"]
+        key = d["integers"]["quantum_action"]
+        for i, r in enumerate(d["rows"]):
+            p, rim = r["pair"]
+            assert rim == den
+            s = rates.sine_rim(p, rim)
+            out.append((f, i, p, rim, s, key))
+        if with_light:
+            out.append((f, "light", den, den, 0, key))
+    return out
+
+
+# Gaussian numbers as pairs (re, im) of int/Fraction
+def gm(a, b):
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+
+def ga(a, b):
+    return (a[0] + b[0], a[1] + b[1])
+
+
+def gs(a, b):
+    return (a[0] - b[0], a[1] - b[1])
+
+
+def gk(k, a):
+    return (k * a[0], k * a[1])
+
+
+def gc(a):
+    return (a[0], -a[1])
+
+
+def n2(a):
+    return a[0] * a[0] + a[1] * a[1]
+
+
+IPOW = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+COS4 = [1, 0, -1, 0]
+
+L = 4
+SITES = [(x, y, z) for x in range(L) for y in range(L) for z in range(L)]
+NB = []
+for (x, y, z) in SITES:
+    NB.append([((x + 1) % L, y, z), ((x - 1) % L, y, z), (x, (y + 1) % L, z),
+               (x, (y - 1) % L, z), (x, y, (z + 1) % L), (x, y, (z - 1) % L)])
+IDX = {s: i for i, s in enumerate(SITES)}
+NBI = [[IDX[t] for t in nb] for nb in NB]
+
+
+def wind_norm(a, am, p, rim, S=0):
+    """E' = E / (2 Gamma^2 G^2): 3 rim SUM(|a|^2+|a-|^2) - p Re SUM_x SUM_j conj(a_x) a-_(x+j)
+    (the engine's hands.wind at the vacuum, globally; S = 0 at the vacuum)."""
+    e = 0
+    cross = 0
+    for i in range(len(a)):
+        e += n2(a[i]) + n2(am[i])
+        for j in NBI[i]:
+            c = gm(gc(a[i]), am[j])
+            cross += c[0]
+    return 3 * rim * e - p * cross
+
+
+def sweep(a, am):
+    return sum(gm(gc(a[i]), am[i])[1] for i in range(len(a)))
+
+
+def dft(a):
+    """alpha_n = SUM_x conj(i^(n.x)) a_x, exact Gaussian integers; n in SITES order."""
+    out = []
+    for n in SITES:
+        acc = (0, 0)
+        for xi, x in enumerate(SITES):
+            ph = IPOW[(-(n[0] * x[0] + n[1] * x[1] + n[2] * x[2])) % 4]
+            acc = ga(acc, gm(ph, a[xi]))
+        out.append(acc)
+    return out
+
+
+def pyth(limit):
+    """Primitive Pythagorean triples (a, b, h) with h <= limit."""
+    out = []
+    m = 2
+    while m * m + 1 <= limit:
+        for n in range(1, m):
+            if (m - n) % 2 == 1:
+                from math import gcd
+                if gcd(m, n) == 1:
+                    h = m * m + n * n
+                    if h <= limit:
+                        out.append((m * m - n * n, 2 * m * n, h))
+        m += 1
+    return out
+
+== p12.py (the second hand, written from the claims alone) ==
+"""Claims 1 and 2: the vacuum dispersion on the 4^3 torus, and the rest turn g/rim. Exact integers."""
+import random
+import sys
+import time
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import (trains, rule3, SITES, NBI, IPOW, COS4, gm, ga, gs, gk)  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(20261028)
+GAMMA = 1000
+G = rule3.mesh_unit_of(GAMMA)
+print("Gamma", GAMMA, "G", G)
+TR = trains(with_light=True)
+
+# --- C1a: the engine's gearing at the vacuum against the stated coefficients
+ok = bad = 0
+for (f, i, p, rim, s, key) in TR:
+    gr = rule3.gearing(p, rim, GAMMA, GAMMA, GAMMA, None, G)
+    w = 6 * rim * GAMMA**2 * G**2
+    R = 2 * p * GAMMA**2 * G**2
+    D = 12 * (rim - p) * GAMMA**2 * G**2
+    good = (gr.teeth == w and all(x == R for x in gr.grips) and len(gr.grips) == 6
+            and gr.spring == D and gr.hold == 2 * w - D - 6 * R == 0)
+    ok += good
+    bad += not good
+print(f"C1a gearing at vacuum == stated (w, R x6, D, S=0): {ok} ok, {bad} bad of {len(TR)} trains")
+pyth_ok = sum(1 for (f, i, p, rim, s, key) in TR if p * p + s * s == rim * rim)
+print(f"    trains with pinion^2 + s^2 == rim^2 (s = rates.sine_rim): {pyth_ok} of {len(TR)}")
+
+
+def lattice_check(w, R, D, num, den, n, Am, A):
+    """a(x,t) = A_t i^(n.x); A_(t+1) = (num/den) A_t - A_(t-1), all scaled by den. Exact check at 64 sites."""
+    Ap = gs(gk(num, A), gk(den, Am))           # den * A_(t+1)
+    A_s, Am_s = gk(den, A), gk(den, Am)       # den * A_t, den * A_(t-1)
+    for xi, x in enumerate(SITES):
+        ph = IPOW[(n[0] * x[0] + n[1] * x[1] + n[2] * x[2]) % 4]
+        ap, a, am = gm(Ap, ph), gm(A_s, ph), gm(Am_s, ph)
+        lhs = gk(w, ga(gs(ap, gk(2, a)), am))
+        rhs = gk(-D, a)
+        for j in NBI[xi]:
+            y = SITES[j]
+            phy = IPOW[(n[0] * y[0] + n[1] * y[1] + n[2] * y[2]) % 4]
+            rhs = ga(rhs, gk(R, gs(gm(A_s, phy), a)))
+        if lhs != rhs:
+            return False
+    return True
+
+
+# --- C1b: plane waves i^(n.x), rim cos w = pinion (SUM cos k_j)/3, i.e. 2 cos w = 2 p SUM / (3 rim)
+res = {"claim": [0, 0], "m_grip_no_pinion": [0, 0], "m_cos_plus": [0, 0], "ctrl_general_disp_mutant_grips": [0, 0],
+       "m_sign": [0, 0]}
+for (f, i, p, rim, s, key) in TR:
+    w = 6 * rim * GAMMA**2 * G**2
+    R = 2 * p * GAMMA**2 * G**2
+    D = 12 * (rim - p) * GAMMA**2 * G**2
+    Rm = 2 * GAMMA**2 * G**2  # mutant grips without the pinion
+    for n in SITES:
+        Sig = sum(COS4[c] for c in n)
+        Am = (rng.randint(-10**6, 10**6), rng.randint(-10**6, 10**6))
+        A = (rng.randint(-10**6, 10**6), rng.randint(-10**6, 10**6))
+        # claim: 2 cos w = 2 p Sig / (3 rim)
+        r = lattice_check(w, R, D, 2 * p * Sig, 3 * rim, n, Am, A)
+        res["claim"][0 if r else 1] += 1
+        r = lattice_check(w, Rm, D, 2 * p * Sig, 3 * rim, n, Am, A)
+        res["m_grip_no_pinion"][0 if r else 1] += 1
+        r = lattice_check(w, R, D, 2 * p * Sig + 2, 3 * rim, n, Am, A)   # cos w + 1/(3 rim)
+        res["m_cos_plus"][0 if r else 1] += 1
+        r = lattice_check(w, R, D, -2 * p * Sig, 3 * rim, n, Am, A)      # rim cos w = -p SUM/3
+        res["m_sign"][0 if r else 1] += 1
+        # control: the general formula w (2 - 2 cos w) = Rm SUM(2 - 2cos k) + D with the mutant grips
+        # 2 cos w = 2 - (Rm SUM(2-2cos) + D)/w  -> num/den = (2w - Rm(6 - 2 Sig) - D)/w
+        r = lattice_check(w, Rm, D, 2 * w - Rm * (6 - 2 * Sig) - D, w, n, Am, A)
+        res["ctrl_general_disp_mutant_grips"][0 if r else 1] += 1
+for k, (a, b) in res.items():
+    print(f"C1b {k}: {a} hold, {b} fail of {a + b} plane waves")
+
+# --- C2: g^2 - 2 p g + rim^2 = 0, Re(g^t) recurrence, and the rest hand on the lattice
+T = 30
+c2 = {"identity": [0, 0], "recurrence": [0, 0], "lattice_rest": [0, 0],
+      "m_s1_identity": [0, 0], "m_s1_recurrence": [0, 0]}
+for (f, i, p, rim, s, key) in TR:
+    for (sv, tag) in ((s, ""), (s + 1, "m_s1_")):
+        g = (p, sv)
+        q = ga(gs(gm(g, g), gk(2 * p, g)), (rim * rim, 0))
+        c2[tag + "identity"][0 if q == (0, 0) else 1] += 1
+        powers = [(1, 0)]
+        for t in range(T + 1):
+            powers.append(gm(powers[-1], g))
+        for t in range(1, T):
+            r = powers[t + 1][0] == 2 * p * powers[t][0] - rim * rim * powers[t - 1][0]
+            c2[tag + "recurrence"][0 if r else 1] += 1
+    # the rest hand on the lattice: a_t = z g^t rim^(T-t) at every site (scaled by rim^T), t = 0..T
+    w = 6 * rim * GAMMA**2 * G**2
+    R = 2 * p * GAMMA**2 * G**2
+    D = 12 * (rim - p) * GAMMA**2 * G**2
+    g = (p, s)
+    z = (rng.randint(1, 99), rng.randint(-99, 99))
+    seq = []
+    gp = (1, 0)
+    for t in range(8):
+        seq.append(gk(rim ** (7 - t), gm(z, gp)))
+        gp = gm(gp, g)
+    for t in range(1, 7):
+        a, ap, am = seq[t], seq[t + 1], seq[t - 1]
+        lhs = gk(w, ga(gs(ap, gk(2, a)), am))
+        rhs = gk(-D, a)  # neighbours equal: SUM R (a_j - a) = 0
+        c2["lattice_rest"][0 if lhs == rhs else 1] += 1
+for k, (a, b) in c2.items():
+    print(f"C2 {k}: {a} hold, {b} fail")
+print(f"run {time.time() - t0:.1f} s")
+
+== p34.py (the second hand, written from the claims alone) ==
+"""Claims 3 and 4: the per-mode identity (which exponent sign), the bound on the 4^3 torus. Exact integers;
+floats only on the lines marked FLOAT (the beat w0 = arccos(p/rim) set against the sine)."""
+import math
+import random
+import sys
+import time
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import (trains, SITES, COS4, gm, ga, gs, gk, gc, n2, wind_norm, sweep, dft, pyth)  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(4242)
+TR = [t for t in trains(with_light=False) if t[2] ** 2 + t[4] ** 2 == t[3] ** 2]
+print("Pythagorean trains used:", len(TR))
+
+# ---------------- C3: the identity, both exponent signs
+angles = []
+for (a, b, h) in pyth(400):
+    for (ca, sb) in ((a, b), (b, a)):
+        for sc in (1, -1):
+            for ss in (1, -1):
+                angles.append((sc * ca, ss * sb, h))
+for (f, i, p, rim, s, key) in TR:
+    angles.append((p, s, rim))
+    angles.append((-p, s, rim))
+cnt = {"plus": [0, 0], "minus": [0, 0]}
+cases = 0
+for (ca, sb, h) in angles:
+    w = rng.randint(1, 10**6)
+    for _ in range(3):
+        al = (rng.randint(-999, 999), rng.randint(-999, 999))
+        be = (rng.randint(-999, 999), rng.randint(-999, 999))
+        z = gm(gc(al), be)
+        X, Y = z
+        if Y == 0:
+            continue
+        cases += 1
+        eps = 1 if Y > 0 else -1
+        hE = w * h * (n2(al) + n2(be)) - 2 * w * ca * X          # h * E_k
+        lhs = h * (hE - 2 * w * sb * abs(Y))                       # h^2 (E - 2 w sin |sigma|)
+        for tag, sign in (("plus", 1), ("minus", -1)):
+            rot = (ca, sign * eps * sb)                            # h e^(+-i eps w)
+            rhs = w * n2(gs(gk(h, be), gm(al, rot)))               # h^2 w |beta - alpha e^(...)|^2
+            cnt[tag][0 if lhs == rhs else 1] += 1
+print(f"C3 cases (sigma != 0): {cases} at {len(angles)} rational angles")
+print(f"C3 e^(+i eps w): {cnt['plus'][0]} hold, {cnt['plus'][1]} fail;  "
+      f"mutant e^(-i eps w): {cnt['minus'][0]} hold, {cnt['minus'][1]} fail")
+
+# ---------------- C4: states on the 4^3 torus
+PAR = [(-1) ** (x + y + z) for (x, y, z) in SITES]
+SIG = [sum(COS4[c] for c in n) for n in SITES]
+stats = {"states": 0, "bound_fail": 0, "equal": 0, "equal_kinds": {}, "parseval_bad": 0,
+         "mode_bound_fail": 0, "mode_cases": 0, "m_s1_fail": 0, "m_beat_fail": 0, "eq_support_bad": 0,
+         "mode_eq": 0}
+for (f, i, p, rim, s, key) in TR:
+    g = (p, s)
+    cg = gc(g)
+    states = []
+    for _ in range(12):
+        R = rng.choice([3, 50, 10**4])
+        a = [(rng.randint(-R, R), rng.randint(-R, R)) for _ in SITES]
+        am = [(rng.randint(-R, R), rng.randint(-R, R)) for _ in SITES]
+        states.append(("random", a, am))
+    z = (rng.randint(1, 50), rng.randint(-50, 50))
+    u = (rng.randint(1, 50), rng.randint(-50, 50))
+    rest_p = ([gk(rim, z)] * 64, [gm(z, g)] * 64)          # beta = alpha g/rim  (eps +1)
+    rest_m = ([gk(rim, z)] * 64, [gm(z, cg)] * 64)         # beta = alpha conj(g)/rim (eps -1)
+    cor_p = ([gk(rim * PAR[k], u) for k in range(64)], [gk(-PAR[k], gm(u, cg)) for k in range(64)])  # e^{i w_c} = -conj g / rim
+    cor_m = ([gk(rim * PAR[k], u) for k in range(64)], [gk(-PAR[k], gm(u, g)) for k in range(64)])
+    states += [("rest+", *rest_p), ("rest-", *rest_m), ("corner+", *cor_p), ("corner-", *cor_m)]
+    # mixtures
+    def add(A, B):
+        return ([ga(x, y) for x, y in zip(A[0], B[0])], [ga(x, y) for x, y in zip(A[1], B[1])])
+    # the sweep's sign: sigma = Im(conj(alpha) beta); for rest+ beta = alpha g/rim -> sigma = |alpha|^2 s/rim > 0
+    # corner+: beta = alpha (-conj g)/rim -> Im = |alpha|^2 s / rim > 0
+    states.append(("rest+ & corner+", *add(rest_p, cor_p)))
+    states.append(("rest+ & corner-", *add(rest_p, cor_m)))
+    pert = (list(rest_p[0]), list(rest_p[1]))
+    pert[0][5] = ga(pert[0][5], (1, 0))
+    states.append(("rest+ perturbed", *pert))
+    states.append(("rest+ with +i (not the pair)", [gk(rim, z)] * 64, [gm(gk(rim, z), (0, 1))] * 64))
+    for kind, a, am in states:
+        stats["states"] += 1
+        E = wind_norm(a, am, p, rim)
+        sg = sweep(a, am)
+        d = E - 6 * s * abs(sg)
+        if d < 0:
+            stats["bound_fail"] += 1
+        if d == 0:
+            stats["equal"] += 1
+            stats["equal_kinds"][kind] = stats["equal_kinds"].get(kind, 0) + 1
+        # mutant s + 1
+        if E - 6 * (s + 1) * abs(sg) < 0:
+            stats["m_s1_fail"] += 1
+        # mutant: the beat for the sine. FLOAT: w0 = arccos(p/rim) set against the integer bound
+        w0 = math.acos(p / rim)
+        if E - 6 * rim * w0 * abs(sg) < -1e-9 * E:
+            stats["m_beat_fail"] += 1
+        # per mode, exact
+        al, be = dft(a), dft(am)
+        Es, ss = 0, 0
+        support = []
+        for k in range(64):
+            zz = gm(gc(al[k]), be[k])
+            Ek = 3 * rim * (n2(al[k]) + n2(be[k])) - 2 * p * SIG[k] * zz[0]
+            Es += Ek
+            ss += zz[1]
+            stats["mode_cases"] += 1
+            # E_k >= 6 rim sin w_k |sigma_k| <=> E_k >= 0 and E_k^2 >= 4 (9 rim^2 - p^2 SIG^2) sigma_k^2
+            rhs2 = 4 * (9 * rim * rim - p * p * SIG[k] ** 2) * zz[1] ** 2
+            if Ek < 0 or Ek * Ek < rhs2:
+                stats["mode_bound_fail"] += 1
+            if Ek * Ek == rhs2 and Ek > 0:
+                stats["mode_eq"] += 1
+            if n2(al[k]) + n2(be[k]):
+                support.append(SITES[k])
+        if Es != 64 * E or ss != 64 * sg:
+            stats["parseval_bad"] += 1
+        if d == 0 and not set(support) <= {(0, 0, 0), (2, 2, 2)}:
+            stats["eq_support_bad"] += 1
+for k, v in stats.items():
+    print("C4", k, v)
+print(f"run {time.time() - t0:.1f} s")
+
+== p56.py (the second hand, written from the claims alone) ==
+"""Claims 5 and 6: the inertia from the dispersion's curvature; the sine form of a unitary turn.
+Exact Fractions; FLOAT only where marked (arccos / arcsin / eigen-angles)."""
+import cmath
+import math
+import random
+import sys
+import time
+from fractions import Fraction as F
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import trains, rule3, pyth  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(77)
+GAMMA, G = 1000, rule3.mesh_unit_of(1000)
+TR = [t for t in trains() if t[2] ** 2 + t[4] ** 2 == t[3] ** 2]
+
+# ---------------- C5
+c5 = {"k2_coeff_zero_at_a=p/(6s)": 0, "m2*R/w==s/rim": 0, "cT2==cos/3": 0, "float_curv_ok": 0,
+      "m_inertia_no_rim/pinion": 0, "m_beat_for_sine(FLOAT)": 0, "literal 'sine*rim/pinion'==m2": 0}
+readings = {}
+for (f, i, p, rim, s, key) in TR:
+    gr = rule3.gearing(p, rim, GAMMA, GAMMA, GAMMA, None, G)
+    Rw = F(gr.grips[0], gr.teeth)
+    a = F(p, 6 * s)
+    # k^2 coefficient of rim cos(w0 + a k^2) - p (cos k + 2)/3  =  -rim sin w0 a + p/6 = -s a + p/6
+    c5["k2_coeff_zero_at_a=p/(6s)"] += (-s * a + F(p, 6) == 0)
+    m2 = 1 / (2 * a)                                   # 1 / w''(0)
+    assert m2 == F(3 * s, p)
+    c5["m2*R/w==s/rim"] += (m2 * Rw == F(s, rim))
+    c5["cT2==cos/3"] += (Rw == F(1, 3) * F(p, rim))
+    # FLOAT: central second difference of w(k) = arccos(p (cos k + 2) / (3 rim)) at k = 0
+    w0 = math.acos(p / rim)
+    h = 0.01 * w0 / math.sqrt(p / (3 * rim))   # c_T h = w0 / 100
+    wk = math.acos(p * (math.cos(h) + 2) / (3 * rim))
+    curv = 2 * (wk - w0) / (h * h)
+    c5["float_curv_ok"] += abs(curv * float(m2) - 1) < 1e-3
+    c5["m_inertia_no_rim/pinion"] += (F(3 * s, rim) * Rw == F(s, rim))     # counts holds (should be 0)
+    c5["m_beat_for_sine(FLOAT)"] += abs(float(m2 * Rw) - w0) < 1e-9 * w0   # counts holds
+    c5["literal 'sine*rim/pinion'==m2"] += (F(s, rim) * F(rim, p) == m2)  # counts holds
+    readings[(f, i)] = (s / rim, math.atan2(s, p), 3 * s / p, curv * float(m2))
+print("C5 over", len(TR), "trains (counts of holds):")
+for k, v in c5.items():
+    print("   ", k, v)
+print("    m2 / (sine * rim/pinion) =", {F(3 * s, p) / (F(s, rim) * F(rim, p)) for (f, i, p, rim, s, key) in TR})
+e = readings[("universe_toy", 0)]
+for j in (1, 2):
+    n = readings[("universe_toy", j)]
+    print(f"    toy row {j} / row 0: sine {n[0] / e[0]:.2f}  beat(FLOAT) {n[1] / e[1]:.2f}  inertia {n[2] / e[2]:.0f};"
+          f"  beat/sine {n[1] / n[0]:.4f} (row {j}), {e[1] / e[0]:.10f} (row 0); (inertia ratio)/(sine ratio) {(n[2] / e[2]) / (n[0] / e[0]):.3f}")
+
+
+# ---------------- C6: 2x2 matrices of Gaussian Fractions
+def mm(A, B):
+    return [[_add(_mul(A[r][0], B[0][c]), _mul(A[r][1], B[1][c])) for c in range(2)] for r in range(2)]
+
+
+def _mul(a, b):
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+
+def _add(a, b):
+    return (a[0] + b[0], a[1] + b[1])
+
+
+def dag(A):
+    return [[(A[c][r][0], -A[c][r][1]) for c in range(2)] for r in range(2)]
+
+
+def sub(A, B):
+    return [[(A[r][c][0] - B[r][c][0], A[r][c][1] - B[r][c][1]) for c in range(2)] for r in range(2)]
+
+
+def over2i(A):  # A / (2i) = -i A / 2
+    return [[(F(A[r][c][1], 2), F(-A[r][c][0], 2)) for c in range(2)] for r in range(2)]
+
+
+I2 = [[(1, 0), (0, 0)], [(0, 0), (1, 0)]]
+
+
+def mv(A, v):
+    return [_add(_mul(A[r][0], v[0]), _mul(A[r][1], v[1])) for r in range(2)]
+
+
+def sc(k, v):
+    return [_mul(k, x) for x in v]
+
+
+c6 = {"unitary": 0, "hermitian": 0, "commutes": 0, "eig_sin": 0, "m_sign_eig": 0, "cases": 0,
+      "ring_cases": 0, "ring_unitary": 0, "ring_commutes": 0, "ring_H2=sin2": 0, "ring_float_eig_sin": 0,
+      "ring_m_sign_float": 0, "ring_m_angle_float": 0}
+P = pyth(120)
+# (a) constructed U = V diag(l1, l2) V^dagger with rational eigen-units, V a Gaussian-rational unitary
+for _ in range(40):
+    (a1, b1, h1), (a2, b2, h2), (a3, b3, h3) = rng.choice(P), rng.choice(P), rng.choice(P)
+    l1 = (F(a1, h1) * rng.choice((1, -1)), F(-b1, h1) * rng.choice((1, -1)))   # e^{-i w1}: sin w1 = -Im
+    l2 = (F(a2, h2) * rng.choice((1, -1)), F(-b2, h2) * rng.choice((1, -1)))
+    ph = (F(a3, h3), F(b3, h3))
+    c, sn = F(b2 * 3 + 1, 1), F(0)  # dummy to vary
+    (a4, b4, h4) = rng.choice(P)
+    u, v = (F(a4, h4), F(0)), (F(b4, h4), F(0))
+    u = _mul(u, ph)  # complex entry
+    V = [[u, (-v[0], v[1])], [v, (u[0], -u[1])]]   # [[u, -conj v],[v, conj u]]
+    Dg = [[l1, (0, 0)], [(0, 0), l2]]
+    U = mm(mm(V, Dg), dag(V))
+    H = over2i(sub(dag(U), U))
+    c6["cases"] += 1
+    c6["unitary"] += mm(dag(U), U) == [[(F(1), F(0)), (F(0), F(0))], [(F(0), F(0)), (F(1), F(0))]]
+    c6["hermitian"] += dag(H) == H
+    c6["commutes"] += mm(H, U) == mm(U, H)
+    ok = mok = True
+    for j, lam in ((0, l1), (1, l2)):
+        vec = [V[0][j], V[1][j]]
+        assert mv(U, vec) == sc(lam, vec)
+        sinw = -lam[1]                                     # lam = e^{-iw}  ->  sin w = -Im lam
+        ok &= mv(H, vec) == sc((sinw, 0), vec)
+        Hm = over2i(sub(U, dag(U)))                        # mutant: (U - U^dagger)/(2i)
+        mok &= mv(Hm, vec) == sc((sinw, 0), vec)
+    c6["eig_sin"] += ok
+    c6["m_sign_eig"] += mok
+# (b) the ring step U(k) = M diag(e^{-ik}, e^{ik}) at Pythagorean k, M the train's coin
+for (f, i, p, rim, s, key) in TR:
+    for coin in ("rot", "i"):
+        if coin == "rot":
+            M = [[(F(p, rim), F(0)), (F(-s, rim), F(0))], [(F(s, rim), F(0)), (F(p, rim), F(0))]]
+        else:
+            M = [[(F(p, rim), F(0)), (F(0), F(s, rim))], [(F(0), F(s, rim)), (F(p, rim), F(0))]]
+        for (a, b, h) in rng.sample(P, 4):
+            ek = (F(a, h), F(b, h))
+            Dk = [[(ek[0], -ek[1]), (0, 0)], [(0, 0), ek]]
+            U = mm(M, Dk)
+            H = over2i(sub(dag(U), U))
+            c6["ring_cases"] += 1
+            c6["ring_unitary"] += mm(dag(U), U) == [[(1, 0), (0, 0)], [(0, 0), (1, 0)]]
+            c6["ring_commutes"] += mm(H, U) == mm(U, H)
+            tr = _add(U[0][0], U[1][1])
+            det = _add(_mul(U[0][0], U[1][1]), _mul((-U[0][1][0], -U[0][1][1]), U[1][0]))
+            # det U = 1 for both coins here; then H^2 = (1 - (tr U / 2)^2) I  (tr U real)
+            if det == (1, 0) and tr[1] == 0:
+                s2 = 1 - (tr[0] / 2) ** 2
+                c6["ring_H2=sin2"] += mm(H, H) == [[(s2, 0), (0, 0)], [(0, 0), (s2, 0)]]
+            # FLOAT: eigenvectors of U, H read on them against sin of the eigen-angle (asin/phase)
+            Uf = [[complex(float(x[0]), float(x[1])) for x in row] for row in U]
+            Hf = [[complex(float(x[0]), float(x[1])) for x in row] for row in H]
+            t_, d_ = Uf[0][0] + Uf[1][1], Uf[0][0] * Uf[1][1] - Uf[0][1] * Uf[1][0]
+            disc = cmath.sqrt(t_ * t_ - 4 * d_)
+            good = mgood = agood = True
+            for lam in ((t_ + disc) / 2, (t_ - disc) / 2):
+                vec = [Uf[0][1], lam - Uf[0][0]] if abs(Uf[0][1]) > 1e-12 else [lam - Uf[1][1], Uf[1][0]]
+                if abs(vec[0]) + abs(vec[1]) < 1e-12:
+                    vec = [1, 0]
+                wang = -cmath.phase(lam)                       # lam = e^{-i w}
+                Hv = [Hf[0][0] * vec[0] + Hf[0][1] * vec[1], Hf[1][0] * vec[0] + Hf[1][1] * vec[1]]
+                good &= all(abs(Hv[r] - math.sin(wang) * vec[r]) < 1e-9 * (abs(vec[0]) + abs(vec[1])) for r in range(2))
+                mgood &= all(abs(Hv[r] + math.sin(wang) * vec[r]) < 1e-9 * (abs(vec[0]) + abs(vec[1])) for r in range(2))
+                agood &= all(abs(Hv[r] - wang * vec[r]) < 1e-9 * (abs(vec[0]) + abs(vec[1])) for r in range(2))
+            c6["ring_float_eig_sin"] += good
+            c6["ring_m_sign_float"] += mgood and abs(math.sin(wang)) > 1e-6
+            c6["ring_m_angle_float"] += agood and abs(wang) > 1e-3
+print("C6:", c6)
+print(f"run {time.time() - t0:.1f} s")
+
+== p79.py (the second hand, written from the claims alone) ==
+"""Claims 7 and 9: the one-site child; the composite g1 g2. Exact; FLOAT only where marked."""
+import cmath
+import math
+import random
+import sys
+import time
+from fractions import Fraction as F
+from itertools import combinations_with_replacement
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import trains, rates, gm, gk, gc, n2, wind_norm, sweep  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(9)
+TR = [t for t in trains() if t[2] ** 2 + t[4] ** 2 == t[3] ** 2]
+
+# ---------------- C7
+c7 = {"cases": 0, "E1==3rim(|z|^2+|z-|^2)": 0, "bound_fail": 0, "equal": 0, "equal_iff_ok": 0,
+      "pair_cases": 0, "pair==1/sin": 0, "m_pair_s+1": 0, "m_beat(FLOAT)": 0, "m_no_i_equal": 0}
+site = 21
+for (f, i, p, rim, s, key) in TR:
+    g, cg = (p, s), (p, -s)
+    shapes = []
+    for _ in range(40):
+        R = rng.choice([2, 30, 10**5])
+        z = (rng.randint(-R, R), rng.randint(-R, R))
+        zm = (rng.randint(-R, R), rng.randint(-R, R))
+        shapes.append(("random", z, zm))
+    for _ in range(4):
+        z = (rng.randint(-99, 99), rng.randint(-99, 99)) or (1, 0)
+        shapes.append(("+i z", z, gm(z, (0, 1))))
+        shapes.append(("-i z", z, gm(z, (0, -1))))
+        shapes.append(("+z", z, z))                           # mutant shape: no i
+        shapes.append(("|z|=|z-| other", z, gm(z, (3, 4)) if False else (z[1], z[0])))  # |zm| = |z|, generic phase
+    for kind, z, zm in shapes:
+        if z == (0, 0) and zm == (0, 0):
+            continue
+        a = [(0, 0)] * 64
+        am = [(0, 0)] * 64
+        a[site], am[site] = z, zm
+        E = wind_norm(a, am, p, rim)
+        sg = sweep(a, am)
+        c7["cases"] += 1
+        c7["E1==3rim(|z|^2+|z-|^2)"] += E == 3 * rim * (n2(z) + n2(zm))
+        d = E - 6 * rim * abs(sg)
+        c7["bound_fail"] += d < 0
+        eq = d == 0
+        c7["equal"] += eq
+        cond = n2(z) == n2(zm) and (zm == gm(z, (0, 1)) or zm == gm(z, (0, -1)))
+        c7["equal_iff_ok"] += eq == cond
+        if kind == "+z":
+            c7["m_no_i_equal"] += eq
+    # the pair's own shape z- = z conj(g)/rim: z = rim u, z- = u conj(g)
+    for _ in range(6):
+        u = (rng.randint(1, 999), rng.randint(-999, 999))
+        for sv, tag in ((s, "pair"), (s + 1, "m")):
+            z, zm = gk(rim, u), gm(u, (p, -sv))
+            a = [(0, 0)] * 64
+            am = [(0, 0)] * 64
+            a[site], am[site] = z, zm
+            E = wind_norm(a, am, p, rim)
+            sg = sweep(a, am)
+            per_quantum = F(E * key, 2 * abs(sg))              # wind per quantum, quantum = key/2 of sweep
+            hbar = 3 * key * rim
+            target = F(hbar * rim, s)                           # hbar_L / sin w0
+            if tag == "pair":
+                c7["pair_cases"] += 1
+                c7["pair==1/sin"] += per_quantum == target
+                # FLOAT: the beat read for the sine, 1/w0 windings
+                c7["m_beat(FLOAT)"] += abs(float(per_quantum / hbar) - 1 / math.acos(p / rim)) < 1e-9 * float(per_quantum / hbar)
+            else:
+                c7["m_pair_s+1"] += per_quantum == target
+for (f, i, p, rim, s, key) in TR:
+    if f == "universe_toy":
+        print(f"    pair-shape windings a quantum, toy row {i}: {rim / s:.4f}")
+print("C7:", c7)
+
+# ---------------- C9: the composite of two trains of one universe (common rim)
+c9 = {"pairs": 0, "N==rim^4": 0, "composite s == sine_rim(Re, rim^2)": 0, "short_identity": 0,
+      "books_full_sum": 0, "beats_add(FLOAT)": 0, "m_s+1_on_circle": 0, "m_s+1_sine": 0}
+fracs = []
+by_file = {}
+for t in TR:
+    by_file.setdefault(t[0], []).append(t)
+for f, ts in by_file.items():
+    uniq = sorted({(t[2], t[4]) for t in ts})
+    for (p1, s1), (p2, s2) in combinations_with_replacement(uniq, 2):
+        rim = ts[0][3]
+        g = gm((p1, s1), (p2, s2))
+        c9["pairs"] += 1
+        c9["N==rim^4"] += n2(g) == rim ** 4
+        c9["composite s == sine_rim(Re, rim^2)"] += rates.sine_rim(g[0], rim * rim) == g[1]
+        booked = F(g[1], rim)                                   # composite winding in units of 3 key
+        parts = s1 + s2
+        ratio = booked / parts
+        c9["short_identity"] += (parts * rim - g[1] == s1 * (rim - p2) + s2 * (rim - p1)) and ratio == F(p1 * s2 + s1 * p2, rim * (s1 + s2))
+        c9["books_full_sum"] += ratio == 1
+        # FLOAT: the beats add
+        c9["beats_add(FLOAT)"] += abs(cmath.phase(complex(g[0], g[1])) - (math.atan2(s1, p1) + math.atan2(s2, p2))) < 1e-12
+        gm1 = gm((p1, s1 + 1), (p2, s2))
+        c9["m_s+1_on_circle"] += n2(gm1) == rim ** 4
+        c9["m_s+1_sine"] += rates.sine_rim(gm1[0], rim * rim) == gm1[1]
+        fracs.append((f, (p1, s1), (p2, s2), float(ratio)))
+print("C9:", c9)
+for f, a, b, r in fracs:
+    print(f"    {f} {a[1]} x {b[1]}: books {r:.7f} of the parts' windings")
+print(f"run {time.time() - t0:.1f} s")
+
+== p8.py (the second hand, written from the claims alone) ==
+"""Claim 8: the action Q = SUM Im(conj(a) P), P = W (a - a-), under the rational step with the teeth, the
+spring and the grips changed uniformly from tick to tick (fine tooth dropped). Exact Fractions."""
+import random
+import sys
+import time
+from fractions import Fraction as F
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import trains, rule3, NBI  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(8)
+GAMMA = 1000
+G = rule3.mesh_unit_of(GAMMA)
+TR = [t for t in trains() if t[2] ** 2 + t[4] ** 2 == t[3] ** 2]
+TICKS = 12
+
+
+def coeffs(p, rim, vary_teeth, aniso=False):
+    rate = rng.randint(GAMMA // 2, GAMMA)
+    mesh = (rate * rate + GAMMA // 2) // GAMMA
+    gr = rule3.gearing(p, rim, GAMMA, rate, mesh, None, G)
+    W = gr.teeth * (F(rng.randint(GAMMA, 2 * GAMMA), GAMMA) if vary_teeth else 1)   # the stretch X / Gamma
+    grips = list(gr.grips)
+    if aniso:  # mutant: the mesh read differently from its two ends (+X grip != -X grip)
+        grips[0] = grips[0] * 2
+    return W, grips, gr.spring
+
+
+def run(train, form, vary_teeth, aniso=False):
+    f, i, p, rim, s, key = train
+    am = [(F(rng.randint(-50, 50)), F(rng.randint(-50, 50))) for _ in range(64)]
+    a = [(F(rng.randint(-50, 50)), F(rng.randint(-50, 50))) for _ in range(64)]
+    W_prev, _, _ = coeffs(p, rim, vary_teeth)
+    Qs, sig = [], []
+    for t in range(TICKS):
+        W, grips, D = coeffs(p, rim, vary_teeth, aniso)
+        # Q_t with P_t = W_prev (a_t - a_(t-1)), the momentum of the half tick before
+        Q = sum(x[0] * (W_prev * (x[1] - y[1])) - x[1] * (W_prev * (x[0] - y[0])) for x, y in zip(a, am))
+        Qs.append(Q)
+        sig.append(sum(x[0] * y[1] - x[1] * y[0] for x, y in zip(a, am)))   # plain sweep Im(conj a a-)
+        new = []
+        for k in range(64):
+            pull = [0, 0]
+            for sp, j in enumerate(NBI[k]):
+                for c in (0, 1):
+                    pull[c] += grips[sp] * (a[j][c] - a[k][c])
+            nk = []
+            for c in (0, 1):
+                tot = pull[c] - D * a[k][c]
+                if form == "flux":          # W_t (a+ - a) - W_(t-1) (a - a-) = pull - D a
+                    nk.append(a[k][c] + (W_prev * (a[k][c] - am[k][c]) + tot) / W)
+                else:                       # W_t (a+ - 2 a + a-) = pull - D a   (one teeth on both differences)
+                    nk.append(2 * a[k][c] - am[k][c] + tot / W)
+            new.append(tuple(nk))
+        am, a, W_prev = a, new, W
+    keptQ = all(q == Qs[0] for q in Qs)
+    keptS = all(x == sig[0] for x in sig)
+    return keptQ, keptS
+
+
+out = {}
+for scen in [("flux", True, False), ("flux", False, False), ("one-teeth", True, False), ("flux", True, True)]:
+    kq = ks = 0
+    for n in range(4):
+        q, sgm = run(TR[(3 * n + 1) % len(TR)], *scen)
+        kq += q
+        ks += sgm
+    out[scen] = (kq, ks)
+    print(f"C8 form={scen[0]:9s} teeth vary={scen[1]!s:5s} aniso grips={scen[2]!s:5s}: Q kept {kq}/4 runs; plain sweep kept {ks}/4 runs ({TICKS} ticks each)")
+print(f"run {time.time() - t0:.1f} s")
+
+== poff.py (the second hand, written from the claims alone) ==
+"""The off-circle row (universe_bang row 3): claim 4's bound with the integer sine (a floor), exact."""
+import random, sys
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import trains, SITES, gm, gk, gc, n2, wind_norm, sweep
+rng = random.Random(3)
+off = [t for t in trains() if t[2] ** 2 + t[4] ** 2 != t[3] ** 2]
+for (f, i, p, rim, s, key) in off:
+    fails = eq = 0; n = 0; minslack = None
+    for k in range(40):
+        if k < 20:
+            a = [(rng.randint(-99, 99), rng.randint(-99, 99)) for _ in SITES]; am = [(rng.randint(-99, 99), rng.randint(-99, 99)) for _ in SITES]
+        else:  # the nearest integer rest wave: a = z rim, a- = z g with g = p + i s (not a unit)
+            z = (rng.randint(1, 99), rng.randint(-99, 99)); a = [gk(rim, z)] * 64; am = [gm(z, (p, s))] * 64
+        E = wind_norm(a, am, p, rim); sg = sweep(a, am); d = E - 6 * s * abs(sg); n += 1
+        fails += d < 0; eq += d == 0
+        # exact sine bound: E >= 6 sqrt(rim^2 - p^2) |sigma|  <=>  E^2 >= 36 (rim^2 - p^2) sigma^2
+        fails += E * E < 36 * (rim * rim - p * p) * sg * sg
+    print(f, i, "states", n, "fails", fails, "equalities with integer s", eq, "rim^2-p^2-s^2 =", rim * rim - p * p - s * s)

@@ -2,9 +2,9 @@
 
 David, 2026-10-28, 13:5x UTC, for the Boss (Sofer and Animate copied). This page answers the owner's word through Animate (6467743683, posted at 11:25 by the platform's clock; quoted in ALGEBRA.md line 440 on scribe-5): "From the tensor of the 24's rules, the complex numbers and the clock, it must get exactly what a mass is in the clicks." It answers the plan's section 30 row "The mass readings disagree" (TENSOR24.md line 1468 at 13af3fc82): the sines give 1,838.68 and 1,836.15, the rest beats 2,623 and 2,608, and the inertia about 11,000.
 
-A helper drafted it (draft M), and I reran its four probes; the outputs are identical, apart from their run-time lines. They are in DAVID-TENSOR24-THE-MASS_CHECKS.txt, with the draft's proofs in full. The draft reads toys-5 b56643b0e (src, identical to engine-5.0-test 33d9ecaa3's) and scribe-5 f32b67cc3 (the law). It follows the owner's method: the clock first, then the tensor, then the 24. This page covers protocol steps 1 to 4. A second hand follows, then Sofer's check and my sign-off. No src is pushed.
+A helper drafted it (draft M), and I reran its four probes; the outputs are identical, apart from their run-time lines. They are in DAVID-TENSOR24-THE-MASS_CHECKS.txt, with the draft's proofs in full. The draft reads toys-5 b56643b0e (src, identical to engine-5.0-test 33d9ecaa3's) and scribe-5 f32b67cc3 (the law). It follows the owner's method: the clock first, then the tensor, then the 24. This page covers protocol steps 1 to 5: the second hand confirms it, with three tightenings folded in (its section below). Sofer's check and my sign-off follow. No src is pushed.
 
-**Units.** At the vacuum (the load 0 at the full rate, p_0 = p_i = Gamma, Q_j = G^2): the teeth w = 6 rim Gamma^2 G^2, each of the six grips R = 2 pinion Gamma^2 G^2, the spring D = 12 (rim - pinion) Gamma^2 G^2, and the hold S = 2 w - D - SUM_j R_j. One quantum is the sweep key / 2. hbar_L = 3 key rim is the light's winding. g = pinion + i s is the train's pair as one Gaussian integer, with N(g) = rim^2 (den's circle).
+**Units.** At the vacuum (the load 0 at the full rate, p_0 = p_i = Gamma, Q_j = G^2): the teeth w = 6 rim Gamma^2 G^2, each of the six grips R = 2 pinion Gamma^2 G^2, the spring D = 12 (rim - pinion) Gamma^2 G^2, and the hold S = 2 w - D - SUM_j R_j. One quantum is the sweep key / 2. hbar_L = 3 key rim is the light's winding. g = pinion + i s is the train's pair as one Gaussian integer, with N(g) = rim^2 (den's circle) on a Pythagorean row. The second hand found one row off the circle: universe_bang's row 3, whose s is the integer floor of the root, with rim^2 - pinion^2 - s^2 = 2,625,219,173,950,632. There the exact circle's claims (the rest turn as a Gaussian unit) fail, while the bound of section 2 holds with the integer sine.
 
 ## 1. In the clock: what a mass is
 
@@ -15,7 +15,7 @@ A helper drafted it (draft M), and I reran its four probes; the outputs are iden
    - **the beat,** arg g: the hand's turn per tick;
    - **the inertia,** 3 s / pinion: the band's curvature.
 
-   The sine is the exact reading in the clicks. The beat misreads it through E = hbar w, and the inertia misreads it through light's c.
+   The sine is what the clicks book. The beat is the clock's own exact phase reading, the Floquet quasi-energy; reading it as the energy (E = hbar w) misreads the books. The inertia reads the sine through light's c instead of the train's own.
 
 ## 2. The formula and its proofs
 
@@ -38,7 +38,7 @@ A helper drafted it (draft M), and I reran its four probes; the outputs are iden
    | the inertia | 3 Im g / Re g | 1.6102e-3 | 18.2600 | 17.3714 | 11,341 and 10,790 |
 
    - The beat agrees with the sine to 5e-8 for the electron, and is off by 1.427 and 1.420 for the nucleons. Section 30's "effective quantum 0.70" (line 1431) is sin w0 / w0.
-   - The inertia is off by rim / pinion: 6.17 and 5.88. Exactly, 11,341 = 1,838.68 x pinion_e / pinion_n.
+   - The inertia is exactly 3 (s / rim)(rim / pinion): light's 1/c^2 = 3, times the sine, times rim / pinion. Between trains the 3 cancels, and the ratio is off by rim / pinion: 6.17 and 5.88. Exactly, 11,341 = 1,838.68 x pinion_e / pinion_n.
 7. **The same on the walk of the cap page** (my addition). For a step that is a turn U, the form (U^dagger - U) / (2i) commutes with U, and on a turning wave U psi = e^(-iw) psi it reads sin w per quantum. It is read from U's rational entries, while the angle w needs an arc. So on either step the integers read the sine of the turn, never its angle. PROVED (two lines).
 
 ## 3. The 24
@@ -73,7 +73,7 @@ A helper drafted it (draft M), and I reran its four probes; the outputs are iden
 ## 6. The quantum per mode is the action
 
 1. **The action of the hand's own turn:** Q = SUM_x Im(conj(a) P), with P = W (a - a-) + (r - mid W) the step's exact momentum. It is the area the hand sweeps in a tick, times its teeth: the hand's Noether charge.
-2. **It is kept exactly by the rational step under any uniform change of the clock** (the teeth, the stretch, the spring and the grips at every tick), not only slowly. PROVED; CHECKED (Q3: 4 of 4 runs of 12 varying ticks; the plain sweep fails 4 of 4).
+2. **It is kept exactly by the head's rational step under any uniform change of the clock** (the teeth, the stretch, the spring and the grips at every tick), not only slowly. The step is the head's kick-drift form, W+ (a+ - a) - W (a - a-) = X F, each difference with its own teeth. With one teeth on both differences the action is not kept and the plain sweep is (the second hand: 4 of 4 each), so the plain sweep fails only because the teeth change. PROVED; CHECKED (Q3: 4 of 4 runs of 12 varying ticks; the plain sweep fails 4 of 4).
 3. **A fixed winding overcounts mode k by sin w(k) / sin w0.** That is section 30's 54 (line 1428): 53.79 at k = 0.05 for the electron. On the 4^3 board's lowest moving mode the head counts 1,388.8469 electrons a quantum, exactly the formula's value (Q1).
 4. **At rest the wind counts both senses and the action their difference** (Q4: 150 of 150 swings split exactly into their circular parts).
 5. **On the head the integer carries leak the action** (draft A's verifier's identity; Q5). The integer carry that keeps Q exactly is OPEN; it joins the kept charge Q* (draft I, and my charge helper, still running).
@@ -103,6 +103,26 @@ The product of the parts' pairs adds the beats but not the windings. The composi
    - the owed "quantum per mode, from an adiabatic invariant" (line 569): it is the action.
 2. **The choice of one light speed for every train** (draft M, 1.6). With grips R = c_u^2 w for all, the sine and the inertia become one reading. The cost: the hold is no longer 0, and the corner's stability needs c_u^2 <= (1 + pinion_min / rim) / 6, light at 0.440 Mesh a tick against 0.577 now. CHECKED (C8: at c_u^2 = 1/3 the nucleons' corner mode grows about 3.4 times a tick). OPEN: mine, then the owner's.
 3. **What stays a contradiction with nature** (the lattice's): the nucleons sit at the cutoff (w0 = 1.41 rad, a beat of 2.23 ticks). Nature one to one needs w0 much below 1 for every train. With the electron at 5.4e-4, the ratio 1,838 forces the nucleons to the cutoff, and the electron's Compton length is 1,076 Meshes.
+
+## The second hand (protocol step 5)
+
+1. **An independent exact probe set, written from the claims alone** (it opened the checks only after its own run), confirms every claim:
+   - the gearing on 15 rows and lights, and S = 0 at the vacuum;
+   - 960 exact plane waves;
+   - the per-mode identity with e^(+i eps w): 1,572 of 1,572 at 524 rational angles, while the draft's e^(-i eps w) fails all 1,572;
+   - the bound on the 4^3 torus: 200 states and 12,800 modes, 0 failures, with all 50 equalities at k = 0 or the corner (pi, pi, pi);
+   - m2 R / w = s / rim, exact on 10 trains;
+   - the walk's sine form (U^dagger - U) / (2i), on 40 built unitaries and 80 ring steps;
+   - the one-site child on 560 shapes and 60 pair shapes, with equality exactly where |z| = |z-| and z- = +-i z;
+   - the action on 4 runs of 12 ticks;
+   - the composite on 16 pairs.
+
+   Every mutant fails. Its values agree with the page's: the ratios 1,838.68 and 1,836.15, 2,623.49 and 2,608.27, and 11,341 and 10,790; the pair-shape windings 1,863.33, 1.0134 and 1.0148.
+2. **Its three tightenings, folded above:**
+   - universe_bang's row 3 is off den's circle (the units);
+   - the inertia's exact form, with the 3 of light's 1/c^2 (section 2);
+   - the action is kept by the head's kick-drift step, which is now named (section 6).
+3. **On the naming,** it finds the beat exactly the Floquet quasi-energy, i log U taken mod 2 pi. Every exact charge of the step (the wind, the sweep, the action) is a polynomial in its rational entries, and on a turning mode reads hbar_L sin w a quantum, while the angle needs an arc. So the clicks' least wind per quantum is the sine, exact in the integers. But the beat is exact too: the chimes read it, and it is what adds under products. It is the clock's exact phase reading, not booked, rather than a misreading; the page now says so (section 1).
 
 ## For Sofer and the Boss
 
