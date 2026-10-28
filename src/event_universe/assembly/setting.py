@@ -12,7 +12,7 @@ from event_universe.core.acts import carry, mid
 from event_universe.core.rates import rounded, sine_rim
 from event_universe.core.rule3 import carries, half, largest_below, least_at, odd
 from event_universe.core.spokes import AXES, SIDES, wrap
-from event_universe.meshes import factors, offset_pair
+from event_universe.meshes import coupling_of, factors, offset_pair
 from event_universe.run import logged
 from event_universe.trains import REGULATOR, Gear, Train, zeros
 
@@ -59,7 +59,8 @@ def set_piece(clock: Clock, setting: list[dict[str, Any]]) -> None:
             set_even(clock, clock.hands().index(train), int(lay["quanta"]), int(lay.get("sense", 0)))
         elif form == "hole":
             at = clock.clock_of(lay["at"])
-            unwind.advance(clock, clock.hands().index(clock.unsprung()), at, (-clock.drift, 0, 0, 0))
+            for rec, hand in enumerate(clock.hands()):  # the drift back on every hand at 1 - coupling
+                unwind.advance(clock, rec, at, ((coupling_of(hand) - 1) * clock.drift, 0, 0, 0))
         elif form == "wave":
             if train is None or train is not clock.unsprung() or "quanta" not in lay:
                 raise ValueError("the cycle lay is the light's: the plane at the gap 0 at its quanta")

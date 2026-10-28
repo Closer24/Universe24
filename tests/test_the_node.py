@@ -14,7 +14,7 @@ from event_universe.clock import Clock
 from event_universe.core import rates
 from event_universe.core.rule3 import carries
 from event_universe.core.spokes import SPOKES
-from event_universe.meshes import factors
+from event_universe.meshes import coupling_of, factors
 from event_universe.tick import Tick
 from event_universe.trains import HAND, OFFSET, REGULATOR, rows_of, zeros
 from event_universe.unspring import fall_of, unwinds
@@ -341,7 +341,8 @@ def test_the_merger_takes_one_light_quantum_at_each_end_of_the_pair_and_lays_the
     a, b, k = clock.A, clock.B, 3
     heavy = max(range(len(clock.hands())), key=lambda r: clock.hands()[r].spring or 0)
     unsprung = clock.unsprung()
-    unsprung_index, unit = clock.hands().index(unsprung), clock.winding_unsprung
+    unsprung_index = clock.hands().index(unsprung)
+    unit = clock.windings[unsprung_index]
     m, p = (1, 1, 1), (2, 1, 1)
     feed = (
         (m, (k * a, 0, 0, k * b)),
@@ -528,13 +529,14 @@ def test_the_unit_the_emitter_and_the_identity_turn_are_values_of_the_pair_un() 
     assert clock.windings == [
         3 * t * (rates.sine_rim(r.ratio[0], rim) + rim * (r.ratio[0] // rim)) for r in all_hands
     ]
-    assert clock.windings[-1] == clock.winding_unsprung == 3 * t * rim
+    assert clock.windings[-1] == clock.windings[all_hands.index(clock.unsprung())] == 3 * t * rim
     assert (
         (clock.unsprung().size, clock.unsprung().ratio)
         == (HAND, clock.train(OFFSET).ratio)
         == (2, (rim, rim))
     )
-    assert clock.unsprung() is all_hands[-1] and clock.sprung == all_hands[:-1]
+    assert clock.unsprung() is all_hands[-1]
+    assert [r for r in all_hands if coupling_of(r)] == all_hands[:-1]
     kept = copy.deepcopy(clock)
     for _ in range(INTERVALS):
         clock.tick()
@@ -562,7 +564,7 @@ def test_the_take_keeps_its_remainder_at_the_node_and_pays_exactly_ex_s1() -> No
     c = readings.load(clock)
     clock.start_load, clock.start_stretch = c, clock.train(REGULATOR).gears[0].now
     gearing = readings.gearing_of(clock, unsprung, c, factors(clock))
-    windings = clock.winding_unsprung + clock.winding_unsprung
+    windings = clock.windings[rec0] + clock.windings[rec0]
     hash_before, undo, paid, below = record.state_hash(clock), [], 0, 0
     for _ in range(20):
         got = unwinds(clock, [(at, windings)], gearing, 1)  # the one unwind act at one end (CR-S2)

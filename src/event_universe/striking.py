@@ -41,11 +41,10 @@ class Fitting(NamedTuple):
 
 
 def list_of(clock: Clock, rec: int, number: int) -> int:
-    """The fitted hands' hand of an engagement of the hand `rec` by the ratios: where the unwound hand is the unsprung hand the vernier's pick among the hands (the number over the winding, modulo their count); where it is another hand, the train whose ratio is the product (rim, rim), the unsprung hand (SL-S1: two sprung windings engaging give unsprung windings)."""
+    """The fitted hands' hand of an engagement of the hand `rec`, one pick for every hand (R12): the vernier's pick (the number over the winding, modulo their count) among the hands whose coupling times the unwound hand's is 0 (meshes.coupling_of): an unwound hand at the coupling 0 picks among every hand, a coupled one among the hands at the coupling 0 alone, the one hand at the spring 0, its pick modulo 1 (SL-S1: two sprung windings engaging give unsprung windings; the former branch on the unwound hand's identity, which named the unsprung hand, kept by name)."""
     all_hands = clock.hands()
-    if all_hands[rec] is not clock.unsprung():
-        return all_hands.index(clock.unsprung())
-    recs = [k for k, r in enumerate(all_hands) if r.size == HAND]
+    coupled = coupling_of(all_hands[rec])
+    recs = [k for k, r in enumerate(all_hands) if r.size == HAND and coupled * coupling_of(r) == 0]
     return recs[int(remainder(carries(number, clock.windings[rec]), len(recs)))]
 
 
@@ -126,9 +125,9 @@ def twin_at(
 
 
 def jam(clock: Clock, fits: list[Fitting], winds: list[Any]) -> list[Fitting]:
-    """The advance jammed by name: where any of the fitted hand's hand already stands at its clock, and where two fitted hands of one hand would land at one clock in one striking (the sweep made at a crowded advance); an unspringing's unsprung fitted hands (the unwound hand sprung, the fitted hands on the unsprung hand) pass both and read their bound on their own quantum at the unwind, the unsprung hand's winding at the end as MG-S1's wind reads it, the unsprung hand a sea the unspringing pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the fitting read at -1, MG-S1). Returns the fittings kept."""
+    """The advance jammed by name: where any of the fitted hand's hand already stands at its clock, and where two fitted hands of one hand would land at one clock in one striking (the sweep made at a crowded advance); an unspringing's unsprung fitted hands (the engagement lowering the coupling: the unwound hand's coupling above the fitted hands', meshes.coupling_of; the former read of the two hands' identities kept by name, R12) pass both and read their bound on their own quantum at the unwind, the unsprung hand's winding at the end as MG-S1's wind reads it, the unsprung hand a sea the unspringing pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the fitting read at -1, MG-S1). Returns the fittings kept."""
     all_hands = clock.hands()
-    inverse = [k for k in fits if all_hands[k.gear_ratio] is clock.unsprung() is not all_hands[k.rec]]
+    inverse = [k for k in fits if coupling_of(all_hands[k.rec]) > coupling_of(all_hands[k.gear_ratio])]
     kept = []
     for at, s, minus, plus, room, rec in [k for k in fits if k not in inverse]:
         if int(winds[s][minus]) > 0 or int(winds[hands.twin_of(all_hands, s)][plus]) > 0:

@@ -64,7 +64,7 @@ class Tick:
         self.trains = clock.trains()
         self.where = {id(r): k for k, r in enumerate(clock.trains_)}
         self.regulator, self.ratchet = clock.train(REGULATOR), ratchet_of(clock.trains_)
-        self.offset, self.unsprung = clock.train(OFFSET), clock.unsprung()
+        self.offset = clock.train(OFFSET)
         self.driven = [r for r in clock.trains_ if r.teeth is None and r is not self.regulator]
         self.hands = clock.hands()
         self.hand_couplings = [(r, coupling_of(r)) for r in self.hands]
