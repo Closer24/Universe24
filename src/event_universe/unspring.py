@@ -1,4 +1,4 @@
-"""The unspringing at rest, MG-S1 (H-Merger-At-Rest-1, 2026-10-26, the Boss's order under the owner's delegation; the former CS8-S1 and CS8-S2 as one letter): a fitted hand's winding is its own quantum, the wind its notches (A, 0 | 0, +-B) hold alone at the clock under its train's gearing, the same two integers for every train (`fitted_windings_of`; the former board's increment kept by name, equal to it on an empty hand); a sprung hand whose two ends hold a whole winding each of opposite sweep with no lead across the mesh engages as the conjugate pair (striking.engage's rest branch); each fitted hand's winding is paid at its own end by the unwound hand's notches at that clock unwound whole by the one advance act at -1, the fall the wind the great clock loses, both ends read before either is written, jammed by name `stop` where an end's fall is below the winding (`merger_falls`, `merger_take`; the mesh's number read after the stop, so a stopped pair reads nothing on the vernier); the unsprung hand is advanced at each end as the exact unwind at -1, on the gear the unwind names, by the least count of notches at which the wind rises by the winding (fall_of at -1; the former rise_of kept by name), the notches of that advance `unsprung_notches`, the two fitted hands' advance one act for the unsprung and the sweeping fitted hand alike (`fitted_advanced`). The striking's one unwind act for every letter (CR-S1 and CR-S2, the owner's word of 2026-10-26, 06:1x UTC): the ends read before any is written (`read_ends`), then written (`unwind_ends`), the fitting's one end, the bob's one end and the unspringing's two alike (`unwinds`, `summed`)."""
+"""The unspringing at rest, MG-S1 (H-Merger-At-Rest-1, 2026-10-26, the Boss's order under the owner's delegation; the former CS8-S1 and CS8-S2 as one letter): a fitted hand's winding is its own quantum, the wind its notches (A, 0 | 0, +-B) hold alone at the clock under its train's gearing, the same two integers for every train (`fitted_windings_of`; the former board's increment kept by name, equal to it on an empty hand); a sprung hand whose two ends hold a whole winding each of opposite sweep with no lead across the mesh engages as the conjugate pair (click.engage's rest branch); each fitted hand's winding is paid at its own end by the unwound hand's notches at that clock unwound whole by the one advance act at -1, the fall the wind the great clock loses, both ends read before either is written, jammed by name `stop` where an end's fall is below the winding (`merger_falls`, `merger_take`; the mesh's number read after the stop, so a stopped pair reads nothing on the vernier); the unsprung hand is advanced at each end as the exact unwind at -1, on the gear the unwind names, by the least count of notches at which the wind rises by the winding (fall_of at -1; the former rise_of kept by name), the notches of that advance `unsprung_notches`, the two fitted hands' advance one act for the unsprung and the sweeping fitted hand alike (`fitted_advanced`). The click's one unwind act for every letter (CR-S1 and CR-S2, the owner's word of 2026-10-26, 06:1x UTC): the ends read before any is written (`read_ends`), then written (`unwind_ends`), the fitting's one end, the bob's one end and the unspringing's two alike (`unwinds`, `summed`)."""
 
 from __future__ import annotations
 
@@ -103,7 +103,7 @@ def fitted_windings_of(
     gearing: rule3.Gearing,
     own: dict[tuple[int, int, tuple[int, ...]], int],
 ) -> tuple[int, int]:
-    """Each fitted hand's winding, its own quantum (MG-S1, CS8-S2): the fitted hand advanced by the one advance act at its end on the train's count of zero gears (the train's gears held and put back), the wind summed under the train's gearing at the great clock's load over the end and its six neighbours (hands.wind at that window: the zero gears' wind is 0 everywhere else), the gears discarded; the same two integers for every train and every clock of one load, read once per end and train in a striking (`own`: no gear of the great clock enters it); the former reading, the board's increment where the plane already stands, kept by name."""
+    """Each fitted hand's winding, its own quantum (MG-S1, CS8-S2): the fitted hand advanced by the one advance act at its end on the train's count of zero gears (the train's gears held and put back), the wind summed under the train's gearing at the great clock's load over the end and its six neighbours (hands.wind at that window: the zero gears' wind is 0 everywhere else), the gears discarded; the same two integers for every train and every clock of one load, read once per end and train in a click (`own`: no gear of the great clock enters it); the former reading, the board's increment where the plane already stands, kept by name."""
     hand = clock.hands()[s]
     held, found = hand.gears, []
     for where, sense in ((minus, -1), (plus, 1)):
@@ -127,7 +127,7 @@ def wind_fall(
     notches: tuple[int, ...],
     cache: dict[tuple[int, tuple[int, ...]], int],
 ) -> int:
-    """The wind the great clock loses by an advance at -1 of the notches at the clock (advanced and returned): the advance changes the wind at the clock and its six neighbours alone, so the fall is their winds' difference, bit for bit the great clock's (the former read of the whole board's share, kept by name); the winds as read kept in `cache` per hand and clock for the striking until an unwind writes, read on the whole great clock at once where the window holds a clock not yet read."""
+    """The wind the great clock loses by an advance at -1 of the notches at the clock (advanced and returned): the advance changes the wind at the clock and its six neighbours alone, so the fall is their winds' difference, bit for bit the great clock's (the former read of the whole board's share, kept by name); the winds as read kept in `cache` per hand and clock for the click until an unwind writes, read on the whole great clock at once where the window holds a clock not yet read."""
     hand, window = clock.hands()[rec], sorted(set(window_clocks(clock, where)))
     if any((rec, at) not in cache for at in window):
         whole = hands.wind(clock, hand.gears, gearing)
@@ -202,7 +202,7 @@ def unspring_end(
         for g, now, before in zip(own, notches[0::HAND], notches[1::HAND], strict=True)
     ]
     advance(clock, r, where, notches, -1)
-    clock.strikes[where] -= 1
+    clock.clicks[where] -= 1
     size, slack_was = sum(abs(x) for x in notches), int(clock.slack[where])
     clock.slack[where] += fall - tallied
     entry = dict(
@@ -229,7 +229,7 @@ def unsprung_end(clock: Clock, rec: int, read: Read) -> dict[str, Any]:
     now, before = int(z.now[where]), int(z.before[where])
     toward = 1 if before > now else -1
     move(clock, rec, k, where, toward * notches)
-    clock.strikes[where] += 1
+    clock.clicks[where] += 1
     slack_was = int(clock.slack[where])
     clock.slack[where] += fall - tallied
     clock.last_push = push_of(

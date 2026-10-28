@@ -1,4 +1,4 @@
-"""The table of gates: every row of UNIVERSE24's table (the nineteen and the widened 20 to 54) as one function of the chart with its verdict and its numbers, shown, not shown, or not read with the predicate named where the chart cannot carry it (`TABLE`, in the rows' order), and `gates(run)` reading them all with the event lines of the gates' first SHOWN (events.py); the rows read from the strikes are strikes.py's, the great clock's great_clock.py's, the widened rows predicates.py's, and here 7 light absorbed, 9 the collisions, 11 the redshift, 12 the delay, 13 the free fall, 18 the arrow of time, 23 the momentum across the strike, 25 the entropy of the strikes, the conservations and the three constants. Usage: `python -m event_universe.gates <chart.json>`."""
+"""The table of gates: every row of UNIVERSE24's table (the nineteen and the widened 20 to 54) as one function of the chart with its verdict and its numbers, shown, not shown, or not read with the predicate named where the chart cannot carry it (`TABLE`, in the rows' order), and `gates(run)` reading them all with the event lines of the gates' first SHOWN (events.py); the rows read from the clicks are clicks.py's, the great clock's great_clock.py's, the widened rows predicates.py's, and here 7 light absorbed, 9 the collisions, 11 the redshift, 12 the delay, 13 the free fall, 18 the arrow of time, 23 the momentum across the click, 25 the entropy of the clicks, the conservations and the three constants. Usage: `python -m event_universe.gates <chart.json>`."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ from collections import Counter, defaultdict
 from collections.abc import Callable
 from typing import Any
 
-from event_universe import events, great_clock, phenomena, predicates, strikes, swings, symmetries
+from event_universe import clicks, events, great_clock, phenomena, predicates, swings, symmetries
 from event_universe.core.spokes import AXES
 from event_universe.reckoner import (
     HALF,
@@ -149,7 +149,7 @@ def arrow(chart: Chart) -> dict[str, Any]:
 
 
 def recoil(chart: Chart) -> dict[str, Any]:
-    """Row 23: the momentum across the strike (Compton's recoil), the striking's dP_a on the strike lines: the unwinds' and the advances' sums per axis and the fittings where the recoil passed to the fitted pair (unwind + advance = 0)."""
+    """Row 23: the momentum across the click (Compton's recoil), the click's dP_a on the click lines: the unwinds' and the advances' sums per axis and the fittings where the recoil passed to the fitted pair (unwind + advance = 0)."""
     unwinds = [c["dP_take"] for c in chart.chimes + chart.fittings if c.get("dP_take")]
     lays = [b["dP_lay"] for b in chart.fittings if b.get("dP_lay")]
     passed = sum(
@@ -195,7 +195,7 @@ def constants(chart: Chart) -> dict[str, Any]:
 
 
 def conservations(chart: Chart) -> dict[str, Any]:
-    """The conservations in the strikes (the owner's word: what the lattice conserves is shown conserved in the clicks): the charge, the count, the energy as the beat unchanged from one strike to the next, the momentum (row 23)."""
+    """The conservations in the clicks (the owner's word: what the lattice conserves is shown conserved in the clicks): the charge, the count, the energy as the beat unchanged from one click to the next, the momentum (row 23)."""
     fittings, signs, (taken, tallied) = chart.fittings, chart.signs_of(), chart.unwinds_of()
     pairs = [
         (b1, b2)
@@ -224,7 +224,7 @@ def conservations(chart: Chart) -> dict[str, Any]:
 
 
 def entropy(chart: Chart) -> dict[str, Any]:
-    """Row 25: the entropy of the strikes as the law's integer: each fitting's vernier has its room (the count of numbers the one-mesh read could give); H(t) = SUM over the fittings to t of bit_length(room - 1), read from the chart alone, never falling."""
+    """Row 25: the entropy of the clicks as the law's integer: each fitting's vernier has its room (the count of numbers the one-mesh read could give); H(t) = SUM over the fittings to t of bit_length(room - 1), read from the chart alone, never falling."""
     total = last = 0
     found = []
     for b in sorted(chart.fittings, key=lambda b: int(b["i"])):
@@ -257,7 +257,7 @@ def restated(key: str, source: Row) -> Row:
 
 RESTATED = (
     ("29 the redshift of light", redshift),
-    ("30 the dilation", strikes.dilation),
+    ("30 the dilation", clicks.dilation),
     ("31 the deflection and the Shapiro delay", delay),
     ("33 free fall by the tail", free_fall),
 )  # the rows of the widened table that restate a gate of the nineteen, the gate's row beside each
@@ -266,30 +266,30 @@ TABLE: tuple[Row, ...] = (
     swings.recurring_swing,
     swings.tops,
     swings.returns,
-    strikes.lengthening,
+    clicks.lengthening,
     great_clock.shortening,
     great_clock.era,
     great_clock.acceleration,
     great_clock.contraction,
     light,
-    strikes.families,
-    strikes.species_track,
+    clicks.families,
+    clicks.species_track,
     collisions,
-    strikes.dilation,
+    clicks.dilation,
     redshift,
     delay,
     free_fall,
     great_clock.standstill,
-    strikes.conservation_at_strike,
-    strikes.one_strike_floor,
-    strikes.charge,
+    clicks.conservation_at_click,
+    clicks.one_click_floor,
+    clicks.charge,
     arrow,
-    strikes.mass_ratios,
+    clicks.mass_ratios,
     events.stub("20"),
     predicates.twist_of_fitting,
     predicates.coulomb,
     recoil,
-    strikes.unspring,
+    clicks.unspring,
     entropy,
     predicates.lifts,
     predicates.confinement,
@@ -325,8 +325,8 @@ TABLE: tuple[Row, ...] = (
     predicates.ghz,
     events.fast_expansion,
     events.deceleration,
-    events.acceleration_in_strikes,
-    strikes.horizon_radiates,
+    events.acceleration_in_clicks,
+    clicks.horizon_radiates,
     predicates.arrow_of_time,
     symmetries.uniformity,
     symmetries.dark_matter,

@@ -1,4 +1,4 @@
-"""The tick, the clock's one program forward and backward (ALGEBRA.md, The tick; The going: every act but the strike a bijection, the rewind the same acts in the reverse order, each inverted), in the symmetric form of the driven trains (R5; the owner's approved sentence 1 of 2026-10-25: the held regulator of the teeth and every driven train step as one pair at the mean teeth): five acts of two kinds, the carry (core/acts.carry (the former carried_division kept by name), the rates' odd rounding where the law has it) and the advance; (1) the readings at the start (the load, the rulers, the meshes' count and offsets from the ratchet's act, every driven gear's pull, the hands' lead and the release), (2) the impulse (every driven gear's stride read at the mean teeth and impelled, the hands' sweep at the impulse among them, PL-S1, the regulator's source from every driven train alike, the hands' count flow on each axis from the velocities in and out against the centred gradient, Y-S3), (3) the carry (the regulator's one carry, every driven gear's one carry at the mean teeth of the regulator's two notches at its end, the advances among the carries, the trains set, the stopped clocks' gears restored, BH-S1), (4) the turnover at the top and the bottom, (5) the striking; backward the striking and the turnover are undone first, the advances come off before the impulse and every carry is the same act at -1; one class holds the tick's readings so that each act is one function."""
+"""The tick, the clock's one program forward and backward (ALGEBRA.md, The tick; The going: every act but the click a bijection, the rewind the same acts in the reverse order, each inverted), in the symmetric form of the driven trains (R5; the owner's approved sentence 1 of 2026-10-25: the held regulator of the teeth and every driven train step as one pair at the mean teeth): five acts of two kinds, the carry (core/acts.carry (the former carried_division kept by name), the rates' odd rounding where the law has it) and the advance; (1) the readings at the start (the load, the rulers, the meshes' count and offsets from the ratchet's act, every driven gear's pull, the hands' lead and the release), (2) the impulse (every driven gear's stride read at the mean teeth and impelled, the hands' sweep at the impulse among them, PL-S1, the regulator's source from every driven train alike, the hands' count flow on each axis from the velocities in and out against the centred gradient, Y-S3), (3) the carry (the regulator's one carry, every driven gear's one carry at the mean teeth of the regulator's two notches at its end, the advances among the carries, the trains set, the stopped clocks' gears restored, BH-S1), (4) the turnover at the top and the bottom, (5) the click; backward the click and the turnover are undone first, the advances come off before the impulse and every carry is the same act at -1; one class holds the tick's readings so that each act is one function."""
 
 from __future__ import annotations
 
@@ -40,7 +40,7 @@ def advanced_on(clock: Clock, gear: Gear, notches: Any) -> None:
 
 
 class Tick:
-    """One tick's readings at its start and the trains as the acts leave them, in the going given: forward from the pre-state, the tick counted up; backward from the post-state with the striking undone (5, striking.strike at -1) and the turned-over clocks returned to their pre-state by the turnover's own reverse (4), the acts inverted in the reverse order."""
+    """One tick's readings at its start and the trains as the acts leave them, in the going given: forward from the pre-state, the tick counted up; backward from the post-state with the click undone (5, click.click at -1) and the turned-over clocks returned to their pre-state by the turnover's own reverse (4), the acts inverted in the reverse order."""
 
     def __init__(self, clock: Clock, going: int) -> None:
         self.clock, self.going = clock, going
@@ -52,7 +52,7 @@ class Tick:
             self.tallies: list[tuple[tuple[int, ...], list[int], int]] = []
         else:
             note = clock.stack.pop()
-            clock.strike([], [], -1, note)
+            clock.click([], [], -1, note)
             self.top = note["turned"]
             self.stopped = note["frozen"]
             self.tallies = note["bookings"]
@@ -244,7 +244,7 @@ class Tick:
             self.impelled[k] = p_other
 
     def carry(self) -> None:
-        """(3) The carry (the former `carrier_act`, `divisions`, `writes` and `rest`): the regulator's one carry with the drive sourced by the driven trains' strides, 4 stretch_now (forms (the file's trace weight) rim full_rate^2 - trace rate^2) rate on its time gear read within its hold, stretch_now times the time gear's drive teeth (no clock's stretch moves by more than itself in one tick: the great clock runs the small clocks, the owner's word of 2026-10-27, 18:5x UTC) and, times rate^2 on its nine axis gears by the position of their reading, the traceless stress, the hands' count flow and the shears (Y-S1, Y-S3; the regulator's act clock.act, the former `carried` by this name); every driven gear's one carry at the mean teeth of the regulator's two notches at its end, its fine tooth kept in [0, W) there, backward the turned-over clocks set to their kept pre-state; the hands' gears at the start and before the turnover kept for the striking (the latter the state the turnover replaces at the turned-over clocks, the notches now elsewhere, CL-S2; the former `stepped` kept by name); the trains set; forward the advances among the carries after them (`advances`; backward they came off first); then every gear at a stopped clock restored to its held gear, its notches, its fine teeth and its teeth by the clock's one restore (BH-S1, the former `rest`), so no act but the turnover changes any integer of a stopped clock's state forward or backward; backward a clock both stopped and turned over is restored to the pre-state the reverse returned (FR-S1)."""
+        """(3) The carry (the former `carrier_act`, `divisions`, `writes` and `rest`): the regulator's one carry with the drive sourced by the driven trains' strides, 4 stretch_now (forms (the file's trace weight) rim full_rate^2 - trace rate^2) rate on its time gear read within its hold, stretch_now times the time gear's drive teeth (no clock's stretch moves by more than itself in one tick: the great clock runs the small clocks, the owner's word of 2026-10-27, 18:5x UTC) and, times rate^2 on its nine axis gears by the position of their reading, the traceless stress, the hands' count flow and the shears (Y-S1, Y-S3; the regulator's act clock.act, the former `carried` by this name); every driven gear's one carry at the mean teeth of the regulator's two notches at its end, its fine tooth kept in [0, W) there, backward the turned-over clocks set to their kept pre-state; the hands' gears at the start and before the turnover kept for the click (the latter the state the turnover replaces at the turned-over clocks, the notches now elsewhere, CL-S2; the former `stepped` kept by name); the trains set; forward the advances among the carries after them (`advances`; backward they came off first); then every gear at a stopped clock restored to its held gear, its notches, its fine teeth and its teeth by the clock's one restore (BH-S1, the former `rest`), so no act but the turnover changes any integer of a stopped clock's state forward or backward; backward a clock both stopped and turned over is restored to the pre-state the reverse returned (FR-S1)."""
         clk, regulator = self.clock, self.regulator
         k = self.where[id(regulator)]
         p02, (trace, traceless) = self.rate * self.rate, tensor_parts(self.stress[:AXES])
@@ -317,12 +317,12 @@ class Tick:
         """(4) The turnover at the top and the bottom (clock.turnover; the stopped clock released by its own trigger, FR-S1): the weak maximum of the regulator's three notches, the held before, the held now and the now after the advances, or an outer one below the bottom; the turned-over clock ends the tick at its held pre-state, exchanged and complemented."""
         self.top = self.clock.turnover(self.held)
 
-    def strike(self) -> None:
-        """(5) The striking (striking.strike) after the turnover, the rewind note pushed for the rewind: the turned-over clocks, the counters as they stood before the strike (the turnover changes none), the log's length and the stopped mask."""
+    def click(self) -> None:
+        """(5) The click (click.click) after the turnover, the rewind note pushed for the rewind: the turned-over clocks, the counters as they stood before the click (the turnover changes none), the log's length and the stopped mask."""
         clock = self.clock
         log_from = len(clock.log)
         note = rewind_note(clock, self.top, log_from, self.stopped, self.tallies)
-        clock.strike(self.hand_starts, self.held)
+        clock.click(self.hand_starts, self.held)
         clock.stack.append(note)
 
 
@@ -336,10 +336,10 @@ def offset_curl(odd: list[Any]) -> list[Any]:
 
 
 def run(clock: Clock, going: int) -> None:
-    """One tick in the going, five acts: the readings, the impulse, the carry, the turnover at the top, the striking; backward the striking and the turnover are undone at the Tick's making, the advances come off before the impulse (the reverse order: the last advanced, the first undone), the impulse and the carry are the same acts at -1 and the tick is counted down."""
+    """One tick in the going, five acts: the readings, the impulse, the carry, the turnover at the top, the click; backward the click and the turnover are undone at the Tick's making, the advances come off before the impulse (the reverse order: the last advanced, the first undone), the impulse and the carry are the same acts at -1 and the tick is counted down."""
     tick = Tick(clock, going)
     acts = {
-        1: (tick.impulse, tick.carry, tick.turnover, tick.strike),
+        1: (tick.impulse, tick.carry, tick.turnover, tick.click),
         -1: (tick.advances, tick.impulse, tick.carry),
     }
     for act in (tick.readings, *acts[going]):
