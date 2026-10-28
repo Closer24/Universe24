@@ -1,4 +1,4 @@
-"""The Scribe's gate on src/event_universe: the owner's rules as a script that refuses a push.
+"""Sofer's gate on src/event_universe: the owner's rules as a script that refuses a push.
 
 The owner's words of 2026-10-28, 04:3x, 04:5x and 05:0x UTC: no number in the code, whole numbers only, no cosine, sine or
 circularity that makes a phenomenon happen, no state beyond the Node-clock; "your laws should be in scripts, so that they cannot
@@ -6,13 +6,13 @@ push at all what breaks our lawfulness, and let it be logical and smart".
 
 How it decides. A push may not raise the count of any rule's hits, at any (rule, file, detail), above the same file's at the push's
 merge base: what stands at the base stands, a new hit is a REFUSAL (BLOCK) or a NOTE (WARN) by the rule's tier. A hit leaves the list
-by being removed and enters it only by the owner's word (scribe_scan_allowed.json, written by the Scribe on that word, with the
+by being removed and enters it only by the owner's word (scribe_scan_allowed.json, written by Sofer on that word, with the
 row of the ledger that holds it). The key of a hit holds no line number, so a moved or reformatted line is no new hit.
 
   python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
   python scribe_scan.py TREE [--base REV]      TREE a directory or a git revision; the base a revision
   python scribe_scan.py --patch FILE           the patch applied on the base in a scratch worktree, then the same check
-  python scribe_scan.py TREE --baseline FILE   the tree against the list of departures that stand (the Scribe's audit of the whole)
+  python scribe_scan.py TREE --baseline FILE   the tree against the list of departures that stand (Sofer's audit of the whole)
   python scribe_scan.py TREE --all [--summary] every hit of the tree, by rule and file (--summary: the counts only)
   python scribe_scan.py --write-baseline FILE  [TREE]  the tree's hits written as the list that stands
   python scribe_scan.py --rules                the rules, their tiers and the law each one keeps
@@ -52,7 +52,7 @@ REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
 ALLOWED = HERE / "scribe_scan_allowed.json"
 BASES = ("origin/engine-5.0-test", "origin/main")
-PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by the Scribe alone
+PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by Sofer alone
 # the gate's own files: a push that changes one needs the owner's word, and says so
 OWN = (
     "tools/derivations/open_items/scribe_scan.py",
@@ -115,6 +115,10 @@ RULES: dict[str, tuple[str, str]] = {
         "BLOCK",
         "an act reads the great clock's log, a global read: only the readers read the record (law: Locality is never broken)",
     ),
+    "LOOP": (
+        "WARN",
+        "a loop (for, while, a comprehension) in an engine module: the machine is one tensor operation with no loop (the owner's word of 2026-10-28, 06:5x); the count may not rise",
+    ),
 }
 
 BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sympy mpmath".split())
@@ -141,7 +145,7 @@ MUTATORS = frozenset(
     "append extend insert pop remove clear update setdefault add discard popitem sort reverse".split()
 )
 MEMOS = frozenset({"cache", "lru_cache", "cached_property"})
-# the modules that read a finished chart and run no step (the Scribe's audit of 2026-10-28): they may read the log
+# the modules that read a finished chart and run no step (Sofer's audit of 2026-10-28): they may read the log
 READERS = frozenset(
     "run.py gates.py predicates.py reckoner.py rim.py swings.py great_clock.py strikes.py clicks.py events.py "
     "symmetries.py phenomena.py".split()
@@ -355,6 +359,26 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add("FLOAT", node, "float")
             if node.id in CIRCULAR_FUNCTIONS or node.id == "pi":
                 add("CIRCLE", node, node.id)
+        elif (
+            isinstance(
+                node,
+                ast.For
+                | ast.AsyncFor
+                | ast.While
+                | ast.ListComp
+                | ast.SetComp
+                | ast.DictComp
+                | ast.GeneratorExp,
+            )
+            and rel not in READERS
+        ):
+            if isinstance(node, ast.For | ast.AsyncFor):
+                shape = f"for {ast.unparse(node.target)} in {ast.unparse(node.iter)}"
+            elif isinstance(node, ast.While):
+                shape = f"while {ast.unparse(node.test)}"
+            else:
+                shape = f"{type(node).__name__} over {ast.unparse(node.generators[0].iter)}"
+            add("LOOP", node, shape[:56])
         elif isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
             for decorator in node.decorator_list:
                 found = (
@@ -452,7 +476,7 @@ def standing(path: Path) -> Counter[tuple[str, str, str]]:
 
 
 def allowance(repo: Path = REPO) -> Counter[tuple[str, str, str]]:
-    """What the owner's word lets stand: entries {rule, file, detail, count, word, row}, read from the Scribe's published branch
+    """What the owner's word lets stand: entries {rule, file, detail, count, word, row}, read from Sofer's published branch
     (origin/scribe-5), so that a push cannot approve itself by editing its own copy; the working file where that ref is absent."""
     relative = ALLOWED.relative_to(REPO).as_posix()
     shown = git(repo, "show", f"{PUBLISHED}:{relative}")
@@ -519,7 +543,7 @@ def report(label: str, new: list[Hit], base_label: str, out: Any = sys.stdout) -
     refusals = [h for h in new if h.tier == "BLOCK"]
     notes = [h for h in new if h.tier == "WARN"]
     print(
-        f"The Scribe's gate: {label} against {base_label}: refusals {len(refusals)}, notes {len(notes)}",
+        f"Sofer's gate: {label} against {base_label}: refusals {len(refusals)}, notes {len(notes)}",
         file=out,
     )
     for hit in (refusals + notes)[:SHOWN]:
@@ -537,8 +561,8 @@ def report(label: str, new: list[Hit], base_label: str, out: Any = sys.stdout) -
         print(
             "  These are the owner's rules (docs/ALGEBRA.md): the push is refused and nothing was sent.\n"
             "  If a rule or a law must be broken, STOP and tell the owner, the Boss and David in the thread at once (his order of\n"
-            "  2026-10-28, 04:5x UTC); only his word lets a hit stand (scribe_scan_allowed.json, written by the Scribe on that word).\n"
-            "  Do not weaken or go round this gate (--no-verify, an edited list or script): the Scribe reads every push and reports it.",
+            "  2026-10-28, 04:5x UTC); only his word lets a hit stand (scribe_scan_allowed.json, written by Sofer on that word).\n"
+            "  Do not weaken or go round this gate (--no-verify, an edited list or script): Sofer reads every push and reports it.",
             file=out,
         )
     return 1 if refusals else 0
@@ -593,7 +617,7 @@ def check_patch(repo: Path, patch: Path, base: str | None) -> int:
 
 
 def _clean(label: str, base: str) -> int:
-    print(f"The Scribe's gate: {label} against {base}: no refusal, no note")
+    print(f"Sofer's gate: {label} against {base}: no refusal, no note")
     return 0
 
 
@@ -671,13 +695,11 @@ def push_hook(base: str | None) -> int:
 
 
 def guarded(call: Callable[[str | None], int], base: str | None) -> int:
-    """A caller's run: the gate's own fault never holds a push, it says so and lets it go (the Scribe's scan reads it after)."""
+    """A caller's run: the gate's own fault never holds a push, it says so and lets it go (Sofer's scan reads it after)."""
     try:
         return call(base)
     except (Exception, SystemExit) as error:
-        print(
-            f"The Scribe's gate could not run ({error!r}); this push is not held by it", file=sys.stderr
-        )
+        print(f"Sofer's gate could not run ({error!r}); this push is not held by it", file=sys.stderr)
         return 0
 
 
@@ -689,7 +711,7 @@ def install() -> int:
     marker = "# installed by tools/derivations/open_items/scribe_scan.py --install"
     if target.exists() and marker not in target.read_text(encoding="utf-8"):
         print(
-            f'{target} exists and is not the Scribe\'s: chain `python {Path(__file__).resolve()} --hook "$@"` into it by hand'
+            f'{target} exists and is not Sofer\'s: chain `python {Path(__file__).resolve()} --hook "$@"` into it by hand'
         )
         return 2
     python = REPO / "venv314" / "bin" / "python"
@@ -703,7 +725,7 @@ def install() -> int:
     )
     target.chmod(0o755)
     print(
-        f"installed {target}: a push that raises a count of the Scribe's rules is refused (git push --no-verify goes round it, and is reported)"
+        f"installed {target}: a push that raises a count of Sofer's rules is refused (git push --no-verify goes round it, and is reported)"
     )
     return 0
 

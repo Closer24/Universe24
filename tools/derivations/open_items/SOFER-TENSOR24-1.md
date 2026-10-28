@@ -25,12 +25,13 @@ The plan is the Boss's file tools/derivations/open_items/TENSOR24.md. The owner 
 
 ## The owner's list for 08:30 UTC (10:30 Israel time), with Sofer's recommendations
 
-1. The law the 24 exactly with one one-hand coupling, or the 48 (Animate's reading, which the owner called a beautiful solution; the Boss recommends it): yes, and the law's last line stands as written. This replaces Sofer's earlier "held".
+1. The law the 24 exactly (the cube's 24 rotations) with one one-hand coupling, or the 48 (those 24 rotations and their 24 mirror images): Animate's reading, which the owner called a beautiful solution and the Boss recommends, yes, and the law's last line stands as written; the 48 stays as a test only (checked, ledger row 314), not as law and not as kinds.
 2. The law's clause: its one word, pseudoscalar for the A2 kind (A2 is the sign of x y z; the word is the twist's kind in the 48): A2.
 3. The fair draw's push, held: push it right after the plan closes with him.
-4. The Bell click's form, bell_turn as a function or a detector hand's gear by Rule3's carry: the gear.
+4. The Bell click's form: not a function (the owner, 06:4x: "A function is forbidden; maybe a complex number solves it. In any case let it be part of Tensor24"); David derives it with the twins (the Boss's open items (a) and (d)); the final form is his word, and Sofer's recommendation stands: a detector hand's gear, a Gaussian pair, by Rule3's carry.
 5. The bang's seed.
 6. A twin family in the bang's universe (without one there is no split click, so no Born and no Bell in the one bang).
 7. The price of the 24: the light's cycle setting fits nothing (CS5-S2), the hole's chimes fall (ledger rows 296 and 299).
 8. A required status check on engine-5.0-test at the server.
+8a. The loop rule as a refusal: Sofer's gate counts loops from 06:5x as a note (engine modules only, 367 at 526a5666d); a refusal that a push may not raise, and 0 in the machine at the end: yes.
 9. Later, when derived and checked: the main formula as law (cut 0).

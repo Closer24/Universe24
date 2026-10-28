@@ -7,7 +7,7 @@ index 40ed0873d..49ae00ba1 100644
      ["tools/tests_shape.py"],
      ["tools/documents_gates.py"],
 +    # the owner's rules of 2026-10-28 (no circularity that makes a phenomenon happen, no state beyond the Node-clock,
-+    # no typed table, no number, whole numbers only): the Scribe's gate refuses a push that raises a count of its rules
++    # no typed table, no number, whole numbers only): Sofer's gate refuses a push that raises a count of its rules
 +    ["tools/derivations/open_items/scribe_scan.py"],
  ]
  

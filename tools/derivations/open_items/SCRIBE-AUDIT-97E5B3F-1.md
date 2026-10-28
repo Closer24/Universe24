@@ -1,6 +1,6 @@
 # The read of every src file under the owner's five rules, at 97e5b3fd6
 
-The owner's order of 2026-10-28, 04:3x UTC: "Read all the code, make sure there is no number and only operations on integers, without cosine, sine or circularity that makes phenomena happen. When you find violations, update the Boss that there is a violation, and me; we do not change postulates or laws without my approval." A subagent read each of the 36 modules of src/event_universe whole (6,918 lines, the engine head 97e5b3fd6, nothing edited, no test run), and the Scribe verified its counts against the tree with tools/derivations/open_items/scribe_scan.py and an AST pass; what the Scribe verified is marked **checked**, what rests on the subagent's reading alone **read**. The head has since moved to 42d5448b7 (the one mirror, one new module phase.py): the gate's counts at it stand in SCRIBE-GATE-1.md.
+The owner's order of 2026-10-28, 04:3x UTC: "Read all the code, make sure there is no number and only operations on integers, without cosine, sine or circularity that makes phenomena happen. When you find violations, update the Boss that there is a violation, and me; we do not change postulates or laws without my approval." A subagent read each of the 36 modules of src/event_universe whole (6,918 lines, the engine head 97e5b3fd6, nothing edited, no test run), and Sofer verified its counts against the tree with tools/derivations/open_items/scribe_scan.py and an AST pass; what Sofer verified is marked **checked**, what rests on the subagent's reading alone **read**. The head has since moved to 42d5448b7 (the one mirror, one new module phase.py): the gate's counts at it stand in SCRIBE-GATE-1.md.
 
 ## The five rules and the counts, checked
 
@@ -23,7 +23,7 @@ The readers read a finished chart and produce nothing, yet several verdicts cann
 - symmetries.py rows 71, 72 and 73, strikes.py and predicates.py rows 15 and 47 test identities that hold by the algebra of the books' slack (`taken + remainder_was - remainder == booked`), so they cannot fail; the CPT row holds identically (read).
 - gates.py row 25: entropy as a sum of bit lengths, never falls (read); great_clock.py row 5 compares two coded sums, a lift and the load pull 2 sqrt(X / Gamma) (read); predicates.py confinement tests against a typed third of the charge (read).
 
-## Where a phenomenon is made by a formula that holds it (read, the Scribe re-read E1, E3, E5, E8 and E19)
+## Where a phenomenon is made by a formula that holds it (read, Sofer re-read E1, E3, E5, E8 and E19)
 
 | | where | what |
 | --- | --- | --- |
@@ -49,7 +49,7 @@ The readers read a finished chart and produce nothing, yet several verdicts cann
 
 ## For the Boss and the owner
 
-The departures are the gate's baseline (scribe_scan_baseline.json, 209 hits at 42d5448b7) and the register's R5; the Scribe's recommendation stands (ledger row 294): the pair's three integers and the setting's weights and angle digits as data in the universe and setting files, so that the engine computes no sine and no root; the formulas that hold a phenomenon (E1, E3, E5, E8, E19 above all) are the owner's to weigh against the law **No circularity that makes a phenomenon happen**; no postulate or law is changed by this read.
+The departures are the gate's baseline (scribe_scan_baseline.json, 576 hits at 526a5666d, 152 of them blocking) and the register's R5; Sofer's recommendation stands (ledger row 294): the pair's three integers and the setting's weights and angle digits as data in the universe and setting files, so that the engine computes no sine and no root; the formulas that hold a phenomenon (E1, E3, E5, E8, E19 above all) are the owner's to weigh against the law **No circularity that makes a phenomenon happen**; no postulate or law is changed by this read.
 
 ## Not read
 
