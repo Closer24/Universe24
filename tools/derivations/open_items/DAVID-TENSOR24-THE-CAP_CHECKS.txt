@@ -4,6 +4,8 @@ import the engine read-only for den's circle (rates.sine_rim), the head's gearin
 rerun by David on toys-5 with its own src, each output identical to the helper's; c1, c2, c3 and c5 also run with the argument
 'mutants', and every mutant fails as it must. Then David's own check of the junctions carried at a fixed width (junctions.py).
 Then the helper's draft with its proofs in full, and the sources. Integers and exact fractions only; no float.
+At the end, the second hand: an independent exact probe written from the claims alone, with its guard (rerun by David,
+identical): 51 checks, 0 failures, 23 mutants failing as they must.
 
 == venv314/bin/python -I c1_clock.py src ==
 1. The Spoke's two senses: P_a^+- = (1 +- sigma_a) / 2
@@ -3252,3 +3254,1569 @@ for name, coefs in found.items():
         if not (x == xy[0] and y == xy[1]): mut_ok += 1
 print(f"mutant (undo in the wrong order): {mut_ok} of {200 * len(found)} states not returned")
 print("RESULT:", "0 failures" if fails == 0 else f"{fails} failures")
+
+== the second hand: venv314/bin/python -I probe.py (rerun by David, identical) ==
+=== claim 1: W_a unitary, symbol exp(-ik sigma_a); M, U unitary ===
+[1] symbol W_a(k) = cos k - i s_a sin k, unitary, det 1 (rational k): 60 of 60 
+[1] sigma_a^2 = 1 (so cos k - i sigma_a sin k = exp(-i k sigma_a)): 3 of 3 
+[1] W_a unitary as operators (rings 8,12,16 on each axis, tori 3^3, 4^3): 21 of 21 
+[1] M unitary for (3,4,5),(20,21,29),(119,120,169),(5,12,13),(8,15,17): 5 of 5 
+[1] U_L, U_R, U = M(U_L+U_R) unitary on rings 8,12,16 and tori 3^3, 4^3: 19 of 19 
+[1] operator stencil on 3^3 reproduces the symbols U_L(k), U_R(k), U(k) (9 sites x 6 k): 162 of 162 
+[1 MUTANT] both senses moving alike (P+ T+ + P- T+): symbol != exp(-ik sigma_a): fails at 18 of 18 
+[1 MUTANT] coin off den's circle (3,4,6),(1,1,1),(20,21,30): M not unitary: fails at 3 of 3 
+[1 MUTANT] pair U with the off-circle coin on 3^3: not unitary: fails at 1 of 1 
+=== claim 2: Q_a sigma_z Q_a^dag = sigma_a; W_a = Q_a S_a Q_a^dag ===
+[2] Q_a unitary and Q_a sigma_z Q_a^dag = sigma_a: 3 of 3 
+[2] W_a = Q_a S_a Q_a^dag as operators (3^3, 4^3, ring 8): 9 of 9 
+[2] symbol Q_a diag(e^-ik, e^ik) Q_a^dag = W_a(k): 60 of 60 
+[2 MUTANT] Q_y with columns swapped / Q_x with sign moved: fails at 2 of 2 
+=== claim 3: unitary 2x2 Gaussian-integer matrices are monomial ===
+[3] all 390625 matrices with parts in [-2,2]: unitary ones (32) are monomial: 32 of 32 
+    norm-1 columns: 8 (entries of norm >= 2 cannot occur in a unit column)
+[3 MUTANT] entries over (1+i): unitary but not monomial (Q_x-like): fails at 64 of 6561 
+=== claim 4: ring beat cos w = c cos k; head relation; k=0 ===
+[4] pair on an axis: charpoly U(k) = (x^2 - 2 c cos k x + 1)^2, 5 coins x 3 axes x 20 k: 300 of 300 
+[4] ring of 4 on each axis: plane waves are eigen-images of the symbol: 48 of 48 
+[4] along an axis: cos w_head - c = (cos w_walk - c)/3: 100 of 100 
+[4] k = 0: cos w0 = pinion/den for walk and head: 5 of 5 
+[4 MUTANT] R := L without the phase reversal: ring beat != c cos k: fails at 12 of 12 
+[4 MUTANT] head relation without the 1/3: fails at 6 of 6 
+=== claim 5: Weyl beat cxcycz + sxsysz; 12 of 24; pair keeps 24 + inversion ===
+[5] Tr U_L(k)/2 = cx cy cz + sx sy sz, det 1 (rational k): 1748 of 1748 
+[5] pair charpoly = x^4 - e1 x^3 + e2 x^2 - e1 x + 1, e1 = 4cC, e2 from C, S^2, P2 only: 1749 of 1749 
+    generic k points for the rotation test: 30
+[5] one Weyl field: proper rotations keeping its beat is exactly 12 (found 12 of 24): 1 of 1 (of all 48 signed perms: 24 keep; inversion keeps: False)
+[5] Dirac pair: proper rotations keeping its beat (charpoly): 24 of 24 (inversion keeps: True)
+[5] Dirac pair (20,21,29): all 48 signed permutations keep the beat: 48 of 48 
+[5 MUTANT] R := L without the phase reversal: proper rotations lost: fails at 12 of 24 
+=== claim 6: the 24 permute the three sub-acts ===
+    matrix group order 96 ; scalars in it: 4 ; order mod sign: 48 ; distinct rotations: 24
+[6] group <diag(1,i), Q_x>: distinct rotations that are proper signed permutations: 24 of 24 (group order 96, scalars 4)
+[6] Lam W_a Lam^dag = W_pi(a) on 3^3 for every lift with its own rotation: 24 of 24 (permutations realised: 6 of 6)
+[6 MUTANT] lift paired with the lattice rotation composed with inversion: fails at 24 of 24 
+=== claims 7 & 9: the family tensor (integer form R/lam) ===
+[7] ring 8, pair, (3,4,5): 60 ticks, laid 7 (refused 1, negative free size 0); rho^2=rho: 61 of 61 
+[7] ring 8, pair, (3,4,5): Tr = N: 61 of 61 
+[7] ring 8, pair, (3,4,5): cap (minors of R_xx and lam - R_xx >= 0), site-ticks: 488 of 488 (Hermitian: True; tensor = hands stepped alone: True; lam bits 320)
+[7] ring 12, pair, (20,21,29): 40 ticks, laid 6 (refused 1, negative free size 0); rho^2=rho: 41 of 41 
+[7] ring 12, pair, (20,21,29): Tr = N: 41 of 41 
+[7] ring 12, pair, (20,21,29): cap (minors of R_xx and lam - R_xx >= 0), site-ticks: 492 of 492 (Hermitian: True; tensor = hands stepped alone: True; lam bits 474)
+[7] ring 8, one Weyl field: 40 ticks, laid 5 (refused 1, negative free size 0); rho^2=rho: 41 of 41 
+[7] ring 8, one Weyl field: Tr = N: 41 of 41 
+[7] ring 8, one Weyl field: cap (minors of R_xx and lam - R_xx >= 0), site-ticks: 328 of 328 (Hermitian: True; tensor = hands stepped alone: True; lam bits 3)
+[7] 3^3, one Weyl field: 10 ticks, laid 5 (refused 1, negative free size 0); rho^2=rho: 6 of 6 
+[7] 3^3, one Weyl field: Tr = N: 11 of 11 
+[7] 3^3, one Weyl field: cap (minors of R_xx and lam - R_xx >= 0), site-ticks: 297 of 297 (Hermitian: True; tensor = hands stepped alone: True; lam bits 48)
+[7] 3^3, pair, (3,4,5): 3 ticks, laid 5 (refused 1, negative free size 0); rho^2=rho: 2 of 2 
+[7] 3^3, pair, (3,4,5): Tr = N: 4 of 4 
+[7] 3^3, pair, (3,4,5): cap (minors of R_xx and lam - R_xx >= 0), site-ticks: 108 of 108 (Hermitian: True; tensor = hands stepped alone: True; lam bits 35)
+[7] free size F = 0 exactly when Q chi = 0 (range newcomers refused), F >= 0: 30 of 30 
+--- mutants on the tensor (claims 7, 9) ---
+[7 MUTANT] symmetric lay on matter: rho^2 = rho: fails at 31 of 31 
+[9 MUTANT] symmetric lay on matter: cap, site-ticks: fails at 17 of 248 
+    symmetric lay of the same state twice: rho_00 = 2 (eigenvalue 2)
+[7 MUTANT] lay without its denominator (rho + Q chi chi^dag Q): rho^2 = rho: fails at 11 of 11 
+[7 MUTANT] lay without its denominator: Tr = N: fails at 11 of 11 
+[9 MUTANT] Feynman checkerboard coin (straight 1, corner -4i/5): cap, site-ticks: fails at 116 of 248 (trace kept 1 of 31; lays with negative free size 1)
+[9 MUTANT] coin off den's circle, contracting (3,4,6): rho^2 = rho: fails at 30 of 31 (cap broken at 0 of 248 site-ticks: a shrinking coin keeps rho <= 1)
+[9 MUTANT] coin off den's circle, expanding (4,4,5): cap, site-ticks: fails at 107 of 248 (rho^2=rho kept 1 of 31)
+[9] force carriers: three in one state read (Tr rho, Tr rho^2, Tr rho^3) = (3, 9, 27): 1 of 1 (Fraction(3, 1), Fraction(9, 1), Fraction(27, 1))
+[9] force carriers on ring 8 stack: local occupation above 1 at 38 of 248 site-ticks: 1 of 1 
+[9] two boson pairs, same tensor before the lay; occupation of state 1 after laying e1 = (2, 5/2): 1 of 1 (2, 5/2)
+[9 MUTANT] tensor carries the bosons' state (same tensor -> same occupation): fails at 1 of 1 
+=== claim 8: Lagrange and Cauchy-Binet ===
+[8] Lagrange: chi^dag(1 - phi phi^dag/|phi|^2)chi = N(det[phi,chi])/|phi|^2: 3000 of 3000 
+[8 MUTANT] Lagrange with |phi|^4 in the denominator: fails at 2997 of 3000 
+[8] Cauchy-Binet: det(SUM v v^dag/n) = SUM_{k<l} N(det[v_k,v_l])/(n_k n_l), random: 1500 of 1500 
+[8 MUTANT] Cauchy-Binet with det^2 in place of N(det): fails at 1487 of 1500 
+[8] det rho_xx = SUM_{k<l} N(det[phi_k(x),phi_l(x)])/(n_k n_l) on the stepped 3^3 hands, every site: 27 of 27 (hands orthogonal: True)
+=== claim 10: locality ===
+[10] tensor step, coin changed only at site 8: entries of rows at site 0 that change (of 64 each): 1 of 1 per row [4, 4, 4, 4], columns at sites [8]
+[10] one hand per quantum: the far coin changes the hands only at its own site: 1 of 1 sites changed: [8]
+[10 MUTANT] hypothesis "row 0 of the tensor step reads only coins within one Mesh": fails at 1 of 1 
+[10] pair ring 16, lay at site 0 on a spread state (laid): rows beyond one Mesh that change: 28 of 52 (sites [2, 4, 6, 8, 10, 12, 14]): 1 of 1 
+[10] Weyl ring 16, lay at site 0 on a spread state (laid): rows beyond one Mesh that change: 6 of 26: 1 of 1 
+[10 MUTANT] hypothesis "the lay writes only within one Mesh": fails at 1 of 1 
+=== claim 11: junctions as unit phase x three shears; carried rewinds ===
+    Qx^dag -> ((0, -1), 'left', (Fraction(1, 1), Fraction(0, 1)), (Fraction(-1, 2), Fraction(-1, 2)), (Fraction(0, 1), Fraction(-1, 1)))
+    Qy^dag Qx -> ((0, 1), 'left', (Fraction(0, 1), Fraction(1, 1)), (Fraction(-1, 2), Fraction(1, 2)), (Fraction(1, 1), Fraction(0, 1)))
+    Qy -> ((1, 0), 'left', (Fraction(1, 1), Fraction(0, 1)), (Fraction(-1, 2), Fraction(1, 2)), (Fraction(0, 1), Fraction(1, 1)))
+[11] junction = diag(1,u)^-1 x [[1,p],[0,1]][[1,0],[c,1]][[1,q],[0,1]], p,q units, c = (+-1+-i)/2: 3 of 3 
+[11] carried junctions undone exactly (states with parts in [-4,4]^4, 3 junctions): 19683 of 19683 (norm moved at 8400 of 19683; max |carried - exact|^2 = 1)
+[11 MUTANT] shears undone in the wrong order: fails at 19677 of 19683 
+[11] exact junction-and-shift tick S_z Q_y S_y (Q_y^dag Q_x) S_x Q_x^dag = U_L on 3^3: 1 of 1 
+[11] carried Weyl tick on 3^3, 30 ticks there and back at parts ~1e6: bit for bit: 4 of 4 (width stays <= 22 bits; worst relative norm drift 4705 e-9)
+[11 MUTANT] carried tick rewound with the shears in the wrong order (1 tick): fails at 1 of 1 
+=== guard: 222 result leaves exact; source scan clean ===
+=== SUMMARY ===
+checks 51 (not-all 0), mutants 23 (survived 0); time 46 s
+
+== probe.py (the second hand, written from the claims alone) ==
+"""Second-hand probe for DAVID-TENSOR24-THE-CAP.md, claims 1-11, written from the claims only.
+Exact: int and Fraction; Gaussian numbers are pairs. guard.scan refuses floats in this source."""
+import sys
+import itertools
+import time
+from fractions import Fraction as Fr
+HERE = '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/cap2'
+sys.path.insert(0, HERE)
+import guard
+from guard import ex, deep, fdiv, gcd
+
+_bad = guard.scan(__file__)
+if _bad:
+    print('GUARD refuses this source:', _bad)
+    sys.exit(2)
+T0 = time.monotonic_ns()
+TAB = []
+MUT = []
+
+
+def rec(claim, what, ok, tot, note=''):
+    TAB.append((claim, what, ok, tot, note))
+    flag = '' if ok == tot else '   <-- NOT ALL'
+    print('[%s] %s: %d of %d %s%s' % (claim, what, ok, tot, note, flag), flush=True)
+
+
+def mut(claim, what, caught, tot, note=''):
+    MUT.append((claim, what, caught, tot, note))
+    flag = '' if caught > 0 else '   <-- MUTANT SURVIVED'
+    print('[%s MUTANT] %s: fails at %d of %d %s%s' % (claim, what, caught, tot, note, flag), flush=True)
+
+
+def info(*a):
+    print('    ' + ' '.join(str(x) for x in a), flush=True)
+
+
+# ---------------- Gaussian arithmetic (pairs) ----------------
+Z = (0, 0)
+ONE = (1, 0)
+II = (0, 1)
+MI = (0, -1)
+M1 = (-1, 0)
+UNITS = [ONE, II, M1, MI]
+
+
+def add(x, y): return (x[0] + y[0], x[1] + y[1])
+def sub(x, y): return (x[0] - y[0], x[1] - y[1])
+def mul(x, y): return (x[0] * y[0] - x[1] * y[1], x[0] * y[1] + x[1] * y[0])
+def cj(x): return (x[0], -x[1])
+def nrm(x): return x[0] * x[0] + x[1] * x[1]
+def neg(x): return (-x[0], -x[1])
+def rs(r, x): return (r * x[0], r * x[1])
+def isz(x): return x[0] == 0 and x[1] == 0
+
+
+def gdiv(x, y):
+    n = nrm(y)
+    z = mul(x, cj(y))
+    return (fdiv(z[0], n), fdiv(z[1], n))
+
+
+def gsum(it):
+    a = 0
+    b = 0
+    for x in it:
+        a += x[0]
+        b += x[1]
+    return (a, b)
+
+
+def mm(A, B): return [[gsum(mul(A[i][t], B[t][j]) for t in range(len(B))) for j in range(len(B[0]))] for i in range(len(A))]
+def dag(A): return [[cj(A[j][i]) for j in range(len(A))] for i in range(len(A[0]))]
+def mconj(A): return [[cj(v) for v in r] for r in A]
+def eye(n): return [[ONE if i == j else Z for j in range(n)] for i in range(n)]
+def zer(n): return [[Z] * n for _ in range(n)]
+def madd(A, B): return [[add(A[i][j], B[i][j]) for j in range(len(A[0]))] for i in range(len(A))]
+def msub(A, B): return [[sub(A[i][j], B[i][j]) for j in range(len(A[0]))] for i in range(len(A))]
+def msc(g, A): return [[mul(g, v) for v in r] for r in A]
+def meq(A, B): return all(A[i][j] == B[i][j] for i in range(len(A)) for j in range(len(A[0])))
+def tr(A): return gsum(A[i][i] for i in range(len(A)))
+
+
+def charpoly(A):
+    """Faddeev-LeVerrier: coefficients c[0..n] of det(lam - A) = sum c_k lam^k."""
+    n = len(A)
+    c = [Z] * (n + 1)
+    c[n] = ONE
+    Mk = zer(n)
+    for k in range(1, n + 1):
+        Mk = madd(mm(A, Mk), msc(c[n - k + 1], eye(n)))
+        t = tr(mm(A, Mk))
+        c[n - k] = (fdiv(-t[0], k), fdiv(-t[1], k))
+    return c
+
+
+def gdet(A):
+    k = len(A)
+    if k == 0:
+        return ONE
+    if k == 1:
+        return A[0][0]
+    s = Z
+    for j in range(k):
+        if isz(A[0][j]):
+            continue
+        minor = [[A[i][l] for l in range(k) if l != j] for i in range(1, k)]
+        term = mul(A[0][j], gdet(minor))
+        s = add(s, term) if j % 2 == 0 else sub(s, term)
+    return s
+
+
+def unitary(A): return meq(mm(dag(A), A), eye(len(A)))
+
+
+SX = [[Z, ONE], [ONE, Z]]
+SY = [[Z, MI], [II, Z]]
+SZ = [[ONE, Z], [Z, M1]]
+SIG = [SX, SY, SZ]
+H = Fr(1, 2)
+def Pp(a): return [[rs(H, add(eye(2)[i][j], SIG[a][i][j])) for j in range(2)] for i in range(2)]
+def Pm(a): return [[rs(H, sub(eye(2)[i][j], SIG[a][i][j])) for j in range(2)] for i in range(2)]
+
+
+INV1MI = (Fr(1, 2), Fr(1, 2))   # 1/(1-i) = (1+i)/2
+QX = msc(INV1MI, [[ONE, ONE], [ONE, M1]])
+QY = msc(INV1MI, [[ONE, ONE], [II, MI]])
+QZ = eye(2)
+QS = [QX, QY, QZ]
+
+TRIPLES = [(3, 4, 5), (20, 21, 29), (119, 120, 169), (5, 12, 13), (8, 15, 17)]
+
+
+def Mcoin(p, s, den):
+    a = (Fr(p, den), 0)
+    b = (0, Fr(-s, den))
+    return [[a, b], [b, a]]
+
+
+# rational points on the circle: e = e^{ik} = (cos k, sin k)
+CIRC = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+for (m_, n_) in [(2, 1), (3, 2), (4, 1), (5, 2), (4, 3), (5, 4), (7, 2), (6, 5)]:
+    d_ = m_ * m_ + n_ * n_
+    c_ = Fr(m_ * m_ - n_ * n_, d_)
+    s_ = Fr(2 * m_ * n_, d_)
+    CIRC += [(c_, s_), (-s_, c_)]
+CIRC_GEN = [e for e in CIRC if e[0] != 0 and e[1] != 0]
+assert all(e[0] * e[0] + e[1] * e[1] == 1 for e in CIRC)
+
+
+def Wk(a, e):   # symbol of W_a: T_+a -> e^{-ik}, T_-a -> e^{ik}
+    return madd(msc(cj(e), Pp(a)), msc(e, Pm(a)))
+
+
+def Wk_formula(a, e):   # cos k - i sigma_a sin k
+    return madd(msc((e[0], 0), eye(2)), msc((0, -e[1]), SIG[a]))
+
+
+def ULk(es): return mm(Wk(2, es[2]), mm(Wk(1, es[1]), Wk(0, es[0])))
+def URk(es): return mm(SY, mm(mconj(ULk([cj(e) for e in es])), SY))   # sigma_y conj(U_L(-k)) sigma_y
+
+
+def pairk(es, M, ULf=ULk, URf=URk):
+    A = ULf(es)
+    B = URf(es)
+    out = zer(4)
+    for i in range(2):
+        for j in range(2):
+            out[i][j] = mul(M[0][0], A[i][j])
+            out[i][j + 2] = mul(M[0][1], B[i][j])
+            out[i + 2][j] = mul(M[1][0], A[i][j])
+            out[i + 2][j + 2] = mul(M[1][1], B[i][j])
+    return out
+
+
+# ---------------- lattice operators (sparse) ----------------
+E3 = [(1, 0, 0), (0, 1, 0), (0, 0, 1)]
+
+
+def sites(Ls): return list(itertools.product(range(Ls[0]), range(Ls[1]), range(Ls[2])))
+def sidx(x, Ls): return ((x[0] % Ls[0]) * Ls[1] + (x[1] % Ls[1])) * Ls[2] + (x[2] % Ls[2])
+
+
+def coord(i, Ls):
+    z = i % Ls[2]
+    i //= Ls[2]
+    y = i % Ls[1]
+    return (i // Ls[1], y, z)
+
+
+def nsites(Ls): return Ls[0] * Ls[1] * Ls[2]
+
+
+def clean(row): return {k: v for k, v in row.items() if not isz(v)}
+
+
+def W_op(a, Ls, PP=None, PM=None, both_plus=False):
+    PP = PP or Pp(a)
+    PM = PM or Pm(a)
+    op = {}
+    for x in sites(Ls):
+        xi = sidx(x, Ls)
+        xm = tuple(x[i] - E3[a][i] for i in range(3))
+        xp = tuple(x[i] + E3[a][i] for i in range(3))
+        if both_plus:
+            xp = xm
+        for al in range(2):
+            row = {}
+            for be in range(2):
+                for (y, P) in ((xm, PP), (xp, PM)):
+                    v = P[al][be]
+                    if not isz(v):
+                        col = sidx(y, Ls) * 2 + be
+                        row[col] = add(row.get(col, Z), v)
+            op[xi * 2 + al] = clean(row)
+    return op
+
+
+def S_op(a, Ls):   # up moves +a, down moves -a
+    op = {}
+    for x in sites(Ls):
+        xi = sidx(x, Ls)
+        xm = tuple(x[i] - E3[a][i] for i in range(3))
+        xp = tuple(x[i] + E3[a][i] for i in range(3))
+        op[xi * 2] = {sidx(xm, Ls) * 2: ONE}
+        op[xi * 2 + 1] = {sidx(xp, Ls) * 2 + 1: ONE}
+    return op
+
+
+def site_op(Ls, mat):
+    m = len(mat)
+    op = {}
+    for xi in range(nsites(Ls)):
+        for al in range(m):
+            op[xi * m + al] = clean({xi * m + be: mat[al][be] for be in range(m)})
+    return op
+
+
+def spmul(A, B):
+    C = {}
+    for r, row in A.items():
+        acc = {}
+        for k, v in row.items():
+            br = B.get(k)
+            if br:
+                for c, w in br.items():
+                    p = mul(v, w)
+                    acc[c] = add(acc[c], p) if c in acc else p
+        C[r] = clean(acc)
+    return C
+
+
+def spdag(A, n):
+    C = {r: {} for r in range(n)}
+    for r, row in A.items():
+        for c, v in row.items():
+            C[c][r] = cj(v)
+    return C
+
+
+def spconj(A): return {r: {c: cj(v) for c, v in row.items()} for r, row in A.items()}
+def speq(A, B, n): return all(clean(A.get(r, {})) == clean(B.get(r, {})) for r in range(n))
+def spid(n): return {r: {r: ONE} for r in range(n)}
+def spunitary(A, n): return speq(spmul(spdag(A, n), A), spid(n), n)
+
+
+def UL_op(Ls):
+    return spmul(W_op(2, Ls), spmul(W_op(1, Ls), W_op(0, Ls)))
+
+
+def UR_from(UL, Ls):
+    sy = site_op(Ls, SY)
+    return spmul(sy, spmul(spconj(UL), sy))
+
+
+def pair_op(UL, UR, Ls, coin):
+    """coin(xi) -> 2x2 [[a,b],[b',a']] on (L,R); U = M (U_L (+) U_R)."""
+    U = {}
+    for r2 in range(2 * nsites(Ls)):
+        xi, al = divmod(r2, 2)
+        M = coin(xi)
+        rowL = {}
+        rowR = {}
+        for c2, v in UL[r2].items():
+            yi, be = divmod(c2, 2)
+            rowL[yi * 4 + be] = mul(M[0][0], v)
+            rowR[yi * 4 + be] = mul(M[1][0], v)
+        for c2, v in UR[r2].items():
+            yi, be = divmod(c2, 2)
+            rowL[yi * 4 + 2 + be] = mul(M[0][1], v)
+            rowR[yi * 4 + 2 + be] = mul(M[1][1], v)
+        U[xi * 4 + al] = clean(rowL)
+        U[xi * 4 + 2 + al] = clean(rowR)
+    return U
+
+
+def stencil_symbol(op, Ls, m, xc, es):
+    xi = sidx(xc, Ls)
+    out = zer(m)
+    for al in range(m):
+        for col, v in op[xi * m + al].items():
+            yi, be = divmod(col, m)
+            y = coord(yi, Ls)
+            ph = ONE
+            for i in range(3):
+                s = (xc[i] - y[i]) % Ls[i]
+                if Ls[i] == 1:
+                    s = 0
+                elif s == Ls[i] - 1:
+                    s = -1
+                elif s > 1:
+                    raise ValueError('stencil too wide')
+                if s == 1:
+                    ph = mul(ph, cj(es[i]))
+                elif s == -1:
+                    ph = mul(ph, es[i])
+            out[al][be] = add(out[al][be], mul(v, ph))
+    return out
+
+
+print('=== claim 1: W_a unitary, symbol exp(-ik sigma_a); M, U unitary ===', flush=True)
+ok = tot = 0
+for a in range(3):
+    for e in CIRC:
+        tot += 1
+        A = Wk(a, e)
+        ok += meq(A, Wk_formula(a, e)) and unitary(A) and gdet(A) == ONE
+rec(1, 'symbol W_a(k) = cos k - i s_a sin k, unitary, det 1 (rational k)', ok, tot)
+ok = tot = 0
+for a in range(3):
+    tot += 1
+    ok += meq(mm(SIG[a], SIG[a]), eye(2))
+rec(1, 'sigma_a^2 = 1 (so cos k - i sigma_a sin k = exp(-i k sigma_a))', ok, tot)
+ok = tot = 0
+for Ls in [(8, 1, 1), (12, 1, 1), (16, 1, 1), (1, 12, 1), (1, 1, 8), (3, 3, 3), (4, 4, 4)]:
+    n2 = 2 * nsites(Ls)
+    for a in range(3):
+        tot += 1
+        ok += spunitary(W_op(a, Ls), n2)
+rec(1, 'W_a unitary as operators (rings 8,12,16 on each axis, tori 3^3, 4^3)', ok, tot)
+ok = tot = 0
+for t in TRIPLES:
+    tot += 1
+    ok += unitary(Mcoin(*t))
+rec(1, 'M unitary for (3,4,5),(20,21,29),(119,120,169),(5,12,13),(8,15,17)', ok, tot)
+ok = tot = 0
+OPS = {}
+for Ls in [(8, 1, 1), (12, 1, 1), (16, 1, 1), (3, 3, 3), (4, 4, 4)]:
+    UL = UL_op(Ls)
+    UR = UR_from(UL, Ls)
+    n2 = 2 * nsites(Ls)
+    tot += 2
+    ok += spunitary(UL, n2) + spunitary(UR, n2)
+    for t in (TRIPLES[:2] if Ls != (4, 4, 4) else TRIPLES[:1]):
+        Mc = Mcoin(*t)
+        U = pair_op(UL, UR, Ls, lambda xi: Mc)
+        tot += 1
+        ok += spunitary(U, 4 * nsites(Ls))
+        OPS[(Ls, t)] = U
+    OPS[(Ls, 'UL')] = UL
+    OPS[(Ls, 'UR')] = UR
+rec(1, 'U_L, U_R, U = M(U_L+U_R) unitary on rings 8,12,16 and tori 3^3, 4^3', ok, tot)
+# operator <-> symbol via the stencil, every site, rational k
+ok = tot = 0
+Ls = (3, 3, 3)
+pts = [(CIRC_GEN[i], CIRC_GEN[(3 * i + 1) % len(CIRC_GEN)], CIRC_GEN[(5 * i + 2) % len(CIRC_GEN)]) for i in range(12)]
+for xc in sites(Ls)[:9]:
+    for es in pts[:6]:
+        tot += 3
+        ok += meq(stencil_symbol(OPS[(Ls, 'UL')], Ls, 2, xc, es), ULk(es))
+        ok += meq(stencil_symbol(OPS[(Ls, 'UR')], Ls, 2, xc, es), URk(es))
+        ok += meq(stencil_symbol(OPS[(Ls, (3, 4, 5))], Ls, 4, xc, es), pairk(es, Mcoin(3, 4, 5)))
+rec(1, 'operator stencil on 3^3 reproduces the symbols U_L(k), U_R(k), U(k) (9 sites x 6 k)', ok, tot)
+# mutants
+bad = 0
+tot = 0
+for a in range(3):
+    Wb = W_op(a, (8, 1, 1) if a == 0 else ((1, 8, 1) if a == 1 else (1, 1, 8)), both_plus=True)
+    for e in CIRC_GEN[:6]:
+        tot += 1
+        sym = madd(msc(cj(e), Pp(a)), msc(cj(e), Pm(a)))
+        bad += not meq(sym, Wk_formula(a, e))
+mut(1, 'both senses moving alike (P+ T+ + P- T+): symbol != exp(-ik sigma_a)', bad, tot)
+bad = 0
+for (p, s, den) in [(3, 4, 6), (1, 1, 1), (20, 21, 30)]:
+    bad += not unitary(Mcoin(p, s, den))
+mut(1, 'coin off den\'s circle (3,4,6),(1,1,1),(20,21,30): M not unitary', bad, 3)
+Ls = (3, 3, 3)
+Uoff = pair_op(OPS[(Ls, 'UL')], OPS[(Ls, 'UR')], Ls, lambda xi: Mcoin(3, 4, 6))
+mut(1, 'pair U with the off-circle coin on 3^3: not unitary', 1 - spunitary(Uoff, 108), 1)
+
+print('=== claim 2: Q_a sigma_z Q_a^dag = sigma_a; W_a = Q_a S_a Q_a^dag ===', flush=True)
+ok = 0
+for a in range(3):
+    ok += meq(mm(QS[a], mm(SZ, dag(QS[a]))), SIG[a]) and unitary(QS[a])
+rec(2, 'Q_a unitary and Q_a sigma_z Q_a^dag = sigma_a', ok, 3)
+ok = tot = 0
+for Ls in [(3, 3, 3), (4, 4, 4), (8, 1, 1)]:
+    n2 = 2 * nsites(Ls)
+    for a in range(3):
+        tot += 1
+        q = site_op(Ls, QS[a])
+        qd = site_op(Ls, dag(QS[a]))
+        ok += speq(spmul(q, spmul(S_op(a, Ls), qd)), W_op(a, Ls), n2)
+rec(2, 'W_a = Q_a S_a Q_a^dag as operators (3^3, 4^3, ring 8)', ok, tot)
+ok = tot = 0
+for a in range(3):
+    for e in CIRC:
+        tot += 1
+        ok += meq(mm(QS[a], mm([[cj(e), Z], [Z, e]], dag(QS[a]))), Wk(a, e))
+rec(2, 'symbol Q_a diag(e^-ik, e^ik) Q_a^dag = W_a(k)', ok, tot)
+QYbad = [[QY[0][1], QY[0][0]], [QY[1][1], QY[1][0]]]
+QXbad = msc(INV1MI, [[ONE, ONE], [M1, ONE]])
+bad = (not meq(mm(QYbad, mm(SZ, dag(QYbad))), SY)) + (not meq(mm(QXbad, mm(SZ, dag(QXbad))), SX))
+mut(2, 'Q_y with columns swapped / Q_x with sign moved', bad, 2)
+
+print('=== claim 3: unitary 2x2 Gaussian-integer matrices are monomial ===', flush=True)
+B = 2
+cols = [((a, b), (c, d)) for a in range(-B, B + 1) for b in range(-B, B + 1) for c in range(-B, B + 1) for d in range(-B, B + 1)]
+nunit = nmono = 0
+unit_cols = [col for col in cols if nrm(col[0]) + nrm(col[1]) == 1]
+nchk = 0
+for c1 in cols:
+    n1 = nrm(c1[0]) + nrm(c1[1])
+    for c2 in cols:
+        nchk += 1
+        if n1 != 1:
+            continue
+        if nrm(c2[0]) + nrm(c2[1]) != 1:
+            continue
+        if not isz(add(mul(cj(c1[0]), c2[0]), mul(cj(c1[1]), c2[1]))):
+            continue
+        nunit += 1
+        mono = (isz(c1[0]) != isz(c1[1])) and (isz(c2[0]) != isz(c2[1]))
+        nmono += mono
+rec(3, 'all %d matrices with parts in [-2,2]: unitary ones (%d) are monomial' % (nchk, nunit), nmono, nunit)
+info('norm-1 columns:', len(unit_cols), '(entries of norm >= 2 cannot occur in a unit column)')
+# mutant: allow denominators (1+i): entries in Z[i]/(1+i)
+cnt = 0
+h2 = INV1MI
+vals = [mul(h2, (a, b)) for a in range(-1, 2) for b in range(-1, 2)]
+for e00, e01, e10, e11 in itertools.product(vals, repeat=4):
+    A = [[e00, e01], [e10, e11]]
+    if unitary(A) and not ((isz(e00) != isz(e10)) and (isz(e01) != isz(e11))):
+        cnt += 1
+mut(3, 'entries over (1+i): unitary but not monomial (Q_x-like)', cnt, 9 ** 4)
+
+print('=== claim 4: ring beat cos w = c cos k; head relation; k=0 ===', flush=True)
+ok = tot = 0
+for t in TRIPLES:
+    c = Fr(t[0], t[2])
+    Mc = Mcoin(*t)
+    for a in range(3):
+        for e in CIRC:
+            es = [ONE, ONE, ONE]
+            es[a] = e
+            cp = charpoly(pairk(es, Mc))
+            ck = c * e[0]
+            want = [ONE, (-4 * ck, 0), (2 + 4 * ck * ck, 0), (-4 * ck, 0), ONE]   # (x^2 - 2ck x + 1)^2, low to high
+            tot += 1
+            ok += cp == want
+rec(4, 'pair on an axis: charpoly U(k) = (x^2 - 2 c cos k x + 1)^2, 5 coins x 3 axes x %d k' % len(CIRC), ok, tot)
+# finite ring, plane waves exactly (N = 4, e^{ik} in {1,i,-1,-i})
+ok = tot = 0
+for a in range(3):
+    Ls = [1, 1, 1]
+    Ls[a] = 4
+    Ls = tuple(Ls)
+    UL = UL_op(Ls)
+    UR = UR_from(UL, Ls)
+    U = pair_op(UL, UR, Ls, lambda xi: Mcoin(3, 4, 5))
+    for j in range(4):
+        e = UNITS[j]
+        es = [ONE, ONE, ONE]
+        es[a] = e
+        Uk = pairk(es, Mcoin(3, 4, 5))
+        for comp in range(4):
+            v = [Z] * 16
+            for x in range(4):
+                ph = ONE
+                for _ in range(x):
+                    ph = mul(ph, e)
+                v[x * 4 + comp] = ph
+            Uv = [gsum(mul(w, v[cc]) for cc, w in U[r].items()) for r in range(16)]
+            want = [mul(v[(r // 4) * 4], Uk[r % 4][comp]) if True else Z for r in range(16)]
+            # want(x, al) = e^{ikx} U(k)[al][comp]
+            want = []
+            for r in range(16):
+                x, al = divmod(r, 4)
+                ph = ONE
+                for _ in range(x):
+                    ph = mul(ph, e)
+                want.append(mul(ph, Uk[al][comp]))
+            tot += 1
+            ok += Uv == want
+rec(4, 'ring of 4 on each axis: plane waves are eigen-images of the symbol', ok, tot)
+ok = tot = 0
+for t in TRIPLES:
+    c = Fr(t[0], t[2])
+    for e in CIRC:
+        tot += 1
+        head = c * (e[0] + 2) * Fr(1, 3)
+        walk = c * e[0]
+        ok += (head - c) * 3 == (walk - c)
+rec(4, 'along an axis: cos w_head - c = (cos w_walk - c)/3', ok, tot)
+ok = 0
+for t in TRIPLES:
+    c = Fr(t[0], t[2])
+    cp = charpoly(pairk([ONE, ONE, ONE], Mcoin(*t)))
+    ok += cp[3] == (-4 * c, 0) and c * Fr(3, 3) == c
+rec(4, 'k = 0: cos w0 = pinion/den for walk and head', ok, len(TRIPLES))
+bad = tot = 0
+for t in TRIPLES[:2]:
+    c = Fr(t[0], t[2])
+    Mc = Mcoin(*t)
+    for e in CIRC_GEN[:6]:
+        tot += 1
+        cp = charpoly(pairk([e, ONE, ONE], Mc, URf=ULk))
+        ck = c * e[0]
+        bad += cp != [ONE, (-4 * ck, 0), (2 + 4 * ck * ck, 0), (-4 * ck, 0), ONE]
+mut(4, 'R := L without the phase reversal: ring beat != c cos k', bad, tot)
+bad = 0
+for e in CIRC_GEN[:6]:
+    c = Fr(3, 5)
+    bad += (c * (e[0] + 2) * Fr(1, 3) - c) != (c * e[0] - c)
+mut(4, 'head relation without the 1/3', bad, 6)
+
+print('=== claim 5: Weyl beat cxcycz + sxsysz; 12 of 24; pair keeps 24 + inversion ===', flush=True)
+PERMS = list(itertools.permutations(range(3)))
+
+
+def psign(p):
+    s = 1
+    for i in range(3):
+        for j in range(i + 1, 3):
+            if p[i] > p[j]:
+                s = -s
+    return s
+
+
+ROTS = []
+for p in PERMS:
+    for eps in itertools.product((1, -1), repeat=3):
+        ROTS.append((p, eps, psign(p) * eps[0] * eps[1] * eps[2]))
+PROPER = [r for r in ROTS if r[2] == 1]
+
+
+def rot_k(r, es):
+    p, eps, _ = r
+    return [(es[p[i]][0], eps[i] * es[p[i]][1]) for i in range(3)]
+
+
+ok = tot = 0
+K3 = [(CIRC[i], CIRC[(7 * i + 3) % len(CIRC)], CIRC[(11 * i + 5) % len(CIRC)]) for i in range(len(CIRC))]
+K3 += [tuple(t) for t in itertools.product(CIRC[:12], repeat=3)]
+for es in K3:
+    V = ULk(es)
+    C = es[0][0] * es[1][0] * es[2][0]
+    S = es[0][1] * es[1][1] * es[2][1]
+    tot += 1
+    ok += tr(V) == (2 * (C + S), 0) and gdet(V) == ONE
+rec(5, 'Tr U_L(k)/2 = cx cy cz + sx sy sz, det 1 (rational k)', ok, tot)
+ok = tot = 0
+for t in TRIPLES[:3]:
+    p_, s_, den = t
+    c = Fr(p_, den)
+    Mc = Mcoin(*t)
+    for es in K3[::3]:
+        C = es[0][0] * es[1][0] * es[2][0]
+        S = es[0][1] * es[1][1] * es[2][1]
+        sq = [e[1] * e[1] for e in es]
+        P2 = sq[0] * sq[1] + sq[1] * sq[2] + sq[0] * sq[2]
+        e1 = 4 * c * C
+        t2 = fdiv(p_ * p_ * (8 * C * C + 8 * S * S - 4) - 4 * s_ * s_ * (1 - 2 * P2 + 4 * S * S), den * den)
+        e2 = fdiv(e1 * e1 - t2, 2)
+        cp = charpoly(pairk(es, Mc))
+        tot += 1
+        ok += cp == [ONE, (-e1, 0), (e2, 0), (-e1, 0), ONE]
+rec(5, 'pair charpoly = x^4 - e1 x^3 + e2 x^2 - e1 x + 1, e1 = 4cC, e2 from C, S^2, P2 only', ok, tot)
+GEN = [es for es in K3 if all(e[1] != 0 and e[0] != 0 for e in es) and len({e[1] * e[1] for e in es}) == 3][:30]
+info('generic k points for the rotation test:', len(GEN))
+keepW = keepWall = keepP = keepM = 0
+keep_inv_W = keep_inv_P = True
+for r in ROTS:
+    kw = kp = km = True
+    for es in GEN:
+        rk = rot_k(r, es)
+        if tr(ULk(rk)) != tr(ULk(es)):
+            kw = False
+        if charpoly(pairk(rk, Mcoin(3, 4, 5))) != charpoly(pairk(es, Mcoin(3, 4, 5))):
+            kp = False
+        if charpoly(pairk(rk, Mcoin(3, 4, 5), URf=ULk)) != charpoly(pairk(es, Mcoin(3, 4, 5), URf=ULk)):
+            km = False
+    if r[2] == 1:
+        keepW += kw
+        keepP += kp
+        keepM += km
+    keepWall += kw
+    if r[0] == (0, 1, 2) and r[1] == (-1, -1, -1):
+        keep_inv_W = kw
+        keep_inv_P = kp
+rec(5, 'one Weyl field: proper rotations keeping its beat is exactly 12 (found %d of 24)' % keepW, int(keepW == 12), 1, '(of all 48 signed perms: %d keep; inversion keeps: %s)' % (keepWall, keep_inv_W))
+rec(5, 'Dirac pair: proper rotations keeping its beat (charpoly)', keepP, 24, '(inversion keeps: %s)' % keep_inv_P)
+pall = 0
+for r in ROTS:
+    pall += all(charpoly(pairk(rot_k(r, es), Mcoin(20, 21, 29))) == charpoly(pairk(es, Mcoin(20, 21, 29))) for es in GEN[:8])
+rec(5, 'Dirac pair (20,21,29): all 48 signed permutations keep the beat', pall, 48)
+mut(5, 'R := L without the phase reversal: proper rotations lost', 24 - keepM, 24)
+
+print('=== claim 6: the 24 permute the three sub-acts ===', flush=True)
+G1 = [[ONE, Z], [Z, II]]
+
+
+def key(A): return tuple((Fr(v[0]), Fr(v[1])) for r in A for v in r)
+
+
+grp = {key(eye(2)): eye(2)}
+frontier = [eye(2)]
+while frontier:
+    nf = []
+    for A in frontier:
+        for g in (G1, QX):
+            Bm = mm(A, g)
+            k = key(Bm)
+            if k not in grp:
+                grp[k] = Bm
+                nf.append(Bm)
+    frontier = nf
+scal = [A for A in grp.values() if isz(A[0][1]) and isz(A[1][0]) and A[0][0] == A[1][1]]
+
+
+def adj(u):
+    R = [[None] * 3 for _ in range(3)]
+    for a in range(3):
+        X = mm(u, mm(SIG[a], dag(u)))
+        for b in range(3):
+            t = tr(mm(SIG[b], X))
+            R[b][a] = fdiv(t[0], 2)
+            assert t[1] == 0
+    return R
+
+
+rots = {}
+for A in grp.values():
+    R = adj(A)
+    rk = tuple(tuple(r) for r in R)
+    rots.setdefault(rk, A)
+info('matrix group order', len(grp), '; scalars in it:', len(scal), '; order mod sign:', len(grp) // 2, '; distinct rotations:', len(rots))
+okr = 0
+for rk in rots:
+    R = [list(r) for r in rk]
+    sp = all(sorted(abs(v) for v in R[i]) == [0, 0, 1] for i in range(3)) and all(sorted(abs(R[i][j]) for i in range(3)) == [0, 0, 1] for j in range(3))
+    detR = R[0][0] * (R[1][1] * R[2][2] - R[1][2] * R[2][1]) - R[0][1] * (R[1][0] * R[2][2] - R[1][2] * R[2][0]) + R[0][2] * (R[1][0] * R[2][1] - R[1][1] * R[2][0])
+    okr += sp and detR == 1
+rec(6, 'group <diag(1,i), Q_x>: distinct rotations that are proper signed permutations', okr, len(rots), '(group order %d, scalars %d)' % (len(grp), len(scal)))
+Ls = (3, 3, 3)
+n2 = 54
+Wops = [W_op(a, Ls) for a in range(3)]
+
+
+def lattice_lift(u, R, Ls, flip=False):
+    # (Lam psi)(x) = u psi(R^-1 x); R^-1 = R^T
+    op = {}
+    for x in sites(Ls):
+        xi = sidx(x, Ls)
+        y = tuple(sum(R[j][i] * x[j] for j in range(3)) for i in range(3))   # R^T x
+        if flip:
+            y = tuple(-v for v in y)
+        yi = sidx(y, Ls)
+        for al in range(2):
+            op[xi * 2 + al] = clean({yi * 2 + be: u[al][be] for be in range(2)})
+    return op
+
+
+ok = tot = 0
+bad = 0
+perms_seen = set()
+for rk, u in rots.items():
+    R = [list(r) for r in rk]
+    Lam = lattice_lift(u, R, Ls)
+    LamD = spdag(Lam, n2)
+    Lbad = lattice_lift(u, R, Ls, flip=True)
+    LbadD = spdag(Lbad, n2)
+    pi = []
+    good = True
+    anybad = False
+    for a in range(3):
+        b = [i for i in range(3) if R[i][a] != 0][0]
+        pi.append(b)
+        good = good and speq(spmul(Lam, spmul(Wops[a], LamD)), Wops[b], n2)
+        if not speq(spmul(Lbad, spmul(Wops[a], LbadD)), Wops[b], n2):
+            anybad = True
+    perms_seen.add(tuple(pi))
+    tot += 1
+    ok += good and spunitary(Lam, n2)
+    bad += anybad
+rec(6, 'Lam W_a Lam^dag = W_pi(a) on 3^3 for every lift with its own rotation', ok, tot, '(permutations realised: %d of 6)' % len(perms_seen))
+mut(6, 'lift paired with the lattice rotation composed with inversion', bad, tot)
+
+print('=== claims 7 & 9: the family tensor (integer form R/lam) ===', flush=True)
+
+
+def lcm(a, b): return a * b // gcd(a, b)
+
+
+def to_int_op(U):
+    D = 1
+    for row in U.values():
+        for v in row.values():
+            for part in v:
+                D = lcm(D, Fr(part).denominator)
+    DU = {}
+    for r, row in U.items():
+        nr = {}
+        for c, v in row.items():
+            a = Fr(v[0]) * D
+            b = Fr(v[1]) * D
+            assert a.denominator == 1 and b.denominator == 1
+            nr[c] = (a.numerator, b.numerator)
+        DU[r] = nr
+    return DU, D * D
+
+
+def sp_dense(A, Mre, Mim, n):
+    Ore = []
+    Oim = []
+    for r in range(n):
+        ar = [0] * n
+        ai = [0] * n
+        for c, (vr, vi) in A[r].items():
+            mr = Mre[c]
+            mi = Mim[c]
+            if vi == 0:
+                for j in range(n):
+                    ar[j] += vr * mr[j]
+                    ai[j] += vr * mi[j]
+            elif vr == 0:
+                for j in range(n):
+                    ar[j] -= vi * mi[j]
+                    ai[j] += vi * mr[j]
+            else:
+                for j in range(n):
+                    x = mr[j]
+                    y = mi[j]
+                    ar[j] += vr * x - vi * y
+                    ai[j] += vr * y + vi * x
+        Ore.append(ar)
+        Oim.append(ai)
+    return Ore, Oim
+
+
+def dense_dag(Mre, Mim, n):
+    return [[Mre[j][i] for j in range(n)] for i in range(n)], [[-Mim[j][i] for j in range(n)] for i in range(n)]
+
+
+class Tensor:
+    def __init__(self, n, m, mode='matter'):
+        self.n = n
+        self.m = m
+        self.Rre = [[0] * n for _ in range(n)]
+        self.Rim = [[0] * n for _ in range(n)]
+        self.lam = 1
+        self.N = 0
+        self.mode = mode
+        self.hands = []
+
+    def step(self, DU, ND):
+        Tre, Tim = sp_dense(DU, self.Rre, self.Rim, self.n)
+        Tdr, Tdi = dense_dag(Tre, Tim, self.n)
+        self.Rre, self.Rim = sp_dense(DU, Tdr, Tdi, self.n)
+        self.lam *= ND
+        self.hands = [[gsum(mul(w, h[c]) for c, w in DU[r].items()) for r in range(self.n)] for h in self.hands]
+        self.reduce()
+
+    def reduce(self):
+        g = self.lam
+        for row in self.Rre + self.Rim:
+            for v in row:
+                if v:
+                    g = gcd(g, v)
+                    if g == 1:
+                        return
+        if g > 1:
+            self.lam //= g
+            self.Rre = [[v // g for v in row] for row in self.Rre]
+            self.Rim = [[v // g for v in row] for row in self.Rim]
+
+    def Rchi(self, chi):
+        n = self.n
+        return [gsum(mul((self.Rre[i][j], self.Rim[i][j]), chi[j]) for j in range(n) if not isz(chi[j])) for i in range(n)]
+
+    def lay(self, chi, mode=None):
+        mode = mode or self.mode
+        n = self.n
+        cc = sum(nrm(v) for v in chi)
+        if mode == 'carrier' or mode == 'sym':
+            # rho + chi chi^dag / |chi|^2
+            lam = self.lam
+            self.Rre = [[cc * self.Rre[i][j] + lam * mul(chi[i], cj(chi[j]))[0] for j in range(n)] for i in range(n)]
+            self.Rim = [[cc * self.Rim[i][j] + lam * mul(chi[i], cj(chi[j]))[1] for j in range(n)] for i in range(n)]
+            self.lam = lam * cc
+            self.N += 1
+            self.hands.append(list(chi))
+            return 'laid'
+        Rc = self.Rchi(chi)
+        cRc = gsum(mul(cj(chi[i]), Rc[i]) for i in range(n))
+        assert cRc[1] == 0
+        F = self.lam * cc - cRc[0]
+        if F < 0:
+            return 'negative'
+        if F == 0:
+            return 'refused'
+        v = [sub(rs(self.lam, chi[i]), Rc[i]) for i in range(n)]
+        if mode == 'nodenom':   # rho + Q chi chi^dag Q  (no division by chi^dag Q chi)
+            lam = self.lam
+            self.Rre = [[lam * self.Rre[i][j] + mul(v[i], cj(v[j]))[0] for j in range(n)] for i in range(n)]
+            self.Rim = [[lam * self.Rim[i][j] + mul(v[i], cj(v[j]))[1] for j in range(n)] for i in range(n)]
+            self.lam = lam * lam
+        else:
+            self.Rre = [[F * self.Rre[i][j] + mul(v[i], cj(v[j]))[0] for j in range(n)] for i in range(n)]
+            self.Rim = [[F * self.Rim[i][j] + mul(v[i], cj(v[j]))[1] for j in range(n)] for i in range(n)]
+            self.lam = self.lam * F
+        self.N += 1
+        self.hands.append(v)
+        self.reduce()
+        return 'laid'
+
+    def herm(self):
+        n = self.n
+        return all(self.Rre[i][j] == self.Rre[j][i] and self.Rim[i][j] == -self.Rim[j][i] for i in range(n) for j in range(i, n))
+
+    def proj(self):
+        R2re, R2im = sp_dense({i: {j: (self.Rre[i][j], self.Rim[i][j]) for j in range(self.n) if self.Rre[i][j] or self.Rim[i][j]} for i in range(self.n)}, self.Rre, self.Rim, self.n)
+        lam = self.lam
+        return all(R2re[i][j] == lam * self.Rre[i][j] and R2im[i][j] == lam * self.Rim[i][j] for i in range(self.n) for j in range(self.n))
+
+    def trace_ok(self):
+        return sum(self.Rre[i][i] for i in range(self.n)) == self.N * self.lam and all(self.Rim[i][i] == 0 for i in range(self.n))
+
+    def block(self, xi):
+        m = self.m
+        return [[(self.Rre[xi * m + a][xi * m + b], self.Rim[xi * m + a][xi * m + b]) for b in range(m)] for a in range(m)]
+
+    def cap_site(self, xi):
+        B = self.block(xi)
+        m = self.m
+        C = [[sub((self.lam, 0) if a == b else Z, B[a][b]) for b in range(m)] for a in range(m)]
+        for k in range(1, m + 1):
+            for S in itertools.combinations(range(m), k):
+                for X in (B, C):
+                    d = gdet([[X[a][b] for b in S] for a in S])
+                    assert d[1] == 0
+                    if d[0] < 0:
+                        return False
+        return True
+
+    def occ_max_gt1(self, xi):
+        return not self.cap_site(xi)
+
+    def equals_hands(self, rows=None):
+        rows = range(self.n) if rows is None else rows
+        ns = [sum(nrm(v) for v in h) for h in self.hands]
+        for i in rows:
+            for j in range(self.n):
+                s = Fr(0)
+                si = Fr(0)
+                for h, nk in zip(self.hands, ns):
+                    pr = mul(h[i], cj(h[j]))
+                    s += fdiv(pr[0], nk)
+                    si += fdiv(pr[1], nk)
+                if s * self.lam != self.Rre[i][j] or si * self.lam != self.Rim[i][j]:
+                    return False
+        return True
+
+
+def delta(n, m, xi, comp, val=ONE):
+    v = [Z] * n
+    v[xi * m + comp] = val
+    return v
+
+
+def run_matter(name, Ls, m, U, T, plan, proj_every=1, mode='matter', hands_rows=None):
+    V = nsites(Ls)
+    n = V * m
+    DU, ND = to_int_op(U)
+    ten = Tensor(n, m, mode)
+    laid = refused = negative = 0
+    pj = pt = tj = tt = cj_ = ct = 0
+    herm_ok = True
+    for t in range(T + 1):
+        if t > 0:
+            ten.step(DU, ND)
+        for (xc, comp, val) in plan.get(t, []):
+            r = ten.lay(delta(n, m, sidx(xc, Ls), comp, val))
+            laid += r == 'laid'
+            refused += r == 'refused'
+            negative += r == 'negative'
+        herm_ok = herm_ok and ten.herm()
+        if t % proj_every == 0 or t == T:
+            pt += 1
+            pj += ten.proj()
+        tt += 1
+        tj += ten.trace_ok()
+        for xi in range(V):
+            ct += 1
+            cj_ += ten.cap_site(xi)
+    eqh = ten.equals_hands(hands_rows)
+    return dict(name=name, ticks=T, laid=laid, refused=refused, negative=negative, proj=(pj, pt), trace=(tj, tt), cap=(cj_, ct), herm=herm_ok, hands=eqh, ten=ten, lambits=ten.lam.bit_length())
+
+
+O = (0, 0, 0)
+runs = []
+# ring of 8 (axis x), the pair, (3,4,5): 4 states a Node-clock; lay 4 at 0, 5th refused; more later
+Ls = (8, 1, 1)
+U = OPS[(Ls, (3, 4, 5))]
+plan = {0: [(O, 0, ONE), (O, 1, ONE), (O, 2, ONE), (O, 3, ONE), (O, 0, ONE)], 5: [(O, 0, ONE)], 9: [(O, 2, (1, 1))], 14: [((3, 0, 0), 1, ONE)]}
+runs.append(run_matter('ring 8, pair, (3,4,5)', Ls, 4, U, 60, plan))
+Ls = (12, 1, 1)
+U = OPS[(Ls, (20, 21, 29))]
+plan = {0: [(O, 0, ONE), (O, 1, ONE), (O, 2, ONE), (O, 3, ONE), (O, 1, ONE)], 4: [(O, 0, ONE)], 8: [(O, 3, (2, -1))]}
+runs.append(run_matter('ring 12, pair, (20,21,29)', Ls, 4, U, 40, plan))
+# ring of 8, one Weyl field alone (2 states): U_L only
+Ls = (8, 1, 1)
+plan = {0: [(O, 0, ONE), (O, 1, ONE), (O, 0, ONE)], 3: [(O, 0, ONE)], 6: [(O, 1, ONE)], 10: [((4, 0, 0), 0, ONE)]}
+runs.append(run_matter('ring 8, one Weyl field', Ls, 2, OPS[(Ls, 'UL')], 40, plan))
+# 3^3 torus, one Weyl field, 2 states
+Ls = (3, 3, 3)
+plan = {0: [(O, 0, ONE), (O, 1, ONE), (O, 0, ONE)], 2: [(O, 0, ONE)], 4: [(O, 1, (1, 2))], 6: [((1, 1, 1), 0, ONE)]}
+runs.append(run_matter('3^3, one Weyl field', Ls, 2, OPS[(Ls, 'UL')], 10, plan, proj_every=2))
+# 3^3 torus, the pair, 4 states
+plan = {0: [(O, 0, ONE), (O, 1, ONE), (O, 2, ONE), (O, 3, ONE), (O, 0, ONE)], 2: [(O, 0, ONE)]}
+runs.append(run_matter('3^3, pair, (3,4,5)', Ls, 4, OPS[(Ls, (3, 4, 5))], 3, plan, proj_every=3, hands_rows=range(8)))
+for r in runs:
+    rec(7, '%s: %d ticks, laid %d (refused %d, negative free size %d); rho^2=rho' % (r['name'], r['ticks'], r['laid'], r['refused'], r['negative']), r['proj'][0], r['proj'][1])
+    rec(7, '%s: Tr = N' % r['name'], r['trace'][0], r['trace'][1])
+    rec(7, '%s: cap (minors of R_xx and lam - R_xx >= 0), site-ticks' % r['name'], r['cap'][0], r['cap'][1], '(Hermitian: %s; tensor = hands stepped alone: %s; lam bits %d)' % (r['herm'], r['hands'], r['lambits']))
+# refusal exactly where free size is 0: random newcomers on a spread state
+ten = runs[0]['ten']
+n = ten.n
+ok = tot = 0
+seed = [12345]
+
+
+def rnd_int(lo, hi):
+    seed[0] = (seed[0] * 6364136223846793005 + 1442695040888963407) % (1 << 64)
+    return lo + (seed[0] >> 33) % (hi - lo + 1)
+
+
+for trial in range(30):
+    if trial % 3 == 0:   # chi in the range of rho: a combination of hands -> must be refused
+        chi = [Z] * n
+        for h in ten.hands:
+            cf = (rnd_int(-2, 2), rnd_int(-2, 2))
+            chi = [add(chi[i], mul(cf, h[i])) for i in range(n)]
+        if all(isz(v) for v in chi):
+            continue
+        expect = 'refused'
+    else:
+        chi = [(rnd_int(-2, 2), rnd_int(-2, 2)) if rnd_int(0, 3) == 0 else Z for _ in range(n)]
+        if all(isz(v) for v in chi):
+            continue
+        expect = None
+    Rc = ten.Rchi(chi)
+    cc = sum(nrm(v) for v in chi)
+    F = ten.lam * cc - gsum(mul(cj(chi[i]), Rc[i]) for i in range(n))[0]
+    # F == 0  <=>  Q chi == 0
+    Qchi_zero = all(isz(sub(rs(ten.lam, chi[i]), Rc[i])) for i in range(n))
+    tot += 1
+    ok += (F == 0) == Qchi_zero and (expect != 'refused' or F == 0) and F >= 0
+rec(7, 'free size F = 0 exactly when Q chi = 0 (range newcomers refused), F >= 0', ok, tot)
+
+print('--- mutants on the tensor (claims 7, 9) ---', flush=True)
+Ls = (8, 1, 1)
+U = OPS[(Ls, (3, 4, 5))]
+plan = {0: [(O, 0, ONE), (O, 0, ONE)], 3: [(O, 1, ONE)], 6: [(O, 0, ONE)]}
+r = run_matter('sym lay on matter', Ls, 4, U, 30, plan, mode='sym')
+mut(7, 'symmetric lay on matter: rho^2 = rho', r['proj'][1] - r['proj'][0], r['proj'][1])
+mut(9, 'symmetric lay on matter: cap, site-ticks', r['cap'][1] - r['cap'][0], r['cap'][1])
+tsym = Tensor(4, 4, 'sym')
+tsym.lay(delta(4, 4, 0, 0))
+tsym.lay(delta(4, 4, 0, 0))
+info('symmetric lay of the same state twice: rho_00 =', fdiv(tsym.Rre[0][0], tsym.lam), '(eigenvalue 2)')
+plan = {0: [(O, 0, (2, 0)), (O, 1, (1, 1))], 3: [(O, 2, ONE)]}
+r = run_matter('lay without denominator', Ls, 4, U, 10, plan, mode='nodenom')
+mut(7, 'lay without its denominator (rho + Q chi chi^dag Q): rho^2 = rho', r['proj'][1] - r['proj'][0], r['proj'][1])
+mut(7, 'lay without its denominator: Tr = N', r['trace'][1] - r['trace'][0], r['trace'][1])
+# non-unitary coins
+UL = OPS[(Ls, 'UL')]
+UR = OPS[(Ls, 'UR')]
+Ufey = pair_op(UL, UR, Ls, lambda xi: [[ONE, (0, Fr(-4, 5))], [(0, Fr(-4, 5)), ONE]])
+plan = {0: [(O, 0, ONE), (O, 1, ONE), (O, 2, ONE), (O, 3, ONE)], 4: [((4, 0, 0), 0, ONE)]}
+r = run_matter('Feynman checkerboard coin', Ls, 4, Ufey, 30, plan)
+mut(9, 'Feynman checkerboard coin (straight 1, corner -4i/5): cap, site-ticks', r['cap'][1] - r['cap'][0], r['cap'][1], '(trace kept %d of %d; lays with negative free size %d)' % (r['trace'][0], r['trace'][1], r['negative']))
+Uoff = pair_op(UL, UR, Ls, lambda xi: Mcoin(3, 4, 6))
+r = run_matter('off-circle coin', Ls, 4, Uoff, 30, plan)
+mut(9, 'coin off den\'s circle, contracting (3,4,6): rho^2 = rho', r['proj'][1] - r['proj'][0], r['proj'][1], '(cap broken at %d of %d site-ticks: a shrinking coin keeps rho <= 1)' % (r['cap'][1] - r['cap'][0], r['cap'][1]))
+Uoff2 = pair_op(UL, UR, Ls, lambda xi: Mcoin(4, 4, 5))
+r = run_matter('off-circle coin 2', Ls, 4, Uoff2, 30, plan)
+mut(9, 'coin off den\'s circle, expanding (4,4,5): cap, site-ticks', r['cap'][1] - r['cap'][0], r['cap'][1], '(rho^2=rho kept %d of %d)' % r['proj'])
+# force carriers stack
+tc = Tensor(4, 4, 'carrier')
+for _ in range(3):
+    tc.lay(delta(4, 4, 0, 0))
+rho = [[(fdiv(tc.Rre[i][j], tc.lam), fdiv(tc.Rim[i][j], tc.lam)) for j in range(4)] for i in range(4)]
+traces = (tr(rho)[0], tr(mm(rho, rho))[0], tr(mm(rho, mm(rho, rho)))[0])
+rec(9, 'force carriers: three in one state read (Tr rho, Tr rho^2, Tr rho^3) = (3, 9, 27)', int(traces == (3, 9, 27)), 1, str(traces))
+plan = {0: [(O, 0, ONE), (O, 0, ONE), (O, 0, ONE)], 5: [(O, 1, ONE)], 9: [((2, 0, 0), 0, ONE)]}
+r = run_matter('carriers', Ls, 4, U, 30, plan, mode='carrier')
+rec(9, 'force carriers on ring 8 stack: local occupation above 1 at %d of %d site-ticks' % (r['cap'][1] - r['cap'][0], r['cap'][1]), int(r['cap'][1] > r['cap'][0]), 1)
+# two boson pairs, one tensor
+
+
+def fact(k):
+    f = 1
+    for i in range(2, k + 1):
+        f *= i
+    return f
+
+
+def bmul(p, q):
+    out = {}
+    for (a, b), c in p.items():
+        for (a2, b2), c2 in q.items():
+            k = (a + a2, b + b2)
+            out[k] = add(out.get(k, Z), mul(c, c2))
+    return {k: v for k, v in out.items() if not isz(v)}
+
+
+def occ1(poly):
+    num = Fr(0)
+    den = Fr(0)
+    for (a, b), c in poly.items():
+        w = nrm(c) * fact(a) * fact(b)
+        num += w * a
+        den += w
+    return fdiv(num, den)
+
+
+a1 = {(1, 0): ONE}
+a2 = {(0, 1): ONE}
+f_ = {(1, 0): ONE, (0, 1): ONE}
+g_ = {(1, 0): ONE, (0, 1): M1}
+st1 = bmul(a1, a2)
+st2 = bmul(f_, g_)
+o1 = occ1(bmul(a1, st1))
+o2 = occ1(bmul(a1, st2))
+rho1 = madd([[ONE, Z], [Z, Z]], [[Z, Z], [Z, ONE]])
+rho2 = madd(msc((Fr(1, 2), 0), [[ONE, ONE], [ONE, ONE]]), msc((Fr(1, 2), 0), [[ONE, M1], [M1, ONE]]))
+rec(9, 'two boson pairs, same tensor before the lay; occupation of state 1 after laying e1 = (2, 5/2)', int(meq(rho1, rho2) and (o1, o2) == (2, Fr(5, 2))), 1, '(%s, %s)' % (o1, o2))
+mut(9, 'tensor carries the bosons\' state (same tensor -> same occupation)', int(o1 != o2), 1)
+
+print('=== claim 8: Lagrange and Cauchy-Binet ===', flush=True)
+ok = tot = 0
+badm = 0
+for _ in range(3000):
+    phi = [(rnd_int(-6, 6), rnd_int(-6, 6)), (rnd_int(-6, 6), rnd_int(-6, 6))]
+    chi = [(rnd_int(-6, 6), rnd_int(-6, 6)), (rnd_int(-6, 6), rnd_int(-6, 6))]
+    np_ = nrm(phi[0]) + nrm(phi[1])
+    if np_ == 0:
+        continue
+    ov = add(mul(cj(phi[0]), chi[0]), mul(cj(phi[1]), chi[1]))
+    lhs = (nrm(chi[0]) + nrm(chi[1])) - fdiv(nrm(ov), np_)
+    dt = sub(mul(phi[0], chi[1]), mul(phi[1], chi[0]))
+    tot += 1
+    ok += lhs == fdiv(nrm(dt), np_)
+    badm += lhs != fdiv(nrm(dt), np_ * np_)
+rec(8, 'Lagrange: chi^dag(1 - phi phi^dag/|phi|^2)chi = N(det[phi,chi])/|phi|^2', ok, tot)
+mut(8, 'Lagrange with |phi|^4 in the denominator', badm, tot)
+ok = tot = badm = 0
+for _ in range(1500):
+    K = rnd_int(2, 5)
+    vs = [[(rnd_int(-4, 4), rnd_int(-4, 4)), (rnd_int(-4, 4), rnd_int(-4, 4))] for _ in range(K)]
+    ws = [rnd_int(1, 9) for _ in range(K)]
+    rho = zer(2)
+    for v, w in zip(vs, ws):
+        rho = madd(rho, [[(fdiv(mul(v[i], cj(v[j]))[0], w), fdiv(mul(v[i], cj(v[j]))[1], w)) for j in range(2)] for i in range(2)])
+    lhs = gdet(rho)
+    rhs = Fr(0)
+    rhs_bad = Z
+    for k in range(K):
+        for l in range(k + 1, K):
+            dt = sub(mul(vs[k][0], vs[l][1]), mul(vs[k][1], vs[l][0]))
+            rhs += fdiv(nrm(dt), ws[k] * ws[l])
+            rhs_bad = add(rhs_bad, (fdiv(mul(dt, dt)[0], ws[k] * ws[l]), fdiv(mul(dt, dt)[1], ws[k] * ws[l])))
+    tot += 1
+    ok += lhs == (rhs, 0)
+    badm += lhs != rhs_bad
+rec(8, 'Cauchy-Binet: det(SUM v v^dag/n) = SUM_{k<l} N(det[v_k,v_l])/(n_k n_l), random', ok, tot)
+mut(8, 'Cauchy-Binet with det^2 in place of N(det)', badm, tot)
+# on the evolved orthogonal hands of the 3^3 Weyl run
+ten = runs[3]['ten']
+ns = [sum(nrm(v) for v in h) for h in ten.hands]
+ok = tot = 0
+for xi in range(27):
+    B = ten.block(xi)
+    lhs = fdiv(gdet(B)[0], ten.lam * ten.lam)
+    rhs = Fr(0)
+    for k in range(len(ten.hands)):
+        for l in range(k + 1, len(ten.hands)):
+            hk = ten.hands[k]
+            hl = ten.hands[l]
+            dt = sub(mul(hk[xi * 2], hl[xi * 2 + 1]), mul(hk[xi * 2 + 1], hl[xi * 2]))
+            rhs += fdiv(nrm(dt), ns[k] * ns[l])
+    tot += 1
+    ok += lhs == rhs
+orth = all(isz(gsum(mul(cj(ten.hands[k][i]), ten.hands[l][i]) for i in range(ten.n))) for k in range(len(ten.hands)) for l in range(k + 1, len(ten.hands)))
+rec(8, 'det rho_xx = SUM_{k<l} N(det[phi_k(x),phi_l(x)])/(n_k n_l) on the stepped 3^3 hands, every site', ok, tot, '(hands orthogonal: %s)' % orth)
+
+print('=== claim 10: locality ===', flush=True)
+Ls = (16, 1, 1)
+V = 16
+n = 64
+UL = UL_op(Ls)
+UR = UR_from(UL, Ls)
+coinA = lambda xi: Mcoin(3, 4, 5)
+coinB = lambda xi: Mcoin(20, 21, 29) if xi == 8 else Mcoin(3, 4, 5)
+UA = pair_op(UL, UR, Ls, coinA)
+UB = pair_op(UL, UR, Ls, coinB)
+# common integer scale for both
+DUa, NDa = to_int_op(UA)
+DUb, NDb = to_int_op(UB)
+Dc = 1
+for row in list(UA.values()) + list(UB.values()):
+    for v in row.values():
+        for part in v:
+            Dc = lcm(Dc, Fr(part).denominator)
+
+
+def scale_op(U, D):
+    return {r: {c: ((Fr(v[0]) * D).numerator, (Fr(v[1]) * D).numerator) for c, v in row.items()} for r, row in U.items()}
+
+
+DUa = scale_op(UA, Dc)
+DUb = scale_op(UB, Dc)
+ten = Tensor(n, 4)
+spread = [Z] * n
+spread[0] = ONE
+spread[8 * 4] = ONE
+ten.lay(spread)
+spread2 = [Z] * n
+spread2[1] = ONE
+spread2[8 * 4 + 3] = II
+ten.lay(spread2)
+ten.lay(delta(n, 4, 4, 2))
+spread3 = [Z] * n
+spread3[1 * 4 + 2] = ONE
+spread3[9 * 4 + 1] = (1, 1)
+ten.lay(spread3)
+for _ in range(2):
+    ten.step(DUa, Dc * Dc)
+TAr, TAi = sp_dense(DUa, ten.Rre, ten.Rim, n)
+TAr, TAi = sp_dense(DUa, *dense_dag(TAr, TAi, n), n)
+TBr, TBi = sp_dense(DUb, ten.Rre, ten.Rim, n)
+TBr, TBi = sp_dense(DUb, *dense_dag(TBr, TBi, n), n)
+chg_row0 = [sum(1 for j in range(n) if (TAr[r][j], TAi[r][j]) != (TBr[r][j], TBi[r][j])) for r in range(4)]
+far = [j for j in range(n) if (TAr[0][j], TAi[0][j]) != (TBr[0][j], TBi[0][j])]
+rec(10, 'tensor step, coin changed only at site 8: entries of rows at site 0 that change (of 64 each)', int(all(c > 0 for c in chg_row0)), 1, 'per row %s, columns at sites %s' % (chg_row0, sorted({j // 4 for j in far})))
+# hands: phi -> U phi
+hchg = 0
+h_sites = set()
+for h in ten.hands:
+    ha = [gsum(mul(w, h[c]) for c, w in DUa[r].items()) for r in range(n)]
+    hb = [gsum(mul(w, h[c]) for c, w in DUb[r].items()) for r in range(n)]
+    for r in range(n):
+        if ha[r] != hb[r]:
+            h_sites.add(r // 4)
+rec(10, 'one hand per quantum: the far coin changes the hands only at its own site', int(h_sites <= {8}), 1, 'sites changed: %s' % sorted(h_sites))
+# control: uniform coin change -> the same test (sanity of the detector)
+UC = pair_op(UL, UR, Ls, lambda xi: Mcoin(3, 4, 5))
+DUc = scale_op(UC, Dc)
+TCr, TCi = sp_dense(DUc, ten.Rre, ten.Rim, n)
+TCr, TCi = sp_dense(DUc, *dense_dag(TCr, TCi, n), n)
+same = all((TCr[0][j], TCi[0][j]) == (TAr[0][j], TAi[0][j]) for j in range(n))
+mut(10, 'hypothesis "row 0 of the tensor step reads only coins within one Mesh"', int(len(far) > 0 and same), 1)
+# the lay's write reach
+before_r = [row[:] for row in ten.Rre]
+before_i = [row[:] for row in ten.Rim]
+lam0 = ten.lam
+for _ in range(3):
+    ten.step(DUa, Dc * Dc)
+before_r = [row[:] for row in ten.Rre]
+before_i = [row[:] for row in ten.Rim]
+lam0 = ten.lam
+res = ten.lay(delta(n, 4, 0, 0))
+F = fdiv(ten.lam, lam0)
+changed_sites = set()
+for i in range(n):
+    for j in range(n):
+        old = (fdiv(before_r[i][j], lam0), fdiv(before_i[i][j], lam0))
+        new = (fdiv(ten.Rre[i][j], ten.lam), fdiv(ten.Rim[i][j], ten.lam))
+        if old != new:
+            changed_sites.add(i // 4)
+dist = lambda s: min(s % 16, (-s) % 16)
+beyond = sorted(s for s in changed_sites if dist(s) > 1)
+rows_beyond = sum(1 for i in range(n) if dist(i // 4) > 1 and any((fdiv(before_r[i][j], lam0), fdiv(before_i[i][j], lam0)) != (fdiv(ten.Rre[i][j], ten.lam), fdiv(ten.Rim[i][j], ten.lam)) for j in range(n)))
+rec(10, 'pair ring 16, lay at site 0 on a spread state (%s): rows beyond one Mesh that change: %d of 52 (sites %s)' % (res, rows_beyond, beyond), int(rows_beyond > 0), 1)
+# the same with one Weyl field on a ring of 16 (2 comps; 26 rows beyond one Mesh)
+UW = UL_op(Ls)
+DUw, NDw = to_int_op(UW)
+tw = Tensor(32, 2)
+for vec in ([(0, ONE), (16, ONE)], [(3, ONE), (19, II)], [(9, ONE), (2, (1, -1))]):
+    chi = [Z] * 32
+    for (ix, val) in vec:
+        chi[ix] = val
+    tw.lay(chi)
+for _ in range(4):
+    tw.step(DUw, NDw)
+br = [row[:] for row in tw.Rre]
+bi = [row[:] for row in tw.Rim]
+l0 = tw.lam
+resw = tw.lay(delta(32, 2, 0, 0))
+rows_w = sum(1 for i in range(32) if dist(i // 2) > 1 and any((fdiv(br[i][j], l0), fdiv(bi[i][j], l0)) != (fdiv(tw.Rre[i][j], tw.lam), fdiv(tw.Rim[i][j], tw.lam)) for j in range(32)))
+rec(10, 'Weyl ring 16, lay at site 0 on a spread state (%s): rows beyond one Mesh that change: %d of 26' % (resw, rows_w), int(rows_w > 0), 1)
+mut(10, 'hypothesis "the lay writes only within one Mesh"', int(len(beyond) > 0), 1)
+
+print('=== claim 11: junctions as unit phase x three shears; carried rewinds ===', flush=True)
+
+
+def rnd(t):
+    t = Fr(t)
+    return (2 * t.numerator + t.denominator) // (2 * t.denominator)
+
+
+def rndg(z): return (rnd(z[0]), rnd(z[1]))
+
+
+JUN = [('Qx^dag', dag(QX)), ('Qy^dag Qx', mm(dag(QY), QX)), ('Qy', QY)]
+CS = [(Fr(a, 2), Fr(b, 2)) for a in (1, -1) for b in (1, -1)]
+SHEARS = []
+ok = 0
+for name, J in JUN:
+    found = None
+    for u in UNITS:
+        for side in ('left', 'right'):
+            A = mm([[ONE, Z], [Z, u]], J) if side == 'left' else mm(J, [[ONE, Z], [Z, u]])
+            if gdet(A) != ONE or isz(A[1][0]):
+                continue
+            c = A[1][0]
+            p = gdiv(sub(A[0][0], ONE), c)
+            q = gdiv(sub(A[1][1], ONE), c)
+            prod = mm([[ONE, p], [Z, ONE]], mm([[ONE, Z], [c, ONE]], [[ONE, q], [Z, ONE]]))
+            if meq(prod, A) and p in UNITS and q in UNITS and c in CS and found is None:
+                found = (u, side, p, c, q)
+    info(name, '->', found)
+    if found:
+        ok += 1
+        SHEARS.append((name, J, found))
+rec(11, 'junction = diag(1,u)^-1 x [[1,p],[0,1]][[1,0],[c,1]][[1,q],[0,1]], p,q units, c = (+-1+-i)/2', ok, 3)
+
+
+def carry(sh, x, y):
+    u, side, p, c, q = sh
+    if side == 'right':
+        y = mul(u, y)      # J = A diag(1, conj u): apply diag(1,conj u)^-1 ... handled below
+    x = add(x, mul(q, y))
+    y = add(y, rndg(mul(c, x)))
+    x = add(x, mul(p, y))
+    if side == 'left':
+        y = mul(cj(u), y)
+    return x, y
+
+
+def uncarry(sh, x, y, wrong=False):
+    u, side, p, c, q = sh
+    if side == 'left':
+        y = mul(u, y)
+    if wrong:
+        x = sub(x, mul(q, y))
+        y = sub(y, rndg(mul(c, x)))
+        x = sub(x, mul(p, y))
+    else:
+        x = sub(x, mul(p, y))
+        y = sub(y, rndg(mul(c, x)))
+        x = sub(x, mul(q, y))
+    if side == 'right':
+        y = mul(cj(u), y)
+    return x, y
+
+
+Bx = 4
+box = [(a, b) for a in range(-Bx, Bx + 1) for b in range(-Bx, Bx + 1)]
+ok = tot = bad = nchg = 0
+maxerr = Fr(0)
+for name, J, sh in SHEARS:
+    if sh[1] == 'right':
+        sh = (cj(sh[0]), 'right', sh[2], sh[3], sh[4])
+    for x in box:
+        for y in box:
+            x2, y2 = carry(sh, x, y)
+            x3, y3 = uncarry(sh, x2, y2)
+            tot += 1
+            ok += (x3, y3) == (x, y)
+            x4, y4 = uncarry(sh, x2, y2, wrong=True)
+            bad += (x4, y4) != (x, y)
+            nchg += (nrm(x2) + nrm(y2)) != (nrm(x) + nrm(y))
+            ex_ = [add(mul(J[0][0], x), mul(J[0][1], y)), add(mul(J[1][0], x), mul(J[1][1], y))]
+            err = nrm(sub(ex_[0], x2)) + nrm(sub(ex_[1], y2))
+            if err > maxerr:
+                maxerr = err
+rec(11, 'carried junctions undone exactly (states with parts in [-4,4]^4, 3 junctions)', ok, tot, '(norm moved at %d of %d; max |carried - exact|^2 = %s)' % (nchg, tot, maxerr))
+mut(11, 'shears undone in the wrong order', bad, tot)
+# carried Weyl tick on the 3^3 torus: J1, S_x, J2, S_y, J3, S_z ; exact version = U_L
+Ls = (3, 3, 3)
+ex_tick = spmul(S_op(2, Ls), spmul(site_op(Ls, QY), spmul(S_op(1, Ls), spmul(site_op(Ls, mm(dag(QY), QX)), spmul(S_op(0, Ls), site_op(Ls, dag(QX)))))))
+rec(11, 'exact junction-and-shift tick S_z Q_y S_y (Q_y^dag Q_x) S_x Q_x^dag = U_L on 3^3', int(speq(ex_tick, OPS[(Ls, 'UL')], 54)), 1)
+SH = {}
+for name, J, sh in SHEARS:
+    SH[name] = sh if sh[1] == 'left' else (cj(sh[0]), 'right', sh[2], sh[3], sh[4])
+
+
+def shift_field(f, a, Ls, sgn):
+    out = {}
+    for x in sites(Ls):
+        xm = tuple(x[i] - sgn * E3[a][i] for i in range(3))
+        xp = tuple(x[i] + sgn * E3[a][i] for i in range(3))
+        out[x] = (f[tuple(v % Ls[i] for i, v in enumerate(xm))][0], f[tuple(v % Ls[i] for i, v in enumerate(xp))][1])
+    return out
+
+
+def jun_field(f, sh, inv=False, wrong=False):
+    return {x: (uncarry(sh, *v, wrong=wrong) if inv else carry(sh, *v)) for x, v in f.items()}
+
+
+def carried_tick(f):
+    f = jun_field(f, SH['Qx^dag'])
+    f = shift_field(f, 0, Ls, 1)
+    f = jun_field(f, SH['Qy^dag Qx'])
+    f = shift_field(f, 1, Ls, 1)
+    f = jun_field(f, SH['Qy'])
+    return shift_field(f, 2, Ls, 1)
+
+
+def carried_untick(f, wrong=False):
+    f = shift_field(f, 2, Ls, -1)
+    f = jun_field(f, SH['Qy'], True, wrong)
+    f = shift_field(f, 1, Ls, -1)
+    f = jun_field(f, SH['Qy^dag Qx'], True, wrong)
+    f = shift_field(f, 0, Ls, -1)
+    return jun_field(f, SH['Qx^dag'], True, wrong)
+
+
+W6 = 10 ** 6
+okr = totr = 0
+drift_num = []
+widths = []
+for trial in range(4):
+    f0 = {x: ((rnd_int(-W6, W6), rnd_int(-W6, W6)), (rnd_int(-W6, W6), rnd_int(-W6, W6))) for x in sites(Ls)}
+    n0 = sum(nrm(v[0]) + nrm(v[1]) for v in f0.values())
+    f = f0
+    wmax = 0
+    for _ in range(30):
+        f = carried_tick(f)
+        for v in f.values():
+            for g in v:
+                for part in g:
+                    part = Fr(part)
+                    if part.denominator != 1:
+                        raise ValueError('carried field left the integers')
+                    wmax = max(wmax, abs(part.numerator))
+    n1 = sum(nrm(v[0]) + nrm(v[1]) for v in f.values())
+    for _ in range(30):
+        f = carried_untick(f)
+    totr += 1
+    okr += f == f0
+    drift_num.append(fdiv(abs(n1 - n0), n0))
+    widths.append(wmax.bit_length())
+fbad = carried_untick(carried_tick(f0), wrong=True)
+worst = max(drift_num)
+rec(11, 'carried Weyl tick on 3^3, 30 ticks there and back at parts ~1e6: bit for bit', okr, totr, '(width stays <= %d bits; worst relative norm drift %d e-9)' % (max(widths), (worst * 10 ** 9).numerator // (worst * 10 ** 9).denominator))
+mut(11, 'carried tick rewound with the shears in the wrong order (1 tick)', int(fbad != f0), 1)
+
+nleaves = deep(TAB) + deep(MUT)
+print('=== guard: %d result leaves exact; source scan clean ===' % nleaves)
+print('=== SUMMARY ===')
+nfail = 0
+for (c, w, ok_, t_, note) in TAB:
+    if ok_ != t_:
+        nfail += 1
+        print('NOT ALL: [%s] %s %d/%d %s' % (c, w, ok_, t_, note))
+for (c, w, cg, t_, note) in MUT:
+    if cg == 0:
+        print('MUTANT SURVIVED: [%s] %s' % (c, w))
+print('checks %d (not-all %d), mutants %d (survived %d); time %d s' % (len(TAB), nfail, len(MUT), sum(1 for m_ in MUT if m_[2] == 0), (time.monotonic_ns() - T0) // 10 ** 9))
+
+== guard.py (the second hand) ==
+"""Exactness guard for the cap2 probe: refuses floats at run time and in the source.
+
+ex(x)      -> x if x is int/bool/Fraction, else TypeError
+deep(obj)  -> walks containers, ex() on every leaf, returns the leaf count
+fdiv(a,b)  -> Fraction(a)/Fraction(b), both checked exact (the only true division the probe may use)
+scan(path) -> list of offences in a source file: float/complex literals, the names
+              float/complex/math/cmath/numpy/decimal/random, any '/' operator, '**' with a
+              non-literal or negative exponent.
+gcd        -> math.gcd (integer only; the probe may not import math itself)
+"""
+import ast
+import math as _m
+from fractions import Fraction
+
+gcd = _m.gcd
+
+
+def ex(x):
+    t = type(x)
+    if t is int or t is bool or t is Fraction:
+        return x
+    raise TypeError('inexact value refused: %r (%s)' % (x, t.__name__))
+
+
+def deep(obj):
+    st = [obj]
+    n = 0
+    while st:
+        o = st.pop()
+        if isinstance(o, (list, tuple, set, frozenset)):
+            st.extend(o)
+        elif isinstance(o, dict):
+            st.extend(o.keys())
+            st.extend(o.values())
+        elif o is None or isinstance(o, str):
+            pass
+        else:
+            ex(o)
+            n += 1
+    return n
+
+
+def fdiv(a, b):
+    ex(a)
+    ex(b)
+    if b == 0:
+        raise ZeroDivisionError('fdiv by 0')
+    r = Fraction(a) / Fraction(b)
+    return ex(r)
+
+
+BANNED = {'float', 'complex', 'math', 'cmath', 'numpy', 'np', 'decimal', 'Decimal',
+          'random', 'statistics', 'sqrt', 'truediv'}
+
+
+def scan(path):
+    src = open(path).read()
+    tree = ast.parse(src)
+    bad = []
+    for node in ast.walk(tree):
+        ln = getattr(node, 'lineno', '?')
+        if isinstance(node, ast.Constant) and type(node.value) in (float, complex):
+            bad.append(('float/complex literal', ln))
+        elif isinstance(node, ast.Name) and node.id in BANNED:
+            bad.append(('name ' + node.id, ln))
+        elif isinstance(node, ast.Attribute) and node.attr in BANNED:
+            bad.append(('attr ' + node.attr, ln))
+        elif isinstance(node, (ast.Import, ast.ImportFrom)):
+            mods = [a.name for a in node.names]
+            if isinstance(node, ast.ImportFrom) and node.module:
+                mods.append(node.module)
+            for mname in mods:
+                if mname.split('.')[0] in BANNED:
+                    bad.append(('import ' + mname, ln))
+        elif isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
+            bad.append(('true division /', ln))
+        elif isinstance(node, ast.AugAssign) and isinstance(node.op, ast.Div):
+            bad.append(('true division /=', ln))
+        elif isinstance(node, ast.BinOp) and isinstance(node.op, ast.Pow):
+            r = node.right
+            if not (isinstance(r, ast.Constant) and type(r.value) is int and r.value >= 0):
+                bad.append(('pow with non-literal exponent', ln))
+    return bad
