@@ -82,6 +82,11 @@ SITE, SHAPE = (
     "line 2's {} has not its shape in the schema",
 )
 TURNOVER = {"kind": "turnover", "round": 1, "site": 0, "count": 1, "q": 1, "x": 0}
+# the Boss's ruling of 04:4x UTC (6488101036): a whole click is the carry's quotient at least 1, and windings count from 0
+Q_BELOW, LOW = (
+    "line 2 holds the whole click's q {}, below 1",
+    "line 2 holds a holding's windings {}, below 0",
+)
 BOOKED = {"kind": "books", "round": 1, "site": 0, "train": 0, "kept": 1}
 
 READS = {  # each record read: a field the schema does not name holds whole numbers and labels, a field absent
@@ -89,6 +94,7 @@ READS = {  # each record read: a field the schema does not name holds whole numb
     "a rate line's unnamed children": [B, rate(1, 0, 1, 1, children="x"), E],
     "a rate line's unnamed ends off the board": [B, rate(1, 0, 1, 1, ends=[{"site": 9}]), E],
     "a turnover's unnamed ends": [B, {**TURNOVER, "ends": {"a": 1}}, E],
+    "a turnover at q 0, the time gear's bit": [B, {**TURNOVER, "q": 0}, E],
     "a books line's unnamed children": [B, {**BOOKED, "children": [[1]]}, E],
     "a books line's unnamed count 0": [B, {**BOOKED, "count": 0}, E],
     "the header's unnamed ends": [{**B, "ends": [5]}, rate(1, 0, 1, 1), E],
@@ -129,6 +135,16 @@ REFUSED = {  # each record not read, its own cause named
     "a side of 0": (
         [{**B, "sides": [1 + 1, 0, 1]}, rate(1, 1, 1, 1), E],
         "line 1's sides [2, 0, 1] make no board, a side below 1",
+    ),
+    "a whole click at q 0, no click": ([H, {**TAKE, "q": 0}, E], Q_BELOW.format(0)),
+    "a whole click at q -3 (A4)": ([H, {**TAKE, "q": -3}, E], Q_BELOW.format(-3)),
+    "a take below 0 (A3)": (
+        [H, click(1, 0, [hold(1, (0, -3))], [hold(0, (0, 3))], q=3), E],
+        LOW.format(-3),
+    ),
+    "an end's laid holding below 0": (
+        [H, {**PAIR, "ends": [ENDED[0], end_of(1, [hold(0, (5, 0))], [hold(1, (-1, 4))])]}, E],
+        LOW.format(-1),
     ),
     "a field named with a line feed": ([H, {**rate(1, 0, 1, 1), "a\nb": 0.5}, E], SHAPE.format("a\\nb")),
     "a field named with a lone surrogate": (
