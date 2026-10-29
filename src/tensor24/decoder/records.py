@@ -1,4 +1,4 @@
-"""The record read: one record of the schema 1.1 into its header, its events and its end, or the cause it is not."""
+"""The record read: one record of the schema 1.2 into its header, its events and its end, or the cause it is not."""
 
 # The schema's rules are its guards, checked in order as it reads (Animate): the file reads; every line is a JSON
 # object with its kind, a label, each key once; the record holds a header and an end; the header comes first, with a
@@ -36,6 +36,7 @@ from tensor24.record import schema
 KINDS = ("whole", "split", "rate", "books")  # the events' order within a round, the schema's
 PLACE = ("round", "site")
 ENDS = ("near", "far")  # a whole click's two ends, where it takes at both
+WAYS = ("+", "-")  # the two ways along each of the board's sides, a Spoke each
 BOOKED = ("taken", "laid")  # where a whole click and each of its ends book their holdings
 AT = ("step", "clicks")  # a ledger line's place in its round: after the step, or after the clicks
 ENTRY = ("round", "train")  # a ledger line's place beside its at
@@ -168,7 +169,7 @@ def board(header: Any) -> tuple[Any, Any, Any]:
     sites = 1
     for side in sides:
         sites = sites * side
-    return sides, sites, len(sides) + len(sides)
+    return sides, sites, len(sides) * len(WAYS)
 
 
 def carded(header: Line) -> str:
@@ -242,9 +243,10 @@ def kinded(lines: Lines) -> str:
 
 
 def placed(lines: Lines) -> str:
-    events = events_of(lines)
     unplaced = [
-        n for n, e in enumerate(events, start=1 + 1) if not all(whole(e.get(key)) for key in PLACE)
+        n
+        for n, e in list(enumerate(lines, start=1))[1:-1]
+        if isinstance(e, dict) and not all(whole(e.get(key)) for key in PLACE)
     ]
     return f"line {unplaced[0]} stands at no whole round and site" if unplaced else ""
 
@@ -349,13 +351,13 @@ def fitted(lines: Lines) -> str:
 
 
 def once(lines: Lines) -> str:
-    places = [(line["round"], line["at"], line["train"]) for line in lines if isinstance(line, dict)]
-    earliest: dict[tuple[int, str, int], int] = {}
+    places = [(e["round"], e["at"], e.get("site"), e["train"]) for e in lines if isinstance(e, dict)]
+    earliest: dict[tuple[Any, ...], int] = {}
     for n, entry in enumerate(places, start=1):
         earliest.setdefault(entry, n)
     return named(
         [n for n, entry in enumerate(places, start=1) if earliest[entry] != n],
-        "the ledger's line {} stands at the round, the at and the train of an earlier line",
+        "the ledger's line {} stands at the round, the at, the site and the train of an earlier line",
     )
 
 

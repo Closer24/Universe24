@@ -256,7 +256,7 @@ LEDGER_BROKEN = {  # each broken ledger's line after GOOD's four, the guard with
     "a line at the place of an earlier one": (
         GOOD[0],
         "once",
-        "the ledger's line 5 stands at the round, the at and the train of an earlier line",
+        "the ledger's line 5 stands at the round, the at, the site and the train of an earlier line",
     ),
 }
 

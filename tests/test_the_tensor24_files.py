@@ -1,6 +1,8 @@
 """Tensor24's three files: the examples hold, each rule of the checker refuses its own broken file by name, its edge holds."""
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -345,3 +347,14 @@ def test_two_departures_of_one_file_are_each_named_once(tmp_path):
         "universe.integers.full_rate: a whole number of at least 1, not 0",
         "universe.version: 1, not 2",
     ]
+
+
+def test_the_tool_holds_the_examples_and_leaves_a_count_of_files_not_three_to_argparse():
+    """The tool on the examples prints that they hold and load, exit 0; given one file, argparse's usage error, exit 2."""
+    tool = Path(__file__).resolve().parents[1] / "tools" / "tensor24_files.py"
+    held, one = (
+        subprocess.run([sys.executable, "-I", str(tool), *argv], capture_output=True, text=True)
+        for argv in ([], ["universe.json"])
+    )
+    assert held.returncode == 0 and held.stdout.startswith("the three files hold and load"), held.stderr
+    assert one.returncode == 1 + 1 and "the three files, or none for the examples" in one.stderr

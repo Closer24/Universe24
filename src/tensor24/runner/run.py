@@ -1,5 +1,6 @@
 """The run: the three files checked and loaded, every Node-clock stepping in every round to the setting's ticks, the rewind checked, the record and its ledger written."""
 
+import dataclasses
 import hashlib
 import json
 from collections.abc import Callable
@@ -43,15 +44,17 @@ def ledger_of(record: Path) -> Path:
 
 
 def counts(round_: int, s: Any, trains: list[Any]) -> list[dict[str, Any]]:
-    """One round's count lines of the ledger: per Node-clock and train, the train's now counts there, row by row."""
+    """One round's Count lines of the ledger, schema.Count's fields in order: per Node-clock and train, the train's now counts there, row by row."""
     return [
-        {
-            "round": round_,
-            "at": STEP,
-            "site": site,
-            "train": at,
-            "count": s.a[train.first : train.first + train.rows(), site].tolist(),
-        }
+        dataclasses.asdict(
+            schema.Count(
+                round_,
+                STEP,
+                site,
+                at,
+                tuple(s.a[train.first : train.first + train.rows(), site].tolist()),
+            )
+        )
         for site in range(s.a.shape[-1])
         for at, train in enumerate(trains)
     ]
@@ -116,14 +119,14 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     found = promises(start.r, layout.gearing.rest)
     if found:
         return found
-    ticks, end, ledger = setting["ticks"], start, []
-    for at, end in enumerate(rounds(engine.tick, layout, start, ticks), start=1):
-        ledger += counts(at, end, loaded.trains)
+    ticks, end = setting["ticks"], start
+    with ledger_of(record).open("w", encoding="utf-8") as counted:
+        for at, end in enumerate(rounds(engine.tick, layout, start, ticks), start=1):
+            counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))
     exact = int(stated(rewind(engine.untick, layout, end, ticks)) == stated(start))
     lines = [
         header(record, files, universe, shape, kinds, loaded, layout),
         {"kind": "end", "rounds": ticks, "digest": digest(stated(end)), "undone": ticks, "exact": exact},
     ]
     record.write_text("".join(json.dumps(line) + "\n" for line in lines), encoding="utf-8")
-    ledger_of(record).write_text("".join(json.dumps(line) + "\n" for line in ledger), encoding="utf-8")
     return []

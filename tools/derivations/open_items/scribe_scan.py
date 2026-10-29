@@ -11,6 +11,11 @@ row of the ledger that holds it). The key of a hit holds no line number, so a mo
 the rule KEYS (a key added to the files' format) leaves the list when Sofer has read the key through the law and listed it in
 scribe_scan_keys.json, read from his published branch as the allowance is.
 
+The ceiling. What stands at the merge base stands, so a fake that a stage of the new engine deletes could come back up to the base's own count (the merge
+base holds an early Tensor24). For the rules that the stages delete (CEILED) in the new engine's src, the base's count is capped at the ceiling,
+scribe_scan_ceiling.json: the most that stands per key at a live head, written by Sofer from the live heads, never raised, read from his published
+branch as the allowance is. A hit above it is new; a key the ceiling does not hold stands at 0.
+
   python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
   python scribe_scan.py TREE [--base REV]      TREE a directory or a git revision; the base a revision
   python scribe_scan.py --patch FILE           the patch applied on the base in a scratch worktree, then the same check
@@ -66,6 +71,9 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
 ALLOWED = HERE / "scribe_scan_allowed.json"
+CEILING = (
+    HERE / "scribe_scan_ceiling.json"
+)  # the most that stands per key at a live head: what a stage deleted cannot return up to the base's count
 KEYS_READ = (
     HERE / "scribe_scan_keys.json"
 )  # the keys of the files' format that Sofer has read through the law, 'KEYS|file|path' per line
@@ -90,6 +98,7 @@ OWN = (
     "tools/derivations/open_items/scribe_scan.py",
     "tools/derivations/open_items/scribe_scan_selftest.py",
     "tools/derivations/open_items/scribe_scan_allowed.json",
+    "tools/derivations/open_items/scribe_scan_ceiling.json",
     "tools/derivations/open_items/scribe_scan_keys.json",
     "tools/derivations/open_items/scribe_scan_baseline.json",
     ".claude/settings.json",
@@ -1589,9 +1598,45 @@ def readings(repo: Path = REPO) -> Counter[tuple[str, str, str]]:
     return held
 
 
+CEILED = frozenset(
+    {"TWICE", "CHOOSE", "BRANCH", "LOOP", "COMPARE", "CLAMP", "FAMILY", "POSITION"}
+)  # the rules that the stages of the new engine delete
+
+
+def ceiled(key: tuple[str, str, str]) -> bool:
+    """A key the ceiling binds: one of the deleted-by-stages rules, in a file of the new engine's src."""
+    return key[0] in CEILED and key[1].startswith(NEW_ENGINE + "/")
+
+
+def ceiling(repo: Path = REPO) -> Counter[tuple[str, str, str]] | None:
+    """What stands at most per key at a live head: entries {rule, file, detail, count}, read from Sofer's published branch (origin/scribe-5)
+    as the allowance is, the working file where that ref is absent; None where there is no file (no ceiling binds)."""
+    relative = CEILING.relative_to(REPO).as_posix()
+    shown = git(repo, "show", f"{PUBLISHED}:{relative}")
+    if shown.returncode == 0:
+        text = shown.stdout.decode()
+    elif CEILING.is_file():
+        text = CEILING.read_text(encoding="utf-8")
+    else:
+        return None
+    held: Counter[tuple[str, str, str]] = Counter()
+    for entry in json.loads(text):
+        held[(entry["rule"], entry["file"], entry["detail"])] += int(entry.get("count", 1))
+    return held
+
+
 def above(now: Iterable[Hit], stands: Counter[tuple[str, str, str]]) -> list[Hit]:
-    """The hits above what stands at their key (the last by line), less what the owner's word allows and the keys Sofer has read."""
+    """The hits above what stands at their key (the last by line), less what the owner's word allows and the keys Sofer has read; what may
+    stand at a key that the ceiling binds is capped at the ceiling, so that what a stage deleted does not come back up to the base's own."""
     stands = stands + allowance() + readings()
+    bound = ceiling()
+    if bound is not None:
+        stands = Counter(
+            {
+                key: min(count, bound.get(key, 0)) if ceiled(key) else count
+                for key, count in stands.items()
+            }
+        )
     found: list[Hit] = []
     for key, group in groupby(sorted(now, key=lambda h: (h.key, h.line)), key=lambda h: h.key):
         members = list(group)

@@ -33,7 +33,7 @@ def axes(d: int) -> Z:
 
 def inverse(matrix: Z) -> Z:
     """Each turn's inverse, its transpose: a signed permutation's rows are its columns."""
-    return np.swapaxes(matrix, 1, -1)
+    return np.einsum("...ij->...ji", matrix)
 
 
 def turns(unit: Z) -> tuple[Z, Z]:

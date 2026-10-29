@@ -1,0 +1,122 @@
+[
+ {
+  "rule": "BRANCH",
+  "file": "tensor24/runner/load.py",
+  "detail": "if",
+  "count": 10
+ },
+ {
+  "rule": "BRANCH",
+  "file": "tensor24/runner/load.py",
+  "detail": "ternary",
+  "count": 5
+ },
+ {
+  "rule": "CLAMP",
+  "file": "tensor24/runner/load.py",
+  "detail": "abs()",
+  "count": 1
+ },
+ {
+  "rule": "COMPARE",
+  "file": "tensor24/runner/load.py",
+  "detail": "ordering",
+  "count": 6
+ },
+ {
+  "rule": "FAMILY",
+  "file": "tensor24/runner/load.py",
+  "detail": "'A1'",
+  "count": 2
+ },
+ {
+  "rule": "FAMILY",
+  "file": "tensor24/runner/load.py",
+  "detail": "'E'",
+  "count": 1
+ },
+ {
+  "rule": "FAMILY",
+  "file": "tensor24/runner/load.py",
+  "detail": "'T1'",
+  "count": 1
+ },
+ {
+  "rule": "FAMILY",
+  "file": "tensor24/runner/load.py",
+  "detail": "'gradient'",
+  "count": 2
+ },
+ {
+  "rule": "LOOP",
+  "file": "tensor24/runner/load.py",
+  "detail": "call",
+  "count": 1
+ },
+ {
+  "rule": "LOOP",
+  "file": "tensor24/runner/load.py",
+  "detail": "comprehension",
+  "count": 18
+ },
+ {
+  "rule": "LOOP",
+  "file": "tensor24/runner/load.py",
+  "detail": "for",
+  "count": 7
+ },
+ {
+  "rule": "LOOP",
+  "file": "tensor24/runner/load.py",
+  "detail": "while",
+  "count": 1
+ },
+ {
+  "rule": "POSITION",
+  "file": "tensor24/runner/load.py",
+  "detail": "held[-1]",
+  "count": 4
+ },
+ {
+  "rule": "POSITION",
+  "file": "tensor24/runner/load.py",
+  "detail": "seeds[0]",
+  "count": 1
+ },
+ {
+  "rule": "POSITION",
+  "file": "tensor24/runner/load.py",
+  "detail": "trains[-1]",
+  "count": 1
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/decoder/records.py",
+  "detail": "1 + 1",
+  "count": 1
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/decoder/records.py",
+  "detail": "len(sides) + len(sides)",
+  "count": 1
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "1 + 1",
+  "count": 1
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "g + g",
+  "count": 1
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "gamma + gamma",
+  "count": 1
+ }
+]

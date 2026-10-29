@@ -58,7 +58,7 @@ def tick(layout: Layout, s: State) -> State:
 
 
 def mirror(layout: Layout, s: State) -> State:
-    """The state mirrored, time's reversal: the slots swapped, each fine tooth flipped in the teeth it was kept at, the before slot's."""
+    """The state mirrored, time's reversal at fixed teeth: the slots swapped, each fine tooth flipped in the teeth it was kept at, the before slot's; mirrored twice, r moves by W(a) - W(b), so the mirror is its own inverse only where the clock stands still."""
     _, _, _, _, gearing, _, clock = layout
     a, b, r, rd = s
     _, _, _, teeth = gearing
@@ -66,5 +66,5 @@ def mirror(layout: Layout, s: State) -> State:
 
 
 def untick(layout: Layout, s: State) -> State:
-    """The round run back, the tick on the mirrored state mirrored: exact where every fine tooth it ran from stood within its teeth, of at least 1."""
+    """The round run back, the tick on the mirrored state mirrored: tick's inverse from the states whose fine teeth stand within the now slot's teeth, of at least 1, onto those whose fine teeth stand within the before slot's; n rounds run back by n unticks, not by one mirror about n ticks, which departs from the second round where the clock moves."""
     return mirror(layout, tick(layout, mirror(layout, s)))
