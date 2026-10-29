@@ -1,0 +1,10 @@
+a ring of 24 Node-clocks, W = W+ = 1536000, s = 1, the grip W / 6 = 256000, the key 36000, 4000 quanta laid
+train      k        sin w     drift of Q   E / (2 W Q sin w)   n = 2Q div key   E / (n W key sin w)
+light     0.2618   0.10642    6.88e-04   1.000001 to 1.000014   3997 to 4001   1.00001 to 1.00026
+light     0.5236   0.21014    5.76e-04   1.000000 to 1.000004   3998 to 4001   1.00000 to 1.00025
+light     0.7854   0.30862    4.63e-04   1.000000 to 1.000002   3997 to 4000   1.00000 to 1.00025
+massive   0.2618   0.18981    4.00e-04   1.000000 to 1.000007   3999 to 4002   1.00000 to 1.00025
+massive   0.5236   0.26162    6.99e-04   1.000000 to 1.000004   3998 to 4001   1.00000 to 1.00025
+massive   0.7854   0.34478    3.79e-04   1.000000 to 1.000003   3998 to 4001   1.00001 to 1.00025
+over both trains and the six waves, 3 turns each: E / (n W key sin omega) lies in [1.00000, 1.00026]
+Q is a whole number at every tick (the product of Gaussian integers), so n = 2 Q div key is one carry, the remainder kept

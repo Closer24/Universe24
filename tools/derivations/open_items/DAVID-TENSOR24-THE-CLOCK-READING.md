@@ -103,8 +103,10 @@ For each item, one question: is it what the one act does by itself? The Node-clo
 2. **For the owner:**
    - the course (item 15);
    - the horizon (item 16).
-3. **Owed by David:**
-   - the click as the drive's carry, with the take on hands (items 5 and 6);
-   - Planck's key on swept area (item 9);
-   - the twin's axis step (item 10);
-   - the draw (item 11).
+3. **Owed by David, closed on the owner's word of 04:1x UTC ("Close every open step"; the list in 6488233005), each page with its probes in derive/david_open/ or derive/david_stages/:**
+   - the pressure's sign (item 12): DAVID-TENSOR24-THE-PRESSURE.md, the load's source rho + 3p;
+   - the ladder of kinds and fusion: DAVID-TENSOR24-THE-LADDER-AND-FUSION.md;
+   - the click as the drive's carry, with the take (items 5 and 6): DAVID-TENSOR24-THE-CLICK-AND-THE-TAKE.md, with the take on light's gears open;
+   - Born for position, single quanta, Bell's late choice and the draw (items 8 and 11): DAVID-TENSOR24-THE-FAIR-DRAW-AND-POSITION.md;
+   - the twin's axis step (item 10) and Planck's key (item 9): DAVID-TENSOR24-THE-TWIN-AXIS-AND-THE-KEY.md;
+   - the course, the horizon (items 15 and 16) and the growth: DAVID-TENSOR24-THE-COURSE-AND-THE-GROWTH.md.

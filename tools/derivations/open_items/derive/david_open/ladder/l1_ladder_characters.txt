@@ -1,0 +1,53 @@
+1. The 24: 24 of the 216 matrices whose rows are three Spokes carry the weight 1 (det 1).
+   the classes (order of the turn, size) and the characters, each the trace of the kind's whole matrix:
+      (1,1)    (2,3)    (2,6)    (3,8)    (4,6)
+   A1:        1        1        1        1        1
+   A2:        1        1       -1        1       -1
+    E:        2        2        0       -1        0
+   T1:        3       -1       -1        0        1
+   T2:        3       -1        1        0       -1
+   orthonormal over the 24 (SUM chi_a chi_b = 24 delta_ab, the characters real): True
+   dimensions 1 + 1 + 4 + 9 + 9 = 24
+
+2. Every product split by the characters, n(m; i, k) = SUM chi_i chi_k chi_m / 24:
+   A1 x A1 = A1
+   A1 x A2 = A2
+   A1 x E = E
+   A1 x T1 = T1
+   A1 x T2 = T2
+   A2 x A2 = A1
+   A2 x E = E
+   A2 x T1 = T2
+   A2 x T2 = T1
+   E x E = A1 + A2 + E
+   E x T1 = T1 + T2
+   E x T2 = T1 + T2
+   T1 x T1 = A1 + E + T1 + T2
+   T1 x T2 = A2 + E + T1 + T2
+   T2 x T2 = A1 + E + T1 + T2
+   every multiplicity 0 or 1 (the 24 split every product of two kinds without repeat): True
+   the triples (i, k -> m) the 24 allow: 43 of 125
+
+3. The ladder from A1 and its gradient:
+   step 1: an A1 train's centred differences along the three axes read as T1 (7a's readings)
+   step 2: T1 x T1 = A1 + E + T1 + T2; one train's gradient read twice is the
+           symmetric square, Sym^2 T1 = A1 + E + T2; two different T1 readings add Alt^2 T1 = T1
+   step 3: T1 x T2 = A2 + E + T1 + T2; one train's gradient thrice,
+           Sym^3 T1 = A2 + T1 + T1 + T2
+   after step 0: ['A1']
+   after step 1: ['A1', 'T1']
+   after step 2: ['A1', 'E', 'T1', 'T2']
+   after step 3: ['A1', 'A2', 'E', 'T1', 'T2']
+   the step at which each kind first stands: {'A1': 0, 'A2': 3, 'E': 2, 'T1': 1, 'T2': 2}
+   the triple product of one gradient, dx a dy a dz a, turns as A2 under all 24 (rho_A2 the sign): True
+
+4. 7a's tables (main.made on the board's axes), C[i, k -> m] of shape (dim m, dim i, dim k):
+   tables 125, nonzero 43
+   nonzero exactly where the characters give m in i x k: True
+   the seeds' span (the intertwiners) has the dimension of the multiplicity, 0 or 1, for all 125: True
+   each nonzero table has rank dim m as a map from i x k: True
+   each nonzero table turns as its kind under all 24, C(rho_i u, rho_k v) = rho_m C(u, v), 3 pairs each: True
+   T1 x T1 -> A1: 3 entries, [((0, 0, 0), 1), ((0, 1, 1), 1), ((0, 2, 2), 1)]
+   T1 x T1 -> T1: 6 entries, [((0, 1, 2), 1), ((0, 2, 1), -1), ((1, 0, 2), -1), ((1, 2, 0), 1), ((2, 0, 1), 1), ((2, 1, 0), -1)]
+   T1 x T2 -> A2: 3 entries, [((0, 0, 0), 1), ((0, 1, 1), 1), ((0, 2, 2), 1)]
+   E x E -> A2: 2 entries, [((0, 0, 1), 1), ((0, 1, 0), -1)]

@@ -171,7 +171,7 @@ Sofer asked (6471863755, item 1): "In the wind's form (positive, kept by the ste
 ## For the Boss and the plan
 
 1. **The cuts** (for the plan, not for an engine before the owner's approval):
-   - matter's step: the one formula as it stands, read in the wind's metric, with every Mesh coupling its two ends alike (section 9). The walk (section 2) is the route only if the owner wants a first-order step;
+   - matter's step: the one formula as written, read in the wind's metric, with every Mesh coupling its two ends alike (section 9). The walk (section 2) is the route only if the owner wants a first-order step;
    - each family's quanta: the tensor, or hands at right angles in the wind's metric with their norms (the owner's choice, with the composite's);
    - the lay with the kind's sign, as in section 3;
    - the click's reads: the count, the pair and the free size at a Node-clock.

@@ -1,6 +1,6 @@
 # The click in Tensor24: its kinds, the Bell closure, the links and the clock
 
-David, 2026-10-28, 06:5x UTC, for the Boss, who owns Tensor24 (TENSOR24.md, engine-5.0-test 04cd7355f). This answers the owner's word to David of 06:1x UTC: "Work only on the Tensor24 program. Only once it is whole, implement by the Boss. Understand how the click and its kinds enter, all the closure [we] did for Bell, the links, the clock." It takes TENSOR24.md's sections 3 and 6 as its frame, and answers its open items 9 (a), (d) and (e) from the derivation's side. It is read on 526a5666d (click.py, bobs.py, draw.py, phase.py, unspring.py and meshes.py). Every claim that is not a reading of the code is a check in DAVID-TENSOR24-THE-CLICK_CHECKS.txt. No src is pushed.
+David, 2026-10-28, 06:5x UTC, for the Boss, who owns Tensor24 (TENSOR24.md, engine-5.0-test 04cd7355f). This answers the owner's word to David of 06:1x UTC: "Work only on the Tensor24 program. Only once it is whole, implement by the Boss. Understand how the click and its kinds enter, all the closure [the team] did for Bell, the links, the clock." It takes TENSOR24.md's sections 3 and 6 as its frame, and answers its open items 9 (a), (d) and (e) from the derivation's side. It is read on 526a5666d (click.py, bobs.py, draw.py, phase.py, unspring.py and meshes.py). Every claim that is not a reading of the code is a check in DAVID-TENSOR24-THE-CLICK_CHECKS.txt. No src is pushed.
 
 ## The clock and the links
 

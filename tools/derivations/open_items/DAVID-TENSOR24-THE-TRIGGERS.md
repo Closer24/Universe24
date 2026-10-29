@@ -9,7 +9,7 @@ It overlaps the board's item H (the Boss's helper), so either can be the other's
 
 ## 1. (a) The rate 0 gives nothing
 
-1. **In the clock.** A clock whose Link rate reads 0 should not tick. The one formula as it stands does not give that: at the rate 0 only the grips vanish, and the time gear coasts on its own inertia, spring and push. The discarded step is 517,114,983 at 5,000,000 quanta and 160,335,814 at 500,000 (PROVED; CHECKED).
+1. **In the clock.** A clock whose Link rate reads 0 should not tick. The one formula as written does not give that: at the rate 0 only the grips vanish, and the time gear coasts on its own inertia, spring and push. The discarded step is 517,114,983 at 5,000,000 quanta and 160,335,814 at 500,000 (PROVED; CHECKED).
 2. **The formula, in the three operations:** weight the time gear's step by the clock's own tick count at its Link rate,
    - n = (p_m + Gamma - 1) div Gamma, which is Rule3 on a dial one tooth short of its turn: 1 at every Link rate from 1 to Gamma, and 0 at 0;
    - the time gear's output = held + n (stepped - held).
