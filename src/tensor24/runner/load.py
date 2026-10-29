@@ -79,7 +79,7 @@ def trains_of(
                 )
             elif label == "E":
                 found.append(
-                    f"{where}.kinds[{j}]: E has no whole basis the 24 permute; it stands beside A1 in the tensions (stage 7)"
+                    f"{where}.kinds[{j}]: E has no whole basis the 24 permute; it stands beside A1 in the tensions (stage 7c)"
                 )
         if train["part"] not in (1, 1 + 1):
             found.append(
@@ -132,7 +132,7 @@ def plan(
         where = f"universe.couplings[{at}]"
         if {OPERANDS[operand], OPERANDS[with_operand]} & {"before", "after"}:
             found.append(
-                f"{where}: before and after enter at stage 7, with the trains that step between an impulse and its carry"
+                f"{where}: before and after enter at stage 7c, with the trains that step between an impulse and its carry"
             )
             continue
         sides = ((train, kind, part, operand), (with_train, with_kind, with_part, with_operand))
@@ -158,7 +158,7 @@ def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[
     rows = sum(t.rows() for t in trains)
     try:
         a, b, r, go, rd = (np.zeros((rows, sites), dtype=object) for _ in ("a", "b", "r", "go", "rd"))
-        clocks = np.zeros((1, sites), dtype=object)
+        ph, c, tn = (np.zeros((1, sites), dtype=object) for _ in ("ph", "c", "tn"))
     except (ValueError, MemoryError) as error:
         return (), [
             f"piece.shape: {rows} rows at {sites} sites, more than the arrays of this machine hold ({error})"
@@ -172,7 +172,7 @@ def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[
             continue
         row = trains[train].first + component
         a[row, site], b[row, site], r[row, site] = now, before, tooth
-    return (a, b, r, go, rd, clocks, clocks, clocks), found
+    return (a, b, r, go, rd, ph, c, tn), found
 
 
 def promises(r: Z, w: Z, rate: Z, gamma: Z) -> list[str]:

@@ -1,0 +1,14 @@
+(a) one round, divisors >= 2, W != W+: 200 of 200 exact, 607 Node-clocks ticked
+(b) 8 rounds at one layout, W+ alike: 60 of 60 run back exactly
+(b) 8 rounds at one layout, W+ less: 60 of 60 run back exactly
+(b) 8 rounds at one layout, W+ more: 1 of 60 run back exactly
+(b) 8 rounds at one layout, W+ parted: 1 of 60 run back exactly
+(c) 6 rounds re-geared, W of a round the W+ of the last: 60 of 60 run back exactly
+(d) start with r = W: 2 of 60 run back exactly, 0 raised
+(d) start with r = -1: 2 of 60 run back exactly, 0 raised
+(d) start with r_d = T_d: 2 of 60 run back exactly, 0 raised
+(d) start with r_d = -1: 2 of 60 run back exactly, 0 raised
+(d) start with tn = c + 1: 17 of 60 run back exactly, 0 raised
+(d) T_d = 0: raises ZeroDivisionError (division by zero)
+(d) T_d = -3: no raise; run back exact True; r_d+ range [-2, 0]
+(d) W+ = 0: raises ZeroDivisionError (division by zero)

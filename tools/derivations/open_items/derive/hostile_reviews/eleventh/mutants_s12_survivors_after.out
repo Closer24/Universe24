@@ -1,0 +1,4 @@
+SURVIVES   d1 drive carries j+rd at 0 (equivalent): 223 passed in 27.89s
+SURVIVES   s12 J landing on 0*a gears from b: 223 passed in 27.28s
+killed     r4 State rd and go names swapped: FAILED tests/test_the_tensor24_act.py::test_a_hands_charge_moves_by_rules_torques_alone_and_parts_on_a_grip_per_end_or_a_moving_s | 1 failed, 17 passed in 2.22s
+killed     r5 Plan first and second names swapped: FAILED tests/test_the_tensor24_act.py::test_the_engines_records_hold_their_fields_in_order | 1 failed, 18 passed in 2.45s

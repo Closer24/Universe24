@@ -7,7 +7,7 @@ from typing import Any, TypeGuard
 
 # The checker's one deferral: a gear's component within its train's rows, a kind among the 24's and a coupling's
 # channel are the load's to refuse (runner/load.py), where the kinds are made; the fine tooth within the teeth is the
-# load's where the teeth are read (stage 7).
+# load's where the teeth are read (stage 7b).
 
 NAMES = ("universe", "piece", "setting")
 VERSION = 1

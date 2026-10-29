@@ -1,0 +1,2 @@
+r_d mirrored True: turns whose full act commutes, per world (of 24): [24, 24, 24, 24, 24, 24] ticked sites: [4, 0, 6, 2, 6, 1]
+r_d mirrored False: turns whose full act commutes, per world (of 24): [3, 24, 3, 3, 3, 3] ticked sites: [4, 0, 6, 2, 6, 1]
