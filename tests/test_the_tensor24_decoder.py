@@ -205,15 +205,21 @@ def test_a_record_of_the_schema_reads_its_lines_split_at_the_line_feed_alone(tmp
 
 
 def test_a_line_with_no_kind_and_the_order_by_site_kind_and_train(tmp_path):
-    turnover = {"kind": "turnover", "round": 1, "site": 0, "count": 1, "q": 1, "x": 0}
     one, zero = {**TAKE, "train": 1}, {**TAKE, "train": 0}
     cases = [
         [{"round": 1, "site": 0}],
         [rate(1, 1, 1, 1), rate(1, 0, 1, 1)],
-        [turnover, rate(1, 0, 1, 1)],
+        [zero, rate(1, 0, 1, 1)],
+        [rate(1, 0, 1, 1), zero],
     ]
     got = [cause_of([H, *lines, E], tmp_path) for lines in [*cases, [one, zero], [zero, one]]]
-    assert got == [NO_JSON, ORDER, "", ORDER, ""]
+    assert got == [NO_JSON, ORDER, "", ORDER, ORDER, ""]
+
+
+def test_a_turnover_line_is_refused_by_its_kind(tmp_path):
+    """Schema 1.2 retires the turnover line: the reader names it among the kinds it holds not, as any such line."""
+    turnover = {"kind": "turnover", "round": 1, "site": 0, "count": 1, "q": 1, "x": 0}
+    assert cause_of([H, turnover, E], tmp_path) == "the line kinds ['turnover'] are unknown"
 
 
 def ledger(round_, held):

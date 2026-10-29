@@ -14,7 +14,7 @@ from tensor24.runner.load import load, promises
 from tensor24.runner.rewind import rewind
 
 ORDER = "z fastest: the site (x sy + y) sz + z"  # runner/board.py's
-TIME = "the time gear"  # the clock's own train, after the file's trains: its count is the tick's weight
+CLOCK = "the clock"  # the clock's own train, after the file's trains: every gear's teeth read its count
 
 
 class Engine(NamedTuple):
@@ -80,7 +80,7 @@ def header(
     runner: str,
 ) -> dict[str, Any]:
     """The record's first line: the files verbatim with their digests, the board, the kinds, the trains with their windings."""
-    labels = [*(train["name"] for train in universe["trains"]), TIME]
+    labels = [*(train["name"] for train in universe["trains"]), CLOCK]
     return {
         "kind": "header",
         "record": record.name,
@@ -129,7 +129,7 @@ def run(
     start = engine.state(*loaded.state)
     found = promises(
         start.r, layout.gearing.rest, layout.rate, layout.gamma
-    )  # the clocks stand at 0 as laid
+    )  # the clocks stand at 0 as laid, so the teeth are the rest; a moving clock's are read at G2
     if found:
         return found
     every = bits or (lambda _, n: [1] * n)

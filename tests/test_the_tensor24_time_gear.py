@@ -1,5 +1,6 @@
 """Tensor24's clock, G1 of decision 40: its own gear laid by the load as every row, every gear's teeth its rest and the
-clock's count at the now slot by no table and at no bound, a still clock the act at fixed teeth, the run back exact."""
+clock's count at the now slot by no table and at no bound, a still clock the act at fixed teeth, the run back exact while
+no gear's teeth fall below its kept tooth, and departing where they do, which the metric's stage (G2) owes."""
 
 import json
 from pathlib import Path
@@ -18,6 +19,7 @@ from tests import frame
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
 SHAPE, GAMMA, ROUNDS = (3, 3, 3), 50, 12  # a small board, a small full rate, the rounds of a run back
 REACH = 1 << 40  # the clock's counts are drawn below it, its strides below its square root
+STRIDE = 1000  # the clock's stride where it moves alike everywhere
 
 
 def built(gamma=GAMMA, shape=SHAPE):
@@ -102,3 +104,22 @@ def test_the_run_back_is_exact_with_the_clock_moving_under_random_masks():
     clock = held.trains[-1].first
     assert any(o.k.any() for o in outs) and (end.a[clock] != s.a[clock]).any()
     assert frame.same(rewind(step.untick, laid, end, outs), s)
+
+
+def test_the_run_back_is_exact_while_the_clock_rises_and_departs_at_the_second_round_where_it_falls():
+    """Light at rest at one count, the clock's own gear moving by a stride alike everywhere, every tooth at its teeth
+    less 1: rising, ROUNDS rounds run back to the start; falling, the first round's kept tooth stands past the next
+    teeth, so its round runs back and the second does not, the one limit of W = W+ (G2's to close by design)."""
+    _, held, laid = built()
+    clock = held.trains[-1].first
+    for stride in (STRIDE, -STRIDE):
+        s = world(np.random.default_rng(4), laid, moving=False)
+        a = 0 * s.a + REACH
+        b = a - stride * (np.arange(len(a)) == clock).astype(object)[:, None]
+        s = s._replace(a=a, b=b, r=step.weight(laid.gearing, laid.clock, a) - 1)
+        runs = [rounds(step.tick, laid, s, [1] * n) for n in (1, 1 + 1, ROUNDS)]
+        exact = [frame.same(rewind(step.untick, laid, *run), s) for run in runs]
+        first, _ = runs[0]
+        past = (first.r >= step.weight(laid.gearing, laid.clock, first.a)).any()
+        want = [True, True, True] if stride > 0 else [True, False, False]
+        assert exact == want and past == (stride < 0)

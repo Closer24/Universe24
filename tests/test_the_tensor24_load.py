@@ -29,7 +29,7 @@ DIMS = {"A1": 1, "A2": 1, "T1": 3, "T2": 3}
 ROWS = sum(
     sum(DIMS[k] for k in t["kinds"]) * t["part"] for t in TRAINS
 )  # every train's rows, counted afresh
-LAID = ROWS + 1  # and the clock's own time gear, one A1 row the load lays after the file's trains
+LAID = ROWS + 1  # and the clock's own gear, one A1 row the load lays after the file's trains
 
 
 def gears(rows=LAID):
@@ -105,7 +105,7 @@ def naive(u, c, readings, labels):
     rows[(len(u["trains"]), 0, 0, 0)], at = (
         at,
         at + 1,
-    )  # the clock's own time gear, after the file's trains
+    )  # the clock's own gear, after the file's trains
     planes = {"value": [0], "gradient": [1, 2, 3], "pull": [4], "before": [5], "after": [6]}
     j = np.zeros((at, readings.shape[-1]), dtype=object)
     for i, ki, pi, oi, k, kk, pk, ok, m, km, pm, strength in u["couplings"]:
@@ -345,7 +345,7 @@ def renamed(made, scale=lambda strength, target: strength):
                 for o in (
                     *order,
                     len(TRAINS),
-                )  # the time gear stands after the file's trains in every order
+                )  # the clock's own gear stands after the file's trains in every order
             ]
         )
         shuffled = readings.reshape(planes, rows, SITES)[:, mapping].reshape(-1, SITES)

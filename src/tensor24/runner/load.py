@@ -224,7 +224,7 @@ def mesh_unit(gamma: int) -> int:
 def geared(
     universe: dict[str, Any], trains: list[Train], spokes: int
 ) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], Z]:
-    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes, read with the clock's count; s = 1; the kick and the drive 1, the force's path; no spring, since masses are measured only in clicks; every grip den Gamma^2 G^2 per Mesh; and the clock's own gear, the train after the file's, as every row."""
+    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes; every row, the clock's own gear (the train after the file's) among them, reading the clock's count at the factor 1, a placeholder until the exact read is derived; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 G^2 per Mesh."""
     integers, rows = universe["integers"], sum(t.rows() for t in trains)
     den, gamma = integers["den"], integers["full_rate"]
     g = mesh_unit(gamma)

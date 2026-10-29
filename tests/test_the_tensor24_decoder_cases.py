@@ -86,7 +86,6 @@ SITE, SHAPE = (
     "line 2 names site {}, off the board of sides [2, 1, 1]",
     "line 2's {} has not its shape in the schema",
 )
-TURNOVER = {"kind": "turnover", "round": 1, "site": 0, "count": 1, "q": 1, "x": 0}
 # the Boss's ruling of 04:4x UTC (6488101036): a whole click is the carry's quotient at least 1, and windings count from 0
 Q_BELOW, LOW = (
     "line 2 holds the whole click's q {}, below 1",
@@ -100,8 +99,7 @@ READS = {  # each record read: a field the schema does not name holds whole numb
     "a rate line's unnamed ends": [B, rate(1, 0, 1, 1, ends=[1]), E],
     "a rate line's unnamed children": [B, rate(1, 0, 1, 1, children="x"), E],
     "a rate line's unnamed ends off the board": [B, rate(1, 0, 1, 1, ends=[{"site": 9}]), E],
-    "a turnover's unnamed ends": [B, {**TURNOVER, "ends": {"a": 1}}, E],
-    "a turnover at q 0, the time gear's bit": [B, {**TURNOVER, "q": 0}, E],
+    "a rate line's unnamed q 0": [B, rate(1, 0, 1, 1, q=0), E],
     "a books line's unnamed children": [B, {**BOOKED, "children": [[1]]}, E],
     "a books line's unnamed count 0": [B, {**BOOKED, "count": 0}, E],
     "the header's unnamed ends": [{**B, "ends": [5]}, rate(1, 0, 1, 1), E],
