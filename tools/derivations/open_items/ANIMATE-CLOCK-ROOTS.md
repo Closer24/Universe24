@@ -4,6 +4,8 @@ The owner's word to Animate, 2026-10-28, 15:2x UTC (Hebrew, translated): "Try to
 
 This page is a toy check for the plan. Nothing here is engine code. The toys are in ANIMATE-PROBES-4, and every claim is marked CHECKED or OPEN.
 
+**Decision 27** (the owner's word to the Boss of 2026-10-29, 06:3x UTC) cancels the act at the top. The turnover on this page is that former act. T stays each kind's time reversal, read by the tests and applied by no act. The law of parts 6 and 7 is restated without it, and its toys are re-run with no act at the top (ANIMATE-LAW-CHOSEN-PATH.md; ANIMATE-PROBES-4 at reader-5 fe977628): the line carried and the climb stand, and the record's sense is kept where the turnover reversed it.
+
 ## 1. The open problems, each where it breaks in the clocks
 
 | # | the problem | where it breaks, in the clocks | the cause |

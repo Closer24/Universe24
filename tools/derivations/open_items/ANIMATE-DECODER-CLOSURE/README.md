@@ -62,6 +62,12 @@ The clicks in this chain need two things that are open in the click itself (the 
   - **The gap:** under the take (David's way (b)) light's kept is booked in the sweep; under the drive's carry (David's click) it is in the drive's notches.
   - **The proposal:** the decoder reads each train's windings at the winding its card names (A6), so the writer names one unit per train: the drive's notches, or the sweep with each winding key / 2 (Planck's key, n = 2 Q div key).
 
+**The Turnover line (K7) in 1.2** (Sofer's ask, 07:16 UTC, #2187 comment 6490483844): it stays for the converter alone.
+- **Why it stays:** the converted records are the head's, made under the head's act at the top (its law 4, swap(train)). The line says what the head did, so a converted record that dropped it would hide an act that moved every gear.
+- **Why the runner writes none:** decision 27 cancels the act at the top, and stage 10's runner writes none.
+- **How the reader tells them apart:** the header's runner names a converted record ("converted from the head's record"), against "synchronous" or "under the caller's masks" for the runner's. So the reader can refuse, by name, a Turnover line in any record the converter did not write. That refusal is built with 1.2, once the Boss rules, with its test and its mutant.
+- **No row reads it:** row 46 and rows 1 and 1b read the bangs from the load (G1). K7's other half, a site's silence, is the absence of clicks and needs no line.
+
 ## 3. The algebra: each reading's identity, and where it stands
 
 | reading | the identity, in whole numbers | in the decoder |
@@ -103,10 +109,25 @@ The clicks in this chain need two things that are open in the click itself (the 
   - the load's bottoms at their edges.
 - **The mutants:** 22 for row 46 among the decoder's 204 (ANIMATE-DECODER-1/mutants.txt).
 
+## 4b. The runner's first record (stage 10, tensor24-review 20e8a8bf)
+
+- **What it is:** the example files (light on a board of 4 x 4 x 4, with the time gear) run for 10 rounds. The record holds 66 lines: the header, 64 rate lines and the end. The run back is exact.
+- **What the decoder reads:** it reads the record with no refusal.
+  - Row 15 reads NOT READ, "no whole click".
+  - Row 46 reads NOT READ, "the ledger is absent".
+  - The ticks read none.
+  
+  Each is the right reading at a stage with no click and no ledger.
+- **For G1:** the header holds the time gear's card after the file's trains (index 1 here, label "the time gear", winding T, its drive's teeth). So G1 asks only two things:
+  - the header names it (time_gear);
+  - the ledger (10b) holds its count summed over the board at "step", as its windings.
+
 ## 5. What stays open, in order
 
 1. **The Boss:** G1 to G4 (the schema's minor version 1.2); stage 9's clicks; 7b's gathering.
-2. **David:** the gathering of one spread quantum, and the composite's write size.
+2. **David:** the gathering of one spread quantum, and the composite's write size. **Answered** (6490839743):
+   - the frame's second reading is the redshift of light's absorptions against its emissions, the clicks' own reading;
+   - a copy is a composite of train X whose own whole clicks lay hands that bind into a new composite of the same train X, the same parts on its card (G2). That is row 46's third reading, per bang.
 3. **Animate:** the readings of part 3 marked "to build", in this order:
    - the conservation rows on the ledger: 7, 17, 23, 24, 47, 65 and 70 to 73;
    - the draw: rows 25 and 55;
