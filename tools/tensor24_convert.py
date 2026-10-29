@@ -2,8 +2,8 @@
 
 A head record is one JSON object: the world and the universe, the per-interval nodes (the sites turned and frozen, X and
 the winds) and the log (credit, birth, books, lay, refused). The schema 1.1 (src/tensor24/record/schema.py) is JSON Lines,
-one object a line, in the order (round, kind, site, train): the header, then per round the whole clicks, the turnovers,
-the rate lines and the books, and the end. A credit is a whole click at one Node-clock; a birth a fitting, its two
+one object a line, in the order (round, kind, site, train): the header, then per round the whole clicks, the rate lines
+and the books, and the end (schema 1.2 retires the turnover line, so the head's turned sites are not written). A credit is a whole click at one Node-clock; a birth a fitting, its two
 sites its children's, its books at the click where one end takes and in its ends where both take (a pair into light). No
 refusal is written, and a field the head lacks is left out, so a reading that needs it reads not read, the cause named;
 the header's runner names the record as converted. The head's planes are trains 0 to P - 1, their winds, and their
@@ -28,7 +28,7 @@ import hashlib
 import json
 import sys
 
-KINDS = ("whole", "split", "turnover", "rate", "books")  # the events' order within a round, the schema's
+KINDS = ("whole", "split", "rate", "books")  # the events' order within a round, the schema's
 SPOKES = (
     (0, 1),
     (0, -1),
@@ -158,11 +158,6 @@ def converted(head, engine):
         if e["event"] == "books":
             for x, y, z, sign in e["booked"]:
                 lines.append({"kind": "books", "round": e["i"], "site": site([x, y, z]), "kept": sign})
-    for n in head["nodes"]:
-        for s in n["turned"]:
-            lines.append(
-                {"kind": "turnover", "round": n["i"], "site": s, "count": n["i"], "q": 1, "x": n["X"][s]}
-            )
     for s, clicks in ticked.items():
         for count, k in rate_lines(clicks):
             lines.append({"kind": "rate", "round": count, "site": s, "count": count, "k": k})

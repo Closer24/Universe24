@@ -33,7 +33,7 @@ from typing import Any, TypeGuard
 
 from tensor24.record import schema
 
-KINDS = ("whole", "split", "turnover", "rate", "books")  # the events' order within a round, the schema's
+KINDS = ("whole", "split", "rate", "books")  # the events' order within a round, the schema's
 PLACE = ("round", "site")
 ENDS = ("near", "far")  # a whole click's two ends, where it takes at both
 BOOKED = ("taken", "laid")  # where a whole click and each of its ends book their holdings

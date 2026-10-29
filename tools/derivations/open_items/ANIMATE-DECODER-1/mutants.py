@@ -164,8 +164,8 @@ MUTANTS = {
     "the kinds' order changed": [
         (
             REC,
-            'KINDS = ("whole", "split", "turnover", "rate", "books")',
-            'KINDS = ("whole", "split", "rate", "turnover", "books")',
+            'KINDS = ("whole", "split", "rate", "books")',
+            'KINDS = ("rate", "split", "whole", "books")',
         )
     ],
     # the shapes (G1, G2)

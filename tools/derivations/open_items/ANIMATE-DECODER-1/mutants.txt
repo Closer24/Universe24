@@ -1,4 +1,4 @@
-unmutated: rc=0 149 passed in 1.30s
+unmutated: rc=0 149 passed in 1.63s
 killed   the guard jsoned dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a key twice]
 killed   the guard framed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an empty file]
 killed   the guard headed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a first line that is no header]
@@ -35,7 +35,7 @@ killed   the unplaced event named one back  <- test_a_broken_record_is_not_read_
 killed   an event's round not checked  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an event without its round]
 killed   the order read by round and kind alone  <- test_a_line_with_no_kind_and_the_order_by_site_kind_and_train
 killed   the order read without the train  <- test_a_line_with_no_kind_and_the_order_by_site_kind_and_train
-killed   the kinds' order changed  <- test_a_line_with_no_kind_and_the_order_by_site_kind_and_train
+killed   the kinds' order changed  <- test_a_record_of_the_schema_reads_its_lines_split_at_the_line_feed_alone
 killed   a truth value read as a whole number  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a truth value for a whole number]
 killed   a float read as a whole number  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[NaN for a whole number]
 killed   a label's shape not read  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a label that is no label]
@@ -138,7 +138,7 @@ killed   the tool reads on past a record not read  <- test_the_tool_reads_names_
 killed   the tool names no first click not read  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
 killed   a whole click's q below 1 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a whole click at q -3 (A4)]
 killed   a whole click's q of 0 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a whole click at q 0, no click]
-killed   the q rule read on every kind  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a turnover at q 0, the time gear's bit]
+killed   the q rule read on every kind  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a rate line's unnamed q 0]
 killed   a holding's windings below 0 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a take below 0 (A3)]
 killed   a holding's windings of 0 refused  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a click booked at the click and its ends]
 killed   an end's holdings not read for their windings  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[an end's laid holding below 0]
