@@ -194,8 +194,8 @@ def edits():
         ),
         "a pinion below den, a mass by hand": (
             "universe",
-            light(pinion=DEN - 1),
-            f"{train}.pinion: den, the seed's (masses are measured only in clicks), not {DEN - 1}",
+            light(pinion=-1),
+            f"{train}.pinion: den, the seed's (masses are measured only in clicks), not -1",
         ),
         "a pinion of a list": (
             "universe",
