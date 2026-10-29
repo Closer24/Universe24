@@ -24,9 +24,12 @@ C. on B, clicks turning matter into light at a rate r per click-time (kappa 1e-9
   r 0.1: the top at U 4.055, click-time to it 788; the least q in the last 1.5 e-folds +0.752
 
 D. the time gear reading the ruler, d/dt (W U') = s J - D U, W = e^(4U), the spring D0 e^(2U), from U -3:
-  A_L 0.001, A_M 1.0, D0 1e-9: a top at U 6.52, a bounce at U -3.48, a top at U 6.52
+  A_L 0.001, A_M 1.0, D0 1e-9, the float run: a top at U 6.52, a bounce at U -3.48, a top at U 6.52
+    the exact first integral turns the swing at U -4.5703 and 6.5224
     the first expansion: U -3.0 q +0.50; U -1.1 q +0.50; U 0.8 q +0.50; U 2.7 q +0.50; U 4.6 q +0.50; U 6.5 q +5015853.29
-  A_L 1.0, A_M 0.001, D0 1e-9: a top at U 5.08, a bounce at U -5.30, a top at U 5.08
+  A_L 1.0, A_M 0.001, D0 1e-9, the float run: a top at U 5.08, a bounce at U -5.30, a top at U 5.08
+    the exact first integral turns the swing at U -5.3026 and 5.0829
     the first expansion: U -3.0 q +0.99; U -1.4 q +1.00; U 0.2 q +1.00; U 1.8 q +1.00; U 3.5 q +0.99; U 5.1 q +2230120.24
   the time gear's waves: as built (its own teeth) they keep c0 while light runs at c0 N^2, so locally
   they outrun light by 1 / N^2 = e^(2U); reading the ruler, both read Z and share one cone at every notch
+  the bounces lie below the ruler's floor, where a count reads at 0: the act's bang is at the floor

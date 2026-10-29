@@ -18,6 +18,10 @@ Then, exactly, H = dU / d tau = e^U U' and q = -2 - U'' / U'^2, primes in the bo
      momentum W U' changes by the force, W = W0 e^(4U) (Z = T Y^4 div Gamma^4) and the spring by Y^2 as a massive
      train's, so d/dt (W U') = s J - D U gives U'' = -4 U'^2 + (s J - D0 e^(2U) U) / (W0 e^(4U)), J as in A. B breaks
      Postulate 6 (linear in X); D keeps the act linear in its count, its teeth read from the ruler as every gear's are.
+     D's turns are read from its exact first integral E = P^2 / 2 - INT F W dU with P = W U' (the Boss's correction of
+     2026-10-29, 12:1x UTC, comment 6496331673: the float run's later bounce is its drift through the top, where the
+     stiff constant weighs e^(8U)); its bounces lie below the ruler's floor (a count below 0 reads at 0, the picture's
+     section 4), so they are the toy's and not the act's, whose bang is at the floor.
 A toy of the logic: floats, a small step, and every rate typed; the formula for q is exact.
 """
 
@@ -143,7 +147,10 @@ def main() -> None:
     for al, am in ((1e-3, 1.0), (1.0, 1e-3)):
         events, rows = gear_d(al, am)
         lines.append(
-            f"  A_L {al}, A_M {am}, D0 1e-9: " + ", ".join(f"{e} at U {u:.2f}" for e, u in events)
+            f"  A_L {al}, A_M {am}, D0 1e-9, the float run: " + ", ".join(f"{e} at U {u:.2f}" for e, u in events)
+        )
+        lines.append(
+            "    the exact first integral turns the swing at U " + " and ".join(f"{u:.4f}" for u in turns_d(al, am))
         )
         lines.append("    the first expansion: " + sample(rows, 5))
     lines.append(
@@ -152,7 +159,34 @@ def main() -> None:
     lines.append(
         "  they outrun light by 1 / N^2 = e^(2U); reading the ruler, both read Z and share one cone at every notch"
     )
+    lines.append(
+        "  the bounces lie below the ruler's floor, where a count reads at 0: the act's bang is at the floor"
+    )
     print("\n".join(lines))
+
+
+def turns_d(al: float, am: float, d0: float = 1e-9, u0: float = -3.0, frac: float = 0.99) -> list[float]:
+    """D's turning points from its exact first integral E = P^2 / 2 - INT F W dU, P = W U', W = e^(4U), F = J - D0 e^(2U) U."""
+
+    def work(u: float) -> float:
+        return al * math.exp(2 * u) / 2 + am * math.exp(3 * u) / 3 - d0 * math.exp(6 * u) * (u / 6 - 1 / 36)
+
+    free = al * math.exp(-6 * u0) + 2 * am / 3 * math.exp(-5 * u0)
+    energy = (math.exp(4 * u0) * math.sqrt(frac * free)) ** 2 / 2 - work(u0)
+
+    def held(u: float) -> bool:
+        return work(u) + energy > 0
+
+    roots, lo = [], -12.0
+    while lo < 12.0:
+        hi = lo + 0.01
+        if held(lo) != held(hi):
+            a, b = lo, hi
+            for _ in range(80):
+                a, b = (a, (a + b) / 2) if held(a) != held((a + b) / 2) else ((a + b) / 2, b)
+            roots.append((a + b) / 2)
+        lo = hi
+    return roots
 
 
 def gear_d(al: float, am: float, d0: float = 1e-9, u0: float = -3.0, frac: float = 0.99):
