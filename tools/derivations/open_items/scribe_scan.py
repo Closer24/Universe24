@@ -170,6 +170,10 @@ RULES: dict[str, tuple[str, str]] = {
         "WARN",
         "a key added to the files' format (a string in the module-level collections of runner/files.py): each key is a name or a number a file may declare, and a key near the time gear is what Postulate 6 refuses (law: Postulate 6; The principle of the clock and the gear); read each note through the law; the keys Sofer has read stand in scribe_scan_keys.json on origin/scribe-5, so an unread key alone is a note",
     ),
+    "INDEX": (
+        "WARN",
+        "a cast to numpy's index type as a gather's index (astype(np.intp) directly in take or in a subscript) in algebra/, engine/ or readings/, the one cast the closed list names: numpy gathers by an index of integer type and the engine's integers are Python integers in arrays of dtype=object; the cast is the identity on a whole number that fits the index type and an OverflowError on one that does not, so it changes no value and is no operation of the act (law: The Node-clock is one act, one gather; The rates compose, the count bounded by the width alone); read each note through the law at the push: the count it casts is held within the table's length by nonneg at both ends, and the cast is never a gear's value or kept in a name",
+    ),
     "ALLOW": (
         "BLOCK",
         "not on the Node-clock's closed list: its only operations are addition, multiplication and Rule3's carry, on whole numbers (the owner's idea of 2026-10-28, 15:0x UTC; law: The Node-clock is one act; The Node-clock and the Mesh are generic; there is no if), so a construct, an operator, a call or an array not made with dtype=object that the list does not name is refused in algebra/, engine/ and readings/, and in runner/board.py against a list of its own (numpy's arange and stack, the index dtype np.intp, list displays); the architect's additions go through Sofer by a ledger entry that names the law line each serves (the count per file may not rise)",
@@ -564,6 +568,30 @@ def is_index(node: ast.AST, numpy: set[str]) -> bool:
     )
 
 
+def index_cast(call: ast.Call, parents: dict[ast.AST, ast.AST], numpy: set[str]) -> bool:
+    """astype(np.intp) standing as the index of a gather: the index type's one use in the engine's closed folders. The cast is the identity
+    on a whole number that fits the index type and an OverflowError on one that does not, so it changes no value; the gather is take's index
+    (an array's method takes it first, np.take second) or a subscript's (alone or in a tuple of indices)."""
+    if not (
+        isinstance(call.func, ast.Attribute)
+        and call.func.attr == "astype"
+        and len(call.args) == 1
+        and not call.keywords
+        and is_index(call.args[0], numpy)
+    ):
+        return False
+    held: ast.AST = call
+    above = parents.get(held)
+    if isinstance(above, ast.Tuple):  # table[x.astype(np.intp), 0]: the tuple is the subscript's index
+        held, above = above, parents.get(above)
+    if isinstance(above, ast.Subscript):
+        return above.slice is held
+    if isinstance(above, ast.Call) and isinstance(above.func, ast.Attribute) and above.func.attr == "take":
+        at = 1 if isinstance(above.func.value, ast.Name) and above.func.value.id in numpy else 0
+        return len(above.args) > at and above.args[at] is held
+    return False
+
+
 def frozen_record(decorator: ast.AST) -> bool:
     """@dataclass(frozen=True): a record that cannot be written after it is made."""
     return (
@@ -781,10 +809,16 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
             return ([] if allowed else [f"constant {value!r:.24}"]), False
         if isinstance(node, ast.Attribute):
             root = root_of(node)
+            cast = parents.get(node)
             allowed = (
                 (node.attr in ALLOW_ATTRIBUTES and isinstance(node.ctx, ast.Load))
                 or root in siblings
                 or (root in numpy and isinstance(node.value, ast.Name) and node.attr in vocabulary)
+                or (
+                    isinstance(cast, ast.Call)
+                    and index_cast(cast, parents, numpy)
+                    and cast.args[0] is node
+                )  # np.intp, as the one argument of the index cast
             )
             detail = f"attribute {ast.unparse(node)}" if root in numpy else f"attribute .{node.attr}"
             return ([] if allowed else [detail]), True
@@ -807,7 +841,11 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
             if (
                 isinstance(func, ast.Attribute)
                 and func.attr == "astype"
-                and not (objects or (node.args and is_object(node.args[0])))
+                and not (
+                    objects
+                    or (node.args and is_object(node.args[0]))
+                    or index_cast(node, parents, numpy)
+                )
             ):
                 problems.append("astype without object")
             for keyword_ in node.keywords:
@@ -1250,6 +1288,10 @@ def scan(rel: str, source: str) -> list[Hit]:
     if rel.startswith(CLOSED) or rel == BOARD:
         for node, detail in closed_list(tree, rel):
             add("ALLOW", node, detail)
+    if rel.startswith(CLOSED):
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and index_cast(node, parents, numpy):
+                add("INDEX", node, "astype(np.intp) as a gather's index")
 
     if rel == FORMAT:
         for node, path in format_keys(tree):

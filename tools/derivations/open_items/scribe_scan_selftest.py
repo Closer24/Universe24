@@ -1104,6 +1104,20 @@ CASES += [
         "np.zeros by name with no dtype", "from numpy import zeros\n\n\ndef f(a):\n    return zeros(a)\n"
     ),
     refused("astype to something else", fn("return a.astype(int)")),
+    # the index cast (2026-10-29, 05:4x UTC): the index type as a gather's index alone, a note on each use (INDEX_CASES); any other place refused
+    ("an index cast outside the closed folders", NEW_RUNNER, NP + fn("return a.take(a.astype(np.intp))"), {}),
+    refused("an index cast kept in a name", NP + fn("b = a.astype(np.intp)\nreturn b"), allow=2),
+    refused("an index cast in a sum", NP + fn("return a.astype(np.intp) + 1"), allow=2),
+    refused("astype(int) as take's index", NP + fn("return a.take(a.astype(int))")),
+    refused("the table cast and not the index", NP + fn("return a.astype(np.intp).take(a)"), allow=2),
+    refused("an index cast by keyword", NP + fn("return a.take(a.astype(dtype=np.intp))"), allow=3),
+    refused("an index cast with two arguments", NP + fn("return a.take(a.astype(np.intp, object))"), allow=2),
+    refused("the cast subscripted and not the index", NP + fn("return a.astype(np.intp)[0]"), allow=2),
+    refused("np.take's table cast and not its index", NP + fn("return np.take(a.astype(np.intp), a)"), allow=2),
+    refused("np.intp as the argument of another method", NP + fn("return a.take(a.reshape(np.intp))")),
+    refused("an index cast as another method's argument", NP + fn("return a.reshape(a.astype(np.intp))"), allow=2),
+    refused("an index cast with a keyword beside it", NP + fn("return a.take(a.astype(np.intp, copy=False))"), allow=3),
+    refused("an index cast in a tuple that is no index", NP + fn("return (a.astype(np.intp), 1)"), allow=2),
     refused(
         "a dtype that is not object on the engine's own call",
         "def g(a, dtype=None):\n    return a\n\n\ndef f(a):\n    return g(a, dtype=int)\n",
@@ -1624,6 +1638,32 @@ def key_cases() -> tuple[int, int]:
     return made, parted
 
 
+# the index cast in the engine's closed folders: no refusal, one note of INDEX on each use (a case of CASES names the rules it tests and lets
+# a hit of another stand beside it, so a refusal that should not be there would pass unseen; these are read for the refusal as well)
+INDEX_CASES: list[tuple[str, str, str, int, int]] = [
+    ("an index cast as take's index", NEW_STEP, NP + fn("return a.take(a.astype(np.intp))"), 0, 1),
+    ("an index cast as np.take's index", NEW_STEP, NP + fn("return np.take(a, a.astype(np.intp))"), 0, 1),
+    ("an index cast as a subscript's index", NEW_STEP, NP + fn("return a[a.astype(np.intp)]"), 0, 1),
+    ("an index cast in a tuple of indices", NEW_STEP, NP + fn("return a[a.astype(np.intp), 0]"), 0, 1),
+    (
+        "the index cast of a reading's count",
+        NEW_STEP,
+        NP + "from .carry import nonneg\n\n\n" + fn("return a.take(nonneg(a).astype(np.intp))"),
+        0,
+        1,
+    ),
+    ("an index cast in the readings", NEW_READING, NP + fn("return a.take(a.astype(np.intp))"), 0, 1),
+    (
+        "two index casts in one act, a note on each",
+        NEW_STEP,
+        NP + fn("return a.take(a.astype(np.intp)) + a.take(a.astype(np.intp))"),
+        0,
+        2,
+    ),
+    # the board keeps its own narrower list: the cast is refused there, and no note stands for it
+    ("an index cast in runner/board.py", NEW_BOARD, NP + fn("return a.take(a.astype(np.intp))"), 2, 0),
+]
+
 def main() -> int:
     parted = 0
     for label, rel, source, want in CASES:
@@ -1644,6 +1684,15 @@ def main() -> int:
         else:
             print(f"ok      {label}")
         del beside
+    index_cases = 0
+    for label, rel, source, refusals, notes in INDEX_CASES:
+        index_cases += 1
+        got = counts(rel, source)
+        if got.get("ALLOW", 0) != refusals or got.get("INDEX", 0) != notes:
+            parted += 1
+            print(f"PARTED  {label}: wanted {refusals} ALLOW and {notes} INDEX, the gate gave {got}")
+        else:
+            print(f"ok      {label}")
     tier_cases = 0
     for label, rel, source, rule, tier in TIERS:
         tier_cases += 1
@@ -1859,7 +1908,7 @@ def main() -> int:
     key_total, key_parted = key_cases()
     parted += key_parted
     print(
-        f"selftest: {len(CASES) + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + 2} cases, {parted} parted"
+        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + 2} cases, {parted} parted"
     )
     return 1 if parted else 0
 
