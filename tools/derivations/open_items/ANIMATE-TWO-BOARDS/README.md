@@ -59,6 +59,22 @@ The owner's word to Animate, 2026-10-29, 08:4x UTC (in Hebrew; in translation): 
   - the sweeps cycle in about a quarter of them;
   - a fair choice between two gives |S| = 3.66, past nature's bound.
 
+## 3b. Reading 15: which form the engine builds (Sofer's 6492798477)
+
+**B, the product draw made where the dials meet at the source.**
+- **The draw's place:**
+  - the twins' shared hand stays one at the birth Node-clock (the Boss's 6493065300: the joint sizes are the norms of its whole-number overlaps with the two detectors' frames, nothing typed but the frames);
+  - the backward board carries each detector's frame back along its own twin to the birth;
+  - one law-9 draw is made there, over the overlaps' norms (the product of the two dials' sizes, decision 29);
+  - the forward board carries each outcome out along its own twin, and the detector's click writes the record.
+- **No Node-clock compares ticks at a distance:**
+  - a spacelike pair needs no order: the four parts in any order give one law (part 1);
+  - a causal chain takes its order from the forward signal that makes the later setting depend on the earlier outcome. The runner's passes meet that order by themselves: the later setting cannot be carried back before the earlier outcome is carried out.
+- **The passes verify and do not select.** One history at every digit, in the spacelike case and, with the cause's order, in the loop (part 1).
+- **O's law is the same,** so every reading of David's probe carries over (S, the marginals, three parties). Only the draw's place moves, from the second detector to the source.
+- **The same rule for one spread quantum:** the draw at its emitter over the absorbers' sizes carried back, so one absorber clicks (g2 = 0); with a silent future, Born.
+- **Open:** the scheduler on a full board (many pairs, nested chains), and the act at the birth giving the one shared hand (the Boss's open step).
+
 ## 4. The swings, and the clicks between the boards, by kind
 
 - **The swing** is the same on both boards. The act is symmetric in time (T S T = S^-1) and the source rho + 3p is even, so the backward board sees the load's swing run back, with the same tops and bottoms. The boards agree on the pendulum and part only at the escapement, the clicks.
