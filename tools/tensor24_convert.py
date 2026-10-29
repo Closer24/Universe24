@@ -14,7 +14,10 @@ where its books count the amounts moved. The head ticks every
 Node-clock once a round, so a click's count is its round. Its proper time, `proper`, is its dial summed: the ticks are its whole turns by the full rate (Rule3) and the
 dial the remainder, and the rate lines are written so that they give exactly those ticks at each of its clicks (the head
 records no beat between clicks). Its books are written as holdings of the amounts it moved: the taken plane's windings
-(amount, 0) and the laid line's (0, amount), the take's remainder as the taken holding's kept. Beside the record it
+(amount, 0) and the laid line's (0, amount), the take's remainder as the taken holding's kept. The head counts those
+amounts in its wind's own units, so every train's winding is written 1, a holding's windings counting those units (the
+decoder reads each train's windings at its winding; David's A6, 6488889537), and the head's T, its quantum_action,
+stands in the universe file the header holds verbatim. Beside the record it
 writes the ledger, <out>.ledger.jsonl: per round and train, the wind summed over every site, at "clicks" alone, since
 the head writes its winds once a round, after the step and the clicks together.
 
@@ -70,7 +73,7 @@ def converted(head, engine):
     """The schema's lines for one head record, in the schema's order."""
     side = head["cube"]
     full = head["universe"]["integers"]["node_clock"]
-    winding = head["T"]
+    winding = 1  # the head's amounts in its wind's units: one a winding
     planes = len(head["planes"])  # a plane's line is the train planes on from its own
 
     def site(node):

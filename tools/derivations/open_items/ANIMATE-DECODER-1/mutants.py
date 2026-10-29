@@ -6,8 +6,8 @@ Each mutant is one or more textual changes in a scratch copy of src/tensor24, to
 two tests; "killed" names the first test that fails with it, "SURVIVED" means all of them pass. The mutants: each guard
 of the record and of the ledger dropped from its tuple; each part of each rule, reading and verdict changed; the fifth
 hostile review's sixteen, the seventh's eighteen and the twelfth's twenty-five as they read on this text
-(decoder_mutants.py, decoder_mutants_s8.py and mutants_s13.py there); the Boss's ruling on A3 and A4; and the tool's
-lines.
+(decoder_mutants.py, decoder_mutants_s8.py and mutants_s13.py there); the Boss's ruling on A3 and A4; David's A6, each
+train's windings at its own winding, with the header's train cards; and the tool's lines.
 """
 
 import shutil
@@ -45,6 +45,7 @@ OWN = 'own = click.get("train") in trains'
 CHAIN = 'elif h["windings"][0] == last["windings"][1] and h["kept"][0] == last["kept"][1]:'
 SIDES = 'taken, laid = chained(part["taken"]), chained(part["laid"])'
 LEFT = 'return sum(h["windings"][0] - h["windings"][1] for p in parts(click) for h in p["taken"])'
+UNWOUND_IF = '    if not all(h["train"] in winding for h in held):\n        return UNWOUND\n'
 
 
 def dropped(name):
@@ -268,14 +269,16 @@ MUTANTS = {
     # the first reading: the books hold the click
     "the books close at any end": [(BOOKS, "each = all(part_closes", "each = any(part_closes")],
     "a part that takes nothing read": [(BOOKS, "        bool(taken)\n", "        True\n")],
-    "a take that gains read": gone(BOOKS, "        and all(gained([h]) < 0 for h in taken)\n"),
-    "a laid holding that loses read": gone(BOOKS, "        and all(gained([h]) > 0 for h in laid)\n"),
+    "a take that gains read": gone(BOOKS, "        and all(gained([h], winding) < 0 for h in taken)\n"),
+    "a laid holding that loses read": gone(
+        BOOKS, "        and all(gained([h], winding) > 0 for h in laid)\n"
+    ),
     "the books close over the two ends together": [
-        (BOOKS, "        and gained(taken) + gained(laid) == 0\n", ""),
+        (BOOKS, "        and gained(taken, winding) + gained(laid, winding) == 0\n", ""),
         (
             BOOKS,
-            "    each = all(part_closes(p) for p in parts(click))\n",
-            '    each = all(part_closes(p) for p in parts(click)) and sum(gained(p["taken"]) + gained(p["laid"]) for p in parts(click)) == 0\n',
+            "    each = all(part_closes(p, winding) for p in parts(click))\n",
+            '    each = all(part_closes(p, winding) for p in parts(click)) and sum(gained(p["taken"], winding) + gained(p["laid"], winding) for p in parts(click)) == 0\n',
         ),
     ],
     "the click's own train not read": [(BOOKS, OWN, "own = True")],
@@ -419,7 +422,11 @@ MUTANTS = {
         (BOOKS, ' or {h["train"] for h in taken} & {h["train"] for h in laid}', "")
     ],
     "a part that books a train twice closes": [
-        (BOOKS, "    if held is None:\n        return False\n", "    if held is None:\n        return True\n")
+        (
+            BOOKS,
+            "    if held is None:\n        return False\n",
+            "    if held is None:\n        return True\n",
+        )
     ],
     "a click that books a train twice read": [
         (BOOKS, 'return TWICE if any(per_train(p) is None for p in parts(click)) else ""', 'return ""')
@@ -502,14 +509,22 @@ MUTANTS = {
     ],
     # the Boss's ruling of 04:4x UTC (6488101036, A3 and A4): a whole click's q at least 1, every holding's windings from 0
     "a whole click's q below 1 read": [
-        (REC, '    if line["kind"] == "whole" and whole(line.get("q")) and line["q"] < 1:\n', "    if False:\n")
+        (
+            REC,
+            '    if line["kind"] == "whole" and whole(line.get("q")) and line["q"] < 1:\n',
+            "    if False:\n",
+        )
     ],
     "a whole click's q of 0 read": [(REC, 'line["q"] < 1:', 'line["q"] < 0:')],
     "the q rule read on every kind": [
         (REC, 'line["kind"] == "whole" and whole(line.get("q"))', 'whole(line.get("q"))')
     ],
     "a holding's windings below 0 read": [
-        (REC, '    return f"holds a holding\'s windings {low[0]}, below 0" if low else ""\n', '    return ""\n')
+        (
+            REC,
+            '    return f"holds a holding\'s windings {low[0]}, below 0" if low else ""\n',
+            '    return ""\n',
+        )
     ],
     "a holding's windings of 0 refused": [(REC, "if whole(w) and w < 0]", "if whole(w) and w < 1]")],
     "an end's holdings not read for their windings": [
@@ -518,8 +533,53 @@ MUTANTS = {
     "the laid holdings not read for their windings": [
         (REC, "for key in BOOKED if key in fields", "for key in BOOKED[:1] if key in fields")
     ],
+    # David's A6 (6488889537, item 2): each train's windings at its own winding, as the header's train cards give it
+    "the books read unweighted": [(BOOKS, ' * winding[h["train"]]', "")],
+    "the kept weighed too": [
+        (
+            BOOKS,
+            '+ h["kept"][1] - h["kept"][0]\n',
+            '+ (h["kept"][1] - h["kept"][0]) * winding[h["train"]]\n',
+        )
+    ],
+    "every holding at the first card's winding": [
+        (BOOKS, 'winding[h["train"]]', "next(iter(winding.values()))")
+    ],
+    "a train with no winding read at 1 (the patch's default)": [
+        (BOOKS, 'winding[h["train"]]', 'winding.get(h["train"], 1)'),
+        (BOOKS, UNWOUND_IF, ""),
+    ],
+    "a train with no winding read (its check dropped)": [(BOOKS, UNWOUND_IF, "")],
+    "a card's winding read without its index": [
+        (BOOKS, 'if whole(t.get("index")) and whole(t.get("winding"))', 'if whole(t.get("winding"))')
+    ],
+    "a card's index read without its winding": [
+        (BOOKS, 'if whole(t.get("index")) and whole(t.get("winding"))', 'if whole(t.get("index"))')
+    ],
+    "row 15's lacking read with no windings": [
+        (BOOKS, "    winding = windings_of(record)\n    lacking", "    winding = {}\n    lacking")
+    ],
+    "the books named closed where none is read": [
+        (BOOKS, '        if lacking and first["read"]\n', "        if lacking\n")
+    ],
+    "the cards' rule dropped from the guard": [
+        (REC, '    if cards:\n        return f"line 1\'s {cards}"\n', "")
+    ],
+    "a card's winding below 1 read": [
+        (
+            REC,
+            '        return f"train card {low[0][0]} holds the winding {low[0][1]}, below 1"\n',
+            '        return ""\n',
+        )
+    ],
+    "a card's winding of 0 read": [(REC, 't["winding"] < 1', 't["winding"] < 0')],
+    "a train on two cards read": [
+        (REC, "twice = [i for n, i in enumerate(trains) if i in trains[:n]]", "twice = []")
+    ],
     # the twelfth hostile review's twenty-five (mutants_s13.py there), as they read on this text
-    "a negative site read": [(REC, "whole(size) and not 0 <= s < size]", "whole(size) and not s < size]")],
+    "a negative site read": [
+        (REC, "whole(size) and not 0 <= s < size]", "whole(size) and not s < size]")
+    ],
     "a negative Spoke read": [(REC, "if not 0 <= s < spokes]", "if not s < spokes]")],
     "a child's site not read (the ends' read)": [
         (REC, 'for key in ("ends", "children")', 'for key in ("ends",)')
@@ -528,7 +588,11 @@ MUTANTS = {
         (REC, 'event = line["kind"] in KINDS', 'event = line["kind"] == "rate"')
     ],
     "a count before the first beat read but on a rate line": [
-        (REC, 'if "count" in fields and whole(line.get("count"))', 'if line["kind"] == "rate" and whole(line.get("count"))')
+        (
+            REC,
+            'if "count" in fields and whole(line.get("count"))',
+            'if line["kind"] == "rate" and whole(line.get("count"))',
+        )
     ],
     "an end without its rounds raises": [
         (
@@ -538,7 +602,11 @@ MUTANTS = {
         )
     ],
     "an end or child without its site raises": [
-        (REC, "far = [s for s in sites if whole(s) and whole(size)", "far = [s for s in sites if whole(size)")
+        (
+            REC,
+            "far = [s for s in sites if whole(s) and whole(size)",
+            "far = [s for s in sites if whole(size)",
+        )
     ],
     "an end without its Spoke raises": [(REC, "if whole(s) and whole(spokes)]", "if whole(spokes)]")],
     "a kind that is no label let through (absent alone refused)": [
@@ -563,15 +631,25 @@ MUTANTS = {
         )
     ],
     "a taken holding that keeps its windings read": [
-        (BOOKS, "all(gained([h]) < 0 for h in taken)", "all(gained([h]) <= 0 for h in taken)")
+        (
+            BOOKS,
+            "all(gained([h], winding) < 0 for h in taken)",
+            "all(gained([h], winding) <= 0 for h in taken)",
+        )
     ],
     "a laid holding that gains nothing read": [
-        (BOOKS, "all(gained([h]) > 0 for h in laid)", "all(gained([h]) >= 0 for h in laid)")
+        (
+            BOOKS,
+            "all(gained([h], winding) > 0 for h in laid)",
+            "all(gained([h], winding) >= 0 for h in laid)",
+        )
     ],
     "q read as at most the windings that left": [
         (BOOKS, 'click["q"] == left(click)', 'click["q"] <= left(click)')
     ],
-    "a click without its train read (its train not asked)": gone(BOOKS, '        and "train" in click\n'),
+    "a click without its train read (its train not asked)": gone(
+        BOOKS, '        and "train" in click\n'
+    ),
     "q read over the click's own books, not its ends": [
         (BOOKS, LEFT, LEFT.replace("for p in parts(click)", "for p in [click]"))
     ],
@@ -586,18 +664,28 @@ MUTANTS = {
         )
     ],
     "a train card without its index raises": [
-        (BOOKS, 'trains = {t["index"] for t in cards} if indexed else set()', 'trains = {t["index"] for t in cards}')
+        (
+            BOOKS,
+            'trains = {t["index"] for t in cards} if indexed else set()',
+            'trains = {t["index"] for t in cards}',
+        )
     ],
     "a count before the first beat named unread (ticks_to still 0)": [
         (CLOCKS, "if not whole(count) or count < 0:", "if not whole(count) or count < 1:")
     ],
     "the tool reads every click against the first click's Node-clock": [
-        (TOOL, "clocks.ticks_at(lines.get(site, []),", 'clocks.ticks_at(lines.get(clicks[0]["site"], []),')
+        (
+            TOOL,
+            "clocks.ticks_at(lines.get(site, []),",
+            'clocks.ticks_at(lines.get(clicks[0]["site"], []),',
+        )
     ],
     "the tool matches a Node-clock's counts to its clicks backward": [
         (TOOL, "                ats,\n", "                ats[::-1],\n")
     ],
-    "the tool's last read is its first": [(TOOL, "the last read {read[-1:]}", "the last read {read[:1]}")],
+    "the tool's last read is its first": [
+        (TOOL, "the last read {read[-1:]}", "the last read {read[:1]}")
+    ],
     "the tool counts a click of 0 ticks as not read": [
         (TOOL, "if found[at] is not None]", "if found[at]]")
     ],

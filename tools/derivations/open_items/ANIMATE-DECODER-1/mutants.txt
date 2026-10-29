@@ -1,4 +1,4 @@
-unmutated: rc=0 127 passed in 1.38s
+unmutated: rc=0 130 passed in 1.21s
 killed   the guard jsoned dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a key twice]
 killed   the guard framed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an empty file]
 killed   the guard headed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a first line that is no header]
@@ -92,7 +92,7 @@ killed   the ledger absent read as an empty ledger  <- test_the_books_close_at_e
 killed   a header that names no train not named  <- test_the_wind_is_read_over_every_train_of_the_header
 killed   the ledger shown where it is read at some rounds alone  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
 killed   a click that lacks its books read among the others  <- test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read[a holding's kept]
-killed   a click that lacks its books hiding an open one  <- test_a_part_read_that_fails_is_not_shown_beside_a_click_that_lacks_a_field
+killed   a click that lacks its books hiding an open one  <- test_the_books_hold_the_click_they_book[a laid holding that loses]
 killed   the lines named where every round with a click reads  <- test_the_wind_over_every_train_round_by_round
 killed   the lines not named where a round with a click is not read  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
 killed   the books named beside a click that lacks a field  <- test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read[a holding's kept]
@@ -114,8 +114,8 @@ killed   a train on both sides of a part read  <- test_a_part_that_books_a_train
 killed   a part that books a train twice closes  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a chain broken on its kept]
 killed   a click that books a train twice read  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a chain broken on its kept]
 killed   a pair that books a train twice at one end read  <- test_a_part_that_books_a_train_twice_reads_not_read_named[an end that books a train twice]
-killed   the gap not named beside open books  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a header that names no train]
-killed   the wall not named beside open books  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a header that names no train]
+killed   the gap not named beside open books  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a ledger of round 2 alone]
+killed   the wall not named beside open books  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a train card without its index]
 killed   the lines not named beside open books  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a ledger of round 2 alone]
 killed   the wind not named beside open books  <- test_open_books_beside_a_ledger_read_name_the_wind
 killed   the wall read after a ledger read at no round  <- test_the_books_close_at_each_end_and_the_verdict
@@ -143,6 +143,19 @@ killed   a holding's windings below 0 read  <- test_a_broken_record_is_not_read_
 killed   a holding's windings of 0 refused  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a click booked at the click and its ends]
 killed   an end's holdings not read for their windings  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[an end's laid holding below 0]
 killed   the laid holdings not read for their windings  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[an end's laid holding below 0]
+killed   the books read unweighted  <- test_the_books_read_each_train_s_windings_at_its_own_winding_and_name_a_train_with_none
+killed   the kept weighed too  <- test_the_books_read_each_train_s_windings_at_its_own_winding_and_name_a_train_with_none
+killed   every holding at the first card's winding  <- test_the_books_read_each_train_s_windings_at_its_own_winding_and_name_a_train_with_none
+killed   a train with no winding read at 1 (the patch's default)  <- test_the_books_read_each_train_s_windings_at_its_own_winding_and_name_a_train_with_none
+killed   a train with no winding read (its check dropped)  <- test_the_wind_is_read_over_every_train_of_the_header
+killed   a card's winding read without its index  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a train card without its index]
+killed   a card's index read without its winding  <- test_the_books_read_each_train_s_windings_at_its_own_winding_and_name_a_train_with_none
+killed   row 15's lacking read with no windings  <- test_the_wind_over_every_train_round_by_round
+killed   the books named closed where none is read  <- test_the_books_read_each_train_s_windings_at_its_own_winding_and_name_a_train_with_none
+killed   the cards' rule dropped from the guard  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a train card's winding -4]
+killed   a card's winding below 1 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a train card's winding -4]
+killed   a card's winding of 0 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a train card's winding 0]
+killed   a train on two cards read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a train on two cards]
 killed   a negative site read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a rate line at a site below 0]
 killed   a negative Spoke read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a pair's end at a Spoke below 0]
 killed   a child's site not read (the ends' read)  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a child laid off the board]
@@ -159,7 +172,7 @@ killed   a laid holding that gains nothing read  <- test_the_books_open_at_each_
 killed   q read as at most the windings that left  <- test_the_books_open_at_each_side_of_their_bounds[a pair's q per end]
 killed   a click without its train read (its train not asked)  <- test_a_whole_click_without_its_train_reads_not_read_named
 killed   q read over the click's own books, not its ends  <- test_the_books_open_at_each_side_of_their_bounds[a laid holding that gains nothing]
-killed   a gap before the books' failure (the docstring's order)  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a header that names no train]
+killed   a gap before the books' failure (the docstring's order)  <- test_the_books_hold_the_click_they_book[a laid holding that loses]
 killed   the clicks lines may hold a train the header lacks (the step's held to the header)  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a ledger whose clicks lines hold a train the header lacks]
 killed   a train card without its index raises  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a train card without its index]
 killed   a count before the first beat named unread (ticks_to still 0)  <- test_the_ticks_before_the_first_beat_are_read_as_none
@@ -168,4 +181,4 @@ killed   the tool matches a Node-clock's counts to its clicks backward  <- test_
 killed   the tool's last read is its first  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
 killed   the tool counts a click of 0 ticks as not read  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
 killed   the tool names the last click not read as the first  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
-169 mutants, 0 survived
+182 mutants, 0 survived
