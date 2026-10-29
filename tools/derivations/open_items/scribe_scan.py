@@ -161,7 +161,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "ALLOW": (
         "BLOCK",
-        "not on the Node-clock's closed list: its only operations are addition, multiplication and Rule3's carry, on whole numbers (the owner's idea of 2026-10-28, 15:0x UTC; law: The Node-clock is one act; The Node-clock and the Mesh are generic; there is no if), so a construct, an operator, a call or an array not made with dtype=object that the list does not name is refused in algebra/, engine/ and readings/; the architect's additions go through Sofer by a ledger entry that names the law line each serves (the count per file may not rise)",
+        "not on the Node-clock's closed list: its only operations are addition, multiplication and Rule3's carry, on whole numbers (the owner's idea of 2026-10-28, 15:0x UTC; law: The Node-clock is one act; The Node-clock and the Mesh are generic; there is no if), so a construct, an operator, a call or an array not made with dtype=object that the list does not name is refused in algebra/, engine/ and readings/, and in runner/board.py against a list of its own (numpy's arange and stack, the index dtype np.intp, list displays); the architect's additions go through Sofer by a ledger entry that names the law line each serves (the count per file may not rise)",
     ),
 }
 
@@ -275,6 +275,7 @@ ALLOW_NUMPY = frozenset(
 ALLOW_METHODS = frozenset("reshape transpose astype copy take sum swapaxes".split())
 ALLOW_ATTRIBUTES = frozenset("shape ndim T dtype size".split())
 ALLOW_KEYWORDS = frozenset("axis axes dtype keepdims".split())
+BOARD_NUMPY = frozenset({"arange", "stack", "intp"})  # runner/board.py's own vocabulary under the closed list: the sites counted, the six neighbours stacked, the index dtype; every other name of numpy is refused there, its wrap being the carry's alone
 CONSTRUCTORS = frozenset(
     "zeros ones full eye identity zeros_like ones_like full_like array asarray arange".split()
 )  # the calls that make an array: each takes dtype=object (Python integers, whatever their width), the architect's rule
@@ -531,6 +532,16 @@ def is_object(node: ast.AST) -> bool:
     return isinstance(node, ast.Name) and node.id == "object"
 
 
+def is_index(node: ast.AST, numpy: set[str]) -> bool:
+    """numpy's intp, the dtype of an index: np.intp."""
+    return (
+        isinstance(node, ast.Attribute)
+        and node.attr == "intp"
+        and isinstance(node.value, ast.Name)
+        and node.value.id in numpy
+    )
+
+
 def frozen_record(decorator: ast.AST) -> bool:
     """@dataclass(frozen=True): a record that cannot be written after it is made."""
     return (
@@ -548,6 +559,8 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
     construct (its parts are not read inside it) and a node class that nobody listed refused by default; an annotation is no code."""
     parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
     numpy: set[str] = set(NUMPY_NAMES)
+    vocabulary = BOARD_NUMPY if rel == BOARD else ALLOW_NUMPY  # the board's module has a narrower list than the engine's
+    methods = frozenset[str]() if rel == BOARD else ALLOW_METHODS
     # known: the functions and classes of the module, and what numpy's tensor vocabulary was imported by name (imported: to its own
     # name); siblings: the names the engine's own folders were imported by; skipped: the annotations, the decorators and the parts
     # that a refusal already names
@@ -571,7 +584,7 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
                 elif (
                     node.level == 0
                     and (node.module or "").split(".")[0] == "numpy"
-                    and alias.name in ALLOW_NUMPY
+                    and alias.name in vocabulary
                 ):
                     known.add(alias.asname or alias.name)
                     imported[alias.asname or alias.name] = alias.name
@@ -625,11 +638,11 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
         if isinstance(func, ast.Attribute):
             root = root_of(func)
             if root in numpy:
-                ok = is_scatter(call) or (isinstance(func.value, ast.Name) and func.attr in ALLOW_NUMPY)
+                ok = is_scatter(call) or (isinstance(func.value, ast.Name) and func.attr in vocabulary)
                 return ("" if ok else f"call {ast.unparse(func)}"), True
             if root in siblings:
                 return "", False
-            return ("" if func.attr in ALLOW_METHODS else f"call .{func.attr}"), True
+            return ("" if func.attr in methods else f"call .{func.attr}"), True
         return "call of an expression", False
 
     def judge(node: ast.AST) -> tuple[list[str], bool]:
@@ -657,7 +670,7 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
             return [
                 "import *" if alias.name == "*" else f"numpy.{alias.name}"
                 for alias in node.names
-                if alias.name == "*" or (numpy_import and alias.name not in ALLOW_NUMPY)
+                if alias.name == "*" or (numpy_import and alias.name not in vocabulary)
             ], True
         if isinstance(node, ast.FunctionDef):
             args, problems = node.args, []
@@ -749,7 +762,7 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
             allowed = (
                 (node.attr in ALLOW_ATTRIBUTES and isinstance(node.ctx, ast.Load))
                 or root in siblings
-                or (root in numpy and isinstance(node.value, ast.Name) and node.attr in ALLOW_NUMPY)
+                or (root in numpy and isinstance(node.value, ast.Name) and node.attr in vocabulary)
             )
             detail = f"attribute {ast.unparse(node)}" if root in numpy else f"attribute .{node.attr}"
             return ([] if allowed else [detail]), True
@@ -780,7 +793,9 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
                     problems.append("**kwargs in a call")
                 elif tensor and keyword_.arg not in ALLOW_KEYWORDS:
                     problems.append(f"keyword {keyword_.arg}")
-                elif keyword_.arg == "dtype" and not is_object(keyword_.value):
+                elif keyword_.arg == "dtype" and not (
+                    is_object(keyword_.value) or (rel == BOARD and is_index(keyword_.value, numpy))
+                ):
                     problems.append("dtype other than object")
             return problems, True
         if isinstance(node, ast.UnaryOp):
@@ -791,6 +806,8 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
                 isinstance(node.op, ALLOW_CARRY) and rel in CARRY_HOME
             )
             return ([] if allowed else [f"BinOp {SYMBOLS.get(type(node.op), '?')}"]), allowed
+        if isinstance(node, ast.List) and rel == BOARD:
+            return [], True  # np.stack's list of the six neighbours
         return [type(node).__name__], False  # a node class nobody listed
 
     def children(node: ast.AST) -> Iterator[ast.AST]:
@@ -1150,7 +1167,7 @@ def scan(rel: str, source: str) -> list[Hit]:
                 if all(products(e) >= 2 and sums(e) for e in node.elts):
                     add("MIX", node, f"{len(node.elts)} bilinear sums")
 
-    if rel.startswith(CLOSED):
+    if rel.startswith(CLOSED) or rel == BOARD:
         for node, detail in closed_list(tree, rel):
             add("ALLOW", node, detail)
 

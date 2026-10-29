@@ -13,6 +13,8 @@ from typing import Any, NamedTuple
 
 import numpy as np
 
+from tensor24.engine.state import Gearing, Layout, Plan
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -245,6 +247,20 @@ def meshes_of(nb):
     axes, n = np.arange(len(nb)) // 2, nb.shape[1]
     own, theirs = axes[:, None] * n + np.arange(n)[None, :], axes[:, None] * n + nb
     return np.where((np.arange(len(nb)) % 2 == 0)[:, None], own, theirs)
+
+
+def plain(nb, meshes, grip, w, rate, gamma):
+    """A layout of stage 4 in stage 7's records: W+ = W, s = 1, no spring, the force's path (T_k = T_d = 1), no term of J."""
+    none = np.zeros(0, dtype=np.intp)
+    return Layout(
+        nb,
+        meshes,
+        np.reshape(grip, (1, -1)),
+        Gearing(w, w, 1, 0, 1, 1),
+        Plan(none, none, none.astype(object), none),
+        rate,
+        gamma,
+    )
 
 
 def holds(name, make, shape, seed):

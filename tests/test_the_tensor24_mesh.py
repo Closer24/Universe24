@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 from tensor24.engine import mesh, step
-from tensor24.engine.state import Layout, State
+from tensor24.engine.state import State
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 from tests.frame import (
@@ -17,6 +17,7 @@ from tests.frame import (
     holds,
     meshes_of,
     near,
+    plain,
     same,
     undone_elsewhere,
     unseeded,
@@ -33,7 +34,7 @@ def varied(rng, stopped=True):
     w = rng.integers(1, 20, size=(1, n)).astype(object)
     rate = rng.integers(0, GAMMA + 1, size=(1, n)).astype(object)
     rate[0, 5] = 0 if stopped else rate[0, 5]
-    return Layout(nb, meshes_of(nb), rng.integers(-3, 4, size=3 * n).astype(object), w, rate, GAMMA)
+    return plain(nb, meshes_of(nb), rng.integers(-3, 4, size=3 * n).astype(object), w, rate, GAMMA)
 
 
 def world(rng, shape, trains, w=W):
@@ -46,20 +47,24 @@ def world(rng, shape, trains, w=W):
     c = draw(0, 2, one)
     tn = c - draw(0, 2, one)
     tooth = draw(0, 1 << 20, size) % w
-    return State(wide(rng, size), wide(rng, size), tooth, draw(0, 2, size), draw(0, GAMMA, one), c, tn)
+    zero = draw(0, 1, size)  # the drive's fine tooth, within [0, T_d) at T_d = 1
+    return State(
+        wide(rng, size), wide(rng, size), tooth, draw(0, 2, size), zero, draw(0, GAMMA, one), c, tn
+    )
 
 
 def start(rng, layout):
     """The first state on a layout: two trains, every count and the now slots' times at 0."""
-    n = layout.w.shape[1]
+    w = layout.gearing.w
+    n = w.shape[1]
     a, b = (rng.integers(-99, 99, size=(2, n)).astype(object) for _ in range(2))
-    r = rng.integers(0, 1 << 20, size=(2, n)).astype(object) % layout.w
+    r = rng.integers(0, 1 << 20, size=(2, n)).astype(object) % w
     go, ph = (
         rng.integers(0, 2, size=(2, n)).astype(object),
         rng.integers(0, GAMMA, size=(1, n)).astype(object),
     )
     zero = np.zeros((1, n), dtype=object)
-    return State(a, b, r, go, ph, zero, zero)
+    return State(a, b, r, go, 0 * a, ph, zero, zero)
 
 
 def parted(seed, stopped=True):
@@ -112,11 +117,11 @@ def stopped():
 
 def naive(shape, s, layout, mask):
     """The tick site by site, with loops and plain integers, its neighbours and Meshes found from the coordinates."""
-    _, _, grip, w, rate, gamma = layout
-    a, b, r, go, ph, c, tn = (x.tolist() for x in s)
-    grip, (w,), (rate,), (mask,) = grip.tolist(), w.tolist(), rate.tolist(), mask.tolist()
+    _, _, (grip,), gearing, _, rate, gamma = layout
+    a, b, r, go, rd, ph, c, tn = (x.tolist() for x in s)
+    grip, (w,), (rate,), (mask,) = grip.tolist(), gearing.w.tolist(), rate.tolist(), mask.tolist()
     n = len(c[0])
-    new = [[row[:] for row in x] for x in (a, b, r, go, ph, c, tn)]
+    new = [[row[:] for row in x] for x in (a, b, r, go, rd, ph, c, tn)]
     fire, k, before = ([[0] * n] for _ in range(3))
     for x in itertools.product(*map(range, shape)):
         i, around = (
@@ -125,8 +130,8 @@ def naive(shape, s, layout, mask):
         )
         spokes = [axis * n + j for axis in range(3) for j in (i, around[axis + axis + 1])]
         fire[0][i] = mask[i] * int(all(c[0][j] >= c[0][i] for j in around))
-        k[0][i], new[4][0][i] = divmod(ph[0][i] + rate[i], gamma) if fire[0][i] else (0, ph[0][i])
-        new[5][0][i], before[0][i] = c[0][i] + fire[0][i], tn[0][i]
+        k[0][i], new[5][0][i] = divmod(ph[0][i] + rate[i], gamma) if fire[0][i] else (0, ph[0][i])
+        new[6][0][i], before[0][i] = c[0][i] + fire[0][i], tn[0][i]
         if k[0][i]:
             for g in range(len(a)):
                 seen = [a[g][j] if c[0][i] >= tn[0][j] else b[g][j] for j in around]
@@ -134,7 +139,7 @@ def naive(shape, s, layout, mask):
                 home = (w[i] - go[g][i]) // 2
                 q, new[2][g][i] = divmod(w[i] * (a[g][i] - b[g][i]) + r[g][i] - home + pull + home, w[i])
                 new[0][g][i], new[1][g][i] = a[g][i] + q, a[g][i]
-            new[6][0][i] = new[5][0][i]
+            new[7][0][i] = new[6][0][i]
     return State(*(np.array(x, dtype=object) for x in new)), tuple(
         np.array(x, dtype=object) for x in (fire, k, before)
     )
@@ -146,8 +151,8 @@ def masked():
         rng = np.random.default_rng(10 + seed)
         layout = varied(rng, stopped=False)
         s, mask = (
-            world(rng, SHAPE, 2, layout.w),
-            rng.integers(0, 2, size=(1, layout.w.shape[1])).astype(object),
+            world(rng, SHAPE, 2, layout.gearing.w),
+            rng.integers(0, 2, size=(1, layout.gearing.w.shape[1])).astype(object),
         )
         if not same(flat(step.tick(layout, s, mask)), flat(naive(SHAPE, s, layout, mask))):
             return False
@@ -160,15 +165,15 @@ def negated():
         rng = np.random.default_rng(20 + seed)
         layout = varied(rng, stopped=False)
         s, mask = (
-            world(rng, SHAPE, 2, layout.w),
-            rng.integers(0, 2, size=(1, layout.w.shape[1])).astype(object),
+            world(rng, SHAPE, 2, layout.gearing.w),
+            rng.integers(0, 2, size=(1, layout.gearing.w.shape[1])).astype(object),
         )
         a, b, r, go, *rest = s
         (a1, b1, r1, go1, *rest1), out1 = step.tick(layout, s, mask)
         (a2, b2, r2, go2, *rest2), out2 = step.tick(
-            layout, State(-a, -b, layout.w - 1 - r, 1 - go, *rest), mask
+            layout, State(-a, -b, layout.gearing.w - 1 - r, 1 - go, *rest), mask
         )
-        flipped = same([a2, b2, r2, go2], [-a1, -b1, layout.w - 1 - r1, 1 - go1])
+        flipped = same([a2, b2, r2, go2], [-a1, -b1, layout.gearing.w - 1 - r1, 1 - go1])
         if not (flipped and same([*rest2, *out2], [*rest1, *out1])):
             return False
     return True
@@ -177,9 +182,7 @@ def negated():
 def alike(nb):
     """The layout alike at every site and Mesh, for the frame's properties."""
     ones = np.ones((1, nb.shape[1]), dtype=object)
-    return Layout(
-        nb, meshes_of(nb), np.ones(3 * nb.shape[1], dtype=object), W * ones, RATE * ones, GAMMA
-    )
+    return plain(nb, meshes_of(nb), np.ones(3 * nb.shape[1], dtype=object), W * ones, RATE * ones, GAMMA)
 
 
 def engine():
@@ -197,13 +200,18 @@ def engine():
     )
 
 
+def teeth(gearing, w):
+    """The gearing with other teeth, W and W+ alike."""
+    return gearing._replace(w=w, wp=w)
+
+
 def mutants():
     """Broken copies of the engine, each with the law that must catch it: what it replaces in the step, and with what."""
     tick, untick, pull, gear = step.tick, step.untick, mesh.pull, step.gear
     calls = itertools.count()
 
     def now_only(layout, s):
-        return ((s.a[:, layout.nb] - s.a[:, None, :]) * layout.grip[layout.meshes]).sum(axis=1)
+        return ((s.a[:, layout.nb] - s.a[:, None, :]) * layout.grip[:, layout.meshes]).sum(axis=1)
 
     def counting(layout, s, allowed):
         return tick(layout, s, allowed * step.beat(s.ph, layout.rate, layout.gamma, 1)[0])
@@ -237,7 +245,11 @@ def mutants():
         "a far site's teeth": (
             "masked",
             "tick",
-            lambda layout, s, allowed: tick(layout._replace(w=layout.w[:, layout.nb[0]]), s, allowed),
+            lambda layout, s, allowed: tick(
+                layout._replace(gearing=teeth(layout.gearing, layout.gearing.w[:, layout.nb[0]])),
+                s,
+                allowed,
+            ),
         ),
         "a pull that is not odd": ("negated", "pull", lambda layout, s: pull(layout, s) + 1),
         "a pull two Meshes away": (

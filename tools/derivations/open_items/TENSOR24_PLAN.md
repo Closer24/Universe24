@@ -405,7 +405,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 
 1. **The five laws, in five places:**
    - **the kind table:** kinds, in engine/kinds.py; the tables C in runner/load.py, from each elementary seed in turn (the loop at load), made primitive; contract, one gather, one product and one scattered sum, in engine/contract.py;
-   - **the tick:** step, with shift and pull, in engine/mesh.py and engine/step.py;
+   - **the tick:** step, with shift and pull, in engine/mesh.py and engine/step.py; from stage 7a every gear's sources (its force, and J on the value, the centred difference along each axis and the force), its drive (every source's one way in, the kick) and its carry, at coefficients the layout holds until stage 7b gears them from the lapse;
    - **the turnover:** turnover, in engine/step.py;
    - **the click:** click_whole and click_split, in engine/click.py;
    - **every bound a carry:** carry, in algebra/carry.py, and beat, in engine/step.py.
