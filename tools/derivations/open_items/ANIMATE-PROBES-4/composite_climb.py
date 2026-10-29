@@ -1,17 +1,19 @@
 """Toy: does the chosen path help build ever more complex clocks? (Animate; the owner's word of 2026-10-28, 15:57 UTC:
 "Does this help build more and more complex clocks?")
 
-1. The turnover keeps every kind. T commutes with every turn, so it sends each kind to the kind of the conjugate
-   characters; it keeps every kind exactly where every turn is conjugate to its own reverse. Counted exactly on the 24
-   turns and on their 48 lifts to the twins (Gaussian rationals up to a positive scalar, as in kind_kept.py), and on the
-   mutant, the 12 turns of the tetrahedron and their 24 lifts.
+1. T, each kind's time reversal, keeps every kind (read by this count; no act applies T, decision 27). T commutes
+   with every turn, so it sends each kind to the kind of the conjugate characters; it keeps every kind exactly where
+   every turn is conjugate to its own reverse. Counted exactly on the 24 turns and on their 48 lifts to the twins
+   (Gaussian rationals up to a positive scalar, as in kind_kept.py), and on the mutant, the 12 turns of the
+   tetrahedron and their 24 lifts.
 2. The kinds built from the twins, each a meeting of a composite with one more twin (the 24's projections by the
    characters, checked against the built kinds' traces): each kind's rung (the fewest twins that hold it), its T T, and
    whether it can hold a direction (T1 in K x K*, by the characters, and the largest |<S_z>| it shows).
 3. One composite clock over many bangs, in the plan's item (t): every meeting is one shared dial, the 24 decompose it
    into kinds, and the click draws a kind with shares the projections' norms; the composite is then a clock of the kind
    drawn, its components that kind's own (line 98's count stays fixed). Each bang:
-     - the turnover, T = J K by the kind;
+     - no act at the top (decision 27): the composite goes on as its gears hold it; with --former, the former
+       turnover, T = J K by the kind, for comparison;
      - the fitting lays one new twin: along the composite's standing direction, by S . J at the coupling's strength,
        where the composite holds one; along the bang's own lead axis with a fair sign where it holds none;
      - the composite and the twin meet, and the click draws the kind.
@@ -22,17 +24,22 @@
      choice    the twin laid wholly along it;
      against   wholly against it: the coupling's other sign.
    The composite's direction is its T1 reading, the sum of its parts' spins read in its kind; a kind reached by more
-   than one route is read through its first route. The draws come from a fixed stream of fair digits (the vernier's
-   stand-in); the states are complex doubles.
+   than one route is read through its first route. The draws come from a fixed stream of fair digits, SHA-256 of the
+   seed and a counter (the vernier's stand-in; the former linear congruential bit repeated every 2^17 bits, so a rule's
+   2,048 runs replayed part of it), each rule on its own stream; the states are complex doubles. --seed N sets the seed.
 Read per bang over many runs: the kinds' shares, the share holding a direction, and the share that has held all eight.
 """
 
+import hashlib
+import sys
 from fractions import Fraction as Q
 from itertools import permutations, product
 
 import numpy as np
 
 BANGS, RUNS = 24, 2048
+FORMER = "--former" in sys.argv  # the former turnover at the top, which decision 27 cancelled
+SEED = int(sys.argv[sys.argv.index("--seed") + 1]) if "--seed" in sys.argv else 2026
 
 
 # 1. Exact: Gaussian rationals as pairs (re, im) of Fractions.
@@ -257,11 +264,14 @@ def build(group):
 
 
 def digits():
-    """A fixed stream of fair bits: the binary digits of a linear congruential walk (the vernier's stand-in)."""
-    x = 2026
+    """A fixed stream of fair bits: SHA-256 of the seed and a counter, 256 bits a block (the vernier's stand-in)."""
+    count = 0
     while True:
-        x = (1103515245 * x + 12345) % (1 << 31)
-        yield (x >> 16) & 1
+        block = hashlib.sha256(f"{SEED}:{count}".encode()).digest()
+        count += 1
+        for byte in block:
+            for i in range(8):
+                yield (byte >> i) & 1
 
 
 def uniforms():
@@ -293,8 +303,8 @@ def climb(rule, kinds, meets, draws):
     for _ in range(2, BANGS + 1):
         if rule == "rewound":
             kind, v = "E1/2", fresh()
-        else:
-            v = kinds[kind]["J"] @ v.conj()  # the turnover
+        elif FORMER:
+            v = kinds[kind]["J"] @ v.conj()  # the former turnover; no act at the top (decision 27)
         s = reading(kind, v)
         if np.linalg.norm(s) > 1e-9:
             line, kappa = s / np.linalg.norm(s), KAPPA.get(rule, 0.0)
@@ -322,7 +332,8 @@ def main():
     assert len(group) == 48
     tet_lifts = [m for m in group if even(rotation(m))]
     print(
-        "1. the turnover keeps a kind exactly where every turn is conjugate to its own reverse (counted exactly)"
+        "1. T, each kind's time reversal, keeps a kind exactly where every turn is conjugate to its own reverse"
+        " (counted exactly)"
     )
     for name, (count, real) in (
         ("the 24 turns", classes_turns(rot)),
@@ -330,9 +341,7 @@ def main():
         ("the mutant: the tetrahedron's 12 turns", classes_turns(tet)),
         ("their 24 lifts", classes_lifts(tet_lifts)),
     ):
-        print(
-            f"   {name}: {count} kinds, {real} kept by the turnover, {count - real} sent to another kind"
-        )
+        print(f"   {name}: {count} kinds, {real} kept by T, {count - real} sent to another kind")
     for a in CHARACTERS.values():
         for b in CHARACTERS.values():
             dot = sum(n * x * y for n, x, y in zip(SIZES, a, b, strict=True))
@@ -352,14 +361,16 @@ def main():
             f"largest |<S_z>| {largest:.3f}; with one more twin: {' or '.join(into)}"
         )
     print(
-        f"3. one composite over {BANGS} bangs, {RUNS} runs per rule; per bang: the share at the bang's new rung"
+        f"3. one composite over {BANGS} bangs, {RUNS} runs per rule, seed {SEED}, "
+        + ("the former turnover at the top" if FORMER else "no act at the top (decision 27)")
+        + "; per bang: the share at the bang's new rung"
     )
     print(
         "   (bangs 1 to 6), the mean rung, the share holding a direction, and the share that has reached the top"
     )
     print("   kind (A2, rung 6) at least once")
-    draws = uniforms()
     for rule in ("rewound", "against", "axis", "half", "choice"):
+        draws = uniforms()
         paths = [climb(rule, kinds, meets, draws) for _ in range(RUNS)]
         top, mean, held, reached = [], [], [], []
         for b in range(BANGS):

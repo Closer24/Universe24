@@ -8,23 +8,27 @@ One Node-clock across many bangs, in clocks:
     (1 - s . m) / 2, s the child's own spin (0 for a singlet's child), by the board's draw (here a fixed stream of fair
     digits, the vernier's stand-in);
   - what the click wrote is a twin pair with a definite direction: the record;
-  - the turnover is T on every gear: the record's direction reverses (S to -S);
+  - no act at the top (decision 27, the owner's word to the Boss of 2026-10-29, 06:3x UTC): the record goes on as
+    the gears hold it; with --former, the former turnover, T on every gear, reverses it (S to -S), for comparison;
   - law 6's detector is "a second twin pair at the Node-clock": where a record stands, it is the next click's detector,
     its axis m; where none stands, the bang's own frame, the light's lead axis there, one of the three axes by the draw.
 The directions are the 24's six axis directions, integers. Four rules for what crosses into the next bang:
   rewound      the exact rewind undoes every click: each bang starts with no record (law 3 as the board's own act);
-  axis         way 2: the record stands through the turnover, reversed, and is the next detector; the child a singlet's
-               (s = 0): the axis carries, the sign is drawn afresh;
+  axis         the record stands and is the next detector; the child a singlet's (s = 0): the axis carries, the
+               sign is drawn afresh;
   choice       as axis, and the record bends the light's lead through the spin's coupling to the current (S . J,
-               item 5), so the next child is laid along the lead (law C, the kind kept): s = the reversed record;
+               item 5), so the next child is laid along the lead (law C, the kind kept): s = the record;
   half         as choice, with the child laid half along the lead: shares (2 +- s . m) / 4;
   mutant       as half, with the contraction read on the z parts alone (an axis typed), which must part the 24.
 The 24: the same draws with every frame turned by each of the 24 turns; a generic law turns every choice with them.
 Read over 4,096 bangs: how often the next bang's axis is the last record's line, how often its choice is the last
-choice reversed, and the share of fresh draws.
+choice repeated or reversed, and the share of fresh draws.
 """
 
+import sys
+
 BANGS = 4096
+FORMER = "--former" in sys.argv  # the former turnover at the top, which decision 27 cancelled
 AXES = [(1, 0, 0), (0, 1, 0), (0, 0, 1)]
 
 
@@ -58,7 +62,7 @@ def run(rule, turn=None):
     determinant 1, one of the 24), and the choices are returned for the covariance check."""
     bits = digits()
     record = None
-    same_line, reversed_choice, drawn = 0, 0, 0
+    same_line, reversed_choice, repeated, drawn = 0, 0, 0, 0
     last, choices = None, []
     for _ in range(BANGS):
         # the detector: the record where one stands, else the bang's own frame, the light's lead axis there, which
@@ -85,12 +89,14 @@ def run(rule, turn=None):
         if last is not None:
             same_line += abs(dot(choice, last)) == 1
             reversed_choice += choice == neg(last)
+            repeated += choice == last
         last = choice
         choices.append(choice)
-        # the turnover: T reverses every gear's spin; the rewound rule undoes the click from its log
-        record = None if rule == "rewound" else neg(choice)
+        # no act at the top (decision 27): the record goes on as written; the former turnover reversed every gear's
+        # spin; the rewound rule undoes the click from its log
+        record = None if rule == "rewound" else neg(choice) if FORMER else choice
     pairs = BANGS - 1
-    return same_line, reversed_choice, drawn, pairs, choices
+    return same_line, reversed_choice, drawn, pairs, choices, repeated
 
 
 def apply(turn, v):
@@ -118,14 +124,15 @@ def turns():
 
 
 def main():
+    act = "the former turnover at the top" if FORMER else "no act at the top (decision 27)"
     print(
-        f"one Node-clock over {BANGS} bangs; the detector the last record, or the bang's own lead axis"
+        f"one Node-clock over {BANGS} bangs, {act}; the detector the last record, or the bang's own lead axis"
     )
     for rule in ("rewound", "axis", "choice", "half"):
-        same_line, reversed_choice, drawn, pairs, _ = run(rule)
+        same_line, reversed_choice, drawn, pairs, _, repeated = run(rule)
         print(
             f"  {rule:8s}: the next choice on the last choice's line {same_line} of {pairs}; "
-            f"the last choice reversed {reversed_choice} of {pairs}; fresh draws {drawn} of {BANGS}"
+            f"the last choice repeated {repeated}, reversed {reversed_choice}; fresh draws {drawn} of {BANGS}"
         )
     print(
         "the 24: every frame the draw gives turned by each turn R; the law keeps the 24 where the choices turn by R"
