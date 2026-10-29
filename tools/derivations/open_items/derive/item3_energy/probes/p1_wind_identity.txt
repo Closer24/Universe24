@@ -1,0 +1,20 @@
+W = 1, no J (the force's path, free): 400 worlds, 2400 round-ticks run (a world stops once a gear passes 2**60)
+  identity dE = sum (a+ - b)(s T_k q - (r+ - r)) held: 2400 of 2400
+  E kept exactly (dE = 0 on every row): 2400 of 2400
+  stride pi+ = pi + push exact: 2400 of 2400; drive T_d q = J + r_d - r_d+ exact: 2400 of 2400
+  mutant (no remainder term) held: 2400 of 2400
+W random 1..9, no J (free gear): 400 worlds, 2400 round-ticks run (a world stops once a gear passes 2**60)
+  identity dE = sum (a+ - b)(s T_k q - (r+ - r)) held: 2400 of 2400
+  E kept exactly (dE = 0 on every row): 8 of 2400
+  stride pi+ = pi + push exact: 2400 of 2400; drive T_d q = J + r_d - r_d+ exact: 2400 of 2400
+  mutant (no remainder term) held: 8 of 2400
+W = 1, J random, T_d random 1..9: 400 worlds, 1556 round-ticks run (a world stops once a gear passes 2**60)
+  identity dE = sum (a+ - b)(s T_k q - (r+ - r)) held: 1556 of 1556
+  E kept exactly (dE = 0 on every row): 120 of 1556
+  stride pi+ = pi + push exact: 1556 of 1556; drive T_d q = J + r_d - r_d+ exact: 1556 of 1556
+  mutant (no remainder term) held: 1556 of 1556
+W random 1..9, J random, T_d random 1..9: 400 worlds, 1721 round-ticks run (a world stops once a gear passes 2**60)
+  identity dE = sum (a+ - b)(s T_k q - (r+ - r)) held: 1721 of 1721
+  E kept exactly (dE = 0 on every row): 0 of 1721
+  stride pi+ = pi + push exact: 1721 of 1721; drive T_d q = J + r_d - r_d+ exact: 1721 of 1721
+  mutant (no remainder term) held: 11 of 1721

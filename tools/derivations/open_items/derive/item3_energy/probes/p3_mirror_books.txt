@@ -1,0 +1,40 @@
+kind A1, W = 1, T_d = 1, lay + take (mirrors): 616 round-ticks over 150 worlds
+  (c1) dS_t = tau_t + sum Im(conj(a) push_t), every train: 616 of 616
+  (c2) the pairs X+Z, Y+Z kept up to the two torques: 616 of 616
+  (c3) the pairs X+Z, Y+Z kept bit for bit: 616 of 616
+  (c5) ticks with a drive quantum: 616; of them sum q(take) = -sum q(lay): 0; ticks with some q < 0: 616
+kind A1, W = 1, T_d = 1, lay alone (mutant): 1121 round-ticks over 150 worlds
+  (c1) dS_t = tau_t + sum Im(conj(a) push_t), every train: 1121 of 1121
+  (c2) the pairs X+Z, Y+Z kept up to the two torques: 0 of 1121
+  (c3) the pairs X+Z, Y+Z kept bit for bit: 0 of 1121
+  (c5) ticks with a drive quantum: 1121; of them sum q(take) = -sum q(lay): 1; ticks with some q < 0: 1096
+kind A1, W 1..6, T_d 2..5, lay + take (mirrors): 806 round-ticks over 150 worlds
+  (c1) dS_t = tau_t + sum Im(conj(a) push_t), every train: 806 of 806
+  (c2) the pairs X+Z, Y+Z kept up to the two torques: 806 of 806
+  (c3) the pairs X+Z, Y+Z kept bit for bit: 0 of 806
+  (c5) ticks with a drive quantum: 806; of them sum q(take) = -sum q(lay): 0; ticks with some q < 0: 804
+kind A1, W 1..6, T_d 2..5, lay alone (mutant): 1189 round-ticks over 150 worlds
+  (c1) dS_t = tau_t + sum Im(conj(a) push_t), every train: 1189 of 1189
+  (c2) the pairs X+Z, Y+Z kept up to the two torques: 1 of 1189
+  (c3) the pairs X+Z, Y+Z kept bit for bit: 0 of 1189
+  (c5) ticks with a drive quantum: 1189; of them sum q(take) = -sum q(lay): 3; ticks with some q < 0: 1153
+kind T1, W = 1, T_d = 1, lay + take (mirrors): 603 round-ticks over 150 worlds
+  (c1) dS_t = tau_t + sum Im(conj(a) push_t), every train: 603 of 603
+  (c2) the pairs X+Z, Y+Z kept up to the two torques: 603 of 603
+  (c3) the pairs X+Z, Y+Z kept bit for bit: 603 of 603
+  (c5) ticks with a drive quantum: 603; of them sum q(take) = -sum q(lay): 0; ticks with some q < 0: 603
+kind T1, W = 1, T_d = 1, lay alone (mutant): 1115 round-ticks over 150 worlds
+  (c1) dS_t = tau_t + sum Im(conj(a) push_t), every train: 1115 of 1115
+  (c2) the pairs X+Z, Y+Z kept up to the two torques: 0 of 1115
+  (c3) the pairs X+Z, Y+Z kept bit for bit: 0 of 1115
+  (c5) ticks with a drive quantum: 1115; of them sum q(take) = -sum q(lay): 0; ticks with some q < 0: 1115
+kind T1, W 1..6, T_d 2..5, lay + take (mirrors): 765 round-ticks over 150 worlds
+  (c1) dS_t = tau_t + sum Im(conj(a) push_t), every train: 765 of 765
+  (c2) the pairs X+Z, Y+Z kept up to the two torques: 765 of 765
+  (c3) the pairs X+Z, Y+Z kept bit for bit: 0 of 765
+  (c5) ticks with a drive quantum: 765; of them sum q(take) = -sum q(lay): 1; ticks with some q < 0: 765
+kind T1, W 1..6, T_d 2..5, lay alone (mutant): 1189 round-ticks over 150 worlds
+  (c1) dS_t = tau_t + sum Im(conj(a) push_t), every train: 1189 of 1189
+  (c2) the pairs X+Z, Y+Z kept up to the two torques: 0 of 1189
+  (c3) the pairs X+Z, Y+Z kept bit for bit: 0 of 1189
+  (c5) ticks with a drive quantum: 1189; of them sum q(take) = -sum q(lay): 3; ticks with some q < 0: 1189

@@ -1,0 +1,13 @@
+seed 0: board (2, 2, 2), W [4, 3, 3, 4, 4, 5, 6, 2]: E0 25580, E over the run within [17753, 27626] (per mille of E0: 694 to 1079); bound held 4000 of 4000; not back within 4000 ticks
+seed 1: board (1, 2, 2), W [6, 2, 2, 6]: E0 4516, E over the run within [2752, 6872] (per mille of E0: 609 to 1521); bound held 4000 of 4000; not back within 4000 ticks
+seed 2: board (2, 1, 1), W [3, 4]: E0 2809, E over the run within [2613, 3131] (per mille of E0: 930 to 1114); bound held 4000 of 4000; not back within 4000 ticks
+seed 3: board (2, 1, 1), W [3, 2]: E0 2081, E over the run within [1615, 2591] (per mille of E0: 776 to 1245); bound held 4000 of 4000; not back within 4000 ticks
+seed 4: board (2, 2, 2), W [4, 6, 6, 6, 2, 4, 5, 3]: E0 15374, E over the run within [15285, 30533] (per mille of E0: 994 to 1986); bound held 4000 of 4000; not back within 4000 ticks
+seed 5: board (2, 2, 1), W [6, 4, 4, 5]: E0 14136, E over the run within [12608, 17662] (per mille of E0: 891 to 1249); bound held 4000 of 4000; not back within 4000 ticks
+seed 6: board (1, 2, 2), W [3, 6, 3, 5]: E0 9735, E over the run within [6949, 17538] (per mille of E0: 713 to 1801); bound held 4000 of 4000; not back within 4000 ticks
+seed 7: board (2, 2, 2), W [6, 4, 5, 6, 3, 2, 3, 3]: E0 26854, E over the run within [23964, 39744] (per mille of E0: 892 to 1480); bound held 4000 of 4000; not back within 4000 ticks
+seed 8: board (2, 1, 1), W [6, 2]: E0 778, E over the run within [328, 1125] (per mille of E0: 421 to 1446); bound held 4000 of 4000; not back within 4000 ticks
+seed 9: board (1, 2, 2), W [3, 2, 5, 5]: E0 16243, E over the run within [12388, 16838] (per mille of E0: 762 to 1036); bound held 4000 of 4000; not back within 4000 ticks
+seed 10: board (2, 2, 1), W [3, 5, 6, 4]: E0 21398, E over the run within [20528, 29791] (per mille of E0: 959 to 1392); bound held 4000 of 4000; not back within 4000 ticks
+seed 11: board (1, 1, 2), W [4, 4]: E0 2004, E over the run within [1365, 2353] (per mille of E0: 681 to 1174); bound held 366 of 366; back at its start after 366 ticks
+the per-tick bound |sqrt E+ - sqrt E| <= sqrt(sum (r+ - r)^2 / W): held at 44366 of 44366 ticks

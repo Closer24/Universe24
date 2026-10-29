@@ -1,0 +1,1 @@
+400 worlds with E positive definite, J random, T_d 1..5: the bound |sqrt E+ - sqrt E| <= sqrt(SUM (s T_k q - (r+ - r))^2 / W) held at 2445 of 2445 round-ticks
