@@ -24,6 +24,7 @@ For each item, one question: is it what the one act does by itself? The Node-clo
    - **The head's own tables give them:** A1 (1 component), E (2) and T2 (3), six in all, as a symmetric tensor of three axes holds. T1 x T1 -> T1, the cross, is antisymmetric.
    - **A wave along z:** h_xx - h_yy lands in E, and h_xy in T2. The head struck the shears (T2, R11), so its waves hold one polarization of the two.
    - **The change:** the regulator's spatial block is the symmetric square of the Spoke, A1 + E + T2, beside the lapse (A1) and the flows (T1). That makes ten components, general relativity's ten. Its sources are the stress's symmetric channels through C, as the tensions' are now.
+   - **Massless:** the block keeps the spring 0, while the time gear carries the clock's one notch (item 13).
 3. **The perihelion** (6484103660; p14).
    - **In the clock:** a slowing is a ratio, ratios multiply, and their count adds. The count is what the one formula moves.
    - **In the law:** the rate line holds the load c as the time notch, p0 = Gamma (1 - 1 / Gamma)^c: the count of slowings, each one tooth in Gamma, moving linearly. That is n = 0, general relativity's advance. The head's volume gear X belongs to the hypothesis **The motion of gravity's train is a hill at the symmetry's weight** (2026-10-22). It is n = 4, a third of the advance.
@@ -79,6 +80,8 @@ For each item, one question: is it what the one act does by itself? The Node-clo
     - **Its price in nature:** Yukawa's reach, about sqrt(Gamma / 6) Meshes with light at the step's edge. Gravity's reach in nature bounds Gamma from below, and the swing's period is then of the same order in ticks.
     - **Decision 25** (d61cdb7bd) read the mass as 0, since "no standing law asks one". Line 352 is a standing law that asks one, and the course's top rests on it.
     - **Decided** by the owner's word of 03:1x UTC ("I am going with your recommendations"): line 352 stands, with the pinion rim - rim div Gamma, and decision 25's clause comes out.
+    - **Entered as law** by the owner's word of 03:3x UTC: "Approved. Send to the Boss and to Sofer to enter as law. Cancel what contradicts it." (#2187, 6487250651, with the places it cancels).
+    - **On the time gear alone.** The spatial block and the flows keep the spring 0, so the graviton's two polarizations stay massless. Light reads the same count (N A = 1), so the bending and the pull carry one Yukawa factor and their ratio stays general relativity's: no van Dam, Veltman and Zakharov discontinuity, which a spring on the shears would bring (TENSOR24.md section 18, item 14, corrected).
 14. **The lattice's frame** (root II). One Mesh is the board's rest frame, and no act on a lattice removes it. What the act gives is one cone at long waves (item 1).
 15. **The course** (root VI). The circle is law 4, the owner's. The course under item 3's law is OPEN 7 and needs the bang run again. Its top is item 13's: with the clock's one notch the board's mean count swings, and with no spring it has no top. With line 352 standing, the course has its top.
 16. **The horizon.** The metric N A = 1 with the count harmonic has none. Whether the board's black holes are the turnover's releases (rows 1, 14, 34 and 61) is the owner's.
