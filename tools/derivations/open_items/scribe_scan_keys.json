@@ -52,5 +52,10 @@
 "KEYS|tensor24/runner/files.py|AXES.z",
 "KEYS|tensor24/runner/files.py|OPTIONAL.couplings",
 "KEYS|tensor24/runner/files.py|OPTIONAL.gears",
-"KEYS|tensor24/runner/files.py|OPTIONAL.weight"
+"KEYS|tensor24/runner/files.py|OPTIONAL.weight",
+"KEYS|tensor24/runner/files.py|UNIVERSE.integers.den",
+"KEYS|tensor24/runner/files.py|UNIVERSE.integers.full_rate",
+"KEYS|tensor24/runner/files.py|UNIVERSE.integers.key",
+"KEYS|tensor24/runner/files.py|UNIVERSE.integers.trace",
+"KEYS|tensor24/runner/files.py|UNIVERSE.integers.width"
 ]
