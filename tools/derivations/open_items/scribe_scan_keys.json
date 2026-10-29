@@ -49,5 +49,8 @@
 "KEYS|tensor24/runner/files.py|GEAR.train",
 "KEYS|tensor24/runner/files.py|AXES.x",
 "KEYS|tensor24/runner/files.py|AXES.y",
-"KEYS|tensor24/runner/files.py|AXES.z"
+"KEYS|tensor24/runner/files.py|AXES.z",
+"KEYS|tensor24/runner/files.py|OPTIONAL.couplings",
+"KEYS|tensor24/runner/files.py|OPTIONAL.gears",
+"KEYS|tensor24/runner/files.py|OPTIONAL.weight"
 ]
