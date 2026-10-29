@@ -14,6 +14,7 @@ from tensor24.engine import contract, mesh, step
 from tensor24.engine.state import Gearing, Layout, Plan, Read, State
 from tensor24.main import made
 from tensor24.runner import board as boards
+from tensor24.runner import load as loading
 from tensor24.runner.load import load
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
@@ -67,7 +68,7 @@ def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False):
     none = np.zeros(0, dtype=np.intp)
     plan = plan if sourced else Plan(none, none, none.astype(object), none)
     grip = draw(rng, -3, 4, (rows, 3 * n))
-    return Layout(nb, frame.meshes_of(nb), grip, gearing, plan, read)
+    return Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, read)
 
 
 def world(rng, layout, rows=ROWS):
@@ -83,7 +84,7 @@ def world(rng, layout, rows=ROWS):
 
 def naive(layout, s, shape=SHAPE):
     """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the carry."""
-    _, _, grip, gearing, plan, _ = layout
+    _, _, _, grip, gearing, plan, _ = layout
     rows = len(s.a)
     rest, stretch, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     first, second, factor, target = (x.tolist() for x in plan)
@@ -209,9 +210,12 @@ SHAPES = ((3, 3, 3), (4, 5, 6), (3, 4, 7), (1, 1, 1), (7, 7, 7))
 
 
 def model():
-    """The board's neighbours and Meshes equal the frame's, found by numpy's own wrap, at every shape."""
-    built = [boards.board(shape) for shape in SHAPES]
-    wanted = [(frame.board(shape), frame.meshes_of(frame.board(shape))) for shape in SHAPES]
+    """The board's neighbours, and the load's Spokes and Meshes on them, equal the frame's (numpy's own wrap) at every
+    shape."""
+    built = [
+        (boards.board(shape), *loading.geometry(boards.board(shape), len(shape))) for shape in SHAPES
+    ]
+    wanted = [(frame.board(s), frame.spokes(), frame.meshes_of(frame.board(s))) for s in SHAPES]
     return all(
         np.array_equal(x, y)
         for pair in zip(built, wanted, strict=True)
@@ -222,7 +226,8 @@ def model():
 def held_alike():
     """Each Mesh is held alike at its two ends: a site's +axis Spoke and its +axis neighbour's -axis Spoke."""
     for shape in SHAPES:
-        nb, meshes = boards.board(shape)
+        nb = boards.board(shape)
+        _, meshes = loading.geometry(nb, len(shape))
         if not all(np.array_equal(meshes[x + x], meshes[x + x + 1][nb[x + x]]) for x in range(3)):
             return False
     return True
@@ -246,7 +251,8 @@ def sourced_images():
     n, rows = nb.shape[1], 1 + 1 + 3 + 3 + 1
     ones = np.ones((1, n), dtype=object)
     gearing = Gearing(ones, ones, ones, ones)
-    layout = Layout(nb, frame.meshes_of(nb), 3 * ones.repeat(3, axis=1), gearing, plan, frame.unread())
+    grip = 3 * ones.repeat(3, axis=1)
+    layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, frame.unread())
     s = world(np.random.default_rng(5), layout, rows)
     force, j = step.sources(layout, s.a)
     xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
@@ -285,7 +291,13 @@ def mutants():
     """Broken copies, each with the law that must catch it: what it replaces in the step (or the board), and with what."""
     tick, untick, gear, mirror = step.tick, step.untick, step.gear, step.mirror
     read, weight, driven, drive, sources = step.read, step.weight, step.driven, step.drive, step.sources
-    pull, seen, built, calls = mesh.pull, mesh.seen, boards.board, itertools.count()
+    pull, seen, built, laid, calls = (
+        mesh.pull,
+        mesh.seen,
+        boards.board,
+        loading.geometry,
+        itertools.count(),
+    )
 
     def far(y):
         return y._replace(nb=y.nb[:, y.nb[0]])
@@ -346,12 +358,12 @@ def mutants():
         return tuple(x[:, y.nb[0][y.nb[0]]] for x in sources(y, a))
 
     def one_short(shape):
-        nb, meshes = built(shape)
-        return np.stack([nb[0], nb[0], *nb[2:]]), meshes
+        nb = built(shape)
+        return np.stack([nb[0], nb[0], *nb[2:]])
 
-    def wrapped_once(shape):
-        nb, meshes = built(shape)
-        return nb, np.stack([meshes[0], meshes[0], *meshes[2:]])
+    def wrapped_once(nb, axes):
+        spokes, meshes = laid(nb, axes)
+        return spokes, np.stack([meshes[0], meshes[0], *meshes[2:]])
 
     first = lambda a: (np.arange(len(a)) == 0).astype(object)[:, None]  # noqa: E731
     return {  # the Mesh, the board, and the act at its coefficients
@@ -376,7 +388,7 @@ def mutants():
         "the before slot off the stride": ("formula", "gear", lambda a, b, *z: gear(a, 0 * b, *z)),
         "the run back keeping the before slot": ("bijectivity", "untick", keep_b),
         "the -x neighbour taken as the +x": ("model", "board", one_short, boards),
-        "the -x Spoke holding the site's own Mesh": ("held_alike", "board", wrapped_once, boards),
+        "the -x Spoke holding the site's own Mesh": ("held_alike", "geometry", wrapped_once, loading),
         "the pull two Meshes away, past the cone": ("cone", "pull", lambda y, a: pull(far(y), a)),
         "the run back two Meshes away": ("cone_back", "untick", lambda y, s: untick(far(y), s)),
         "the kick's teeth ignored": ("formula", "driven", kicked(lambda g: 1)),
@@ -477,7 +489,7 @@ def kept(each_end=False, moving=False, sourced=False):
     for t in range(SQUARING if sourced else ROUNDS):  # J squares the gears each round
         push = s + t * draw(rng, 0, 3, (1, n)) if moving else s
         gearing = Gearing(teeth[t], push, kick, drive)  # each round at its own teeth
-        layout = Layout(nb, meshes, grip, gearing, plan, frame.unread())
+        layout = Layout(nb, frame.spokes(), meshes, grip, gearing, plan, frame.unread())
         _, j = step.sources(layout, state.a)
         now = step.tick(layout, state)
         torques = im(state.a - state.b, state.r - home(teeth[t]))
@@ -507,7 +519,7 @@ def test_a_hands_charge_moves_by_rules_torques_and_its_kick_alone_and_parts_on_a
 def test_the_engines_records_hold_their_fields_in_order():
     assert State._fields == ("a", "b", "r", "rd")
     assert Gearing._fields == ("rest", "stretch", "kick", "drive")
-    assert Layout._fields == ("nb", "meshes", "grip", "gearing", "plan", "clock")
+    assert Layout._fields == ("nb", "spokes", "meshes", "grip", "gearing", "plan", "clock")
     assert Read._fields == ("first", "factor", "target")
     assert Plan._fields == ("first", "second", "factor", "target")
 

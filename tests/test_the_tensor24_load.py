@@ -12,7 +12,7 @@ from tensor24.engine.step import tick, untick
 from tensor24.main import made as joint
 from tensor24.runner.board import board
 from tensor24.runner.files import COUPLING, OPERANDS
-from tensor24.runner.load import load, promises
+from tensor24.runner.load import geometry, load, promises
 from tests.frame import plain
 
 D = 3
@@ -279,7 +279,8 @@ def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
 
 def rewound(r, w):
     """One round of every gear on a ring of sites and its run back: the start back exactly, or not."""
-    nb, meshes = board((SITES, 1, 1))
+    nb = board((SITES, 1, 1))
+    _, meshes = geometry(nb, D)
     layout = plain(nb, meshes, np.ones(D * SITES, dtype=object), w)
     a = np.arange(SITES, dtype=object)[None, :] + 0
     s = State(a, a - 1, r, 0 * a)

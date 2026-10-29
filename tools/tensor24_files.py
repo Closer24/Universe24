@@ -3,10 +3,11 @@ kind, part and site referred to there; then each refusal of the load by name (a 
 hand, a channel the 24 forbid, a gradient off A1, the strides before stage 7c, a component off its train's rows).
 
 Usage: `python tools/tensor24_files.py [universe piece setting]` prints every departure (the examples by default)
-and exits 1 if there is one, 2 if the files are not three. The fine tooth within the teeth and the rate within the
-full rate are the load's where the teeth and the rates are read (stage 7b).
+and exits 1 if there is one; files that are not three are argparse's usage error. The fine tooth within its teeth is
+the load's promise, read where the teeth are.
 """
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -25,17 +26,22 @@ def loaded(universe: Path, piece: Path, setting: Path) -> list[str]:
 
 
 def main(argv: list[str]) -> int:
-    if len(argv) not in (0, len(NAMES)):
-        print(f"usage: tensor24_files.py [{' '.join(NAMES)}]: the three files, or none for the examples")
-        return 1 + 1
-    files = [Path(a) for a in argv] or [EXAMPLES / f"{name}.json" for name in NAMES]
+    """Check and load the files, print each departure or that they hold, and return 1 on a departure."""
+    parser = argparse.ArgumentParser(description="Tensor24's three files checked and loaded.")
+    parser.add_argument(
+        "files", nargs="*", type=Path, help=f"{' '.join(NAMES)}, or none for the examples"
+    )
+    given = parser.parse_args(argv).files
+    if len(given) not in (0, len(NAMES)):
+        parser.error("the three files, or none for the examples")
+    files = given or [EXAMPLES / f"{name}.json" for name in NAMES]
     found = departures(*files)
     found = found or loaded(*files)
     print(
         "\n".join(found)
         if found
         else "the three files hold and load: whole numbers, the integers at least 1, references whole, every"
-        " kind, part, channel and component the 24's (the fine tooth's and the rate's bounds are the load's at stage 7b)"
+        " kind, part, channel and component the 24's (the fine tooth's promise is the load's, where the teeth are read)"
     )
     return 1 if found else 0
 

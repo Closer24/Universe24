@@ -11,5 +11,5 @@ def seen(a: Z, nb: Z) -> Z:
 
 def pull(layout: Layout, a: Z) -> Z:
     """The Meshes' pull on every gear: its train's grip on each Spoke's Mesh times the neighbour less its own now."""
-    nb, meshes, grip, _, _, _ = layout
+    nb, _, meshes, grip, _, _, _ = layout
     return ((seen(a, nb) - a[:, None, :]) * grip[:, meshes]).sum(axis=1)

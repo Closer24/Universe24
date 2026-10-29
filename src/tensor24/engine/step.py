@@ -20,15 +20,13 @@ def drive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
 
 
 def sources(layout: Layout, a: Z) -> tuple[Z, Z]:
-    """Every gear's force, its pull, and its source J: the plan on the value, the differences, the force."""
-    nb, _, _, _, plan, _ = layout
+    """Every gear's force, its pull, and its source J: the plan on the value, the differences along each axis, the force."""
+    nb, spokes, _, _, _, plan, _ = layout
     force = pull(layout, a)
-    near = seen(a, nb)
-    rows, _, sites = near.shape
-    ends = near.reshape(rows, -1, 1 + 1, sites)
-    gradient = np.moveaxis(ends[:, :, 0] - ends[:, :, 1], 1, 0)
+    # each axis's + neighbour less its - neighbour: the neighbours summed with their Spokes' directions
+    gradient = np.tensordot(spokes, seen(a, nb), axes=(0, 1))
     readings = np.concatenate((np.expand_dims(a, 0), gradient, np.expand_dims(force, 0)))
-    return force, contract(plan, readings.reshape(-1, sites), a)
+    return force, contract(plan, readings.reshape(-1, a.shape[-1]), a)
 
 
 def driven(gearing: Gearing, force: Z, q: Z) -> Z:
@@ -50,7 +48,7 @@ def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
 
 def tick(layout: Layout, s: State) -> State:
     """One round: every gear steps on its sources at the teeth it reads at the now slot, in one pass."""
-    _, _, _, gearing, _, clock = layout
+    _, _, _, _, gearing, _, clock = layout
     a, b, r, rd = s
     force, j = sources(layout, a)
     _, _, _, teeth = gearing
@@ -61,7 +59,7 @@ def tick(layout: Layout, s: State) -> State:
 
 def mirror(layout: Layout, s: State) -> State:
     """The state mirrored, time's reversal: the slots swapped, each fine tooth flipped in the teeth it was kept at, the before slot's."""
-    _, _, _, gearing, _, clock = layout
+    _, _, _, _, gearing, _, clock = layout
     a, b, r, rd = s
     _, _, _, teeth = gearing
     return State(b, a, flip(r, weight(gearing, clock, b)), flip(rd, teeth))

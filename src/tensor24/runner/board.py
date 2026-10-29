@@ -1,4 +1,4 @@
-"""The board from its shape: each site's six neighbours, the wrap by Rule3 on each coordinate, and each Spoke's Mesh."""
+"""The board from its shape: each site's six neighbours, the wrap by Rule3 on each coordinate."""
 
 import numpy as np
 
@@ -16,14 +16,14 @@ def wrap(x: Z, side: Z) -> Z:
     return kept
 
 
-def board(shape: tuple[int, int, int]) -> tuple[Z, Z]:
-    """The six neighbours of every site, +x, -x, +y, -y, +z, -z, and the Mesh each Spoke holds, as index arrays."""
+def board(shape: tuple[int, int, int]) -> Z:
+    """The six neighbours of every site, +x, -x, +y, -y, +z, -z, as one index array."""
     sx, sy, sz = shape
     n = sx * sy * sz
     sites = np.arange(n, dtype=np.intp)  # an index array: the sites counted, each a whole number below n
     rest, z = carry(sites, sz, 0)
     x, y = carry(rest, sy, 0)
-    nb = np.stack(
+    return np.stack(
         [
             site(wrap(x + 1, sx), y, z, sy, sz),
             site(wrap(x - 1, sx), y, z, sy, sz),
@@ -33,6 +33,3 @@ def board(shape: tuple[int, int, int]) -> tuple[Z, Z]:
             site(x, y, wrap(z - 1, sz), sy, sz),
         ]
     )
-    _, mx, _, my, _, mz = nb
-    meshes = np.stack([sites, mx, n + sites, n + my, n + n + sites, n + n + mz])
-    return nb, meshes

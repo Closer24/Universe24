@@ -234,10 +234,21 @@ def geared(
     return gearing, clock, grip
 
 
+def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
+    """The board's Spokes as the act reads them: each one's direction (the + and the - of every axis in turn, the neighbours' order) and the Mesh it holds, each axis's Meshes after the earlier axes', the + Spoke's the site's own and the - Spoke's its - neighbour's."""
+    _, n = nb.shape
+    unit = np.eye(axes, dtype=object)
+    offsets = np.arange(axes, dtype=np.intp)[:, None] * n
+    _, minus = np.moveaxis(nb.reshape(axes, -1, n), 1, 0)
+    meshes = np.stack((offsets + np.arange(n, dtype=np.intp), offsets + minus), axis=1).reshape(-1, n)
+    return np.stack((unit, -unit), axis=1).reshape(-1, axes), meshes
+
+
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's six parts: the board from the piece's sides, every coefficient and grip from the universe's integers, J's plan and every gear's clock; main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's seven parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's plan and every gear's clock; main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
-    nb, meshes = board((sx, sy, sz))
+    nb = board((sx, sy, sz))
+    spokes, meshes = geometry(nb, len(shape))
     gearing, clock, grip = geared(universe, loaded.trains, len(nb))
     grips = np.full((1, len(shape) * nb.shape[1]), grip, dtype=object)
-    return nb, meshes, grips, gearing, loaded.plan, clock
+    return nb, spokes, meshes, grips, gearing, loaded.plan, clock
