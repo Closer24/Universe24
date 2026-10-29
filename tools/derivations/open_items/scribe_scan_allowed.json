@@ -1,1 +1,1138 @@
-[]
+[
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/anticoincidence/two_atoms.json",
+  "detail": "family atom [1, 1299]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/anticoincidence/two_atoms.json",
+  "detail": "family photon [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen.json",
+  "detail": "family electron [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen.json",
+  "detail": "family proton [0, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen_72M.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen_72M.json",
+  "detail": "family electron [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen_72M.json",
+  "detail": "family proton [0, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen_read3.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen_read3.json",
+  "detail": "family electron [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/atom/hydrogen_read3.json",
+  "detail": "family proton [0, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/born.json",
+  "detail": "family atom [1, 1299]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/born.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/born.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/born.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/born.json",
+  "detail": "family light_pair [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/born.json",
+  "detail": "family matter [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/born.json",
+  "detail": "family spin [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/spin.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/spin.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/spin.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/spin.json",
+  "detail": "family light_pair [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/spin.json",
+  "detail": "family matter [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/bell_singlet/spin.json",
+  "detail": "family spin [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/big_bang/universe_big_bang.json",
+  "detail": "family dust [0, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/big_bang/universe_big_bang.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/big_bang/universe_big_bang.json",
+  "detail": "family light [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/big_bang/universe_big_bang.json",
+  "detail": "family matter [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/charged.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/charged.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/charged.json",
+  "detail": "family charged [3600, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/charged.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/charged.json",
+  "detail": "family matter [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_box.json",
+  "detail": "family absorber [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_box.json",
+  "detail": "family antineutrino [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_box.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_box.json",
+  "detail": "family electron [3600, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_box.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_box.json",
+  "detail": "family neutron [-4800, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_box.json",
+  "detail": "family photon [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_box.json",
+  "detail": "family proton [0, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_light.json",
+  "detail": "family absorber [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_light.json",
+  "detail": "family antineutrino [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_light.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_light.json",
+  "detail": "family electron [3600, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_light.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_light.json",
+  "detail": "family neutron [-4800, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_light.json",
+  "detail": "family photon [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/clicks/nucleons_light.json",
+  "detail": "family proton [0, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/conserve/universe_conserve.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/conserve/universe_conserve.json",
+  "detail": "family electron [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/conserve/universe_conserve.json",
+  "detail": "family photon [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/conserve/universe_conserve.json",
+  "detail": "family proton [0, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/cycle/universe_cycle.json",
+  "detail": "family dust [0, 1000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/cycle/universe_cycle.json",
+  "detail": "family gravity [999, 1000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/cycle/universe_three_clumps.json",
+  "detail": "family dust [0, 1000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/cycle/universe_three_clumps.json",
+  "detail": "family gravity [999, 1000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/cycle/universe_three_clumps.json",
+  "detail": "family matter [666, 1000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/deuteron.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/deuteron.json",
+  "detail": "family nuclide [4004, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/ghz.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/ghz.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/ghz.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/ghz.json",
+  "detail": "family light_ghz [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/ghz.json",
+  "detail": "family matter [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/light.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/light.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/light.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/light.json",
+  "detail": "family matter [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/m20/universe_m19_lay3_g1000.json",
+  "detail": "family dust [0, 1000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/m20/universe_m19_lay3_g1000.json",
+  "detail": "family gravity [999, 1000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/m20/universe_m19_lay3_g1000.json",
+  "detail": "family matter [666, 1000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/neutron_conversion/nucleons.json",
+  "detail": "family antineutrino [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/neutron_conversion/nucleons.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/neutron_conversion/nucleons.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/neutron_conversion/nucleons.json",
+  "detail": "family electron [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/neutron_conversion/nucleons.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/neutron_conversion/nucleons.json",
+  "detail": "family neutron [-4800, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/neutron_conversion/nucleons.json",
+  "detail": "family proton [0, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/packet_emission/zeno_atom_content.json",
+  "detail": "family atom [1, 1299]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/packet_emission/zeno_atom_content.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/packet_emission/zeno_atom_content.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/packet_emission/zeno_atom_content.json",
+  "detail": "family pulse [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/pair.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/pair.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/pair.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/pair.json",
+  "detail": "family light_pair [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/pair.json",
+  "detail": "family matter [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/pixel/universe_pixel_absorption.json",
+  "detail": "family electron [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/pixel/universe_pixel_absorption.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/pixel/universe_pixel_absorption.json",
+  "detail": "family photon [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/two_slits/light_x4096.json",
+  "detail": "family binding [2400, 2401]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/two_slits/light_x4096.json",
+  "detail": "family charge [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/two_slits/light_x4096.json",
+  "detail": "family gravity [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/two_slits/light_x4096.json",
+  "detail": "family matter [4000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/universe24/universe_universe24.json",
+  "detail": "family charge [53567765, 53567765]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/universe24/universe_universe24.json",
+  "detail": "family electron [53567757, 53567765]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/universe24/universe_universe24.json",
+  "detail": "family gravity [53529741, 53567765]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/universe24/universe_universe24.json",
+  "detail": "family light [53567765, 53567765]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/universe24/universe_universe24.json",
+  "detail": "family matter [32140659, 53567765]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/universe24/universe_universe24.json",
+  "detail": "family proton [4859756, 53567765]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/zeno/zeno_atom.json",
+  "detail": "family atom [1, 1299]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "examples/events/zeno/zeno_atom.json",
+  "detail": "family pulse [6000, 6000]",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tests/test_the_tensor24_time_gear.py",
+  "detail": "train dust den - den // 97",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tools/derivations/open_items/derive/boss/swing_push/act_push.py",
+  "detail": "train matter DEN - DEN // 50",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tools/derivations/open_items/derive/boss/tsym/tsym.py",
+  "detail": "train matter DEN - DEN // 50",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tools/derivations/open_items/derive/hostile_reviews/ninth/load_raise.py",
+  "detail": "train big 3",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tools/derivations/open_items/derive/hostile_reviews/tenth/load_edges.py",
+  "detail": "train mixed 2",
+  "count": 1,
+  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/algebra/carry.py",
+  "detail": "1 + 1",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/algebra/ring.py",
+  "detail": "x + x",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/algebra/ring.py",
+  "detail": "y + y",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/decoder/bangs.py",
+  "detail": "1 + 1",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/decoder/records.py",
+  "detail": "1 + 1",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/decoder/records.py",
+  "detail": "len(sides) + len(sides)",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/engine/kinds.py",
+  "detail": "1 + 1",
+  "count": 2,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/engine/step.py",
+  "detail": "1 + 1",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/board.py",
+  "detail": "n + n",
+  "count": 2,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "1 + 1",
+  "count": 6,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "d + d",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "g + g",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "gamma + gamma",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "n + n",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "spokes + spokes",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "teeth + teeth",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "TWICE",
+  "file": "tensor24/runner/load.py",
+  "detail": "time + time",
+  "count": 1,
+  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tests/test_the_tensor24_engine.py",
+  "detail": "coupling row [0, 0, 0, 1, 1, 0, 0, 0, 3, 0, 0, 2]",
+  "count": 1,
+  "word": "the coupling rows the engine's own test lays (tests/test_the_tensor24_engine.py), standing since the engine's stage 6, before the rule read a row written as a list: frozen as breaches by name until the build replaces them (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tests/test_the_tensor24_engine.py",
+  "detail": "coupling row [0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 3]",
+  "count": 1,
+  "word": "the coupling rows the engine's own test lays (tests/test_the_tensor24_engine.py), standing since the engine's stage 6, before the rule read a row written as a list: frozen as breaches by name until the build replaces them (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tests/test_the_tensor24_engine.py",
+  "detail": "coupling row [1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 7]",
+  "count": 1,
+  "word": "the coupling rows the engine's own test lays (tests/test_the_tensor24_engine.py), standing since the engine's stage 6, before the rule read a row written as a list: frozen as breaches by name until the build replaces them (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tests/test_the_tensor24_engine.py",
+  "detail": "coupling row [2, 0, 0, 2, 2, 0, 0, 0, 2, 0, 0, 5]",
+  "count": 1,
+  "word": "the coupling rows the engine's own test lays (tests/test_the_tensor24_engine.py), standing since the engine's stage 6, before the rule read a row written as a list: frozen as breaches by name until the build replaces them (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tests/test_the_tensor24_engine.py",
+  "detail": "coupling row [3, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 1]",
+  "count": 1,
+  "word": "the coupling rows the engine's own test lays (tests/test_the_tensor24_engine.py), standing since the engine's stage 6, before the rule read a row written as a list: frozen as breaches by name until the build replaces them (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tools/derivations/open_items/derive/david_open/ladder/f2_fusion_on_the_act.py",
+  "detail": "coupling row [2, 0, 0, 0, 0, 0, p, 0, 1, 0, p, g]",
+  "count": 1,
+  "word": "the coupling rows David's two probes lay (his own breaches by name, 6497338785, item 2), standing since 05:31 UTC before the rule read a row written as a list: frozen until he redoes them on the generic form (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tools/derivations/open_items/derive/david_open/ladder/f2_fusion_on_the_act.py",
+  "detail": "coupling row [2, 0, 0, 0, 1, 0, p, 0, 0, 0, p, g]",
+  "count": 1,
+  "word": "the coupling rows David's two probes lay (his own breaches by name, 6497338785, item 2), standing since 05:31 UTC before the rule read a row written as a list: frozen until he redoes them on the generic form (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tools/derivations/open_items/derive/david_open/ladder/l2_ladder_on_the_act.py",
+  "detail": "coupling row [0, 0, 0, GRAD, 0, 0, 0, GRAD, 1, 0, 0, 1]",
+  "count": 1,
+  "word": "the coupling rows David's two probes lay (his own breaches by name, 6497338785, item 2), standing since 05:31 UTC before the rule read a row written as a list: frozen until he redoes them on the generic form (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "DECLARE",
+  "file": "tools/derivations/open_items/derive/david_open/ladder/l2_ladder_on_the_act.py",
+  "detail": "coupling row [0, 0, 0, GRAD, 1, 0, 0, VALUE, 2, 0, 0, 1]",
+  "count": 1,
+  "word": "the coupling rows David's two probes lay (his own breaches by name, 6497338785, item 2), standing since 05:31 UTC before the rule read a row written as a list: frozen until he redoes them on the generic form (the owner's word of 12:5x: no trains, no exceptions in code)",
+  "row": "399"
+ },
+ {
+  "rule": "BRANCH",
+  "file": "tensor24/runner/load.py",
+  "detail": "if",
+  "count": 10,
+  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "BRANCH",
+  "file": "tensor24/runner/load.py",
+  "detail": "ternary",
+  "count": 5,
+  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "CLAMP",
+  "file": "tensor24/runner/load.py",
+  "detail": "abs()",
+  "count": 1,
+  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "COMPARE",
+  "file": "tensor24/runner/load.py",
+  "detail": "ordering",
+  "count": 8,
+  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "LOOP",
+  "file": "tensor24/runner/load.py",
+  "detail": "call",
+  "count": 1,
+  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "LOOP",
+  "file": "tensor24/runner/load.py",
+  "detail": "comprehension",
+  "count": 31,
+  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "LOOP",
+  "file": "tensor24/runner/load.py",
+  "detail": "for",
+  "count": 7,
+  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
+  "row": "399"
+ },
+ {
+  "rule": "LOOP",
+  "file": "tensor24/runner/load.py",
+  "detail": "while",
+  "count": 2,
+  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
+  "row": "399"
+ }
+]

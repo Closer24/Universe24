@@ -12,6 +12,7 @@ from __future__ import annotations
 import contextlib
 import importlib.util
 import io
+import json
 import os
 import subprocess
 import sys
@@ -40,6 +41,7 @@ NEW_REWIND = "tensor24/runner/rewind.py"
 NEW_RECORD = "tensor24/record/schema.py"
 NEW_RUNNER = "tensor24/runner/loop.py"
 NEW_BOARD = "tensor24/runner/board.py"
+NEW_LOADER = "tensor24/runner/load.py"
 NEW_DECODER = "tensor24/decoder/rows.py"
 NEW_READING = "tensor24/readings/wind.py"
 NEW_MESH = "tensor24/engine/mesh.py"
@@ -534,7 +536,7 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ('vars of numpy by a key in another runner module', NEW_RUNNER, "import numpy as np\n\n\ndef f(x, side):\n    return vars(np)['remainder'](x, side)\n", {}),
     ("numpy's unravel_index in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(x, side):\n    return np.unravel_index(x, (side, side))[1]\n', {}),
     ("numpy's digitize in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(x, side):\n    return x - side * np.digitize(x, [0, side])\n', {}),
-    ("the board's module as the Boss wrote it (0ff2ae0dc)", NEW_BOARD, BOARD_SOURCE, {}),
+    ("the board's module as the Boss wrote it (0ff2ae0dc), its two doublings spelt as sums read by the rule TWICE", NEW_BOARD, BOARD_SOURCE, {"TWICE": 2}),
     ("a method call of the remainder in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__mod__(b)\n', {"OPERATION": 1}),
     ("a method call of the floor division in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__floordiv__(b)\n', {"OPERATION": 1}),
     ("a method call of the reflected remainder in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__rmod__(b)\n', {"OPERATION": 1}),
@@ -1084,6 +1086,24 @@ CASES += [
     ("a log read in the readings", NEW_READING, fn("return a.log"), {"LOGREAD": 1}),
     ("a log read in the record", NEW_RECORD, fn("return a.log"), {"LOGREAD": 1}),
     ("a loop in runner/rewind.py", NEW_REWIND, fn("for x in a:\n    pass"), {}),
+    # the loader keeps every rule of the engine (the owner's "5 approved", 2026-10-29, 13:2x); the format checker, the driver and the rest of the runner stay spared
+    ("a loop in runner/load.py (not spared)", NEW_LOADER, fn("for x in a:\n    pass"), {"LOOP": 1}),
+    ("a comprehension in runner/load.py", NEW_LOADER, fn("return [x for x in a]"), {"LOOP": 1}),
+    ("a branch in runner/load.py", NEW_LOADER, fn("if a:\n    return 1\nreturn 0"), {"BRANCH": 1}),
+    ("a conditional expression in runner/load.py", NEW_LOADER, fn("return 1 if a else 0"), {"BRANCH": 1}),
+    ("an ordering comparison in runner/load.py", NEW_LOADER, fn("return a < b", "a, b"), {"COMPARE": 1}),
+    ("max of a pair in runner/load.py", NEW_LOADER, fn("return max(a, b)", "a, b"), {"CLAMP": 1}),
+    ("a refusal in runner/load.py", NEW_LOADER, fn("raise ValueError(a)"), {"REFUSE": 1}),
+    ("a remainder in runner/load.py", NEW_LOADER, fn("return a % b", "a, b"), {"OPERATION": 1}),
+    ("a floor division in runner/load.py", NEW_LOADER, fn("return a // b", "a, b"), {"OPERATION": 1}),
+    ("a floor named in runner/load.py", NEW_LOADER, fn("return a.floor"), {"BOUND": 1}),
+    ("the undo log in runner/load.py", NEW_LOADER, fn("return a.log"), {"LOGREAD": 1}),
+    ("a name added to itself in runner/load.py", NEW_LOADER, fn("return a + a"), {"TWICE": 1}),
+    ("a loop in runner/files.py stays spared", "tensor24/runner/files.py", fn("for x in a:\n    pass"), {}),
+    ("a branch in runner/run.py stays spared", "tensor24/runner/run.py", fn("if a:\n    return 1\nreturn 0"), {}),
+    ("a loop in a module named for the loader", "tensor24/runner/loader.py", fn("for x in a:\n    pass"), {}),
+    ("a loop in a runner module whose name ends in the loader's", "tensor24/runner/preload.py", fn("for x in a:\n    pass"), {}),
+    ("a loop in another folder's load.py", "tensor24/decoder/load.py", fn("for x in a:\n    pass"), {}),
     # every array is made with dtype=object (Python integers, whatever their width): the architect's rule
     ("an array made with dtype=object", NEW_STEP, NP + fn("return np.zeros(a, dtype=object)"), {}),
     (
@@ -1376,6 +1396,19 @@ NOT_DYNAMIC = (
 PINNED_FLOOR = "526a5666d"
 
 
+CASES += [
+    # the rule TWICE: a two spelt as a sum, in every module of the new engine, the runner and the decoder included
+    ("a one added to a one in the engine", NEW_STEP, "def f(a):\n    return a * (1 + 1)\n", {"TWICE": 1}),
+    ("a name added to itself in the engine", NEW_STEP, "def f(teeth):\n    return teeth + teeth\n", {"TWICE": 1}),
+    ("a name added to itself in the runner (not spared)", NEW_RUNNER, "def f(spokes):\n    return spokes + spokes\n", {"TWICE": 1}),
+    ("a name added to itself in the decoder (not spared)", "tensor24/decoder/rows.py", "def f(n):\n    return n + n\n", {"TWICE": 1}),
+    ("two different names added are no doubling", NEW_STEP, "def f(a, b):\n    return a + b\n", {}),
+    ("a name added to its successor is no doubling", NEW_STEP, "def f(a):\n    return a + (a + 1)\n", {}),
+    ("a product of a name with itself is no sum", NEW_STEP, "def f(a):\n    return a * a\n", {}),
+    ("a sum of a name with itself outside the new engine is not read", ENGINE, "def f(a):\n    return a + a\n", {}),
+]
+
+
 @contextlib.contextmanager
 def without_git_variables() -> Iterator[None]:
     """The git variables a hook exports (GIT_DIR, GIT_INDEX_FILE and the like) set aside: git then finds a repository by the path it is given."""
@@ -1635,6 +1668,154 @@ def key_cases() -> tuple[int, int]:
             "the list is read from the published branch, the working file set aside",
             held == Counter({("KEYS", KEY_FILE, "ZZ_ALPHA.published"): 1}),
         )
+    return made, parted
+
+
+def declare_cases() -> tuple[int, int]:
+    """The rule DECLARE, a refusal of a family, a train or a coupling that a push adds over its merge base: what it reads in a universe
+    file and in a dict of a train, the seed that declares no mass, the files it reads, and the push through git (a new declaration
+    refused, a reformat quiet, a rename quiet, a removal quiet, a changed number and a doubled name refused, the owner's list); the
+    cases made and those that parted."""
+    made = parted = 0
+
+    def check(label: str, ok: bool) -> None:
+        nonlocal made, parted
+        made += 1
+        parted += not ok
+        print(f"{'ok     ' if ok else 'PARTED '} the declarations' rule: {label}")
+
+    def universe(den: int = 9, **lists: object) -> str:
+        return json.dumps({"integers": {"den": den}, **lists}, indent=1)
+
+    check("DECLARE is a refusal", gate.RULES["DECLARE"][0] == "BLOCK")
+    electron = {"name": "electron", "pair": [4000, 6000]}
+    in_json = (
+        ("a family with its pair", universe(families=[electron]), {"family electron [4000, 6000]"}),
+        ("a train with its pinion", universe(trains=[{"name": "dust", "pinion": 8}]), {"train dust 8"}),
+        ("a train at pinion = den is the seed and declares no mass", universe(trains=[{"name": "light", "pinion": 9, "sine": 0}]), set()),
+        ("a train at a pinion that is not this file's den is no seed", universe(den=10, trains=[{"name": "light", "pinion": 9}]), {"train light 9"}),
+        ("a train with no number", universe(trains=[{"name": "x"}]), {"train x -"}),
+        ("a coupling row", universe(couplings=[{"train": "a", "strength": 3}]), {'coupling {"strength": 3, "train": "a"}'}),
+        ("an entry with no name", universe(families=[{"pair": [1, 2]}]), set()),
+        ("a list that is no list", universe(families={"name": "x"}), set()),
+        ("a file with none of the lists", universe(), set()),
+        ("a file that is a list", "[1, 2]", set()),
+        ("a file that is no JSON", "{ nope", set()),
+    )
+    for label, text, want in in_json:
+        check(f"in a universe file, {label}", {h.detail for h in gate.declared_in("examples/w/universe.json", text)} == want)
+    in_python = (
+        ("a train dict with a pinion", 'T = {"name": "dust", "kinds": ["A1"], "pinion": den - den // 97}\n', {"train dust den - den // 97"}),
+        ("a reformatted pinion is the same declaration", 'T = {"name": "dust", "pinion": den-den//97}\n', {"train dust den - den // 97"}),
+        ("a pinion spelt DEN is the seed", 'T = {"name": "light", "pinion": DEN}\n', set()),
+        ("a pinion spelt as a module's attribute DEN is the seed", 'T = {"name": "light", "pinion": rig.DEN}\n', set()),
+        ("a pinion spelt as another attribute is a declaration", 'T = {"name": "dust", "pinion": rig.pinion}\n', {"train dust rig.pinion"}),
+        ("a train written as a call of dict is read as a dict", 'T = dict(name="dust", pinion=8)\n', {"train dust 8"}),
+        ("a call of dict with the seed is the seed", 'T = dict(name="light", pinion=den)\n', set()),
+        ("a call of dict with no pinion declares nothing", 'T = dict(name="light", kinds=1)\n', set()),
+        ("a coupling row appended to a list named couplings", 'couplings = []\ncouplings.append([2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 3, 5])\n', {"coupling row [2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 3, 5]"}),
+        ("a couplings list of rows", 'couplings = [[1, 2, 3], [4, 5, 6]]\n', {"coupling row [1, 2, 3]", "coupling row [4, 5, 6]"}),
+        ("an empty couplings list declares nothing", 'couplings = []\n', set()),
+        ("a list of rows not named for couplings declares nothing", 'edges = [[1, 2, 3]]\n', set()),
+        ("a row appended to an attribute named for couplings", 'self.coupling_rows.append([1, 2])\n', {"coupling row [1, 2]"}),
+        ("a dict with no pinion", 'T = {"name": "light", "kinds": ["A1"]}\n', set()),
+        ("a name that is no string literal", 'T = {"name": LABEL, "pinion": 3}\n', set()),
+        ("a dict that unpacks another", 'T = {**base, "name": "dust", "pinion": 3}\n', {"train dust 3"}),
+        ("a file that does not parse", "def (:\n", set()),
+    )
+    for label, source, want in in_python:
+        check(f"in a Python file, {label}", {h.detail for h in gate.declared_in("tests/test_w.py", source)} == want)
+    reads = (
+        ("examples/w/universe.json", True),
+        ("reader/worlds/universe_toy.json", True),
+        ("tests/test_w.py", True),
+        ("tools/derivations/open_items/derive/boss/tsym/tsym.py", True),
+        ("tools/derivations/open_items/scribe_scan_selftest.py", False),
+        ("tools/derivations/open_items/scribe_scan.py", False),
+        ("src/tensor24/runner/files.py", True),
+        ("docs/BIG_PICTURE.md", False),
+        ("examples/w/notes.txt", False),
+        ("papers/w/refs.json", False),
+        ("venv314/lib/w.py", False),
+        ("tools/venv314/w.py", False),
+        ("examples/w/__pycache__/w.py", False),
+        ("w.py", False),
+    )
+    for name, want in reads:
+        check(f"{name} is {'read' if want else 'not read'}", gate.declared_path(name) == want)
+    saved = gate.allowance
+    gate.allowance = lambda repo=gate.REPO: Counter()
+    try:
+        with without_git_variables(), tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            git = ["git", "-C", scratch, "-c", "user.name=selftest", "-c", "user.email=selftest@example.invalid"]
+
+            def run(*args: str) -> str:
+                return subprocess.run([*git, *args], capture_output=True, text=True, check=True).stdout.strip()
+
+            def commit(files: dict[str, str | None]) -> str:
+                for name, text in files.items():
+                    if text is None:
+                        (root / name).unlink()
+                        continue
+                    (root / name).parent.mkdir(parents=True, exist_ok=True)
+                    (root / name).write_text(text, encoding="utf-8")
+                run("add", "-A")
+                run("commit", "-q", "-m", "selftest")
+                return run("rev-parse", "HEAD")
+
+            def read(rev: str) -> tuple[int, str]:
+                out = io.StringIO()
+                return gate.check_revision(root, rev, base, out), out.getvalue()
+
+            def branch(name: str, files: dict[str, str | None]) -> str:
+                run("checkout", "-q", "-B", name, base)
+                return commit(files)
+
+            world = "examples/w/universe.json"
+            run("init", "-q")
+            held = universe(families=[electron])
+            base = commit({world: held, "README.md": "the base\n"})
+            neutron = {"name": "neutron", "pair": [-4800, 6000]}
+            status, text = read(branch("added", {world: universe(families=[electron, neutron])}))
+            check(
+                "a family a push adds is refused, named with its pair",
+                status == 1 and "REFUSED DECLARE" in text and "family neutron [-4800, 6000]" in text and "refusals 1" in text,
+            )
+            status, text = read(branch("reformatted", {world: json.dumps(json.loads(held))}))
+            check("the same declarations written another way are quiet", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("number", {world: universe(families=[{"name": "electron", "pair": [3600, 6000]}])}))
+            check("a changed pair is a new declaration", status == 1 and "family electron [3600, 6000]" in text)
+            status, text = read(branch("doubled", {world: universe(families=[electron, electron])}))
+            check("a name declared twice in one file is one more than the base's", status == 1 and "REFUSED DECLARE" in text)
+            status, text = read(branch("removed", {world: universe(families=[])}))
+            check("a declaration removed is quiet", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("renamed", {world: None, "examples/w2/universe.json": held}))
+            check("the same file moved is no new declaration", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("train", {"tests/test_w.py": 'T = {"name": "dust", "pinion": den - den // 97}\n'}))
+            check("a train a test adds is refused", status == 1 and "train dust den - den // 97" in text)
+            status, text = read(branch("seed", {"tests/test_w.py": 'T = {"name": "light", "pinion": DEN}\n'}))
+            check("a train at pinion = den in a test is the seed, quiet", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("seed_file", {"examples/w3/universe.json": universe(trains=[{"name": "light", "pinion": 9}])}))
+            check("a new universe file with the seed train alone is quiet", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("probe", {"tools/derivations/open_items/derive/p/probe.py": 'T = {"name": "matter", "pinion": DEN - DEN // 50}\n'}))
+            check("a train a probe adds under tools is refused", status == 1 and "train matter DEN - DEN // 50" in text)
+            status, text = read(branch("coupling", {"examples/w4/universe.json": universe(couplings=[{"train": "a", "strength": 3}])}))
+            check("a coupling row a push adds is refused", status == 1 and "coupling" in text and "REFUSED DECLARE" in text)
+            status, text = read(branch("outside", {"papers/w/universe.json": universe(families=[neutron])}))
+            check("a universe file outside the scopes is not read", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("docs", {"docs/a.md": "a line\n"}))
+            check("a push that changes a document alone is quiet and runs nothing", status == 0 and text == "")
+            status, text = read(branch("code", {"tests/test_w.py": "x = 1\n"}))
+            check("a push that changes code alone gives the code rules' answer and no declaration", "DECLARE" not in text)
+            gate.allowance = lambda repo=gate.REPO: Counter({("DECLARE", world, "family neutron [-4800, 6000]"): 1})
+            status, text = read(branch("allowed", {world: universe(families=[electron, neutron])}))
+            check("a declaration the owner's list holds is quiet", status == 0 and "DECLARE" not in text)
+            proton = {"name": "proton", "pair": [0, 6000]}
+            status, text = read(branch("allowed_other", {world: universe(families=[electron, proton])}))
+            check("a declaration the owner's list does not hold is refused beside it", status == 1 and "family proton [0, 6000]" in text)
+    finally:
+        gate.allowance = saved
     return made, parted
 
 
@@ -1907,8 +2088,10 @@ def main() -> int:
     parted += tool_parted
     key_total, key_parted = key_cases()
     parted += key_parted
+    declare_total, declare_parted = declare_cases()
+    parted += declare_parted
     print(
-        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + 2} cases, {parted} parted"
+        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + declare_total + 2} cases, {parted} parted"
     )
     return 1 if parted else 0
 
