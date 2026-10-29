@@ -42,7 +42,7 @@ own Meshes beside it; (e) the probe and this README committed here.
 
 **In code:** tests/test_the_tensor24_light.py runs the six worlds and compares Tensor24's pull and gear at the head's
 inputs at every site and tick, the end of tick where no turnover hit, with six mutants each parting it; the head's
-per-end grips enter through a table of the test alone, and tests/test_the_tensor24_board.py holds the board's own
+per-end grips enter through a table of the test alone, and tests/test_the_tensor24_engine.py holds the board's own
 Meshes, one grip per Mesh.
 
 **Words:** Sofer's on the reading, yes with five conditions (6479294042); David's on the law-2 point, asked.
