@@ -1,4 +1,4 @@
-"""The record read: one record of the schema 1.1 into its header, its events and its end, or the cause it is not."""
+"""The record read: one record of the schema 1.2 into its header, its events and its end, or the cause it is not."""
 
 # The schema's rules are its guards, checked in order as it reads (Animate): the file reads; every line is a JSON
 # object with its kind, a label, each key once; the record holds a header and an end; the header comes first, with a
@@ -349,13 +349,13 @@ def fitted(lines: Lines) -> str:
 
 
 def once(lines: Lines) -> str:
-    places = [(line["round"], line["at"], line["train"]) for line in lines if isinstance(line, dict)]
-    earliest: dict[tuple[int, str, int], int] = {}
+    places = [(e["round"], e["at"], e.get("site"), e["train"]) for e in lines if isinstance(e, dict)]
+    earliest: dict[tuple[Any, ...], int] = {}
     for n, entry in enumerate(places, start=1):
         earliest.setdefault(entry, n)
     return named(
         [n for n, entry in enumerate(places, start=1) if earliest[entry] != n],
-        "the ledger's line {} stands at the round, the at and the train of an earlier line",
+        "the ledger's line {} stands at the round, the at, the site and the train of an earlier line",
     )
 
 

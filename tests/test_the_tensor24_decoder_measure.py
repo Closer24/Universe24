@@ -224,3 +224,16 @@ def test_the_tool_prints_the_measurements_rules(tmp_path):
     )
     for rule in ("the cone check (D8)", "proper time (D6)", "the twin reading (D6)"):
         assert f"{rule}: {{'kind': 'SHOWN'" in found.stdout
+
+
+def test_the_ledgers_count_lines_stand_once_at_each_round_site_and_train(tmp_path):
+    count = {"round": 1, "at": "step", "site": 0, "train": 1, "count": [0]}
+    for lines, cause in (
+        ([count, {**count, "site": 1}], ""),
+        ([count, count], "the site and the train of an earlier"),
+    ):
+        path = tmp_path / "count.ledger.jsonl"
+        path.write_text("".join(json.dumps(line) + "\n" for line in lines), encoding="utf-8")
+        assert cause in records.read_ledger(str(path))[1] and (
+            cause or not records.read_ledger(str(path))[1]
+        )
