@@ -50,6 +50,7 @@ TENSOR24_RING = "Tensor24's Gaussian ring, stage 5 of the build the owner approv
 TENSOR24_KINDS = "Tensor24's kinds and tables, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the 24 a group of the Spokes' threefold power, each of the five kinds a representation, their characters Sofer's by his definitions at every turn and his table on every class, orthonormal, the Spokes' character A1 + E + T1, every table C equivariant and 0 exactly where David's products hold no channel, primitive, the dot, the cross and A2 x T1 -> T2 exactly, each law failing on its own mutant; the Boss's room by name."
 TENSOR24_LOAD = "Tensor24's load, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the coupling rows' plan contracted as a naive sum over the rows and the tables, each refusal of the load naming its own broken file with its edge that loads, a coupling the table lacks holding no term, the two promises named where they fail and shown to be the run back's own condition, the rename law with its mutant, a gear laid on the first train's rows and at the last train's last component past 64 bits, J of Python integers on gears of any width, and no raise on the files the checker holds nor on a board the machine's memory refuses; the Boss's room by name."
 TENSOR24_ACT = "Tensor24's one act, stage 7a of the build the owner approved at 16:0x UTC on 2026-10-28: every gear's impulse, drive and carry at its coefficients (W and W+, s, the spring, the kick's and the drive's teeth, a grip per gear row and Mesh, and J's terms on the value, the centred difference along each axis and the force) against a naive model, the run back under random masks with every divisor row away from 1, the sources' images under the 24 through the tables of a plan of four kinds, the force's path as the stage 4 tick with J added, a hand's charge moving by Rule3's torques alone over rounds whose teeth change (David's OPEN 13), and the engine's records' fields pinned in order, each law failing on its own mutant; the Boss's room by name."
+TENSOR24_DECODER = "Tensor24's decoder, Animate's, on the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the seventh hostile review's four changes and its precedence follow-up, each test failing on its own mutant: row 15's second reading over every train of the header, the first reading failing on a click that books nothing, the guards' parts and the tool naming every cause it meets, the ticks refusing a k that is no bit, and a part read that fails before a gap; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_tensor24_ring.py::hands": (
         4,
@@ -662,6 +663,30 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_tensor24_act.py::test_the_engines_records_hold_their_fields_in_order": (
         6,
         TENSOR24_ACT,
+    ),
+    "tests/test_the_tensor24_decoder.py::test_the_wind_is_read_over_every_train_of_the_header": (
+        12,
+        TENSOR24_DECODER,
+    ),
+    "tests/test_the_tensor24_decoder.py::test_the_books_hold_the_click_they_book": (
+        6,
+        TENSOR24_DECODER,
+    ),
+    "tests/test_the_tensor24_decoder.py::test_a_cause_two_guards_see_is_named_by_the_first_and_the_files_that_cannot_be_read": (
+        10,
+        TENSOR24_DECODER,
+    ),
+    "tests/test_the_tensor24_decoder.py::test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits": (
+        41,
+        TENSOR24_DECODER,
+    ),
+    "tests/test_the_tensor24_decoder.py::test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat": (
+        17,
+        TENSOR24_DECODER,
+    ),
+    "tests/test_the_tensor24_decoder.py::test_a_part_read_that_fails_is_not_shown_beside_a_click_that_lacks_a_field": (
+        9,
+        TENSOR24_DECODER,
     ),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (
         26,
