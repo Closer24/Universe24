@@ -150,17 +150,6 @@ class Split:
 
 
 @dataclass(frozen=True)
-class Turnover:
-    """A turnover (law 4): the time gear's carry q at its top, T's bit, with the gear's reading there."""
-
-    round: int
-    site: int
-    count: int
-    q: int
-    x: int
-
-
-@dataclass(frozen=True)
 class Rate:
     """A Node-clock's k at its first beat and at each beat whose k differs from its last beat's, with the beat's count."""
 

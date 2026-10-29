@@ -44,10 +44,7 @@ def edits():
         ("universe", "version"): "universe.version: 1, not None",
         ("universe", "integers"): "universe.integers: a mapping, not NoneType",
         ("universe", "trains"): "universe.trains: a list of one train or more",
-        **{
-            ("universe", "integers", k): f"universe.integers.{k}: {whole}"
-            for k in ("den", "full_rate", "key")
-        },
+        **{("universe", "integers", k): f"universe.integers.{k}: {whole}" for k in ("den", "full_rate")},
         ("universe", "trains", 0, "name"): f"{train}.name: a label, not None",
         ("universe", "trains", 0, "kinds"): f"{train}.kinds: a list of the kinds' labels, not None",
         ("universe", "trains", 0, "part"): f"{train}.part: {whole}",
@@ -217,8 +214,13 @@ def edits():
             lambda u: u["integers"].update(trace=1),
             "universe.integers: the key 'trace' is not in the format",
         ),
+        "a key, read by no act": (
+            "universe",
+            lambda u: u["integers"].update(key=1),
+            "universe.integers: the key 'key' is not in the format",
+        ),
         "a coupling to no train": coupling("a train off the trains' rows", with_train=1),
-        "a coupling on the time gear": coupling("a train off the trains' rows", train=1),
+        "a coupling on the clock's own gear": coupling("a train off the trains' rows", train=1),
         "a coupling's first train below 0": coupling("a train off the trains' rows", train=-1),
         "a coupling's second train below 0": coupling("a train off the trains' rows", with_train=-1),
         "a coupling's target beyond": coupling("a train off the trains' rows", target=1),
@@ -276,7 +278,7 @@ def edits():
         "a gear off the board": gear([0, 0, 64, 1, 0, 0], "train 0 or site 64 off the files"),
         "a gear at the last site": gear([0, 0, 63, 1, 0, 0], None),
         "a gear's site below 0": gear([0, 0, -1, 1, 0, 0], "train 0 or site -1 off the files"),
-        "a gear on the time gear": gear([1, 0, 0, 1, 0, 0], "train 1 or site 0 off the files"),
+        "a gear on the clock's own gear": gear([1, 0, 0, 1, 0, 0], "train 1 or site 0 off the files"),
         "a gear's train below 0": gear([-1, 0, 1, 1, 0, 0], "train -1 or site 1 off the files"),
         "a gear's notch that is a float": gear(
             [0, 0, 1, 0.5, 0, 0], "a row of whole numbers, one per field"
@@ -336,10 +338,10 @@ def test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its
 def test_two_departures_of_one_file_are_each_named_once(tmp_path):
     paths = [EXAMPLES / f"{name}.json" for name in NAMES]
     held = json.loads(paths[0].read_text(encoding="utf-8"))
-    held["version"], held["integers"]["key"] = 1 + 1, 0
+    held["version"], held["integers"]["full_rate"] = 1 + 1, 0
     paths[0] = tmp_path / "universe.json"
     paths[0].write_text(json.dumps(held), encoding="utf-8")
     assert sorted(departures(*paths)) == [
-        "universe.integers.key: a whole number of at least 1, not 0",
+        "universe.integers.full_rate: a whole number of at least 1, not 0",
         "universe.version: 1, not 2",
     ]

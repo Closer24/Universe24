@@ -42,7 +42,7 @@ def draw(rng, low, high, size):
 
 def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False):
     """A layout parted at every gear and site: grips per row and Mesh, the teeth at rest, s, T_k, T_d, and J or none
-    of it, every gear reading its teeth from the last row's count at a drawn factor where clocked; every divisor at least
+    of it, every gear reading its teeth from two drawn rows' counts at drawn factors where clocked; every divisor at least
     `least`, and T_k too where `least` is above 1, so that a swap of T_k and T_d shows as a wrong run back, not a raise."""
     nb = frame.board(shape)
     n = nb.shape[1]
@@ -53,7 +53,8 @@ def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False):
     )
     gearing = Gearing(w, *coefficients, draw(rng, least, 9, (rows, 1)))
     every = np.arange(rows, dtype=np.intp)
-    read = Read(0 * every + rows - 1, draw(rng, 1, 4, rows), every) if clocked else frame.unread()
+    two = np.repeat(rng.permutation(rows)[: 1 + 1], rows) if clocked else every  # every gear reads both
+    read = Read(two, draw(rng, 1, 4, len(two)), np.tile(every, 1 + 1)) if clocked else frame.unread()
     index = [
         rng.integers(0, high, size=TERMS).astype(np.intp) for high in (PLANES * rows,) * 2 + (rows,)
     ]
@@ -65,7 +66,7 @@ def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False):
 
 
 def world(rng, layout, rows=ROWS):
-    """A state the act may meet: gears across 2**256, a clock's row in [0, 2**20), each tooth within its W and T_d."""
+    """A state the act may meet: gears across 2**256, the clocks' rows in [0, 2**20), each tooth within its W and T_d."""
     size, drive = (rows, layout.nb.shape[1]), layout.gearing.drive
     a, b = frame.wide(rng, size), frame.wide(rng, size)
     clocks = np.unique(layout.clock.first)
@@ -301,7 +302,7 @@ def cube():
 def sourced_images():
     """The sources turn with the board under the 24: the force and J of the turned state, the turned force and J."""
     nb, plan = frame.board(CUBE), cube()
-    # A1 and A2, T1 and T2, as stored, and the load's time gear, A1
+    # A1 and A2, T1 and T2, as stored, and the clock's own gear the load lays, A1
     n, rows = nb.shape[1], 1 + 1 + 3 + 3 + 1
     ones = np.ones((1, n), dtype=object)
     gearing = Gearing(ones, ones, ones, ones)
@@ -314,7 +315,7 @@ def sourced_images():
     for m in frame.turns():
         site = np.ravel_multi_index(tuple((m @ xyz) % sides), CUBE)
         turn = np.eye(rows, dtype=int).astype(object)
-        turn[:-1, :-1] = frame.stored(m)[: rows - 1, : rows - 1]  # the time gear is A1: no turn moves it
+        turn[:-1, :-1] = frame.stored(m)[: rows - 1, : rows - 1]  # the clock is A1: no turn moves it
         there = State(*(np.empty_like(x) for x in s))
         for x, y in zip(there, s, strict=True):
             x[:, site] = y
@@ -366,6 +367,9 @@ def mutants():
 
     def unfactored(c, x):
         return read(c._replace(factor=c.first), x)
+
+    def placed(c, x):  # every clock found at the last row, by its place
+        return read(c._replace(first=0 * c.first + len(x) - 1), x)
 
     def read_after(y, s, o):  # the run back's teeth read at its own now slot, the forward's after slot
         step.weight = lambda g, c, _: weight(g, c, s.a)
@@ -454,6 +458,7 @@ def mutants():
         "the gradient's ends swapped": ("formula", "seen", reread([1, 0, 3, 2, 5, 4])),
         "J read without the force": ("formula", "contract", forceless),
         "the clocks' read off its factor": ("formula", "read", unfactored),
+        "the clocks found by their place": ("formula", "read", placed),
         "the teeth without their rest": ("formula", "weight", lambda g, c, a: read(c, a)),
         "T_k read from T_d": ("formula", "driven", kicked(lambda g: g.drive)),
         "the run back's teeth read at the after slot": ("back", "untick", read_after),

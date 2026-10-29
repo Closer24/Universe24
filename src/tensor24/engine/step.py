@@ -8,6 +8,8 @@ from tensor24.engine.mesh import due, pull, seen
 from tensor24.engine.state import Gearing, Layout, Out, Read, State
 
 
+# The tick passes W+ = W, so the two homes cancel and the going parts no act: go and W+ stay the gear's parameters,
+# read by the algebra's tie rule, until the run back is the tick on the mirrored state (G1b).
 def gear(a: Z, b: Z, r: Z, go: Z, w: Z, wp: Z, push: Z) -> tuple[Z, Z, Z]:
     """A gear's tick: p = W (a - b) + (r - home), and a+ = a + q with (q, r+) the carry of p + push at W+."""
     p = w * (a - b) + (r - home(w, go))
@@ -62,6 +64,10 @@ def unbeat(k: Z, ph: Z, rate: Z, gamma: Z, fire: Z) -> Z:
     return choose(fire, uncarry(k, gamma, ph) - rate, ph)
 
 
+# W = W+ holds a round's teeth fixed, so a round runs back exactly wherever every fine tooth stands within [0, W), and a
+# run while no gear's teeth fall below the fine tooth its last tick kept. A falling clock breaks it, and the term
+# (d_t W)(d_t a) of d_t (W d_t a) = F is dropped with it; every run the files make keeps it, the clock's own gear having
+# no source and standing at 0 as laid. The metric's stage (G2) owes both by design, with no promise in the round.
 def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
     """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and at no bound."""
     rest, _, _, _ = gearing
@@ -94,7 +100,7 @@ def tick(layout: Layout, s: State, allowed: Z) -> tuple[State, Out]:
 
 
 def untick(layout: Layout, s: State, o: Out) -> State:
-    """The round run back from its out: the teeth and the sources as the forward's now slot held them, the drive, the gears, the count, the dial, the time."""
+    """The round run back from its out, exact where every fine tooth it ran from stood within its teeth: the teeth and the sources as the forward's now slot held them, the drive, the gears, the count, the dial, the time."""
     nb, _, _, gearing, _, rate, gamma, clock = layout
     a, b, r, go, rd, ph, c, tn = s
     fire, k, before = o

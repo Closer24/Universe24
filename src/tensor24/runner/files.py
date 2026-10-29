@@ -53,7 +53,7 @@ SIDES = Rule(
 TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, "pinion": None}
 UNIVERSE = {
     "version": VERSIONED,
-    "integers": {"den": ONE, "full_rate": ONE, "key": ONE, "width": ONE},
+    "integers": {"den": ONE, "full_rate": ONE, "width": ONE},
     "trains": [TRAIN],
     "couplings": COUPLING,
 }

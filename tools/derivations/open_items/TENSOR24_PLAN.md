@@ -253,7 +253,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 
 ## 7. The families and the kinds
 
-1. **A train is a kind plus its integers in the universe file:** the pinion, and on a hand its pair (pinion, sine) over den, the checker refusing a pair whose norm is not den den (David's (n3)); the spring, the couplings and the weight. The engine knows no train's name in nature. **Since G0 and G1 of decision 40** (tensor24-review b957ce0ca and its successor): a train is a kind and a part, and its pinion is den, the seed's (masses are measured only in clicks, decision 37); the sine, the weight and the spring are out, read by no act, and the load reads no pinion.
+1. **A train is a kind plus its integers in the universe file:** the pinion, and on a hand its pair (pinion, sine) over den, the checker refusing a pair whose norm is not den den (David's (n3)); the spring, the couplings and the weight. The engine knows no train's name in nature. **Since G0 and G1 of decision 40** (tensor24-review b957ce0ca and its successor): a train is a kind and a part, and its pinion is den, the seed's (masses are measured only in clicks, decision 37); the sine, the weight and the spring are out, read by no act, and the load reads no pinion. The universe's integers are den, full_rate and width: trace left at G0 and key at G1's fix, each read by no act.
 2. **The five kinds of the 24:**
    - A1 (1), A2 (1), E (2), T1 (3), T2 (3); together 1 + 1 + 4 + 9 + 9 = 24;
    - all derived from the six Spokes, with no typed table (engine/kinds.py, stage 6): T1 the turn, A2 the sign of its permutation of the axes, E that permutation on the plane where the axes sum to 0, T2 = A2 T1; E has no whole basis the 24 permute, so no train holds it alone (the load refuses one by name; it stands beside A1 in the tensions, stage 7).
@@ -771,6 +771,36 @@ On the owner's word to David: "a generic solution for everything". This is David
       - Sofer: the law's lines to (a) to (g) (lines 35, 330, 1507 and 1841, the source clause, 5.1 and 5.2's slot case, Postulate 6's "the wells add"), and the gate on every head;
       - Animate: the decoder (D6 to D8: proper time, invariants only, the twin reading, the cone check) and the slot rule (b) in the scheduler;
       - David: (a)'s tensor with the gears' own books in the one law, the exact read of (e), the course's slicing on the act (his hole of 14:4x), and the odd tooth's two readings.
+    - **The build's stages, G0 to G6** (the order of #2187 6497161018, kept in BIG_PICTURE.md 15.1, with decision 40's recommendations, the architect's N1 to N5 and the reviews folded in). Each stage runs the full check green and gets a hostile reader, Sofer's law reading, Animate's record check and David's derivation check:
+      - **G0, the gates** (b957ce0ca, 8b38f8b9c), done: the uniformity test on every kind at both parts, every order of the trains, the 24's turns on the components, the seed's pinion at den by the checker, DECLARE in the gate, and the cone, one Mesh a round both ways, on the act. The cone check by click (Animate's D8) is a test on every stage's records: on records built in memory now (decoder/measure.py), and on the act's records from G5, where the clicks begin (6500074687).
+      - **G1, the generic gear** (2300dce6d and its fix after its hostile reader's B1, B2 and R1 to R4), done, with its limits named:
+        - every row steps once a round at W = W+, its rest plus the clocks' linear read at the now slot, in one pass, with no table, clamp, ruler, spring or second pass;
+        - a round runs back exactly wherever every fine tooth stands within its teeth, so a run runs back exactly while no gear's teeth fall below the tooth its last tick kept. A falling clock breaks it (two rounds back depart) and drops the term (d_t W)(d_t a) of d_t (W d_t a) = F. Every run the files make keeps it, since the clock's own gear has no source and stands at 0 as laid; a test shows both sides;
+        - the read's factor 1, one tooth per count, is a placeholder until the exact read of (e) (David);
+        - W = T and s = 1, where 7b had 2 T and 2: the same ratio and half the fine teeth, so light's act changed bit for bit;
+        - no spring, as no row holds a term of its own: the swing's top (Postulate 4, ALGEBRA.md line 352) is lost until G2;
+        - the going and W+ part no act (the homes cancel at W = W+) and stay until G1b; the kick and the drive are 1 on every row, so every winding is 1, until G3's one drive;
+        - the file's key left the format, read by no act, as trace did at G0; the owner is told, and each returns on his word.
+      - **G1b, the clock as a family** (the owner's word to David, 6500476862):
+        - (i) the clock's family named in the universe file as any train, found by its name and never by its place (Sofer, 6503383298: a train written like the others adds no key; a role flag or a read plan in a file is a row apart or a declared strength);
+        - (ii) the run back as the tick on the mirrored state, T swapping the slots and flipping the teeth, so untick goes;
+        - (iii) the asynchronous schedule out (due, the count test, the dial and the fire mask), with ledger lines per Node-clock written for the reader's proper time (Animate, 6503716830);
+        - (iv) the twos spelt as sums, from the board's structure or out.
+      - **G2, the metric's slots** (decision 39 under (a), (c), (e) and (f); N1 to N3; the representation, the count c or the tick's weight in the slot, is the owner's, F11):
+        - the ten (mu, nu) slots, each an ordinary family with the one law, each pushed by its own component of 2T - eta T (N3: the 00 slot by rho + 3p, the diagonal three by 3 (rho - p) in all), the gears' own books in the one tensor (a), on a toy bounded at lambda = 1/Gamma first;
+        - the slicing w = 1/2 as a law (N1); every push that reads a rate run back exactly (N2: the matter stepped first, so the metric reads its rates at both slots; a push that reads its own rate has no bijection);
+        - G1's limit closed by design, with no promise in the round: every kept tooth within its next teeth and (d_t W)(d_t a) restored. The candidates: the chain (W read at the before slot, W+ at the now slot), whose run back takes the read's depth in passes and needs no slot to read its own before slot; a variable in which the self-reading slot's teeth are fixed; the order of the steps;
+        - shown on the board: the swing's top from the metric's own law with no spring (Sofer's ask, 6503383298), the wells adding (gamma = beta = 1), q per era on the course, the waves on light's cone, the exact run back with the clocks moving, and the 24.
+      - **G3, the coupling family** (below).
+      - **G4, the shift and the shears** (T1; E + T2 in one whole six-row block, E with no basis of its own): frame dragging, and the waves' two polarizations at light's speed. G2 and G4 test the board's structure (N5).
+      - **G5, the clicks on the act:** the whole click as the drive's carry; the split click by the one rule over sigma_f, a full slot refusing after the draw and the quantum going back to its giver by 5.1's books line (b), the refusal's form on the record as Animate proposes (6502190388); the backward run's tag; schema 1.2. The reader's four rules (D6 to D8, 6500074687) run on the act's records: proper time read twice (the clock's own count, and the rate along its path, never the board's tick, the round being order alone); invariants only, a reading that compares board ticks refused by name; the twin reading; the cone check on every record.
+      - **G6, the seed alone:** a universe of the seed and the clock's families, run through the bang; read on the record: composites and their beats (the masses, decision 37), q per era, the frame statistic, and the books (forward times backward).
+    - **The coupling family** (decision 40 (d), (g) and (h); the architect's N4; David's mends of #2187, 13:16 UTC, and his dimension check, 6497888613):
+      - an ordinary family of the one gear type; its leg in every source by the one plan, with only three-leg vertices, each pushing all its legs;
+      - one drive for every row comes with it, at G3: the drive's teeth the same for every row, so the whole click is one carry for every gear; G1's kick and drive of 1 give way to it, and the windings with them;
+      - one strength for all 43 tables by one formula (Schur's lambda), read through the ruler; no file holds a coupling or a read's factor (Sofer: a strength in a file is a declared one);
+      - its steady count one quantum per Node-clock, from the law and not from a file (g); its kind, A1 or A2, and whether the generic law chooses it, is David's (h). If the 24 break, they break by this state;
+      - places 5 and 6 of the keeper's reading (the per-row kick and teeth) stay named breaches until G3 (N4).
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 

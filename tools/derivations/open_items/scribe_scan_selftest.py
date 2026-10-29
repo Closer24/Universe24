@@ -52,43 +52,43 @@ TOOL_DECODE = "tools/tensor24_decode.py"
 BOARD_SOURCE = "\n".join(
     [
         '"""The board from its shape: each site\'s six neighbours, the wrap by Rule3 on each coordinate, and each Spoke\'s Mesh."""',
-        '',
-        'import numpy as np',
-        '',
-        'from tensor24.algebra.carry import Z, carry',
-        '',
-        '',
-        'def site(x: Z, y: Z, z: Z, sy: Z, sz: Z) -> Z:',
+        "",
+        "import numpy as np",
+        "",
+        "from tensor24.algebra.carry import Z, carry",
+        "",
+        "",
+        "def site(x: Z, y: Z, z: Z, sy: Z, sz: Z) -> Z:",
         '    """The site at three coordinates, z the fastest: (x sy + y) sz + z."""',
-        '    return (x * sy + y) * sz + z',
-        '',
-        '',
-        'def wrap(x: Z, side: Z) -> Z:',
+        "    return (x * sy + y) * sz + z",
+        "",
+        "",
+        "def wrap(x: Z, side: Z) -> Z:",
         '    """A coordinate brought onto the board\'s side by Rule3: the carry\'s remainder."""',
-        '    _, kept = carry(x, side, 0)',
-        '    return kept',
-        '',
-        '',
-        'def board(shape: tuple[int, int, int]) -> tuple[Z, Z]:',
+        "    _, kept = carry(x, side, 0)",
+        "    return kept",
+        "",
+        "",
+        "def board(shape: tuple[int, int, int]) -> tuple[Z, Z]:",
         '    """The six neighbours of every site, +x, -x, +y, -y, +z, -z, and the Mesh each Spoke holds, as index arrays."""',
-        '    sx, sy, sz = shape',
-        '    n = sx * sy * sz',
-        '    sites = np.arange(n, dtype=np.intp)  # an index array: the sites counted, each a whole number below n',
-        '    rest, z = carry(sites, sz, 0)',
-        '    x, y = carry(rest, sy, 0)',
-        '    nb = np.stack(',
-        '        [',
-        '            site(wrap(x + 1, sx), y, z, sy, sz),',
-        '            site(wrap(x - 1, sx), y, z, sy, sz),',
-        '            site(x, wrap(y + 1, sy), z, sy, sz),',
-        '            site(x, wrap(y - 1, sy), z, sy, sz),',
-        '            site(x, y, wrap(z + 1, sz), sy, sz),',
-        '            site(x, y, wrap(z - 1, sz), sy, sz),',
-        '        ]',
-        '    )',
-        '    _, mx, _, my, _, mz = nb',
-        '    meshes = np.stack([sites, mx, n + sites, n + my, n + n + sites, n + n + mz])',
-        '    return nb, meshes',
+        "    sx, sy, sz = shape",
+        "    n = sx * sy * sz",
+        "    sites = np.arange(n, dtype=np.intp)  # an index array: the sites counted, each a whole number below n",
+        "    rest, z = carry(sites, sz, 0)",
+        "    x, y = carry(rest, sy, 0)",
+        "    nb = np.stack(",
+        "        [",
+        "            site(wrap(x + 1, sx), y, z, sy, sz),",
+        "            site(wrap(x - 1, sx), y, z, sy, sz),",
+        "            site(x, wrap(y + 1, sy), z, sy, sz),",
+        "            site(x, wrap(y - 1, sy), z, sy, sz),",
+        "            site(x, y, wrap(z + 1, sz), sy, sz),",
+        "            site(x, y, wrap(z - 1, sz), sy, sz),",
+        "        ]",
+        "    )",
+        "    _, mx, _, my, _, mz = nb",
+        "    meshes = np.stack([sites, mx, n + sites, n + my, n + n + sites, n + n + mz])",
+        "    return nb, meshes",
     ]
 )
 BOARD_SOURCE += "\n"
@@ -475,10 +475,30 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a refusal in the runner", NEW_RUNNER, "def f(a):\n    raise ValueError(a)\n", {}),
     ("max of a pair in the runner", NEW_RUNNER, "def f(a, b):\n    return max(a, b)\n", {}),
     # the board's module keeps the rules a wrap by hand would break; the rest of the runner is spared them
-    ("a remainder in the board's module", NEW_BOARD, "def f(a, b):\n    return a % b\n", {"OPERATION": 1}),
-    ("a floor division in the board's module", NEW_BOARD, "def f(a, b):\n    return a // b\n", {"OPERATION": 1}),
-    ("an augmented remainder in the board's module", NEW_BOARD, "def f(a, b):\n    a %= b\n    return a\n", {"OPERATION": 1}),
-    ("divmod in the board's module", NEW_BOARD, "def f(a, b):\n    return divmod(a, b)\n", {"OPERATION": 1}),
+    (
+        "a remainder in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a % b\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a floor division in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a // b\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "an augmented remainder in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    a %= b\n    return a\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "divmod in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return divmod(a, b)\n",
+        {"OPERATION": 1},
+    ),
     (
         "numpy's mod in the board's module",
         NEW_BOARD,
@@ -493,13 +513,48 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ),
     ("a power in the board's module", NEW_BOARD, "def f(a):\n    return a ** a\n", {"OPERATION": 1}),
     ("a shift in the board's module", NEW_BOARD, "def f(a):\n    return a << a\n", {"OPERATION": 1}),
-    ("a branch in the board's module", NEW_BOARD, "def f(a, b):\n    if a:\n        return b\n    return a\n", {"BRANCH": 1}),
-    ("a conditional expression in the board's module", NEW_BOARD, "def f(a, b):\n    return b if a else a\n", {"BRANCH": 1}),
-    ("an ordering comparison in the board's module", NEW_BOARD, "def f(a, b):\n    return a < b\n", {"COMPARE": 1}),
-    ("a loop in the board's module", NEW_BOARD, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
-    ("a comprehension in the board's module", NEW_BOARD, "def f(a):\n    return [x for x in a]\n", {"LOOP": 1}),
-    ("max of a pair in the board's module", NEW_BOARD, "def f(a, b):\n    return max(a, b)\n", {"CLAMP": 1}),
-    ("where in the board's module", NEW_BOARD, "def f(a, b):\n    return where(a, b, 0)\n", {"CLAMP": 1}),
+    (
+        "a branch in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    if a:\n        return b\n    return a\n",
+        {"BRANCH": 1},
+    ),
+    (
+        "a conditional expression in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return b if a else a\n",
+        {"BRANCH": 1},
+    ),
+    (
+        "an ordering comparison in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a < b\n",
+        {"COMPARE": 1},
+    ),
+    (
+        "a loop in the board's module",
+        NEW_BOARD,
+        "def f(a):\n    for x in a:\n        pass\n",
+        {"LOOP": 1},
+    ),
+    (
+        "a comprehension in the board's module",
+        NEW_BOARD,
+        "def f(a):\n    return [x for x in a]\n",
+        {"LOOP": 1},
+    ),
+    (
+        "max of a pair in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return max(a, b)\n",
+        {"CLAMP": 1},
+    ),
+    (
+        "where in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return where(a, b, 0)\n",
+        {"CLAMP": 1},
+    ),
     (
         "a wrap by hand in the board's module: a subtraction under a comparison",
         NEW_BOARD,
@@ -512,59 +567,314 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
         "from tensor24.algebra.carry import carry\n\n\ndef f(a, b):\n    return carry(a, b, 0)\n",
         {},
     ),
-    ("an equality as a whether in the board's module", NEW_BOARD, "def f(a, b):\n    return a == b\n", {"ALLOW": 1}),
+    (
+        "an equality as a whether in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a == b\n",
+        {"ALLOW": 1},
+    ),
     ("a raise in the board's module", NEW_BOARD, "def f(a):\n    raise ValueError(a)\n", {"ALLOW": 1}),
-    ("a remainder in a module named for the board", "tensor24/runner/boards.py", "def f(a, b):\n    return a % b\n", {}),
-    ("a remainder in a runner module whose name ends in the board's", "tensor24/runner/dashboard.py", "def f(a, b):\n    return a % b\n", {}),
+    (
+        "a remainder in a module named for the board",
+        "tensor24/runner/boards.py",
+        "def f(a, b):\n    return a % b\n",
+        {},
+    ),
+    (
+        "a remainder in a runner module whose name ends in the board's",
+        "tensor24/runner/dashboard.py",
+        "def f(a, b):\n    return a % b\n",
+        {},
+    ),
     # the dodges of the board's rule: a method's name, a name imported or aliased, a getattr, numpy's own wraps
-    ("numpy's divmod in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a, b):\n    return np.divmod(a, b)\n', {"OPERATION": 1}),
-    ("numpy's divmod in the decoder", NEW_DECODER, 'import numpy as np\n\n\ndef f(a, b):\n    return np.divmod(a, b)\n', {"OPERATION": 1}),
-    ("numpy's take with a mode in another runner module", NEW_RUNNER, "import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i, mode='wrap')\n", {}),
-    ("a take with a mode in the decoder", NEW_DECODER, "def f(a, i):\n    return a.take(i, mode='wrap')\n", {}),
-    ("numpy's unravel_index in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(x, side):\n    return np.unravel_index(x, (side, side))[1]\n', {"ALLOW": 1}),
-    ("numpy's equal as a whether in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(x, side):\n    return x + side * np.equal(x, side)\n', {"ALLOW": 1}),
-    ("numpy's digitize as a whether in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(x, side):\n    return x - side * np.digitize(x, [0, side])\n', {"ALLOW": 1}),
-    ("a getattr of a built name in the board's module", NEW_BOARD, "import numpy as np\n\n\ndef f(x, side):\n    return getattr(np, 're' + 'mainder')(x, side)\n", {"ALLOW": 4}),
-    ("vars of numpy by a key in the board's module", NEW_BOARD, "import numpy as np\n\n\ndef f(x, side):\n    return vars(np)['remainder'](x, side)\n", {"ALLOW": 3}),
-    ("numpy's tile of the index range in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(x, side):\n    return np.tile(np.arange(side, dtype=np.intp), 1 + 1 + 1)[x + side]\n', {"ALLOW": 1}),
-    ("an array's take method in the board's module", NEW_BOARD, 'def f(a, i):\n    return a.take(i)\n', {"ALLOW": 1}),
-    ("numpy's arange with the index dtype in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(n):\n    return np.arange(n, dtype=np.intp)\n', {}),
-    ("numpy's stack of a list in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a, b):\n    return np.stack([a, b])\n', {}),
-    ("numpy's arange with another dtype in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(n):\n    return np.arange(n, dtype=np.int64)\n', {"ALLOW": 2}),
-    ("numpy's arange with no dtype in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(n):\n    return np.arange(n)\n', {"ALLOW": 1, "DTYPE": 1}),
-    ("numpy's equal in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(x, side):\n    return x + side * np.equal(x, side)\n', {}),
-    ('vars of numpy by a key in another runner module', NEW_RUNNER, "import numpy as np\n\n\ndef f(x, side):\n    return vars(np)['remainder'](x, side)\n", {}),
-    ("numpy's unravel_index in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(x, side):\n    return np.unravel_index(x, (side, side))[1]\n', {}),
-    ("numpy's digitize in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(x, side):\n    return x - side * np.digitize(x, [0, side])\n', {}),
-    ("the board's module as the Boss wrote it (0ff2ae0dc), its two doublings spelt as sums read by the rule TWICE", NEW_BOARD, BOARD_SOURCE, {"TWICE": 2}),
-    ("a method call of the remainder in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__mod__(b)\n', {"OPERATION": 1}),
-    ("a method call of the floor division in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__floordiv__(b)\n', {"OPERATION": 1}),
-    ("a method call of the reflected remainder in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__rmod__(b)\n', {"OPERATION": 1}),
-    ("a method call of divmod in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__divmod__(b)\n', {"OPERATION": 1}),
-    ("a method call of the power in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__pow__(b)\n', {"OPERATION": 1}),
-    ("a getattr of the remainder's method in the board's module", NEW_BOARD, "def f(a, b):\n    return getattr(a, '__mod__')(b)\n", {"OPERATION": 1}),
-    ("a getattr of numpy's mod in the board's module", NEW_BOARD, "import numpy as np\n\n\ndef f(a, b):\n    return getattr(np, 'mod')(a, b)\n", {"OPERATION": 1}),
-    ("numpy's ndarray method of the remainder in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a, b):\n    return np.ndarray.__mod__(a, b)\n', {"OPERATION": 1}),
-    ("numpy's mod imported by name in the board's module", NEW_BOARD, 'from numpy import mod as m\n\n\ndef f(a, b):\n    return m(a, b)\n', {"OPERATION": 1}),
-    ("operator's floordiv imported by name in the board's module", NEW_BOARD, 'from operator import floordiv\n\n\ndef f(a, b):\n    return floordiv(a, b)\n', {"OPERATION": 1}),
-    ("numpy's mod aliased in the board's module", NEW_BOARD, 'import numpy as np\n\ng = np.mod\n\n\ndef f(a, b):\n    return g(a, b)\n', {"OPERATION": 1}),
-    ("numpy's remainder passed as a value in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a, g):\n    return g(np.remainder)\n', {"OPERATION": 1}),
-    ("numpy's roll in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a):\n    return np.roll(a, 1)\n', {"OPERATION": 1}),
-    ("numpy's pad in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a):\n    return np.pad(a, 1)\n', {"OPERATION": 1}),
-    ("numpy's roll imported by name in the board's module", NEW_BOARD, 'from numpy import roll\n\n\ndef f(a):\n    return roll(a, 1)\n', {"OPERATION": 1}),
-    ("numpy's take with a mode in the board's module", NEW_BOARD, "import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i, mode='wrap')\n", {"OPERATION": 1}),
-    ("numpy's take with no mode in the board's module", NEW_BOARD, "import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i)\n", {"ALLOW": 1}),
-    ("methods that are no operation in the board's module", NEW_BOARD, "def f(a, i):\n    return a.__getitem__(i), a.__len__()\n", {"ALLOW": 2}),
-    ("a numpy name that is no operation imported in the board's module", NEW_BOARD, 'from numpy import stack\n\n\ndef f(a):\n    return stack(a)\n', {}),
-    ('a method call of the remainder in another runner module', NEW_RUNNER, 'def f(a, b):\n    return a.__mod__(b)\n', {}),
-    ("numpy's mod in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(a, b):\n    return np.mod(a, b)\n', {}),
-    ("numpy's roll in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(a):\n    return np.roll(a, 1)\n', {}),
-    ('a method call of the remainder in the decoder', NEW_DECODER, 'def f(a, b):\n    return a.__mod__(b)\n', {"OPERATION": 1}),
-    ("numpy's mod imported by name in the decoder", NEW_DECODER, 'from numpy import mod\n\n\ndef f(a, b):\n    return mod(a, b)\n', {"OPERATION": 1}),
-    ('a method call of the remainder in the current engine', ENGINE, 'def f(a, b):\n    return a.__mod__(b)\n', {"OPERATION": 1}),
-    ("a method call of the remainder in the carry's home", CARRY, 'def f(a, b):\n    return a.__mod__(b)\n', {}),
-    ("a remainder in the board's name in the decoder", "tensor24/decoder/board.py", "def f(a, b):\n    return a % b\n", {"OPERATION": 1}),
-    ("a loop in a module of the decoder named for the board", "tensor24/decoder/board.py", "def f(a):\n    for x in a:\n        pass\n", {}),
+    (
+        "numpy's divmod in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.divmod(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's divmod in the decoder",
+        NEW_DECODER,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.divmod(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's take with a mode in another runner module",
+        NEW_RUNNER,
+        "import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i, mode='wrap')\n",
+        {},
+    ),
+    (
+        "a take with a mode in the decoder",
+        NEW_DECODER,
+        "def f(a, i):\n    return a.take(i, mode='wrap')\n",
+        {},
+    ),
+    (
+        "numpy's unravel_index in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(x, side):\n    return np.unravel_index(x, (side, side))[1]\n",
+        {"ALLOW": 1},
+    ),
+    (
+        "numpy's equal as a whether in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(x, side):\n    return x + side * np.equal(x, side)\n",
+        {"ALLOW": 1},
+    ),
+    (
+        "numpy's digitize as a whether in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(x, side):\n    return x - side * np.digitize(x, [0, side])\n",
+        {"ALLOW": 1},
+    ),
+    (
+        "a getattr of a built name in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(x, side):\n    return getattr(np, 're' + 'mainder')(x, side)\n",
+        {"ALLOW": 4},
+    ),
+    (
+        "vars of numpy by a key in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(x, side):\n    return vars(np)['remainder'](x, side)\n",
+        {"ALLOW": 3},
+    ),
+    (
+        "numpy's tile of the index range in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(x, side):\n    return np.tile(np.arange(side, dtype=np.intp), 1 + 1 + 1)[x + side]\n",
+        {"ALLOW": 1},
+    ),
+    (
+        "an array's take method in the board's module",
+        NEW_BOARD,
+        "def f(a, i):\n    return a.take(i)\n",
+        {"ALLOW": 1},
+    ),
+    (
+        "numpy's arange with the index dtype in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(n):\n    return np.arange(n, dtype=np.intp)\n",
+        {},
+    ),
+    (
+        "numpy's stack of a list in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.stack([a, b])\n",
+        {},
+    ),
+    (
+        "numpy's arange with another dtype in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(n):\n    return np.arange(n, dtype=np.int64)\n",
+        {"ALLOW": 2},
+    ),
+    (
+        "numpy's arange with no dtype in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(n):\n    return np.arange(n)\n",
+        {"ALLOW": 1, "DTYPE": 1},
+    ),
+    (
+        "numpy's equal in another runner module",
+        NEW_RUNNER,
+        "import numpy as np\n\n\ndef f(x, side):\n    return x + side * np.equal(x, side)\n",
+        {},
+    ),
+    (
+        "vars of numpy by a key in another runner module",
+        NEW_RUNNER,
+        "import numpy as np\n\n\ndef f(x, side):\n    return vars(np)['remainder'](x, side)\n",
+        {},
+    ),
+    (
+        "numpy's unravel_index in another runner module",
+        NEW_RUNNER,
+        "import numpy as np\n\n\ndef f(x, side):\n    return np.unravel_index(x, (side, side))[1]\n",
+        {},
+    ),
+    (
+        "numpy's digitize in another runner module",
+        NEW_RUNNER,
+        "import numpy as np\n\n\ndef f(x, side):\n    return x - side * np.digitize(x, [0, side])\n",
+        {},
+    ),
+    (
+        "the board's module as the Boss wrote it (0ff2ae0dc), its two doublings spelt as sums read by the rule TWICE",
+        NEW_BOARD,
+        BOARD_SOURCE,
+        {"TWICE": 2},
+    ),
+    (
+        "a method call of the remainder in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a.__mod__(b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a method call of the floor division in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a.__floordiv__(b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a method call of the reflected remainder in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a.__rmod__(b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a method call of divmod in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a.__divmod__(b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a method call of the power in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return a.__pow__(b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a getattr of the remainder's method in the board's module",
+        NEW_BOARD,
+        "def f(a, b):\n    return getattr(a, '__mod__')(b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a getattr of numpy's mod in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, b):\n    return getattr(np, 'mod')(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's ndarray method of the remainder in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.ndarray.__mod__(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's mod imported by name in the board's module",
+        NEW_BOARD,
+        "from numpy import mod as m\n\n\ndef f(a, b):\n    return m(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "operator's floordiv imported by name in the board's module",
+        NEW_BOARD,
+        "from operator import floordiv\n\n\ndef f(a, b):\n    return floordiv(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's mod aliased in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\ng = np.mod\n\n\ndef f(a, b):\n    return g(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's remainder passed as a value in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, g):\n    return g(np.remainder)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's roll in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a):\n    return np.roll(a, 1)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's pad in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a):\n    return np.pad(a, 1)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's roll imported by name in the board's module",
+        NEW_BOARD,
+        "from numpy import roll\n\n\ndef f(a):\n    return roll(a, 1)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's take with a mode in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i, mode='wrap')\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's take with no mode in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i)\n",
+        {"ALLOW": 1},
+    ),
+    (
+        "methods that are no operation in the board's module",
+        NEW_BOARD,
+        "def f(a, i):\n    return a.__getitem__(i), a.__len__()\n",
+        {"ALLOW": 2},
+    ),
+    (
+        "a numpy name that is no operation imported in the board's module",
+        NEW_BOARD,
+        "from numpy import stack\n\n\ndef f(a):\n    return stack(a)\n",
+        {},
+    ),
+    (
+        "a method call of the remainder in another runner module",
+        NEW_RUNNER,
+        "def f(a, b):\n    return a.__mod__(b)\n",
+        {},
+    ),
+    (
+        "numpy's mod in another runner module",
+        NEW_RUNNER,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.mod(a, b)\n",
+        {},
+    ),
+    (
+        "numpy's roll in another runner module",
+        NEW_RUNNER,
+        "import numpy as np\n\n\ndef f(a):\n    return np.roll(a, 1)\n",
+        {},
+    ),
+    (
+        "a method call of the remainder in the decoder",
+        NEW_DECODER,
+        "def f(a, b):\n    return a.__mod__(b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's mod imported by name in the decoder",
+        NEW_DECODER,
+        "from numpy import mod\n\n\ndef f(a, b):\n    return mod(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a method call of the remainder in the current engine",
+        ENGINE,
+        "def f(a, b):\n    return a.__mod__(b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a method call of the remainder in the carry's home",
+        CARRY,
+        "def f(a, b):\n    return a.__mod__(b)\n",
+        {},
+    ),
+    (
+        "a remainder in the board's name in the decoder",
+        "tensor24/decoder/board.py",
+        "def f(a, b):\n    return a % b\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "a loop in a module of the decoder named for the board",
+        "tensor24/decoder/board.py",
+        "def f(a):\n    for x in a:\n        pass\n",
+        {},
+    ),
     ("a loop in the readings", NEW_READING, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
     (
         "an ordering comparison in the readings",
@@ -741,6 +1051,122 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a floor in a reader", READER, "def f(a):\n    return a.floor\n", {}),
     ("a floor in the decoder", NEW_DECODER, "def f(a):\n    return a.floor\n", {}),
     ("a floor in the runner", NEW_RUNNER, "def f(a):\n    return a.floor\n", {}),
+    ("a choose in the act", NEW_STEP, "def f(k, x, y):\n    return choose(k, x, y)\n", {"CHOOSE": 1}),
+    ("a nonneg in the act", NEW_STEP, "def f(x):\n    return nonneg(x)\n", {"CHOOSE": 1}),
+    (
+        "a choose reached through a module",
+        NEW_STEP,
+        "def f(a, k, x, y):\n    return a.choose(k, x, y)\n",
+        {"CHOOSE": 1, "CLAMP": 1},
+    ),
+    (
+        "numpy's choose is a clamp and no engine choose",
+        NEW_STEP,
+        "import numpy as np\n\n\ndef f(k, x):\n    return np.choose(k, x)\n",
+        {"CLAMP": 1},
+    ),
+    ("a choose in the mesh", NEW_MESH, "def f(k, x, y):\n    return choose(k, x, y)\n", {"CHOOSE": 1}),
+    (
+        "a choose in the loader",
+        NEW_LOADER,
+        "def f(k, x, y):\n    return choose(k, x, y)\n",
+        {"CHOOSE": 1},
+    ),
+    ("a choose in the algebra", NEW_RING, "def f(k, x, y):\n    return choose(k, x, y)\n", {"ALLOW": 1}),
+    ("a choose in a reader", NEW_DECODER, "def f(k, x, y):\n    return choose(k, x, y)\n", {}),
+    (
+        "a name that only contains choose",
+        NEW_STEP,
+        "def f(chooser, x):\n    return chooser(x)\n",
+        {"ALLOW": 1},
+    ),
+    (
+        "a family found by its last place",
+        NEW_LOADER,
+        "def f(trains):\n    return trains[-1]\n",
+        {"POSITION": 1},
+    ),
+    (
+        "a family found by its first place",
+        NEW_STEP,
+        "def f(rows):\n    return rows[0]\n",
+        {"POSITION": 1},
+    ),
+    (
+        "an attribute indexed by an expression",
+        NEW_LOADER,
+        "def f(self, k):\n    return self.rows[k + 1]\n",
+        {},
+    ),
+    (
+        "an attribute indexed by a literal",
+        NEW_LOADER,
+        "def f(self):\n    return self.rows[5]\n",
+        {"POSITION": 1},
+    ),
+    ("an array's dimension", NEW_LOADER, "def f(a):\n    return a.shape[-1]\n", {}),
+    (
+        "a pair out of a call's result",
+        NEW_LOADER,
+        "def f(a, b, carry):\n    return carry(a, b, 0)[0]\n",
+        {},
+    ),
+    ("an index that is a name", NEW_LOADER, "def f(rows, k):\n    return rows[k]\n", {}),
+    ("a slice", NEW_LOADER, "def f(rows):\n    return rows[0:1]\n", {}),
+    ("a place in the algebra", NEW_RING, "def f(phi):\n    return phi[0]\n", {}),
+    ("a place in a reader", NEW_DECODER, "def f(rows):\n    return rows[0]\n", {}),
+    ("a kind named by a string in the loader", NEW_LOADER, "def f():\n    return 'A1'\n", {"FAMILY": 1}),
+    (
+        "an operand named by a string in the loader",
+        NEW_LOADER,
+        "def f(op):\n    return op == 'gradient'\n",
+        {"FAMILY": 1},
+    ),
+    ("a kind named by a string in the act", NEW_STEP, "def f():\n    return 'T1'\n", {"FAMILY": 1}),
+    (
+        "two kinds, one each in two functions",
+        NEW_STEP,
+        "def f():\n    return 'E'\n\n\ndef g():\n    return 'T2'\n",
+        {"FAMILY": 2},
+    ),
+    ("a kind named in the algebra", NEW_RING, "def f():\n    return 'A1'\n", {"ALLOW": 1}),
+    ("a kind named by the decoder", NEW_DECODER, "def f():\n    return 'A1'\n", {}),
+    ("a string that only contains a kind", NEW_LOADER, "def f():\n    return 'A12 and E'\n", {}),
+    (
+        "an if spelt as arithmetic in the act",
+        NEW_STEP,
+        "def f(r, a, b):\n    return r * a + (1 - r) * b\n",
+        {"CHOOSE": 1},
+    ),
+    (
+        "an if spelt as arithmetic in the loader",
+        NEW_LOADER,
+        "def f(r, a, b):\n    return r * a + (1 - r) * b\n",
+        {"CHOOSE": 1},
+    ),
+    (
+        "an if spelt as arithmetic in the mesh",
+        NEW_MESH,
+        "def f(r, a, b):\n    return r * a + (1 - r) * b\n",
+        {"CHOOSE": 1},
+    ),
+    ("one less a name in the loader", NEW_LOADER, "def f(r):\n    return 1 - r\n", {"CHOOSE": 1}),
+    ("one less an element of a name", NEW_STEP, "def f(r, i):\n    return 1 - r[i]\n", {"CHOOSE": 1}),
+    ("one less an attribute", NEW_STEP, "def f(s):\n    return 1 - s.bit\n", {"CHOOSE": 1}),
+    (
+        "the choose spelt as arithmetic in the algebra",
+        NEW_RING,
+        "def f(r, a, b):\n    return r * a + (1 - r) * b\n",
+        {},
+    ),
+    (
+        "the choose spelt as arithmetic in a reader",
+        NEW_DECODER,
+        "def f(r, a, b):\n    return r * a + (1 - r) * b\n",
+        {},
+    ),
+    ("a difference that is no complement", NEW_STEP, "def f(w, r):\n    return w - 1 - r\n", {}),
+    ("one less one", NEW_STEP, "def f(a):\n    return a * (1 - 1)\n", {}),
 ]
 
 
@@ -1004,7 +1430,7 @@ CASES += [
     # the architect's own functions (design section 2): choose and nonneg of algebra/ called by their names, the due bit's product over the
     # Spoke axis (np.prod); numpy's choose stays a clamp
     (
-        "a lawful beat and due bit: the algebra's carry, nonneg and choose, np.prod over the Spoke axis",
+        "a beat and due bit: the algebra's carry, nonneg and choose (two selections, the rule CHOOSE counts them), np.prod over the Spoke axis",
         NEW_STEP,
         "import numpy as np\n"
         "from tensor24.algebra.carry import carry, choose, nonneg\n\n\n"
@@ -1015,7 +1441,7 @@ CASES += [
         "    return carry(rate, gamma, ph)\n\n\n"
         "def turnover(q, moved, same):\n"
         "    return choose(q, moved, same)\n",
-        {},
+        {"CHOOSE": 2},
     ),
     (
         "numpy's choose is still a clamp, and no list name",
@@ -1090,7 +1516,12 @@ CASES += [
     ("a loop in runner/load.py (not spared)", NEW_LOADER, fn("for x in a:\n    pass"), {"LOOP": 1}),
     ("a comprehension in runner/load.py", NEW_LOADER, fn("return [x for x in a]"), {"LOOP": 1}),
     ("a branch in runner/load.py", NEW_LOADER, fn("if a:\n    return 1\nreturn 0"), {"BRANCH": 1}),
-    ("a conditional expression in runner/load.py", NEW_LOADER, fn("return 1 if a else 0"), {"BRANCH": 1}),
+    (
+        "a conditional expression in runner/load.py",
+        NEW_LOADER,
+        fn("return 1 if a else 0"),
+        {"BRANCH": 1},
+    ),
     ("an ordering comparison in runner/load.py", NEW_LOADER, fn("return a < b", "a, b"), {"COMPARE": 1}),
     ("max of a pair in runner/load.py", NEW_LOADER, fn("return max(a, b)", "a, b"), {"CLAMP": 1}),
     ("a refusal in runner/load.py", NEW_LOADER, fn("raise ValueError(a)"), {"REFUSE": 1}),
@@ -1099,10 +1530,30 @@ CASES += [
     ("a floor named in runner/load.py", NEW_LOADER, fn("return a.floor"), {"BOUND": 1}),
     ("the undo log in runner/load.py", NEW_LOADER, fn("return a.log"), {"LOGREAD": 1}),
     ("a name added to itself in runner/load.py", NEW_LOADER, fn("return a + a"), {"TWICE": 1}),
-    ("a loop in runner/files.py stays spared", "tensor24/runner/files.py", fn("for x in a:\n    pass"), {}),
-    ("a branch in runner/run.py stays spared", "tensor24/runner/run.py", fn("if a:\n    return 1\nreturn 0"), {}),
-    ("a loop in a module named for the loader", "tensor24/runner/loader.py", fn("for x in a:\n    pass"), {}),
-    ("a loop in a runner module whose name ends in the loader's", "tensor24/runner/preload.py", fn("for x in a:\n    pass"), {}),
+    (
+        "a loop in runner/files.py stays spared",
+        "tensor24/runner/files.py",
+        fn("for x in a:\n    pass"),
+        {},
+    ),
+    (
+        "a branch in runner/run.py stays spared",
+        "tensor24/runner/run.py",
+        fn("if a:\n    return 1\nreturn 0"),
+        {},
+    ),
+    (
+        "a loop in a module named for the loader",
+        "tensor24/runner/loader.py",
+        fn("for x in a:\n    pass"),
+        {},
+    ),
+    (
+        "a loop in a runner module whose name ends in the loader's",
+        "tensor24/runner/preload.py",
+        fn("for x in a:\n    pass"),
+        {},
+    ),
     ("a loop in another folder's load.py", "tensor24/decoder/load.py", fn("for x in a:\n    pass"), {}),
     # every array is made with dtype=object (Python integers, whatever their width): the architect's rule
     ("an array made with dtype=object", NEW_STEP, NP + fn("return np.zeros(a, dtype=object)"), {}),
@@ -1125,19 +1576,40 @@ CASES += [
     ),
     refused("astype to something else", fn("return a.astype(int)")),
     # the index cast (2026-10-29, 05:4x UTC): the index type as a gather's index alone, a note on each use (INDEX_CASES); any other place refused
-    ("an index cast outside the closed folders", NEW_RUNNER, NP + fn("return a.take(a.astype(np.intp))"), {}),
+    (
+        "an index cast outside the closed folders",
+        NEW_RUNNER,
+        NP + fn("return a.take(a.astype(np.intp))"),
+        {},
+    ),
     refused("an index cast kept in a name", NP + fn("b = a.astype(np.intp)\nreturn b"), allow=2),
     refused("an index cast in a sum", NP + fn("return a.astype(np.intp) + 1"), allow=2),
     refused("astype(int) as take's index", NP + fn("return a.take(a.astype(int))")),
     refused("the table cast and not the index", NP + fn("return a.astype(np.intp).take(a)"), allow=2),
     refused("an index cast by keyword", NP + fn("return a.take(a.astype(dtype=np.intp))"), allow=3),
-    refused("an index cast with two arguments", NP + fn("return a.take(a.astype(np.intp, object))"), allow=2),
+    refused(
+        "an index cast with two arguments", NP + fn("return a.take(a.astype(np.intp, object))"), allow=2
+    ),
     refused("the cast subscripted and not the index", NP + fn("return a.astype(np.intp)[0]"), allow=2),
-    refused("np.take's table cast and not its index", NP + fn("return np.take(a.astype(np.intp), a)"), allow=2),
+    refused(
+        "np.take's table cast and not its index",
+        NP + fn("return np.take(a.astype(np.intp), a)"),
+        allow=2,
+    ),
     refused("np.intp as the argument of another method", NP + fn("return a.take(a.reshape(np.intp))")),
-    refused("an index cast as another method's argument", NP + fn("return a.reshape(a.astype(np.intp))"), allow=2),
-    refused("an index cast with a keyword beside it", NP + fn("return a.take(a.astype(np.intp, copy=False))"), allow=3),
-    refused("an index cast in a tuple that is no index", NP + fn("return (a.astype(np.intp), 1)"), allow=2),
+    refused(
+        "an index cast as another method's argument",
+        NP + fn("return a.reshape(a.astype(np.intp))"),
+        allow=2,
+    ),
+    refused(
+        "an index cast with a keyword beside it",
+        NP + fn("return a.take(a.astype(np.intp, copy=False))"),
+        allow=3,
+    ),
+    refused(
+        "an index cast in a tuple that is no index", NP + fn("return (a.astype(np.intp), 1)"), allow=2
+    ),
     refused(
         "a dtype that is not object on the engine's own call",
         "def g(a, dtype=None):\n    return a\n\n\ndef f(a):\n    return g(a, dtype=int)\n",
@@ -1310,23 +1782,91 @@ CASES += [
 # the new engine's tools, tools/tensor24_*.py (the Boss's word of 2026-10-28, 23:4x): the rules NUMBER and FLOAT alone, a path joined by
 # pathlib's slash no division; the scope itself (the two tools and no other file under tools/) is tested through git below
 CASES += [
-    ("a tool: the literal 2 as an index", TOOL_DECODE, "def f(argv):\n    return argv[2]\n", {"NUMBER": 1}),
-    ("a tool: the literals 2 and 3 in a membership test", TOOL_DECODE, "def f(argv):\n    return len(argv) not in (2, 3)\n", {"NUMBER": 2}),
+    (
+        "a tool: the literal 2 as an index",
+        TOOL_DECODE,
+        "def f(argv):\n    return argv[2]\n",
+        {"NUMBER": 1},
+    ),
+    (
+        "a tool: the literals 2 and 3 in a membership test",
+        TOOL_DECODE,
+        "def f(argv):\n    return len(argv) not in (2, 3)\n",
+        {"NUMBER": 2},
+    ),
     ("a tool: a return of 2", TOOL_DECODE, "def f(argv):\n    return 2\n", {"NUMBER": 1}),
     ("a tool: 3 in an equality", TOOL_FILES, "def f(argv):\n    return len(argv) == 3\n", {"NUMBER": 1}),
-    ("a tool: 2 spelt as 1 + 1 stands", TOOL_FILES, "def f(argv):\n    return 1 + 1\n", {}),
-    ("a tool: 0, 1 and -1 stand", TOOL_DECODE, "import sys\n\n\ndef f(argv):\n    sys.set_int_max_str_digits(0)\n    return argv[1], argv[-1:], 1 + 0\n", {}),
+    (
+        "a tool: 2 spelt as 1 + 1 is refused",
+        TOOL_FILES,
+        "def f(argv):\n    return 1 + 1\n",
+        {"TWICE": 1},
+    ),
+    (
+        "a tool: a name added to itself is refused",
+        TOOL_DECODE,
+        "def f(a):\n    return a + a\n",
+        {"TWICE": 1},
+    ),
+    ("a tool: two different names added stand", TOOL_DECODE, "def f(a, b):\n    return a + b\n", {}),
+    (
+        "a tool not of the new engine: a name added to itself is not read",
+        "tools/other_tool.py",
+        "def f(a):\n    return a + a\n",
+        {},
+    ),
+    (
+        "a tool: 0, 1 and -1 stand",
+        TOOL_DECODE,
+        "import sys\n\n\ndef f(argv):\n    sys.set_int_max_str_digits(0)\n    return argv[1], argv[-1:], 1 + 0\n",
+        {},
+    ),
     ("a tool: a float literal", TOOL_FILES, "def f():\n    return 0.5\n", {"FLOAT": 1, "NUMBER": 1}),
     ("a tool: a complex literal", TOOL_FILES, "def f():\n    return 1j\n", {"FLOAT": 1, "NUMBER": 1}),
-    ("a tool: a true division of two names", TOOL_FILES, "def f(a, b):\n    return a / b\n", {"FLOAT": 1}),
-    ("a tool: a true division of 1 by a name", TOOL_FILES, "def f(a):\n    return 1 / a\n", {"FLOAT": 1}),
-    ("a tool: an augmented true division", TOOL_FILES, "def f(a, b):\n    a /= b\n    return a\n", {"FLOAT": 1}),
+    (
+        "a tool: a true division of two names",
+        TOOL_FILES,
+        "def f(a, b):\n    return a / b\n",
+        {"FLOAT": 1},
+    ),
+    (
+        "a tool: a true division of 1 by a name",
+        TOOL_FILES,
+        "def f(a):\n    return 1 / a\n",
+        {"FLOAT": 1},
+    ),
+    (
+        "a tool: an augmented true division",
+        TOOL_FILES,
+        "def f(a, b):\n    a /= b\n    return a\n",
+        {"FLOAT": 1},
+    ),
     ("a tool: round()", TOOL_FILES, "def f(a):\n    return round(a)\n", {"FLOAT": 1}),
     ("a tool: pow()", TOOL_FILES, "def f(a, b):\n    return pow(a, b)\n", {"FLOAT": 1}),
-    ("a tool: a path joined by pathlib's slash with strings", TOOL_FILES, 'from pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1] / "examples" / "tensor24"\n', {}),
-    ("a tool: a path joined with an f-string", TOOL_FILES, 'def f(root, name):\n    return root / f"{name}.json"\n', {}),
-    ("a tool: an augmented path join", TOOL_FILES, 'def f(root):\n    root /= "x"\n    return root\n', {}),
-    ("a slash with a string is still a division in the code", ENGINE, 'def f(root):\n    return root / "x"\n', {"FLOAT": 1}),
+    (
+        "a tool: a path joined by pathlib's slash with strings",
+        TOOL_FILES,
+        'from pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1] / "examples" / "tensor24"\n',
+        {},
+    ),
+    (
+        "a tool: a path joined with an f-string",
+        TOOL_FILES,
+        'def f(root, name):\n    return root / f"{name}.json"\n',
+        {},
+    ),
+    (
+        "a tool: an augmented path join",
+        TOOL_FILES,
+        'def f(root):\n    root /= "x"\n    return root\n',
+        {},
+    ),
+    (
+        "a slash with a string is still a division in the code",
+        ENGINE,
+        'def f(root):\n    return root / "x"\n',
+        {"FLOAT": 1},
+    ),
     (
         "a tool: no other rule reads it (math, a loop, a branch, a raise, a clamp, a power, a remainder, a circular name)",
         TOOL_DECODE,
@@ -1398,14 +1938,44 @@ PINNED_FLOOR = "526a5666d"
 
 CASES += [
     # the rule TWICE: a two spelt as a sum, in every module of the new engine, the runner and the decoder included
-    ("a one added to a one in the engine", NEW_STEP, "def f(a):\n    return a * (1 + 1)\n", {"TWICE": 1}),
-    ("a name added to itself in the engine", NEW_STEP, "def f(teeth):\n    return teeth + teeth\n", {"TWICE": 1}),
-    ("a name added to itself in the runner (not spared)", NEW_RUNNER, "def f(spokes):\n    return spokes + spokes\n", {"TWICE": 1}),
-    ("a name added to itself in the decoder (not spared)", "tensor24/decoder/rows.py", "def f(n):\n    return n + n\n", {"TWICE": 1}),
+    (
+        "a one added to a one in the engine",
+        NEW_STEP,
+        "def f(a):\n    return a * (1 + 1)\n",
+        {"TWICE": 1},
+    ),
+    (
+        "a name added to itself in the engine",
+        NEW_STEP,
+        "def f(teeth):\n    return teeth + teeth\n",
+        {"TWICE": 1},
+    ),
+    (
+        "a name added to itself in the runner (not spared)",
+        NEW_RUNNER,
+        "def f(spokes):\n    return spokes + spokes\n",
+        {"TWICE": 1},
+    ),
+    (
+        "a name added to itself in the decoder (not spared)",
+        "tensor24/decoder/rows.py",
+        "def f(n):\n    return n + n\n",
+        {"TWICE": 1},
+    ),
     ("two different names added are no doubling", NEW_STEP, "def f(a, b):\n    return a + b\n", {}),
-    ("a name added to its successor is no doubling", NEW_STEP, "def f(a):\n    return a + (a + 1)\n", {}),
+    (
+        "a name added to its successor is no doubling",
+        NEW_STEP,
+        "def f(a):\n    return a + (a + 1)\n",
+        {},
+    ),
     ("a product of a name with itself is no sum", NEW_STEP, "def f(a):\n    return a * a\n", {}),
-    ("a sum of a name with itself outside the new engine is not read", ENGINE, "def f(a):\n    return a + a\n", {}),
+    (
+        "a sum of a name with itself outside the new engine is not read",
+        ENGINE,
+        "def f(a):\n    return a + a\n",
+        {},
+    ),
 ]
 
 
@@ -1453,10 +2023,20 @@ def tool_cases() -> tuple[int, int]:
         check(f"{name} is {'a' if want else 'no'} tool", bool(gate.TOOLS.fullmatch(name)) == want)
     with without_git_variables(), tempfile.TemporaryDirectory() as scratch:
         root = Path(scratch)
-        git = ["git", "-C", scratch, "-c", "user.name=selftest", "-c", "user.email=selftest@example.invalid"]
+        git = [
+            "git",
+            "-C",
+            scratch,
+            "-c",
+            "user.name=selftest",
+            "-c",
+            "user.email=selftest@example.invalid",
+        ]
 
         def run(*args: str) -> str:
-            return subprocess.run([*git, *args], capture_output=True, text=True, check=True).stdout.strip()
+            return subprocess.run(
+                [*git, *args], capture_output=True, text=True, check=True
+            ).stdout.strip()
 
         def commit(files: dict[str, str]) -> str:
             for name, text in files.items():
@@ -1494,11 +2074,22 @@ def tool_cases() -> tuple[int, int]:
             "in the working tree the same two",
             {k for k in gate.sources_in(root) if k.startswith("tools/")} == tools,
         )
-        check("the code under src is read beside them", "tensor24/__init__.py" in gate.sources_at(root, base))
-        status, text = read(branch("literal", {"tools/tensor24_files.py": "def main():\n    return 3\n"}))
-        check("a literal 3 in a tool is refused", status == 1 and "NUMBER" in text and "tools/tensor24_files.py" in text)
+        check(
+            "the code under src is read beside them",
+            "tensor24/__init__.py" in gate.sources_at(root, base),
+        )
+        status, text = read(
+            branch("literal", {"tools/tensor24_files.py": "def main():\n    return 3\n"})
+        )
+        check(
+            "a literal 3 in a tool is refused",
+            status == 1 and "NUMBER" in text and "tools/tensor24_files.py" in text,
+        )
         status, text = read(branch("float", {"tools/tensor24_new.py": "def main():\n    return 0.5\n"}))
-        check("a float in a new tool is refused", status == 1 and "FLOAT" in text and "tools/tensor24_new.py" in text)
+        check(
+            "a float in a new tool is refused",
+            status == 1 and "FLOAT" in text and "tools/tensor24_new.py" in text,
+        )
         status, text = read(
             branch(
                 "other",
@@ -1509,7 +2100,9 @@ def tool_cases() -> tuple[int, int]:
             )
         )
         check("a push that changes no tool is not read", status == 0 and text == "")
-        status, _ = read(branch("stands", {"tools/tensor24_old.py": "# kept\ndef main():\n    return 2\n"}))
+        status, _ = read(
+            branch("stands", {"tools/tensor24_old.py": "# kept\ndef main():\n    return 2\n"})
+        )
         check("a literal that stands at the base stands", status == 0)
         status, text = read(branch("more", {"tools/tensor24_old.py": "def main():\n    return 2 + 2\n"}))
         check("a second literal above the one that stands is refused", status == 1 and "NUMBER" in text)
@@ -1521,7 +2114,9 @@ def tool_cases() -> tuple[int, int]:
         slash = 'from pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1] / "examples"\n'
         status, _ = read(branch("slash", {"tools/tensor24_files.py": slash}))
         check("a path joined by a slash is no division", status == 0)
-        status, text = read(branch("division", {"tools/tensor24_files.py": "def main(a, b):\n    return a / b\n"}))
+        status, text = read(
+            branch("division", {"tools/tensor24_files.py": "def main(a, b):\n    return a / b\n"})
+        )
         check("a division of names in a tool is refused", status == 1 and "FLOAT" in text)
     return made, parted
 
@@ -1547,7 +2142,12 @@ KEY_SNIPPETS = (
     (
         "a dict, its keys and what lies beneath them",
         'LAYOUT = {"universe": {"version": 1, "integers": ("den",)}}\n',
-        {"LAYOUT.universe", "LAYOUT.universe.version", "LAYOUT.universe.integers", "LAYOUT.universe.integers.den"},
+        {
+            "LAYOUT.universe",
+            "LAYOUT.universe.version",
+            "LAYOUT.universe.integers",
+            "LAYOUT.universe.integers.den",
+        },
     ),
     (
         "a dict spread into a dict",
@@ -1559,8 +2159,16 @@ KEY_SNIPPETS = (
         'NAMES = frozenset({"a", "b"})\nMORE = tuple(["c"])\n',
         {"NAMES.a", "NAMES.b", "MORE.c"},
     ),
-    ("an annotated assignment", 'GEAR: tuple[str, ...] = ("train", "site")\n', {"GEAR.train", "GEAR.site"}),
-    ("a list holding tuples", 'ROWS = [("alpha", ("beta", "gamma"))]\n', {"ROWS.alpha", "ROWS.beta", "ROWS.gamma"}),
+    (
+        "an annotated assignment",
+        'GEAR: tuple[str, ...] = ("train", "site")\n',
+        {"GEAR.train", "GEAR.site"},
+    ),
+    (
+        "a list holding tuples",
+        'ROWS = [("alpha", ("beta", "gamma"))]\n',
+        {"ROWS.alpha", "ROWS.beta", "ROWS.gamma"},
+    ),
     (
         "a number, a lone string, a name and a call of another function hold no key",
         'LIMIT = 1\nTITLE = "version"\nALIAS = TITLE\nVALUE = compile("x", "y", "exec")\n',
@@ -1589,7 +2197,12 @@ def key_cases() -> tuple[int, int]:
     for label, source, want in KEY_SNIPPETS:
         found = {h.detail for h in gate.scan(KEY_FILE, source) if h.rule == "KEYS"}
         check(f"{label}: {sorted(found)}", found == want)
-    for name in ("tensor24/runner/load.py", "tensor24/decoder/rows.py", "assembly/files.py", "tensor24/engine/files.py"):
+    for name in (
+        "tensor24/runner/load.py",
+        "tensor24/decoder/rows.py",
+        "assembly/files.py",
+        "tensor24/engine/files.py",
+    ):
         found = [h for h in gate.scan(name, 'UNIVERSE = ("version", "integers")\n') if h.rule == "KEYS"]
         check(f"{name} is no format: no key read", not found)
     check("the rule is a note and never a refusal", gate.RULES["KEYS"][0] == "WARN")
@@ -1601,10 +2214,20 @@ def key_cases() -> tuple[int, int]:
     saved = gate.readings
     with without_git_variables(), tempfile.TemporaryDirectory() as scratch:
         root = Path(scratch)
-        git = ["git", "-C", scratch, "-c", "user.name=selftest", "-c", "user.email=selftest@example.invalid"]
+        git = [
+            "git",
+            "-C",
+            scratch,
+            "-c",
+            "user.name=selftest",
+            "-c",
+            "user.email=selftest@example.invalid",
+        ]
 
         def run(*args: str) -> str:
-            return subprocess.run([*git, *args], capture_output=True, text=True, check=True).stdout.strip()
+            return subprocess.run(
+                [*git, *args], capture_output=True, text=True, check=True
+            ).stdout.strip()
 
         def commit(files: dict[str, str]) -> str:
             for name, text in files.items():
@@ -1637,13 +2260,20 @@ def key_cases() -> tuple[int, int]:
             status == 0 and "refusals 0, notes 1" in text and "KEYS" in text and "ZZ_ALPHA.two" in text,
         )
         status, text = read(branch("same", {files: '# a line moved down\nZZ_ALPHA = ("one",)\n'}))
-        check("a key that stands at the base is quiet, though its line moved", status == 0 and "KEYS" not in text)
+        check(
+            "a key that stands at the base is quiet, though its line moved",
+            status == 0 and "KEYS" not in text,
+        )
         status, text = read(branch("renamed", {files: 'ZZ_BETA = ("one",)\n'}))
         check("the same key under another name is a note", status == 0 and "ZZ_BETA.one" in text)
         status, text = read(branch("removed", {files: "ZZ_ALPHA = ()\n"}))
         check("a key removed is no note", status == 0 and "note   KEYS" not in text)
-        status, text = read(branch("other", {"src/tensor24/runner/load.py": 'ZZ_ALPHA = ("one", "two")\n'}))
-        check("a collection in another module of the runner is no key", status == 0 and "KEYS" not in text)
+        status, text = read(
+            branch("other", {"src/tensor24/runner/load.py": 'ZZ_ALPHA = ("one", "two")\n'})
+        )
+        check(
+            "a collection in another module of the runner is no key", status == 0 and "KEYS" not in text
+        )
         status, text = read(branch("own", {keys_file: '["KEYS|x|y"]\n'}))
         check(
             "a push that changes the keys list says it changes the gate's own files",
@@ -1655,14 +2285,19 @@ def key_cases() -> tuple[int, int]:
             check("a key Sofer has read is quiet", status == 0 and "ZZ_ALPHA.two" not in text)
             gate.readings = lambda repo=gate.REPO: Counter({("KEYS", KEY_FILE, "ZZ_OTHER.two"): 1})
             status, text = read(branch("other_key", {files: 'ZZ_ALPHA = ("one", "two")\n'}))
-            check("a key read under another path leaves this one a note", status == 0 and "ZZ_ALPHA.two" in text)
+            check(
+                "a key read under another path leaves this one a note",
+                status == 0 and "ZZ_ALPHA.two" in text,
+            )
         finally:
             gate.readings = saved
         run("checkout", "-q", "-B", "origin/scribe-5", base)
         commit({keys_file: '[\n"KEYS|tensor24/runner/files.py|ZZ_ALPHA.published"\n]\n'})
         run("checkout", "-q", "-B", "worktree", base)
         (root / keys_file).parent.mkdir(parents=True, exist_ok=True)
-        (root / keys_file).write_text('["KEYS|tensor24/runner/files.py|ZZ_ALPHA.working"]\n', encoding="utf-8")
+        (root / keys_file).write_text(
+            '["KEYS|tensor24/runner/files.py|ZZ_ALPHA.working"]\n', encoding="utf-8"
+        )
         held = gate.readings(root)
         check(
             "the list is read from the published branch, the working file set aside",
@@ -1692,10 +2327,22 @@ def declare_cases() -> tuple[int, int]:
     in_json = (
         ("a family with its pair", universe(families=[electron]), {"family electron [4000, 6000]"}),
         ("a train with its pinion", universe(trains=[{"name": "dust", "pinion": 8}]), {"train dust 8"}),
-        ("a train at pinion = den is the seed and declares no mass", universe(trains=[{"name": "light", "pinion": 9, "sine": 0}]), set()),
-        ("a train at a pinion that is not this file's den is no seed", universe(den=10, trains=[{"name": "light", "pinion": 9}]), {"train light 9"}),
+        (
+            "a train at pinion = den is the seed and declares no mass",
+            universe(trains=[{"name": "light", "pinion": 9, "sine": 0}]),
+            set(),
+        ),
+        (
+            "a train at a pinion that is not this file's den is no seed",
+            universe(den=10, trains=[{"name": "light", "pinion": 9}]),
+            {"train light 9"},
+        ),
         ("a train with no number", universe(trains=[{"name": "x"}]), {"train x -"}),
-        ("a coupling row", universe(couplings=[{"train": "a", "strength": 3}]), {'coupling {"strength": 3, "train": "a"}'}),
+        (
+            "a coupling row",
+            universe(couplings=[{"train": "a", "strength": 3}]),
+            {'coupling {"strength": 3, "train": "a"}'},
+        ),
         ("an entry with no name", universe(families=[{"pair": [1, 2]}]), set()),
         ("a list that is no list", universe(families={"name": "x"}), set()),
         ("a file with none of the lists", universe(), set()),
@@ -1703,28 +2350,97 @@ def declare_cases() -> tuple[int, int]:
         ("a file that is no JSON", "{ nope", set()),
     )
     for label, text, want in in_json:
-        check(f"in a universe file, {label}", {h.detail for h in gate.declared_in("examples/w/universe.json", text)} == want)
+        check(
+            f"in a universe file, {label}",
+            {h.detail for h in gate.declared_in("examples/w/universe.json", text)} == want,
+        )
     in_python = (
-        ("a train dict with a pinion", 'T = {"name": "dust", "kinds": ["A1"], "pinion": den - den // 97}\n', {"train dust den - den // 97"}),
-        ("a reformatted pinion is the same declaration", 'T = {"name": "dust", "pinion": den-den//97}\n', {"train dust den - den // 97"}),
+        (
+            "a train dict with a pinion",
+            'T = {"name": "dust", "kinds": ["A1"], "pinion": den - den // 97}\n',
+            {"train dust den - den // 97"},
+        ),
+        (
+            "a reformatted pinion is the same declaration",
+            'T = {"name": "dust", "pinion": den-den//97}\n',
+            {"train dust den - den // 97"},
+        ),
         ("a pinion spelt DEN is the seed", 'T = {"name": "light", "pinion": DEN}\n', set()),
-        ("a pinion spelt as a module's attribute DEN is the seed", 'T = {"name": "light", "pinion": rig.DEN}\n', set()),
-        ("a pinion spelt as another attribute is a declaration", 'T = {"name": "dust", "pinion": rig.pinion}\n', {"train dust rig.pinion"}),
-        ("a train written as a call of dict is read as a dict", 'T = dict(name="dust", pinion=8)\n', {"train dust 8"}),
+        (
+            "a pinion spelt as a module's attribute DEN is the seed",
+            'T = {"name": "light", "pinion": rig.DEN}\n',
+            set(),
+        ),
+        (
+            "a pinion spelt as another attribute is a declaration",
+            'T = {"name": "dust", "pinion": rig.pinion}\n',
+            {"train dust rig.pinion"},
+        ),
+        (
+            "a train written as a call of dict is read as a dict",
+            'T = dict(name="dust", pinion=8)\n',
+            {"train dust 8"},
+        ),
         ("a call of dict with the seed is the seed", 'T = dict(name="light", pinion=den)\n', set()),
         ("a call of dict with no pinion declares nothing", 'T = dict(name="light", kinds=1)\n', set()),
-        ("a coupling row appended to a list named couplings", 'couplings = []\ncouplings.append([2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 3, 5])\n', {"coupling row [2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 3, 5]"}),
-        ("a couplings list of rows", 'couplings = [[1, 2, 3], [4, 5, 6]]\n', {"coupling row [1, 2, 3]", "coupling row [4, 5, 6]"}),
-        ("an empty couplings list declares nothing", 'couplings = []\n', set()),
-        ("a list of rows not named for couplings declares nothing", 'edges = [[1, 2, 3]]\n', set()),
-        ("a row appended to an attribute named for couplings", 'self.coupling_rows.append([1, 2])\n', {"coupling row [1, 2]"}),
+        (
+            "a coupling row appended to a list named couplings",
+            "couplings = []\ncouplings.append([2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 3, 5])\n",
+            {"coupling row [2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 3, 5]"},
+        ),
+        (
+            "a couplings list of rows",
+            "couplings = [[1, 2, 3], [4, 5, 6]]\n",
+            {"coupling row [1, 2, 3]", "coupling row [4, 5, 6]"},
+        ),
+        ("an empty couplings list declares nothing", "couplings = []\n", set()),
+        ("a list of rows not named for couplings declares nothing", "edges = [[1, 2, 3]]\n", set()),
+        (
+            "a row appended to an attribute named for couplings",
+            "self.coupling_rows.append([1, 2])\n",
+            {"coupling row [1, 2]"},
+        ),
         ("a dict with no pinion", 'T = {"name": "light", "kinds": ["A1"]}\n', set()),
         ("a name that is no string literal", 'T = {"name": LABEL, "pinion": 3}\n', set()),
         ("a dict that unpacks another", 'T = {**base, "name": "dust", "pinion": 3}\n', {"train dust 3"}),
+        (
+            "a helper call with a literal pinion",
+            "T = light(pinion=0, sine=DEN)\n",
+            {"train call light 0"},
+        ),
+        ("a helper call with the seed", "T = light(pinion=DEN)\n", set()),
+        ("a helper call with the seed as a module's attribute", "T = light(pinion=rig.DEN)\n", set()),
+        ("a helper call forwarding a variable", "T = light(pinion=pinion)\n", set()),
+        (
+            "a helper call with a constant expression",
+            "T = light(pinion=DEN - DEN // 97)\n",
+            {"train call light DEN - DEN // 97"},
+        ),
+        ("a helper call with a list pinion", "T = light(pinion=[DEN])\n", {"train call light [DEN]"}),
+        (
+            "a helper call with a subscript of a constant",
+            "T = light(pinion=HAND[0] - 1, sine=HAND[1])\n",
+            {"train call light HAND[0] - 1"},
+        ),
+        (
+            "a helper call with a typed coupling strength",
+            "C = row(train=1, with_train=1, target=4, strength=3)\n",
+            {"coupling call row strength 3"},
+        ),
+        (
+            "a helper call with a typed negative strength",
+            "C = row(strength=-2)\n",
+            {"coupling call row strength -2"},
+        ),
+        ("a helper call with a strength that is a variable", "C = row(strength=k)\n", set()),
+        ("a call with neither keyword declares nothing", "T = light(kinds=1)\n", set()),
         ("a file that does not parse", "def (:\n", set()),
     )
     for label, source, want in in_python:
-        check(f"in a Python file, {label}", {h.detail for h in gate.declared_in("tests/test_w.py", source)} == want)
+        check(
+            f"in a Python file, {label}",
+            {h.detail for h in gate.declared_in("tests/test_w.py", source)} == want,
+        )
     reads = (
         ("examples/w/universe.json", True),
         ("reader/worlds/universe_toy.json", True),
@@ -1748,10 +2464,20 @@ def declare_cases() -> tuple[int, int]:
     try:
         with without_git_variables(), tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)
-            git = ["git", "-C", scratch, "-c", "user.name=selftest", "-c", "user.email=selftest@example.invalid"]
+            git = [
+                "git",
+                "-C",
+                scratch,
+                "-c",
+                "user.name=selftest",
+                "-c",
+                "user.email=selftest@example.invalid",
+            ]
 
             def run(*args: str) -> str:
-                return subprocess.run([*git, *args], capture_output=True, text=True, check=True).stdout.strip()
+                return subprocess.run(
+                    [*git, *args], capture_output=True, text=True, check=True
+                ).stdout.strip()
 
             def commit(files: dict[str, str | None]) -> str:
                 for name, text in files.items():
@@ -1780,40 +2506,104 @@ def declare_cases() -> tuple[int, int]:
             status, text = read(branch("added", {world: universe(families=[electron, neutron])}))
             check(
                 "a family a push adds is refused, named with its pair",
-                status == 1 and "REFUSED DECLARE" in text and "family neutron [-4800, 6000]" in text and "refusals 1" in text,
+                status == 1
+                and "REFUSED DECLARE" in text
+                and "family neutron [-4800, 6000]" in text
+                and "refusals 1" in text,
             )
             status, text = read(branch("reformatted", {world: json.dumps(json.loads(held))}))
-            check("the same declarations written another way are quiet", status == 0 and "DECLARE" not in text)
-            status, text = read(branch("number", {world: universe(families=[{"name": "electron", "pair": [3600, 6000]}])}))
-            check("a changed pair is a new declaration", status == 1 and "family electron [3600, 6000]" in text)
+            check(
+                "the same declarations written another way are quiet",
+                status == 0 and "DECLARE" not in text,
+            )
+            status, text = read(
+                branch(
+                    "number", {world: universe(families=[{"name": "electron", "pair": [3600, 6000]}])}
+                )
+            )
+            check(
+                "a changed pair is a new declaration",
+                status == 1 and "family electron [3600, 6000]" in text,
+            )
             status, text = read(branch("doubled", {world: universe(families=[electron, electron])}))
-            check("a name declared twice in one file is one more than the base's", status == 1 and "REFUSED DECLARE" in text)
+            check(
+                "a name declared twice in one file is one more than the base's",
+                status == 1 and "REFUSED DECLARE" in text,
+            )
             status, text = read(branch("removed", {world: universe(families=[])}))
             check("a declaration removed is quiet", status == 0 and "DECLARE" not in text)
             status, text = read(branch("renamed", {world: None, "examples/w2/universe.json": held}))
             check("the same file moved is no new declaration", status == 0 and "DECLARE" not in text)
-            status, text = read(branch("train", {"tests/test_w.py": 'T = {"name": "dust", "pinion": den - den // 97}\n'}))
+            status, text = read(
+                branch("train", {"tests/test_w.py": 'T = {"name": "dust", "pinion": den - den // 97}\n'})
+            )
             check("a train a test adds is refused", status == 1 and "train dust den - den // 97" in text)
-            status, text = read(branch("seed", {"tests/test_w.py": 'T = {"name": "light", "pinion": DEN}\n'}))
-            check("a train at pinion = den in a test is the seed, quiet", status == 0 and "DECLARE" not in text)
-            status, text = read(branch("seed_file", {"examples/w3/universe.json": universe(trains=[{"name": "light", "pinion": 9}])}))
-            check("a new universe file with the seed train alone is quiet", status == 0 and "DECLARE" not in text)
-            status, text = read(branch("probe", {"tools/derivations/open_items/derive/p/probe.py": 'T = {"name": "matter", "pinion": DEN - DEN // 50}\n'}))
-            check("a train a probe adds under tools is refused", status == 1 and "train matter DEN - DEN // 50" in text)
-            status, text = read(branch("coupling", {"examples/w4/universe.json": universe(couplings=[{"train": "a", "strength": 3}])}))
-            check("a coupling row a push adds is refused", status == 1 and "coupling" in text and "REFUSED DECLARE" in text)
-            status, text = read(branch("outside", {"papers/w/universe.json": universe(families=[neutron])}))
-            check("a universe file outside the scopes is not read", status == 0 and "DECLARE" not in text)
+            status, text = read(
+                branch("seed", {"tests/test_w.py": 'T = {"name": "light", "pinion": DEN}\n'})
+            )
+            check(
+                "a train at pinion = den in a test is the seed, quiet",
+                status == 0 and "DECLARE" not in text,
+            )
+            status, text = read(
+                branch(
+                    "seed_file",
+                    {"examples/w3/universe.json": universe(trains=[{"name": "light", "pinion": 9}])},
+                )
+            )
+            check(
+                "a new universe file with the seed train alone is quiet",
+                status == 0 and "DECLARE" not in text,
+            )
+            status, text = read(
+                branch(
+                    "probe",
+                    {
+                        "tools/derivations/open_items/derive/p/probe.py": 'T = {"name": "matter", "pinion": DEN - DEN // 50}\n'
+                    },
+                )
+            )
+            check(
+                "a train a probe adds under tools is refused",
+                status == 1 and "train matter DEN - DEN // 50" in text,
+            )
+            status, text = read(
+                branch(
+                    "coupling",
+                    {"examples/w4/universe.json": universe(couplings=[{"train": "a", "strength": 3}])},
+                )
+            )
+            check(
+                "a coupling row a push adds is refused",
+                status == 1 and "coupling" in text and "REFUSED DECLARE" in text,
+            )
+            status, text = read(
+                branch("outside", {"papers/w/universe.json": universe(families=[neutron])})
+            )
+            check(
+                "a universe file outside the scopes is not read", status == 0 and "DECLARE" not in text
+            )
             status, text = read(branch("docs", {"docs/a.md": "a line\n"}))
-            check("a push that changes a document alone is quiet and runs nothing", status == 0 and text == "")
+            check(
+                "a push that changes a document alone is quiet and runs nothing",
+                status == 0 and text == "",
+            )
             status, text = read(branch("code", {"tests/test_w.py": "x = 1\n"}))
-            check("a push that changes code alone gives the code rules' answer and no declaration", "DECLARE" not in text)
-            gate.allowance = lambda repo=gate.REPO: Counter({("DECLARE", world, "family neutron [-4800, 6000]"): 1})
+            check(
+                "a push that changes code alone gives the code rules' answer and no declaration",
+                "DECLARE" not in text,
+            )
+            gate.allowance = lambda repo=gate.REPO: Counter(
+                {("DECLARE", world, "family neutron [-4800, 6000]"): 1}
+            )
             status, text = read(branch("allowed", {world: universe(families=[electron, neutron])}))
             check("a declaration the owner's list holds is quiet", status == 0 and "DECLARE" not in text)
             proton = {"name": "proton", "pair": [0, 6000]}
             status, text = read(branch("allowed_other", {world: universe(families=[electron, proton])}))
-            check("a declaration the owner's list does not hold is refused beside it", status == 1 and "family proton [0, 6000]" in text)
+            check(
+                "a declaration the owner's list does not hold is refused beside it",
+                status == 1 and "family proton [0, 6000]" in text,
+            )
     finally:
         gate.allowance = saved
     return made, parted
@@ -1823,7 +2613,13 @@ def declare_cases() -> tuple[int, int]:
 # a hit of another stand beside it, so a refusal that should not be there would pass unseen; these are read for the refusal as well)
 INDEX_CASES: list[tuple[str, str, str, int, int]] = [
     ("an index cast as take's index", NEW_STEP, NP + fn("return a.take(a.astype(np.intp))"), 0, 1),
-    ("an index cast as np.take's index", NEW_STEP, NP + fn("return np.take(a, a.astype(np.intp))"), 0, 1),
+    (
+        "an index cast as np.take's index",
+        NEW_STEP,
+        NP + fn("return np.take(a, a.astype(np.intp))"),
+        0,
+        1,
+    ),
     ("an index cast as a subscript's index", NEW_STEP, NP + fn("return a[a.astype(np.intp)]"), 0, 1),
     ("an index cast in a tuple of indices", NEW_STEP, NP + fn("return a[a.astype(np.intp), 0]"), 0, 1),
     (
@@ -1844,6 +2640,7 @@ INDEX_CASES: list[tuple[str, str, str, int, int]] = [
     # the board keeps its own narrower list: the cast is refused there, and no note stands for it
     ("an index cast in runner/board.py", NEW_BOARD, NP + fn("return a.take(a.astype(np.intp))"), 2, 0),
 ]
+
 
 def main() -> int:
     parted = 0
