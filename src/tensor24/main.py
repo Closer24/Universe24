@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from tensor24.engine import kinds
+from tensor24.engine import kinds, state
 from tensor24.runner import load
 
 
@@ -11,3 +11,11 @@ def made(shape: tuple[int, ...]) -> tuple[kinds.Kinds, dict[Any, Any]]:
     matrix, weight = kinds.turns(kinds.axes(len(shape)))
     held = kinds.kinds(matrix)
     return held, load.tables(held, kinds.kinds(kinds.inverse(matrix)), weight, kinds.projector)
+
+
+def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> state.Layout:
+    """The layout the load reads from the three files, in the engine's records."""
+    nb, meshes, grip, gearing, plan, rate, gamma, ruler = load.laid_out(universe, shape, loaded)
+    return state.Layout(
+        nb, meshes, grip, state.Gearing(*gearing), state.Plan(*plan), rate, gamma, state.Ruler(*ruler)
+    )

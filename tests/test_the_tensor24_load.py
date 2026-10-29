@@ -29,9 +29,10 @@ DIMS = {"A1": 1, "A2": 1, "T1": 3, "T2": 3}
 ROWS = sum(
     sum(DIMS[k] for k in t["kinds"]) * t["part"] for t in TRAINS
 )  # every train's rows, counted afresh
+LAID = ROWS + 1  # and the clock's own time gear, one A1 row the load lays after the file's trains
 
 
-def gears(rows=ROWS):
+def gears(rows=LAID):
     """The gears' shape, at 0: what J lands in."""
     return np.zeros((rows, SITES), dtype=object)
 
@@ -101,6 +102,10 @@ def naive(u, c, readings, labels):
             for x in range(len(c[(labels.index(label), labels.index("A1"), labels.index(label))])):
                 for p in range(train["part"]):
                     rows[(t, j, x, p)], at = at, at + 1
+    rows[(len(u["trains"]), 0, 0, 0)], at = (
+        at,
+        at + 1,
+    )  # the clock's own time gear, after the file's trains
     planes = {"value": [0], "gradient": [1, 2, 3], "pull": [4], "before": [5], "after": [6]}
     j = np.zeros((at, readings.shape[-1]), dtype=object)
     for i, ki, pi, oi, k, kk, pk, ok, m, km, pm, strength in u["couplings"]:
@@ -143,15 +148,15 @@ def test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables(made):
         held, found = loaded(made, u)
         assert found == [] and held is not None
         readings = (
-            rng.integers(-1 << 40, 1 << 40, (len(OPERANDS) + D - 1, ROWS, SITES)).astype(object) << 70
+            rng.integers(-1 << 40, 1 << 40, (len(OPERANDS) + D - 1, LAID, SITES)).astype(object) << 70
         )
         flat, given = (
             readings.reshape(-1, SITES),
-            rng.integers(1, 1 << 30, (ROWS, SITES)).astype(object) << 80,
+            rng.integers(1, 1 << 30, (LAID, SITES)).astype(object) << 80,
         )
         kept, j = given.copy(), naive(u, c, flat, labels)
         assert (contract(Plan(*held.plan), flat, given) == j).all() and (given == kept).all()
-        fixed = contract(Plan(*held.plan), flat, np.zeros((ROWS, SITES), dtype=np.int64))
+        fixed = contract(Plan(*held.plan), flat, np.zeros((LAID, SITES), dtype=np.int64))
         assert fixed.dtype == object and (fixed == j).all()
 
 
@@ -247,7 +252,7 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
         tooth,
     )
     assert (a[ROWS - 1, site], b[ROWS - 1, site]) == (before, now)
-    assert (a.shape, b.shape, r.shape, go.shape, rd.shape) == ((ROWS, SITES),) * len("abrgd")
+    assert (a.shape, b.shape, r.shape, go.shape, rd.shape) == ((LAID, SITES),) * len("abrgd")
     assert all(x.shape == (1, SITES) for x in clocks) and all(x.dtype == object for x in held.state)
     assert not any(
         np.shares_memory(x, y) for x, y in itertools.combinations(held.state, 1 + 1)
@@ -337,7 +342,10 @@ def renamed(made, scale=lambda strength, target: strength):
         mapping = np.concatenate(
             [
                 np.arange(base.trains[o].first, base.trains[o].first + base.trains[o].rows())
-                for o in order
+                for o in (
+                    *order,
+                    len(TRAINS),
+                )  # the time gear stands after the file's trains in every order
             ]
         )
         shuffled = readings.reshape(planes, rows, SITES)[:, mapping].reshape(-1, SITES)
@@ -358,7 +366,7 @@ def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
     bare.pop("couplings")
     assert load(bare, {}, SITES, ks, c)[1] == []
     held, found = load(universe(), {"gears": []}, 1 << 64, ks, c)
-    assert held is None and len(found) == 1 and found[0].startswith(f"piece.shape: {ROWS} rows at")
+    assert held is None and len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
 
 
 def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
@@ -380,5 +388,5 @@ def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
         held, found = load(universe(), {"gears": []}, SITES, ks, c)
         assert len(asked) == after + 1 and held is None
         assert found == [
-            f"piece.shape: {ROWS} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
+            f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
         ]
