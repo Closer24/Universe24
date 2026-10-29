@@ -45,6 +45,7 @@ It is a proposal for the Boss, whose schema it is. Nothing is built: the decoder
 | layer | Split | the draw's order at its Node-clock, where a birth's parts are drawn as their settings come back | the layered law (each layer's line conditional on the earlier ones) | 1 |
 | axes, heard | Split (a setting) | the frames the setting draws among, and the takes it heard by light (round, site), none for a free one; its sizes, c, room and drawn as any draw's | late settings; every machine's cone | NOT READ for late settings |
 | detector, written | Whole (a take) | the frame its setting set, as its first line, and the line taken, in 1.1's axis form (moved from the Split); one form for every take | S, M, the joint clicks, no signal | the 1.1 Split's own |
+| clock, tooth | Whole (a clock's click) | clock: the round and site of the lay that made the clicking clock (G5 for a clock); tooth: its face's teeth from that lay, before and after the click | proper time read twice; the twin reading | NOT READ for both |
 | agree | End | 1 where the backward run, from the record's clicks, gives back every frame written | the passes' verification | NOT READ |
 
 ## 2. Retired, and never added
@@ -143,6 +144,16 @@ The owner's text to the Boss (space and time are a four-dimensional spacetime's 
    - Under decision 40 (b) it holds on hand_slot's two boards exactly: the far twin's click is 1/2 at every near frame, and A's click at x is 2/5 with B and without (ANIMATE-SCHEDULER part 5).
    - A's fate at z moves with B's birth (taken 3/5; taken 12/25 and refused 3/25), lawfully, since z lies on B's birth's light cone. A check that binned A's whole outcome would name that a signal; the check by click names none.
    - Under the withdrawn weighing, "a full slot weighs 0", it fails there: 11/29 against 107/174, and 2/5 against 10/19.
+
+**As built in the decoder** (src/tensor24/decoder/measure.py; tested on records built in memory, N5):
+- **The cone:** one Mesh a round. The Meshes between two sites are the shorter way round each side, summed; an event on the cone stands inside it.
+- **The cone check** reads each take (a whole click naming its lay), each refusal (a Books line naming its lay) and each setting (a split click naming its lay among its members, with its axes and the one drawn).
+  - The lays laid at one site are trials alike. Each click and each setting is placed by its round after its lay's round, and its site.
+  - At each click's place, against each setting's place outside its past cone, each trial's outcome there (the line written, refused, or none) is binned by the frame drawn.
+  - Shares are compared exactly, by cross products. A spread for the act's records is the Boss's to rule.
+- **Proper time read twice:** between two of a clock's clicks at one Node-clock, (i) its tooth after's difference and (ii) the Node-clock's ticks from the rate lines; the two agree through one beat at every pair. A clock that moves between two clicks has no path on the record (G1 per train would give it).
+- **The twin reading:** two clocks meeting twice by two paths, each path the sites of its clicks between; equal counts are named. Whether a difference is the lapse's and the motion's reads the metric along each path, which waits on the owner's ruling of the metric's representation.
+- **No board tick (D7):** a duration is a clock's own count between two of its clicks. Asked between other events, it is refused: "compares board ticks, no reading".
 
 ## 7. What does not follow
 

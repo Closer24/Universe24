@@ -1,8 +1,9 @@
 """The decoder's tool (Animate's): one record of the schema read, with its ledger beside it where one is named, and its
-readings printed: row 15's verdict with its two readings, row 46's with its two, and each whole click's ticks from the
-rate lines. Nothing is raised: a record or a ledger that is not read is named with its cause, and the rows that need it
-read NOT READ. The interpreter's bound on a whole number's digits is lifted, since the schema's numbers are whole
-numbers of any width. Each Node-clock's rate lines are read once for all its whole clicks.
+readings printed: row 15's verdict with its two readings, row 46's with its two, the measurement's rules (the cone
+check by click, proper time read twice and the twin reading), and each whole click's ticks from the rate lines.
+Nothing is raised: a record or a ledger that is not read is named with its cause, and the rows that need it read NOT
+READ. The interpreter's bound on a whole number's digits is lifted, since the schema's numbers are whole numbers of
+any width. Each Node-clock's rate lines are read once for all its whole clicks.
 
 Usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]
 """
@@ -12,7 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from tensor24.decoder import bangs, books, clocks, records  # noqa: E402
+from tensor24.decoder import bangs, books, clocks, measure, records  # noqa: E402
 
 USAGE = "usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]"
 
@@ -57,6 +58,9 @@ def main(argv: list[str]) -> int:
     ledger, why = records.read_ledger(named[1]) if named[1:] else (None, "the ledger is absent")
     print(f"row 15: {books.row_15(record, ledger, why)}")
     print(f"row 46: {bangs.row_46(record, ledger, why)}")
+    print(f"the cone check (D8): {measure.cone_check(record)}")
+    print(f"proper time (D6): {measure.proper(record)}")
+    print(f"the twin reading (D6): {measure.twins(record)}")
     print(ticks(record))
     return 0
 

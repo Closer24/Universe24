@@ -119,6 +119,11 @@ The Boss's hunt of 13:55 UTC asks it of the record and the clicks. `python -I ha
   - under the withdrawn weighing, A's click at x read 2/5 with B not born and 10/19 with B born at site 30. B's birth is spacelike to A's take at x (site 4, tick 6), so whether B's source emits was read at A's absorber;
   - under (b), A's click at x reads 2/5 either way;
   - A at z (site 20, tick 10) is taken 3/5 with B not born, and taken 12/25 and refused 3/25 with B born. This moves with B's birth lawfully, since z lies on B's birth's light cone (10 sites in 10 ticks). So the cone check reads each click by the settings outside that click's past cone (D8), never a party's whole outcome.
+- **The decoder's cone check reads it** (cone_read.py, its output cone_read.txt; src/tensor24/decoder/measure.py):
+  - the board above with a near detector whose two clicks (+ at site 44, - at site 46) both hold its setting (site 45, two ticks before) in their past cones; the far twin at site 150. hand_slot's own near detector spans ten sites in one tick, so its setting stands outside one of its own clicks' past cones;
+  - every digit of every Node-clock that draws is one lay, written as schema 1.2's lines (settings, takes and refusals naming their lay) and read by the decoder;
+  - under (b): SHOWN, 3 places of a click and a setting compared over 1,856 lays;
+  - under the withdrawn weighing: NOT SHOWN, the far click's - share at its frame reading 216 of 696 at the near frame z and 214 of 696 at x.
 
 ## 6. What does not follow
 
