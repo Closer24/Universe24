@@ -7,7 +7,9 @@ push at all what breaks our lawfulness, and let it be logical and smart".
 How it decides. A push may not raise the count of any rule's hits, at any (rule, file, detail), above the same file's at the push's
 merge base: what stands at the base stands, a new hit is a REFUSAL (BLOCK) or a NOTE (WARN) by the rule's tier. A hit leaves the list
 by being removed and enters it only by the owner's word (scribe_scan_allowed.json, written by Sofer on that word, with the
-row of the ledger that holds it). The key of a hit holds no line number, so a moved or reformatted line is no new hit.
+row of the ledger that holds it). The key of a hit holds no line number, so a moved or reformatted line is no new hit. A note of
+the rule KEYS (a key added to the files' format) leaves the list when Sofer has read the key through the law and listed it in
+scribe_scan_keys.json, read from his published branch as the allowance is.
 
   python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
   python scribe_scan.py TREE [--base REV]      TREE a directory or a git revision; the base a revision
@@ -56,6 +58,7 @@ HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
 ALLOWED = HERE / "scribe_scan_allowed.json"
+KEYS_READ = HERE / "scribe_scan_keys.json"  # the keys of the files' format that Sofer has read through the law, 'KEYS|file|path' per line
 BASES = ("origin/engine-5.0-test", "origin/main")
 FLOOR = "526a5666d"  # the engine head the list that stands was taken at: no base is older (a pull request into main is read against it)
 PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by Sofer alone
@@ -64,6 +67,7 @@ OWN = (
     "tools/derivations/open_items/scribe_scan.py",
     "tools/derivations/open_items/scribe_scan_selftest.py",
     "tools/derivations/open_items/scribe_scan_allowed.json",
+    "tools/derivations/open_items/scribe_scan_keys.json",
     "tools/derivations/open_items/scribe_scan_baseline.json",
     ".claude/settings.json",
 )
@@ -162,6 +166,10 @@ RULES: dict[str, tuple[str, str]] = {
         "WARN",
         "a name that holds a floor, a bound, a clamp or a cap (floor, ceiling, cap, clamp, clip, limit, bound, saturate): no act, tool or reading of the system holds one (law: A floor or a bound is an if, and the Node-clock has none); a reader may name one to report; read each note (the count per file may not rise)",
     ),
+    "KEYS": (
+        "WARN",
+        "a key added to the files' format (a string in the module-level collections of runner/files.py): each key is a name or a number a file may declare, and a key near the time gear is what Postulate 6 refuses (law: Postulate 6; The principle of the clock and the gear); read each note through the law; the keys Sofer has read stand in scribe_scan_keys.json on origin/scribe-5, so an unread key alone is a note",
+    ),
     "ALLOW": (
         "BLOCK",
         "not on the Node-clock's closed list: its only operations are addition, multiplication and Rule3's carry, on whole numbers (the owner's idea of 2026-10-28, 15:0x UTC; law: The Node-clock is one act; The Node-clock and the Mesh are generic; there is no if), so a construct, an operator, a call or an array not made with dtype=object that the list does not name is refused in algebra/, engine/ and readings/, and in runner/board.py against a list of its own (numpy's arange and stack, the index dtype np.intp, list displays); the architect's additions go through Sofer by a ledger entry that names the law line each serves (the count per file may not rise)",
@@ -224,6 +232,8 @@ BOARD = RUNNER + "board.py"  # the board's wrap is Rule3's carry, imported from 
 BOARD_KEEPS = frozenset(
     {"OPERATION", "LOOP", "CLAMP", "COMPARE", "BRANCH"}
 )  # the rules the board's module keeps and the rest of the runner is spared: a wrap by hand is a remainder, a quotient, a branch, a comparison, a clamp or a loop (the sixth hostile review, follow-up 2)
+FORMAT = RUNNER + "files.py"  # the files' format: the keys a universe, a piece and a setting file may hold, the checker refusing any other
+KEY_CALLS = frozenset("tuple list set frozenset".split())  # a collection made by a call of one argument holds what its argument holds
 DECODER = NEW_ENGINE + "/decoder/"
 DECODER_KEEPS = frozenset(
     {"OPERATION", "REFUSE", "CLAMP"}
@@ -849,6 +859,63 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
     return found
 
 
+def format_keys(tree: ast.Module) -> list[tuple[ast.AST, str]]:
+    """Every string a module-level collection holds as a key, each with its path from the name the collection is bound to: the elements of
+    a tuple, list or set (a star of a literal or of a name bound above stands in place), the keys of a dict with what lies beneath them,
+    and the argument of a tuple, list, set or frozenset call; a number, a call of anything else and a name alone hold none."""
+    bound: dict[str, list[str]] = {}
+
+    def strings(node: ast.AST) -> list[str]:
+        """The strings a flat collection holds, for a star of it."""
+        if isinstance(node, ast.Name):
+            return bound.get(node.id, [])
+        if isinstance(node, ast.Call) and callee_name(node) in KEY_CALLS and len(node.args) == 1 and not node.keywords:
+            return strings(node.args[0])
+        if isinstance(node, ast.Dict):
+            return [k.value for k in node.keys if isinstance(k, ast.Constant) and isinstance(k.value, str)]
+        held: list[str] = []
+        if isinstance(node, ast.Tuple | ast.List | ast.Set):
+            for item in node.elts:
+                if isinstance(item, ast.Starred):
+                    held += strings(item.value)
+                elif isinstance(item, ast.Constant) and isinstance(item.value, str):
+                    held.append(item.value)
+        return held
+
+    def walk(node: ast.AST, path: str) -> list[tuple[ast.AST, str]]:
+        if isinstance(node, ast.Call) and callee_name(node) in KEY_CALLS and len(node.args) == 1 and not node.keywords:
+            return walk(node.args[0], path)
+        found: list[tuple[ast.AST, str]] = []
+        if isinstance(node, ast.Tuple | ast.List | ast.Set):
+            for item in node.elts:
+                if isinstance(item, ast.Constant) and isinstance(item.value, str):
+                    found.append((item, f"{path}.{item.value}"))
+                elif isinstance(item, ast.Starred):
+                    found += [(item, f"{path}.{held}") for held in strings(item.value)]
+                else:
+                    found += walk(item, path)
+        elif isinstance(node, ast.Dict):
+            for key, value in zip(node.keys, node.values, strict=True):
+                if key is None:
+                    found += [(value, f"{path}.{held}") for held in strings(value)]
+                elif isinstance(key, ast.Constant) and isinstance(key.value, str):
+                    found.append((key, f"{path}.{key.value}"))
+                    found += walk(value, f"{path}.{key.value}")
+        return found
+
+    keys: list[tuple[ast.AST, str]] = []
+    for statement in tree.body:
+        if isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name):
+            name, value = statement.targets[0].id, statement.value
+        elif isinstance(statement, ast.AnnAssign) and isinstance(statement.target, ast.Name) and statement.value is not None:
+            name, value = statement.target.id, statement.value
+        else:
+            continue
+        keys += walk(value, name)
+        bound[name] = strings(value)
+    return keys
+
+
 def scan(rel: str, source: str) -> list[Hit]:
     """Every hit of every rule in one module (rel: its path inside src/event_universe, another package's under its name; a test's under tests/, the rule PIN alone; a tool's under tools/, the rules NUMBER and FLOAT alone)."""
     tree = ast.parse(source)
@@ -1184,6 +1251,10 @@ def scan(rel: str, source: str) -> list[Hit]:
         for node, detail in closed_list(tree, rel):
             add("ALLOW", node, detail)
 
+    if rel == FORMAT:
+        for node, path in format_keys(tree):
+            add("KEYS", node, path)
+
     try:
         for token in tokenize.generate_tokens(io.StringIO(source).readline):
             if token.type == tokenize.NAME and not keyword.iskeyword(token.string):
@@ -1289,9 +1360,27 @@ def allowance(repo: Path = REPO) -> Counter[tuple[str, str, str]]:
     return held
 
 
+def readings(repo: Path = REPO) -> Counter[tuple[str, str, str]]:
+    """The keys Sofer has read through the law: 'KEYS|file|path' per line, read from his published branch as the allowance is (a push
+    cannot read its own keys into the list), else the working file."""
+    relative = KEYS_READ.relative_to(REPO).as_posix()
+    shown = git(repo, "show", f"{PUBLISHED}:{relative}")
+    if shown.returncode == 0:
+        text = shown.stdout.decode()
+    elif KEYS_READ.is_file():
+        text = KEYS_READ.read_text(encoding="utf-8")
+    else:
+        return Counter()
+    held: Counter[tuple[str, str, str]] = Counter()
+    for line in json.loads(text):
+        rule, file, detail = line.split("|", 2)
+        held[(rule, file, detail)] += 1
+    return held
+
+
 def above(now: Iterable[Hit], stands: Counter[tuple[str, str, str]]) -> list[Hit]:
-    """The hits above what stands at their key (the last by line), less what the owner's word allows."""
-    stands = stands + allowance()
+    """The hits above what stands at their key (the last by line), less what the owner's word allows and the keys Sofer has read."""
+    stands = stands + allowance() + readings()
     found: list[Hit] = []
     for key, group in groupby(sorted(now, key=lambda h: (h.key, h.line)), key=lambda h: h.key):
         members = list(group)
