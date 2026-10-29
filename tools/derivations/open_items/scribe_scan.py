@@ -1536,9 +1536,10 @@ def delta_line(before: list[Hit], after: list[Hit]) -> str:
 
 
 def declared_path(path: str) -> bool:
-    """Whether the rule DECLARE reads a path: a .json or .py file under the declared scopes, outside an environment or a cache."""
+    """Whether the rule DECLARE reads a path: a .json or .py file under the declared scopes, outside an environment or a cache and outside
+    the gate's own files, whose fixtures name trains to test the rule (they change only on the owner's word, OWN)."""
     parts = path.split("/")
-    return path.endswith((".json", ".py")) and parts[0] in DECLARED_SCOPES and not DECLARED_SKIP & set(parts)
+    return path.endswith((".json", ".py")) and parts[0] in DECLARED_SCOPES and not DECLARED_SKIP & set(parts) and path not in OWN
 
 
 def line_of(text: str, word: str) -> int:
@@ -1578,7 +1579,7 @@ def declared_json(rel: str, text: str) -> list[Hit]:
 
 
 def declared_python(rel: str, text: str) -> list[Hit]:
-    """The trains a world's code writes as a dict with a name and a pinion, the pinion as the line writes it (unparsed, so that a
+    """The trains a world's code writes as a dict, a literal or a call of dict, with a name and a pinion, the pinion as the line writes it (unparsed, so that a
     reformatted line is the same declaration); a pinion spelt den, or as the attribute den of a module (rig.DEN), is the seed."""
     try:
         tree = ast.parse(text)
@@ -1586,13 +1587,17 @@ def declared_python(rel: str, text: str) -> list[Hit]:
         return []
     found: list[Hit] = []
     for node in ast.walk(tree):
-        if not isinstance(node, ast.Dict):
+        fields: dict[str, ast.expr]
+        if isinstance(node, ast.Dict):
+            fields = {
+                k.value: v
+                for k, v in zip(node.keys, node.values, strict=True)
+                if isinstance(k, ast.Constant) and isinstance(k.value, str)
+            }
+        elif isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "dict":
+            fields = {kw.arg: kw.value for kw in node.keywords if kw.arg}
+        else:
             continue
-        fields = {
-            k.value: v
-            for k, v in zip(node.keys, node.values, strict=True)
-            if isinstance(k, ast.Constant) and isinstance(k.value, str)
-        }
         name = fields.get("name")
         if isinstance(name, ast.Constant) and isinstance(name.value, str) and "pinion" in fields:
             number = ast.unparse(fields["pinion"])
