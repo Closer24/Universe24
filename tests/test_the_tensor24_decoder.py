@@ -76,9 +76,9 @@ NAN = '{"kind": "rate", "round": 1, "site": 0, "count": 1, "k": NaN}'
 DEEP, NESTS = "[" * 100_000 + "]" * 100_000, "line 2 nests past the interpreter's depth"
 OFF_ROUND, OFF_SITE = (
     "line 2 stands at round 7, off the record's rounds 1 to 6",
-    "line 2 names site 2, off the board's sites 0 to 1",
+    "line 2 names site 2, off the board of sides [2, 1, 1]",
 )
-OFF_END = "line 2 names site 5, off the board's sites 0 to 1"
+OFF_END = "line 2 names site 5, off the board of sides [2, 1, 1]"
 OFF_SPOKE, EARLY = (
     "line 2 names Spoke 6, off the board's Spokes 0 to 5",
     "line 2 holds the count 0, before the first beat",
@@ -296,11 +296,11 @@ OPEN = {  # a whole click whose holdings sum to nothing and whose books still do
         "q": 4,
     },
     "a laid holding that loses": click(
-        1, 0, [holding(1, (7, 4))], [holding(0, (0, 5)), holding(1, (2, 0))], train=1
+        1, 0, [holding(1, (7, 4))], [holding(0, (0, 5)), holding(2, (2, 0))], train=1
     ),
     "a q that did not leave": {**TAKE, "q": 4},
     "a taken holding that gains": click(
-        1, 0, [holding(1, (7, 4)), holding(0, (0, 1))], [holding(0, (0, 1 + 1))], train=1
+        1, 0, [holding(1, (7, 4)), holding(2, (0, 1))], [holding(0, (0, 1 + 1))], train=1
     ),
     "an end that takes nothing": click(1, 0, ends=[ENDED[0], end_of(1, [], [])]),
 }
@@ -509,8 +509,8 @@ LAWS = {  # each law, and its mutant: one function of the decoder replaced
     "a click that lacks a field of its books reads not read": (
         law_lacking,
         books,
-        "legible",
-        lambda click: True,
+        "unread_books",
+        lambda click: "",
     ),
     "the ticks counted from the rate lines": (
         law_ticks,

@@ -1,21 +1,26 @@
 """Row 15, the conservation at the click, read twice: the books at every whole click, and the ledger beside them."""
 
-# The first reading, K3 (Animate's part C): a whole click's books stand at the click itself, or at each of its two ends
-# where it takes at both (the record's guard). Each part takes: its taken holds a holding, each taken holding loses
-# and each laid one gains, its windings and kept together, and over the part's holdings the windings and the kept
-# together gain nothing (law 8: every integer is held, moved or booked); the click's own train is among those it takes
-# from, and where it holds its q, q whole windings left (law 5). A take paid from its remainder alone moves no whole
-# winding, so a holding is read by its windings and kept together. A whole click that lacks a field its books are read
-# from (its ends, a part's taken and laid, a holding's train, windings and kept) is not read, and named (Sofer's G1).
-# The second reading is the plan's (TENSOR24.md section 19, item 8; TENSOR24_PLAN.md section 5, item 8): the wind over
-# every train of the header after the clicks against after the step, at every round with a click, whole or split; a
-# round is read where its step lines and its clicks lines hold the header's trains and no other, each with its whole
-# wind. A click moves wind between trains and keeps its remainder in the train it took from (Holding's kept), so the
-# change over every train is what the clicks booked, 0 where the books close: part C's "the change equals the booked"
-# is each reading held against 0, and a split click, which books no holding, moves no wind out of the trains. The row:
-# not read with no whole click, with the ledger absent or not read, or with a header that names no train, the cause
-# named; not shown where a part read fails, the books at a whole click read or the wind at a round read, beside the
-# rest named; else not read where a whole click lacks a field or a round with a click is not read; else shown.
+# The first reading, K3 (Animate's part C): a whole click's books stand at the click itself, or at each of its two
+# ends where it takes at both (the record's guard), and are read per train. A part's taken and its laid each hold one
+# holding per train, a train's holdings on one side read as one where each starts where the last ended, and no train
+# stands on both sides of a part. Each part takes: each taken train loses and each laid one gains, its windings and
+# kept together, and over the part the windings and the kept together gain nothing (law 8: every integer is held,
+# moved or booked); the click's own train is among those it takes from, and where it holds its q, q whole windings
+# left (law 5), over both its ends where it takes at both. A take paid from its remainder alone moves no whole
+# winding, so a holding is read by its windings and kept together. A whole click whose books cannot be read is not
+# read, and named: one that lacks a field they are read from (its own train, its ends, a part's taken and laid, a
+# holding's train, windings and kept; Sofer's G1), or that books a train twice in a part: twice on one side,
+# unchained, or on both sides. The second reading is the plan's (TENSOR24.md section 19, item 8; TENSOR24_PLAN.md
+# section 5, item 8): the wind over every train of the header after the clicks against after the step, at every round
+# with a click, whole or split; a round is read where its step lines and its clicks lines hold the header's trains
+# and no other, each with its whole wind, and the header's trains are read where every train card holds its index. A
+# click moves wind between trains and keeps its remainder in the train it took from (Holding's kept), so the change
+# over every train is what the clicks booked, 0 where the books close: part C's "the change equals the booked" is
+# each reading held against 0, and a split click, which books no holding, moves no wind out of the trains. The row:
+# not read with no whole click; not shown where a part read fails, the books at a whole click read or the wind at a
+# round read, with every gap named beside it, since law 8 breaks on the first reading alone; else not read where a
+# whole click's books are not read, the ledger is absent or not read at a round with a click, or the header names no
+# train or a train card holds no index, the cause named; else shown.
 
 from typing import Any
 
@@ -25,6 +30,8 @@ Line = dict[str, Any]
 BOOKS = ("taken", "laid")
 HELD = ("train", "windings", "kept")
 CLICKS = ("whole", "split")
+LACKS = "lacks a field its books are read from"
+TWICE = "books one train twice in a part"
 
 
 def gained(holdings: list[Line]) -> int:
@@ -43,42 +50,81 @@ def left(click: Line) -> int:
     return sum(h["windings"][0] - h["windings"][1] for p in parts(click) for h in p["taken"])
 
 
+def chained(holdings: list[Line]) -> list[Line] | None:
+    """A side's holdings one per train: a train's holdings in turn, each starting where the last ended, read as one."""
+    runs: dict[int, Line] = {}
+    for h in holdings:
+        last = runs.get(h["train"])
+        if last is None:
+            runs[h["train"]] = h
+        elif h["windings"][0] == last["windings"][1] and h["kept"][0] == last["kept"][1]:
+            runs[h["train"]] = {
+                "train": h["train"],
+                "windings": [last["windings"][0], h["windings"][1]],
+                "kept": [last["kept"][0], h["kept"][1]],
+            }
+        else:
+            return None
+    return list(runs.values())
+
+
+def per_train(part: Line) -> tuple[list[Line], list[Line]] | None:
+    """A part's taken and laid one holding per train, no train on both sides; None where the part books a train twice."""
+    taken, laid = chained(part["taken"]), chained(part["laid"])
+    if taken is None or laid is None or {h["train"] for h in taken} & {h["train"] for h in laid}:
+        return None
+    return taken, laid
+
+
+def part_closes(part: Line) -> bool:
+    """A part takes and closes: each taken train loses, each laid one gains, and the part together gains nothing."""
+    held = per_train(part)
+    if held is None:
+        return False
+    taken, laid = held
+    return (
+        bool(taken)
+        and all(gained([h]) < 0 for h in taken)
+        and all(gained([h]) > 0 for h in laid)
+        and gained(taken) + gained(laid) == 0
+    )
+
+
 def closes(click: Line) -> bool:
     """Whether a whole click's books close: each part takes and closes, from the click's train, q windings leaving."""
-    each = all(
-        p["taken"]
-        and all(gained([h]) < 0 for h in p["taken"])
-        and all(gained([h]) > 0 for h in p["laid"])
-        and gained(p["taken"]) + gained(p["laid"]) == 0
-        for p in parts(click)
-    )
+    each = all(part_closes(p) for p in parts(click))
     trains = {h["train"] for p in parts(click) for h in p["taken"]}
-    own = not whole(click.get("train")) or click["train"] in trains
+    own = click.get("train") in trains
     counted = not whole(click.get("q")) or click["q"] == left(click)
     return each and own and counted
 
 
-def legible(click: Line) -> bool:
-    """Whether a whole click holds every field its books are read from: its ends, each part's books, each holding's."""
-    sides = [click, *click.get("ends", [])]
-    held = [h for p in sides for key in BOOKS for h in p.get(key, [])]
-    return (
+def unread_books(click: Line) -> str:
+    """Why a whole click's books are not read: a field they are read from lacking, or a train booked twice; or nothing."""
+    held_by = [click, *click.get("ends", [])]
+    held = [h for p in held_by for key in BOOKS for h in p.get(key, [])]
+    if not (
         "ends" in click
-        and all(key in p for p in sides for key in BOOKS)
+        and "train" in click
+        and all(key in p for p in held_by for key in BOOKS)
         and all(key in h for h in held for key in HELD)
-    )
+    ):
+        return LACKS
+    return TWICE if any(per_train(p) is None for p in parts(click)) else ""
 
 
 def first_reading(record: Record) -> dict[str, int]:
     """The books at every whole click: the whole clicks, those whose books are read, and those that close."""
     clicks = record.of("whole")
-    read = [c for c in clicks if legible(c)]
+    read = [c for c in clicks if not unread_books(c)]
     return {"whole clicks": len(clicks), "read": len(read), "closed": sum(closes(c) for c in read)}
 
 
 def second_reading(record: Record, ledger: list[Line]) -> dict[str, int]:
     """The wind over every train of the header after the clicks against after the step, at every round with a click."""
-    trains = {t["index"] for t in record.header.get("trains", []) if whole(t.get("index"))}
+    cards = record.header.get("trains", [])
+    indexed = all(whole(t.get("index")) for t in cards)
+    trains = {t["index"] for t in cards} if indexed else set()
     winds: dict[tuple[int, str], dict[int, Any]] = {}
     for line in ledger:
         winds.setdefault((line["round"], line["at"]), {})[line["train"]] = line.get("wind")
@@ -110,6 +156,18 @@ def verdict(kind: str, *causes: str, **readings: dict[str, int]) -> dict[str, An
     return {"kind": kind, "cause": "; ".join(cause for cause in causes if cause), **readings}
 
 
+def wall(record: Record, second: dict[str, int] | None, why: str) -> str:
+    """Why the second reading is read at no round: the ledger absent or not read, a train card with no index, no train."""
+    cards = [
+        n for n, t in enumerate(record.header.get("trains", []), start=1) if not whole(t.get("index"))
+    ]
+    if second is None:
+        return why
+    if cards:
+        return f"the header's train card {cards[0]} holds no index"
+    return "" if second["trains"] else "the header names no train"
+
+
 def row_15(
     record: Record, ledger: list[Line] | None, why: str = "the ledger is absent"
 ) -> dict[str, Any]:
@@ -117,9 +175,9 @@ def row_15(
     first = first_reading(record)
     if unread(first):
         return verdict("NOT READ", "no whole click", first=first)
-    lacking = [c for c in record.of("whole") if not legible(c)]
+    lacking = [(c, cause) for c in record.of("whole") if (cause := unread_books(c))]
     lacks = (
-        f"the whole click at round {lacking[0]['round']}, site {lacking[0]['site']} lacks a field its books are read from"
+        f"the whole click at round {lacking[0][0]['round']}, site {lacking[0][0]['site']} {lacking[0][1]}"
         if lacking
         else ""
     )
@@ -131,19 +189,28 @@ def row_15(
         if lacking
         else "the books close at every whole click"
     )
-    if ledger is None:
-        return verdict("NOT READ", why, books, lacks, first=first)
-    second = second_reading(record, ledger)
-    rounds, read, agree = second["rounds with a click"], second["read"], second["agree"]
-    if not second["trains"]:
-        return verdict("NOT READ", "the header names no train", books, lacks, first=first, second=second)
-    lines = f"the ledger's lines are read at {read} of {rounds} rounds with a click"
-    if not read:
-        return verdict("NOT READ", books, lacks, lines, first=first, second=second)
-    wind = f"the wind over every train agrees after the clicks and after the step at {agree} of {read} rounds read, of {rounds} with a click"
+    second = None if ledger is None else second_reading(record, ledger)
+    readings = {"first": first} if second is None else {"first": first, "second": second}
+    barred = wall(record, second, why)
+    rounds, read, agree = (
+        (0, 0, 0) if second is None else (second["rounds with a click"], second["read"], second["agree"])
+    )
+    lines = (
+        f"the ledger's lines are read at {read} of {rounds} rounds with a click"
+        if not barred and read < rounds
+        else ""
+    )
+    wind = (
+        f"the wind over every train agrees after the clicks and after the step at {agree} of {read} rounds read, of {rounds} with a click"
+        if read
+        else ""
+    )
     if opened or agree < read:
-        return verdict("NOT SHOWN", books, lacks, wind, first=first, second=second)
-    if lacking or read < rounds:
-        partly = lines if read < rounds else ""
-        return verdict("NOT READ", lacks, "" if lacking else books, partly, first=first, second=second)
-    return verdict("SHOWN", books, wind, first=first, second=second)
+        return verdict("NOT SHOWN", books, lacks, wind or barred or lines, **readings)
+    if barred:
+        return verdict("NOT READ", barred, books, lacks, **readings)
+    if not read:
+        return verdict("NOT READ", books, lacks, lines, **readings)
+    if lacking or lines:
+        return verdict("NOT READ", lacks, "" if lacking else books, lines, **readings)
+    return verdict("SHOWN", books, wind, **readings)
