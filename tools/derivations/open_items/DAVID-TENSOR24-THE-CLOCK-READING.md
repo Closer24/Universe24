@@ -18,7 +18,7 @@ For each item, one question: is it what the one act does by itself? The Node-clo
    - **In the clock:** the grip is the Mesh's, the meshing of two clocks' gears, and the ruler is the Mesh's (law 2, and **The same clock and the same ruler for every act**). So every train crosses a Mesh with one grip, and a train's mass is its clock's own spring alone.
    - **The head's grip carries each train's pinion,** so each train reads its own cone: c^2 / c_L^2 = w0 / tan w0, which is also E0 / (m c_L^2). At a rest beat near 80 deg it is 0.25, so m c^2 is four times E0. M5's factor of 4.3 is this ratio at a rest beat near 81 deg (which train M5 measured, I have not read).
    - **With one grip per Mesh for every train** the number is w0 / sin w0: 1.0002 at 2 deg, 1.047 at 30 deg, 1.128 at the toy electron's 48 deg, and 1.42 at 80 deg. Both forms go to 1 as the rest beat shrinks against the lattice's beat. That is M5's Compton length: the files' rest beats are a calibration, not a law.
-   - **Its price:** with light at the step's edge (grips W/3), no massive train is a turn under one grip per Mesh. With light at the owner's way (a) of item (g) (light at 1/sqrt 6, grips W/6), every rest beat to 90 deg is a turn. So this item and the doubler are one decision.
+   - **Its price:** with light at the step's edge (grips W/3), no massive train is a turn under one grip per Mesh. With light at the doubler's hold (item (g)'s way (1), approved with the plan: light at 1/sqrt 6, grips W/6), every rest beat to 90 deg is a turn. So this item stands on that decision and needs no new word.
 2. **The graviton's two polarizations** (M5; p16).
    - **In the act:** a metric is a symmetric tensor of two Spokes, so its kinds are the channels of T1 x T1 that are symmetric in their two inputs.
    - **The head's own tables give them:** A1 (1 component), E (2) and T2 (3), six in all, as a symmetric tensor of three axes holds. T1 x T1 -> T1, the cross, is antisymmetric.
@@ -85,11 +85,10 @@ For each item, one question: is it what the one act does by itself? The Node-clo
 ## What follows
 
 1. **For stage 7b:**
-   - one grip per Mesh for every train (item 1), with light at way (a);
+   - one grip per Mesh for every train (item 1), with light at the doubler's hold;
    - the regulator's block A1 + E + T2 (item 2);
    - the count's law, with the time gear holding the count c or a drive that hands its teeth over (item 3).
 2. **For the owner:**
-   - way (a) of item (g), with item 1;
    - the metric's mass: line 352 against decision 25 (item 13);
    - the course (item 15);
    - the horizon (item 16).

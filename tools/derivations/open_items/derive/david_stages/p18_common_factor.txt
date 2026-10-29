@@ -1,0 +1,8 @@
+W and W+ parted, alternating, every clock ticking, L = Gamma^3 = 729, 20 worlds of 40 rounds:
+  (1) the notches and the dials equal at every round in 20 of 20; the fine tooth mapped in 20 of 20
+  (2) both worlds run back to their own starts in 20 of 20
+  (3) each laid at its own home, the stride in the notches alone: the notches equal in 20 of 20
+W = W+, the rates parted, random masks, L = Gamma^3 = 729, 20 worlds of 40 rounds:
+  (1) the notches and the dials equal at every round in 20 of 20; the fine tooth mapped in 20 of 20
+  (2) both worlds run back to their own starts in 20 of 20
+  (3) each laid at its own home, the stride in the notches alone: the notches equal in 20 of 20
