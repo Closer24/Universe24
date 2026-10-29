@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The Boss's 6497161018 and Animate's 6497277230 (2026-10-29, 13:0x UTC; ledger row 399): docs/BIG_PICTURE.md 0.2 with Animate's six breaks beside their lines, 3.1 (the couplings, lawful and not), 10.1 (ede6c3cb7), 13.1 (the mass as the record reads it), 15.1 (how the engine is closed to the final picture), reading 35.
 - Decision 38 and the owner's words of 12:5x (2026-10-29, 12:5x UTC; ledger row 399): docs/BIG_PICTURE.md 0.2 rewritten as the coherent picture on one page (the Boss's 6497078099, fifteen lines each with its status word), 3.1 (the couplings), 4, 7, 12.3 items 22 and 23, 13.1 (the seed is free, the node generic), reading 34; docs/ALGEBRA.md line 35 gains the clause The Node-clock is one generic, simple node, no line moved.
 - The owner's question on a mass in the universe file, the Boss's 6496835638 and 6496932945 and David's 6496879911 (2026-10-29, 12:5x UTC; ledger row 399): docs/BIG_PICTURE.md 13.1 (a question and not a status), 8.1 (root II as the Boss words it; Animate's frame statistic), 12.3 items 17 and 21, 4.1 (the uniformity test taken), reading 33.
 - The gate's own files and the dict call (2026-10-29, 12:4x UTC; the Boss's 6496932945; ledger row 399): scribe_scan.py no longer reads its own files under the rule DECLARE (the self-test's fixtures were refused on scribe-5 and on the Boss's merge: the keeper's miss) and reads a train written as a call of dict; scribe_scan_selftest.py 5 cases added (1,055 in all, 0 parted).
