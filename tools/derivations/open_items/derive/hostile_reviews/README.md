@@ -55,3 +55,6 @@ it.
   promises broken), images_full_act.py and images_full_act_all.py (the 24 on the whole act), order_full_act.py,
   stage4_alike.py, local_pure.py with its control, and mutants_s12.py (51 source mutants of stage 7a, its output at
   9e5233d7f and its four survivors after), each with its output.
+- fifteenth/: REPORT.md, stages 7b and 10 read together, one reader for two stages (decision 27): approve with
+  changes, three owed while the build is stopped (the runner on files the checker passes, the ruler's tests, the
+  record's fields); the probes p1 to p8 in the reader's scratch, each with its output.
