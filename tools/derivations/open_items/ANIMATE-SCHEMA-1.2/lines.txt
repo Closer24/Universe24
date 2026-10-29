@@ -1,0 +1,17 @@
+Schema 1.2's lines, written from bands the one rule draws, and read back
+
+a pair, its second frame set by its first take: the decoder's reader: read; every take names a lay: True;
+  every draw law 9's over sizes times back: True; every member taken where its history says: True
+  {"kind": "whole", "round": 1, "site": 50, "count": 1, "train": 0, "q": 1}
+  {"kind": "split", "round": 1, "site": 50, "count": 1, "train": 0, "members": [[1, 50, 0]], "parts": [[[45, 1]], [[45, -1]]], "sizes": [2, 2], "back": [1, 1], "c": 3, "room": 4, "drawn": 1, "layer": 1}
+  {"kind": "split", "round": 1, "site": 50, "count": 1, "train": 0, "members": [[1, 50, 1]], "parts": [[[70, 1]], [[70, -1]]], "sizes": [9, 49], "back": [1, 1], "c": 3, "room": 58, "drawn": 0, "layer": 2}
+  {"kind": "whole", "round": 6, "site": 45, "count": 6, "train": 0, "q": 1, "birth": [1, 50], "detector": {"train": 0, "rho": 2, "spin": [2, 0, 0]}, "written": {"train": 0, "rho": 2, "spin": [-2, 0, 0]}}
+  {"kind": "whole", "round": 36, "site": 70, "count": 36, "train": 0, "q": 1, "birth": [1, 50], "detector": {"train": 0, "rho": 29, "spin": [-20, 0, 21]}, "written": {"train": 0, "rho": 29, "spin": [-20, 0, 21]}}
+
+two quanta, one free slot at z: the decoder's reader: read; every take names a lay: True;
+  every draw law 9's over sizes times back: True; every member taken where its history says: True
+  {"kind": "whole", "round": 1, "site": 10, "count": 1, "train": 0, "q": 1}
+  {"kind": "whole", "round": 1, "site": 30, "count": 1, "train": 1, "q": 1}
+  {"kind": "whole", "round": 7, "site": 36, "count": 7, "train": 1, "q": 1, "birth": [1, 30]}
+  {"kind": "whole", "round": 11, "site": 20, "count": 11, "train": 0, "q": 1, "birth": [1, 10]}
+  {"kind": "split", "round": 11, "site": 20, "count": 11, "train": 0, "members": [[1, 10, 0], [1, 30, 0]], "parts": [[[4, 0], [36, 0]], [[4, 0], [20, 0]], [[20, 0], [36, 0]], [[20, 0], [20, 0]]], "sizes": [6, 4, 9, 6], "back": [1, 1, 1, 0], "c": 13, "room": 19, "drawn": 2, "layer": 1}
