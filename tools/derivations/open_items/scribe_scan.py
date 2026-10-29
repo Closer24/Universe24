@@ -57,7 +57,7 @@ TESTS = "tests"
 SCOPES = ("src", TESTS)  # every package under src, and the tests for the rule PIN alone
 TOOLS = re.compile(r"tools/tensor24_[^/]*\.py")  # the new engine's tools, directly under tools/: the rules of TOOL_RULES alone
 TOOLS_SPEC = ":(glob)tools/tensor24_*.py"  # the same files as git's pathspec
-TOOL_RULES = frozenset({"NUMBER", "FLOAT"})  # no number beyond 0 and 1 and no float, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x)
+TOOL_RULES = frozenset({"NUMBER", "FLOAT", "TWICE"})  # no number beyond 0 and 1, no float and no two spelt as a sum, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x)
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
@@ -145,7 +145,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "TWICE": (
         "BLOCK",
-        "a two spelt as a sum: an expression added to itself (1 + 1, teeth + teeth, spokes + spokes) in any module of the new engine, the runner and the decoder included: the rule NUMBER counts literals, so a thing added to itself is a 2 in disguise (the owner's word of 2026-10-29, 12:5x: forbidden); the count per file and spelling may not rise",
+        "a two spelt as a sum: an expression added to itself (1 + 1, teeth + teeth, spokes + spokes) in any module of the new engine, the runner and the decoder included, and in tools/tensor24_*.py: the rule NUMBER counts literals, so a thing added to itself is a 2 in disguise (the owner's word of 2026-10-29, 12:5x: forbidden); the count per file and spelling may not rise",
     ),
     "REFUSE": (
         "BLOCK",
@@ -249,7 +249,7 @@ PROMOTED = frozenset({"MEMO"})
 RUNNER = NEW_ENGINE + "/runner/"
 REWIND = RUNNER + "rewind.py"  # the rewind check: the one module of the runner that reads the undo log
 BOARD = RUNNER + "board.py"  # the board's wrap is Rule3's carry, imported from algebra/carry.py: nothing else spells one there
-LOADER = RUNNER + "load.py"  # the loader makes every gear's coefficients from the files: a mask, a row found by position, a per-row constant or a loop there is an exception of the Node-clock (decision 38), so it keeps every rule of the engine (the owner's "5 approved" of 2026-10-29, 13:2x UTC)
+LOADER = RUNNER + "load.py"  # the loader makes every gear's coefficients from the files, so it keeps every rule of the engine (the owner's "5 approved" of 2026-10-29, 13:2x UTC); the rules count its loops, branches, comparisons, clamps and operations, and a mask or a per-row constant built from a table of bits passes them: the uniformity test (G0) is what sees that
 BOARD_KEEPS = frozenset(
     {"OPERATION", "LOOP", "CLAMP", "COMPARE", "BRANCH"}
 )  # the rules the board's module keeps and the rest of the runner is spared: a wrap by hand is a remainder, a quotient, a branch, a comparison, a clamp or a loop (the sixth hostile review, follow-up 2)
@@ -1033,7 +1033,7 @@ def scan(rel: str, source: str) -> list[Hit]:
             add(
                 "ISOLATE", node, f"dynamic import {dynamic_call(node)}"
             )  # a string names the module: no wall reads it
-    if rel.startswith(NEW_ENGINE + "/"):
+    if rel.startswith(NEW_ENGINE + "/") or TOOLS.fullmatch(rel):
         for node in ast.walk(tree):
             if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add) and ast.dump(node.left) == ast.dump(node.right):
                 add("TWICE", node, ast.unparse(node))  # not spared to the runner or the decoder: the loader's twos are the engine's
@@ -1595,6 +1595,16 @@ def coupling_name(node: ast.AST) -> bool:
     return "coupling" in name.lower()
 
 
+def fixed_value(node: ast.expr) -> bool:
+    """Whether an expression holds literals and module constants (names in capitals) alone: a value the code writes, not one it forwards."""
+    return all(n.id.isupper() for n in ast.walk(node) if isinstance(n, ast.Name))
+
+
+def literal_integer(node: ast.expr) -> bool:
+    """An integer literal, signed."""
+    return integer_leaves(node) is not None and not isinstance(node, ast.Tuple | ast.List)
+
+
 def declared_python(rel: str, text: str) -> list[Hit]:
     """The trains a world's code writes as a dict, a literal or a call of dict, with a name and a pinion, the pinion as the line writes it (unparsed, so that a
     reformatted line is the same declaration); a pinion spelt den, or as the attribute den of a module (rig.DEN), is the seed."""
@@ -1616,6 +1626,15 @@ def declared_python(rel: str, text: str) -> list[Hit]:
             rows = [arg for arg in node.args if isinstance(arg, ast.List)]
         for row in rows:
             found.append(Hit("DECLARE", rel, row.lineno, f"coupling row {ast.unparse(row)}", "", row.col_offset))
+        if isinstance(node, ast.Call) and callee_name(node) not in ("dict", ""):
+            keywords = {kw.arg: kw.value for kw in node.keywords if kw.arg}
+            callee = callee_name(node)
+            pinion = keywords.get("pinion")
+            if pinion is not None and fixed_value(pinion) and ast.unparse(pinion).lower().rpartition(".")[2] != "den":
+                found.append(Hit("DECLARE", rel, node.lineno, f"train call {callee} {ast.unparse(pinion)}", "", node.col_offset))
+            strength = keywords.get("strength")
+            if strength is not None and literal_integer(strength):
+                found.append(Hit("DECLARE", rel, node.lineno, f"coupling call {callee} strength {ast.unparse(strength)}", "", node.col_offset))
         fields: dict[str, ast.expr]
         if isinstance(node, ast.Dict):
             fields = {
