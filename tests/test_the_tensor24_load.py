@@ -22,7 +22,17 @@ TRAINS = [
     {"name": "axial", "kinds": ["A2"], "part": 1},
     {"name": "stress", "kinds": ["T2"], "part": 1},
     {"name": "potential", "kinds": ["A1", "T1"], "part": 2},
+    {"name": "field", "kinds": ["T1", "A1"], "part": 1},
 ]
+DIMS = {"A1": 1, "A2": 1, "T1": 3, "T2": 3}
+ROWS = sum(
+    sum(DIMS[k] for k in t["kinds"]) * t["part"] for t in TRAINS
+)  # every train's rows, counted afresh
+
+
+def gears(rows=ROWS):
+    """The gears' shape, at 0: what J lands in."""
+    return np.zeros((rows, SITES), dtype=object)
 
 
 def row(**fields):
@@ -66,6 +76,9 @@ COUPLINGS = [
     row(
         train=0, part=1, operand=op("gradient"), with_train=1, target=4, strength=17
     ),  # a hand's second part's
+    row(
+        train=5, kind=1, operand=op("gradient"), with_train=1, target=4, strength=19
+    ),  # an A1 at its train's second kind
 ]
 
 
@@ -128,7 +141,7 @@ def test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables(made):
     rows = sum(t.rows() for t in held.trains)
     readings = rng.integers(-1 << 40, 1 << 40, (len(OPERANDS) + D - 1, rows, SITES)).astype(object) << 70
     flat = readings.reshape(-1, SITES)
-    assert (contract(Plan(*held.plan), flat) == naive(universe(), c, flat, labels)).all()
+    assert (contract(Plan(*held.plan), flat, gears(rows)) == naive(universe(), c, flat, labels)).all()
 
 
 AT = f"universe.couplings[{len(COUPLINGS)}]"  # where an edit's coupling row stands, after the universe's own
@@ -164,6 +177,14 @@ def edits():
             coupling(train=1, operand=op("gradient"), target=4),
             f"{AT}: a gradient of a train not of A1",
         ),
+        "a gradient of the potential's T1, its second kind": (
+            coupling(train=4, kind=1, operand=op("gradient"), target=1),
+            f"{AT}: a gradient of a train not of A1",
+        ),
+        "a gradient of the field's A1, its second kind": (
+            coupling(train=5, kind=1, operand=op("gradient"), with_train=1, target=0),
+            None,
+        ),
         "a gradient of a T1 train on the second side": (
             coupling(with_train=1, with_operand=op("gradient"), target=4),
             f"{AT}: a gradient of a train not of A1",
@@ -196,27 +217,24 @@ def test_each_refusal_of_the_load_names_its_own_broken_file_and_its_edge_loads(r
 
 
 def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
-    """A gear lands on its train's own rows, the first train's and a later one's; every going, dial, count and time is 0."""
-    rows, site, now, before = 2, 3, 5, 6  # the light's hand: two rows
-    dims = {"A1": 1, "A2": 1, "T1": 3, "T2": 3}
-    first = sum(
-        sum(dims[k] for k in t["kinds"]) * t["part"] for t in TRAINS[:-1]
-    )  # the potential's first row
-    gears = [(0, rows - 1, site, now, before, 0), (len(TRAINS) - 1, 1, site, before, now, 0)]
-    held, found = loaded(made, universe(), gears)
-    a, b, _, go, *clocks = held.state
-    assert found == [] and (
-        a[rows - 1, site],
-        b[rows - 1, site],
-        a[first + 1, site],
-        b[first + 1, site],
-    ) == (
+    """A gear lands on its train's own rows, the first train's and the last's, with its fine tooth; the rest is 0."""
+    rows, site, now, before, tooth = 2, 3, 5, 6, 4  # the light's hand: two rows
+    first = (
+        ROWS - sum(DIMS[k] for k in TRAINS[-1]["kinds"]) * TRAINS[-1]["part"]
+    )  # the last train's first row
+    laid = [(0, rows - 1, site, now, before, tooth), (len(TRAINS) - 1, 1, site, before, now, 0)]
+    held, found = loaded(made, universe(), laid)
+    a, b, r, go, *clocks = held.state
+    assert found == [] and (a[rows - 1, site], b[rows - 1, site], r[rows - 1, site]) == (
         now,
         before,
-        before,
-        now,
+        tooth,
     )
+    assert (a[first + 1, site], b[first + 1, site]) == (before, now)
+    assert (a.shape, b.shape, r.shape, go.shape) == ((ROWS, SITES),) * len("abrg")
+    assert all(x.shape == (1, SITES) for x in clocks)
     assert not go.any() and not any(x.any() for x in clocks)
+    assert (a != 0).sum() == len(laid) and (r != 0).sum() == 1
     held, found = loaded(made, universe(), [(0, rows, site, now, before, 0)])
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
 
@@ -232,7 +250,7 @@ def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
     trains, _ = trains_of(u["trains"], labels, tuple(k.shape[-1] for k in ks))
     planned, _ = plan(u["couplings"], trains, c, labels, D)
     readings = np.ones(((len(OPERANDS) + D - 1) * sum(t.rows() for t in trains), SITES), dtype=object)
-    assert planned[0].size == 0 and not contract(Plan(*planned), readings).any()
+    assert planned[0].size == 0 and not contract(Plan(*planned), readings, gears()).any()
 
 
 def rewound(r, w, rate, gamma, dial=0):
@@ -290,8 +308,8 @@ def renamed(made, scale=lambda strength, target: strength):
     readings = (
         np.random.default_rng(3).integers(-1 << 30, 1 << 30, (planes * rows, SITES)).astype(object)
     )
-    j = contract(Plan(*base.plan), readings)
-    for order in [(4, 3, 2, 1, 0), (1, 0, 4, 2, 3)]:
+    j = contract(Plan(*base.plan), readings, gears(rows))
+    for order in [(5, 4, 3, 2, 1, 0), (1, 0, 5, 4, 2, 3)]:
         place = {old: new for new, old in enumerate(order)}
         couplings = [
             [place[x[0]], *x[1:4], place[x[4]], *x[5:8], place[x[8]], *x[9:]] for x in COUPLINGS
@@ -304,7 +322,7 @@ def renamed(made, scale=lambda strength, target: strength):
             ]
         )
         shuffled = readings.reshape(planes, rows, SITES)[:, mapping].reshape(-1, SITES)
-        if found or not (contract(Plan(*moved.plan), shuffled) == j[mapping]).all():
+        if found or not (contract(Plan(*moved.plan), shuffled, gears(rows)) == j[mapping]).all():
             return False
     return True
 
@@ -321,4 +339,27 @@ def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
     bare.pop("couplings")
     assert load(bare, {}, SITES, ks, c)[1] == []
     held, found = load(universe(), {"gears": []}, 1 << 64, ks, c)
-    assert held is None and len(found) == 1 and found[0].startswith("piece.shape: 17 rows at")
+    assert held is None and len(found) == 1 and found[0].startswith(f"piece.shape: {ROWS} rows at")
+
+
+def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
+    """Whichever of the lay's five arrays the machine's memory refuses, the board is named and nothing raises."""
+    ks, c = made
+    zeros = np.zeros
+    for after in range(
+        len("abrgc")
+    ):  # a, b, r, the going and the clocks: `after` made, the next refused
+        asked = []
+
+        def refused(*args, after=after, asked=asked, **kwargs):
+            asked.append(args)
+            if len(asked) > after:
+                raise MemoryError("no room")
+            return zeros(*args, **kwargs)
+
+        monkeypatch.setattr(np, "zeros", refused)
+        held, found = load(universe(), {"gears": []}, SITES, ks, c)
+        assert len(asked) == after + 1 and held is None
+        assert found == [
+            f"piece.shape: {ROWS} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
+        ]

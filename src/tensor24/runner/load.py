@@ -149,20 +149,19 @@ def plan(
             second.append(twos[z])
             factor.append(strength * table[x, y, z])
             landing.append(trains[target].row(target_kind, x, target_part))
-    scatter = np.zeros((rows, len(landing)), dtype=object)
-    scatter[landing, range(len(landing))] = 1
-    indices = (np.array(first, dtype=np.intp), np.array(second, dtype=np.intp))
-    return (*indices, np.array(factor, dtype=object), scatter), found
+    first_, second_, landing_ = (np.array(column, dtype=np.intp) for column in (first, second, landing))
+    return (first_, second_, np.array(factor, dtype=object), landing_), found
 
 
 def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[Z, ...], list[str]]:
     """The setting's gears laid on the trains' rows, every going, dial, count and time at 0; a component off its train's, named."""
     rows = sum(t.rows() for t in trains)
     try:
-        a, b, r = (np.zeros((rows, sites), dtype=object) for _ in range(1 + 1 + 1))
+        a, b, r, go = (np.zeros((rows, sites), dtype=object) for _ in ("a", "b", "r", "go"))
+        clocks = np.zeros((1, sites), dtype=object)
     except (ValueError, MemoryError) as error:
         return (), [
-            f"piece.shape: {rows} rows at {sites} sites, more than one array of this machine holds ({error})"
+            f"piece.shape: {rows} rows at {sites} sites, more than the arrays of this machine hold ({error})"
         ]
     found = []
     for at, (train, component, site, now, before, tooth) in enumerate(gears):
@@ -173,8 +172,7 @@ def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[
             continue
         row = trains[train].first + component
         a[row, site], b[row, site], r[row, site] = now, before, tooth
-    clocks = np.zeros((1, sites), dtype=object)
-    return (a, b, r, 0 * a, clocks, clocks, clocks), found
+    return (a, b, r, go, clocks, clocks, clocks), found
 
 
 def promises(r: Z, w: Z, rate: Z, gamma: Z) -> list[str]:

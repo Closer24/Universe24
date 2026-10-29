@@ -514,6 +514,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         5,
         TENSOR24_KINDS,
     ),
+    "tests/test_the_tensor24_load.py::gears": (
+        3,
+        TENSOR24_LOAD,
+    ),
     "tests/test_the_tensor24_load.py::row": (
         3,
         TENSOR24_LOAD,
@@ -543,7 +547,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::edits": (
-        45,
+        53,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_each_refusal_of_the_load_names_its_own_broken_file_and_its_edge_loads": (
@@ -551,7 +555,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid": (
-        24,
+        21,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_coupling_the_table_lacks_holds_no_term_and_gives_0": (
@@ -576,6 +580,10 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_tensor24_load.py::test_the_files_the_checker_holds_load_or_are_named_and_none_raises": (
         8,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_a_board_the_machine_cannot_hold_is_named": (
+        21,
         TENSOR24_LOAD,
     ),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (

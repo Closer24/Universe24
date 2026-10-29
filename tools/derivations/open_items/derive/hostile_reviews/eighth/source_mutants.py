@@ -1,4 +1,4 @@
-"""Probe 6: source mutants of kinds.py, main.py, load.py, contract.py and the checker (files.py), the eighth review's (its M1 updated for kinds(matrix)), each in a
+"""Probe 6: source mutants of kinds.py, main.py, load.py, contract.py and the checker (files.py), the eighth review's (its M1 updated for kinds(matrix), L17 and C1 for the ninth's changes), each in a
 scratch copy under /dev/shm/tmp/s9mut/<n>, run against tests/test_the_tensor24_{kinds,load,files}.py (pytest -x) and
 tools/tensor24_files.py on the examples. SURVIVED: every test passes and the tool exits 0 with the mutant in place.
 usage: python3 -I source_mutants.py <worktree>"""
@@ -38,11 +38,11 @@ MUTANTS = {
     "L14 a part of 3 loads": [(L, 'not in (1, 1 + 1):', 'not in (1, 1 + 1, 1 + 1 + 1):')],
     "L15 E loads": [(L, 'elif label == "E":', 'elif label == "E?":')],
     "L16 lay swaps before and the tooth": [(L, "= now, before, tooth", "= now, tooth, before")],
-    "L17 lay's going at 1, not 0": [(L, "return (a, b, r, 0 * a, clocks", "return (a, b, r, 0 * a + 1, clocks")],
+    "L17 lay's going at 1, not 0": [(L, "return (a, b, r, go, clocks", "return (a, b, r, go + 1, clocks")],
     "L18 promises' tooth bound one past": [(L, "(r < 0) | (r >= w)", "(r < 0) | (r > w)")],
     "L19 promises' rate bound one past the full rate": [(L, "(rate < 0) | (rate > gamma)", "(rate < 0) | (rate > gamma + 1)")],
     "L20 promises' rate floor one below": [(L, "(rate < 0) | (rate > gamma)", "(rate < 0 - 1) | (rate > gamma)")],
-    "C1 the factor dropped": [(C, "target @ (factor[:, None] * readings[first]", "target @ (readings[first]")],
+    "C1 the factor dropped": [(C, "factor[:, None] * readings[first]", "readings[first]")],
     "C2 the second reading as the first": [(C, "readings[first] * readings[second]", "readings[first] * readings[first]")],
     "F1 a pinion below den only": [(F, "whole(pinion) and 0 <= pinion <= den", "whole(pinion) and 0 <= pinion < den")],
     "F2 a pinion above 0 only": [(F, "whole(pinion) and 0 <= pinion <= den", "whole(pinion) and 0 < pinion <= den")],

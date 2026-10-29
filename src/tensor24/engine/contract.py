@@ -2,6 +2,8 @@
 
 from typing import NamedTuple
 
+import numpy as np
+
 from tensor24.algebra.carry import Z
 
 
@@ -11,10 +13,12 @@ class Plan(NamedTuple):
     first: Z  # (terms,): the row of the readings that enters first
     second: Z  # (terms,): the row that enters second
     factor: Z  # (terms,): the strength times the table's entry
-    target: Z  # (gears, terms): 1 where the term lands
+    target: Z  # (terms,): the gear's row where the term lands
 
 
-def contract(plan: Plan, readings: Z) -> Z:
-    """Every gear's source J: one gather, one product and one scattered sum; a product the 24 forbid holds no term."""
+def contract(plan: Plan, readings: Z, gears: Z) -> Z:
+    """Every gear's source J, in the gears' shape: one gather, one product and one scattered sum over the terms."""
     first, second, factor, target = plan
-    return target @ (factor[:, None] * readings[first] * readings[second])
+    source = 0 * gears
+    np.add.at(source, target, factor[:, None] * readings[first] * readings[second])
+    return source
