@@ -6,7 +6,9 @@
 # and site; every field a line holds has its shape in the schema's record of its kind, a whole number, a label, a row
 # of them or a record of the schema, and a field the schema does not name holds whole numbers and labels alone,
 # through its rows and mappings (the schema's first line), so a float, a truth value, NaN or null, or a row of
-# another length, is seen (Sofer's G1 and G2); the header's sides make a board, each side 1 or more; every value
+# another length, is seen (Sofer's G1 and G2); the header's sides make a board, each side 1 or more; the header's
+# train cards name each train once, each card's winding 1 or more (a winding counts its train's notches, and the books
+# read each train's windings at it); every value
 # stands on the record, read where the line's record names it: an event's round from 1 to the end's rounds and its
 # site on the board, a whole click's ends and children on the board and its ends' Spokes among the board's, and a
 # count from the first beat on the kinds whose record holds one (the digests are the runner's, which the decoder
@@ -169,6 +171,21 @@ def board(header: Any) -> tuple[Any, Any, Any]:
     return sides, sites, len(sides) + len(sides)
 
 
+def carded(header: Line) -> str:
+    """The first train card off the record: a winding below 1, or a train an earlier card names; or nothing."""
+    cards = header.get("trains", [])
+    low = [
+        (n, t["winding"])
+        for n, t in enumerate(cards, start=1)
+        if whole(t.get("winding")) and t["winding"] < 1
+    ]
+    if low:
+        return f"train card {low[0][0]} holds the winding {low[0][1]}, below 1"
+    trains = [t["index"] for t in cards if whole(t.get("index"))]
+    twice = [i for n, i in enumerate(trains) if i in trains[:n]]
+    return f"train cards name the train {twice[0]} twice" if twice else ""
+
+
 def place(e: Line) -> tuple[int, int, int, int]:
     """An event's place in the schema's order; an event with no train stands at train 0 of its site."""
     train: int = e["train"] if whole(e.get("train")) else 0
@@ -252,6 +269,9 @@ def valued(lines: Lines) -> str:
     made = board(lines[0])
     if made[0] and not all(side >= 1 for side in made[0]):
         return f"line 1's sides {made[0]} make no board, a side below 1"
+    cards = carded(lines[0]) if isinstance(lines[0], dict) else ""
+    if cards:
+        return f"line 1's {cards}"
     shapes = schema_shapes()
     end = lines[-1]
     rounds = end.get("rounds") if isinstance(end, dict) else None

@@ -3,14 +3,17 @@
 # The first reading, K3 (Animate's part C): a whole click's books stand at the click itself, or at each of its two
 # ends where it takes at both (the record's guard), and are read per train. A part's taken and its laid each hold one
 # holding per train, a train's holdings on one side read as one where each starts where the last ended, and no train
-# stands on both sides of a part. Each part takes: each taken train loses and each laid one gains, its windings and
-# kept together, and over the part the windings and the kept together gain nothing (law 8: every integer is held,
-# moved or booked); the click's own train is among those it takes from, and where it holds its q, q whole windings
-# left (law 5), over both its ends where it takes at both. A take paid from its remainder alone moves no whole
-# winding, so a holding is read by its windings and kept together. A whole click whose books cannot be read is not
-# read, and named: one that lacks a field they are read from (its own train, its ends, a part's taken and laid, a
-# holding's train, windings and kept; Sofer's G1), or that books a train twice in a part: twice on one side,
-# unchained, or on both sides. The second reading is the plan's (TENSOR24.md section 19, item 8; TENSOR24_PLAN.md
+# stands on both sides of a part. Each part takes: each taken train loses and each laid one gains, its windings at
+# its winding and its kept together, and over the part they together gain nothing (law 8: every integer is held, moved
+# or booked). A holding's windings count its train's whole windings, each its train's winding in notches as the
+# header's train card gives it, and its kept counts notches, so the books read each train's windings at its own
+# winding (David's 6488889537, item 2, A6: the giver's kept is the drive's remainder, -r_d). The click's own train is
+# among those it takes from, and where it holds its q, q whole windings left (law 5), over both its ends where it
+# takes at both. A take paid from its remainder alone moves no whole winding, so a holding is read by its windings and
+# kept together. A whole click whose books cannot be read is not read, and named: one that lacks a field they are read
+# from (its own train, its ends, a part's taken and laid, a holding's train, windings and kept; Sofer's G1), that books
+# a train the header gives no winding, or that books a train twice in a part: twice on one side, unchained, or on both
+# sides. The second reading is the plan's (TENSOR24.md section 19, item 8; TENSOR24_PLAN.md
 # section 5, item 8): the wind over every train of the header after the clicks against after the step, at every round
 # with a click, whole or split; a round is read where its step lines and its clicks lines hold the header's trains
 # and no other, each with its whole wind, and the header's trains are read where every train card holds its index. A
@@ -31,12 +34,23 @@ BOOKS = ("taken", "laid")
 HELD = ("train", "windings", "kept")
 CLICKS = ("whole", "split")
 LACKS = "lacks a field its books are read from"
+UNWOUND = "books a train the header gives no winding"
 TWICE = "books one train twice in a part"
+Windings = dict[int, int]  # each train's winding by its index, as the header's train cards give it
 
 
-def gained(holdings: list[Line]) -> int:
-    """What holdings gained over a click, the windings and the kept together: after less before."""
-    return sum(h["windings"][1] - h["windings"][0] + h["kept"][1] - h["kept"][0] for h in holdings)
+def windings_of(record: Record) -> Windings:
+    """Each train's winding by its index, from the header's train cards that hold both."""
+    cards = record.header.get("trains", [])
+    return {t["index"]: t["winding"] for t in cards if whole(t.get("index")) and whole(t.get("winding"))}
+
+
+def gained(holdings: list[Line], winding: Windings) -> int:
+    """What holdings gained over a click, each one's windings at its train's winding and its kept: after less before."""
+    return sum(
+        (h["windings"][1] - h["windings"][0]) * winding[h["train"]] + h["kept"][1] - h["kept"][0]
+        for h in holdings
+    )
 
 
 def parts(click: Line) -> list[Line]:
@@ -76,7 +90,7 @@ def per_train(part: Line) -> tuple[list[Line], list[Line]] | None:
     return taken, laid
 
 
-def part_closes(part: Line) -> bool:
+def part_closes(part: Line, winding: Windings) -> bool:
     """A part takes and closes: each taken train loses, each laid one gains, and the part together gains nothing."""
     held = per_train(part)
     if held is None:
@@ -84,23 +98,23 @@ def part_closes(part: Line) -> bool:
     taken, laid = held
     return (
         bool(taken)
-        and all(gained([h]) < 0 for h in taken)
-        and all(gained([h]) > 0 for h in laid)
-        and gained(taken) + gained(laid) == 0
+        and all(gained([h], winding) < 0 for h in taken)
+        and all(gained([h], winding) > 0 for h in laid)
+        and gained(taken, winding) + gained(laid, winding) == 0
     )
 
 
-def closes(click: Line) -> bool:
+def closes(click: Line, winding: Windings) -> bool:
     """Whether a whole click's books close: each part takes and closes, from the click's train, q windings leaving."""
-    each = all(part_closes(p) for p in parts(click))
+    each = all(part_closes(p, winding) for p in parts(click))
     trains = {h["train"] for p in parts(click) for h in p["taken"]}
     own = click.get("train") in trains
     counted = not whole(click.get("q")) or click["q"] == left(click)
     return each and own and counted
 
 
-def unread_books(click: Line) -> str:
-    """Why a whole click's books are not read: a field they are read from lacking, or a train booked twice; or nothing."""
+def unread_books(click: Line, winding: Windings) -> str:
+    """Why a whole click's books are not read: a field lacking, a train with no winding, or a train booked twice; or nothing."""
     held_by = [click, *click.get("ends", [])]
     held = [h for p in held_by for key in BOOKS for h in p.get(key, [])]
     if not (
@@ -110,14 +124,21 @@ def unread_books(click: Line) -> str:
         and all(key in h for h in held for key in HELD)
     ):
         return LACKS
+    if not all(h["train"] in winding for h in held):
+        return UNWOUND
     return TWICE if any(per_train(p) is None for p in parts(click)) else ""
 
 
 def first_reading(record: Record) -> dict[str, int]:
     """The books at every whole click: the whole clicks, those whose books are read, and those that close."""
+    winding = windings_of(record)
     clicks = record.of("whole")
-    read = [c for c in clicks if not unread_books(c)]
-    return {"whole clicks": len(clicks), "read": len(read), "closed": sum(closes(c) for c in read)}
+    read = [c for c in clicks if not unread_books(c, winding)]
+    return {
+        "whole clicks": len(clicks),
+        "read": len(read),
+        "closed": sum(closes(c, winding) for c in read),
+    }
 
 
 def second_reading(record: Record, ledger: list[Line]) -> dict[str, int]:
@@ -175,7 +196,8 @@ def row_15(
     first = first_reading(record)
     if unread(first):
         return verdict("NOT READ", "no whole click", first=first)
-    lacking = [(c, cause) for c in record.of("whole") if (cause := unread_books(c))]
+    winding = windings_of(record)
+    lacking = [(c, cause) for c in record.of("whole") if (cause := unread_books(c, winding))]
     lacks = (
         f"the whole click at round {lacking[0][0]['round']}, site {lacking[0][0]['site']} {lacking[0][1]}"
         if lacking
@@ -186,6 +208,8 @@ def row_15(
         f"the books open at {opened} of {first['read']} whole clicks read"
         if opened
         else "the books close at every whole click read"
+        if lacking and first["read"]
+        else ""
         if lacking
         else "the books close at every whole click"
     )
