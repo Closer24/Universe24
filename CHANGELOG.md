@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- Decision 39, road (II) (2026-10-29, 13:5x UTC; ledger row 399): ALGEBRA.md line 35 gains the clause The great clock is the whole metric and line 1841 is amended by name (h N = 1 the static field's identity; the old reading kept by name), no line moved (1,960); docs/BIG_PICTURE.md 0.2, section 7, 12.3 item 27, reading 43.
 - The loader's exemption from the gate's code rules ended and David's six levels entered (2026-10-29, 13:4x UTC; ledger row 399): scribe_scan.py spares runner/load.py no rule, scribe_scan_allowed.json lists its 65 standing hits (41 loops, 15 branches, 8 comparisons, 1 clamp) as named breaches until G1, 17 self-test cases (1,085 in all, 0 parted); docs/BIG_PICTURE.md 3.1 item 15, 0.2 items 4, 5 and 12, 12.3 item 26, readings 41 and 42, SCRIBE-GATE-1.md.
 - David's dimension check and the example's den named (2026-10-29, 13:3x UTC; ledger row 399): docs/BIG_PICTURE.md 3.1 items 13 and 14, 0.2 items 10 and 12, 12.3 item 25, 13.1 (c), reading 40.
 - David's answers on the couplings and the owner's "5 approved" (2026-10-29, 13:2x UTC; ledger row 399): docs/BIG_PICTURE.md 3.1 items 10 to 13 (the keeper's lawfulness checks and the question to the owner on a seed's steady count), 0.2 items 4, 6 and 12, 12.3 item 24, reading 39.
