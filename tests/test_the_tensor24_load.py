@@ -133,15 +133,25 @@ def loaded(made, u, gears=()):
 
 
 def test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables(made):
+    """At strengths of a few bits and past 64, J is the naive sum, of Python integers whatever gears it is given."""
     ks, c = made
     labels = tuple(name.upper() for name in ks._fields)
-    held, found = loaded(made, universe())
-    assert found == [] and held is not None
     rng = np.random.default_rng(7)
-    rows = sum(t.rows() for t in held.trains)
-    readings = rng.integers(-1 << 40, 1 << 40, (len(OPERANDS) + D - 1, rows, SITES)).astype(object) << 70
-    flat = readings.reshape(-1, SITES)
-    assert (contract(Plan(*held.plan), flat, gears(rows)) == naive(universe(), c, flat, labels)).all()
+    for shift in (0, 70):
+        u = universe(couplings=[[*x[:-1], x[-1] << shift] for x in COUPLINGS])
+        held, found = loaded(made, u)
+        assert found == [] and held is not None
+        readings = (
+            rng.integers(-1 << 40, 1 << 40, (len(OPERANDS) + D - 1, ROWS, SITES)).astype(object) << 70
+        )
+        flat, given = (
+            readings.reshape(-1, SITES),
+            rng.integers(1, 1 << 30, (ROWS, SITES)).astype(object) << 80,
+        )
+        kept, j = given.copy(), naive(u, c, flat, labels)
+        assert (contract(Plan(*held.plan), flat, given) == j).all() and (given == kept).all()
+        fixed = contract(Plan(*held.plan), flat, np.zeros((ROWS, SITES), dtype=np.int64))
+        assert fixed.dtype == object and (fixed == j).all()
 
 
 AT = f"universe.couplings[{len(COUPLINGS)}]"  # where an edit's coupling row stands, after the universe's own
@@ -217,12 +227,17 @@ def test_each_refusal_of_the_load_names_its_own_broken_file_and_its_edge_loads(r
 
 
 def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
-    """A gear lands on its train's own rows, the first train's and the last's, with its fine tooth; the rest is 0."""
-    rows, site, now, before, tooth = 2, 3, 5, 6, 4  # the light's hand: two rows
-    first = (
-        ROWS - sum(DIMS[k] for k in TRAINS[-1]["kinds"]) * TRAINS[-1]["part"]
-    )  # the last train's first row
-    laid = [(0, rows - 1, site, now, before, tooth), (len(TRAINS) - 1, 1, site, before, now, 0)]
+    """A gear lands on its train's own rows, the first train's with its fine tooth and the last's at its last component,
+    every integer whole past 64 bits; the rest is 0."""
+    rows, site, now, before, tooth = (
+        2,
+        3,
+        1 << 70,
+        (1 << 70) + 1,
+        (1 << 70) + 2,
+    )  # the light's hand: two rows
+    last = sum(DIMS[k] for k in TRAINS[-1]["kinds"]) * TRAINS[-1]["part"]  # the last train's rows
+    laid = [(0, rows - 1, site, now, before, tooth), (len(TRAINS) - 1, last - 1, site, before, now, 0)]
     held, found = loaded(made, universe(), laid)
     a, b, r, go, *clocks = held.state
     assert found == [] and (a[rows - 1, site], b[rows - 1, site], r[rows - 1, site]) == (
@@ -230,11 +245,11 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
         before,
         tooth,
     )
-    assert (a[first + 1, site], b[first + 1, site]) == (before, now)
+    assert (a[ROWS - 1, site], b[ROWS - 1, site]) == (before, now)
     assert (a.shape, b.shape, r.shape, go.shape) == ((ROWS, SITES),) * len("abrg")
-    assert all(x.shape == (1, SITES) for x in clocks)
+    assert all(x.shape == (1, SITES) for x in clocks) and all(x.dtype == object for x in held.state)
     assert not go.any() and not any(x.any() for x in clocks)
-    assert (a != 0).sum() == len(laid) and (r != 0).sum() == 1
+    assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1
     held, found = loaded(made, universe(), [(0, rows, site, now, before, 0)])
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
 

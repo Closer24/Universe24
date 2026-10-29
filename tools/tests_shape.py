@@ -48,7 +48,7 @@ TENSOR24_CLOCK = "Tensor24's one clock, stage 2 of the build the owner approved 
 TENSOR24_MESH = "Tensor24's Mesh, stage 3 of the build the owner approved at 16:0x UTC on 2026-10-28: the due beat, the read as of the reader's count, forty random schedules equal to the synchronous pass with the counts parted and before slots read, the rewind under a random schedule, a stopped clock keeping pace, the tick under random masks at teeth, rates and grips parted at every site and Mesh against a naive model, the tie rule on the tick, and the frame's six properties on the tick against its naive model and in fresh interpreters, each failing on its own mutant; the Boss's room by name."
 TENSOR24_RING = "Tensor24's Gaussian ring, stage 5 of the build the owner approved at 16:0x UTC on 2026-10-28: the hand's product, conjugate, norm and pair, and the twin hand's overlap, reverse and axis, exact at every size: T T +1 on a hand and -1 on a twin hand, Lagrange's identity for the split, the split's share in (rho, S), the joint dial and S's orientation, S . S = rho rho, each law failing on its own mutant; the Boss's room by name."
 TENSOR24_KINDS = "Tensor24's kinds and tables, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the 24 a group of the Spokes' threefold power, each of the five kinds a representation, their characters Sofer's by his definitions at every turn and his table on every class, orthonormal, the Spokes' character A1 + E + T1, every table C equivariant and 0 exactly where David's products hold no channel, primitive, the dot, the cross and A2 x T1 -> T2 exactly, each law failing on its own mutant; the Boss's room by name."
-TENSOR24_LOAD = "Tensor24's load, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the coupling rows' plan contracted as a naive sum over the rows and the tables, each refusal of the load naming its own broken file with its edge that loads, a coupling the table lacks holding no term, the two promises named where they fail and shown to be the run back's own condition, and the rename law with its mutant; the Boss's room by name."
+TENSOR24_LOAD = "Tensor24's load, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the coupling rows' plan contracted as a naive sum over the rows and the tables, each refusal of the load naming its own broken file with its edge that loads, a coupling the table lacks holding no term, the two promises named where they fail and shown to be the run back's own condition, the rename law with its mutant, a gear laid on the first train's rows and at the last train's last component past 64 bits, J of Python integers on gears of any width, and no raise on the files the checker holds nor on a board the machine's memory refuses; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_tensor24_ring.py::hands": (
         4,
@@ -543,7 +543,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables": (
-        10,
+        20,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::edits": (
@@ -555,7 +555,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid": (
-        21,
+        26,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_coupling_the_table_lacks_holds_no_term_and_gives_0": (

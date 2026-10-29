@@ -2,8 +2,8 @@
 
 Each review is a fresh reader who did not write the code, run on the review branch tensor24-review: it approves only
 what it could not break, with evidence it ran. Every change it asks is made before the branch moves to the three
-integration branches. The fourth to ninth reports are here, the fourth, fifth, seventh, eighth and ninth with the
-probes their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
+integration branches. The fourth to tenth reports are here, the fourth, fifth and the seventh to tenth with the probes
+their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
 
 | review | commits read | verdict | the changes, where |
 | --- | --- | --- | --- |
@@ -16,6 +16,7 @@ probes their authors are to run; the first three stand in the Boss's posts on #2
 | seventh | 814fe5c45, 8469170ad, 823690afc (the gate's text lines, the sixth's follow-ups, the decoder's fixes) | approve with changes, four, all the decoder's | Animate's; the Boss's two follow-ups in the commit that adds seventh/ |
 | eighth | 83a0b214a, 3fbbd1cd0, 91226e796 (stage 6) | approve with changes, five, all of the tests | the commit that adds eighth/ |
 | ninth | af564daac, 54b9e6a63, 83a0b214a to 927071a14 (stage 6 after the eighth's changes) | approve with changes, two: the load's raises and four gaps of the tests | the commit that adds ninth/; two follow-ups Sofer's |
+| tenth | 0ff2ae0dc (the ninth's changes) | approve with changes, two: J of the caller's dtype, and six gaps of the load's tests | the commit that adds tenth/ |
 
 Each probe runs as `python3 -I <probe> <a worktree of tensor24-review> [...]`, its docstring naming its arguments;
 its output stands beside it. The copies here are the readers' files but for the text rules: the fourth report's
@@ -32,9 +33,14 @@ and the fifth's sketch of tests is renamed decoder_tests_strengthened.py, so pyt
   (eighteen mutants of the decoder's new text), decoder_tests_s8.py (the reader's sketch of 21 tests, run by
   decoder_tests_s8_run.py) and decoder_precedence.py (row 15's order of decision).
 - eighth/: REPORT.md, each change with where it went; source_mutants.py (48 source mutants of stage 6, its L17 and C1
-  re-aimed at the ninth's new lines), its output at 91226e796 and after the changes.
+  re-aimed at the ninth's new lines, so it runs at 0ff2ae0dc and after), its output at 91226e796 and after the changes,
+  each made with the strings as they stood.
 - ninth/: REPORT.md, each change with where it went; new_mutants.py (29 source mutants of stage 6 and a control), its
   output at 927071a14 and after the changes; load_raise.py (the load's raises on files the checker holds, and the
   contraction's time), gradient_kinds.py (the gradient at a train's second kind, and the fine tooth),
   fuzz_files_deepcopy.py (Sofer's fuzz with its harness mended) and gate_board_dodges.py (six wraps the gate
   misses), each with its output; eighth_source_mutants_rerun.out (the eighth's 48 after the ninth's changes).
+- tenth/: REPORT.md, each change with where it went; contract_equiv.py (contract against the dense form and a naive
+  loop, and its dtypes), mutants_s11.py (34 source mutants of the changed code, its output at 0ff2ae0dc and after),
+  proposed_checks.py (the six checks the reader asked, at 0ff2ae0dc and after), load_edges.py, zeros_raises.py and
+  gate_alternatives.py, each with its output.
