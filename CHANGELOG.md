@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The Boss's 14:57 answers and Animate's 15:05 post entered (2026-10-29, 15:0x UTC; ledger row 399): the owner's word to Animate, "Approved to start a generic engine...", the record's side of G0, (b) held for the owner's word, 0.2 item 4's words, the final architect's pass; docs/BIG_PICTURE.md 0.2 items 4 and 15, 8.1 item 11, 13.2 F2 and F3, then F6 and F7, the head list, reading 52; no line of the law moved.
 - The owner's words of 14:4x to 14:5x entered (2026-10-29, 14:5x UTC; ledger row 399): "relativity is in the clicks, it is not in the board" (line 1507 of the law, said again), "the 24 breaks with the odd tooth ... the light is not in the clicks", "That this be in the plan" and "Is this solved with the new r?"; docs/BIG_PICTURE.md the head list, 13.2 block F (F1 to F5), 12.3 item 31, 0.2 items 4 and 13, 8.1 D2, 13.2 C, reading 51; no line of the law moved.
 - The hunt's last posts entered (2026-10-29, 14:4x UTC; ledger row 399): the Boss's, David's and Animate's of 14:42 to 14:44; docs/BIG_PICTURE.md 8.1 item 12 (the decoder's four rules, owed at G5), 12.3 item 30 (David's hole: the free count's course does not run on the act), 3.1 item 14, 0.2 item 4, 13.2 C, reading 50.
 - The owner's text of 14:3x entered (2026-10-29, 14:4x UTC; ledger row 399): spacetime as one block and its shadows, the minus sign; docs/BIG_PICTURE.md 8.1 items 9 to 11 (the Boss's D6 to D8) with the keeper's cares, the head list's bullet, reading 49; no line of the law moved.
