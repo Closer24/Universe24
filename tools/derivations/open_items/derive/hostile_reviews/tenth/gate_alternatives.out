@@ -1,0 +1,7 @@
+contract.py as committed                         hits 0: []
+source = np.zeros_like(gears, dtype=object)      hits 0: []
+source = np.zeros(gears.shape, dtype=object)     hits 0: []
+source = np.zeros_like(gears)  (no dtype)        hits 1: [('ALLOW', 'np.zeros_like without dtype=object')]
+load.py as committed                             hits 0: []
+load.py, the lay's arrays dtype=np.int64         hits 0: []
+load.py, the plan's factor dtype=np.int64        hits 0: []

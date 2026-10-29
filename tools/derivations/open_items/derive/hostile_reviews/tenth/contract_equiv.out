@@ -1,0 +1,19 @@
+600 random plans: 600 equal to the dense form and the naive loop, every entry a Python int; 0 not
+covered: {'repeated landings': 360, 'empty plan': 90, 'one row': 155, 'huge': 335, 'negative factor': 438}
+gears not zero: J independent of the gears' values: True ; the caller's gears untouched: True
+gears int64               readings small : J dtype int64, entry type int64, exact True
+gears int64               readings 2^40  : RAISES OverflowError: Python int too large to convert to C long
+gears int64               readings 2^100 : RAISES OverflowError: Python int too large to convert to C long
+gears float64             readings small : J dtype float64, entry type float64, exact True
+gears float64             readings 2^40  : J dtype float64, entry type float64, exact False (got 3626777458850484593885184, want 3626777458850484593885187)
+gears float64             readings 2^100 : J dtype float64, entry type float64, exact False (got 4820814132776970826625886277023487807566608981348378505904128, want 4820814132776970826625886277031093711167978357757358725136387)
+gears bool                readings small : J dtype int64, entry type int64, exact True
+gears bool                readings 2^40  : RAISES OverflowError: Python int too large to convert to C long
+gears bool                readings 2^100 : RAISES OverflowError: Python int too large to convert to C long
+gears uint8               readings small : J dtype uint8, entry type uint8, exact True
+gears uint8               readings 2^40  : RAISES OverflowError: Python int too large to convert to C long
+gears uint8               readings 2^100 : RAISES OverflowError: Python int too large to convert to C long
+gears object of np.int64  readings small : J dtype object, entry type int64, exact True
+gears object of np.int64  readings 2^40  : RAISES OverflowError: Python int too large to convert to C long
+gears object of np.int64  readings 2^100 : RAISES OverflowError: Python int too large to convert to C long
+np.zeros_like(int64 gears, dtype=object): dtype object entry type int
