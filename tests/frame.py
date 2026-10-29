@@ -249,6 +249,11 @@ def meshes_of(nb):
     return np.where((np.arange(len(nb)) % 2 == 0)[:, None], own, theirs)
 
 
+def spokes(axes=3):
+    """Each Spoke's direction in the board's order, +axis then -axis for every axis: the steps board() takes."""
+    return np.array([sign * axis for axis in np.eye(axes, dtype=int) for sign in (1, -1)], dtype=object)
+
+
 def unread():
     """The clocks' read of no term: every gear's teeth its rest."""
     none = np.zeros(0, dtype=np.intp)
@@ -260,7 +265,7 @@ def plain(nb, meshes, grip, w):
     path (T_k = T_d = 1), no term of J."""
     none = np.zeros(0, dtype=np.intp)
     plan = Plan(none, none, none.astype(object), none)
-    return Layout(nb, meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, unread())
+    return Layout(nb, spokes(), meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, unread())
 
 
 def holds(name, make, shape, seed):

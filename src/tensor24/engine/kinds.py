@@ -33,11 +33,11 @@ def axes(d: int) -> Z:
 
 def inverse(matrix: Z) -> Z:
     """Each turn's inverse, its transpose: a signed permutation's rows are its columns."""
-    return np.swapaxes(matrix, 1, 1 + 1)
+    return np.swapaxes(matrix, 1, -1)
 
 
 def turns(unit: Z) -> tuple[Z, Z]:
-    """Every matrix whose rows are three Spokes, weighed by Rule3: (det + det det) div 2 is 1 at det 1, else 0."""
+    """Every matrix whose rows are three Spokes, weighed by Rule3: (det + det det) div an axis's Spokes is 1 at det 1, else 0."""
     spokes = np.concatenate((unit, -unit))
     n, d = spokes.shape
     first = np.broadcast_to(spokes[:, None, None], (n, n, n, d))
@@ -45,7 +45,8 @@ def turns(unit: Z) -> tuple[Z, Z]:
     third = np.broadcast_to(spokes[None, None, :], (n, n, n, d))
     matrix = np.stack((first, second, third), axis=d).reshape(-1, d, d)
     turn = det(matrix)
-    weight, _ = carry(turn + turn * turn, 1 + 1, 0)
+    senses, _ = carry(n, d, 0)  # the Spokes along one axis, its + and its -
+    weight, _ = carry(turn + turn * turn, senses, 0)
     return matrix, weight
 
 

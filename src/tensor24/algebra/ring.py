@@ -50,7 +50,8 @@ def reverse(psi: Twin) -> Twin:
 
 
 def axis(psi: Twin) -> tuple[Z, tuple[Z, Z, Z]]:
-    """The twin hand's reading (rho, S): its size, and its spin from the pair of its two hands, S . S = rho rho."""
+    """The twin hand's reading (rho, S): its size, and its spin psi* sigma psi from the pairs of its two hands, S . S = rho rho."""
     up, down = psi
     x, y = pair(up, down)
-    return norm(up) + norm(down), (x + x, y + y, norm(up) - norm(down))
+    u, v = pair(down, up)
+    return norm(up) + norm(down), (x + u, y - v, norm(up) - norm(down))

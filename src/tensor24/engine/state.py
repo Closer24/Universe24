@@ -43,10 +43,11 @@ class Gearing(NamedTuple):
 
 
 class Layout(NamedTuple):
-    """The board read once: the neighbours, each Spoke's Mesh, the grips, the gearing, J's plan and the clocks."""
+    """The board read once: the neighbours, the Spokes' directions, each Spoke's Mesh, the grips, the gearing, J's plan and the clocks."""
 
     nb: Z  # (6, N): +x, -x, +y, -y, +z, -z, each the other's opposite (the load makes the relation symmetric)
-    meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired by runner/board.py; a grip its own conjugate
+    spokes: Z  # (6, d): each Spoke's direction on the board's axes, a unit vector or its opposite, in nb's order
+    meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired by the load (load.geometry); a grip its own conjugate
     grip: Z  # (rows or 1, Meshes): a gear row's grip on each Mesh, once per Mesh; a train's rows alike from 7b's load
     gearing: Gearing
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, and the force
