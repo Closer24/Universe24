@@ -27,7 +27,7 @@ For each item, one question: is it what the one act does by itself? The Node-clo
 3. **The perihelion** (6484103660; p14).
    - **In the clock:** a slowing is a ratio, ratios multiply, and their count adds. The count is what the one formula moves.
    - **In the law:** the rate line holds the load c as the time notch, p0 = Gamma (1 - 1 / Gamma)^c: the count of slowings, each one tooth in Gamma, moving linearly. That is n = 0, general relativity's advance. The head's volume gear X belongs to the hypothesis **The motion of gravity's train is a hill at the symmetry's weight** (2026-10-22). It is n = 4, a third of the advance.
-   - **Decided:** Postulate 6, rates multiply along a gear train (decision 25, tensor24-review d61cdb7bd, the owner's word of 01:3x UTC).
+   - **Decided:** Postulate 6, rates multiply along a gear train (decision 25, tensor24-review d61cdb7bd, the owner's word of 01:3x UTC). The gear is the count c, by the owner's word of 03:1x UTC: "I am going with your recommendations" (#2187, 6486960331).
    - **In the act, the gear it asks** (p17): what adds is the count c, the law's own load (**The rates compose**: p0 = Gamma (1 - 1 / Gamma)^c, f(c1 + c2) = f(c1) f(c2) / Gamma). In c the law is the plain act, the grip per Mesh and the matter's source, with no self-source.
      - In any power of the rate as the gear (the ruler Y, the stretch X) the law carries a self-source over the gear's own notch.
      - In Y its drive at the gear's own notch (6484103660, item 5) cannot be run back where Y falls: on 7a's step with the drive's teeth 9 then 4, 0 of 300 rounds run back, where the gear's own teeth falling run back in 300 of 300.
@@ -77,9 +77,10 @@ For each item, one question: is it what the one act does by itself? The Node-clo
       - With no spring, the board's mean count moves by the mean source alone, so under matter it rises with no top: 9,090, 81,270 and 324,540 at ticks 100, 300 and 600.
       - With the clock's one notch it swings: its top at tick 70, its lows at 140, 280, 421 and 561, where 2 pi sqrt(Gamma / 2) = 140.5 at Gamma 1,000.
     - **Its price in nature:** Yukawa's reach, about sqrt(Gamma / 6) Meshes with light at the step's edge. Gravity's reach in nature bounds Gamma from below, and the swing's period is then of the same order in ticks.
-    - **Decision 25** (d61cdb7bd) reads the mass as 0, since "no standing law asks one". Line 352 is a standing law that asks one, and the course's top rests on it. That contradiction is the owner's.
+    - **Decision 25** (d61cdb7bd) read the mass as 0, since "no standing law asks one". Line 352 is a standing law that asks one, and the course's top rests on it.
+    - **Decided** by the owner's word of 03:1x UTC ("I am going with your recommendations"): line 352 stands, with the pinion rim - rim div Gamma, and decision 25's clause comes out.
 14. **The lattice's frame** (root II). One Mesh is the board's rest frame, and no act on a lattice removes it. What the act gives is one cone at long waves (item 1).
-15. **The course** (root VI). The circle is law 4, the owner's. The course under item 3's law is OPEN 7 and needs the bang run again. Its top is item 13's: with the clock's one notch the board's mean count swings, and with no spring it has no top.
+15. **The course** (root VI). The circle is law 4, the owner's. The course under item 3's law is OPEN 7 and needs the bang run again. Its top is item 13's: with the clock's one notch the board's mean count swings, and with no spring it has no top. With line 352 standing, the course has its top.
 16. **The horizon.** The metric N A = 1 with the count harmonic has none. Whether the board's black holes are the turnover's releases (rows 1, 14, 34 and 61) is the owner's.
 
 ## What follows
@@ -87,9 +88,9 @@ For each item, one question: is it what the one act does by itself? The Node-clo
 1. **For stage 7b:**
    - one grip per Mesh for every train (item 1), with light at the doubler's hold;
    - the regulator's block A1 + E + T2 (item 2);
-   - the count's law, with the time gear holding the count c or a drive that hands its teeth over (item 3).
+   - the count's law, with the time gear holding the count c (item 3);
+   - the pinion as line 352 has it (item 13).
 2. **For the owner:**
-   - the metric's mass: line 352 against decision 25 (item 13);
    - the course (item 15);
    - the horizon (item 16).
 3. **Owed by David:**
