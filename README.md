@@ -34,6 +34,10 @@ The engine 5.0 under test, this branch, is the one world Universe24 and nothing 
 
 **The trains.** (the former "The rows.", renamed 2026-10-27) No train is declared: the trains emerge at the click (2026-10-24, 09:4x UTC). The calibre holds its integers and its trains, the plane trains as pairs on den's circle, the quartet, the regulator of the volume and the walled train (**The setting in three forms and no fourth**; **The width is derived**); the width of the integers is derived from the notch the law names and never declared (128 bits on this head; the swing pair's measure of 2026-10-26: no word width buys one more swing). Nothing in `src/` names a train; the reckoner names the clicks' kinds as a human reading them would.
 
+## Description of the system
+
+The machine is a board of clocks: three space axes, a torus whose three sides the piece file gives, a Node-clock at every site with six neighbours, and time each Node-clock's own count of ticks, so three dimensions of space and one of time. It is tensorial: every quantity is one of the five kinds of the cube's 24 turns (A1 the scalar, A2 the pseudoscalar, E, T1 the vector, T2 the shears), and the one act commutes with the turns. It takes in three files, the universe (integers, trains, couplings), the piece (the sides) and the setting (ticks and first values). At each tick a Node-clock reads its gears and its six neighbours' and does a linear meshing, a bilinear coupling through the 24's tables and Rule3's carries, the only nonlinearity; it puts out a state of the same shape, the beat, a record from which the step runs back exactly and, from stage 9, the clicks the decoder reads. The whole description, with its sizes, is in [the engine's document](docs/ENGINE.md#description-of-the-system); the law's picture of it is **The picture over the postulates** in [docs/ALGEBRA.md](docs/ALGEBRA.md).
+
 ## The calibre and the piece
 
 A universe is its integers and its trains (`tests/worlds/universe_toy.json`, nature's; `universe_middle.json`, `universe_quartet.json`, `universe_ga2.json` beside it):
