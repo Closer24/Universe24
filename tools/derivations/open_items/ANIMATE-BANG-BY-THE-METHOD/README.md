@@ -30,7 +30,7 @@ The owner's word to Animate, 04:2x UTC on 2026-10-29 (in Hebrew; in translation)
    - Under a held density the count rises to twice its rest, tops, and comes back to the full rate. The spring alone does it: no turnover act and no comparison.
    - With no spring the count runs away (9,090, 81,270 and 324,540 at ticks 100, 300 and 600), as the head's course did below its cap.
    - The run back is bit for bit through every swing: 214 swings, 30,000 ticks.
-   - **Asked of the clicks:** the turnover T of stage 8 is not needed for the return. Whether it still fires at the top, and by which carry, is for the clicks to show: Bell's late choice, the detector's axis after the birth, the relics read through the reversal.
+   - **Answered by the owner's word** (to David, relayed in 6489403097, 06:1x UTC): the trigger at the top goes. OPEN 7 and item (w) close by the spring, and stage 8 writes no trigger at the top. The fifth act's reversal at the top (line 1602) is put to him again, with the spring alone as David's recommendation.
 4. **Every bang shows more: does not follow from the swing.**
    - A spring under a held density repeats its swing to the remainders: over 214 swings the tops stay between 1,786 and 1,804.
    - **Asked of the clicks:** the click kinds per swing rising (row 46), read once stage 9 writes the clicks.
@@ -83,8 +83,9 @@ The owner's word to Animate, 04:2x UTC on 2026-10-29 (in Hebrew; in translation)
    - **The count's waves there** run at sqrt(s grip / W) = 1 / sqrt 6 Mesh per tick. That is light's speed at the doubler's hold, item (g) way (a).
    - **Gravity's reach there** is sqrt(grip / D) = sqrt(Gamma / 12): measured at 9.97 Meshes at Gamma 1,200, where sqrt(Gamma / 12) = 10.00.
    - **David's sqrt(Gamma / 6)** holds at light's 1 / sqrt 3 (Postulate 3), which needs a grip of W / 3.
-   - **Taken:** David takes sqrt(Gamma / 12) at the doubler's hold (6488192915, item 3), and the law's line 35 carries it (scribe-5 32b539636).
+   - **In the law:** lines 35 and 324 carry both values (scribe-5 96584d01): sqrt(Gamma / 6) at Postulate 3's light, and sqrt(Gamma / 12) at the doubler's hold, item (g), on which the owner has given no word (David's 6488889537, item 7; Sofer's 6489336828, item 3).
    - **What it changes:** the swing's period reads D / W alone, so the bang's length is the same either way. Gravity's reach, and the bound it sets on Gamma, differ by a factor of 2 in Gamma.
+4. **The count's source.** By the owner's word (relayed in 6489403097, item 1), 7b writes the time gear's source as rho + 3p, every train's form plus its pressure, so light pushes the count twice as hard as dust. The probe reads 7a's J. The swing's period reads D / W alone, so the bang's length stands.
 
 ## The files
 
@@ -114,10 +115,12 @@ The owner's word to Animate, 04:2x UTC on 2026-10-29 (in Hebrew; in translation)
 - **(c) What does not follow, asked of the clicks and of the plan:**
   - every bang showing more (row 46, stage 9);
   - the structure's growth (7b's lapse);
-  - the bottom of a swing against the second promise (7b);
-  - the turnover T at the top (stage 8, the clicks of Bell and the detector);
   - a stopped clock, the horizon;
-  - the reach's grip, W / 6 or W / 3 (the table the Boss asked David for in 6487549831).
+  - (g), the reach's grip at W / 6 or W / 3, the owner's.
+
+  Two are closed:
+  - **the turnover T at the top,** by the owner's word: stage 8 writes no trigger at the top;
+  - **the bottom of a swing,** by David (6488418223, item 3): only the ruler's reading of the load reads a hill at 0, and the beat stays at the full rate.
 
 ---
 Animate, reader-5.
