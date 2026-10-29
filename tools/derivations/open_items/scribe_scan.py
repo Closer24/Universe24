@@ -143,6 +143,10 @@ RULES: dict[str, tuple[str, str]] = {
         "BLOCK",
         "a power, a shift, an exclusive or, or a floor division or remainder outside the carry's home (core/acts.py, core/rule3.py, and tensor24/algebra/carry.py in the new engine; the new engine's runner/board.py writes none of it, its wrap being the carry imported from there): the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 09:0x); the same under a method's name (a.__mod__(b)), a name imported or aliased from numpy or operator, a getattr of an operation's name, and, in runner/board.py, numpy's own wraps (roll, pad, a call with mode=)",
     ),
+    "TWICE": (
+        "BLOCK",
+        "a two spelt as a sum: an expression added to itself (1 + 1, teeth + teeth, spokes + spokes) in any module of the new engine, the runner and the decoder included: the rule NUMBER counts literals, so a thing added to itself is a 2 in disguise (the owner's word of 2026-10-29, 12:5x: forbidden); the count per file and spelling may not rise",
+    ),
     "REFUSE": (
         "BLOCK",
         "a raise in an engine module: a refusal by name is a rule written for a phenomenon (the exclusion's refusals were such); the count per file may not rise (the owner's word of 2026-10-28, 09:0x: no declarations)",
@@ -1026,6 +1030,10 @@ def scan(rel: str, source: str) -> list[Hit]:
             add(
                 "ISOLATE", node, f"dynamic import {dynamic_call(node)}"
             )  # a string names the module: no wall reads it
+    if rel.startswith(NEW_ENGINE + "/"):
+        for node in ast.walk(tree):
+            if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add) and ast.dump(node.left) == ast.dump(node.right):
+                add("TWICE", node, ast.unparse(node))  # not spared to the runner or the decoder: the loader's twos are the engine's
     module_containers: dict[str, ast.stmt] = {}
     for stmt in tree.body:
         value = stmt.value if isinstance(stmt, ast.Assign | ast.AnnAssign) else None
@@ -1578,6 +1586,12 @@ def declared_json(rel: str, text: str) -> list[Hit]:
     return found
 
 
+def coupling_name(node: ast.AST) -> bool:
+    """Whether a name or an attribute is called a coupling list (couplings, self.coupling_rows): the rows a world's code lays as lists."""
+    name = node.id if isinstance(node, ast.Name) else node.attr if isinstance(node, ast.Attribute) else ""
+    return "coupling" in name.lower()
+
+
 def declared_python(rel: str, text: str) -> list[Hit]:
     """The trains a world's code writes as a dict, a literal or a call of dict, with a name and a pinion, the pinion as the line writes it (unparsed, so that a
     reformatted line is the same declaration); a pinion spelt den, or as the attribute den of a module (rig.DEN), is the seed."""
@@ -1587,6 +1601,18 @@ def declared_python(rel: str, text: str) -> list[Hit]:
         return []
     found: list[Hit] = []
     for node in ast.walk(tree):
+        rows: list[ast.expr] = []
+        if isinstance(node, ast.Assign) and isinstance(node.value, ast.List) and any(coupling_name(t) for t in node.targets):
+            rows = [row for row in node.value.elts if isinstance(row, ast.List)]
+        elif (
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Attribute)
+            and node.func.attr in ("append", "insert", "extend")
+            and coupling_name(node.func.value)
+        ):
+            rows = [arg for arg in node.args if isinstance(arg, ast.List)]
+        for row in rows:
+            found.append(Hit("DECLARE", rel, row.lineno, f"coupling row {ast.unparse(row)}", "", row.col_offset))
         fields: dict[str, ast.expr]
         if isinstance(node, ast.Dict):
             fields = {

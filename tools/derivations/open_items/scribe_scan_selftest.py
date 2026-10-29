@@ -535,7 +535,7 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ('vars of numpy by a key in another runner module', NEW_RUNNER, "import numpy as np\n\n\ndef f(x, side):\n    return vars(np)['remainder'](x, side)\n", {}),
     ("numpy's unravel_index in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(x, side):\n    return np.unravel_index(x, (side, side))[1]\n', {}),
     ("numpy's digitize in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(x, side):\n    return x - side * np.digitize(x, [0, side])\n', {}),
-    ("the board's module as the Boss wrote it (0ff2ae0dc)", NEW_BOARD, BOARD_SOURCE, {}),
+    ("the board's module as the Boss wrote it (0ff2ae0dc), its two doublings spelt as sums read by the rule TWICE", NEW_BOARD, BOARD_SOURCE, {"TWICE": 2}),
     ("a method call of the remainder in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__mod__(b)\n', {"OPERATION": 1}),
     ("a method call of the floor division in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__floordiv__(b)\n', {"OPERATION": 1}),
     ("a method call of the reflected remainder in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__rmod__(b)\n', {"OPERATION": 1}),
@@ -1377,6 +1377,19 @@ NOT_DYNAMIC = (
 PINNED_FLOOR = "526a5666d"
 
 
+CASES += [
+    # the rule TWICE: a two spelt as a sum, in every module of the new engine, the runner and the decoder included
+    ("a one added to a one in the engine", NEW_STEP, "def f(a):\n    return a * (1 + 1)\n", {"TWICE": 1}),
+    ("a name added to itself in the engine", NEW_STEP, "def f(teeth):\n    return teeth + teeth\n", {"TWICE": 1}),
+    ("a name added to itself in the runner (not spared)", NEW_RUNNER, "def f(spokes):\n    return spokes + spokes\n", {"TWICE": 1}),
+    ("a name added to itself in the decoder (not spared)", "tensor24/decoder/rows.py", "def f(n):\n    return n + n\n", {"TWICE": 1}),
+    ("two different names added are no doubling", NEW_STEP, "def f(a, b):\n    return a + b\n", {}),
+    ("a name added to its successor is no doubling", NEW_STEP, "def f(a):\n    return a + (a + 1)\n", {}),
+    ("a product of a name with itself is no sum", NEW_STEP, "def f(a):\n    return a * a\n", {}),
+    ("a sum of a name with itself outside the new engine is not read", ENGINE, "def f(a):\n    return a + a\n", {}),
+]
+
+
 @contextlib.contextmanager
 def without_git_variables() -> Iterator[None]:
     """The git variables a hook exports (GIT_DIR, GIT_INDEX_FILE and the like) set aside: git then finds a repository by the path it is given."""
@@ -1681,6 +1694,11 @@ def declare_cases() -> tuple[int, int]:
         ("a train written as a call of dict is read as a dict", 'T = dict(name="dust", pinion=8)\n', {"train dust 8"}),
         ("a call of dict with the seed is the seed", 'T = dict(name="light", pinion=den)\n', set()),
         ("a call of dict with no pinion declares nothing", 'T = dict(name="light", kinds=1)\n', set()),
+        ("a coupling row appended to a list named couplings", 'couplings = []\ncouplings.append([2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 3, 5])\n', {"coupling row [2, 0, 0, 0, 1, 0, 3, 0, 0, 0, 3, 5]"}),
+        ("a couplings list of rows", 'couplings = [[1, 2, 3], [4, 5, 6]]\n', {"coupling row [1, 2, 3]", "coupling row [4, 5, 6]"}),
+        ("an empty couplings list declares nothing", 'couplings = []\n', set()),
+        ("a list of rows not named for couplings declares nothing", 'edges = [[1, 2, 3]]\n', set()),
+        ("a row appended to an attribute named for couplings", 'self.coupling_rows.append([1, 2])\n', {"coupling row [1, 2]"}),
         ("a dict with no pinion", 'T = {"name": "light", "kinds": ["A1"]}\n', set()),
         ("a name that is no string literal", 'T = {"name": LABEL, "pinion": 3}\n', set()),
         ("a dict that unpacks another", 'T = {**base, "name": "dust", "pinion": 3}\n', {"train dust 3"}),
