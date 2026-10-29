@@ -64,7 +64,7 @@ The owner's word to Animate, 2026-10-29, 08:4x UTC (in Hebrew; in translation): 
 - **The swing** is the same on both boards. The act is symmetric in time (T S T = S^-1) and the source rho + 3p is even, so the backward board sees the load's swing run back, with the same tops and bottoms. The boards agree on the pendulum and part only at the escapement, the clicks.
 - **The whole click (how much):**
   - the forward board decides it (q at least 1) and writes the record;
-  - the backward board carries only the confirmation back to the source, so the giver and the taker close one handshake;
+  - the handshake between the giver and the taker is a check, not state: each quantum laid once and taken once, read on the forward record through G5. It adds nothing to the backward board's integers (Sofer's reading 12, 6492354773);
   - the books close at both ends.
 - **The split click (which):**
   - the draw runs over the products of the two dials' sizes where they meet (decision 29);
@@ -76,6 +76,13 @@ The owner's word to Animate, 2026-10-29, 08:4x UTC (in Hebrew; in translation): 
 - **The records:** forward only. The backward board writes none and erases none, so the arrow stays the records' growth.
 
 ## 5. Open, each with its probe
+
+- **What the toy puts in by hand** (Sofer's reading of David's probe, 6492354773, holds here too): the joint sizes are the singlet's, n - s t (a . b). So S = -82/29 in O and B shows the bookkeeping and its exactness, not the act's own derivation of those sizes from the twins' frames, which is the engine probe's. What the toy finds on its own:
+  - the bound of 2 on every forward-only history, exhausted;
+  - U's two histories, its cycles and its S past nature's bound;
+  - the loop's dependence on the order of the parts;
+  - g2 above 0 when each absorber draws alone.
+- **Complexity is not the two boards' work** (the Boss's swing probe and its argument, 6492236807): P(history) = P(future) P(history | future). So a history that agrees with itself draws by the forward law, Born, and leans no click toward composites; a lean needs a future set from outside, a declared goal. The growth is the forward board's ratchet, the bang that keeps history. This page's part 2 agrees: the two do different jobs.
 
 - **The scheduler on a full board:** many pairs, chains and composites, each split click's settings found before its source's draw, by local passes and with no selection. The toy has one pair.
 - **Loops beyond one step:** a machine whose choice depends on its own outcome through many clicks, with the cause's order read along the forward board.
