@@ -39,13 +39,22 @@ The owner's word to Animate, 2026-10-29, 08:4x UTC (in Hebrew; in translation): 
 
 ## 3. Which two-board form
 
-- **B, the draw at the birth, is the cleanest.**
-  - **One draw, local:** the draw is made at the Node-clock where the twins were one, reading both settings carried back. This is draft D's local split at one Mesh (L = 1), moved to the birth.
-  - **Nothing crosses space:** each twin carries only its own outcome out, at its own speed, so in the board's time nothing crosses space.
-  - **One history, no order needed:** while no setting depends on the pair's own outcomes, there is one history at every digit and no order is needed. The runner needs one pass forward to the settings, one back along the twins to the birth, and one forward with the outcomes (on paper; the toy has one pair). Each pass reads neighbours only, and nothing is selected. That meets Sofer's reading 7 (6491095182): a schedule that verifies, not a search that selects.
-  - **A causal loop** (a later setting that depends on an earlier outcome, the clicks in each other's light cone): B needs the parts ordered by cause, and then equals O. The cause's order is physical, carried along the forward board, not a frame chosen.
-- **O, ordered at the detectors (David's),** gives the same law. But in the engine's order of work, the far twin learns the near outcome at the tick of the near click: an update at a distance, the zigzag being its path in spacetime. For clicks outside each other's cones it needs an order across the board, a frame.
-- **U, no order at the detectors, is out:**
+- **O, the product draw ordered by the board's tick (David's 6491076850), approved by decision 29** (the owner's word to the Boss of 08:3x UTC, tensor24-review 6e3cbbfe).
+  - The first click draws with a silent future; the second draws over the products, with the first outcome carried along the zigzag.
+  - The order, and a tie rule the 24 leave alike, are what make the history one: U below shows what happens without them.
+  - David's probe (toys-5 f3661f52, derive/david_open/two_boards) shows:
+    - A first, B first and a shared tick alike, at S = -82/29;
+    - every carry one Mesh a step, and no read across space;
+    - three parties with no two-party marginal moving with the third's setting;
+    - a machine's feed-forward with one history per pair of digits.
+- **B, the draw at the birth, is the same law seen at the source,** not a rival rule.
+  - The draw is made at the Node-clock where the twins were one, reading both settings carried back. It is draft D's local split at one Mesh (L = 1), moved to the birth.
+  - Each twin carries only its own outcome out.
+  - **For a spacelike pair it needs no order and no tie rule:** the four parts in any order give one law, equal to O's.
+  - **For a causal loop** (a later setting that depends on an earlier outcome) it needs the parts ordered by cause, and then equals O. The cause's order is physical, carried along the forward board.
+  - The runner needs one pass forward to the settings, one back along the twins to the birth, and one forward with the outcomes (on paper; the toy has one pair).
+- **Both re-run the twins' paths once a later event is known** (O, the first outcome; B, the settings), and neither reads across space. Each is a schedule that verifies a history, not a search that selects one: Sofer's reading 7 (6491095182).
+- **U, no order at the detectors, is out, and it is why O needs its order:**
   - two histories at (a . b)^2 of the digits;
   - the sweeps cycle in about a quarter of them;
   - a fair choice between two gives |S| = 3.66, past nature's bound.
@@ -58,10 +67,11 @@ The owner's word to Animate, 2026-10-29, 08:4x UTC (in Hebrew; in translation): 
   - the backward board carries only the confirmation back to the source, so the giver and the taker close one handshake;
   - the books close at both ends.
 - **The split click (which):**
-  - the draw is made at the source, where the parts were one (the birth of a pair, or the emitter of one spread quantum), over the parts' sizes;
-  - the backward board carries the future's settings and absorbers there;
-  - the forward board carries each outcome out, and the detector's click writes the record;
-  - for a lone quantum with a silent future, this is Born.
+  - the draw runs over the products of the two dials' sizes where they meet (decision 29);
+  - for a pair, the second click reads the first outcome carried back to the birth and out along its own twin. Seen at the source, this is one draw at the birth over the four parts;
+  - for one spread quantum, the word runs back to the source and out, so one absorber clicks (g2 = 0);
+  - the detector's click writes the record;
+  - with a silent future it is Born exactly.
 - **The silence:** nothing passes.
 - **The records:** forward only. The backward board writes none and erases none, so the arrow stays the records' growth.
 
@@ -70,7 +80,8 @@ The owner's word to Animate, 2026-10-29, 08:4x UTC (in Hebrew; in translation): 
 - **The scheduler on a full board:** many pairs, chains and composites, each split click's settings found before its source's draw, by local passes and with no selection. The toy has one pair.
 - **Loops beyond one step:** a machine whose choice depends on its own outcome through many clicks, with the cause's order read along the forward board.
 - **The cost:** the backward board's integers per Node-clock and the passes; the record's G5 (the birth) and G6 (the backward sizes; under B, the settings carried back).
-- **The probe on the engine as built** (the Boss's), with B's rule: S, g2, Born, three parties with no signal, and a loop.
+- **The probe on the engine as built** (the Boss's), with the product draw and the switch in the universe file (decision 29): S, g2, Born, three parties with no signal, and a loop. Born with the switch off.
+- **The aim's lean** (David's probe, part 5): a split leaning toward a composite has two histories at some digits, and Born holds when the fewer is kept (his rule). Born's row 55 on the forward record reads whether the lean leaks.
 
 ## Method: addressed
 
