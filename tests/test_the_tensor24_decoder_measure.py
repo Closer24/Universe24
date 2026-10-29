@@ -224,6 +224,15 @@ def test_the_tool_prints_the_measurements_rules(tmp_path):
     )
     for rule in ("the cone check (D8)", "proper time (D6)", "the twin reading (D6)"):
         assert f"{rule}: {{'kind': 'SHOWN'" in found.stdout
+    broken = tmp_path / "measure.ledger.jsonl"
+    broken.write_text("no ledger\n", encoding="utf-8")
+    found = subprocess.run(
+        [sys.executable, "-I", str(TOOL), str(path), str(broken)], capture_output=True, text=True
+    )
+    assert (
+        "the ledger: the ledger is absent" not in found.stdout
+        and "the ledger: the ledger's line 1 " in found.stdout
+    )
 
 
 def test_the_ledgers_count_lines_stand_once_at_each_round_site_and_train(tmp_path):

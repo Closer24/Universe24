@@ -1,6 +1,7 @@
 """The decoder's tool (Animate's): one record of the schema read, with its ledger beside it where one is named, and its
-readings printed: row 15's verdict with its two readings, row 46's with its two, the measurement's rules (the cone
-check by click, proper time read twice and the twin reading), and each whole click's ticks from the rate lines.
+readings printed: row 15's verdict with its two readings, row 46's with its two, the ledger read or the cause it is
+not, the measurement's rules (the cone check by click, proper time read twice and the twin reading), and each whole
+click's ticks from the rate lines of a record written before the schema 1.2.
 Nothing is raised: a record or a ledger that is not read is named with its cause, and the rows that need it read NOT
 READ. The interpreter's bound on a whole number's digits is lifted, since the schema's numbers are whole numbers of
 any width. Each Node-clock's rate lines are read once for all its whole clicks.
@@ -59,6 +60,7 @@ def main(argv: list[str]) -> int:
     ledger, why = records.read_ledger(held.ledger) if held.ledger else (None, "the ledger is absent")
     print(f"row 15: {books.row_15(record, ledger, why)}")
     print(f"row 46: {bangs.row_46(record, ledger, why)}")
+    print(f"the ledger: {why if ledger is None else f'read, {len(ledger)} lines'}")
     print(f"the cone check (D8): {measure.cone_check(record)}")
     print(f"proper time (D6): {measure.proper(record)}")
     print(f"the twin reading (D6): {measure.twins(record)}")
