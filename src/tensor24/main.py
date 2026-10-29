@@ -1,9 +1,10 @@
 """Tensor24's one joint: the engine's functions passed into the runner, the only module that imports both."""
 
+from pathlib import Path
 from typing import Any
 
-from tensor24.engine import kinds, state
-from tensor24.runner import load
+from tensor24.engine import kinds, state, step
+from tensor24.runner import load, run
 
 
 def made(shape: tuple[int, ...]) -> tuple[kinds.Kinds, dict[Any, Any]]:
@@ -19,3 +20,11 @@ def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> s
     return state.Layout(
         nb, meshes, grip, state.Gearing(*gearing), state.Plan(*plan), rate, gamma, state.Ruler(*ruler)
     )
+
+
+ENGINE = run.Engine(made, layout, step.tick, step.untick, state.State)
+
+
+def ran(paths: list[Path], record: Path, bits: Any = None) -> list[str]:
+    """The three files run to the record by the engine's own functions, every due beat firing or the caller's masks."""
+    return run.run(ENGINE, paths, record, bits)
