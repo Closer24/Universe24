@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The forward run's and the record's holes entered as open (2026-10-29, 14:3x UTC; ledger row 399): docs/BIG_PICTURE.md section 13.2 block D, 0.2 items 2, 3, 4, 6, 12, 13 and 14, reading 47.
 - The hunt's findings (2026-10-29, 14:2x UTC; ledger row 399): docs/BIG_PICTURE.md section 13.2 (A1 to A12, B1 to B12, the open list), 0.2 items 2 and 4, 10.7, the owner's list of open questions, reading 46; docs/ALGEBRA.md line 35's clause of decision 39 made exact (where the shift is 0; the shears' five slots), no line moved (1,960).
 - David's sorted constants and the Boss's hunt entered (2026-10-29, 14:0x UTC; ledger row 399): the owner's words to David ("Check whether more constants behave like a spring") and to the Boss (the whole team hunts for holes until 14:45, the final picture approved at 15:00 UTC); docs/BIG_PICTURE.md 12.3 item 29, 0.2 item 10, 13.1, reading 45.
 - The Boss's 13:48 post and David's "Maybe r is a spring?" entered (2026-10-29, 13:5x UTC; ledger row 399): the eight probe trains out (db94ef9d9), the gate adopted on tensor24-review (058512b2b, no refusal), the runner's exemption ended at G0; docs/BIG_PICTURE.md 12.3 item 28, 0.2 item 5, 10.1, 13.1, reading 44.
