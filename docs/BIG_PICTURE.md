@@ -298,60 +298,49 @@ Both clicks are carries: their quotients leave forward and are written in the re
 
 ### The split click (5.2)
 
-> **Brought to decision 28 by the keeper (07:5x UTC), awaiting David's rewrite (the Boss's 6490979060, item 3).** The closure as a token carried along the Meshes, the tournament's closure, "the click is final once the closure has crossed the hand", the closure's cone and the collapse's femtosecond below are the retired reading, kept by name and dated 2026-10-29, 07:0x to 07:4x; the split click on two boards is section 10.1, the draw over the products of the two dials' sizes. The measured lines on g2 = 0 and on S = -82/29 below were taken under the closure and are the retired reading's too. The whole click, the draw's number d = (c + V) mod L with its rank count, the fair draw's proofs and the books stand. Decision 29 (08:3x) makes the draw's form the owner's, over the products of the two boards' sizes, and the state count 5 G + T + 3 + k below is the retired reading's (section 15, items 5 and 6).
+> **Rewritten by the keeper at 09:5x UTC to decisions 28 and 29 and to the engine's form B** (the Boss's ruling, comment 6493239195), David to confirm or correct by name. The tournament of two-part splits along the Meshes, the closure as a token carried along them, "the click is final once the closure has crossed the hand", the closure's cone, the collapse's femtosecond and the state count 5 G + T + 3 + k are the retired reading, kept by name and dated 2026-10-29, 07:0x to 07:4x; their text stands in git.
 
-**Clocks.** A spread hand is decided by a tournament of two-part splits along the Meshes.
-- At one Mesh, the two parts' sizes meet, and the draw at the Mesh's Node-clock picks a side by the sizes.
-- The winner keeps the whole winding of both, and the loser's wind travels to it, one Mesh a tick.
-- The click is final once the closure has crossed the hand.
-- The draw reads the remainders, which no click can read. So the choice is set on the board and fair to every reader.
+**Clocks.** A split click decides which part of a spread hand wins: where, which detector, which outcome.
+- **The draw is made at the Node-clock where the parts were one** (a pair's birth, a spread quantum's source), over the products of each part's size on the forward board and on the backward board (decision 29); a silent future, sigma_b alike, makes it Born's rule exactly.
+- **The backward board carries what the click needs back along each twin's own path to that Node-clock,** a detector's frame or an absorber's size, one Mesh a sweep; **the forward board carries the outcome out** along each twin's own path, and the detector's click writes the record. No Node-clock reads past its six neighbours, and nothing crosses space (section 10.1).
+- **A pair's parts need no order:** the four parts in any order give one law. **A causal chain takes its order from the forward signal** that makes a later setting depend on an earlier outcome (Animate's loop: one history at all 116 digits when ordered by cause, 40 digits with none when ordered the other way); the cause's order is carried along the forward board, and no Node-clock compares ticks at a distance. The passes verify a history and select none.
+- **The draw reads the remainders, which no click can read.** So the choice is set on the board and fair to every reader.
 
-**Acts** (DAVID-TENSOR24-THE-FAIR-DRAW-AND-POSITION.md, for stage 9):
+**Acts** (DAVID-TENSOR24-THE-FAIR-DRAW-AND-POSITION.md and David's 6491076850; the Boss's form B, 6493239195, for stage 9):
 - **The number:** d = (c + V) mod L, one carry, where:
   - c is the Node-clock's beat count;
   - V is the sum, over the Node-clock and its six neighbours, of its A1 rows' fine teeth, each read in its row's pitch g (the digit r div g, g the gcd of the row's W and its push's coefficients);
-  - L is the parts' sizes' total.
-- **The part:** the rank count, part = SUM_i nonneg(d - S_i), with S_i the cumulative sizes. There is no sort and no if.
+  - L is the sum of the parts' products.
+- **The part:** the rank count, part = SUM_i nonneg(d - S_i), with S_i the cumulative products. There is no sort and no if.
 - **The law's wording** (the principle's item (5), ALGEBRA.md line 35, as decision 29 has it): the draw is one number d = (c + V) mod L, one carry, and the part is the rank count over the cumulative sizes, each size the product of the part's size on the forward board and on the backward board; the form is the owner's (decision 29, 08:3x). The former wording, a second carry c x the sum of the sizes = t x the draw's range + a remainder, is kept by name and dated 2026-10-29, 08:3x.
 - **On twins against a detector:**
   - sigma_up = (rho rho_d + S . m) / 2 (Fierz's identity, exact on Gaussian integers);
   - L = rho rho_d;
-  - down = (2 d - S . m + L) div (2 L), one carry.
-- **The tournament:** the larger-neighbour matching, a schedule the 24 leave alike. The winner keeps both windings, and the loser's wind moves one Mesh a tick.
-- **The closure:** a token carried along the Meshes, one Mesh a tick; for a pair, along the birth's Mesh.
-- **What it writes:** the draw writes nothing, since it is a reading of the state at its beat. The record carries the part, and the winner's windings and the losers' moves are books.
+  - down = (2 d - S . m + L) div (2 L), one carry;
+  - a pair's joint sizes are the squared whole-number overlaps of one shared hand with the two detectors' frames, a 2 x 2 determinant per pair of outcomes, the frames Gaussian integers (the Boss's joint_from_norms.py).
+- **What it writes:** the draw writes nothing, since it is a reading of the state at its beat. The record carries the part, and the winner's windings are books.
 
 **Tensors:**
 - V is a stencil sum: the own digit plus the six gathered by nb;
 - d and the part are elementwise, the part a reduction over the parts' axis;
-- the tournament is a fixed schedule of index pairs, read at load;
-- the closure is a token per Node-clock (the merged size and the closure's sign, a fixed number k of integers named at stage 9), moved by a gather along nb each tick; the losers' wind in transit is books, held in the T windings per Node-clock already counted; the pair's open axis is the twin train's frame q, on each child's Node-clock in that train's own rows; the count per Node-clock stays fixed for the run, 5 G + T + 3 + k (David, 6490839743, item 2; ALGEBRA.md line 98 fixes the count for the run and names no number).
+- sigma_b is one more set of integers per Node-clock, the backward board's, carried by the untick's gather along nb one Mesh a sweep (k_b more where the universe file switches the backward board on, section 10.2); the count per Node-clock stays fixed for the run (ALGEBRA.md line 98 names no number);
+- the pair's open axis is the twin train's frame q, on each child's Node-clock in that train's own rows.
 
 **New, from the big picture** (derived on paper; probes in preparation):
-- **The closure runs at the board's cone, with no ruler factor.**
-  - **Locality is never broken** sets the cone of a click: "a click's effect travels one Mesh per tick".
-  - Light travels c0 N^2 Meshes a tick, with c0 = 1 / sqrt 6, the doubler's hold ((g), approved by decision 27).
-  - So in local units, the closure's cone is wider than light's by e^(2U) / c0. At the bang that is sqrt 6. Since the bang it is at least sqrt 6 x 1,100^2, about 3 x 10^6, since the background light's redshift alone gives e^U >= 1,100.
-  - The reading behind it: the acts that move hands read the ruler, and the closure, a click's effect, runs at the click's cone. It was put to the owner, who chose the two boards instead (decision 28, section 10.1).
-- **The collapse is near instant in local time:** a quantum spread over one metre settles in about one femtosecond. At the bang the closure ran at sqrt 6 times light.
 - **The draw reads its digits in the local pitch.** Under 7b the pitch moves with W, so g is read per load from a table, as Z is. A uniform notch then keeps the full turn exact; in a gradient, 7b measures it.
-- **The gathering on light's gears gets its frame** (a direction):
-  - each loser's share of light is taken at the loser;
-  - its sweep is carried by the closure to the winner;
-  - the books close in the sweep at every Mesh, and the write is logged in the out.
+- **The gathering on light's gears** (open, David's): each loser's share of light is taken at the loser, and how the winner holds the whole quantum is carried, under decision 28, by the word that runs back to the source and out again, not across space; the books must close at every click.
 
-**Measured** (p1 to p4, on 7a's act):
-- each part is drawn exactly sigma_i times over any L beats (2,880 of 2,880 cases);
-- Born for position is exact by telescoping (P = 10/77 ... 9/77), and on the act the chi-square is 8.3 on 7 for 2,947 quanta;
-- g2 = 0 exactly: A 1,437, B 1,513, both 0;
-- Bell's S = -82/29, with every marginal 1/2; on the act -2.8589 against -2.8276 for 3,950 pairs;
+**Measured and shown:**
+- each part is drawn exactly sigma_i times over any L beats (2,880 of 2,880 cases on 7a's act), and exactly its product sigma_f sigma_b times over a full turn (67,104 of 67,104, David's two_boards.py);
+- Born for position is the fair draw's exactness over the sizes at the source; the chi-square of 8.3 on 7 for 2,947 quanta on 7a's act was taken under the tournament, the retired reading's, and is owed again;
+- g2 = 0 on two boards, one quantum written once, against two absorbers clicking together with odds 1/4 on one forward board (Animate's toy, beside the engine); the act's g2 of A 1,437, B 1,513, both 0, was taken under the closure and is owed again;
+- Bell's S = -82/29 with every marginal 1/2 at every timing of the two clicks (David's probe, Animate's O and B, beside the engine); the act's -2.8589 against -2.8276 for 3,950 pairs was taken under the closure and is owed again;
 - no exact integer CHSH passes Tsirelson's bound (the largest is 478/169 = 2.828402).
 
 **Open:**
 - the independence of two draws (measured, |corr| at most 0.01, not proved);
-- two neighbours of equal sizes need the digits to break their tie;
 - the gathering's write on the gears;
-- the window of section 10, and the closure's form there for several parties (l5).
+- the act at the birth Node-clock giving the twins one shared hand, and the scheduler on a full board (the Boss's and Animate's).
 
 ### The two together (5.3)
 
@@ -361,14 +350,14 @@ Both clicks are carries: their quotients leave forward and are written in the re
 
 ## 6. Time's cone in the clicks
 
-> **Items 3 to 6 read the closure's cone as the click's carrier, the reading retired by decision 28** (kept by name and dated 2026-10-29, 07:0x to 07:4x); David brings this section to the two boards, and the keeper enters it. Items 1 and 2 stand.
+> **Rewritten by the keeper at 09:5x UTC to decisions 28 and 29 and to form B,** David to confirm or correct by name. The retired reading's items 3 to 6, the closure's cone as the click's carrier, are kept by name and dated 2026-10-29, 07:0x to 07:4x; their text stands in git.
 
 1. **A whole click is local:** one Node-clock and its six neighbours, in one tick.
-2. **A split at one Mesh:** the two ends of one Mesh, in one tick.
-3. **A spread quantum's click** is final once the closure has crossed it, at one Mesh a tick (at most 11 ticks on a ring of 8).
-4. **Grangier:** one detector clicks (g2 = 0), and the other is silenced by the closure, through the board's cone.
-5. **Bell:** a partner that clicks after the closure lands gives S = -82/29. One that clicks before, outside the closure's cone, gives S = 0.
-6. **The notch:** in a well, or late in the expansion, light's cone narrows (N^2) while the board's does not. The clock there clicks more slowly (the redshift), and the closure's cone, read in local units, widens by e^(2U).
+2. **The draw is local:** one Node-clock and its six neighbours, in one tick, at the Node-clock where the parts were one.
+3. **A spread quantum's click** is final when the draw at its source is made and the word has run out along the quantum's own paths; no cone of the board's own enters it.
+4. **Grangier:** one absorber clicks (g2 = 0), because the draw at the source is one draw over the absorbers' sizes carried back.
+5. **Bell:** S = -82/29 at every timing of the two clicks, A first, together or B first, with no window; the retired reading gave S = 0 for clicks outside the closure's cone.
+6. **The notch:** in a well, or late in the expansion, light's cone narrows (N^2) while the board's reach does not, and the clock there clicks more slowly (the redshift). The zigzag rides the twins' own paths, which the hands keep inside light's cone, so a notch changes the carries' timing and widens no cone.
 
 ## 7. The great clock's course: one bang, then the swing
 
@@ -433,50 +422,26 @@ The owner's word to David of 07:18 UTC (the list above) asks when the board's ti
 1. **Where time can go back** (derived). The act is symmetric in time (T S T = S^-1), so where there are no clicks forward and back cannot be told apart: a contraction there is the mirrored board's expansion run back. There the great clock's time, the load, turns back at the top by the spring alone, with no act (decision 27); what swings is the load, and each clock's beat count only grows (the first of the three times of section 8).
 2. **Where the board goes forward** (derived; one step open). A click writes a record that the state alone cannot undo: its bits, the free slots and the take's write (the click page's mutants), so the arrow is the direction in which the record grows. Where the records sit in composites, their own later clicks read them (a machine acts by what it recorded), so the arrow feeds itself where clicks are linked to more complex clocks (read with section 11.1: the feeding is the record's crossing the bang, link 4; a lean of the draws by the backward board is link 8, not claimed). The open step: how strongly such a record locks the direction, against one that disperses.
 3. **The two clicks and the remainders** (derived). The remainders are the memory and the way back. The whole click builds, laying a hand in a slot. The split click chooses from the past's remainders, so it sets the direction of cause, and the draw does not read alike under the mirror.
-4. **The click's cone** (derived on the closure's cone, the reading retired by decision 28; David brings this point to the two boards). A click is final only once the closure has crossed the quantum, and the closure runs at one Mesh a tick, ahead of light; so the click's cone sets the board's time order: B is after A when B is inside A's cone, which orders pairs that light cannot order. Where two clicks are outside each other's cones (the window) the board has no order between them, and that is where l5 found the three-party signal.
+4. **The click's order** (derived on paper). A click is final when the draw at its source is made and the outcomes have run out along the twins; the order of two clicks is the cause's order, carried along the forward board where a later setting depends on an earlier outcome, and a spacelike pair needs none (the four parts in any order give one law, Animate's toy). So the board's time order of clicks is the forward signal's, and no cone of the click's own enters. The retired reading, kept by name and dated: the closure's cone ordering pairs that light cannot order, with the window where l5 found the three-party signal.
 5. **The picture, a mechanical clock** (a reading): the swing is the pendulum, the clicks are the escapement and the composites are the gear train; in a clock the arrow is in the escapement, not in the pendulum.
-6. **What light at 1 / sqrt 6 gives** (derived): one species per particle, by (g)'s hold; the room between the click's cone and light's, where the closure and the arrow run ahead of light (sqrt 6 at the bang, sqrt 6 e^(2U) since; the closure's part is the retired reading, decision 28); the board's own number, 1/6 being one over the six Spokes, so that no constant is typed; one cone for light and gravity, as in nature; and the swing's period of exactly 2 pi times light's crossing of gravity's reach (the reach sqrt(Gamma / 12) Meshes, crossed in sqrt(Gamma / 2) ticks).
+6. **What light at 1 / sqrt 6 gives** (derived): one species per particle, by (g)'s hold; the board's own number, 1/6 being one over the six Spokes, so that no constant is typed; one cone for light and gravity, as in nature; and the swing's period of exactly 2 pi times light's crossing of gravity's reach (the reach sqrt(Gamma / 12) Meshes, crossed in sqrt(Gamma / 2) ticks). The retired reading added the room between the click's cone and light's, where the closure ran ahead of light.
 7. **A test owed:** one board at the top of the swing, run with clicks and without, to read whether the contraction mirrors the expansion.
 
-**Status:** derived as above (points 1 to 3 and 6; the closure's parts of points 4 and 6 are the retired reading's, decision 28), a reading (point 5), a direction (point 2's open step); the probe of point 7 owed. Kept by Sofer: nothing here reverses the board, so section 9's answer, no, stands; what turns back is the load.
+**Status:** derived as above (points 1 to 4 and 6; points 4 and 6 rewritten by the keeper at 09:5x to decision 28, David to confirm), a reading (point 5), a direction (point 2's open step); the probe of point 7 owed. Kept by Sofer: nothing here reverses the board, so section 9's answer, no, stands; what turns back is the load.
 
 ## 10. Bell at a distance that is not at a distance
 
-> **Decided by the owner's word of 07:44 (decision 28): Bell at a distance stands on two boards on one Node-clock (10.1).** Retired by it, kept by name and dated 2026-10-29, 07:0x to 07:4x: the closure across space at the board's cone as Bell's carrier, with its window and Bancal's catch, and item (l). What this section says of them stands as the record of that reading until David brings sections 5.2, 6, 10, 10.1, 14 and 15 to the decision (the Boss's 6490979060, item 3) and the keeper enters them.
+> **Decided by the owner's word of 07:44 (decision 28): Bell at a distance stands on two boards on one Node-clock (10.1 to 10.4).** This section was rewritten by the keeper at 09:5x UTC to keep what stands and to name what is retired; David to confirm or correct by name. The older text stands in git.
 
-- **The two measures of distance.** The clicks measure distance with light; the board measures it in Meshes and ticks. Since the bang, light crosses a Mesh e^(2U) times more slowly in ticks, and the closure does not slow.
-- **Against nature.** The Bell tests at a distance (Aspect; Weihs; Delft; Micius) keep the correlation even where an influence would need at least about ten thousand times light's speed (Salart and others, 2008; Yin and others, 2013).
-  - On the first way below that lies inside the closure's cone of about three million times light's.
-  - So the local closure gives S = -82/29 with a late choice.
-  - There is no shared state held by no Node-clock, and no global order of clicks. Locality is kept.
-  - There is no signal: every marginal is 1/2 at every setting.
-- **A prediction by name: the window.** Two clicks within D / (sqrt 6 e^(2U) c) of each other in the board's frame fall outside the closure's cone and give S = 0.
-  - That is about a picosecond per kilometre at the background light's bound, and far less if the bang was hotter.
-  - At the bang, the window was the light time itself over sqrt 6.
-- **The known catch** (Bancal, Pironio, Acin, Liang, Scarani and Gisin, Nature Physics 8, 867, 2012; a three-party form by Barnea and others, 2013). An influence of any finite speed, within its window, either signals in some setups of several parties or departs from the quantum predictions there.
-  - **Measured** (the item (l) page's probe l5, on the act's dials; the page in preparation): the carried closure as written, extended to three parts, signals there. A's axis moves B's and C's joint law by up to 1/2 when B and C fall in each other's window. The signal runs no faster than the board's cone, and only inside the window.
-  - **So the closure's form in a window is the open step:** it is to be written so that it departs from the quantum predictions there, and does not signal. Bancal's theorem leaves that choice, and with it no click reads the great clock (**Einstein lives in the clicks of bound bobs, and the great clock is never measured**).
-- **Measured for two parties** (the same page's probe l4, on 7a's act with 7b's gearing):
-  - light runs at c0 N^2 to six digits at the counts 0, 100, 1,000 and 3,000;
-  - S reads -2.86 inside the cone and 0 in the window;
-  - every two-party marginal is 1/2.
-- **What stands after the Boss's check** (6490369479, and his correction 6490433752 on the owner's question "But there is a solution for full Bell, Bell with the cone, isn't there?"):
-  - the cone's Bell stands: S = -82/29, every marginal 1/2, local, with no Node-clock holding a shared state;
-  - it is the collapse of quantum mechanics in the lattice's frame and no signal: nature forbids a signal faster than light, and no setting at one end changes what the other end reads;
-  - nature's tests bound a finite speed above about 10,000 c and do not exclude one (Salart and others, 2008; the loophole-free tests of 2015 at 1.3 km; the satellite pair of 2017 at 1,200 km), so the cone's Bell covers nature where the closure's speed over light's exceeds that bound.
-- **The cone's width.** The closure runs at the board's reach, one Mesh a tick, and light at c0 N^2 Meshes a tick on 7b's act (l4 measured it to six digits at the counts 0, 100, 1,000 and 3,000), so the cone is sqrt 6 times light's at the count 0, the bang, and e^(2U) / c0 times light's at a notch N = e^(-U): at least 3 x 10^6 since the bang (e^U >= 1,100, by the background light's redshift alone), and every test so far falls inside it. The Boss's "sqrt 6 c" holds at the count 0 alone, and David's reading stands (the Boss, 6490868228, item 3). **Its one cost is Gamma:** the Mesh's rate p0^2 / Gamma must not round to 0 at the present load, so Gamma >= e^(2U) >= 1.2 x 10^6 and the cone is at most sqrt 6 Gamma times light's. **Its one condition:** the closure does not read the ruler. The window and the several-party step are open (l5).
-- **The ways that were put to the owner (way 4 decided by decision 28; ways 1 to 3 retired):**
-  1. **The closure at the reach with no ruler factor** (David's recommendation): the cone is wide by the notch itself, with no constant changed; it retires item (l); its condition is that a click's effect reads no ruler.
-  2. **A wide cone by a constant at load 0** (the Boss's door (a), 6490433752, light below 1 / 10,000 of a Mesh a tick at the full rate): c0^2 = s grip / W = 1/6, so reaching 10^-8 needs W up about 1.7 x 10^7 times, which takes T from 85 bits to about 109 and passes the width 128 at the ruler's deep entry Z = T Y^4 div Gamma^4, or a grip below K-S1's resolution, so that one notch of tension no longer resolves; and light at 1 / sqrt 6 is (g)'s hold itself, so the doubler and the pairs would reopen. It costs (g) and K-S1 or the width, and the notch's door costs none (David, 6490839743, item 1).
-  3. **Item (l), the pair as one clock:** not local; it crosses **Locality is never broken**, a law not to be crossed.
-  4. **Two boards on one Node-clock, one forward and one backward** (section 10.1, the owner's own option of 07:2x to 07:4x): no influence crosses space at any speed, so there is no window; its open steps are its own.
-  The Boss's 6490868228 (item 3) holds that David's reading of the cone stands where the closure is the carrier; with way 4 decided it is not.
-- **The law's line this changes.** **Locality is never broken** (ALGEBRA.md line 92) holds as the owner's sentence that the correlation of two clicks is read in the reckoner's whole view with no act between the two Node-clocks, and records |S| at most 2 for every rule of the engine where the settings are free of the pair, late or random, as a finding against nature by name. The closure is an act between the two Node-clocks, one Mesh a tick, so each of the ways needs the owner's word to rewrite that sentence (section 16, reading 6); and way 4's search for a history that agrees with itself at both ends is a great-clock-wide act if it selects the clicks, which crosses this line and line 98 (no read beyond one Mesh, no global, no great-clock-wide act), where if it only verifies a history that the forward run made it is a check like the rewind and no act of the board (section 16, reading 7). Until his word the law reads as written. **Settled by decision 28 (07:44):** the word was given, and ALGEBRA.md lines 35, 92, 1173 and 1934 carry the rewritten sentence (section 16, readings 6 and 7; the sweeps' locality, reading 7, stays open).
-- **Status:**
-  - derived from two paragraphs of the law and the swing;
-  - measured for two parties (l4);
-  - the window's form for several parties is open (l5);
-  - the reading was the owner's to choose, and he chose way 4 (decision 28).
+- **Against nature (kept).** The Bell tests at a distance (Aspect; Weihs; Delft; Micius) keep the correlation even where an influence would need at least about ten thousand times light's speed (Salart and others, 2008; Yin and others, 2013; the loophole-free tests of 2015 at 1.3 km and the satellite pair of 2017 at 1,200 km). On two boards no influence crosses space at any speed, so these tests are met with no bound on a speed.
+- **The theorem (kept).** Under the generic Node-clock |S| is at most 2 for every rule of the engine where the settings are free of the pair, late or random (**Tsirelson's bound is a theorem of the credit's form**); Animate's one forward board confirms it on a toy, exhausted. The finding against nature by name stands for a universe whose file switches the backward board off, and is lifted for one that switches it on when the probes run on the engine (ALGEBRA.md lines 92 and 1173).
+- **Retired by decision 28, kept by name and dated 2026-10-29, 07:0x to 07:4x:**
+  - the closure across space at the board's cone as Bell's carrier, with its window (two clicks within D / (sqrt 6 e^(2U) c) of each other falling outside the cone and giving S = 0), its three-party signal (l5) and Bancal's catch (Bancal, Pironio, Acin, Liang, Scarani and Gisin, Nature Physics 8, 867, 2012; a three-party form by Barnea and others, 2013: an influence of any finite speed, within its window, either signals in some setups of several parties or departs from the quantum predictions there);
+  - the cone's width as e^(2U) / c0 times light's, with its one cost Gamma and its one condition that the closure reads no ruler;
+  - item (l), the pair clicking as one clock wherever its parts are, and the ways 1 to 3 that were put to the owner (the closure at the reach, a wide cone by a constant at load 0, item (l)); way 4, two boards on one Node-clock, was his choice;
+  - their measures (g2 = 0 with A 1,437 and B 1,513; S = -2.86 inside the cone and 0 in the window), taken under the closure and owed again on two boards; light at c0 N^2 to six digits at the counts 0, 100, 1,000 and 3,000 (l4 on 7b's gearing) stays measured.
+- **The law's line.** **Locality is never broken** (ALGEBRA.md line 92) holds, with its sentence rewritten by decision 28 (lines 35, 92, 1173 and 1934): the correlation of a pair runs through its shared birth on the two boards, every read within six neighbours; the sweeps' locality (reading 7) stays open for a full board, and the schedule that meets it is form B's three passes (10.1, Animate's toy).
+- **Status:** decided (the owner's word of 07:44); the substance is 10.1 to 10.4.
 
 ### Two boards on one Node-clock, one forward and one backward: decided (10.1)
 
@@ -742,7 +707,7 @@ The owner's word to the Boss of 09:4x (relayed at 09:44, comment 6493334067; in 
 - **Gravity's reach is above about 4.4 billion light-years,** if the bang nature shows is the swing's bottom: 13.8 billion years have passed, the expansion goes on, and the swing's period is 2 pi times light's crossing of the reach.
 - **The late acceleration,** the named difference: the swing accelerates early and slows before the top.
 - **One seed, looking back:** consistent with the swing, and no proof of it.
-- **Bell's window** (section 10, the retired reading).
+- **Bell with no window:** the correlation at every distance and timing, the settings free of the pair (section 10; the retired reading's window prediction is withdrawn with the closure).
 
 **In the engine** (stages 7b, 9 and 11):
 - a uniform notch changes no ratio between clicks at one place, once the click's source reads the ruler;
@@ -805,7 +770,7 @@ The owner's word to the Boss of 09:4x (relayed at 09:44, comment 6493334067; in 
 1. **The whole click** as 5.1 writes it, with the channel's source carrying the ruler's factor, F(c) = K Gamma^2 div Y(c)^2, at teeth K T_c fixed for the run, and every coupling row's drive with its own factor by the same paragraph of the law.
 2. **The split click** as 5.2 writes it:
    - the draw, with its digits in the local pitch, read per load;
-   - the tournament;
+   - the draw at the Node-clock where the parts were one, with the cause's order for a loop (form B, the Boss's ruling of 09:39);
    - the draw over the products of the two dials' sizes, with sigma_b = 1 for every part while the universe file's backward whether is 0 (sections 10.1 and 10.2); Born's marginals and each party's marginal against the others' settings are read on the forward record (rows 55 to 57).
 3. **The take on light's gears,** way (b), the owner's by decision 29, scoped to light that holds many quanta at the Node-clock.
 4. **The per-swing readings** of section 13, at stages 9 and 11.
@@ -826,8 +791,8 @@ The owner's word to the Boss of 09:4x (relayed at 09:44, comment 6493334067; in 
 
 ## 16. The keeping (Sofer)
 
-- **The state of the picture by section at 09:4x** (the keeper's, on the owner's word "Sync on the full picture..."): read against the law and against each other, **no contradiction found in** sections 0, 0.1, 1 to 4, 5.1, 5.3, 7, 8, 9, 10.1 to 10.4, 11 (with 11.1 to 11.3), 12, 13, 14, 15 and 16; **under a banner, awaiting David's rewrite to decisions 28 and 29:** 5.2, 6, 9.1 (points 4 and 6) and 10 (the retired reading, kept by name and dated); **open, each with its owner:** the one question and one board or two (the owner); the clock side of 10.3 and 10.1's aim line (David); the seven law lines 426, 428, 430, 432, 691, 1596 and 1841 (David); the engine's own probes, namely the joint sizes from the act's arrays, GHZ's, loops beyond one step, each sweep's reach and the engine's own sieve (the Boss); the scheduler on a full board and the schema's 1.2 with G5 to G7 (Animate). **What stands, by status word:** the law holds decisions 27 to 29 and Postulate 7; derived and shown beside the engine, the product draw, Bell, GHZ and the singlet's joint sizes; derived on the toys, the swing, the old theory's end, heredity and the lean's dependence on a typed future; not claimed, a lean of the draws toward complexity.
-- **The approval** (the owner's word to the Boss of 08:59, comment 6492382830: "Let everyone approve the coherent picture, whose aim is to make ever more complex clocks."; the Boss's order, item 3 there): the keeper, the one writer, calls the picture coherent; then each of the four, Sofer, David, Animate and the Boss, approves it by name; then a fresh hostile reader and the architect read it for coherence (tensors against clocks, clocks against nature, no contradiction with the law); then the owner; the build stays stopped until his word. **The keeper's call at 09:2x: not yet.** What stands: the law read against every entry (nothing crossed, flags named in readings 12, 14 and 15); no place outside a banner reads the retired closure; the table of 10.3 is placed; each open step is named with its probe and its owner. **Owed before the call:** David's rewrite of 5.2, 6, 9.1, 10, 14 and 15 to decisions 28 and 29 (the banners come off then); David's clock side of 10.3 confirmed cell by cell (the Boss's tensor side and Animate's decoder column, 4e, are placed); the seven law lines (426, 428, 430, 432, 691, 1596, 1841); and the owner's answer to the one question of section 14.
+- **The state of the picture by section at 09:4x** (the keeper's, on the owner's word "Sync on the full picture..."): read against the law and against each other, **no contradiction found in** sections 0, 0.1, 1 to 4, 5.1 to 5.3, 6 to 9, 10 to 10.4, 11 (with 11.1 to 11.3), 12 (with 12.1), 13, 14, 15 and 16; **rewritten by the keeper at 09:5x to decisions 28 and 29 and form B, David to confirm or correct by name:** 5.2, 6, 9.1 (points 4 and 6) and 10 (the retired reading kept by name and dated, its text in git); **open, each with its owner:** the one question and one board or two (the owner); the clock side of 10.3 and 10.1's aim line (David); the seven law lines 426, 428, 430, 432, 691, 1596 and 1841 (David); the engine's own probes, namely the joint sizes from the act's arrays, GHZ's, loops beyond one step, each sweep's reach and the engine's own sieve (the Boss); the scheduler on a full board and the schema's 1.2 with G5 to G7 (Animate). **What stands, by status word:** the law holds decisions 27 to 29 and Postulate 7; derived and shown beside the engine, the product draw, Bell, GHZ and the singlet's joint sizes; derived on the toys, the swing, the old theory's end, heredity and the lean's dependence on a typed future; not claimed, a lean of the draws toward complexity.
+- **The approval** (the owner's word to the Boss of 08:59, comment 6492382830: "Let everyone approve the coherent picture, whose aim is to make ever more complex clocks."; the Boss's order, item 3 there): the keeper, the one writer, calls the picture coherent; then each of the four, Sofer, David, Animate and the Boss, approves it by name; then a fresh hostile reader and the architect read it for coherence (tensors against clocks, clocks against nature, no contradiction with the law); then the owner; the build stays stopped until his word. **The keeper's call at 09:5x: coherent,** on this text (after the keeper's rewrite of 5.2, 6, 9.1 and 10 to decisions 28 and 29 and to form B): the law read against every entry (nothing crossed; flags named in readings 12, 14 and 15, the first and the last settled); no section reads the retired closure but by name and date, its text in git; the table of 10.3 has its three sides (the keeper's clocks, the Boss's tensors checked against the build, Animate's decoder column); each open step is named with its probe and its owner. **Approvals by name:** Sofer, yes (09:5x); David, Animate and the Boss owed. **Open, each with its owner, none a contradiction:** David's confirmation of the keeper's rewrite of 5.2, 6, 9.1, 10, 14 and 15, and his check of the clock side of 10.3; the seven law lines (426, 428, 430, 432, 691, 1596, 1841), David's reading of the law's own lines against the source rho + 3 p and the cancelled act, none changed until then; the owner's answer to the one question of section 14, and one board or two; the engine's own probes (the Boss's), the scheduler on a full board and the schema's 1.2 (Animate).
 - **The document is Sofer's to keep, place and phrase** (the owner's word to David of 06:43 UTC): it stands in docs/ beside the description in docs/ENGINE.md, each line with its status word, the owner's decisions entered as he gives them, and a probe's result, once run, replacing that line's status word. David's first writing stays at toys-5 9c1957b5d; what David, the Boss or Animate add is entered here the hour it is posted.
 - **Read against the law** (at placing, 07:3x UTC, and at the update of 07:5x; nothing here crosses a law as written; nineteen readings, each with the one whose it is):
   1. **The draw's form** (5.2) is the stage-9 form, and the owner's word followed it in decision 29 (08:3x): the principle's item (5) holds d = (c + V) mod L over the products of the two boards' sizes, the former wording kept by name and dated. **Settled.**
