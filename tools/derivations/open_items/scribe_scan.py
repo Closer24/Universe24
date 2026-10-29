@@ -55,22 +55,36 @@ from typing import Any
 PACKAGE = "src/event_universe"
 TESTS = "tests"
 SCOPES = ("src", TESTS)  # every package under src, and the tests for the rule PIN alone
-TOOLS = re.compile(r"tools/tensor24_[^/]*\.py")  # the new engine's tools, directly under tools/: the rules of TOOL_RULES alone
+TOOLS = re.compile(
+    r"tools/tensor24_[^/]*\.py"
+)  # the new engine's tools, directly under tools/: the rules of TOOL_RULES alone
 TOOLS_SPEC = ":(glob)tools/tensor24_*.py"  # the same files as git's pathspec
-TOOL_RULES = frozenset({"NUMBER", "FLOAT", "TWICE"})  # no number beyond 0 and 1, no float and no two spelt as a sum, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x)
+TOOL_RULES = frozenset(
+    {"NUMBER", "FLOAT", "TWICE"}
+)  # no number beyond 0 and 1, no float and no two spelt as a sum, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x)
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
 ALLOWED = HERE / "scribe_scan_allowed.json"
-KEYS_READ = HERE / "scribe_scan_keys.json"  # the keys of the files' format that Sofer has read through the law, 'KEYS|file|path' per line
+KEYS_READ = (
+    HERE / "scribe_scan_keys.json"
+)  # the keys of the files' format that Sofer has read through the law, 'KEYS|file|path' per line
 BASES = ("origin/engine-5.0-test", "origin/main")
 FLOOR = "526a5666d"  # the engine head the list that stands was taken at: no base is older (a pull request into main is read against it)
 PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by Sofer alone
 # the rule DECLARE reads the files a universe or a world is declared in, besides the code
 DECLARED_SCOPES = ("examples", "reader", "tests", "tools", "src")
 DECLARED_SKIP = frozenset({".git", "node_modules", "venv314", "__pycache__"})
-DECLARED_LISTS = (("families", "family"), ("trains", "train"), ("couplings", "coupling"))  # the lists of a universe file that declare
-DECLARED_GEAR = ("pinion", "pair", "ratio")  # the key that carries the number a declaration stands for, the first an entry holds
+DECLARED_LISTS = (
+    ("families", "family"),
+    ("trains", "train"),
+    ("couplings", "coupling"),
+)  # the lists of a universe file that declare
+DECLARED_GEAR = (
+    "pinion",
+    "pair",
+    "ratio",
+)  # the key that carries the number a declaration stands for, the first an entry holds
 # the gate's own files: a push that changes one needs the owner's word, and says so
 OWN = (
     "tools/derivations/open_items/scribe_scan.py",
@@ -190,7 +204,8 @@ RULES: dict[str, tuple[str, str]] = {
     "ALLOW": (
         "BLOCK",
         "not on the Node-clock's closed list: its only operations are addition, multiplication and Rule3's carry, on whole numbers (the owner's idea of 2026-10-28, 15:0x UTC; law: The Node-clock is one act; The Node-clock and the Mesh are generic; there is no if), so a construct, an operator, a call or an array not made with dtype=object that the list does not name is refused in algebra/, engine/ and readings/, and in runner/board.py against a list of its own (numpy's arange and stack, the index dtype np.intp, list displays); the architect's additions go through Sofer by a ledger entry that names the law line each serves (the count per file may not rise)",
-    ),    "DECLARE": (
+    ),
+    "DECLARE": (
         "BLOCK",
         "a family, a train or a coupling named in a universe file or in a world's code, with its pair, pinion or strength: no particle, mass or coupling is declared in any file (law: Nothing is declared: every particle appears by itself in the clicks; the owner's word of 2026-10-29, 10:54, decision 35); a train at pinion = den is the seed and declares no mass; the declarations that stand are on the owner's list (scribe_scan_allowed.json) as named breaches until the clicks build the particles, and a new one, or a changed number, is refused",
     ),
@@ -239,7 +254,9 @@ OPERATION_DUNDERS = frozenset(
     "__mod__ __rmod__ __imod__ __floordiv__ __rfloordiv__ __ifloordiv__ __divmod__ __rdivmod__ __pow__ __rpow__ __ipow__ "
     "__lshift__ __rlshift__ __ilshift__ __rshift__ __rrshift__ __irshift__ __xor__ __rxor__ __ixor__".split()
 )  # the foreign operators under their method names (a.__mod__(b))
-BOARD_WRAPS = frozenset({"roll", "pad"})  # numpy's own wraps: in the board's module the wrap is the carry's alone (and a call with mode=)
+BOARD_WRAPS = frozenset(
+    {"roll", "pad"}
+)  # numpy's own wraps: in the board's module the wrap is the carry's alone (and a call with mode=)
 ITERATING_BARE = frozenset(
     "map filter iter reduce accumulate starmap vectorize permutations combinations groupby".split()
 )
@@ -260,13 +277,21 @@ STRICT = (
 PROMOTED = frozenset({"MEMO"})
 RUNNER = NEW_ENGINE + "/runner/"
 REWIND = RUNNER + "rewind.py"  # the rewind check: the one module of the runner that reads the undo log
-BOARD = RUNNER + "board.py"  # the board's wrap is Rule3's carry, imported from algebra/carry.py: nothing else spells one there
-LOADER = RUNNER + "load.py"  # the loader makes every gear's coefficients from the files, so it keeps every rule of the engine (the owner's "5 approved" of 2026-10-29, 13:2x UTC); the rules count its loops, branches, comparisons, clamps and operations, and a mask or a per-row constant built from a table of bits passes them: the uniformity test (G0) is what sees that
+BOARD = (
+    RUNNER + "board.py"
+)  # the board's wrap is Rule3's carry, imported from algebra/carry.py: nothing else spells one there
+LOADER = (
+    RUNNER + "load.py"
+)  # the loader makes every gear's coefficients from the files, so it keeps every rule of the engine (the owner's "5 approved" of 2026-10-29, 13:2x UTC); the rules count its loops, branches, comparisons, clamps and operations, and a mask or a per-row constant built from a table of bits passes them: the uniformity test (G0) is what sees that
 BOARD_KEEPS = frozenset(
     {"OPERATION", "LOOP", "CLAMP", "COMPARE", "BRANCH"}
 )  # the rules the board's module keeps and the rest of the runner is spared: a wrap by hand is a remainder, a quotient, a branch, a comparison, a clamp or a loop (the sixth hostile review, follow-up 2)
-FORMAT = RUNNER + "files.py"  # the files' format: the keys a universe, a piece and a setting file may hold, the checker refusing any other
-KEY_CALLS = frozenset("tuple list set frozenset".split())  # a collection made by a call of one argument holds what its argument holds
+FORMAT = (
+    RUNNER + "files.py"
+)  # the files' format: the keys a universe, a piece and a setting file may hold, the checker refusing any other
+KEY_CALLS = frozenset(
+    "tuple list set frozenset".split()
+)  # a collection made by a call of one argument holds what its argument holds
 DECODER = NEW_ENGINE + "/decoder/"
 DECODER_KEEPS = frozenset(
     {"OPERATION", "REFUSE", "CLAMP"}
@@ -288,8 +313,12 @@ WALLS = {
 }  # the new engine's folders each may import (the standard library always); the architect's table, section 4 (eaf07f596)
 NUMPY_FOLDERS = frozenset({"engine", "runner"})  # the folders that may import numpy
 ACT = NEW_ENGINE + "/engine/"  # the new engine's act: the Node-clock's step, its Mesh and its state
-SELECTIONS = frozenset({"choose", "nonneg"})  # the engine's own selection by a bit and its floor: an if and a clamp spelt as arithmetic (David's audit, F8)
-FAMILY_WORDS = frozenset({"A1", "A2", "E", "T1", "T2", "gradient"})  # a kind or an operand named by a string: the code knows a family by name
+SELECTIONS = frozenset(
+    {"choose", "nonneg"}
+)  # the engine's own selection by a bit and its floor: an if and a clamp spelt as arithmetic (David's audit, F8)
+FAMILY_WORDS = frozenset(
+    {"A1", "A2", "E", "T1", "T2", "gradient"}
+)  # a kind or an operand named by a string: the code knows a family by name
 ROOT_MODULES = frozenset(
     {"__init__.py", "main.py"}
 )  # the only modules directly under tensor24/: the package's own file (the standard library alone) and main.py; any other path is unlisted
@@ -324,7 +353,9 @@ ALLOW_NUMPY = frozenset(
 ALLOW_METHODS = frozenset("reshape transpose astype copy take sum swapaxes".split())
 ALLOW_ATTRIBUTES = frozenset("shape ndim T dtype size".split())
 ALLOW_KEYWORDS = frozenset("axis axes dtype keepdims".split())
-BOARD_NUMPY = frozenset({"arange", "stack", "intp"})  # runner/board.py's own vocabulary under the closed list: the sites counted, the six neighbours stacked, the index dtype; every other name of numpy is refused there, its wrap being the carry's alone
+BOARD_NUMPY = frozenset(
+    {"arange", "stack", "intp"}
+)  # runner/board.py's own vocabulary under the closed list: the sites counted, the six neighbours stacked, the index dtype; every other name of numpy is refused there, its wrap being the carry's alone
 CONSTRUCTORS = frozenset(
     "zeros ones full eye identity zeros_like ones_like full_like array asarray arange".split()
 )  # the calls that make an array: each takes dtype=object (Python integers, whatever their width), the architect's rule
@@ -398,7 +429,11 @@ def constant_index(node: ast.expr) -> bool:
     """A constant integer used as an index, signed: trains[-1], rows[0]."""
     if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub | ast.UAdd):
         node = node.operand
-    return isinstance(node, ast.Constant) and isinstance(node.value, int) and not isinstance(node.value, bool)
+    return (
+        isinstance(node, ast.Constant)
+        and isinstance(node.value, int)
+        and not isinstance(node.value, bool)
+    )
 
 
 def complement_of_a_name(node: ast.BinOp) -> bool:
@@ -645,7 +680,11 @@ def index_cast(call: ast.Call, parents: dict[ast.AST, ast.AST], numpy: set[str])
         held, above = above, parents.get(above)
     if isinstance(above, ast.Subscript):
         return above.slice is held
-    if isinstance(above, ast.Call) and isinstance(above.func, ast.Attribute) and above.func.attr == "take":
+    if (
+        isinstance(above, ast.Call)
+        and isinstance(above.func, ast.Attribute)
+        and above.func.attr == "take"
+    ):
         at = 1 if isinstance(above.func.value, ast.Name) and above.func.value.id in numpy else 0
         return len(above.args) > at and above.args[at] is held
     return False
@@ -668,7 +707,9 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
     construct (its parts are not read inside it) and a node class that nobody listed refused by default; an annotation is no code."""
     parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
     numpy: set[str] = set(NUMPY_NAMES)
-    vocabulary = BOARD_NUMPY if rel == BOARD else ALLOW_NUMPY  # the board's module has a narrower list than the engine's
+    vocabulary = (
+        BOARD_NUMPY if rel == BOARD else ALLOW_NUMPY
+    )  # the board's module has a narrower list than the engine's
     methods = frozenset[str]() if rel == BOARD else ALLOW_METHODS
     # known: the functions and classes of the module, and what numpy's tensor vocabulary was imported by name (imported: to its own
     # name); siblings: the names the engine's own folders were imported by; skipped: the annotations, the decorators and the parts
@@ -966,10 +1007,17 @@ def format_keys(tree: ast.Module) -> list[tuple[ast.AST, str]]:
         """The strings a flat collection holds, for a star of it."""
         if isinstance(node, ast.Name):
             return bound.get(node.id, [])
-        if isinstance(node, ast.Call) and callee_name(node) in KEY_CALLS and len(node.args) == 1 and not node.keywords:
+        if (
+            isinstance(node, ast.Call)
+            and callee_name(node) in KEY_CALLS
+            and len(node.args) == 1
+            and not node.keywords
+        ):
             return strings(node.args[0])
         if isinstance(node, ast.Dict):
-            return [k.value for k in node.keys if isinstance(k, ast.Constant) and isinstance(k.value, str)]
+            return [
+                k.value for k in node.keys if isinstance(k, ast.Constant) and isinstance(k.value, str)
+            ]
         held: list[str] = []
         if isinstance(node, ast.Tuple | ast.List | ast.Set):
             for item in node.elts:
@@ -980,7 +1028,12 @@ def format_keys(tree: ast.Module) -> list[tuple[ast.AST, str]]:
         return held
 
     def walk(node: ast.AST, path: str) -> list[tuple[ast.AST, str]]:
-        if isinstance(node, ast.Call) and callee_name(node) in KEY_CALLS and len(node.args) == 1 and not node.keywords:
+        if (
+            isinstance(node, ast.Call)
+            and callee_name(node) in KEY_CALLS
+            and len(node.args) == 1
+            and not node.keywords
+        ):
             return walk(node.args[0], path)
         found: list[tuple[ast.AST, str]] = []
         if isinstance(node, ast.Tuple | ast.List | ast.Set):
@@ -1002,9 +1055,17 @@ def format_keys(tree: ast.Module) -> list[tuple[ast.AST, str]]:
 
     keys: list[tuple[ast.AST, str]] = []
     for statement in tree.body:
-        if isinstance(statement, ast.Assign) and len(statement.targets) == 1 and isinstance(statement.targets[0], ast.Name):
+        if (
+            isinstance(statement, ast.Assign)
+            and len(statement.targets) == 1
+            and isinstance(statement.targets[0], ast.Name)
+        ):
             name, value = statement.targets[0].id, statement.value
-        elif isinstance(statement, ast.AnnAssign) and isinstance(statement.target, ast.Name) and statement.value is not None:
+        elif (
+            isinstance(statement, ast.AnnAssign)
+            and isinstance(statement.target, ast.Name)
+            and statement.value is not None
+        ):
             name, value = statement.target.id, statement.value
         else:
             continue
@@ -1075,17 +1136,35 @@ def scan(rel: str, source: str) -> list[Hit]:
             )  # a string names the module: no wall reads it
     if rel.startswith(NEW_ENGINE + "/") or TOOLS.fullmatch(rel):
         for node in ast.walk(tree):
-            if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add) and ast.dump(node.left) == ast.dump(node.right):
-                add("TWICE", node, ast.unparse(node))  # not spared to the runner or the decoder: the loader's twos are the engine's
+            if (
+                isinstance(node, ast.BinOp)
+                and isinstance(node.op, ast.Add)
+                and ast.dump(node.left) == ast.dump(node.right)
+            ):
+                add(
+                    "TWICE", node, ast.unparse(node)
+                )  # not spared to the runner or the decoder: the loader's twos are the engine's
     if rel.startswith(ACT) or rel == LOADER:
         for node in ast.walk(tree):
-            if isinstance(node, ast.Call) and callee_name(node) in SELECTIONS and not spelt_operation(node.func, numpy):
-                add("CHOOSE", node, callee_name(node))  # an if spelt as arithmetic, or a floor: the act has neither (David's audit, F8)
+            if (
+                isinstance(node, ast.Call)
+                and callee_name(node) in SELECTIONS
+                and not spelt_operation(node.func, numpy)
+            ):
+                add(
+                    "CHOOSE", node, callee_name(node)
+                )  # an if spelt as arithmetic, or a floor: the act has neither (David's audit, F8)
             elif isinstance(node, ast.BinOp) and complement_of_a_name(node):
-                add("CHOOSE", node, f"a complement {ast.unparse(node)}")  # a choose spelt as arithmetic: r * a + (1 - r) * b (the hunter's finding at 36087c95d)
+                add(
+                    "CHOOSE", node, f"a complement {ast.unparse(node)}"
+                )  # a choose spelt as arithmetic: r * a + (1 - r) * b (the hunter's finding at 36087c95d)
             elif isinstance(node, ast.Subscript) and indexed_by_place(node):
                 add("POSITION", node, f"{ast.unparse(node.value)}[{ast.unparse(node.slice)}]")
-            elif isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value in FAMILY_WORDS:
+            elif (
+                isinstance(node, ast.Constant)
+                and isinstance(node.value, str)
+                and node.value in FAMILY_WORDS
+            ):
                 add("FAMILY", node, repr(node.value))
     module_containers: dict[str, ast.stmt] = {}
     for stmt in tree.body:
@@ -1158,7 +1237,11 @@ def scan(rel: str, source: str) -> list[Hit]:
             module = node.module or ""
             if module.split(".")[0] in BAD_IMPORTS:
                 add("IMPORT", node, module)
-            if rel not in CARRY_HOME and not exempt(rel, "OPERATION") and module.split(".")[0] in numpy | {"operator"}:
+            if (
+                rel not in CARRY_HOME
+                and not exempt(rel, "OPERATION")
+                and module.split(".")[0] in numpy | {"operator"}
+            ):
                 for alias in node.names:
                     if alias.name in OPERATION_CALLS | OPERATION_DUNDERS:
                         add("OPERATION", node, f"{module}.{alias.name}")
@@ -1208,9 +1291,12 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add("FLOAT", node, f"{name}()")
             if rel not in CARRY_HOME and not exempt(rel, "OPERATION"):
                 if name == "divmod":
-                    add("OPERATION", node, "divmod")  # np.divmod too: the attribute rule gives the same hit, kept once
+                    add(
+                        "OPERATION", node, "divmod"
+                    )  # np.divmod too: the attribute rule gives the same hit, kept once
                 if name in {"getattr", "attrgetter", "methodcaller"} and any(
-                    isinstance(arg, ast.Constant) and arg.value in OPERATION_CALLS | OPERATION_DUNDERS for arg in node.args
+                    isinstance(arg, ast.Constant) and arg.value in OPERATION_CALLS | OPERATION_DUNDERS
+                    for arg in node.args
                 ):
                     add("OPERATION", node, f"{name} of an operation's name")
             if rel == BOARD and any(k.arg == "mode" for k in node.keywords):
@@ -1266,10 +1352,18 @@ def scan(rel: str, source: str) -> list[Hit]:
             if (
                 rel not in CARRY_HOME
                 and not exempt(rel, "OPERATION")
-                and (node.attr in OPERATION_DUNDERS or (node.attr in OPERATION_CALLS and spelt_operation(node, numpy)))
+                and (
+                    node.attr in OPERATION_DUNDERS
+                    or (node.attr in OPERATION_CALLS and spelt_operation(node, numpy))
+                )
             ):
                 add("OPERATION", node, node.attr)
-            if rel == BOARD and node.attr in BOARD_WRAPS and isinstance(node.value, ast.Name) and node.value.id in numpy:
+            if (
+                rel == BOARD
+                and node.attr in BOARD_WRAPS
+                and isinstance(node.value, ast.Name)
+                and node.value.id in numpy
+            ):
                 add("OPERATION", node, f"np.{node.attr}")
             if isinstance(node.value, ast.Name) and node.value.id in numpy:
                 if node.attr in NP_FLOAT:
@@ -1409,7 +1503,9 @@ def rel_of(path: str) -> str:
 def sources_at(repo: Path, rev: str) -> dict[str, str]:
     """The modules of every package under src, the tests and the new engine's tools at a revision, read from git without a checkout."""
     listing = git(repo, "ls-tree", "-r", "--name-only", rev, "--", *SCOPES).stdout.decode().split("\n")
-    tools = [row.split("\t", 1) for row in git(repo, "ls-tree", rev, "tools/").stdout.decode().splitlines()]
+    tools = [
+        row.split("\t", 1) for row in git(repo, "ls-tree", rev, "tools/").stdout.decode().splitlines()
+    ]
     paths = [p for p in listing if p.endswith(".py")] + [
         path for kind, path in tools if kind.split()[1] == "blob" and TOOLS.fullmatch(path)
     ]
@@ -1600,7 +1696,12 @@ def declared_path(path: str) -> bool:
     """Whether the rule DECLARE reads a path: a .json or .py file under the declared scopes, outside an environment or a cache and outside
     the gate's own files, whose fixtures name trains to test the rule (they change only on the owner's word, OWN)."""
     parts = path.split("/")
-    return path.endswith((".json", ".py")) and parts[0] in DECLARED_SCOPES and not DECLARED_SKIP & set(parts) and path not in OWN
+    return (
+        path.endswith((".json", ".py"))
+        and parts[0] in DECLARED_SCOPES
+        and not DECLARED_SKIP & set(parts)
+        and path not in OWN
+    )
 
 
 def line_of(text: str, word: str) -> int:
@@ -1634,14 +1735,18 @@ def declared_json(rel: str, text: str) -> list[Hit]:
                 continue
             if kind == "train" and den is not None and entry.get("pinion") == den:
                 continue
-            number = next((json.dumps(entry[g], sort_keys=True) for g in DECLARED_GEAR if g in entry), "-")
+            number = next(
+                (json.dumps(entry[g], sort_keys=True) for g in DECLARED_GEAR if g in entry), "-"
+            )
             found.append(Hit("DECLARE", rel, line_of(text, name), f"{kind} {name} {number}"))
     return found
 
 
 def coupling_name(node: ast.AST) -> bool:
     """Whether a name or an attribute is called a coupling list (couplings, self.coupling_rows): the rows a world's code lays as lists."""
-    name = node.id if isinstance(node, ast.Name) else node.attr if isinstance(node, ast.Attribute) else ""
+    name = (
+        node.id if isinstance(node, ast.Name) else node.attr if isinstance(node, ast.Attribute) else ""
+    )
     return "coupling" in name.lower()
 
 
@@ -1660,12 +1765,16 @@ def declared_python(rel: str, text: str) -> list[Hit]:
     reformatted line is the same declaration); a pinion spelt den, or as the attribute den of a module (rig.DEN), is the seed."""
     try:
         tree = ast.parse(text)
-    except (SyntaxError, ValueError):
+    except SyntaxError, ValueError:
         return []
     found: list[Hit] = []
     for node in ast.walk(tree):
         rows: list[ast.expr] = []
-        if isinstance(node, ast.Assign) and isinstance(node.value, ast.List) and any(coupling_name(t) for t in node.targets):
+        if (
+            isinstance(node, ast.Assign)
+            and isinstance(node.value, ast.List)
+            and any(coupling_name(t) for t in node.targets)
+        ):
             rows = [row for row in node.value.elts if isinstance(row, ast.List)]
         elif (
             isinstance(node, ast.Call)
@@ -1675,16 +1784,40 @@ def declared_python(rel: str, text: str) -> list[Hit]:
         ):
             rows = [arg for arg in node.args if isinstance(arg, ast.List)]
         for row in rows:
-            found.append(Hit("DECLARE", rel, row.lineno, f"coupling row {ast.unparse(row)}", "", row.col_offset))
+            found.append(
+                Hit("DECLARE", rel, row.lineno, f"coupling row {ast.unparse(row)}", "", row.col_offset)
+            )
         if isinstance(node, ast.Call) and callee_name(node) not in ("dict", ""):
             keywords = {kw.arg: kw.value for kw in node.keywords if kw.arg}
             callee = callee_name(node)
             pinion = keywords.get("pinion")
-            if pinion is not None and fixed_value(pinion) and ast.unparse(pinion).lower().rpartition(".")[2] != "den":
-                found.append(Hit("DECLARE", rel, node.lineno, f"train call {callee} {ast.unparse(pinion)}", "", node.col_offset))
+            if (
+                pinion is not None
+                and fixed_value(pinion)
+                and ast.unparse(pinion).lower().rpartition(".")[2] != "den"
+            ):
+                found.append(
+                    Hit(
+                        "DECLARE",
+                        rel,
+                        node.lineno,
+                        f"train call {callee} {ast.unparse(pinion)}",
+                        "",
+                        node.col_offset,
+                    )
+                )
             strength = keywords.get("strength")
             if strength is not None and literal_integer(strength):
-                found.append(Hit("DECLARE", rel, node.lineno, f"coupling call {callee} strength {ast.unparse(strength)}", "", node.col_offset))
+                found.append(
+                    Hit(
+                        "DECLARE",
+                        rel,
+                        node.lineno,
+                        f"coupling call {callee} strength {ast.unparse(strength)}",
+                        "",
+                        node.col_offset,
+                    )
+                )
         fields: dict[str, ast.expr]
         if isinstance(node, ast.Dict):
             fields = {
@@ -1700,7 +1833,9 @@ def declared_python(rel: str, text: str) -> list[Hit]:
         if isinstance(name, ast.Constant) and isinstance(name.value, str) and "pinion" in fields:
             number = ast.unparse(fields["pinion"])
             if number.lower().rpartition(".")[2] != "den":
-                found.append(Hit("DECLARE", rel, node.lineno, f"train {name.value} {number}", "", node.col_offset))
+                found.append(
+                    Hit("DECLARE", rel, node.lineno, f"train {name.value} {number}", "", node.col_offset)
+                )
     return found
 
 
@@ -1732,7 +1867,9 @@ def blobs_at(repo: Path, rev: str, paths: list[str]) -> dict[str, str]:
     """The text of each path at a revision, read from git in one call; a path the revision does not hold is left out."""
     if not paths:
         return {}
-    payload = git(repo, "cat-file", "--batch", stdin="".join(f"{rev}:{p}\n" for p in paths).encode()).stdout
+    payload = git(
+        repo, "cat-file", "--batch", stdin="".join(f"{rev}:{p}\n" for p in paths).encode()
+    ).stdout
     stream = io.BytesIO(payload)
     found: dict[str, str] = {}
     for path in paths:
@@ -1748,7 +1885,11 @@ def blobs_at(repo: Path, rev: str, paths: list[str]) -> dict[str, str]:
 
 def declared_sources_at(repo: Path, rev: str) -> dict[str, str]:
     """Every file the rule reads at a revision (the audit's reading)."""
-    listing = git(repo, "ls-tree", "-r", "--name-only", rev, "--", *DECLARED_SCOPES).stdout.decode().splitlines()
+    listing = (
+        git(repo, "ls-tree", "-r", "--name-only", rev, "--", *DECLARED_SCOPES)
+        .stdout.decode()
+        .splitlines()
+    )
     return blobs_at(repo, rev, [p for p in listing if declared_path(p)])
 
 
@@ -1764,7 +1905,9 @@ def changed_declared(
         if parts[0][0] != "D" and declared_path(parts[-1]):
             found.append((parts[0][0], parts[1], parts[-1]))
     if untracked:
-        listing = git(repo, "ls-files", "--others", "--exclude-standard", "--", *DECLARED_SCOPES).stdout.decode()
+        listing = git(
+            repo, "ls-files", "--others", "--exclude-standard", "--", *DECLARED_SCOPES
+        ).stdout.decode()
         found += [("A", p, p) for p in listing.splitlines() if declared_path(p)]
     return found
 
@@ -1775,7 +1918,9 @@ def declared_new(
     """The declarations a push adds over its merge base, in the files it changes alone (a declaration is read from its own file, so a
     file that did not change holds what it held): above what the base held in the same file (a rename is no new hit), less what the
     owner's list allows. The head is a revision, else the working tree `root` (with the index when `cached`)."""
-    changes = changed_declared(repo, base, *([head] if head else []), cached=cached, untracked=not head and not cached)
+    changes = changed_declared(
+        repo, base, *([head] if head else []), cached=cached, untracked=not head and not cached
+    )
     if not changes:
         return []
     olds = blobs_at(repo, base, [old for status, old, _ in changes if status != "A"])
@@ -1806,7 +1951,11 @@ def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout
         print(f"the gate cannot resolve {rev}", file=out)
         return 0
     name, mb = merge_base(repo, base, commit)
-    touched = git(repo, "diff", "--name-only", mb, commit, "--", *SCOPES, TOOLS_SPEC, *OWN).stdout.decode().split()
+    touched = (
+        git(repo, "diff", "--name-only", mb, commit, "--", *SCOPES, TOOLS_SPEC, *OWN)
+        .stdout.decode()
+        .split()
+    )
     declared = declared_new(repo, mb, commit)
     if not touched and not declared:
         return 0
@@ -2059,7 +2208,9 @@ def main(argv: list[str]) -> int:
         print(f"written: {len(found)} hits in {len(sources)} modules")
         return 0
     if args.all:
-        listing = found + declared_hits(declared_sources_at(repo, rev) if by_rev else declared_sources_in(repo))
+        listing = found + declared_hits(
+            declared_sources_at(repo, rev) if by_rev else declared_sources_in(repo)
+        )
         summary(listing) if args.summary else [
             print(f"{h.tier:5s} {h.rule:7s} {h.rel}:{h.line}  {h.detail}") for h in listing
         ]
