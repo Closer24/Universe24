@@ -2881,6 +2881,59 @@ def main() -> int:
         print(f"PARTED  a new package: a clamp and a number gave {len(fresh)} new, not 2")
     else:
         print("ok      a new package: every hit in it is new")
+    # the ceiling: what may stand at a key of the new engine is capped at the ceiling, the base's count included; a key it does not hold stands at 0
+    loops = gate.scan(
+        NEW_LOADER, "def f(a):\n    for x in a:\n        pass\n    for y in a:\n        pass\n"
+    )
+    held = Counter(h.key for h in loops)  # two loops, as the merge base holds them
+    loop_key = next(k for k in held if k[0] == "LOOP")
+    saved = gate.ceiling, gate.allowance, gate.readings
+    gate.allowance = lambda repo=gate.REPO: Counter()
+    gate.readings = lambda repo=gate.REPO: Counter()
+    try:
+        outside = gate.scan("another_engine/core.py", "def f(a):\n    return min(a, 5)\n")
+        outside_held = Counter(h.key for h in outside)
+        ceiling_cases = (
+            (
+                "two loops, two at the base, one at the ceiling: one new",
+                Counter({loop_key: 1}),
+                loops,
+                held,
+                1,
+            ),
+            ("two loops, two at the base, no ceiling file: none new", None, loops, held, 0),
+            (
+                "two loops, two at the base, a ceiling that holds no such key: two new",
+                Counter(),
+                loops,
+                held,
+                2,
+            ),
+            (
+                "two loops, two at the base, three at the ceiling: none new",
+                Counter({loop_key: 3}),
+                loops,
+                held,
+                0,
+            ),
+            (
+                "a clamp and a number outside the new engine, at the base, an empty ceiling: none new",
+                Counter(),
+                outside,
+                outside_held,
+                0,
+            ),
+        )
+        for name, bound, now, stands, want in ceiling_cases:
+            gate.ceiling = lambda repo=gate.REPO, bound=bound: bound
+            got = len(gate.above(now, Counter(stands)))
+            if got != want:
+                parted += 1
+                print(f"PARTED  the ceiling: {name} gave {got} new, not {want}")
+            else:
+                print(f"ok      the ceiling: {name}")
+    finally:
+        gate.ceiling, gate.allowance, gate.readings = saved
     tool_total, tool_parted = tool_cases()
     parted += tool_parted
     key_total, key_parted = key_cases()
@@ -2888,7 +2941,7 @@ def main() -> int:
     declare_total, declare_parted = declare_cases()
     parted += declare_parted
     print(
-        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + declare_total + 2} cases, {parted} parted"
+        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + declare_total + 2 + 5} cases, {parted} parted"
     )
     return 1 if parted else 0
 
