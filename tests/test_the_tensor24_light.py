@@ -93,12 +93,12 @@ def alike(m, heads):
         spokes = np.arange(6 * nb.shape[1]).reshape(6, -1)
         for act in seen:
             grip = np.concatenate([np.asarray(g, dtype=object).reshape(-1) for g in act["grip"]])
-            layout = Layout(nb, spokes, grip, None, None, None)
+            layout = Layout(nb, spokes, grip.reshape(1, -1), None, None, None, None)
             w, wp = (np.asarray(act[key], dtype=object).reshape(1, -1) for key in ("w", "wp"))
             off = ~act["top"]
             for (a, b, r), done, end in zip(act["start"], act["act"], act["end"], strict=True):
                 zero = 0 * a
-                pull = m.pull(layout, State(a, b, r, zero, zero, zero, zero))
+                pull = m.pull(layout, State(a, b, r, zero, zero, zero, zero, zero))
                 ticked = m.gear(a, b, r, zero, w, wp, pull)
                 if not (
                     same(ticked, done)
@@ -111,7 +111,7 @@ def alike(m, heads):
 def mutants():
     """Broken copies of the act, each with what it replaces: the comparison must part on every one."""
     pull, gear = mesh.pull, step.gear
-    first = lambda grip: grip * (np.arange(len(grip)) >= len(grip) // 6)  # noqa: E731
+    first = lambda grip: grip * (np.arange(grip.shape[-1]) >= grip.shape[-1] // 6)  # noqa: E731
     return {
         "the push's sign": {"gear": lambda a, b, r, go, w, wp, push: gear(a, b, r, go, w, wp, -push)},
         "the gear carried at W, not W+": {

@@ -6,10 +6,10 @@ import numpy as np
 import pytest
 
 from tensor24.engine import step
-from tensor24.engine.state import Layout, State
+from tensor24.engine.state import State
 from tensor24.runner import board
 from tests.frame import board as modelled
-from tests.frame import meshes_of
+from tests.frame import meshes_of, plain
 
 SHAPES = ((3, 3, 3), (4, 5, 6), (3, 4, 7), (1, 1, 1), (7, 7, 7))
 SIDE, GAMMA, ROUNDS = 7, 9, 60  # the cone's board, its full rate and its rounds
@@ -40,9 +40,9 @@ def alike(m):
 
 def ahead(layout, s):
     """The neighbour's now slot read whatever its time: a slot written a count ahead is seen early."""
-    nb, meshes, grip, _, _, _ = layout
-    a, _, _, _, _, _, _ = s
-    return ((a[:, nb] - a[:, None, :]) * grip[meshes]).sum(axis=1)
+    nb, meshes, grip, _, _, _, _ = layout
+    a, _, _, _, _, _, _, _ = s
+    return ((a[:, nb] - a[:, None, :]) * grip[:, meshes]).sum(axis=1)
 
 
 def row(rng, low, high):
@@ -60,8 +60,8 @@ def world(seed, rate=None):
         row(rng, *ends) for ends in ((-99, 99), (-99, 99), (0, 1 << 20), (0, 2), (0, GAMMA), (0, 1))
     )
     return (
-        Layout(nb, meshes, grip, w, rates, GAMMA),
-        State(a, b, r % w, go, ph, zero, zero),
+        plain(nb, meshes, grip, w, rates, GAMMA),
+        State(a, b, r % w, go, 0 * a, ph, zero, zero),
         rng,
     )
 

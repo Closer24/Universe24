@@ -6,13 +6,14 @@ import itertools
 import numpy as np
 import pytest
 
-from tensor24.engine.contract import Plan, contract
-from tensor24.engine.state import Layout, State
+from tensor24.engine.contract import contract
+from tensor24.engine.state import Plan, State
 from tensor24.engine.step import tick, untick
 from tensor24.main import made as joint
 from tensor24.runner.board import board
 from tensor24.runner.files import COUPLING, OPERANDS
 from tensor24.runner.load import load, promises
+from tests.frame import plain
 
 D = 3
 SITES = 8
@@ -239,16 +240,16 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
     last = sum(DIMS[k] for k in TRAINS[-1]["kinds"]) * TRAINS[-1]["part"]  # the last train's rows
     laid = [(0, rows - 1, site, now, before, tooth), (len(TRAINS) - 1, last - 1, site, before, now, 0)]
     held, found = loaded(made, universe(), laid)
-    a, b, r, go, *clocks = held.state
+    a, b, r, go, rd, *clocks = held.state
     assert found == [] and (a[rows - 1, site], b[rows - 1, site], r[rows - 1, site]) == (
         now,
         before,
         tooth,
     )
     assert (a[ROWS - 1, site], b[ROWS - 1, site]) == (before, now)
-    assert (a.shape, b.shape, r.shape, go.shape) == ((ROWS, SITES),) * len("abrg")
+    assert (a.shape, b.shape, r.shape, go.shape, rd.shape) == ((ROWS, SITES),) * len("abrgd")
     assert all(x.shape == (1, SITES) for x in clocks) and all(x.dtype == object for x in held.state)
-    assert not go.any() and not any(x.any() for x in clocks)
+    assert not go.any() and not rd.any() and not any(x.any() for x in clocks)
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1
     held, found = loaded(made, universe(), [(0, rows, site, now, before, 0)])
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
@@ -271,10 +272,10 @@ def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
 def rewound(r, w, rate, gamma, dial=0):
     """One round of every gear on a ring of sites and its run back from the out: the start back exactly, or not."""
     nb, meshes = board((SITES, 1, 1))
-    layout = Layout(nb, meshes, np.ones(D * SITES, dtype=object), w, rate, gamma)
+    layout = plain(nb, meshes, np.ones(D * SITES, dtype=object), w, rate, gamma)
     a = np.arange(SITES, dtype=object)[None, :] + 0
     clocks = 0 * a
-    s = State(a, a - 1, r, 0 * a, clocks + dial, clocks, clocks)
+    s = State(a, a - 1, r, 0 * a, 0 * a, clocks + dial, clocks, clocks)
     now, out = tick(layout, s, clocks + 1)
     return all((x == y).all() for x, y in zip(untick(layout, now, out), s, strict=True))
 
@@ -358,12 +359,10 @@ def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
 
 
 def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
-    """Whichever of the lay's five arrays the machine's memory refuses, the board is named and nothing raises."""
+    """Whichever of the lay's six arrays the machine's memory refuses, the board is named and nothing raises."""
     ks, c = made
     zeros = np.zeros
-    for after in range(
-        len("abrgc")
-    ):  # a, b, r, the going and the clocks: `after` made, the next refused
+    for after in range(len("abrgdc")):  # a, b, r, the going, the drive's tooth, the clocks: `after` made
         asked = []
 
         def refused(*args, after=after, asked=asked, **kwargs):

@@ -154,10 +154,10 @@ def plan(
 
 
 def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[Z, ...], list[str]]:
-    """The setting's gears laid on the trains' rows, every going, dial, count and time at 0; a component off its train's, named."""
+    """The setting's gears laid on the trains' rows, every going, drive's tooth, dial, count and time at 0; one off, named."""
     rows = sum(t.rows() for t in trains)
     try:
-        a, b, r, go = (np.zeros((rows, sites), dtype=object) for _ in ("a", "b", "r", "go"))
+        a, b, r, go, rd = (np.zeros((rows, sites), dtype=object) for _ in ("a", "b", "r", "go", "rd"))
         clocks = np.zeros((1, sites), dtype=object)
     except (ValueError, MemoryError) as error:
         return (), [
@@ -172,7 +172,7 @@ def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[
             continue
         row = trains[train].first + component
         a[row, site], b[row, site], r[row, site] = now, before, tooth
-    return (a, b, r, go, clocks, clocks, clocks), found
+    return (a, b, r, go, rd, clocks, clocks, clocks), found
 
 
 def promises(r: Z, w: Z, rate: Z, gamma: Z) -> list[str]:
