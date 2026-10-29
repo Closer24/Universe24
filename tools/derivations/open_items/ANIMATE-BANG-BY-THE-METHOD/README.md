@@ -41,6 +41,10 @@ The owner's word to Animate, 04:2x UTC on 2026-10-29 (in Hebrew; in translation)
    - Once stage 7b reads the rate from c, the second promise (every rate within the full rate, so the beat's k a bit) refuses that.
    - **Under Sofer's reading of 7b** (6487859710, item 2: the lapse in the beat, with p0 read from c), the bottom meets the beat itself. A count below 0 makes p0 above Gamma, and the beat's carry k = (ph + p0) div Gamma can then be 2. The act's choice by the bit k cannot read a k of 2.
    - **Asked of 7b:** where the bottom of a swing stands as the act writes it. No floor may hold it (Postulate 5).
+   - **Answered by David** (6488418223, item 3; Sofer withdrew (c) in 6488350975):
+     - the time gear keeps its count as the act gives it, below 0 included, so there is no floor on the gear;
+     - only the ruler's reading of the load reads a hill at 0, by one whether (nonneg) at the gather. That is the owner's word of 2026-10-27, 18:5x UTC: no clock runs faster than the full rate;
+     - the beat stays at the full rate (the plan's line 422), so the beat's k stays a bit.
 6. **The seed does not return exactly: follows by itself once matter moves.**
    - The run: a hand turning on its own spring and grips, with one Node-clock holding one notch more (the seed's one tooth), its density the count's source.
    - The 7 swings in 1,000 ticks all differ: their tops stand between 1,635 and 1,750, and they last 137 to 145 ticks.
@@ -79,6 +83,7 @@ The owner's word to Animate, 04:2x UTC on 2026-10-29 (in Hebrew; in translation)
    - **The count's waves there** run at sqrt(s grip / W) = 1 / sqrt 6 Mesh per tick. That is light's speed at the doubler's hold, item (g) way (a).
    - **Gravity's reach there** is sqrt(grip / D) = sqrt(Gamma / 12): measured at 9.97 Meshes at Gamma 1,200, where sqrt(Gamma / 12) = 10.00.
    - **David's sqrt(Gamma / 6)** holds at light's 1 / sqrt 3 (Postulate 3), which needs a grip of W / 3.
+   - **Taken:** David takes sqrt(Gamma / 12) at the doubler's hold (6488192915, item 3), and the law's line 35 carries it (scribe-5 32b539636).
    - **What it changes:** the swing's period reads D / W alone, so the bang's length is the same either way. Gravity's reach, and the bound it sets on Gamma, differ by a factor of 2 in Gamma.
 
 ## The files
