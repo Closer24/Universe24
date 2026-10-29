@@ -672,6 +672,12 @@ On the owner's word to David: "a generic solution for everything". This is David
     - **The reviewers:** when Sofer calls the picture coherent and the four approve it by name, a fresh architect, a fresh hostile mathematician and a fresh hostile physicist read the whole, and their findings are answered before the next step.
     - **Then the engine:** the picture is unified into the engine in the plan's order (the doubled Node-clock's backward dial, stage 9's two clicks, the runner's passes, then 7c, 8 and 11), each stage under decision 27's rule of reviews; the owner is told when it starts.
     - **Until then:** no engine code; probes beside the engine alone.
+33. **(ag) No switch: the Node-clock is always doubled. APPROVED (the owner's word to the Boss of 2026-10-29, 10:3x UTC, in Hebrew; in translation: "No need for a flag..."; read by the Boss as the universe file's switch of decision 29, and so told to him).**
+    - **Retired:** decision 29's third part, the universe file's whether `backward`. No file switches the backward half on or off; every Node-clock of every world is doubled.
+    - **The law's gain:** **The one Node-clock** (ALGEBRA.md line 504) needs no exception: nothing of the Node-clock is switched by any file. The gate's keys list drops INTEGERS.backward and UNIVERSE.integers.backward, and the record's header names no switch.
+    - **What stays:** the product draw and the take by way (b), decision 29's first two parts.
+    - **The control that the switch gave** (the big picture's 10.2, test 5) becomes a test of the engine: a backward dial held silent, sigma_b alike at every part, draws by law 9 exactly, Born, and leaves every count of the first aim as the forward board alone gives it.
+    - **The one tick:** decision 30's check is in (tensor24-review 9a7db7432). The backward half is the same tick on the mirrored state (T S T = S^-1, exact on 7b's whole state), with the forward log's fire as its mask where counts are staggered.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
