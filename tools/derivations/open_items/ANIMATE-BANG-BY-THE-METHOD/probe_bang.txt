@@ -1,0 +1,16 @@
+(1) the swing: the count on a board alike everywhere, a held density m m = 900 a tick at every Node-clock
+  Gamma 1,000, W 500, D 1 (D / W = 2 / Gamma), 1500 ticks: 11 tops and 10 lows; the lows at [140, 280, 421, 561, 702]...; the swings 140 to 141 ticks against 2 pi sqrt(Gamma / 2) = 140.5
+    the tops' heights [1797, 1799, 1800, 1801, 1802, 1803, 1804] (the count's rest at the source over D, 900, and twice it at the top); the lows' depths [-4, -3, -2, -1, 0, 1]; the run back through every swing: True
+  Gamma 4,000, W 2000, D 1 (D / W = 2 / Gamma), 1500 ticks: 5 tops and 5 lows; the lows at [279, 560, 841, 1122, 1403]...; the swings 281 to 281 ticks against 2 pi sqrt(Gamma / 2) = 281.0
+    the tops' heights [1799, 1800, 1801] (the count's rest at the source over D, 900, and twice it at the top); the lows' depths [0, 2, 3, 4]; the run back through every swing: True
+  no spring, Gamma 1,000, W 500: the count at 100, 300, 600: 9,090, 81,270, 324,540; tops 0; the run back: True
+  30,000 ticks at Gamma 1,000: 214 swings, each 140 or 141 ticks, their mean 140.481 against the act's own 2 pi / (2 asin(sqrt(D / W) / 2)) = 140.485; the run back: True
+    swings 1 to 30: tops 1795 to 1804, lows -4 to 4, swings 31 to 60: tops 1787 to 1801, lows 0 to 12, swings 61 to 120: tops 1786 to 1794, lows 6 to 14, swings 121 to 214: tops 1788 to 1804, lows -4 to 13
+(2) the matter moving: a hand turning on its own spring and grips, the seed's one tooth at one Node-clock, its density the count's source ((4, 4, 4), Gamma 1,000)
+  7 tops of the count's mean, at [70, 211, 349, 488, 633, 770, 915]; their heights [1674.5, 1635.2, 1675.9, 1665.4, 1652.6, 1749.9, 1691.1]
+  the count's spread over the board (largest less smallest) at each top: [8, 31, 12, 26, 48, 15, 44]
+  the books on the board (the summed impulse moved by the summed kick less D times the summed count): exact at 1000 of 1000 ticks; the run back through every swing: True
+(3) the reach on a chain (Gamma 1,200, W 600, grip 100 per Mesh, D 1; the count's mean over 3,000 ticks, about 19 swings):
+  the decay length 9.97 Meshes; sqrt(grip / D) = 10.00 (the lattice's, from 2 cosh(1 / L) - 2 = D / grip: 10.00); sqrt(Gamma / 12) = 10.00; David's sqrt(Gamma / 6) = 14.14; the run back: True
+  the count's own wave speed sqrt(s grip / W) = 0.408 Mesh per tick (1 / sqrt 6 = 0.408; light's 1 / sqrt 3 = 0.577, Postulate 3); the swing's period 2 pi sqrt(W / D) = 153.9 ticks reads D / W alone
+  a local bang: the count at the source's own Node-clock tops at [50, 57, 62, 131, 139] ([722, 740, 733, 341, 334]) and returns at [51, 61, 121, 128, 135] ([721, 732, 360, 335, 331]), its settled level 499
