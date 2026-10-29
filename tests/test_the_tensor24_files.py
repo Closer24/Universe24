@@ -33,7 +33,48 @@ def edits():
     def gear(row, named):
         return "setting", lambda s: s["gears"].append(row), named and f"setting.gears[1]: {named}"
 
+    def at(name, *path, null=False):
+        """The file's key at the path taken away, or given as null where a file may leave it out."""
+
+        def edit(held):
+            for key in path[:-1]:
+                held = held[key]
+            held.update({path[-1]: None}) if null else held.pop(path[-1])
+
+        return name, edit
+
+    whole = "a whole number of at least 1, not None"
+    gone = {  # every key the format requires, each named where it stands when it is absent
+        ("universe", "version"): "universe.version: 1, not None",
+        ("universe", "integers"): "universe.integers: a mapping, not NoneType",
+        ("universe", "trains"): "universe.trains: a list of one train or more",
+        **{
+            ("universe", "integers", k): f"universe.integers.{k}: {whole}"
+            for k in ("den", "full_rate", "key", "trace")
+        },
+        ("universe", "trains", 0, "name"): f"{train}.name: a label, not None",
+        ("universe", "trains", 0, "kinds"): f"{train}.kinds: a list of the kinds' labels, not None",
+        ("universe", "trains", 0, "part"): f"{train}.part: {whole}",
+        ("universe", "trains", 0, "pinion"): f"{train}.pinion: a whole number within [0, den], not None",
+        ("piece", "version"): "piece.version: 1, not None",
+        (
+            "piece",
+            "shape",
+        ): "piece.shape: one side per axis, each a whole number of at least 1, not None",
+        ("setting", "version"): "setting.version: 1, not None",
+        ("setting", "ticks"): "setting.ticks: a whole number of at least 0, not None",
+    }
+    nulls = {  # a key a file may leave out is not left out by a null
+        ("universe", "couplings"): "universe.couplings: a list of rows, not NoneType",
+        ("setting", "gears"): "setting.gears: a list of rows, not NoneType",
+        ("universe", "trains", 0, "weight"): f"{train}.weight: a whole number, not None",
+    }
     return {
+        **{f"no {'.'.join(map(str, path))}": (*at(*path), named) for path, named in gone.items()},
+        **{
+            f"a null {'.'.join(map(str, path))}": (*at(*path, null=True), named)
+            for path, named in nulls.items()
+        },
         "a version that is a float": (
             "universe",
             lambda u: u.update(version=1.0),
@@ -312,3 +353,15 @@ def test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its
     )
     found = departures(*paths)
     assert any(named in line for line in found) if named else found == [], found
+
+
+def test_two_departures_of_one_file_are_each_named_once(tmp_path):
+    paths = [EXAMPLES / f"{name}.json" for name in NAMES]
+    held = json.loads(paths[0].read_text(encoding="utf-8"))
+    held["version"], held["integers"]["key"] = 1 + 1, 0
+    paths[0] = tmp_path / "universe.json"
+    paths[0].write_text(json.dumps(held), encoding="utf-8")
+    assert sorted(departures(*paths)) == [
+        "universe.integers.key: a whole number of at least 1, not 0",
+        "universe.version: 1, not 2",
+    ]

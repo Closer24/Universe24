@@ -1,0 +1,45 @@
+(1) Jointly uniform digits, every tuple enumerated once
+ bases (5, 7, 9), the head's modulus M 100
+  mixed radix by carry (no sort/cap) room   315  values hit   315  counts min/max 1/1  uniform True  P(up | 1,1) = 158/315 = 0.5016
+  sum by carry, room 5               room     5  values hit     5  counts min/max 63/63  uniform True  P(up | 1,1) = 3/5 = 0.6000
+  MUTANT head: sorted, capped at M   room   100  values hit    95  counts min/max 0/8  uniform False  P(up | 1,1) = 188/315 = 0.5968
+  MUTANT unsorted, capped at M       room   100  values hit   100  counts min/max 3/4  uniform False  P(up | 1,1) = 11/21 = 0.5238
+ bases (10, 10, 10), the head's modulus M 1000
+  mixed radix by carry (no sort/cap) room  1000  values hit  1000  counts min/max 1/1  uniform True  P(up | 1,1) = 1/2 = 0.5000
+  sum by carry, room 10              room    10  values hit    10  counts min/max 100/100  uniform True  P(up | 1,1) = 1/2 = 0.5000
+  MUTANT head: sorted, capped at M   room  1000  values hit   220  counts min/max 0/6  uniform False  P(up | 1,1) = 7/8 = 0.8750
+  MUTANT unsorted, capped at M       room  1000  values hit  1000  counts min/max 1/1  uniform True  P(up | 1,1) = 1/2 = 0.5000
+ bases (6, 6, 6, 6), the head's modulus M 1296
+  mixed radix by carry (no sort/cap) room  1296  values hit  1296  counts min/max 1/1  uniform True  P(up | 1,1) = 1/2 = 0.5000
+  sum by carry, room 6               room     6  values hit     6  counts min/max 216/216  uniform True  P(up | 1,1) = 1/2 = 0.5000
+  MUTANT head: sorted, capped at M   room  1296  values hit   126  counts min/max 0/24  uniform False  P(up | 1,1) = 15/16 = 0.9375
+  MUTANT unsorted, capped at M       room  1296  values hit  1296  counts min/max 1/1  uniform True  P(up | 1,1) = 1/2 = 0.5000
+ bases (8, 8, 8), the head's modulus M 64
+  mixed radix by carry (no sort/cap) room   512  values hit   512  counts min/max 1/1  uniform True  P(up | 1,1) = 1/2 = 0.5000
+  sum by carry, room 8               room     8  values hit     8  counts min/max 64/64  uniform True  P(up | 1,1) = 1/2 = 0.5000
+  MUTANT head: sorted, capped at M   room    64  values hit    36  counts min/max 0/39  uniform False  P(up | 1,1) = 1/2 = 0.5000
+  MUTANT unsorted, capped at M       room    64  values hit    64  counts min/max 8/8  uniform True  P(up | 1,1) = 1/2 = 0.5000
+ bases (2, 3, 4, 5), the head's modulus M 120
+  mixed radix by carry (no sort/cap) room   120  values hit   120  counts min/max 1/1  uniform True  P(up | 1,1) = 1/2 = 0.5000
+  sum by carry, room 2               room     2  values hit     2  counts min/max 60/60  uniform True  P(up | 1,1) = 1/2 = 0.5000
+  MUTANT head: sorted, capped at M   room   120  values hit    58  counts min/max 0/6  uniform False  P(up | 1,1) = 4/5 = 0.8000
+  MUTANT unsorted, capped at M       room   120  values hit   120  counts min/max 1/1  uniform True  P(up | 1,1) = 1/2 = 0.5000
+ mixed radix uniform at every case: True
+ sum by carry uniform at every case: True
+ sorted mutant uniform at any case: []
+ capped mutant uniform exactly where M divides prod b: [((5, 7, 9), 100, False), ((10, 10, 10), 1000, True), ((6, 6, 6, 6), 1296, True), ((8, 8, 8), 64, True), ((2, 3, 4, 5), 120, True)]
+
+(2) The one-digit lemma: one digit uniform on [0, room) and independent; the others ANY law (here the sorted
+    mutant's own biased c, and a constant): the sum by carry is still uniform on [0, room)
+  others = sorted mutant's c (biased)      counts per residue [1000]  uniform True
+  others = constant 7                      counts per residue [1]  uniform True
+  and with NO uniform digit (both from the sorted mutant): counts min/max 30502/144622, uniform False
+
+(3) The 24 on the six Meshes' digits: the cube's rotations permute the faces +x,-x,+y,-y,+z,-z
+  rotations generated: 24
+  over 729 tuples x 24 turns at base 3: mixed radix changed 16128 times, sum by carry 0 times
+  the sum by carry over the six Meshes: counts {0: 243, 1: 243, 2: 243} (uniform on [0, 3))
+
+(4) Born's pick on a uniform c: part k's count is ceil(sig_<=k room/S) - ceil(sig_<k room/S),
+    exactly sig_k room / S where S divides room, within one count otherwise (every room < 80, sizes < 6)
+  50955 part-cases: within one count 50955; at S | room exact in every case: True

@@ -1,0 +1,16 @@
+(1) M = W (a - b) + r and M+ = M + push, on a ring of 4, W 7, D 1, grip 1, 40 ticks from a moving state
+   holds at every site and tick: True
+
+(2a) Site 0's fine tooth over all of [0, 7), the rest of the state fixed; its law at the ticks 1 to 6
+   D 1, grip 1: residues hit at site 0 per tick (U = all 7, once each): ['U', '4/7', '5/7', '5/7', '5/7', '5/7']
+   D 0, grip 1: residues hit at site 0 per tick (U = all 7, once each): ['U', '5/7', '3/7', '6/7', '6/7', '5/7']
+   D 7, grip 0: residues hit at site 0 per tick (U = all 7, once each): ['U', 'U', 'U', 'U', 'U', 'U']
+   D 0, grip 0: residues hit at site 0 per tick (U = all 7, once each): ['U', 'U', 'U', 'U', 'U', 'U']
+
+(2b) All four sites' fine teeth jointly over [0, 7)^4 (2,401 states), D 1, grip 1: the images' count
+   tick  1: distinct joint fine-teeth images 2401 of 2401; site 0's law {0: 343, 1: 343, 2: 343, 3: 343, 4: 343, 5: 343, 6: 343}
+   tick  2: distinct joint fine-teeth images 1267 of 2401; site 0's law {2: 294, 3: 637, 4: 686, 5: 686, 6: 98}
+   tick  3: distinct joint fine-teeth images 1332 of 2401; site 0's law {0: 265, 1: 85, 2: 323, 3: 378, 4: 601, 5: 363, 6: 386}
+   tick  5: distinct joint fine-teeth images 1419 of 2401; site 0's law {0: 298, 1: 221, 2: 337, 3: 376, 4: 364, 5: 375, 6: 430}
+   tick  8: distinct joint fine-teeth images 1473 of 2401; site 0's law {0: 246, 1: 331, 2: 272, 3: 420, 4: 434, 5: 369, 6: 329}
+   tick 13: distinct joint fine-teeth images 1526 of 2401; site 0's law {0: 380, 1: 324, 2: 267, 3: 327, 4: 329, 5: 375, 6: 399}

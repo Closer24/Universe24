@@ -12,7 +12,6 @@ from typing import Any, NamedTuple, TypeGuard
 
 NAMES = ("universe", "piece", "setting")
 VERSION = 1
-INTEGERS = ("den", "full_rate", "key", "trace", "width")
 PAIR = ("pinion", "sine")  # a hand's Gaussian pair over den; a train of one gear holds its pinion alone
 COUPLING = (
     *("train", "kind", "part", "operand"),
@@ -51,10 +50,11 @@ SIDES = Rule(
     "one side per axis, each a whole number of at least 1",
 )
 # Each file's keys and what each holds: a rule, a mapping, a list of one train or more, or rows of the fields named.
-TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, **dict.fromkeys(PAIR), "weight": WHOLE}
+# every key a literal, so that the gate reads each one (the note KEYS)
+TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, "pinion": None, "sine": None, "weight": WHOLE}
 UNIVERSE = {
     "version": VERSIONED,
-    "integers": dict.fromkeys(INTEGERS, ONE),
+    "integers": {"den": ONE, "full_rate": ONE, "key": ONE, "trace": ONE, "width": ONE},
     "trains": [TRAIN],
     "couplings": COUPLING,
 }

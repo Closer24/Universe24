@@ -2,7 +2,7 @@
 
 Each review is a fresh reader who did not write the code, run on the review branch tensor24-review: it approves only
 what it could not break, with evidence it ran. Every change it asks is made before the branch moves to the three
-integration branches. The fourth to thirteenth reports are here, the fourth, fifth and the seventh to eleventh with
+integration branches. The fourth to fourteenth reports are here, the fourth, fifth and the seventh to eleventh with
 the probes their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
 
 | review | commits read | verdict | the changes, where |
@@ -20,6 +20,7 @@ the probes their authors are to run; the first three stand in the Boss's posts o
 | eleventh | 9e5233d7f (stage 7a) | approve with changes, one: the run back with every divisor row away from 1 | the commit that adds eleventh/ |
 | twelfth | ac2f5689f, 69eb983f9, 06c823ca2 (the decoder after the seventh review, the gate's amendment 4) | approve with changes, six, all the decoder's | Animate's, asked on #2187 |
 | thirteenth | fc8c810ff, 610fef782, d61cdb7bd, e0c52c053 (the engine since the tenth) | approve with changes, two of text: the charge identity's condition, and item (u) put to the owner | the commit that adds thirteenth/ |
+| fourteenth | cb7a54943, c98cf9154, a49138552, 1de239790, 1a4d1fdfe (the merged engine tests, the files' one checker, the room by file) | approve with changes, four: the room counted twice, the checker's tests, the keys hidden from the note KEYS, two of text | the commit that adds fourteenth/ |
 
 From the twelfth on, a review leaves its report alone here (the owner's word of 2026-10-29, 02:5x UTC, the plan's
 decision 26): its probes stay in the reader's scratch, each named in the report, and the Boss gives an author the
