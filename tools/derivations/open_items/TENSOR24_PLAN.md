@@ -693,6 +693,38 @@ On the owner's word to David: "a generic solution for everything". This is David
       - Animate: the record's reading of a particle, a stable composite's beat and windings;
       - the Boss: the act's own numbers and the three probes.
 
+36. **(aj) The same clock and the same ruler for every act, the time gear among them: no exception to a generic rule, and no contradiction with nature. APPROVED (the owner's words to the Boss of 2026-10-29, 12:0x UTC, in Hebrew; in translation: "2 matches the usual generic rule. How did a rule that makes an exception get in at all?" and "3: there is no contradiction with nature."; on the Boss's report of 11:5x, items 2 and 3).**
+    - **The rule:** **The same clock and the same ruler for every act** (ALGEBRA.md line 693) holds with no exception. The time gear's teeth read the ruler at its own count (W = Z_b + Z_n and W+ = Z_n + Z_+, Z = T Y^4 div Gamma^4), and its spring reads Y^2, as a massive train's do: David's road A (6495164657). It replaces "the time gear stands on its own teeth (T, 1) ... it never reads the ruler, so no clock stops": decision 25's "the drive at fixed teeth", the picture's section 4, and runner/load.py's gearing, where the time gear's row reads no ruler.
+    - **What it gives** (derived in toys, owed on the act): with X = e^(4U) the time gear's momentum is W U' = X'/4, so its act is X'' = 4F, the volume's law in the time gear's own momentum, the 4 being 3 + 1. Its attractor is Friedmann's form for any mix of light and matter, with a stiff mode for the bounce and the spring as a slowly varying dark energy below its center (6495923568). Postulate 6 holds: the force stays linear in the count, and the statics are untouched.
+    - **No exception to a generic rule:** an exception enters only where a symmetry derives it. An engineering problem that seems to force one is booked as open by name, and the exception does not enter. This one came in for two engineering problems, neither a law:
+      - the step that reads its own count is implicit (the ruler as the gear could not run back, decision 25). It is to be solved within the rule: the step on the volume, explicit and reversible, or a monotone search for the stride (the Boss's probe);
+      - the ruler's end (past the stopped load the rate rounds to 0; David's course page, section 4). There the carry's remainder holds the impulse, so the clock slows and does not stop.
+    - **No contradiction with nature:** no road C. What road A leaves stays open by name and is to close in agreement with nature, never booked as a contradiction:
+      - the tensor waves: the spatial block's shears, E + T2, the other family;
+      - the late acceleration: the spring's door, the act's ratio of D0 to the push;
+      - the horizon: N = e^-U is never 0 (David's shadow test, 2 e M against 5.20 M);
+      - the large-number relation, if the swing is the cosmic cycle;
+      - the fixed point probe's ratchet: on 7b light's amplitude rises at each bang until the bang is lost, where nature's light keeps its number through an expansion.
+    - **Owed:**
+      - the Boss: road A on the act's own run (q per era, the run back, no clock stopping, the ruler's range, the wells, the cone); the sweep of every act's coefficients against line 693, running; the coupling rows' strength through the ruler, the second exception found (11:3x);
+      - David: the late acceleration's door and the shears, in clocks;
+      - Sofer: the picture's sections 4 and 12.3 brought to the rule, and "no exception to a generic rule" read into the method.
+
+37. **(ak) Masses are measured only in clicks. APPROVED (the owner's word to the Boss of 2026-10-29, 12:0x UTC, in Hebrew; in translation: "4. Where do the masses enter at all? Masses are measured only in clicks, no?"; on the Boss's question of 11:5x, item 4: may a probe or a test lay a measuring train with a mass).**
+    - **The rule:** a mass is no input of any file, test or probe. It is measured, at the clicks: the beat a clock shows at its clicks, read twice (its beat at each click and its windings booked there, agreeing through the one key; Animate's reading, 6494943325, item 3). It is the shadow's rule for one parameter: the board holds no parameter of nature (the owner's word of 11:5x).
+    - **Where a mass enters as built:** in one place, a train's pinion in the universe file. runner/load.py lays its spring 12 (den - pinion) G^2 Gamma^2, so light at pinion = den has none. A pinion below den is a mass put in by hand, a breach of decision 35.
+    - **What follows:**
+      - every train a file lays is the seed, at pinion = den, and a train's spring is never an input;
+      - tests and probes lay no massive train. The Boss's probes' "matter", the time gear's test's "dust" and the reviewers' toys are breaches named, frozen until the build replaces them;
+      - a massive thing exists only where the clicks build it from the seed, and its mass is its beat read at its clicks;
+      - the time gear's spring, the clock's one notch from den and Gamma, is the board's own and no particle's mass.
+    - **What it makes decisive:** whether the act builds massive composites from the seed at all (David's ladder, its spectrum from one seed). Without them there is no matter and no matter's push; they are the next thing the clicks must show.
+    - **Owed:**
+      - David: the ladder's spectrum from one seed, now first;
+      - Animate: the mass reading on the record, as the definition;
+      - Sofer: the law's line 35, and the gate refusing a pinion below den in any file (on the owner's word);
+      - the Boss: when the build resumes, the files' format without a mass, and the probes and the tests on the seed alone.
+
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
 ## 15. The reviewers, the approvals and where it stands
