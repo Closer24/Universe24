@@ -41,6 +41,7 @@ NEW_REWIND = "tensor24/runner/rewind.py"
 NEW_RECORD = "tensor24/record/schema.py"
 NEW_RUNNER = "tensor24/runner/loop.py"
 NEW_BOARD = "tensor24/runner/board.py"
+NEW_LOADER = "tensor24/runner/load.py"
 NEW_DECODER = "tensor24/decoder/rows.py"
 NEW_READING = "tensor24/readings/wind.py"
 NEW_MESH = "tensor24/engine/mesh.py"
@@ -1085,6 +1086,24 @@ CASES += [
     ("a log read in the readings", NEW_READING, fn("return a.log"), {"LOGREAD": 1}),
     ("a log read in the record", NEW_RECORD, fn("return a.log"), {"LOGREAD": 1}),
     ("a loop in runner/rewind.py", NEW_REWIND, fn("for x in a:\n    pass"), {}),
+    # the loader keeps every rule of the engine (the owner's "5 approved", 2026-10-29, 13:2x); the format checker, the driver and the rest of the runner stay spared
+    ("a loop in runner/load.py (not spared)", NEW_LOADER, fn("for x in a:\n    pass"), {"LOOP": 1}),
+    ("a comprehension in runner/load.py", NEW_LOADER, fn("return [x for x in a]"), {"LOOP": 1}),
+    ("a branch in runner/load.py", NEW_LOADER, fn("if a:\n    return 1\nreturn 0"), {"BRANCH": 1}),
+    ("a conditional expression in runner/load.py", NEW_LOADER, fn("return 1 if a else 0"), {"BRANCH": 1}),
+    ("an ordering comparison in runner/load.py", NEW_LOADER, fn("return a < b", "a, b"), {"COMPARE": 1}),
+    ("max of a pair in runner/load.py", NEW_LOADER, fn("return max(a, b)", "a, b"), {"CLAMP": 1}),
+    ("a refusal in runner/load.py", NEW_LOADER, fn("raise ValueError(a)"), {"REFUSE": 1}),
+    ("a remainder in runner/load.py", NEW_LOADER, fn("return a % b", "a, b"), {"OPERATION": 1}),
+    ("a floor division in runner/load.py", NEW_LOADER, fn("return a // b", "a, b"), {"OPERATION": 1}),
+    ("a floor named in runner/load.py", NEW_LOADER, fn("return a.floor"), {"BOUND": 1}),
+    ("the undo log in runner/load.py", NEW_LOADER, fn("return a.log"), {"LOGREAD": 1}),
+    ("a name added to itself in runner/load.py", NEW_LOADER, fn("return a + a"), {"TWICE": 1}),
+    ("a loop in runner/files.py stays spared", "tensor24/runner/files.py", fn("for x in a:\n    pass"), {}),
+    ("a branch in runner/run.py stays spared", "tensor24/runner/run.py", fn("if a:\n    return 1\nreturn 0"), {}),
+    ("a loop in a module named for the loader", "tensor24/runner/loader.py", fn("for x in a:\n    pass"), {}),
+    ("a loop in a runner module whose name ends in the loader's", "tensor24/runner/preload.py", fn("for x in a:\n    pass"), {}),
+    ("a loop in another folder's load.py", "tensor24/decoder/load.py", fn("for x in a:\n    pass"), {}),
     # every array is made with dtype=object (Python integers, whatever their width): the architect's rule
     ("an array made with dtype=object", NEW_STEP, NP + fn("return np.zeros(a, dtype=object)"), {}),
     (

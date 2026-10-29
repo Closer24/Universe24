@@ -137,11 +137,11 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "LOOP": (
         "BLOCK",
-        "a loop (for, while, a comprehension, map, filter, reduce, itertools, np.vectorize, a function that calls itself) in an engine module, and in the new engine's runner/board.py: no loop that makes a formula, the machine is one tensor operation (the owner's words of 2026-10-28, 06:5x and 09:0x); the count per file and kind may not rise",
+        "a loop (for, while, a comprehension, map, filter, reduce, itertools, np.vectorize, a function that calls itself) in an engine module, and in the new engine's runner/board.py and runner/load.py: no loop that makes a formula, the machine is one tensor operation (the owner's words of 2026-10-28, 06:5x and 09:0x); the count per file and kind may not rise",
     ),
     "OPERATION": (
         "BLOCK",
-        "a power, a shift, an exclusive or, or a floor division or remainder outside the carry's home (core/acts.py, core/rule3.py, and tensor24/algebra/carry.py in the new engine; the new engine's runner/board.py writes none of it, its wrap being the carry imported from there): the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 09:0x); the same under a method's name (a.__mod__(b)), a name imported or aliased from numpy or operator, a getattr of an operation's name, and, in runner/board.py, numpy's own wraps (roll, pad, a call with mode=)",
+        "a power, a shift, an exclusive or, or a floor division or remainder outside the carry's home (core/acts.py, core/rule3.py, and tensor24/algebra/carry.py in the new engine; the new engine's runner/board.py and runner/load.py write none of it, its wrap being the carry imported from there): the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 09:0x); the same under a method's name (a.__mod__(b)), a name imported or aliased from numpy or operator, a getattr of an operation's name, and, in runner/board.py, numpy's own wraps (roll, pad, a call with mode=)",
     ),
     "TWICE": (
         "BLOCK",
@@ -149,11 +149,11 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "REFUSE": (
         "BLOCK",
-        "a raise in an engine module: a refusal by name is a rule written for a phenomenon (the exclusion's refusals were such); the count per file may not rise (the owner's word of 2026-10-28, 09:0x: no declarations)",
+        "a raise in an engine module, and in the new engine's runner/load.py: a refusal by name is a rule written for a phenomenon (the exclusion's refusals were such); the count per file may not rise (the owner's word of 2026-10-28, 09:0x: no declarations)",
     ),
     "CLAMP": (
         "BLOCK",
-        "min, max, abs, clip or where in an engine module, and in the new engine's runner/board.py: a bound or a branch written as a clamp, where the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 08:0x, through David)",
+        "min, max, abs, clip or where in an engine module, and in the new engine's runner/board.py and runner/load.py: a bound or a branch written as a clamp, where the step does multiplication, addition and Rule3 alone (the owner's word of 2026-10-28, 08:0x, through David)",
     ),
     "PIN": (
         "WARN",
@@ -161,7 +161,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "COMPARE": (
         "BLOCK",
-        "an ordering comparison in an engine module, and in the new engine's runner/board.py: a threshold read by order and not as the quotient of a carry (Postulate 5: the Node-clock has no if; the owner's word of 2026-10-28, 12:5x); the count per file may not rise",
+        "an ordering comparison in an engine module, and in the new engine's runner/board.py and runner/load.py: a threshold read by order and not as the quotient of a carry (Postulate 5: the Node-clock has no if; the owner's word of 2026-10-28, 12:5x); the count per file may not rise",
     ),
     "ISOLATE": (
         "BLOCK",
@@ -169,7 +169,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "BRANCH": (
         "BLOCK",
-        "a branch (if, a conditional expression, match) in an engine module, and in the new engine's runner/board.py: the Node-clock has no if (Postulate 5; the owner's word of 2026-10-28, 12:5x: enforce it, never cross it; also The Node-clock and the Mesh are generic; there is no if), and a whether is Rule3's quotient (n < d exactly where the quotient of n by d is 0; the sign test [x >= 0] = 1 + x div (x x + 1)); a branch the formula does not hold is a declaration (the count per file may not rise)",
+        "a branch (if, a conditional expression, match) in an engine module, and in the new engine's runner/board.py and runner/load.py: the Node-clock has no if (Postulate 5; the owner's word of 2026-10-28, 12:5x: enforce it, never cross it; also The Node-clock and the Mesh are generic; there is no if), and a whether is Rule3's quotient (n < d exactly where the quotient of n by d is 0; the sign test [x >= 0] = 1 + x div (x x + 1)); a branch the formula does not hold is a declaration (the count per file may not rise)",
     ),
     "INDICATOR": (
         "WARN",
@@ -249,6 +249,7 @@ PROMOTED = frozenset({"MEMO"})
 RUNNER = NEW_ENGINE + "/runner/"
 REWIND = RUNNER + "rewind.py"  # the rewind check: the one module of the runner that reads the undo log
 BOARD = RUNNER + "board.py"  # the board's wrap is Rule3's carry, imported from algebra/carry.py: nothing else spells one there
+LOADER = RUNNER + "load.py"  # the loader makes every gear's coefficients from the files: a mask, a row found by position, a per-row constant or a loop there is an exception of the Node-clock (decision 38), so it keeps every rule of the engine (the owner's "5 approved" of 2026-10-29, 13:2x UTC)
 BOARD_KEEPS = frozenset(
     {"OPERATION", "LOOP", "CLAMP", "COMPARE", "BRANCH"}
 )  # the rules the board's module keeps and the rest of the runner is spared: a wrap by hand is a remainder, a quotient, a branch, a comparison, a clamp or a loop (the sixth hostile review, follow-up 2)
@@ -349,7 +350,7 @@ READERS = frozenset(
 
 def exempt(rel: str, rule: str) -> bool:
     """Whether a module that reads a finished chart or record and runs no step is spared a rule: by name in the current
-    engine, by folder in the new (the decoder keeps the rules of DECODER_KEEPS, the runner none)."""
+    engine, by folder in the new (the decoder keeps the rules of DECODER_KEEPS, the runner none but the loader, which keeps all)."""
     if rel in READERS:
         return True
     if rel.startswith(DECODER):
@@ -357,6 +358,8 @@ def exempt(rel: str, rule: str) -> bool:
     if rel.startswith(RUNNER):
         if rel == BOARD and rule in BOARD_KEEPS:
             return False  # the board's wrap is the carry's, imported
+        if rel == LOADER:
+            return False  # the loader is spared no rule: it builds the engine's coefficients (the files' format, the driver, the rewind check and the rounds stay spared)
         return rule != "LOGREAD" or rel == REWIND  # the undo log is read by the rewind check alone
     return False
 
