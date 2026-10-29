@@ -31,9 +31,11 @@ The owner's word to Animate, 04:2x UTC on 2026-10-29 (in Hebrew; in translation)
    - With no spring the count runs away (9,090, 81,270 and 324,540 at ticks 100, 300 and 600), as the head's course did below its cap.
    - The run back is bit for bit through every swing: 214 swings, 30,000 ticks.
    - **Answered by the owner's word** (to David, relayed in 6489403097, 06:1x UTC): the trigger at the top goes. OPEN 7 and item (w) close by the spring, and stage 8 writes no trigger at the top. The fifth act's reversal at the top (line 1602) is put to him again, with the spring alone as David's recommendation.
+   - **Decided** (decision 27, the owner's word to the Boss of 06:3x UTC): the act at the top is cancelled, not being a local law. "Back" is the load returning while every tick goes forward.
 4. **Every bang shows more: does not follow from the swing.**
    - A spring under a held density repeats its swing to the remainders: over 214 swings the tops stay between 1,786 and 1,804.
    - **Asked of the clicks:** the click kinds per swing rising (row 46), read once stage 9 writes the clicks.
+   - **Built:** row 46 (reader-5 6b9dc134, YES by Sofer, 6491095182). It reads each bang's clicks against the clocks held at its end, from the forward board's record (decision 28).
    - **Asked of stage 7b:** matter that does not read the count is changed by the swings only through its own motion.
 5. **No floor and no bound: the top follows, and the bottom needs a word.**
    - From rest the swing's bottom touches the full rate, c = 0.
@@ -73,7 +75,7 @@ The owner's word to Animate, 04:2x UTC on 2026-10-29 (in Hebrew; in translation)
    **What the decoder already reads of it:**
    - a hand's whole carry as the whole click, in the schema's Whole lines;
    - the split's draw, in its Split lines;
-   - the beat and the turnover as the clock's own events, no click (Sofer's item 5), in its Rate and Turnover lines.
+   - the beat and the turnover as the clock's own events, no click (Sofer's item 5), in its Rate and Turnover lines. The Turnover line is retired in 1.2 (the architect's 6491347414; decision 27).
 2. **Three places where the texts and the code part** (Sofer's 6487859710, item 3). I read them against the code at 1de239790 and agree with all three:
    - **The state:** it holds 5G + 3 whole numbers per Node-clock: a, b, r, go and rd per gear, and ph, c and tn per Node-clock. There is no integer per hand.
    - **The writer:** the clicks are stage 9's, and the runner writes the record at stage 10 (the plan's table).
@@ -86,6 +88,17 @@ The owner's word to Animate, 04:2x UTC on 2026-10-29 (in Hebrew; in translation)
    - **(g) approved:** the owner's word to the Boss of 06:3x UTC (decision 27) takes the doubler's hold, light at 1 / sqrt 6, as stage 7b writes it (one cone, 1/6, on every row). So gravity's reach is sqrt(Gamma / 12).
    - **What it changes:** the swing's period reads D / W alone, so the bang's length is the same either way. Gravity's reach, and the bound it sets on Gamma, differ by a factor of 2 in Gamma.
 4. **The count's source.** By the owner's word (relayed in 6489403097, item 1), 7b writes the time gear's source as rho + 3p, every train's form plus its pressure, so light pushes the count twice as hard as dust. The probe reads 7a's J. The swing's period reads D / W alone, so the bang's length stands.
+
+## Against the swing as built (stage 7b; decisions 27 and 28), 2026-10-29
+
+The Boss's ask (6490944673, item 4): my bang page against the swing.
+- **The probe re-run on the engine as built** (reader-5 with tensor24-review 20e8a8bf merged: 7b and the runner): its output equals probe_bang.txt byte for byte.
+- **Why the swing stands:** the time gear reads no ruler. In 7b's load its row's reads is 0: it stands on its own teeth, W = T, s = 1, D / W = 2 / Gamma. So the swing's period 2 pi sqrt(Gamma / 2), its tops at twice the rest, the time gear's flux and the run back stand as measured.
+- **What the re-run does not reach:** the probe lays its own gearing with no ruler, so its matter does not read the count, and goal 8 (structure) is still read at 7a's behaviour.
+  - Under 7b a file's train reads the ruler at the time gear's counts (W = Z_b + Z_n, Z(c) = T Y(c)^4 div Gamma^4), so a denser site slows its own matter.
+  - Its probe is owed at a count scale inside the ruler's range (3,792 counts at Gamma 1,000). That is the fifteenth review's question of the count's scale (6491495470), David's: the example's light at 10^12 drives the count to about 10^20 within 10 ticks, past the ruler's last count.
+- **Decision 27:** goal 3's turn is the spring's, and no act reverses a gear. The floor's trigger is cancelled with the act at the top, so goal 7's stopped clock stays open as before.
+- **Decision 28:** what runs back is the backward board's dial at every Node-clock, the act run back, writing no record. The forward board's record only grows, so goal 4 is row 46's to read on it.
 
 ## The files
 
