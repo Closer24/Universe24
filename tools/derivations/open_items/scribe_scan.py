@@ -1765,7 +1765,8 @@ def declared_python(rel: str, text: str) -> list[Hit]:
     reformatted line is the same declaration); a pinion spelt den, or as the attribute den of a module (rig.DEN), is the seed."""
     try:
         tree = ast.parse(text)
-    except SyntaxError, ValueError:
+    # parenthesized, so that an older Python than 3.14 compiles the gate and re-runs it under 3.14
+    except (SyntaxError, ValueError):  # fmt: skip
         return []
     found: list[Hit] = []
     for node in ast.walk(tree):
