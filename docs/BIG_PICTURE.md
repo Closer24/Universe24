@@ -40,7 +40,7 @@ There are two clicks, and both are carries:
 
 **What turns is the scale, not the arrow.** The record grows through every top and every bottom, and the remainders and the records pass every bang, so each cycle starts from what the last one built. That is the board's direction toward ever more complex clocks, and the conditions for machines that make machines.
 
-**Bell at a distance is not at a distance on the board.** The board's cone does not narrow with the notch while light's does, so since the bang the closure's cone has grown to at least three million times light's. On the board, Bell holds locally, without item (l).
+**Bell at a distance is not at a distance on the board, on the first of three readings put to the owner** (section 10). If the closure takes no ruler factor, the board's cone does not narrow with the notch while light's does, so since the bang the closure's cone has grown to at least three million times light's, and Bell holds locally, without item (l); at the full rate the cone is only sqrt 6 times light's, and the other two doors are a wide cone by the lattice's constants and item (l).
 
 ## Three speeds, stated once (0.1)
 
@@ -396,7 +396,7 @@ The way back stands in the law, in the remainders. But no act runs it: the sprin
 
 - **The two measures of distance.** The clicks measure distance with light; the board measures it in Meshes and ticks. Since the bang, light crosses a Mesh e^(2U) times more slowly in ticks, and the closure does not slow.
 - **Against nature.** The Bell tests at a distance (Aspect; Weihs; Delft; Micius) keep the correlation even where an influence would need at least about ten thousand times light's speed (Salart and others, 2008; Yin and others, 2013).
-  - That lies inside the closure's cone of about three million times light's.
+  - On the first reading (door 1 below) that lies inside the closure's cone of about three million times light's.
   - So the local closure gives S = -82/29 with a late choice.
   - There is no shared state held by no Node-clock, and no global order of clicks. Locality is kept.
   - There is no signal: every marginal is 1/2 at every setting.
