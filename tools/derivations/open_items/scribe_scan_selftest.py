@@ -1479,6 +1479,151 @@ def tool_cases() -> tuple[int, int]:
     return made, parted
 
 
+KEY_FILE = "tensor24/runner/files.py"
+KEY_SNIPPETS = (
+    ("a flat tuple", 'UNIVERSE = ("version", "integers")\n', {"UNIVERSE.version", "UNIVERSE.integers"}),
+    (
+        "a star of a name bound above",
+        'PAIR = ("pinion", "sine")\nTRAIN = ("name", *PAIR)\n',
+        {"PAIR.pinion", "PAIR.sine", "TRAIN.name", "TRAIN.pinion", "TRAIN.sine"},
+    ),
+    (
+        "a star of a literal tuple",
+        'COUPLING = (*("train", "kind"), "strength")\n',
+        {"COUPLING.train", "COUPLING.kind", "COUPLING.strength"},
+    ),
+    (
+        "a star of a dict stands for its keys",
+        'BASE = {"x": 1, "y": 2}\nUSER = ("name", *BASE)\n',
+        {"BASE.x", "BASE.y", "USER.name", "USER.x", "USER.y"},
+    ),
+    (
+        "a dict, its keys and what lies beneath them",
+        'LAYOUT = {"universe": {"version": 1, "integers": ("den",)}}\n',
+        {"LAYOUT.universe", "LAYOUT.universe.version", "LAYOUT.universe.integers", "LAYOUT.universe.integers.den"},
+    ),
+    (
+        "a dict spread into a dict",
+        'SPREAD = {**{"k": 1}, "m": 2}\n',
+        {"SPREAD.k", "SPREAD.m"},
+    ),
+    (
+        "a set and a collection made by a call",
+        'NAMES = frozenset({"a", "b"})\nMORE = tuple(["c"])\n',
+        {"NAMES.a", "NAMES.b", "MORE.c"},
+    ),
+    ("an annotated assignment", 'GEAR: tuple[str, ...] = ("train", "site")\n', {"GEAR.train", "GEAR.site"}),
+    ("a list holding tuples", 'ROWS = [("alpha", ("beta", "gamma"))]\n', {"ROWS.alpha", "ROWS.beta", "ROWS.gamma"}),
+    (
+        "a number, a lone string, a name and a call of another function hold no key",
+        'LIMIT = 1\nTITLE = "version"\nALIAS = TITLE\nVALUE = compile("x", "y", "exec")\n',
+        set(),
+    ),
+    (
+        "a tuple bound inside a function is no key",
+        'def read(held):\n    local = ("flag", "other")\n    return held.get("version"), local\n',
+        set(),
+    ),
+)
+
+
+def key_cases() -> tuple[int, int]:
+    """The rule KEYS, a note on every key a push adds to the files' format: the collections it reads by snippet, the one module it reads,
+    the note and not a refusal, the list of keys Sofer has read (read from his published branch, a push unable to read its own keys in),
+    and the gate's own files that now hold that list; the cases made and those that parted."""
+    made = parted = 0
+
+    def check(label: str, ok: bool) -> None:
+        nonlocal made, parted
+        made += 1
+        parted += not ok
+        print(f"{'ok     ' if ok else 'PARTED '} the keys' note: {label}")
+
+    for label, source, want in KEY_SNIPPETS:
+        found = {h.detail for h in gate.scan(KEY_FILE, source) if h.rule == "KEYS"}
+        check(f"{label}: {sorted(found)}", found == want)
+    for name in ("tensor24/runner/load.py", "tensor24/decoder/rows.py", "assembly/files.py", "tensor24/engine/files.py"):
+        found = [h for h in gate.scan(name, 'UNIVERSE = ("version", "integers")\n') if h.rule == "KEYS"]
+        check(f"{name} is no format: no key read", not found)
+    check("the rule is a note and never a refusal", gate.RULES["KEYS"][0] == "WARN")
+    check(
+        "the list of keys read is among the gate's own files",
+        "tools/derivations/open_items/scribe_scan_keys.json" in gate.OWN,
+    )
+    keys_file = "tools/derivations/open_items/scribe_scan_keys.json"
+    saved = gate.readings
+    with without_git_variables(), tempfile.TemporaryDirectory() as scratch:
+        root = Path(scratch)
+        git = ["git", "-C", scratch, "-c", "user.name=selftest", "-c", "user.email=selftest@example.invalid"]
+
+        def run(*args: str) -> str:
+            return subprocess.run([*git, *args], capture_output=True, text=True, check=True).stdout.strip()
+
+        def commit(files: dict[str, str]) -> str:
+            for name, text in files.items():
+                (root / name).parent.mkdir(parents=True, exist_ok=True)
+                (root / name).write_text(text, encoding="utf-8")
+            run("add", "-A")
+            run("commit", "-q", "-m", "selftest")
+            return run("rev-parse", "HEAD")
+
+        def read(rev: str) -> tuple[int, str]:
+            out = io.StringIO()
+            return gate.check_revision(root, rev, base, out), out.getvalue()
+
+        def branch(name: str, files: dict[str, str]) -> str:
+            run("checkout", "-q", "-B", name, base)
+            return commit(files)
+
+        files = "src/tensor24/runner/files.py"
+        run("init", "-q")
+        base = commit(
+            {
+                "src/tensor24/__init__.py": '"""A package."""\n',
+                "src/tensor24/runner/__init__.py": '"""The runner."""\n',
+                files: 'ZZ_ALPHA = ("one",)\n',
+            }
+        )
+        status, text = read(branch("added", {files: 'ZZ_ALPHA = ("one", "two")\n'}))
+        check(
+            "a key a push adds is one note, no refusal",
+            status == 0 and "refusals 0, notes 1" in text and "KEYS" in text and "ZZ_ALPHA.two" in text,
+        )
+        status, text = read(branch("same", {files: '# a line moved down\nZZ_ALPHA = ("one",)\n'}))
+        check("a key that stands at the base is quiet, though its line moved", status == 0 and "KEYS" not in text)
+        status, text = read(branch("renamed", {files: 'ZZ_BETA = ("one",)\n'}))
+        check("the same key under another name is a note", status == 0 and "ZZ_BETA.one" in text)
+        status, text = read(branch("removed", {files: "ZZ_ALPHA = ()\n"}))
+        check("a key removed is no note", status == 0 and "note   KEYS" not in text)
+        status, text = read(branch("other", {"src/tensor24/runner/load.py": 'ZZ_ALPHA = ("one", "two")\n'}))
+        check("a collection in another module of the runner is no key", status == 0 and "KEYS" not in text)
+        status, text = read(branch("own", {keys_file: '["KEYS|x|y"]\n'}))
+        check(
+            "a push that changes the keys list says it changes the gate's own files",
+            "gate's own files" in text and "scribe_scan_keys.json" in text,
+        )
+        try:
+            gate.readings = lambda repo=gate.REPO: Counter({("KEYS", KEY_FILE, "ZZ_ALPHA.two"): 1})
+            status, text = read(branch("read", {files: 'ZZ_ALPHA = ("one", "two")\n'}))
+            check("a key Sofer has read is quiet", status == 0 and "ZZ_ALPHA.two" not in text)
+            gate.readings = lambda repo=gate.REPO: Counter({("KEYS", KEY_FILE, "ZZ_OTHER.two"): 1})
+            status, text = read(branch("other_key", {files: 'ZZ_ALPHA = ("one", "two")\n'}))
+            check("a key read under another path leaves this one a note", status == 0 and "ZZ_ALPHA.two" in text)
+        finally:
+            gate.readings = saved
+        run("checkout", "-q", "-B", "origin/scribe-5", base)
+        commit({keys_file: '[\n"KEYS|tensor24/runner/files.py|ZZ_ALPHA.published"\n]\n'})
+        run("checkout", "-q", "-B", "worktree", base)
+        (root / keys_file).parent.mkdir(parents=True, exist_ok=True)
+        (root / keys_file).write_text('["KEYS|tensor24/runner/files.py|ZZ_ALPHA.working"]\n', encoding="utf-8")
+        held = gate.readings(root)
+        check(
+            "the list is read from the published branch, the working file set aside",
+            held == Counter({("KEYS", KEY_FILE, "ZZ_ALPHA.published"): 1}),
+        )
+    return made, parted
+
+
 def main() -> int:
     parted = 0
     for label, rel, source, want in CASES:
@@ -1711,8 +1856,10 @@ def main() -> int:
         print("ok      a new package: every hit in it is new")
     tool_total, tool_parted = tool_cases()
     parted += tool_parted
+    key_total, key_parted = key_cases()
+    parted += key_parted
     print(
-        f"selftest: {len(CASES) + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + 2} cases, {parted} parted"
+        f"selftest: {len(CASES) + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + 2} cases, {parted} parted"
     )
     return 1 if parted else 0
 
