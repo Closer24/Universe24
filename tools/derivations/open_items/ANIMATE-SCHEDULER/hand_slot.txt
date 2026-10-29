@@ -1,0 +1,7 @@
+A band joined by a hand and a slot at once, drawn at the slot by the one rule
+  no slot limit (two free):
+    b0: a0: far + 1/2, near + 1/2 (room 116, slot kept True); a1: far + 1/2, near + 1/2 (room 232, slot kept True)
+    b1: a0: far + 1/2, near + 1/2 (room 116, slot kept True); a1: far + 1/2, near + 1/2 (room 232, slot kept True)
+  one free slot at site 55:
+    b0: a0: far + 11/29, near + 2/3 (room 87, slot kept True); a1: far + 67/174, near + 2/3 (room 174, slot kept True)
+    b1: a0: far + 11/29, near + 2/3 (room 87, slot kept True); a1: far + 107/174, near + 2/3 (room 174, slot kept True)

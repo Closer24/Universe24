@@ -33,6 +33,7 @@ Beside the engine. `python -I scheduler.py` runs in about 8 seconds; its output 
 7. **Nothing is told by kind in the code either** (Sofer's item 6). The output is equal byte for byte to the code that told them apart (scheduler.txt, 2,432 bytes).
    - **sigma_f is one formula for every hand:** the Gaussian norm of the hand's whole-number overlap with its parties' ends, each end a line of its party's frame, summed over the lines the hand carries untaken. A twin's frame is its two spinors along an axis. A spread quantum's frame is its absorbers' own lines, and its hand holds at each absorber its share as a Gaussian norm over two lines no absorber here resolves (any whole share is a sum of four squares).
    - **A setting is one law-9 draw over its frames:** its own light's sizes (1 each) times, at each take it heard, the sizes its rule gives that take's end. Hearing nothing, it is free; hearing a take, its rule's sizes leave one frame (a machine); a spread quantum's setting has one frame. The depth of a chain is one formula too: each setting one more than the deepest setting whose take it heard.
+8. **A band joined by a hand and by a slot at once signals** (part 5). The far twin's law at its frame moves with the near twin's frame (11/29 against 107/174). The no-signal checks cover bands drawn at a birth, and this band is drawn at the slot. A generic fix is named as a candidate.
 
 ## 1. The board
 
@@ -81,11 +82,33 @@ Every draw is the one rule's, by the same function as Parts 1 and 2:
 
 At every digit, every quantum is taken exactly once, and no slot past its free count.
 
-## 5. What does not follow
+## 5. A band joined by a hand and a slot at once: it signals (hand_slot.py)
+
+The Boss's hunt of 13:55 UTC asks it of the record and the clicks. `python -I hand_slot.py` runs in under a second; its output is hand_slot.txt.
+
+- **The board:**
+  - a pair at site 50 (tick 5). Its near twin meets a two-way detector, + taken at site 45 and - at site 55, both at tick 10. Its far twin is taken at site 100 at tick 55, outside the near setting's future cone;
+  - a spread quantum reaches x (site 75) or site 55 at tick 10, shares 1 and 1;
+  - site 55 has one free slot at that tick. The hand and the slot join the three parts into one band, drawn once at the slot.
+- **With no slot limit,** the far twin's + share is 1/2 at every pair of frames.
+- **With the one free slot,** the far twin's + share at b moves with the near twin's frame a:
+  - at b = (20, 0, 21)/29: 11/29 at a = z, and 67/174 at a = x;
+  - at b = (-20, 0, 21)/29: 11/29 at a = z, and 107/174 at a = x.
+
+  The near setting is read at the far take, outside its future cone: a signal. In closed form the far twin's + share is (3 - a.b)/6.
+- **The cause:** sigma_b weighs 0 the histories in which the near twin's - and the quantum share the slot, and the draw renormalizes over the rest. That is a post-selection on a near event correlated with the near twin's sign, and through the hand it reaches the far twin.
+- **Why the 9,872 checks missed it:** they check every band drawn at a birth, as its settings come in. A band joined by a slot is drawn at the slot, and the code checks none there. Part 3's slot bands hold no hand, so no signal could show in them.
+- **A generic fix, as a candidate:** a full slot removes no history.
+  - The part that does not get the slot rides on to its next end, and the slot's own draw picks which arrival takes it.
+  - Every history then keeps its sigma_f, the hand's law is untouched, and no signal can arise.
+  - The tie's law changes with it, which is to measure.
+  - Drawing the hand before the slot would also close it, but it tells a hand from a slot by kind, which decision 38 forbids.
+
+## 6. What does not follow
 
 - **The engine:** stage 9's two clicks and the runner's passes on the act's own arrays.
 - **Locality:** each carry rides its part's own path, one site a step, by construction here. The Boss's bpasses.py counts the reads (0 far).
-- **A band joined both by a hand and by a slot,** a twin in a slot contest: the same rule (its parts are one at the birth and at the slot, the digits of both), not measured here.
+- **A band joined both by a hand and by a slot,** a twin in a slot contest: measured in part 5, where it signals. The fix is a candidate, not measured.
 - **A loop through the backward run itself,** a setting that read the tag. The rule that every setting is a forward click, read only from takes in its past light cone, excludes it, and the probe makes none.
 
 ## Method: addressed
@@ -100,7 +123,7 @@ At every digit, every quantum is taken exactly once, and no slot past its free c
   - every part of every band is drawn once and taken once, on every board and at every digit;
   - the law is nature's at every layer, exactly, and the products over the band where a slot joins quanta;
   - two histories that no single Node-clock parts appear only when a birth is drawn whole out of the cause's order, or when two sources draw alone across a shared slot.
-- **(c) What does not follow, asked of the clicks:** the act's own run, and a band joined by a hand and a slot at once.
+- **(c) What does not follow, asked of the clicks:** the act's own run, and the fix for a band joined by a hand and a slot at once (part 5).
 
 ---
 Animate, reader-5.
