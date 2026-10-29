@@ -57,10 +57,10 @@ On the owner's word to David: "a generic solution for everything". This is David
 2. **The tick.**
    - **In the clock:** the one formula. Every Mesh couples its two ends alike, so the wind and the charge are kept. With matter held as hands, the ceiling follows by itself.
    - **In the tensors:** p+ = p + s F + K, with the grip g_j equal at both ends; the charge kept by Noether, the ceiling by Bessel.
-3. **The turnover** (approved).
-   - **In the clock:** T = J K on every gear, at the clock's own top, as a carry. The two slots of every gear exchange, and each gear's sign is its source's.
+3. **The turnover** (approved; its act at the top cancelled by the owner's word to the Boss of 2026-10-29, 06:3x UTC, decision 27: it is not a local law).
+   - **In the clock** (the former text, kept by name): T = J K on every gear, at the clock's own top, as a carry. The two slots of every gear exchange, and each gear's sign is its source's.
    - **In the tensors:** (a, a-) -> (T a-, T a).
-   - **The trigger at the top goes** (the owner's word to David of 2026-10-29, 06:1x UTC, "Going with your recommendation", relayed in 6489403097): the top is the act's own turning point by the spring (David's step 9, 6488889537), so stage 8 writes no trigger at the top; whether the reversal at the top (ALGEBRA.md line 1602) stays is put to him again, with the spring alone as David's recommendation.
+   - **The trigger at the top goes** (the owner's word to David of 2026-10-29, 06:1x UTC, "Going with your recommendation", relayed in 6489403097): the top is the act's own turning point by the spring (David's step 9, 6488889537), so stage 8 writes no trigger at the top; the reversal at the top (ALGEBRA.md line 1602) is cancelled by his word of 06:3x UTC (decision 27): it is not a local law. T = J K stays each kind's time reversal (item (s)), which the tests read and no act applies.
 4. **The click** (approved).
    - **In the clock:** law 6 on the composite clock:
      - two clocks that meet are read as one dial;
@@ -78,7 +78,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 - (r) the click counting the action against law 5's fixed winding;
 - (u) lin against past;
 - (j) the second carry;
-- (g) the doubler;
+- (g) the doubler: decided as recommended, light at the speed 1/sqrt(6) (decision 27);
 - (w) one bang whose tops part: closed by the spring, the trigger at the top gone (item 3 above).
 
 (v), the local turnover, is withdrawn.
@@ -90,7 +90,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - The quotient leaves as an event, and the remainder stays.
 2. **A new engine, in new files.** It replaces the head. The head stays beside it for comparison until the switch, on the owner's decision of 09:1x UTC.
 3. **Two laws not to be crossed:**
-   - **time is a circle:** forward to the top, the turnover, back, and the next bang;
+   - **time is a circle:** forward to the top, the turnover, back, and the next bang (the turnover at the top cancelled by decision 27, not being a local law: the circle is the count's swing, the spring turning it at the top and the source at the bottom);
    - **every bang shows more than the one before.**
 
    They agree by (o), approved at 14:37 UTC: time is a circle for the gears, and the clicks carry the arrow.
@@ -164,8 +164,8 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **In the tensors:** the same step, with a+ and a- exchanged.
    - **The going:** for the rewind to be exact at every teeth count, each gear keeps its own going, the parity of its own turnovers and negations, within line 98's fixed count: the 24's turns negate some gears of a Node-clock and not others, so a going shared by the Node-clock fails at even counts (the tie rule, derive/tie_rule: PROVED and CHECKED; Sofer's law passes, #2187 6474681064; David's formula owed). Draft H founded it, and its verifier confirmed it on 91,728 states. Without that bit only the step's invertibility is proved, and the head's 20 of 20 read its stack, that is, a log.
    - **The click is many to one,** so a click is undone only from its log.
-4. **The turnover.**
-   - **In the clock:** the clock's own act at the top of its time gear.
+4. **The turnover** (its act at the top cancelled by decision 27: it is not a local law).
+   - **In the clock** (the former text): the clock's own act at the top of its time gear.
    - **The second trigger, the floor, is struck by law 11.** There is no trigger at the bottom.
    - **The top:** the weak maximum X0 <= X1 >= X2 is the law's own text (line 1602) and the head's, a comparison that Postulate 5 refuses in engine code. The top as the time gear's carry, q, r' = carry(X - Gamma, X_c - Gamma) with T applied q times as a choice, is OPEN 7 (David, Sofer). The threshold form as first written is refuted: it is an if. OPEN 7 closes by the spring (David's step 9): the top is the act's own turning point, and the trigger goes by the owner's word of 06:1x UTC (item 3 of the core).
    - **The one mirror is an involution** only where the fine tooth is not 0 at an even teeth count. At every teeth count it is exact only as the flip r -> w - 1 - r, with the going (H, confirmed).
@@ -466,12 +466,13 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **David:** derives, and writes no code;
    - **Animate:** until the approval, only toys that prove something; after it, the decoder and the viewer;
    - **Sofer:** the gate and the law, on the owner's word; he approves every piece of code against the laws.
-3. **Every stage needs four approvals,** and then the full check exits 0 (the owner's word of 2026-10-29, 02:5x UTC, decision 26; before it, every push did); a review's follow-up commits are read by the three:
+3. **Every stage needs three approvals, and every two stages a fresh hostile reader and the architect,** and then the full check exits 0 (the owner's words of 2026-10-29, 02:5x UTC, decision 26, and 06:3x UTC, decision 27; before them, every push did); a review's follow-up commits are read by the three:
    - Sofer;
    - David;
    - Animate;
-   - a fresh hostile reader.
-4. **What is built at each stage** (the owner's word to Sofer, 15:0x UTC; the one architect's ruling, section 6). Clocks first, then tensors, then the 24's operations. No line before stage 0; every test is shown failing on a broken copy; the record, the decoder and Animate's converter run in parallel from stage 0.
+   - a fresh hostile reader, every two stages;
+   - the architect, every two stages, approving that the whole stands.
+4. **What is built at each stage** (the owner's word to Sofer, 15:0x UTC; the one architect's ruling, section 6). Clocks first, then tensors, then the 24's operations. No line before stage 0; every test is shown failing on a broken copy; the record, the decoder and Animate's converter run in parallel from stage 0. **The order** (decision 27): stages 0 to 7, then the runner (10), then 8, 9 and 11.
 
    | stage | what is built | its test that can fail | what closes first |
    | --- | --- | --- | --- |
@@ -483,7 +484,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    | 5 | the ring: the Gaussian integers, the hand, the twin hand | the ring's laws exact; T T = +1 on a hand, -1 on a twin hand | nothing |
    | 6 | the kinds and the contraction, from the board's shape; the load of the calibre's trains and coupling rows | the characters; a coupling the table lacks gives 0, named by the checker; the rename test | item (a); OPEN 3 before any twin train loads |
    | 7 | the one act on every train alike | the formula test; the head compared act by act, 0 unexplained differences | M1 on every train; the charge |
-   | 8 | the 24's operations: the 24 on the state; the turnover T = J K per gear, T^q a choice; tick and untick | the 24 turns bit for bit, a board that is no cube as the control; T S T = S^-1 at every teeth count; the rewind through the top 20 of 20; the bang's spread 0 | (w) and OPEN 7, closed by the spring: no trigger at the top |
+   | 8 | the 24's operations: the 24 on the state; T = J K per gear as each kind's time reversal, applied by no act (decision 27); tick and untick | the 24 turns bit for bit, a board that is no cube as the control; T S T = S^-1 at every teeth count; the rewind through the top 20 of 20 | (w) and OPEN 7, closed by the spring: no trigger and no act at the top |
    | 9 | the clicks: whole, split, the draw by a rank count, the take, the owed writes; the books | the books closed; the exchange sign on the eight kinds; the draw's distribution; each reading with its second reading | M2; the draw's fairness; the click law's derivation, or its exactness shown again |
    | 10 | the runner: the rounds, the ledger, the undo log and the rewind check; the asynchronous option (masks, regions, halos) | synchronous and asynchronous with every dial equal: the same record and ledger, byte for byte | lin's formula, if chosen |
    | 11 | the capability table on both engines' records; then the switch | the table read on both; the end check | every bang shows more, for its row; the owner's word on the switch |
@@ -535,7 +536,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 7. **(f) Law 10 on the derived course.**
    - **It gives:** every bang shows more.
    - **The recommendation:** twin hands in the file, the composite clock and unequal quanta, measured on the bang. **OPEN**, and decided in (o).
-8. **(g) The doubler's vacuum.**
+8. **(g) The doubler's vacuum. APPROVED as recommended (the owner's word to the Boss of 2026-10-29, 06:3x UTC, decision 27).**
    - **The recommendation:** way (1), the hold in the vacuum, after Wilson.
      - It removes the doubler with the one term the kinds allow.
      - Its cost: light at the speed 1/sqrt(6), and the pairs derived anew.
@@ -634,9 +635,15 @@ On the owner's word to David: "a generic solution for everything". This is David
 26. **(z) The work made lighter. APPROVED (the owner's word of 2026-10-29, 02:5x UTC, in translation: "Approved", on the Boss's proposal; #2187 6486562433).**
     - **The tests' room by file:** each Tensor24 test file holds one budget in tools/tests_shape.py's ROOM, grows within it with no new entry, and is refused above it.
     - **A hostile review's report alone in the repo:** its probes stay in the reader's scratch, each named in the report.
-    - **One hostile reader per stage, and the four approvals per stage** (section 12, item 3): a review's follow-up commits are read by Sofer, David and Animate, and the three branches move at a stage's end.
+    - **One hostile reader per stage, and the four approvals per stage** (section 12, item 3): a review's follow-up commits are read by Sofer, David and Animate, and the three branches move at a stage's end. Amended by decision 27: a hostile reader and the architect every two stages.
     - **The stage tests merged:** the laws that the test files of stages 2, 3, 4 and 7a repeat stand once, each still failing on its own mutant.
     - **One checker of formats:** the files' format as one table, and one checker that names every departure.
+
+27. **(aa) The runner first, the act at the top cancelled, the doubler's hold, and a hostile reader every two stages. APPROVED (the owner's word to the Boss of 2026-10-29, 06:3x UTC, in Hebrew; in translation: "2 yes. 3 cancel, it is not a local law. 4 as recommended. Two stages are enough, and the architect to approve too that everything stands"; on the Boss's four questions).**
+    - **The runner first:** stage 10 is built after stage 7, before stages 8 and 9, so that a run from the three files to the record stands first: light, matter and the time gear, with no click.
+    - **The act at the top is cancelled:** it is not a local law. The top is the act's own turning point by the spring, and each bang goes on from where the last left it; the clicks carry the arrow. T = J K stays each kind's time reversal (item (s)), which the tests read and no act applies. The law's fifth act at the top (ALGEBRA.md line 1602) is Sofer's to cancel in place, the former sentence kept by name and dated.
+    - **(g), the doubler's hold, as recommended:** light at the speed 1/sqrt(6), gravity's reach of the order of sqrt(Gamma / 12) Meshes; 7b's table is written so.
+    - **The reviews:** a fresh hostile reader every two stages, and the architect approving at each that the whole stands; Sofer, David and Animate approve every stage, and the three branches move at the end of each pair of stages, after the reader and the architect.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
