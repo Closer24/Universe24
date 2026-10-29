@@ -767,6 +767,16 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a kind named in the algebra", NEW_RING, "def f():\n    return 'A1'\n", {"ALLOW": 1}),
     ("a kind named by the decoder", NEW_DECODER, "def f():\n    return 'A1'\n", {}),
     ("a string that only contains a kind", NEW_LOADER, "def f():\n    return 'A12 and E'\n", {}),
+    ("an if spelt as arithmetic in the act", NEW_STEP, "def f(r, a, b):\n    return r * a + (1 - r) * b\n", {"CHOOSE": 1}),
+    ("an if spelt as arithmetic in the loader", NEW_LOADER, "def f(r, a, b):\n    return r * a + (1 - r) * b\n", {"CHOOSE": 1}),
+    ("an if spelt as arithmetic in the mesh", NEW_MESH, "def f(r, a, b):\n    return r * a + (1 - r) * b\n", {"CHOOSE": 1}),
+    ("one less a name in the loader", NEW_LOADER, "def f(r):\n    return 1 - r\n", {"CHOOSE": 1}),
+    ("one less an element of a name", NEW_STEP, "def f(r, i):\n    return 1 - r[i]\n", {"CHOOSE": 1}),
+    ("one less an attribute", NEW_STEP, "def f(s):\n    return 1 - s.bit\n", {"CHOOSE": 1}),
+    ("the choose spelt as arithmetic in the algebra", NEW_RING, "def f(r, a, b):\n    return r * a + (1 - r) * b\n", {}),
+    ("the choose spelt as arithmetic in a reader", NEW_DECODER, "def f(r, a, b):\n    return r * a + (1 - r) * b\n", {}),
+    ("a difference that is no complement", NEW_STEP, "def f(w, r):\n    return w - 1 - r\n", {}),
+    ("one less one", NEW_STEP, "def f(a):\n    return a * (1 - 1)\n", {}),
 ]
 
 

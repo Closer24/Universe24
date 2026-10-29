@@ -401,6 +401,16 @@ def constant_index(node: ast.expr) -> bool:
     return isinstance(node, ast.Constant) and isinstance(node.value, int) and not isinstance(node.value, bool)
 
 
+def complement_of_a_name(node: ast.BinOp) -> bool:
+    """1 less a name, an attribute or an element of one: the complement of a bit, with which a choose is spelt as arithmetic."""
+    return (
+        isinstance(node.op, ast.Sub)
+        and isinstance(node.left, ast.Constant)
+        and node.left.value == 1
+        and isinstance(node.right, ast.Name | ast.Attribute | ast.Subscript)
+    )
+
+
 def indexed_by_place(node: ast.Subscript) -> bool:
     """A name or an attribute indexed by a constant, other than an array's dimension (x.shape[-1]): a family found by its place."""
     base = node.value
@@ -1071,6 +1081,8 @@ def scan(rel: str, source: str) -> list[Hit]:
         for node in ast.walk(tree):
             if isinstance(node, ast.Call) and callee_name(node) in SELECTIONS and not spelt_operation(node.func, numpy):
                 add("CHOOSE", node, callee_name(node))  # an if spelt as arithmetic, or a floor: the act has neither (David's audit, F8)
+            elif isinstance(node, ast.BinOp) and complement_of_a_name(node):
+                add("CHOOSE", node, f"a complement {ast.unparse(node)}")  # a choose spelt as arithmetic: r * a + (1 - r) * b (the hunter's finding at 36087c95d)
             elif isinstance(node, ast.Subscript) and indexed_by_place(node):
                 add("POSITION", node, f"{ast.unparse(node.value)}[{ast.unparse(node.slice)}]")
             elif isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value in FAMILY_WORDS:
