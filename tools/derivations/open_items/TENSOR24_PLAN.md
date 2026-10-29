@@ -405,7 +405,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 
 1. **The five laws, in five places:**
    - **the kind table:** kinds, in engine/kinds.py; the tables C in runner/load.py, from each elementary seed in turn (the loop at load), made primitive; contract, one gather, one product and one scattered sum, in engine/contract.py;
-   - **the tick:** step, with shift and pull, in engine/mesh.py and engine/step.py; from stage 7a every gear's sources (its force, and J on the value, the centred difference along each axis and the force), its drive (every source's one way in, the kick) and its carry, at coefficients the layout holds until stage 7b gears them from the lapse;
+   - **the tick:** step, with shift and pull, in engine/mesh.py and engine/step.py; from stage 7a every gear's sources (its force, and J on the value, the centred difference along each axis and the force), its drive (every source's one way in, the kick) and its carry, at coefficients the layout holds until stage 7b gears them from the lapse; stage 7c brings the regulator's block, the strides before and after with their mirror, and the head compared act by act on every train;
    - **the turnover:** turnover, in engine/step.py;
    - **the click:** click_whole and click_split, in engine/click.py;
    - **every bound a carry:** carry, in algebra/carry.py, and beat, in engine/step.py.
@@ -465,7 +465,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **David:** derives, and writes no code;
    - **Animate:** until the approval, only toys that prove something; after it, the decoder and the viewer;
    - **Sofer:** the gate and the law, on the owner's word; he approves every piece of code against the laws.
-3. **Every push needs four approvals,** and then the full check exits 0:
+3. **Every stage needs four approvals,** and then the full check exits 0 (the owner's word of 2026-10-29, 02:5x UTC, decision 26; before it, every push did); a review's follow-up commits are read by the three:
    - Sofer;
    - David;
    - Animate;
@@ -597,7 +597,7 @@ On the owner's word to David: "a generic solution for everything". This is David
     - **It cancels:** the click law's separate statement.
     - **The recommendation:** approve, as law 6's form for the composite clock. It gives no sign, so (m) stays.
     - **Animate's kind-keeping click** (checked again on the owner's word of 15:2x UTC): the 24's kind projection of a two-point tensor, one act for the whole click, the detector's click and the fusion. A candidate, not law 10's solution. OPEN: the local tick, Bell at a distance, the exchange sign, the density step's locality, and the fusion's books. Its risk: a first burst that spends the light.
-21. **(u) The asynchronous read: past or lin. Past, as decision 25 derives it.**
+21. **(u) The asynchronous read: past or lin. Past, as decision 25's reading derives it, put to the owner.**
     - **It gives:** a read that keeps the time reversal must see the new state after half a tick (PROVED).
       - **past** keeps the cone and breaks the reversal.
       - **lin** keeps the reversal, and reaches 318 of 372 Node-clocks faster than one Mesh per shortest tick.
@@ -620,13 +620,20 @@ On the owner's word to David: "a generic solution for everything". This is David
 
 25. **(y) The time gear's law: Postulate 6, rates multiply along a gear train. APPROVED (the owner's word of 2026-10-29, 01:3x UTC, in translation: "Rates multiply along a gear train, so the time gear's law is linear in the logarithm of the rate. Let it enter as a law that is enforced, and as a postulate, in simple words").**
     - **The postulate, in simple words:** when a clock drives a clock, their rates multiply. So when two causes slow a clock, the slowdowns multiply, and what adds up is the logarithm of the rate. The time gear's law is therefore linear in the logarithm of the rate.
-    - **What it decides:** David's family of time gear laws, each linear in (Gamma / N)^n (6484103660): n = 0, Einstein's, under which a planet's perihelion advances as in general relativity. The head's n = 4 gives a third of that: 14 arcseconds a century for Mercury, where nature shows 43.
+    - **What it decides:** David's family of time gear laws, each linear in (Gamma / N)^n, its member n = 0 the logarithm ln (Gamma / N), the family's limit (6484103660): n = 0, Einstein's, under which a planet's perihelion advances as in general relativity. The head's n = 4 gives a third of that: 14 arcseconds a century for Mercury, where nature shows 43.
     - **How it is enforced:** the engine builds the time gear's coupling with itself at the strength the postulate gives, and no file sets it: the load refuses a file that names it. A test shows two slowdowns composing by their product, with the head's law, linear in the stretch, as the mutant it must refuse. Sofer reads every push against it, as against the other postulates.
     - **What follows from the laws already standing** (the Boss's reading, put to the owner with it at 01:3x UTC):
       - the time gear holds the ruler Y = Gamma^2 / p0 (way (a)): the closed list asks every coefficient to be a product of gears, and the stretch X = Y^4 / Gamma^3 needs roots;
       - item (u) is past: the due beat keeps a neighbour at most one count ahead, so the slot written at or before the reader's count is its value there, exactly;
       - G is K-S1's, derived at load from Gamma;
       - the metric's mass is 0, the regulator's pinion at rim: the 24 allow a spring on every kind, no standing law asks one of the time gear, and nothing is declared. It stands so unless David derives a mass.
+
+26. **(z) The work made lighter. APPROVED (the owner's word of 2026-10-29, 02:5x UTC, in translation: "Approved", on the Boss's proposal; #2187 6486562433).**
+    - **The tests' room by file:** each Tensor24 test file holds one budget in tools/tests_shape.py's ROOM, grows within it with no new entry, and is refused above it.
+    - **A hostile review's report alone in the repo:** its probes stay in the reader's scratch, each named in the report.
+    - **One hostile reader per stage, and the four approvals per stage** (section 12, item 3): a review's follow-up commits are read by Sofer, David and Animate, and the three branches move at a stage's end.
+    - **The stage tests merged:** the laws that the test files of stages 2, 3, 4 and 7a repeat stand once, each still failing on its own mutant.
+    - **One checker of formats:** the files' format as one table, and one checker that names every departure.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 

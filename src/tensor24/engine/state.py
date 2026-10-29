@@ -23,7 +23,9 @@ class Plan(NamedTuple):
 
     first: Z  # (terms,): the row of the readings that enters first
     second: Z  # (terms,): the row that enters second
-    factor: Z  # (terms,): the strength times the table's entry
+    factor: (
+        Z  # (terms,): the strength times the table's entry, Python integers, so that no product wraps
+    )
     target: Z  # (terms,): the gear's row where the term lands
 
 

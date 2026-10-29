@@ -2,8 +2,8 @@
 
 Each review is a fresh reader who did not write the code, run on the review branch tensor24-review: it approves only
 what it could not break, with evidence it ran. Every change it asks is made before the branch moves to the three
-integration branches. The fourth to eleventh reports are here, the fourth, fifth and the seventh to eleventh with the
-probes their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
+integration branches. The fourth to thirteenth reports are here, the fourth, fifth and the seventh to eleventh with
+the probes their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
 
 | review | commits read | verdict | the changes, where |
 | --- | --- | --- | --- |
@@ -18,11 +18,16 @@ probes their authors are to run; the first three stand in the Boss's posts on #2
 | ninth | af564daac, 54b9e6a63, 83a0b214a to 927071a14 (stage 6 after the eighth's changes) | approve with changes, two: the load's raises and four gaps of the tests | the commit that adds ninth/; two follow-ups Sofer's |
 | tenth | 0ff2ae0dc (the ninth's changes) | approve with changes, two: J of the caller's dtype, and six gaps of the load's tests | the commit that adds tenth/ |
 | eleventh | 9e5233d7f (stage 7a) | approve with changes, one: the run back with every divisor row away from 1 | the commit that adds eleventh/ |
+| twelfth | ac2f5689f, 69eb983f9, 06c823ca2 (the decoder after the seventh review, the gate's amendment 4) | approve with changes, six, all the decoder's | Animate's, asked on #2187 |
+| thirteenth | fc8c810ff, 610fef782, d61cdb7bd, e0c52c053 (the engine since the tenth) | approve with changes, two of text: the charge identity's condition, and item (u) put to the owner | the commit that adds thirteenth/ |
 
-Each probe runs as `python3 -I <probe> <a worktree of tensor24-review> [...]`, its docstring naming its arguments;
-its output stands beside it. The copies here are the readers' files but for the text rules: the fourth report's
-verdict is in lower case and its two quoted phrases are described; one probe's raw U+2028 is written as its escape,
-and the fifth's sketch of tests is renamed decoder_tests_strengthened.py, so pytest does not collect it.
+From the twelfth on, a review leaves its report alone here (the owner's word of 2026-10-29, 02:5x UTC, the plan's
+decision 26): its probes stay in the reader's scratch, each named in the report, and the Boss gives an author the
+probes a change needs. Each probe runs as `python3 -I <probe> <a worktree of tensor24-review> [...]`, its docstring
+naming its arguments; its output stands beside it. The copies here are the readers' files but for the text rules: the
+fourth report's verdict is in lower case and its two quoted phrases are described; one probe's raw U+2028 is written
+as its escape, and the fifth's sketch of tests is renamed decoder_tests_strengthened.py, so pytest does not collect
+it.
 
 - fourth/: REPORT.md; gate_weakened.sh (the self-test against weakened scans), gate_floor_sideways.py (floored()
   on a side line), gate_closed_list.py and gate_dynamic_assign.py (dynamic imports beside the closed list).
