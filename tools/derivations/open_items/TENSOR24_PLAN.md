@@ -597,7 +597,7 @@ On the owner's word to David: "a generic solution for everything". This is David
     - **It cancels:** the click law's separate statement.
     - **The recommendation:** approve, as law 6's form for the composite clock. It gives no sign, so (m) stays.
     - **Animate's kind-keeping click** (checked again on the owner's word of 15:2x UTC): the 24's kind projection of a two-point tensor, one act for the whole click, the detector's click and the fusion. A candidate, not law 10's solution. OPEN: the local tick, Bell at a distance, the exchange sign, the density step's locality, and the fusion's books. Its risk: a first burst that spends the light.
-21. **(u) The asynchronous read: past or lin.**
+21. **(u) The asynchronous read: past or lin. Past, as decision 25 derives it.**
     - **It gives:** a read that keeps the time reversal must see the new state after half a tick (PROVED).
       - **past** keeps the cone and breaks the reversal.
       - **lin** keeps the reversal, and reaches 318 of 372 Node-clocks faster than one Mesh per shortest tick.
@@ -617,6 +617,16 @@ On the owner's word to David: "a generic solution for everything". This is David
       - how far the tops part is measured in the build, before a global read is asked of the owner.
 
 24. **(x) A candidate big law: the board is dials and their carries** (Animate, 6473326413, ANIMATE-CLOCK-ROOTS.md, reader-5 ab860c82, on the owner's word to her of 15:2x UTC; a candidate big law, with no verifier): each clock's time is the carry of its own dial; clocks that meet share one dial; every carry keeps the kind of what feeds it. Its letters: A, time (the local tick: a fast clock ticks more often, one at rate 0 does not tick, light crosses one Mesh per local tick); B, state (the joint dial held where its clocks meet, so a winding may stand with no direction and the detector's click has something to decide); C, selection (still light lays the singlet, a lead lays the vector along its Mesh). Its toys: local_tick.py (the local tick holds, its rewind exact over 9,600 events, where one tick for all grows past 10^6); kind_kept.py (the singlet and vector lay keep the 24 at 72 of 72 cases, the head's lay at 12 of 72); the families' ladder (a vector light reaches the 24's five kinds by bang 3, all eight with the twins by bang 3 or 4). The owner's to decide with it: the light as a vector (T1, three Gaussian gears). OPEN: law 7's premise; Bell at a distance; the density step's form; the draw's fairness; the joint toy of A, B and C on the one big bang. Recommended: approve as a direction, checked in the build by the joint toy before it enters the law.
+
+25. **(y) The time gear's law: Postulate 6, rates multiply along a gear train. APPROVED (the owner's word of 2026-10-29, 01:3x UTC, in translation: "Rates multiply along a gear train, so the time gear's law is linear in the logarithm of the rate. Let it enter as a law that is enforced, and as a postulate, in simple words").**
+    - **The postulate, in simple words:** when a clock drives a clock, their rates multiply. So when two causes slow a clock, the slowdowns multiply, and what adds up is the logarithm of the rate. The time gear's law is therefore linear in the logarithm of the rate.
+    - **What it decides:** David's family of time gear laws, each linear in (Gamma / N)^n (6484103660): n = 0, Einstein's, under which a planet's perihelion advances as in general relativity. The head's n = 4 gives a third of that: 14 arcseconds a century for Mercury, where nature shows 43.
+    - **How it is enforced:** the engine builds the time gear's coupling with itself at the strength the postulate gives, and no file sets it: the load refuses a file that names it. A test shows two slowdowns composing by their product, with the head's law, linear in the stretch, as the mutant it must refuse. Sofer reads every push against it, as against the other postulates.
+    - **What follows from the laws already standing** (the Boss's reading, put to the owner with it at 01:3x UTC):
+      - the time gear holds the ruler Y = Gamma^2 / p0 (way (a)): the closed list asks every coefficient to be a product of gears, and the stretch X = Y^4 / Gamma^3 needs roots;
+      - item (u) is past: the due beat keeps a neighbour at most one count ahead, so the slot written at or before the reader's count is its value there, exactly;
+      - G is K-S1's, derived at load from Gamma;
+      - the metric's mass is 0, the regulator's pinion at rim: the 24 allow a spring on every kind, no standing law asks one of the time gear, and nothing is declared. It stands so unless David derives a mass.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
