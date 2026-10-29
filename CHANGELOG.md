@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- The owner's text of 14:3x entered (2026-10-29, 14:4x UTC; ledger row 399): spacetime as one block and its shadows, the minus sign; docs/BIG_PICTURE.md 8.1 items 9 to 11 (the Boss's D6 to D8) with the keeper's cares, the head list's bullet, reading 49; no line of the law moved.
 - The review round entered (2026-10-29, 14:4x UTC; ledger row 399): docs/BIG_PICTURE.md 0.2 items 3, 4, 6, 7 and 13 made exact, the withdrawals, the Boss's six decisions for the owner, section 13.2 block E, reading 48.
 - The forward run's and the record's holes entered as open (2026-10-29, 14:3x UTC; ledger row 399): docs/BIG_PICTURE.md section 13.2 block D, 0.2 items 2, 3, 4, 6, 12, 13 and 14, reading 47.
 - The hunt's findings (2026-10-29, 14:2x UTC; ledger row 399): docs/BIG_PICTURE.md section 13.2 (A1 to A12, B1 to B12, the open list), 0.2 items 2 and 4, 10.7, the owner's list of open questions, reading 46; docs/ALGEBRA.md line 35's clause of decision 39 made exact (where the shift is 0; the shears' five slots), no line moved (1,960).
