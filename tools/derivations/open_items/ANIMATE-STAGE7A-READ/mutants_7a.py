@@ -1,4 +1,5 @@
-"""Mutants of stage 7a's act (Animate), each against tests/test_the_tensor24_act.py: killed names the first failing test.
+"""Mutants of stage 7a's act (Animate), each against tests/test_the_tensor24_engine.py, the stage tests merged into one
+file at cb7a5494: killed names the first failing test.
 
 usage: python -I mutants_7a.py <worktree at the head> <scratch folder>   (run here at 9e5233d7f: mutants_7a.txt)
 """
@@ -10,7 +11,7 @@ from pathlib import Path
 
 WT, SCRATCH = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve()
 STEP, MESH = "src/tensor24/engine/step.py", "src/tensor24/engine/mesh.py"
-TEST = "tests/test_the_tensor24_act.py"
+TEST = "tests/test_the_tensor24_engine.py"
 MUTANTS = {
     "the drive's tooth written where the gear did not tick": [
         (
