@@ -1,6 +1,6 @@
 # The big picture of Tensor24: one carry, two clicks, and the great clock's swing
 
-Kept by Sofer, on the owner's word to David of 2026-10-29, 06:43 UTC (in Hebrew; in translation): "Put it in the big picture document and let Sofer manage it. Everything in it is to be derived in tensor terms and in terms of the clocks and the acts. The two kinds of clicks: everything has to be clear there. Update the Boss." First written by David, 2026-10-29, 06:5x UTC, from the picture the owner closed with David in chat between 05:51 and 06:43 UTC, and from the pages and probes it cites (his first writing stands at toys-5 9c1957b5d, tools/derivations/open_items/TENSOR24-THE-BIG-PICTURE.md). Placed in docs/ by Sofer at 07:3x UTC, beside the description in [docs/ENGINE.md](ENGINE.md); from here the document is kept in this file, and what David, the Boss or Animate add is entered here with its status word the hour it is posted. The law is [docs/ALGEBRA.md](ALGEBRA.md), cited by its paragraphs' names.
+Kept by Sofer, on the owner's word to David of 2026-10-29, 06:43 UTC (in Hebrew; in translation): "Put it in the big picture document and let Sofer manage it. Everything in it is to be derived in tensor terms and in terms of the clocks and the acts. The two kinds of clicks: everything has to be clear there. Update the Boss." First written by David, 2026-10-29, 06:5x UTC, from the picture the owner closed with David in chat between 05:51 and 06:43 UTC, and from the pages and probes it cites (his first writing stands at toys-5 9c1957b5d, tools/derivations/open_items/TENSOR24-THE-BIG-PICTURE.md). Placed in docs/ by Sofer at 07:3x UTC, beside the description in [docs/ENGINE.md](ENGINE.md); from here the document is kept in this file, and what David, the Boss or Animate add is entered here with its status word the hour it is posted. The law is [docs/ALGEBRA.md](ALGEBRA.md), cited by its paragraphs' names. **One writer:** by the owner's word to David of 07:31 UTC ("Get updated from the Boss... only the writer adds to the document, to check that there are no contradictions"), Sofer alone writes this document; David, the Boss and Animate send what they add to Sofer, who enters it after his check against the law and against the lines already here, and names each contradiction he finds.
 
 Every line carries one status word:
 - **derived**, with its probe;
@@ -23,6 +23,11 @@ Every line carries one status word:
   - The runner comes first.
 - **To the Boss, relayed at 07:1x (comment 6490369479):** "David is working on a big picture document; it must be perfect and clear. Make sure the speed of light does not contradict nature in that definition."
 - **To the Boss, relayed at 07:13 (comment 6490433752):** "But there is a solution for full Bell, Bell with the cone, isn't there?"
+- **07:18, to David** (David's rendering, comment 6490839743): "Think: time on the board can go back, and when does it switch back, that is, swing... The solution is in the clicks' mechanism... they hint at it in the click's cone... The board goes forward where there are clicks linked to more complex clocks; that is a good direction for the solution... two kinds of clicks and remainders. What does it give that light moves at 1/sqrt 6?"
+- **07:31, to David:** "Get updated from the Boss... only the writer adds to the document, to check that there are no contradictions."
+- **07:2x to 07:4x, to the Boss** (comment 6490868228): "And if there are two boards running on one node, one backward and one forward, can locality be kept? Because locality must not be broken." Then: "Put it as an option in the big picture file, and send it to David too." Then: "What does each board stand for, and how do the clicks enter, with the two kinds?" And: "It supports making more complex clocks, because that is the universe's aim."
+- **To the Boss, relayed at 07:41 (comment 6490918360):** "OK, send to Sofer to update the big picture file."
+- **07:4x, directly to Sofer** (in Hebrew; in translation): "Are you managing the full picture document?" and "Get updated from the Boss."
 
 ## 0. The picture in one paragraph
 
@@ -40,15 +45,15 @@ There are two clicks, and both are carries:
 
 **What turns is the scale, not the arrow.** The record grows through every top and every bottom, and the remainders and the records pass every bang, so each cycle starts from what the last one built. That is the board's direction toward ever more complex clocks, and the conditions for machines that make machines.
 
-**Bell at a distance is not at a distance on the board, on the first of three readings put to the owner** (section 10). If the closure takes no ruler factor, the board's cone does not narrow with the notch while light's does, so since the bang the closure's cone has grown to at least three million times light's, and Bell holds locally, without item (l); at the full rate the cone is only sqrt 6 times light's, and the other two doors are a wide cone by the lattice's constants and item (l).
+**Bell at a distance is not at a distance on the board, on the first of four ways put to the owner** (section 10). If the closure takes no ruler factor, the board's cone does not narrow with the notch while light's does, so since the bang the closure's cone has grown to at least three million times light's, and Bell holds locally, without item (l); at the count 0 the cone is only sqrt 6 times light's; the other ways are a wide cone by a constant at load 0, item (l), and the owner's option of two boards on one Node-clock (section 10.1).
 
 ## Three speeds, stated once (0.1)
 
 The Boss's ask of 07:1x (6490369479, item 3), after his check of light against nature (items 1 of 6490369479 and 6490433752). Every other line of this document uses these three and no other.
 
-- **Light's speed:** 1 / sqrt 6 of a Mesh per tick at the full rate, c0, the doubler's hold (decision 27, item (g)); at a notch N it is c0 N^2 Meshes a tick. It is the one cone of every train and of the time gear, so gravity's waves move at light's speed.
+- **Light's speed:** 1 / sqrt 6 of a Mesh per tick at the full rate, c0, the doubler's hold (decision 27, item (g)), c0 squared being 1/6, one over the six Spokes, so that no constant is typed (David, 6490839743, item 6); at a notch N it is c0 N^2 Meshes a tick. It is the one cone of every train and of the time gear, so gravity's waves move at light's speed.
 - **The board's reach:** one Mesh a tick, sqrt 6 times light's at the full rate. It belongs to the due beat and to the reads alone: a Node-clock reads its six neighbours and no further (Postulate 3; **Locality is never broken**).
-- **Nothing physical moves at the reach:** no wave of the act outruns light, no hand carries the bare word, and what a bob measures of another by clicks never exceeds c. The closure of a split click moves at the reach and carries no signal (every marginal is 1/2); whether that is called physical is put to the owner (section 10).
+- **What moves at the reach, and what does not:** no hand, no light, no gear's wave and no signal at two parties outruns light, and what a bob measures of another by clicks never exceeds c; the click's closure, its books' wind in transit and its token move at the reach and carry no signal (every marginal is 1/2). The Boss's "nothing physical moves at the reach" is read in David's wording (6490839743, reading 3): the closure and the wind it books move at the reach, and nothing that a click can read does (section 16, reading 3).
 
 **Status:**
 - **derived**, on stage 7b's act at rest, where every row stands at the one cone s grip / W = 1/6 (7b's table: T = 6 den Gamma^2 G^2, grip = den Gamma^2 G^2 per Mesh, W = W+ = 2 T, s = 2) and the leapfrog's own dispersion is sin^2(w/2) = (1/6) SUM_i sin^2(k_i / 2) + s D / (4 W), the sum over the three axes (the Boss's probe light_speed.py, in his scratch, the file owed to the repository; the relation and his numbers checked by Sofer at 07:3x on a grid and by hand):
@@ -190,7 +195,7 @@ This follows **How to think about solutions: the principle of the clock and the 
 
 **Status:**
 - the source is derived (p20; DAVID-TENSOR24-THE-PRESSURE.md: the books' own source, -dL/dPhi = 2 v^2 - mu phi^2 = rho + T_ii, exactly);
-- the gearing is derived (p19 and 6488192915), and built at stage 7b (tensor24-review 861f883e9, with Sofer's yes and Animate's, hers with one test owed: the ruler's powers away from rest, at a held load N = Gamma / Y(c) a massive hand's beat at N of rest and light's speed at N^2, which kills the three mutants of W's and the spring's powers that survive the tests at rest; 6490565427).
+- the gearing is derived (p19 and 6488192915), and built at stage 7b (tensor24-review 861f883e9, with Sofer's yes and Animate's, hers with one test owed: the ruler's powers away from rest, at a held load N = Gamma / Y(c) a massive hand's beat at N of rest and light's speed at N^2, which kills the three mutants of W's and the spring's powers that survive the tests at rest; 6490565427; David's yes with that test owed, his own p19 slab, taken as the stage's closing test: at a uniform load light runs at N^2 of its rest speed and a massive hand's beat at N, and l4 measured the light half on 7b's gearing; 6490839743, item 5).
 
 ## 5. The two clicks
 
@@ -293,7 +298,7 @@ Both clicks are carries: their quotients leave forward and are written in the re
 - V is a stencil sum: the own digit plus the six gathered by nb;
 - d and the part are elementwise, the part a reduction over the parts' axis;
 - the tournament is a fixed schedule of index pairs, read at load;
-- the closure is an integer field, moved by a gather along nb each tick.
+- the closure is a token per Node-clock (the merged size and the closure's sign, a fixed number k of integers named at stage 9), moved by a gather along nb each tick; the losers' wind in transit is books, held in the T windings per Node-clock already counted; the pair's open axis is the twin train's frame q, on each child's Node-clock in that train's own rows; the count per Node-clock stays fixed for the run, 5 G + T + 3 + k (David, 6490839743, item 2; ALGEBRA.md line 98 fixes the count for the run and names no number).
 
 **New, from the big picture** (derived on paper; probes in preparation):
 - **The closure runs at the board's cone, with no ruler factor.**
@@ -392,11 +397,25 @@ The way back stands in the law, in the remainders. No act of the board runs it: 
   - Had it stood, every cycle would have replayed the last backward, until the clicks broke the mirror.
 - **Even then no click could tell.** The act is symmetric in time (T S T = S^-1), and for the clicks, time is the record's order.
 
+### Where time can go back, and where the board goes forward (9.1)
+
+The owner's word to David of 07:18 UTC (the list above) asks when the board's time can go back and when it goes forward, with the two kinds of clicks and the remainders, and what it gives that light moves at 1 / sqrt 6. David's answer (6490839743, item 6), each line with its status word, entered by the keeper:
+
+1. **Where time can go back** (derived). The act is symmetric in time (T S T = S^-1), so where there are no clicks forward and back cannot be told apart: a contraction there is the mirrored board's expansion run back. There the great clock's time, the load, turns back at the top by the spring alone, with no act (decision 27); what swings is the load, and each clock's beat count only grows (the first of the three times of section 8).
+2. **Where the board goes forward** (derived; one step open). A click writes a record that the state alone cannot undo: its bits, the free slots and the take's write (the click page's mutants), so the arrow is the direction in which the record grows. Where the records sit in composites, their own later clicks read them (a machine acts by what it recorded), so the arrow feeds itself where clicks are linked to more complex clocks. The open step: how strongly such a record locks the direction, against one that disperses.
+3. **The two clicks and the remainders** (derived). The remainders are the memory and the way back. The whole click builds, laying a hand in a slot. The split click chooses from the past's remainders, so it sets the direction of cause, and the draw does not read alike under the mirror.
+4. **The click's cone** (derived). A click is final only once the closure has crossed the quantum, and the closure runs at one Mesh a tick, ahead of light; so the click's cone sets the board's time order: B is after A when B is inside A's cone, which orders pairs that light cannot order. Where two clicks are outside each other's cones (the window) the board has no order between them, and that is where l5 found the three-party signal.
+5. **The picture, a mechanical clock** (a reading): the swing is the pendulum, the clicks are the escapement and the composites are the gear train; in a clock the arrow is in the escapement, not in the pendulum.
+6. **What light at 1 / sqrt 6 gives** (derived): one species per particle, by (g)'s hold; the room between the click's cone and light's, where the closure and the arrow run ahead of light (sqrt 6 at the bang, sqrt 6 e^(2U) since); the board's own number, 1/6 being one over the six Spokes, so that no constant is typed; one cone for light and gravity, as in nature; and the swing's period of exactly 2 pi times light's crossing of gravity's reach (the reach sqrt(Gamma / 12) Meshes, crossed in sqrt(Gamma / 2) ticks).
+7. **A test owed:** one board at the top of the swing, run with clicks and without, to read whether the contraction mirrors the expansion.
+
+**Status:** derived as above (points 1 to 4 and 6; the click's cone rests on the reading put to the owner in section 10), a reading (point 5), a direction (point 2's open step); the probe of point 7 owed. Kept by Sofer: nothing here reverses the board, so section 9's answer, no, stands; what turns back is the load.
+
 ## 10. Bell at a distance that is not at a distance
 
 - **The two measures of distance.** The clicks measure distance with light; the board measures it in Meshes and ticks. Since the bang, light crosses a Mesh e^(2U) times more slowly in ticks, and the closure does not slow.
 - **Against nature.** The Bell tests at a distance (Aspect; Weihs; Delft; Micius) keep the correlation even where an influence would need at least about ten thousand times light's speed (Salart and others, 2008; Yin and others, 2013).
-  - On the first reading (door 1 below) that lies inside the closure's cone of about three million times light's.
+  - On the first way below that lies inside the closure's cone of about three million times light's.
   - So the local closure gives S = -82/29 with a late choice.
   - There is no shared state held by no Node-clock, and no global order of clicks. Locality is kept.
   - There is no signal: every marginal is 1/2 at every setting.
@@ -414,17 +433,58 @@ The way back stands in the law, in the remainders. No act of the board runs it: 
   - the cone's Bell stands: S = -82/29, every marginal 1/2, local, with no Node-clock holding a shared state;
   - it is the collapse of quantum mechanics in the lattice's frame and no signal: nature forbids a signal faster than light, and no setting at one end changes what the other end reads;
   - nature's tests bound a finite speed above about 10,000 c and do not exclude one (Salart and others, 2008; the loophole-free tests of 2015 at 1.3 km; the satellite pair of 2017 at 1,200 km), so the cone's Bell covers nature where the closure's speed over light's exceeds that bound.
-- **The cone's width, put to the owner.** The closure runs at the board's reach, one Mesh a tick, and light at 1 / sqrt 6 of a Mesh a tick at the full rate, so at the full rate the cone is only sqrt 6 = 2.45 times light's and the tested pairs fall outside it, where S = 0. Three doors:
-  1. **The closure at the reach with no ruler factor** (David's recommendation): in local units light runs at c0 N^2, so the cone is e^(2U) / c0 times light's, at least 3 x 10^6 since the bang (e^U >= 1,100), and every test so far falls inside it. It retires item (l). The window and the several-party step are open (l5).
-  2. **A wide cone by the lattice's constants** (the Boss's door (a), 6490433752): light slow against the reach, below 1 / 10,000 of a Mesh a tick at the full rate (the cone s grip / W below 10^-8 on every row alike, so gravity keeps light's speed), so that the closure outruns light by 10,000 times or more at every time. Its cost, ticks per Mesh of light and what it does to (g)'s doubler and to G, is David's to derive (the Boss's ask of 07:13).
+- **The cone's width.** The closure runs at the board's reach, one Mesh a tick, and light at c0 N^2 Meshes a tick on 7b's act (l4 measured it to six digits at the counts 0, 100, 1,000 and 3,000), so the cone is sqrt 6 times light's at the count 0, the bang, and e^(2U) / c0 times light's at a notch N = e^(-U): at least 3 x 10^6 since the bang (e^U >= 1,100, by the background light's redshift alone), and every test so far falls inside it. The Boss's "sqrt 6 c" holds at the count 0 alone, and David's reading stands (the Boss, 6490868228, item 3). **Its one cost is Gamma:** the Mesh's rate p0^2 / Gamma must not round to 0 at the present load, so Gamma >= e^(2U) >= 1.2 x 10^6 and the cone is at most sqrt 6 Gamma times light's. **Its one condition:** the closure does not read the ruler. The window and the several-party step are open (l5).
+- **The ways put to the owner:**
+  1. **The closure at the reach with no ruler factor** (David's recommendation): the cone is wide by the notch itself, with no constant changed; it retires item (l); its condition is that a click's effect reads no ruler.
+  2. **A wide cone by a constant at load 0** (the Boss's door (a), 6490433752, light below 1 / 10,000 of a Mesh a tick at the full rate): c0^2 = s grip / W = 1/6, so reaching 10^-8 needs W up about 1.7 x 10^7 times, which takes T from 85 bits to about 109 and passes the width 128 at the ruler's deep entry Z = T Y^4 div Gamma^4, or a grip below K-S1's resolution, so that one notch of tension no longer resolves; and light at 1 / sqrt 6 is (g)'s hold itself, so the doubler and the pairs would reopen. It costs (g) and K-S1 or the width, and the notch's door costs none (David, 6490839743, item 1).
   3. **Item (l), the pair as one clock:** not local; it crosses **Locality is never broken**, a law not to be crossed.
-  If the closure must read the ruler too, its cone stays at sqrt 6 times light's, and nature's Bell at its distances then needs door 2 or door 3.
-- **The law's line this changes.** **Locality is never broken** (ALGEBRA.md line 92) holds as the owner's sentence that the correlation of two clicks is read in the reckoner's whole view with no act between the two Node-clocks, and records |S| at most 2 for every rule of the engine where the settings are free of the pair, late or random, as a finding against nature by name. The closure is an act between the two Node-clocks, one Mesh a tick, so doors 1 and 2 need the owner's word to rewrite that sentence; door 3 needs it too. Until his word the law reads as written (section 16, reading 6).
+  4. **Two boards on one Node-clock, one forward and one backward** (section 10.1, the owner's own option of 07:2x to 07:4x): no influence crosses space at any speed, so there is no window; its open steps are its own.
+  If the closure must read the ruler too, its cone stays at sqrt 6 times light's, and nature's Bell at its distances then needs way 2, 3 or 4.
+- **The law's line this changes.** **Locality is never broken** (ALGEBRA.md line 92) holds as the owner's sentence that the correlation of two clicks is read in the reckoner's whole view with no act between the two Node-clocks, and records |S| at most 2 for every rule of the engine where the settings are free of the pair, late or random, as a finding against nature by name. The closure is an act between the two Node-clocks, one Mesh a tick, so each of the ways needs the owner's word to rewrite that sentence (section 16, reading 6); and way 4's search for a history that agrees with itself at both ends is a great-clock-wide act if it selects the clicks, which crosses this line and line 98 (no read beyond one Mesh, no global, no great-clock-wide act), where if it only verifies a history that the forward run made it is a check like the rewind and no act of the board (section 16, reading 7). Until his word the law reads as written.
 - **Status:**
   - derived from two paragraphs of the law and the swing;
   - measured for two parties (l4);
   - the window's form for several parties is open (l5);
   - the reading is the owner's to choose (section 14).
+
+### An option: two boards on one Node-clock, one forward and one backward (10.1)
+
+Entered by the Boss on the owner's words to the Boss of 2026-10-29, 07:2x to 07:4x UTC (in Hebrew; in translation): "And if there are two boards running on one node, one backward and one forward, can locality be kept? Because locality must not be broken." Then: "Put it as an option in the big picture file, and send it to David too." Then: "What does each board stand for, and how do the clicks enter, with the two kinds?" And: "It supports making more complex clocks, because that is the universe's aim."
+
+- **What each board stands for:**
+  - **the forward board is the past arriving:** what was prepared (the bang, the sources, the pair's birth); it carries the waves forward (light, matter, gravity) and it alone writes records, the quotient leaving forward; it is the board as built;
+  - **the backward board is the future arriving backward:** what the detectors will choose and click; it is the same act run back, carries the choices back, and writes no record, so the clicks never see it, only the correlations it makes;
+  - **the present, at every Node-clock,** is where the two dials meet.
+- **How the two clicks enter:**
+  - **the whole click (how much)** stands on the forward board as built: the drive at the detector reaches a whole winding (q at least 1) and the record is written; the backward board takes from it only the confirmation, one quantum taken, back to the source, so the giver and the taker are the two ends of one handshake and the books close at both;
+  - **the split click (which)** is where the backward board works: detector A's choice and outcome ride back along A's twin to the birth, and the other twin's forward dial brings them to B; B's draw reads its forward dial, which already holds A's choice, and Bell follows;
+  - **one spread quantum (Grangier)** the same way: once a part is drawn "here", the word runs back to the source and out to every other part, so no other detector clicks (g2 = 0), with no closure across space.
+
+- **In clocks:**
+  - every Node-clock holds two dials, one turning forward from the bang and one turning backward from the clicks to come, and a twin carries both;
+  - when detector A chooses and clicks, its choice rides the backward dial back along its twin's own path to the birth's Node-clock, one Mesh at a time;
+  - there it passes to the other twin's forward dial and rides with it to B, one Mesh at a time;
+  - no step reads past a Node-clock's six neighbours, and nothing crosses space at any speed: the correlation travels through the shared birth, a zigzag in time.
+- **In the act:** the board's step runs back exactly (the untick), so the backward board is the same act run back, with no new term.
+- **In physics:** Aharonov's two-state vector (Aharonov, Bergmann and Lebowitz, 1964; Aharonov and Vaidman), Cramer's transactional reading (1986), and the locally mediated reformulations that Wharton and Argaman review (Reviews of Modern Physics 92, 021002, 2020). Locality is kept; what Bell's theorem loses is the independence of the source from the settings to come, through the future and not through a shared past.
+- **What it would lift:** the window of section 10 and Bancal's catch. No influence crosses space at any finite speed, so no setup of several parties falls inside a window, and the open step of l5 does not arise.
+- **What is open, each with a probe that can fail:**
+  1. **Consistency.** The backward board starts from the clicks, and the clicks read it, so the whole history must agree with itself at both ends. The runner then searches for that history and cannot only run forward tick by tick; whether one always exists, and only one, is open.
+  2. **No signal into the past.** Each end's statistics must not depend on the other end's choice, in every setup of two and of three parties.
+  3. **The cost.** Two states at every Node-clock, and the search.
+  4. **The aim kept.** The search for a history that agrees with itself must not forbid composite clocks.
+- **The aim, ever more complex clocks** (the owner's reason for the option):
+  - a composite clock stays one clock: parts born together stay correlated at any distance until their first click, with no read beyond the neighbours, which is what pairs, atoms, molecules and machines need;
+  - the arrow is kept: the forward board alone writes records and the backward board neither writes nor erases, so the record grows from swing to swing and every bang shows more;
+  - a direction, one step open: the backward board starts from the clicks to come, richer than the bang's seed, so a plain past and a rich future set the history between them, the direction of time toward more complex clocks.
+- **The probe:** a small board, a pair, two detectors that choose late, both boards, the search; S, the marginals of two and of three parties, and whether a consistent history exists.
+- **Read against the law at entering** (Sofer, 07:5x UTC):
+  - every read stays within the six neighbours, as the Boss states it, and the backward board is the act run back, the same function at -1 (ALGEBRA.md line 98), so it adds no term;
+  - two dials per Node-clock are a count fixed for the run if their number is fixed (line 98 names no number);
+  - **the search** (open step 1) is the one place that may cross a law: if the runner's search selects which clicks happen, it is a great-clock-wide act, against **Locality is never broken** (line 92: no act fires on the whole great clock, no act reads a global) and line 98; if it only verifies a history that the forward run made, it is a check like the rewind and no act of the board; which of the two it is, is the option's first open step, and David's probe decides it;
+  - like the closure, the option puts an act between the two Node-clocks along the Meshes where line 92's sentence records none, so it needs the owner's word to rewrite that sentence.
+- **Status:** a direction, the owner's option beside the closure at the board's cone (section 10) and item (l); David's to derive (the Boss, 6490868228 and 6490918360).
+
 
 ## 11. Ever more complex clocks, machines, and machines that make machines
 
@@ -446,7 +506,7 @@ The way back stands in the law, in the remainders. No act of the board runs it: 
   - memory: the quotients written go only forward, and composites persist;
   - selection: the cap's fixed room, and each bang's sifting;
   - a flow from givers to takers: light from bound givers, with the redshift's dark sky as the sink.
-- **Not derived:** that a composite that copies itself arises from the act's bindings, or how often. That is a count for stages 9 and 11: per swing, the composites whose lays bind into composites like themselves.
+- **Not derived:** that a composite that copies itself arises from the act's bindings, or how often. That is a count for stages 9 and 11: per swing, the composites whose lays bind into composites like themselves. A copy is a composite of train X whose own whole clicks lay hands that bind into a new composite of the same train X, the same parts on its card (G2); per bang it is row 46's third reading (David, 6490839743, item 4).
 - **The bang breaks every machine** (derived on paper).
   - Light sent in the machines' era comes back to the bottom blue-shifted by at least e^U >= 1,100, so visible light returns as X-rays, and chemically bound machines break.
   - What passes is their records, as whole numbers in the state (Postulate 4).
@@ -499,6 +559,7 @@ So one count, the balance of light and matter over the swing, decides three thin
 - the click's source reads the ruler;
 - the closure's cone is e^(2U) / c0 times light's, and Bell holds inside it at nature's distances, with its window (measured for two parties by l4);
 - the draw's digits are read in the local pitch;
+- where time can go back and where the board goes forward (section 9.1, points 1 to 4 and 6; the test of point 7 owed);
 - the sign of the balance of light and matter;
 - the bang breaks every machine.
 
@@ -513,7 +574,8 @@ So one count, the balance of light and matter over the swing, decides three thin
 - which composites copy themselves, and how often;
 - how the records in the seed shape the next cycle's first structures;
 - the light pumped at a changing horizon;
-- the closure's form in a window of several parties: it departs and does not signal (l5 measures the signal of the form as written).
+- the closure's form in a window of several parties: it departs and does not signal (l5 measures the signal of the form as written);
+- two boards on one Node-clock (section 10.1): the history that agrees with itself, no signal into the past, the cost, the aim kept.
 
 **The owner's:**
 - **Decided** (his word to the Boss of 06:3x UTC, decision 27):
@@ -521,7 +583,7 @@ So one count, the balance of light and matter over the swing, decides three thin
   - (g): approved, light at 1 / sqrt 6, the doubler's hold, as 7b's table writes it.
 - **Put to him,** each with David's recommendation:
   - the take on light's gears: way (b);
-  - Bell at a distance: the closure at the board's cone with no ruler factor, retiring item (l) (David's recommendation), a wide cone by the lattice's constants (the Boss's door (a)), or item (l) (section 10).
+  - Bell at a distance, four ways (section 10): the closure at the board's reach with no ruler factor, retiring item (l) (David's recommendation, and the Boss's reading too); a wide cone by a constant at load 0 (the Boss's door (a), which costs (g) and K-S1 or the width); item (l); and his own option, two boards on one Node-clock, one forward and one backward (section 10.1), a direction.
 
 ## 15. For the Boss, at stage 9
 
@@ -536,12 +598,14 @@ So one count, the balance of light and matter over the swing, decides three thin
 ## 16. The keeping (Sofer)
 
 - **The document is Sofer's to keep, place and phrase** (the owner's word to David of 06:43 UTC): it stands in docs/ beside the description in docs/ENGINE.md, each line with its status word, the owner's decisions entered as he gives them, and a probe's result, once run, replacing that line's status word. David's first writing stays at toys-5 9c1957b5d; what David, the Boss or Animate add is entered here the hour it is posted.
-- **Read against the law at placing** (07:3x UTC; nothing here crosses a law as written; six readings, each put to the one whose it is):
+- **Read against the law** (at placing, 07:3x UTC, and at the update of 07:5x; nothing here crosses a law as written; seven readings, each with the one whose it is):
   1. **The draw's form** (5.2) is the stage-9 form; the law's wording of item (5) stands until the owner's word follows it.
-  2. **The closure's state.** 5.2 carries the closure as an integer field moved by a gather along the six Spokes, and the tournament as a schedule read at load. A field per Node-clock beyond the gears is a count beyond line 98's fixed 5 G + T + 3; David and the Boss say where it lives and whether the count changes.
-  3. **"Nothing physical moves at the reach"** (section 0.1) and the loser's wind: the books carry the loser's wind to the winner one Mesh a tick, sqrt 6 times light's at the full rate. The Boss withdrew the objection (no signal: every marginal is 1/2), so the sentence is read as no signal, no hand and no click's measure at the reach; if the owner wants it to cover the books' wind in transit he says so.
-  4. **The head's record** (sections 7 and 14) is the head's under the act that decision 27 cancels: that each cycle is higher than the last and that 12 tracks cross the return are measured with the reversal, and are read again on the spring alone at the runner.
-  5. **The owner's minutes.** His "Going with your recommendation" is 06:08 UTC by David's record and was relayed at 06:11 (comment 6489403097); the law's lines say both.
-  6. **Locality is never broken, line 92.** The closure is an act between two Node-clocks and gives |S| above 2 with a late choice, where the law's sentence says no act between the two Node-clocks and |S| at most 2 (section 10): the choice among the doors is the owner's, and the law is rewritten only on his word.
-- **Put to David by Animate** (6490628536, with the document's keeper copied): which second reading of the frame the decoder compares with the load, the clicks' density per round (densest at the load's bottoms) or the redshift of light's absorptions against its emissions; and whether a copy is a composite's whole click laying children of its own train, which the parts on the train cards (G2) let the decoder read per bang as row 46's third reading.
+  2. **The closure's state** (answered by David, 6490839743, item 2): a token of a fixed number k of integers per Node-clock; the losers' wind in transit is in the books; the pair's open axis is the twin train's frame; the count stays fixed for the run, 5 G + T + 3 + k with k named at stage 9. Line 98 fixes the count for the run and names no number, so no law is crossed.
+  3. **"Nothing physical moves at the reach"** (section 0.1) and the loser's wind: David's wording replaces the Boss's, since the books carry the loser's wind to the winner at the reach: no hand, no light, no gear's wave and no signal at two parties outruns light, and the closure, its wind in transit and its token move at the reach. **The Boss is asked to confirm the wording**, since his own sentence was the one he asked the document to state.
+  4. **The head's record** (sections 7 and 14) is the head's under the act that decision 27 cancels: that each cycle is higher than the last and that 12 tracks cross the return are measured with the reversal, and are read again on the spring alone at the runner (David agrees, 6490839743).
+  5. **The owner's minutes.** His "Going with your recommendation" is 06:08 UTC by David's record and was relayed at 06:11 (comment 6489403097); the law's line 35 says both.
+  6. **Locality is never broken, line 92** (the owner's). The closure is an act between two Node-clocks and gives |S| above 2 with a late choice, where the law's sentence says no act between the two Node-clocks and |S| at most 2 (section 10): the choice among the ways is the owner's, and the law is rewritten only on his word (David agrees, 6490839743).
+  7. **Two boards, the search** (section 10.1, open step 1). A search for a history that agrees with itself at both ends is a great-clock-wide act if it selects the clicks, against lines 92 and 98, and a check like the rewind if it only verifies; David's probe says which.
+- **Answered by David for Animate** (6490839743, item 4): the frame's second reading is the redshift of light's absorptions against its emissions, the clicks' own reading (section 8); the density of clicks per round is in the great clock's ticks, which no click reads, so it stays the reckoner's check beside it. A copy is a composite of train X whose own whole clicks lay hands that bind into a new composite of the same train X, the same parts on its card (G2), read per bang as row 46's third reading (section 11).
+- **Owed by David:** his reading of the seven law lines, 426, 428, 430, 432, 691, 1596 and 1841, against the source rho + 3 p and the cancelled act, by name in his next post (none is changed until then); his probes p1 to p20 on 7b; and his words on 158d07aa, 6b9dc134 and c01ec1e8.
 - **The law's paragraphs this document rests on:** Postulate 3 (line 33); **The time gear's spring is the clock's one notch** and **The time gear's load is sourced by the form plus the pressure** (line 35); the principle (line 35); **The turnover** and **The floor** (lines 1602 and 1608, cancelled); **Locality is never broken** (line 92); **Only local** (line 502); **The same clock and the same ruler for every act** (line 693); **The great clock's tick is no observable** (line 695); **Einstein lives in the clicks of bound bobs, and the great clock is never measured** (line 1507); **Time in the engine is a circle, and every bang shows more than the one before** (line 106).
