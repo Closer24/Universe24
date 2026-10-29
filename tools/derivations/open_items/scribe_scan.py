@@ -194,6 +194,18 @@ RULES: dict[str, tuple[str, str]] = {
         "BLOCK",
         "a family, a train or a coupling named in a universe file or in a world's code, with its pair, pinion or strength: no particle, mass or coupling is declared in any file (law: Nothing is declared: every particle appears by itself in the clicks; the owner's word of 2026-10-29, 10:54, decision 35); a train at pinion = den is the seed and declares no mass; the declarations that stand are on the owner's list (scribe_scan_allowed.json) as named breaches until the clicks build the particles, and a new one, or a changed number, is refused",
     ),
+    "CHOOSE": (
+        "BLOCK",
+        "a call of choose or nonneg in the new engine's act (tensor24/engine) or its loader (runner/load.py): choose(k, x, y) = k x + (1 - k) y is an if spelt as arithmetic, a mask by a bit, and nonneg is a floor; the Node-clock has no if, no mask and no clamp (Postulate 5; the owner's word of 2026-10-29, 15:0x UTC, to David: no floors or bounds, no if; David's audit of tensor24-review 058512b2b, F8); the count per file may not rise",
+    ),
+    "POSITION": (
+        "BLOCK",
+        "a name indexed by a constant integer (trains[-1], rows[0]) in the new engine's act or its loader: a family found by its place in a list is a row apart (law: A gear like every gear; decision 38; the owner's word of 2026-10-29, 15:0x UTC: the code does not know what the families are); an array's dimension (x.shape[-1]) and a pair picked out of a call's result are no family; the count per file may not rise",
+    ),
+    "FAMILY": (
+        "BLOCK",
+        "a family's kind or operand named by a string ('A1', 'A2', 'E', 'T1', 'T2', 'gradient') in the new engine's act or its loader: the files name each family and the code reads every role from them (decision 38; the owner's word of 2026-10-29, 15:0x UTC: make sure the code does not know what the families are); the count per file may not rise",
+    ),
 }
 
 BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sympy mpmath".split())
@@ -275,6 +287,9 @@ WALLS = {
     "main.py": {"engine", "runner"},
 }  # the new engine's folders each may import (the standard library always); the architect's table, section 4 (eaf07f596)
 NUMPY_FOLDERS = frozenset({"engine", "runner"})  # the folders that may import numpy
+ACT = NEW_ENGINE + "/engine/"  # the new engine's act: the Node-clock's step, its Mesh and its state
+SELECTIONS = frozenset({"choose", "nonneg"})  # the engine's own selection by a bit and its floor: an if and a clamp spelt as arithmetic (David's audit, F8)
+FAMILY_WORDS = frozenset({"A1", "A2", "E", "T1", "T2", "gradient"})  # a kind or an operand named by a string: the code knows a family by name
 ROOT_MODULES = frozenset(
     {"__init__.py", "main.py"}
 )  # the only modules directly under tensor24/: the package's own file (the standard library alone) and main.py; any other path is unlisted
@@ -377,6 +392,21 @@ def own_choose(rel: str, name: str, node: ast.Call) -> bool:
     """The new engine's own choose(k, x, y) = k x + (1 - k) y of algebra/ (the architect's design, section 2), called by its bare name:
     numpy's choose, reached through an attribute, stays a clamp, and numpy's own name is no import there (the closed list)."""
     return name == "choose" and isinstance(node.func, ast.Name) and rel.startswith(NEW_ENGINE + "/")
+
+
+def constant_index(node: ast.expr) -> bool:
+    """A constant integer used as an index, signed: trains[-1], rows[0]."""
+    if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub | ast.UAdd):
+        node = node.operand
+    return isinstance(node, ast.Constant) and isinstance(node.value, int) and not isinstance(node.value, bool)
+
+
+def indexed_by_place(node: ast.Subscript) -> bool:
+    """A name or an attribute indexed by a constant, other than an array's dimension (x.shape[-1]): a family found by its place."""
+    base = node.value
+    return constant_index(node.slice) and (
+        isinstance(base, ast.Name) or (isinstance(base, ast.Attribute) and base.attr != "shape")
+    )
 
 
 def reduction(rel: str, name: str, node: ast.Call) -> bool:
@@ -1037,6 +1067,14 @@ def scan(rel: str, source: str) -> list[Hit]:
         for node in ast.walk(tree):
             if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Add) and ast.dump(node.left) == ast.dump(node.right):
                 add("TWICE", node, ast.unparse(node))  # not spared to the runner or the decoder: the loader's twos are the engine's
+    if rel.startswith(ACT) or rel == LOADER:
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call) and callee_name(node) in SELECTIONS and not spelt_operation(node.func, numpy):
+                add("CHOOSE", node, callee_name(node))  # an if spelt as arithmetic, or a floor: the act has neither (David's audit, F8)
+            elif isinstance(node, ast.Subscript) and indexed_by_place(node):
+                add("POSITION", node, f"{ast.unparse(node.value)}[{ast.unparse(node.slice)}]")
+            elif isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value in FAMILY_WORDS:
+                add("FAMILY", node, repr(node.value))
     module_containers: dict[str, ast.stmt] = {}
     for stmt in tree.body:
         value = stmt.value if isinstance(stmt, ast.Assign | ast.AnnAssign) else None

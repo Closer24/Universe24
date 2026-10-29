@@ -741,6 +741,32 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a floor in a reader", READER, "def f(a):\n    return a.floor\n", {}),
     ("a floor in the decoder", NEW_DECODER, "def f(a):\n    return a.floor\n", {}),
     ("a floor in the runner", NEW_RUNNER, "def f(a):\n    return a.floor\n", {}),
+    ("a choose in the act", NEW_STEP, "def f(k, x, y):\n    return choose(k, x, y)\n", {"CHOOSE": 1}),
+    ("a nonneg in the act", NEW_STEP, "def f(x):\n    return nonneg(x)\n", {"CHOOSE": 1}),
+    ("a choose reached through a module", NEW_STEP, "def f(a, k, x, y):\n    return a.choose(k, x, y)\n", {"CHOOSE": 1, "CLAMP": 1}),
+    ("numpy's choose is a clamp and no engine choose", NEW_STEP, "import numpy as np\n\n\ndef f(k, x):\n    return np.choose(k, x)\n", {"CLAMP": 1}),
+    ("a choose in the mesh", NEW_MESH, "def f(k, x, y):\n    return choose(k, x, y)\n", {"CHOOSE": 1}),
+    ("a choose in the loader", NEW_LOADER, "def f(k, x, y):\n    return choose(k, x, y)\n", {"CHOOSE": 1}),
+    ("a choose in the algebra", NEW_RING, "def f(k, x, y):\n    return choose(k, x, y)\n", {"ALLOW": 1}),
+    ("a choose in a reader", NEW_DECODER, "def f(k, x, y):\n    return choose(k, x, y)\n", {}),
+    ("a name that only contains choose", NEW_STEP, "def f(chooser, x):\n    return chooser(x)\n", {"ALLOW": 1}),
+    ("a family found by its last place", NEW_LOADER, "def f(trains):\n    return trains[-1]\n", {"POSITION": 1}),
+    ("a family found by its first place", NEW_STEP, "def f(rows):\n    return rows[0]\n", {"POSITION": 1}),
+    ("an attribute indexed by an expression", NEW_LOADER, "def f(self, k):\n    return self.rows[k + 1]\n", {}),
+    ("an attribute indexed by a literal", NEW_LOADER, "def f(self):\n    return self.rows[5]\n", {"POSITION": 1}),
+    ("an array's dimension", NEW_LOADER, "def f(a):\n    return a.shape[-1]\n", {}),
+    ("a pair out of a call's result", NEW_LOADER, "def f(a, b, carry):\n    return carry(a, b, 0)[0]\n", {}),
+    ("an index that is a name", NEW_LOADER, "def f(rows, k):\n    return rows[k]\n", {}),
+    ("a slice", NEW_LOADER, "def f(rows):\n    return rows[0:1]\n", {}),
+    ("a place in the algebra", NEW_RING, "def f(phi):\n    return phi[0]\n", {}),
+    ("a place in a reader", NEW_DECODER, "def f(rows):\n    return rows[0]\n", {}),
+    ("a kind named by a string in the loader", NEW_LOADER, "def f():\n    return 'A1'\n", {"FAMILY": 1}),
+    ("an operand named by a string in the loader", NEW_LOADER, "def f(op):\n    return op == 'gradient'\n", {"FAMILY": 1}),
+    ("a kind named by a string in the act", NEW_STEP, "def f():\n    return 'T1'\n", {"FAMILY": 1}),
+    ("two kinds, one each in two functions", NEW_STEP, "def f():\n    return 'E'\n\n\ndef g():\n    return 'T2'\n", {"FAMILY": 2}),
+    ("a kind named in the algebra", NEW_RING, "def f():\n    return 'A1'\n", {"ALLOW": 1}),
+    ("a kind named by the decoder", NEW_DECODER, "def f():\n    return 'A1'\n", {}),
+    ("a string that only contains a kind", NEW_LOADER, "def f():\n    return 'A12 and E'\n", {}),
 ]
 
 
@@ -1004,7 +1030,7 @@ CASES += [
     # the architect's own functions (design section 2): choose and nonneg of algebra/ called by their names, the due bit's product over the
     # Spoke axis (np.prod); numpy's choose stays a clamp
     (
-        "a lawful beat and due bit: the algebra's carry, nonneg and choose, np.prod over the Spoke axis",
+        "a beat and due bit: the algebra's carry, nonneg and choose (two selections, the rule CHOOSE counts them), np.prod over the Spoke axis",
         NEW_STEP,
         "import numpy as np\n"
         "from tensor24.algebra.carry import carry, choose, nonneg\n\n\n"
@@ -1015,7 +1041,7 @@ CASES += [
         "    return carry(rate, gamma, ph)\n\n\n"
         "def turnover(q, moved, same):\n"
         "    return choose(q, moved, same)\n",
-        {},
+        {"CHOOSE": 2},
     ),
     (
         "numpy's choose is still a clamp, and no list name",
