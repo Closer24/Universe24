@@ -1,0 +1,15 @@
+CAUGHT {'OPERATION': 1}                         a wrap: True  control: x % side
+CAUGHT {'OPERATION': 1}                         a wrap: True  control: np.mod
+CAUGHT {'DTYPE': 1, 'OPERATION': 1}             a wrap: True  control: np.take with mode=
+CAUGHT {'DTYPE': 3}                             a wrap: True  a doubled range indexed
+CAUGHT {'DTYPE': 1}                             a wrap: True  np.tile indexed
+CAUGHT {'DTYPE': 1}                             a wrap: True  np.resize indexed
+MISSED                                          a wrap: True  np.unravel_index's second part
+MISSED                                          a wrap: True  == as the whether (no ordering)
+MISSED                                          a wrap: True  np.equal as the whether
+CAUGHT {'COMPARE': 2}                           a wrap: True  np.greater_equal as the whether
+MISSED                                          a wrap: True  np.digitize as the whether
+MISSED                                          a wrap: True  a getattr of a built name
+MISSED                                          a wrap: True  vars(np) by key
+wraps the gate misses: 6
+exit 0

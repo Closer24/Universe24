@@ -23,7 +23,14 @@ and 4, its sea, a packet over the sea, the packet alone, the vacuum), 20 to 40 t
 - Every input recomputed from the head's raw state equals the head's own at every site.
 - The end of tick equals the act at 4,123 of 4,123 site-ticks where no turnover hit.
 
-**The differences, named** (Sofer's condition (a)):
+**Sofer's five conditions on the test** (6479294042): (a) the differences named, with counts and stage; (b) mutants
+that part it: the push's sign, the pull reading the before slot, the grip from the neighbour's Mesh, b+ = b; (c) the
+probe's six worlds, not the smallest piece alone; (d) the per-end table inside the test alone, a test of the board's
+own Meshes beside it; (e) the probe and this README committed here.
+
+**The light's spring:** D = 0 on the light, so stage 4 holds no spring term; the term enters with matter at stage 7.
+
+**The differences, named** (condition (a)):
 - the turnover replaces the act at 1,847 of 5,970 site-ticks: the head mirrors the tooth as (2 mid W - r) mod W with
   no going, where the tie rule flips it to w - 1 - r and advances go (stage 8);
 - the regulator moves W, W+ and the stretch s at every site and tick: W+ = W at 45 of 5,970 (stage 7);

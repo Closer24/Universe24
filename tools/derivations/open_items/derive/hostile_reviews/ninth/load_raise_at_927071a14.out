@@ -1,0 +1,24 @@
+### case B
+B: a board of 40000000 sites, two rows: one array 610 MiB; the cap holds 3.75 of them (three, and the clocks of half of one)
+files: universe.json 195 bytes, piece.json 41 bytes, setting.json 39 bytes; the checker: holds
+the load RAISED MemoryError: Unable to allocate 610. MiB for an array with shape (2, 40000000) and data type object
+  state, laid = lay(setting.get("gears", []), trains, sites) | ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/review_s10/wt/src/tensor24/runner/load.py", line 177, in lay | return (a, b, r, 0 * a, clocks, clocks, clocks), found | ~~^~~
+exit 0
+### case A
+A: one T1 train of 10000 kinds on a hand (rows 60000), 10000 cross rows (60000 terms); the scatter asks 26.8 GiB
+files: universe.json 440187 bytes, piece.json 34 bytes, setting.json 39 bytes; the checker: holds
+the load RAISED MemoryError: Unable to allocate 26.8 GiB for an array with shape (60000, 60000) and data type object
+  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/review_s10/wt/src/tensor24/runner/load.py", line 211, in load | planned, refused = plan(universe.get("couplings", []), trains, c, labels, kinds.t1.shape[-1]) | ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/review_s10/wt/src/tensor24/runner/load.py", line 152, in plan | scatter = np.zeros((rows, len(landing)), dtype=object)
+tools/tensor24_files.py on them: exit 1 (1 is also its exit for a named departure); stderr's last line: numpy._core._exceptions._ArrayMemoryError: Unable to allocate 26.8 GiB for an array with shape (60000, 60000) and data type object
+exit 0
+### case C
+files: universe.json 4587 bytes, piece.json 34 bytes, setting.json 39 bytes; the checker: holds
+the load: named [], loaded True in 0.1s
+C: rows 600, terms 600, the dense scatter 360000 entries: one contraction 0.03s
+files: universe.json 8987 bytes, piece.json 34 bytes, setting.json 39 bytes; the checker: holds
+the load: named [], loaded True in 0.1s
+C: rows 1200, terms 1200, the dense scatter 1440000 entries: one contraction 0.13s
+files: universe.json 17787 bytes, piece.json 34 bytes, setting.json 39 bytes; the checker: holds
+the load: named [], loaded True in 0.2s
+C: rows 2400, terms 2400, the dense scatter 5760000 entries: one contraction 0.57s
+exit 0

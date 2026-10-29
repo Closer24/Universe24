@@ -1,0 +1,49 @@
+killed   tests: 1 failed in 0.84s; tool exit 0                                                                                     K1 E's reading (e1, e2)
+killed   tests: 1 failed in 0.87s; tool exit 0                                                                                     K2 E's plane (e1 - e2, e1 - e3)
+killed   tests: 1 failed in 0.77s; tool exit 0                                                                                     K3 T1 (and T2) conjugated by the 3-cycle of the axes
+killed   tests: 1 failed in 0.93s; tool exit 0                                                                                     K4 A2 the turn's own determinant
+killed   tests: 1 failed in 0.87s; tool exit 0                                                                                     K5 projector reads the inverse kinds transposed
+killed   tests: 1 failed in 0.88s; tool exit 0                                                                                     K6 kinds.inverse the turn itself
+killed   tests: 1 failed in 0.65s; tool exit 0                                                                                     K7 the 48 weighed in
+SURVIVED tests: 124 passed in 2.79s; tool exit 0                                                                                   K8 E in the other equivalent basis (an E basis choice)
+killed   tests: 1 failed, 14 passed in 2.13s; tool exit 0                                                                          M1 main.made passes the turns as their own inverses
+SURVIVED tests: 124 passed in 2.79s; tool exit 0                                                                                   L1 the last seed not 0 (equivalent since the sign is fixed)
+killed   tests: 1 failed in 0.78s; tool exit 0                                                                                     L2 the sign by the last entry
+SURVIVED tests: 124 passed in 2.75s; tool exit 0                                                                                   L3 the gcd without abs
+killed   tests: 1 failed, 15 passed in 2.25s; tool exit 0                                                                          L4 Train.row with the part slowest
+killed   tests: 1 failed, 31 passed in 2.44s; tool exit 0                                                                          L5 lay ignores the train's first row
+killed   tests: 1 failed, 31 passed in 2.36s; tool exit 0                                                                          L6 lay's bound one past
+killed   tests: 1 failed, 15 passed in 2.48s; tool exit 0                                                                          L7 the pull's plane one on
+killed   tests: 1 failed, 15 passed in 2.45s; tool exit 0                                                                          L8 the gradient read at part 0
+killed   tests: 1 failed, 19 passed in 2.39s; tool exit 0                                                                          L9 the gradient's A1 rule on the first side alone
+killed   tests: 1 failed, 27 passed in 2.41s; tool exit 0                                                                          L10 the strides on the first side alone
+killed   tests: 1 failed, 17 passed in 2.36s; tool exit 0                                                                          L11 a forbidden channel not named
+killed   tests: 1 failed, 15 passed in 2.38s; tool exit 0                                                                          L12 the landing at part 0
+killed   tests: 1 failed, 15 passed in 2.25s; tool exit 0                                                                          L13 the table's sign dropped from the factor
+killed   tests: 1 failed, 25 passed in 2.31s; tool exit 0                                                                          L14 a part of 3 loads
+killed   tests: 1 failed, 16 passed in 2.35s; tool exit 0                                                                          L15 E loads
+killed   tests: 1 failed, 31 passed in 2.40s; tool exit 0                                                                          L16 lay swaps before and the tooth
+killed   tests: 1 failed, 31 passed in 2.31s; tool exit 0                                                                          L17 lay's going at 1, not 0
+killed   tests: 1 failed, 33 passed in 2.36s; tool exit 0                                                                          L18 promises' tooth bound one past
+killed   tests: 1 failed, 33 passed in 2.32s; tool exit 0                                                                          L19 promises' rate bound one past the full rate
+killed   tests: 1 failed, 33 passed in 2.39s; tool exit 0                                                                          L20 promises' rate floor one below
+killed   tests: 1 failed, 15 passed in 2.31s; tool exit 0                                                                          C1 the factor dropped
+killed   tests: 1 failed, 15 passed in 2.23s; tool exit 0                                                                          C2 the second reading as the first
+killed   tests: 1 failed, 37 passed in 2.68s; tool exit 1                                                                          F1 a pinion below den only
+killed   tests: 1 failed, 91 passed in 2.72s; tool exit 0                                                                          F2 a pinion above 0 only
+killed   tests: 1 failed, 37 passed in 2.37s; tool exit 1                                                                          F3 a hand from part 3
+killed   tests: 1 failed, 91 passed in 2.24s; tool exit 0                                                                          F4 a sine below den only
+killed   tests: 1 failed, 37 passed in 2.55s; tool exit 1                                                                          F5 a sine above 0 only
+killed   tests: 1 failed, 79 passed in 2.62s; tool exit 0                                                                          F6 the norm at most den den
+killed   tests: 1 failed, 46 passed in 2.61s; tool exit 0                                                                          F7 a kind one past
+killed   tests: 1 failed, 38 passed in 2.59s; tool exit 0                                                                          F8 a kind from 1 (the floor moved by one)
+killed   tests: 1 failed, 50 passed in 2.57s; tool exit 0                                                                          F9 a part one past
+killed   tests: 1 failed, 48 passed in 2.44s; tool exit 0                                                                          F10 an operand one past
+killed   tests: 1 failed, 51 passed in 2.61s; tool exit 0                                                                          F11 the second side's kind read as the first's
+killed   tests: 1 failed, 60 passed in 2.54s; tool exit 0                                                                          F12 the target's kind read as the first's
+killed   tests: 1 failed, 62 passed in 2.41s; tool exit 0                                                                          F13 the target's part read as the first's
+killed   tests: 1 failed, 42 passed in 2.15s; tool exit 0                                                                          F14 a train one past
+killed   tests: 1 failed, 91 passed in 2.19s; tool exit 0                                                                          F15 the norm's sine not squared
+killed   tests: 1 failed, 108 passed in 2.32s; tool exit 0                                                                         F16 a sine allowed on one gear
+killed   tests: 1 failed, 52 passed in 1.70s; tool exit 0                                                                          F17 the second operand unchecked
+survived: 3 of 48

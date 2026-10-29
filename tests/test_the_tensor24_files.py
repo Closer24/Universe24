@@ -5,22 +5,30 @@ from pathlib import Path
 
 import pytest
 
-from tensor24.runner.files import NAMES, departures
+from tensor24.runner.files import COUPLING, NAMES, OPERANDS, departures
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
 DEN = 15162856759112389  # the example's den, as its file holds it: the widest of its integers, 54 bits
+HAND = (
+    15162854575528411,
+    8137489624680,
+)  # one of the head's hand rows over den (David, 6478324607, (n3))
 
 
 def edits():
     """One edited file per rule: the file, its one change (or its text), the departure named, or None at a rule's edge."""
     train = "universe.trains[0]"
 
-    def coupling(row, named):
+    def coupling(named, **fields):
+        row = dict(zip(COUPLING, [0] * (len(COUPLING) - 1) + [1], strict=True)) | fields
         return (
             "universe",
-            lambda u: u["couplings"].append(row),
+            lambda u: u["couplings"].append(list(row.values())),
             named and f"universe.couplings[0]: {named}",
         )
+
+    def light(**fields):
+        return lambda u: u["trains"][0].update(fields)
 
     def gear(row, named):
         return "setting", lambda s: s["gears"].append(row), named and f"setting.gears[1]: {named}"
@@ -60,7 +68,7 @@ def edits():
         "the width one bit short": (
             "universe",
             lambda u: u["integers"].update(width=53),
-            f"universe.trains[0].pair[1]: the integer {DEN} takes more bits than the width, 53",
+            f"universe.trains[0].pinion: the integer {DEN} takes more bits than the width, 53",
         ),
         "the width at the widest integer": ("universe", lambda u: u["integers"].update(width=54), None),
         "an integer too wide in the setting": (
@@ -138,45 +146,92 @@ def edits():
             lambda u: u["trains"][0].update(part=True),
             f"{train}.part: a whole number of at least 1, not True",
         ),
-        "a rim that is not den": (
+        "a pinion past den": (
             "universe",
-            lambda u: u["trains"][0].update(pair=[DEN, DEN + 1]),
-            f"{train}.pair: the rim is den, not {DEN + 1}",
-        ),
-        "a pinion past the rim": (
-            "universe",
-            lambda u: u["trains"][0].update(pair=[DEN + 1, DEN]),
-            f"{train}.pair: the pinion within [0, den], not {DEN + 1}",
+            light(pinion=DEN + 1),
+            f"{train}.pinion: a whole number within [0, den], not {DEN + 1}",
         ),
         "a pinion below 0": (
             "universe",
-            lambda u: u["trains"][0].update(pair=[-1, DEN]),
-            f"{train}.pair: the pinion within [0, den], not -1",
+            light(pinion=-1),
+            f"{train}.pinion: a whole number within [0, den], not -1",
         ),
-        "a pinion at 0": ("universe", lambda u: u["trains"][0].update(pair=[0, DEN]), None),
+        "a pinion of a list": (
+            "universe",
+            light(pinion=[DEN]),
+            f"{train}.pinion: a whole number within [0, den], not [{DEN}]",
+        ),
+        "a pinion at 0 with its other at den": ("universe", light(pinion=0, sine=DEN), None),
+        "a hand's pair off den's circle": (
+            "universe",
+            light(sine=1),
+            f"{train}: the hand's pair ({DEN}, 1) has the norm {DEN * DEN + 1}, not den den",
+        ),
+        "a hand's pair one off in the pinion": (
+            "universe",
+            light(pinion=HAND[0] - 1, sine=HAND[1]),
+            f"{train}: the hand's pair ({HAND[0] - 1}, {HAND[1]}) has the norm",
+        ),
+        "the head's hand pair": ("universe", light(pinion=HAND[0], sine=HAND[1]), None),
+        "a hand with no other": (
+            "universe",
+            lambda u: u["trains"][0].pop("sine"),
+            f"{train}.sine: on a hand, a whole number within [0, den], not None",
+        ),
+        "a hand's other past den": (
+            "universe",
+            light(sine=DEN + 1),
+            f"{train}.sine: on a hand, a whole number within [0, den], not {DEN + 1}",
+        ),
+        "a hand's other below 0": (
+            "universe",
+            light(sine=-1),
+            f"{train}.sine: on a hand, a whole number within [0, den], not -1",
+        ),
+        "an other on a train of one gear": (
+            "universe",
+            light(part=1),
+            f"{train}.sine: none on a train of one gear, not 0",
+        ),
         "a weight that is a float": (
             "universe",
             lambda u: u["trains"][0].update(weight=0.5),
             f"{train}.weight: a whole number, not 0.5",
         ),
-        "a coupling to no train": coupling([0, 0, 1, 0, 0, 1], "a train off the trains' rows"),
-        "a coupling's first train beyond": coupling([1, 0, 0, 0, 0, 1], "a train off the trains' rows"),
-        "a coupling's first train below 0": coupling(
-            [-1, 0, 0, 0, 0, 1], "a train off the trains' rows"
-        ),
-        "a coupling's second train below 0": coupling(
-            [0, 0, -1, 0, 0, 1], "a train off the trains' rows"
-        ),
-        "a coupling's target beyond": coupling([0, 0, 0, 0, 1, 1], "a train off the trains' rows"),
-        "a coupling's target below 0": coupling([0, 0, 0, 0, -1, 1], "a train off the trains' rows"),
+        "a coupling to no train": coupling("a train off the trains' rows", with_train=1),
+        "a coupling's first train beyond": coupling("a train off the trains' rows", train=1),
+        "a coupling's first train below 0": coupling("a train off the trains' rows", train=-1),
+        "a coupling's second train below 0": coupling("a train off the trains' rows", with_train=-1),
+        "a coupling's target beyond": coupling("a train off the trains' rows", target=1),
+        "a coupling's target below 0": coupling("a train off the trains' rows", target=-1),
         "a coupling's strength that is a float": coupling(
-            [0, 0, 0, 0, 0, 0.5], "a row of whole numbers, one per field"
+            "a row of whole numbers, one per field", strength=0.5
         ),
-        "a coupling's part beyond": coupling([0, 2, 0, 0, 0, 1], "a part off its train's"),
-        "a coupling's part below 0": coupling([0, -1, 0, 0, 0, 1], "a part off its train's"),
-        "a coupling's second part beyond": coupling([0, 0, 0, 2, 0, 1], "a part off its train's"),
-        "a coupling's second part below 0": coupling([0, 0, 0, -1, 0, 1], "a part off its train's"),
-        "a coupling at the last parts": coupling([0, 1, 0, 1, 0, 1], None),
+        "a coupling's kind beyond": coupling("a kind off its train's", kind=1),
+        "a coupling's kind below 0": coupling("a kind off its train's", kind=-1),
+        "a coupling's second kind beyond": coupling("a kind off its train's", with_kind=1),
+        "a coupling's target kind beyond": coupling("a kind off its train's", target_kind=1),
+        "a coupling's target kind below 0": coupling("a kind off its train's", target_kind=-1),
+        "a coupling's part beyond": coupling("a part off its train's", part=2),
+        "a coupling's part below 0": coupling("a part off its train's", part=-1),
+        "a coupling's second part beyond": coupling("a part off its train's", with_part=2),
+        "a coupling's second part below 0": coupling("a part off its train's", with_part=-1),
+        "a coupling's target part beyond": coupling("a part off its train's", target_part=2),
+        "a coupling's target part below 0": coupling("a part off its train's", target_part=-1),
+        "a coupling's operand beyond": coupling("an operand off the readings", operand=len(OPERANDS)),
+        "a coupling's operand below 0": coupling("an operand off the readings", operand=-1),
+        "a coupling's second operand beyond": coupling(
+            "an operand off the readings", with_operand=len(OPERANDS)
+        ),
+        "a coupling's second operand below 0": coupling("an operand off the readings", with_operand=-1),
+        "a coupling at the last parts and operands": coupling(
+            None,
+            part=1,
+            with_part=1,
+            target_part=1,
+            operand=len(OPERANDS) - 1,
+            with_operand=len(OPERANDS) - 1,
+        ),
         "a side at 0": (
             "piece",
             lambda p: p["shape"].__setitem__(0, 0),
@@ -221,33 +276,24 @@ def edits():
             "piece.json: not read:",
         ),
         "no JSON": ("setting", lambda s: "{", "setting.json: not read:"),
-        "a part of 1": ("universe", lambda u: u["trains"][0].update(part=1), None),
+        "a part of 1": ("universe", lambda u: (light(part=1)(u), u["trains"][0].pop("sine")), None),
         "an integer of 1": ("universe", lambda u: u["integers"].update(full_rate=1), None),
         "a side of 1": ("piece", lambda p: p["shape"].__setitem__(0, 1), None),
-        "a coupling at the first parts": coupling([0, 0, 0, 0, 0, 1], None),
+        "a coupling at the first parts": coupling(None),
         "a version 0": ("setting", lambda s: s.update(version=0), "setting.version: 1, not 0"),
-        "a rim below den": (
-            "universe",
-            lambda u: u["trains"][0].update(pair=[0, DEN - 1]),
-            f"{train}.pair: the rim is den, not {DEN - 1}",
-        ),
-        "a pair of three": (
-            "universe",
-            lambda u: u["trains"][0].update(pair=[0, DEN, DEN]),
-            f"{train}.pair: the pinion and the rim",
-        ),
-        "a pair of one": (
-            "universe",
-            lambda u: u["trains"][0].update(pair=[DEN]),
-            f"{train}.pair: the pinion and the rim",
-        ),
         "four axes": ("piece", lambda p: p.update(shape=[4, 4, 4, 4]), "piece.shape: one side per axis"),
         "a gear row of seven": gear([0, 0, 1, 1, 0, 0, 0], "a row of whole numbers, one per field"),
         "a gear row of five": gear([0, 0, 1, 1, 0], "a row of whole numbers, one per field"),
-        "a coupling row of seven": coupling(
-            [0, 0, 0, 0, 0, 1, 1], "a row of whole numbers, one per field"
+        "a coupling row of a field more": (
+            "universe",
+            lambda u: u["couplings"].append([0] * (len(COUPLING) + 1)),
+            "universe.couplings[0]: a row of whole numbers, one per field",
         ),
-        "a coupling row of five": coupling([0, 0, 0, 0, 0], "a row of whole numbers, one per field"),
+        "a coupling row of a field less": (
+            "universe",
+            lambda u: u["couplings"].append([0] * (len(COUPLING) - 1)),
+            "universe.couplings[0]: a row of whole numbers, one per field",
+        ),
     }
 
 

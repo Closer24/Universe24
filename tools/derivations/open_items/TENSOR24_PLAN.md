@@ -22,7 +22,7 @@ After the approval only the Boss writes the engine. Animate writes the decoder.
 The owner's question (15:2x UTC): "In the engine there will be vector, tensor or scalar multiplication, or complex numbers, which solve many things here, yes or no? General functions. The node must do very, very simple operations. The code must be very short, no?" Yes, to all of it.
 
 1. **The operations are three, on whole numbers: addition, multiplication and Rule3's carry** (the owner's word to Sofer, 15:0x UTC; Sofer's proposal for Postulate 5, for the owner's word). Nothing else is on the list, so nothing else needs forbidding. A whether is the bit nonneg(n) = 1 + n div (n n + 1), a choice is b x + (1 - b) y, and a bound is the remainder of a clock's carry.
-   **CHECKED** (the owner's word of 15:3x UTC, "make sure the engine can really be written with these"; derive/closed_list): the engine's 29 acts, written on a whole number that allows addition, multiplication and the carry alone, each match their plain reference with 0 failures; their code holds no if and no comparison; and 12 of 12 mutants fail. The one promise is that every divisor is a teeth count of at least 1; light's w_c = 0 (M2) and W+ <= 0 (M1) break it until they close, before the first cut. A second promise stands beside it (Sofer, #2187 6476698665): every rate lies between 0 and the full rate, since the beat's k is read as a bit; with one clock at twice the full rate k reaches 2 and the rewind is not exact (his probe on the stage 3 engine). The load refuses a rate above the full rate by name at stage 6, its test a setting at two full rates that must not load.
+   **CHECKED** (the owner's word of 15:3x UTC, "make sure the engine can really be written with these"; derive/closed_list): the engine's 29 acts, written on a whole number that allows addition, multiplication and the carry alone, each match their plain reference with 0 failures; their code holds no if and no comparison; and 12 of 12 mutants fail. The one promise is that every divisor is a teeth count of at least 1; light's w_c = 0 (M2) and W+ <= 0 (M1) break it until they close, before the first cut. A second promise stands beside it (Sofer, #2187 6476698665): every rate lies between 0 and the full rate, since the beat's k is read as a bit; with one clock at twice the full rate k reaches 2 and the rewind is not exact (his probe on the stage 3 engine). The refusal stands by name from stage 6 (runner/load.py's promises, with the fine tooth within [0, w)), tested on a board at two full rates, where the run back is not exact; the load applies it where the files give the rates and the teeth, stage 7.
 2. **On them stand three general functions:**
    - **the carry (Rule3):** n + r = q d + r', with 0 <= r' < d. Every "whether" in the engine is its quotient: a full winding, the side of the draw, the turnover. It is the one place a division is written.
    - **the Gaussian product (complex numbers with integer parts):** a hand is z = a + i b, two integer gears.
@@ -252,10 +252,10 @@ On the owner's word to David: "a generic solution for everything". This is David
 
 ## 7. The families and the kinds
 
-1. **A train is a kind plus its integers in the universe file:** the pair, the spring, the couplings and the weight. The engine knows no train's name in nature.
+1. **A train is a kind plus its integers in the universe file:** the pinion, and on a hand its pair (pinion, sine) over den, the checker refusing a pair whose norm is not den den (David's (n3)); the spring, the couplings and the weight. The engine knows no train's name in nature.
 2. **The five kinds of the 24:**
    - A1 (1), A2 (1), E (2), T1 (3), T2 (3); together 1 + 1 + 4 + 9 + 9 = 24;
-   - all derived from the six Spokes, with no typed table.
+   - all derived from the six Spokes, with no typed table (engine/kinds.py, stage 6): T1 the turn, A2 the sign of its permutation of the axes, E that permutation on the plane where the axes sum to 0, T2 = A2 T1; E has no whole basis the 24 permute, so no train holds it alone (the load refuses one by name; it stands beside A1 in the tensions, stage 7).
 3. **On twin hands 2O acts,** the 24 with the twin's sign: every turn comes with two signs, and the full turn is -1.
    - There are three more kinds there: E1/2, E5/2 and G3/2.
    - **OPEN before the first cut (M5, M6):**
@@ -275,7 +275,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **the composite clock:** proposed.
 5. **A coupling, in two parts:**
    - **whether there is a coupling:** by the kind, in the 24's table;
-   - **how strong:** an integer in the universe file. The couplings stand in the calibre as rows of integers (train, part, train, part, target, strength); the tensors are computed at load from the board's shape, and a row the 24 forbid is refused at load (the owner's question of 15:1x UTC; TENSOR24.md, section 28);
+   - **how strong:** an integer in the universe file. The couplings stand in the calibre as rows of twelve integers, (train, kind, part, operand) for each of the two sides, (target, target_kind, target_part) and the strength, an operand naming the value, the gradient, the pull, the stride before or the stride after (David, 6481240750; the strides wait for stage 7, and a gradient is of an A1 train alone); the tensors are computed at load from the board's shape, and a row the 24 forbid is refused at load (the owner's question of 15:1x UTC; TENSOR24.md, section 28);
    - **gravity:** with no number;
    - R4 goes.
 6. **The mirror's breaking:**
@@ -404,7 +404,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 ## 11. The code: the architect's design (approved with changes)
 
 1. **The five laws, in five places:**
-   - **the kind table:** kinds, in engine/kinds.py;
+   - **the kind table:** kinds, in engine/kinds.py; the tables C in runner/load.py, from each elementary seed in turn (the loop at load), made primitive; contract, one gather, one product and one scattered sum, in engine/contract.py;
    - **the tick:** step, with shift and pull, in engine/mesh.py and engine/step.py;
    - **the turnover:** turnover, in engine/step.py;
    - **the click:** click_whole and click_split, in engine/click.py;
@@ -442,7 +442,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 11. **One architecture** (the owner's word to Sofer, 15:0x UTC: one architect; centralize it): Sofer's SOFER-ARCHITECTURE-1.md (scribe-5) is the frame the owner reads, the design its detail, and the one architect's ruling (derive/architecture/RULING.md, 15:4x UTC) decides where they differed. Beside the rule above it fixes:
     - the turnover's T^q as a choice by the bit q, not a power;
     - law 9's sorted draw as a rank count, with no sort and no law changed;
-    - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused;
+    - the width: Python integers in numpy object arrays, exact at 112 bits and beyond, int64 refused; the index tables alone are integer arrays, since an index counts places and holds no integer of a Node-clock: the board's nb (sites below N) and meshes (Meshes below 3N), runner/board.py, and the plan's two rows of the readings per term, runner/load.py;
     - **the twin hands:** in no basis of their four integer rows do the third turns act as signed permutations, so no ring alone, Z[zeta8] included, keeps the 24 bit for bit on them under element-wise carries. The departure stands until David's route (OPEN 3), and no twin train loads before it.
 
 12. **The standard of known engines** (the owner's word of 15:5x UTC: "in the standard of known engines in the world; everything generic; only simple operations in the Node-clock"). Each part of the design comes from engines the world already trusts (TENSOR24.md, section 31, the prior art):
@@ -476,7 +476,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    | --- | --- | --- | --- |
    | 0 | the gate amended (algebra/, the closed list in engine/ and readings/, main.py); the three files and their checker; the record's schema; the harness on a trivial engine | the scan refuses a planted if, a literal 2 and a sort; the harness fails on a mutant | the owner's yes on the closed list and the gate |
    | 1 | algebra/carry.py: carry, nonneg, choose, home and flip, forward and at -1 | the carry exact and unique; q(-p) = -q(p) at both parities; nonneg exact across 0 | items (h) and (e), and the tie rule |
-   | 2 | one clock: a gear with its fine tooth; beat: the rate dial, the count c, the due and allowed bits, tb and tn | the rewind 20 of 20, both ways; a stopped clock beats, its count advances, its gears stand | nothing |
+   | 2 | one clock: a gear with its fine tooth; beat: the rate dial, the count c, the due and allowed bits, tb and tn (tb out at stage 4, under past) | the rewind 20 of 20, both ways; a stopped clock beats, its count advances, its gears stand | nothing |
    | 3 | two clocks over one Mesh: link, the slot read by tn, the arrivals rule; the synchronous pass and random masks | the order test: 40 random masks equal the synchronous pass, rates parted, one clock stopped; its mutant fails | item (u), past or lin |
    | 4 | the board: the six neighbours from the shape, the gather over the Spokes, the scalar light with its spring | the one-Mesh reach both ways; the formula against a naive loop model; equal to the head on the light, act by act | M1 (N, U_j, J, W+ >= 1); the cap's step; F2, F5 and the horizon; the doubler (g) |
    | 5 | the ring: the Gaussian integers, the hand, the twin hand | the ring's laws exact; T T = +1 on a hand, -1 on a twin hand | nothing |

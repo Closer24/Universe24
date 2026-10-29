@@ -3,7 +3,8 @@
 The order test: forty random schedules, each run until every count stands at T, give the synchronous pass's state.
 past: a neighbour's now slot where its tn is at most the reader's count c, else its before slot (the ruling's line 5).
 lin: the same where tn <= c; else the straight line between the two slots by the local times, one carry by tn - tb.
-usage: PYTHONPATH=src python3 tools/derivations/open_items/derive/asynchronous_read/probe.py
+usage: PYTHONPATH=src python3 tools/derivations/open_items/derive/asynchronous_read/probe.py, on a worktree at a5b992c73
+(the stage 3 engine, whose State still holds tb, which lin reads; tb left the State at stage 4)
 """
 
 import numpy as np

@@ -5,7 +5,7 @@ import itertools
 import numpy as np
 import pytest
 
-from tests.frame import Engine, digest, holds, near, undone_elsewhere, unseeded, wide
+from tests.frame import STORED, Engine, digest, holds, near, turned, undone_elsewhere, unseeded, wide
 
 # a side of 5 or more: x + e, x - e, x + 2e and x - 2e are four sites, so no shift hides another
 SHAPE = (5, 5, 5)
@@ -118,6 +118,23 @@ def two(nb):
     return nb[2][nb[0]]
 
 
+def graded(nb, a, b):
+    """The trivial form with each T1 row fed the A1 row's difference across its own axis: a mixing the 24 keep."""
+    new, before = trivial(nb, a, b)
+    if len(a) == STORED:
+        for axis in range(3):
+            new[1 + 1 + axis] += a[0, nb[axis + axis]] - a[0, nb[axis + axis + 1]]
+    return new, before
+
+
+def fed(a, into, by):
+    """Row by added into row into, where the world holds both: a step that mixes two components at every site alike."""
+    out = 0 * a
+    if len(a) > max(into, by):
+        out[into] = a[by]
+    return out
+
+
 def mark(n):
     """A column of n bits, 1 at row 0 alone."""
     return (np.arange(n) == 0).astype(object)[:, None]
@@ -175,6 +192,15 @@ def mutants():
             "images",
             broken(lambda nb, a, b: (trivial(nb, a, b)[0] + a[:, nb[0]] + a[:, nb[1]], a)),
         ),
+        "A2 fed into A1": ("kinds", broken(lambda nb, a, b: (trivial(nb, a, b)[0] + fed(a, 0, 1), a))),
+        "T1's second component fed into its first": (
+            "kinds",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0] + fed(a, 1 + 1, 3), a)),
+        ),
+        "a tension fed by T1": (
+            "kinds",
+            broken(lambda nb, a, b: (trivial(nb, a, b)[0] + fed(a, 8, 1 + 1), a)),
+        ),
         "the before slot dropped": (
             "bijectivity",
             broken(lambda nb, a, b: (a[:, nb].sum(axis=1) - a, a)),
@@ -193,6 +219,17 @@ def test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_
 
 def test_the_images_fail_on_a_board_the_24_do_not_keep():
     assert not holds("images", broken(trivial), ASKEW, 0)
+    assert not holds("kinds", broken(trivial), ASKEW, 0)
+
+
+def test_a_mixing_the_24_keep_passes_the_kinds_images():
+    for seed in range(3):
+        assert holds("kinds", broken(graded), SHAPE, seed)
+
+
+def test_the_mixing_mutants_pass_the_images_of_the_sites_alone_on_every_stored_kind():
+    for name in ("A2 fed into A1", "T1's second component fed into its first", "a tension fed by T1"):
+        assert turned(mutants()[name][1], SHAPE, np.random.default_rng(0), STORED)
 
 
 @pytest.mark.parametrize("factory, pure", [("engine", True), ("cached", False), ("salted", False)])

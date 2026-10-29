@@ -2,8 +2,8 @@
 
 Each review is a fresh reader who did not write the code, run on the review branch tensor24-review: it approves only
 what it could not break, with evidence it ran. Every change it asks is made before the branch moves to the three
-integration branches. The fourth and fifth reports are here, with the probes the gate's author and the decoder's
-author asked to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
+integration branches. The fourth to ninth reports are here, the fourth, fifth, seventh, eighth and ninth with the
+probes their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
 
 | review | commits read | verdict | the changes, where |
 | --- | --- | --- | --- |
@@ -12,12 +12,29 @@ author asked to run; the first three stand in the Boss's posts on #2187 (6474866
 | third | 1faf2f65c to 227cde2fe (stages 1 to 3) | approve with changes, C1 to C5 | 81521e0f4; C5 by David's word (6478324607) |
 | fourth | 3b606a606 and 4b39f234b (the gate, stage 5) | approve with changes, R1 and four gate follow-ups | 81521e0f4; Sofer's c267a2229, adopted in 2eec73c1d |
 | fifth | 81521e0f4, 49c65abfa, 0970b0deb | approve with changes, four | the commit that adds this folder (the checker); the decoder's three are Animate's |
+| sixth | 2eec73c1d, 6fa366dbe, 3f9e974ad, 37d2d06e2, 13672be1e (the gate, the fifth's changes, stage 4, tb out) | approve; nine follow-ups, none blocking | the commit that adds sixth/; the gate's one is Sofer's |
+| seventh | 814fe5c45, 8469170ad, 823690afc (the gate's text lines, the sixth's follow-ups, the decoder's fixes) | approve with changes, four, all the decoder's | Animate's; the Boss's two follow-ups in the commit that adds seventh/ |
+| eighth | 83a0b214a, 3fbbd1cd0, 91226e796 (stage 6) | approve with changes, five, all of the tests | the commit that adds eighth/ |
+| ninth | af564daac, 54b9e6a63, 83a0b214a to 927071a14 (stage 6 after the eighth's changes) | approve with changes, two: the load's raises and four gaps of the tests | the commit that adds ninth/; two follow-ups Sofer's |
 
 Each probe runs as `python3 -I <probe> <a worktree of tensor24-review> [...]`, its docstring naming its arguments;
-its output stands beside it.
+its output stands beside it. The copies here are the readers' files but for the text rules: the fourth report's
+verdict is in lower case and its two quoted phrases are described; one probe's raw U+2028 is written as its escape,
+and the fifth's sketch of tests is renamed decoder_tests_strengthened.py, so pytest does not collect it.
 
 - fourth/: REPORT.md; gate_weakened.sh (the self-test against weakened scans), gate_floor_sideways.py (floored()
   on a side line), gate_closed_list.py and gate_dynamic_assign.py (dynamic imports beside the closed list).
 - fifth/: REPORT.md; decoder_raises.py (the reader's and the tool's raises); decoder_mutants.py (sixteen source
   mutants of the decoder, run against the decoder's tests or against decoder_tests_strengthened.py, the reader's
   sketch of five tests more).
+- sixth/: REPORT.md, its follow-ups each with where it went.
+- seventh/: REPORT.md; decoder_readings.py (row 15 and the ticks on lawful and broken records), decoder_mutants_s8.py
+  (eighteen mutants of the decoder's new text), decoder_tests_s8.py (the reader's sketch of 21 tests, run by
+  decoder_tests_s8_run.py) and decoder_precedence.py (row 15's order of decision).
+- eighth/: REPORT.md, each change with where it went; source_mutants.py (48 source mutants of stage 6, its L17 and C1
+  re-aimed at the ninth's new lines), its output at 91226e796 and after the changes.
+- ninth/: REPORT.md, each change with where it went; new_mutants.py (29 source mutants of stage 6 and a control), its
+  output at 927071a14 and after the changes; load_raise.py (the load's raises on files the checker holds, and the
+  contraction's time), gradient_kinds.py (the gradient at a train's second kind, and the fine tooth),
+  fuzz_files_deepcopy.py (Sofer's fuzz with its harness mended) and gate_board_dodges.py (six wraps the gate
+  misses), each with its output; eighth_source_mutants_rerun.out (the eighth's 48 after the ninth's changes).

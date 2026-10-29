@@ -89,7 +89,7 @@ def alike(m, heads):
     """The pull and the gear at the head's inputs give its act everywhere, and its end of tick where no turnover hit."""
     for shape, seen in heads:
         nb, _ = board(shape)
-        # each Spoke its own grip: the head's grips depart from law 2 at 9,147 of the six worlds' 17,910 Meshes
+        # each Spoke its own grip: the grips fed, s R, depart from law 2 at 9,713 of the six worlds' 17,910 Meshes
         spokes = np.arange(6 * nb.shape[1]).reshape(6, -1)
         for act in seen:
             grip = np.concatenate([np.asarray(g, dtype=object).reshape(-1) for g in act["grip"]])

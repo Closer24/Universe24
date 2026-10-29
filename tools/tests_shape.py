@@ -47,6 +47,8 @@ TENSOR24_ALGEBRA = "Tensor24's algebra, stage 1 of the build the owner approved 
 TENSOR24_CLOCK = "Tensor24's one clock, stage 2 of the build the owner approved at 16:0x UTC on 2026-10-28: a gear's tick and its exact run back at teeth counts that change from tick to tick, the run back undone forth, the rate dial's beat, a stopped clock's beat, and the tie rule at the tick, at a few teeth and at teeth and a full rate of about 2**80, each failing on its own mutant; the Boss's room by name."
 TENSOR24_MESH = "Tensor24's Mesh, stage 3 of the build the owner approved at 16:0x UTC on 2026-10-28: the due beat, the read as of the reader's count, forty random schedules equal to the synchronous pass with the counts parted and before slots read, the rewind under a random schedule, a stopped clock keeping pace, the tick under random masks at teeth, rates and grips parted at every site and Mesh against a naive model, the tie rule on the tick, and the frame's six properties on the tick against its naive model and in fresh interpreters, each failing on its own mutant; the Boss's room by name."
 TENSOR24_RING = "Tensor24's Gaussian ring, stage 5 of the build the owner approved at 16:0x UTC on 2026-10-28: the hand's product, conjugate, norm and pair, and the twin hand's overlap, reverse and axis, exact at every size: T T +1 on a hand and -1 on a twin hand, Lagrange's identity for the split, the split's share in (rho, S), the joint dial and S's orientation, S . S = rho rho, each law failing on its own mutant; the Boss's room by name."
+TENSOR24_KINDS = "Tensor24's kinds and tables, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the 24 a group of the Spokes' threefold power, each of the five kinds a representation, their characters Sofer's by his definitions at every turn and his table on every class, orthonormal, the Spokes' character A1 + E + T1, every table C equivariant and 0 exactly where David's products hold no channel, primitive, the dot, the cross and A2 x T1 -> T2 exactly, each law failing on its own mutant; the Boss's room by name."
+TENSOR24_LOAD = "Tensor24's load, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the coupling rows' plan contracted as a naive sum over the rows and the tables, each refusal of the load naming its own broken file with its edge that loads, a coupling the table lacks holding no term, the two promises named where they fail and shown to be the run back's own condition, and the rename law with its mutant; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_tensor24_ring.py::hands": (
         4,
@@ -101,7 +103,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_RING,
     ),
     "tests/test_the_tensor24_files.py::edits": (
-        211,
+        280,
         TENSOR24_FILES,
     ),
     "tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds": (
@@ -157,7 +159,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_CLOCK,
     ),
     "tests/test_the_tensor24_clock.py::run": (
-        21,
+        20,
         TENSOR24_CLOCK,
     ),
     "tests/test_the_tensor24_clock.py::rewind": (
@@ -189,7 +191,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_MESH,
     ),
     "tests/test_the_tensor24_mesh.py::world": (
-        13,
+        11,
         TENSOR24_MESH,
     ),
     "tests/test_the_tensor24_mesh.py::start": (
@@ -205,7 +207,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_MESH,
     ),
     "tests/test_the_tensor24_mesh.py::order": (
-        6,
+        9,
         TENSOR24_MESH,
     ),
     "tests/test_the_tensor24_mesh.py::back": (
@@ -296,6 +298,14 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         16,
         TENSOR24_FRAME,
     ),
+    "tests/frame.py::stored": (
+        10,
+        TENSOR24_FRAME,
+    ),
+    "tests/frame.py::kinded": (
+        17,
+        TENSOR24_FRAME,
+    ),
     "tests/frame.py::formula": (
         5,
         TENSOR24_FRAME,
@@ -384,12 +394,20 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         3,
         TENSOR24_FRAME,
     ),
+    "tests/test_the_tensor24_frame.py::graded": (
+        7,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::fed": (
+        6,
+        TENSOR24_FRAME,
+    ),
     "tests/test_the_tensor24_frame.py::mark": (
         3,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::mutants": (
-        58,
+        67,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_must_catch": (
@@ -397,7 +415,15 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::test_the_images_fail_on_a_board_the_24_do_not_keep": (
-        2,
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_a_mixing_the_24_keep_passes_the_kinds_images": (
+        3,
+        TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_frame.py::test_the_mixing_mutants_pass_the_images_of_the_sites_alone_on_every_stored_kind": (
+        3,
         TENSOR24_FRAME,
     ),
     "tests/test_the_tensor24_frame.py::test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds": (
@@ -407,6 +433,158 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     "tests/test_the_tensor24_frame.py::test_a_world_is_run_back_in_a_fresh_interpreter_that_never_stepped": (
         5,
         TENSOR24_FRAME,
+    ),
+    "tests/test_the_tensor24_kinds.py::made": (
+        4,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::product": (
+        5,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::the24": (
+        4,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::klass": (
+        10,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::chi": (
+        7,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::group": (
+        8,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::forms": (
+        11,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::representations": (
+        10,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::reference": (
+        11,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::characters": (
+        17,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::orthonormal": (
+        6,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::spokes": (
+        7,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::channels": (
+        11,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::equivariant": (
+        10,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::classical": (
+        11,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::mutants": (
+        77,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::good": (
+        2,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::test_every_law_holds_on_the_kinds_as_made": (
+        2,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::test_each_law_of_the_kinds_fails_on_its_mutant": (
+        4,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_kinds.py::test_the_joint_makes_the_kinds_and_the_tables_the_load_reads": (
+        5,
+        TENSOR24_KINDS,
+    ),
+    "tests/test_the_tensor24_load.py::gears": (
+        3,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::row": (
+        3,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::op": (
+        2,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::made": (
+        3,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::universe": (
+        2,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::naive": (
+        33,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::loaded": (
+        3,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables": (
+        10,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::edits": (
+        53,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_each_refusal_of_the_load_names_its_own_broken_file_and_its_edge_loads": (
+        11,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid": (
+        21,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_a_coupling_the_table_lacks_holds_no_term_and_gives_0": (
+        12,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::rewound": (
+        9,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_the_two_promises_are_named_where_they_fail_and_are_the_run_backs_own_condition": (
+        30,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::renamed": (
+        29,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_the_rename_law_holds_and_fails_where_a_strength_is_read_by_its_target_trains_place": (
+        3,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_the_files_the_checker_holds_load_or_are_named_and_none_raises": (
+        8,
+        TENSOR24_LOAD,
+    ),
+    "tests/test_the_tensor24_load.py::test_a_board_the_machine_cannot_hold_is_named": (
+        21,
+        TENSOR24_LOAD,
     ),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (
         26,

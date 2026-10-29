@@ -38,6 +38,7 @@ NEW_MAIN = "tensor24/main.py"
 NEW_REWIND = "tensor24/runner/rewind.py"
 NEW_RECORD = "tensor24/record/schema.py"
 NEW_RUNNER = "tensor24/runner/loop.py"
+NEW_BOARD = "tensor24/runner/board.py"
 NEW_DECODER = "tensor24/decoder/rows.py"
 NEW_READING = "tensor24/readings/wind.py"
 NEW_MESH = "tensor24/engine/mesh.py"
@@ -424,6 +425,81 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
     ("a remainder in the runner", NEW_RUNNER, "def f(a, b):\n    return a % b\n", {}),
     ("a refusal in the runner", NEW_RUNNER, "def f(a):\n    raise ValueError(a)\n", {}),
     ("max of a pair in the runner", NEW_RUNNER, "def f(a, b):\n    return max(a, b)\n", {}),
+    # the board's module keeps the rules a wrap by hand would break; the rest of the runner is spared them
+    ("a remainder in the board's module", NEW_BOARD, "def f(a, b):\n    return a % b\n", {"OPERATION": 1}),
+    ("a floor division in the board's module", NEW_BOARD, "def f(a, b):\n    return a // b\n", {"OPERATION": 1}),
+    ("an augmented remainder in the board's module", NEW_BOARD, "def f(a, b):\n    a %= b\n    return a\n", {"OPERATION": 1}),
+    ("divmod in the board's module", NEW_BOARD, "def f(a, b):\n    return divmod(a, b)\n", {"OPERATION": 1}),
+    (
+        "numpy's mod in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.mod(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    (
+        "numpy's floor_divide in the board's module",
+        NEW_BOARD,
+        "import numpy as np\n\n\ndef f(a, b):\n    return np.floor_divide(a, b)\n",
+        {"OPERATION": 1},
+    ),
+    ("a power in the board's module", NEW_BOARD, "def f(a):\n    return a ** a\n", {"OPERATION": 1}),
+    ("a shift in the board's module", NEW_BOARD, "def f(a):\n    return a << a\n", {"OPERATION": 1}),
+    ("a branch in the board's module", NEW_BOARD, "def f(a, b):\n    if a:\n        return b\n    return a\n", {"BRANCH": 1}),
+    ("a conditional expression in the board's module", NEW_BOARD, "def f(a, b):\n    return b if a else a\n", {"BRANCH": 1}),
+    ("an ordering comparison in the board's module", NEW_BOARD, "def f(a, b):\n    return a < b\n", {"COMPARE": 1}),
+    ("a loop in the board's module", NEW_BOARD, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
+    ("a comprehension in the board's module", NEW_BOARD, "def f(a):\n    return [x for x in a]\n", {"LOOP": 1}),
+    ("max of a pair in the board's module", NEW_BOARD, "def f(a, b):\n    return max(a, b)\n", {"CLAMP": 1}),
+    ("where in the board's module", NEW_BOARD, "def f(a, b):\n    return where(a, b, 0)\n", {"CLAMP": 1}),
+    (
+        "a wrap by hand in the board's module: a subtraction under a comparison",
+        NEW_BOARD,
+        "def f(a, b):\n    return a - b if a >= b else a\n",
+        {"BRANCH": 1, "COMPARE": 1},
+    ),
+    (
+        "the carry imported and called in the board's module",
+        NEW_BOARD,
+        "from tensor24.algebra.carry import carry\n\n\ndef f(a, b):\n    return carry(a, b, 0)\n",
+        {},
+    ),
+    ("an equality in the board's module", NEW_BOARD, "def f(a, b):\n    return a == b\n", {}),
+    ("a refusal in the board's module", NEW_BOARD, "def f(a):\n    raise ValueError(a)\n", {}),
+    ("a remainder in a module named for the board", "tensor24/runner/boards.py", "def f(a, b):\n    return a % b\n", {}),
+    ("a remainder in a runner module whose name ends in the board's", "tensor24/runner/dashboard.py", "def f(a, b):\n    return a % b\n", {}),
+    # the dodges of the board's rule: a method's name, a name imported or aliased, a getattr, numpy's own wraps
+    ("numpy's divmod in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a, b):\n    return np.divmod(a, b)\n', {"OPERATION": 1}),
+    ("numpy's divmod in the decoder", NEW_DECODER, 'import numpy as np\n\n\ndef f(a, b):\n    return np.divmod(a, b)\n', {"OPERATION": 1}),
+    ("numpy's take with a mode in another runner module", NEW_RUNNER, "import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i, mode='wrap')\n", {}),
+    ("a take with a mode in the decoder", NEW_DECODER, "def f(a, i):\n    return a.take(i, mode='wrap')\n", {}),
+    ("a method call of the remainder in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__mod__(b)\n', {"OPERATION": 1}),
+    ("a method call of the floor division in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__floordiv__(b)\n', {"OPERATION": 1}),
+    ("a method call of the reflected remainder in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__rmod__(b)\n', {"OPERATION": 1}),
+    ("a method call of divmod in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__divmod__(b)\n', {"OPERATION": 1}),
+    ("a method call of the power in the board's module", NEW_BOARD, 'def f(a, b):\n    return a.__pow__(b)\n', {"OPERATION": 1}),
+    ("a getattr of the remainder's method in the board's module", NEW_BOARD, "def f(a, b):\n    return getattr(a, '__mod__')(b)\n", {"OPERATION": 1}),
+    ("a getattr of numpy's mod in the board's module", NEW_BOARD, "import numpy as np\n\n\ndef f(a, b):\n    return getattr(np, 'mod')(a, b)\n", {"OPERATION": 1}),
+    ("numpy's ndarray method of the remainder in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a, b):\n    return np.ndarray.__mod__(a, b)\n', {"OPERATION": 1}),
+    ("numpy's mod imported by name in the board's module", NEW_BOARD, 'from numpy import mod as m\n\n\ndef f(a, b):\n    return m(a, b)\n', {"OPERATION": 1}),
+    ("operator's floordiv imported by name in the board's module", NEW_BOARD, 'from operator import floordiv\n\n\ndef f(a, b):\n    return floordiv(a, b)\n', {"OPERATION": 1}),
+    ("numpy's mod aliased in the board's module", NEW_BOARD, 'import numpy as np\n\ng = np.mod\n\n\ndef f(a, b):\n    return g(a, b)\n', {"OPERATION": 1}),
+    ("numpy's remainder passed as a value in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a, g):\n    return g(np.remainder)\n', {"OPERATION": 1}),
+    ("numpy's roll in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a):\n    return np.roll(a, 1)\n', {"OPERATION": 1}),
+    ("numpy's pad in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a):\n    return np.pad(a, 1)\n', {"OPERATION": 1}),
+    ("numpy's roll imported by name in the board's module", NEW_BOARD, 'from numpy import roll\n\n\ndef f(a):\n    return roll(a, 1)\n', {"OPERATION": 1}),
+    ("numpy's take with a mode in the board's module", NEW_BOARD, "import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i, mode='wrap')\n", {"OPERATION": 1}),
+    ("numpy's take with no mode in the board's module", NEW_BOARD, 'import numpy as np\n\n\ndef f(a, i):\n    return np.take(a, i)\n', {}),
+    ("methods that are no operation in the board's module", NEW_BOARD, 'def f(a, i):\n    return a.__getitem__(i), a.__len__()\n', {}),
+    ("a numpy name that is no operation imported in the board's module", NEW_BOARD, 'from numpy import stack\n\n\ndef f(a):\n    return stack(a)\n', {}),
+    ('a method call of the remainder in another runner module', NEW_RUNNER, 'def f(a, b):\n    return a.__mod__(b)\n', {}),
+    ("numpy's mod in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(a, b):\n    return np.mod(a, b)\n', {}),
+    ("numpy's roll in another runner module", NEW_RUNNER, 'import numpy as np\n\n\ndef f(a):\n    return np.roll(a, 1)\n', {}),
+    ('a method call of the remainder in the decoder', NEW_DECODER, 'def f(a, b):\n    return a.__mod__(b)\n', {"OPERATION": 1}),
+    ("numpy's mod imported by name in the decoder", NEW_DECODER, 'from numpy import mod\n\n\ndef f(a, b):\n    return mod(a, b)\n', {"OPERATION": 1}),
+    ('a method call of the remainder in the current engine', ENGINE, 'def f(a, b):\n    return a.__mod__(b)\n', {"OPERATION": 1}),
+    ("a method call of the remainder in the carry's home", CARRY, 'def f(a, b):\n    return a.__mod__(b)\n', {}),
+    ("a remainder in the board's name in the decoder", "tensor24/decoder/board.py", "def f(a, b):\n    return a % b\n", {"OPERATION": 1}),
+    ("a loop in a module of the decoder named for the board", "tensor24/decoder/board.py", "def f(a):\n    for x in a:\n        pass\n", {}),
     ("a loop in the readings", NEW_READING, "def f(a):\n    for x in a:\n        pass\n", {"LOOP": 1}),
     (
         "an ordering comparison in the readings",
@@ -1304,7 +1380,7 @@ def main() -> int:
     print(
         f"ok      dynamic imports: {dynamic_cases} cases, every folder and the root against the loaders and the calls that run text"
     )
-    # the floor: a merge base older than the floor, on its own line, is read as the floor; one at or after it, or beside it, as it stands (the first hostile
+    # the floor: a merge base older than the floor, on its own line, is read as the floor; one at or after it, or beside it, is read as found (the first hostile
     # review's F1 and the fourth's follow-up)
     floor_cases, kept_floor = 1, gate.FLOOR
     if kept_floor != PINNED_FLOOR:
