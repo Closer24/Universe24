@@ -398,6 +398,39 @@ The way back stands in the law, in the remainders. But no act runs it: the sprin
   - the window's form for several parties is open (l5);
   - the reading is the owner's to choose (section 14).
 
+### 10.1 An option: two boards on one Node-clock, one forward and one backward
+
+Entered by the Boss on the owner's words to the Boss of 2026-10-29, 07:2x to 07:4x UTC (in Hebrew; in translation): "And if there are two boards running on one node, one backward and one forward, can locality be kept? Because locality must not be broken." Then: "Put it as an option in the big picture file, and send it to David too." Then: "What does each board stand for, and how do the clicks enter, with the two kinds?" And: "It supports making more complex clocks, because that is the universe's aim."
+
+- **What each board stands for:**
+  - **the forward board is the past arriving:** what was prepared (the bang, the sources, the pair's birth); it carries the waves forward (light, matter, gravity) and it alone writes records, the quotient leaving forward; it is the board as built;
+  - **the backward board is the future arriving backward:** what the detectors will choose and click; it is the same act run back, carries the choices back, and writes no record, so the clicks never see it, only the correlations it makes;
+  - **the present, at every Node-clock,** is where the two dials meet.
+- **How the two clicks enter:**
+  - **the whole click (how much)** stands on the forward board as built: the drive at the detector reaches a whole winding (q at least 1) and the record is written; the backward board takes from it only the confirmation, one quantum taken, back to the source, so the giver and the taker are the two ends of one handshake and the books close at both;
+  - **the split click (which)** is where the backward board works: detector A's choice and outcome ride back along A's twin to the birth, and the other twin's forward dial brings them to B; B's draw reads its forward dial, which already holds A's choice, and Bell follows;
+  - **one spread quantum (Grangier)** the same way: once a part is drawn "here", the word runs back to the source and out to every other part, so no other detector clicks (g2 = 0), with no closure across space.
+
+- **In clocks:**
+  - every Node-clock holds two dials, one turning forward from the bang and one turning backward from the clicks to come, and a twin carries both;
+  - when detector A chooses and clicks, its choice rides the backward dial back along its twin's own path to the birth's Node-clock, one Mesh at a time;
+  - there it passes to the other twin's forward dial and rides with it to B, one Mesh at a time;
+  - no step reads past a Node-clock's six neighbours, and nothing crosses space at any speed: the correlation travels through the shared birth, a zigzag in time.
+- **In the act:** the board's step runs back exactly (the untick), so the backward board is the same act run back, with no new term.
+- **In physics:** Aharonov's two-state vector (Aharonov, Bergmann and Lebowitz, 1964; Aharonov and Vaidman), Cramer's transactional reading (1986), and the locally mediated reformulations that Wharton and Argaman review (Reviews of Modern Physics 92, 021002, 2020). Locality is kept; what Bell's theorem loses is the independence of the source from the settings to come, through the future and not through a shared past.
+- **What it would lift:** the window of this section and Bancal's catch. No influence crosses space at any finite speed, so no setup of several parties falls inside a window, and the open step of l5 does not arise.
+- **What is open, each with a probe that can fail:**
+  1. **Consistency.** The backward board starts from the clicks, and the clicks read it, so the whole history must agree with itself at both ends. The runner then searches for that history and cannot only run forward tick by tick; whether one always exists, and only one, is open.
+  2. **No signal into the past.** Each end's statistics must not depend on the other end's choice, in every setup of two and of three parties.
+  3. **The cost.** Two states at every Node-clock, and the search.
+  4. **The aim kept.** The search for a history that agrees with itself must not forbid composite clocks.
+- **The aim, ever more complex clocks** (the owner's reason for the option):
+  - a composite clock stays one clock: parts born together stay correlated at any distance until their first click, with no read beyond the neighbours, which is what pairs, atoms, molecules and machines need;
+  - the arrow is kept: the forward board alone writes records and the backward board neither writes nor erases, so the record grows from swing to swing and every bang shows more;
+  - a direction, one step open: the backward board starts from the clicks to come, richer than the bang's seed, so a plain past and a rich future set the history between them, the direction of time toward more complex clocks.
+- **The probe:** a small board, a pair, two detectors that choose late, both boards, the search; S, the marginals of two and of three parties, and whether a consistent history exists.
+- **Status:** a direction, the owner's option beside the closure at the board's cone (above) and item (l).
+
 ## 11. Ever more complex clocks, machines, and machines that make machines
 
 **The ratchet** (clocks):
@@ -493,7 +526,8 @@ So one count, the balance of light and matter over the swing, decides three thin
   - (g): approved, light at 1 / sqrt 6, the doubler's hold, as 7b's table writes it.
 - **Put to him,** each with David's recommendation:
   - the take on light's gears: way (b);
-  - Bell at a distance: the closure at the board's cone, retiring item (l).
+  - Bell at a distance: the closure at the board's cone, retiring item (l);
+  - Bell at a distance, an option of his own: two boards on one Node-clock, one forward and one backward (section 10.1).
 
 ## 15. For the Boss, at stage 9
 
