@@ -2,8 +2,9 @@
 
 import json
 from collections import Counter
+from collections.abc import Callable
 from pathlib import Path
-from typing import Any, TypeGuard
+from typing import Any, NamedTuple, TypeGuard
 
 # The checker's one deferral: a gear's component within its train's rows, a kind among the 24's and a coupling's
 # channel are the load's to refuse (runner/load.py), where the kinds are made; the fine tooth within the teeth is the
@@ -11,20 +12,54 @@ from typing import Any, TypeGuard
 
 NAMES = ("universe", "piece", "setting")
 VERSION = 1
-UNIVERSE = ("version", "integers", "trains", "couplings")
 INTEGERS = ("den", "full_rate", "key", "trace", "width")
 PAIR = ("pinion", "sine")  # a hand's Gaussian pair over den; a train of one gear holds its pinion alone
-TRAIN = ("name", "kinds", "part", *PAIR, "weight")
 COUPLING = (
     *("train", "kind", "part", "operand"),
     *("with_train", "with_kind", "with_part", "with_operand"),
     *("target", "target_kind", "target_part", "strength"),
 )
 OPERANDS = ("value", "gradient", "pull", "before", "after")  # the readings an operand names, in order
-PIECE = ("version", "shape")
-SETTING = ("version", "ticks", "gears")
 GEAR = ("train", "component", "site", "a", "b", "r")
 AXES = ("x", "y", "z")
+# the keys a file may leave out; the pair's keys are its own rule's
+OPTIONAL = ("couplings", "gears", "weight")
+
+
+def whole(value: Any) -> TypeGuard[int]:
+    """An integer, and not a truth value."""
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
+class Rule(NamedTuple):
+    """What a field must hold, and the words that name it."""
+
+    test: Callable[[Any], bool]
+    wants: str
+
+
+WHOLE = Rule(whole, "a whole number")
+ONE = Rule(lambda v: whole(v) and v >= 1, "a whole number of at least 1")
+NONE_BELOW = Rule(lambda v: whole(v) and v >= 0, "a whole number of at least 0")
+LABEL = Rule(lambda v: isinstance(v, str) and v != "", "a label")
+KINDS = Rule(
+    lambda v: isinstance(v, list) and v != [] and all(map(LABEL.test, v)), "a list of the kinds' labels"
+)
+VERSIONED = Rule(lambda v: whole(v) and v == VERSION, f"{VERSION}")
+SIDES = Rule(
+    lambda v: isinstance(v, list) and len(v) == len(AXES) and all(map(ONE.test, v)),
+    "one side per axis, each a whole number of at least 1",
+)
+# Each file's keys and what each holds: a rule, a mapping, a list of one train or more, or rows of the fields named.
+TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, **dict.fromkeys(PAIR), "weight": WHOLE}
+UNIVERSE = {
+    "version": VERSIONED,
+    "integers": dict.fromkeys(INTEGERS, ONE),
+    "trains": [TRAIN],
+    "couplings": COUPLING,
+}
+PIECE = {"version": VERSIONED, "shape": SIDES}
+SETTING = {"version": VERSIONED, "ticks": NONE_BELOW, "gears": GEAR}
 
 
 def once(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
@@ -43,11 +78,6 @@ def read(path: Path) -> tuple[Any, list[str]]:
         return None, [f"{path.name}: not read: {error}"]
 
 
-def whole(value: Any) -> TypeGuard[int]:
-    """An integer, and not a truth value."""
-    return isinstance(value, int) and not isinstance(value, bool)
-
-
 def numbers(held: Any) -> list[tuple[str, int]]:
     """Every whole number a file holds, at any depth, with the field it stands in, walked without recursion."""
     found: list[tuple[str, int]] = []
@@ -63,21 +93,6 @@ def numbers(held: Any) -> list[tuple[str, int]]:
     return found
 
 
-def mapping(where: str, held: Any, names: tuple[str, ...]) -> list[str]:
-    """A mapping whose every key the format names."""
-    if not isinstance(held, dict):
-        return [f"{where}: a mapping, not {type(held).__name__}"]
-    return [f"{where}: the key {key!r} is not in the format" for key in held if key not in names]
-
-
-def versioned(where: str, held: dict[str, Any]) -> list[str]:
-    """The format's version, a whole number."""
-    version = held.get("version")
-    return (
-        [] if whole(version) and version == VERSION else [f"{where}.version: {VERSION}, not {version!r}"]
-    )
-
-
 def rows(where: str, held: Any, fields: tuple[str, ...]) -> list[str]:
     """A list of rows, each of whole numbers, one per field."""
     if not isinstance(held, list):
@@ -87,6 +102,27 @@ def rows(where: str, held: Any, fields: tuple[str, ...]) -> list[str]:
         for at, row in enumerate(held)
         if not (isinstance(row, list) and len(row) == len(fields) and all(map(whole, row)))
     ]
+
+
+def checked(where: str, held: Any, form: Any) -> list[str]:
+    """Every way a value departs from its form in the table, each named where it stands, walked down the table."""
+    if isinstance(form, dict):
+        if not isinstance(held, dict):
+            return [f"{where}: a mapping, not {type(held).__name__}"]
+        found = [f"{where}: the key {key!r} is not in the format" for key in held if key not in form]
+        return found + [
+            line
+            for key, inner in form.items()
+            if inner is not None and (key in held or key not in OPTIONAL)
+            for line in checked(f"{where}.{key}", held.get(key), inner)
+        ]
+    if isinstance(form, list):
+        if not (isinstance(held, list) and held):
+            return [f"{where}: a list of one train or more"]
+        return [line for at, item in enumerate(held) for line in checked(f"{where}[{at}]", item, *form)]
+    if isinstance(form, Rule):
+        return [] if form.test(held) else [f"{where}: {form.wants}, not {held!r}"]
+    return rows(where, held, form)
 
 
 def pair_departures(where: str, train: dict[str, Any], den: Any) -> list[str]:
@@ -109,83 +145,28 @@ def pair_departures(where: str, train: dict[str, Any], den: Any) -> list[str]:
     if found or not (whole(pinion) and whole(other)):
         return found
     norm = pinion * pinion + other * other
-    return (
-        []
-        if norm == den * den
-        else [f"{where}: the hand's pair ({pinion}, {other}) has the norm {norm}, not den den"]
-    )
-
-
-def train_departures(where: str, train: Any, den: Any) -> list[str]:
-    """Every way one train's row departs: its label, its kinds, its part, its pinion and pair, and its weight."""
-    found = mapping(where, train, TRAIN)
-    if not isinstance(train, dict):
-        return found
-    name, kinds, part = train.get("name"), train.get("kinds"), train.get("part")
-    if not (isinstance(name, str) and name):
-        found.append(f"{where}.name: a label, not {name!r}")
-    if not (isinstance(kinds, list) and kinds and all(isinstance(kind, str) and kind for kind in kinds)):
-        found.append(f"{where}.kinds: a list of the kinds' labels, not {kinds!r}")
-    if not (whole(part) and part >= 1):
-        found.append(f"{where}.part: a whole number of at least 1, not {part!r}")
-    found += pair_departures(where, train, den)
-    if "weight" in train and not whole(train["weight"]):
-        found.append(f"{where}.weight: a whole number, not {train['weight']!r}")
-    return found
+    off = f"{where}: the hand's pair ({pinion}, {other}) has the norm {norm}, not den den"
+    return [] if norm == den * den else [off]
 
 
 def universe_departures(universe: Any) -> list[str]:
-    """Every way a universe file departs: its version, its integers, its trains and its coupling rows."""
-    found = mapping("universe", universe, UNIVERSE)
-    if found:
+    """Every way a universe file departs: its form, each train's pair over den, its labels, and its coupling rows."""
+    found = checked("universe", universe, UNIVERSE)
+    if not isinstance(universe, dict) or not isinstance(universe.get("trains"), list):
         return found
-    integers, trains = universe.get("integers"), universe.get("trains")
-    found += versioned("universe", universe) + mapping("universe.integers", integers, INTEGERS)
-    if found or not (isinstance(trains, list) and trains):
-        return found + (
-            []
-            if isinstance(trains, list) and trains
-            else ["universe.trains: a list of one train or more"]
-        )
-    found += [
-        f"universe.integers.{name}: a whole number of at least 1, not {integers.get(name)!r}"
-        for name in INTEGERS
-        if not (whole(integers.get(name)) and integers.get(name) >= 1)
-    ]
+    trains, integers = universe["trains"], universe.get("integers")
+    den = integers.get("den") if isinstance(integers, dict) else None
     for at, train in enumerate(trains):
-        found += train_departures(f"universe.trains[{at}]", train, integers.get("den"))
-    labels = Counter(
-        train["name"]
-        for train in trains
-        if isinstance(train, dict) and isinstance(train.get("name"), str)
-    )
+        found += pair_departures(f"universe.trains[{at}]", train, den) if isinstance(train, dict) else []
+    labels = Counter(t["name"] for t in trains if isinstance(t, dict) and isinstance(t.get("name"), str))
     found += [
         f"universe.trains: the label {name!r} names two trains or more"
         for name, count in sorted(labels.items())
         if count > 1
     ]
-    couplings = universe.get("couplings", [])
-    found += rows("universe.couplings", couplings, COUPLING)
-    for at, row in enumerate(couplings if not found else []):
-        (
-            train,
-            kind,
-            part,
-            operand,
-            with_train,
-            with_kind,
-            with_part,
-            with_operand,
-            target,
-            target_kind,
-            target_part,
-            _,
-        ) = row
-        sides = (
-            (train, kind, part, operand),
-            (with_train, with_kind, with_part, with_operand),
-            (target, target_kind, target_part, 0),
-        )
+    for at, row in enumerate(universe.get("couplings", []) if not found else []):
+        train, kind, part, operand, *other, target, target_kind, target_part, _ = row
+        sides = ((train, kind, part, operand), tuple(other), (target, target_kind, target_part, 0))
         if not all(0 <= train < len(trains) for train, _, _, _ in sides):
             found.append(f"universe.couplings[{at}]: a train off the trains' rows")
         elif not all(0 <= kind < len(trains[train]["kinds"]) for train, kind, _, _ in sides):
@@ -194,20 +175,6 @@ def universe_departures(universe: Any) -> list[str]:
             found.append(f"universe.couplings[{at}]: a part off its train's")
         elif not all(0 <= operand < len(OPERANDS) for _, _, _, operand in sides):
             found.append(f"universe.couplings[{at}]: an operand off the readings {OPERANDS}")
-    return found
-
-
-def piece_departures(piece: Any) -> list[str]:
-    """Every way a piece file departs: its version and its shape, one side of at least 1 per axis."""
-    found = mapping("piece", piece, PIECE)
-    if found:
-        return found
-    found += versioned("piece", piece)
-    shape = piece.get("shape")
-    if not (
-        isinstance(shape, list) and len(shape) == len(AXES) and all(whole(s) and s >= 1 for s in shape)
-    ):
-        found.append(f"piece.shape: one side per axis, each a whole number of at least 1, not {shape!r}")
     return found
 
 
@@ -220,19 +187,12 @@ def sites_of(shape: list[int]) -> int:
 
 
 def setting_departures(setting: Any, universe: Any, piece: Any) -> list[str]:
-    """Every way a setting departs: its version, its ticks, and its gears on the trains and the board."""
-    found = mapping("setting", setting, SETTING)
-    if found:
-        return found
-    found += versioned("setting", setting)
-    if not (whole(setting.get("ticks")) and setting["ticks"] >= 0):
-        found.append(f"setting.ticks: a whole number of at least 0, not {setting.get('ticks')!r}")
-    gears = setting.get("gears", [])
-    found += rows("setting.gears", gears, GEAR)
+    """Every way a setting departs: its form, and its gears on the trains and the board, each given once."""
+    found = checked("setting", setting, SETTING)
+    gears = setting.get("gears", []) if not found else []
     trains, sites = len(universe["trains"]), sites_of(piece["shape"])
-    given = Counter((t, c, x) for t, c, x, *_ in gears) if not found else Counter()
-    for at, row in enumerate(gears if not found else []):
-        train, component, site, _, _, tooth = row
+    given = Counter((t, c, x) for t, c, x, *_ in gears)
+    for at, (train, component, site, _, _, tooth) in enumerate(gears):
         if not (0 <= train < trains and 0 <= site < sites):
             found.append(f"setting.gears[{at}]: train {train} or site {site} off the files")
         if not (component >= 0 and tooth >= 0):
@@ -246,7 +206,7 @@ def departures(universe: Path, piece: Path, setting: Path) -> list[str]:
     """Every departure of the three files, the setting read once the universe and the piece stand, then the width, field by field."""
     (u, bad_u), (p, bad_p), (s, bad_s) = read(universe), read(piece), read(setting)
     found = bad_u + bad_p + bad_s
-    found = found or universe_departures(u) + piece_departures(p)
+    found = found or universe_departures(u) + checked("piece", p, PIECE)
     found = found or setting_departures(s, u, p)
     width = 0 if found else u["integers"]["width"]
     return found or [
