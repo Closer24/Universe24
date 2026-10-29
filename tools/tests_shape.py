@@ -43,7 +43,8 @@ DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
 TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality in the stencil form, purity across two worlds and across fresh interpreters at other hash seeds, rename with an inert train, the 24's images with the translations, the formula against a naive model, the run back by a fresh engine and in a fresh interpreter that never stepped) for any engine, on a trivial engine at three seeds of Python integers whose every bit is drawn across 2**256 on a side of 5, each failing on every mutant it must catch."
-TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, the integers and the sides at least 1, every reference whole, every integer within the width), each of its rules refuses its own broken file by name, and a file at a rule's edge holds."
+TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, the integers and the sides at least 1, every reference whole, every integer within the width), each of its rules refuses its own broken file by name, and a file at a rule's edge holds, every key it requires absent and every key it lets a file leave out given as null (the fourteenth hostile review)."
+TENSOR24_ROOM = "Tensor24's room by file (decision 26), the fourteenth hostile review's required change: the room a push may take is the head's budgets less the base's, so a test with no budget is refused beside budgets the base already holds."
 TENSOR24_SCHEMA = "Tensor24's record schema, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: every field of every line the runner writes is a whole number of any width, a label or a row of them, and a float, a truth value, an absence or a mapping in a field is seen."
 TENSOR24_ALGEBRA = "Tensor24's algebra, stage 1 of the build the owner approved at 16:0x UTC on 2026-10-28: Rule3's carry, the one whether, the choice, the fine tooth's home and its flip, each law failing on its own mutant, the tie rule's odd quotient at both parities among them."
 TENSOR24_LIGHT = "Tensor24's light, stage 4 of the build the owner approved at 16:0x UTC on 2026-10-28: the scalar light acting as the head's at the head's own inputs in its worlds, each named difference met, each mutant failing."
@@ -59,7 +60,8 @@ ROOM = {  # the room given by name: the test or the file, its lines and the reas
     "tests/test_the_tensor24_algebra.py": (150, TENSOR24_ALGEBRA),
     "tests/test_the_tensor24_decoder.py": (600, TENSOR24_DECODER),
     "tests/test_the_tensor24_decoder_cases.py": (350, TENSOR24_DECODER_CASES),
-    "tests/test_the_tensor24_files.py": (350, TENSOR24_FILES),
+    "tests/test_the_tensor24_files.py": (400, TENSOR24_FILES),
+    "tests/test_the_tensor24_room.py": (50, TENSOR24_ROOM),
     "tests/test_the_tensor24_frame.py": (250, TENSOR24_FRAME),
     "tests/test_the_tensor24_kinds.py": (350, TENSOR24_KINDS),
     "tests/test_the_tensor24_light.py": (150, TENSOR24_LIGHT),
@@ -966,7 +968,9 @@ def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
     """Every way the head departs from the shape, each one line; with no base, the head is its own base."""
     base = head if base is None else base
     found: list[str] = []
-    head_tests, base_tests = lines_in(head, "tests/"), lines_in(base, "tests/") + room_of(head)
+    # the room a push may take is what the head's budgets grant beyond what the base's already hold
+    head_tests = lines_in(head, "tests/")
+    base_tests = lines_in(base, "tests/") + room_of(head) - room_of(base)
     if head_tests > base_tests:
         found.append(
             f"tests/ grew from {base_tests} to {head_tests} lines; offset the new tests by deletions in the same pull request"
