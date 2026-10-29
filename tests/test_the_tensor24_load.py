@@ -203,11 +203,11 @@ def edits():
         "a gradient of an A1 train": (coupling(operand=op("gradient"), with_train=1, target=0), None),
         "the before stride": (
             coupling(operand=op("before")),
-            f"{AT}: before and after enter at stage 7",
+            f"{AT}: before and after enter at stage 7c",
         ),
         "the after stride": (
             coupling(with_operand=op("after")),
-            f"{AT}: before and after enter at stage 7",
+            f"{AT}: before and after enter at stage 7c",
         ),
         "the pull": (coupling(operand=op("pull"), with_operand=op("pull")), None),
     }
@@ -249,6 +249,9 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
     assert (a[ROWS - 1, site], b[ROWS - 1, site]) == (before, now)
     assert (a.shape, b.shape, r.shape, go.shape, rd.shape) == ((ROWS, SITES),) * len("abrgd")
     assert all(x.shape == (1, SITES) for x in clocks) and all(x.dtype == object for x in held.state)
+    assert len({id(x) for x in held.state}) == len(
+        held.state
+    )  # every array its own: no write reaches two
     assert not go.any() and not rd.any() and not any(x.any() for x in clocks)
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1
     held, found = loaded(made, universe(), [(0, rows, site, now, before, 0)])
@@ -359,10 +362,12 @@ def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
 
 
 def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
-    """Whichever of the lay's six arrays the machine's memory refuses, the board is named and nothing raises."""
+    """Whichever of the lay's eight arrays the machine's memory refuses, the board is named and nothing raises."""
     ks, c = made
     zeros = np.zeros
-    for after in range(len("abrgdc")):  # a, b, r, the going, the drive's tooth, the clocks: `after` made
+    for after in range(
+        len("abrgdpct")
+    ):  # the gears' five, then the dial, the count, the time: `after` made
         asked = []
 
         def refused(*args, after=after, asked=asked, **kwargs):

@@ -1,0 +1,49 @@
+killed     g1 stride read at W+: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.40s
+killed     g2 impulse home at W+: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.43s
+killed     g3 carry home at W: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.41s
+killed     g4 ungear home at W: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.65s
+killed     g5 ungear carry home at W+: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.88s
+SURVIVES   d1 drive carries j+rd at 0 (equivalent): 221 passed in 28.81s
+killed     d2 undrive keeps rd in: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.83s
+killed     d3 undrive reads -j: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.70s
+killed     d4 untick pushes j not q: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.67s
+killed     d5 tick pushes j not q: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.43s
+killed     d6 tick keeps rd where no tick too: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.36s
+killed     d7 tick keeps rd where fired: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.49s
+killed     d8 untick rd unchosen: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.68s
+killed     d9 untick drive by drive: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.76s
+killed     p1 push without stretch on force: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.36s
+killed     p2 push kick squared: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.41s
+killed     p3 push without force: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.43s
+killed     s1 J value plane zero: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.44s
+killed     s2 J pull operand without spring: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.39s
+killed     s3 J value and pull planes swapped: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.42s
+killed     s4 J readings gear-major: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.35s
+killed     s5 gradient from now slots whatever their time: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.48s
+killed     s6 gradient from before slots: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.39s
+killed     s7 gradient forward one-sided: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.39s
+killed     s8 gradient axes z y x: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.40s
+killed     s9 gradient sign turned: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.39s
+killed     s10 gradient halved by carry: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.36s
+killed     s11 spring on b: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.44s
+SURVIVES   s12 J landing on 0*a gears from b: 221 passed in 29.28s
+killed     u1 untick sources at after a: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.85s
+killed     u2 untick sources at after count: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.70s
+killed     u3 untick sources at before tn (equivalent?): FAILED tests/test_the_tensor24_load.py::test_the_two_promises_are_named_where_they_fail_and_are_the_run_backs_own_condition | 1 failed, 189 passed in 14.74s
+killed     u4 untick sources with b at choose: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.74s
+killed     u5 untick ungear W W: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.73s
+killed     m1 pull first row's grips for every row: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.37s
+killed     m2 pull grips of the far end's Mesh: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.35s
+killed     m3 seen strict: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.41s
+killed     m4 seen slots swapped: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.39s
+killed     m5 due one early: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.47s
+killed     r1 Gearing kick and drive names swapped: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.46s
+killed     r2 Gearing w and wp names swapped: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the run back with W and W+ swapped] | 1 failed, 9 passed in 0.78s
+killed     r3 Gearing stretch and spring names swapped: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the spring's sign turned] | 1 failed, 4 passed in 0.52s
+SURVIVES   r4 State rd and go names swapped: 221 passed in 27.83s
+SURVIVES   r5 Plan first and second names swapped: 221 passed in 28.58s
+killed     c1 contract no accumulation: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.39s
+killed     c2 contract first twice: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the kick's teeth ignored] | 1 failed in 0.37s
+killed     l1 load pull at the z gradient's plane: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the gradient one-sided] | 1 failed, 12 passed in 1.84s
+killed     l2 load gradient axes reversed: FAILED tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant[the gradient one-sided] | 1 failed, 12 passed in 2.16s
+killed     l3 load gradient reads component of part 0: FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables | 1 failed, 171 passed in 13.83s

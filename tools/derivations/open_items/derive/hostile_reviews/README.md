@@ -2,8 +2,8 @@
 
 Each review is a fresh reader who did not write the code, run on the review branch tensor24-review: it approves only
 what it could not break, with evidence it ran. Every change it asks is made before the branch moves to the three
-integration branches. The fourth to tenth reports are here, the fourth, fifth and the seventh to tenth with the probes
-their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
+integration branches. The fourth to eleventh reports are here, the fourth, fifth and the seventh to eleventh with the
+probes their authors are to run; the first three stand in the Boss's posts on #2187 (6474866014, 6476982394, 6478559511).
 
 | review | commits read | verdict | the changes, where |
 | --- | --- | --- | --- |
@@ -17,6 +17,7 @@ their authors are to run; the first three stand in the Boss's posts on #2187 (64
 | eighth | 83a0b214a, 3fbbd1cd0, 91226e796 (stage 6) | approve with changes, five, all of the tests | the commit that adds eighth/ |
 | ninth | af564daac, 54b9e6a63, 83a0b214a to 927071a14 (stage 6 after the eighth's changes) | approve with changes, two: the load's raises and four gaps of the tests | the commit that adds ninth/; two follow-ups Sofer's |
 | tenth | 0ff2ae0dc (the ninth's changes) | approve with changes, two: J of the caller's dtype, and six gaps of the load's tests | the commit that adds tenth/ |
+| eleventh | 9e5233d7f (stage 7a) | approve with changes, one: the run back with every divisor row away from 1 | the commit that adds eleventh/ |
 
 Each probe runs as `python3 -I <probe> <a worktree of tensor24-review> [...]`, its docstring naming its arguments;
 its output stands beside it. The copies here are the readers' files but for the text rules: the fourth report's
@@ -44,3 +45,7 @@ and the fifth's sketch of tests is renamed decoder_tests_strengthened.py, so pyt
   loop, and its dtypes), mutants_s11.py (34 source mutants of the changed code, its output at 0ff2ae0dc and after),
   proposed_checks.py (the six checks the reader asked, at 0ff2ae0dc and after), load_edges.py, zeros_raises.py and
   gate_alternatives.py, each with its output.
+- eleventh/: REPORT.md, the change and each follow-up with where it went; run_back.py (the act's run back, and the
+  promises broken), images_full_act.py and images_full_act_all.py (the 24 on the whole act), order_full_act.py,
+  stage4_alike.py, local_pure.py with its control, and mutants_s12.py (51 source mutants of stage 7a, its output at
+  9e5233d7f and its four survivors after), each with its output.

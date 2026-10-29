@@ -43,10 +43,10 @@ class Layout(NamedTuple):
 
     nb: Z  # (6, N): +x, -x, +y, -y, +z, -z, each the other's opposite (the load makes the relation symmetric)
     meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired by runner/board.py; a grip its own conjugate
-    grip: Z  # (rows or 1, Meshes): a train's grip on each Mesh, once per Mesh
+    grip: Z  # (rows or 1, Meshes): a gear row's grip on each Mesh, once per Mesh; a train's rows alike from 7b's load
     gearing: Gearing
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, and the force
-    rate: Z  # from 0 to the full rate, so the beat's k is a bit (the load's promises name one past it, from stage 7)
+    rate: Z  # from 0 to the full rate, so the beat's k is a bit (the load's promises name one past it, from stage 7b)
     gamma: Z
 
 

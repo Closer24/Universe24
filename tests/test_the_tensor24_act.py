@@ -2,12 +2,14 @@
 back, and the sources' images under the 24, each law failing on its mutant."""
 
 import itertools
+from fractions import Fraction
 
 import numpy as np
 import pytest
 
+from tensor24.algebra.carry import home
 from tensor24.engine import contract, mesh, step
-from tensor24.engine.state import Gearing, Layout, Plan, State
+from tensor24.engine.state import Gearing, Layout, Out, Plan, State
 from tensor24.main import made
 from tensor24.runner.load import load
 from tensor24.runner.rewind import rewind
@@ -35,19 +37,19 @@ def draw(rng, low, high, size):
     return rng.integers(low, high, size=size).astype(object)
 
 
-def varied(rng, alike=False):
-    """A layout parted at every gear and site: grips per train and Mesh, W and W+ (alike, or parted), s, D, T_k, T_d, J."""
+def varied(rng, alike=False, least=1):
+    """A layout parted at every gear and site: grips per row and Mesh, W and W+ (alike, or parted), s, D, T_k, T_d, J;
+    every divisor (W, W+, T_d) at least `least`."""
     nb = board(SHAPE)
     n = nb.shape[1]
-    w = draw(rng, 1, 20, (ROWS, n))
+    w = draw(rng, least, 20, (ROWS, n))
     coefficients = (
         draw(rng, -3, 4, (ROWS, n)),
         draw(rng, -3, 4, (ROWS, 1)),
         draw(rng, -5, 6, (ROWS, 1)),
     )
-    gearing = Gearing(
-        w, w if alike else draw(rng, 1, 20, (ROWS, n)), *coefficients, draw(rng, 1, 9, (ROWS, 1))
-    )
+    wp = w if alike else draw(rng, least, 20, (ROWS, n))
+    gearing = Gearing(w, wp, *coefficients, draw(rng, least, 9, (ROWS, 1)))
     index = [
         rng.integers(0, high, size=TERMS).astype(np.intp) for high in (PLANES * ROWS,) * 2 + (ROWS,)
     ]
@@ -124,10 +126,11 @@ def formula():
 
 
 def back():
-    """Rounds under random masks run back to the start bit for bit, W and W+ alike; one round with them parted, alike."""
+    """Rounds under random masks run back to the start bit for bit, W and W+ alike; one round with them parted, alike;
+    every divisor row away from 1, so a swap of W and W+ or of T_k and T_d shows (Sofer's read-for)."""
     for seed in range(3):
         rng = np.random.default_rng(10 + seed)
-        layout, parted = varied(rng, alike=True), varied(rng)
+        layout, parted = varied(rng, alike=True, least=1 + 1), varied(rng, least=1 + 1)
         s, t = world(rng, layout), world(rng, parted)
         masks = [draw(rng, 0, 2, (1, layout.nb.shape[1])) for _ in range(ROUNDS)]
         end, outs = rounds(step.tick, layout, s, masks)
@@ -298,3 +301,73 @@ def test_the_force_s_path_is_the_stage_4_tick_with_j_added():
     )
     assert out.k.any() and not now.rd.any()
     assert same([np.where(out.k == 1, a, s.a), np.where(out.k == 1, r, s.r)], [now.a, now.r])
+
+
+def im(x, y):
+    """Im(conj(x) y) for two hands, each the pair of rows (re, im): x_re y_im - x_im y_re."""
+    return x[0] * y[1] - x[1] * y[0]
+
+
+def charged(s, w, weight):
+    """The hand's charge Q* = SUM Im(conj(a + b) P) / (2 s), P = W (a - b) + (r - home): David's density, exact."""
+    a, b, r, go = s[:4]
+    density = im(a + b, w * (a - b) + (r - home(w, go)))
+    return sum(
+        Fraction(int(d), int(2 * v)) for d, v in zip(density.ravel(), weight.ravel(), strict=True)
+    )
+
+
+def kept(each_end=False, moving=False):
+    """Over synchronous rounds a hand's charge Q* moves by Rule3's torques alone (David's OPEN 13 at 7a): the grips one
+    per Mesh, the teeth changing each round, s fixed per Node-clock; a grip per end, or an s that moves, parts it."""
+    rng = np.random.default_rng(50)
+    nb = board(SHAPE)
+    n = nb.shape[1]
+    meshes = np.arange(6 * n).reshape(6, n) if each_end else meshes_of(nb)
+    grip, s = draw(rng, -3, 4, (1, (6 if each_end else 3) * n)), draw(rng, 1, 5, (1, n))
+    teeth = [draw(rng, 2, 20, (1, n)) for _ in range(ROUNDS + 1)]
+    none = np.zeros(0, dtype=np.intp)
+    zero = np.zeros((1, n), dtype=object)
+    state = State(
+        wide(rng, (2, n)),
+        wide(rng, (2, n)),
+        draw(rng, 0, 1 << 20, (2, n)) % teeth[0],
+        draw(rng, 0, 2, (2, n)),
+        0 * draw(rng, 0, 1, (2, n)),
+        zero,
+        zero,
+        zero,
+    )
+    for t in range(ROUNDS):
+        push = s + t * draw(rng, 0, 3, (1, n)) if moving else s
+        gearing = Gearing(teeth[t], teeth[t + 1], push, 3, 1, 1)
+        layout = Layout(
+            nb, meshes, grip, gearing, Plan(none, none, none.astype(object), none), GAMMA + zero, GAMMA
+        )
+        now, out = step.tick(layout, state, 1)
+        torques = im(state.a - state.b, state.r - home(teeth[t], state.go))
+        torques = torques + im(now.a - state.a, now.r - home(teeth[t + 1], now.go))
+        moved = charged(now, teeth[t + 1], s) - charged(state, teeth[t], s)
+        if not out.k.all() or moved != sum(
+            Fraction(int(x), int(2 * v)) for x, v in zip(torques.ravel(), s.ravel(), strict=True)
+        ):
+            return False
+        state = now
+    return True
+
+
+def test_a_hands_charge_moves_by_rules_torques_alone_and_parts_on_a_grip_per_end_or_a_moving_s(
+    monkeypatch,
+):
+    assert kept() and not kept(each_end=True) and not kept(moving=True)
+    driven = step.driven
+    monkeypatch.setattr(step, "driven", lambda g, f, q: driven(g._replace(stretch=1), f, q))
+    assert not kept()  # the push off its stretch
+
+
+def test_the_engines_records_hold_their_fields_in_order():
+    """The engine unpacks its records by place, so every field's place is pinned: a swap of two names would pass."""
+    assert State._fields == ("a", "b", "r", "go", "rd", "ph", "c", "tn")
+    assert Gearing._fields == ("w", "wp", "stretch", "spring", "kick", "drive")
+    assert Layout._fields == ("nb", "meshes", "grip", "gearing", "plan", "rate", "gamma")
+    assert Plan._fields == ("first", "second", "factor", "target") and Out._fields == ("fire", "k", "tn")

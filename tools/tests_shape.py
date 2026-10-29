@@ -49,7 +49,7 @@ TENSOR24_MESH = "Tensor24's Mesh, stage 3 of the build the owner approved at 16:
 TENSOR24_RING = "Tensor24's Gaussian ring, stage 5 of the build the owner approved at 16:0x UTC on 2026-10-28: the hand's product, conjugate, norm and pair, and the twin hand's overlap, reverse and axis, exact at every size: T T +1 on a hand and -1 on a twin hand, Lagrange's identity for the split, the split's share in (rho, S), the joint dial and S's orientation, S . S = rho rho, each law failing on its own mutant; the Boss's room by name."
 TENSOR24_KINDS = "Tensor24's kinds and tables, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the 24 a group of the Spokes' threefold power, each of the five kinds a representation, their characters Sofer's by his definitions at every turn and his table on every class, orthonormal, the Spokes' character A1 + E + T1, every table C equivariant and 0 exactly where David's products hold no channel, primitive, the dot, the cross and A2 x T1 -> T2 exactly, each law failing on its own mutant; the Boss's room by name."
 TENSOR24_LOAD = "Tensor24's load, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the coupling rows' plan contracted as a naive sum over the rows and the tables, each refusal of the load naming its own broken file with its edge that loads, a coupling the table lacks holding no term, the two promises named where they fail and shown to be the run back's own condition, the rename law with its mutant, a gear laid on the first train's rows and at the last train's last component past 64 bits, J of Python integers on gears of any width, and no raise on the files the checker holds nor on a board the machine's memory refuses; the Boss's room by name."
-TENSOR24_ACT = "Tensor24's one act, stage 7a of the build the owner approved at 16:0x UTC on 2026-10-28: every gear's impulse, drive and carry at its coefficients (W and W+, s, the spring, the kick's and the drive's teeth, a grip per train and Mesh, and J's terms on the value, the centred difference along each axis and the force) against a naive model, the run back under random masks, the sources' images under the 24 through the tables of a plan of four kinds, and the force's path as the stage 4 tick with J added, each law failing on its own mutant; the Boss's room by name."
+TENSOR24_ACT = "Tensor24's one act, stage 7a of the build the owner approved at 16:0x UTC on 2026-10-28: every gear's impulse, drive and carry at its coefficients (W and W+, s, the spring, the kick's and the drive's teeth, a grip per gear row and Mesh, and J's terms on the value, the centred difference along each axis and the force) against a naive model, the run back under random masks with every divisor row away from 1, the sources' images under the 24 through the tables of a plan of four kinds, the force's path as the stage 4 tick with J added, a hand's charge moving by Rule3's torques alone over rounds whose teeth change (David's OPEN 13), and the engine's records' fields pinned in order, each law failing on its own mutant; the Boss's room by name."
 ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
     "tests/test_the_tensor24_ring.py::hands": (
         4,
@@ -564,7 +564,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid": (
-        26,
+        29,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_coupling_the_table_lacks_holds_no_term_and_gives_0": (
@@ -592,7 +592,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_load.py::test_a_board_the_machine_cannot_hold_is_named": (
-        19,
+        21,
         TENSOR24_LOAD,
     ),
     "tests/test_the_tensor24_act.py::draw": (
@@ -616,7 +616,7 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
         TENSOR24_ACT,
     ),
     "tests/test_the_tensor24_act.py::back": (
-        16,
+        17,
         TENSOR24_ACT,
     ),
     "tests/test_the_tensor24_act.py::cube": (
@@ -641,6 +641,26 @@ ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.m
     ),
     "tests/test_the_tensor24_act.py::test_the_force_s_path_is_the_stage_4_tick_with_j_added": (
         14,
+        TENSOR24_ACT,
+    ),
+    "tests/test_the_tensor24_act.py::im": (
+        3,
+        TENSOR24_ACT,
+    ),
+    "tests/test_the_tensor24_act.py::charged": (
+        7,
+        TENSOR24_ACT,
+    ),
+    "tests/test_the_tensor24_act.py::kept": (
+        37,
+        TENSOR24_ACT,
+    ),
+    "tests/test_the_tensor24_act.py::test_a_hands_charge_moves_by_rules_torques_alone_and_parts_on_a_grip_per_end_or_a_moving_s": (
+        7,
+        TENSOR24_ACT,
+    ),
+    "tests/test_the_tensor24_act.py::test_the_engines_records_hold_their_fields_in_order": (
+        6,
         TENSOR24_ACT,
     ),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (
