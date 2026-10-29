@@ -1,5 +1,5 @@
-"""Tensor24's run (stage 10): the three files to a record the decoder reads, the run back checked, a departure named
-before any record, and the run under masks the synchronous run at every count."""
+"""Tensor24's run (stage 10): the three files to a record the decoder reads and a ledger of every train's counts at
+every Node-clock and round, the run back checked, and a departure named before any record."""
 
 import hashlib
 import json
@@ -7,17 +7,17 @@ import subprocess
 import sys
 from pathlib import Path
 
-import numpy as np
-
 from tensor24 import main
 from tensor24.decoder import records
+from tensor24.engine import step
+from tensor24.engine.state import State
 from tensor24.runner import run
 from tensor24.runner.files import NAMES, sites_of
+from tensor24.runner.load import load
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLES = ROOT / "examples" / "tensor24"
 PATHS = [EXAMPLES / f"{name}.json" for name in NAMES]
-SEED = 7  # the test's masks, drawn by numpy: the runner draws none
 TOOTH = 1 << 127  # a fine tooth within the files' width and past light's teeth, 2 T
 
 
@@ -49,9 +49,9 @@ def test_the_example_files_run_to_a_record_the_decoder_reads_with_its_run_back_e
         "undone": ticks,
         "exact": 1,
     }
-    # every dial at the full rate: each Node-clock's k is written at its first beat alone, in the first round
-    rates = [(e["round"], e["site"], e["count"], e["k"]) for e in held.of("rate")]
-    assert rates == [(1, site, 1, 1) for site in range(sites_of(piece["shape"]))]
+    assert (
+        held.events == []
+    )  # no rate line: every Node-clock steps in every round, and light alone never clicks
     *_, clock = held.header["trains"]  # the clock's own gear winds as every train does, 1 until G3
     assert clock["label"] == run.CLOCK and all(t["winding"] == 1 for t in held.header["trains"])
 
@@ -62,7 +62,7 @@ def test_the_end_holds_the_digest_of_the_state_the_rounds_reach_and_reads_0_wher
     record, missed = tmp_path / "run.jsonl", tmp_path / "missed.jsonl"
     reached = {}
 
-    def kept(layout, s, out):
+    def kept(layout, s):
         reached.setdefault("end", s)  # the first state the run back reads is the rounds' last
         return s  # a run back that undoes nothing
 
@@ -73,45 +73,31 @@ def test_the_end_holds_the_digest_of_the_state_the_rounds_reach_and_reads_0_wher
     assert read(missed)[-1]["exact"] == 0 and read(missed)[-1]["digest"] == end["digest"]
 
 
-def without_rounds(lines):
-    """A record's events with their rounds taken out, in the order of their sites and counts, and its end without its rounds."""
-    events = sorted((e["site"], e["count"], e["dial"], e["k"]) for e in lines[1:-1])
-    return events, {key: value for key, value in lines[-1].items() if key not in ("rounds", "undone")}
-
-
-def test_under_masks_the_run_is_the_synchronous_run_at_every_count(tmp_path):
-    synchronous, masked = tmp_path / "synchronous.jsonl", tmp_path / "masked.jsonl"
-    rng = np.random.default_rng(SEED)
-    bits = lambda _, n: rng.integers(0, 1 + 1, n).tolist()  # noqa: E731
-    assert main.ran(PATHS, synchronous) == [] and main.ran(PATHS, masked, bits) == []
-    s, m = read(synchronous), read(masked)
-    assert m[-1]["rounds"] > s[-1]["rounds"] and m[-1]["exact"] == 1  # the masks held beats back
-    assert without_rounds(m) == without_rounds(s)
-    named = ("record", "runner")  # the two fields that name the record and its runner
-    assert {k: v for k, v in m[0].items() if k not in named} == {
-        k: v for k, v in s[0].items() if k not in named
-    }
-    assert m[0]["runner"] == "under the caller's masks"
-
-
-def test_a_node_clocks_k_is_written_at_its_first_beat_and_wherever_it_changes(tmp_path):
-    def slowed(universe, shape, loaded):
-        laid = main.layout(universe, shape, loaded)
-        rate = laid.rate.copy()
-        rate[0, 0] = laid.gamma // (
-            1 + 1
-        )  # one Node-clock at half the full rate: its k turns at every beat
-        return laid._replace(rate=rate)
-
+def test_the_ledger_holds_every_trains_counts_at_every_node_clock_after_every_round(tmp_path):
+    """Beside the record, one count line per round, Node-clock and train, in that order: the train's now counts there,
+    row by row, as the engine's own rounds reach them; the clock's own gear stands at 0 in every line."""
     record = tmp_path / "run.jsonl"
-    assert run.run(main.ENGINE._replace(layout=slowed), PATHS, record) == []
-    lines = read(record)
-    slow = [(e["count"], e["k"]) for e in lines[1:-1] if e["site"] == 0]
-    rest = [e["count"] for e in lines[1:-1] if e["site"] != 0]
-    ticks = read(PATHS[-1])["ticks"]
-    assert [count for count, _ in slow] == list(range(1, ticks + 1)) and set(rest) == {1}
-    assert all(k != after for (_, k), (_, after) in zip(slow[:-1], slow[1:], strict=True))
-    assert records.read(str(record))[1] == ""
+    assert main.ran(PATHS, record) == []
+    universe, piece, setting = (read(path) for path in PATHS)
+    held, _ = load(universe, setting, sites_of(piece["shape"]), *main.made(tuple(piece["shape"])))
+    laid, s, wanted = main.layout(universe, piece["shape"], held), State(*held.state), []
+    for at in range(1, setting["ticks"] + 1):
+        s = step.tick(laid, s)
+        wanted += [
+            {
+                "round": at,
+                "at": "step",
+                "site": site,
+                "train": n,
+                "count": s.a[t.first : t.first + t.rows(), site].tolist(),
+            }
+            for site in range(sites_of(piece["shape"]))
+            for n, t in enumerate(held.trains)
+        ]
+    lines = read(run.ledger_of(record))
+    assert lines == wanted and {
+        tuple(x["count"]) for x in lines if x["train"] == len(held.trains) - 1
+    } == {(0,)}
 
 
 def test_a_departing_file_or_a_broken_promise_is_named_and_no_record_is_written(tmp_path):

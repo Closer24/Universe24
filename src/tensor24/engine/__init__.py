@@ -1,1 +1,1 @@
-"""The engine: kinds, Mesh, step, beat and clicks, pure functions over integer arrays."""
+"""The engine: the kinds, the Mesh, the contraction and the step, pure functions over integer arrays."""

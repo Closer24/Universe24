@@ -159,11 +159,10 @@ def plan(
 
 
 def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[Z, ...], list[str]]:
-    """The setting's gears laid on the trains' rows, every going, drive's tooth, dial, count and time at 0; one off, named."""
+    """The setting's gears laid on the trains' rows, every drive's fine tooth at 0; a gear off its train, named."""
     rows = sum(t.rows() for t in trains)
     try:
-        a, b, r, go, rd = (np.zeros((rows, sites), dtype=object) for _ in ("a", "b", "r", "go", "rd"))
-        ph, c, tn = (np.zeros((1, sites), dtype=object) for _ in ("ph", "c", "tn"))
+        a, b, r, rd = (np.zeros((rows, sites), dtype=object) for _ in ("a", "b", "r", "rd"))
     except (ValueError, MemoryError) as error:
         return (), [
             f"piece.shape: {rows} rows at {sites} sites, more than the arrays of this machine hold ({error})"
@@ -177,22 +176,16 @@ def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[
             continue
         row = trains[train].first + component
         a[row, site], b[row, site], r[row, site] = now, before, tooth
-    return (a, b, r, go, rd, ph, c, tn), found
+    return (a, b, r, rd), found
 
 
-def promises(r: Z, w: Z, rate: Z, gamma: Z) -> list[str]:
-    """The engine's two promises, each departure named where it stands: a fine tooth within [0, w), a rate within [0, Gamma]."""
+def promises(r: Z, w: Z) -> list[str]:
+    """The engine's promise, each departure named where it stands: every fine tooth within [0, w), its teeth."""
     w = np.broadcast_to(w, r.shape)
-    rate, gamma = (np.broadcast_to(x, (1, r.shape[-1])) for x in (rate, gamma))
-    teeth = [
+    return [
         f"row {g}, site {x}: the fine tooth {r[g, x]} not within [0, {w[g, x]})"
         for g, x in np.argwhere((r < 0) | (r >= w))
     ]
-    rates = [
-        f"site {x}: the rate {rate[0, x]} not within [0, the full rate {gamma[0, x]}]"
-        for _, x in np.argwhere((rate < 0) | (rate > gamma))
-    ]
-    return teeth + rates
 
 
 class Loaded(NamedTuple):
@@ -242,18 +235,9 @@ def geared(
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's eight parts: the board from the piece's sides, every coefficient and grip from the universe's integers, J's plan, every dial at the full rate and every gear's clock; main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's six parts: the board from the piece's sides, every coefficient and grip from the universe's integers, J's plan and every gear's clock; main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
     nb, meshes = board((sx, sy, sz))
     gearing, clock, grip = geared(universe, loaded.trains, len(nb))
-    gamma, sites = universe["integers"]["full_rate"], nb.shape[1]
-    return (
-        nb,
-        meshes,
-        np.full((1, len(shape) * sites), grip, dtype=object),
-        gearing,
-        loaded.plan,
-        np.full((1, sites), gamma, dtype=object),
-        gamma,
-        clock,
-    )
+    grips = np.full((1, len(shape) * nb.shape[1]), grip, dtype=object)
+    return nb, meshes, grips, gearing, loaded.plan, clock

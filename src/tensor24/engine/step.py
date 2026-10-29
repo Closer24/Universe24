@@ -1,26 +1,17 @@
-"""The Node-clock's step: every gear's impulse, drive and carry at the teeth its clock gives it, and the rate dial's beat, each run back."""
+"""The Node-clock's step: every gear's impulse, drive and carry at the teeth its clock gives it, in one pass every round, and the run back as the step on the mirrored state."""
 
 import numpy as np
 
-from tensor24.algebra.carry import Z, carry, choose, home, uncarry
+from tensor24.algebra.carry import Z, carry, flip
 from tensor24.engine.contract import contract, read
-from tensor24.engine.mesh import due, pull, seen
-from tensor24.engine.state import Gearing, Layout, Out, Read, State
+from tensor24.engine.mesh import pull, seen
+from tensor24.engine.state import Gearing, Layout, Read, State
 
 
-# The tick passes W+ = W, so the two homes cancel and the going parts no act: go and W+ stay the gear's parameters,
-# read by the algebra's tie rule, until the run back is the tick on the mirrored state (G1b).
-def gear(a: Z, b: Z, r: Z, go: Z, w: Z, wp: Z, push: Z) -> tuple[Z, Z, Z]:
-    """A gear's tick: p = W (a - b) + (r - home), and a+ = a + q with (q, r+) the carry of p + push at W+."""
-    p = w * (a - b) + (r - home(w, go))
-    q, kept = carry(p + push, wp, home(wp, go))
+def gear(a: Z, b: Z, r: Z, w: Z, push: Z) -> tuple[Z, Z, Z]:
+    """A gear's tick at its teeth W: (q, r+) the carry of W (a - b) + push with its fine tooth r, and a+ = a + q."""
+    q, kept = carry(w * (a - b) + push, w, r)
     return a + q, a, kept
-
-
-def ungear(a: Z, b: Z, r: Z, go: Z, w: Z, wp: Z, push: Z) -> tuple[Z, Z, Z]:
-    """The gear's tick run back from its now (a, b, r): the stride read at W+, then carried at W."""
-    q, kept = carry(wp * (a - b) + (r - home(wp, go)) - push, w, home(w, go))
-    return b, b - q, kept
 
 
 def drive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
@@ -28,18 +19,11 @@ def drive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
     return carry(j, teeth, rd)
 
 
-def undrive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
-    """The drive run back from r_d+: (q, r_d) with J + r_d = q T_d + r_d+, r_d the remainder of r_d+ - J at T_d."""
-    back, kept = carry(rd - j, teeth, 0)
-    return -back, kept
-
-
-def sources(layout: Layout, s: State) -> tuple[Z, Z]:
+def sources(layout: Layout, a: Z) -> tuple[Z, Z]:
     """Every gear's force, its pull, and its source J: the plan on the value, the differences, the force."""
-    nb, _, _, _, plan, _, _, _ = layout
-    a, _, _, _, _, _, _, _ = s
-    force = pull(layout, s)
-    near = seen(s, nb)
+    nb, _, _, _, plan, _ = layout
+    force = pull(layout, a)
+    near = seen(a, nb)
     rows, _, sites = near.shape
     ends = near.reshape(rows, -1, 1 + 1, sites)
     gradient = np.moveaxis(ends[:, :, 0] - ends[:, :, 1], 1, 0)
@@ -53,72 +37,36 @@ def driven(gearing: Gearing, force: Z, q: Z) -> Z:
     return stretch * (force + kick * q)
 
 
-def beat(ph: Z, rate: Z, gamma: Z, fire: Z) -> tuple[Z, Z]:
-    """The rate dial's beat where fire is 1: (k, ph') = carry(ph, Gamma, rate), k = 0 being no tick this tick."""
-    k, turned = carry(ph, gamma, rate)
-    return fire * k, choose(fire, turned, ph)
-
-
-def unbeat(k: Z, ph: Z, rate: Z, gamma: Z, fire: Z) -> Z:
-    """The beat run back: k Gamma + ph' - rate where it fired, ph' where it did not."""
-    return choose(fire, uncarry(k, gamma, ph) - rate, ph)
-
-
-# W = W+ holds a round's teeth fixed, so a round runs back exactly wherever every fine tooth stands within [0, W), and a
-# run while no gear's teeth fall below the fine tooth its last tick kept. A falling clock breaks it, and the term
-# (d_t W)(d_t a) of d_t (W d_t a) = F is dropped with it; every run the files make keeps it, the clock's own gear having
-# no source and standing at 0 as laid. The metric's stage (G2) owes both by design, with no promise in the round.
+# W = W+ holds a round's teeth fixed, so a round runs back exactly wherever W is at least 1 and every fine tooth stands
+# within [0, W), and a run while every kept tooth stands below the teeth of the round that reads it: only a falling
+# clock can break that. Wherever a clock moves, rising or falling, W = W+ drops the term (d_t W)(d_t a) of
+# d_t (W d_t a) = F. Every run the files make keeps the clock's own gear at 0 as laid, no source moving it; the
+# metric's stage (G2) owes both by design, with no promise in the round.
 def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
-    """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and at no bound."""
+    """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and with no bound on the read."""
     rest, _, _, _ = gearing
     return rest + read(clock, a)
 
 
-def tick(layout: Layout, s: State, allowed: Z) -> tuple[State, Out]:
-    """One round where the runner allows: the due beat turns the dial; where it ticks, every gear steps on its sources at the teeth it reads at the now slot, in one pass."""
-    nb, _, _, gearing, _, rate, gamma, clock = layout
-    a, b, r, go, rd, ph, c, tn = s
-    fire = due(c, nb) * allowed
-    k, dial = beat(ph, rate, gamma, fire)
-    w = weight(gearing, clock, a)
-    force, j = sources(layout, s)
+def tick(layout: Layout, s: State) -> State:
+    """One round: every gear steps on its sources at the teeth it reads at the now slot, in one pass."""
+    _, _, _, gearing, _, clock = layout
+    a, b, r, rd = s
+    force, j = sources(layout, a)
     _, _, _, teeth = gearing
     q, kept = drive(j, teeth, rd)
-    a1, b1, r1 = gear(a, b, r, go, w, w, driven(gearing, force, q))
-    count = c + fire
-    now = State(
-        choose(k, a1, a),
-        choose(k, b1, b),
-        choose(k, r1, r),
-        go,
-        choose(k, kept, rd),
-        dial,
-        count,
-        choose(k, count, tn),
-    )
-    return now, Out(fire, k, tn)
+    a1, b1, r1 = gear(a, b, r, weight(gearing, clock, a), driven(gearing, force, q))
+    return State(a1, b1, r1, kept)
 
 
-def untick(layout: Layout, s: State, o: Out) -> State:
-    """The round run back from its out, exact where every fine tooth it ran from stood within its teeth: the teeth and the sources as the forward's now slot held them, the drive, the gears, the count, the dial, the time."""
-    nb, _, _, gearing, _, rate, gamma, clock = layout
-    a, b, r, go, rd, ph, c, tn = s
-    fire, k, before = o
-    count = c - fire
-    start = choose(k, b, a)
-    w = weight(gearing, clock, start)
-    force, j = sources(layout, State(start, b, r, go, rd, ph, count, tn))
+def mirror(layout: Layout, s: State) -> State:
+    """The state mirrored, time's reversal: the slots swapped, each fine tooth flipped in the teeth it was kept at, the before slot's."""
+    _, _, _, gearing, _, clock = layout
+    a, b, r, rd = s
     _, _, _, teeth = gearing
-    q, kept = undrive(j, teeth, rd)
-    a0, b0, r0 = ungear(a, b, r, go, w, w, driven(gearing, force, q))
-    dial = unbeat(k, ph, rate, gamma, fire)
-    return State(
-        choose(k, a0, a),
-        choose(k, b0, b),
-        choose(k, r0, r),
-        go,
-        choose(k, kept, rd),
-        dial,
-        count,
-        before,
-    )
+    return State(b, a, flip(r, weight(gearing, clock, b)), flip(rd, teeth))
+
+
+def untick(layout: Layout, s: State) -> State:
+    """The round run back, the tick on the mirrored state mirrored: exact where every fine tooth it ran from stood within its teeth, of at least 1."""
+    return mirror(layout, tick(layout, mirror(layout, s)))

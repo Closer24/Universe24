@@ -16,15 +16,13 @@ def made(shape: tuple[int, ...]) -> tuple[kinds.Kinds, dict[Any, Any]]:
 
 def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> state.Layout:
     """The layout the load reads from the three files, in the engine's records."""
-    nb, meshes, grip, gearing, plan, rate, gamma, clock = load.laid_out(universe, shape, loaded)
-    return state.Layout(
-        nb, meshes, grip, state.Gearing(*gearing), state.Plan(*plan), rate, gamma, state.Read(*clock)
-    )
+    nb, meshes, grip, gearing, plan, clock = load.laid_out(universe, shape, loaded)
+    return state.Layout(nb, meshes, grip, state.Gearing(*gearing), state.Plan(*plan), state.Read(*clock))
 
 
 ENGINE = run.Engine(made, layout, step.tick, step.untick, state.State)
 
 
-def ran(paths: list[Path], record: Path, bits: Any = None) -> list[str]:
-    """The three files run to the record by the engine's own functions, every due beat firing or the caller's masks."""
-    return run.run(ENGINE, paths, record, bits)
+def ran(paths: list[Path], record: Path) -> list[str]:
+    """The three files run to the record and its ledger by the engine's own functions, every Node-clock in every round."""
+    return run.run(ENGINE, paths, record)

@@ -1,4 +1,4 @@
-"""The engine's records: the Node-clocks' state, the layout read once at load, J's plan, and what a round puts out."""
+"""The engine's records: the Node-clocks' state, the layout read once at load, J's plan, and the clocks' read."""
 
 from typing import NamedTuple
 
@@ -6,16 +6,12 @@ from tensor24.algebra.carry import Z
 
 
 class State(NamedTuple):
-    """Per gear its now and before slots, fine tooth, going and drive's fine tooth; per Node-clock its dial, count and time."""
+    """Per gear its now and before slots, its fine tooth and its drive's fine tooth."""
 
     a: Z
     b: Z
-    r: Z
-    go: Z
+    r: Z  # the fine tooth, within [0, W): the remainder the gear's carry keeps
     rd: Z  # the drive's fine tooth, within [0, T_d): the remainder its carry keeps, as r is the gear's
-    ph: Z
-    c: Z
-    tn: Z
 
 
 class Plan(NamedTuple):
@@ -47,21 +43,11 @@ class Gearing(NamedTuple):
 
 
 class Layout(NamedTuple):
-    """The board read once: the neighbours, each Spoke's Mesh, the grips, the gearing, J's plan, the rates, the full rate, the clocks."""
+    """The board read once: the neighbours, each Spoke's Mesh, the grips, the gearing, J's plan and the clocks."""
 
     nb: Z  # (6, N): +x, -x, +y, -y, +z, -z, each the other's opposite (the load makes the relation symmetric)
     meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired by runner/board.py; a grip its own conjugate
     grip: Z  # (rows or 1, Meshes): a gear row's grip on each Mesh, once per Mesh; a train's rows alike from 7b's load
     gearing: Gearing
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, and the force
-    rate: Z  # from 0 to the full rate, so the beat's k is a bit (the load's promises name one past it, from stage 7b)
-    gamma: Z
     clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
-
-
-class Out(NamedTuple):
-    """What a round puts out: where it fired, where it ticked, and the now slot's time before the round."""
-
-    fire: Z
-    k: Z
-    tn: Z
