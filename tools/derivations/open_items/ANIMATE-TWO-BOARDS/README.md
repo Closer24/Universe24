@@ -37,6 +37,39 @@ The owner's word to Animate, 2026-10-29, 08:4x UTC (in Hebrew; in translation): 
   - marginals of 1/2, so no signal.
 - **The two do different jobs.** The kept history is the arrow and the ratchet: each bang starts richer, and the chosen path builds composites (ANIMATE-LAW-CHOSEN-PATH.md). The backward board is the reach into the past that the correlations of pairs and of one spread quantum need. It writes no record.
 
+## 2b. Why nature has two boards on a Node-clock: Animate's reading
+
+The owner's question to Animate, 2026-10-29, 09:5x UTC (in Hebrew; in translation): "Why, in your opinion, did nature choose two boards on a Node-clock?" Then: "Pass the explanation to everyone and to the full picture." Each line carries its status word.
+
+**In one line (a reading):** the law runs both ways, and only where the future meets the past at the source can a click be whole without anything crossing space.
+
+1. **The law itself runs both ways** (measured).
+   - The one act runs back exactly: the untick, the run back exact in every record.
+   - A law that runs back has no direction of its own. The backward board adds nothing to it: it is the same act read the other way, so it comes with the law's reversibility.
+   - What runs one way is the records (the law, decision 28): the forward board alone writes them. So the law is symmetric and the world has an arrow.
+2. **A click must be whole and local at once** (derived).
+   - One quantum spread over several absorbers, or two twins far apart, need one outcome, kept together, while every act reads its six neighbours alone.
+   - A forward board alone cannot do it: Bell's S is at most 2, and two absorbers click together with odds 1/4 (part 1, measured on the toy).
+   - So the parts must be kept together either across space or across time:
+     - **across space** is the closure faster than light, with its window and its three-party step;
+     - **across time** is through the source, where the parts were one: the future's settings ride back along each part's own path, and the outcome rides out along the same path.
+   - **Across time is the cheaper way** (a reading): no new speed, no window, and no preferred frame.
+3. **A click is a meeting** (the owner's law of 2026-10-28: the click is the meeting of the future with the past).
+   - The source offers and the absorber confirms. One board holds the offer alone, with no one to take it.
+   - In physics, three precedents:
+     - Wheeler and Feynman (1945) needed waves from the absorber, from the future, to explain radiation;
+     - Aharonov, Bergmann and Lebowitz (1964) wrote two state vectors, one from the past and one from the future;
+     - Cramer (1986) read each event as a handshake between emitter and absorber.
+4. **It costs nothing else** (derived).
+   - A history that agrees with itself draws by the forward law, Born: P(history) = P(future) P(history | future), the Boss's identity.
+   - So the backward board disturbs nothing else: the arrow stays the records', and complexity grows by the forward ratchet (the binding click, the bottom's sieve, the records passing).
+   - The one addition is one dial more at each Node-clock.
+5. **In clocks** (a direction): each Node-clock holds a dial turning forward from the bang and a dial turning back from the clicks to come. The present is where they meet, and a click is that meeting. A plain past and a rich future set the history between them (David's phrase).
+
+**What does not follow:**
+- that nature "chose": the clicks can only show that, among the local mechanisms, two boards is the one that fits the clicks nature shows;
+- that no selection is ever needed on a full board (the scheduler, open).
+
 ## 3. Which two-board form
 
 - **O, the product draw ordered by the board's tick (David's 6491076850), approved by decision 29** (the owner's word to the Boss of 08:3x UTC, tensor24-review 6e3cbbfe).
