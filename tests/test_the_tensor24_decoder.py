@@ -16,7 +16,12 @@ DIGITS = (
     sys.int_info.default_max_str_digits
 )  # the interpreter's bound on a whole number's digits, the tool lifts it
 TRAINS = [{"index": t, "label": f"train {t}", "kinds": [0], "part": 1, "winding": 1} for t in (0, 1)]
+WOUND = dict.fromkeys(range(3), 1)  # each train's winding by its index: TRAINS', and train 2's at 1
 HEADER = {"kind": "header", "record": "tensor24", "major": 1, "minor": 1, "trains": TRAINS}
+THIRD = {
+    **HEADER,
+    "trains": [*TRAINS, {**TRAINS[1], "index": 2, "label": "train 2"}],
+}  # train 2's card added
 BOARD = {**HEADER, "sides": [1 + 1, 1, 1]}  # a board of two sites on its x axis, and six Spokes
 END = {"kind": "end", "rounds": 6, "undone": 0, "exact": 1}
 H, B, E = HEADER, BOARD, END  # short names for the tables below
@@ -279,9 +284,8 @@ def test_the_books_close_at_each_end_and_the_verdict(tmp_path):
         end_of(0, [holding(0, (5, 0))], [holding(1, (0, 6))]),
         end_of(1, [holding(0, (5, 0))], [holding(1, (0, 4))]),
     ]
-    assert (
-        books.closes(PAIR) and not books.closes(one_open) and not books.closes(click(1, 0, ends=twisted))
-    )
+    assert books.closes(PAIR, WOUND) and not books.closes(one_open, WOUND)
+    assert not books.closes(click(1, 0, ends=twisted), WOUND)
     opened = click(1, 0, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
     assert kind([H, opened, E], GOOD, tmp_path) == "NOT SHOWN"
     absent = books.row_15(read([H, TAKE, E], tmp_path), None)
@@ -309,10 +313,10 @@ OPEN = {  # a whole click whose holdings sum to nothing and whose books still do
 @pytest.mark.parametrize("name", sorted(OPEN))
 def test_the_books_hold_the_click_they_book(tmp_path, name):
     from_kept = click(1, 0, [holding(1, (0, 0), (5, 1))], [holding(0, (0, 4))], train=1)
-    assert books.closes({**TAKE, "q": 1 + 1 + 1}) and books.closes(from_kept) and books.closes(PAIR)
-    assert not books.closes(OPEN[name])
+    assert books.closes({**TAKE, "q": 1 + 1 + 1}, WOUND) and books.closes(from_kept, WOUND)
+    assert books.closes(PAIR, WOUND) and not books.closes(OPEN[name], WOUND)
     held = ledger(1, {0: (4, 4), 1: (6, 6)})
-    assert kind([H, OPEN[name], E], held, tmp_path) == "NOT SHOWN"
+    assert kind([THIRD, OPEN[name], E], held, tmp_path) == "NOT SHOWN"
 
 
 def test_the_wind_over_every_train_round_by_round(tmp_path):
@@ -383,9 +387,11 @@ LACKING = {  # a whole click that lacks a field its books are read from (Sofer's
 
 @pytest.mark.parametrize("name", sorted(LACKING))
 def test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read(tmp_path, name):
-    verdict = books.row_15(read([H, LACKING[name], E], tmp_path), GOOD)
     cause = "the whole click at round 1, site 0 lacks a field its books are read from"
-    assert verdict["kind"] == "NOT READ" and verdict["cause"] == cause
+    beside = [LACKING[name], {**TAKE, "site": 1}]  # beside a click whose books close, the books unnamed
+    for clicks in ([LACKING[name]], beside):
+        verdict = books.row_15(read([H, *clicks, E], tmp_path), GOOD)
+        assert verdict["kind"] == "NOT READ" and verdict["cause"] == cause
 
 
 def test_a_part_read_that_fails_is_not_shown_beside_a_click_that_lacks_a_field(tmp_path):
@@ -441,12 +447,12 @@ def test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat():
 
 def law_books(tmp_path):
     broken = click(1, 0, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
-    return books.closes(TAKE) and not books.closes(broken)
+    return books.closes(TAKE, WOUND) and not books.closes(broken, WOUND)
 
 
 def law_ends(tmp_path):
-    return books.closes(PAIR) and not books.closes(
-        click(1, 0, ends=[end_of(0, [holding(0, (5, 0))], [holding(1, (0, 4))])])
+    return books.closes(PAIR, WOUND) and not books.closes(
+        click(1, 0, ends=[end_of(0, [holding(0, (5, 0))], [holding(1, (0, 4))])]), WOUND
     )
 
 
@@ -492,11 +498,11 @@ def law_line_feed(tmp_path):
 
 
 LAWS = {  # each law, and its mutant: one function of the decoder replaced
-    "the books close, windings and kept together": (
+    "the books close, each train's windings at its winding and its kept together": (
         law_books,
         books,
         "gained",
-        lambda hs: sum(h["windings"][1] - h["windings"][0] for h in hs),
+        lambda hs, winding: sum(h["windings"][1] - h["windings"][0] for h in hs),
     ),
     "a pair into light's books close at each end": (law_ends, books, "parts", lambda click: [click]),
     "the wind over every train of the header agrees after the clicks and after the step": (
@@ -510,7 +516,7 @@ LAWS = {  # each law, and its mutant: one function of the decoder replaced
         law_lacking,
         books,
         "unread_books",
-        lambda click: "",
+        lambda click, winding: "",
     ),
     "the ticks counted from the rate lines": (
         law_ticks,

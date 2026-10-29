@@ -12,9 +12,15 @@ from tensor24.decoder import books, clocks, records
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
 TRAINS = [{"index": t, "label": f"train {t}", "kinds": [0], "part": 1, "winding": 1} for t in (0, 1)]
+WOUND = dict.fromkeys(range(3), 1)  # each train's winding by its index: TRAINS', and train 2's at 1
 H = {"kind": "header", "record": "tensor24", "major": 1, "minor": 1, "trains": TRAINS}
+THIRD = {**H, "trains": [*TRAINS, {**TRAINS[1], "index": 2, "label": "train 2"}]}  # train 2's card added
 B = {**H, "sides": [1 + 1, 1, 1]}  # a board of two sites on its x axis, and six Spokes
 E = {"kind": "end", "rounds": 6, "undone": 0, "exact": 1}
+
+
+def wound(*windings):  # the header with each of its trains' windings given, in turn
+    return {**H, "trains": [{**t, "winding": w} for t, w in zip(TRAINS, windings, strict=True)]}
 
 
 def hold(train, windings, kept=(0, 0)):
@@ -67,9 +73,8 @@ def row(lines, held, tmp_path):
 
 # three windings and one kept of train 1 laid as four of train 0; a pair of train 0 taken at both ends into train 1
 TAKE = click(1, 0, [hold(1, (7, 4), (3, 2))], [hold(0, (0, 4))])
-GOOD = ledger(
-    1, {0: (0, 4), 1: (10, 6)}
-)  # TAKE's round: the wind over every train 10 after the step and the clicks
+# TAKE's round: the wind over every train 10 after the step and the clicks
+GOOD = ledger(1, {0: (0, 4), 1: (10, 6)})
 ENDED = [
     end_of(0, [hold(0, (5, 0), (0, 1))], [hold(1, (0, 4))]),
     end_of(1, [hold(0, (5, 0))], [hold(1, (0, 5))]),
@@ -88,6 +93,8 @@ Q_BELOW, LOW = (
     "line 2 holds a holding's windings {}, below 0",
 )
 BOOKED = {"kind": "books", "round": 1, "site": 0, "train": 0, "kept": 1}
+WINDING = "line 1's train card {} holds the winding {}, below 1"
+TWO_CARDS = "line 1's train cards name the train 0 twice"
 
 READS = {  # each record read: a field the schema does not name holds whole numbers and labels, a field absent
     "a rate line's unnamed ends": [B, rate(1, 0, 1, 1, ends=[1]), E],
@@ -137,6 +144,9 @@ REFUSED = {  # each record not read, its own cause named
         "line 1's sides [2, 0, 1] make no board, a side below 1",
     ),
     "a whole click at q 0, no click": ([H, {**TAKE, "q": 0}, E], Q_BELOW.format(0)),
+    "a train card's winding 0": ([wound(0, 1), TAKE, E], WINDING.format(1, 0)),
+    "a train card's winding -4": ([wound(1, -4), TAKE, E], WINDING.format(1 + 1, -4)),
+    "a train on two cards": ([{**H, "trains": [*TRAINS, TRAINS[0]]}, TAKE, E], TWO_CARDS),
     "a whole click at q -3 (A4)": ([H, {**TAKE, "q": -3}, E], Q_BELOW.format(-3)),
     "a take below 0 (A3)": (
         [H, click(1, 0, [hold(1, (0, -3))], [hold(0, (0, 3))], q=3), E],
@@ -194,7 +204,7 @@ BOOKED_TWICE = {  # a part that books a train twice: on one side unchained, or o
 @pytest.mark.parametrize("name", sorted(BOOKED_TWICE))
 def test_a_part_that_books_a_train_twice_reads_not_read_named(tmp_path, name):
     twice = BOOKED_TWICE[name]
-    assert not books.closes(twice) and books.unread_books(twice) == books.TWICE
+    assert not books.closes(twice, WOUND) and books.unread_books(twice, WOUND) == books.TWICE
     assert row([H, twice, E], ledger(1, {0: (0, 0), 1: (0, 0)}), tmp_path) == ("NOT READ", TWICE)
 
 
@@ -202,7 +212,7 @@ def test_a_train_taken_in_chained_holdings_reads_as_one(tmp_path):
     chained = click(1, 0, [hold(1, (7, 4), (3, 2)), hold(1, (4, 1), (1 + 1, 0))], [hold(0, (0, 9))], q=6)
     laid_in_two = click(1, 0, [hold(1, (7, 4))], [hold(0, (0, 1)), hold(0, (1, 1 + 1 + 1))], q=3)
     moved = ledger(1, {0: (0, 9), 1: (10, 1)})
-    assert books.closes(chained) and books.closes(laid_in_two)
+    assert books.closes(chained, WOUND) and books.closes(laid_in_two, WOUND)
     assert row([H, chained, E], moved, tmp_path)[0] == "SHOWN"
 
 
@@ -220,7 +230,7 @@ OPEN_BOOKS, CLOSED_BOOKS = (
     "the books close at every whole click",
 )
 UNREAD_LINES = "the ledger's lines are read at 0 of 1 rounds with a click"
-CARDLESS = {**H, "trains": [TRAINS[0], without(TRAINS[1], "index")]}
+CARDLESS = {**H, "trains": [*TRAINS, without(TRAINS[1], "index")]}
 GAPS = {  # a gap in the second reading: the header, the ledger, the gap's cause and the verdict beside closed books
     "the ledger absent": (H, None, "the ledger is absent", f"the ledger is absent; {CLOSED_BOOKS}"),
     "an empty ledger": (H, [], UNREAD_LINES, f"{CLOSED_BOOKS}; {UNREAD_LINES}"),
@@ -230,17 +240,11 @@ GAPS = {  # a gap in the second reading: the header, the ledger, the gap's cause
         UNREAD_LINES,
         f"{CLOSED_BOOKS}; {UNREAD_LINES}",
     ),
-    "a header that names no train": (
-        {**H, "trains": []},
-        GOOD,
-        "the header names no train",
-        f"the header names no train; {CLOSED_BOOKS}",
-    ),
     "a train card without its index": (
         CARDLESS,
         GOOD,
-        "the header's train card 2 holds no index",
-        f"the header's train card 2 holds no index; {CLOSED_BOOKS}",
+        "the header's train card 3 holds no index",
+        f"the header's train card 3 holds no index; {CLOSED_BOOKS}",
     ),
     "a ledger whose clicks lines hold a train the header lacks": (
         H,
@@ -262,8 +266,28 @@ def test_open_books_beside_a_ledger_read_name_the_wind():
     record = records.Record(H, [OPENED], E)
     wind = "the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click"
     assert books.row_15(record, GOOD)["cause"] == f"{OPEN_BOOKS}; {wind}"
-    first_card = books.row_15(records.Record({**H, "trains": [{}, TRAINS[1]]}, [TAKE], E), GOOD)
+    first_card = books.row_15(records.Record({**H, "trains": [{}, *TRAINS]}, [TAKE], E), GOOD)
     assert first_card["cause"] == f"the header's train card 1 holds no index; {CLOSED_BOOKS}"
+
+
+# David's A6 (6488889537, item 2): each train's windings at its winding of notches, the kept in notches; at 4, one
+# winding of train 1 leaves with 3 notches kept back, and two windings of 3 notches are laid as three of 2
+WEIGHED = click(1, 0, [hold(1, (5, 4), (-1, 2))], [hold(0, (0, 1), (1, -2))], q=1)
+MIXED = click(1, 0, [hold(1, (1 + 1, 0))], [hold(0, (0, 3))], q=1 + 1)
+UNWOUND = "the whole click at round 1, site 0 books a train the header gives no winding"
+
+
+def test_the_books_read_each_train_s_windings_at_its_own_winding_and_name_a_train_with_none(tmp_path):
+    fours, mixed = wound(4, 4), wound(1 + 1, 3)
+    shown = [row([fours, WEIGHED, E], GOOD, tmp_path), row([mixed, MIXED, E], GOOD, tmp_path)]
+    opened = [row([H, WEIGHED, E], GOOD, tmp_path), row([fours, MIXED, E], GOOD, tmp_path)]
+    assert all(k == "SHOWN" for k, _ in shown) and all(k == "NOT SHOWN" for k, _ in opened)
+    unwound = {**H, "trains": [TRAINS[0], without(TRAINS[1], "winding")]}
+    elsewhere = click(1, 0, [hold(1, (7, 4), (3, 2))], [hold(1 + 1, (0, 4))])  # laid into train 2
+    lines = [[unwound, TAKE, E], [H, elsewhere, E]]
+    assert all(row(x, GOOD, tmp_path) == ("NOT READ", UNWOUND) for x in lines)
+    no_train = row([{**H, "trains": []}, OPENED, E], GOOD, tmp_path)
+    assert no_train == ("NOT READ", f"the header names no train; {UNWOUND}")
 
 
 OPEN_AT_A_BOUND = {  # a whole click whose books open at one side of a bound, each train booked once
@@ -281,9 +305,9 @@ OPEN_AT_A_BOUND = {  # a whole click whose books open at one side of a bound, ea
 @pytest.mark.parametrize("name", sorted(OPEN_AT_A_BOUND))
 def test_the_books_open_at_each_side_of_their_bounds(tmp_path, name):
     both_ends = {**PAIR, "q": 5 + 5}  # a pair's q counts the windings that left at both its ends
-    assert books.closes(both_ends) and books.closes({**TAKE, "q": 1 + 1 + 1})
-    assert not books.closes(OPEN_AT_A_BOUND[name])
-    assert row([H, OPEN_AT_A_BOUND[name], E], GOOD, tmp_path)[0] == "NOT SHOWN"
+    assert books.closes(both_ends, WOUND) and books.closes({**TAKE, "q": 1 + 1 + 1}, WOUND)
+    assert not books.closes(OPEN_AT_A_BOUND[name], WOUND)
+    assert row([THIRD, OPEN_AT_A_BOUND[name], E], GOOD, tmp_path)[0] == "NOT SHOWN"
     assert row([H, both_ends, E], PAIRED, tmp_path)[0] == "SHOWN"
 
 
