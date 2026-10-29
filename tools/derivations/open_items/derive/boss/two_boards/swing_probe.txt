@@ -1,0 +1,4 @@
+exact, each strength's odds (weak, medium, strong): forward (4/7, 2/7, 1/7); two boards (4/7, 2/7, 1/7); imposed (0, 1/2, 1/2)
+exact, the survival per bond per swing: forward 2/7; two boards 2/7; imposed 1 (set by hand)
+   forward: the largest composite per swing (mean of 400 seeds):   3.4   5.8   9.0  12.8  17.3  23.2  30.6  39.6  50.1  60.3  70.9  79.0
+            composites of 4 or more per swing:              1.6   5.7   9.0  10.1   9.7   8.2   6.7   5.2   3.9   3.0   2.3   1.8
