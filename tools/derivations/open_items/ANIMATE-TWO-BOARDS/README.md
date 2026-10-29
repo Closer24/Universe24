@@ -136,7 +136,7 @@ The owner's question to Animate, 2026-10-29, 09:5x UTC (in Hebrew; in translatio
 - **The scheduler on a full board:** many pairs, chains and composites, each split click's settings found before its source's draw, by local passes and with no selection. The toy has one pair.
 - **Loops beyond one step:** a machine whose choice depends on its own outcome through many clicks, with the cause's order read along the forward board.
 - **The cost:** the backward board's integers per Node-clock and the passes; the record's G5 (the birth) and G6 (the backward sizes; under B, the settings carried back).
-- **The probe on the engine as built** (the Boss's), with the product draw and the switch in the universe file (decision 29): S, g2, Born, three parties with no signal, and a loop. Born with the switch off.
+- **The probe on the engine as built** (the Boss's), with the product draw (decision 29; its switch retired by decision 33, every Node-clock doubled): S, g2, Born, three parties with no signal, and a loop. Born with the backward dial held silent, decision 33's test.
 - **The aim's lean** (David's probe, part 5): a split leaning toward a composite has two histories at some digits, and Born holds when the fewer is kept (his rule). Born's row 55 on the forward record reads whether the lean leaks.
 
 ## Method: addressed

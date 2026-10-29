@@ -176,13 +176,16 @@ The owner's word to the Boss of 08:5x UTC (6492382830, in translation): "Let the
 | gravity | the forward board (7b: every reading row's W at the time gear's counts) | none of its own; read through the clicks of bobs and light | rows 10 and 30, the dilation (with G7); rows 11 and 29, the redshift; rows 12 and 31, the delay; rows 13 and 33, free fall; row 32; rows 45 and 53 |
 | binding | the forward board | a whole click laying a composite train (a fusion) | row 46, reading 1 (the depth laid, with G2); rows 27, 76 and 77; row 15, the books per train |
 | the bang | the time gear's swing, alike on both boards | none (the spring at the top, the source at the bottom) | rows 1, 1b, 46 and 58 to 60, from the load (G1); rows 14, 34 and 61, the horizon; row 63 |
-| Born | the forward board, the future silent (sigma_b = 1) | the split click | row 55 (the counts against sigma_f); rows 18 and 25 (the draw over the products, with G6 where the switch is on) |
+| Born | the forward board, the future silent (sigma_b = 1) | the split click | row 55 (the counts against sigma_f); rows 18 and 25 (the draw over the products, with G6) |
 | Grangier (g2 = 0) | the source's reach: the word back to the source on two boards | the split click | one quantum written once, at one absorber (G5) |
-| Bell, two and three parties | two boards (the zigzag through the birth), the switch on | the split clicks at each end | rows 56 and 57 through G5; each party's marginal against the other parties' settings |
+| Bell, two and three parties | two boards (the zigzag through the birth) | the split clicks at each end | rows 56 and 57 through G5; each party's marginal against the other parties' settings |
 | the arrow | the forward board's records alone | every click that writes | row 18 (the run back undoing every click, the rooms' bits never falling forward); rows 25, 62 and 1c |
 | complexity's growth | the forward board's ratchet (the binding click, the bottom's sieve, the records passing) | the whole click that binds; the split clicks' variation | row 46 (readings 1 to 3: the kinds, the depth laid and held, the copies); row 8; the record's length per bang (draft K, K4) |
 
-- **The switch** (decision 29): the header names the backward board's bit. The decoder reads it, and reads G6 where it is on; with it off, back is 1 at every part and rows 18 and 25 read the draw over sigma_f alone.
+- **No switch** (decision 33, the owner's word to the Boss of 2026-10-29, 10:3x UTC; it retires decision 29's switch, which this line first read): every Node-clock is doubled, and the header names no switch. So:
+  - the decoder reads G6 on every record the runner writes;
+  - a record written with the backward dial held silent (decision 33's test of the engine: sigma_b alike at every part) reads the draw over sigma_f alone, Born, and every count of the first aim as the forward board alone gives it;
+  - a converted record of the head carries no G6 and reads back 1 at every part, as schema 1.1 does.
 - **One board or two, from the decoder's side:**
   - every reading above is a reading of the forward record either way;
   - with two boards, three of them need G5 or G6 (Grangier, Bell, and the draw's check);
