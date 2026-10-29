@@ -116,7 +116,28 @@ Decision 38 asks it of Animate, and G1 of the Boss's plan takes it (6497161018).
 - **Checked in a scratch worktree:** the decoder's 130 tests pass; ruff check and format hold; the decoder's 204 mutants are all killed (mutants.txt in the patch), the kinds' order mutant now swapping the whole click and the rate line.
 - **Left to the writer** (the Boss's): engine/__init__.py's docstring names the turnover among the engine's parts, and algebra/carry.py's names the fine tooth reflected at it. Both are the engine's words, not the record's.
 
-## 6. What does not follow
+## 6. The measurement's rules: proper time and invariants (D6 to D8)
+
+The owner's text to the Boss (space and time are a four-dimensional spacetime's shadows, the interval's minus sign is light's limit) and his word, "This is also important for the decoder, no?", entered by the Boss as D6 to D8 (6499708355, 6499774896). The reader's code is owed at G5 (decision 32).
+
+1. **Proper time, never the board's tick.** As built, decoder/clocks.py counts beats from the rate lines, which are the great clock's ticks: a gap.
+   - A clock's proper time between two of its clicks is read twice, and the two agree:
+     - (i) its own count, the face's tooth at each click (K4), followed through one lay's clicks (G5);
+     - (ii) the sum of the rate gear's count, N, along its path, from G1's lines (or G7 on each click).
+   - A disagreement is named, never averaged.
+   - The round is order alone: which click is before which, and the cone from the round, the site and light's speed. It is never a duration.
+2. **Invariants only:** proper counts; rest beats (E^2 - (c p)^2 of a clock's booked clicks, part 4); intervals between clicks, from proper counts and the cone.
+   - A reading that compares rounds as times is refused by name: "compares board ticks, no reading".
+   - Every row that reads a duration (the bang's length, q per era, the gravity rows 10, 12, 13, 30 and 45) reads it from proper counts.
+3. **The twin reading:** two clocks whose clicks share a first and a last event (a meeting at one Node-clock at one round), their own counts between the two compared.
+   - It fails where the counts are equal while the paths differ, or where they differ by other than the lapse and the motion.
+   - Guards: G5, and G7 or G1.
+4. **The cone check on every record:** the no-signal reading of B's record, run on every record.
+   - For every party, its outcome's law against every setting outside its past cone, binned by that setting.
+   - Equal laws within the Poisson spread, or the record is named as signalling, with the pair named.
+   - Under the slot fix (a full slot refuses after the draw) it holds on hand_slot's two boards exactly. Under "a full slot weighs 0" it fails there (11/29 against 107/174; 2/5 against 10/19, ANIMATE-SCHEDULER part 5).
+
+## 7. What does not follow
 
 - **The writer:** the runner, which writes every line; and stage 9, which makes the clicks.
 - **A mass, on any record so far:** no record holds a train the clicks built. Whether the act builds one from the seed is decision 37's decisive question (David's ladder).
