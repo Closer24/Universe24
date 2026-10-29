@@ -725,6 +725,17 @@ On the owner's word to David: "a generic solution for everything". This is David
       - Sofer: the law's line 35, and the gate refusing a pinion below den in any file (on the owner's word);
       - the Boss: when the build resumes, the files' format without a mass, and the probes and the tests on the seed alone.
 
+38. **(al) The Node-clock is one generic, simple node: every exception, restriction, block and fake out; an added family is allowed where it is generic. APPROVED (the owner's words to the Boss of 2026-10-29, 12:4x UTC, in Hebrew; in translation: "There is no problem with another family, because it is generic. But note that all the exclusions and restrictions ruin it for us, because then the generic law cannot be reached. When you put in a generic law it runs into all kinds of restrictions and blocks; that is why we throw out blocks and restrictions, there is none of that. All the fakes the writer has now found, throw them all out. The node is a generic and simple node. Confirm that you understood."; on the Boss's confirmation, "Approved. Reach a coherent picture within an hour, and go on to close the engine with the final picture.").**
+    - **The rule:** one gear type; rows that differ only by data arrays made by one formula from the row's own numbers; one pass of the tick; every row reading the ruler at its own count; no row found by position, no mask, no clamp, no per-row constant and no second mode. An engineering problem meets the generic form, never a block: the implicit step by the volume coordinate or a monotone search, and the ruler's end as a variable of the files.
+    - **Out, all of them:** the fourteen places of the keeper's reading (BIG_PICTURE.md 4.1, twelve standing after decision 36) and the Boss's sweep (6496744667, item 4).
+    - **An added family is allowed where it is generic:** the same gear type, the same law, the same clock and ruler. So the great clock may be the whole metric, one family per part the 24 splits it into (the lapse and the ruler, A1; the shift, T1; the shears, E + T2), each with the one law and its own part of the one tensor (the Boss's road (II), 6496744667); and a rate family, the Higgs's place, may stand if the clicks need it (the Boss's probe).
+    - **The order:** a coherent picture within the hour (by 13:4x UTC); decision 32's three fresh reviewers read it at once; then the engine is closed to the final picture.
+    - **Owed:**
+      - the Boss: the generic Node-clock beside the engine with the uniformity test (the time gear laid as an ordinary train gives the same record bit for bit, and permuted trains permute the record and nothing else), then the engine;
+      - David: which of the time gear's stretch, kick and drive teeth are the clock's own by a symmetry, and road (II) in clocks;
+      - Sofer: the picture to the rule (4.1's twelve out, the great clock as the whole metric) and the question of a two spelt 1 + 1;
+      - Animate: the record without the turnover line.
+
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
 ## 15. The reviewers, the approvals and where it stands
