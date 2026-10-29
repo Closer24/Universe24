@@ -12,6 +12,7 @@ from __future__ import annotations
 import contextlib
 import importlib.util
 import io
+import json
 import os
 import subprocess
 import sys
@@ -1638,6 +1639,142 @@ def key_cases() -> tuple[int, int]:
     return made, parted
 
 
+def declare_cases() -> tuple[int, int]:
+    """The rule DECLARE, a refusal of a family, a train or a coupling that a push adds over its merge base: what it reads in a universe
+    file and in a dict of a train, the seed that declares no mass, the files it reads, and the push through git (a new declaration
+    refused, a reformat quiet, a rename quiet, a removal quiet, a changed number and a doubled name refused, the owner's list); the
+    cases made and those that parted."""
+    made = parted = 0
+
+    def check(label: str, ok: bool) -> None:
+        nonlocal made, parted
+        made += 1
+        parted += not ok
+        print(f"{'ok     ' if ok else 'PARTED '} the declarations' rule: {label}")
+
+    def universe(den: int = 9, **lists: object) -> str:
+        return json.dumps({"integers": {"den": den}, **lists}, indent=1)
+
+    check("DECLARE is a refusal", gate.RULES["DECLARE"][0] == "BLOCK")
+    electron = {"name": "electron", "pair": [4000, 6000]}
+    in_json = (
+        ("a family with its pair", universe(families=[electron]), {"family electron [4000, 6000]"}),
+        ("a train with its pinion", universe(trains=[{"name": "dust", "pinion": 8}]), {"train dust 8"}),
+        ("a train at pinion = den is the seed and declares no mass", universe(trains=[{"name": "light", "pinion": 9, "sine": 0}]), set()),
+        ("a train at a pinion that is not this file's den is no seed", universe(den=10, trains=[{"name": "light", "pinion": 9}]), {"train light 9"}),
+        ("a train with no number", universe(trains=[{"name": "x"}]), {"train x -"}),
+        ("a coupling row", universe(couplings=[{"train": "a", "strength": 3}]), {'coupling {"strength": 3, "train": "a"}'}),
+        ("an entry with no name", universe(families=[{"pair": [1, 2]}]), set()),
+        ("a list that is no list", universe(families={"name": "x"}), set()),
+        ("a file with none of the lists", universe(), set()),
+        ("a file that is a list", "[1, 2]", set()),
+        ("a file that is no JSON", "{ nope", set()),
+    )
+    for label, text, want in in_json:
+        check(f"in a universe file, {label}", {h.detail for h in gate.declared_in("examples/w/universe.json", text)} == want)
+    in_python = (
+        ("a train dict with a pinion", 'T = {"name": "dust", "kinds": ["A1"], "pinion": den - den // 97}\n', {"train dust den - den // 97"}),
+        ("a reformatted pinion is the same declaration", 'T = {"name": "dust", "pinion": den-den//97}\n', {"train dust den - den // 97"}),
+        ("a pinion spelt DEN is the seed", 'T = {"name": "light", "pinion": DEN}\n', set()),
+        ("a dict with no pinion", 'T = {"name": "light", "kinds": ["A1"]}\n', set()),
+        ("a name that is no string literal", 'T = {"name": LABEL, "pinion": 3}\n', set()),
+        ("a dict that unpacks another", 'T = {**base, "name": "dust", "pinion": 3}\n', {"train dust 3"}),
+        ("a file that does not parse", "def (:\n", set()),
+    )
+    for label, source, want in in_python:
+        check(f"in a Python file, {label}", {h.detail for h in gate.declared_in("tests/test_w.py", source)} == want)
+    reads = (
+        ("examples/w/universe.json", True),
+        ("reader/worlds/universe_toy.json", True),
+        ("tests/test_w.py", True),
+        ("tools/derivations/open_items/derive/boss/tsym/tsym.py", True),
+        ("src/tensor24/runner/files.py", True),
+        ("docs/BIG_PICTURE.md", False),
+        ("examples/w/notes.txt", False),
+        ("papers/w/refs.json", False),
+        ("venv314/lib/w.py", False),
+        ("tools/venv314/w.py", False),
+        ("examples/w/__pycache__/w.py", False),
+        ("w.py", False),
+    )
+    for name, want in reads:
+        check(f"{name} is {'read' if want else 'not read'}", gate.declared_path(name) == want)
+    saved = gate.allowance
+    gate.allowance = lambda repo=gate.REPO: Counter()
+    try:
+        with without_git_variables(), tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            git = ["git", "-C", scratch, "-c", "user.name=selftest", "-c", "user.email=selftest@example.invalid"]
+
+            def run(*args: str) -> str:
+                return subprocess.run([*git, *args], capture_output=True, text=True, check=True).stdout.strip()
+
+            def commit(files: dict[str, str | None]) -> str:
+                for name, text in files.items():
+                    if text is None:
+                        (root / name).unlink()
+                        continue
+                    (root / name).parent.mkdir(parents=True, exist_ok=True)
+                    (root / name).write_text(text, encoding="utf-8")
+                run("add", "-A")
+                run("commit", "-q", "-m", "selftest")
+                return run("rev-parse", "HEAD")
+
+            def read(rev: str) -> tuple[int, str]:
+                out = io.StringIO()
+                return gate.check_revision(root, rev, base, out), out.getvalue()
+
+            def branch(name: str, files: dict[str, str | None]) -> str:
+                run("checkout", "-q", "-B", name, base)
+                return commit(files)
+
+            world = "examples/w/universe.json"
+            run("init", "-q")
+            held = universe(families=[electron])
+            base = commit({world: held, "README.md": "the base\n"})
+            neutron = {"name": "neutron", "pair": [-4800, 6000]}
+            status, text = read(branch("added", {world: universe(families=[electron, neutron])}))
+            check(
+                "a family a push adds is refused, named with its pair",
+                status == 1 and "REFUSED DECLARE" in text and "family neutron [-4800, 6000]" in text and "refusals 1" in text,
+            )
+            status, text = read(branch("reformatted", {world: json.dumps(json.loads(held))}))
+            check("the same declarations written another way are quiet", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("number", {world: universe(families=[{"name": "electron", "pair": [3600, 6000]}])}))
+            check("a changed pair is a new declaration", status == 1 and "family electron [3600, 6000]" in text)
+            status, text = read(branch("doubled", {world: universe(families=[electron, electron])}))
+            check("a name declared twice in one file is one more than the base's", status == 1 and "REFUSED DECLARE" in text)
+            status, text = read(branch("removed", {world: universe(families=[])}))
+            check("a declaration removed is quiet", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("renamed", {world: None, "examples/w2/universe.json": held}))
+            check("the same file moved is no new declaration", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("train", {"tests/test_w.py": 'T = {"name": "dust", "pinion": den - den // 97}\n'}))
+            check("a train a test adds is refused", status == 1 and "train dust den - den // 97" in text)
+            status, text = read(branch("seed", {"tests/test_w.py": 'T = {"name": "light", "pinion": DEN}\n'}))
+            check("a train at pinion = den in a test is the seed, quiet", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("seed_file", {"examples/w3/universe.json": universe(trains=[{"name": "light", "pinion": 9}])}))
+            check("a new universe file with the seed train alone is quiet", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("probe", {"tools/derivations/open_items/derive/p/probe.py": 'T = {"name": "matter", "pinion": DEN - DEN // 50}\n'}))
+            check("a train a probe adds under tools is refused", status == 1 and "train matter DEN - DEN // 50" in text)
+            status, text = read(branch("coupling", {"examples/w4/universe.json": universe(couplings=[{"train": "a", "strength": 3}])}))
+            check("a coupling row a push adds is refused", status == 1 and "coupling" in text and "REFUSED DECLARE" in text)
+            status, text = read(branch("outside", {"papers/w/universe.json": universe(families=[neutron])}))
+            check("a universe file outside the scopes is not read", status == 0 and "DECLARE" not in text)
+            status, text = read(branch("docs", {"docs/a.md": "a line\n"}))
+            check("a push that changes a document alone is quiet and runs nothing", status == 0 and text == "")
+            status, text = read(branch("code", {"tests/test_w.py": "x = 1\n"}))
+            check("a push that changes code alone gives the code rules' answer and no declaration", "DECLARE" not in text)
+            gate.allowance = lambda repo=gate.REPO: Counter({("DECLARE", world, "family neutron [-4800, 6000]"): 1})
+            status, text = read(branch("allowed", {world: universe(families=[electron, neutron])}))
+            check("a declaration the owner's list holds is quiet", status == 0 and "DECLARE" not in text)
+            proton = {"name": "proton", "pair": [0, 6000]}
+            status, text = read(branch("allowed_other", {world: universe(families=[electron, proton])}))
+            check("a declaration the owner's list does not hold is refused beside it", status == 1 and "family proton [0, 6000]" in text)
+    finally:
+        gate.allowance = saved
+    return made, parted
+
+
 # the index cast in the engine's closed folders: no refusal, one note of INDEX on each use (a case of CASES names the rules it tests and lets
 # a hit of another stand beside it, so a refusal that should not be there would pass unseen; these are read for the refusal as well)
 INDEX_CASES: list[tuple[str, str, str, int, int]] = [
@@ -1907,8 +2044,10 @@ def main() -> int:
     parted += tool_parted
     key_total, key_parted = key_cases()
     parted += key_parted
+    declare_total, declare_parted = declare_cases()
+    parted += declare_parted
     print(
-        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + 2} cases, {parted} parted"
+        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + declare_total + 2} cases, {parted} parted"
     )
     return 1 if parted else 0
 

@@ -21,6 +21,10 @@ scribe_scan_keys.json, read from his published branch as the allowance is.
   python scribe_scan.py --install              the git pre-push hook of this clone
   python scribe_scan.py --hook                 git's pre-push call (the refs on stdin); --claude-hook: Claude Code's call before `git push`
 
+The rule DECLARE reads data besides code: the families, trains and couplings a universe file names (.json) and the dicts of a train written with a name and a
+pinion (.py), under examples, reader, tests, tools and src, in the files a push changes alone; a declaration a push adds over its merge base is a refusal unless the
+owner's list holds it (decision 35: nothing is declared), and a train at pinion = den is the seed and no declaration.
+
 Exit status 1 on a refusal, 0 otherwise (2: the call itself is wrong). Read with the repository's own interpreter, Python 3.14
 (venv314/bin/python); an older one runs the script again under it.
 """
@@ -62,6 +66,11 @@ KEYS_READ = HERE / "scribe_scan_keys.json"  # the keys of the files' format that
 BASES = ("origin/engine-5.0-test", "origin/main")
 FLOOR = "526a5666d"  # the engine head the list that stands was taken at: no base is older (a pull request into main is read against it)
 PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by Sofer alone
+# the rule DECLARE reads the files a universe or a world is declared in, besides the code
+DECLARED_SCOPES = ("examples", "reader", "tests", "tools", "src")
+DECLARED_SKIP = frozenset({".git", "node_modules", "venv314", "__pycache__"})
+DECLARED_LISTS = (("families", "family"), ("trains", "train"), ("couplings", "coupling"))  # the lists of a universe file that declare
+DECLARED_GEAR = ("pinion", "pair", "ratio")  # the key that carries the number a declaration stands for, the first an entry holds
 # the gate's own files: a push that changes one needs the owner's word, and says so
 OWN = (
     "tools/derivations/open_items/scribe_scan.py",
@@ -177,6 +186,9 @@ RULES: dict[str, tuple[str, str]] = {
     "ALLOW": (
         "BLOCK",
         "not on the Node-clock's closed list: its only operations are addition, multiplication and Rule3's carry, on whole numbers (the owner's idea of 2026-10-28, 15:0x UTC; law: The Node-clock is one act; The Node-clock and the Mesh are generic; there is no if), so a construct, an operator, a call or an array not made with dtype=object that the list does not name is refused in algebra/, engine/ and readings/, and in runner/board.py against a list of its own (numpy's arange and stack, the index dtype np.intp, list displays); the architect's additions go through Sofer by a ledger entry that names the law line each serves (the count per file may not rise)",
+    ),    "DECLARE": (
+        "BLOCK",
+        "a family, a train or a coupling named in a universe file or in a world's code, with its pair, pinion or strength: no particle, mass or coupling is declared in any file (law: Nothing is declared: every particle appears by itself in the clicks; the owner's word of 2026-10-29, 10:54, decision 35); a train at pinion = den is the seed and declares no mass; the declarations that stand are on the owner's list (scribe_scan_allowed.json) as named breaches until the clicks build the particles, and a new one, or a changed number, is refused",
     ),
 }
 
@@ -1523,6 +1535,167 @@ def delta_line(before: list[Hit], after: list[Hit]) -> str:
     return "counts from the base: " + (", ".join(moved_rules) if moved_rules else "unchanged")
 
 
+def declared_path(path: str) -> bool:
+    """Whether the rule DECLARE reads a path: a .json or .py file under the declared scopes, outside an environment or a cache."""
+    parts = path.split("/")
+    return path.endswith((".json", ".py")) and parts[0] in DECLARED_SCOPES and not DECLARED_SKIP & set(parts)
+
+
+def line_of(text: str, word: str) -> int:
+    """The line a quoted name first stands on in a file's text, 1 where it is not found (no part of a hit's key)."""
+    found = text.find(f'"{word}"')
+    return text.count("\n", 0, found) + 1 if found >= 0 else 1
+
+
+def declared_json(rel: str, text: str) -> list[Hit]:
+    """The families, trains and couplings a universe file names, each with the number it carries as the file writes it; a train at
+    pinion = den, the file's own integer, is the seed and declares no mass."""
+    try:
+        data = json.loads(text)
+    except ValueError:
+        return []
+    if not isinstance(data, dict):
+        return []
+    integers = data.get("integers")
+    den = integers.get("den") if isinstance(integers, dict) else None
+    found: list[Hit] = []
+    for key, kind in DECLARED_LISTS:
+        entries = data.get(key)
+        for entry in entries if isinstance(entries, list) else ():
+            if not isinstance(entry, dict):
+                continue
+            if kind == "coupling":
+                found.append(Hit("DECLARE", rel, 1, f"coupling {json.dumps(entry, sort_keys=True)}"))
+                continue
+            name = entry.get("name")
+            if not isinstance(name, str):
+                continue
+            if kind == "train" and den is not None and entry.get("pinion") == den:
+                continue
+            number = next((json.dumps(entry[g], sort_keys=True) for g in DECLARED_GEAR if g in entry), "-")
+            found.append(Hit("DECLARE", rel, line_of(text, name), f"{kind} {name} {number}"))
+    return found
+
+
+def declared_python(rel: str, text: str) -> list[Hit]:
+    """The trains a world's code writes as a dict with a name and a pinion, the pinion as the line writes it (unparsed, so that a
+    reformatted line is the same declaration); a pinion spelt den is the seed."""
+    try:
+        tree = ast.parse(text)
+    except (SyntaxError, ValueError):
+        return []
+    found: list[Hit] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.Dict):
+            continue
+        fields = {
+            k.value: v
+            for k, v in zip(node.keys, node.values, strict=True)
+            if isinstance(k, ast.Constant) and isinstance(k.value, str)
+        }
+        name = fields.get("name")
+        if isinstance(name, ast.Constant) and isinstance(name.value, str) and "pinion" in fields:
+            number = ast.unparse(fields["pinion"])
+            if number.lower() != "den":
+                found.append(Hit("DECLARE", rel, node.lineno, f"train {name.value} {number}", "", node.col_offset))
+    return found
+
+
+def declared_in(rel: str, text: str) -> list[Hit]:
+    """The declarations one file holds: a universe file's lists, or a Python file's train dicts."""
+    if rel.endswith(".json"):
+        return declared_json(rel, text)
+    return declared_python(rel, text) if rel.endswith(".py") else []
+
+
+def declared_hits(sources: dict[str, str]) -> list[Hit]:
+    return [hit for rel, text in sorted(sources.items()) for hit in declared_in(rel, text)]
+
+
+def declared_sources_in(root: Path) -> dict[str, str]:
+    """Every file the rule reads in a working tree (the audit's reading)."""
+    found: dict[str, str] = {}
+    for scope in DECLARED_SCOPES:
+        if not (root / scope).is_dir():
+            continue
+        for path in sorted((root / scope).rglob("*")):
+            rel = path.relative_to(root).as_posix()
+            if path.is_file() and declared_path(rel):
+                found[rel] = path.read_text(encoding="utf-8", errors="replace")
+    return found
+
+
+def blobs_at(repo: Path, rev: str, paths: list[str]) -> dict[str, str]:
+    """The text of each path at a revision, read from git in one call; a path the revision does not hold is left out."""
+    if not paths:
+        return {}
+    payload = git(repo, "cat-file", "--batch", stdin="".join(f"{rev}:{p}\n" for p in paths).encode()).stdout
+    stream = io.BytesIO(payload)
+    found: dict[str, str] = {}
+    for path in paths:
+        header = stream.readline().split()
+        if len(header) != 3:
+            continue
+        data = stream.read(int(header[2]))
+        stream.read(1)
+        if header[1] == b"blob":
+            found[path] = data.decode("utf-8", errors="replace")
+    return found
+
+
+def declared_sources_at(repo: Path, rev: str) -> dict[str, str]:
+    """Every file the rule reads at a revision (the audit's reading)."""
+    listing = git(repo, "ls-tree", "-r", "--name-only", rev, "--", *DECLARED_SCOPES).stdout.decode().splitlines()
+    return blobs_at(repo, rev, [p for p in listing if declared_path(p)])
+
+
+def changed_declared(
+    repo: Path, *revs: str, cached: bool = False, untracked: bool = False
+) -> list[tuple[str, str, str]]:
+    """Every file under the declared scopes that differs between two revisions, the index and a revision, or a revision and the working
+    tree: (status, old path, new path), a rename read as one and a deleted file left out; `untracked` adds the files git does not track."""
+    flags = ["diff", "-M", "--name-status", *(["--cached"] if cached else [])]
+    found: list[tuple[str, str, str]] = []
+    for line in git(repo, *flags, *revs, "--", *DECLARED_SCOPES).stdout.decode().splitlines():
+        parts = line.split("\t")
+        if parts[0][0] != "D" and declared_path(parts[-1]):
+            found.append((parts[0][0], parts[1], parts[-1]))
+    if untracked:
+        listing = git(repo, "ls-files", "--others", "--exclude-standard", "--", *DECLARED_SCOPES).stdout.decode()
+        found += [("A", p, p) for p in listing.splitlines() if declared_path(p)]
+    return found
+
+
+def declared_new(
+    repo: Path, base: str, head: str | None = None, root: Path | None = None, cached: bool = False
+) -> list[Hit]:
+    """The declarations a push adds over its merge base, in the files it changes alone (a declaration is read from its own file, so a
+    file that did not change holds what it held): above what the base held in the same file (a rename is no new hit), less what the
+    owner's list allows. The head is a revision, else the working tree `root` (with the index when `cached`)."""
+    changes = changed_declared(repo, base, *([head] if head else []), cached=cached, untracked=not head and not cached)
+    if not changes:
+        return []
+    olds = blobs_at(repo, base, [old for status, old, _ in changes if status != "A"])
+    if head:
+        news = blobs_at(repo, head, [new for _, _, new in changes])
+    else:
+        assert root is not None
+        news = {
+            new: (root / new).read_text(encoding="utf-8", errors="replace")
+            for _, _, new in changes
+            if (root / new).is_file()
+        }
+    after: list[Hit] = []
+    stands: Counter[tuple[str, str, str]] = Counter()
+    for status, old, new in changes:
+        if new not in news:
+            continue
+        after += declared_in(new, news[new])
+        if status != "A" and old in olds:
+            stands.update((h.rule, new, h.detail) for h in declared_in(old, olds[old]))
+    return above(after, stands)
+
+
 def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout) -> int:
     """The tree at `rev` against its merge base: 1 on a refusal."""
     commit = resolve(repo, rev)
@@ -1531,14 +1704,21 @@ def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout
         return 0
     name, mb = merge_base(repo, base, commit)
     touched = git(repo, "diff", "--name-only", mb, commit, "--", *SCOPES, TOOLS_SPEC, *OWN).stdout.decode().split()
-    if not touched:
+    declared = declared_new(repo, mb, commit)
+    if not touched and not declared:
         return 0
-    before, after = hits_of(sources_at(repo, mb)), hits_of(sources_at(repo, commit))
-    stands = stood(before, moved(repo, mb, commit))
-    new = above(after, stands)
+    before: list[Hit] = []
+    after: list[Hit] = []
+    new: list[Hit] = []
+    if touched:
+        before, after = hits_of(sources_at(repo, mb)), hits_of(sources_at(repo, commit))
+        stands = stood(before, moved(repo, mb, commit))
+        new = above(after, stands)
+    new = new + declared
     own = [p for p in touched if p in OWN]
     status = report(f"{commit[:9]}", new, f"its merge base {mb[:9]} with {name}", out) if new else 0
-    print(f"  {delta_line(before, after)}", file=out)
+    if touched:
+        print(f"  {delta_line(before, after)}", file=out)
     if own:
         print(
             f"  note: this push changes the gate's own files {own}: the owner's word is needed for it",
@@ -1569,7 +1749,7 @@ def check_patch(repo: Path, patch: Path, base: str | None) -> int:
         git(tree, "add", "-A")
         before, after = hits_of(sources_at(repo, commit)), hits_of(sources_in(tree))
         stands = stood(before, moved(tree, commit, cached=True))
-        new = above(after, stands)
+        new = above(after, stands) + declared_new(tree, commit, root=tree, cached=True)
     base_label = name if name == commit[:9] else f"{name} ({commit[:9]})"
     status = (
         report(f"the patch {patch.name}", new, base_label) if new else _clean(patch.name, base_label)
@@ -1776,8 +1956,9 @@ def main(argv: list[str]) -> int:
         print(f"written: {len(found)} hits in {len(sources)} modules")
         return 0
     if args.all:
-        summary(found) if args.summary else [
-            print(f"{h.tier:5s} {h.rule:7s} {h.rel}:{h.line}  {h.detail}") for h in found
+        listing = found + declared_hits(declared_sources_at(repo, rev) if by_rev else declared_sources_in(repo))
+        summary(listing) if args.summary else [
+            print(f"{h.tier:5s} {h.rule:7s} {h.rel}:{h.line}  {h.detail}") for h in listing
         ]
         return 0
     if args.baseline:
@@ -1789,6 +1970,7 @@ def main(argv: list[str]) -> int:
     name, mb = merge_base(repo, args.base, rev)
     moves = moved(repo, mb, rev) if by_rev else moved(repo, mb)
     new = above(found, stood(hits_of(sources_at(repo, mb)), moves))
+    new = new + (declared_new(repo, mb, rev) if by_rev else declared_new(repo, mb, root=repo))
     return (
         report(label, new, f"its merge base {mb[:9]} with {name}")
         if new
