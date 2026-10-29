@@ -1,13 +1,14 @@
-"""The converter: the head's records written in the record's schema 1.0 (Animate's tool, outside src/tensor24).
+"""The converter: the head's records written in the record's schema 1.1 (Animate's tool, outside src/tensor24).
 
 A head record is one JSON object: the world and the universe, the per-interval nodes (the sites turned and frozen, X and
-the winds) and the log (credit, birth, books, lay, refused). The schema 1.0 (src/tensor24/record/schema.py) is JSON Lines,
+the winds) and the log (credit, birth, books, lay, refused). The schema 1.1 (src/tensor24/record/schema.py) is JSON Lines,
 one object a line, in the order (round, kind, site, train): the header, then per round the whole clicks, the turnovers,
 the rate lines and the books, and the end. A credit is a whole click at one Node-clock; a birth a fitting, its two
 sites its children's, its books at the click where one end takes and in its ends where both take (a pair into light). No
 refusal is written, and a field the head lacks is left out, so a reading that needs it reads not read, the cause named;
-the header's runner names the record as converted. The head ticks every Node-clock once a round, so a click's count is
-its round. Its proper time, `proper`, is its dial summed: the ticks are its whole turns by the full rate (Rule3) and the
+the header's runner names the record as converted. A whole click's train is the train its windings left, the taken
+one, and its q is left out: the head counts its levels where its books count the amounts moved. The head ticks every
+Node-clock once a round, so a click's count is its round. Its proper time, `proper`, is its dial summed: the ticks are its whole turns by the full rate (Rule3) and the
 dial the remainder, and the rate lines are written so that they give exactly those ticks at each of its clicks (the head
 records no beat between clicks). Its books are written as holdings of the amounts it moved: the taken train's windings
 (amount, 0) and the laid train's (0, amount), the take's remainder as the taken holding's kept. Beside the record it
@@ -27,8 +28,8 @@ SPOKES = (
     (0, -1),
     (1, 1),
     (1, -1),
-    (2, 1),
-    (2, -1),
+    (1 + 1, 1),
+    (1 + 1, -1),
 )  # the six Spokes' order: +x, -x, +y, -y, +z, -z
 
 
@@ -84,7 +85,7 @@ def converted(head, engine):
         "kind": "header",
         "record": "tensor24",
         "major": 1,
-        "minor": 0,
+        "minor": 1,
         "engine": engine,
         "runner": "converted from the head's record",
         "files": [verbatim("universe", head["universe"]), verbatim("world", head["world"])],
@@ -107,8 +108,7 @@ def converted(head, engine):
         line = {"kind": "whole", "round": e["i"], "site": site(e["node"]), "count": e["i"], "dial": dial}
         if e["event"] == "credit":
             line.update(
-                train=e["line"],
-                q=e["levels"],
+                train=e["taken_line"],
                 winding=winding,
                 sweep=e["sense"],
                 push=e["dP_take"],
@@ -123,7 +123,6 @@ def converted(head, engine):
             pushes = e.get("dP_lay_ends", [[0, 0, 0] for _ in ends])
             line.update(
                 train=e["taken_row"],
-                q=e["levels"],
                 winding=winding,
                 push=e["dP_take"],
                 taken=[] if takes else [holding(e["taken_row"], (e["taken"], 0), kept(e))],
