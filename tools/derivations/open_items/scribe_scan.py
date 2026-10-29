@@ -1,4 +1,4 @@
-"""Sofer's gate on every package under src: the owner's rules as a script that refuses a push.
+"""Sofer's gate on every package under src and the new engine's tools: the owner's rules as a script that refuses a push.
 
 The owner's words of 2026-10-28, 04:3x, 04:5x and 05:0x UTC: no number in the code, whole numbers only, no cosine, sine or
 circularity that makes a phenomenon happen, no state beyond the Node-clock; "your laws should be in scripts, so that they cannot
@@ -49,6 +49,9 @@ from typing import Any
 PACKAGE = "src/event_universe"
 TESTS = "tests"
 SCOPES = ("src", TESTS)  # every package under src, and the tests for the rule PIN alone
+TOOLS = re.compile(r"tools/tensor24_[^/]*\.py")  # the new engine's tools, directly under tools/: the rules of TOOL_RULES alone
+TOOLS_SPEC = ":(glob)tools/tensor24_*.py"  # the same files as git's pathspec
+TOOL_RULES = frozenset({"NUMBER", "FLOAT"})  # no number beyond 0 and 1 and no float, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x)
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
@@ -69,11 +72,11 @@ OWN = (
 RULES: dict[str, tuple[str, str]] = {
     "NUMBER": (
         "BLOCK",
-        "a number beyond 0 and 1: numbers stand in the world, universe and setting files (law: No number in the code)",
+        "a number beyond 0 and 1: numbers stand in the world, universe and setting files, in the code and in tools/tensor24_*.py (law: No number in the code)",
     ),
     "FLOAT": (
         "BLOCK",
-        "a float, a true division, round() or pow(): whole numbers only (law: No float anywhere in the system)",
+        "a float, a true division, round() or pow(): whole numbers only, in the code and in tools/tensor24_*.py (law: No float anywhere in the system)",
     ),
     "IMPORT": (
         "BLOCK",
@@ -425,6 +428,15 @@ def dynamic_call(call: ast.Call) -> str:
     name = callee_name(call)
     return (
         name if name in DYNAMIC_CALLS or (name == "compile" and isinstance(call.func, ast.Name)) else ""
+    )
+
+
+def path_join(node: ast.BinOp | ast.AugAssign) -> bool:
+    """A division with a string operand: pathlib's / joining a path, which is a TypeError between numbers (a tool names its files so)."""
+    operands = (node.left, node.right) if isinstance(node, ast.BinOp) else (node.value,)
+    return any(
+        isinstance(o, ast.JoinedStr) or (isinstance(o, ast.Constant) and isinstance(o.value, str))
+        for o in operands
     )
 
 
@@ -838,7 +850,7 @@ def closed_list(tree: ast.Module, rel: str) -> list[tuple[ast.AST, str]]:
 
 
 def scan(rel: str, source: str) -> list[Hit]:
-    """Every hit of every rule in one module (rel: its path inside src/event_universe, another package's under its name; a test's under tests/, the rule PIN alone)."""
+    """Every hit of every rule in one module (rel: its path inside src/event_universe, another package's under its name; a test's under tests/, the rule PIN alone; a tool's under tools/, the rules NUMBER and FLOAT alone)."""
     tree = ast.parse(source)
     if rel.startswith(TESTS + "/"):
         return [
@@ -995,7 +1007,8 @@ def scan(rel: str, source: str) -> list[Hit]:
                 if value not in (0, 1):
                     add("NUMBER", node, repr(value))
         elif isinstance(node, ast.BinOp | ast.AugAssign) and isinstance(node.op, ast.Div):
-            add("FLOAT", node, "true division")
+            if not (TOOLS.fullmatch(rel) and path_join(node)):
+                add("FLOAT", node, "true division")
         elif (
             isinstance(node, ast.BinOp | ast.AugAssign)
             and not exempt(rel, "OPERATION")
@@ -1186,7 +1199,8 @@ def scan(rel: str, source: str) -> list[Hit]:
                     hits.append(Hit("TEXT", rel, token.start[0], "/".join(found_words)))
     except tokenize.TokenError:
         pass
-    return sorted(set(hits), key=lambda h: (h.rel, h.line, h.rule, h.detail))
+    kept = sorted(set(hits), key=lambda h: (h.rel, h.line, h.rule, h.detail))
+    return [h for h in kept if h.rule in TOOL_RULES] if TOOLS.fullmatch(rel) else kept
 
 
 def git(repo: Path, *args: str, stdin: bytes | None = None) -> subprocess.CompletedProcess[bytes]:
@@ -1207,9 +1221,12 @@ def rel_of(path: str) -> str:
 
 
 def sources_at(repo: Path, rev: str) -> dict[str, str]:
-    """The modules of every package under src and the tests at a revision, read from git without a checkout."""
+    """The modules of every package under src, the tests and the new engine's tools at a revision, read from git without a checkout."""
     listing = git(repo, "ls-tree", "-r", "--name-only", rev, "--", *SCOPES).stdout.decode().split("\n")
-    paths = [p for p in listing if p.endswith(".py")]
+    tools = [row.split("\t", 1) for row in git(repo, "ls-tree", rev, "tools/").stdout.decode().splitlines()]
+    paths = [p for p in listing if p.endswith(".py")] + [
+        path for kind, path in tools if kind.split()[1] == "blob" and TOOLS.fullmatch(path)
+    ]
     if not paths:
         return {}
     payload = git(
@@ -1225,12 +1242,14 @@ def sources_at(repo: Path, rev: str) -> dict[str, str]:
 
 
 def sources_in(root: Path) -> dict[str, str]:
-    return {
+    found = {
         rel_of(p.relative_to(root).as_posix()): p.read_text(encoding="utf-8")
         for scope in SCOPES
         if (root / scope).is_dir()
         for p in sorted((root / scope).rglob("*.py"))
     }
+    tools = [p for p in sorted((root / "tools").glob("tensor24_*.py")) if p.is_file()]
+    return found | {p.relative_to(root).as_posix(): p.read_text(encoding="utf-8") for p in tools}
 
 
 def hits_of(sources: dict[str, str]) -> list[Hit]:
@@ -1317,7 +1336,7 @@ def merge_base(repo: Path, base: str | None, tree_rev: str) -> tuple[str, str]:
 def moved(repo: Path, *revs: str, cached: bool = False) -> dict[str, str]:
     """The modules git reads as moved between the revisions (or the index and the revision), new path to old."""
     flags = ["diff", "-M", "--name-status", "--diff-filter=R", *(["--cached"] if cached else [])]
-    listing = git(repo, *flags, *revs, "--", *SCOPES).stdout.decode().splitlines()
+    listing = git(repo, *flags, *revs, "--", *SCOPES, TOOLS_SPEC).stdout.decode().splitlines()
     found: dict[str, str] = {}
     for line in listing:
         _status, old, new = line.split("\t")
@@ -1380,7 +1399,7 @@ def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout
         print(f"the gate cannot resolve {rev}", file=out)
         return 0
     name, mb = merge_base(repo, base, commit)
-    touched = git(repo, "diff", "--name-only", mb, commit, "--", *SCOPES, *OWN).stdout.decode().split()
+    touched = git(repo, "diff", "--name-only", mb, commit, "--", *SCOPES, TOOLS_SPEC, *OWN).stdout.decode().split()
     if not touched:
         return 0
     before, after = hits_of(sources_at(repo, mb)), hits_of(sources_at(repo, commit))

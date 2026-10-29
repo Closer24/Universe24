@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import contextlib
 import importlib.util
+import io
 import os
 import subprocess
 import sys
@@ -43,6 +44,8 @@ NEW_DECODER = "tensor24/decoder/rows.py"
 NEW_READING = "tensor24/readings/wind.py"
 NEW_MESH = "tensor24/engine/mesh.py"
 NEW_ROOT = "tensor24/__init__.py"
+TOOL_FILES = "tools/tensor24_files.py"
+TOOL_DECODE = "tools/tensor24_decode.py"
 # runner/board.py as the Boss wrote it at 0ff2ae0dc: the closed list's own vocabulary holds it clean
 BOARD_SOURCE = "\n".join(
     [
@@ -1270,6 +1273,36 @@ CASES += [
 ]
 
 
+# the new engine's tools, tools/tensor24_*.py (the Boss's word of 2026-10-28, 23:4x): the rules NUMBER and FLOAT alone, a path joined by
+# pathlib's slash no division; the scope itself (the two tools and no other file under tools/) is tested through git below
+CASES += [
+    ("a tool: the literal 2 as an index", TOOL_DECODE, "def f(argv):\n    return argv[2]\n", {"NUMBER": 1}),
+    ("a tool: the literals 2 and 3 in a membership test", TOOL_DECODE, "def f(argv):\n    return len(argv) not in (2, 3)\n", {"NUMBER": 2}),
+    ("a tool: a return of 2", TOOL_DECODE, "def f(argv):\n    return 2\n", {"NUMBER": 1}),
+    ("a tool: 3 in an equality", TOOL_FILES, "def f(argv):\n    return len(argv) == 3\n", {"NUMBER": 1}),
+    ("a tool: 2 spelt as 1 + 1 stands", TOOL_FILES, "def f(argv):\n    return 1 + 1\n", {}),
+    ("a tool: 0, 1 and -1 stand", TOOL_DECODE, "import sys\n\n\ndef f(argv):\n    sys.set_int_max_str_digits(0)\n    return argv[1], argv[-1:], 1 + 0\n", {}),
+    ("a tool: a float literal", TOOL_FILES, "def f():\n    return 0.5\n", {"FLOAT": 1, "NUMBER": 1}),
+    ("a tool: a complex literal", TOOL_FILES, "def f():\n    return 1j\n", {"FLOAT": 1, "NUMBER": 1}),
+    ("a tool: a true division of two names", TOOL_FILES, "def f(a, b):\n    return a / b\n", {"FLOAT": 1}),
+    ("a tool: a true division of 1 by a name", TOOL_FILES, "def f(a):\n    return 1 / a\n", {"FLOAT": 1}),
+    ("a tool: an augmented true division", TOOL_FILES, "def f(a, b):\n    a /= b\n    return a\n", {"FLOAT": 1}),
+    ("a tool: round()", TOOL_FILES, "def f(a):\n    return round(a)\n", {"FLOAT": 1}),
+    ("a tool: pow()", TOOL_FILES, "def f(a, b):\n    return pow(a, b)\n", {"FLOAT": 1}),
+    ("a tool: a path joined by pathlib's slash with strings", TOOL_FILES, 'from pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1] / "examples" / "tensor24"\n', {}),
+    ("a tool: a path joined with an f-string", TOOL_FILES, 'def f(root, name):\n    return root / f"{name}.json"\n', {}),
+    ("a tool: an augmented path join", TOOL_FILES, 'def f(root):\n    root /= "x"\n    return root\n', {}),
+    ("a slash with a string is still a division in the code", ENGINE, 'def f(root):\n    return root / "x"\n', {"FLOAT": 1}),
+    (
+        "a tool: no other rule reads it (math, a loop, a branch, a raise, a clamp, a power, a remainder, a circular name)",
+        TOOL_DECODE,
+        "import math\n\n\ndef sine(a, b):\n    for x in a:\n        if x < b:\n            raise ValueError(x)\n    return min(a, b) ** b, a % b\n",
+        {},
+    ),
+    ("a tool: a table of 0 and 1 is no table here", TOOL_DECODE, "X = (1, 0, 1)\n", {}),
+]
+
+
 IMPORTERS = {
     "root": NEW_ROOT,
     "algebra": NEW_RING,
@@ -1341,6 +1374,109 @@ def without_git_variables() -> Iterator[None]:
 
 def counts(rel: str, source: str) -> dict[str, int]:
     return dict(Counter(hit.rule for hit in gate.scan(rel, source)))
+
+
+TOOL_NAMES = (
+    ("tools/tensor24_files.py", True),
+    ("tools/tensor24_decode.py", True),
+    ("tools/tensor24_.py", True),
+    ("tools/tensor24.py", False),
+    ("tools/check.py", False),
+    ("tools/xtensor24_files.py", False),
+    ("tools/derivations/tensor24_files.py", False),
+    ("tools/tensor24_files.pyc", False),
+    ("tools/tensor24_files.py.orig", False),
+    ("tools/tensor24_dir/files.py", False),
+    ("src/tools/tensor24_files.py", False),
+)
+
+
+def tool_cases() -> tuple[int, int]:
+    """The tools' scope through git and through the working tree, each check a case: tools/tensor24_*.py read and no other file under
+    tools/, a push that changes a tool alone read, a tool moved no new hit; the cases made and those that parted."""
+    made = parted = 0
+
+    def check(label: str, ok: bool) -> None:
+        nonlocal made, parted
+        made += 1
+        parted += not ok
+        print(f"{'ok     ' if ok else 'PARTED '} the tools' scope: {label}")
+
+    for name, want in TOOL_NAMES:
+        check(f"{name} is {'a' if want else 'no'} tool", bool(gate.TOOLS.fullmatch(name)) == want)
+    with without_git_variables(), tempfile.TemporaryDirectory() as scratch:
+        root = Path(scratch)
+        git = ["git", "-C", scratch, "-c", "user.name=selftest", "-c", "user.email=selftest@example.invalid"]
+
+        def run(*args: str) -> str:
+            return subprocess.run([*git, *args], capture_output=True, text=True, check=True).stdout.strip()
+
+        def commit(files: dict[str, str]) -> str:
+            for name, text in files.items():
+                (root / name).parent.mkdir(parents=True, exist_ok=True)
+                (root / name).write_text(text, encoding="utf-8")
+            run("add", "-A")
+            run("commit", "-q", "-m", "selftest")
+            return run("rev-parse", "HEAD")
+
+        def read(rev: str) -> tuple[int, str]:
+            out = io.StringIO()
+            return gate.check_revision(root, rev, base, out), out.getvalue()
+
+        def branch(name: str, files: dict[str, str]) -> str:
+            run("checkout", "-q", "-B", name, base)
+            return commit(files)
+
+        run("init", "-q")
+        base = commit(
+            {
+                "src/tensor24/__init__.py": '"""A package."""\n',
+                "tools/tensor24_files.py": "def main():\n    return 1 + 1\n",
+                "tools/tensor24_old.py": "def main():\n    return 2\n",
+                "tools/tensor24_dir.py/inner.py": "def main():\n    return 3\n",
+                "tools/check.py": "def main():\n    return 5\n",
+                "tools/derivations/open_items/tensor24_probe.py": "def main():\n    return 7\n",
+            }
+        )
+        tools = {"tools/tensor24_files.py", "tools/tensor24_old.py"}
+        check(
+            "through git the two tools are read, and no other file under tools/ (a folder named for one included)",
+            {k for k in gate.sources_at(root, base) if k.startswith("tools/")} == tools,
+        )
+        check(
+            "in the working tree the same two",
+            {k for k in gate.sources_in(root) if k.startswith("tools/")} == tools,
+        )
+        check("the code under src is read beside them", "tensor24/__init__.py" in gate.sources_at(root, base))
+        status, text = read(branch("literal", {"tools/tensor24_files.py": "def main():\n    return 3\n"}))
+        check("a literal 3 in a tool is refused", status == 1 and "NUMBER" in text and "tools/tensor24_files.py" in text)
+        status, text = read(branch("float", {"tools/tensor24_new.py": "def main():\n    return 0.5\n"}))
+        check("a float in a new tool is refused", status == 1 and "FLOAT" in text and "tools/tensor24_new.py" in text)
+        status, text = read(
+            branch(
+                "other",
+                {
+                    "tools/check.py": "def main():\n    return 9\n",
+                    "tools/derivations/open_items/tensor24_probe.py": "def main():\n    return 11\n",
+                },
+            )
+        )
+        check("a push that changes no tool is not read", status == 0 and text == "")
+        status, _ = read(branch("stands", {"tools/tensor24_old.py": "# kept\ndef main():\n    return 2\n"}))
+        check("a literal that stands at the base stands", status == 0)
+        status, text = read(branch("more", {"tools/tensor24_old.py": "def main():\n    return 2 + 2\n"}))
+        check("a second literal above the one that stands is refused", status == 1 and "NUMBER" in text)
+        run("checkout", "-q", "-B", "moved", base)
+        run("mv", "tools/tensor24_old.py", "tools/tensor24_moved.py")
+        run("commit", "-q", "-m", "moved")
+        status, _ = read(run("rev-parse", "HEAD"))
+        check("a tool moved is no new hit", status == 0)
+        slash = 'from pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1] / "examples"\n'
+        status, _ = read(branch("slash", {"tools/tensor24_files.py": slash}))
+        check("a path joined by a slash is no division", status == 0)
+        status, text = read(branch("division", {"tools/tensor24_files.py": "def main(a, b):\n    return a / b\n"}))
+        check("a division of names in a tool is refused", status == 1 and "FLOAT" in text)
+    return made, parted
 
 
 def main() -> int:
@@ -1573,8 +1709,10 @@ def main() -> int:
         print(f"PARTED  a new package: a clamp and a number gave {len(fresh)} new, not 2")
     else:
         print("ok      a new package: every hit in it is new")
+    tool_total, tool_parted = tool_cases()
+    parted += tool_parted
     print(
-        f"selftest: {len(CASES) + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + 2} cases, {parted} parted"
+        f"selftest: {len(CASES) + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + 2} cases, {parted} parted"
     )
     return 1 if parted else 0
 
