@@ -77,7 +77,7 @@ For each item, one question: is it what the one act does by itself? The Node-clo
     - **In the act** (p17): the board's summed impulse moves by its summed kick less D times its summed count, exactly, the grips one per Mesh.
       - With no spring, the board's mean count moves by the mean source alone, so under matter it rises with no top: 9,090, 81,270 and 324,540 at ticks 100, 300 and 600.
       - With the clock's one notch it swings: its top at tick 70, its lows at 140, 280, 421 and 561, where 2 pi sqrt(Gamma / 2) = 140.5 at Gamma 1,000.
-    - **Its price in nature:** Yukawa's reach, about sqrt(Gamma / 6) Meshes with light at the step's edge. Gravity's reach in nature bounds Gamma from below, and the swing's period is then of the same order in ticks.
+    - **Its price in nature:** Yukawa's reach, about sqrt(Gamma / 12) Meshes at the doubler's hold, light at 1 / sqrt 6 with grips W / 6 (Animate, 6487999699, item 3: 9.97 Meshes at Gamma 1,200; my earlier sqrt(Gamma / 6) held for light at the step's edge, 1 / sqrt 3). Gravity's reach in nature bounds Gamma from below, and the swing's period is then of the same order in ticks.
     - **Decision 25** (d61cdb7bd) read the mass as 0, since "no standing law asks one". Line 352 is a standing law that asks one, and the course's top rests on it.
     - **Decided** by the owner's word of 03:1x UTC ("I am going with your recommendations"): line 352 stands, with the pinion rim - rim div Gamma, and decision 25's clause comes out.
     - **Entered as law** by the owner's word of 03:3x UTC: "Approved. Send to the Boss and to Sofer to enter as law. Cancel what contradicts it." (#2187, 6487250651, with the places it cancels).
@@ -92,7 +92,14 @@ For each item, one question: is it what the one act does by itself? The Node-clo
    - one grip per Mesh for every train (item 1), with light at the doubler's hold;
    - the regulator's block A1 + E + T2 (item 2);
    - the count's law, with the time gear holding the count c (item 3);
-   - the pinion as line 352 has it (item 13).
+   - the pinion as line 352 has it (item 13);
+   - **the gearing, my answer to the Boss's two asks (6488192915, with 6488418223):**
+     - the beat at the full rate at every Node-clock (the plan's lines 126 and 422), and the gears carrying the rate, as the law's lines 693, 709 and 725 have it: the Mesh clocked twice by its reading Node-clock's own clock, the clock once on the spring;
+     - the ruler Y(c) = rate(-c) from one table the load walks once, the head's own rate line;
+     - Z(c) = T Y(c)^4 div Gamma^4 folded at load, with W = Z_b + Z_n, W+ = Z_n + Z_+ and s = 2, so that W stays within 108 bits at the example universe's width of 128, where T Y^4 reaches 147;
+     - a massive train's spring D = 12 (rim - pinion) G^2 Y_n^2, and the time gear on its own teeth, (T, 1), with its spring from the pair (den - den div Gamma, den);
+     - a count below 0 read at 0 (the owner's word of 2026-10-27, 18:5x UTC, as the head's readings.rates_of holds it), and past the stopped load the reading resting at the clock's last rate;
+     - the Boss's two-end grip, g0 p_i p_j / Gamma^2, gives light N^2 in a uniform slab but misses general relativity's operator by order 1 in a gradient (p19: 1.54 at every n, where the law's form misses by h^2).
 2. **For the owner:**
    - the course (item 15);
    - the horizon (item 16).
