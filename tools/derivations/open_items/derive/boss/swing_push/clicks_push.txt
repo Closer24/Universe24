@@ -1,0 +1,21 @@
+Do the clicks push the contraction away? The time gear's swing, exact fractions (the Boss, 2026-10-29)
+
+Gamma = 1000: the swing's period 140.5 ticks, a quarter of it 35.1
+1. no source after the bang (the control): the top at tick 35, height 22.37
+2. a steady push j0 = kappa v0 w (the formula for a smooth swing: w t_top = pi - atan(1 / kappa)):
+   kappa  1/2: the top at tick 46 (smooth 45.5), height 35.96
+   kappa    1: the top at tick 53 (smooth 52.7), height 53.64
+   kappa    3: the top at tick 63 (smooth 63.1), height 137.32
+   kappa   10: the top at tick 69 (smooth 68.0), height 447.83
+3. matter at kappa = 1, the clicks turning it into light at a rate per tick (light pushes twice):
+   rate     0: the top at tick 53, height 53.64
+   rate 1/100: the top at tick 58, height 61.74
+   rate  1/30: the top at tick 63, height 75.51
+   rate  1/10: the top at tick 63, height 88.28
+4. light alone at kappa = 1, fading with no clicks to renew it (the redshift's thinning):
+   fade     0: the top at tick 53, height 53.64
+   fade 1/100: the top at tick 48, height 47.08
+   fade  1/30: the top at tick 43, height 38.84
+   fade  1/10: the top at tick 38, height 30.17
+5. a source that grows with the load as fast as the spring pulls (j = w2 x), the door of section 12:
+   the top at tick 400 of 400 (none within the run), height 400.00
