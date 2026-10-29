@@ -27,8 +27,14 @@ For each item, one question: is it what the one act does by itself? The Node-clo
 3. **The perihelion** (6484103660; p14).
    - **In the clock:** a slowing is a ratio, ratios multiply, and their count adds. The count is what the one formula moves.
    - **In the law:** the rate line holds the load c as the time notch, p0 = Gamma (1 - 1 / Gamma)^c: the count of slowings, each one tooth in Gamma, moving linearly. That is n = 0, general relativity's advance. The head's volume gear X belongs to the hypothesis **The motion of gravity's train is a hill at the symmetry's weight** (2026-10-22). It is n = 4, a third of the advance.
-   - **In the act:** the ruler Y holds the count in products, with one self-source carried at Y (6484103660, item 5).
    - **Decided:** Postulate 6, rates multiply along a gear train (decision 25, tensor24-review d61cdb7bd, the owner's word of 01:3x UTC).
+   - **In the act, the gear it asks** (p17): what adds is the count c, the law's own load (**The rates compose**: p0 = Gamma (1 - 1 / Gamma)^c, f(c1 + c2) = f(c1) f(c2) / Gamma). In c the law is the plain act, the grip per Mesh and the matter's source, with no self-source.
+     - In any power of the rate as the gear (the ruler Y, the stretch X) the law carries a self-source over the gear's own notch.
+     - In Y its drive at the gear's own notch (6484103660, item 5) cannot be run back where Y falls: on 7a's step with the drive's teeth 9 then 4, 0 of 300 rounds run back, where the gear's own teeth falling run back in 300 of 300.
+   - **The test** (p17): two held sources, alone and together, from one start.
+     - On a uniform board the strides add bit for bit, and the counts too at teeth 1. At teeth 6 the counts add within one notch per tick.
+     - Two masses at two Node-clocks miss by 27 counts in 1.4 million; the head's law, the same act on X, misses by 186,689.
+     - The law's rate line then composes by its product to the unit: Gamma rate(c1 + c2) - rate(c1) rate(c2) is at most 1,312 at Gamma 1,000; the stretch misses by 23,827 at c1 = c2 = 100.
 4. **A stopping clock that blocks infall** (M5).
    - It goes with the lapse in the gears (6483927829): no clock stops. A deep well's clock slows without stopping.
 
@@ -64,9 +70,16 @@ For each item, one question: is it what the one act does by itself? The Node-clo
 
 ## 3. Data or a choice: the act cannot decide it
 
-13. **The metric's mass, which sets gravity's range.** The head's regulator pinion is rim - rim div Gamma. The act holds any pinion. Its neutral element, pinion = rim with no spring, is the massless metric. Decided by decision 25 (d61cdb7bd): the mass is 0, the regulator's pinion at rim, unless a mass is derived.
+13. **The metric's mass, which sets gravity's reach and turns the course.** The law holds one, and decision 25 reads it as 0.
+    - **The law:** ALGEBRA.md line 352, **The volume holder's rest is the clock's one notch** (the owner's word of 2026-10-24, 15:0x UTC: "bring back the holder's mass number; it can be a number at the Node, no?"). The pair is (den - den div Gamma, den), so D / W = 2 / Gamma, "derived from den and Gamma and from no other number". That is the head's regulator pinion, rim - rim div Gamma. The same line keeps the massless holder by name as the former sentence, and records that the massless time gear never tops.
+    - **In the clock:** the spring reads the clock's own rate against its rim, which the clock holds, since its dial steps by its rate modulo Gamma. It is linear in the count, so Postulate 6 holds with it.
+    - **In the act** (p17): the board's summed impulse moves by its summed kick less D times its summed count, exactly, the grips one per Mesh.
+      - With no spring, the board's mean count moves by the mean source alone, so under matter it rises with no top: 9,090, 81,270 and 324,540 at ticks 100, 300 and 600.
+      - With the clock's one notch it swings: its top at tick 70, its lows at 140, 280, 421 and 561, where 2 pi sqrt(Gamma / 2) = 140.5 at Gamma 1,000.
+    - **Its price in nature:** Yukawa's reach, about sqrt(Gamma / 6) Meshes with light at the step's edge. Gravity's reach in nature bounds Gamma from below, and the swing's period is then of the same order in ticks.
+    - **Decision 25** (d61cdb7bd) reads the mass as 0, since "no standing law asks one". Line 352 is a standing law that asks one, and the course's top rests on it. That contradiction is the owner's.
 14. **The lattice's frame** (root II). One Mesh is the board's rest frame, and no act on a lattice removes it. What the act gives is one cone at long waves (item 1).
-15. **The course** (root VI). The circle is law 4, the owner's. The course under item 3's law is OPEN 7 and needs the bang run again.
+15. **The course** (root VI). The circle is law 4, the owner's. The course under item 3's law is OPEN 7 and needs the bang run again. Its top is item 13's: with the clock's one notch the board's mean count swings, and with no spring it has no top.
 16. **The horizon.** The metric N A = 1 with the count harmonic has none. Whether the board's black holes are the turnover's releases (rows 1, 14, 34 and 61) is the owner's.
 
 ## What follows
@@ -74,9 +87,10 @@ For each item, one question: is it what the one act does by itself? The Node-clo
 1. **For stage 7b:**
    - one grip per Mesh for every train (item 1), with light at way (a);
    - the regulator's block A1 + E + T2 (item 2);
-   - the count's law (item 3).
+   - the count's law, with the time gear holding the count c or a drive that hands its teeth over (item 3).
 2. **For the owner:**
    - way (a) of item (g), with item 1;
+   - the metric's mass: line 352 against decision 25 (item 13);
    - the course (item 15);
    - the horizon (item 16).
 3. **Owed by David:**

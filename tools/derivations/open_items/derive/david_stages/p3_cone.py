@@ -20,8 +20,9 @@ obj = lambda x: np.asarray(x, dtype=object)  # noqa: E731
 
 
 def layout_of(nb, grips6, w, rate, gamma):
-    """The Layout of either head: one grip per Mesh read through the meshes table where the Layout holds it
-    (81521e0f4 on), else a grip per Spoke; grips6 is read the same from the Mesh's two ends."""
+    """The Layout of any head: one grip per Mesh read through the meshes table where the Layout holds it (81521e0f4
+    on), else a grip per Spoke; from stage 7a (9e5233d7f) the stage-4 layout in stage 7's records, W+ = W, s = 1, no
+    spring, the force's path and no term of J (tests/frame.py's plain()); grips6 is read the same from the Mesh's two ends."""
     if "meshes" not in Layout._fields:
         return Layout(nb, grips6, w, rate, gamma)
     n = nb.shape[1]
@@ -31,17 +32,32 @@ def layout_of(nb, grips6, w, rate, gamma):
         meshes[2 * axis] = axis * n + np.arange(n)
         meshes[2 * axis + 1] = axis * n + nb[2 * axis + 1]
         grip[axis * n + np.arange(n)] = grips6[2 * axis]
+    if "gearing" in Layout._fields:
+        from tensor24.engine.state import Gearing, Plan
+        none = np.zeros(0, dtype=np.intp)
+        plan = Plan(none, none, none.astype(object), none)
+        return Layout(nb, meshes, grip.reshape(1, -1), Gearing(w, w, 1, 0, 1, 1), plan, rate, gamma)
     return Layout(nb, meshes, grip, w, rate, gamma)
+
+
+def teeth(layout):
+    """The teeth W of any head's Layout: in the gearing from stage 7a."""
+    return layout.gearing.w if "gearing" in Layout._fields else layout.w
 
 
 def grips(layout):
     """Each Spoke's grip, (6, N), on either head."""
-    return layout.grip[layout.meshes] if "meshes" in Layout._fields else layout.grip
+    if "meshes" not in Layout._fields:
+        return layout.grip
+    grip = layout.grip[0] if np.ndim(layout.grip) == 2 else layout.grip
+    return grip[layout.meshes]
 
 
 def state_of(**fields):
     """The State of either head: with the before slot's time tb where the State holds it (to 0970b0deb), else without
     (13672be1e on, the out carrying the replaced now-slot time)."""
+    if "rd" in State._fields and "rd" not in fields:
+        fields["rd"] = 0 * fields["a"]  # the drive's fine tooth, from stage 7a, laid at 0 as the load lays it
     return State(**{key: value for key, value in fields.items() if key in State._fields})
 
 
