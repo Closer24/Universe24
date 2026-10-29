@@ -1676,6 +1676,8 @@ def declare_cases() -> tuple[int, int]:
         ("a train dict with a pinion", 'T = {"name": "dust", "kinds": ["A1"], "pinion": den - den // 97}\n', {"train dust den - den // 97"}),
         ("a reformatted pinion is the same declaration", 'T = {"name": "dust", "pinion": den-den//97}\n', {"train dust den - den // 97"}),
         ("a pinion spelt DEN is the seed", 'T = {"name": "light", "pinion": DEN}\n', set()),
+        ("a pinion spelt as a module's attribute DEN is the seed", 'T = {"name": "light", "pinion": rig.DEN}\n', set()),
+        ("a pinion spelt as another attribute is a declaration", 'T = {"name": "dust", "pinion": rig.pinion}\n', {"train dust rig.pinion"}),
         ("a dict with no pinion", 'T = {"name": "light", "kinds": ["A1"]}\n', set()),
         ("a name that is no string literal", 'T = {"name": LABEL, "pinion": 3}\n', set()),
         ("a dict that unpacks another", 'T = {**base, "name": "dust", "pinion": 3}\n', {"train dust 3"}),

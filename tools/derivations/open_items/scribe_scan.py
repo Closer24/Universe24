@@ -1579,7 +1579,7 @@ def declared_json(rel: str, text: str) -> list[Hit]:
 
 def declared_python(rel: str, text: str) -> list[Hit]:
     """The trains a world's code writes as a dict with a name and a pinion, the pinion as the line writes it (unparsed, so that a
-    reformatted line is the same declaration); a pinion spelt den is the seed."""
+    reformatted line is the same declaration); a pinion spelt den, or as the attribute den of a module (rig.DEN), is the seed."""
     try:
         tree = ast.parse(text)
     except (SyntaxError, ValueError):
@@ -1596,7 +1596,7 @@ def declared_python(rel: str, text: str) -> list[Hit]:
         name = fields.get("name")
         if isinstance(name, ast.Constant) and isinstance(name.value, str) and "pinion" in fields:
             number = ast.unparse(fields["pinion"])
-            if number.lower() != "den":
+            if number.lower().rpartition(".")[2] != "den":
                 found.append(Hit("DECLARE", rel, node.lineno, f"train {name.value} {number}", "", node.col_offset))
     return found
 
