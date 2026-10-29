@@ -1,11 +1,12 @@
-Rule B's scheduler on a full board: J draws each birth whole, L draws each part as its setting comes back
+Rule B's scheduler on a full board, one rule for every band: each band drawn once, where its parts are
+one, each part as its setting comes back (L); J, for contrast, draws each birth whole
 
 Part 1: two crossed births, each one's early outcome setting the other's late frame (spacelike pairs)
   J as the runner builds it, pass by pass: it deadlocks, each birth waiting for the other's outcome: True
   J as a history that agrees with itself (guess both early outcomes, keep the guesses the draws return):
     the first party's sign outermost, the cause's order: of 53824 free frames and digits, 53824 with 1; its law nature's: True
     the second's outermost: of 53824 free frames and digits, 3200 with 0, 47424 with 1, 3200 with 2
-  L, each part drawn as its setting comes back: one history at every one of 215296 digit sets, 5 passes;
+  the one rule, each part drawn as its setting comes back: one history at every one of 215296 digit sets, 5 passes;
     its law is nature's sequential law: True
 
 Part 2: random full boards (a line of 96 sites; 12 births, about a third of them triples; detectors 0 to 3
@@ -18,9 +19,10 @@ ticks late; 0, 30, 60 or 90 percent of the detectors machines)
       5       5                        5  [11]                  178,   178            5
   L finishes every board; J finishes only where no birth waits on an outcome its own parts wait for
 
-Part 3: two quanta, one free slot: A spread over absorbers x and z (sizes 2 and 3), B over y and z (3 and 2),
-both reaching z at one tick, where one slot is free
-  the slot as sigma_b, each source drawing alone: of 900 digit pairs, 684 with 1, 216 with 2 histories that agree
-  where two agree, they differ only in which quantum z takes: they part at z, so z's own click must decide,
-  over sizes that reach z along the quanta's own paths. One candidate, z drawing once over the joint histories:
-    xy 6/19, zy 9/19, xz 4/19: one history at every digit, each quantum taken once; whether it is the rule is David's
+Part 3: quanta at absorbers' free slots, every draw by the one rule (run() above, nothing added)
+  A alone over x and z (sizes 2 and 3), its band its own birth: x 2/5, z 3/5: Born; whole True
+  A and B (y and z, sizes 3 and 2), both reaching z at one tick, where one slot is free:
+    each source drawing alone, the slot as sigma_b: of 900 digit pairs, 684 with 1, 216 with 2 histories that agree
+    the one rule, their band drawn at z where they are one: x/y 6/19, x/z 4/19, z/y 9/19; whole True
+  a chain: A over x and z (2, 3), B over z and z2 (2, 2), C over z2 and w (3, 2), one slot free at z and at z2:
+    the one rule, one band drawn at z and z2, their digits summed: x/z/z2 3/10, x/z/w 1/5, x/z2/w 1/5, z/z2/w 3/10; whole True
