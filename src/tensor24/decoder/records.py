@@ -1,21 +1,25 @@
 """The record read: one record of the schema 1.1 into its header, its events and its end, or the cause it is not."""
 
 # The schema's rules are its guards, checked in order as it reads (Animate): the file reads; every line is a JSON
-# object with its kind, each key once; the record holds a header and an end; the header comes first, with a whole
-# major version that is known; the end comes last; every event is of a known kind and stands at a whole round and
-# site; every field a line holds has its shape in the schema's record of its kind, a whole number, a label, a row of
-# them or a record of the schema, and a field the schema does not name holds whole numbers and labels alone (the
-# schema's first line), so a float, a truth value, NaN or null, or a row of another length, is seen (Sofer's G1 and
-# G2); every value stands on the record: a round from 1 to the end's rounds, a site on the board the header's sides
-# make, a Spoke among the board's, a count from the first beat (the digests are the runner's, which the decoder never
-# reads); a whole click that takes at both ends books in its two ends alone, its own taken and laid empty, and one
-# that takes at one end holds no end (G3); the events keep the schema's order (round, kind, site, train). A field may stand absent where its writer
-# lacks it: a reading that needs it reads not read, the cause named. A record that breaks a rule is not read, and the
-# cause is named: nothing is raised. The lines are split at the line feed alone, so U+2028, U+0085 and their kin
-# stand inside a label as JSON lets them; a line nested past the interpreter's depth, or holding a whole number past
-# its digits (sys.get_int_max_str_digits(), which the tool lifts), is named so. The ledger beside the record is read
-# under its own guards: every line a JSON object, at a whole round and train, after the step or after the clicks, its
-# fields of their shape, each place once. The standard library and the record's schema alone.
+# object with its kind, a label, each key once; the record holds a header and an end; the header comes first, with a
+# whole major version that is known; the end comes last; every event is of a known kind and stands at a whole round
+# and site; every field a line holds has its shape in the schema's record of its kind, a whole number, a label, a row
+# of them or a record of the schema, and a field the schema does not name holds whole numbers and labels alone,
+# through its rows and mappings (the schema's first line), so a float, a truth value, NaN or null, or a row of
+# another length, is seen (Sofer's G1 and G2); the header's sides make a board, each side 1 or more; every value
+# stands on the record, read where the line's record names it: an event's round from 1 to the end's rounds and its
+# site on the board, a whole click's ends and children on the board and its ends' Spokes among the board's, and a
+# count from the first beat on the kinds whose record holds one (the digests are the runner's, which the decoder
+# never reads); a whole click that takes at both ends books in its two ends alone, its own taken and laid empty, and
+# one that takes at one end holds no end (G3); the events keep the schema's order (round, kind, site, train). A field
+# may stand absent where its writer lacks it: a reading that needs it reads not read, the cause named. A record that
+# breaks a rule is not read, and the cause is named in ASCII: a field's name and a kind as Python's ascii() writes
+# them, so a line feed or a lone surrogate in a name stands escaped, and a board by its sides, never their product,
+# which may pass the interpreter's digits; nothing is raised. The lines are split at the line feed alone, so U+2028,
+# U+0085 and their kin stand inside a label as JSON lets them; a line nested past the interpreter's depth, or holding
+# a whole number past its digits (sys.get_int_max_str_digits(), which the tool lifts), is named so. The ledger beside
+# the record is read under its own guards: every line a JSON object, at a whole round and train, after the step or
+# after the clicks, its fields of their shape, each place once. The standard library and the record's schema alone.
 
 import dataclasses
 import json
@@ -126,37 +130,36 @@ def misfit(line: Line, fields: dict[str, Any], shapes: Shapes) -> str:
     return wrong[0] if wrong else ""
 
 
-def off(line: Line, rounds: Any, size: Any, spokes: Any) -> str:
-    """The first value of a line off the record: a round, a site, a Spoke or a count; or nothing."""
+def off(line: Line, rounds: Any, made: tuple[Any, Any, Any], fields: dict[str, Any]) -> str:
+    """The first value of a line off the record, each read where the line's record names it: a round, site, Spoke, count."""
+    sides, size, spokes = made
     event = line["kind"] in KINDS
     if event and whole(rounds) and not 1 <= line["round"] <= rounds:
         return f"stands at round {line['round']}, off the record's rounds 1 to {rounds}"
-    sites = ([line["site"]] if event else []) + [
-        part.get("site") for key in ("ends", "children") for part in line.get(key, [])
-    ]
+    parts = [part for key in ("ends", "children") if key in fields for part in line.get(key, [])]
+    sites = ([line["site"]] if event else []) + [part.get("site") for part in parts]
     far = [s for s in sites if whole(s) and whole(size) and not 0 <= s < size]
     if far:
-        return f"names site {far[0]}, off the board's sites 0 to {size - 1}"
-    turned = [
-        s for s in (end.get("spoke") for end in line.get("ends", [])) if whole(s) and whole(spokes)
-    ]
+        return f"names site {far[0]}, off the board of sides {sides}"
+    ends = line.get("ends", []) if "ends" in fields else []
+    turned = [s for s in (end.get("spoke") for end in ends) if whole(s) and whole(spokes)]
     wide = [s for s in turned if not 0 <= s < spokes]
     if wide:
         return f"names Spoke {wide[0]}, off the board's Spokes 0 to {spokes - 1}"
-    if event and whole(line.get("count")) and line["count"] < 1:
+    if "count" in fields and whole(line.get("count")) and line["count"] < 1:
         return f"holds the count {line['count']}, before the first beat"
     return ""
 
 
-def board(header: Any) -> tuple[Any, Any]:
-    """The board the header's sides make: its sites, their product, and its Spokes, two a side; none where it names no side."""
+def board(header: Any) -> tuple[Any, Any, Any]:
+    """The board the header's sides make: the sides, its sites (their product) and its Spokes (two a side), or none."""
     sides = header.get("sides") if isinstance(header, dict) else None
     if not (isinstance(sides, list) and sides):
-        return None, None
+        return None, None, None
     sites = 1
     for side in sides:
         sites = sites * side
-    return sites, len(sides) + len(sides)
+    return sides, sites, len(sides) + len(sides)
 
 
 def place(e: Line) -> tuple[int, int, int, int]:
@@ -211,7 +214,7 @@ def events_of(lines: Lines) -> list[Line]:
 
 def kinded(lines: Lines) -> str:
     unknown = sorted({e["kind"] for e in events_of(lines)} - set(KINDS))
-    return f"the line kinds {unknown} are unknown" if unknown else ""
+    return f"the line kinds {ascii(unknown)} are unknown" if unknown else ""
 
 
 def placed(lines: Lines) -> str:
@@ -230,15 +233,23 @@ def shaped(lines: Lines) -> str:
         if isinstance(line, dict) and line["kind"] in shapes
     ]
     found = [(n, name) for n, name in wrong if name]
-    return f"line {found[0][0]}'s {found[0][1]} has not its shape in the schema" if found else ""
+    # a field's name printed in ASCII, so a surrogate or a line feed in it stands escaped in the cause
+    return (
+        f"line {found[0][0]}'s {ascii(found[0][1])[1:-1]} has not its shape in the schema"
+        if found
+        else ""
+    )
 
 
 def valued(lines: Lines) -> str:
-    sites, spokes = board(lines[0])
+    made = board(lines[0])
+    if made[0] and not all(side >= 1 for side in made[0]):
+        return f"line 1's sides {made[0]} make no board, a side below 1"
+    shapes = schema_shapes()
     end = lines[-1]
     rounds = end.get("rounds") if isinstance(end, dict) else None
     for n, line in enumerate(lines, start=1):
-        cause = off(line, rounds, sites, spokes) if isinstance(line, dict) else ""
+        cause = off(line, rounds, made, shapes[line["kind"]]) if isinstance(line, dict) else ""
         if cause:
             return f"line {n} {cause}"
     return ""
