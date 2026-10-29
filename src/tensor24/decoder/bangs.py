@@ -104,7 +104,7 @@ def frame(record: Record, ledger: list[Line]) -> tuple[list[Bang], str]:
     if unloaded or not rounds:
         return [], f"the ledger holds no load at round {unloaded[0] if unloaded else 1}"
     found = bangs(rounds, [load[r] for r in rounds])
-    if len(found) < 1 + 1:
+    if not found[1:]:
         return found, f"the bangs whole number {len(found)}, where the row compares two or more"
     return found, ""
 

@@ -36,6 +36,7 @@ from tensor24.record import schema
 KINDS = ("whole", "split", "rate", "books")  # the events' order within a round, the schema's
 PLACE = ("round", "site")
 ENDS = ("near", "far")  # a whole click's two ends, where it takes at both
+WAYS = ("+", "-")  # the two ways along each of the board's sides, a Spoke each
 BOOKED = ("taken", "laid")  # where a whole click and each of its ends book their holdings
 AT = ("step", "clicks")  # a ledger line's place in its round: after the step, or after the clicks
 ENTRY = ("round", "train")  # a ledger line's place beside its at
@@ -168,7 +169,7 @@ def board(header: Any) -> tuple[Any, Any, Any]:
     sites = 1
     for side in sides:
         sites = sites * side
-    return sides, sites, len(sides) + len(sides)
+    return sides, sites, len(sides) * len(WAYS)
 
 
 def carded(header: Line) -> str:
@@ -242,9 +243,10 @@ def kinded(lines: Lines) -> str:
 
 
 def placed(lines: Lines) -> str:
-    events = events_of(lines)
     unplaced = [
-        n for n, e in enumerate(events, start=1 + 1) if not all(whole(e.get(key)) for key in PLACE)
+        n
+        for n, e in list(enumerate(lines, start=1))[1:-1]
+        if isinstance(e, dict) and not all(whole(e.get(key)) for key in PLACE)
     ]
     return f"line {unplaced[0]} stands at no whole round and site" if unplaced else ""
 

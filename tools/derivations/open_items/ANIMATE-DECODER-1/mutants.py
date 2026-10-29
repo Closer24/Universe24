@@ -144,7 +144,7 @@ MUTANTS = {
         )
     ],
     "the unplaced event named one back": [
-        (REC, "enumerate(events, start=1 + 1)", "enumerate(events, start=1)")
+        (REC, "list(enumerate(lines, start=1))[1:-1]", "list(enumerate(lines))[1:-1]")
     ],
     "an event's round not checked": [(REC, 'PLACE = ("round", "site")', 'PLACE = ("site",)')],
     "the order read by round and kind alone": [
@@ -244,7 +244,7 @@ MUTANTS = {
         (REC, "        sites = sites * side\n", "        sites = side\n")
     ],
     "the board's Spokes one a side": [
-        (REC, "return sides, sites, len(sides) + len(sides)", "return sides, sites, len(sides)")
+        (REC, "return sides, sites, len(sides) * len(WAYS)", "return sides, sites, len(sides)")
     ],
     "a count of 0 read": [(REC, 'line["count"] < 1', 'line["count"] < 0')],
     # the books' guard (G3)
@@ -500,7 +500,7 @@ MUTANTS = {
     ],
     # the tool
     "the tool takes four arguments": [
-        (TOOL, "    if not named or named[1 + 1 :]:", "    if not named:")
+        (TOOL, 'parser.add_argument("ledger", nargs="?")', 'parser.add_argument("ledger", nargs="*")')
     ],
     "the tool keeps the interpreter's digits": gone(TOOL, "    sys.set_int_max_str_digits(0)\n"),
     "the tool reads on past a record not read": [
@@ -629,7 +629,7 @@ MUTANTS = {
     "the load read after the clicks too": [
         (BANGS, 'if line["at"] == "step" and line["train"] == gear', 'if line["train"] == gear')
     ],
-    "one bang whole compared": [(BANGS, "if len(found) < 1 + 1:", "if len(found) < 1:")],
+    "one bang whole compared": [(BANGS, "if not found[1:]:", "if not found:")],
     "a clock of no depth read": [(BANGS, "    if deep:\n", "    if False:\n")],
     "a bang shows more only by both": [
         (

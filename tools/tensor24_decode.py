@@ -8,14 +8,13 @@ any width. Each Node-clock's rate lines are read once for all its whole clicks.
 Usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]
 """
 
+import argparse
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from tensor24.decoder import bangs, books, clocks, measure, records  # noqa: E402
-
-USAGE = "usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]"
 
 
 def ticks(record: records.Record) -> str:
@@ -45,17 +44,19 @@ def ticks(record: records.Record) -> str:
 
 
 def main(argv: list[str]) -> int:
-    """Read the record and its ledger, print the readings, and return the exit code: 1 + 1 for a usage error, else 0."""
-    named = argv[1:]
-    if not named or named[1 + 1 :]:
-        print(USAGE, file=sys.stderr)
-        return 1 + 1
+    """Read the record and its ledger, print the readings, and return 0; a usage error is argparse's."""
+    parser = argparse.ArgumentParser(
+        prog="tensor24_decode.py", description="Tensor24's decoder: one record read."
+    )
+    parser.add_argument("record")
+    parser.add_argument("ledger", nargs="?")
+    held = parser.parse_args(argv[1:])
     sys.set_int_max_str_digits(0)
-    record, cause = records.read(named[0])
+    record, cause = records.read(held.record)
     if record is None:
         print(f"not read: {cause}")
         return 0
-    ledger, why = records.read_ledger(named[1]) if named[1:] else (None, "the ledger is absent")
+    ledger, why = records.read_ledger(held.ledger) if held.ledger else (None, "the ledger is absent")
     print(f"row 15: {books.row_15(record, ledger, why)}")
     print(f"row 46: {bangs.row_46(record, ledger, why)}")
     print(f"the cone check (D8): {measure.cone_check(record)}")
