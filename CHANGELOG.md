@@ -4,6 +4,7 @@ One entry per version, the newest first; what the engine does differently, with 
 
 ## Unreleased
 
+- David's dimension check and the example's den named (2026-10-29, 13:3x UTC; ledger row 399): docs/BIG_PICTURE.md 3.1 items 13 and 14, 0.2 items 10 and 12, 12.3 item 25, 13.1 (c), reading 40.
 - David's answers on the couplings and the owner's "5 approved" (2026-10-29, 13:2x UTC; ledger row 399): docs/BIG_PICTURE.md 3.1 items 10 to 13 (the keeper's lawfulness checks and the question to the owner on a seed's steady count), 0.2 items 4, 6 and 12, 12.3 item 24, reading 39.
 - The coherence pass (2026-10-29, 13:2x UTC; ledger row 399): docs/BIG_PICTURE.md sections 7.1, 11, 13.1, 15 and 16 brought to decisions 36 to 38 (the three roads and the contradiction kept are gone; each epoch, the course and the large-number relation read open by name), reading 38.
 - The coupling family and Animate's turnover patch (2026-10-29, 13:1x UTC; ledger row 399): docs/BIG_PICTURE.md 3.1 items 8 to 10 (the Boss's candidates for the strengths: a mediator family, then one coupling family; David's grip unit), 0.2 item 12, 4.1 item 14 and 10.1 (reader-5 85137a0a4, turnover_out.patch: gate no refusal), reading 37.
