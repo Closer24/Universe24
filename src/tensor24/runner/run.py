@@ -1,4 +1,4 @@
-"""The run: the three files checked and loaded, the rounds to the setting's ticks, every due beat firing or the caller's masks, the rewind checked, the record written."""
+"""The run: the three files checked and loaded, every Node-clock stepping in every round to the setting's ticks, the rewind checked, the record and its ledger written."""
 
 import hashlib
 import json
@@ -6,15 +6,15 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any, NamedTuple
 
-import numpy as np
-
 from tensor24.record import schema
 from tensor24.runner.files import OPERANDS, departures, sites_of
 from tensor24.runner.load import load, promises
 from tensor24.runner.rewind import rewind
+from tensor24.runner.rounds import rounds
 
 ORDER = "z fastest: the site (x sy + y) sz + z"  # runner/board.py's
 CLOCK = "the clock"  # the clock's own train, after the file's trains: every gear's teeth read its count
+STEP = "step"  # a count line's place in its round: after the step
 
 
 class Engine(NamedTuple):
@@ -37,36 +37,24 @@ def stated(s: Any) -> str:
     return json.dumps([x.tolist() for x in s])
 
 
-def ran(
-    engine: Engine, layout: Any, start: Any, ticks: int, bits: Callable[[int, int], list[int]]
-) -> tuple[Any, list[Any], list[dict[str, Any]]]:
-    """Rounds until every Node-clock's count stands at the ticks, each round's mask the bits where a count falls short; a Node-clock's k written at its first beat and wherever it changes."""
-    s: Any = start
-    outs: list[Any] = []  # the undo log
-    rates: list[dict[str, Any]] = []
-    last: dict[int, int] = {}  # each Node-clock's k at its last beat
-    while any(c < ticks for c in s.c[0].tolist()):
-        short = [int(c < ticks) for c in s.c[0].tolist()]
-        mask = [bit * held for bit, held in zip(bits(len(outs) + 1, len(short)), short, strict=True)]
-        s, out = engine.tick(layout, s, np.array([mask], dtype=object))
-        outs.append(out)
-        beats = zip(
-            out.fire[0].tolist(), out.k[0].tolist(), s.c[0].tolist(), s.ph[0].tolist(), strict=True
-        )
-        for site, (fire, k, count, dial) in enumerate(beats):
-            if fire and last.get(site) != k:
-                rates.append(
-                    {
-                        "kind": "rate",
-                        "round": len(outs),
-                        "site": site,
-                        "count": count,
-                        "dial": dial,
-                        "k": k,
-                    }
-                )
-                last[site] = k
-    return s, outs, rates
+def ledger_of(record: Path) -> Path:
+    """The ledger's own file, beside the record: its name with ".ledger" before its suffix."""
+    return record.with_name(f"{record.stem}.ledger{record.suffix}")
+
+
+def counts(round_: int, s: Any, trains: list[Any]) -> list[dict[str, Any]]:
+    """One round's count lines of the ledger: per Node-clock and train, the train's now counts there, row by row."""
+    return [
+        {
+            "round": round_,
+            "at": STEP,
+            "site": site,
+            "train": at,
+            "count": s.a[train.first : train.first + train.rows(), site].tolist(),
+        }
+        for site in range(s.a.shape[-1])
+        for at, train in enumerate(trains)
+    ]
 
 
 def header(
@@ -77,7 +65,6 @@ def header(
     kinds: Any,
     loaded: Any,
     layout: Any,
-    runner: str,
 ) -> dict[str, Any]:
     """The record's first line: the files verbatim with their digests, the board, the kinds, the trains with their windings."""
     labels = [*(train["name"] for train in universe["trains"]), CLOCK]
@@ -87,7 +74,7 @@ def header(
         "major": schema.MAJOR,
         "minor": schema.MINOR,
         "engine": "tensor24",
-        "runner": runner,
+        "runner": "synchronous",
         "files": [{"name": path.name, "text": text, "digest": digest(text)} for path, text in files],
         "sides": shape,
         "order": ORDER,
@@ -111,10 +98,8 @@ def header(
     }
 
 
-def run(
-    engine: Engine, paths: list[Path], record: Path, bits: Callable[[int, int], list[int]] | None = None
-) -> list[str]:
-    """The three files run to the record at its path, every due beat firing or the caller's masks (a test's), every departure named and nothing written past one."""
+def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
+    """The three files run to the record at its path and the ledger beside it, every Node-clock in every round, every departure named and nothing written past one."""
     found = departures(*paths)
     if found:
         return found
@@ -127,26 +112,18 @@ def run(
         return found
     layout = engine.layout(universe, shape, loaded)
     start = engine.state(*loaded.state)
-    found = promises(
-        start.r, layout.gearing.rest, layout.rate, layout.gamma
-    )  # the clocks stand at 0 as laid, so the teeth are the rest; a moving clock's are read at G2
+    # the clocks stand at 0 as laid, so the teeth are the rest; a moving clock's are read at G2
+    found = promises(start.r, layout.gearing.rest)
     if found:
         return found
-    every = bits or (lambda _, n: [1] * n)
-    end, outs, rates = ran(engine, layout, start, setting["ticks"], every)
-    back = rewind(engine.untick, layout, end, outs)
-    runner = "synchronous" if bits is None else "under the caller's masks"
-    exact = int(stated(back) == stated(start))
+    ticks, end, ledger = setting["ticks"], start, []
+    for at, end in enumerate(rounds(engine.tick, layout, start, ticks), start=1):
+        ledger += counts(at, end, loaded.trains)
+    exact = int(stated(rewind(engine.untick, layout, end, ticks)) == stated(start))
     lines = [
-        header(record, files, universe, shape, kinds, loaded, layout, runner),
-        *rates,
-        {
-            "kind": "end",
-            "rounds": len(outs),
-            "digest": digest(stated(end)),
-            "undone": len(outs),
-            "exact": exact,
-        },
+        header(record, files, universe, shape, kinds, loaded, layout),
+        {"kind": "end", "rounds": ticks, "digest": digest(stated(end)), "undone": ticks, "exact": exact},
     ]
     record.write_text("".join(json.dumps(line) + "\n" for line in lines), encoding="utf-8")
+    ledger_of(record).write_text("".join(json.dumps(line) + "\n" for line in ledger), encoding="utf-8")
     return []

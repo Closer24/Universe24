@@ -825,14 +825,6 @@
  },
  {
   "rule": "DECLARE",
-  "file": "tests/test_the_tensor24_time_gear.py",
-  "detail": "train dust den - den // 97",
-  "count": 1,
-  "word": "the owner's \"Approved\" of 2026-10-29, 11:4x UTC, directly to Sofer, read as his word on the gate's refusal of a new declaration (decision 35, nothing is declared): the declarations that stand at that hour are named breaches until the clicks build the particles",
-  "row": "399"
- },
- {
-  "rule": "DECLARE",
   "file": "tools/derivations/open_items/derive/boss/swing_push/act_push.py",
   "detail": "train matter DEN - DEN // 50",
   "count": 1,
@@ -939,14 +931,6 @@
   "rule": "TWICE",
   "file": "tensor24/runner/load.py",
   "detail": "1 + 1",
-  "count": 6,
-  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/runner/load.py",
-  "detail": "d + d",
   "count": 1,
   "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
   "row": "399"
@@ -963,38 +947,6 @@
   "rule": "TWICE",
   "file": "tensor24/runner/load.py",
   "detail": "gamma + gamma",
-  "count": 1,
-  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/runner/load.py",
-  "detail": "n + n",
-  "count": 1,
-  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/runner/load.py",
-  "detail": "spokes + spokes",
-  "count": 1,
-  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/runner/load.py",
-  "detail": "teeth + teeth",
-  "count": 1,
-  "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/runner/load.py",
-  "detail": "time + time",
   "count": 1,
   "word": "the owner's word of 2026-10-29, 12:5x UTC, directly to Sofer (\"b. Forbidden\", on a two spelt as a sum): the places that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same spelling in a file, is refused",
   "row": "399"
@@ -1115,7 +1067,7 @@
   "rule": "LOOP",
   "file": "tensor24/runner/load.py",
   "detail": "comprehension",
-  "count": 31,
+  "count": 21,
   "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
   "row": "399"
  },
@@ -1131,7 +1083,7 @@
   "rule": "LOOP",
   "file": "tensor24/runner/load.py",
   "detail": "while",
-  "count": 2,
+  "count": 1,
   "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
   "row": "399"
  },
@@ -1146,31 +1098,7 @@
  {
   "rule": "DECLARE",
   "file": "tests/test_the_tensor24_files.py",
-  "detail": "train call light 0",
-  "count": 1,
-  "word": "the trains and coupling strengths a test or a probe lays through a helper's keywords (a pinion or a strength written as a value, the keeper's gate gap three, found by the second hostile reader at 14:2x UTC): named breaches until G1 and the replacement of the tests (decision 37; the owner's word of 12:5x: no test or probe lays a train, in code it is a fake); a new one, or one more of a kind in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "DECLARE",
-  "file": "tests/test_the_tensor24_files.py",
   "detail": "train call light DEN + 1",
-  "count": 1,
-  "word": "the trains and coupling strengths a test or a probe lays through a helper's keywords (a pinion or a strength written as a value, the keeper's gate gap three, found by the second hostile reader at 14:2x UTC): named breaches until G1 and the replacement of the tests (decision 37; the owner's word of 12:5x: no test or probe lays a train, in code it is a fake); a new one, or one more of a kind in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "DECLARE",
-  "file": "tests/test_the_tensor24_files.py",
-  "detail": "train call light HAND[0]",
-  "count": 1,
-  "word": "the trains and coupling strengths a test or a probe lays through a helper's keywords (a pinion or a strength written as a value, the keeper's gate gap three, found by the second hostile reader at 14:2x UTC): named breaches until G1 and the replacement of the tests (decision 37; the owner's word of 12:5x: no test or probe lays a train, in code it is a fake); a new one, or one more of a kind in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "DECLARE",
-  "file": "tests/test_the_tensor24_files.py",
-  "detail": "train call light HAND[0] - 1",
   "count": 1,
   "word": "the trains and coupling strengths a test or a probe lays through a helper's keywords (a pinion or a strength written as a value, the keeper's gate gap three, found by the second hostile reader at 14:2x UTC): named breaches until G1 and the replacement of the tests (decision 37; the owner's word of 12:5x: no test or probe lays a train, in code it is a fake); a new one, or one more of a kind in a file, is refused",
   "row": "399"
@@ -1299,15 +1227,7 @@
   "rule": "CHOOSE",
   "file": "tensor24/engine/step.py",
   "detail": "choose",
-  "count": 16,
-  "word": "the selections by a bit, the floors, the families found by a constant index and the family strings that the new engine's act and loader hold at tensor24-review 058512b2b (David's audit of 15:10 UTC, F8 of docs/BIG_PICTURE.md 13.2; the owner's word of 2026-10-29, 15:0x, to David: no floors or bounds, no if; the code does not know what the families are): named breaches until G1 (decision 38); a new one, or one more of a kind in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "CHOOSE",
-  "file": "tensor24/engine/step.py",
-  "detail": "nonneg",
-  "count": 2,
+  "count": 12,
   "word": "the selections by a bit, the floors, the families found by a constant index and the family strings that the new engine's act and loader hold at tensor24-review 058512b2b (David's audit of 15:10 UTC, F8 of docs/BIG_PICTURE.md 13.2; the owner's word of 2026-10-29, 15:0x, to David: no floors or bounds, no if; the code does not know what the families are): named breaches until G1 (decision 38); a new one, or one more of a kind in a file, is refused",
   "row": "399"
  },

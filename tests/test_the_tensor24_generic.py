@@ -53,11 +53,10 @@ def test_every_row_of_every_kind_and_part_is_geared_by_one_formula_and_the_load_
 
 
 def run(universe, gears):
-    """The universe's layout and its run of TICKS rounds from its gears on the board of three sides, every beat firing."""
+    """The universe's layout and its run of TICKS rounds from its gears on the board of three sides."""
     held, laid, s = loaded(universe, SHAPE, gears)
-    every = np.ones((1, laid.nb.shape[1]), dtype=object)
     for _ in range(TICKS):
-        s, _ = step.tick(laid, s, every)
+        s = step.tick(laid, s)
     return held, laid, s
 
 
@@ -84,14 +83,14 @@ def test_every_order_of_three_trains_orders_the_layouts_and_the_runs_rows_alike(
         rows = np.concatenate([*at, np.arange(held.trains[-1].first, len(laid.gearing.rest))])
         reads = [np.array(x[rows].tolist(), dtype=object) for x in (laid.clock.first, laid.clock.factor)]
         runs.append([*(np.broadcast_to(x, s.a.shape)[rows] for x in laid.gearing), *reads])
-        runs[-1] += [x[rows] if len(x) == len(s.a) else x for x in s]
+        runs[-1] += [x[rows] for x in s]
     moved = runs[0][-len(state.State._fields)]  # the first order's run, its now slots
     assert all(frame.same(each, runs[0]) for each in runs[1:]) and (moved != 0).any()
 
 
 def turned(m, laid, held, s, teeth):
     """The state turned by m: sites moved, each train's components by its kind's matrix, a negated component's tooth
-    flipped at the teeth it was carried at and its going advanced."""
+    flipped at the teeth it was carried at."""
     xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
     site = np.ravel_multi_index(tuple((m @ xyz) % sides), CUBE)
     acting = kinds.kinds(m[None, :, :])
@@ -108,9 +107,8 @@ def turned(m, laid, held, s, teeth):
         x[:, site] = y
     there.a[:, site], there.b[:, site] = turn @ s.a, turn @ s.b
     flips = (1 - sign) // (1 + 1)  # 1 where the component is negated
-    r, go = np.abs(turn) @ s.r, np.abs(turn) @ s.go
+    r = np.abs(turn) @ s.r
     there.r[:, site] = flips * (teeth - 1 - r) + (1 - flips) * r
-    there.go[:, site] = flips * (1 - go) + (1 - flips) * go
     return there, site
 
 
@@ -126,12 +124,9 @@ def test_the_loaded_act_is_alike_under_the_24s_turns_of_its_sites_and_components
         clock = held.trains[-1].first
         a[clock], b[clock] = (rng.integers(0, REACH, n).astype(object) for _ in "ab")
         teeth = step.weight(laid.gearing, laid.clock, a)
-        zero = np.zeros((1, n), dtype=object)
-        s = state.State(
-            a, b, frame.wide(rng, (rows, n)) % teeth, 0 * a, 0 * a, zero, zero.copy(), zero.copy()
-        )
-        out = step.tick(laid, s, 1)[0]
+        s = state.State(a, b, frame.wide(rng, (rows, n)) % teeth, 0 * a)
+        out = step.tick(laid, s)
         for m in frame.turns():
             there, _ = turned(m, laid, held, s, teeth)
             moved, _ = turned(m, laid, held, out, teeth)
-            assert frame.same(step.tick(laid, there, 1)[0], moved), m.tolist()
+            assert frame.same(step.tick(laid, there), moved), m.tolist()

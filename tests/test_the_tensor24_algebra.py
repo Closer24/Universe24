@@ -1,4 +1,4 @@
-"""Tensor24's algebra: Rule3's carry and the whethers made of it, each law failing on its own mutant."""
+"""Tensor24's algebra: Rule3's carry and the fine tooth's flip, each law failing on its own mutant."""
 
 from types import SimpleNamespace
 
@@ -32,33 +32,12 @@ def exact(m):
 
 
 def odd(m):
-    """The tie rule: negating a gear, its fine tooth flipped and its going advanced, negates the carry's quotient."""
-    n, d, _ = numbers()
-    for go in (0, 1):
-        q, kept = m.carry(n, d, m.home(d, go))
-        q2, kept2 = m.carry(-n, d, m.home(d, 1 - go))
-        if not ((q2 == -q).all() and (kept2 == m.flip(kept, d)).all()):
-            return False
-    return True
-
-
-def whether(m):
-    """The bit of n at least 0, exact across 0 and at every size."""
-    n, _, _ = numbers()
-    return all(m.nonneg(x) == (x >= 0) for x in [*n, *range(-50, 51)])
-
-
-def choice(m):
-    """The bit 1 chooses x, the bit 0 chooses y."""
-    n, d, _ = numbers()
-    return (m.choose(1, n, d) == n).all() and (m.choose(0, n, d) == d).all()
-
-
-def back(m):
-    """The carry run back returns n + r from the quotient and the remainder."""
+    """The tie rule: a carry negated, its fine tooth flipped, negates the quotient and flips the tooth it keeps."""
     n, d, r = numbers()
-    q, kept = m.carry(n, d, r)
-    return (m.uncarry(q, d, kept) == n + r).all()
+    tooth = algebra.carry(r, d, 0)[1]
+    q, kept = m.carry(n, d, tooth)
+    q2, kept2 = m.carry(-n, d, m.flip(tooth, d))
+    return (q2 == -q).all() and (kept2 == m.flip(kept, d)).all()
 
 
 def involution(m):
@@ -79,23 +58,13 @@ def mutants():
                 (n + r) + ((-(n + r)) // d) * d,
             )
         },
-        "odd": {"home": lambda w, go: algebra.carry(w, 1 + 1, 0)[0]},
-        "whether": {"nonneg": lambda n: algebra.carry(n, n * n + 1, 0)[0]},
-        "choice": {"choose": lambda k, x, y: k * x + k * y},
-        "back": {"uncarry": lambda q, d, kept: q * d - kept},
+        "odd": {"flip": lambda r, w: r},
         "involution": {"flip": lambda r, w: w - r},
     }
 
 
-@pytest.mark.parametrize("name", ["exact", "odd", "whether", "choice", "back", "involution"])
+@pytest.mark.parametrize("name", ["exact", "odd", "involution"])
 def test_each_law_of_the_carry_holds_and_fails_on_its_mutant(name):
-    law = {
-        "exact": exact,
-        "odd": odd,
-        "whether": whether,
-        "choice": choice,
-        "back": back,
-    }
-    law = law | {"involution": involution}
+    law = {"exact": exact, "odd": odd, "involution": involution}
     assert law[name](algebra)
     assert not law[name](SimpleNamespace(**{**vars(algebra), **mutants()[name]}))

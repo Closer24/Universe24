@@ -1,24 +1,15 @@
-"""The Mesh: when a Node-clock's beat is due, and what it reads of its neighbours as of its own count."""
+"""The Mesh: what a Node-clock reads of its neighbours, and the Meshes' pull."""
 
-import numpy as np
-
-from tensor24.algebra.carry import Z, choose, nonneg
-from tensor24.engine.state import Layout, State
+from tensor24.algebra.carry import Z
+from tensor24.engine.state import Layout
 
 
-def due(c: Z, nb: Z) -> Z:
-    """The beat is due where every neighbour stands at a count at least the Node-clock's own."""
-    return np.prod(nonneg(c[:, nb] - c[:, None, :]), axis=1)
+def seen(a: Z, nb: Z) -> Z:
+    """Each neighbour's gears at the now slot: every Node-clock steps in every round, so its now slot is the round's."""
+    return a[:, nb]
 
 
-def seen(s: State, nb: Z) -> Z:
-    """Each neighbour's gears as of the reader's count: the now slot written at or before it, else the before slot."""
-    a, b, _, _, _, _, c, tn = s
-    return choose(nonneg(c[:, None, :] - tn[:, nb]), a[:, nb], b[:, nb])
-
-
-def pull(layout: Layout, s: State) -> Z:
-    """The Meshes' pull on every gear: its train's grip on each Spoke's Mesh times the neighbour as seen less its own now."""
-    nb, meshes, grip, _, _, _, _, _ = layout
-    a, _, _, _, _, _, _, _ = s
-    return ((seen(s, nb) - a[:, None, :]) * grip[:, meshes]).sum(axis=1)
+def pull(layout: Layout, a: Z) -> Z:
+    """The Meshes' pull on every gear: its train's grip on each Spoke's Mesh times the neighbour less its own now."""
+    nb, meshes, grip, _, _, _ = layout
+    return ((seen(a, nb) - a[:, None, :]) * grip[:, meshes]).sum(axis=1)

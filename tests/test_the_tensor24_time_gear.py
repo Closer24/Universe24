@@ -1,6 +1,6 @@
 """Tensor24's clock, G1 of decision 40: its own gear laid by the load as every row, every gear's teeth its rest and the
-clock's count at the now slot by no table and at no bound, a still clock the act at fixed teeth, the run back exact while
-no gear's teeth fall below its kept tooth, and departing where they do, which the metric's stage (G2) owes."""
+clock's count at the now slot by no table, a still clock the act at fixed teeth, the run back exact while every kept tooth
+stands below the next round's teeth, and departing where a falling clock breaks that, which the metric's stage owes."""
 
 import json
 from pathlib import Path
@@ -39,14 +39,18 @@ def world(rng, laid, moving=True):
     clock = laid.clock.first[0]
     a[clock] = rng.integers(0, REACH, n).astype(object) * moving
     b[clock] = a[clock] - rng.integers(-(1 << 20), 1 << 20, n).astype(object) * moving
-    zero = np.zeros((1, n), dtype=object)
     teeth = frame.wide(rng, (rows, n)) % step.weight(laid.gearing, laid.clock, a)
-    return State(a, b, teeth, 0 * a, 0 * a, zero, zero.copy(), zero.copy())
+    return State(a, b, teeth, 0 * a)
+
+
+def reached(laid, s, n):
+    """The states after each of n rounds of the tick."""
+    return list(rounds(step.tick, laid, s, n))
 
 
 def test_every_coefficient_is_the_files_integers_by_one_formula_the_clocks_own_gear_among_them():
-    """T = 6 den Gamma^2 G^2 at rest for every row, s = 1, no spring (masses are measured in clicks), the force's path (T_k = T_d =
-    1); every row reads its teeth from the clock's own gear, the train the load lays after the file's."""
+    """T = 6 den Gamma^2 G^2 at rest for every row, s = 1, no spring (no row holds a term of its own), the force's path
+    (T_k = T_d = 1); every row reads its teeth from the clock's own gear, the train the load lays after the file's."""
     u, held, laid = built()
     den, gamma = u["integers"]["den"], u["integers"]["full_rate"]
     g, spokes = mesh_unit(gamma), len(laid.nb)
@@ -67,15 +71,15 @@ def test_every_gears_teeth_are_its_rest_and_the_clocks_count_at_the_now_slot_and
     same step at the clock's before count is not the act."""
     _, held, laid = built()
     s = world(np.random.default_rng(1), laid)
-    now, out = step.tick(laid, s, 1)
-    force, j = step.sources(laid, s)
+    now = step.tick(laid, s)
+    force, j = step.sources(laid, s.a)
     q, _ = step.drive(j, laid.gearing.drive, s.rd)
     push = step.driven(laid.gearing, force, q)
     clock = held.trains[-1].first
-    assert out.k.all() and (s.a[clock] != s.b[clock]).any()
+    assert (s.a[clock] != s.b[clock]).any()
     for slot, act in ((s.a, True), (s.b, False)):
         w = laid.gearing.rest + slot[clock]
-        assert frame.same(step.gear(s.a, s.b, s.r, s.go, w, w, push), [now.a, now.b, now.r]) is act
+        assert frame.same(step.gear(s.a, s.b, s.r, w, push), [now.a, now.b, now.r]) is act
 
 
 def test_a_clock_standing_at_one_count_gives_the_act_of_a_board_at_its_rest_and_that_count():
@@ -90,26 +94,25 @@ def test_a_clock_standing_at_one_count_gives_the_act_of_a_board_at_its_rest_and_
         fixed = laid._replace(
             gearing=laid.gearing._replace(rest=laid.gearing.rest + count), clock=frame.unread()
         )
-        assert frame.same(frame.flat(step.tick(laid, s, 1)), frame.flat(step.tick(fixed, s, 1)))
+        assert frame.same(step.tick(laid, s), step.tick(fixed, s))
 
 
-def test_the_run_back_is_exact_with_the_clock_moving_under_random_masks():
-    """ROUNDS rounds under random masks, light across 2**256 and the clock's own gear moving: the run back from the
-    outs reaches the start bit for bit, the clock's counts moved."""
+def test_the_run_back_is_exact_with_the_clock_moving_wherever_every_kept_tooth_stands_within_its_next_teeth():
+    """ROUNDS rounds, light across 2**256 and the clock's own gear moving by its strides: every kept tooth stands within
+    the teeth the next round reads, and the run back by the tick on the mirrored state reaches the start bit for bit."""
     _, held, laid = built()
-    rng = np.random.default_rng(3)
-    s = world(rng, laid)
-    masks = [rng.integers(0, 1 + 1, (1, laid.nb.shape[1])).astype(object) for _ in range(ROUNDS)]
-    end, outs = rounds(step.tick, laid, s, masks)
+    s = world(np.random.default_rng(3), laid)
+    ends = reached(laid, s, ROUNDS)
     clock = held.trains[-1].first
-    assert any(o.k.any() for o in outs) and (end.a[clock] != s.a[clock]).any()
-    assert frame.same(rewind(step.untick, laid, end, outs), s)
+    kept = all((x.r < step.weight(laid.gearing, laid.clock, x.a)).all() for x in ends)
+    assert kept and (ends[-1].a[clock] != s.a[clock]).any()
+    assert frame.same(rewind(step.untick, laid, ends[-1], ROUNDS), s)
 
 
 def test_the_run_back_is_exact_while_the_clock_rises_and_departs_at_the_second_round_where_it_falls():
     """Light at rest at one count, the clock's own gear moving by a stride alike everywhere, every tooth at its teeth
     less 1: rising, ROUNDS rounds run back to the start; falling, the first round's kept tooth stands past the next
-    teeth, so its round runs back and the second does not, the one limit of W = W+ (G2's to close by design)."""
+    teeth, so its round runs back and the second does not: W = W+'s limit on the run back, G2's to close by design."""
     _, held, laid = built()
     clock = held.trains[-1].first
     for stride in (STRIDE, -STRIDE):
@@ -117,9 +120,8 @@ def test_the_run_back_is_exact_while_the_clock_rises_and_departs_at_the_second_r
         a = 0 * s.a + REACH
         b = a - stride * (np.arange(len(a)) == clock).astype(object)[:, None]
         s = s._replace(a=a, b=b, r=step.weight(laid.gearing, laid.clock, a) - 1)
-        runs = [rounds(step.tick, laid, s, [1] * n) for n in (1, 1 + 1, ROUNDS)]
-        exact = [frame.same(rewind(step.untick, laid, *run), s) for run in runs]
-        first, _ = runs[0]
-        past = (first.r >= step.weight(laid.gearing, laid.clock, first.a)).any()
+        ends = reached(laid, s, ROUNDS)
+        exact = [frame.same(rewind(step.untick, laid, ends[n - 1], n), s) for n in (1, 1 + 1, ROUNDS)]
+        past = (ends[0].r >= step.weight(laid.gearing, laid.clock, ends[0].a)).any()
         want = [True, True, True] if stride > 0 else [True, False, False]
         assert exact == want and past == (stride < 0)

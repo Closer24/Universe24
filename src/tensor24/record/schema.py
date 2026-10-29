@@ -1,11 +1,16 @@
-"""The record's schema 1.1: JSON Lines of whole numbers and labels, each line's kind its record's name in lower case."""
+"""The record's schema 1.2: JSON Lines of whole numbers and labels, each line's kind its record's name in lower case."""
 
 from dataclasses import dataclass
 
-# The lines, in the order (round, kind, site, train): Header first; then Whole, Split, Turnover, Rate and Books; End
-# last. The ledger's own file holds Ledger lines. The other records stand inside lines. A digest is SHA-256 in hex.
+# The lines, in the order (round, kind, site, train): Header first; then Whole, Split, Rate and Books; End last. The
+# ledger's own file holds Ledger and Count lines. The other records stand inside lines. A digest is SHA-256 in hex.
 MAJOR = 1  # a breaking change; the decoder upcasts an older major and refuses an unknown one
-MINOR = 1  # an added field; 1.1 names the operands, and the coupling row took its twelve fields at 1.1, before any record held one
+# each minor version's change in order: an added field or line that no reader needs, or a line no run writes retired
+ADDED = (
+    "the operands named, the coupling row's twelve fields",
+    "the ledger's count per Node-clock (Animate's G1), the turnover line retired as her 1.2 has it",
+)
+MINOR = len(ADDED)
 
 
 @dataclass(frozen=True)
@@ -178,6 +183,17 @@ class End:
     digest: str
     undone: int
     exact: int
+
+
+@dataclass(frozen=True)
+class Count:
+    """A line of the ledger's own file, per round, Node-clock and train, at "step": the train's now counts there, row by row."""
+
+    round: int
+    at: str
+    site: int
+    train: int
+    count: tuple[int, ...]
 
 
 @dataclass(frozen=True)

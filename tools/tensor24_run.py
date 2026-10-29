@@ -1,5 +1,5 @@
-"""Tensor24's run (stage 10): the three files run to a record of the schema, every due beat firing in every round
-until each Node-clock's count stands at the setting's ticks, the rewind checked, every departure of the files named
+"""Tensor24's run (stage 10): the three files run to a record of the schema and its ledger beside it, every
+Node-clock stepping in every round for the setting's ticks, the rewind checked, every departure of the files named
 and no record written past one.
 
 Usage: python -I tools/tensor24_run.py <universe> <piece> <setting> <record .jsonl>

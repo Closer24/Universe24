@@ -245,19 +245,19 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
     last = sum(DIMS[k] for k in TRAINS[-1]["kinds"]) * TRAINS[-1]["part"]  # the last train's rows
     laid = [(0, rows - 1, site, now, before, tooth), (len(TRAINS) - 1, last - 1, site, before, now, 0)]
     held, found = loaded(made, universe(), laid)
-    a, b, r, go, rd, *clocks = held.state
+    a, b, r, rd = held.state
     assert found == [] and (a[rows - 1, site], b[rows - 1, site], r[rows - 1, site]) == (
         now,
         before,
         tooth,
     )
     assert (a[ROWS - 1, site], b[ROWS - 1, site]) == (before, now)
-    assert (a.shape, b.shape, r.shape, go.shape, rd.shape) == ((LAID, SITES),) * len("abrgd")
-    assert all(x.shape == (1, SITES) for x in clocks) and all(x.dtype == object for x in held.state)
+    assert (a.shape, b.shape, r.shape, rd.shape) == ((LAID, SITES),) * len("abrd")
+    assert all(x.dtype == object for x in held.state)
     assert not any(
         np.shares_memory(x, y) for x, y in itertools.combinations(held.state, 1 + 1)
     )  # every array its own: no write reaches two
-    assert not go.any() and not rd.any() and not any(x.any() for x in clocks)
+    assert not rd.any()
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1
     held, found = loaded(made, universe(), [(0, rows, site, now, before, 0)])
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
@@ -277,47 +277,24 @@ def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
     assert planned[0].size == 0 and not contract(Plan(*planned), readings, gears()).any()
 
 
-def rewound(r, w, rate, gamma, dial=0):
-    """One round of every gear on a ring of sites and its run back from the out: the start back exactly, or not."""
+def rewound(r, w):
+    """One round of every gear on a ring of sites and its run back: the start back exactly, or not."""
     nb, meshes = board((SITES, 1, 1))
-    layout = plain(nb, meshes, np.ones(D * SITES, dtype=object), w, rate, gamma)
+    layout = plain(nb, meshes, np.ones(D * SITES, dtype=object), w)
     a = np.arange(SITES, dtype=object)[None, :] + 0
-    clocks = 0 * a
-    s = State(a, a - 1, r, 0 * a, 0 * a, clocks + dial, clocks, clocks)
-    now, out = tick(layout, s, clocks + 1)
-    return all((x == y).all() for x, y in zip(untick(layout, now, out), s, strict=True))
+    s = State(a, a - 1, r, 0 * a)
+    return all((x == y).all() for x, y in zip(untick(layout, tick(layout, s)), s, strict=True))
 
 
-def test_the_two_promises_are_named_where_they_fail_and_are_the_run_backs_own_condition():
-    w, gamma = 5, 4
-    full = np.zeros((1, SITES), dtype=object) + gamma
+def test_the_promise_is_named_where_it_fails_and_is_the_run_backs_own_condition():
+    w = 5
     for tooth in (w, w + 1, -1):
         r = np.zeros((1, SITES), dtype=object)
         r[0, 2] = tooth
-        assert promises(r, w, full, gamma) == [
-            f"row 0, site 2: the fine tooth {tooth} not within [0, {w})"
-        ]
-        assert not rewound(r, w, full, gamma)
+        assert promises(r, w) == [f"row 0, site 2: the fine tooth {tooth} not within [0, {w})"]
+        assert not rewound(r, w)
     r = np.zeros((1, SITES), dtype=object) + w - 1
-    assert promises(r, w, full, gamma) == [] and rewound(r, w, full, gamma)
-    rate = full + 0
-    rate[0, 3] = gamma + gamma
-    assert promises(0 * r, w, rate, gamma) == [
-        f"site 3: the rate {gamma + gamma} not within [0, the full rate {gamma}]"
-    ]
-    assert not rewound(0 * r, w, rate, gamma)
-    rate[0, 3] = -1
-    assert promises(0 * r, w, rate, gamma) == [
-        f"site 3: the rate -1 not within [0, the full rate {gamma}]"
-    ]
-    assert not rewound(0 * r, w, 0 * full - 1, gamma)  # every rate at -1: k is -1, no bit
-    edge = full + 0  # at the dial's top, Gamma - 1, the full rate gives k = 1 and one past it k = 2
-    assert rewound(0 * r, w, edge, gamma, gamma - 1)
-    edge[0, 3] = gamma + 1
-    assert not rewound(0 * r, w, edge, gamma, gamma - 1)
-    assert promises(0 * r, w, edge, gamma) == [
-        f"site 3: the rate {gamma + 1} not within [0, the full rate {gamma}]"
-    ]
+    assert promises(r, w) == [] and rewound(r, w)
 
 
 def renamed(made, scale=lambda strength, target: strength):
@@ -370,12 +347,10 @@ def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
 
 
 def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
-    """Whichever of the lay's eight arrays the machine's memory refuses, the board is named and nothing raises."""
+    """Whichever of the lay's four arrays the machine's memory refuses, the board is named and nothing raises."""
     ks, c = made
     zeros = np.zeros
-    for after in range(
-        len("abrgdpct")
-    ):  # the gears' five, then the dial, the count, the time: `after` made
+    for after in range(len("abrd")):  # the gears' four: `after` made
         asked = []
 
         def refused(*args, after=after, asked=asked, **kwargs):
