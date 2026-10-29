@@ -15,12 +15,14 @@ A toy of the logic, not the act. The depth k = 0 to K is how deep the board's co
 h is the heat: the swing's (H at each bang, 0 at the top), or the old theory's (one bang, then cooling for ever).
 The whole clicks of composites that each step writes, the interesting clicks, number k f, with f = h (H - h) the flow
 between hot and cold: a board at one temperature carries none.
-Three histories, each from the same first bang (k = 0, h = H):
+Four histories, each from the same first bang (k = 0, h = H):
   A, the old theory: one bang, then cooling for ever, forward only;
   B1, the swing, forward only (a silent future);
   B2, the swing with two boards: at the last bang the future weighs each depth by the clicks it will make, 1 + c k,
       the backward board carries that weight back step by step, and each split is drawn by its forward size times the
-      backward weight of the side it leads to (the product draw of two_boards.py, part 1).
+      backward weight of the side it leads to (the product draw of two_boards.py, part 1);
+  B3, the swing on one board with records: the depth M a composite has reached is kept in the record and passes
+      every bang, and binding again below M is REBIND + 1 times as easy (heredity, forward only).
 Each history's law is computed exactly: the forward weights from the past, the backward weights from the future, and
 the step's law their product (Aharonov, Bergmann and Lebowitz's rule, a Markov chain weighed by its far end).
 """
@@ -129,6 +131,42 @@ def report(name: str, law: list[list[Fraction]], heat) -> list[str]:
     return out
 
 
+REBIND = 3  # a remembered bond rebinds REBIND + 1 times as easily
+
+
+def heredity(heat, steps: int) -> list[list[Fraction]]:
+    """One board with records: the depth M a composite has reached is kept in the record and passes every bang,
+    and binding again below M is REBIND + 1 times as easy; the law over (k, M), read as the law of k."""
+    law = {(0, 0): Fraction(1)}
+    marginals = []
+    for s in range(steps + 1):
+        row = [Fraction(0)] * (K + 1)
+        for (k, _m), p in law.items():
+            row[k] += p
+        marginals.append(row)
+        if s == steps:
+            break
+        h = heat(s)
+        nxt: dict[tuple[int, int], Fraction] = {}
+        for (k, m), p in law.items():
+            parts = sizes(k, h)
+            if k < K:
+                remembered = 1 - nonneg_less(k, m)
+                parts[k + 1] = parts[k + 1] * (1 + REBIND * remembered)
+            total = sum(parts.values())
+            for k2, size in parts.items():
+                key = (k2, max(m, k2))
+                nxt[key] = nxt.get(key, Fraction(0)) + p * Fraction(size, total)
+        law = nxt
+    return marginals
+
+
+def nonneg_less(k: int, m: int) -> int:
+    """1 where k is at least m, 0 where k is below m: the one whether on m - k - 1."""
+    n = m - k - 1
+    return 1 - (n // (n * n + 1) + 1)
+
+
 def main() -> None:
     steps = C * T
     lines = [
@@ -181,6 +219,15 @@ def main() -> None:
         )
     ]
     gentle = [b - a for a, b in zip(per_swing(g1, gentle_heat), per_swing(g2, gentle_heat), strict=True)]
+    b3 = heredity(swing_heat, steps)
+    lines.extend(
+        report(
+            f"B3, the swing on one board with records: a remembered bond rebinds {REBIND + 1} times as easily",
+            b3,
+            swing_heat,
+        )
+    )
+    lines.append("")
     lines.append("the two boards' lean, B2 less B1, in interesting clicks per swing (weight 1 + 3 k):")
     lines.append("  the full bang:   " + ", ".join(f"{float(x):.2f}" for x in strong))
     lines.append("  the gentle bang: " + ", ".join(f"{float(x):.2f}" for x in gentle))
