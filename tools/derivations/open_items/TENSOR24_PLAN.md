@@ -683,6 +683,15 @@ On the owner's word to David: "a generic solution for everything". This is David
     - **What the backward run carries:** no hand but a tag, the basis and the weights of the clicks to come (the detectors' frames, the absorbers' takes, sigma_b per part), carried back one Mesh a step to the Node-clock where the parts were one.
     - **The split click** is where the forward reading of the one hand meets the tag that came back: law 9's draw over sigma_f sigma_b, ordered by cause (B). The whole click and the record are the forward run's alone.
     - **So:** decisions 28, 30 and 31 read as one Node-clock with one hand, run forward and back; "two boards" and "a doubled Node-clock" are the run's two directions, and the new array is the tag alone.
+35. **(ai) Nothing declared: every particle is to appear by itself in the clicks. APPROVED (the owner's word to the Boss of 2026-10-29, 10:5x UTC, in Hebrew; in translation: "You wrote 'declared', but declaring is forbidden: the muon, the tau, the quarks, W, Z and the Higgs, not derived, some declared in the file and some open. They are to appear by themselves in the clicks."; on the Boss's report of the documents' check).**
+    - **The rule:** no particle, mass or coupling is declared. A universe file that declares one, a train's pinion standing for a particle's mass, breaches **nothing declared**; it is no status. Every particle is to appear by itself in the clicks: a stable composite clock that the clicks build from the one seed, its mass its own beat, read on the record.
+    - **The status words change:** "declared by the file" leaves the ledger. Each such number reads "not yet seen in the clicks", with the breach named wherever a file still declares it (the head's test worlds' pinions, the example universes' trains).
+    - **The seed:** small clocks all alike (the principle's item (9)), one train; the kinds by the ladder (all five from one A1 train within three steps, DAVID-TENSOR24-THE-LADDER-AND-FUSION.md on toys-5); the masses as the composites' beats; the generations, Planck's key and a large number sought with them (the Boss's three probes, running).
+    - **Owed:**
+      - Sofer: what the universe file may still hold (the board, the seed, the scale) read against nothing declared;
+      - David: the ladder's spectrum from one seed, the composites and their beats;
+      - Animate: the record's reading of a particle, a stable composite's beat and windings;
+      - the Boss: the act's own numbers and the three probes.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
