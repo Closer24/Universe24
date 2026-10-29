@@ -1,4 +1,4 @@
-unmutated: rc=0 130 passed in 1.21s
+unmutated: rc=0 149 passed in 1.30s
 killed   the guard jsoned dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a key twice]
 killed   the guard framed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an empty file]
 killed   the guard headed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a first line that is no header]
@@ -156,6 +156,28 @@ killed   the cards' rule dropped from the guard  <- test_a_broken_record_is_not_
 killed   a card's winding below 1 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a train card's winding -4]
 killed   a card's winding of 0 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a train card's winding 0]
 killed   a train on two cards read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a train on two cards]
+killed   a composite at its deepest part's depth  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   an elementary train at depth 1  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   a part that is a row read  <- test_a_record_the_row_cannot_frame_or_read_reads_not_read_named[a part that is a row]
+killed   a bottom held two rounds missed  <- test_the_load_s_bottoms_at_their_edges[a bottom held two rounds]
+killed   a bottom counted twice where it is held  <- test_the_load_s_bottoms_at_their_edges[a bottom held two rounds]
+killed   a bang closing at its next bottom  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   the first bang dropped  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   an end's lays not read  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   a click's children not read  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   a split click not counted  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   the click kinds by kind alone  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   a bang's clicks read past its last round  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   the clocks held read after the step  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   a winding of 0 held  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   no time gear read as one  <- test_a_record_the_row_cannot_frame_or_read_reads_not_read_named[no time gear]
+killed   the load read after the clicks too  <- test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger
+killed   one bang whole compared  <- test_a_record_the_row_cannot_frame_or_read_reads_not_read_named[one bang whole]
+killed   a clock of no depth read  <- test_a_record_the_row_cannot_frame_or_read_reads_not_read_named[a card without its parts]
+killed   a bang shows more only by both  <- test_a_bang_shows_more_by_its_kinds_alone_or_by_its_depth_alone
+killed   a later bang against the first  <- test_a_later_bang_that_shows_no_more_reads_not_shown_named[a shallower clock]
+killed   a held clock's fall not read  <- test_the_deepest_clock_held_falling_at_a_bang_s_end_reads_not_shown
+killed   the tool prints no row 46  <- test_the_tool_prints_row_46_from_the_record_and_its_ledger
 killed   a negative site read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a rate line at a site below 0]
 killed   a negative Spoke read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a pair's end at a Spoke below 0]
 killed   a child's site not read (the ends' read)  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a child laid off the board]
@@ -181,4 +203,4 @@ killed   the tool matches a Node-clock's counts to its clicks backward  <- test_
 killed   the tool's last read is its first  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
 killed   the tool counts a click of 0 ticks as not read  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
 killed   the tool names the last click not read as the first  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
-182 mutants, 0 survived
+204 mutants, 0 survived

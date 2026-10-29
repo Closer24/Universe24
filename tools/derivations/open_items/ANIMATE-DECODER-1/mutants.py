@@ -7,7 +7,8 @@ two tests; "killed" names the first test that fails with it, "SURVIVED" means al
 of the record and of the ledger dropped from its tuple; each part of each rule, reading and verdict changed; the fifth
 hostile review's sixteen, the seventh's eighteen and the twelfth's twenty-five as they read on this text
 (decoder_mutants.py, decoder_mutants_s8.py and mutants_s13.py there); the Boss's ruling on A3 and A4; David's A6, each
-train's windings at its own winding, with the header's train cards; and the tool's lines.
+train's windings at its own winding, with the header's train cards; row 46, each later bang shows more; and the tool's
+lines.
 """
 
 import shutil
@@ -15,13 +16,18 @@ import subprocess
 import sys
 from pathlib import Path
 
-REC, BOOKS, CLOCKS, TOOL = (
+REC, BOOKS, CLOCKS, BANGS, TOOL = (
     "src/tensor24/decoder/records.py",
     "src/tensor24/decoder/books.py",
     "src/tensor24/decoder/clocks.py",
+    "src/tensor24/decoder/bangs.py",
     "tools/tensor24_decode.py",
 )
-TESTS = ("tests/test_the_tensor24_decoder.py", "tests/test_the_tensor24_decoder_cases.py")
+TESTS = (
+    "tests/test_the_tensor24_decoder.py",
+    "tests/test_the_tensor24_decoder_cases.py",
+    "tests/test_the_tensor24_decoder_bangs.py",
+)
 GUARDS = (
     "jsoned",
     "framed",
@@ -575,6 +581,80 @@ MUTANTS = {
     "a card's winding of 0 read": [(REC, 't["winding"] < 1', 't["winding"] < 0')],
     "a train on two cards read": [
         (REC, "twice = [i for n, i in enumerate(trains) if i in trains[:n]]", "twice = []")
+    ],
+    # row 46, each later bang shows more (the owner's word to Animate of 06:3x UTC: "ever more complex clocks")
+    "a composite at its deepest part's depth": [
+        (
+            BANGS,
+            "found[train] = 1 + max(found[p] for p in of)",
+            "found[train] = max(found[p] for p in of)",
+        )
+    ],
+    "an elementary train at depth 1": [
+        (BANGS, "for p in of) if of else 0", "for p in of) if of else 1")
+    ],
+    "a part that is a row read": [(BANGS, '        and all(whole(p) for p in t["parts"])\n', "")],
+    "a bottom held two rounds missed": [(BANGS, "load[n] <= load[n - 1]", "load[n] < load[n - 1]")],
+    "a bottom counted twice where it is held": [
+        (BANGS, "load[n] < load[n + 1]", "load[n] <= load[n + 1]")
+    ],
+    "a bang closing at its next bottom": [
+        (BANGS, "(rounds[a], rounds[b] - 1)", "(rounds[a], rounds[b])")
+    ],
+    "the first bang dropped": [(BANGS, "starts = [0, *bottoms(load)]", "starts = bottoms(load)")],
+    "an end's lays not read": [(BANGS, 'parts = [click, *click.get("ends", [])]', "parts = [click]")],
+    "a click's children not read": [(BANGS, '[*holdings, *click.get("children", [])]', "holdings")],
+    "a split click not counted": [(BANGS, 'CLICKS = ("whole", "split")', 'CLICKS = ("whole",)')],
+    "the click kinds by kind alone": [
+        (
+            BANGS,
+            'kinds = {(e["kind"], e.get("train")) for e in clicks}',
+            'kinds = {e["kind"] for e in clicks}',
+        )
+    ],
+    "a bang's clicks read past its last round": [
+        (BANGS, 'first <= e["round"] <= last', 'first <= e["round"]')
+    ],
+    "the clocks held read after the step": [
+        (
+            BANGS,
+            'at = "clicks" if any(line["at"] == "clicks" for line in lines) else "step"',
+            'at = "step"',
+        )
+    ],
+    "a winding of 0 held": [(BANGS, 'line["windings"] > 0', 'line["windings"] >= 0')],
+    "no time gear read as one": [
+        (BANGS, '    if not whole(gear):\n        return [], "the header names no time gear"\n', "")
+    ],
+    "the load read after the clicks too": [
+        (BANGS, 'if line["at"] == "step" and line["train"] == gear', 'if line["train"] == gear')
+    ],
+    "one bang whole compared": [(BANGS, "if len(found) < 1 + 1:", "if len(found) < 1:")],
+    "a clock of no depth read": [(BANGS, "    if deep:\n", "    if False:\n")],
+    "a bang shows more only by both": [
+        (
+            BANGS,
+            "kinds[n] > kinds[n - 1] or laid_deepest[n] > laid_deepest[n - 1]",
+            "kinds[n] > kinds[n - 1] and laid_deepest[n] > laid_deepest[n - 1]",
+        )
+    ],
+    "a later bang against the first": [
+        (
+            BANGS,
+            "more = kinds[n] >= kinds[n - 1] and laid_deepest[n] >= laid_deepest[n - 1]",
+            "more = kinds[n] >= kinds[0] and laid_deepest[n] >= laid_deepest[0]",
+        ),
+        (
+            BANGS,
+            "kinds[n] > kinds[n - 1] or laid_deepest[n] > laid_deepest[n - 1]",
+            "kinds[n] > kinds[0] or laid_deepest[n] > laid_deepest[0]",
+        ),
+    ],
+    "a held clock's fall not read": [
+        (BANGS, "        if held_deepest[n] < held_deepest[n - 1]:\n", "        if False:\n")
+    ],
+    "the tool prints no row 46": [
+        (TOOL, '    print(f"row 46: {bangs.row_46(record, ledger, why)}")\n', "")
     ],
     # the twelfth hostile review's twenty-five (mutants_s13.py there), as they read on this text
     "a negative site read": [
