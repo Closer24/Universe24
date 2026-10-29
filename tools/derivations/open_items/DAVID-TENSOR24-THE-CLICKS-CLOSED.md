@@ -12,11 +12,13 @@ David, 2026-10-29, 10:1x UTC, for Sofer, the Boss and Animate. By the owner's wo
 - the clock side of 10.3, cell by cell (section 8);
 - lines for sections 14 and 15 (section 9);
 - the whole click's numbers the Boss asked for (section 11);
-- my approval (section 12).
+- my approval (section 12);
+- the two clicks on the doubled Node-clock, decision 31 (section 13).
 
 **The probes,** in exact integers and fractions, in derive/david_open/two_boards/, each with its output beside it:
 - **shared_hand.py:** the twins' shared hand forced by the 24, its sizes, and the room of closed composites;
-- **composite_window.py:** a composite of three parts clicking in a window, three forms on one board against the draw at the birth on two boards.
+- **composite_window.py:** a composite of three parts clicking in a window, three forms on one board against the draw at the birth on two boards;
+- **spread_quantum.py:** one quantum spread over many absorbers on the doubled Node-clock, the takes merged back along the backward half.
 
 Each runs with `python3 -I <file>` in under three seconds and reads no engine.
 
@@ -55,10 +57,11 @@ Confirmed: the draw at the Node-clock where the parts were one, the backward boa
 1. **The draw's place** (Clocks, first bullet): add "a composite's binding" beside a pair's birth and a spread quantum's source. For three parts, B is exact with no signal at every timing (composite_window.py, 8 of 8).
 2. **The hand** (Acts, beside the twins' joint sizes): "at a birth alike under the 24 the twins' joint hand is forced, the singlet for two halves and the identity for two vector twins (shared_hand.py); the twin trains' coupling as an intertwiner of the lifts is owed on the act".
 3. **The size** (Acts, the law's wording): the size of each outcome is the squared whole-number overlap of the forward hand with that outcome's frame on the backward dial, a Gaussian norm; it is the product sigma_f sigma_b where the parts are apart. The pair's 2 x 2 determinants are this overlap.
-4. **The count** (Tensors, the sigma_b line). "One more set of integers per Node-clock" undercounts.
-   - The backward board is the untick's arrays: the same act run back, so a whole second state per Node-clock, k_b = 5 G + 2 T + 3.
-   - The frames ride in the detectors' own rows of it, and sigma_b at a part is read from that state's hand there.
-   - The count stays fixed for the run.
+4. **The count** (Tensors, the sigma_b line; 10.7's "k_b, David's count owed"). Under the Boss's refinement (10.7, item 8: only the dial is doubled, since an agreeing history's gears retrace the forward clock's), k_b is the dial's integers alone:
+   - **per twin train:** the frame in transit, four whole numbers for a quaternion (two for a Gaussian frame), and sigma_b at the two outcomes: 6;
+   - **per channel train:** the merge's total and the branch drawn (section 13): 2;
+   - so k_b = 6 per twin train plus 2 per channel train, at most 6 T, fixed for the run. My first count of 10:2x, a whole second state of 5 G + 2 T + 3, was the axis of two that the Boss's refinement replaces; it is withdrawn.
+   - Two spread quanta of one train crossing one Node-clock in one span need their passes in turn (the scheduler's, open).
 5. **The gathering** (New, second bullet): the sentence "each loser's share of light is taken at the loser, and how the winner holds the whole quantum is carried, under decision 28, by the word that runs back to the source and out again" states a mechanism that is not derived. In its place: "**open:** a take at a loser would be a write on the forward board read from the backward dial, and the loser's share has no forward path to the winner; the books close in the total at every click, through the winner's signed kept; where the losers' shares go, so that no second click takes them, is the open step (David's)".
 6. **Open:** add "a joint frame: a station that measures two parts of two births together (entanglement swapping), where the backward dial carries one frame over two paths, so the draw needs the cause's order over two births (a test the scheduler can fail)".
 7. **Measured and shown:** add "three parts, GHZ and W, exact with no signal at all four timings of their clicks under B, where one board's three forms of the closure each signal or depart (composite_window.py)". A tie rule needs no line: the rank count's order over the outcomes changes no law, since each outcome is drawn exactly its size's times over a full turn in any order.
@@ -95,8 +98,8 @@ The Boss asks (6492236807, item 3) that the aim line be kept with its condition 
 | three parties | as Bell | exact, with no signal, at every timing |
 | the runner | forward, tick by tick | forward to the settings, back along the paths to the births, forward with the outcomes (each pass a run of the act or of the untick), repeated where loops close |
 | the record | the forward board's; G6's back is 1 at every part | the same, with G6 writing sigma_b per part, and the End's second bit |
-| the state per Node-clock | 5 G + 2 T + 3 | twice: the backward state of the same count, k_b = 5 G + 2 T + 3 |
-| the cost | one state, one pass | two states, three passes per span, more where loops close |
+| the state per Node-clock | 5 G + 2 T + 3 | the same, plus the backward dial: k_b = 6 per twin train and 2 per channel train, at most 6 T (the gears coincide in an agreeing history, 10.7) |
+| the cost | one state, one pass | one state and the dial, three passes per span, more where loops close |
 | complexity | the forward ratchet | the same: the two boards add nothing to it |
 
 ## 8. The clock side of 10.3, cell by cell
@@ -110,7 +113,7 @@ The Boss asks (6492236807, item 3) that the aim line be kept with its condition 
 - **The bang and the swing:** confirmed.
 - **Binding, composite clocks:** confirmed, and add: a composite closes (total zero, A1) only with an even count of halves; the closed composites of n halves number 1, 2, 5, 15, 51, 187, 715 and 2795 for n = 2 to 16 (shared_hand.py).
 - **Born:** confirmed, and add: drawn at the Node-clock where the parts were one.
-- **Grangier:** in place of "the word runs back from the click to the source and out": each absorber's size rides back along the quantum's paths to the source, the source draws once over the products, and the outcome rides out to the one absorber that clicks.
+- **Grangier:** in place of "the word runs back from the click to the source and out": the absorbers' takes ride back to the source merged on the way, each Node-clock drawing one branch by the rank count over the branches' totals (section 13), and the word rides out along the branches drawn to the one absorber that clicks.
 - **Bell, three parties, the eraser:** confirmed, and add: three parts exact with no signal at every timing (composite_window.py, 8 of 8); the shared hand forced by the 24 (shared_hand.py).
 - **The arrow:** confirmed.
 - **Complexity's growth:** confirmed, and add: the closed composites' room grows about four times per pair of halves, so the algebra caps no composite's parts; the cap m is per Node-clock.
@@ -124,7 +127,7 @@ The Boss asks (6492236807, item 3) that the aim line be kept with its condition 
   - the shared hand forced by the 24, and its sizes;
   - the room of closed composites;
   - three parts on two boards exact with no signal, where one board's forms signal or depart;
-- **derived on paper, add:** k_b = 5 G + 2 T + 3; K = Y(last)^2;
+- **derived on paper, add:** k_b = 6 per twin train and 2 per channel train; K = Y(last)^2;
 - **directions, add:**
   - the gathering, as corrected in section 2, item 5;
   - a joint frame over two births (entanglement swapping);
@@ -137,7 +140,7 @@ The Boss asks (6492236807, item 3) that the aim line be kept with its condition 
   - K = Y(last)^2, the ruler's deepest entry squared. So F runs from Y(last)^2 at rest to Gamma^2 at the deepest load, exact to one part in Gamma^2 everywhere.
   - T_c comes from the universe file's key and the stretch s (law 5's 3 key s), or is the key itself on the swept-area count (the key page, section 5). The law's line chooses which, at stage 9.
 - **Item 2:** the draw at the Node-clock where the parts were one (form B), over the squared overlaps of the forward hand with the backward frames, and no tournament.
-- **New item:** k_b = 5 G + 2 T + 3, the backward state of the same count; and the twin trains' coupling at a birth as an intertwiner of the 24's lifts.
+- **New item:** k_b = 6 per twin train and 2 per channel train, the dial alone (10.7); and the twin trains' coupling at a birth as an intertwiner of the 24's lifts.
 
 ## 10. More and more complex clocks: what the closed clicks give
 
@@ -169,3 +172,39 @@ So the chain toward ever more complex clocks closes from the clicks at every lin
 ## 12. My approval
 
 **David approves the picture by name** (docs/BIG_PICTURE.md at scribe-5 69dd8f9d3), with section 2's item 5 entered. That is the one line of the rewrite that states a mechanism that is not derived; the other items are additions. The flag on gravity's tensor half (section 8) goes to the fresh hostile reader and the architect by name.
+
+## 13. The two clicks on the doubled Node-clock (decision 31)
+
+The owner's word to the Boss, 10:0x UTC (decision 31, comment 6493855395; in Hebrew; in translation): "Better to see it as one board with doubled Node-clocks, which simulates a double board, no? Let the clicks be derived exactly from the full picture." The Boss asks what the backward half brings to a spread quantum's source (the absorbers' takes) and to a pair's birth (the frames). Probe: spread_quantum.py, with its output.
+
+**The whole click (how much):** the forward half's drive carry at the receiving train's winding writes the record (5.1). The backward half confirms it as a check read on the forward record (G5; Animate's reading 12) and writes nothing.
+
+**The split click at a pair's birth: the backward half brings the frames.**
+- Each detector's frame rides back along its own twin's path, one Mesh a sweep, in the twin train's rows of the backward half: two whole numbers for a Gaussian frame, four for a quaternion.
+- An ideal detector brings its frame and weights sigma_b = 1 at each outcome.
+- At the birth Node-clock the forward half's hand is the twins' shared hand, forced by the 24 (section 1). Its overlaps with the two frames, squared, are the joint sizes.
+- One draw, the rank count over d = (c + V) mod L at the birth's own count and digits.
+- Each outcome rides out along its twin on the forward half, and the detector's whole click writes the record.
+- Shown: shared_hand.py (the hand, the sizes, S); two_boards.py (the zigzag at three timings); composite_window.py (three parts at four timings).
+
+**The split click at a spread quantum's source: the backward half brings the absorbers' takes, merged on the way.** The backward dial holds a fixed count per Node-clock, so many absorbers' takes cannot ride back each on its own without a count that grows with the absorbers. They ride back merged:
+- **pass 1, forward:** the quantum spreads, and each absorber reads its share sigma_f at its own Node-clock. That share is its channel row's fine tooth r_d after the passage, the fraction of a winding in transit, which the whole click's carry already holds: for one quantum no absorber reaches a whole winding, and the shares sum to one winding. Beside it stands the absorber's take sigma_b, its free slots under the cap;
+- **pass 2, backward,** one Mesh a sweep from the farthest Node-clock to the source:
+  - each Node-clock adds its own sigma_f sigma_b to the totals that reach it from the branches one Mesh farther;
+  - it draws one branch by the rank count over those totals, and keeps the branch drawn;
+  - it passes the total on to its parent, the neighbour one Mesh nearer the source;
+- **pass 3, forward:** from the source the word follows the branches drawn, out to one absorber, whose whole click takes the quantum. Every other absorber hears "not you".
+- **The count:** two integers more per channel train in the backward dial, the total and the branch drawn. Every read stays within six neighbours.
+- **Shown** (spread_quantum.py, exact):
+  - each absorber wins with odds exactly its take over the sum of the takes, on two different trees, so the law does not depend on the tree;
+  - a silent future gives Born over sigma_f, and an absorber with no free slot never wins;
+  - on a board of side 5 with three nested merges, every combination of their digits over the joint turn (135) draws each absorber exactly its share, and exactly one absorber clicks at every combination (g2 = 0).
+- **So** the draw at the source over the products is assembled, with a fixed count per Node-clock, as a chain of local draws along the backward half. It is the retired tournament's telescoping run on the backward pass, where no click is written until the pass ends, so it has no window.
+
+**Open, each with its test:**
+- **The gathering, now sharper.** After the winner's whole click, the losers' shares stay on the forward half as light that no absorber may take ("not you"), while the winner's take keeps its signed debt; the books close in the total.
+  - If that light still pushes the time gear (rho + 3p), gravity follows the spread wave and not the outcome.
+  - Page and Geilker (1981) tested exactly this with a Cavendish balance steered by a quantum choice: gravity followed the outcome.
+  - So the losers' shares must not push after the click. The direction to derive is Wheeler and Feynman's: the advanced wave from the winner cancels the retarded shares beyond the completed transaction.
+- **A joint frame over two births** (entanglement swapping), as in section 2, item 6.
+- **The merges' digits:** the joint turn's exactness assumes each merge's counter runs over its own full turn; that is the independence of two draws, measured and not proved.
