@@ -52,8 +52,8 @@ def test_the_example_files_run_to_a_record_the_decoder_reads_with_its_run_back_e
     # every dial at the full rate: each Node-clock's k is written at its first beat alone, in the first round
     rates = [(e["round"], e["site"], e["count"], e["k"]) for e in held.of("rate")]
     assert rates == [(1, site, 1, 1) for site in range(sites_of(piece["shape"]))]
-    *trains, time = held.header["trains"]
-    assert time["label"] == run.TIME and time["winding"] > 1 and all(t["winding"] == 1 for t in trains)
+    *_, time = held.header["trains"]  # the clock's own gear winds as every train does
+    assert time["label"] == run.TIME and all(t["winding"] == 1 for t in held.header["trains"])
 
 
 def test_the_end_holds_the_digest_of_the_state_the_rounds_reach_and_reads_0_where_the_run_back_misses(

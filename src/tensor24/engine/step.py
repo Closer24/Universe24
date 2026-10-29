@@ -1,11 +1,11 @@
-"""The Node-clock's step: every gear's impulse, drive and carry, the time gear first, and the rate dial's beat, each run back."""
+"""The Node-clock's step: every gear's impulse, drive and carry at the teeth its clock gives it, and the rate dial's beat, each run back."""
 
 import numpy as np
 
-from tensor24.algebra.carry import Z, carry, choose, home, nonneg, uncarry
-from tensor24.engine.contract import contract
+from tensor24.algebra.carry import Z, carry, choose, home, uncarry
+from tensor24.engine.contract import contract, read
 from tensor24.engine.mesh import due, pull, seen
-from tensor24.engine.state import Gearing, Layout, Out, Ruler, State
+from tensor24.engine.state import Gearing, Layout, Out, Read, State
 
 
 def gear(a: Z, b: Z, r: Z, go: Z, w: Z, wp: Z, push: Z) -> tuple[Z, Z, Z]:
@@ -33,11 +33,10 @@ def undrive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
 
 
 def sources(layout: Layout, s: State) -> tuple[Z, Z]:
-    """Every gear's force, its pull less its spring D a, and its source J: the plan on the value, the differences, the force."""
-    nb, _, _, gearing, plan, _, _, _ = layout
-    _, _, _, spring, _, _ = gearing
+    """Every gear's force, its pull, and its source J: the plan on the value, the differences, the force."""
+    nb, _, _, _, plan, _, _, _ = layout
     a, _, _, _, _, _, _, _ = s
-    force = pull(layout, s) - spring * a
+    force = pull(layout, s)
     near = seen(s, nb)
     rows, _, sites = near.shape
     ends = near.reshape(rows, -1, 1 + 1, sites)
@@ -48,7 +47,7 @@ def sources(layout: Layout, s: State) -> tuple[Z, Z]:
 
 def driven(gearing: Gearing, force: Z, q: Z) -> Z:
     """The push on every gear, s F + K with the kick K = T_k s q: the force, and every source through the drive."""
-    _, _, stretch, _, kick, _ = gearing
+    _, stretch, kick, _ = gearing
     return stretch * (force + kick * q)
 
 
@@ -63,46 +62,23 @@ def unbeat(k: Z, ph: Z, rate: Z, gamma: Z, fire: Z) -> Z:
     return choose(fire, uncarry(k, gamma, ph) - rate, ph)
 
 
-def reading(count: Z, last: Z) -> Z:
-    """A count read on the ruler: below 0 at 0, no clock running faster than the full rate (the owner's word of 2026-10-27, 18:5x UTC), past the last count at the last, the clock's last rate; each end one whether."""
-    held = count * nonneg(count)
-    return choose(nonneg(last - held), held, last)
-
-
-def at(table: Z, count: Z, last: Z) -> Z:
-    """The ruler's entry at every Node-clock's count: a gather, the count read on the ruler."""
-    return table[reading(count, last).astype(np.intp)]
-
-
-def ruled(gearing: Gearing, ruler: Ruler, b: Z, a: Z, after: Z) -> Gearing:
-    """The round's gearing at the time gear's before, now and after counts: a reading row's W = Z_b + Z_n, its W+ = Z_n + Z_+ and its spring its factor times Y_n^2, so each tick's W is the last tick's W+; every other row's as laid."""
-    w, wp, stretch, spring, kick, drive = gearing
-    row, last, teeth, square, reads, factor = ruler
-    now = at(teeth, a[row], last)
-    return Gearing(
-        choose(reads, at(teeth, b[row], last) + now, w),
-        choose(reads, now + at(teeth, after[row], last), wp),
-        stretch,
-        choose(reads, factor * at(square, a[row], last), spring),
-        kick,
-        drive,
-    )
+def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
+    """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and at no bound."""
+    rest, _, _, _ = gearing
+    return rest + read(clock, a)
 
 
 def tick(layout: Layout, s: State, allowed: Z) -> tuple[State, Out]:
-    """One round where the runner allows: the due beat turns the dial; where it ticks, each gear steps on its sources, the time gear first, then every gear whose W+ its count after reads."""
-    nb, meshes, grip, gearing, plan, rate, gamma, ruler = layout
+    """One round where the runner allows: the due beat turns the dial; where it ticks, every gear steps on its sources at the teeth it reads at the now slot, in one pass."""
+    nb, _, _, gearing, _, rate, gamma, clock = layout
     a, b, r, go, rd, ph, c, tn = s
     fire = due(c, nb) * allowed
     k, dial = beat(ph, rate, gamma, fire)
-    laid = ruled(gearing, ruler, b, a, a)
-    w, wp, _, _, _, teeth = laid
-    force, j = sources(Layout(nb, meshes, grip, laid, plan, rate, gamma, ruler), s)
+    w = weight(gearing, clock, a)
+    force, j = sources(layout, s)
+    _, _, _, teeth = gearing
     q, kept = drive(j, teeth, rd)
-    push = driven(laid, force, q)
-    first, _, _ = gear(a, b, r, go, w, wp, push)
-    w, wp, _, _, _, _ = ruled(gearing, ruler, b, a, first)
-    a1, b1, r1 = gear(a, b, r, go, w, wp, push)
+    a1, b1, r1 = gear(a, b, r, go, w, w, driven(gearing, force, q))
     count = c + fire
     now = State(
         choose(k, a1, a),
@@ -118,23 +94,17 @@ def tick(layout: Layout, s: State, allowed: Z) -> tuple[State, Out]:
 
 
 def untick(layout: Layout, s: State, o: Out) -> State:
-    """The round run back from its out: the sources as they were read, the drive, the time gear, then the gears that read its counts, the count, the dial, the time."""
-    nb, meshes, grip, gearing, plan, rate, gamma, ruler = layout
+    """The round run back from its out: the teeth and the sources as the forward's now slot held them, the drive, the gears, the count, the dial, the time."""
+    nb, _, _, gearing, _, rate, gamma, clock = layout
     a, b, r, go, rd, ph, c, tn = s
     fire, k, before = o
     count = c - fire
     start = choose(k, b, a)
-    laid = ruled(gearing, ruler, start, start, a)
-    w, wp, _, _, _, teeth = laid
-    force, j = sources(
-        Layout(nb, meshes, grip, laid, plan, rate, gamma, ruler),
-        State(start, b, r, go, rd, ph, count, tn),
-    )
+    w = weight(gearing, clock, start)
+    force, j = sources(layout, State(start, b, r, go, rd, ph, count, tn))
+    _, _, _, teeth = gearing
     q, kept = undrive(j, teeth, rd)
-    push = driven(laid, force, q)
-    _, first, _ = ungear(a, b, r, go, w, wp, push)
-    w, wp, _, _, _, _ = ruled(gearing, ruler, first, start, a)
-    a0, b0, r0 = ungear(a, b, r, go, w, wp, push)
+    a0, b0, r0 = ungear(a, b, r, go, w, w, driven(gearing, force, q))
     dial = unbeat(k, ph, rate, gamma, fire)
     return State(
         choose(k, a0, a),

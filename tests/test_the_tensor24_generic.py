@@ -1,13 +1,14 @@
-"""Tensor24's generic node, G0 of decision 40: the loaded rows geared by one formula of their own numbers, the file's order
-of its trains nothing to the run, the loaded act alike under the 24 turns and the translations; what the engine still holds
-apart is named by column and record, with the stage of the build that takes it out."""
+"""Tensor24's generic node, G0 and G1 of decision 40: every loaded row of every kind and part geared by one formula, the
+clock's own gear among them and every row reading its teeth from it, no term the load lays, the file's order of its trains
+nothing to the layout or the run, and the loaded act alike under the 24's turns of sites and components."""
 
+import itertools
 import json
 from pathlib import Path
 
 import numpy as np
 
-from tensor24.engine import state, step
+from tensor24.engine import kinds, state, step
 from tensor24.main import layout, made
 from tensor24.runner.files import sites_of
 from tensor24.runner.load import load
@@ -15,20 +16,11 @@ from tests import frame
 
 UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
 CUBE, SHAPE = (3, 3, 3), (2, 3, 4)  # a board the 24 turn, and a board of three sides
-TICKS, SEEDS = 6, range(3)  # the run's ticks, and the worlds the images are read on
-# Where the clock's own time gear, laid after the file's trains, still stands apart, each with the stage of decision 40's
-# build that takes it out: its own teeth, stretch and spring, its count read by no ruler, and the records that name its row
-# and the rows that read it, at G1; its kick and its drive at fixed teeth (places 5 and 6 of the keeper's reading) at G3.
-APART = {
-    "w": "G1",
-    "wp": "G1",
-    "stretch": "G1",
-    "spring": "G1",
-    "reads": "G1",
-    "kick": "G3",
-    "drive": "G3",
-}
-RECORDS = {"Ruler.row": "G1", "Ruler.reads": "G1", "LAID": "G1"}
+TICKS, SEEDS, REACH = (
+    6,
+    range(3),
+    1 << 40,
+)  # the run's ticks, the images' worlds, the clock's counts drawn below it
 
 
 def loaded(universe, shape, gears=()):
@@ -38,90 +30,108 @@ def loaded(universe, shape, gears=()):
     return held, layout(universe, list(shape), held), state.State(*held.state)
 
 
-def seed():
-    """The example's universe, its one train the seed."""
-    return json.loads(UNIVERSE.read_text(encoding="utf-8"))
+def seeded(*shapes):
+    """The example's universe with seed trains, one per (kind, part), each massless, its pinion den."""
+    universe = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    den = universe["integers"]["den"]
+    named = [{"name": f"{k}{p}", "kinds": [k], "part": p, "pinion": den} for k, p in shapes]
+    return dict(universe, trains=named)
 
 
-def test_every_row_is_geared_by_one_formula_but_the_named_columns_of_the_time_gear():
-    """Every train of a file is the seed (its pinion den, decision 37) and the law lays no mass, so the one formula gives
-    every row the same coefficients; the rows that depart are the time gear's alone, in the columns named."""
-    held, laid, _ = loaded(seed(), CUBE)
-    rows, time = len(laid.ruler.reads), held.trains[-1]
-    named = dict(zip(state.Gearing._fields, laid.gearing, strict=True)) | {"reads": laid.ruler.reads}
-    departs = {}
-    for name, column in named.items():
-        values = np.broadcast_to(column, (rows, 1))[:, 0].tolist()
-        assert len(set(values[: time.first])) == 1, name  # the file's rows alike
-        departs[name] = [row for row, value in enumerate(values) if value != values[0]]
-    assert {name for name, at in departs.items() if at} == set(APART)
-    assert all(at == list(range(time.first, rows)) for at in departs.values() if at)
-    kept = {f"Ruler.{field}" for field in ("row", "reads") if field in state.Ruler._fields}
-    assert kept | ({"LAID"} if hasattr(state, "LAID") else set()) == set(RECORDS)
+def test_every_row_of_every_kind_and_part_is_geared_by_one_formula_and_the_load_lays_no_term():
+    """Every train a seed, so the one formula gives every row, the clock's own gear's too, the same coefficients, grips
+    and read of the clock; the load lays no term of J; no record or function of the engine holds a row apart."""
+    shapes = [(k, p) for k in ("A1", "A2", "T1", "T2") for p in (1, 1 + 1)]
+    held, laid, _ = loaded(seeded(*shapes), CUBE)
+    rows = len(laid.gearing.rest)
+    for name, column in zip(state.Gearing._fields, laid.gearing, strict=True):
+        assert len(set(np.broadcast_to(column, (rows, 1))[:, 0].tolist())) == 1, name
+    assert len(set(laid.grip.ravel().tolist())) == 1 and all(len(x) == 0 for x in laid.plan)
+    first, factor, target = (x.tolist() for x in laid.clock)
+    assert set(first) == {held.trains[-1].first} and set(factor) == {1} and target == list(range(rows))
+    assert not {"Ruler", "LAID"} & set(dir(state)) and not {"ruled", "reading", "at"} & set(dir(step))
 
 
 def run(universe, gears):
-    """The universe's run of TICKS rounds from its gears on the board of three sides, every due beat firing."""
-    _, laid, s = loaded(universe, SHAPE, gears)
+    """The universe's layout and its run of TICKS rounds from its gears on the board of three sides, every beat firing."""
+    held, laid, s = loaded(universe, SHAPE, gears)
     every = np.ones((1, laid.nb.shape[1]), dtype=object)
     for _ in range(TICKS):
         s, _ = step.tick(laid, s, every)
-    return laid, s
+    return held, laid, s
 
 
-def test_the_files_order_of_its_trains_orders_the_runs_rows_alike():
-    """Two seed trains, a hand of A1 and a gear of T1, given in either order with the same gears: the run's rows are the
-    other order's rows, and the clock's own rows, laid after the file's, the same (decision 38: no row by position)."""
-    universe = seed()
-    den = universe["integers"]["den"]
-    light, vector = universe["trains"][0], {"name": "vector", "kinds": ["T1"], "part": 1, "pinion": den}
+def test_every_order_of_three_trains_orders_the_layouts_and_the_runs_rows_alike():
+    """A hand of A1, a gear of T1 and one of A2, in all six orders with the same small gears: each train's rows in the
+    layout and in the run are its rows in every other order, and the clock's own row, laid after the file's, the same."""
+    shapes = [("A1", 1 + 1), ("T1", 1), ("A2", 1)]
     rng = np.random.default_rng(0)
-    sites, rows = sites_of(list(SHAPE)), (light["part"], len(vector["kinds"]) * 3)
+    sizes = [loaded(seeded(shape), SHAPE)[0].trains[0].rows() for shape in shapes]
     gears = [
-        [train, component, site, *rng.integers(-(1 << 40), 1 << 40, 1 + 1).tolist(), 0]
-        for train, count in enumerate(rows)
-        for component in range(count)
-        for site in range(sites)
+        [t, c, x, *rng.integers(-8, 9, 1 + 1).tolist(), 0]
+        for t, size in enumerate(sizes)
+        for c in range(size)
+        for x in range(sites_of(list(SHAPE)))
     ]
-    swapped = [[1 - train, *rest] for train, *rest in gears]
-    (laid, ran), (_, back) = (
-        run(dict(universe, trains=[light, vector]), gears),
-        run(dict(universe, trains=[vector, light]), swapped),
-    )
-    clock = slice(sum(rows), None)  # the clock's own row, laid after the file's
-    here, there = (
-        (slice(0, rows[0]), slice(rows[0], sum(rows)), clock),
-        (slice(rows[1], sum(rows)), slice(0, rows[1]), clock),
-    )
-    for x, y in zip(ran, back, strict=True):  # a gear's rows mapped; a Node-clock's one row alike
-        geared = len(x) == len(ran.a)
-        assert (
-            frame.same([x[at] for at in here], [y[at] for at in there])
-            if geared
-            else frame.same([x], [y])
-        )
-    assert len(laid.ruler.reads) - sum(rows) == 1
+    runs = []
+    for order in itertools.permutations(range(len(shapes))):
+        moved = [[order.index(t), *rest] for t, *rest in gears]
+        held, laid, s = run(seeded(*(shapes[t] for t in order)), moved)
+        at = [
+            np.arange(held.trains[order.index(t)].first, held.trains[order.index(t)].first + n)
+            for t, n in enumerate(sizes)
+        ]
+        rows = np.concatenate([*at, np.arange(held.trains[-1].first, len(laid.gearing.rest))])
+        reads = [np.array(x[rows].tolist(), dtype=object) for x in (laid.clock.first, laid.clock.factor)]
+        runs.append([*(np.broadcast_to(x, s.a.shape)[rows] for x in laid.gearing), *reads])
+        runs[-1] += [x[rows] if len(x) == len(s.a) else x for x in s]
+    moved = runs[0][-len(state.State._fields)]  # the first order's run, its now slots
+    assert all(frame.same(each, runs[0]) for each in runs[1:]) and (moved != 0).any()
 
 
-def test_the_loaded_act_is_alike_under_the_boards_24_turns_and_its_translations():
-    """The seed and the clock's own row on a board the 24 turn: every turn and every unit translation of the sites moves
-    the loaded act alike (the frame's images), each Node-clock reading its own counts on the ruler."""
-    _, laid, _ = loaded(seed(), CUBE)
-    rows, n = len(laid.ruler.reads), laid.nb.shape[1]
-    every = np.ones((1, n), dtype=object)
-    teeth = np.broadcast_to(laid.gearing.w, (rows, n))
+def turned(m, laid, held, s, teeth):
+    """The state turned by m: sites moved, each train's components by its kind's matrix, a negated component's tooth
+    flipped at the teeth it was carried at and its going advanced."""
+    xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
+    site = np.ravel_multi_index(tuple((m @ xyz) % sides), CUBE)
+    acting = kinds.kinds(m[None, :, :])
+    rows = len(laid.gearing.rest)
+    turn = np.eye(rows, dtype=object)
+    for train in held.trains[:-1]:
+        matrix = acting[train.kinds[0]][0]
+        at = train.first + np.arange(len(matrix)) * train.part
+        for part in range(train.part):
+            turn[np.ix_(at + part, at + part)] = matrix
+    sign = turn.sum(axis=1)[:, None]  # each row's one entry: its source row's sign
+    there = state.State(*(np.empty_like(x) for x in s))
+    for x, y in zip(there, s, strict=True):
+        x[:, site] = y
+    there.a[:, site], there.b[:, site] = turn @ s.a, turn @ s.b
+    flips = (1 - sign) // (1 + 1)  # 1 where the component is negated
+    r, go = np.abs(turn) @ s.r, np.abs(turn) @ s.go
+    there.r[:, site] = flips * (teeth - 1 - r) + (1 - flips) * r
+    there.go[:, site] = flips * (1 - go) + (1 - flips) * go
+    return there, site
 
-    def world(rng, shape, trains):
+
+def test_the_loaded_act_is_alike_under_the_24s_turns_of_its_sites_and_components():
+    """Seeds of the kinds A1 and A2, T1 and T2, and the clock's own gear moving, on a board the 24 turn: every turn of the state, its
+    components by their kinds' matrices, turns the act alike; the loaded board is the frame's."""
+    held, laid, _ = loaded(seeded(("A1", 1), ("A2", 1), ("T1", 1), ("T2", 1)), CUBE)
+    rows, n = len(laid.gearing.rest), laid.nb.shape[1]
+    assert np.array_equal(laid.nb, frame.board(CUBE))
+    for seed_ in SEEDS:
+        rng = np.random.default_rng(seed_)
         a, b = frame.wide(rng, (rows, n)), frame.wide(rng, (rows, n))
-        a[laid.ruler.row], b[laid.ruler.row] = (
-            rng.integers(0, laid.ruler.last + 1, n).astype(object) for _ in "ab"
+        clock = held.trains[-1].first
+        a[clock], b[clock] = (rng.integers(0, REACH, n).astype(object) for _ in "ab")
+        teeth = step.weight(laid.gearing, laid.clock, a)
+        zero = np.zeros((1, n), dtype=object)
+        s = state.State(
+            a, b, frame.wide(rng, (rows, n)) % teeth, 0 * a, 0 * a, zero, zero.copy(), zero.copy()
         )
-        c = rng.integers(0, 1 + 1, (1, n)).astype(object)
-        teeth_drawn = frame.wide(rng, (rows, n)) % teeth
-        dial = rng.integers(0, laid.gamma, (1, n)).astype(object)
-        return state.State(
-            a, b, teeth_drawn, 0 * a, 0 * a, dial, c, c - rng.integers(0, 1 + 1, (1, n)).astype(object)
-        )
-
-    e = frame.Engine(lambda nb, s: step.tick(laid, state.State(*s), every), None, world, None)
-    assert all(frame.turned(lambda: e, CUBE, np.random.default_rng(seed_), rows) for seed_ in SEEDS)
+        out = step.tick(laid, s, 1)[0]
+        for m in frame.turns():
+            there, _ = turned(m, laid, held, s, teeth)
+            moved, _ = turned(m, laid, held, out, teeth)
+            assert frame.same(step.tick(laid, there, 1)[0], moved), m.tolist()
