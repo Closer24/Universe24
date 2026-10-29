@@ -34,5 +34,5 @@ def home(w: Z, go: Z) -> Z:
 
 
 def flip(r: Z, w: Z) -> Z:
-    """The fine tooth reflected at a negation and at the turnover, the going advanced with it: w - 1 - r."""
+    """The fine tooth reflected at a negation, the going advanced with it: w - 1 - r."""
     return w - 1 - r

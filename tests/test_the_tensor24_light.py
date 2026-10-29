@@ -93,7 +93,7 @@ def alike(m, heads):
         spokes = np.arange(6 * nb.shape[1]).reshape(6, -1)
         for act in seen:
             grip = np.concatenate([np.asarray(g, dtype=object).reshape(-1) for g in act["grip"]])
-            layout = Layout(nb, spokes, grip.reshape(1, -1), None, None, None, None)
+            layout = Layout(nb, spokes, grip.reshape(1, -1), None, None, None, None, None)
             w, wp = (np.asarray(act[key], dtype=object).reshape(1, -1) for key in ("w", "wp"))
             off = ~act["top"]
             for (a, b, r), done, end in zip(act["start"], act["act"], act["end"], strict=True):

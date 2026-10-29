@@ -13,7 +13,7 @@ from typing import Any, NamedTuple
 
 import numpy as np
 
-from tensor24.engine.state import Gearing, Layout, Plan
+from tensor24.engine.state import Gearing, Layout, Plan, Read
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -249,17 +249,25 @@ def meshes_of(nb):
     return np.where((np.arange(len(nb)) % 2 == 0)[:, None], own, theirs)
 
 
+def unread():
+    """The clocks' read of no term: every gear's teeth its rest."""
+    none = np.zeros(0, dtype=np.intp)
+    return Read(none, none.astype(object), none)
+
+
 def plain(nb, meshes, grip, w, rate, gamma):
-    """A layout of stage 4 in stage 7's records: W+ = W, s = 1, no spring, the force's path (T_k = T_d = 1), no term of J."""
+    """A layout of stage 4 in the generic records: the teeth W at rest and no clock read, s = 1, the force's
+    path (T_k = T_d = 1), no term of J."""
     none = np.zeros(0, dtype=np.intp)
     return Layout(
         nb,
         meshes,
         np.reshape(grip, (1, -1)),
-        Gearing(w, w, 1, 0, 1, 1),
+        Gearing(w, 1, 1, 1),
         Plan(none, none, none.astype(object), none),
         rate,
         gamma,
+        unread(),
     )
 
 

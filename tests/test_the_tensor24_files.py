@@ -9,10 +9,6 @@ from tensor24.runner.files import COUPLING, NAMES, OPERANDS, departures
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
 DEN = 15162856759112389  # the example's den, as its file holds it: the widest of its integers, 54 bits
-HAND = (
-    15162854575528411,
-    8137489624680,
-)  # one of the head's hand rows over den (David, 6478324607, (n3))
 
 
 def edits():
@@ -50,12 +46,17 @@ def edits():
         ("universe", "trains"): "universe.trains: a list of one train or more",
         **{
             ("universe", "integers", k): f"universe.integers.{k}: {whole}"
-            for k in ("den", "full_rate", "key", "trace")
+            for k in ("den", "full_rate", "key")
         },
         ("universe", "trains", 0, "name"): f"{train}.name: a label, not None",
         ("universe", "trains", 0, "kinds"): f"{train}.kinds: a list of the kinds' labels, not None",
         ("universe", "trains", 0, "part"): f"{train}.part: {whole}",
-        ("universe", "trains", 0, "pinion"): f"{train}.pinion: a whole number within [0, den], not None",
+        (
+            "universe",
+            "trains",
+            0,
+            "pinion",
+        ): f"{train}.pinion: den, the seed's (masses are measured only in clicks), not None",
         ("piece", "version"): "piece.version: 1, not None",
         (
             "piece",
@@ -67,7 +68,6 @@ def edits():
     nulls = {  # a key a file may leave out is not left out by a null
         ("universe", "couplings"): "universe.couplings: a list of rows, not NoneType",
         ("setting", "gears"): "setting.gears: a list of rows, not NoneType",
-        ("universe", "trains", 0, "weight"): f"{train}.weight: a whole number, not None",
     }
     return {
         **{f"no {'.'.join(map(str, path))}": (*at(*path), named) for path, named in gone.items()},
@@ -190,54 +190,32 @@ def edits():
         "a pinion past den": (
             "universe",
             light(pinion=DEN + 1),
-            f"{train}.pinion: a whole number within [0, den], not {DEN + 1}",
+            f"{train}.pinion: den, the seed's (masses are measured only in clicks), not {DEN + 1}",
         ),
-        "a pinion below 0": (
+        "a pinion below den, a mass by hand": (
             "universe",
             light(pinion=-1),
-            f"{train}.pinion: a whole number within [0, den], not -1",
+            f"{train}.pinion: den, the seed's (masses are measured only in clicks), not -1",
         ),
         "a pinion of a list": (
             "universe",
             light(pinion=[DEN]),
-            f"{train}.pinion: a whole number within [0, den], not [{DEN}]",
+            f"{train}.pinion: den, the seed's (masses are measured only in clicks), not [{DEN}]",
         ),
-        "a pinion at 0 with its other at den": ("universe", light(pinion=0, sine=DEN), None),
-        "a hand's pair off den's circle": (
+        "a sine, read by no act": (
             "universe",
-            light(sine=1),
-            f"{train}: the hand's pair ({DEN}, 1) has the norm {DEN * DEN + 1}, not den den",
+            light(sine=0),
+            f"{train}: the key 'sine' is not in the format",
         ),
-        "a hand's pair one off in the pinion": (
+        "a weight, read by no act": (
             "universe",
-            light(pinion=HAND[0] - 1, sine=HAND[1]),
-            f"{train}: the hand's pair ({HAND[0] - 1}, {HAND[1]}) has the norm",
+            light(weight=1),
+            f"{train}: the key 'weight' is not in the format",
         ),
-        "the head's hand pair": ("universe", light(pinion=HAND[0], sine=HAND[1]), None),
-        "a hand with no other": (
+        "a trace, read by no act": (
             "universe",
-            lambda u: u["trains"][0].pop("sine"),
-            f"{train}.sine: on a hand, a whole number within [0, den], not None",
-        ),
-        "a hand's other past den": (
-            "universe",
-            light(sine=DEN + 1),
-            f"{train}.sine: on a hand, a whole number within [0, den], not {DEN + 1}",
-        ),
-        "a hand's other below 0": (
-            "universe",
-            light(sine=-1),
-            f"{train}.sine: on a hand, a whole number within [0, den], not -1",
-        ),
-        "an other on a train of one gear": (
-            "universe",
-            light(part=1),
-            f"{train}.sine: none on a train of one gear, not 0",
-        ),
-        "a weight that is a float": (
-            "universe",
-            lambda u: u["trains"][0].update(weight=0.5),
-            f"{train}.weight: a whole number, not 0.5",
+            lambda u: u["integers"].update(trace=1),
+            "universe.integers: the key 'trace' is not in the format",
         ),
         "a coupling to no train": coupling("a train off the trains' rows", with_train=1),
         "a coupling on the time gear": coupling("a train off the trains' rows", train=1),
@@ -317,7 +295,7 @@ def edits():
             "piece.json: not read:",
         ),
         "no JSON": ("setting", lambda s: "{", "setting.json: not read:"),
-        "a part of 1": ("universe", lambda u: (light(part=1)(u), u["trains"][0].pop("sine")), None),
+        "a part of 1": ("universe", light(part=1), None),
         "an integer of 1": ("universe", lambda u: u["integers"].update(full_rate=1), None),
         "a side of 1": ("piece", lambda p: p["shape"].__setitem__(0, 1), None),
         "a coupling at the first parts": coupling(None),

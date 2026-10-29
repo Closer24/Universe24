@@ -14,7 +14,7 @@ from tensor24.runner.load import load, promises
 from tensor24.runner.rewind import rewind
 
 ORDER = "z fastest: the site (x sy + y) sz + z"  # runner/board.py's
-TIME = "the time gear"  # the clock's own train, after the file's trains
+TIME = "the time gear"  # the clock's own train, after the file's trains: its count is the tick's weight
 
 
 class Engine(NamedTuple):
@@ -127,7 +127,9 @@ def run(
         return found
     layout = engine.layout(universe, shape, loaded)
     start = engine.state(*loaded.state)
-    found = promises(start.r, layout.gearing.w, layout.rate, layout.gamma)
+    found = promises(
+        start.r, layout.gearing.rest, layout.rate, layout.gamma
+    )  # the clocks stand at 0 as laid
     if found:
         return found
     every = bits or (lambda _, n: [1] * n)

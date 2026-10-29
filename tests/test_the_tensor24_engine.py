@@ -10,7 +10,7 @@ import pytest
 
 from tensor24.algebra.carry import home
 from tensor24.engine import contract, mesh, step
-from tensor24.engine.state import Gearing, Layout, Out, Plan, Ruler, State
+from tensor24.engine.state import Gearing, Layout, Out, Plan, Read, State
 from tensor24.main import made
 from tensor24.runner import board as boards
 from tensor24.runner.load import load
@@ -40,20 +40,20 @@ def draw(rng, low, high, size):
     return rng.integers(low, high, size=size).astype(object)
 
 
-def varied(rng, alike=False, least=1, sourced=True, rows=ROWS, shape=SHAPE):
-    """A layout parted at every gear and site: grips per row and Mesh, W and W+ (alike, or parted), s, D, T_k, T_d, and J
-    or none of it; every divisor at least `least`, and T_k too where `least` is above 1, so that a swap of T_k and T_d
-    shows as a wrong run back and not as a raise."""
+def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False):
+    """A layout parted at every gear and site: grips per row and Mesh, the teeth at rest, s, T_k, T_d, and J or none
+    of it, every gear reading its teeth from the last row's count at a drawn factor where clocked; every divisor at least
+    `least`, and T_k too where `least` is above 1, so that a swap of T_k and T_d shows as a wrong run back, not a raise."""
     nb = frame.board(shape)
     n = nb.shape[1]
     w = draw(rng, least, 20, (rows, n))
     coefficients = (
         draw(rng, -3, 4, (rows, n)),
-        draw(rng, -3, 4, (rows, 1)),
         draw(rng, -5, 6, (rows, 1)) if least == 1 else draw(rng, least, 9, (rows, 1)),
     )
-    wp = w if alike else draw(rng, least, 20, (rows, n))
-    gearing = Gearing(w, wp, *coefficients, draw(rng, least, 9, (rows, 1)))
+    gearing = Gearing(w, *coefficients, draw(rng, least, 9, (rows, 1)))
+    every = np.arange(rows, dtype=np.intp)
+    read = Read(0 * every + rows - 1, draw(rng, 1, 4, rows), every) if clocked else frame.unread()
     index = [
         rng.integers(0, high, size=TERMS).astype(np.intp) for high in (PLANES * rows,) * 2 + (rows,)
     ]
@@ -61,32 +61,32 @@ def varied(rng, alike=False, least=1, sourced=True, rows=ROWS, shape=SHAPE):
     none = np.zeros(0, dtype=np.intp)
     plan = plan if sourced else Plan(none, none, none.astype(object), none)
     grip, rate = draw(rng, -3, 4, (rows, 3 * n)), draw(rng, 0, GAMMA + 1, (1, n))
-    return Layout(nb, frame.meshes_of(nb), grip, gearing, plan, rate, GAMMA)
+    return Layout(nb, frame.meshes_of(nb), grip, gearing, plan, rate, GAMMA, read)
 
 
 def world(rng, layout, rows=ROWS):
-    """A state the act may meet: gears across 2**256, each tooth within its W, each drive's tooth within its T_d."""
-    w, drive = np.broadcast_to(layout.gearing.w, (rows, layout.nb.shape[1])), layout.gearing.drive
-    size, one = w.shape, (1, w.shape[1])
+    """A state the act may meet: gears across 2**256, a clock's row in [0, 2**20), each tooth within its W and T_d."""
+    size, drive = (rows, layout.nb.shape[1]), layout.gearing.drive
+    a, b = frame.wide(rng, size), frame.wide(rng, size)
+    clocks = np.unique(layout.clock.first)
+    for x in (a, b):
+        x[clocks] = draw(rng, 0, 1 << 20, (len(clocks), size[1]))
+    w, one = step.weight(layout.gearing, layout.clock, a), (1, size[1])
     c = draw(rng, 0, 2, one)
     teeth = (draw(rng, 0, 1 << 20, size) % w, draw(rng, 0, 2, size), draw(rng, 0, 1 << 20, size) % drive)
-    return State(
-        frame.wide(rng, size),
-        frame.wide(rng, size),
-        *teeth,
-        draw(rng, 0, GAMMA, one),
-        c,
-        c - draw(rng, 0, 2, one),
-    )
+    return State(a, b, *teeth, draw(rng, 0, GAMMA, one), c, c - draw(rng, 0, 2, one))
 
 
 def naive(layout, s, mask, shape=SHAPE):
     """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the carry."""
     _, _, grip, gearing, plan, rate, gamma, _ = layout
     rows = len(s.a)
-    w, wp, stretch, spring, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
+    rest, stretch, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     first, second, factor, target = (x.tolist() for x in plan)
     a, b, r, go, rd = (x.tolist() for x in s[:5])
+    w = [row[:] for row in rest]  # every gear's teeth: its rest and the clocks' read, term by term
+    for f, m, g in zip(*(x.tolist() for x in layout.clock), strict=True):
+        w[g] = [x + m * y for x, y in zip(w[g], a[f], strict=True)]
     ph, c, tn, rate = (x.tolist()[0] for x in (*s[5:], rate))
     mask = np.broadcast_to(mask, (1, len(c))).tolist()[0]
     grip = np.broadcast_to(grip, (rows, grip.shape[1])).tolist()
@@ -103,7 +103,6 @@ def naive(layout, s, mask, shape=SHAPE):
         seen = [[a[g][j] if c[i] >= tn[j] else b[g][j] for j in around] for g in range(rows)]
         force = [
             sum(grip[g][m] * (v - a[g][i]) for m, v in zip(spokes, seen[g], strict=True))
-            - spring[g][i] * a[g][i]
             for g in range(rows)
         ]
         readings = [a[g][i] for g in range(rows)]
@@ -117,7 +116,7 @@ def naive(layout, s, mask, shape=SHAPE):
             q, new[4][g][i] = divmod(source[g] + rd[g][i], drive[g][i])
             p = w[g][i] * (a[g][i] - b[g][i]) + r[g][i] - (w[g][i] - go[g][i]) // 2
             push = stretch[g][i] * (force[g] + kick[g][i] * q)
-            v, new[2][g][i] = divmod(p + push + (wp[g][i] - go[g][i]) // 2, wp[g][i])
+            v, new[2][g][i] = divmod(p + push + (w[g][i] - go[g][i]) // 2, w[g][i])
             new[0][g][i], new[1][g][i] = a[g][i] + v, a[g][i]
         new[7][0][i] = new[6][0][i] if k[i] else tn[i]
     return State(*(np.array(x, dtype=object) for x in new)), tuple(
@@ -126,10 +125,11 @@ def naive(layout, s, mask, shape=SHAPE):
 
 
 def formula():
-    """At varied layouts, W and W+ parted, the act under a random mask equals the naive model at every entry, three seeds."""
+    """At varied layouts, every gear clocked by a row's count, the act under a random mask equals the naive model at every
+    entry, three seeds."""
     for seed in range(3):
         rng = np.random.default_rng(seed)
-        layout = varied(rng)
+        layout = varied(rng, clocked=True)
         s, mask = world(rng, layout), draw(rng, 0, 2, (1, layout.nb.shape[1]))
         if not frame.same(frame.flat(step.tick(layout, s, mask)), frame.flat(naive(layout, s, mask))):
             return False
@@ -137,11 +137,11 @@ def formula():
 
 
 def back():
-    """Rounds under random masks run back to the start bit for bit, W and W+ alike; one round with them parted, alike;
-    every divisor row away from 1, so a swap of W and W+ or of T_k and T_d shows (Sofer's read-for)."""
+    """Rounds under random masks run back to the start bit for bit, the teeth at rest; one round clocked by a row's count,
+    alike; every divisor row away from 1, so a swap of T_k and T_d or a read off its slot shows (Sofer's read-for)."""
     for seed in range(3):
         rng = np.random.default_rng(10 + seed)
-        layout, parted = varied(rng, alike=True, least=1 + 1), varied(rng, least=1 + 1)
+        layout, parted = varied(rng, least=1 + 1), varied(rng, least=1 + 1, clocked=True)
         s, t = world(rng, layout), world(rng, parted)
         masks = [draw(rng, 0, 2, (1, layout.nb.shape[1])) for _ in range(ROUNDS)]
         end, outs = rounds(step.tick, layout, s, masks)
@@ -156,7 +156,7 @@ def back():
 def schedule(seed):
     """A layout with no term of J, rates parted and the clock at site 5 stopped, its first state at count 0, and an rng."""
     rng = np.random.default_rng(seed)
-    layout = varied(rng, alike=True, sourced=False, rows=2)
+    layout = varied(rng, sourced=False, rows=2)
     layout.rate[0, 5] = 0
     s = world(rng, layout, 2)
     return layout, s._replace(c=0 * s.c, tn=0 * s.tn), rng
@@ -197,20 +197,17 @@ def stopped():
 
 
 def negated():
-    """The tie rule on the act with no term of J: every gear negated, its tooth flipped and its going advanced, ticks to
-    the negation, its tooth flipped at W+."""
+    """The tie rule on the act with no term of J: every gear negated, its tooth flipped and its going advanced, ticks to the
+    negation, its tooth flipped; at W = W+ the homes cancel, and the going parts only where W, W+ part (algebra, light)."""
     for seed in range(3):
         rng = np.random.default_rng(20 + seed)
         layout = varied(rng, sourced=False)
         s, mask = world(rng, layout), draw(rng, 0, 2, (1, layout.nb.shape[1]))
-        w, wp = layout.gearing.w, layout.gearing.wp
+        w = layout.gearing.rest
         (a1, b1, r1, go1, *rest1), out1 = step.tick(layout, s, mask)
         negative = s._replace(a=-s.a, b=-s.b, r=w - 1 - s.r, go=1 - s.go)
         (a2, b2, r2, go2, *rest2), out2 = step.tick(layout, negative, mask)
-        k = out1.k
-        flipped = frame.same(
-            [a2, b2, go2, r2], [-a1, -b1, 1 - go1, k * (wp - 1 - r1) + (1 - k) * (w - 1 - r1)]
-        )
+        flipped = frame.same([a2, b2, go2, r2], [-a1, -b1, 1 - go1, w - 1 - r1])
         if not (flipped and frame.same([*rest2, *out2], [*rest1, *out1])):
             return False
     return True
@@ -220,7 +217,7 @@ def lit(seed, full=False):
     """A board of side SIDE with no term of J and grips above 0, at count 0, its rates drawn or every clock at full;
     each site's Mesh distance from site 0, and a change at site 0."""
     rng = np.random.default_rng(seed)
-    layout = varied(rng, alike=True, sourced=False, rows=1, shape=(SIDE,) * 3)
+    layout = varied(rng, sourced=False, rows=1, shape=(SIDE,) * 3)
     rate = GAMMA + 0 * layout.rate if full else layout.rate
     layout = layout._replace(grip=abs(layout.grip) + 1, rate=rate)
     s, xyz = world(rng, layout, 1), np.indices((SIDE,) * 3).reshape(3, -1)
@@ -304,28 +301,19 @@ def cube():
 def sourced_images():
     """The sources turn with the board under the 24: the force and J of the turned state, the turned force and J."""
     nb, plan = frame.board(CUBE), cube()
-    n, rows = (
-        nb.shape[1],
-        1 + 1 + 3 + 3 + 1,
-    )  # A1 and A2, T1 and T2, as stored, and the load's time gear, A1
+    # A1 and A2, T1 and T2, as stored, and the load's time gear, A1
+    n, rows = nb.shape[1], 1 + 1 + 3 + 3 + 1
     ones = np.ones((1, n), dtype=object)
+    gearing = Gearing(ones, ones, ones, ones)
     layout = Layout(
-        nb,
-        frame.meshes_of(nb),
-        3 * ones.repeat(3, axis=1),
-        Gearing(ones, ones, ones, 2, ones, ones),
-        plan,
-        ones,
-        1,
+        nb, frame.meshes_of(nb), 3 * ones.repeat(3, axis=1), gearing, plan, ones, 1, frame.unread()
     )
     s = world(np.random.default_rng(5), layout, rows)
     force, j = step.sources(layout, s)
     xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
     for m in frame.turns():
-        site, turn = (
-            np.ravel_multi_index(tuple((m @ xyz) % sides), CUBE),
-            np.eye(rows, dtype=int).astype(object),
-        )
+        site = np.ravel_multi_index(tuple((m @ xyz) % sides), CUBE)
+        turn = np.eye(rows, dtype=int).astype(object)
         turn[:-1, :-1] = frame.stored(m)[: rows - 1, : rows - 1]  # the time gear is A1: no turn moves it
         there = State(*(np.empty_like(x) for x in s))
         for x, y in zip(there, s, strict=True):
@@ -341,7 +329,7 @@ def alike(nb):
     """A layout alike at every site, Mesh and gear, for the frame's properties: s, D and T_k, the force's path, no J."""
     ones = np.ones((1, nb.shape[1]), dtype=object)
     layout = frame.plain(nb, frame.meshes_of(nb), ones.repeat(3, axis=1), 7 * ones, 5 * ones, GAMMA)
-    return layout._replace(gearing=Gearing(7 * ones, 7 * ones, 1 + 1, 1, 3, 1))
+    return layout._replace(gearing=Gearing(7 * ones, 1 + 1, 3, 1))
 
 
 def engine():
@@ -356,7 +344,8 @@ def engine():
 
 def mutants():
     """Broken copies, each with the law that must catch it: what it replaces in the step (or the board), and with what."""
-    tick, untick, gear, ungear, beat = step.tick, step.untick, step.gear, step.ungear, step.beat
+    tick, untick, gear, ungear = step.tick, step.untick, step.gear, step.ungear
+    beat, read, weight = step.beat, step.read, step.weight
     driven, drive, undrive, sources = step.driven, step.drive, step.undrive, step.sources
     pull, seen, built, calls = mesh.pull, mesh.seen, boards.board, itertools.count()
 
@@ -375,6 +364,16 @@ def mutants():
         q = np.vectorize(lambda x, y: math.floor(x / y), otypes=[object])(n, wp + 0 * n)
         return a + q, a, n - q * wp
 
+    def unfactored(c, x):
+        return read(c._replace(factor=c.first), x)
+
+    def read_after(y, s, o):  # the run back's teeth read at its own now slot, the forward's after slot
+        step.weight = lambda g, c, _: weight(g, c, s.a)
+        try:
+            return untick(y, s, o)
+        finally:
+            step.weight = weight
+
     def keep_b(y, s, o):
         return untick(y, s, o)._replace(b=s.b)
 
@@ -386,7 +385,7 @@ def mutants():
 
     def far_teeth(y, s, m):
         g = y.gearing
-        return tick(y._replace(gearing=g._replace(w=g.w[:, y.nb[0]], wp=g.wp[:, y.nb[0]])), s, m)
+        return tick(y._replace(gearing=g._replace(rest=g.rest[:, y.nb[0]])), s, m)
 
     def regrip(f):
         return lambda y, s: pull(y._replace(grip=f(y.grip)), s)
@@ -396,9 +395,6 @@ def mutants():
 
     def reread(order):
         return lambda s, nb: seen(s, nb[order])
-
-    def unsprung(y, s):
-        return sources(y._replace(gearing=y.gearing._replace(spring=-y.gearing.spring)), s)
 
     def forceless(plan, readings, gears):
         cut = len(readings) - len(gears)
@@ -430,7 +426,6 @@ def mutants():
     return {  # one clock, the Mesh, the board, and the act at its coefficients
         "the run back blind to the push": ("back", "ungear", lambda *x: ungear(*x[:-1], 0 * x[-1])),
         "a stopped beat that ticks": ("stopped", "beat", lambda ph, rate, gamma, fire: (fire, ph)),
-        "the going ignored": ("negated", "gear", lambda a, b, r, go, *z: gear(a, b, r, 0 * go, *z)),
         "the now slot doubled": ("formula", "gear", doubled),
         "the quotient through a float": ("formula", "gear", floated),
         "the read of the now slot alone": ("order", "pull", now_only),
@@ -456,12 +451,12 @@ def mutants():
         "the stretch off the kick": ("formula", "driven", lambda g, f, q: g.stretch * f + g.kick * q),
         "the drive without its fine tooth": ("formula", "drive", lambda j, d, rd: drive(j, d, 0 * rd)),
         "the drive's tooth not carried": ("formula", "drive", lambda *x: (drive(*x)[0], x[2])),
-        "the spring's sign turned": ("formula", "sources", unsprung),
         "the gradient's ends swapped": ("formula", "seen", reread([1, 0, 3, 2, 5, 4])),
         "J read without the force": ("formula", "contract", forceless),
-        "the carry at W, not W+": ("formula", "gear", lambda *x: gear(*x[:5], x[4], x[6])),
+        "the clocks' read off its factor": ("formula", "read", unfactored),
+        "the teeth without their rest": ("formula", "weight", lambda g, c, a: read(c, a)),
         "T_k read from T_d": ("formula", "driven", kicked(lambda g: g.drive)),
-        "W, W+ swapped back": ("back", "ungear", lambda *x: ungear(*x[:4], x[5], x[4], x[6])),
+        "the run back's teeth read at the after slot": ("back", "untick", read_after),
         "the drive run back, its sign turned": ("back", "undrive", turned_back),
         "the run back with T_k and T_d swapped": ("back", "untick", swapped),
         "the drive's tooth not run back": ("back", "undrive", lambda *x: (undrive(*x)[0], x[2])),
@@ -506,9 +501,8 @@ def test_the_force_s_path_is_the_stage_4_tick_with_j_added():
     s = s._replace(rd=0 * s.rd)
     now, out = step.tick(layout, s, 1)
     force, j = step.sources(layout, s)
-    a, _, r = step.gear(
-        s.a, s.b, s.r, s.go, layout.gearing.w, layout.gearing.wp, layout.gearing.stretch * (force + j)
-    )
+    w = step.weight(layout.gearing, layout.clock, s.a)
+    a, _, r = step.gear(s.a, s.b, s.r, s.go, w, w, layout.gearing.stretch * (force + j))
     assert out.k.any() and not now.rd.any()
     assert frame.same([np.where(out.k == 1, a, s.a), np.where(out.k == 1, r, s.r)], [now.a, now.r])
 
@@ -555,13 +549,13 @@ def kept(each_end=False, moving=False, sourced=False):
     )
     for t in range(4 if sourced else ROUNDS):  # J squares the gears each round
         push = s + t * draw(rng, 0, 3, (1, n)) if moving else s
-        gearing = Gearing(teeth[t], teeth[t + 1], push, 3, kick, drive)
-        layout = Layout(nb, meshes, grip, gearing, plan, GAMMA + zero, GAMMA)
+        gearing = Gearing(teeth[t], push, kick, drive)  # each round at its own teeth
+        layout = Layout(nb, meshes, grip, gearing, plan, GAMMA + zero, GAMMA, frame.unread())
         _, j = step.sources(layout, state)
         now, out = step.tick(layout, state, 1)
         torques = im(state.a - state.b, state.r - home(teeth[t], state.go))
-        torques = torques + im(now.a - state.a, now.r - home(teeth[t + 1], now.go))
-        moved = charged(now, teeth[t + 1], s) - charged(state, teeth[t], s)
+        torques = torques + im(now.a - state.a, now.r - home(teeth[t], now.go))
+        moved = charged(now, teeth[t], s) - charged(state, teeth[t], s)
         kicked = np.broadcast_to(kick * im(state.a, j + state.rd - now.rd), (1, n))
         ds = np.broadcast_to(drive, (1, n)).ravel()
         terms = zip(torques.ravel(), s.ravel(), kicked.ravel(), ds, strict=True)
@@ -585,9 +579,9 @@ def test_a_hands_charge_moves_by_rules_torques_and_its_kick_alone_and_parts_on_a
 
 def test_the_engines_records_hold_their_fields_in_order():
     assert State._fields == ("a", "b", "r", "go", "rd", "ph", "c", "tn")
-    assert Gearing._fields == ("w", "wp", "stretch", "spring", "kick", "drive")
-    assert Layout._fields == ("nb", "meshes", "grip", "gearing", "plan", "rate", "gamma", "ruler")
-    assert Ruler._fields == ("row", "last", "teeth", "square", "reads", "spring")
+    assert Gearing._fields == ("rest", "stretch", "kick", "drive")
+    assert Layout._fields == ("nb", "meshes", "grip", "gearing", "plan", "rate", "gamma", "clock")
+    assert Read._fields == ("first", "factor", "target")
     assert Plan._fields == ("first", "second", "factor", "target")
     assert Out._fields == ("fire", "k", "tn")
 

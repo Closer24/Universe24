@@ -12,7 +12,6 @@ from typing import Any, NamedTuple, TypeGuard
 
 NAMES = ("universe", "piece", "setting")
 VERSION = 1
-PAIR = ("pinion", "sine")  # a hand's Gaussian pair over den; a train of one gear holds its pinion alone
 COUPLING = (
     *("train", "kind", "part", "operand"),
     *("with_train", "with_kind", "with_part", "with_operand"),
@@ -21,8 +20,8 @@ COUPLING = (
 OPERANDS = ("value", "gradient", "pull", "before", "after")  # the readings an operand names, in order
 GEAR = ("train", "component", "site", "a", "b", "r")
 AXES = ("x", "y", "z")
-# the keys a file may leave out; the pair's keys are its own rule's
-OPTIONAL = ("couplings", "gears", "weight")
+# the keys a file may leave out; the pinion's key is its own rule's
+OPTIONAL = ("couplings", "gears")
 
 
 def whole(value: Any) -> TypeGuard[int]:
@@ -51,10 +50,10 @@ SIDES = Rule(
 )
 # Each file's keys and what each holds: a rule, a mapping, a list of one train or more, or rows of the fields named.
 # every key a literal, so that the gate reads each one (the note KEYS)
-TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, "pinion": None, "sine": None, "weight": WHOLE}
+TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, "pinion": None}
 UNIVERSE = {
     "version": VERSIONED,
-    "integers": {"den": ONE, "full_rate": ONE, "key": ONE, "trace": ONE, "width": ONE},
+    "integers": {"den": ONE, "full_rate": ONE, "key": ONE, "width": ONE},
     "trains": [TRAIN],
     "couplings": COUPLING,
 }
@@ -125,39 +124,28 @@ def checked(where: str, held: Any, form: Any) -> list[str]:
     return rows(where, held, form)
 
 
-def pair_departures(where: str, train: dict[str, Any], den: Any) -> list[str]:
-    """A train's pinion within [0, den]; on a hand, a part above 1, its pair's other within [0, den] and the norm den den."""
-    first, second = PAIR
-    pinion, other = train.get(first), train.get(second)
+def seed_departures(where: str, train: dict[str, Any], den: Any) -> list[str]:
+    """A train's pinion at den, the seed's: a pinion off den is a mass laid by hand, and masses are measured only in clicks."""
     if not whole(den):
         return []  # the integers' own departure is named
-    found = (
+    pinion = train.get("pinion")
+    seed = whole(pinion) and pinion == den
+    return (
         []
-        if whole(pinion) and 0 <= pinion <= den
-        else [f"{where}.{first}: a whole number within [0, den], not {pinion!r}"]
+        if seed
+        else [f"{where}.pinion: den, the seed's (masses are measured only in clicks), not {pinion!r}"]
     )
-    if not (whole(train.get("part")) and train["part"] > 1):
-        return found + (
-            [] if other is None else [f"{where}.{second}: none on a train of one gear, not {other!r}"]
-        )
-    if not (whole(other) and 0 <= other <= den):
-        return found + [f"{where}.{second}: on a hand, a whole number within [0, den], not {other!r}"]
-    if found or not (whole(pinion) and whole(other)):
-        return found
-    norm = pinion * pinion + other * other
-    off = f"{where}: the hand's pair ({pinion}, {other}) has the norm {norm}, not den den"
-    return [] if norm == den * den else [off]
 
 
 def universe_departures(universe: Any) -> list[str]:
-    """Every way a universe file departs: its form, each train's pair over den, its labels, and its coupling rows."""
+    """Every way a universe file departs: its form, each train's pinion at den, its labels, and its coupling rows."""
     found = checked("universe", universe, UNIVERSE)
     if not isinstance(universe, dict) or not isinstance(universe.get("trains"), list):
         return found
     trains, integers = universe["trains"], universe.get("integers")
     den = integers.get("den") if isinstance(integers, dict) else None
     for at, train in enumerate(trains):
-        found += pair_departures(f"universe.trains[{at}]", train, den) if isinstance(train, dict) else []
+        found += seed_departures(f"universe.trains[{at}]", train, den) if isinstance(train, dict) else []
     labels = Counter(t["name"] for t in trains if isinstance(t, dict) and isinstance(t.get("name"), str))
     found += [
         f"universe.trains: the label {name!r} names two trains or more"
