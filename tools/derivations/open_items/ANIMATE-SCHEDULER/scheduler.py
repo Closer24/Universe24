@@ -14,11 +14,15 @@ a draw is where its parts are one.
 
 A line of Node-clocks; light runs one site a tick. A birth lays a pair (the shared hand e1 x e2 - e2 x e1), a triple
 (e1 x e1 x e1 + e2 x e2 x e2) or one quantum spread over absorbers. Each twin rides one site a tick to its detector and
-waits there `late` ticks; its take is a whole click. Each detector's setting is a split click one tick before its
-take: free (its own light's digit, over its two frames) or a machine that sets its frame from an outcome it heard by
-light, a take strictly inside its past light cone. sigma_f is the Gaussian norm of the hand's whole-number overlap with
-the frames' spinors (ANIMATE-B-RECORD), or a spread quantum's share at an absorber; sigma_b is an absorber's free slots.
-Every draw is law 9's: the rank count of a digit over the weights' running sums, the digit a number modulo their sum.
+waits there `late` ticks; its take is a whole click. Each part's setting is a split click one tick before its take,
+one law-9 draw over its frames: its own light's sizes (1 each) times, at each take it heard by light (strictly inside
+its past light cone), the sizes its rule gives that take's end. A setting that hears nothing is free (its digit picks
+among its two frames); one that hears a take sets the frame its rule names for it (a machine); a spread quantum's
+setting has one frame, its absorbers' own lines. sigma_f is one formula for every hand: the Gaussian norm of the hand's
+whole-number overlap with its parties' ends, each end a line of its party's frame (a twin's spinor along its axis,
+ANIMATE-B-RECORD; an absorber's own line), summed over the lines a hand carries untaken; sigma_b is an absorber's free
+slots. Every draw is law 9's: the rank count of a digit over the weights' running sums, the digit a number modulo
+their sum.
 
 The scheduler J, for contrast, draws a birth's band only when all its parts are in.
 Part 1: two crossed births, each one's early outcome setting the other's late frame. Part 2: random full boards.
@@ -36,13 +40,52 @@ from itertools import product
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ANIMATE-B-RECORD"))
-from b_record import BEE, BEE2, GHZ, SINGLET, X, Y, Z, size  # noqa: E402  the hands, the frames, sigma_f
+from b_record import BEE, BEE2, GHZ, SINGLET, X, Y, Z, conj, gmul, gnorm, spinor  # noqa: E402
 
-SIGNS = (1, -1)
-HANDS = {"pair": SINGLET, "triple": GHZ}
-PAIR_FRAMES = ((Z, X), (BEE, BEE2))  # a, a' at the first party; b, b' at the second (draft D)
+SIGNS = (1, -1)  # a twin's ends: 0 is + along its frame, 1 is -
+PAIR_FRAMES = ((Z, X), (BEE, BEE2))  # a, a' at the first party; b, b' at the second (draft D), as axes
 TRIPLE_FRAMES = ((X, Y),) * 3
-RULE = {1: 0, -1: 1}  # a machine sets its first frame where it heard +, its second where it heard -
+# a machine's sizes over its frames at each end of the take it heard: its first frame at +, its second at -
+RULE = ((1, 0), (0, 1))
+REVERSE = ((0, 1), (1, 0))
+
+
+def hand(amplitudes):
+    """A hand: per joint line of its parties, a whole-number Gaussian amplitude over the lines it carries untaken
+    (one for a twin's hand), in a fixed order."""
+    return tuple(sorted(amplitudes.items()))
+
+
+def basis(axis):
+    """A twin's frame: its two spinors along the axis, + and - (ends 0 and 1)."""
+    return (spinor(axis, 1), spinor(axis, -1))
+
+
+def lines(count):
+    """A party's own lines, count of them, each a whole-number vector: an absorber's own line of a spread quantum,
+    or the silent frame of a part whose setting is still out (z for a twin)."""
+    out = []
+    for r in range(count):
+        row = [(0, 0)] * count
+        row[r] = (1, 0)
+        out.append(tuple(row))
+    return tuple(out)
+
+
+def squares(share):
+    """A whole share as a Gaussian norm over two lines: the first four squares that sum to it (Lagrange)."""
+    roots = range(share + 1)
+    return next(
+        ((a, b), (c, d))
+        for a, b, c, d in product(roots, repeat=4)
+        if a * a + b * b + c * c + d * d == share
+    )
+
+
+PAIR_HAND = hand({bits: (a,) for bits, a in SINGLET.items()})
+TRIPLE_HAND = hand({bits: (a,) for bits, a in GHZ.items()})
+PAIR_BASES = tuple(tuple(basis(a) for a in party) for party in PAIR_FRAMES)
+TRIPLE_BASES = tuple(tuple(basis(a) for a in party) for party in TRIPLE_FRAMES)
 
 
 def law9(weights, n):
@@ -66,18 +109,33 @@ class Digits:
         return int.from_bytes(hashlib.sha256(f"{self.label}:{self.count}".encode()).digest()[:8], "big")
 
 
+def size(hand_, bases, ends):
+    """sigma_f, one formula for every hand: the Gaussian norm of the hand's whole-number overlap with its parties'
+    ends (each end a line of its party's frame), summed over the lines the hand carries untaken."""
+    total = [(0, 0)] * len(hand_[0][1])
+    for bits, amplitude in hand_:
+        factor = (1, 0)
+        for frame, end, bit in zip(bases, ends, bits, strict=True):
+            factor = gmul(factor, conj(frame[end][bit]))
+        total = [
+            (t[0] + u[0], t[1] + u[1])
+            for t, u in zip(total, (gmul(a, factor) for a in amplitude), strict=True)
+        ]
+    return sum(gnorm(t) for t in total)
+
+
 @cache
-def subset_sizes(hand, frames, known, chosen):
-    """The sizes of the chosen parties' joint signs, the first chosen outermost: sigma_f with the known parties'
-    signs held (pairs of party and sign), summed over the signs of the parties neither known nor chosen."""
+def subset_sizes(hand_, bases, known, chosen):
+    """The sizes of the chosen parties' joint ends, the first chosen outermost: sigma_f with the known parties' ends
+    held (pairs of party and end), summed over the ends of the parties neither known nor chosen."""
     held = dict(known)
-    rest = [p for p in range(len(frames)) if p not in held and p not in chosen]
+    rest = [p for p in range(len(bases)) if p not in held and p not in chosen]
     sizes = []
-    for signs in product(SIGNS, repeat=len(chosen)):
+    for picks in product(*[range(len(bases[p])) for p in chosen]):
         total = 0
-        for others in product(SIGNS, repeat=len(rest)):
-            full = held | dict(zip(chosen, signs, strict=True)) | dict(zip(rest, others, strict=True))
-            total += size(HANDS[hand], list(frames), [full[p] for p in range(len(frames))])
+        for others in product(*[range(len(bases[p])) for p in rest]):
+            full = held | dict(zip(chosen, picks, strict=True)) | dict(zip(rest, others, strict=True))
+            total += size(hand_, bases, [full[p] for p in range(len(bases))])
         sizes.append(total)
     return tuple(sizes)
 
@@ -86,31 +144,40 @@ def shares(sizes):
     return [Fraction(w, sum(sizes)) for w in sizes]
 
 
-def detector(birth, b, site, late, heard=None):
-    """A twin: taken at its detector, + or - along the frame its setting sets."""
+def detector(birth, b, site, late, heard=()):
+    """A twin: taken at its detector, + or - along the frame its setting sets (its two ends, the frame's two lines,
+    at one site and tick). Its setting hears the takes in heard, pairs of a part and its rule (none: a free one)."""
     take = birth["tick"] + abs(site - birth["site"]) + late
-    ends = [(site, take, 1), (site, take, -1)]
     return {
         "birth": b,
         "site": site,
         "late": late,
         "take": take,
         "heard": heard,
-        "rule": RULE,
-        "ends": ends,
+        "ends": [(site, take), (site, take)],
     }
 
 
 def spread(birth, b, absorbers):
-    """One quantum spread over absorbers (site, share), taken at one of them; it has no setting."""
-    birth["shares"] = [w for _, w in absorbers]
-    return {"birth": b, "ends": [(s, birth["tick"] + abs(s - birth["site"]), 0) for s, _ in absorbers]}
+    """One quantum spread over absorbers (site, share), taken at one of them, each absorber one of its ends. Its hand
+    holds at each absorber the share as a Gaussian norm over two lines it carries and no absorber here resolves; its
+    setting has one frame, its absorbers' own lines, and hears nothing."""
+    birth["hand"] = hand({(k,): squares(w) for k, (_, w) in enumerate(absorbers)})
+    birth["frames"] = ((lines(len(absorbers)),),)
+    return {
+        "birth": b,
+        "heard": (),
+        "ends": [(s, birth["tick"] + abs(s - birth["site"])) for s, _ in absorbers],
+    }
 
 
 def frames_of(board, b, frame):
-    """A birth's frames, silent (z) where a part's setting is still out."""
+    """A birth's frames, each part's silent (its own lines) where its setting is still out."""
     birth = board["births"][b]
-    return tuple(birth["frames"][k][frame[i]] if i in frame else Z for k, i in enumerate(birth["parts"]))
+    return tuple(
+        birth["frames"][k][frame[i]] if i in frame else lines(len(birth["frames"][k][0]))
+        for k, i in enumerate(birth["parts"])
+    )
 
 
 def band_weights(board, band, frame, taken):
@@ -122,23 +189,20 @@ def band_weights(board, band, frame, taken):
     for b in sorted({parts[i]["birth"] for i in band}):
         birth = births[b]
         where = [n for n, i in enumerate(band) if parts[i]["birth"] == b]
-        if birth["hand"] == "spread":
-            factors.append((where, {(e,): w for e, w in enumerate(birth["shares"])}))
-            continue
         party = {i: k for k, i in enumerate(birth["parts"])}
-        held = tuple(sorted((party[i], parts[i]["ends"][e][2]) for i, e in taken.items() if i in party))
+        held = tuple(sorted((party[i], e) for i, e in taken.items() if i in party))
         chosen = tuple(party[band[n]] for n in where)
         sizes = subset_sizes(birth["hand"], frames_of(board, b, frame), held, chosen)
-        picks = product(*[range(len(parts[band[n]]["ends"])) for n in where])  # end 0 is +, end 1 is -
+        picks = product(*[range(len(parts[band[n]]["ends"])) for n in where])
         factors.append((where, dict(zip(picks, sizes, strict=True))))
     slots = board.get("slots", {})
-    held_ends = [parts[i]["ends"][e][:2] for i, e in taken.items()]
+    held_ends = [parts[i]["ends"][e] for i, e in taken.items()]
     weights = []
     for history in histories:
         weight = 1
         for where, table in factors:
             weight *= table[tuple(history[n] for n in where)]
-        ends = held_ends + [parts[band[n]]["ends"][e][:2] for n, e in enumerate(history)]
+        ends = held_ends + [parts[band[n]]["ends"][e] for n, e in enumerate(history)]
         for slot, free in slots.items():
             weight *= ends.count(slot) <= free
         weights.append(weight)
@@ -162,8 +226,8 @@ def bands(board, ready, taken, joint):
             root[find(i)] = find(mine[0])
     joined = []
     for slot, free in board.get("slots", {}).items():
-        near = [i for i in ready if any(end[:2] == slot for end in parts[i]["ends"])]
-        held = sum(parts[i]["ends"][e][:2] == slot for i, e in taken.items())
+        near = [i for i in ready if slot in parts[i]["ends"]]
+        held = sum(parts[i]["ends"][e] == slot for i, e in taken.items())
         if near and len(near) + held > free:
             joined.append((slot, near))
             for i in near[1:]:
@@ -193,9 +257,9 @@ def drawn_weights(board, band, nodes, frame, taken, joint):
         births, parts = board["births"], board["parts"]
         histories, weights = band_weights(board, band, frame, taken)
         b, checked = parts[band[0]]["birth"], [0, 0]
-        if not joint and nodes == [("birth", b)] and births[b]["hand"] != "spread":
+        if not joint and nodes == [("birth", b)]:
             out = [k for k, i in enumerate(births[b]["parts"]) if i not in frame]
-            for picks in product(range(2), repeat=len(out)):
+            for picks in product(*[range(len(births[b]["frames"][k])) for k in out]):
                 other = dict(frame) | {
                     births[b]["parts"][k]: pick for k, pick in zip(out, picks, strict=True)
                 }
@@ -215,15 +279,18 @@ def run(board, joint, numbers):
     steps = max(e[1] - births[p["birth"]]["tick"] for p in parts for e in p["ends"])
 
     def set_frames():
+        """Each setting whose heard takes are in: law 9 over its frames, its own light's sizes times its rules'."""
         for i, p in enumerate(parts):
-            if "heard" in p and i not in frame and (p["heard"] is None or p["heard"] in taken):
-                heard = p["heard"]
-                sign = None if heard is None else parts[heard]["ends"][taken[heard]][2]
-                frame[i] = law9([1, 1], numbers(("det", i))) if heard is None else p["rule"][sign]
+            if i not in frame and all(j in taken for j, _ in p["heard"]):
+                birth = births[p["birth"]]
+                weights = [1] * len(birth["frames"][birth["parts"].index(i)])
+                for j, rule in p["heard"]:
+                    weights = [w * r for w, r in zip(weights, rule[taken[j]], strict=True)]
+                frame[i] = law9(weights, numbers(("det", i)))
 
     set_frames()
     while len(taken) < len(parts):
-        ready = [i for i, p in enumerate(parts) if i not in taken and ("heard" not in p or i in frame)]
+        ready = [i for i in range(len(parts)) if i in frame and i not in taken]
         now = []
         for band, nodes in bands(board, ready, taken, joint):
             histories, weights, checked = drawn_weights(board, band, nodes, frame, taken, joint)
@@ -236,10 +303,8 @@ def run(board, joint, numbers):
             return None
         passes, steps = passes + 2, steps + 2 * max(now)
         set_frames()
-    outcome = {i: parts[i]["ends"][e][2] for i, e in taken.items()}
     return {
         "frame": frame,
-        "outcome": outcome,
         "taken": taken,
         "passes": passes,
         "steps": steps,
@@ -248,12 +313,12 @@ def run(board, joint, numbers):
 
 
 def depth(board):
-    """The longest chain of settings: a free setting 1, a machine one more than the take it heard."""
+    """The longest chain of settings: each one more than the deepest setting whose take it heard (a free one 1)."""
     known, parts = {}, board["parts"]
     while len(known) < len(parts):
         for i, d in enumerate(parts):
-            if i not in known and (d["heard"] is None or d["heard"] in known):
-                known[i] = 1 if d["heard"] is None else known[d["heard"]] + 1
+            if i not in known and all(j in known for j, _ in d["heard"]):
+                known[i] = 1 + max((known[j] for j, _ in d["heard"]), default=0)
     return max(known.values())
 
 
@@ -282,19 +347,18 @@ def crossed():
     """Q at site 50 and P at 100, both at tick 0. Q's first twin is taken at site 40 (tick 10), its second at 150
     (tick 100); P's first at 120 (tick 20), its second at 10 (tick 90). Q's second frame is set by P's first outcome,
     heard by light (30 sites in 79 ticks), and P's second by Q's first; each birth's two takes are spacelike."""
-    q = {"site": 50, "tick": 0, "hand": "pair", "frames": PAIR_FRAMES, "parts": [0, 1]}
-    p = {"site": 100, "tick": 0, "hand": "pair", "frames": PAIR_FRAMES, "parts": [2, 3]}
+    q = {"site": 50, "tick": 0, "hand": PAIR_HAND, "frames": PAIR_BASES, "parts": [0, 1]}
+    p = {"site": 100, "tick": 0, "hand": PAIR_HAND, "frames": PAIR_BASES, "parts": [2, 3]}
     parts = [
         detector(q, 0, 40, 0),
-        detector(q, 0, 150, 0, 2),
+        detector(q, 0, 150, 0, ((2, RULE),)),
         detector(p, 1, 120, 0),
-        detector(p, 1, 10, 0, 0),
+        detector(p, 1, 10, 0, ((0, RULE),)),
     ]
     for d in parts:
-        h = parts[d["heard"]] if d["heard"] is not None else None
-        assert h is None or h["take"] + abs(h["site"] - d["site"]) < d["take"] - 1, (
-            "heard outside the past cone"
-        )
+        for j, _ in d["heard"]:
+            h = parts[j]
+            assert h["take"] + abs(h["site"] - d["site"]) < d["take"] - 1, "heard outside the past cone"
     return {"births": [q, p], "parts": parts}
 
 
@@ -308,14 +372,18 @@ def fixed_points(order):
     )  # 116 is a multiple of every room (58 and 116): each digit is met alike
     for fq, fp, nq, np_ in product(range(2), range(2), range(span), range(span)):
         found = []
-        for gq, gp in product(SIGNS, SIGNS):
+        for gq, gp in product(range(2), range(2)):  # the guessed ends of both early takes
             drawn = []
             for f, guess, n in ((fq, gp, nq), (fp, gq, np_)):
-                frames = (PAIR_FRAMES[0][f], PAIR_FRAMES[1][RULE[guess]])
-                signs = list(product(SIGNS, SIGNS))[law9(subset_sizes("pair", frames, (), order), n)]
-                drawn.append(dict(zip(order, signs, strict=True)))
+                bases = (PAIR_BASES[0][f], PAIR_BASES[1][law9(RULE[guess], 0)])
+                ends = list(product(range(2), range(2)))[
+                    law9(subset_sizes(PAIR_HAND, bases, (), order), n)
+                ]
+                drawn.append(dict(zip(order, ends, strict=True)))
             if drawn[0][0] == gq and drawn[1][0] == gp:
-                found.append((fq, fp, RULE[gp], RULE[gq], gq, drawn[0][1], gp, drawn[1][1]))
+                seconds = (law9(RULE[gp], 0), law9(RULE[gq], 0))
+                signs = (SIGNS[gq], SIGNS[drawn[0][1]], SIGNS[gp], SIGNS[drawn[1][1]])
+                found.append((fq, fp, *seconds, *signs))
         counts[len(found)] = counts.get(len(found), 0) + 1
         for key in found if len(found) == 1 else ():
             law[key] = law.get(key, 0) + 1
@@ -359,6 +427,10 @@ def part1():
         range(2), range(2), range(4), range(4), range(58), range(58)
     ):
         stream = {("det", 0): [fq], ("det", 2): [fp], ("birth", 0): [n1q, n2q], ("birth", 1): [n1p, n2p]}
+        stream |= {
+            ("det", 1): [0],
+            ("det", 3): [0],
+        }  # the machines' own digits: their rule's sizes decide
         used = dict.fromkeys(stream, 0)
 
         def numbers(key, stream=stream, used=used):
@@ -366,7 +438,9 @@ def part1():
             return stream[key][used[key] - 1]
 
         out = run(board, False, numbers)
-        key = (fq, fp, out["frame"][1], out["frame"][3]) + tuple(out["outcome"][i] for i in range(4))
+        key = (fq, fp, out["frame"][1], out["frame"][3]) + tuple(
+            SIGNS[out["taken"][i]] for i in range(4)
+        )
         law[key], total = law.get(key, 0) + 1, total + 1
     passes = run(board, False, lambda key: 0)["passes"]
     print(
@@ -388,9 +462,9 @@ def random_board(rng, count, line, machines):
         birth = {
             "site": rng.randrange(line),
             "tick": rng.randrange(24),
-            "hand": "triple" if triple else "pair",
+            "hand": TRIPLE_HAND if triple else PAIR_HAND,
         }
-        birth["frames"], birth["parts"] = (TRIPLE_FRAMES if triple else PAIR_FRAMES), []
+        birth["frames"], birth["parts"] = (TRIPLE_BASES if triple else PAIR_BASES), []
         for _ in range(3 if triple else 2):
             d = detector(birth, b, rng.randrange(line), rng.randrange(4))
             while (d["site"], d["take"]) in used:
@@ -405,7 +479,7 @@ def random_board(rng, count, line, machines):
             j for j, h in enumerate(parts) if h["take"] + abs(h["site"] - d["site"]) < d["take"] - 1
         ]
         if heard and rng.random() < machines:
-            d["heard"], d["rule"] = rng.choice(heard), RULE if rng.random() < 0.5 else {1: 1, -1: 0}
+            d["heard"] = ((rng.choice(heard), RULE if rng.random() < 0.5 else REVERSE),)
     return board
 
 
@@ -452,7 +526,7 @@ def drawn_law(board, spans):
     for digits in product(*[range(n) for _, n in spans]):
         given = dict(zip([key for key, _ in spans], digits, strict=True))
         out = run(board, False, lambda key, given=given: given.get(key, 0))
-        ends = [board["parts"][i]["ends"][out["taken"][i]][:2] for i in range(len(board["parts"]))]
+        ends = [board["parts"][i]["ends"][out["taken"][i]] for i in range(len(board["parts"]))]
         whole &= len(out["taken"]) == len(board["parts"])
         whole &= all(ends.count(slot) <= free for slot, free in board.get("slots", {}).items())
         key = tuple(out["taken"][i] for i in range(len(board["parts"])))
@@ -465,7 +539,7 @@ def quanta(absorbers, slots):
     """Births of one spread quantum each, at sites 10, 30, 50, ...; absorbers per quantum (site, share)."""
     board = {"births": [], "parts": [], "slots": slots}
     for b, ends in enumerate(absorbers):
-        birth = {"site": 10 + 20 * b, "tick": 0, "hand": "spread", "parts": [b]}
+        birth = {"site": 10 + 20 * b, "tick": 0, "parts": [b]}
         board["parts"].append(spread(birth, b, ends))
         board["births"].append(birth)
     return board
@@ -493,7 +567,10 @@ def part3():
     for na, nb in product(range(30), range(30)):  # 30 is a multiple of every room (5, 2 and 3)
         found = 0
         for ha, hb in product(a, b):
-            wa = [a["x"], a["z"] * (hb != "z")]  # each source alone, z's slot as the other leaves it
+            wa = [
+                a["x"],
+                a["z"] * (hb != "z"),
+            ]  # each source alone, z's slot as the other leaves it
             wb = [b["y"], b["z"] * (ha != "z")]
             found += (
                 ("x", "z")[law9(wa, na)] == ha
@@ -512,7 +589,8 @@ def part3():
         f"    the one rule, their band drawn at z where they are one: {named(tie, law)}; whole {whole}"
     )
     chain = quanta(
-        [[(4, 2), (20, 3)], [(20, 2), (40, 2)], [(40, 3), (56, 2)]], {(20, 10): 1, (40, 10): 1}
+        [[(4, 2), (20, 3)], [(20, 2), (40, 2)], [(40, 3), (56, 2)]],
+        {(20, 10): 1, (40, 10): 1},
     )
     law, whole = drawn_law(chain, [(("slot", 20, 10), 40), (("slot", 40, 10), 40)])
     print(

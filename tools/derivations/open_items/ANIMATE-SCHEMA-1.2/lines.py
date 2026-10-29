@@ -4,10 +4,11 @@ owed line (5) of 6494833685, schema 1.2; ANIMATE-SCHEMA-1.2/README.md).
 Two bands are drawn by ANIMATE-SCHEDULER's run(), the one rule, and written as 1.2 lines: a pair whose second setting
 is a machine hearing its first take (two split clicks at its birth, layers 1 and 2), and two quanta joined by one free
 slot (one split click at the absorber where they are one). Each band's split click names its members (each member's
-lay and its party there, G5), its joint histories (per member, the site that takes it and its sign along the frame
-there, 0 where the absorber has no frame), sigma_f (sizes) and sigma_b (back, G6), c over room and drawn (law 9), and
-its layer. Each take is a whole click naming its lay (G5), with the frame it took in and the part it wrote (1.1's
-detector and written). The lines are read by the decoder's own reader (schema 1.1's guards, the 1.2 fields unnamed)
+lay and its party there, G5), its joint histories (per member, the site that takes it and the line of its frame it is
+taken on: a twin's 0 is +, 1 is -; a spread quantum's k is its k-th absorber), sigma_f (sizes) and sigma_b (back,
+G6), c over room and drawn (law 9), and its layer. Each take is a whole click naming its lay (G5), with the frame it
+took in and the part it wrote (1.1's detector and written: the frame's first line and the line taken, in axis form),
+one form for every take. The lines are read by the decoder's own reader (schema 1.1's guards, the 1.2 fields unnamed)
 and by three 1.2 checks: every take names a lay; every draw is law 9's over sizes times back; every member is taken
 where its band's drawn history says.
 
@@ -54,11 +55,12 @@ def run_logged(board, digits):
     return out, log
 
 
-def reading(board, i, frame_index, sign=1):
-    """A twin's frame in 1.1's axis form (rho, spin), signed by the part it wrote."""
+def reading(board, out, i, end):
+    """A line of the frame part i's setting set, in 1.1's axis form (rho, spin): the detector's frame is its first
+    line, the part written the line taken."""
     birth = board["births"][board["parts"][i]["birth"]]
-    rho, spin = scheduler.axis(birth["frames"][birth["parts"].index(i)][frame_index])
-    return {"train": board["parts"][i]["birth"], "rho": rho, "spin": [sign * s for s in spin]}
+    rho, spin = scheduler.axis(birth["frames"][birth["parts"].index(i)][out["frame"][i]][end])
+    return {"train": board["parts"][i]["birth"], "rho": rho, "spin": list(spin)}
 
 
 def written(board, out, log):
@@ -68,27 +70,26 @@ def written(board, out, log):
         {"kind": "whole", "round": LAID, "site": birth["site"], "count": LAID, "train": b, "q": 1}
         for b, birth in enumerate(births)
     ]
+    place = {("birth", b): (birth["site"], birth["tick"]) for b, birth in enumerate(births)}
+    place |= {
+        ("slot", *slot): slot for slot in board.get("slots", {})
+    }  # each Node-clock that draws, and its tick
     for band, nodes, histories, weights, sizes, drawn, layer, n in log:
         members = [
             [LAID, births[parts[i]["birth"]]["site"], births[parts[i]["birth"]]["parts"].index(i)]
             for i in band
         ]
-        rows = [
-            [[parts[i]["ends"][e][0], parts[i]["ends"][e][2]] for i, e in zip(band, h, strict=True)]
-            for h in histories
-        ]
+        rows = [[[parts[i]["ends"][e][0], e] for i, e in zip(band, h, strict=True)] for h in histories]
         back = []  # sigma_b: 0 where a history fills a slot past its free count
         for h in histories:
-            ends = [parts[i]["ends"][e][:2] for i, e in zip(band, h, strict=True)]
+            ends = [parts[i]["ends"][e] for i, e in zip(band, h, strict=True)]
             back.append(
                 int(all(ends.count(slot) <= free for slot, free in board.get("slots", {}).items()))
             )
         assert [s * b for s, b in zip(sizes, back, strict=True)] == list(weights), (
             "sizes times back are the products"
         )
-        site, tick = (
-            (births[parts[band[0]]["birth"]]["site"], 0) if nodes[0][0] == "birth" else nodes[0][1:]
-        )
+        site, tick = place[nodes[0]]
         line = {
             "kind": "split",
             "round": LAID + tick,
@@ -101,7 +102,7 @@ def written(board, out, log):
             line | {"c": n % sum(weights), "room": sum(weights), "drawn": drawn, "layer": layer}
         )
     for i, e in out["taken"].items():
-        site, tick, sign = parts[i]["ends"][e]
+        site, tick = parts[i]["ends"][e]
         lay = births[parts[i]["birth"]]["site"]
         take = {
             "kind": "whole",
@@ -111,11 +112,7 @@ def written(board, out, log):
             "train": parts[i]["birth"],
         }
         take |= {"q": 1, "birth": [LAID, lay]}
-        if sign:
-            take |= {
-                "detector": reading(board, i, out["frame"][i]),
-                "written": reading(board, i, out["frame"][i], sign),
-            }
+        take |= {"detector": reading(board, out, i, 0), "written": reading(board, out, i, e)}
         lines.append(take)
     return lines
 
@@ -124,8 +121,15 @@ def boards():
     """A pair at site 50: its first twin taken at 45 (tick 5), its second at 70 (tick 35), the second's frame set by
     the first's outcome, heard by light (25 sites in 30 ticks). Two quanta at sites 10 and 30, over x (4) and z (20),
     and over y (36) and z, both reaching z at tick 10, where one slot is free."""
-    pair = {"site": 50, "tick": 0, "hand": "pair", "frames": scheduler.PAIR_FRAMES, "parts": [0, 1]}
-    first, second = scheduler.detector(pair, 0, 45, 0), scheduler.detector(pair, 0, 70, 15, 0)
+    pair = {
+        "site": 50,
+        "tick": 0,
+        "hand": scheduler.PAIR_HAND,
+        "frames": scheduler.PAIR_BASES,
+        "parts": [0, 1],
+    }
+    first = scheduler.detector(pair, 0, 45, 0)
+    second = scheduler.detector(pair, 0, 70, 15, ((0, scheduler.RULE),))
     assert first["take"] + abs(first["site"] - second["site"]) < second["take"] - 1, (
         "heard outside the past cone"
     )
@@ -141,8 +145,9 @@ def boards():
 
 
 def checks(lines):
-    """Every take names a lay; every draw is law 9's over sizes times back; every member is taken at the site, and with
-    the sign, its band's drawn history says."""
+    """Every take names a lay; every draw is law 9's over sizes times back; every member is taken at the site, and on
+    the line of its frame, its band's drawn history says (a frame of two lines: the first where the part written is
+    the detector's own line, the second where it is the other)."""
     lays = {(e["round"], e["site"]) for e in lines if e["kind"] == "whole" and "birth" not in e}
     takes = [e for e in lines if e["kind"] == "whole" and "birth" in e]
     named = all(tuple(t["birth"]) in lays for t in takes)
@@ -150,14 +155,10 @@ def checks(lines):
     for e in (e for e in lines if e["kind"] == "split"):
         products = [w * b for w, b in zip(e["sizes"], e["back"], strict=True)]
         lawful &= e["room"] == sum(products) and scheduler.law9(products, e["c"]) == e["drawn"]
-        for member, (site, sign) in zip(e["members"], e["parts"][e["drawn"]], strict=True):
+        for member, (site, end) in zip(e["members"], e["parts"][e["drawn"]], strict=True):
             found = [t for t in takes if t["birth"] == member[:2] and t["site"] == site]
-            signs = [
-                1 if t["written"]["spin"] == t["detector"]["spin"] else -1
-                for t in found
-                if "detector" in t
-            ]
-            placed &= len(found) == 1 and (signs == [sign] if sign else not signs)
+            taken = [int(t["written"] != t["detector"]) for t in found]
+            placed &= taken == [end]
     return named, lawful, placed
 
 

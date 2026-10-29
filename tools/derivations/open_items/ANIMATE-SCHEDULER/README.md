@@ -4,7 +4,8 @@ The asks:
 - the Boss's 6494549592, item 4 ("The scheduler on a full board has to be sized by the depth of its chains, not three passes fixed");
 - Sofer's owed line (5) of 6494833685;
 - Animate's own 10.5, item 6 (every band of agreeing histories must part at one Node-clock, and the probe must look for a band that does not);
-- the owner's word to Animate of 2026-10-29, 11:5x UTC (in Hebrew; in translation): "The rule must be generic."
+- the owner's word to Animate of 2026-10-29, 11:5x UTC (in Hebrew; in translation): "The rule must be generic.";
+- Sofer's 6496692228, item 6: two places in the code told weights by kind (a spread quantum's sigma_f against a hand's, and a free setting against a machine).
 
 Beside the engine. `python -I scheduler.py` runs in about 8 seconds; its output is scheduler.txt. It reuses the hands, frames and sizes of ANIMATE-B-RECORD/b_record.py.
 
@@ -29,14 +30,17 @@ Beside the engine. `python -I scheduler.py` runs in about 8 seconds; its output 
    - **Two quanta reaching one absorber's one free slot at one tick:** with each source drawing alone and the slot as sigma_b, 216 of 900 digit pairs have two histories.
    - **Under the one rule** the two quanta are one band, joined by the slot, and drawn once at the absorber where they are one. That gives one history at every digit, each quantum taken once, at the products over the band: 6/19, 4/19 and 9/19.
    - **A chain of three quanta joined by two slots** is one band, drawn once with the two slots' digits summed: 3/10, 1/5, 1/5 and 3/10, with every quantum taken once and no slot past its free count.
+7. **Nothing is told by kind in the code either** (Sofer's item 6). The output is equal byte for byte to the code that told them apart (scheduler.txt, 2,432 bytes).
+   - **sigma_f is one formula for every hand:** the Gaussian norm of the hand's whole-number overlap with its parties' ends, each end a line of its party's frame, summed over the lines the hand carries untaken. A twin's frame is its two spinors along an axis. A spread quantum's frame is its absorbers' own lines, and its hand holds at each absorber its share as a Gaussian norm over two lines no absorber here resolves (any whole share is a sum of four squares).
+   - **A setting is one law-9 draw over its frames:** its own light's sizes (1 each) times, at each take it heard, the sizes its rule gives that take's end. Hearing nothing, it is free; hearing a take, its rule's sizes leave one frame (a machine); a spread quantum's setting has one frame. The depth of a chain is one formula too: each setting one more than the deepest setting whose take it heard.
 
 ## 1. The board
 
 - **A line of Node-clocks;** light runs one site a tick.
 - **Births:** a birth lays a pair (the shared hand e1 x e2 - e2 x e1), a triple (e1 x e1 x e1 + e2 x e2 x e2), or one quantum spread over absorbers.
 - **Takes:** each twin rides one site a tick to its detector and waits there 0 to 3 ticks; its take is a whole click.
-- **Settings:** each detector's setting is a split click one tick before its take. It is either free (its own light's digit over its two frames) or a machine that sets its frame from an outcome it heard by light, a take strictly inside its past light cone.
-- **The sizes:** sigma_f is the Gaussian norm of the hand's whole-number overlap with the frames' spinors, or a spread quantum's share at an absorber. sigma_b is an absorber's free slots. Every draw is law 9's, the rank count of a digit over the running sums.
+- **Settings:** each part's setting is a split click one tick before its take, one law-9 draw over its frames: its own light's sizes times the sizes its rule gives each take it heard by light, strictly inside its past light cone. A setting that hears nothing is free; one that hears a take is a machine.
+- **The sizes:** sigma_f is the Gaussian norm of the hand's whole-number overlap with its parties' ends (a twin's spinors along its frame; an absorber's own line), summed over the lines the hand carries untaken. sigma_b is an absorber's free slots. Every draw is law 9's, the rank count of a digit over the running sums.
 
 ## 2. Part 1: two crossed births
 
@@ -88,10 +92,10 @@ At every digit, every quantum is taken exactly once, and no slot past its free c
 
 - **(a) Which clock or gear makes each term:**
   - each draw is law 9's over sigma_f sigma_b, at the Node-clock where the band's parts are one;
-  - each setting is a split click of the detector's own light, or a machine's frame from a take it heard by light;
+  - each setting is a law-9 draw of the detector's own light, over its own sizes times its rule's at each take it heard by light;
   - the passes are the runner's order of work.
 
-  No term is declared: a full slot weighs 0 by sigma_b, and the place of a draw is where its parts are one.
+  No term is declared: a full slot weighs 0 by sigma_b, the place of a draw is where its parts are one, and sigma_f is one formula for every hand.
 - **(b) What the clicks show, the books first:**
   - every part of every band is drawn once and taken once, on every board and at every digit;
   - the law is nature's at every layer, exactly, and the products over the band where a slot joins quanta;
