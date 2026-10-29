@@ -32,3 +32,8 @@ variants 20000: held by the checker 1777; of those the load named a departure in
 raised in the checker: {}
 raised in the load: {}
 raised in the contraction: {}
+== python -I fuzz_files.py <worktree at 0ff2ae0dc> 3000 20261029
+variants 3000: held by the checker 246; of those the load named a departure in 24 and loaded 222
+raised in the checker: {}
+raised in the load: {}
+raised in the contraction: {}

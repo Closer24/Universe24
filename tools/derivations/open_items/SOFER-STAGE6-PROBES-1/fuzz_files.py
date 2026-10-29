@@ -2,7 +2,7 @@
 doubled, the text cut or made not JSON), each variant through the checker and, where it holds, the load and the contraction.
 A raise anywhere is a finding: the checker and the load name every departure, they raise none.
 usage: python -I fuzz_files.py <worktree> <variants> <seed>"""
-import copy, json, random, sys, tempfile, traceback
+import copy, inspect, json, random, sys, tempfile, traceback
 from collections import Counter
 from pathlib import Path
 
@@ -16,6 +16,7 @@ from tensor24.runner.files import departures, sites_of  # noqa: E402
 from tensor24.runner.load import load  # noqa: E402
 from tests.test_the_tensor24_load import COUPLINGS, TRAINS  # noqa: E402
 
+TAKES_GEARS = len(inspect.signature(contract).parameters) > 2  # contract takes the gears from 0ff2ae0dc on; before, two arguments
 held, c = made((3, 3, 3))
 trains = []
 for t in TRAINS:
@@ -128,7 +129,7 @@ with tempfile.TemporaryDirectory() as d:
         try:
             rows = sum(t.rows() for t in got.trains)
             readings = np.arange(7 * rows * sites_of(p["shape"]), dtype=object).reshape(7 * rows, -1)
-            contract(Plan(*got.plan), readings)
+            contract(Plan(*got.plan), readings, *(got.state[:1] if TAKES_GEARS else ()))
         except BaseException as e:  # noqa: BLE001
             key = f"{type(e).__name__}: {str(e)[:90]}"
             raised_contract[key] += 1

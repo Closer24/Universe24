@@ -37,6 +37,12 @@ Four files, each run on the repo's Python with `python -I`, the outputs beside t
 - **The load raises on none of 43,000 variants** (3,000 at seed 20261028, 20,000 at seed 7 and 20,000 at seed 11): the checker, the
   load and the contraction each raise none. The `.get` for gears and couplings and the board's size named in lay() are in.
 - **signs.py gives 43 of 43 positive:** each table is primitive with its first entry positive.
+
+## What they give at 0ff2ae0dc (the ninth review's changes)
+
+- **The load and the contraction raise on none of 3,000 variants** (seed 20261029: 246 held by the checker, 24 named by the load, 222 loaded).
+  contract takes the gears as a third argument from this head on; fuzz_files.py reads the signature and passes the laid
+  state's first array where it is asked for, so the probe runs on either head.
 - The harness drew its hostile values from one pool of objects, which made a circular document in one configuration;
   each value drawn is now a copy.
 
