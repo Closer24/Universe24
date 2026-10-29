@@ -247,7 +247,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - sigma_ab = N(det[phi1^a, phi2^b]) and E = -m1 m2 / (rho1 rho2). CHSH gives exactly S = -82/29;
    - **where it works:** on one Mesh, and where the detectors' frames are held from before the birth to the click (BC);
    - **what the probe put in by hand (the second physicist):** the frames and the singlet;
-   - **at a distance, with a late choice:** the composite clock must click as one (item (l));
+   - **at a distance, with a late choice:** the composite clock must click as one (item (l); retired by decision 28, Bell at a distance standing on two boards);
    - **a late choice through the time reversal is refuted (BC's verifier):** the exact rewind brings no detector's axis back to the birth. Even with the clicks left undone (o), the next bang's pairs reach S = -82/29 only where their choices repeat;
    - this is a matter of Bell alone. The difference between bangs, through the detector's click, is law 10 (section 8).
 
@@ -384,7 +384,7 @@ On the owner's word to David: "a generic solution for everything". This is David
    - **what is missing:** an entangled state of many quanta, and the vacuum's fluctuations.
 4. **IV. Locality against Bell:**
    - with frames held from before the birth it works;
-   - with a late choice it is a contradiction, until item (l).
+   - with a late choice it is a contradiction, until item (l) (retired by decision 28: two boards on one Node-clock, one forward and one backward, keep locality and carry the late choice through the birth).
 5. **V. The light's kind:**
    - T1 on the Meshes, and two transverse gears;
    - the exact link on Z[i] is Z4 alone. It is fixed.
@@ -553,7 +553,7 @@ On the owner's word to David: "a generic solution for everything". This is David
     - **The recommendation:** first prove that the second carry is needed (David), and only then decide.
 12. **(k) The one act as the stationary point of one action.**
     - **The recommendation:** approve as a direction only. It gives one of draft I's two changes, and the turnover as T stays an axiom (b).
-13. **(l) A composite clock clicks as one, wherever its parts are.**
+13. **(l) A composite clock clicks as one, wherever its parts are.** RETIRED by decision 28 (the owner's word to the Boss of 2026-10-29, 07:4x UTC): Bell at a distance stands on two boards, with locality kept.
     - **It gives:** Bell at any distance, and with a late choice.
     - **It cancels:** "locality is never broken", at the moment of the click.
     - **The recommendation:** not now.
@@ -644,6 +644,11 @@ On the owner's word to David: "a generic solution for everything". This is David
     - **The act at the top is cancelled:** it is not a local law. The top is the act's own turning point by the spring, and each bang goes on from where the last left it; the clicks carry the arrow. T = J K stays each kind's time reversal (item (s)), which the tests read and no act applies. The law's fifth act at the top (ALGEBRA.md line 1602) is Sofer's to cancel in place, the former sentence kept by name and dated.
     - **(g), the doubler's hold, as recommended:** light at the speed 1/sqrt(6), gravity's reach of the order of sqrt(Gamma / 12) Meshes; 7b's table is written so.
     - **The reviews:** a fresh hostile reader every two stages, and the architect approving at each that the whole stands; Sofer, David and Animate approve every stage, and the three branches move at the end of each pair of stages, after the reader and the architect.
+28. **(ab) Bell at a distance on two boards. APPROVED (the owner's word to the Boss of 2026-10-29, 07:4x UTC, in Hebrew; in translation: "The two boards."; on the options of the big picture, TENSOR24-THE-BIG-PICTURE.md section 10.1 on toys-5 3f48ceef7).**
+    - **The decision:** every Node-clock holds two boards, one forward from the bang and one backward from the clicks to come; the backward board is the one act run back. A detector's choice and outcome ride the backward board back along its twin to the birth, and the other twin's forward board brings them to its detector: every read within the six neighbours, so **locality is never broken**.
+    - **Retired:** the closure across space at the board's cone as Bell's carrier, with its window and Bancal's catch, and item (l).
+    - **Kept:** the arrow: the forward board alone writes records.
+    - **Owed before the build resumes** (the owner's word of 07:4x UTC: "Stop building the engine for a moment until you close on the final picture. It must be hermetically closed."): the split click in two boards for Born's position, Grangier's g2 = 0, Bell's S and three parties with no signal; a history agreeing with itself at both ends, its existence, its uniqueness and the runner's search for it; no signal into the past; the state and the cost; the aim of ever more complex clocks kept.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
