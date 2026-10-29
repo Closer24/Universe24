@@ -51,6 +51,27 @@ def law(fa, fb, limited):
     return far, near, room, kept
 
 
+def tie():
+    """Part 3's tie, two independent quanta at z's one free slot: A's law at x with B not born and with B born at site
+    30 (tick 0), spacelike to A's take at x (site 4, tick 6). Under the one rule sigma_b weighs 0 the history with both
+    at z; with the slot removing no history, both arrivals are kept (one taken at z's next free tick)."""
+    alone = s.quanta([[(4, 2), (20, 3)]], {(20, 10): 1})
+    law, _ = s.drawn_law(alone, [(("birth", 0), 5)])
+    at_x = sum(p for k, p in law.items() if k[0] == 0)
+    rows = [("B not born", at_x, at_x)]
+    pair = [[(4, 2), (20, 3)], [(36, 3), (20, 2)]]
+    one_rule, _ = s.drawn_law(s.quanta(pair, {(20, 10): 1}), [(("slot", 20, 10), 19)])
+    kept, _ = s.drawn_law(s.quanta(pair, {(20, 10): 2}), [(("birth", 0), 5), (("birth", 1), 5)])
+    rows.append(
+        (
+            "B born",
+            sum(p for k, p in one_rule.items() if k[0] == 0),
+            sum(p for k, p in kept.items() if k[0] == 0),
+        )
+    )
+    return rows
+
+
 def main():
     print("A band joined by a hand and a slot at once, drawn at the slot by the one rule")
     for limited, name in ((2, "no slot limit (two free)"), (1, "one free slot at site 55")):
@@ -61,6 +82,11 @@ def main():
                 far, near, room, kept = law(fa, fb, limited)
                 cells.append(f"a{fa}: far + {far}, near + {near} (room {room}, slot kept {kept})")
             print(f"    b{fb}: " + "; ".join(cells))
+    print(
+        "Part 3's tie, two independent quanta at z's one free slot: A's law at x, B's birth spacelike to it"
+    )
+    for name, one_rule, kept in tie():
+        print(f"  {name}: under the one rule {one_rule}; with the slot removing no history {kept}")
 
 
 if __name__ == "__main__":

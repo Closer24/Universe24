@@ -34,6 +34,7 @@ Beside the engine. `python -I scheduler.py` runs in about 8 seconds; its output 
    - **sigma_f is one formula for every hand:** the Gaussian norm of the hand's whole-number overlap with its parties' ends, each end a line of its party's frame, summed over the lines the hand carries untaken. A twin's frame is its two spinors along an axis. A spread quantum's frame is its absorbers' own lines, and its hand holds at each absorber its share as a Gaussian norm over two lines no absorber here resolves (any whole share is a sum of four squares).
    - **A setting is one law-9 draw over its frames:** its own light's sizes (1 each) times, at each take it heard, the sizes its rule gives that take's end. Hearing nothing, it is free; hearing a take, its rule's sizes leave one frame (a machine); a spread quantum's setting has one frame. The depth of a chain is one formula too: each setting one more than the deepest setting whose take it heard.
 8. **A band joined by a hand and by a slot at once signals** (part 5). The far twin's law at its frame moves with the near twin's frame (11/29 against 107/174). The no-signal checks cover bands drawn at a birth, and this band is drawn at the slot. A generic fix is named as a candidate.
+9. **The tie of item 6 signals too, with no hand** (part 5). A's law at x is 2/5 with B not born and 10/19 with B born, B's birth spacelike to A's take at x. Under the candidate fix both read 2/5, and the tie's law is the Born product (6/25, 4/25, 9/25 and 6/25).
 
 ## 1. The board
 
@@ -103,6 +104,10 @@ The Boss's hunt of 13:55 UTC asks it of the record and the clicks. `python -I ha
   - Every history then keeps its sigma_f, the hand's law is untouched, and no signal can arise.
   - The tie's law changes with it, which is to measure.
   - Drawing the hand before the slot would also close it, but it tells a hand from a slot by kind, which decision 38 forbids.
+- **The tie of Part 3 signals too, with no hand** (hand_slot.txt, its second part):
+  - A's law at x is 2/5 with B not born, and 10/19 with B born at site 30. B's birth is spacelike to A's take at x (site 4, tick 6), so whether B's source emits is read at A's absorber.
+  - Under the candidate fix both read 2/5, and the tie's law is the Born product: x/y 6/25, x/z 4/25, z/y 9/25, and z/z 6/25 with one quantum taken at z's next free tick. The one rule gives 6/19, 4/19 and 9/19.
+  - So under the fix two independent sources stay independent at a shared absorber, as nature's are.
 
 ## 6. What does not follow
 
