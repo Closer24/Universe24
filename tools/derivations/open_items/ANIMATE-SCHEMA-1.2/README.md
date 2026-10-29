@@ -101,7 +101,21 @@ Two quanta laid at sites 10 and 30, over x (4) and z (20) and over y (36) and z,
 
 **Guards:** G2 (parts), G4 (unit), G7 (load), G3 (work, for a moving mass's energy) and G5 (one lay followed through its clicks).
 
-## 5. What does not follow
+## 5. The record without the turnover line, as one change (turnover_out.patch)
+
+Decision 38 asks it of Animate, and G1 of the Boss's plan takes it (6497161018). Under decision 32 no decoder code enters src, so it stands here as one patch, ready the moment the build resumes. `git apply` takes all nine files on reader-5's head; on tensor24-review it takes the src and tests hunks (`--include='src/*' --include='tests/*'`), the converter and the decoder's page being reader-5's.
+
+- **src/tensor24/decoder/records.py:** the turnover kind leaves the reader's kinds. A turnover line is then refused as any line of a kind the schema does not hold: "the line kinds ['turnover'] are unknown". No guard of its own is added.
+- **src/tensor24/record/schema.py:** the Turnover record goes, and the lines' order names Whole, Split, Rate and Books.
+- **The two decoder tests:**
+  - the order's case stands on a whole click and a rate line;
+  - a turnover line is refused by its kind (a new test);
+  - the mutant that reads the whole click's q rule on every kind is killed by a rate line with an unnamed q 0, where a turnover at q 0 killed it before.
+- **tools/tensor24_convert.py:** the converter writes no turnover line. ANIMATE-DECODER-1's first slice and page follow: the three records lose their 1,934, 861 and 1,073 turnover lines, and every other count is unchanged.
+- **Checked in a scratch worktree:** the decoder's 130 tests pass; ruff check and format hold; the decoder's 204 mutants are all killed (mutants.txt in the patch), the kinds' order mutant now swapping the whole click and the rate line.
+- **Left to the writer** (the Boss's): engine/__init__.py's docstring names the turnover among the engine's parts, and algebra/carry.py's names the fine tooth reflected at it. Both are the engine's words, not the record's.
+
+## 6. What does not follow
 
 - **The writer:** the runner, which writes every line; and stage 9, which makes the clicks.
 - **A mass, on any record so far:** no record holds a train the clicks built. Whether the act builds one from the seed is decision 37's decisive question (David's ladder).
