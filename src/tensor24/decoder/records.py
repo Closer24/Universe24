@@ -10,16 +10,18 @@
 # stands on the record, read where the line's record names it: an event's round from 1 to the end's rounds and its
 # site on the board, a whole click's ends and children on the board and its ends' Spokes among the board's, and a
 # count from the first beat on the kinds whose record holds one (the digests are the runner's, which the decoder
-# never reads); a whole click that takes at both ends books in its two ends alone, its own taken and laid empty, and
-# one that takes at one end holds no end (G3); the events keep the schema's order (round, kind, site, train). A field
-# may stand absent where its writer lacks it: a reading that needs it reads not read, the cause named. A record that
-# breaks a rule is not read, and the cause is named in ASCII: a field's name and a kind as Python's ascii() writes
-# them, so a line feed or a lone surrogate in a name stands escaped, and a board by its sides, never their product,
-# which may pass the interpreter's digits; nothing is raised. The lines are split at the line feed alone, so U+2028,
-# U+0085 and their kin stand inside a label as JSON lets them; a line nested past the interpreter's depth, or holding
-# a whole number past its digits (sys.get_int_max_str_digits(), which the tool lifts), is named so. The ledger beside
-# the record is read under its own guards: every line a JSON object, at a whole round and train, after the step or
-# after the clicks, its fields of their shape, each place once. The standard library and the record's schema alone.
+# never reads); a whole click's q, where it holds one, at least 1, and every holding's windings from 0 (the Boss's
+# ruling of 2026-10-29, 04:4x UTC: a whole click is the carry's quotient at least 1, and the wind a positive form); a
+# whole click that takes at both ends books in its two ends alone, its own taken and laid empty, and one that takes
+# at one end holds no end (G3); the events keep the schema's order (round, kind, site, train). A field may stand
+# absent where its writer lacks it: a reading that needs it reads not read, the cause named. A record that breaks a
+# rule is not read, and the cause is named in ASCII: a field's name and a kind as Python's ascii() writes them, so a
+# line feed or a lone surrogate in a name stands escaped, and a board by its sides, never their product, which may
+# pass the interpreter's digits; nothing is raised. The lines are split at the line feed alone, so U+2028, U+0085 and
+# their kin stand inside a label as JSON lets them; a line nested past the interpreter's depth, or holding a whole
+# number past its digits (sys.get_int_max_str_digits(), which the tool lifts), is named so. The ledger beside the
+# record is read under its own guards: every line a JSON object, at a whole round and train, after the step or after
+# the clicks, its fields of their shape, each place once. The standard library and the record's schema alone.
 
 import dataclasses
 import json
@@ -32,6 +34,7 @@ from tensor24.record import schema
 KINDS = ("whole", "split", "turnover", "rate", "books")  # the events' order within a round, the schema's
 PLACE = ("round", "site")
 ENDS = ("near", "far")  # a whole click's two ends, where it takes at both
+BOOKED = ("taken", "laid")  # where a whole click and each of its ends book their holdings
 AT = ("step", "clicks")  # a ledger line's place in its round: after the step, or after the clicks
 ENTRY = ("round", "train")  # a ledger line's place beside its at
 NO_JSON = "is no JSON object"
@@ -148,7 +151,11 @@ def off(line: Line, rounds: Any, made: tuple[Any, Any, Any], fields: dict[str, A
         return f"names Spoke {wide[0]}, off the board's Spokes 0 to {spokes - 1}"
     if "count" in fields and whole(line.get("count")) and line["count"] < 1:
         return f"holds the count {line['count']}, before the first beat"
-    return ""
+    if line["kind"] == "whole" and whole(line.get("q")) and line["q"] < 1:
+        return f"holds the whole click's q {line['q']}, below 1"
+    held = [h for part in [line, *ends] for key in BOOKED if key in fields for h in part.get(key, [])]
+    low = [w for h in held for w in h.get("windings", []) if whole(w) and w < 0]
+    return f"holds a holding's windings {low[0]}, below 0" if low else ""
 
 
 def board(header: Any) -> tuple[Any, Any, Any]:
