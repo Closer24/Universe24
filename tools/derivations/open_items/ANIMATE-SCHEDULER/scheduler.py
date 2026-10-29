@@ -1,16 +1,18 @@
 """Toy: rule B's scheduler on a full board, one rule for every band (Animate; the Boss's 6494549592 item 4: "The
 scheduler on a full board has to be sized by the depth of its chains, not three passes fixed"; Animate's 10.5 item 6:
 every band of agreeing histories must part at one Node-clock; the owner's word to Animate of 2026-10-29, 11:5x UTC,
-in Hebrew, in translation: "The rule must be generic").
+in Hebrew, in translation: "The rule must be generic"; decision 40 (b): a full slot refuses after the split click's
+draw, and the refused quantum goes back to its giver).
 
-The one rule: the parts that share a hand (one birth's twins) or a slot (one absorber at one tick, reachable by more
-parts than it has free) form a band. Each band is decided by one law-9 draw over the products sigma_f sigma_b of its
-joint histories, conditional on what is drawn, at the Node-clock where its parts are one (its birth, or the slots that
-join it, their digits summed), in the pass in which its products come in. Where only some of one birth's parts are
-in (their settings), those are drawn first, over the products summed over the rest: lawful, because a subset's sizes
-summed over the rest are the same in every frame of the rest (no signal); every such draw is checked against every
-frame the parts still out may take, exactly. Nothing else is typed: a full slot weighs 0 by sigma_b, and the place of
-a draw is where its parts are one.
+The one rule: the parts that share a hand (one birth's twins, or one spread quantum) form a band. Each band is decided
+by one law-9 draw over sigma_f of its joint histories, conditional on what is drawn, at its birth's Node-clock, in the
+pass in which its sizes come in. Where only some of one birth's parts are in (their settings), those are drawn first,
+over the sizes summed over the rest: lawful, because a subset's sizes summed over the rest are the same in every frame
+of the rest (no signal); every such draw is checked against every frame the parts still out may take, exactly. A slot
+(one absorber at one tick) joins no band and weighs no history: once every part that may reach it is drawn, its own
+law-9 draw, on its own digit and over equal weights, picks which of its arrivals it takes, as many as it has free; it
+refuses the rest, each back to its giver (its birth), and the refusal is held in the state. Nothing else is typed: the
+place of every draw is where its parts are one, a band's at its birth and a refusal's at its slot.
 
 A line of Node-clocks; light runs one site a tick. A birth lays a pair (the shared hand e1 x e2 - e2 x e1), a triple
 (e1 x e1 x e1 + e2 x e2 x e2) or one quantum spread over absorbers. Each twin rides one site a tick to its detector and
@@ -20,13 +22,14 @@ its past light cone), the sizes its rule gives that take's end. A setting that h
 among its two frames); one that hears a take sets the frame its rule names for it (a machine); a spread quantum's
 setting has one frame, its absorbers' own lines. sigma_f is one formula for every hand: the Gaussian norm of the hand's
 whole-number overlap with its parties' ends, each end a line of its party's frame (a twin's spinor along its axis,
-ANIMATE-B-RECORD; an absorber's own line), summed over the lines a hand carries untaken; sigma_b is an absorber's free
-slots. Every draw is law 9's: the rank count of a digit over the weights' running sums, the digit a number modulo
-their sum.
+ANIMATE-B-RECORD; an absorber's own line), summed over the lines a hand carries untaken. sigma_b, an absorber's free
+slots, is alike in every history and weighs none; the free count is the size of the slot's own draw. Every draw is
+law 9's: the rank count of a digit over the weights' running sums, the digit a number modulo their sum.
 
 The scheduler J, for contrast, draws a birth's band only when all its parts are in.
 Part 1: two crossed births, each one's early outcome setting the other's late frame. Part 2: random full boards.
-Part 3: one quantum alone, two quanta at one absorber's one free slot at one tick, and a chain of three such quanta.
+Part 3: one quantum alone, two quanta at one absorber's one free slot at one tick, and a chain of three such quanta,
+each slot refusing after the draws.
 
 usage: python -I scheduler.py
 """
@@ -36,7 +39,7 @@ import random
 import sys
 from fractions import Fraction
 from functools import cache
-from itertools import product
+from itertools import combinations, product
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "ANIMATE-B-RECORD"))
@@ -180,9 +183,9 @@ def frames_of(board, b, frame):
     )
 
 
-def band_weights(board, band, frame, taken):
-    """The band's joint histories (one end per part) and their products sigma_f sigma_b, conditional on what is
-    taken: each birth's sigma_f summed over its parts still out, and each limited slot's sigma_b, 0 where full."""
+def band_weights(board, band, frame, drawn):
+    """The band's joint histories (one end per part) and their sizes sigma_f, conditional on what is drawn: each
+    birth's sigma_f summed over its parts still out. No slot weighs a history (decision 40 (b))."""
     births, parts = board["births"], board["parts"]
     histories = list(product(*[range(len(parts[i]["ends"])) for i in band]))
     factors = []  # per birth: the places of its parts in the band, and its sigma_f at each of their picks
@@ -190,90 +193,67 @@ def band_weights(board, band, frame, taken):
         birth = births[b]
         where = [n for n, i in enumerate(band) if parts[i]["birth"] == b]
         party = {i: k for k, i in enumerate(birth["parts"])}
-        held = tuple(sorted((party[i], e) for i, e in taken.items() if i in party))
+        held = tuple(sorted((party[i], e) for i, e in drawn.items() if i in party))
         chosen = tuple(party[band[n]] for n in where)
         sizes = subset_sizes(birth["hand"], frames_of(board, b, frame), held, chosen)
         picks = product(*[range(len(parts[band[n]]["ends"])) for n in where])
         factors.append((where, dict(zip(picks, sizes, strict=True))))
-    slots = board.get("slots", {})
-    held_ends = [parts[i]["ends"][e] for i, e in taken.items()]
     weights = []
     for history in histories:
         weight = 1
         for where, table in factors:
             weight *= table[tuple(history[n] for n in where)]
-        ends = held_ends + [parts[band[n]]["ends"][e] for n, e in enumerate(history)]
-        for slot, free in slots.items():
-            weight *= ends.count(slot) <= free
         weights.append(weight)
     return histories, weights
 
 
-def bands(board, ready, taken, joint):
-    """The bands among the parts in: one birth's parts together, joined by every limited slot that more of them may
-    reach than it has free; each with the Node-clocks where its parts are one (its birth, or the slots that join it)."""
-    births, parts = board["births"], board["parts"]
-    root = {i: i for i in ready}
-
-    def find(i):
-        while root[i] != i:
-            i = root[i]
-        return i
-
-    for birth in births:
-        mine = [i for i in birth["parts"] if i in root]
-        for i in mine[1:]:
-            root[find(i)] = find(mine[0])
-    joined = []
-    for slot, free in board.get("slots", {}).items():
-        near = [i for i in ready if slot in parts[i]["ends"]]
-        held = sum(parts[i]["ends"][e] == slot for i, e in taken.items())
-        if near and len(near) + held > free:
-            joined.append((slot, near))
-            for i in near[1:]:
-                root[find(i)] = find(near[0])
-    found = {}
-    for i in ready:
-        found.setdefault(find(i), []).append(i)
+def bands(board, ready, drawn, joint):
+    """The bands among the parts in: one birth's parts together, each drawn at its birth (J: only when all the birth's
+    parts are in). A slot joins no band."""
     out = []
-    for members in sorted(found.values()):
-        owners = sorted({parts[i]["birth"] for i in members})
-        if joint and any(
-            j not in members and j not in taken for b in owners for j in births[b]["parts"]
-        ):
-            continue
-        slots = [("slot", *slot) for slot, near in joined if set(near) <= set(members)]
-        out.append((sorted(members), [("birth", owners[0])] if len(owners) == 1 else slots))
+    for b, birth in enumerate(board["births"]):
+        members = sorted(i for i in birth["parts"] if i in ready)
+        waiting = [j for j in birth["parts"] if j not in members and j not in drawn]
+        if members and not (joint and waiting):
+            out.append((members, [("birth", b)]))
     return out
 
 
-def drawn_weights(board, band, nodes, frame, taken, joint):
-    """A band's histories and products, with its no-signal checks where it is one birth's entangled parts drawn as
-    their settings come in: against every frame the parts still out may take. Kept per board, since a board's
-    runs meet the same bands again."""
-    key = (joint, tuple(band), tuple(sorted(frame.items())), tuple(sorted(taken.items())))
+def slot_sets(board, slot, free, drawn):
+    """A slot's arrivals (the parts drawn to it) and the sets of them it may take, as many as it has free, each set
+    one history of the slot's own draw, all of equal weight."""
+    arrivals = [i for i, e in sorted(drawn.items()) if board["parts"][i]["ends"][e] == slot]
+    return arrivals, list(combinations(arrivals, min(free, len(arrivals))))
+
+
+def drawn_weights(board, band, frame, drawn, joint):
+    """A band's histories and sizes, with its no-signal checks where it is one birth's entangled parts drawn as their
+    settings come in: against every frame the parts still out may take. Kept per board, since a board's runs meet
+    the same bands again."""
+    key = (joint, tuple(band), tuple(sorted(frame.items())), tuple(sorted(drawn.items())))
     memo = board.setdefault("memo", {})
     if key not in memo:
         births, parts = board["births"], board["parts"]
-        histories, weights = band_weights(board, band, frame, taken)
+        histories, weights = band_weights(board, band, frame, drawn)
         b, checked = parts[band[0]]["birth"], [0, 0]
-        if not joint and nodes == [("birth", b)]:
+        if not joint:
             out = [k for k, i in enumerate(births[b]["parts"]) if i not in frame]
             for picks in product(*[range(len(births[b]["frames"][k])) for k in out]):
                 other = dict(frame) | {
                     births[b]["parts"][k]: pick for k, pick in zip(out, picks, strict=True)
                 }
                 checked[0] += 1
-                checked[1] += shares(weights) == shares(band_weights(board, band, other, taken)[1])
+                checked[1] += shares(weights) == shares(band_weights(board, band, other, drawn)[1])
         memo[key] = (histories, weights, checked)
     return memo[key]
 
 
 def run(board, joint, numbers):
-    """The passes of the one rule (J: a birth's band only when all its parts are in): the ends taken and the frames,
-    the passes and steps, the no-signal checks; or None where no band can draw and parts are still out (a deadlock)."""
+    """The passes of the one rule (J: a birth's band only when all its parts are in): the frames, the ends drawn, the
+    slots' takes and refusals, the passes and steps, the no-signal checks; or None where no band can draw and parts
+    are still out (a deadlock)."""
     births, parts = board["births"], board["parts"]
-    frame, taken = {}, {}
+    frame, drawn, slots, refused = {}, {}, {}, {}
     checks = [0, 0]  # a layer's law against a frame of the parts still out: checked, and equal
     passes = 1
     steps = max(e[1] - births[p["birth"]]["tick"] for p in parts for e in p["ends"])
@@ -281,31 +261,44 @@ def run(board, joint, numbers):
     def set_frames():
         """Each setting whose heard takes are in: law 9 over its frames, its own light's sizes times its rules'."""
         for i, p in enumerate(parts):
-            if i not in frame and all(j in taken for j, _ in p["heard"]):
+            if i not in frame and all(j in drawn for j, _ in p["heard"]):
                 birth = births[p["birth"]]
                 weights = [1] * len(birth["frames"][birth["parts"].index(i)])
                 for j, rule in p["heard"]:
-                    weights = [w * r for w, r in zip(weights, rule[taken[j]], strict=True)]
+                    weights = [w * r for w, r in zip(weights, rule[drawn[j]], strict=True)]
                 frame[i] = law9(weights, numbers(("det", i)))
 
+    def refuse():
+        """Each slot whose parts that may reach it are all drawn: its own law-9 draw, over equal weights, picks the
+        set of its arrivals it takes, as many as it has free; it refuses the rest, each back to its giver."""
+        for slot, free in board.get("slots", {}).items():
+            near = [i for i, p in enumerate(parts) if slot in p["ends"]]
+            if slot not in slots and all(i in drawn for i in near):
+                arrivals, sets = slot_sets(board, slot, free, drawn)
+                slots[slot] = sets[law9([1] * len(sets), numbers(("slot", *slot)))]
+                refused.update({i: slot for i in arrivals if i not in slots[slot]})
+
     set_frames()
-    while len(taken) < len(parts):
-        ready = [i for i in range(len(parts)) if i in frame and i not in taken]
+    while len(drawn) < len(parts):
+        ready = [i for i in range(len(parts)) if i in frame and i not in drawn]
         now = []
-        for band, nodes in bands(board, ready, taken, joint):
-            histories, weights, checked = drawn_weights(board, band, nodes, frame, taken, joint)
+        for band, nodes in bands(board, ready, drawn, joint):
+            histories, weights, checked = drawn_weights(board, band, frame, drawn, joint)
             checks[0], checks[1] = checks[0] + checked[0], checks[1] + checked[1]
             history = histories[law9(weights, sum(numbers(node) for node in nodes))]
             for i, e in zip(band, history, strict=True):
-                taken[i] = e
+                drawn[i] = e
                 now.append(parts[i]["ends"][e][1] - births[parts[i]["birth"]]["tick"])
         if not now:
             return None
+        refuse()
         passes, steps = passes + 2, steps + 2 * max(now)
         set_frames()
     return {
         "frame": frame,
-        "taken": taken,
+        "drawn": drawn,
+        "slots": slots,
+        "refused": refused,
         "passes": passes,
         "steps": steps,
         "checks": checks,
@@ -439,7 +432,7 @@ def part1():
 
         out = run(board, False, numbers)
         key = (fq, fp, out["frame"][1], out["frame"][3]) + tuple(
-            SIGNS[out["taken"][i]] for i in range(4)
+            SIGNS[out["drawn"][i]] for i in range(4)
         )
         law[key], total = law.get(key, 0) + 1, total + 1
     passes = run(board, False, lambda key: 0)["passes"]
@@ -520,19 +513,24 @@ def part2():
 
 
 def drawn_law(board, spans):
-    """The one rule run at every digit of the Node-clocks that draw (each over its span): the law of the ends taken,
-    and whether every quantum is taken once and no slot past its free count, at every digit."""
-    law, whole = {}, True
+    """The one rule run at every digit of the Node-clocks that draw (each over its span): the law of the ends drawn,
+    each with whether its slot refused it; and whether, at every digit, every quantum is drawn once and either taken
+    or refused at the end drawn, no slot takes past its free count, and a slot refuses only when full."""
+    law, whole, parts, free = {}, True, board["parts"], board.get("slots", {})
     for digits in product(*[range(n) for _, n in spans]):
         given = dict(zip([key for key, _ in spans], digits, strict=True))
         out = run(board, False, lambda key, given=given: given.get(key, 0))
-        ends = [board["parts"][i]["ends"][out["taken"][i]] for i in range(len(board["parts"]))]
-        whole &= len(out["taken"]) == len(board["parts"])
-        whole &= all(ends.count(slot) <= free for slot, free in board.get("slots", {}).items())
-        key = tuple(out["taken"][i] for i in range(len(board["parts"])))
+        drawn, refused = out["drawn"], out["refused"]
+        takes = [parts[i]["ends"][e] for i, e in drawn.items() if i not in refused]
+        whole &= len(drawn) == len(parts)
+        whole &= all(parts[i]["ends"][drawn[i]] == slot for i, slot in refused.items())
+        whole &= all(takes.count(slot) <= n for slot, n in free.items())
+        whole &= all(takes.count(slot) == free[slot] for slot in refused.values())
+        key = tuple((drawn[i], i in refused) for i in range(len(parts)))
         law[key] = law.get(key, 0) + 1
     total = sum(law.values())
-    return {key: Fraction(n, total) for key, n in sorted(law.items())}, whole
+    order = sorted(law, key=lambda key: (tuple(e for e, _ in key), tuple(r for _, r in key)))
+    return {key: Fraction(law[key], total) for key in order}, whole
 
 
 def quanta(absorbers, slots):
@@ -545,60 +543,59 @@ def quanta(absorbers, slots):
     return board
 
 
-def named(board, law):
+def named(board, law, per=4):
+    """A law over the quanta A, B, C, ... as lines of terms: each quantum's end drawn, and the quanta refused."""
     names = {4: "x", 20: "z", 36: "y", 40: "z2", 56: "w"}
-    return ", ".join(
-        "/".join(names[board["parts"][i]["ends"][e][0]] for i, e in enumerate(key)) + f" {p}"
-        for key, p in law.items()
-    )
+    terms = []
+    for key, p in law.items():
+        ends = "/".join(names[board["parts"][i]["ends"][e][0]] for i, (e, _) in enumerate(key))
+        refused = "".join(f" ({'ABC'[i]} refused)" for i, (_, r) in enumerate(key) if r)
+        terms.append(f"{ends}{refused} {p}")
+    return [", ".join(terms[k : k + per]) for k in range(0, len(terms), per)]
+
+
+def drawn_only(law):
+    """The law of the ends drawn alone, the refusals summed over."""
+    out = {}
+    for key, p in law.items():
+        ends = tuple(e for e, _ in key)
+        out[ends] = out.get(ends, 0) + p
+    return {tuple((e, False) for e in key): p for key, p in out.items()}
 
 
 def part3():
     print(
-        "Part 3: quanta at absorbers' free slots, every draw by the one rule (run() above, nothing added)"
+        "Part 3: quanta at absorbers' free slots, every draw by the one rule (run() above, nothing added): each quantum"
+    )
+    print(
+        "drawn at its own birth over sigma_f; each slot, its arrivals all drawn, refusing past its free count"
     )
     alone = quanta([[(4, 2), (20, 3)]], {(20, 10): 1})
     law, whole = drawn_law(alone, [(("birth", 0), 5)])
     print(
-        f"  A alone over x and z (sizes 2 and 3), its band its own birth: {named(alone, law)}: Born; whole {whole}"
-    )
-    a, b = {"x": 2, "z": 3}, {"y": 3, "z": 2}
-    counts = {}
-    for na, nb in product(range(30), range(30)):  # 30 is a multiple of every room (5, 2 and 3)
-        found = 0
-        for ha, hb in product(a, b):
-            wa = [
-                a["x"],
-                a["z"] * (hb != "z"),
-            ]  # each source alone, z's slot as the other leaves it
-            wb = [b["y"], b["z"] * (ha != "z")]
-            found += (
-                ("x", "z")[law9(wa, na)] == ha
-                and ("y", "z")[law9(wb, nb)] == hb
-                and (ha, hb) != ("z", "z")
-            )
-        counts[found] = counts.get(found, 0) + 1
-    shown = ", ".join(f"{n} with {k}" for k, n in sorted(counts.items()))
-    print("  A and B (y and z, sizes 3 and 2), both reaching z at one tick, where one slot is free:")
-    print(
-        f"    each source drawing alone, the slot as sigma_b: of 900 digit pairs, {shown} histories that agree"
+        f"  A alone over x and z (sizes 2 and 3), its band its own birth: {named(alone, law)[0]}: Born; whole {whole}"
     )
     tie = quanta([[(4, 2), (20, 3)], [(36, 3), (20, 2)]], {(20, 10): 1})
-    law, whole = drawn_law(tie, [(("slot", 20, 10), 19)])
-    print(
-        f"    the one rule, their band drawn at z where they are one: {named(tie, law)}; whole {whole}"
-    )
+    law, whole = drawn_law(tie, [(("birth", 0), 5), (("birth", 1), 5), (("slot", 20, 10), 2)])
+    print("  A and B (y and z, sizes 3 and 2), both reaching z at one tick, where one slot is free:")
+    print(f"    the ends drawn: {named(tie, drawn_only(law))[0]}: the Born product")
+    print(f"    the slot's takes and refusals: {named(tie, law, 5)[0]}; whole {whole}")
     chain = quanta(
         [[(4, 2), (20, 3)], [(20, 2), (40, 2)], [(40, 3), (56, 2)]],
         {(20, 10): 1, (40, 10): 1},
     )
-    law, whole = drawn_law(chain, [(("slot", 20, 10), 40), (("slot", 40, 10), 40)])
+    spans = [(("birth", 0), 5), (("birth", 1), 4), (("birth", 2), 5)]
+    law, whole = drawn_law(chain, spans + [(("slot", 20, 10), 2), (("slot", 40, 10), 2)])
     print(
         "  a chain: A over x and z (2, 3), B over z and z2 (2, 2), C over z2 and w (3, 2), one slot free at z and at z2:"
     )
-    print(
-        f"    the one rule, one band drawn at z and z2, their digits summed: {named(chain, law)}; whole {whole}"
-    )
+    print("    the ends drawn, the Born product:")
+    for line in named(chain, drawn_only(law)):
+        print(f"      {line}")
+    print("    the slots' takes and refusals:")
+    for line in named(chain, law):
+        print(f"      {line}")
+    print(f"    whole {whole}")
 
 
 def main():

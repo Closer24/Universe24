@@ -5,18 +5,19 @@ The asks:
 - Sofer's owed line (5) of 6494833685;
 - Animate's own 10.5, item 6 (every band of agreeing histories must part at one Node-clock, and the probe must look for a band that does not);
 - the owner's word to Animate of 2026-10-29, 11:5x UTC (in Hebrew; in translation): "The rule must be generic.";
-- Sofer's 6496692228, item 6: two places in the code told weights by kind (a spread quantum's sigma_f against a hand's, and a free setting against a machine).
+- Sofer's 6496692228, item 6: two places in the code told weights by kind (a spread quantum's sigma_f against a hand's, and a free setting against a machine);
+- decision 40 (b), the slot rule: "a full slot refuses after the split click's draw, and the refused quantum goes back to its giver by 5.1's books line"; the Boss's 6500777188, item 4: "(b) in the scheduler".
 
-Beside the engine. `python -I scheduler.py` runs in about 8 seconds; its output is scheduler.txt. It reuses the hands, frames and sizes of ANIMATE-B-RECORD/b_record.py.
+Beside the engine. `python -I scheduler.py` runs in about 9 seconds; its output is scheduler.txt. It reuses the hands, frames and sizes of ANIMATE-B-RECORD/b_record.py.
 
 ## The answer
 
-1. **One rule draws every band.**
-   - **The band:** the parts that share a hand (one birth's twins) or a slot (one absorber at one tick, reachable by more parts than it has free).
-   - **The draw:** each band is decided by one law-9 draw over the products sigma_f sigma_b of its joint histories, conditional on what is drawn, in the pass in which its products come in.
-   - **The place:** the draw is made at the Node-clock where the band's parts are one: its birth, or the slots that join it, their digits summed.
-   - **Nothing else is typed.** A full slot weighs 0 by sigma_b, and the place of a draw is where its parts are one. One function in the code does every draw, for pairs, triples, spread quanta, the one-slot tie and a chain of ties.
-2. **Each part is drawn as its setting comes back.** Where only some of one birth's parts are in, those are drawn first, over the products summed over the rest.
+1. **One rule draws every band, and one rule every slot.**
+   - **The band:** the parts that share a hand (one birth's twins, or one spread quantum). A slot joins no band.
+   - **The draw:** each band is decided by one law-9 draw over sigma_f of its joint histories, conditional on what is drawn, at its birth, in the pass in which its sizes come in.
+   - **The slot** (one absorber at one tick), by decision 40 (b): once every part that may reach it is drawn, its own law-9 draw, on its own digit and over equal weights, picks which of its arrivals it takes, as many as it has free. It refuses the rest, each back to its giver (its birth), and the run's state holds the refusal.
+   - **Nothing else is typed.** No slot weighs a history, and the place of every draw is where its parts are one: a band's at its birth, a refusal's at its slot. One function draws every band and one every slot, for pairs, triples, spread quanta, the one-slot tie and a chain of ties.
+2. **Each part is drawn as its setting comes back.** Where only some of one birth's parts are in, those are drawn first, over the sizes summed over the rest.
    - **This is lawful by no signal:** a subset's sizes, summed over the other parts, are the same in every frame of those parts. Every such draw was checked against every frame the parts still out could take, exactly: 9,872 checks, all equal.
    - **A spacelike pair whose settings come back in one pass is drawn at once,** as reading 15 has it.
 3. **The passes are 1 + 2 times the depth of the chains of settings,** a free setting counting 1 and a machine one more than the take it heard. This held on every one of 400 random boards, at depths 1 to 5 (3 to 11 passes).
@@ -26,15 +27,21 @@ Beside the engine. `python -I scheduler.py` runs in about 8 seconds; its output 
    - with that order reversed: of 53,824 free frames and digits, 3,200 have no history and 3,200 have two. The two differ at both births at once, so no single Node-clock parts them.
 
    The one rule never meets this band, because it never draws a part before that part's setting is in.
-6. **The one-slot tie is the same rule, with nothing added.**
-   - **Two quanta reaching one absorber's one free slot at one tick:** with each source drawing alone and the slot as sigma_b, 216 of 900 digit pairs have two histories.
-   - **Under the one rule** the two quanta are one band, joined by the slot, and drawn once at the absorber where they are one. That gives one history at every digit, each quantum taken once, at the products over the band: 6/19, 4/19 and 9/19.
-   - **A chain of three quanta joined by two slots** is one band, drawn once with the two slots' digits summed: 3/10, 1/5, 1/5 and 3/10, with every quantum taken once and no slot past its free count.
-7. **Nothing is told by kind in the code either** (Sofer's item 6). The output is equal byte for byte to the code that told them apart (scheduler.txt, 2,432 bytes).
+6. **Under decision 40 (b), two independent sources stay independent at a shared absorber** (Part 3).
+   - **Two quanta reaching one absorber's one free slot at one tick:** each is drawn at its own birth, so the ends drawn are the Born product: x/y 6/25, x/z 4/25, z/y 9/25 and z/z 6/25. Where both reach z, the slot takes one and refuses the other, 3/25 each way.
+   - **A chain of three quanta joined by two slots:** the ends drawn are the Born product, and each contested slot splits its history's share equally.
+   - **At every digit,** every quantum is drawn once and either taken or refused at the end drawn; no slot takes past its free count, and a slot refuses only when full.
+   - **Withdrawn with the weighing:** the slot bands' laws (the tie's 6/19, 4/19 and 9/19; the chain's 3/10, 1/5, 1/5 and 3/10), and the 216 of 900 digit pairs with two histories when each source drew alone against sigma_b. They stand at reader-5 84e77364.
+7. **Nothing is told by kind in the code either** (Sofer's item 6). Parts 1 and 2 of scheduler.txt are equal byte for byte to the code that told them apart, and stay so under decision 40 (b).
    - **sigma_f is one formula for every hand:** the Gaussian norm of the hand's whole-number overlap with its parties' ends, each end a line of its party's frame, summed over the lines the hand carries untaken. A twin's frame is its two spinors along an axis. A spread quantum's frame is its absorbers' own lines, and its hand holds at each absorber its share as a Gaussian norm over two lines no absorber here resolves (any whole share is a sum of four squares).
    - **A setting is one law-9 draw over its frames:** its own light's sizes (1 each) times, at each take it heard, the sizes its rule gives that take's end. Hearing nothing, it is free; hearing a take, its rule's sizes leave one frame (a machine); a spread quantum's setting has one frame. The depth of a chain is one formula too: each setting one more than the deepest setting whose take it heard.
-8. **A band joined by a hand and by a slot at once signals** (part 5). The far twin's law at its frame moves with the near twin's frame (11/29 against 107/174). The no-signal checks cover bands drawn at a birth, and this band is drawn at the slot. A generic fix is named as a candidate.
-9. **The tie of item 6 signals too, with no hand** (part 5). A's law at x is 2/5 with B not born and 10/19 with B born, B's birth spacelike to A's take at x. Under the candidate fix both read 2/5, and the tie's law is the Born product (6/25, 4/25, 9/25 and 6/25).
+8. **The withdrawn weighing signalled, and (b) closes it** (part 5). With a full slot weighing 0, the far twin's law at its frame moved with the near twin's frame (11/29 against 107/174). Under (b) it reads 1/2 at every pair of frames, with the slot and without.
+9. **The tie signalled too, with no hand, and (b) closes it** (part 5). With a full slot weighing 0, A's click at x read 2/5 with B not born and 10/19 with B born, B's birth spacelike to it. Under (b) both read 2/5.
+10. **The cone check reads each click, never a party's whole outcome** (part 5). Under (b), whether A is taken or refused at z moves with B's birth: taken 3/5 with B not born; taken 12/25 and refused 3/25 with B born. That is lawful, since z lies on B's birth's light cone.
+    - A check that binned A's whole outcome by B's birth would name it a signal.
+    - The check that bins each click by the settings outside that click's past cone names none.
+
+    This is the form of the decoder's cone check (D8).
 
 ## 1. The board
 
@@ -42,7 +49,8 @@ Beside the engine. `python -I scheduler.py` runs in about 8 seconds; its output 
 - **Births:** a birth lays a pair (the shared hand e1 x e2 - e2 x e1), a triple (e1 x e1 x e1 + e2 x e2 x e2), or one quantum spread over absorbers.
 - **Takes:** each twin rides one site a tick to its detector and waits there 0 to 3 ticks; its take is a whole click.
 - **Settings:** each part's setting is a split click one tick before its take, one law-9 draw over its frames: its own light's sizes times the sizes its rule gives each take it heard by light, strictly inside its past light cone. A setting that hears nothing is free; one that hears a take is a machine.
-- **The sizes:** sigma_f is the Gaussian norm of the hand's whole-number overlap with its parties' ends (a twin's spinors along its frame; an absorber's own line), summed over the lines the hand carries untaken. sigma_b is an absorber's free slots. Every draw is law 9's, the rank count of a digit over the running sums.
+- **Slots:** a slot is one absorber at one tick, with a free count. It draws once every part that may reach it is drawn, takes as many of its arrivals as it has free, and refuses the rest, back to their givers.
+- **The sizes:** sigma_f is the Gaussian norm of the hand's whole-number overlap with its parties' ends (a twin's spinors along its frame; an absorber's own line), summed over the lines the hand carries untaken. sigma_b, an absorber's free slots, is alike in every history and weighs none: a slot's free count is the size of its own draw. Every draw is law 9's, the rank count of a digit over the running sums.
 
 ## 2. Part 1: two crossed births
 
@@ -68,67 +76,73 @@ Beside the engine. `python -I scheduler.py` runs in about 8 seconds; its output 
 | 4 | 57 | 57 | 9 | 1,900, 1,900 | 40 |
 | 5 | 5 | 5 | 11 | 178, 178 | 5 |
 
-Parts 1 and 2 give the same numbers through the one rule's code as through the first, pair-only code (reader-5 325440ef).
+Parts 1 and 2 give the same numbers through the one rule's code as through the first, pair-only code (reader-5 325440ef), and through decision 40 (b)'s.
 
-## 4. Part 3: quanta at absorbers' free slots
+## 4. Part 3: quanta at absorbers' free slots, under decision 40 (b)
 
-Every draw is the one rule's, by the same function as Parts 1 and 2:
+Every draw is the one rule's, by the same functions as Parts 1 and 2: each quantum at its own birth over sigma_f, and each slot, its arrivals all drawn, over equal weights.
 - **A alone,** over x and z (sizes 2 and 3): its band is its own birth, so x 2/5 and z 3/5, Born.
 - **A and B**, B over y and z (sizes 3 and 2), both reaching z at one tick, where one slot is free:
-  - each source drawing alone, the slot as sigma_b: of 900 digit pairs, 684 have one history that agrees with itself and 216 have two;
-  - the one rule: their band is drawn at z, where they are one. The law is A at x and B at y 6/19, A at x and B at z 4/19, and A at z and B at y 9/19; A and B both at z weighs 0.
+  - the ends drawn: A at x and B at y 6/25, A at x and B at z 4/25, A at z and B at y 9/25, both at z 6/25. This is the Born product;
+  - where both reach z, the slot's own draw takes one: A taken and B refused 3/25, B taken and A refused 3/25.
 - **A chain:** A over x and z (2 and 3), B over z and z2 (2 and 2), C over z2 and w (3 and 2), with one slot free at z and one at z2.
-  - The three quanta are one band, drawn once at z and z2 with their digits summed.
-  - Its law is x/z/z2 3/10, x/z/w 1/5, x/z2/w 1/5 and z/z2/w 3/10.
+  - The ends drawn are the Born product: x/z/z2 3/25, x/z/w 2/25, x/z2/z2 3/25, x/z2/w 2/25, z/z/z2 9/50, z/z/w 3/25, z/z2/z2 9/50 and z/z2/w 3/25.
+  - Each contested slot splits its history's share equally: x/z2/z2 into 3/50 and 3/50 at z2, z/z/z2 into 9/100 and 9/100 at z, z/z/w into 3/50 and 3/50 at z, and z/z2/z2 into 9/100 and 9/100 at z2.
 
-At every digit, every quantum is taken exactly once, and no slot past its free count.
+At every digit, every quantum is drawn once and either taken or refused at the end drawn, no slot takes past its free count, and a slot refuses only when full.
 
-## 5. A band joined by a hand and a slot at once: it signals (hand_slot.py)
+**Withdrawn with the weighing** (they stand at reader-5 84e77364):
+- with a full slot weighing 0, the one rule joined A and B into one band at z. Its law was 6/19, 4/19 and 9/19, both at z weighing 0;
+- the chain was one band: 3/10, 1/5, 1/5 and 3/10;
+- each source drawing alone against sigma_b left 216 of 900 digit pairs with two histories.
 
-The Boss's hunt of 13:55 UTC asks it of the record and the clicks. `python -I hand_slot.py` runs in under a second; its output is hand_slot.txt.
+## 5. A band joined by a hand and a slot at once: the withdrawn weighing signalled, and (b) closes it (hand_slot.py)
+
+The Boss's hunt of 13:55 UTC asks it of the record and the clicks. `python -I hand_slot.py` runs in under a second; its output is hand_slot.txt. It runs run() under (b), and computes the withdrawn weighing beside it from band_weights, as the contrast.
 
 - **The board:**
   - a pair at site 50 (tick 5). Its near twin meets a two-way detector, + taken at site 45 and - at site 55, both at tick 10. Its far twin is taken at site 100 at tick 55, outside the near setting's future cone;
   - a spread quantum reaches x (site 75) or site 55 at tick 10, shares 1 and 1;
-  - site 55 has one free slot at that tick. The hand and the slot join the three parts into one band, drawn once at the slot.
-- **With no slot limit,** the far twin's + share is 1/2 at every pair of frames.
-- **With the one free slot,** the far twin's + share at b moves with the near twin's frame a:
+  - site 55 has one free slot at that tick.
+- **Under the withdrawn weighing** (a full slot weighs 0), the hand and the slot joined the three parts into one band, drawn once at the slot. The far twin's + share at b moved with the near twin's frame a:
   - at b = (20, 0, 21)/29: 11/29 at a = z, and 67/174 at a = x;
   - at b = (-20, 0, 21)/29: 11/29 at a = z, and 107/174 at a = x.
 
-  The near setting is read at the far take, outside its future cone: a signal. In closed form the far twin's + share is (3 - a.b)/6.
-- **The cause:** sigma_b weighs 0 the histories in which the near twin's - and the quantum share the slot, and the draw renormalizes over the rest. That is a post-selection on a near event correlated with the near twin's sign, and through the hand it reaches the far twin.
-- **Why the 9,872 checks missed it:** they check every band drawn at a birth, as its settings come in. A band joined by a slot is drawn at the slot, and the code checks none there. Part 3's slot bands hold no hand, so no signal could show in them.
-- **A generic fix, as a candidate:** a full slot removes no history.
-  - The part that does not get the slot rides on to its next end, and the slot's own draw picks which arrival takes it.
-  - Every history then keeps its sigma_f, the hand's law is untouched, and no signal can arise.
-  - The tie's law changes with it, which is to measure.
-  - Drawing the hand before the slot would also close it, but it tells a hand from a slot by kind, which decision 38 forbids.
-- **The tie of Part 3 signals too, with no hand** (hand_slot.txt, its second part):
-  - A's law at x is 2/5 with B not born, and 10/19 with B born at site 30. B's birth is spacelike to A's take at x (site 4, tick 6), so whether B's source emits is read at A's absorber.
-  - Under the candidate fix both read 2/5, and the tie's law is the Born product: x/y 6/25, x/z 4/25, z/y 9/25, and z/z 6/25 with one quantum taken at z's next free tick. The one rule gives 6/19, 4/19 and 9/19.
-  - So under the fix two independent sources stay independent at a shared absorber, as nature's are.
+  The near setting was read at the far take, outside its future cone: a signal. In closed form the far twin's + share is (3 - a.b)/6.
+  - **The cause:** the zero weight removed the histories in which the near twin's - and the quantum share the slot, and the draw renormalized over the rest. That is a post-selection on a near event correlated with the near twin's sign, and through the hand it reached the far twin.
+  - **Why the 9,872 checks missed it:** they check every band drawn at a birth, as its settings come in. A band joined by a slot was drawn at the slot, and the code checked none there. Part 3's slot bands held no hand, so no signal could show in them.
+- **Under (b):** the pair is drawn at its birth and the quantum at its own; the slot then takes one of its two arrivals and refuses the other.
+  - The far twin's + share is 1/2 at every pair of frames, with the slot and without; the near twin's drawn + share is 1/2.
+  - The slot refuses the near twin 1/8 of the time and the quantum 1/8, at every pair of frames, and never takes past its free count.
+  - No history is removed, so the hand's law is untouched and no signal can arise. Drawing the hand before the slot would also have closed it, but that tells a hand from a slot by kind, which decision 38 forbids; (b) needs no such telling.
+- **The tie of Part 3, with no hand** (hand_slot.txt, its second part):
+  - under the withdrawn weighing, A's click at x read 2/5 with B not born and 10/19 with B born at site 30. B's birth is spacelike to A's take at x (site 4, tick 6), so whether B's source emits was read at A's absorber;
+  - under (b), A's click at x reads 2/5 either way;
+  - A at z (site 20, tick 10) is taken 3/5 with B not born, and taken 12/25 and refused 3/25 with B born. This moves with B's birth lawfully, since z lies on B's birth's light cone (10 sites in 10 ticks). So the cone check reads each click by the settings outside that click's past cone (D8), never a party's whole outcome.
 
 ## 6. What does not follow
 
-- **The engine:** stage 9's two clicks and the runner's passes on the act's own arrays.
+- **The engine:** stage 9's two clicks and the runner's passes on the act's own arrays; (b) on the act, where the run back tells a refusal from a take by the state, never by the log (the Boss's, at G5).
+- **The way back to the giver** (5.1's books line): its path and its tick are the engine's. Here the run's state holds each refusal and names its giver.
 - **Locality:** each carry rides its part's own path, one site a step, by construction here. The Boss's bpasses.py counts the reads (0 far).
-- **A band joined both by a hand and by a slot,** a twin in a slot contest: measured in part 5, where it signals. The fix is a candidate, not measured.
+- **A machine whose heard take a slot refused:** no board here holds one. A refused part makes no take, and a machine's rule gives sizes only at a take's two ends; its sizes where no take came are to state before a board holds one.
 - **A loop through the backward run itself,** a setting that read the tag. The rule that every setting is a forward click, read only from takes in its past light cone, excludes it, and the probe makes none.
 
 ## Method: addressed
 
 - **(a) Which clock or gear makes each term:**
-  - each draw is law 9's over sigma_f sigma_b, at the Node-clock where the band's parts are one;
+  - each band's draw is law 9's over sigma_f, at its birth;
+  - each slot's draw is law 9's over equal weights, at its slot, on its own digit;
   - each setting is a law-9 draw of the detector's own light, over its own sizes times its rule's at each take it heard by light;
   - the passes are the runner's order of work.
 
-  No term is declared: a full slot weighs 0 by sigma_b, the place of a draw is where its parts are one, and sigma_f is one formula for every hand.
+  No term is declared: no slot weighs a history, the place of a draw is where its parts are one, and sigma_f is one formula for every hand.
 - **(b) What the clicks show, the books first:**
-  - every part of every band is drawn once and taken once, on every board and at every digit;
-  - the law is nature's at every layer, exactly, and the products over the band where a slot joins quanta;
-  - two histories that no single Node-clock parts appear only when a birth is drawn whole out of the cause's order, or when two sources draw alone across a shared slot.
-- **(c) What does not follow, asked of the clicks:** the act's own run, and the fix for a band joined by a hand and a slot at once (part 5).
+  - every part of every band is drawn once, and either taken or refused at the end drawn, on every board and at every digit; no slot takes past its free count;
+  - the law is nature's at every layer, exactly, and the Born product over independent sources at a shared slot;
+  - the far twin's click reads 1/2 at every near frame, the near twin's 1/2 at every far frame, and the slot's refusals 1/8 at every pair of frames; A's click at x reads 2/5 with B and without;
+  - two histories that no single Node-clock parts appear only when a birth is drawn whole out of the cause's order.
+- **(c) What does not follow, asked of the clicks:** the act's own run under (b), the way back to the giver, and a machine whose heard take a slot refused (part 6).
 
 ---
 Animate, reader-5.

@@ -19,10 +19,18 @@ ticks late; 0, 30, 60 or 90 percent of the detectors machines)
       5       5                        5  [11]                  178,   178            5
   L finishes every board; J finishes only where no birth waits on an outcome its own parts wait for
 
-Part 3: quanta at absorbers' free slots, every draw by the one rule (run() above, nothing added)
+Part 3: quanta at absorbers' free slots, every draw by the one rule (run() above, nothing added): each quantum
+drawn at its own birth over sigma_f; each slot, its arrivals all drawn, refusing past its free count
   A alone over x and z (sizes 2 and 3), its band its own birth: x 2/5, z 3/5: Born; whole True
   A and B (y and z, sizes 3 and 2), both reaching z at one tick, where one slot is free:
-    each source drawing alone, the slot as sigma_b: of 900 digit pairs, 684 with 1, 216 with 2 histories that agree
-    the one rule, their band drawn at z where they are one: x/y 6/19, x/z 4/19, z/y 9/19; whole True
+    the ends drawn: x/y 6/25, x/z 4/25, z/y 9/25, z/z 6/25: the Born product
+    the slot's takes and refusals: x/y 6/25, x/z 4/25, z/y 9/25, z/z (B refused) 3/25, z/z (A refused) 3/25; whole True
   a chain: A over x and z (2, 3), B over z and z2 (2, 2), C over z2 and w (3, 2), one slot free at z and at z2:
-    the one rule, one band drawn at z and z2, their digits summed: x/z/z2 3/10, x/z/w 1/5, x/z2/w 1/5, z/z2/w 3/10; whole True
+    the ends drawn, the Born product:
+      x/z/z2 3/25, x/z/w 2/25, x/z2/z2 3/25, x/z2/w 2/25
+      z/z/z2 9/50, z/z/w 3/25, z/z2/z2 9/50, z/z2/w 3/25
+    the slots' takes and refusals:
+      x/z/z2 3/25, x/z/w 2/25, x/z2/z2 (C refused) 3/50, x/z2/z2 (B refused) 3/50
+      x/z2/w 2/25, z/z/z2 (B refused) 9/100, z/z/z2 (A refused) 9/100, z/z/w (B refused) 3/50
+      z/z/w (A refused) 3/50, z/z2/z2 (C refused) 9/100, z/z2/z2 (B refused) 9/100, z/z2/w 3/25
+    whole True

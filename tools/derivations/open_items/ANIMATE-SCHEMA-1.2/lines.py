@@ -1,16 +1,18 @@
-"""Toy: example lines of the record's schema 1.2 as proposed, written from bands the one rule draws (Animate; Sofer's
-owed line (5) of 6494833685, schema 1.2; ANIMATE-SCHEMA-1.2/README.md).
+"""Toy: example lines of the record's schema 1.2 as proposed, written from the draws the one rule makes (Animate;
+Sofer's owed line (5) of 6494833685, schema 1.2; decision 40 (b); ANIMATE-SCHEMA-1.2/README.md).
 
-Two bands are drawn by ANIMATE-SCHEDULER's run(), the one rule, and written as 1.2 lines: a pair whose second setting
-is a machine hearing its first take (two split clicks at its birth, layers 1 and 2), and two quanta joined by one free
-slot (one split click at the absorber where they are one). Each band's split click names its members (each member's
-lay and its party there, G5), its joint histories (per member, the site that takes it and the line of its frame it is
-taken on: a twin's 0 is +, 1 is -; a spread quantum's k is its k-th absorber), sigma_f (sizes) and sigma_b (back,
-G6), c over room and drawn (law 9), and its layer. Each take is a whole click naming its lay (G5), with the frame it
-took in and the part it wrote (1.1's detector and written: the frame's first line and the line taken, in axis form),
-one form for every take. The lines are read by the decoder's own reader (schema 1.1's guards, the 1.2 fields unnamed)
-and by three 1.2 checks: every take names a lay; every draw is law 9's over sizes times back; every member is taken
-where its band's drawn history says.
+Two boards are run by ANIMATE-SCHEDULER's run(), the one rule, and written as 1.2 lines: a pair whose second setting
+is a machine hearing its first take (two split clicks at its birth, layers 1 and 2), and two quanta at one free slot
+(a split click at each birth, then the slot's own split click, which takes one and refuses the other). Every split
+click has one form: its members (each member's lay and its party there, G5), its joint histories (per member, the
+site that takes it and the line of its frame it is taken on: a twin's 0 is +, 1 is -; a spread quantum's k is its
+k-th absorber; at a slot, the slot where it is taken, or its giver's site where the slot refuses it), its sizes
+(sigma_f; a slot's all alike), c over room and drawn (law 9), and its layer. Each take is a whole click naming its lay
+(G5), with the frame it took in and the part it wrote (1.1's detector and written: the frame's first line and the
+line taken, in axis form), one form for every take. Each refusal is a Books line at the slot, one quantum laid back to
+its giver (5.1's books line), naming its lay. The lines are read by the decoder's own reader (schema 1.1's guards, the
+1.2 fields unnamed) and by three 1.2 checks: every take and refusal names a lay; every draw is law 9's over its
+sizes; every member goes where its draw's history says, taken there or refused there and laid back to its giver.
 
 usage: python -I lines.py
 """
@@ -32,20 +34,18 @@ LAID = 1  # the round of every lay; a tick t after it is the round LAID + t
 
 
 def run_logged(board, digits):
-    """The one rule's run (scheduler.run), each band's draw logged: band, nodes, histories, products, sigma_f alone,
-    the history drawn, and the layer (the draw's count at its birth)."""
+    """The one rule's run (scheduler.run), each band's draw logged: band, its birth, histories, sizes (sigma_f), the
+    history drawn, the layer (the draw's count at its birth) and the digit."""
     log, layers = [], {}
     original = scheduler.drawn_weights
 
-    def logging(board_, band, nodes, frame, taken, joint):
-        histories, weights, checked = original(board_, band, nodes, frame, taken, joint)
-        bare = dict(board_) | {"slots": {}}  # sigma_f alone: the same products with no slot's sigma_b
-        sizes = scheduler.band_weights(bare, band, frame, taken)[1]
+    def logging(board_, band, frame, drawn, joint):
+        histories, sizes, checked = original(board_, band, frame, drawn, joint)
         b = board_["parts"][band[0]]["birth"]
         layers[b] = layers.get(b, 0) + 1
-        n = sum(digits.get(node, 0) for node in nodes)
-        log.append((band, nodes, histories, weights, sizes, scheduler.law9(weights, n), layers[b], n))
-        return histories, weights, checked
+        n = digits.get(("birth", b), 0)
+        log.append((band, b, histories, sizes, scheduler.law9(sizes, n), layers[b], n))
+        return histories, sizes, checked
 
     scheduler.drawn_weights = logging
     try:
@@ -63,55 +63,68 @@ def reading(board, out, i, end):
     return {"train": board["parts"][i]["birth"], "rho": rho, "spin": list(spin)}
 
 
-def written(board, out, log):
-    """The 1.2 lines of one run: each birth's lay, each band's split click from the run's log, each take."""
+def split(round_, site, train, members, rows, sizes, n, drawn, layer):
+    """A split click's line, one form for every draw."""
+    line = {"kind": "split", "round": round_, "site": site, "count": round_, "train": train}
+    line |= {"members": members, "parts": rows, "sizes": list(sizes)}
+    return line | {"c": n % sum(sizes), "room": sum(sizes), "drawn": drawn, "layer": layer}
+
+
+def written(board, out, log, digits):
+    """The 1.2 lines of one run: each birth's lay; each band's split click at its birth, from the run's log; each
+    slot's split click, from the run's state; each take; each refusal, laid back to its giver."""
     births, parts = board["births"], board["parts"]
     lines = [
         {"kind": "whole", "round": LAID, "site": birth["site"], "count": LAID, "train": b, "q": 1}
         for b, birth in enumerate(births)
     ]
-    place = {("birth", b): (birth["site"], birth["tick"]) for b, birth in enumerate(births)}
-    place |= {
-        ("slot", *slot): slot for slot in board.get("slots", {})
-    }  # each Node-clock that draws, and its tick
-    for band, nodes, histories, weights, sizes, drawn, layer, n in log:
-        members = [
-            [LAID, births[parts[i]["birth"]]["site"], births[parts[i]["birth"]]["parts"].index(i)]
-            for i in band
-        ]
+
+    def member(i):
+        return [LAID, births[parts[i]["birth"]]["site"], births[parts[i]["birth"]]["parts"].index(i)]
+
+    for band, b, histories, sizes, drawn, layer, n in log:
         rows = [[[parts[i]["ends"][e][0], e] for i, e in zip(band, h, strict=True)] for h in histories]
-        back = []  # sigma_b: 0 where a history fills a slot past its free count
-        for h in histories:
-            ends = [parts[i]["ends"][e] for i, e in zip(band, h, strict=True)]
-            back.append(
-                int(all(ends.count(slot) <= free for slot, free in board.get("slots", {}).items()))
-            )
-        assert [s * b for s, b in zip(sizes, back, strict=True)] == list(weights), (
-            "sizes times back are the products"
-        )
-        site, tick = place[nodes[0]]
-        line = {
-            "kind": "split",
-            "round": LAID + tick,
-            "site": site,
-            "count": LAID + tick,
-            "train": parts[band[0]]["birth"],
-        }
-        line |= {"members": members, "parts": rows, "sizes": list(sizes), "back": back}
         lines.append(
-            line | {"c": n % sum(weights), "room": sum(weights), "drawn": drawn, "layer": layer}
+            split(
+                LAID + births[b]["tick"],
+                births[b]["site"],
+                b,
+                [member(i) for i in band],
+                rows,
+                sizes,
+                n,
+                drawn,
+                layer,
+            )
         )
-    for i, e in out["taken"].items():
+    for slot, kept in out["slots"].items():
+        arrivals, sets = scheduler.slot_sets(board, slot, board["slots"][slot], out["drawn"])
+        rows = [
+            [
+                [slot[0] if i in s else births[parts[i]["birth"]]["site"], out["drawn"][i]]
+                for i in arrivals
+            ]
+            for s in sets
+        ]
+        train, n = parts[arrivals[0]]["birth"], digits.get(("slot", *slot), 0)
+        members = [member(i) for i in arrivals]
+        lines.append(
+            split(LAID + slot[1], slot[0], train, members, rows, [1] * len(sets), n, sets.index(kept), 1)
+        )
+    for i, e in out["drawn"].items():
         site, tick = parts[i]["ends"][e]
-        lay = births[parts[i]["birth"]]["site"]
-        take = {
-            "kind": "whole",
-            "round": LAID + tick,
-            "site": site,
-            "count": LAID + tick,
-            "train": parts[i]["birth"],
-        }
-        take |= {"q": 1, "birth": [LAID, lay]}
+        lay = [LAID, births[parts[i]["birth"]]["site"]]
+        event = {"round": LAID + tick, "site": site}
+        if i in out["refused"]:
+            lines.append(
+                {"kind": "books"} | event | {"train": parts[i]["birth"], "kept": 1, "birth": lay}
+            )
+            continue
+        take = (
+            {"kind": "whole"}
+            | event
+            | {"count": LAID + tick, "train": parts[i]["birth"], "q": 1, "birth": lay}
+        )
         take |= {"detector": reading(board, out, i, 0), "written": reading(board, out, i, e)}
         lines.append(take)
     return lines
@@ -140,33 +153,49 @@ def boards():
             {"births": [pair], "parts": [first, second]},
             {("det", 0): 1, ("birth", 0): 3},
         ),
-        ("two quanta, one free slot at z", tie, {("slot", 20, 10): 13}),
+        (
+            "two quanta, one free slot at z, both drawn to it",
+            tie,
+            {("birth", 0): 3, ("birth", 1): 4, ("slot", 20, 10): 1},
+        ),
     )
 
 
 def checks(lines):
-    """Every take names a lay; every draw is law 9's over sizes times back; every member is taken at the site, and on
-    the line of its frame, its band's drawn history says (a frame of two lines: the first where the part written is
-    the detector's own line, the second where it is the other)."""
+    """Every take and every refusal names a lay; every draw is law 9's over its sizes; every member goes where its
+    draw's drawn history says: taken there on the line it says (a frame of two lines: the first where the part
+    written is the detector's own line, the second where it is the other), or refused there and laid back to its
+    giver, or, at a slot that refuses it, sent back to its giver's site."""
     lays = {(e["round"], e["site"]) for e in lines if e["kind"] == "whole" and "birth" not in e}
     takes = [e for e in lines if e["kind"] == "whole" and "birth" in e]
-    named = all(tuple(t["birth"]) in lays for t in takes)
+    backs = [e for e in lines if e["kind"] == "books"]
+    named = all(tuple(e["birth"]) in lays for e in takes + backs)
     lawful, placed = True, True
     for e in (e for e in lines if e["kind"] == "split"):
-        products = [w * b for w, b in zip(e["sizes"], e["back"], strict=True)]
-        lawful &= e["room"] == sum(products) and scheduler.law9(products, e["c"]) == e["drawn"]
+        lawful &= e["room"] == sum(e["sizes"]) and scheduler.law9(e["sizes"], e["c"]) == e["drawn"]
         for member, (site, end) in zip(e["members"], e["parts"][e["drawn"]], strict=True):
-            found = [t for t in takes if t["birth"] == member[:2] and t["site"] == site]
-            taken = [int(t["written"] != t["detector"]) for t in found]
-            placed &= taken == [end]
+            taken = [
+                int(t["written"] != t["detector"])
+                for t in takes
+                if t["birth"] == member[:2] and t["site"] == site
+            ]
+            refused = [b for b in backs if b["birth"] == member[:2] and b["site"] == site]
+            sent = [
+                b
+                for b in backs
+                if b["birth"] == member[:2] and b["site"] == e["site"] and site == member[1]
+            ]
+            placed &= taken == [end] or len(refused + sent) == 1
     return named, lawful, placed
 
 
 def main():
-    print("Schema 1.2's lines, written from bands the one rule draws, and read back")
+    print(
+        "Schema 1.2's lines, written from the draws the one rule makes (decision 40 (b)), and read back"
+    )
     for name, board, digits in boards():
         out, log = run_logged(board, digits)
-        lines = written(board, out, log)
+        lines = written(board, out, log, digits)
         lines.sort(key=lambda e: (e["round"], KINDS.index(e["kind"]), e["site"], e["train"]))
         head = {
             "kind": "header",
@@ -182,9 +211,11 @@ def main():
             _, cause = records.read(str(path))
         named, lawful, placed = checks(lines)
         print()
-        print(f"{name}: the decoder's reader: {cause or 'read'}; every take names a lay: {named};")
         print(
-            f"  every draw law 9's over sizes times back: {lawful}; every member taken where its history says: {placed}"
+            f"{name}: the decoder's reader: {cause or 'read'}; every take and refusal names a lay: {named};"
+        )
+        print(
+            f"  every draw law 9's over its sizes: {lawful}; every member where its draw's history says: {placed}"
         )
         for e in lines:
             print(f"  {json.dumps(e)}")
