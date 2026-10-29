@@ -10,7 +10,7 @@ import pytest
 
 from tensor24.algebra.carry import home
 from tensor24.engine import contract, mesh, step
-from tensor24.engine.state import Gearing, Layout, Out, Plan, State
+from tensor24.engine.state import Gearing, Layout, Out, Plan, Ruler, State
 from tensor24.main import made
 from tensor24.runner import board as boards
 from tensor24.runner.load import load
@@ -82,7 +82,7 @@ def world(rng, layout, rows=ROWS):
 
 def naive(layout, s, mask, shape=SHAPE):
     """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the carry."""
-    _, _, grip, gearing, plan, rate, gamma = layout
+    _, _, grip, gearing, plan, rate, gamma, _ = layout
     rows = len(s.a)
     w, wp, stretch, spring, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     first, second, factor, target = (x.tolist() for x in plan)
@@ -304,7 +304,10 @@ def cube():
 def sourced_images():
     """The sources turn with the board under the 24: the force and J of the turned state, the turned force and J."""
     nb, plan = frame.board(CUBE), cube()
-    n, rows = nb.shape[1], 1 + 1 + 3 + 3  # A1 and A2, T1 and T2, as stored
+    n, rows = (
+        nb.shape[1],
+        1 + 1 + 3 + 3 + 1,
+    )  # A1 and A2, T1 and T2, as stored, and the load's time gear, A1
     ones = np.ones((1, n), dtype=object)
     layout = Layout(
         nb,
@@ -319,7 +322,11 @@ def sourced_images():
     force, j = step.sources(layout, s)
     xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
     for m in frame.turns():
-        site, turn = np.ravel_multi_index(tuple((m @ xyz) % sides), CUBE), frame.stored(m)[:rows, :rows]
+        site, turn = (
+            np.ravel_multi_index(tuple((m @ xyz) % sides), CUBE),
+            np.eye(rows, dtype=int).astype(object),
+        )
+        turn[:-1, :-1] = frame.stored(m)[: rows - 1, : rows - 1]  # the time gear is A1: no turn moves it
         there = State(*(np.empty_like(x) for x in s))
         for x, y in zip(there, s, strict=True):
             x[:, site] = y
@@ -579,7 +586,8 @@ def test_a_hands_charge_moves_by_rules_torques_and_its_kick_alone_and_parts_on_a
 def test_the_engines_records_hold_their_fields_in_order():
     assert State._fields == ("a", "b", "r", "go", "rd", "ph", "c", "tn")
     assert Gearing._fields == ("w", "wp", "stretch", "spring", "kick", "drive")
-    assert Layout._fields == ("nb", "meshes", "grip", "gearing", "plan", "rate", "gamma")
+    assert Layout._fields == ("nb", "meshes", "grip", "gearing", "plan", "rate", "gamma", "ruler")
+    assert Ruler._fields == ("row", "last", "teeth", "square", "reads", "spring")
     assert Plan._fields == ("first", "second", "factor", "target")
     assert Out._fields == ("fire", "k", "tn")
 

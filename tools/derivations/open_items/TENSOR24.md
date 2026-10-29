@@ -104,7 +104,7 @@ The plan's owner: the Boss. The names are the ones the owner sees in his app: Bo
 
 ## 1. The end state
 
-**Two laws not to be crossed** (the owner's word of 11:4x UTC): **every bang shows more than the one before**, and **time on the board is a circle**: the run forward to the top, the turnover, the run back and the next bang, the rewind exact so that nothing the board held is lost (law 10, section 19).
+**Two laws not to be crossed** (the owner's word of 11:4x UTC): **every bang shows more than the one before**, and **time on the board is a circle**: the run forward to the top, the turnover, the run back and the next bang, the rewind exact so that nothing the board held is lost (law 10, section 19). The turnover at the top is cancelled by the owner's word of 2026-10-29, 06:3x UTC (TENSOR24_PLAN.md, decision 27: it is not a local law): the circle is the count's swing, the spring turning it at the top and the source at the bottom (David's full picture, #2187 6489403097, item 4).
 
 - **One integer tensor machine.** The whole engine is one integer tensor machine of the clocks, with three operations alone: multiplication, addition and Rule3 (the full picture: section 26; the two clicks: section 27; the parameters: section 28; the whole system: section 29). Every Node-clock does one act: every gear of every train by one formula (section 2) with its carry, the gate inside the act. The quotient leaves; the remainder stays.
 - **A new engine.** The engine is written anew in its own files and replaces the current one, which stays beside it as its comparison until the switch (the owner's decision of 09:1x UTC; section 10).
