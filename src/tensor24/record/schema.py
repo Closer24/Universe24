@@ -1,14 +1,17 @@
-"""The record's schema 1.2: JSON Lines of whole numbers and labels, each line's kind its record's name in lower case."""
+"""The record's schema 1.2: JSON Lines of whole numbers and labels, each record line's kind its record's name in lower case."""
 
 from dataclasses import dataclass
 
-# The lines, in the order (round, kind, site, train): Header first; then Whole, Split, Rate and Books; End last. The
-# ledger's own file holds Ledger and Count lines. The other records stand inside lines. A digest is SHA-256 in hex.
+# The record's lines, in the order (round, kind, site, train): Header first; then Whole, Split, Rate and Books; End last.
+# No run writes a Rate line since G1b, every Node-clock stepping in every round; its record stays for the records read
+# before. The ledger's own file holds Ledger and Count lines, a Count line told by its site, which a Ledger line lacks.
+# The other records stand inside lines. A digest is SHA-256 in hex.
 MAJOR = 1  # a breaking change; the decoder upcasts an older major and refuses an unknown one
 # each minor version's change in order: an added field or line that no reader needs, or a line no run writes retired
 ADDED = (
     "the operands named, the coupling row's twelve fields",
-    "the ledger's count per Node-clock (Animate's G1), the turnover line retired as her 1.2 has it",
+    "the ledger's count per Node-clock (Animate's G1), read by her 1.2 reader, which keys a ledger line by round, at,"
+    " site and train (the 1.1 reader's guard refused them); the turnover and the rate lines retired, no run writing either",
 )
 MINOR = len(ADDED)
 
@@ -46,13 +49,13 @@ class Train:
 
 @dataclass(frozen=True)
 class Header:
-    """The first line. The board wraps by Rule3 at each side, its sites in the order named; every going starts at 0."""
+    """The first line. The board wraps by Rule3 at each side, its sites in the order named."""
 
     record: str
     major: int
     minor: int
     engine: str
-    runner: str  # "synchronous", or the asynchronous run with its masks' seed named
+    runner: str  # "synchronous": every Node-clock steps in every round
     files: tuple[File, ...]
     sides: tuple[int, ...]
     order: str
@@ -113,8 +116,8 @@ class Whole:
 
     round: int
     site: int
-    count: int  # the count the Node-clock's beat reached, its first beat being 1
-    dial: int  # its rate dial after the beat
+    count: int  # the count the Node-clock's beat reached, its first beat being 1 (the asynchronous runner's; G3 names it)
+    dial: int  # its rate dial after the beat (the asynchronous runner's)
     train: int
     q: int
     winding: int
@@ -135,7 +138,7 @@ class Whole:
 
 @dataclass(frozen=True)
 class Split:
-    """A split click (law 6 on the composite clock), its count and dial as a whole click's: c over room."""
+    """A split click (law 6 on the composite clock), its count and dial as a whole click's (the asynchronous runner's): c over room."""
 
     round: int
     site: int
@@ -156,13 +159,13 @@ class Split:
 
 @dataclass(frozen=True)
 class Rate:
-    """A Node-clock's k at its first beat and at each beat whose k differs from its last beat's, with the beat's count."""
+    """A Node-clock's k at its first beat and at each beat whose k differs from its last beat's, with the beat's count: the asynchronous runner's line, which no run writes since G1b."""
 
     round: int
     site: int
     count: int  # the count the beat reached, the first beat being 1
     dial: int
-    k: int  # a bit, 1 where the beat ticked, under the second promise: every rate within [0, the full rate]
+    k: int  # a bit, 1 where the beat ticked
 
 
 @dataclass(frozen=True)

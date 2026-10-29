@@ -109,6 +109,23 @@ def test_the_run_back_is_exact_with_the_clock_moving_wherever_every_kept_tooth_s
     assert frame.same(rewind(step.untick, laid, ends[-1], ROUNDS), s)
 
 
+def test_the_mirror_is_its_own_inverse_where_the_clock_stands_still_and_not_where_it_moves():
+    """Mirrored twice, each fine tooth moves by W(a) - W(b): the state itself where the clock stands still, and not where
+    it moves, so a run runs back by its rounds' unticks and one mirror about its ticks departs from the second round."""
+    _, _, laid = built()
+    for moving in (False, True):
+        s = world(np.random.default_rng(5), laid, moving)
+        twice = step.mirror(laid, step.mirror(laid, s))
+        moved = step.weight(laid.gearing, laid.clock, s.a) - step.weight(laid.gearing, laid.clock, s.b)
+        assert frame.same(twice, s._replace(r=s.r + moved)) and frame.same(twice, s) is not moving
+        ends = reached(laid, s, 1 + 1)
+        once = step.mirror(laid, reached(laid, step.mirror(laid, ends[-1]), 1 + 1)[-1])
+        assert (
+            frame.same(rewind(step.untick, laid, ends[-1], 1 + 1), s)
+            and frame.same(once, s) is not moving
+        )
+
+
 def test_the_run_back_is_exact_while_the_clock_rises_and_departs_at_the_second_round_where_it_falls():
     """Light at rest at one count, the clock's own gear moving by a stride alike everywhere, every tooth at its teeth
     less 1: rising, ROUNDS rounds run back to the start; falling, the first round's kept tooth stands past the next

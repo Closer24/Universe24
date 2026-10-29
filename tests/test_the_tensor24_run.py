@@ -1,6 +1,7 @@
-"""Tensor24's run (stage 10): the three files to a record the decoder reads and a ledger of every train's counts at
-every Node-clock and round, the run back checked, and a departure named before any record."""
+"""Tensor24's run (stage 10): the three files to a record and a ledger the decoder reads, every train's counts at
+every Node-clock and round, the run back checked, and a departure named before anything is written."""
 
+import dataclasses
 import hashlib
 import json
 import subprocess
@@ -11,8 +12,9 @@ from tensor24 import main
 from tensor24.decoder import records
 from tensor24.engine import step
 from tensor24.engine.state import State
+from tensor24.record import schema
 from tensor24.runner import run
-from tensor24.runner.files import NAMES, sites_of
+from tensor24.runner.files import NAMES, sites_of, whole
 from tensor24.runner.load import load
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,8 +76,9 @@ def test_the_end_holds_the_digest_of_the_state_the_rounds_reach_and_reads_0_wher
 
 
 def test_the_ledger_holds_every_trains_counts_at_every_node_clock_after_every_round(tmp_path):
-    """Beside the record, one count line per round, Node-clock and train, in that order: the train's now counts there,
-    row by row, as the engine's own rounds reach them; the clock's own gear stands at 0 in every line."""
+    """Beside the record, one Count line per round, Node-clock and train, in that order, schema.Count's fields of their
+    shapes, and the decoder reads them: the train's now counts there, row by row, as the engine's own rounds reach
+    them; the clock's own gear stands at 0 in every line."""
     record = tmp_path / "run.jsonl"
     assert main.ran(PATHS, record) == []
     universe, piece, setting = (read(path) for path in PATHS)
@@ -94,10 +97,20 @@ def test_the_ledger_holds_every_trains_counts_at_every_node_clock_after_every_ro
             for site in range(sites_of(piece["shape"]))
             for n, t in enumerate(held.trains)
         ]
-    lines = read(run.ledger_of(record))
-    assert lines == wanted and {
-        tuple(x["count"]) for x in lines if x["train"] == len(held.trains) - 1
-    } == {(0,)}
+    lines, fields = (
+        read(run.ledger_of(record)),
+        [field.name for field in dataclasses.fields(schema.Count)],
+    )
+    shaped = [
+        list(x) == fields and all(map(whole, (x["round"], x["site"], x["train"], *x["count"])))
+        for x in lines
+    ]
+    assert (
+        lines == wanted
+        and all(shaped)
+        and records.read_ledger(str(run.ledger_of(record))) == (lines, "")
+    )
+    assert {tuple(x["count"]) for x in lines if x["train"] == len(held.trains) - 1} == {(0,)}
 
 
 def test_a_departing_file_or_a_broken_promise_is_named_and_no_record_is_written(tmp_path):
@@ -114,7 +127,8 @@ def test_a_departing_file_or_a_broken_promise_is_named_and_no_record_is_written(
         paths[NAMES.index(name)].write_text(json.dumps(held), encoding="utf-8")
         record = tmp_path / f"{name}.jsonl"
         found = main.ran(paths, record)
-        assert len(found) == 1 and found[0].startswith(named) and not record.exists(), found
+        assert len(found) == 1 and found[0].startswith(named), found
+        assert not record.exists() and not run.ledger_of(record).exists()
 
 
 def test_the_tool_runs_the_files_and_names_a_departure(tmp_path):
