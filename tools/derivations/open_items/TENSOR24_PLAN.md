@@ -678,6 +678,11 @@ On the owner's word to David: "a generic solution for everything". This is David
     - **What stays:** the product draw and the take by way (b), decision 29's first two parts.
     - **The control that the switch gave** (the big picture's 10.2, test 5) becomes a test of the engine: a backward dial held silent, sigma_b alike at every part, draws by law 9 exactly, Born, and leaves every count of the first aim as the forward board alone gives it.
     - **The one tick:** decision 30's check is in (tensor24-review 9a7db7432). The backward half is the same tick on the mirrored state (T S T = S^-1, exact on 7b's whole state), with the forward log's fire as its mask where counts are staggered.
+34. **(ah) One Node-clock, one hand, run both ways. APPROVED (the owner's word to the Boss of 2026-10-29, 10:3x UTC, in Hebrew; in translation: "The picture closes without a flag. It is not really a doubled Node-clock, is it? Because there is one hand..?"; on decision 33 and the one tick).**
+    - **The picture:** each Node-clock has one hand, its gears' state. The backward run is that same hand run back, the same tick on the mirrored state (9a7db7432), and no second clock; in a history that agrees with itself its gears retrace the forward run's tick for tick.
+    - **What the backward run carries:** no hand but a tag, the basis and the weights of the clicks to come (the detectors' frames, the absorbers' takes, sigma_b per part), carried back one Mesh a step to the Node-clock where the parts were one.
+    - **The split click** is where the forward reading of the one hand meets the tag that came back: law 9's draw over sigma_f sigma_b, ordered by cause (B). The whole click and the record are the forward run's alone.
+    - **So:** decisions 28, 30 and 31 read as one Node-clock with one hand, run forward and back; "two boards" and "a doubled Node-clock" are the run's two directions, and the new array is the tag alone.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
