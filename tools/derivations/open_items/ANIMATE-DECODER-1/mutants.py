@@ -1,11 +1,12 @@
-"""The decoder's source mutants against its tests (Animate): every mutant must fail tests/test_the_tensor24_decoder.py.
+"""The decoder's source mutants against its tests (Animate): every mutant must fail tests/test_the_tensor24_decoder.py
+or tests/test_the_tensor24_decoder_cases.py.
 
 usage: python -I mutants.py <worktree> <scratch folder>
 Each mutant is one or more textual changes in a scratch copy of src/tensor24, tools/tensor24_decode.py and the decoder's
-test; "killed" names the first test that fails with it, "SURVIVED" means all of them pass. The mutants: each guard of
-the record and of the ledger dropped from its tuple; each part of each rule, reading and verdict changed; the fifth
-hostile review's sixteen and the seventh's eighteen as they read on this text (decoder_mutants.py and
-decoder_mutants_s8.py there); and the tool's lines.
+two tests; "killed" names the first test that fails with it, "SURVIVED" means all of them pass. The mutants: each guard
+of the record and of the ledger dropped from its tuple; each part of each rule, reading and verdict changed; the fifth
+hostile review's sixteen, the seventh's eighteen and the twelfth's twenty-five as they read on this text
+(decoder_mutants.py, decoder_mutants_s8.py and mutants_s13.py there); and the tool's lines.
 """
 
 import shutil
@@ -19,7 +20,7 @@ REC, BOOKS, CLOCKS, TOOL = (
     "src/tensor24/decoder/clocks.py",
     "tools/tensor24_decode.py",
 )
-TEST = "tests/test_the_tensor24_decoder.py"
+TESTS = ("tests/test_the_tensor24_decoder.py", "tests/test_the_tensor24_decoder_cases.py")
 GUARDS = (
     "jsoned",
     "framed",
@@ -35,9 +36,14 @@ GUARDS = (
 )
 LEDGER_GUARDS = ("objects", "standing", "fitted", "once")
 AGREE = "agree = sum(sum(step.values()) == sum(clicks.values()) for step, clicks in read)"
-SHOWN_IF = '    if opened or agree < read:\n        return verdict("NOT SHOWN", books, lacks, wind, first=first, second=second)\n'
-READ_IF = '    if lacking or read < rounds:\n        partly = lines if read < rounds else ""\n        return verdict("NOT READ", lacks, "" if lacking else books, partly, first=first, second=second)\n'
-OWN = 'own = not whole(click.get("train")) or click["train"] in trains'
+SHOWN_IF = '    if opened or agree < read:\n        return verdict("NOT SHOWN", books, lacks, wind or barred or lines, **readings)\n'
+READ_IF = '    if lacking or lines:\n        return verdict("NOT READ", lacks, "" if lacking else books, lines, **readings)\n'
+WALL_IF = '    if barred:\n        return verdict("NOT READ", barred, books, lacks, **readings)\n'
+BESIDE = "wind or barred or lines, **readings"
+OWN = 'own = click.get("train") in trains'
+CHAIN = 'elif h["windings"][0] == last["windings"][1] and h["kept"][0] == last["kept"][1]:'
+SIDES = 'taken, laid = chained(part["taken"]), chained(part["laid"])'
+LEFT = 'return sum(h["windings"][0] - h["windings"][1] for p in parts(click) for h in p["taken"])'
 
 
 def dropped(name):
@@ -230,7 +236,7 @@ MUTANTS = {
         (REC, "        sites = sites * side\n", "        sites = side\n")
     ],
     "the board's Spokes one a side": [
-        (REC, "return sites, len(sides) + len(sides)", "return sites, len(sides)")
+        (REC, "return sides, sites, len(sides) + len(sides)", "return sides, sites, len(sides)")
     ],
     "a count of 0 read": [(REC, 'line["count"] < 1', 'line["count"] < 0')],
     # the books' guard (G3)
@@ -259,18 +265,17 @@ MUTANTS = {
         (REC, "if earliest[entry] != n]", "if earliest[entry] != earliest[entry]]")
     ],
     # the first reading: the books hold the click
-    "the books close at any end": [(BOOKS, "    each = all(\n", "    each = any(\n")],
-    "a part that takes nothing read": gone(BOOKS, '        p["taken"]\n        and '),
-    "a take that gains read": gone(BOOKS, '        and all(gained([h]) < 0 for h in p["taken"])\n'),
-    "a laid holding that loses read": gone(
-        BOOKS, '        and all(gained([h]) > 0 for h in p["laid"])\n'
-    ),
+    "the books close at any end": [(BOOKS, "each = all(part_closes", "each = any(part_closes")],
+    "a part that takes nothing read": [(BOOKS, "        bool(taken)\n", "        True\n")],
+    "a take that gains read": gone(BOOKS, "        and all(gained([h]) < 0 for h in taken)\n"),
+    "a laid holding that loses read": gone(BOOKS, "        and all(gained([h]) > 0 for h in laid)\n"),
     "the books close over the two ends together": [
+        (BOOKS, "        and gained(taken) + gained(laid) == 0\n", ""),
         (
             BOOKS,
-            '        and gained(p["taken"]) + gained(p["laid"]) == 0\n        for p in parts(click)\n    )\n',
-            '        for p in parts(click)\n    ) and sum(gained(p["taken"]) + gained(p["laid"]) for p in parts(click)) == 0\n',
-        )
+            "    each = all(part_closes(p) for p in parts(click))\n",
+            '    each = all(part_closes(p) for p in parts(click)) and sum(gained(p["taken"]) + gained(p["laid"]) for p in parts(click)) == 0\n',
+        ),
     ],
     "the click's own train not read": [(BOOKS, OWN, "own = True")],
     "q not read": [
@@ -279,7 +284,7 @@ MUTANTS = {
     "q read with the kept": [
         (
             BOOKS,
-            'return sum(h["windings"][0] - h["windings"][1] for p in parts(click) for h in p["taken"])',
+            LEFT,
             'return sum(h["windings"][0] - h["windings"][1] + h["kept"][0] - h["kept"][1] for p in parts(click) for h in p["taken"])',
         )
     ],
@@ -296,8 +301,8 @@ MUTANTS = {
     "a laid holding's lacking fields read": [
         (
             BOOKS,
-            "held = [h for p in sides for key in BOOKS for h in p.get(key, [])]",
-            'held = [h for p in sides for h in p.get("taken", [])]',
+            "held = [h for p in held_by for key in BOOKS for h in p.get(key, [])]",
+            'held = [h for p in held_by for h in p.get("taken", [])]',
         )
     ],
     # the second reading: the wind over every train of the header
@@ -351,31 +356,90 @@ MUTANTS = {
     "the ledger absent read as an empty ledger": [
         (
             BOOKS,
-            "    if ledger is None:\n",
-            "    if ledger is None:\n        ledger = []\n    if ledger is None:\n",
+            "second = None if ledger is None else second_reading(record, ledger)",
+            "second = second_reading(record, [] if ledger is None else ledger)",
         )
     ],
     "a header that names no train not named": [
-        (BOOKS, '    if not second["trains"]:\n', "    if False:\n")
+        (BOOKS, 'return "" if second["trains"] else "the header names no train"', 'return ""')
     ],
     "the ledger shown where it is read at some rounds alone": [
-        (BOOKS, "    if lacking or read < rounds:\n", "    if lacking:\n")
+        (BOOKS, "    if lacking or lines:\n", "    if lacking:\n")
     ],
     "a click that lacks its books read among the others": [
-        (BOOKS, "    if lacking or read < rounds:\n", "    if read < rounds:\n")
+        (BOOKS, "    if lacking or lines:\n", "    if lines:\n")
     ],
-    "a click that lacks its books hiding an open one": [(BOOKS, SHOWN_IF + READ_IF, READ_IF + SHOWN_IF)],
+    "a click that lacks its books hiding an open one": [
+        (BOOKS, READ_IF, ""),
+        (BOOKS, SHOWN_IF, READ_IF + SHOWN_IF),
+    ],
     "the lines named where every round with a click reads": [
-        (BOOKS, 'partly = lines if read < rounds else ""', "partly = lines")
+        (BOOKS, "        if not barred and read < rounds\n", "        if not barred\n")
     ],
     "the lines not named where a round with a click is not read": [
-        (BOOKS, 'partly = lines if read < rounds else ""', 'partly = ""')
+        (BOOKS, "        if not barred and read < rounds\n", "        if False\n")
     ],
     "the books named beside a click that lacks a field": [
-        (BOOKS, '"" if lacking else books, partly', "books, partly")
+        (BOOKS, '"" if lacking else books, lines', "books, lines")
     ],
     "the books not named where the ledger is read in part": [
-        (BOOKS, '"" if lacking else books, partly', '"", partly')
+        (BOOKS, '"" if lacking else books, lines', '"", lines')
+    ],
+    # the twelfth review's changes: the values where the line's record names them, the names in ASCII, the board by its
+    # sides, the books per train, and the verdict's order with the gap named beside the open books
+    "a line's ends and children read on every kind": [
+        (REC, " if key in fields for part in line.get(key, [])", " for part in line.get(key, [])")
+    ],
+    "a line's ends' Spokes read on every kind": [
+        (REC, 'ends = line.get("ends", []) if "ends" in fields else []', 'ends = line.get("ends", [])')
+    ],
+    "a count read on every kind": [
+        (REC, 'if "count" in fields and whole(line.get("count"))', 'if whole(line.get("count"))')
+    ],
+    "the board named by its sites": [
+        (REC, 'off the board of sides {sides}"', 'off the board of {size} sites"')
+    ],
+    "a side below 1 read": [
+        (REC, "    if made[0] and not all(side >= 1 for side in made[0]):\n", "    if False:\n")
+    ],
+    "a side of 0 read": [(REC, "side >= 1 for side", "side >= 0 for side")],
+    "a field's name printed raw": [(REC, "{ascii(found[0][1])[1:-1]}", "{found[0][1]}")],
+    "a kind printed raw": [(REC, "{ascii(unknown)}", "{unknown}")],
+    "a chain read on its windings alone": [(BOOKS, CHAIN, CHAIN.split(" and ")[0] + ":")],
+    "a chain read on its kept alone": [(BOOKS, CHAIN, "elif " + CHAIN.split(" and ")[1])],
+    "any two holdings of a train read as a chain": [(BOOKS, CHAIN, "elif True:")],
+    "a taken train listed twice read": [
+        (BOOKS, SIDES, 'taken, laid = part["taken"], chained(part["laid"])')
+    ],
+    "a laid train listed twice read": [
+        (BOOKS, SIDES, 'taken, laid = chained(part["taken"]), part["laid"]')
+    ],
+    "a train on both sides of a part read": [
+        (BOOKS, ' or {h["train"] for h in taken} & {h["train"] for h in laid}', "")
+    ],
+    "a part that books a train twice closes": [
+        (BOOKS, "    if held is None:\n        return False\n", "    if held is None:\n        return True\n")
+    ],
+    "a click that books a train twice read": [
+        (BOOKS, 'return TWICE if any(per_train(p) is None for p in parts(click)) else ""', 'return ""')
+    ],
+    "a pair that books a train twice at one end read": [
+        (BOOKS, "TWICE if any(per_train", "TWICE if all(per_train")
+    ],
+    "the gap not named beside open books": [(BOOKS, BESIDE, "wind, **readings")],
+    "the wall not named beside open books": [(BOOKS, BESIDE, "wind or lines, **readings")],
+    "the lines not named beside open books": [(BOOKS, BESIDE, "wind or barred, **readings")],
+    "the wind not named beside open books": [(BOOKS, BESIDE, "barred or lines, **readings")],
+    "the wall read after a ledger read at no round": [
+        (BOOKS, WALL_IF, ""),
+        (BOOKS, "    if lacking or lines:\n", WALL_IF + "    if lacking or lines:\n"),
+    ],
+    "a train card counted from 0": [
+        (
+            BOOKS,
+            'enumerate(record.header.get("trains", []), start=1)',
+            'enumerate(record.header.get("trains", []), start=0)',
+        )
     ],
     # the ticks
     "the rate lines read by the round": [
@@ -435,6 +499,96 @@ MUTANTS = {
     "the tool names no first click not read": [
         (TOOL, "        if unread\n        else", "        if False\n        else")
     ],
+    # the twelfth hostile review's twenty-five (mutants_s13.py there), as they read on this text
+    "a negative site read": [(REC, "whole(size) and not 0 <= s < size]", "whole(size) and not s < size]")],
+    "a negative Spoke read": [(REC, "if not 0 <= s < spokes]", "if not s < spokes]")],
+    "a child's site not read (the ends' read)": [
+        (REC, 'for key in ("ends", "children")', 'for key in ("ends",)')
+    ],
+    "the line's own round, site and count read on rate lines alone": [
+        (REC, 'event = line["kind"] in KINDS', 'event = line["kind"] == "rate"')
+    ],
+    "a count before the first beat read but on a rate line": [
+        (REC, 'if "count" in fields and whole(line.get("count"))', 'if line["kind"] == "rate" and whole(line.get("count"))')
+    ],
+    "an end without its rounds raises": [
+        (
+            REC,
+            'if event and whole(rounds) and not 1 <= line["round"] <= rounds:',
+            'if event and not 1 <= line["round"] <= rounds:',
+        )
+    ],
+    "an end or child without its site raises": [
+        (REC, "far = [s for s in sites if whole(s) and whole(size)", "far = [s for s in sites if whole(size)")
+    ],
+    "an end without its Spoke raises": [(REC, "if whole(s) and whole(spokes)]", "if whole(spokes)]")],
+    "a kind that is no label let through (absent alone refused)": [
+        (
+            REC,
+            'if isinstance(line, str) or not isinstance(line.get("kind"), str):',
+            'if isinstance(line, str) or "kind" not in line:',
+        )
+    ],
+    "an unnamed mapping not walked": [
+        (
+            REC,
+            "        if isinstance(item, dict):\n            left += item.values()\n",
+            "        if isinstance(item, dict):\n            pass\n",
+        )
+    ],
+    "an unnamed row refused": [
+        (
+            REC,
+            "        elif isinstance(item, list):\n            left += item\n",
+            "        elif isinstance(item, list):\n            return False\n",
+        )
+    ],
+    "a taken holding that keeps its windings read": [
+        (BOOKS, "all(gained([h]) < 0 for h in taken)", "all(gained([h]) <= 0 for h in taken)")
+    ],
+    "a laid holding that gains nothing read": [
+        (BOOKS, "all(gained([h]) > 0 for h in laid)", "all(gained([h]) >= 0 for h in laid)")
+    ],
+    "q read as at most the windings that left": [
+        (BOOKS, 'click["q"] == left(click)', 'click["q"] <= left(click)')
+    ],
+    "a click without its train read (its train not asked)": gone(BOOKS, '        and "train" in click\n'),
+    "q read over the click's own books, not its ends": [
+        (BOOKS, LEFT, LEFT.replace("for p in parts(click)", "for p in [click]"))
+    ],
+    "a gap before the books' failure (the docstring's order)": [
+        (BOOKS, "    if opened or agree < read:\n", "    if read and (opened or agree < read):\n")
+    ],
+    "the clicks lines may hold a train the header lacks (the step's held to the header)": [
+        (
+            BOOKS,
+            "        and set(step) == set(clicks) == trains\n",
+            "        and set(step) <= set(clicks)\n        and set(step) == trains\n",
+        )
+    ],
+    "a train card without its index raises": [
+        (BOOKS, 'trains = {t["index"] for t in cards} if indexed else set()', 'trains = {t["index"] for t in cards}')
+    ],
+    "a count before the first beat named unread (ticks_to still 0)": [
+        (CLOCKS, "if not whole(count) or count < 0:", "if not whole(count) or count < 1:")
+    ],
+    "the tool reads every click against the first click's Node-clock": [
+        (TOOL, "clocks.ticks_at(lines.get(site, []),", 'clocks.ticks_at(lines.get(clicks[0]["site"], []),')
+    ],
+    "the tool matches a Node-clock's counts to its clicks backward": [
+        (TOOL, "                ats,\n", "                ats[::-1],\n")
+    ],
+    "the tool's last read is its first": [(TOOL, "the last read {read[-1:]}", "the last read {read[:1]}")],
+    "the tool counts a click of 0 ticks as not read": [
+        (TOOL, "if found[at] is not None]", "if found[at]]")
+    ],
+    "the tool names the last click not read as the first": [
+        (
+            TOOL,
+            "f\", the first not read at round {unread[0]['round']}, site {unread[0]['site']}: \"",
+            "f\", the first not read at round {unread[-1]['round']}, site {unread[-1]['site']}: \"",
+        )
+    ],
 }
 
 
@@ -447,7 +601,8 @@ def run(name, changes):
     (tree / "tests").mkdir()
     (tree / "tools").mkdir()
     shutil.copy(WT / "tests" / "__init__.py", tree / "tests" / "__init__.py")
-    shutil.copy(WT / TEST, tree / TEST)
+    for test in TESTS:
+        shutil.copy(WT / test, tree / test)
     shutil.copy(WT / TOOL, tree / TOOL)
     (tree / "pytest.ini").write_text("[pytest]\naddopts = --import-mode=importlib\npythonpath = src\n")
     for rel, old, new in changes:
@@ -456,7 +611,7 @@ def run(name, changes):
         assert text.count(old) == 1, (name, old)
         path.write_text(text.replace(old, new))
     got = subprocess.run(
-        [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "-x", TEST],
+        [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "-x", *TESTS],
         cwd=tree,
         capture_output=True,
         text=True,

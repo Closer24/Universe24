@@ -1,4 +1,4 @@
-unmutated: rc=0 75 passed in 0.99s
+unmutated: rc=0 122 passed in 1.09s
 killed   the guard jsoned dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a key twice]
 killed   the guard framed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an empty file]
 killed   the guard headed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a first line that is no header]
@@ -52,7 +52,7 @@ killed   sites not read  <- test_a_broken_record_is_not_read_with_its_own_cause_
 killed   an end's or a child's site not read  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an end at a site off the board]
 killed   Spokes not read  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an end at a Spoke off the board]
 killed   the board's sites the sum of its sides  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a site off the board]
-killed   the board's sites its last side  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a site off the board]
+killed   the board's sites its last side  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an end at a Spoke off the board]
 killed   the board's Spokes one a side  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an end at a Spoke off the board]
 killed   a count of 0 read  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a count before the first beat]
 killed   a click booked at the click and its ends read  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a click booked at the click and its ends]
@@ -93,10 +93,33 @@ killed   a header that names no train not named  <- test_the_wind_is_read_over_e
 killed   the ledger shown where it is read at some rounds alone  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
 killed   a click that lacks its books read among the others  <- test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read[a holding's kept]
 killed   a click that lacks its books hiding an open one  <- test_a_part_read_that_fails_is_not_shown_beside_a_click_that_lacks_a_field
-killed   the lines named where every round with a click reads  <- test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read[a holding's kept]
+killed   the lines named where every round with a click reads  <- test_the_wind_over_every_train_round_by_round
 killed   the lines not named where a round with a click is not read  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
 killed   the books named beside a click that lacks a field  <- test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read[a holding's kept]
 killed   the books not named where the ledger is read in part  <- test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click
+killed   a line's ends and children read on every kind  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a books line's unnamed children]
+killed   a line's ends' Spokes read on every kind  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a rate line's unnamed ends]
+killed   a count read on every kind  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a books line's unnamed count 0]
+killed   the board named by its sites  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a site off the board]
+killed   a side below 1 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a side below 1]
+killed   a side of 0 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a side of 0]
+killed   a field's name printed raw  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a field named with a line feed]
+killed   a kind printed raw  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a kind past ASCII]
+killed   a chain read on its windings alone  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a chain broken on its kept]
+killed   a chain read on its kept alone  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a chain broken on its windings]
+killed   any two holdings of a train read as a chain  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a chain broken on its kept]
+killed   a taken train listed twice read  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a chain broken on its kept]
+killed   a laid train listed twice read  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a laid train listed twice]
+killed   a train on both sides of a part read  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a train taken and laid]
+killed   a part that books a train twice closes  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a chain broken on its kept]
+killed   a click that books a train twice read  <- test_a_part_that_books_a_train_twice_reads_not_read_named[a chain broken on its kept]
+killed   a pair that books a train twice at one end read  <- test_a_part_that_books_a_train_twice_reads_not_read_named[an end that books a train twice]
+killed   the gap not named beside open books  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a header that names no train]
+killed   the wall not named beside open books  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a header that names no train]
+killed   the lines not named beside open books  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a ledger of round 2 alone]
+killed   the wind not named beside open books  <- test_open_books_beside_a_ledger_read_name_the_wind
+killed   the wall read after a ledger read at no round  <- test_the_books_close_at_each_end_and_the_verdict
+killed   a train card counted from 0  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a train card without its index]
 killed   the rate lines read by the round  <- test_the_ticks_from_a_record_whose_counts_are_not_its_rounds
 killed   the rate lines of every Node-clock read as one  <- test_the_ticks_from_a_record_whose_counts_are_not_its_rounds
 killed   no rate line read  <- test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat
@@ -113,4 +136,29 @@ killed   the tool takes four arguments  <- test_the_tool_reads_names_and_raises_
 killed   the tool keeps the interpreter's digits  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
 killed   the tool reads on past a record not read  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
 killed   the tool names no first click not read  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
-114 mutants, 0 survived
+killed   a negative site read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a rate line at a site below 0]
+killed   a negative Spoke read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a pair's end at a Spoke below 0]
+killed   a child's site not read (the ends' read)  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a child laid off the board]
+killed   the line's own round, site and count read on rate lines alone  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a whole click at a site off the board]
+killed   a count before the first beat read but on a rate line  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a whole click at count 0]
+killed   an end without its rounds raises  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[an end without its rounds]
+killed   an end or child without its site raises  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a pair's end without its site]
+killed   an end without its Spoke raises  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a pair's end without its Spoke]
+killed   a kind that is no label let through (absent alone refused)  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a kind that is no label]
+killed   an unnamed mapping not walked  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a float in an unnamed mapping]
+killed   an unnamed row refused  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a books line's unnamed children]
+killed   a taken holding that keeps its windings read  <- test_the_books_open_at_each_side_of_their_bounds[a taken holding that keeps its windings]
+killed   a laid holding that gains nothing read  <- test_the_books_open_at_each_side_of_their_bounds[a laid holding that gains nothing]
+killed   q read as at most the windings that left  <- test_the_books_open_at_each_side_of_their_bounds[a pair's q per end]
+killed   a click without its train read (its train not asked)  <- test_a_whole_click_without_its_train_reads_not_read_named
+killed   q read over the click's own books, not its ends  <- test_the_books_open_at_each_side_of_their_bounds[a laid holding that gains nothing]
+killed   a gap before the books' failure (the docstring's order)  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a header that names no train]
+killed   the clicks lines may hold a train the header lacks (the step's held to the header)  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a ledger whose clicks lines hold a train the header lacks]
+killed   a train card without its index raises  <- test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside[a train card without its index]
+killed   a count before the first beat named unread (ticks_to still 0)  <- test_the_ticks_before_the_first_beat_are_read_as_none
+killed   the tool reads every click against the first click's Node-clock  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
+killed   the tool matches a Node-clock's counts to its clicks backward  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
+killed   the tool's last read is its first  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
+killed   the tool counts a click of 0 ticks as not read  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
+killed   the tool names the last click not read as the first  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
+162 mutants, 0 survived

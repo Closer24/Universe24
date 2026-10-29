@@ -21,10 +21,10 @@ broken: a click of train 1 that takes from train 0 alone, q 4
     the head reads:     NOT SHOWN: the books open at 1 of 1 whole clicks read; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click
 broken: a whole click at site 99 of a board of one site
     the plan or schema: not read
-    the head reads:     not read: line 2 names site 99, off the board's sites 0 to 0
+    the head reads:     not read: line 2 names site 99, off the board of sides [1, 1, 1]
 broken: a whole click at site -1
     the plan or schema: not read
-    the head reads:     not read: line 2 names site -1, off the board's sites 0 to 0
+    the head reads:     not read: line 2 names site -1, off the board of sides [1, 1, 1]
 broken: a whole click at round 5 of a record of 1 round
     the plan or schema: not read
     the head reads:     not read: line 2 stands at round 5, off the record's rounds 1 to 1
