@@ -6,7 +6,8 @@ Each mutant is one or more textual changes in a scratch copy of src/tensor24, to
 two tests; "killed" names the first test that fails with it, "SURVIVED" means all of them pass. The mutants: each guard
 of the record and of the ledger dropped from its tuple; each part of each rule, reading and verdict changed; the fifth
 hostile review's sixteen, the seventh's eighteen and the twelfth's twenty-five as they read on this text
-(decoder_mutants.py, decoder_mutants_s8.py and mutants_s13.py there); and the tool's lines.
+(decoder_mutants.py, decoder_mutants_s8.py and mutants_s13.py there); the Boss's ruling on A3 and A4; and the tool's
+lines.
 """
 
 import shutil
@@ -498,6 +499,24 @@ MUTANTS = {
     ],
     "the tool names no first click not read": [
         (TOOL, "        if unread\n        else", "        if False\n        else")
+    ],
+    # the Boss's ruling of 04:4x UTC (6488101036, A3 and A4): a whole click's q at least 1, every holding's windings from 0
+    "a whole click's q below 1 read": [
+        (REC, '    if line["kind"] == "whole" and whole(line.get("q")) and line["q"] < 1:\n', "    if False:\n")
+    ],
+    "a whole click's q of 0 read": [(REC, 'line["q"] < 1:', 'line["q"] < 0:')],
+    "the q rule read on every kind": [
+        (REC, 'line["kind"] == "whole" and whole(line.get("q"))', 'whole(line.get("q"))')
+    ],
+    "a holding's windings below 0 read": [
+        (REC, '    return f"holds a holding\'s windings {low[0]}, below 0" if low else ""\n', '    return ""\n')
+    ],
+    "a holding's windings of 0 refused": [(REC, "if whole(w) and w < 0]", "if whole(w) and w < 1]")],
+    "an end's holdings not read for their windings": [
+        (REC, "for part in [line, *ends] for key in BOOKED", "for part in [line] for key in BOOKED")
+    ],
+    "the laid holdings not read for their windings": [
+        (REC, "for key in BOOKED if key in fields", "for key in BOOKED[:1] if key in fields")
     ],
     # the twelfth hostile review's twenty-five (mutants_s13.py there), as they read on this text
     "a negative site read": [(REC, "whole(size) and not 0 <= s < size]", "whole(size) and not s < size]")],

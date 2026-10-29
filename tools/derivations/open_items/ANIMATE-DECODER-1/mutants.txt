@@ -1,4 +1,4 @@
-unmutated: rc=0 122 passed in 1.09s
+unmutated: rc=0 127 passed in 1.38s
 killed   the guard jsoned dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a key twice]
 killed   the guard framed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an empty file]
 killed   the guard headed dropped  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a first line that is no header]
@@ -136,6 +136,13 @@ killed   the tool takes four arguments  <- test_the_tool_reads_names_and_raises_
 killed   the tool keeps the interpreter's digits  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
 killed   the tool reads on past a record not read  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
 killed   the tool names no first click not read  <- test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits
+killed   a whole click's q below 1 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a whole click at q -3 (A4)]
+killed   a whole click's q of 0 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a whole click at q 0, no click]
+killed   the q rule read on every kind  <- test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones[a turnover at q 0, the time gear's bit]
+killed   a holding's windings below 0 read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a take below 0 (A3)]
+killed   a holding's windings of 0 refused  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a click booked at the click and its ends]
+killed   an end's holdings not read for their windings  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[an end's laid holding below 0]
+killed   the laid holdings not read for their windings  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[an end's laid holding below 0]
 killed   a negative site read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a rate line at a site below 0]
 killed   a negative Spoke read  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a pair's end at a Spoke below 0]
 killed   a child's site not read (the ends' read)  <- test_a_broken_record_is_not_read_with_its_own_cause_in_ascii[a child laid off the board]
@@ -161,4 +168,4 @@ killed   the tool matches a Node-clock's counts to its clicks backward  <- test_
 killed   the tool's last read is its first  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
 killed   the tool counts a click of 0 ticks as not read  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
 killed   the tool names the last click not read as the first  <- test_the_tool_reads_each_click_at_its_own_node_clock_in_turn
-162 mutants, 0 survived
+169 mutants, 0 survived

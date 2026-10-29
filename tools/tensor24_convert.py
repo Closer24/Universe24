@@ -6,12 +6,15 @@ one object a line, in the order (round, kind, site, train): the header, then per
 the rate lines and the books, and the end. A credit is a whole click at one Node-clock; a birth a fitting, its two
 sites its children's, its books at the click where one end takes and in its ends where both take (a pair into light). No
 refusal is written, and a field the head lacks is left out, so a reading that needs it reads not read, the cause named;
-the header's runner names the record as converted. A whole click's train is the train its windings left, the taken
-one, and its q is left out: the head counts its levels where its books count the amounts moved. The head ticks every
+the header's runner names the record as converted. The head's planes are trains 0 to P - 1, their winds, and their
+lines are trains P to 2 P - 1, the records the clicks lay into, so a click moves wind between two trains (the Boss's
+ruling of 2026-10-29, 04:4x UTC, on Sofer's reading: a gear is a train's row, and the line takes its own index). A
+whole click's train is the train its windings left, the taken one, and its q is left out: the head counts its levels
+where its books count the amounts moved. The head ticks every
 Node-clock once a round, so a click's count is its round. Its proper time, `proper`, is its dial summed: the ticks are its whole turns by the full rate (Rule3) and the
 dial the remainder, and the rate lines are written so that they give exactly those ticks at each of its clicks (the head
-records no beat between clicks). Its books are written as holdings of the amounts it moved: the taken train's windings
-(amount, 0) and the laid train's (0, amount), the take's remainder as the taken holding's kept. Beside the record it
+records no beat between clicks). Its books are written as holdings of the amounts it moved: the taken plane's windings
+(amount, 0) and the laid line's (0, amount), the take's remainder as the taken holding's kept. Beside the record it
 writes the ledger, <out>.ledger.jsonl: per round and train, the wind summed over every site, at "clicks" alone, since
 the head writes its winds once a round, after the step and the clicks together.
 
@@ -68,6 +71,7 @@ def converted(head, engine):
     side = head["cube"]
     full = head["universe"]["integers"]["node_clock"]
     winding = head["T"]
+    planes = len(head["planes"])  # a plane's line is the train planes on from its own
 
     def site(node):
         x, y, z = node
@@ -96,6 +100,10 @@ def converted(head, engine):
         "trains": [
             {"index": k, "label": f"plane {k}", "kinds": [], "part": 1, "winding": winding}
             for k, _ in enumerate(head["planes"])
+        ]
+        + [
+            {"index": planes + k, "label": f"line {k}", "kinds": [], "part": 1, "winding": winding}
+            for k, _ in enumerate(head["planes"])
         ],
         "couplings": [],
     }
@@ -113,7 +121,7 @@ def converted(head, engine):
                 sweep=e["sense"],
                 push=e["dP_take"],
                 taken=[holding(e["taken_line"], (e["taken"], 0), kept(e))],
-                laid=[holding(e["line"], (0, e["booked"]))],
+                laid=[holding(planes + e["line"], (0, e["booked"]))],
                 ends=[],
                 children=[],
             )
@@ -126,19 +134,19 @@ def converted(head, engine):
                 winding=winding,
                 push=e["dP_take"],
                 taken=[] if takes else [holding(e["taken_row"], (e["taken"], 0), kept(e))],
-                laid=[] if takes else [holding(e["line_pair"], (0, e["booked"]))],
+                laid=[] if takes else [holding(planes + e["line_pair"], (0, e["booked"]))],
                 ends=[
                     {
                         "site": site(t["node"]),
                         "spoke": spoke(t["node"], takes[1 - n]["node"]),
                         "taken": [holding(e["taken_row"], (t["taken"], 0), kept(t))],
-                        "laid": [holding(e["line_pair"], (0, t["booked"]))],
+                        "laid": [holding(planes + e["line_pair"], (0, t["booked"]))],
                         "push": t["dP_take"],
                     }
                     for n, t in enumerate(takes)
                 ],
                 children=[
-                    {"train": e["line_pair"], "site": site(end), "sweep": s, "push": p}
+                    {"train": planes + e["line_pair"], "site": site(end), "sweep": s, "push": p}
                     for end, s, p in zip(ends, e["senses"], pushes, strict=True)
                 ],
             )
