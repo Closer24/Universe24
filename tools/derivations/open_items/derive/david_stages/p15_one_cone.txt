@@ -1,0 +1,12 @@
+the train's cone against light's, c^2 / c_L^2 = E0 / (m c_L^2), at the rest beat w0 (1 is one cone, and E0 = m c^2):
+    2.00 deg: the head's grip  0.9996; one grip per Mesh  1.0002
+   10.00 deg: the head's grip  0.9898; one grip per Mesh  1.0051
+   30.00 deg: the head's grip  0.9069; one grip per Mesh  1.0472
+   48.19 deg: the head's grip  0.7523; one grip per Mesh  1.1284
+   60.00 deg: the head's grip  0.6046; one grip per Mesh  1.2092
+   80.00 deg: the head's grip  0.2462; one grip per Mesh  1.4178
+the step a turn over the whole zone:
+  the head's grip: a turn at the rest beats [0, 2, 10, 30, 60, 80, 90] (deg)
+  one grip per Mesh, light at the edge (g_L = 1/3): a turn at the rest beats [0] (deg)
+  one grip per Mesh, light at way (a) (g_L = 1/6): a turn at the rest beats [0, 2, 10, 30, 60, 80, 90] (deg)
+in closed form: the head's E0/(m c_L^2) = w0 / tan w0, one grip per Mesh w0 / sin w0; both go to 1 as w0 -> 0
