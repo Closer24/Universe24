@@ -53,7 +53,7 @@ def bell(sx):
 
 
 def ghz(sx):
-    """GHZ's joint sizes over the eight outcomes: 1 + E sA sB sC, E = +1 at XXX, -1 at XYY, YXY, YYX, else 0."""
+    """GHZ's joint sizes over the eight outcomes: 1 + E sA sB sC, E = +1 at XXX, -1 at XYY, at YXY and at YYX, else 0."""
     e = {0: 1, 2: -1}.get(sum(sx), 0)
     return [1 + e * a * b * c for a, b, c in product(SIGNS, repeat=3)]
 
