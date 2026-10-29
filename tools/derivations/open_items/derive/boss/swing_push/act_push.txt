@@ -1,0 +1,11 @@
+The great clock's push on stage 7b's act (the Boss, 2026-10-29); tensor24-review's committed act
+
+1. rho + 3p on the act: the board's mean J over whole periods of the train, over its energy at the start
+   light: E = 1.1179e+29, the mean J over 128 ticks = 2.3259e+29, J / E = 2.0806; the time gear's count stayed at 81/4
+   matter: E = 2.6830e+28, the mean J over 128 ticks = 2.4532e+28, J / E = 0.9143; the time gear's count stayed at 0
+
+2. The time gear's swing from 0 to its top under each source (the mean count over the board)
+   light, A = 600 (A = 600, E = 4.472e+31): the top at tick 51, height 1384.0; J over the first 10 ticks 8.068e+31, over the 10 before the top 1.494e+31
+   matter at light's energy (A = 1225, E = 4.474e+31): the top at tick 52, height 1373.0; J over the first 10 ticks 3.664e+31, over the 10 before the top 1.509e+28
+   light, A = 850 (A = 850, E = 8.974e+31): the top at tick 58, height 2815.0; J over the first 10 ticks 1.682e+32, over the 10 before the top 6.368e+31
+   light, A = 1200 (A = 1200, E = 1.789e+32): the top at tick 61, height 7015.0; J over the first 10 ticks 3.333e+32, over the 10 before the top 1.677e+32
