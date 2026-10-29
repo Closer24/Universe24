@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "integers": {"den": 15162856759112389, "full_rate": 1000, "key": 36000, "trace": 6, "width": 128},
+  "integers": {"den": 15162856759112389, "full_rate": 1000, "key": 36000, "width": 128},
   "trains": [
-    {"name": "light", "kinds": ["A1"], "part": 2, "pinion": 15162856759112389, "sine": 0}
+    {"name": "light", "kinds": ["A1"], "part": 2, "pinion": 15162856759112389}
   ],
   "couplings": []
 }
