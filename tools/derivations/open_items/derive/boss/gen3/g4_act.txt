@@ -1,0 +1,43 @@
+Universe: den 1105, Gamma 1000, key 36000000000000000; the massive pair (1073, 264); its laid spring D = 98304000000; coupling strength g = D div 4 = 24576000000; amplitude 1000000 notches; 400 ticks a run.
+
+P1. Schur on the act (1 x 1 x 1 board):
+   kinds A1, T1, T2 of one train, all seven rows at 1000000: alike bit for bit at every tick: True; time gear's load at the end 0; beat c = 1.942081456, the act's prediction 1.942081448
+   T1 polarised axis (1,0,0): each T1 row a bit-for-bit copy of the A1 row (or 0): True
+   T1 polarised face (1,1,0): each T1 row a bit-for-bit copy of the A1 row (or 0): True
+   T1 polarised body (1,1,1): each T1 row a bit-for-bit copy of the A1 row (or 0): True
+   so the act is blind to a T1 hand's polarisation class: its rows are copies, its only tie the time gear's source, a sum over rows (rho + 3p, a dot)
+
+P2. A held T2 background, coupling row J_L = g C[T1; T2, T1](B, L) (1 x 1 x 1 board):
+   background B = (1, 0, 0): M = sum_y C[x, y, z] B_y = [[0, 0, 0], [0, 0, 1], [0, 1, 0]]
+     state (1, 0, 0): mu = 0 g; beat c = 1.942081456, predicted 1.942081448 (off +7.6e-09); leak off the state 0.0e+00; time gear's load 0
+     state (0, 1, 1): mu = 1 g; beat c = 1.956561087, predicted 1.956561086 (off +1.3e-09); leak off the state 0.0e+00; time gear's load 0
+     state (0, 1, -1): mu = -1 g; beat c = 1.927601819, predicted 1.927601810 (off +9.4e-09); leak off the state 2.5e-06; time gear's load 0
+   background B = (1, 1, 1): M = sum_y C[x, y, z] B_y = [[0, 1, 1], [1, 0, 1], [1, 1, 0]]
+     state (1, 1, 1): mu = 2 g; beat c = 1.971040728, predicted 1.971040724 (off +3.7e-09); leak off the state 0.0e+00; time gear's load 0
+     state (1, -1, 0): mu = -1 g; beat c = 1.927601810, predicted 1.927601810 (off -1.9e-10); leak off the state 7.0e-06; time gear's load 0
+     state (1, 1, -2): mu = -1 g; beat c = 1.927601807, predicted 1.927601810 (off -2.9e-09); leak off the state 9.0e-06; time gear's load 0
+   so on an axis three beats (the state's mu 0, +g, -g); on a body diagonal two (2g once, -g twice): 1 + 2
+
+P3. A held T1 background read with the Gaussian i: J_re = -g C[T1;T1,T1](B, L_im), J_im = +g C[T1;T1,T1](B, L_re):
+   C[T1; T1, T1] is the cross product: +epsilon True, -epsilon False
+     state (0, 0, 1): mu = 0 g; beat c = 1.942081456, predicted 1.942081448 (off +7.6e-09); the other gears stay 0: True; time gear's load 0
+     state (1, +i, 0): mu = 1 g; beat c = 1.956561087, predicted 1.956561086 (off +1.3e-09); the other gears stay 0: True; time gear's load 0
+     state (1, -i, 0): mu = -1 g; beat c = 1.927601821, predicted 1.927601810 (off +1.1e-08); the other gears stay 0: True; time gear's load 0
+   background (1, 1, 1), start re = (1, -1, 0) A: fitted lines 2 cos w = 1.967160993, 1.917001932; predicted at mu = +-sqrt 3 g: 1.967160917, 1.917001979; time gear's load 0
+   so on an axis the three Gaussian units' states beat apart (mu 0, +-g); on a body diagonal the two charges omega, omega^2 beat apart at +-sqrt 3 g but no Gaussian state holds one line alone
+
+P4. P2's axis split against the great clock's load (the time gear held at a count c0 by its stretch set to 0 in this script's memory):
+   c0 =   0: Y(c0)^2 = 1000000; rest beat w0 = 0.241247 (ratio to c0 = 0: 1.000000, N = Y(0)/Y(c0) = 1.000000); split / spring read from the beats 0.250000 (ratio 1.000000; N^2 = 1.000000)
+   c0 = 300: Y(c0)^2 = 1822500; rest beat w0 = 0.178506 (ratio to c0 = 0: 0.739928, N = Y(0)/Y(c0) = 0.740741); split / spring read from the beats 0.137174 (ratio 0.548697; N^2 = 0.548697)
+   c0 = 600: Y(c0)^2 = 3323329; rest beat w0 = 0.132111 (ratio to c0 = 0: 0.547615, N = Y(0)/Y(c0) = 0.548546); split / spring read from the beats 0.075226 (ratio 0.300903; N^2 = 0.300903)
+   so the rest beat runs as N (a change of units), but the coupling row's split against it runs as N^2: the strength reads no ruler while the spring reads Y^2; a mass ratio made by a coupling row moves with the load
+
+P5. The zone's corners on a 2 x 2 x 2 board, one A1 train, the eight standing modes (-1)^(n . x), at rest:
+   light: n=0: 1 modes, c = 2.000000 (alike True; predicted 2 cos w = 2 p/den - 2n/3 = 2.000000); n=1: 3 modes, c = 1.333334 (alike True; predicted 2 cos w = 2 p/den - 2n/3 = 1.333333); n=2: 3 modes, c = 0.666666 (alike True; predicted 2 cos w = 2 p/den - 2n/3 = 0.666667); n=3: 1 modes, c = 0.000000 (alike True; predicted 2 cos w = 2 p/den - 2n/3 = 0.000000)
+   massive: n=0: 1 modes, c = 1.942081 (alike True; predicted 2 cos w = 2 p/den - 2n/3 = 1.942081); n=1: 3 modes, c = 1.275415 (alike True; predicted 2 cos w = 2 p/den - 2n/3 = 1.275415); n=2: 3 modes, c = 0.608748 (alike True; predicted 2 cos w = 2 p/den - 2n/3 = 0.608748); n=3: 1 modes, c = -0.057919 (alike True; predicted 2 cos w = 2 p/den - 2n/3 = -0.057919)
+   so one train holds four standing classes, 1 + 3 + 3 + 1: the n = 1 and n = 2 triplets are the three axes permuted (one beat each), and for light the three corner classes beat at cos w = 2/3, 1/3, 0 (the thirds)
+
+P6. A ring of three identical hand trains (a Z3 of the file's trains, no direction), each coupled to the next by b = g_r + i g_i and back by its conjugate, through a held unit A1 gear (1 x 1 x 1 board):
+   the Z3-neutral state (1, 1, 1): one line, 2 cos w = 1.956561087; predicted at mu_0 = 2 g_r: 1.956561086; time gear's load 0
+   one train alone (1, 0, 0): x of train 0 alone holds all three; projected on (1, omega^j, omega^2j): j=0: 1.956561094 (predicted 1.956561086); j=1: 1.947381366 (predicted 1.947381363); j=2: 1.922301899 (predicted 1.922301895); time gear's load 0
+   so a Z3 of three trains splits them three ways in the cosine form a + 2 |b| cos(phi - 2 pi j / 3); but the count three is the file's three trains, b and phi are declared, and the j = 1, 2 states are (1, omega^j, omega^2j), no Gaussian lay: a train laid alone always beats on three lines (flavour is not mass)

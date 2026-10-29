@@ -1,0 +1,8 @@
+Probe 6: the act's exact time reversal (tsym.py's checks, unchanged) at keys other than 36,000
+  key 36000: light: exact 60/60, time gear -1..1530, first failure None, doubled clock [None, None]; light + matter: exact 60/60, time gear -3..767, first failure None, doubled clock [None, None]
+  key 35999: light: exact 60/60, time gear -1..1531, first failure None, doubled clock [None, None]; light + matter: exact 60/60, time gear -3..766, first failure None, doubled clock [None, None]
+  key 2: light: exact 60/60, time gear -3052..140066903, first failure None, doubled clock [None, None]; light + matter: exact 60/60, time gear -40078..14803234001, first failure None, doubled clock [None, None]
+  key 1: light: exact 60/60, time gear -6103..280153678, first failure None, doubled clock [None, None]; light + matter: exact 60/60, time gear -80155..29624612547, first failure None, doubled clock [None, None]
+  key 1000000000000: light: exact 60/60, time gear -16..0, first failure None, doubled clock [None, None]; light + matter: exact 60/60, time gear -16..0, first failure None, doubled clock [None, None]
+So every history of the act agrees with itself at both ends at every key: the fixed point of the dual run is
+met by each history alike and singles out no key.

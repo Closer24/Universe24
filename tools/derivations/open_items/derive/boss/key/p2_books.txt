@@ -1,0 +1,46 @@
+Probe 2: the great clock's weight lam in the joint books H_m + lam H_c (committed 7b act, 4 x 4 x 4, light)
+
+the ruler at Gamma 1,000: Y(0..5) = [1000, 1001, 1002, 1003, 1004, 1005], Y(1000) = 2720, Y(last = 3792) = 44429;
+  its mean log-slope ln(Y(1000)/Y(0))/1000 = 0.0010006 against ln(1000/999) = 0.0010005; its step ln(Y(c+1)/Y(c)) runs over [0.000505, 0.001940] count by count
+
+  cos w_loc = 1 - (1 - cos w)(Gamma / Y(c))^4 at the window's mean count: the light's own frequency in the well
+  wave                     cos w  Gamma   key       A     quanta  top tick  top count  lam_early  (ell key/2) cos w_loc  ratio   lam_early/(ell key/2)
+  k = (0, 0, pi/2)         5/6    100000  576000    562     10.58      646    16697.5      2.192                 2.463   0.890    0.761
+  k = (0, 0, pi/2)         5/6    100000  2304000   1124    10.58      647    16787.0      9.254                 9.852   0.939    0.803
+  k = (0, 0, pi)           2/3    100000  576000    269      7.19      639    16141.0      2.349                 2.041   1.150    0.815
+  k = (0, 0, pi)           2/3    100000  2304000   538      7.19      640    16668.0      8.330                 8.180   1.018    0.723
+  k = (pi/2, pi/2, pi/2)   1/2    100000  576000    586      5.51      642    16214.8      1.773                 1.623   1.093    0.616
+  k = (pi/2, pi/2, pi/2)   1/2    100000  2304000   1172     5.51      640    16233.2      6.921                 6.492   1.066    0.601
+
+  k = (0, 0, pi/2)         5/6    10000   144000    600     48.24      178     5471.5      6.087                 6.443   0.945    0.845
+  k = (0, 0, pi/2)         5/6    10000   288000    600     24.12      192     3282.0     11.712                12.583   0.931    0.813
+  k = (0, 0, pi/2)         5/6    10000   576000    600     12.06      203     1879.0     22.309                24.701   0.903    0.775
+  k = (0, 0, pi)           2/3    10000   144000    600    143.11      148    13317.0      5.836                 6.432   0.907    0.811
+  k = (0, 0, pi)           2/3    10000   288000    600     71.55      161     8894.0     11.726                12.184   0.962    0.814
+  k = (0, 0, pi)           2/3    10000   576000    600     35.78      176     5683.0     22.531                22.882   0.985    0.782
+  k = (pi/2, pi/2, pi/2)   1/2    10000   144000    600     23.09      179     4959.5      4.647                 4.834   0.961    0.645
+  k = (pi/2, pi/2, pi/2)   1/2    10000   288000    600     11.55      191     2983.4      8.089                 8.818   0.917    0.562
+  k = (pi/2, pi/2, pi/2)   1/2    10000   576000    600      5.77      202     1694.0     15.112                16.329   0.925    0.525
+
+  k = (0, 0, pi/2)         5/6    1000    72000     600     96.48       51      871.5     28.858                33.335   0.866    0.801
+  k = (0, 0, pi/2)         5/6    1000    144000    600     48.24       56      549.0     52.505                64.724   0.811    0.729
+  k = (0, 0, pi/2)         5/6    1000    288000    600     24.12       61      335.0     98.849               126.092   0.784    0.686
+  k = (0, 0, pi)           2/3    1000    72000     600    286.22       47     2028.0     20.787                34.037   0.611    0.577
+  k = (0, 0, pi)           2/3    1000    144000    600    143.11       47     1379.0     45.283                65.279   0.694    0.629
+  k = (0, 0, pi)           2/3    1000    288000    600     71.55       50      884.0    103.188               122.953   0.839    0.716
+  k = (pi/2, pi/2, pi/2)   1/2    1000    72000     600     46.19       53      822.8     18.451                27.187   0.679    0.512
+  k = (pi/2, pi/2, pi/2)   1/2    1000    144000    600     23.09       57      506.4     34.350                48.816   0.704    0.477
+  k = (pi/2, pi/2, pi/2)   1/2    1000    288000    600     11.55       60      296.9     88.006                88.077   0.999    0.611
+
+The closure 'one key for every train, the great clock among them' asks the clock's count^2 to weigh as a
+train's notch^2 in the books, lam = 1:  key = 2 / (ell cos w).
+  Gamma = 1000, cos w = 1: key = 1998.999833, the nearest whole key 1999, missed by -0.000167
+  Gamma = 1000, cos w = 5/6: key = 2398.799800, the nearest whole key 2399, missed by -0.200200
+  Gamma = 1000, cos w = 1/2: key = 3997.999666, the nearest whole key 3998, missed by -0.000334
+  Gamma = 1000000, cos w = 1: key = 1999998.999989, the nearest whole key 1999999, missed by -0.000011
+  Gamma = 1000000, cos w = 5/6: key = 2399998.799986, the nearest whole key 2399999, missed by -0.200014
+  Gamma = 1000000, cos w = 1/2: key = 3999997.999977, the nearest whole key 3999998, missed by -0.000023
+  2 / (ell cos w) with cos w rational is transcendental (ln of a rational other than 1 is, by Hermite-Lindemann),
+  so no whole key closes it; it differs train by train (cos w) and moves with the well (w falls as N^2), so no
+  single key closes it for two trains; and the ruler's whole Y makes ell move count by count.
+  The file's key 36,000 at Gamma 1,000: ell key / 2 = 18.0090 (36000 / 1999 = 18.0090), times cos w.

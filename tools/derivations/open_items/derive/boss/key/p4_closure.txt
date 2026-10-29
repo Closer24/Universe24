@@ -1,0 +1,29 @@
+Probe 4: the clocks and the closure of one swing (exact arithmetic, and the committed 7b act)
+
+(a) den = 15162856759112389, den div Gamma = 15162856759112, den mod Gamma = 389
+    cos Omega = 1 - 15162856759112/15162856759112389 (rational, not 0, 1/2 or 1): Omega = 0.044725087 rad a tick,
+    the linear swing's period 2 pi / Omega = 140.484585 ticks (2 pi sqrt(Gamma/2) = 140.496295),
+    Omega / pi irrational by Niven: no whole number of ticks closes the swing, at any Gamma >= 3
+    sin^2 Omega = 1.999000000000e-03 is a rational square: False (the time gear's pair is on den's circle only if it is),
+    so law 5's winding 3 key s has no whole s for the great clock: the time gear has no whole winding
+
+(b) one whole kick: the uniform matter world (A = 601, key 2,304,000, 2 quanta) kicks first at tick 79, at every site;
+    the swing it starts reads half-height 23.50 counts against 1 / sin Omega = 22.37 (sqrt(Gamma/2) = 22.36);
+    the great clock's least swing is set by Gamma alone: a kick is one count a tick, its energy (1/2) T a time gear
+
+(c) the drive's remainder returns over one swing iff SUM_t J = k T_d at every Node-clock; per quantum of matter
+    at rest (w = 0.200335) that is 2 tan(w/2) P / N = 28.2385 / N kicks per quantum per swing:
+    no key in it.  The closure asks n / N (quanta per Node-clock) to make it whole: a condition on the setting.
+
+(d) lam = 1 needs key = 2 / (ell cos w), ell = ln(Gamma/(Gamma-1)) = 0.0010005003: 1998.999833 at cos w = 1 (no whole
+    solution: ln of a rational other than 1 is transcendental), and a different value for every train's w.
+
+(e) K-S1 fixes G = 16 as the least G with 2 G^2 (2 Gamma - 1) > Gamma^2.  The same pattern for the key: one quantum
+    of a hand moves a notch a tick iff key >= cot(w/2) = (1 + cos w) / sin w:
+    the great clock's own beat: cot(Omega/2) = 44.710178; sqrt(2 Gamma - 1) = 44.710178; least whole key 45
+    light, k = pi/2 on one axis: cot(w/2) = 3.3166
+    matter at rest, pinion den - den div 50: cot(w/2) = 9.9499
+    a quantum spread over N Node-clocks needs N times that.  The file's 36,000 is far above each: the rule bounds
+    the key from below and singles out no value (probe 5 reads the count's walk against the key).
+    Note: 2 G^2 (2 Gamma - 1) > Gamma^2 is G > Gamma / (sqrt 2 cot(Omega/2)) where Gamma divides den; both read the step
+    from the rate Gamma to Gamma - 1 (2 Gamma - 1 = Gamma^2 - (Gamma - 1)^2): a shared origin, no relation of the key.

@@ -1,0 +1,14 @@
+The closure of the history over a swing on tensor24-review's act (one Node-clock)
+
+1. The time gear alone from the bang at velocity v0: exact return time tau, against P = 2 pi sqrt(Gamma/2)
+   Gamma 250 (P = 70.25): v0=1: tau=254 (3.616 P), top 1; v0=2: tau=74 (1.053 P), top 16; v0=3: tau=144 (2.050 P), top 28; v0=5: tau=71 (1.011 P), top 50; v0=10: tau=282 (4.014 P), top 106; v0=40: tau=1755 (24.983 P), top 447
+   Gamma 251 (P = 70.39): v0=1: tau=254 (3.609 P), top 1; v0=2: tau=74 (1.051 P), top 16; v0=3: tau=72 (1.023 P), top 28; v0=5: tau=142 (2.017 P), top 50; v0=10: tau=636 (9.036 P), top 106; v0=40: tau=1829 (25.984 P), top 447
+   Gamma 500 (P = 99.35): v0=1: tau=504 (5.073 P), top 1; v0=2: tau=110 (1.107 P), top 22; v0=3: tau=102 (1.027 P), top 39; v0=5: tau=403 (4.057 P), top 71; v0=10: tau=597 (6.009 P), top 152; v0=40: tau=298 (3.000 P), top 626
+   Gamma 1000 (P = 140.50): v0=1: tau=1004 (7.146 P), top 1; v0=2: tau=154 (1.096 P), top 32; v0=3: tau=290 (2.064 P), top 55; v0=5: tau=285 (2.029 P), top 100; v0=10: tau=706 (5.025 P), top 211; v0=40: tau=5481 (39.012 P), top 889
+   Gamma 1001 (P = 140.57): v0=1: tau=1004 (7.143 P), top 1; v0=2: tau=154 (1.096 P), top 32; v0=3: tau=290 (2.063 P), top 55; v0=5: tau=143 (1.017 P), top 100; v0=10: tau=424 (3.016 P), top 211; v0=40: tau=16446 (116.998 P), top 891
+   Gamma 2000 (P = 198.69): v0=1: tau=2004 (10.086 P), top 1; v0=2: tau=217 (1.092 P), top 45; v0=3: tau=208 (1.047 P), top 77; v0=5: tau=1606 (8.083 P), top 144; v0=10: tau=1398 (7.036 P), top 301; v0=40: tau=9739 (49.016 P), top 1253
+   Gamma 4000 (P = 280.99): v0=1: tau=4004 (14.249 P), top 1; v0=2: tau=314 (1.117 P), top 63; v0=3: tau=295 (1.050 P), top 109; v0=5: tau=1138 (4.050 P), top 201; v0=10: tau=1411 (5.021 P), top 425; v0=40: tau=8434 (30.015 P), top 1766
+
+2. A stable swing with one quantum of the matter hand per Node-clock: exact return of the whole state?
+   Gamma 250, n = 1.002: 30001 distinct states in 30000 ticks, first repeat None; 271 bottoms, the hand's |L|^2 at them over its start: min 0.2619, max 3.8202; run back over 30000 ticks exact: True
+   Gamma 1000, n = 1.002: 30001 distinct states in 30000 ticks, first repeat None; 189 bottoms, the hand's |L|^2 at them over its start: min 0.6817, max 1.8095; run back over 30000 ticks exact: True

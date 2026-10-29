@@ -1,0 +1,48 @@
+Probe 1: the act's course at a fixed count of quanta, the amplitudes x L and the key x L^2 (committed 7b act)
+
+light (standing wave, deep well: the top near 1,400 counts, N about e^-1.4): the base world A = 150, key = 2250
+  the reference (largest A): A = 4800, key = 2304000: top at tick 50, height 1359.00
+  A        key           quanta n   top tick  height     max |c(t) - c_ref(t)| over 0..100   (in counts)
+  150      2250           192.9673         50    1360.00     124.000  (to the top: 3.500)
+  300      9000           192.9673         50    1365.50      33.000  (to the top: 6.500)
+  600      36000          192.9673         50    1357.50       5.500  (to the top: 1.500)
+  1200     144000         192.9673         50    1362.00      41.500  (to the top: 3.000)
+  2400     576000         192.9673         50    1360.50       9.500  (to the top: 1.500)
+  4800     2304000        192.9673         50    1359.00       0.000  (to the top: 0.000)
+  1200     36000          771.8690         61    7173.00    6012.500  (to the top: 5336.000)   MUTANT: A x 2, key kept (4 x the quanta)
+  600      144000          48.2418         56     549.00     887.500  (to the top: 833.500)   MUTANT: key x 4, A kept (1/4 the quanta)
+
+light, few quanta (the linear regime): the base world A = 16, key = 2250
+  the reference (largest A): A = 512, key = 2304000: top at tick 62, height 38.00
+  A        key           quanta n   top tick  height     max |c(t) - c_ref(t)| over 0..100   (in counts)
+  16       2250             2.1955         65      36.50       4.500  (to the top: 2.500)
+  32       9000             2.1955         69      38.50       2.000  (to the top: 0.000)
+  64       36000            2.1955         69      41.50       4.500  (to the top: 3.000)
+  128      144000           2.1955         65      39.00       2.000  (to the top: 0.500)
+  256      576000           2.1955         65      39.00       1.500  (to the top: 0.500)
+  512      2304000          2.1955         62      38.00       0.000  (to the top: 0.000)
+  128      36000            8.7822         63     141.50     103.500  (to the top: 103.000)   MUTANT: A x 2, key kept
+  64       144000           0.5489         55      11.50      28.500  (to the top: 27.500)   MUTANT: key x 4, A kept
+
+matter (uniform at rest, pinion den - den div 50): the base world A = 153, key = 562
+  the reference (largest A): A = 4896, key = 575488: top at tick 53, height 1472.00
+  A        key           quanta n   top tick  height     max |c(t) - c_ref(t)| over 0..100   (in counts)
+  153      562            535.8447         52    1405.00     549.000  (to the top: 67.000)
+  306      2248           535.8447         53    1477.00     292.000  (to the top: 6.000)
+  612      8992           535.8447        100    1526.00    1303.000  (to the top: 50.000)
+  1224     35968          535.8447         53    1470.00      20.000  (to the top: 2.000)
+  2448     143872         535.8447         53    1472.00       2.000  (to the top: 0.000)
+  4896     575488         535.8447         53    1472.00       0.000  (to the top: 0.000)
+  2448     35968         2143.3787         95  1358967.00  1358754.000  (to the top: 473101.000)   MUTANT: A x 2, key kept (4 x the quanta)
+  1224     143872         133.9612         68     446.00    1099.000  (to the top: 1099.000)   MUTANT: key x 4, A kept (1/4 the quanta)
+
+The kicks per quantum (the count's scale, BIG_PICTURE 4's open item).  Derived: J = -2 a.F - D a.a has the
+board mean <SUM J> = 4 tan(w/2) (T_d) per quantum of light and 2 tan(w/2) (T_d) per quantum of matter at
+rest (2H = n T key sin w; T_d = (T div 2) key), so a quantum gives the board 4 tan(w/2) or 2 tan(w/2) whole
+kicks a tick, each a time gear's one count a tick, whatever the key.  Read over one linear swing (141 ticks):
+  light: A = 64, key = 36000, n = 2.1955: board kicks a tick 2.7859, per quantum 1.2689 (derived 1.2060); the highest mean count 41.50 (the smooth swing's Gamma qbar = 43.53)
+  light: A = 512, key = 2304000, n = 2.1955: board kicks a tick 2.5457, per quantum 1.1595 (derived 1.2060); the highest mean count 38.00 (the smooth swing's Gamma qbar = 39.78)
+  light: A = 180, key = 36000, n = 17.3671: board kicks a tick 16.7405, per quantum 0.9639 (derived 1.2060); the highest mean count 252.00 (the smooth swing's Gamma qbar = 261.57)
+  matter: A = 75, key = 36000, n = 2.0101: board kicks a tick 0.3869, per quantum 0.1925 (derived 0.2010); the highest mean count 22.00 (the smooth swing's Gamma qbar = 6.05)
+  matter: A = 601, key = 2304000, n = 2.0168: board kicks a tick 0.3959, per quantum 0.1963 (derived 0.2010); the highest mean count 22.00 (the smooth swing's Gamma qbar = 6.19)
+  matter: A = 212, key = 36000, n = 16.0606: board kicks a tick 2.9673, per quantum 0.1848 (derived 0.2010); the highest mean count 57.00 (the smooth swing's Gamma qbar = 46.36)

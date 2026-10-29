@@ -1,0 +1,30 @@
+1. Turns on Gaussian triples (entries a + b i, |a|, |b| <= 2; all 15,624 nonzero triples):
+   C3 eigenvectors found, by eigenvalue: {1+0i: 24} (only 1: the multiples of (1, 1, 1); omega = (-1 + sqrt -3) / 2 is no Gaussian rational, since -3 is no square in Q(i): (a + b i)^2 = -3 needs a b = 0 and a^2 = -3 or b^2 = 3)
+   C4 eigenvectors found, by eigenvalue: {0+1i: 24, 0-1i: 24, 1+0i: 24} (1 on (0, 0, z), and i, -i on (1, -+i, 0) times a Gaussian integer: the ring's own units label three states)
+
+2. The exact rest rotations:
+   x+ =  2 x - x-: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1] ... period 1
+   x+ =  1 x - x-: [1, 1, 0, -1, -1, 0, 1, 1, 0, -1] ... period 6
+   x+ =  0 x - x-: [1, 1, -1, -1, 1, 1, -1, -1, 1, 1] ... period 4
+   x+ = -1 x - x-: [1, 1, -2, 1, 1, -2, 1, 1, -2, 1] ... period 3
+   x+ = -2 x - x-: [1, 1, -3, 5, -7, 9, -11, 13, -15, 17] ... period None
+   so the finite orders are 6, 4, 3 (and 2), at 2 cos w = 1, 0, -1 (and -2): Niven's three in (0, pi)
+   Tensor24's gearing: s D / W = 2 (den - pinion) / den, so 2 cos w0 = 2 pinion / den; at den = 3311818282:
+     gear, 60 deg   pinion   1655909141: admitted
+     gear, 90 deg   pinion            0: admitted
+     gear, 120 deg  pinion  -1655909141: refused: train.pinion: a whole number within [0, den], not -1655909141
+     hand, 60 deg   pinion   1655909141: refused: train: the hand's pair (1655909141, 2868118764) has the norm 10968140327656245577, not den den
+     hand, 90 deg   pinion            0: admitted
+     hand, 120 deg  pinion  -1655909141: refused: train.pinion: a whole number within [0, den], not -1655909141
+     (no Gaussian integer of norm den^2 has real part den/2: the roots of unity in Q(i) are 1, i, -1, -i, so a hand's exact rest turn is the quarter turn alone; the 120-deg gear needs a pinion below 0, which the files refuse)
+     on the act, gear, 60 deg: row 0's notch [0, -7, -7, 0, 7, 7, 0, -7, -7, 0, 7, 7]; the train's (a, b, r) back bit for bit first at tick 6; the time gear's load stayed 0
+     on the act, gear, 90 deg: row 0's notch [-7, -7, 7, 7, -7, -7, 7, 7, -7, -7, 7, 7]; the train's (a, b, r) back bit for bit first at tick 4; the time gear's load stayed 0
+     on the act, hand, 90 deg: row 0's notch [-7, -7, 7, 7, -7, -7, 7, 7, -7, -7, 7, 7]; the train's (a, b, r) back bit for bit first at tick 4; the time gear's load stayed 0
+
+3. Twin hands (ring.axis: S = (2 Re(up* down), 2 Im(up* down), |up|^2 - |down|^2), S . S = rho^2):
+   over 2400 twins with |re|, |im| <= 3: spin along an axis 288, along a face diagonal 0, along a body diagonal 0
+   (S along (1, 1, 0) needs |S| = sqrt 2 s = rho, along (1, 1, 1) |S| = sqrt 3 s = rho: no integer twin; so of the 24's three special axes a twin's spin can stand on the 4-fold one alone)
+
+4. T on hands and twins (ring.conj, ring.reverse), 1,000 random cases each:
+   T T = +1 on hands: 1000/1000; T T = -1 on twins: 1000/1000
+   T is antiunitary (it conjugates), so T U, the history run forward and mirrored, is antiunitary: its square is unitary and its cube antiunitary, never 1; the dual run's agreement (T U)^2 = T^2 = +-1 holds a state alone (hands) or in a Kramers pair (twins): the group of U and T is dihedral, irreducible pieces of size 1 or 2

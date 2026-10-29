@@ -1,0 +1,34 @@
+The runaway past the ruler on tensor24-review's act (one Node-clock, one matter hand, w = 0.2003)
+
+A. The stable swing: the first top against U_top = 2 n tan(w/2), Gamma-free (period against 2 pi sqrt(Gamma/2))
+   Gamma 250, n = 0.502: first top at tick 44, count 30, U_top 0.1200 vs predicted 0.1008; periods [74, 71] vs 70.2; run back exact: True
+   Gamma 250, n = 1.002: first top at tick 39, count 55, U_top 0.2200 vs predicted 0.2013; periods [71, 71] vs 70.2; run back exact: True
+   Gamma 250, n = 1.997: first top at tick 36, count 110, U_top 0.4400 vs predicted 0.4014; periods [68, 69] vs 70.2; run back exact: True
+   Gamma 1000, n = 0.502: first top at tick 11, count 1, U_top 0.0010 vs predicted 0.1008; periods [69, 142, 141] vs 140.5; run back exact: True
+   Gamma 1000, n = 1.002: first top at tick 6, count 1, U_top 0.0010 vs predicted 0.2013; periods [68, 142, 145] vs 140.5; run back exact: True
+   Gamma 1000, n = 1.997: first top at tick 3, count 1, U_top 0.0010 vs predicted 0.4014; periods [69, 140, 139] vs 140.5; run back exact: True
+   Gamma 4000, n = 0.502: first top at tick 11, count 1, U_top 0.0003 vs predicted 0.1008; periods [139, 287, 283] vs 281.0; run back exact: True
+   Gamma 4000, n = 1.002: first top at tick 6, count 1, U_top 0.0003 vs predicted 0.2013; periods [141, 287, 286] vs 281.0; run back exact: True
+   Gamma 4000, n = 1.997: first top at tick 3, count 1, U_top 0.0003 vs predicted 0.4014; periods [139, 282, 281] vs 281.0; run back exact: True
+
+B. The runaway: tops per swing, the per-swing factor F = top_{k+1}/top_k, and log F / log(2 Gamma)
+   Gamma 250 (last count 768), n = 10.00: passes the last count at tick 18; tops [(52, '2.185e+05'), (115, '2.640e+11'), (178, '3.136e+17'), (241, '3.725e+23'), (304, '4.425e+29')]
+      per-swing factors ['1.208e+06', '1.188e+06', '1.188e+06', '1.188e+06']; log F / log(2 Gamma) = [2.254, 2.251, 2.251, 2.251]; largest integer 99 bits; run back to the bang exact: True
+   Gamma 250 (last count 768), n = 20.00: passes the last count at tick 12; tops [(45, '6.635e+05'), (109, '8.008e+11'), (172, '9.513e+17'), (235, '1.130e+24'), (298, '1.342e+30')]
+      per-swing factors ['1.207e+06', '1.188e+06', '1.188e+06', '1.188e+06']; log F / log(2 Gamma) = [2.253, 2.251, 2.251, 2.251]; largest integer 101 bits; run back to the bang exact: True
+   Gamma 500 (last count 1735), n = 10.00: passes the last count at tick 30; tops [(78, '4.424e+05'), (167, '5.319e+12'), (256, '6.310e+19'), (345, '7.486e+26'), (434, '8.881e+33')]
+      per-swing factors ['1.202e+07', '1.186e+07', '1.186e+07', '1.186e+07']; log F / log(2 Gamma) = [2.36, 2.358, 2.358, 2.358]; largest integer 113 bits; run back to the bang exact: True
+   Gamma 500 (last count 1735), n = 20.00: passes the last count at tick 18; tops [(66, '2.048e+06'), (155, '2.472e+13'), (244, '2.932e+20'), (333, '3.479e+27'), (422, '4.127e+34')]
+      per-swing factors ['1.207e+07', '1.186e+07', '1.186e+07', '1.186e+07']; log F / log(2 Gamma) = [2.361, 2.358, 2.358, 2.358]; largest integer 115 bits; run back to the bang exact: True
+   Gamma 1000 (last count 3792), n = 10.00: passes the last count at tick 53; tops [(122, '5.702e+05'), (258, '6.277e+13'), (383, '5.338e+21'), (508, '4.539e+29'), (633, '3.860e+37')]
+      per-swing factors ['1.101e+08', '8.504e+07', '8.504e+07', '8.504e+07']; log F / log(2 Gamma) = [2.436, 2.402, 2.402, 2.402]; largest integer 125 bits; run back to the bang exact: True
+   Gamma 1000 (last count 3792), n = 20.00: passes the last count at tick 28; tops [(97, '3.837e+06'), (221, '3.252e+14'), (346, '2.765e+22'), (471, '2.351e+30'), (596, '2.000e+38')]
+      per-swing factors ['8.474e+07', '8.504e+07', '8.504e+07', '8.504e+07']; log F / log(2 Gamma) = [2.402, 2.402, 2.402, 2.402]; largest integer 128 bits; run back to the bang exact: True
+   Gamma 2000 (last count 8299), n = 10.00: passes the last count at tick 117; tops [(213, '3.922e+05'), (428, '2.213e+07'), (610, '1.288e+16'), (786, '9.151e+24')]
+      per-swing factors ['5.642e+01', '5.823e+08', '7.103e+08']; log F / log(2 Gamma) = [0.486, 2.433, 2.457]; largest integer 113 bits; run back to the bang exact: True
+   Gamma 2000 (last count 8299), n = 20.00: passes the last count at tick 48; tops [(145, '6.294e+06'), (339, '5.890e+15'), (515, '4.183e+24'), (691, '2.971e+33'), (867, '2.110e+42')]
+      per-swing factors ['9.358e+08', '7.103e+08', '7.103e+08', '7.103e+08']; log F / log(2 Gamma) = [2.491, 2.457, 2.457, 2.457]; largest integer 141 bits; run back to the bang exact: True
+   Gamma 4000 (last count 17991), n = 10.00: passes the last count at tick 784; tops [(118, '6.863e+03'), (297, '6.842e+03'), (515, '6.996e+03'), (704, '7.737e+03'), (924, '5.149e+07')]
+      per-swing factors ['7.382e+09']; log F / log(2 Gamma) = [2.528]; largest integer 118 bits; run back to the bang exact: True
+   Gamma 4000 (last count 17991), n = 20.00: passes the last count at tick 78; tops [(217, '9.564e+06'), (505, '6.758e+08'), (757, '3.054e+18'), (1006, '1.756e+28'), (1255, '1.010e+38')]
+      per-swing factors ['7.066e+01', '4.519e+09', '5.750e+09', '5.750e+09']; log F / log(2 Gamma) = [0.474, 2.474, 2.5, 2.5]; largest integer 127 bits; run back to the bang exact: True
