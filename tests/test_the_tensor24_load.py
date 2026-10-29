@@ -249,8 +249,8 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
     assert (a[ROWS - 1, site], b[ROWS - 1, site]) == (before, now)
     assert (a.shape, b.shape, r.shape, go.shape, rd.shape) == ((ROWS, SITES),) * len("abrgd")
     assert all(x.shape == (1, SITES) for x in clocks) and all(x.dtype == object for x in held.state)
-    assert len({id(x) for x in held.state}) == len(
-        held.state
+    assert not any(
+        np.shares_memory(x, y) for x, y in itertools.combinations(held.state, 1 + 1)
     )  # every array its own: no write reaches two
     assert not go.any() and not rd.any() and not any(x.any() for x in clocks)
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1

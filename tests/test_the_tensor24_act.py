@@ -39,14 +39,15 @@ def draw(rng, low, high, size):
 
 def varied(rng, alike=False, least=1):
     """A layout parted at every gear and site: grips per row and Mesh, W and W+ (alike, or parted), s, D, T_k, T_d, J;
-    every divisor (W, W+, T_d) at least `least`."""
+    every divisor (W, W+, T_d) at least `least`, and T_k too where `least` is above 1, so that a swap of T_k and T_d
+    shows as a wrong run back and not as a raise."""
     nb = board(SHAPE)
     n = nb.shape[1]
     w = draw(rng, least, 20, (ROWS, n))
     coefficients = (
         draw(rng, -3, 4, (ROWS, n)),
         draw(rng, -3, 4, (ROWS, 1)),
-        draw(rng, -5, 6, (ROWS, 1)),
+        draw(rng, -5, 6, (ROWS, 1)) if least == 1 else draw(rng, least, 9, (ROWS, 1)),
     )
     wp = w if alike else draw(rng, least, 20, (ROWS, n))
     gearing = Gearing(w, wp, *coefficients, draw(rng, least, 9, (ROWS, 1)))
@@ -134,12 +135,12 @@ def back():
         s, t = world(rng, layout), world(rng, parted)
         masks = [draw(rng, 0, 2, (1, layout.nb.shape[1])) for _ in range(ROUNDS)]
         end, outs = rounds(step.tick, layout, s, masks)
-        moved, out = step.tick(parted, t, masks[0])
+        moved, out = step.tick(parted, t, 1)
         if not (
             same(rewind(step.untick, layout, end, outs), s) and same(step.untick(parted, moved, out), t)
         ):
             return False
-        if not any(o.k.any() for o in outs):
+        if not (any(o.k.any() for o in outs) and out.k.any()):
             return False  # no gear ticked: the run back was never asked
     return True
 
@@ -186,7 +187,7 @@ def images(plan):
 
 def mutants():
     """Broken copies of the act, each with the law that must catch it: what it replaces in the step, and with what."""
-    driven, drive, undrive, sources, gear, ungear, seen = (
+    driven, drive, undrive, sources, gear, ungear, seen, untick = (
         step.driven,
         step.drive,
         step.undrive,
@@ -194,6 +195,7 @@ def mutants():
         step.gear,
         step.ungear,
         mesh.seen,
+        step.untick,
     )
     return {
         "the kick's teeth ignored": (
@@ -250,6 +252,17 @@ def mutants():
             "back",
             "undrive",
             lambda j, teeth, rd: (lambda q, kept: (-q, kept))(*undrive(j, teeth, rd)),
+        ),
+        "the run back with T_k and T_d swapped": (
+            "back",
+            "untick",
+            lambda layout, s, o: untick(
+                layout._replace(
+                    gearing=layout.gearing._replace(kick=layout.gearing.drive, drive=layout.gearing.kick)
+                ),
+                s,
+                o,
+            ),
         ),
         "the drive's tooth not run back": (
             "back",
@@ -317,52 +330,71 @@ def charged(s, w, weight):
     )
 
 
-def kept(each_end=False, moving=False):
-    """Over synchronous rounds a hand's charge Q* moves by Rule3's torques alone (David's OPEN 13 at 7a): the grips one
-    per Mesh, the teeth changing each round, s fixed per Node-clock; a grip per end, or an s that moves, parts it."""
+def kept(each_end=False, moving=False, sourced=False):
+    """Over synchronous rounds a hand's charge Q* moves by Rule3's torques and its kick alone (David's OPEN 13): its rows
+    alike in W, W+, s, D, T_k and T_d, grips one per Mesh, the teeth changing; the kick's term 0 with J off, and with J on
+    read from the drive's carry, T_d q = J + r_d - r_d+, J not 0. A grip per end, or an s that moves, parts it."""
     rng = np.random.default_rng(50)
     nb = board(SHAPE)
     n = nb.shape[1]
     meshes = np.arange(6 * n).reshape(6, n) if each_end else meshes_of(nb)
     grip, s = draw(rng, -3, 4, (1, (6 if each_end else 3) * n)), draw(rng, 1, 5, (1, n))
     teeth = [draw(rng, 2, 20, (1, n)) for _ in range(ROUNDS + 1)]
-    none = np.zeros(0, dtype=np.intp)
+    kick, drive = (draw(rng, 2, 6, (1, n)), draw(rng, 2, 9, (1, n))) if sourced else (1, 1)
+    terms = (TERMS if sourced else 0,) * 2
+    index = [
+        rng.integers(0, high, size=terms[0]).astype(np.intp) for high in (PLANES * 2, PLANES * 2, 2)
+    ]
+    plan = Plan(index[0], index[1], draw(rng, -9, 10, terms[1]), index[2])
     zero = np.zeros((1, n), dtype=object)
     state = State(
-        wide(rng, (2, n)),
-        wide(rng, (2, n)),
+        *(draw(rng, -(1 << 10), 1 << 10, (2, n)) if sourced else wide(rng, (2, n)) for _ in "ab"),
         draw(rng, 0, 1 << 20, (2, n)) % teeth[0],
         draw(rng, 0, 2, (2, n)),
-        0 * draw(rng, 0, 1, (2, n)),
+        draw(rng, 0, 1 << 20, (2, n)) % drive,
         zero,
         zero,
         zero,
     )
-    for t in range(ROUNDS):
+    for t in range(4 if sourced else ROUNDS):  # J squares the gears each round
         push = s + t * draw(rng, 0, 3, (1, n)) if moving else s
-        gearing = Gearing(teeth[t], teeth[t + 1], push, 3, 1, 1)
-        layout = Layout(
-            nb, meshes, grip, gearing, Plan(none, none, none.astype(object), none), GAMMA + zero, GAMMA
-        )
+        gearing = Gearing(teeth[t], teeth[t + 1], push, 3, kick, drive)
+        layout = Layout(nb, meshes, grip, gearing, plan, GAMMA + zero, GAMMA)
+        _, j = step.sources(layout, state)
         now, out = step.tick(layout, state, 1)
         torques = im(state.a - state.b, state.r - home(teeth[t], state.go))
         torques = torques + im(now.a - state.a, now.r - home(teeth[t + 1], now.go))
         moved = charged(now, teeth[t + 1], s) - charged(state, teeth[t], s)
-        if not out.k.all() or moved != sum(
-            Fraction(int(x), int(2 * v)) for x, v in zip(torques.ravel(), s.ravel(), strict=True)
+        kicked = np.broadcast_to(kick * im(state.a, j + state.rd - now.rd), (1, n))
+        if (
+            not out.k.all()
+            or (sourced and not np.any(j))
+            or moved
+            != sum(
+                Fraction(int(x), int(2 * v)) + Fraction(int(y), int(d))
+                for x, v, y, d in zip(
+                    torques.ravel(),
+                    s.ravel(),
+                    kicked.ravel(),
+                    np.broadcast_to(drive, (1, n)).ravel(),
+                    strict=True,
+                )
+            )
         ):
             return False
         state = now
     return True
 
 
-def test_a_hands_charge_moves_by_rules_torques_alone_and_parts_on_a_grip_per_end_or_a_moving_s(
+def test_a_hands_charge_moves_by_rules_torques_and_its_kick_alone_and_parts_on_a_grip_per_end_or_a_moving_s(
     monkeypatch,
 ):
-    assert kept() and not kept(each_end=True) and not kept(moving=True)
+    assert kept() and kept(sourced=True) and not kept(each_end=True) and not kept(moving=True)
     driven = step.driven
     monkeypatch.setattr(step, "driven", lambda g, f, q: driven(g._replace(stretch=1), f, q))
     assert not kept()  # the push off its stretch
+    monkeypatch.setattr(step, "driven", lambda g, f, q: driven(g._replace(kick=1), f, q))
+    assert kept() and not kept(sourced=True)  # the kick off its teeth, which J off cannot see
 
 
 def test_the_engines_records_hold_their_fields_in_order():

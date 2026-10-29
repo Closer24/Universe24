@@ -37,8 +37,9 @@ reader ran.
   State, Gearing, Layout, Plan and Out in order, and both die (mutants_s12_survivors_after.out).
 
 With the review, David's two notes of 6485049535 went in: the hand's charge Q* moves by Rule3's torques alone over
-rounds whose teeth change, its mutants a grip per end, an s that moves and the push off its stretch (OPEN 13); and the
-lay makes the dial, the count and the time three arrays of their own.
+rounds whose teeth change, with J off and the hand's rows alike in W, W+, s, D and the grip (the thirteenth review
+adds the kick's term with J on), its mutants a grip per end, an s that moves and the push off its stretch (OPEN 13);
+and the lay makes the dial, the count and the time three arrays of their own.
 
 ## What holds
 

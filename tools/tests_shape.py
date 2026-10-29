@@ -8,7 +8,9 @@ read from git, so no baseline file is kept: a pull request may lower a count, ne
     file above 600 lines holds no more than at the merge base, and a new one stays under.
     A test the Boss gives room by name (ROOM: the test, its lines and the reason, recorded
     here and in ENGINE.md section 9) adds that room to the base's size while it stands with
-    at most those lines; nothing else grows the budget.
+    at most those lines; nothing else grows the budget. A file the Boss gives a budget (ROOM:
+    the file alone, its lines and the reason; the owner's word of 2026-10-29, 02:5x UTC) takes
+    room as a test does, grows within it with no new entry, and is refused above it.
 (b) Copied setup. No test module imports another `test_*.py`: shared builders live in
     `tests/laws.py`. A function of 8 lines or more whose abstracted
     body appears twice across tests/ is refused beyond the merge base's groups.
@@ -40,654 +42,34 @@ DUPLICATE_LINES = 8
 DOCSTRING_LINES = 3
 HISTORY = re.compile(r"\b(?:SINCE|HISTORY|BUILD\.md|[Ss]uperseded|[Pp]reviously|[Rr]ecords? \d{3,})\b")
 RETIRED = re.compile(r"CANCELLED|[Rr]etired")
-TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality in the stencil form, purity across two worlds and across fresh interpreters at other hash seeds, rename with an inert train, the 24's images with the translations, the formula against a naive model, the run back by a fresh engine and in a fresh interpreter that never stepped) for any engine, on a trivial engine at three seeds of Python integers whose every bit is drawn across 2**256 on a side of 5, each failing on every mutant it must catch; the Boss's room by name."
-TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, the integers and the sides at least 1, every reference whole, every integer within the width), each of its rules refuses its own broken file by name, and a file at a rule's edge holds; the Boss's room by name."
-TENSOR24_SCHEMA = "Tensor24's record schema, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: every field of every line the runner writes is a whole number of any width, a label or a row of them, and a float, a truth value, an absence or a mapping in a field is seen; the Boss's room by name."
-TENSOR24_ALGEBRA = "Tensor24's algebra, stage 1 of the build the owner approved at 16:0x UTC on 2026-10-28: Rule3's carry, the one whether, the choice, the fine tooth's home and its flip, each law failing on its own mutant, the tie rule's odd quotient at both parities among them; the Boss's room by name."
-TENSOR24_CLOCK = "Tensor24's one clock, stage 2 of the build the owner approved at 16:0x UTC on 2026-10-28: a gear's tick and its exact run back at teeth counts that change from tick to tick, the run back undone forth, the rate dial's beat, a stopped clock's beat, and the tie rule at the tick, at a few teeth and at teeth and a full rate of about 2**80, each failing on its own mutant; the Boss's room by name."
-TENSOR24_MESH = "Tensor24's Mesh, stage 3 of the build the owner approved at 16:0x UTC on 2026-10-28: the due beat, the read as of the reader's count, forty random schedules equal to the synchronous pass with the counts parted and before slots read, the rewind under a random schedule, a stopped clock keeping pace, the tick under random masks at teeth, rates and grips parted at every site and Mesh against a naive model, the tie rule on the tick, and the frame's six properties on the tick against its naive model and in fresh interpreters, each failing on its own mutant; the Boss's room by name."
-TENSOR24_RING = "Tensor24's Gaussian ring, stage 5 of the build the owner approved at 16:0x UTC on 2026-10-28: the hand's product, conjugate, norm and pair, and the twin hand's overlap, reverse and axis, exact at every size: T T +1 on a hand and -1 on a twin hand, Lagrange's identity for the split, the split's share in (rho, S), the joint dial and S's orientation, S . S = rho rho, each law failing on its own mutant; the Boss's room by name."
-TENSOR24_KINDS = "Tensor24's kinds and tables, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the 24 a group of the Spokes' threefold power, each of the five kinds a representation, their characters Sofer's by his definitions at every turn and his table on every class, orthonormal, the Spokes' character A1 + E + T1, every table C equivariant and 0 exactly where David's products hold no channel, primitive, the dot, the cross and A2 x T1 -> T2 exactly, each law failing on its own mutant; the Boss's room by name."
-TENSOR24_LOAD = "Tensor24's load, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the coupling rows' plan contracted as a naive sum over the rows and the tables, each refusal of the load naming its own broken file with its edge that loads, a coupling the table lacks holding no term, the two promises named where they fail and shown to be the run back's own condition, the rename law with its mutant, a gear laid on the first train's rows and at the last train's last component past 64 bits, J of Python integers on gears of any width, and no raise on the files the checker holds nor on a board the machine's memory refuses; the Boss's room by name."
-TENSOR24_ACT = "Tensor24's one act, stage 7a of the build the owner approved at 16:0x UTC on 2026-10-28: every gear's impulse, drive and carry at its coefficients (W and W+, s, the spring, the kick's and the drive's teeth, a grip per gear row and Mesh, and J's terms on the value, the centred difference along each axis and the force) against a naive model, the run back under random masks with every divisor row away from 1, the sources' images under the 24 through the tables of a plan of four kinds, the force's path as the stage 4 tick with J added, a hand's charge moving by Rule3's torques alone over rounds whose teeth change (David's OPEN 13), and the engine's records' fields pinned in order, each law failing on its own mutant; the Boss's room by name."
-TENSOR24_DECODER = "Tensor24's decoder, Animate's, on the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the seventh hostile review's four changes and its precedence follow-up, each test failing on its own mutant: row 15's second reading over every train of the header, the first reading failing on a click that books nothing, the guards' parts and the tool naming every cause it meets, the ticks refusing a k that is no bit, and a part read that fails before a gap; the Boss's room by name."
-ROOM = {  # the room given by name: the test, its lines and the reason (ENGINE.md, section 9)
-    "tests/test_the_tensor24_ring.py::hands": (
-        4,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::ringed": (
-        15,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::conjugate": (
-        6,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::sized": (
-        4,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::paired": (
-        4,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::reversed_twice": (
-        9,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::lagrange": (
-        7,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::axial": (
-        5,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::shared": (
-        9,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::joint": (
-        6,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::oriented": (
-        8,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::mutants": (
-        23,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_ring.py::test_each_law_of_the_ring_holds_and_fails_on_its_mutant": (
-        3,
-        TENSOR24_RING,
-    ),
-    "tests/test_the_tensor24_files.py::edits": (
-        280,
-        TENSOR24_FILES,
-    ),
-    "tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds": (
-        14,
-        TENSOR24_FILES,
-    ),
-    "tests/test_the_tensor24_schema.py::leaves": (
-        12,
-        TENSOR24_SCHEMA,
-    ),
-    "tests/test_the_tensor24_schema.py::test_every_line_holds_whole_numbers_and_labels_and_a_float_a_truth_an_absence_or_a_mapping_is_seen": (
-        7,
-        TENSOR24_SCHEMA,
-    ),
-    "tests/test_the_tensor24_algebra.py::numbers": (
-        13,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_algebra.py::exact": (
-        6,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_algebra.py::odd": (
-        9,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_algebra.py::whether": (
-        4,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_algebra.py::choice": (
-        4,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_algebra.py::back": (
-        5,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_algebra.py::involution": (
-        7,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_algebra.py::mutants": (
-        15,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_algebra.py::test_each_law_of_the_carry_holds_and_fails_on_its_mutant": (
-        11,
-        TENSOR24_ALGEBRA,
-    ),
-    "tests/test_the_tensor24_clock.py::clock": (
-        22,
-        TENSOR24_CLOCK,
-    ),
-    "tests/test_the_tensor24_clock.py::run": (
-        20,
-        TENSOR24_CLOCK,
-    ),
-    "tests/test_the_tensor24_clock.py::rewind": (
-        3,
-        TENSOR24_CLOCK,
-    ),
-    "tests/test_the_tensor24_clock.py::stopped": (
-        5,
-        TENSOR24_CLOCK,
-    ),
-    "tests/test_the_tensor24_clock.py::negated": (
-        9,
-        TENSOR24_CLOCK,
-    ),
-    "tests/test_the_tensor24_clock.py::both_ways": (
-        9,
-        TENSOR24_CLOCK,
-    ),
-    "tests/test_the_tensor24_clock.py::mutants": (
-        28,
-        TENSOR24_CLOCK,
-    ),
-    "tests/test_the_tensor24_clock.py::test_each_law_of_one_clock_holds_and_fails_on_its_mutant": (
-        5,
-        TENSOR24_CLOCK,
-    ),
-    "tests/test_the_tensor24_mesh.py::varied": (
-        7,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::world": (
-        14,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::start": (
-        12,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::parted": (
-        5,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::until": (
-        14,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::order": (
-        9,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::back": (
-        5,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::stopped": (
-        5,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::naive": (
-        28,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::masked": (
-        12,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::negated": (
-        18,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::alike": (
-        4,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::engine": (
-        13,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::teeth": (
-        3,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::mutants": (
-        70,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::law": (
-        4,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::test_each_law_of_the_mesh_holds_and_fails_on_its_mutant": (
-        6,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds": (
-        2,
-        TENSOR24_MESH,
-    ),
-    "tests/test_the_tensor24_mesh.py::test_a_world_is_run_back_in_a_fresh_interpreter_that_never_stepped": (
-        2,
-        TENSOR24_MESH,
-    ),
-    "tests/frame.py::board": (
-        5,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::near": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::flat": (
-        4,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::wide": (
-        4,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::same": (
-        5,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::local": (
-        14,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::pure": (
-        8,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::renamed": (
-        13,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::turns": (
-        9,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::turned": (
-        16,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::stored": (
-        10,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::kinded": (
-        17,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::formula": (
-        5,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::bijective": (
-        9,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::digest": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::answer": (
-        6,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::fresh": (
-        13,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::unseeded": (
-        6,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::undone_elsewhere": (
-        16,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::meshes_of": (
-        5,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::plain": (
-        12,
-        TENSOR24_FRAME,
-    ),
-    "tests/frame.py::holds": (
-        6,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::world": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::trivial": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::untrivial": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::naive": (
-        9,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::broken": (
-        5,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::hidden": (
-        13,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::logged": (
-        10,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::engine": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::cached": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::salted": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::fifo": (
-        9,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::memo": (
-        10,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::two": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::graded": (
-        7,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::fed": (
-        6,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::mark": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::mutants": (
-        67,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_must_catch": (
-        5,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::test_the_images_fail_on_a_board_the_24_do_not_keep": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::test_a_mixing_the_24_keep_passes_the_kinds_images": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::test_the_mixing_mutants_pass_the_images_of_the_sites_alone_on_every_stored_kind": (
-        3,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds": (
-        2,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_frame.py::test_a_world_is_run_back_in_a_fresh_interpreter_that_never_stepped": (
-        5,
-        TENSOR24_FRAME,
-    ),
-    "tests/test_the_tensor24_kinds.py::made": (
-        4,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::product": (
-        5,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::the24": (
-        4,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::klass": (
-        10,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::chi": (
-        7,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::group": (
-        8,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::forms": (
-        11,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::representations": (
-        10,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::reference": (
-        11,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::characters": (
-        17,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::orthonormal": (
-        6,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::spokes": (
-        7,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::channels": (
-        11,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::equivariant": (
-        10,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::classical": (
-        11,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::mutants": (
-        77,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::good": (
-        2,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::test_every_law_holds_on_the_kinds_as_made": (
-        2,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::test_each_law_of_the_kinds_fails_on_its_mutant": (
-        4,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_kinds.py::test_the_joint_makes_the_kinds_and_the_tables_the_load_reads": (
-        5,
-        TENSOR24_KINDS,
-    ),
-    "tests/test_the_tensor24_load.py::gears": (
-        3,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::row": (
-        3,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::op": (
-        2,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::made": (
-        3,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::universe": (
-        2,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::naive": (
-        33,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::loaded": (
-        3,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables": (
-        20,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::edits": (
-        53,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::test_each_refusal_of_the_load_names_its_own_broken_file_and_its_edge_loads": (
-        11,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid": (
-        29,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::test_a_coupling_the_table_lacks_holds_no_term_and_gives_0": (
-        12,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::rewound": (
-        9,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::test_the_two_promises_are_named_where_they_fail_and_are_the_run_backs_own_condition": (
-        30,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::renamed": (
-        29,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::test_the_rename_law_holds_and_fails_where_a_strength_is_read_by_its_target_trains_place": (
-        3,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::test_the_files_the_checker_holds_load_or_are_named_and_none_raises": (
-        8,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_load.py::test_a_board_the_machine_cannot_hold_is_named": (
-        21,
-        TENSOR24_LOAD,
-    ),
-    "tests/test_the_tensor24_act.py::draw": (
-        2,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::varied": (
-        19,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::world": (
-        9,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::naive": (
-        43,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::formula": (
-        9,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::back": (
-        17,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::cube": (
-        8,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::images": (
-        27,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::mutants": (
-        89,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::law": (
-        2,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::test_each_law_of_the_act_holds_and_fails_on_its_mutant": (
-        5,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::test_the_force_s_path_is_the_stage_4_tick_with_j_added": (
-        14,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::im": (
-        3,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::charged": (
-        7,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::kept": (
-        37,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::test_a_hands_charge_moves_by_rules_torques_alone_and_parts_on_a_grip_per_end_or_a_moving_s": (
-        7,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_act.py::test_the_engines_records_hold_their_fields_in_order": (
-        6,
-        TENSOR24_ACT,
-    ),
-    "tests/test_the_tensor24_decoder.py::test_the_wind_is_read_over_every_train_of_the_header": (
-        12,
-        TENSOR24_DECODER,
-    ),
-    "tests/test_the_tensor24_decoder.py::test_the_books_hold_the_click_they_book": (
-        6,
-        TENSOR24_DECODER,
-    ),
-    "tests/test_the_tensor24_decoder.py::test_a_cause_two_guards_see_is_named_by_the_first_and_the_files_that_cannot_be_read": (
-        10,
-        TENSOR24_DECODER,
-    ),
-    "tests/test_the_tensor24_decoder.py::test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits": (
-        41,
-        TENSOR24_DECODER,
-    ),
-    "tests/test_the_tensor24_decoder.py::test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat": (
-        17,
-        TENSOR24_DECODER,
-    ),
-    "tests/test_the_tensor24_decoder.py::test_a_part_read_that_fails_is_not_shown_beside_a_click_that_lacks_a_field": (
-        9,
-        TENSOR24_DECODER,
-    ),
+TENSOR24_FRAME = "Tensor24's frame, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): the property tests of the plan's section 13 (locality in the stencil form, purity across two worlds and across fresh interpreters at other hash seeds, rename with an inert train, the 24's images with the translations, the formula against a naive model, the run back by a fresh engine and in a fresh interpreter that never stepped) for any engine, on a trivial engine at three seeds of Python integers whose every bit is drawn across 2**256 on a side of 5, each failing on every mutant it must catch."
+TENSOR24_FILES = "Tensor24's three files, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: the examples hold under the files' checker (whole numbers alone, the integers and the sides at least 1, every reference whole, every integer within the width), each of its rules refuses its own broken file by name, and a file at a rule's edge holds."
+TENSOR24_SCHEMA = "Tensor24's record schema, stage 0 of the build the owner approved at 16:0x UTC on 2026-10-28: every field of every line the runner writes is a whole number of any width, a label or a row of them, and a float, a truth value, an absence or a mapping in a field is seen."
+TENSOR24_ALGEBRA = "Tensor24's algebra, stage 1 of the build the owner approved at 16:0x UTC on 2026-10-28: Rule3's carry, the one whether, the choice, the fine tooth's home and its flip, each law failing on its own mutant, the tie rule's odd quotient at both parities among them."
+TENSOR24_CLOCK = "Tensor24's one clock, stage 2 of the build the owner approved at 16:0x UTC on 2026-10-28: a gear's tick and its exact run back at teeth counts that change from tick to tick, the run back undone forth, the rate dial's beat, a stopped clock's beat, and the tie rule at the tick, at a few teeth and at teeth and a full rate of about 2**80, each failing on its own mutant."
+TENSOR24_MESH = "Tensor24's Mesh, stage 3 of the build the owner approved at 16:0x UTC on 2026-10-28: the due beat, the read as of the reader's count, forty random schedules equal to the synchronous pass with the counts parted and before slots read, the rewind under a random schedule, a stopped clock keeping pace, the tick under random masks at teeth, rates and grips parted at every site and Mesh against a naive model, the tie rule on the tick, and the frame's six properties on the tick against its naive model and in fresh interpreters, each failing on its own mutant."
+TENSOR24_BOARD = "Tensor24's board, stage 4 of the build the owner approved at 16:0x UTC on 2026-10-28: the six neighbours from the shape, the gather over the Spokes, the one-Mesh reach both ways, the read as of the reader's count, and the run back on the board, each failing on its own mutant."
+TENSOR24_LIGHT = "Tensor24's light, stage 4 of the build the owner approved at 16:0x UTC on 2026-10-28: the scalar light acting as the head's at the head's own inputs in its worlds, each named difference met, each mutant failing."
+TENSOR24_RING = "Tensor24's Gaussian ring, stage 5 of the build the owner approved at 16:0x UTC on 2026-10-28: the hand's product, conjugate, norm and pair, and the twin hand's overlap, reverse and axis, exact at every size: T T +1 on a hand and -1 on a twin hand, Lagrange's identity for the split, the split's share in (rho, S), the joint dial and S's orientation, S . S = rho rho, each law failing on its own mutant."
+TENSOR24_KINDS = "Tensor24's kinds and tables, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the 24 a group of the Spokes' threefold power, each of the five kinds a representation, their characters Sofer's by his definitions at every turn and his table on every class, orthonormal, the Spokes' character A1 + E + T1, every table C equivariant and 0 exactly where David's products hold no channel, primitive, the dot, the cross and A2 x T1 -> T2 exactly, each law failing on its own mutant."
+TENSOR24_LOAD = "Tensor24's load, stage 6 of the build the owner approved at 16:0x UTC on 2026-10-28: the coupling rows' plan contracted as a naive sum over the rows and the tables, each refusal of the load naming its own broken file with its edge that loads, a coupling the table lacks holding no term, the two promises named where they fail and shown to be the run back's own condition, the rename law with its mutant, a gear laid on the first train's rows and at the last train's last component past 64 bits, J of Python integers on gears of any width, and no raise on the files the checker holds nor on a board the machine's memory refuses."
+TENSOR24_ACT = "Tensor24's one act, stage 7a of the build the owner approved at 16:0x UTC on 2026-10-28: every gear's impulse, drive and carry at its coefficients (W and W+, s, the spring, the kick's and the drive's teeth, a grip per gear row and Mesh, and J's terms on the value, the centred difference along each axis and the force) against a naive model, the run back under random masks with every divisor row away from 1, the sources' images under the 24 through the tables of a plan of four kinds, the force's path as the stage 4 tick with J added, a hand's charge moving by Rule3's torques and its kick alone over rounds whose teeth change, its two rows alike in W, W+, s, D, T_k and T_d, the kick's term 0 with J off and read from the drive's carry with J on (David's OPEN 13), and the engine's records' fields pinned in order, each law failing on its own mutant."
+TENSOR24_DECODER = "Tensor24's decoder, Animate's, on the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): every reading of the click record against the plan and the schema, NOT READ with its cause where the record cannot support it, NOT SHOWN where it fails, the tool naming every cause it meets and raising on none, each test failing on its own mutant."
+ROOM = {  # the room given by name: the test or the file, its lines and the reason (ENGINE.md, section 9)
+    "tests/frame.py": (300, TENSOR24_FRAME),
+    "tests/test_the_tensor24_act.py": (450, TENSOR24_ACT),
+    "tests/test_the_tensor24_algebra.py": (150, TENSOR24_ALGEBRA),
+    "tests/test_the_tensor24_board.py": (200, TENSOR24_BOARD),
+    "tests/test_the_tensor24_clock.py": (150, TENSOR24_CLOCK),
+    "tests/test_the_tensor24_decoder.py": (600, TENSOR24_DECODER),
+    "tests/test_the_tensor24_files.py": (350, TENSOR24_FILES),
+    "tests/test_the_tensor24_frame.py": (250, TENSOR24_FRAME),
+    "tests/test_the_tensor24_kinds.py": (350, TENSOR24_KINDS),
+    "tests/test_the_tensor24_light.py": (150, TENSOR24_LIGHT),
+    "tests/test_the_tensor24_load.py": (400, TENSOR24_LOAD),
+    "tests/test_the_tensor24_mesh.py": (300, TENSOR24_MESH),
+    "tests/test_the_tensor24_ring.py": (150, TENSOR24_RING),
+    "tests/test_the_tensor24_schema.py": (50, TENSOR24_SCHEMA),
     "tests/test_the_record.py::test_one_big_bang_recurs_within_its_integers_and_spreads_its_matter_alike": (
         26,
         "The one big bang on the great clock (the owner's word of 2026-10-27, 18:5x UTC: the whole system one great clock that runs the small clocks, priority to what makes the one big bang; his rule of 14:5x UTC that a push's test sees what it was pushed for): 20 bangs in 100 ticks within 128 bits under the three bounds, the held field in its universe, and under the order-free click and the one mirror its seed's symmetry standing through the run, every family born chiming one mesh apart at the board's own share exactly (the heavy family bound above it before them, the order's reading); the Boss's room by name.",
@@ -1560,16 +942,28 @@ def uncalled(snapshot: Snapshot) -> set[str]:
 
 
 def room_of(snapshot: Snapshot) -> int:
-    """The room the named tests take in a snapshot: per ROOM entry whose test stands in its file, the fewer of its named lines and the test's own (the def through its last line), so a test keeps its room only while it holds it; 0 for a test that is gone."""
+    """The room the named tests take in a snapshot: per ROOM entry whose test stands in its file, the fewer of its named lines and the test's own (the def through its last line), so a test keeps its room only while it holds it; 0 for a test that is gone. An entry that names a file alone is the file's budget, and the file takes the fewer of it and its own lines."""
     found = 0
     for name, (lines, _reason) in ROOM.items():
-        path, function = name.split("::")
+        path, _, function = name.partition("::")
         if path not in snapshot:
+            continue
+        if not function:
+            found += min(lines, len(snapshot[path].splitlines()))
             continue
         for node in ast.walk(ast.parse(snapshot[path])):
             if isinstance(node, ast.FunctionDef) and node.name == function and node.end_lineno:
                 found += min(lines, node.end_lineno - node.lineno + 1)
     return found
+
+
+def over_budget(snapshot: Snapshot) -> list[str]:
+    """Every file above the budget its ROOM entry gives it."""
+    return [
+        f"{name} has {len(snapshot[name].splitlines())} lines, above its budget of {lines}; raise the budget with its reason, or cut"
+        for name, (lines, _reason) in ROOM.items()
+        if "::" not in name and name in snapshot and len(snapshot[name].splitlines()) > lines
+    ]
 
 
 def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
@@ -1581,6 +975,7 @@ def violations(head: Snapshot, base: Snapshot | None) -> list[str]:
         found.append(
             f"tests/ grew from {base_tests} to {head_tests} lines; offset the new tests by deletions in the same pull request"
         )
+    found.extend(over_budget(head))
     before = {name: file_counts(text) for name, text in tests_of(base).items()}
     after = {name: file_counts(text) for name, text in tests_of(head).items()}
     for name, counts in after.items():
