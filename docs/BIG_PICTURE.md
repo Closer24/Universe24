@@ -51,10 +51,10 @@ The Boss's ask of 07:1x (6490369479, item 3), after his check of light against n
 - **Nothing physical moves at the reach:** no wave of the act outruns light, no hand carries the bare word, and what a bob measures of another by clicks never exceeds c. The closure of a split click moves at the reach and carries no signal (every marginal is 1/2); whether that is called physical is put to the owner (section 10).
 
 **Status:**
-- **derived**, on stage 7b's act at rest, where every row stands at the one cone s grip / W = 1/6 and sin^2(w/2) = (1/6) SUM_i sin^2(k_i / 2) + s D / (4 W) (the Boss's probe light_speed.py, in his scratch; the file is owed to the repository);
-  - the fastest group speed over the whole zone is 0.40818 Mesh a tick, against 1 / sqrt 6 = 0.40825, so no wave outruns light, and a mass term slows it (0.3955 at s D / (4 W) = 0.001);
-  - the long waves are the same in every direction (0.408247 along an axis and 0.408248 along a diagonal at k = 0.01);
-  - waves of a few Meshes slow by direction (0.4047 along an axis and 0.4075 along a diagonal at k = 0.5), which nature does not see only where the Mesh is far below every wave measured.
+- **derived**, on stage 7b's act at rest, where every row stands at the one cone s grip / W = 1/6 (7b's table: T = 6 den Gamma^2 G^2, grip = den Gamma^2 G^2 per Mesh, W = W+ = 2 T, s = 2) and the leapfrog's own dispersion is sin^2(w/2) = (1/6) SUM_i sin^2(k_i / 2) + s D / (4 W), the sum over the three axes (the Boss's probe light_speed.py, in his scratch, the file owed to the repository; the relation and his numbers checked by Sofer at 07:3x on a grid and by hand):
+  - **no wave outruns light.** The group velocity is v_i = (1/6) sin k_i / sin w, and |v|^2 <= 1/6 follows from (SUM s_i)^2 <= 3 SUM s_i^2 with s_i = sin^2(k_i / 2), with equality only as k tends to 0, so light's long-wave speed is the fastest of the zone: 0.40819 on a grid of 64 steps to the zone's edge, against 1 / sqrt 6 = 0.40825, and a mass term slows it (0.3955 at s D / (4 W) = 0.001);
+  - **the long waves are the same in every direction** (the phase speed w / |k| is 0.408247 along an axis and 0.408248 along a diagonal at |k| = 0.01);
+  - **waves of a few Meshes slow by direction** (the phase speed is 0.4047 along an axis and 0.4075 along a diagonal at |k| = 0.5), which nature does not see only where the Mesh is far below every wave measured.
 - **The Mesh's size** is the one calibration the law does not derive: the distance light covers in sqrt 6 ticks, in nature sqrt 6 omega_e times the electron's reduced Compton wavelength, 9.46 x 10^-13 m x omega_e (6.69 x 10^-13 m x omega_e at the head's light, 1 / sqrt 3), with omega_e the electron's rotation per tick that a world's file sets. The bound on it is the shortest wave measured (derived from the direction law above).
 - **The number sets only the tick:** one tick is one Mesh over sqrt 6 c.
 - **The law's line:** Postulate 3 (ALGEBRA.md line 33), where the head's 1 / sqrt 3 and its cosine mean stand by name as the engine-5.0 line's build.
@@ -100,7 +100,7 @@ This follows **How to think about solutions: the principle of the clock and the 
 ## 2. The one mechanism: the carry
 
 **Clocks.** Every step of every gear ends in a carry, n + r = q d + r' with 0 <= r' < d. The quotient q leaves: the gear's notch, the drive's whole windings, the dial's beat, a click. The remainder r' stays in a fine tooth.
-- **The quotient is the arrow.** Once written in the record, the reversed run does not undo it (the owner's decision (o)).
+- **The quotient is the arrow:** no act reverses the board (decision 27), and the record of clicks only grows, which is the owner's decision (o) with the gears' circle now the count's swing (Animate's precision, 6490628536).
 - **The remainder is the memory.** It keeps every bit, so the step runs back exactly (Postulate 4).
   - So the remainders do not prevent the way back; they make it exact.
   - What keeps a cycle from repeating the last is the quotients written.
@@ -190,7 +190,7 @@ This follows **How to think about solutions: the principle of the clock and the 
 
 **Status:**
 - the source is derived (p20; DAVID-TENSOR24-THE-PRESSURE.md: the books' own source, -dL/dPhi = 2 v^2 - mu phi^2 = rho + T_ii, exactly);
-- the gearing is derived (p19 and 6488192915), and built at stage 7b (tensor24-review 861f883e9, with Sofer's yes).
+- the gearing is derived (p19 and 6488192915), and built at stage 7b (tensor24-review 861f883e9, with Sofer's yes and Animate's, hers with one test owed: the ruler's powers away from rest, at a held load N = Gamma / Y(c) a massive hand's beat at N of rest and light's speed at N^2, which kills the three mutants of W's and the spring's powers that survive the tests at rest; 6490565427).
 
 ## 5. The two clicks
 
@@ -370,7 +370,7 @@ Both clicks are carries: their quotients leave forward and are written in the re
 2. **Each Node-clock's tick** always goes forward. The notch changes its units along with everything else.
 3. **The arrow, the record's order,** always grows.
 
-The way back stands in the law, in the remainders. But no act runs it: the spring turns the swing, and the act at the top is cancelled (decision 27).
+The way back stands in the law, in the remainders. No act of the board runs it: the spring turns the swing, and the act at the top is cancelled (decision 27). The runner's rewind check runs it at every record's end (runner/rewind.py: every round undone from its out, the last first, back to the seed, the End line writing the rounds undone and whether the state came back exact); it is a check and no act of the board, and the record stands through it (Animate's precision, 6490628536).
 
 **What the clicks see** (**The same clock and the same ruler for every act**; **The great clock's tick is no observable**):
 - **Where they stand, nothing.** A uniform notch is a change of units: every clock, ruler and bound body changes together.
@@ -543,4 +543,5 @@ So one count, the balance of light and matter over the swing, decides three thin
   4. **The head's record** (sections 7 and 14) is the head's under the act that decision 27 cancels: that each cycle is higher than the last and that 12 tracks cross the return are measured with the reversal, and are read again on the spring alone at the runner.
   5. **The owner's minutes.** His "Going with your recommendation" is 06:08 UTC by David's record and was relayed at 06:11 (comment 6489403097); the law's lines say both.
   6. **Locality is never broken, line 92.** The closure is an act between two Node-clocks and gives |S| above 2 with a late choice, where the law's sentence says no act between the two Node-clocks and |S| at most 2 (section 10): the choice among the doors is the owner's, and the law is rewritten only on his word.
+- **Put to David by Animate** (6490628536, with the document's keeper copied): which second reading of the frame the decoder compares with the load, the clicks' density per round (densest at the load's bottoms) or the redshift of light's absorptions against its emissions; and whether a copy is a composite's whole click laying children of its own train, which the parts on the train cards (G2) let the decoder read per bang as row 46's third reading.
 - **The law's paragraphs this document rests on:** Postulate 3 (line 33); **The time gear's spring is the clock's one notch** and **The time gear's load is sourced by the form plus the pressure** (line 35); the principle (line 35); **The turnover** and **The floor** (lines 1602 and 1608, cancelled); **Locality is never broken** (line 92); **Only local** (line 502); **The same clock and the same ruler for every act** (line 693); **The great clock's tick is no observable** (line 695); **Einstein lives in the clicks of bound bobs, and the great clock is never measured** (line 1507); **Time in the engine is a circle, and every bang shows more than the one before** (line 106).
