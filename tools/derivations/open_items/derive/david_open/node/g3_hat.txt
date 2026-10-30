@@ -1,0 +1,41 @@
+the probe's strengths, CHOSEN: key 3125, n = key^2 = 9765625, hat 1, W = 2,000 n = 19531250000, tie 3;
+  the size's beat 8 hat n / W = 1/250; the tied spring 2 tie n / W = 3/1000
+(a) the hat's monomials by contract.pushes, J against -4 hat (|k|^2 - n) k_a:
+  2 rows: J equals the formula on 2 of 2 rows at 216 whole points; at 216 whole rests of |k|^2 = n, J is 0 on 2 of 2 rows
+  4 rows: J equals the formula on 4 of 4 rows at 216 whole points; at 216 whole rests of |k|^2 = n, J is 0 on 4 of 4 rows
+  the circle's whole points: 44 (r_2(5^10) = 4 (10 + 1) = 44), each |z|^2 = n: True
+(b) the rest: the held hand (rows 0, 1) laid still at whole rests, a tied train (row 2) and light (row 3) at 0, 6 by 6 by 6, 2,000 rounds:
+  alike, with Meshes: rounds in which any count or tooth moved 0 of 2000; |k|^2 - n at most 0 (0 ppm of n); the largest held count 3125; the tied train and light stayed at 0: True
+  scattered, Mesh-less: rounds in which any count or tooth moved 0 of 2000; |k|^2 - n at most 0 (0 ppm of n); the largest held count 3125; the tied train and light stayed at 0: True
+  scattered, with Meshes: rounds in which any count or tooth moved 2000 of 2000; |k|^2 - n at most 78282220 (8016099 ppm of n); the largest held count 8480; the tied train and light stayed at 0: True
+  scattered, with Meshes, a stiffer hat 40: rounds in which any count or tooth moved 2000 of 2000; |k|^2 - n at most 92062777 (9427228 ppm of n); the largest held count 10091; the tied train and light stayed at 0: True
+(c) the norm the law picks: the hand laid alike at every Node-clock, off its rest, 2,000 rounds:
+  at key + 31, the hat on: |k|^2 / n within 979624 to 1019938 ppm; sign changes of k_0 - key 41
+  at key + 31, no hat: |k|^2 / n within 1019938 to 1019938 ppm; sign changes of k_0 - key 0
+  near the top, at key / 25, the hat on: |k|^2 / n within 321 to 1999622 ppm; sign changes of k_0 - key 18
+  the exact linear recurrence W (d+ - 2 d + d-) = -8 hat n d from d = 31: 40 sign changes in 2,000 rounds
+(d) the weight of the still hand, (b)'s lays at round 2,000 of the Mesh-less run and of the alike run:
+  alike: the kinetic sum W (a - b)^2 0, the potential sum hat (|k|^2 - n)^2 0, the teeth's momenta summed 0
+  scattered, Mesh-less: the kinetic sum W (a - b)^2 0, the potential sum hat (|k|^2 - n)^2 0, the teeth's momenta summed 0
+(e) the angle: on a ring of 48, k_0 = key everywhere and k_1 = 50 times the period-6 mode, standing, 600 rounds:
+  with Meshes, grip W/6: sign changes of k_1 at Node-clock 0: 79; k_1 there within -102 to 102; |k|^2 - n at most 71816 (7353 ppm)
+  Mesh-less: sign changes of k_1 at Node-clock 0: 0; k_1 there within 100 to 100; |k|^2 - n at most 16251 (1664 ppm)
+  the massless recurrence W (p+ - 2 p + p-) = -(W/6) p from 100: 79 sign changes in 600 rounds
+(f) the tie: on the ring, the hand at (key, 0) with Meshes, the tied train x = 50 times the mode, grip W/100, 2,000 rounds:
+  the tied train's sign changes at Node-clock 0: 73; the recurrence with the spring W/100 + 2 tie n: 73
+  the hand's |k|^2 - n within -81081 to 68871 (-8303 to 7052 ppm): the hand answers the tied train
+  against the unit spring (tie n; x, x, unit, unit) with no hand: the tied train differs in 1836 of 2000 rounds, first at round 161
+(g) a push across k: (f)'s lay with the hand turning, b = (key, -25) at every Node-clock, 2,000 rounds:
+  the hand's k_1 changed sign 4 times (half turns); |k|^2 - n within -145824 to 709060 (-14933 to 72607 ppm); the tied train's sign changes 73, against (f)'s still hand above
+(h) the run back: 6 by 6 by 6, the hand scattered over the circle, the tied train and light laid moving, every Mesh, 500 rounds out and 500 back:
+  the start returned bit for bit: True
+(i) the odd turn's flip of the A2 row (row 1): tick(flip s) against flip(tick s), (h)'s lay, 300 rounds:
+  the twisted tooth, s -> -1 - s: 300 of 300 rounds commute
+  the plain tooth, s -> -s: 300 of 300 rounds commute
+(j) the same law on four rows (rows 0 to 3), the quaternion:
+  216 products of ten whole quaternions of norm 5: each of norm n: True; distinct 216
+  scattered rests, Mesh-less: rounds in which anything moved 0 of 500
+  the size laid at key + 31: 41 sign changes in 2,000 rounds, (c)'s two rows 40 by the recurrence
+  three angles laid on the ring with Meshes, each the mode shifted: sign changes 79, 79, 79 in 600 rounds; the massless recurrence from the lay's own value at Node-clock 0: 79, 79, 79
+(k) the frame's unit key, n = 1: the hand at (1, 0), the same beats (hat 10^6, W = 2,000 hat, tie 3 W / 2,000), (f)'s tied wave, 2,000 rounds:
+  rounds with |k|^2 off 1 somewhere 3; with the hand at the top (k = 0) somewhere 0; the largest |k|^2 1655048801169; thrown past |k|^2 = 10^6 at round 3 (the run stops there)

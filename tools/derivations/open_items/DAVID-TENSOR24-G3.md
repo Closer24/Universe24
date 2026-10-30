@@ -1,319 +1,276 @@
-# G3, the coupling family: a held hand that turns round at every Node-clock, and the ties it allows
+# G3, the coupling family: the held hand still at the bottom of a hat, and the ties it holds
 
-David, 2026-10-30 (the seventh text, 17:3x UTC). It derives Big Pic's three words for this text, which he wrote "for
-David's seventh text":
-- the held quantum as a hand that beats with D = one winding (6525978806, item 2);
-- whole-speed hands tied through its square and half-speed hands tied linearly, the anchor (6526181441, item 3);
-- the anchor as one piece of four (6526201692, item 3.3).
+David, 2026-10-30 (the eighth text, 20:xx UTC), on the Boss's word of 19:1x UTC (#2187 6531422713, item 3): "your hat
+is that quartic", the quartic the night's frame's hostile mathematician names as the direction for its item 3, "a
+whole-number quartic on k with the unit"; and its frame comes to the architect through the Boss by about 23:00 UTC.
+It keeps what the Boss decided for the night's frame (6531004963, decision 2; NOT_CLOSED 10): the held hand is the
+train of character (A1, A2) at part 1, told from light, (A1, A1), by character. It replaces only the hand's own spring
+of 2 rest, which turns the hand a quarter a round (FRAMES.md 6), by a hat on the hand's norm. It takes Big Pic's
+quaternion lead (6530683608, item 11: one quaternion held hand per Node-clock, still at the bottom of a hat in its
+norm, with no mirror well, no wall and no string) and his re-check of the seventh text (6530163632, item 3: the turning
+hand withdrawn as nature's vacuum). It answers the owner's word of 11:1x UTC (derive what the Node-clock needs; every
+derivation to stand with a hostile mathematician and a hostile physicist) and his words of the night: generic laws for
+every family, "and also with this quaternion"; no root; a frame where the derivation is not closed, approved by the
+Boss after the fact. It reads the act the night builds, node-live at 939fa65a7 (the edge's split), in the law's four
+layers (Postulate 4, item (10)). The seventh text (toys-5 c7b0a4bea) keeps the turning hand's derivations in git. The
+probe is derive/david_open/node/g3_hat.py (about 2 minutes), its output beside it, whole numbers alone, every division
+Rule3's carry, with no root, no logarithm, no search and no function of the turn's arc.
 
-It stands on the owner's yes to the completion of line 35 (4)'s carry: the click counts where the two runs part, D given
-or taken, never D held (6526518899). It answers his word of 11:1x UTC (derive what the Node-clock needs to close;
-everything to stand with a hostile mathematician and a hostile physicist) and the sixth text's two readers (seven items
-and six), whose items on the standing count are answered in section 6. Big Pic's two words on its qualifications are
-folded (6527628627 item 1; 6527540022 item 8): one winding needs D held exactly, and the anchor ties through the norm.
-It is the first of two hands: the Boss's coupling-family agent derives the anchor blind beside it, and neither reads the
-other's draft. It reads the act as built at tensor24-review 9751f91c1, in the law's four layers (Postulate 4, item
-(10)). Only what is new stands here; the sixth text (toys-5, DAVID-TENSOR24-G3.md before this commit) keeps the standing
-count's derivations in git. The probes are derive/david_open/node/g3_held_hand.py (about 70 s) and g3_window_and_well.py
-(about 80 s, the standing count's record), their outputs beside them, whole numbers alone, with no root, no logarithm
-and no search; the turning hand's lay takes its angle from an arcsine series, a lay only, whose scope under the law's
-line on circularity is before the owner.
-
-**The finding in one line:** the held quantum is a hand of two parts turning round at every Node-clock, a quarter turn
-apart, its wind D = now^2 - next x before, summed over the parts, one winding.
-- **It never clicks:** the click counts where the two runs part, and a hand that keeps its beat holds the same D both
-  ways.
-- **On the act** its size re^2 + im^2 stands still to 369 parts per million over 100,000 rounds and D to 141, the
-  carry's remainder; the run back is exact.
-- **Whole-speed hands tie through that size:** a steady spring, never negative. At resonance it pumps nothing, where a
-  one-part tie, the sixth text's linear tie and a tie through re alone grow, as their exact linearized recurrences do. V
-  is at or above 0 at every lam at or above 0, so lam's bound goes, and no wall stands.
-- **n's unit is one winding of D:** A^2 = key / (2 sin^2 w).
-- **Half-speed hands are rocked by the anchor,** whose rate is their beat. A tie linear in the held hand sees its turn,
-  so the anchor ties through the norm (Big Pic). It is named and not built, since the half-speed gear is not on the act.
-- **OPEN:**
-  - one winding held exactly: the potential's least is the hand at rest, and only the lay and D's near-conservation
-    hold it;
-  - the hand's own turn, which a linear tie hands to a half-speed clock as an axial background nature bounds, so the
-    anchor ties through the norm, which no turn moves (Big Pic);
-  - its weight, one quantum per Node-clock;
-  - the held hand's vacuum as a medium: energy kappa A^2 per Node-clock at zero pressure, at rest in the lattice's frame
-    and turning one way (G5's third-text physicist).
+**The finding in one line:** a hat on the held hand's norm, V = hat (|k|^2 - n)^2, laid as three kinds of monomials of
+the vertex law, holds the hand still at every whole rest of |k|^2 = n.
+- **The law gives the rest, not the seed:** laid off it, the hand swings about it at the size's beat, 8 hat n / W;
+  with no hat it stands wherever the seed laid it (the frame's flat direction, NOT_CLOSED 19).
+- **The still hand weighs nothing:** kinetic 0 and potential 0 at every Node-clock, exactly, so nothing it holds
+  sources the lapse (NOT_CLOSED 20).
+- **Its angle is free:** with Meshes a small turn travels as a massless wave, counted against the lattice's own
+  recurrence; without them it stands. Its size is held, inside the step's window, so the hand keeps its Meshes
+  (NOT_CLOSED 22).
+- **The tie reads the hand:** a tied train's spring is 2 tie |k|^2, its beat from the hand's rest, and the hand answers
+  the tied wave: the tied train departs from a unit spring with no hand in 1,836 of 2,000 rounds (the frame's
+  mathematician's item 2).
+- **A push across k turns the hand and leaves the tied beat** (his item 4).
+- **The same law on four rows is the quaternion:** its rests are a sphere, built here by products of whole quaternions.
+  The 24's A2 sign commutes with the act, and the run back is exact.
+- **Its price:** the norm's size n is CHOSEN in counts, and must be fine: at the frame's unit key, n = 1, the same tied
+  wave throws the hand off in 3 rounds. The anchor psi_L Phi psi_R waits on the half-speed kinds (NOT_CLOSED 8).
 
 ## 1. In clocks
 
-- **The held hand.** At every Node-clock the coupling family holds a hand with two parts a quarter turn apart, turning
-  round as a clock's hand goes round its dial. Its size, re^2 + im^2, stays while it turns. Its wind, read from its now
-  and the next and the before, is the same read forward or backward: the quantum both runs hold alike (Big Pic; line
-  1021, "the click is the meeting of the future with the past"). The click counts where the two runs part (line 35 (4),
-  completed by the owner's word), and a hand that keeps its beat never parts them. So the vacuum is a turning clock at
-  every Node-clock, and it never clicks.
-- **Why not a standing count** (the sixth text). A count held still is read by no click, but the act refuses a count of
-  one (no beat). A signed standing count brings the hat's mirror well and its walls, and its beat pumps the tied
-  families (section 6). Big Pic's reading leaves all three behind.
-- **Whole-speed hands** (the five kinds) tie through the held hand's size. The size stands still, so the tie is a
-  steady spring that is never negative: nothing pumps, no mirror well forms, and no wall stands, since the hand's rests
-  are a ring of phases with no sign to choose.
-- **Half-speed hands** (matter, spin half; Big Pic's piece 1) tie linearly. The held hand is the anchor that rocks their
-  left and right hands into each other, as a pendulum clock's anchor rocks between its two pallets, and the rocking rate
-  is their beat, their mass (Big Pic's anchor). A tie linear in the held hand would hand them its turn, so the anchor
-  reads the hand's norm, the one reading no left or right turn moves (Big Pic, 6527540022 item 8), and brings no mirror
-  well. It is not built: the half-speed gear is not on the act (the Boss's families agent finds the per-gear carry
-  refusing its mixing turns, 6526903399).
-- **Light** carries no turn the held hand carries, so it passes the anchor unmeshed and keeps no beat.
-- **n's unit** is one winding of D at the held hand's beat, so G3's n and term 11's key are one relation.
-- **What the held hand does not give the split click.** It never rests, so its fine teeth move at every merge. But one
-  turning hand is one rotation, and G5's draw on it is not fair at most phases (section 3, probe (f)). Big Pic withdrew
-  it as G5's pointer's source (6528531569); his norm pointer, with no held hand, is G5's fourth text.
+- **The held hand.** At every Node-clock the coupling family keeps one hand of rows, the train the frame finds by its
+  character, (A1, A2) at part 1. The frame turned it a quarter a round with an own spring of twice its teeth. Here it
+  turns not at all.
+- **The hat.** Each Node-clock's hand is pulled toward a ring of rests: for two rows a circle, for four a sphere. If the
+  hand strays in, the hat pushes it out; if it strays out, the hat pushes it in. On the ring itself no push lands, so a
+  hand laid there stands still: no turn, no beat, no weight.
+- **The size and the angle.** Moved in or out, the hand swings back and forth across the ring, a beat of its own, the
+  size's. Moved along the ring, nothing pushes it back: alone it stays where it was moved. With Meshes, its neighbours
+  pull it, and the turn travels from Node-clock to Node-clock as a wave with no rest beat.
+- **The tie.** A tied train's spring is the hand's size times the tie, so the tied train beats at a rate the hand's rest
+  sets. The tied wave presses the hand back in turn: its energy pushes the size in, the hat holds it, and the size moves
+  a little. The tied train's mass is the hand's, read at every round.
+- **Four rows.** The same law on four rows is a quaternion hand. Its rests are a sphere, and a sphere has no loop that
+  cannot be shrunk: a turn round a ring of Node-clocks can unwind, where on the circle of two rows it can only through
+  the top of the hat, at a cost of hat n^2 at one Node-clock.
 
 ## 2. In the tensor algebra
 
-### 2.1 The held hand (DERIVED; CHECKED on the act)
+- **The law.** On the held train's rows k_a, the norm |k|^2 = SUM_a k_a^2 and
+  - V = hat (|k|^2 - n)^2, laid as monomials of J's potential by contract.pushes, every leg pushed by minus the factor
+    times the other three (term 6's contraction):
+    - (hat; a, a, a, a) on every held row;
+    - (2 hat; a, a, b, b) for every pair a < b;
+    - (-2 hat n; a, a, unit, unit) on every held row (the constant hat n^2 dropped).
+  - The push on row a is the sum of the legs' pushes: -4 hat a^3 - 4 hat a SUM_(b != a) b^2 + 4 hat n a = -4 hat
+    (|k|^2 - n) k_a = -dV/dk_a. Probe (a) checks it against contract on 216 whole points, on two rows and on four.
+  - Local (each Node-clock's own rows at the now slot), counts only, every leg even, A1 under the 24 (|k|^2 is a sum of
+    an A1 square and an A2 square), even under the mirror.
+- **The rests.** The push is 0 exactly wherever |k|^2 = n, so a hand laid still there stays still on any act where
+  zero push moves nothing (probe (b)).
+  - On two rows the whole rests are the Gaussian integers of norm n. At n = 5^10, (2 + i)^j (2 - i)^(10 - j) times
+    the four units, j = 0 to 10: 44 points, as r_2(5^10) = 4 (10 + 1). Every n = R^2 has at least (R, 0).
+  - On four rows every n has whole rests (Lagrange). Here they are products of ten whole quaternions of norm 5: 216
+    distinct points, each of norm 5^10, by multiplication alone (probe (j)).
+- **On the act.** The edge's split carries each gear's momentum and splits it at the next edge's dial. At constant
+  teeth W the counts obey W (a+ - 2 a + b) = push, the remainder kept in the tooth. Linearized about a rest:
+  - the size: W (d+ - 2 d + d-) = -8 hat n d, so 4 sin^2 (omega / 2) = 8 hat n / W (the Higgs's m^2 = 8 lambda v^2);
+  - the angle: no push at first order; with grips g on the Meshes it is the massless wave 4 sin^2 (omega / 2) = g
+    lambda_q / W, lambda_q the Laplacian's eigenvalue of the mode;
+  - a tied train x: (tie; x, x, a, a) over the held rows, V = tie x^2 |k|^2, so its spring is 2 tie |k|^2, 2 tie n at
+    the rest, and the push it lands on the hand is -2 tie x^2 k_a, along k.
+- **The window.** The step's window is strict, 0 < K / W < 4 (the frame's mathematician, item 5). The held rows' own
+  spring at the rest is 8 hat n along the size and 0 along the angle, with no own spring of 2 W. With Meshes the
+  size's mode at the board's corner needs 2 SUM_6 g + 8 hat n < 4 W. On the probe, SUM_6 g = W and 8 hat n = W / 250.
+- **The answer's size.** A tied wave of mean square x^2 presses the size in by d = -tie x^2 / (4 hat R) at |k| = R, so
+  the hand stays near its rest while tie x^2 is far below 4 hat R^2. At a fixed tied spring K_t = 2 tie R^2 and size's
+  spring K_s = 8 hat R^2, that reads x^2 K_t far below R^2 K_s. On the probe K_s / K_t = 4/3, x = 100 against R =
+  3,125, held; at R = 1, the frame's unit key, x = 100 is not, and the hand is thrown off (probe (k)).
+- **The weight.** At a still rest, a = b, every tooth 0, |k|^2 = n: the kinetic sum W (a - b)^2 is 0 and V is 0 at
+  every Node-clock (probe (d)). Term 5 in the books' form reads momenta in and out and the Meshes' stretches (the Boss's
+  19:1x, item 4); a still hand laid alike has neither, so it sources nothing.
+- **The 24 and the mirror.** An odd turn negates the A2 row. With the twisted action of frame 1 (a negated row's tooth
+  s -> -1 - s) the act commutes with it at every round: the split of -n - 1 at the same dial is (-q, -1 - s). With the
+  plain s -> -s it departs only where a tooth stands at -D, the half-open edge (probe (i) meets neither departure). V is
+  even, so the run back is exact (probe (h)).
 
-- **The step.** Two parts re and im, each a gear at teeth W pushed by its own spring, -kappa times the part. With
-  4 W sin^2 (w / 2) = kappa, the step's two solutions are cos(t w) and sin(t w).
-- **What is exact in real numbers.** Laid a quarter turn apart, re = A cos(t w) and im = A sin(t w) give at every round:
-  - the size re^2 + im^2 = A^2;
-  - each part's wind D = now^2 - next x before = A^2 sin^2 w, the leapfrog's identity
-    cos^2 (t w) - cos((t + 1) w) cos((t - 1) w) = sin^2 w;
-  - the turned momentum L = re_now im_before - im_now re_before = -A^2 sin w.
-- **On the act.** The carries round each part to whole counts, so the size and D wander by the carry's remainder:
-  - the size by 58, 114 and 369 parts per million of A^2 over 1,000, 10,000 and 100,000 rounds;
-  - D's sum by 141 parts per million of its mean, which stands 55 parts per million above the closed form (probe (a)).
-  These are exact invariants of the step in real numbers, not of the act.
-- **The run back is exact** by the mirror, whatever the lay: 100,000 rounds out and back, bit for bit (probe (a)).
-- **The control.** The same hand laid with both parts in phase does not turn round: its size beats at full depth, from
-  1,922 to 2.000 x 10^12 against A^2 = 10^12, with L = 0.
+## 3. On the board (g3_hat.py on node-live's src at 939fa65a7)
 
-### 2.2 One winding, and n's unit (DERIVED)
+The probe's strengths, CHOSEN: key R = 3,125 = 5^5, n = R^2 = 9,765,625, hat 1, W = 2,000 n (the size's beat 8 hat n /
+W = 1/250), tie 3 (the tied spring 2 tie n / W = 3/1,000), the held rows' grip W/6 on each Mesh where they have Meshes,
+the tied train's W/100, light's W/6. Every count is a whole number and every lay is whole, with no function of the arc.
 
-- The wind summed over the parts is 2 A^2 sin^2 w, so one winding reads A^2 = key / (2 sin^2 w).
-- At the probe's kappa = W div 16, sin^2 w = 63 / 1024 exactly, so D = (126 / 1024) A^2: at A = n = 10^6,
-  D = 123,046,875,000 (probe (e): D at the lay 123,046,783,021, the laid im rounded).
-- So G3's n^2 is the key over 2 sin^2 w, and term 11's key is one winding of D: one relation.
-- **The src carries no quantum of D.** The drive's teeth are 1 on the force's path. Read as the key, they give A^2 =
-  8.127 counts^2 (the probe's helper's reading, not the law's). The key's value is OPEN with term 11.
-
-### 2.3 The tie through the size (DERIVED; CHECKED)
-
-- **The tie.** A whole-speed hand x tied to the held hand has the spring s0 + (g / n)(re^2 + im^2): at the held size n^2
-  that is s0 + g n, steady. The held parts take the back-reaction, -(g / n) re x^2 and -(g / n) im x^2.
-- **The potential.** V = (kappa / 2)(re^2 + im^2) + (s0 / 2) x^2 + (g / (2 n))(re^2 + im^2) x^2 + (lam / 4) x^4 is a sum
-  of terms at or above 0 wherever kappa, s0, g and lam are. On every whole (re, im, x) with each from -2 n to 2 n in
-  steps of n div 50, the least of 4 n V is 0 at lam = 0, 1 and 9,097,714 (probe (c)). So lam has no bound, against the
-  sixth text's least 4,548,858; s0 at or above 0 replaces it.
-- **The qualification.** V's least is the hand at rest at 0: nothing in the potential holds the hand at one winding.
-  The lay and D's near-conservation hold it, and the act lets D wander by 141 parts per million. One winding held
-  exactly needs D conserved exactly on the act, a question for the completed carry's form (OPEN).
-- **Big Pic's probe agrees** (6527628627, item 1). Read in windows of 12,000 rounds over 240,000, a free two-part hand's
-  turn holds to under one grain while its wind wanders up to 10 grains. So a winding that rests on D alone wanders with
-  it: either the completed carry's form holds D, or the winding rests on what the act holds exactly.
-
-### 2.4 Why the other ties pump (DERIVED; CHECKED)
-
-A tie whose spring beats pumps the tied hand at Mathieu's primary resonance, growing as eps w / 4 a round, eps the
-spring's relative swing. On the act, 20,000 rounds, x tuned to the worst case (probe (b)):
-
-| Tie | eps | Seed 1,000 on the act: rounds to twice, ten times its first window | The exact linearized recurrence |
-|---|---|---|---|
-| (i) Big Pic's, through re^2 + im^2, x at the hand's beat | 1.5 x 10^-5 (the carry's remainder) | never, never | never, never |
-| (ii) a one-part count through 2 re^2, the pump at 2 w | 0.040 | 400, 1,000 | 400, 1,000 |
-| (iii) the sixth text's linear tie g k, k = n + re' at twice x's beat | 0.010 | 8,000, never in 20,000 | 8,000, never |
-| (iv) a tie through re alone, x at w / 2 | 0.159 | 200, 500 | 200, 500 |
-
-- Under (i), x laid at 1 creeps to 118 and x laid at 1,000 falls slowly to 730. A scratch diagnosis by the probe's
-  helper traces both to the carry: x's spring held exactly at kappa shows no creep, and the fall needs the back-reaction
-  on a hand the step leaves slightly elliptical. Neither is resonant growth.
-- The controls, x alone at kappa, at g n and at a spring off W's lattice, stay within their seeds.
-- Growth is read as a count over a span, as the law asks of a reading, and the act grows as its exact linearized
-  recurrence does in every row. Mathieu's eps w / 4 needs the angle w, so its column is dropped; the order of the
-  pumped rows, (iv) fastest and (iii) slowest, is the one eps w / 4 gives.
-
-### 2.5 The ring, the winding and walls (CHECKED)
-
-On a ring of 128, each part and x pulled by their two neighbours at the grip, 4,000 rounds (probe (d)):
-- **One phase everywhere:** the size spreads by 215.59 parts per million over the ring and the rounds, and no part
-  changes sign around the ring, against the sixth text's hat, which flipped 114 to 126 of 128 Node-clocks.
-- **One winding** (the phase 2 pi j / 128 at Node-clock j): the winding stays 1 at every round, the size never falls
-  below 0.99988 A^2, and the whole ring runs back bit for bit.
-- **Two halves at opposite phases**, the "two signs":
-  - the seams' energy spreads as waves: per mille of its lay, 6, 17, 12, 30, 7, 11, 1 and 66 at rounds 500 to 4,000;
-  - the size at the seams falls near 0 (3 x 10^-7 A^2);
-  - the halves' middles keep opposed hands at 463 per mille of A^2 each.
-  The hand is linear, with no ring of rests to choose a phase from, so no wall stands, by construction.
-- **In three dimensions** a phase that winds once round a line is a string, its core where the size vanishes. The act
-  keeps a ring's winding; strings and their readings are OPEN.
-
-### 2.6 The half-speed tie, the anchor (named; not built)
-
-- **The tie.** A half-speed clock's two hands, psi_L and psi_R, are rocked into each other by y times the held hand. The
-  rocking rate y A is their beat.
-- **The turn it carries.** The held hand turns at w, so the tie carries the phase e^(i t w). Moved into psi_R, that
-  phase shifts psi_R's beat by w against psi_L's, and the pair reads a background of half the held hand's rate along the
-  axis that tells the two hands apart, an axial background.
-- So the anchor's tie must not see the held hand's turn, or the turn must be removed, with Big Pic's "the held
-  hand's own turn at every Node-clock, which light must not read", which here reaches every clock the anchor rocks.
-- **Big Pic's word** (6527540022, item 8): the readings no left or right turn moves are the hand's norm, four squares,
-  and the real part of the click's product, and a tie linear in the hand sees the turn. So an anchor that must not see
-  the turn ties through the norm; in whole counts, through (re^2 + im^2) / n, which needs no root, its rate y n at the
-  held size, steady.
-- **The tension with G5's cure is real** (the same item): the draw reads the turn in the hand's fine teeth, and the
-  anchor reads its norm. They read two parts of one hand: OPEN.
-
-### 2.7 The held hand's turn and weight (OPEN)
-
-- **Its turn.** L = -A^2 sin w at every Node-clock: a uniform density of the held family's turn. The mirror sends the
-  hand to the opposite sense, so the vacuum's sense is the lay's.
-- **Its weight.** The hand's energy at each Node-clock is one quantum. Term 5 sources the 00 slot by rho + 3 p of the
-  strides; for a hand turning round at its own beat the pressure is 0 on the mean, so the held hand weighs as dust of
-  one quantum per Node-clock. OPEN with term 5's source and term 9's rest (term 9's second text: the slot form reads
-  such a rest in gamma).
-
-## 3. On the board
-
-What the event board's counts do (g3_held_hand.txt), at the head's W, n = 10^6, kappa = W div 16, the grip W div 6:
-
-- **One Node-clock, the hand alone** (probe (a)): laid re = 10^6, im = 0, a quarter turn of the step's own beat on the
-  before slot.
-  - 100,000 rounds: the size from 999,838,664,010 to 1,000,207,208,909;
-  - D's sum from 123,044,302,353 to 123,061,621,303 against 2 A^2 sin^2 w = 123,046,875,000;
-  - L from -248,067,926,672 to -248,035,382,245 against -A^2 sin w = -248,039,185,412;
-  - every kept tooth within [0, W);
-  - the run back bit for bit.
-- **The ties at resonance** (probe (b)): the table of 2.4.
-- **The potential** (probe (c)): the least of 4 n V is 0 on 201^3 points at three values of lam.
-- **The ring** (probe (d)): 2.5's numbers.
-- **n's unit** (probe (e)): D at the lay 123,046,783,021; D over 2 sin^2 w = 999,999,252,488, against A^2 = 10^12.
-- **G5's pointer in vacuum** (probe (f)), each draw in the parts' own order (G5's third-text readers found the
-  earlier figures drawn by a rank): the held hand on a ring of 128, the merge at one Node-clock and its two
-  neighbours, its fine teeth born at H as G5 lays them, 10,800 draws:
-  - the turning hand moves its fine teeth by a median 0.312 of a turn each round;
-  - on the plan's strengths (kappa = W div 16, the grip W div 6) the teeth sit on a lattice, W / gcd(W, kappa) = 16:
-    the pointer takes 8 values, the 3:7 split at z^2 335.266;
-  - one count off the lattice (kappa + 1): 10,797 distinct values, the tenths 9,406.448 on 9, the 3:7 split at z^2
-    301.555;
-  - off the lattice by a step at the hand's swing (kappa + W div (16 n) + 1), at one phase: z^2 2.739, 0.049 and 0.159
-    at 1:1, 1:3 and 3:7, but its 1:3 Fano factor over 40 rounds is 1.223, z^2 6.812, past the 1 per cent point;
-  - **over 64 start angles** (j and j + 32 negate the hand and give the same statistics, so 32 are independent), the
-    tenths fail at the 5, 1 and 0.1 per cent points in 34, 26 and 18 of 64 at the ring's merge, and in 34, 20 and 6
-    on the board's star of seven Node-clocks, against chance's 3.2, 0.64 and 0.064;
-  - the turning is not what moves the teeth: the in-phase control and the standing count laid 10^3 off n move theirs as
-    much (median 0.312), and the standing count near rest freezes the pointer, part 0 at every draw;
-  - the run back with the draw read, 1,000 rounds: bit for bit.
-
-So one turning hand is one rotation, and G5's draw on it is fair only at a few phases. Big Pic withdrew the held hand as
-the pointer's source (6528531569); the readers' figures (G5's third text) and these agree.
+- **(a) The law:** J from contract equals -4 hat (|k|^2 - n) k_a on 2 of 2 rows and on 4 of 4 rows at 216 whole points,
+  and is 0 on every row at 216 whole rests.
+- **(b) The rest,** 6 by 6 by 6, the tied train and light at 0, 2,000 rounds:
+  - laid alike at (R, 0), with Meshes: no count and no tooth moved in any of 2,000 rounds;
+  - scattered over the 44 rests, Mesh-less: none moved in any round;
+  - scattered, with Meshes: every round moves, and the hand leaves the circle: |k|^2 - n up to 8.02 n, the largest held
+    count 8,480 (2.71 R); at a stiffer hat, 40, up to 9.43 n and 10,091 (3.23 R). A lay of random angles holds gradient
+    energy far above the hat's depth (a Mesh's grip W/6 = 333 n against hat), a hot lay of the angle, bounded, no
+    runaway; the tied train and light stayed at 0 in every case.
+- **(c) The norm the law gives,** laid alike, 2,000 rounds:
+  - at (R + 31, 0) with the hat: |k|^2 / n within 979,624 to 1,019,938 ppm; k_0 - R changes sign 41 times, against 40
+    by the exact linear recurrence at 10^40 its size;
+  - the same lay with no hat: |k|^2 / n stands at 1,019,938 ppm, no sign change: the seed's norm stands;
+  - near the top, at (R / 25, 0) = (125, 0), 1,600 ppm of n, with the hat: |k|^2 / n within 321 to 1,999,622 ppm, 18
+    sign changes. The hand rolls out and swings about n, near V's equal heights to the lay's (1,600 and 1,998,400 ppm),
+    within the act's own energy, which is the step's and not the continuum's. The act carries no damping, so a seed off
+    the rest swings about it for good; the rest is the law's.
+- **(d) The weight,** (b)'s still lays at round 2,000: the kinetic sum 0, the potential sum 0, the teeth's momenta
+  summed 0, alike with Meshes and scattered without.
+- **(e) The angle,** a ring of 48, k_0 = R everywhere and k_1 = 50 times the ring's whole mode of period 6 (2, 1, -1,
+  -2, -1, 1, whose second difference is minus itself), standing, 600 rounds:
+  - with Meshes: k_1 at Node-clock 0 changes sign 79 times, against 79 by the massless recurrence W (p+ - 2 p + p-) =
+    -(W/6) p; k_1 there within -102 to 102; |k|^2 - n at most 7,353 ppm;
+  - Mesh-less: k_1 stays at 100, no sign change; |k|^2 - n at most 1,664 ppm (the size taking up the turn's second
+    order).
+- **(f) The tie,** the ring, the hand at (R, 0) with Meshes, the tied train 50 times the mode, 2,000 rounds:
+  - the tied train changes sign 73 times at Node-clock 0, against 73 by the recurrence with the spring W/100 + 2 tie n;
+  - the hand's |k|^2 - n within -8,303 to 7,052 ppm: the hand answers the tied wave;
+  - against the unit spring (tie n; x, x, unit, unit) with no hand, the frame's measure of its item 2: the tied train
+    departs in 1,836 of 2,000 rounds, first at round 161.
+- **(g) A push across k:** (f)'s lay with the hand turning, b = (R, -25): k_1 changes sign 4 times, two turns;
+  |k|^2 - n within -14,933 to 72,607 ppm (the turn's outward stretch, W R Omega^2 = 8 hat n d, near 3.2 percent in
+  |k|^2 at Omega = 25 / R, and the size's swing about it); the tied train changes sign 73 times, as with the still hand.
+- **(h) The run back,** 6 by 6 by 6, the hand scattered over the rests with small momenta, the tied train and light
+  laid moving, every Mesh, the hat and the tie, 500 rounds out and 500 back: the start returns bit for bit.
+- **(i) The 24's A2 sign,** (h)'s lay, 300 rounds: tick of the flipped state equals the flip of the ticked state at 300
+  of 300 rounds with the twisted tooth, and at 300 of 300 with the plain one, so no tooth of the A2 row met -D in this
+  run.
+- **(j) Four rows, the quaternion:**
+  - 216 products of ten whole quaternions of norm 5, each of norm n, all distinct;
+  - laid scattered over them, Mesh-less: nothing moved in any of 500 rounds;
+  - the size laid at (R + 31, 0, 0, 0): 41 sign changes in 2,000 rounds, as on two rows;
+  - three angles laid on the ring with Meshes, each the mode shifted: 79, 79 and 79 sign changes, against 79, 79 and
+    79 by the massless recurrence from each lay's own value.
+- **(k) The frame's unit key,** n = 1, the hand at (1, 0), the same beats (hat 10^6, W = 2,000 hat, tie 3 W / 2,000)
+  and (f)'s tied wave: the hand leaves |k|^2 = 1 in round 1 and passes |k|^2 = 10^6 in round 3 (1,655,048,801,169),
+  outside the window, where the run stops. The norm's count must be fine against the tied wave (section 2).
 
 ## 4. In the clicks (the physics, last)
 
-The physics is read after the clicks, never on the board. Energy and momentum are read in the clicks' spacetime (the
-owner's word of 16:4x UTC). No click is built for the coupling family; these are the readings its clicks owe.
+- **The Higgs's form.** V = lambda (|Phi|^2 - v^2)^2 is nature's potential for its held field, and the act's hat is it,
+  with hat for lambda and n for v^2 in counts. On real rows the size's mass squared is 8 lambda v^2, and the size's
+  beat on the act is 8 hat n / W at the recurrence's count (probe (c)).
+- **A vacuum that weighs nothing.** At the bottom of the hat V = 0, and a still field has no kinetic part, so the vacuum
+  sources nothing, with no constant to cancel. The turning hand of the frame and of the seventh text weighed W |k|^2 a
+  Node-clock at zero pressure, which its physicist refused (the seventh text's B).
+- **No stimulated decay of the vacuum.** The seventh text's two readers found the turning hand's size mode at the
+  threshold of two tied quanta, so the turning vacuum fed them. A still vacuum holds no energy to feed. What remains is
+  physics: an excited size quantum may fall into two tied quanta where 8 hat n exceeds 4 times the tied spring, as the
+  Higgs falls into lighter pairs; the probe's strengths sit below that.
+- **Mass from the hand.** The tied train's mass squared, 2 tie n, is the hand's rest read through the tie, the portal
+  form lambda_p |Phi|^2 x^2. The tie lands its push along k, so the size answers the tied wave (probe (f)): the field's
+  quantum couples to the masses it gives, as the Higgs's does. Nature's gauge bosons take theirs from g^2 v^2 and its
+  fermions from y v; neither is on the act.
+- **The angle.** With Meshes the angle is a massless wave, and the tie, which reads |k|^2 alone, does not couple to it.
+  In nature the Higgs's three angles are eaten by the W and the Z; no gauge field is on the act, so here they stay, free
+  and dark (OPEN). Mesh-less, they stand.
+- **Four rows.** Nature's Higgs is a doublet, four real fields, a quaternion; V on four rows is symmetric under O(4),
+  the custodial symmetry. Its rests are the 3-sphere: no wall (it is connected), no string (every loop shrinks), no
+  monopole. The circle of two rows has strings by its loops, and the hand of the frame is two rows (named).
+- **The anchor.** psi_L Phi psi_R, a quaternion product, would give chiral pairs their masses (Big Pic). The half-speed
+  kinds are not on the act (NOT_CLOSED 8), so it is named and not built.
 
-- **The held boson.** The held hand's size mode is its own beat, set by kappa: the held boson. The tied families'
-  springs are steady, s0 + g n, so their masses are steady, and the held hand's beat pumps none of them (2.4). The sixth
-  text's stimulated decay of the held boson, seeded at Mathieu's rate on a ring, was the standing count's beat; on the
-  turning hand it is gone.
-- **Nature's mechanism.** In nature the Higgs field's value stands still and its phase is a choice of gauge. Here the
-  held hand turns: in the clicks that is a chemical potential of the held family's turn, a uniform charge in the board's
-  frame, and Lorentz invariance in the clicks then asks that the turn be unseen by every clock the clicks read (OPEN).
-- **The held hand's vacuum is a medium** (G5's third-text physicist, his N2). Its kinetic and spring parts are equal
-  every round, so it carries energy kappa A^2 per Node-clock at zero pressure. It rests in the lattice's frame and turns
-  one way, which the mirror reverses, and term 5 sources it. Nature's vacuum has no rest frame and no sense, so the held
-  hand must be unseen by every clock the clicks read, or it is refused: OPEN with its turn and its weight.
-- **The anchor's turn.** If a linear tie sees the turn, the left and right hands of every half-speed family beat apart
-  by half the held hand's rate, an axial background b_0 in the clicks. Torsion pendulums with polarized electrons bound
-  such backgrounds near 10^-27 GeV where they break boosts and 10^-31 GeV where they break rotations (Heckel and others,
-  arXiv:0808.2673). If the held hand's beat is the held boson's mass and that boson is nature's Higgs, at 125 GeV, the
-  background is refused there by about 29 orders, so the anchor must not see the turn. Big Pic's word: it ties through
-  the norm (2.6).
-- **Its weight.** Dust of one quantum per Node-clock gravitates. Unless the held quantum is weightless, a reading the
-  law does not give, the board's density is the held boson's mass per Node-clock: OPEN with term 5 and the law above.
-- **Strings.** A phase winding round a line is a global string. Its readings and bounds are owed with the three-
-  dimensional board.
-- **Departures, named:** the held hand's turn as a uniform charge; the axial background unless the anchor is blind to
-  the turn; the held hand's weight; one winding held only approximately on the act.
+## 5. What it answers, item by item
 
-## 5. What stands, and what is owed
+**In the night's frame (FRAMES.md 6; NOT_CLOSED):**
+- **19, no vacuum minimum:** the hat is a potential in the law; its rest is |k|^2 = n, and no other norm stands (probe
+  (c)). NOT_CLOSED 19 names it as the owner's alternative, so it is for his word.
+- **20, the vacuum's rest frame:** the still hand weighs 0 and sources nothing (probe (d)).
+- **22, the held train Mesh-less:** the held rows keep their Meshes inside the window, and the angle travels (probes
+  (b), (e), (f)). The Mesh-less form stays lawful and still.
+- **The frame's mathematician** (g3_math, through the Boss's 19:1x):
+  - item 2, the held hand bit for bit the unit spring within the room: the tied train departs from it in 1,836 of 2,000
+    rounds (probe (f));
+  - item 3, decision 40 (g) unmet, the seed setting k.k, the quadrature, the phase, the sense and the tooth: the rest is
+    the law's, and a still hand has no quadrature, phase, sense or turning tooth to set; the seed lays its angle, a
+    zero mode, and the rest's size n is CHOSEN in counts (below);
+  - item 4, a push on k not along k breaking every tied beat: the push turns the hand and leaves the tied beat (probe
+    (g)); a push along k meets the hat.
+- **The frame's physicist,** through the frame's text: item 1, the own spring 2 W and the Meshes' 2 W at the window's
+  top: no own spring of 2 W stands, and the size's 8 hat n is small beside the Meshes (section 2); items 2 and 3 as 19
+  and 20 above; item 5, one mass for everything tied, stays (one tie per pair, the frame's); item 6, the room at peak:
+  the turning hand's room goes with it, and the still hand's bound is section 2's answer's size.
 
-- **Clock:** a held hand of two parts turning round at every Node-clock, one winding of D, never clicked; whole-speed
-  hands tied through its size, half-speed hands rocked by it, light passing it unmeshed.
-- **Board:** the size and D steady to the carry's remainder (369 and 141 parts per million over 100,000 rounds); the run
-  back exact; the size tie steady at resonance; V at or above 0; a ring's winding kept; no wall.
-- **Algebra:** D = 2 A^2 sin^2 w; A^2 = key / (2 sin^2 w); V at or above 0 for every kappa, s0, g and lam at or above 0.
-- **Clicks:** the tied masses steady; the held boson's decay pump gone; the anchor's turn and the hand's weight OPEN.
-- **Status:** DRAFTED, CHECKED on the act on one Node-clock and a ring of 128; to its two readers. The anchor is the
-  Boss's agent's hand, blind beside this one.
+**The seventh text's readers and Big Pic's re-check (6530163632, item 3):**
+- The mathematician's A (the tie steady only for an exactly round hand, the size mode at the two-quanta threshold): a
+  still hand has no swing to tie through, and its size beats at 8 hat n / W, a strength apart from the tied spring.
+- His B (a ring's winding held for one mode only; "global string" presuming a vacuum manifold): the hat gives the
+  manifold, the circle on two rows and the sphere on four; strings stand on the circle and none on the sphere.
+- The physicist's A (the held boson's stimulated decay): a still vacuum holds no energy to give (section 4).
+- His B (the weight): 0 (probe (d)).
+- His C (the norm reaches vector-like pairs only): the anchor, a quaternion product, is the chiral road, named and not
+  built (section 4).
+- Big Pic's: the turning hand stays withdrawn as nature's vacuum; this text holds the hand still.
 
-**OPEN:**
-1. One winding held exactly: D conserved exactly on the act, the completed carry's form.
-2. The held hand's turn: unseen by light (Big Pic) and by the anchor's tie, which ties through the norm (2.6, 4); the
-   draw reads it in the fine teeth, the tension OPEN.
-3. The held hand's weight (2.7, 4).
-4. The half-speed gear and the anchor on the act (the Boss's agents).
-5. The strengths derived: kappa, g for each family, lam; off W's coarse lattices by a step at the hand's swing, for G5
-   (3).
-6. Strings on the three-dimensional board.
-7. Which families tie to the held hand: those whose two hands differ in a turn the held hand carries (Big Pic,
-   6526181441 item 3), to derive.
+## 6. The frame, for the architect through the Boss
 
-## 6. The standing count, and the sixth text's readers
+- **Form.** plans.holding lays, on the rows of the train the frame's character test finds held, the hat's monomials in
+  place of the own spring (rest; rho, rho, 1, 1):
+  - (hat; a, a, a, a) on every held row;
+  - (2 hat; a, a, b, b) for every pair of held rows a < b;
+  - (-2 hat R^2; a, a, unit, unit) on every held row.
+  - The seed lays the hand at (R, 0) at every Node-clock, still: now and before alike, the tooth 0. R = 1 is the frame's
+    (1, 0).
+  - The tie keeps its form, (hold x f x C_yz; x_y, x_z, k_rho, k_rho). Its spring at the rest is 2 hold f R^2, so the
+    frame's tied beat holds with f = rest div (Gamma R^2) by one carry.
+- **The held rows' grips:** both lawful. Mesh-less as built (the angle stands), or with every row's grip (the angle
+  travels as a massless wave), within the window.
+- **Strengths, CHOSEN in the universe file:** "hat", at least 1, and "held", the hand's rest R, at least 1.
+  - The window: 2 SUM_6 g_held + 8 hat R^2 below 4 W, strict.
+  - The answer's size: the tied waves' x^2 K_t well below R^2 K_s (section 2), so R fine against the tied amplitude.
+- **The test,** on the click world:
+  - the hand still bit for bit at every Node-clock with the tied train at 0;
+  - the size laid off its rest by a few counts, its sign changes against 8 hat R^2 / W's recurrence;
+  - the tied train's beat against its spring's recurrence, with the hand's |k|^2 moving with it;
+  - the run back exact;
+  - the A2 flip with the twisted tooth commuting with the act.
+- **Prices, named:**
+  - the norm's count R CHOSEN, and fine against the tied waves: at R = 1 the frame's tied wave throws it off (probe (k));
+  - with Meshes, the angle is a massless wave coupled to nothing tied; nature's angles are eaten by gauge fields, which
+    the act lacks;
+  - a hot lay of the angle with Meshes leaves the circle, bounded (probe (b));
+  - on two rows the rests form a circle, with strings by its loops; four rows have none;
+  - the anchor waits on the half-speed kinds.
+- **Replaced by:** this text passing its pair; the owner's word on a potential in the law (NOT_CLOSED 19).
 
-The sixth text's held count stood still at n, tied linearly through k. Its readers (the mathematician's seven, the
-physicist's six) refused it. Their items are answered by g3_window_and_well.py, which prints every number they asked
-for, and by this text's replacement of the standing count:
+## 7. What stands, and what is owed
 
-- **The sign's window** (mathematician 1; physicist 2). The tied quanta attract only while M > 0, from the least lam up
-  to the least + 288,815, 63.49 thousandths of it, and repel below 4 g n at every admissible lam (probe (a1)). On the
-  turning hand there is no lam bound, so no window (2.3).
-- **The mirror well** (mathematician 2; physicist 1). At the least lam a far condensate survives every tilt of the
-  quartic held potential, and the tie even in k leaves two equal leasts (probe (b)). On the turning hand V's least is
-  the hand at rest and no well forms (2.3).
-- **The hat on a ring** (physicist 1): it flips 114 to 126 of 128 Node-clocks in the 2,000-round samples and 84 to 128
-  counted every round (probe (c)), against no flip on the turning hand (2.5).
-- **The stimulated decay** (physicist 3): onsets near rounds 6,750, 5,250 and 2,750 for seeds of 1, 10^3 and 10^6, none
-  with the seed at 0 (probe (i)); gone on the turning hand (2.4).
-- **The clumps** (physicist 4): the inhomogeneity's sign changes per window at the least lam, 2 at every window from
-  round 2,000 to 3,500, and at twice the least 156 to 270 per mille with 14 to 32 sign changes (probe (j)).
-- **The numbers no probe printed, and the reach** (mathematician 4 and 5): printed now (probes (e) to (h)):
-  - the band count: its own prediction needs an angle and is withdrawn; x changes sign 46 times around the ring at
-    round 3,000, on the act and on its exact linearized recurrence alike;
-  - the motion held on its valley at q = 0.16 and 0.64, 61.287 and 55.624 by the binomial series; at q = 1.44 and 2.56
-    the series does not reach and the arithmetic-geometric mean needs a radical, so both are withdrawn;
-  - the largest c passes its reach, the reach's inequality false at it, in 16 of 40 lays, by a whole thousandth or more
-    in 15;
-  - the paired differences -1.925, 0.825 and 6.575, the variances of their means 2.072, 1.879 and 2.418.
-  The lays one count apart are struck.
-- **The decay's conversions** (physicist 3): the key's window 1.819 x 10^24 to 2.843 x 10^36; the width per real row
-  6.681 x 10^-17 to 1.044 x 10^-4 a round; two quanta's Yukawa strength 1.458 x 10^-15 to 2.278 x 10^-3, against about
-  0.84; the graviton's bound 2.42 x 10^-23 eV refusing rounds shorter than 0.090 ms (probe (k)).
-- **The CHECKED sentence, the Hessian lead, the condensate's partner and minors** (mathematician 3, 6 and 7; physicist
-  5 and 6): the condensate's springs between 2.575 and 2.576 g n and between 100.888 and 100.889 g n, as the
-  characteristic polynomial's sign gives them; their beats between 1.604 and 1.605 and between 2.008 and 2.009 times,
-  and 1.605 and 2.025 on the step's exact linear recurrence (probe (d)).
-
-These findings are the record of why the standing count leaves; they stand in the sixth text's terms, and none carries
-over to the turning hand except where 2.3 to 2.5 say so.
-
-## 7. For the architecture document's term 6, through Sofer
-
-- **Term 6's coupling family:** a held hand turning round at every Node-clock, one winding of D, never clicked; the tie
-  through its size for whole-speed hands, the anchor's tie through the norm for half-speed hands (Big Pic); lam's bound
-  gone.
-- **Status:** DRAFTED, CHECKED on the act (g3_held_hand); the anchor the Boss's agent's, blind; the OPEN items as in
-  section 5.
+- **Algebra:** the hat's pushes are -dV/dk exactly and vanish at the rests (CHECKED); the size's beat 8 hat n / W
+  (DERIVED, CHECKED by the recurrence's count); the angle massless (DERIVED, CHECKED); the tied spring 2 tie |k|^2
+  (DERIVED, CHECKED); the twisted A2 flip commutes (DERIVED, CHECKED).
+- **Clicks:** the vacuum weighs 0 (DERIVED, CHECKED); the Higgs's form and mass formula (the standard theory's); mass
+  from the hand's rest, the size answering the tied wave (CHECKED).
+- **Status:** DRAFTED; the frame for the night with the Boss's approval after the fact.
+- **OPEN:**
+  - the norm's count R: the law gives one rest, the file gives its count;
+  - the angle's gauge: no gauge field on the act eats it;
+  - the anchor and the chiral pairs (the half-speed kinds);
+  - one tie per pair, so one mass for everything tied at one tie (NOT_CLOSED 21);
+  - a hot vacuum's settling: the act has no damping, so a seed off the rest swings about it for good.
+- **Departures:** a massless free angle with Meshes; strings on two rows; no damping of the size.
 
 ## 8. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
-- **The probes rerun:** g3_held_hand.py in 72 s and g3_window_and_well.py in 76 s on the head's src at
-  9751f91c1, their outputs the saved ones byte for byte; no root, logarithm or search in either.
-- **Each step derived again:** D = 2 A^2 sin^2 w by the leapfrog's identity; sin^2 w = 63/1024 at kappa = W div 16, so
-  A^2 = n^2 exactly at key = 2 n^2 sin^2 w; V at or above 0 as a sum of terms each at or above 0.
-- **Cases built to pass the text's own words, and what broke:**
-  - G5's probe (f) drew by a rank, the rule G5 refuses (both of G5's third-text readers): it is redrawn in the parts'
-    own order with the 64-angle scan, and the held hand is withdrawn as G5's pointer's source.
-  - The growth rates and two of the valley's counts read through logarithms and radicals, which the law bars: growth is
-    now a count over a span against the exact linearized recurrence, and the counts at q = 1.44 and 2.56 are withdrawn.
-  - "n is the root of the key over 2 sin^2 w" is written as n^2, the key over 2 sin^2 w, exactly.
-  - The turning hand's lay still takes its angle from an arcsine series: a lay, never a reading, named for the owner's
-    ruling on the law's line on circularity, with Big Pic's Pythagorean beats (W = a^2 + b^2, kappa = 4 b^2) as the lay
-    with no series if the ruling asks for one.
+- **The probe rerun** on node-live's src at 939fa65a7: g3_hat.py, about 2 minutes (107 s), its output byte for byte against
+  g3_hat.txt. It holds no float, no division but Rule3's carry, no root, no logarithm, no search and no function of the
+  arc; its rests are products of whole numbers, its lays whole modes.
+- **Each step derived again, by hand:**
+  - the push: -4 hat a^3 - 4 hat a SUM_(b != a) b^2 + 4 hat n a = -4 hat (|k|^2 - n) a, from the legs' pushes of the
+    three monomials;
+  - the size's spring: |k|^2 - n = 2 R d + d^2 at (R + d, 0), so the push is -8 hat R^2 d at first order;
+  - the twisted flip: if n + D = 2 D q + r with 0 <= r < 2 D, then -n - 1 + D = 2 D (-q) + (2 D - 1 - r), so the split
+    of -n - 1 is (-q, -1 - s);
+  - the plain flip fails only at r = 0, the tooth at -D;
+  - the answer's size: -2 tie x^2 R = -8 hat R^2 d gives d = -tie x^2 / (4 hat R);
+  - r_2(5^10) = 4 (10 + 1) = 44, and the 44 points are the products listed.
+- **Cases built to break the text's own words:**
+  - with no hat, the seed's norm stands (c): the hat, not the act, gives the rest;
+  - scattered angles with Meshes leave the circle (b): the rest holds the norm only where the angle's energy sits below
+    the hat's depth, said in the prices;
+  - the frame's unit key (k): thrown off in 3 rounds, so the count of the rest is a price;
+  - the unit spring with no hand (f): the hand's answer shows in 1,836 of 2,000 rounds;
+  - the plain A2 flip (i), which departs only at the half-open edge.
+- **What the check found, and the text now carries:** the hat on its own cannot hold a lay of random angles with stiff
+  Meshes (b); the first draft claimed the norm held under every lay, and it holds under the alike lay, the angle's small
+  waves and the tied waves alone.
