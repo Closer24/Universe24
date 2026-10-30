@@ -484,7 +484,7 @@ and where (1.2), and a click takes a whole train, never one row of it (1.6; 1.11
     (the one rule of the remainder, (i)), writing nothing into a, b or r. On a giver and a taker, two-part T1 hands at
     one Node-clock, key x the clicks + the kept tooth less its birth equals the area moved in every one of 6,000
     rounds; the clicks run +7, -7, +7, -7, +6 as the area goes over and back; a quantum carries the key times the
-    taker's beat (0.0500 against 0.0500); the run back and all 24 turns hold state for state; with no vertex nothing
+    taker's beat (0.0508 at the first click and 0.0500 by the seventh, against 0.0500); the run back and all 24 turns hold state for state; with no vertex nothing
     clicks (The light no bob kept). The mutants fail: a write at the click takes each quantum twice; a tooth born at
     0 writes a click and its return wherever the area dips below 0; a gear's own click falls in other rounds;
   - **the split click:** the draw over the parts' sizes by a rank count, the run forward's size times the run back's,
@@ -492,8 +492,10 @@ and where (1.2), and a click takes a whole train, never one row of it (1.6; 1.11
     the quantum goes back to its giver (term 12; OPEN at G5: the draw's fairness, the doubled node's form, and what
     the split click pushes back, the gathering of the twins' areas into the drawn twin, with three candidates named
     in ANIMATE-CLICK and none derived). The draw's number owes the node a dial: the node holds no round, so it has
-    no beat count c, and on the act the seven Node-clocks' fine teeth span only 11 to 62 in pitch units, so for a
-    sizes' total L of 70 or more only 51 values of d are reached (ANIMATE-CLICK, draw.py).
+    no beat count c, and on the act, its plan empty, the seven Node-clocks' fine teeth span only 11 to 62 in pitch units, so for a
+    sizes' total L of 70 or more only 51 values of d are reached (ANIMATE-CLICK, draw.py). A dial alone gives the
+    exactness over L beats, not independence: with c stepping one a round, two rounds in a row draw in one half
+    0.850 of the time at L of 97 and always at 1,000, so independent draws need digits whose span reaches L.
 
 - **Counts the 24 leave alone (A1):** windings, teeth, a clock's count, the number of quanta laid and taken. A
   turn of the board changes none of them.

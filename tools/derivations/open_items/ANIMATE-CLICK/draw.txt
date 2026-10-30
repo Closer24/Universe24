@@ -21,3 +21,9 @@ d = V mod L on the now counts in place of the fine teeth:
   L = 1048583: chi-square of the tenths on 9 345801.1; one Mesh apart in one half 0.555; two rounds in a row in one half 0.698
 
 the counts' V spans -7956 to 8555
+
+d = (c + V) mod L on the fine teeth, c a dial stepping one count a round (decision 29's c):
+  L = 10: two rounds in a row in one half 0.500; one Mesh apart in one half 0.502
+  L = 70: two rounds in a row in one half 0.789; one Mesh apart in one half 0.824
+  L = 97: two rounds in a row in one half 0.850; one Mesh apart in one half 0.871
+  L = 1000: two rounds in a row in one half 1.000; one Mesh apart in one half 1.000

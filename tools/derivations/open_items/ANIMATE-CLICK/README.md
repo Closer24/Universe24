@@ -107,15 +107,23 @@ tensor24-review ed745f7cc as merged in reader-5), its output click.txt beside it
 - **The draw's source on this act: the node owes its dial** (draw.py, draw.txt; decision 29: d = (c + V) mod L, c the
   Node-clock's beat count, V the seven Node-clocks' A1 fine teeth in pitch units, L the sizes' total).
   - The node holds no round and no time (TENSOR24_NODE.md section 0), so it has no c, and the draw reads V alone.
-  - On the act, with one light train on a board of 6 by 6 by 6 at the example's W = 6 grip, a fine tooth takes six
-    values in pitch units, so V spans 11 to 62 over the seven Node-clocks. For L of 2, 3 and 10 every value of d is
-    reached; for L of 70, 97, 1,000, 16,384 and 1,048,583 only 51 are, so a part whose sizes lie beyond V's top is
-    never drawn.
+  - On the act as built, its plan empty until G3, with one light train on a board of 6 by 6 by 6 at the example's
+    W = 6 grip, a fine tooth takes six values in pitch units, so V spans 11 to 62 over the seven Node-clocks. For L
+    of 2, 3 and 10 every value of d is reached; for L of 70, 97, 1,000, 16,384 and 1,048,583 only 51 are, so a part
+    whose sizes lie beyond V's top is never drawn. A plan's strengths enter the pitch (the gcd of W and the push's
+    coefficients) and may make it finer: that is for G3's strengths to measure.
   - Read on the rows' now counts in place of their fine teeth, d is flat for L of 10, 70 and 1,000 (chi-square 6.6,
-    9.7 and 10.7 on 9), and not for 16,384 or more, beyond the counts' own span (-7,956 to 8,555).
+    9.7 and 10.7 on 9), not at 97 (215.2; the rounds' samples run close together, so the chi-square counts them as
+    more than they are), and not for 16,384 or more, beyond the counts' own span (-7,956 to 8,555).
   - So decision 29's exact fairness, each part drawn exactly its size times over any L beats, needs c, a count that
     steps once a beat and so turns through any L. Two candidates, for David and the Boss: (a) the Node-clock's own
     time gear, an A1 gear stepping one count a beat, which slows where the teeth grow (term 2) and which the decoder's
     clock reading needs as well; (b) the sizes read at a resolution within V's span, which is Born's rule only to that
     resolution.
+  - A dial alone gives the exactness over L beats and not independence. With c stepping one count a round, two rounds
+    in a row draw in one half 0.789, 0.850 and 1.000 of the time at L of 70, 97 and 1,000, and Node-clocks one Mesh
+    apart 0.824, 0.871 and 1.000, where independent draws give 0.500 (as at L of 10). So independent draws need V's
+    span to reach L. On the act as built it is about 50, while a part's size is a norm of counts, a sum of two
+    squares. The plan's strengths (G3) may make the pitch finer; where they do not, the draw owes the node finer
+    digits.
   - V's pitch moves with W on the slot form once the metric moves (G2); at rest it stands.

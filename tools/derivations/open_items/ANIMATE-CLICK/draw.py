@@ -77,6 +77,18 @@ def main() -> None:
             f"two rounds in a row in one half {row:.3f}"
         )
     print(f"\nthe counts' V spans {min(map(min, counts))} to {max(map(max, counts))}")
+    print(
+        "\nd = (c + V) mod L on the fine teeth, c a dial stepping one count a round (decision 29's c):"
+    )
+    v = np.array(teeth, dtype=np.int64)
+    c = np.arange(v.shape[0])[:, None]
+    for size in SIZES[2:6]:
+        half = (((c + v) % size) * 2) // size
+        row = float(np.mean(half[1:] == half[:-1]))
+        apart = float(np.mean(half == half[:, nb[0]]))
+        print(
+            f"  L = {size}: two rounds in a row in one half {row:.3f}; one Mesh apart in one half {apart:.3f}"
+        )
 
 
 if __name__ == "__main__":
