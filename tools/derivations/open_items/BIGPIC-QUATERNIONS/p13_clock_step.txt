@@ -1,0 +1,7 @@
+PASS 1. the density reading (the dial 1/N per Node-clock, the grips N per Mesh): the step N 1 to 4/5 reflects 1 permille (nature's one-dimensional step: 0), and the momentum's books close at every round
+PASS 2. the slot reading (the grips at rest, the dial rest / N^2): the same step reflects 111 permille, the impedance's (N1 - N2) / (N1 + N2) = 111
+PASS 3. the escapement: on a uniform clock it is the act as built, state for state and its books standing; across the step it reflects 98 permille, near the slot reading's and not nature's, and its momentum's books move by 99 permille of the packet's own (the sum over the Node-clocks of |4 A v|) as the packet crosses, where the density reading's stand
+PASS 4. the escapement with the Mesh's own tooth (the Mesh releases its pull into both ends at once, at the dial L(i) + L(i + 1)): on a uniform clock it is the act as built state for state; across the step it reflects 1 permille, its momentum's books stand at every round, and 700 rounds undone one by one, each release read from its tooth's flip, return the lay exactly
+   so the escapement keeps nature's beat at each Node-clock but carries the lapse there alone: a Mesh's two
+   ends take its pull at their own rates; a tooth on the Mesh carries the lapse there too, as nature does
+ALL PASS
