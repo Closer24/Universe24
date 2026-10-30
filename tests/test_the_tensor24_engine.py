@@ -160,13 +160,14 @@ def holding(names):
     )
 
 
-def test_j_is_minus_the_gradient_of_its_potential_and_a_potential_of_no_term_pushes_nothing():
+def test_j_is_minus_the_gradient_of_its_potential_and_pushes_no_row_its_legs_do_not_name():
     """Yes: each monomial pushes every leg by minus its factor times the others, so J is minus V's gradient, of Python
     integers on any gears.
-    No: where the potential holds no monomial, as no file declares a coupling, J is 0 at every gear."""
+    No: under a potential of monomials, a row no leg names stays 0 while the rows its legs name are pushed."""
     assert all(conserved(seed) for seed in J_SEEDS)
-    none, (factor, legs, x, _) = np.zeros(0, dtype=np.intp), potential(np.random.default_rng(0))
-    assert not vertex(none.astype(object), (none,) * LEGS, x).any()
+    factor, legs, x, _ = potential(np.random.default_rng(0))
+    j = vertex(factor, legs, np.concatenate((x, x[:1])))  # row 0's counts again, on a row no leg names
+    assert not j[-1].any() and j[:-1].any()
     # the tenth review (fc8c810ff): J took its caller's int64 gears' width, overflowing past 64 bits; back at aa8565cb2
     wide = factor * (1 << 70)  # strengths past 64 bits
     assert frame.same([vertex(wide, legs, x.astype(np.int64))], [vertex(wide, legs, x)])
