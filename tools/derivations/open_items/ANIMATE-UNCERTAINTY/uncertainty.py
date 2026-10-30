@@ -93,8 +93,8 @@ def engine() -> None:
         for n in ("universe.json", "piece.json", "setting.json")
     )
     shape = tuple(piece["shape"])
-    kinds, tables = made(star(len(shape)))
-    loaded, found = load(universe, setting, sites_of(list(shape)), kinds, tables)
+    kinds, tables, square = made(star(len(shape)))
+    loaded, found = load(universe, setting, sites_of(list(shape)), kinds, tables, square)
     assert not found, found
     layout, start = laid(universe, list(shape), loaded), ENGINE.state(*loaded.state)
     nb = board(shape)
