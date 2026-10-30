@@ -18,8 +18,8 @@ W (a+ - 2 a + a-) = push, the remainder kept in the fine tooth. A spring D is a 
 (g) a T1 count along z on a hand of two parts, read as the hermitian i M on the mode (1, -i, 0): its value there is
     -|v|, so the hand runs away with no A1 part and beats with an A1 part of 2 |v|;
 (h) the uniform wave under the spring D = W div 400 laid at amplitudes 1 to 1000: the band's beat (period about 126
-    rounds) stands only once the swing is about a count a round or more; below, the carry's floor sets a slower beat,
-    its period about 2 W / (A D) = 800 / A rounds.
+    rounds) stands only once the swing is about a count a round or more; below, the carry's floor sets a different beat,
+    whose exact period, the first return of the hand's whole state, is 2 W / (A D) + 4 A.
 
 Usage: python3 -I m3_beat.py <src of tensor24-review at 2a6203a4a>   (the example files are read from <src>/../examples/tensor24)
 """
@@ -175,10 +175,23 @@ print(f"(g) the T1 count along z on a hand, laid on the mode (1, -i, 0) at 10^5,
       f" {hand(0, v, 400)} with no A1 part; {hand(2 * v, v, 400)} with the A1 part 2 v")
 
 print()
+def first_return(d, amp, rounds):
+    """The first round at which the hand's whole state (a, b, r) returns to its start, or None within the rounds."""
+    a, b, r = amp, amp, 0
+    for t in range(1, rounds + 1):
+        a, b, r = step.gear(a, b, r, W, -d * a)
+        if (a, b, r) == (amp, amp, 0):
+            return t
+    return None
+
+
 for amp in (1, 2, 5, 10, 30, 1000):
     u = beat(W // 400, 8000, a=amp)
     changes = sum(1 for x, y in zip(u, u[1:]) if (x < 0) != (y < 0))
     q, r = carry(2 * 8000, changes, 0) if changes else (0, 0)
+    exact = first_return(W // 400, amp, 8000)
+    told = f"the state returns exactly at round {exact}" if exact else "the state does not return within 8000 rounds"
     print(f"(h) the uniform wave at D = W div 400 laid at {amp}: {changes} sign changes in 8000 rounds,"
-          f" a period of {q} rounds and {r}/{changes}")
+          f" a period of about {q} rounds and {r}/{changes}; {told}; 2 W / (A D) + 4 A = {2 * 400 // amp + 4 * amp}"
+          f"{'' if 2 * 400 % amp == 0 else ' and ' + str(2 * 400 % amp) + '/' + str(amp)}")
 

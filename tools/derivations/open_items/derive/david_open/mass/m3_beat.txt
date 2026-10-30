@@ -25,9 +25,9 @@
 (f) the lone gear laid at 1000000: first rounds [1000000, 166666, -500001, -425927, 37036, 289094]; period 6 kept: False; neighbours moved: 63, the first at round 1
 (g) the T1 count along z on a hand, laid on the mode (1, -i, 0) at 10^5, v = W div 400: x after 400 rounds 24812700041447 with no A1 part; 38332 with the A1 part 2 v
 
-(h) the uniform wave at D = W div 400 laid at 1: 20 sign changes in 8000 rounds, a period of 800 rounds and 0/20
-(h) the uniform wave at D = W div 400 laid at 2: 40 sign changes in 8000 rounds, a period of 400 rounds and 0/40
-(h) the uniform wave at D = W div 400 laid at 5: 89 sign changes in 8000 rounds, a period of 179 rounds and 69/89
-(h) the uniform wave at D = W div 400 laid at 10: 134 sign changes in 8000 rounds, a period of 119 rounds and 54/134
-(h) the uniform wave at D = W div 400 laid at 30: 127 sign changes in 8000 rounds, a period of 125 rounds and 125/127
-(h) the uniform wave at D = W div 400 laid at 1000: 127 sign changes in 8000 rounds, a period of 125 rounds and 125/127
+(h) the uniform wave at D = W div 400 laid at 1: 20 sign changes in 8000 rounds, a period of about 800 rounds and 0/20; the state returns exactly at round 804; 2 W / (A D) + 4 A = 804
+(h) the uniform wave at D = W div 400 laid at 2: 40 sign changes in 8000 rounds, a period of about 400 rounds and 0/40; the state returns exactly at round 408; 2 W / (A D) + 4 A = 408
+(h) the uniform wave at D = W div 400 laid at 5: 89 sign changes in 8000 rounds, a period of about 179 rounds and 69/89; the state returns exactly at round 180; 2 W / (A D) + 4 A = 180
+(h) the uniform wave at D = W div 400 laid at 10: 134 sign changes in 8000 rounds, a period of about 119 rounds and 54/134; the state returns exactly at round 120; 2 W / (A D) + 4 A = 120
+(h) the uniform wave at D = W div 400 laid at 30: 127 sign changes in 8000 rounds, a period of about 125 rounds and 125/127; the state returns exactly at round 126; 2 W / (A D) + 4 A = 146 and 20/30
+(h) the uniform wave at D = W div 400 laid at 1000: 127 sign changes in 8000 rounds, a period of about 125 rounds and 125/127; the state returns exactly at round 3141; 2 W / (A D) + 4 A = 4000 and 800/1000
