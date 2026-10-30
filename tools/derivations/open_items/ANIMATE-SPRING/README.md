@@ -2,7 +2,7 @@
 
 The owner's word to Animate (2026-10-30, 06:4x UTC, in Hebrew; in translation): "Did you pass to everyone which part
 the Node-clock lacks? It is needed as an algebraic operation in the node." The part the hostile readers of both pages
-found missing is the spring: no gear on the head holds a beat of its own (Decoder4D2Clicks3D 1.4; board2mass 3).
+found missing is the spring: no gear on the head holds a beat of its own (the decoder's page 1.4, git 8c4f3ff59; board2mass 3).
 
 Run: `python -I tools/derivations/open_items/ANIMATE-SPRING/spring.py` (under a second; the output is spring.txt).
 Whole numbers only, on the head's own gear step (engine/step.py, gear) at the head's teeth W from the example files.
@@ -10,7 +10,7 @@ Whole numbers only, on the head's own gear step (engine/step.py, gear) at the he
 ## The operation
 
 At every Node-clock, every round, at the now slot; x a family's gears there, k the coupling family's held count there,
-here of kind A1 (the E or T2 count that three masses need has its own operation, OPEN: Decoder4D2Clicks3D 3.8.7):
+here of kind A1 (the E or T2 count that three masses need has its own operation, OPEN: the decoder's page 3.8.7, git 8c4f3ff59):
 
 1. **Contract:** c = the sum over i, j of C[i, j -> k] x_i x_j (for a T1 family and an A1 count, c = x . x).
 2. **Push each gear (the spring and its bound):** P_i = -g k x_i - lam c x_i.
