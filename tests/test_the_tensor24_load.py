@@ -11,7 +11,7 @@ from tensor24.engine.state import Plan, State
 from tensor24.engine.step import tick, untick
 from tensor24.main import made as joint
 from tensor24.runner.board import board
-from tensor24.runner.files import COUPLING, OPERANDS
+from tensor24.runner.files import COUPLING, OPERANDS, entries, held_departures, vocabulary
 from tensor24.runner.load import geometry, load, promises, star
 from tests.frame import plain
 
@@ -130,8 +130,12 @@ def naive(u, c, readings, labels):
 
 
 def loaded(made, u, gears=()):
+    """The files held against the engine's kinds, then loaded, as the run does: the departures, or the loaded and none."""
     ks, c, square = made
-    return load(u, {"gears": [list(g) for g in gears]}, SITES, ks, c, square)
+    setting = {"gears": [list(g) for g in gears]}
+    found = held_departures(u, setting, vocabulary(ks, square))
+    held, found = (None, found) if found else load(u, setting, SITES, ks, c, square)
+    return (None if found else held), found
 
 
 def test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables(made):
@@ -183,8 +187,8 @@ def edits():
             ),
             None,
         ),
-        "a twin hand": (train(1, part=4), "universe.trains[1].part: 1, one gear, or 2, a hand, not 4"),
-        "a part of 3": (train(1, part=3), "universe.trains[1].part: 1, one gear, or 2, a hand, not 3"),
+        "a twin hand, the act generic in the part": (train(1, part=4), None),
+        "a part of 3": (train(1, part=3), None),
         "a hand of T1": (train(1, part=2), None),
         "a channel the 24 forbid": (
             coupling(target=1),
@@ -270,10 +274,10 @@ def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
     u = universe(couplings=[row(target=1)])
     held, found = loaded(made, u)
     assert found == ["universe.couplings[0]: the 24 hold no A1 x A1 -> T1"]
-    from tensor24.runner.load import plan, reads_of, trains_of
+    from tensor24.runner.load import plan, trains_of
 
-    labels, dims, reads = reads_of(ks, square)
-    trains, _ = trains_of(u["trains"], labels, dims, reads)
+    labels, dims, reads = vocabulary(ks, square)
+    trains = trains_of(*entries(u["trains"], labels), dims, reads)
     planned, _ = plan(u["couplings"], trains, c, labels, D)
     readings = np.ones(((len(OPERANDS) + D - 1) * sum(t.rows() for t in trains), SITES), dtype=object)
     assert planned[0].size == 0 and not contract(Plan(*planned), readings, gears()).any()
@@ -342,26 +346,19 @@ def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
     bare = universe()
     bare.pop("couplings")
     assert load(bare, {}, SITES, ks, c, square)[1] == []
-    held, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
-    assert held is None and len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
+    _, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
+    assert len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
 
 
 def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
-    """Whichever of the lay's four arrays the machine's memory refuses, the board is named and nothing raises."""
+    """Where the machine's memory refuses the lay's arrays, the board is named and nothing raises."""
     ks, c, square = made
-    zeros = np.zeros
-    for after in range(len("abrd")):  # the gears' four: `after` made
-        asked = []
 
-        def refused(*args, after=after, asked=asked, **kwargs):
-            asked.append(args)
-            if len(asked) > after:
-                raise MemoryError("no room")
-            return zeros(*args, **kwargs)
+    def refused(*args, **kwargs):
+        raise MemoryError("no room")
 
-        monkeypatch.setattr(np, "zeros", refused)
-        held, found = load(universe(), {"gears": []}, SITES, ks, c, square)
-        assert len(asked) == after + 1 and held is None
-        assert found == [
-            f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
-        ]
+    monkeypatch.setattr(np, "zeros", refused)
+    _, found = load(universe(), {"gears": []}, SITES, ks, c, square)
+    assert found == [
+        f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
+    ]

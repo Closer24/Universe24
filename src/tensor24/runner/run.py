@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any, NamedTuple
 
 from tensor24.record import schema
-from tensor24.runner.files import OPERANDS, departures, sites_of
+from tensor24.runner.files import OPERANDS, departures, held_departures, sites_of, vocabulary
 from tensor24.runner.load import load, promises, star
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
@@ -42,7 +42,7 @@ def ledger_of(record: Path) -> Path:
     return record.with_name(f"{record.stem}.ledger{record.suffix}")
 
 
-def counts(round_: int, s: Any, trains: list[Any]) -> list[dict[str, Any]]:
+def counts(round_: int, s: Any, trains: Any) -> list[dict[str, Any]]:
     """One round's Count lines of the ledger, schema.Count's fields in order: per Node-clock and train, the train's now counts there, row by row."""
     return [
         dataclasses.asdict(
@@ -55,7 +55,7 @@ def counts(round_: int, s: Any, trains: list[Any]) -> list[dict[str, Any]]:
             )
         )
         for site in range(s.a.shape[-1])
-        for at, train in enumerate(trains)
+        for at, train in enumerate(trains[n] for n in range(len(trains)))
     ]
 
 
@@ -92,7 +92,9 @@ def header(
                 "part": train.part,
                 "winding": layout.gearing.drive[train.first, 0],
             }
-            for at, (label, train) in enumerate(zip(labels, loaded.trains, strict=True))
+            for at, (label, train) in enumerate(
+                zip(labels, (loaded.trains[n] for n in range(len(labels))), strict=True)
+            )
         ],
         "couplings": universe.get("couplings", []),
         "operands": list(OPERANDS),
@@ -109,8 +111,11 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     universe, piece, setting = (json.loads(text) for _, text in files)
     shape = piece["shape"]
     kinds, tables, square = engine.made(star(len(shape)))
+    found = held_departures(universe, setting, vocabulary(kinds, square))
+    if found:
+        return found
     loaded, found = load(universe, setting, sites_of(shape), kinds, tables, square)
-    if loaded is None:
+    if found:
         return found
     layout = engine.layout(universe, shape, loaded)
     start = engine.state(*loaded.state)

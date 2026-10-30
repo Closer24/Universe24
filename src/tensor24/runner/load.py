@@ -4,13 +4,14 @@
 
 import itertools
 from collections.abc import Callable, Sequence
+from dataclasses import dataclass
 from typing import Any, NamedTuple
 
 import numpy as np
 
 from tensor24.algebra.carry import Z, carry
 from tensor24.runner.board import board
-from tensor24.runner.files import OPERANDS
+from tensor24.runner.files import GEAR, OPERANDS, entries, vocabulary
 
 
 class Train(NamedTuple):
@@ -29,6 +30,29 @@ class Train(NamedTuple):
     def row(self, kind: int, component: int, part: int) -> int:
         """The row of one component of one of its kinds, at one part."""
         return self.first + (sum(self.dims[:kind]) + component) * self.part + part
+
+
+@dataclass(frozen=True, eq=False)
+class Trains:
+    """Every train's rows as arrays: per train its first row, its rows, its part, 1 where it is the four-vector's square, its first kind's entry and its kinds' count; per kind of a train, in the file's order, its index and dimension."""
+
+    first: Z
+    size: Z
+    part: Z
+    square: Z
+    start: Z
+    count: Z
+    kind: Z
+    dim: Z
+
+    def __len__(self) -> int:
+        return len(self.first)
+
+    def __getitem__(self, t: int) -> Train:
+        """One train as a record, read off the arrays."""
+        at = slice(self.start[t], self.start[t] + self.count[t])
+        kinds, dims = tuple(self.kind[at].tolist()), tuple(self.dim[at].tolist())
+        return Train(int(self.first[t]), kinds, dims, int(self.part[t]), int(self.square[t]))
 
 
 def common(values: Any) -> int:
@@ -66,33 +90,14 @@ def tables(
     return found
 
 
-def trains_of(
-    trains: list[dict[str, Any]], labels: tuple[str, ...], dims: tuple[int, ...], reads: tuple[Z, Z, Z]
-) -> tuple[list[Train], list[str]]:
-    """Each train's rows from its kinds and part, and whether its kinds' character is the four-vector's square's; a kind or a part the 24's kinds and the hands cannot hold, and a kind with no whole basis outside the square, named."""
-    traces, wholes, squared = reads
-    held: list[Train] = []
-    found = []
-    for at, train in enumerate(trains):
-        where = f"universe.trains[{at}]"
-        for j, label in enumerate(train["kinds"]):
-            if label not in labels:
-                found.append(
-                    f"{where}.kinds[{j}]: {label!r} is none of the 24's kinds {labels} (twin kinds wait on OPEN 3)"
-                )
-        if train["part"] not in (1, 1 + 1):
-            found.append(
-                f"{where}.part: 1, one gear, or 2, a hand, not {train['part']} (twin hands wait on OPEN 3)"
-            )
-        kinds = tuple(labels.index(label) for label in train["kinds"] if label in labels)
-        square = int((train["part"] * traces[list(kinds)].sum(axis=0) == squared).all())
-        if not square + wholes[list(kinds)].prod():
-            found.append(
-                f"{where}.kinds: a kind with no whole basis the 24 permute stands only in the four-vector's square, whose basis is whole"
-            )
-        first = held[-1].first + held[-1].rows() if held else 0
-        held.append(Train(first, kinds, tuple(dims[k] for k in kinds), train["part"], square))
-    return held, found
+def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z, Z]) -> Trains:
+    """Each train's rows from its kinds and part, and 1 where its kinds' character is the four-vector's square's: its rows that square's basis, its first 00."""
+    traces, _, squared = reads
+    member = np.eye(len(part), dtype=object)[of]  # each kind's train, one of each row
+    dim = np.array(dims, dtype=object)[kind]
+    size, count = part * (dim @ member), member.sum(axis=0)
+    square = (part[:, None] * (member.T @ traces[kind]) == squared).all(axis=-1).astype(int)
+    return Trains(np.cumsum(size) - size, size, part, square, np.cumsum(count) - count, count, kind, dim)
 
 
 def side(
@@ -109,10 +114,10 @@ def side(
 
 
 def plan(
-    couplings: list[list[int]], trains: list[Train], c: dict[Any, Z], labels: tuple[str, ...], d: int
+    couplings: list[list[int]], trains: Trains, c: dict[Any, Z], labels: tuple[str, ...], d: int
 ) -> tuple[tuple[Z, Z, Z, Z], list[str]]:
     """The coupling rows over the tables as index arrays; a row the 24 or the readings refuse is named and gives no term."""
-    rows = sum(t.rows() for t in trains)
+    rows = trains.size.sum()
     first: list[int] = []
     second: list[int] = []
     factor: list[int] = []
@@ -157,25 +162,20 @@ def plan(
     return (first_, second_, np.array(factor, dtype=object), landing_), found
 
 
-def lay(gears: list[list[int]], trains: list[Train], sites: int) -> tuple[tuple[Z, ...], list[str]]:
-    """The setting's gears laid on the trains' rows, every drive's fine tooth at 0; a gear off its train, named."""
-    rows = sum(t.rows() for t in trains)
+def lay(gears: list[list[int]], trains: Trains, sites: int) -> tuple[tuple[Z, ...], list[str]]:
+    """The setting's gears laid on the trains' rows, every drive's fine tooth at 0; a board past the machine's arrays, named."""
+    rows = trains.size.sum()
     try:
-        a, b, r, rd = (np.zeros((rows, sites), dtype=object) for _ in ("a", "b", "r", "rd"))
+        a = np.zeros((rows, sites), dtype=object)
+        b, r, rd = a.copy(), a.copy(), a.copy()
     except (ValueError, MemoryError) as error:
         return (), [
             f"piece.shape: {rows} rows at {sites} sites, more than the arrays of this machine hold ({error})"
         ]
-    found = []
-    for at, (train, component, site, now, before, tooth) in enumerate(gears):
-        if component >= trains[train].rows():
-            found.append(
-                f"setting.gears[{at}]: component {component} off train {train}'s {trains[train].rows()} rows"
-            )
-            continue
-        row = trains[train].first + component
-        a[row, site], b[row, site], r[row, site] = now, before, tooth
-    return (a, b, r, rd), found
+    train, component, site, now, before, tooth = np.array(gears, dtype=object).reshape(-1, len(GEAR)).T
+    at = (trains.first[train.astype(np.intp)] + component).astype(np.intp), site.astype(np.intp)
+    a[at], b[at], r[at] = now, before, tooth
+    return (a, b, r, rd), []
 
 
 def promises(r: Z, w: Z) -> list[str]:
@@ -190,35 +190,20 @@ def promises(r: Z, w: Z) -> list[str]:
 class Loaded(NamedTuple):
     """What the load makes of the universe and the setting: the trains' rows, the coupling rows' plan, the state laid."""
 
-    trains: list[Train]
+    trains: Trains
     plan: tuple[Z, Z, Z, Z]
     state: tuple[Z, ...]
 
 
-def reads_of(kinds: Any, square: Z) -> tuple[tuple[str, ...], tuple[int, ...], tuple[Z, Z, Z]]:
-    """The kinds' labels and dimensions, and what the trains are read by: each kind's character on the 24, 1 where its basis is whole (each row one Spoke's sign), and the square's character."""
-    labels = tuple(name.upper() for name in kinds._fields)
-    dims, traces, wholes = zip(
-        *(
-            (k.shape[-1], np.einsum("gii->g", k), int((np.einsum("gij,gij->gi", k, k) == 1).all()))
-            for k in kinds
-        ),
-        strict=True,
-    )
-    return labels, dims, (np.stack(traces), np.array(wholes, dtype=object), np.einsum("gii->g", square))
-
-
 def load(
     universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: dict[Any, Z], square: Z
-) -> tuple[Loaded | None, list[str]]:
-    """The checked files loaded on the engine's kinds on the 24, their tables and the four-vector's square, every departure named; nothing loads past one."""
-    labels, dims, reads = reads_of(kinds, square)
-    trains, found = trains_of(universe["trains"], labels, dims, reads)
-    if found:
-        return None, found
+) -> tuple[Loaded, list[str]]:
+    """The held files loaded on the engine's kinds on the 24, their tables and the four-vector's square, the plan's and the lay's departures named; nothing is read of a load past one."""
+    labels, dims, reads = vocabulary(kinds, square)
+    trains = trains_of(*entries(universe["trains"], labels), dims, reads)
     planned, refused = plan(universe.get("couplings", []), trains, c, labels, kinds.t1.shape[-1])
     state, laid = lay(setting.get("gears", []), trains, sites)
-    return (None if refused + laid else Loaded(trains, planned, state)), refused + laid
+    return Loaded(trains, planned, state), refused + laid
 
 
 def mesh_unit(gamma: int) -> int:
@@ -227,12 +212,10 @@ def mesh_unit(gamma: int) -> int:
 
 
 def geared(
-    universe: dict[str, Any], trains: list[Train], spokes: int
+    universe: dict[str, Any], trains: Trains, spokes: int
 ) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], Z]:
     """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes; every row reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 G^2 per Mesh."""
-    integers = universe["integers"]
-    first, size, square = np.array([(t.first, t.rows(), t.square) for t in trains], dtype=object).T
-    rows = size.sum()
+    integers, first, rows = universe["integers"], trains.first, trains.size.sum()
     den, gamma = integers["den"], integers["full_rate"]
     g = mesh_unit(gamma)
     grip = den * gamma * gamma * g * g
@@ -244,7 +227,7 @@ def geared(
         ones.copy(),
     )  # main.py makes them the engine's records
     # every row reads each square's 00 slot, its first row, one term each
-    squares, every = np.flatnonzero(square), np.arange(rows, dtype=np.intp)
+    squares, every = np.flatnonzero(trains.square), np.arange(rows, dtype=np.intp)
     clock = (
         np.repeat(first[squares].astype(np.intp), rows),
         np.ones(len(squares) * rows, dtype=object),

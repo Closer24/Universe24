@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from tensor24.main import made  # noqa: E402
-from tensor24.runner.files import NAMES, departures, sites_of  # noqa: E402
+from tensor24.runner.files import NAMES, departures, held_departures, sites_of, vocabulary  # noqa: E402
 from tensor24.runner.load import load, star  # noqa: E402
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
@@ -24,7 +24,9 @@ EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
 def loaded(universe: Path, piece: Path, setting: Path) -> list[str]:
     """The load's departures of three files the checker holds, on the kinds of the piece's board."""
     u, p, s = (json.loads(path.read_text(encoding="utf-8")) for path in (universe, piece, setting))
-    return load(u, s, sites_of(p["shape"]), *made(star(len(p["shape"]))))[1]
+    kinds, tables, square = made(star(len(p["shape"])))
+    held = held_departures(u, s, vocabulary(kinds, square))
+    return held or load(u, s, sites_of(p["shape"]), kinds, tables, square)[1]
 
 
 def main(argv: list[str]) -> int:

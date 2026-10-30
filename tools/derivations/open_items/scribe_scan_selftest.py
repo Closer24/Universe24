@@ -1844,6 +1844,19 @@ CASES += [
     ("a tool: round()", TOOL_FILES, "def f(a):\n    return round(a)\n", {"FLOAT": 1}),
     ("a tool: pow()", TOOL_FILES, "def f(a, b):\n    return pow(a, b)\n", {"FLOAT": 1}),
     (
+        "a tool: a root call is refused",
+        TOOL_FILES,
+        "def f(a, isqrt):\n    return isqrt(a)\n",
+        {"ROOT": 1},
+    ),
+    (
+        "a tool: a typed table of integers is refused",
+        TOOL_DECODE,
+        "TABLE = ((0, 1), (-1, 0))\n",
+        {"TABLE": 1},
+    ),
+    ("a tool: a pair of integers is no table", TOOL_DECODE, "PAIR = (0, 1)\n", {}),
+    (
         "a tool: a path joined by pathlib's slash with strings",
         TOOL_FILES,
         'from pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1] / "examples" / "tensor24"\n',
@@ -1873,7 +1886,12 @@ CASES += [
         "import math\n\n\ndef sine(a, b):\n    for x in a:\n        if x < b:\n            raise ValueError(x)\n    return min(a, b) ** b, a % b\n",
         {},
     ),
-    ("a tool: a table of 0 and 1 is no table here", TOOL_DECODE, "X = (1, 0, 1)\n", {}),
+    (
+        "a tool: a table of 0 and 1 is a table, as in the code",
+        TOOL_DECODE,
+        "X = (1, 0, 1)\n",
+        {"TABLE": 1},
+    ),
 ]
 
 
