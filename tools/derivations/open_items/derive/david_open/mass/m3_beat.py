@@ -1,0 +1,138 @@
+"""The beat on the gear rule: what is a mass and what is not, in whole numbers alone.
+
+Every step below is the head's own gear(a, b, r, W, push) from engine/step.py and its carry, at the head's teeth W:
+W (a+ - 2 a + a-) = push, the remainder kept in the fine tooth. A spring D is a push -D a.
+
+(a) on the head's tick with the example's files: the lone gear's beat and the uniform wave's;
+(b) a held count's spring on the uniform wave: the exact periods at D = W, 2 W and 3 W; the board's top mode
+    (every neighbour opposite, pulled by 12 grip = 2 W) beside it, which runs away once D passes 2 W; and at small
+    springs D = W div k^2 the count of sign changes over N rounds times k, nearly one number, so the beat goes as the
+    root of the spring and the mass's square as the spring;
+(c) the held count pushed back by the gear it holds, the vertex pushing all its legs (the potential (g/2) K X^2):
+    the count drifts below 0 and the gear runs away; with a spring of its own (W div 16, off the gear's doubled beat)
+    it stays, a little below where it was laid;
+(d) a spring between two gears alone, off the diagonal: the mode X + Y beats and the mode X - Y runs away;
+(e) the antisymmetric push a T1 count gives a real gear: it runs away.
+
+Usage: python3 -I m3_beat.py <src of tensor24-review>   (the example files are read from <src>/../examples/tensor24)
+"""
+
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, sys.argv[1])
+from tensor24 import main  # noqa: E402
+from tensor24.algebra.carry import carry  # noqa: E402
+from tensor24.engine import step  # noqa: E402
+from tensor24.runner import load as L  # noqa: E402
+from tensor24.runner.files import sites_of  # noqa: E402
+
+ex = Path(sys.argv[1]).parent / "examples" / "tensor24"
+universe = json.loads((ex / "universe.json").read_text())
+shape = json.loads((ex / "piece.json").read_text())["shape"]
+sites = sites_of(shape)
+kinds, tables = main.made(L.star(len(shape)))
+
+
+def run(gears, rounds):
+    loaded, found = L.load(universe, {"version": 1, "ticks": rounds, "gears": gears}, sites, kinds, tables)
+    assert not found, found
+    layout = main.layout(universe, shape, loaded)
+    s = main.ENGINE.state(*loaded.state)
+    seen, moved = [], set()
+    for _ in range(rounds):
+        s = step.tick(layout, s)
+        seen.append(int(s.a[0, 0]))
+        moved |= {x for x in range(1, sites) if s.a[0, x] != 0}
+    return seen, moved, layout
+
+
+lone, moved, layout = run([[0, 0, 0, 1, 0, 0]], 60)
+W = int(layout.gearing.rest[0][0])
+grip = int(layout.grip[0][0])
+print("(a) the head's teeth W", W, "and grip", grip, "; 6 grip = W:", 6 * grip == W)
+print("    the lone gear, 60 rounds:", lone[:12], "...; period 6:", all(lone[t] == lone[t + 6] for t in range(54)),
+      "; neighbours that ever moved:", len(moved))
+rest, _, _ = run([[0, 0, x, 1, 1, 0] for x in range(sites)], 60)
+moving, _, _ = run([[0, 0, x, 1, 0, 0] for x in range(sites)], 60)
+print("    the uniform wave laid at rest:", rest[:6], "... stands at 1 for 60 rounds:", set(rest) == {1})
+print("    the uniform wave laid moving:", moving[:6], "... drifts, no beat:", moving == list(range(2, 62)))
+
+
+def beat(d, rounds, a=10 ** 12, top=False):
+    """The uniform wave (or the top mode, pulled by -2 W a) under the spring d; its counts, round by round."""
+    b, r, out = a, 0, []
+    for _ in range(rounds):
+        pull = -2 * W * a if top else 0
+        a, b, r = step.gear(a, b, r, W, pull - d * a)
+        out.append(a)
+    return out
+
+
+print()
+for m in (1, 2, 3):
+    u = beat(m * W, 24)
+    period = next(p for p in range(1, 13) if all(u[t] == u[t + p] for t in range(24 - p)))
+    t = beat(m * W, 24, top=True)
+    grow = abs(t[-1]) // 10 ** 12
+    told = "stays within its start" if grow <= 1 else "grows by two starts a round, the edge" if grow < 100 else "runs away"
+    print(f"(b) D = {m} W: the uniform wave's period {period} rounds; the top mode after 24 rounds {told}"
+          f" ({grow} times its start)")
+N = 20000
+for k in (8, 16, 32, 64, 128):
+    u = beat(W // (k * k), N)
+    changes = sum(1 for x, y in zip(u, u[1:]) if (x < 0) != (y < 0))
+    print(f"    D = W div {k * k}: {changes} sign changes in {N} rounds; times k: {changes * k}")
+
+
+CAP = 10 ** 60  # where a run is read as run away: the probe stops it there, the step never does
+
+
+def pair(push, x, y, rounds):
+    """Two gears stepped together by push(x, y) -> (push_x, push_y), stopped once either passes CAP."""
+    bx, by, rx, ry, xs = x, y, 0, 0, []
+    for _ in range(rounds):
+        px, py = push(x, y)
+        x, bx, rx = step.gear(x, bx, rx, W, px)
+        y, by, ry = step.gear(y, by, ry, W, py)
+        xs.append((x, y))
+        if abs(x) > CAP or abs(y) > CAP:
+            break
+    return xs
+
+
+n, A, D = 10 ** 6, 10 ** 5, W // 400
+g, _ = carry(D, n, 0)
+
+
+def held_free(x, k):
+    half, _ = carry(g * x * x, 2, 0)
+    return -g * k * x, -half
+
+
+def held_sprung(x, k):
+    px, pk = held_free(x, k)
+    return px, pk - (W // 16) * (k - n)
+
+
+print()
+for name, push in (("with no law of its own", held_free), ("with a spring of its own, W div 16", held_sprung)):
+    xs = pair(push, A, n, 2000)
+    ks = [k for _, k in xs]
+    gone = len(xs) < 2000
+    first = next((i + 1 for i, k in enumerate(ks) if k < 0), None)
+    shown = [ks[i] for i in (249, 499, 999, 1999) if i < len(ks)]
+    print(f"(c) the held count {name}: K at rounds 250, 500, 1000, 2000 (as far as it ran): {shown};"
+          f" below 0 first at round {first}; {'X ran past 10^60 at round ' + str(len(xs)) if gone else 'X stays'}"
+          f"; least K {min(ks) if not gone else 'past -10^60'}, most {max(ks)}", flush=True)
+print("    (laid K = 10^6, X = 10^5 at rest, D = g K = W div 400)")
+print()
+off = lambda x, y: (-D * y, -D * x)  # noqa: E731
+same = pair(off, A, A, 400)
+opposite = pair(off, A, -A, 400)
+print("(d) a spring off the diagonal alone, D = W div 400: X = Y laid, X after 400 rounds", same[-1][0],
+      "; X = -Y laid, X after 400 rounds", opposite[-1][0])
+anti = pair(lambda x, y: (D * y, -D * x), A, 0, 400)
+print("(e) the T1 count's antisymmetric push on a real gear, D = W div 400: X after 100, 200, 400 rounds",
+      [anti[i][0] for i in (99, 199, 399)])

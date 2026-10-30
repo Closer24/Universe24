@@ -1,0 +1,20 @@
+(a) the head's teeth W 23290147981996629504000000 and grip 3881691330332771584000000 ; 6 grip = W: True
+    the lone gear, 60 rounds: [1, 0, -1, -1, 0, 1, 1, 0, -1, -1, 0, 1] ...; period 6: True ; neighbours that ever moved: 0
+    the uniform wave laid at rest: [1, 1, 1, 1, 1, 1] ... stands at 1 for 60 rounds: True
+    the uniform wave laid moving: [2, 3, 4, 5, 6, 7] ... drifts, no beat: True
+
+(b) D = 1 W: the uniform wave's period 6 rounds; the top mode after 24 rounds stays within its start (1 times its start)
+(b) D = 2 W: the uniform wave's period 4 rounds; the top mode after 24 rounds grows by two starts a round, the edge (49 times its start)
+(b) D = 3 W: the uniform wave's period 3 rounds; the top mode after 24 rounds runs away (17393796001 times its start)
+    D = W div 64: 796 sign changes in 20000 rounds; times k: 6368
+    D = W div 256: 398 sign changes in 20000 rounds; times k: 6368
+    D = W div 1024: 199 sign changes in 20000 rounds; times k: 6368
+    D = W div 4096: 99 sign changes in 20000 rounds; times k: 6336
+    D = W div 16384: 50 sign changes in 20000 rounds; times k: 6400
+
+(c) the held count with no law of its own: K at rounds 250, 500, 1000, 2000 (as far as it ran): [800187, 142793]; below 0 first at round 537; X ran past 10^60 at round 686; least K past -10^60, most 999987
+(c) the held count with a spring of its own, W div 16: K at rounds 250, 500, 1000, 2000 (as far as it ran): [999999, 999999, 999981, 999914]; below 0 first at round None; X stays; least K 999559, most 1000243
+    (laid K = 10^6, X = 10^5 at rest, D = g K = W div 400)
+
+(d) a spring off the diagonal alone, D = W div 400: X = Y laid, X after 400 rounds 38325 ; X = -Y laid, X after 400 rounds 24812700041447
+(e) the T1 count's antisymmetric push on a real gear, D = W div 400: X after 100, 200, 400 rounds [-1602744, 41579439, -1481206931]
