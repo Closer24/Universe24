@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-
 from event_universe import close, gram, readings
 from event_universe import run as record
 from event_universe.core import acts, paces, rule3

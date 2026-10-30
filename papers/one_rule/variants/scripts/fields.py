@@ -22,7 +22,6 @@ for folder in ("src", "tools", "papers/one_rule"):
     sys.path.insert(0, str(ROOT / folder))
 
 import two_slits_real_line as tsl  # noqa: E402  # the law's own script, the two slits by the real line
-
 from event_universe import world_files  # noqa: E402
 from event_universe.loader.derived import count_wall  # noqa: E402
 from event_universe.world_files import load_world  # noqa: E402
