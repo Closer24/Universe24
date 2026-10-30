@@ -1,1 +1,0 @@
-over one beat: books' rho + 3p +0.353626; force form +0.330195; difference -0.023431; 2 <V_c> -0.023432

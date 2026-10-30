@@ -1,5 +1,0 @@
-The decoder's cone check by click on a hand and a slot at once, every digit one lay
-  decision 40 (b), a full slot refusing after the draw: SHOWN
-    every click's law is the same at every frame drawn outside its past cone (the places of a click and a setting compared: 3; the lays: 1856)
-  the withdrawn weighing: NOT SHOWN
-    the lays at site 50: the outcome ('taken', 29, -20, 0, -21) at round +100, site 150 reads 216 of 696 at the frame {"rho": 1, "spin": [0, 0, 1]} and 214 of 696 at the frame {"rho": 2, "spin": [2, 0, 0]} of the setting at round +4, site 45, outside its past cone

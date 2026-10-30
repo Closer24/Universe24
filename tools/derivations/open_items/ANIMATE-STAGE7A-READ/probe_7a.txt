@@ -1,4 +1,0 @@
-1. the act against the model from the plan's words: 300 of 300 layouts equal at every entry
-   (300 of 300 with a gear ticked, 8948 gear ticks; W and W+, s, D, T_k and T_d parted per gear and site)
-2. the run back: 20 of 20 runs of 60 rounds return to their start bit for bit, gears across 2**256,
-   W = W+ per gear and site, T_d from 1 to 9, J read on two rows into the other two (1199 of 1200 rounds ticked)

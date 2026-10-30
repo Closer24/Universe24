@@ -1,5 +1,0 @@
-(a) the rewind: untick after tick returns the state in 900 of 900 rounds (30 seeds x 30 rounds, masks, rates parted, one clock stopped)
-(b) neighbours' counts more than 1 apart in 0 of 900 rounds; k outside {0, 1} in 0 of 900
-(c) the cone in rounds (past): a change reached beyond t Meshes after t rounds in 0 of 120 checks
-(d) T S T = S^-1 on the board, every dial at the full rate: 30 of 30; with the rates parted (past): fails on 30 of 30
-(e) one clock at twice the full rate: k takes [0, 1, 2]

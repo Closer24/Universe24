@@ -1,4 +1,0 @@
-joint: failures 0 of 20000
-share: failures 0 of 20000
-orient: failures 0
-signs: failures 0 of 20000
