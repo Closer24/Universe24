@@ -14,7 +14,7 @@ class State(NamedTuple):
 
     a: Z
     b: Z
-    r: Z  # the tooth of the edge between the two slots, within [-D, D], D = W(b) + W(a): what the momentum's split leaves
+    r: Z  # the tooth of the edge between the two slots, within [-D, D), D = W(b) + W(a): what the momentum's split leaves
     rd: Z  # the drive's fine tooth, within [0, T_d): the remainder its carry keeps, as r is the gear's
     k: Z  # (trains, sites): the click tooth, within [0, key): the remainder the train's click keeps, born at (key - 1) div 2
 
@@ -56,7 +56,7 @@ class Gearing(NamedTuple):
     stretch: Z  # s, the impulse's factor on the force and the kick
     kick: Z  # T_k, the kick's teeth: 1 on the force's path
     drive: Z  # T_d, the drive's teeth, at least 1: 1 on the force's path, where the drive's fine tooth stays 0
-    parity: Z = 1  # tau, the row's parity under time's reversal: 1 for a count the reversal pivots on, -1 for the metric's 0i slots, whose index pair holds one time index
+    parity: Z = 1  # the row's parity under time's reversal: 1 for an even row, a count the reversal pivots on, 0 for an odd one, the metric's 0i slots, whose index pair holds one time index
 
 
 class Layout(NamedTuple):

@@ -36,15 +36,14 @@ class Engine(NamedTuple):
     grips: Callable[..., Any]
 
 
-def promises(s: Any, wa: Any, wb: Any, spokes: Any) -> list[str]:
-    """The round's promise on the state it reads, read from outside, each departure named where it stands: both slots' teeth at least 1, and every tooth within its edge's dial, |s| <= D = W(b) + W(a), on the dial's edge only at an even velocity."""
-    senses, _ = carry(spokes.shape[0], spokes.shape[1], 0)
-    a, b, tooth, _, _ = s
+def promises(s: Any, wa: Any, wb: Any) -> list[str]:
+    """The round's promise on the state it reads, read from outside, each departure named where it stands: both slots' teeth at least 1, and every tooth within its edge's dial, -D <= s < D, D = W(b) + W(a)."""
+    _, _, tooth, _, _ = s
     wa, wb = np.broadcast_to(wa, tooth.shape), np.broadcast_to(wb, tooth.shape)
-    d, odd = wa + wb, (a - b) - senses * ((a - b) // senses)
-    off = (wa < 1) | (wb < 1) | (abs(tooth) > d) | ((abs(tooth) == d) & (odd != 0))
+    d = wa + wb
+    off = (wa < 1) | (wb < 1) | (tooth < -d) | (tooth >= d)
     return [
-        f"row {g}, site {x}: the tooth {tooth[g, x]} not within the edge's dial [-{d[g, x]}, {d[g, x]}] of the teeth {wb[g, x]} and {wa[g, x]}"
+        f"row {g}, site {x}: the tooth {tooth[g, x]} not within the edge's dial [-{d[g, x]}, {d[g, x]}) of the teeth {wb[g, x]} and {wa[g, x]}"
         for g, x in np.argwhere(off)
     ]
 
@@ -62,7 +61,7 @@ def window(held: Any, w: Any, spokes: Any) -> list[str]:
 def promised(engine: Engine, layout: Any, s: Any) -> list[str]:
     """Both promises of the round that reads a state, read from outside: every tooth within its edge's dial, and the wave's window at the now slot's teeth."""
     wa, wb = engine.dials(layout, s)
-    return promises(s, wa, wb, layout.spokes) + window(engine.grips(layout, s), wa, layout.spokes)
+    return promises(s, wa, wb) + window(engine.grips(layout, s), wa, layout.spokes)
 
 
 def digest(text: str) -> str:

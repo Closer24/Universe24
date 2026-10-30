@@ -86,7 +86,7 @@ def drawn(held, laid, seed):
     (clock,) = [t.first for t in held.trains if t.square]
     a[clock], b[clock] = (rng.integers(0, REACH, n).astype(object) for _ in "ab")
     d = step.weight(laid.gearing, laid.clock, a) + step.weight(laid.gearing, laid.clock, b)
-    r = frame.wide(rng, (rows, n)) % (d + d - 1) - (d - 1)
+    r = frame.wide(rng, (rows, n)) % (d + d) - d
     return state.State(a, b, r, 0 * a, 0 * a[: len(held.trains)])
 
 
@@ -117,7 +117,8 @@ def naive(laid, held, s, shape):
 
 
 def turned(m, laid, held, s, shape):
-    """The state turned by m: sites moved, each train's rows by its kind's matrix, a negated row's tooth negated."""
+    """The state turned by m: sites moved, each train's rows by its kind's matrix, a negated row's tooth flipped on its
+    dial, -1 - s, as the mirror flips it."""
     xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
     site = np.ravel_multi_index(tuple((m @ xyz) % sides), shape)
     acting = kinds.kinds(m[None, :, :])
@@ -130,7 +131,8 @@ def turned(m, laid, held, s, shape):
     there = state.State(*(np.empty_like(x) for x in s))
     for x, y in zip(there, s, strict=True):
         x[:, site] = y
-    there.a[:, site], there.b[:, site], there.r[:, site] = turn @ s.a, turn @ s.b, turn @ s.r
+    there.a[:, site], there.b[:, site] = turn @ s.a, turn @ s.b
+    there.r[:, site] = (turn @ (s.r + s.r + 1) - 1) // 2  # s on a kept row, -1 - s on a negated one
     return there
 
 

@@ -87,7 +87,7 @@ def world(rng, layout, rows=ROWS):
     for x in (a, b):
         x[clocks] = draw(rng, 0, 1 << 20, (len(clocks), size[1]))
     d = step.weight(layout.gearing, layout.clock, a) + step.weight(layout.gearing, layout.clock, b)
-    r, rd = draw(rng, 0, 1 << 20, size) % (d + d - 1) - (d - 1), draw(rng, 0, 1 << 20, size) % drive
+    r, rd = draw(rng, 0, 1 << 20, size) % (d + d) - d, draw(rng, 0, 1 << 20, size) % drive
     return State(a, b, r, rd, 0 * a[:1])  # one train's click tooth, 0 within the key 1
 
 
@@ -173,14 +173,14 @@ def back():
 
 
 def negated():
-    """The tie rule, no term of J: every gear and tooth negated ticks to the negation; the drive's tooth alike."""
+    """The tie rule, no J: every gear negated, its tooth flipped (-1 - s), ticks to the negation flipped alike."""
     for seed in range(3):
         rng = np.random.default_rng(20 + seed)
         layout = varied(rng, sourced=False)
         s = world(rng, layout)
         a1, b1, r1, rd1, k1 = step.tick(layout, s)
-        a2, b2, r2, rd2, k2 = step.tick(layout, s._replace(a=-s.a, b=-s.b, r=-s.r))
-        if not frame.same([a2, b2, r2, rd2, k2], [-a1, -b1, -r1, rd1, k1]):
+        a2, b2, r2, rd2, k2 = step.tick(layout, s._replace(a=-s.a, b=-s.b, r=-1 - s.r))
+        if not frame.same([a2, b2, r2, rd2, k2], [-a1, -b1, -1 - r1, rd1, k1]):
             return False
     return True
 
@@ -373,7 +373,7 @@ def mutants():
     def floated(a, b, r, d_in, d_out, push, senses):
         n = senses * (d_in * (a - b) + senses * push) + r
         q = np.vectorize(lambda x, y: math.floor((x + y) / (y + y)), otypes=[object])(n, d_out + 0 * n)
-        return a + q, a, n - q * (d_out + d_out)
+        return a + q, a, n - q * (d_out + d_out) - d_out
 
     def unfactored(c, x):
         return read(c._replace(factor=c.first), x)
@@ -433,7 +433,7 @@ def mutants():
     first = lambda a: (np.arange(len(a)) == 0).astype(object)[:, None]  # noqa: E731
     return {  # the Mesh, the board, and the act at its coefficients
         "the run back with no mirror": ("back", "untick", lambda y, s: tick(y, s)),
-        "the mirror's tooth not negated": ("back", "mirror", lambda y, s: mirror(y, s)._replace(r=s.r)),
+        "the mirror's tooth not flipped": ("back", "mirror", lambda y, s: mirror(y, s)._replace(r=s.r)),
         "the drive's tooth not mirrored": (
             "back",
             "mirror",

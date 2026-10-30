@@ -104,14 +104,14 @@ def refused(made, rule):
 def squared_and_promised(made):
     """A train is marked the four-vector's square where its part times its kinds' character is the square's: in every
     order of the square's five kinds, and not for ten rows of three T1 kinds and one of A1. The promise, every tooth
-    within its edge's dial (the edge at an even velocity alone), is named where it fails, the run back exact where it holds."""
+    within its edge's dial, -D <= s < D, is named where it fails, and the run back is exact where it holds."""
     w, d = 5, 5 + 5  # the teeth and the edge's dial
-    a = np.arange(SITES, dtype=object)[None, :] + 0  # velocities of 1, so the dial's edge is no tooth
-    held = lambda r: promises(State(a, a - 1, r, 0 * a, 0 * a), w + 0 * a, w + 0 * a, star(D))  # noqa: E731
+    a = np.arange(SITES, dtype=object)[None, :] + 0  # velocities of 1
+    held = lambda r: promises(State(a, a - 1, r, 0 * a, 0 * a), w + 0 * a, w + 0 * a)  # noqa: E731
     for tooth in (d + 1, -d - 1, d):
         r = np.zeros((1, SITES), dtype=object)
         r[0, 2] = tooth
-        edge = f"row 0, site 2: the tooth {tooth} not within the edge's dial [-{d}, {d}]"
+        edge = f"row 0, site 2: the tooth {tooth} not within the edge's dial [-{d}, {d})"
         assert held(r) == [f"{edge} of the teeth {w} and {w}"] and not rewound(r, w)
     r = np.zeros((1, SITES), dtype=object) + d - 1
     assert held(r) == [] and rewound(r, w)

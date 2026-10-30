@@ -222,10 +222,9 @@ def spokes(axes=3):
 
 
 def split(n, d):
-    """The centred split of n at the dial 2 d with plain integers: n = q 2d + s, |s| <= d, a tie taken at an even q."""
+    """The split of n at the dial 2 d from its half, with plain integers: n = q 2d + s, -d <= s < d."""
     q, r = divmod(n + d, d + d)
-    tie = int(r == 0 and q % 2 == 1)
-    return q - tie, r - d + tie * (d + d)
+    return q, r - d
 
 
 def unread():

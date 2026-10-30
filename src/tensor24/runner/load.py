@@ -289,21 +289,20 @@ def geared(
     grip = den * gamma * gamma
     ones = np.ones((rows, 1), dtype=object)
     # the square's 0i slots, the rows after its 00 slot, are odd under time's reversal (one time index): their parity
-    # is 1 less the two senses of an axis, every other row's 1; a lone train's places wrap harmlessly at the factor 0
+    # is 0, every other row's 1; a lone train's places wrap harmlessly at the factor 0
     n, d = spokes.shape
-    senses, _ = carry(n, d, 0)
     axis = np.arange(d, dtype=np.intp)
     _, at = carry((first[:, None] + 1 + axis[None, :]).reshape(-1), rows, 0)
-    odd = np.zeros((rows, 1), dtype=object)
+    even = np.ones((rows, 1), dtype=object)
     np.add.at(
-        odd, (at.astype(np.intp), 0 * at.astype(np.intp)), np.repeat(trains.square, d).astype(object)
+        even, (at.astype(np.intp), 0 * at.astype(np.intp)), -np.repeat(trains.square, d).astype(object)
     )
     gearing = (
         len(spokes) * grip * ones,
         ones,
         ones.copy(),
         ones.copy(),
-        1 - senses * odd,
+        even,
     )  # main.py makes them the engine's records
     # every row reads every train's first row at the factor of its square flag, a square's 00 slot at 1 and the rest
     # at 0, less its own row: the zero test of the rows' difference cuts the 00 row's read of itself, so its teeth stand

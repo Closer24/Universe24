@@ -1,24 +1,21 @@
 """Clock: every round every gear moves once: its neighbours pull it, the coupling pushes it, and its momentum, the velocity's whole count with the tooth kept on the edge between its two slots, is carried to the next edge and split there in one dial of both slots' teeth; the drive carries the coupling's push the same way, and each train's click tooth carries the area the kick moves into the train.
-Algebra: D_in = W(b) + W(a); N = 2 (D_in (a - b) + 2 (s F + K)) + s; q, s+ = split(N, 2 D_out), D_out = W(a) + W(a+), n = q 2D + s with |s| <= D and the edge |s| = D taken at an even q; a+ = a + q; b+ = a; J = J1 + J5, J1 the plan on the now slot's readings and J5 the metric's push on them with the momenta M_in = 2 D_in (a - b) + s and M_out = M_in + 4 (s F + K1) read in whole turns of the rest dial; q_d, r_d+ = carry(J, T_d, r_d); K = s T_k q_d; q_c, k+ = carry(tau, key, k); the mirror is (tau b, tau a, -tau s) with tau the row's parity, and the run back is the tick on the mirrored state, mirrored.
+Algebra: D_in = W(b) + W(a); N = 2 (D_in (a - b) + 2 (s F + K)) + s; q, s+ = split(N, 2 D_out), D_out = W(a) + W(a+), n = q 2D + s with -D <= s < D by one carry from the dial's half; a+ = a + q; b+ = a; J = J1 + J5, J1 the plan on the now slot's readings and J5 the metric's push on them with the momenta M_in = 2 D_in (a - b) + s and M_out = M_in + 4 (s F + K1) read in whole turns of the rest dial; q_d, r_d+ = carry(J, T_d, r_d); K = s T_k q_d; q_c, k+ = carry(tau, key, k); the mirror is (b, a, -1 - s) on an even row, the law's (iii) on the dial 2D, and (-b, -a, s) on an odd one, and the run back is the tick on the mirrored state, mirrored.
 Board: one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot; W is the rest plus the metric family's 00 slot here, the 00 row's own teeth at rest, so W(a+) is the 00 row's own carry, given first; the 2 is the two senses of an axis, read from the star; the click pushes nothing into a, b, s or r_d.
 Clicks: a whole click is the click tooth's quotient, one quantum taken (+1) or given back (-1), left for the record from G5; a deeper 00 slot is a slower clock, read in the clicks as proper time, the matter's momentum deepens it and slackens the grips about it (gravity, gamma = 1 by the slots' own units), and the momentum W (a - b), not the velocity, is what a clock keeps as its teeth move.
 """
 
 import numpy as np
 
-from tensor24.algebra.carry import Z, carry, flip, lit
+from tensor24.algebra.carry import Z, carry, flip
 from tensor24.engine.contract import contract, read
 from tensor24.engine.mesh import held, pull, seen
 from tensor24.engine.state import Click, Gearing, Layout, Read, State
 
 
 def split(n: Z, d: Z, senses: Z) -> tuple[Z, Z]:
-    """The centred split of n at the edge's dial, both slots' teeth D in half-teeth: n = q (senses D) + s with the tooth s within [-D, D], counted from the dial's middle, and where s lands on the dial's edge the count q is taken even; two carries and the zero test, no if."""
-    dial = senses * d
-    q, r = carry(n + d, dial, 0)
-    _, odd = carry(q, senses, 0)
-    moved = (1 - lit(r)) * odd
-    return q - moved, r - d + moved * dial
+    """The split of n at the edge's dial, both slots' teeth D in half-teeth, from the dial's half: n = q (senses D) + s with the tooth s within [-D, D), one carry of Rule3 and nothing else (the half-open convention, the owner's decision of 17:0x UTC)."""
+    q, r = carry(n + d, senses * d, 0)
+    return q, r - d
 
 
 def gear(a: Z, b: Z, s: Z, d_in: Z, d_out: Z, push: Z, senses: Z) -> tuple[Z, Z, Z]:
@@ -142,12 +139,15 @@ def tick(layout: Layout, s: State) -> State:
 
 
 def mirror(layout: Layout, s: State) -> State:
-    """The state mirrored, time's reversal: the slots swapped and the edge's tooth negated, read in no teeth, each by the row's parity (an odd row's counts negated and its tooth kept), the drive's tooth flipped in its teeth and the click tooth in its key; its own inverse on any clock, standing or moving."""
+    """The state mirrored, time's reversal: on an even row the slots swapped and the edge's tooth flipped on its dial, s -> -1 - s (the law's (iii), read in no teeth); on an odd row the counts negated and swapped and the tooth kept; the drive's tooth flipped in its teeth and the click tooth in its key; its own inverse on any clock, standing or moving."""
     _, _, _, _, gearing, _, _, _, click, _ = layout
     a, b, tooth, rd, k = s
-    _, _, _, teeth, tau = gearing
+    _, _, _, teeth, even = gearing
     _, _, _, _, key = click
-    return State(tau * b, tau * a, -tau * tooth, flip(rd, teeth), flip(k, key))
+    tau = halves(layout) * even - 1
+    return State(
+        tau * b, tau * a, tooth - even * (halves(layout) * tooth + 1), flip(rd, teeth), flip(k, key)
+    )
 
 
 def untick(layout: Layout, s: State) -> State:
