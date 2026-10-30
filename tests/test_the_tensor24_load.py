@@ -1,5 +1,5 @@
 """Tensor24's load, the Node-clock's initialization: the board and its Meshes, every gear on its train's rows, the
-square found by its kinds' character, and each refusal named."""
+square found by its kinds' character, each refusal named, and the round's promise at its edges."""
 
 import itertools
 import json
@@ -12,6 +12,7 @@ from tensor24.runner import load as loading
 from tensor24.runner.board import board
 from tensor24.runner.files import AXES, held_departures, sites_of, vocabulary
 from tensor24.runner.load import geometry, load, star
+from tensor24.runner.run import promises
 from tests import frame
 
 UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
@@ -47,7 +48,8 @@ def no_room(*args, **kwargs):
 
 def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_each_refusal(monkeypatch):
     """Yes: the board and its Meshes as numpy wraps them, every gear on its train's rows past 64 bits, the square found
-    by its kinds' character in every order, no term of J. No: each refusal named, with nothing loaded and no raise."""
+    by its kinds' character in every order, no term of J. No: each refusal named, with nothing loaded and no raise,
+    and a fine tooth at its teeth or below 0 named by the round's promise."""
     nb, made = board(SHAPE), joint(star(len(AXES)))
     spokes, meshes = geometry(nb, len(SHAPE))
     assert (nb == frame.board(SHAPE)).all() and (spokes == frame.spokes(len(SHAPE))).all()
@@ -88,11 +90,19 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     refused = [
         ([{**TRAINS[1], "kinds": ["E1/2"]}], [], "'E1/2' is none of the 24's kinds"),
         ([{**TRAINS[1], "kinds": ["E"]}], [], "'E' has no whole basis the 24 permute"),
+        # f85c271d0's case: the square's kinds at part 2, their character twice the square's, so E stands outside it
+        ([{**TRAINS[1], "kinds": list(SQUARE), "part": 2}], [], "'E' has no whole basis the 24 permute"),
         ([TRAINS[0]], [(0, rows[0], 0, 1, 0, 0)], f"component {rows[0]} off train 0's {rows[0]} rows"),
     ]
     for trains, gears, named in refused:
         held, found = loaded(made, trains, gears)
         assert held is None and any(named in line for line in found), found
+    # the eighth review's fifth (927071a14), carried to the fine tooth at 8b43839a1, a bound one past survived: the
+    # promise names a tooth at its teeth and one below 0, sites 1 and 2, and holds one at w - 1, here past 64 bits
+    assert promises(np.array([[WIDE - 1, WIDE, -1]], dtype=object), WIDE) == [
+        f"row 0, site 1: the fine tooth {WIDE} not within [0, {WIDE})",
+        f"row 0, site 2: the fine tooth -1 not within [0, {WIDE})",
+    ]
     kinds, c, square = made
     _, found = load({"trains": TRAINS}, {"gears": []}, 1 << 64, kinds, c, square)
     assert len(found) == 1 and found[0].startswith(f"piece.shape: {sum(rows)} rows at")
