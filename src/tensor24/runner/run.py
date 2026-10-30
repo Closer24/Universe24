@@ -1,7 +1,7 @@
 """Clock: the run from the three files to the record: every Node-clock steps every round, then all the rounds run back.
 Algebra: the act iterated; before each round the promise, every tooth within its edge's dial of both slots' teeth, and the wave's window, the Spokes' grips within the teeth per sense, are read; the start returns bit for bit.
 Board: the files checked and loaded, the rounds run, the rewind checked, the record and its ledger written.
-Clicks: it writes what the act gives: the record's header, its whole lines and its end, and the ledger beside them; a whole line per train and Node-clock whose click tooth's quotient is below 0 in a round, q the windings that left the train (the schema's whole click, q at least 1); a take is the same event at the train that took, and writes no line of its own.
+Clicks: it writes what the act gives: the record's header (schema 1.3: each kind's characters on the 24, each train's key and square flag), its click lines and its end, and the ledger beside them; a click line per train and Node-clock whose click tooth carried in a round, q the carry's quotient signed (a give below 0, a take above it) and the tooth before and after; the forward run's lines alone (the run back negates the quotients and writes none).
 """
 
 import dataclasses
@@ -96,18 +96,29 @@ def counts(round_: int, s: Any, trains: Any) -> list[dict[str, Any]]:
     ]
 
 
-def clicked(round_: int, clicks: Any) -> list[dict[str, Any]]:
-    """One round's Whole lines of the record, in the schema's order (site, then train): per Node-clock and train whose click tooth's quotient is below 0, the line's place and q, the windings that left the train; the fields of the richer click (G3, G5) stand absent."""
+def clicked(round_: int, before: Any, after: Any, clicks: Any) -> list[dict[str, Any]]:
+    """One round's Click lines of the record, in the schema's order (site, then train): per Node-clock and train whose click tooth carried, schema.Click's fields: the line's place, its q, the carry's quotient signed, and the click tooth before the round and after it."""
     return [
         {
-            "kind": "whole",
-            "round": round_,
-            "site": int(site),
-            "train": int(train),
-            "q": int(-clicks[train, site]),
+            "kind": "click",
+            **dataclasses.asdict(
+                schema.Click(
+                    round_,
+                    int(site),
+                    int(train),
+                    int(clicks[train, site]),
+                    (int(before.k[train, site]), int(after.k[train, site])),
+                )
+            ),
         }
-        for site, train in np.argwhere(clicks.T < 0)
+        for site, train in np.argwhere(clicks.T)
     ]
+
+
+def characters(kinds: Any) -> list[list[int]]:
+    """Each kind's character on the 24 turns in the turns' order: its trace on the candidates the star's weight keeps, where the kinds' matrices are not 0."""
+    kept = sum(np.einsum("gij,gij->g", k, k) for k in kinds)  # 0 off the 24 for every kind
+    return [[int(t) for t, w in zip(np.einsum("gii->g", k), kept, strict=True) if w] for k in kinds]
 
 
 def header(
@@ -119,8 +130,9 @@ def header(
     loaded: Any,
     layout: Any,
 ) -> dict[str, Any]:
-    """The record's first line: the files verbatim with their digests, the board, the kinds, the trains with their windings."""
+    """The record's first line: the files verbatim with their digests, the board, the kinds with their characters, the trains with their windings, keys and square flags."""
     labels = [train["name"] for train in universe["trains"]]
+    traits = zip(kinds._fields, kinds, characters(kinds), strict=True)
     return {
         "kind": "header",
         "record": record.name,
@@ -132,8 +144,8 @@ def header(
         "sides": shape,
         "order": ORDER,
         "kinds": [
-            {"index": at, "label": name.upper(), "dimension": kind.shape[-1]}
-            for at, (name, kind) in enumerate(zip(kinds._fields, kinds, strict=True))
+            {"index": at, "label": name.upper(), "dimension": kind.shape[-1], "characters": trace}
+            for at, (name, kind, trace) in enumerate(traits)
         ],
         "trains": [
             {
@@ -142,12 +154,13 @@ def header(
                 "kinds": list(train.kinds),
                 "part": train.part,
                 "winding": layout.gearing.drive[train.first, 0],
+                "key": layout.click.key[at, 0],
+                "square": train.square,
             }
             for at, (label, train) in enumerate(
                 zip(labels, (loaded.trains[n] for n in range(len(labels))), strict=True)
             )
         ],
-        "couplings": [],  # no file declares a coupling: the header's field stands empty until the schema retires it
         "operands": list(OPERANDS),
         "width": universe["integers"]["width"],
     }
@@ -170,7 +183,7 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
         return found
     layout = engine.layout(universe, shape, loaded)
     start = engine.state(*loaded.state)
-    ticks, end, ledger = setting["ticks"], start, ledger_of(record)
+    ticks, end, read_, ledger = setting["ticks"], start, start, ledger_of(record)
     # every promise is the round's that reads the state: none where no round runs
     found = promised(engine, layout, start) if ticks else []
     if found:
@@ -179,7 +192,8 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     with ledger.open("w", encoding="utf-8") as counted:
         for at, (end, clicks) in enumerate(rounds(engine.act, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))
-            events += clicked(at, clicks)
+            events += clicked(at, read_, end, clicks)
+            read_ = end
             # the promises of the round that reads this state, read from outside: every kept tooth within its
             # teeth, and the grips within the window
             found = promised(engine, layout, end) if at < ticks else []

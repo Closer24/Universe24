@@ -1,6 +1,6 @@
 """Tensor24's whole system once, on our bang, the three example files: laid by one formula, a round the naive round,
 the trains' order and the 24's turns nothing to the act, run to a record and a ledger the decoder reads with the run
-back exact, and a departure named with nothing written, by the run and by its tool."""
+back exact, and a departure named with nothing written, by the run and by its tool; the click lines of a pair world."""
 
 import dataclasses
 import hashlib
@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 
 from tensor24 import main
-from tensor24.decoder import records
+from tensor24.decoder import clicks, records
 from tensor24.engine import kinds, state, step
 from tensor24.record import schema
 from tensor24.runner import load as loading
@@ -27,14 +27,13 @@ PATHS = [ROOT / "examples" / "tensor24" / f"{name}.json" for name in NAMES]
 TOOTH = 1 << 127  # a tooth within the files' width and past light's dial
 FIELDS = ("round", "at", "site", "train", "count")  # a Count line's fields, schema.Count's
 REACH = 1 << 40  # the clock's counts are drawn below it
+HOW = {"capture_output": True, "text": True}  # a tool run, its output read
 
 
 def read(path):
     """A file of JSON, or a record's lines, each a JSON object."""
     text = path.read_text(encoding="utf-8")
-    return (
-        [json.loads(line) for line in text.splitlines()] if path.suffix == ".jsonl" else json.loads(text)
-    )
+    return [json.loads(x) for x in text.splitlines()] if path.suffix == ".jsonl" else json.loads(text)
 
 
 def bang(order=None):
@@ -167,17 +166,9 @@ def ledger(held, laid, s, setting, sites):
     wanted = []
     for at in range(1, setting["ticks"] + 1):
         s = step.tick(laid, s)
-        wanted += [
-            dict(
-                zip(
-                    FIELDS,
-                    (at, "step", x, n, s.a[t.first : t.first + t.rows(), x].tolist()),
-                    strict=True,
-                )
-            )
-            for x in range(sites)
-            for n, t in enumerate(held.trains)
-        ]
+        for x, (n, t) in itertools.product(range(sites), enumerate(held.trains)):
+            count = s.a[t.first : t.first + t.rows(), x].tolist()
+            wanted.append(dict(zip(FIELDS, (at, "step", x, n, count), strict=True)))
     return wanted
 
 
@@ -215,9 +206,18 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     ticks = setting["ticks"]
     end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1)
     assert got.end == end and got.events == []  # no rate line, and light alone never clicks
-    cards = got.header["trains"]  # the file's trains alone, each winding 1 until G3
-    assert [t["label"] for t in cards] == [t["name"] for t in universe["trains"]]
-    assert {t["winding"] for t in cards} == {1}
+    cards = got.header[
+        "trains"
+    ]  # the file's trains alone, each winding 1 until G3, its key and square flag
+    card = {
+        k: [t[k] for t in cards] for k in ("label", "winding", "key", "square")
+    }  # the cards' columns
+    assert card["label"] == [t["name"] for t in universe["trains"]] and set(card["winding"]) == {1}
+    assert set(card["key"]) == {universe["chosen"]["key"]} and card["square"] == list(held.trains.square)
+    traced = [k["characters"] for k in got.header["kinds"]]  # each kind's character on the 24 turns
+    assert {len(c) for c in traced} == {len(list(frame.turns()))} and len(
+        set(map(tuple, traced))
+    ) == len(traced)
 
     def kept(layout, s):
         reached.setdefault("end", s)  # the first state the run back reads is the rounds' last
@@ -227,10 +227,7 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert read(record)[-1]["digest"] == run.digest(run.stated(reached["end"]))
     assert read(missed)[-1]["exact"] == 0 and read(missed)[-1]["digest"] == read(record)[-1]["digest"]
     # the ledger: every train's counts as the rounds reach them, the metric family at rest, the schema's fields
-    lines, fields = (
-        read(run.ledger_of(record)),
-        [field.name for field in dataclasses.fields(schema.Count)],
-    )
+    lines, fields = read(run.ledger_of(record)), [f.name for f in dataclasses.fields(schema.Count)]
     shaped = [
         list(x) == fields and all(map(whole, (x["round"], x["site"], x["train"], *x["count"])))
         for x in lines
@@ -263,23 +260,38 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
         out, found = tmp_path / f"{name}.jsonl", main.ran(paths, tmp_path / f"{name}.jsonl")
         assert len(found) == lines and found[0].startswith(named), found
         assert not out.exists() and not run.ledger_of(out).exists()
-    tool, written = ROOT / "tools" / "tensor24_run.py", tmp_path / "tool.jsonl"
-    done = subprocess.run(
-        [sys.executable, "-I", str(tool), *map(str, PATHS), str(written)], capture_output=True, text=True
-    )
-    assert (
-        done.returncode == 0
-        and done.stdout == f"{written}: written\n"
-        and records.read(str(written))[1] == ""
-    )
+    tool = str(ROOT / "tools" / "tensor24_run.py")
+    args, written = [sys.executable, "-I", tool], tmp_path / "tool.jsonl"
+    done = subprocess.run([*args, *map(str, PATHS), str(written)], **HOW)
+    assert done.returncode == 0 and done.stdout == f"{written}: written\n"
+    assert not records.read(str(written))[1]  # the tool's record reads
     missing, none = tmp_path / "missing.json", tmp_path / "none.jsonl"
-    done = subprocess.run(
-        [sys.executable, "-I", str(tool), str(missing), *map(str, PATHS[1:]), str(none)],
-        capture_output=True,
-        text=True,
-    )
+    done = subprocess.run([*args, str(missing), *map(str, PATHS[1:]), str(none)], **HOW)
     assert done.returncode == 1 and "missing.json: not read" in done.stdout and not none.exists()
     # every order of the trains runs alike, and not with the clock found by its place (the B2 mutant)
     assert orders_alike()
     by_place(monkeypatch)
     assert not orders_alike()
+    # the click lines on a pair world of one Node-clock within the room (hold (x.x) below Gamma div 4): the held hand (1, 0) with its tooth at
+    # the dial's middle (s = 0), the giver at rest at 32, the taker gliding a count a round, the hands' tie 1200, the key 76801 odd: every round the
+    # giver takes one key and the taker gives one, the pair's books 0 at every round and site, the held hand clicks nowhere, the run back exact
+    den = 1  # every pinion den, the seed's
+    hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
+    pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
+    trains = [hand, {"name": "giver", **pair}, {"name": "taker", **pair}]
+    chosen = {"key": 76801, "push": 0, "notch": 0, "hold": 1, "tie": 1200, "mesh": 0}
+    integers = {"den": den, "full_rate": 10000, "width": 128}
+    world = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
+    gears = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 0, -1, 0], [1, 0, 0, 32, 32, 0], [2, 0, 0, 0, -1, 0]]
+    laid_ = {"version": 1, "ticks": 30, "gears": gears}
+    files = {"universe": world, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": laid_}
+    for name, held_ in files.items():
+        (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")
+    assert main.ran([tmp_path / f"{name}.json" for name in NAMES], tmp_path / "pair.jsonl") == []
+    got, cause = records.read(str(tmp_path / "pair.jsonl"))
+    lines, counted, ticks = got.of("click"), clicks.counted(got), laid_["ticks"]
+    assert cause == "" and got.end["exact"] == 1 and len(lines) == (1 + 1) * ticks
+    assert all(whole(x["q"]) and len(x["tooth"]) == 1 + 1 and all(map(whole, x["tooth"])) for x in lines)
+    assert counted.nonzero == 0 and counted.places == ticks and sorted(counted.trains) == [1, 1 + 1]
+    give, take = counted.trains[1], counted.trains[1 + 1]
+    assert give.given == take.taken == 0 and give.taken == take.given == ticks

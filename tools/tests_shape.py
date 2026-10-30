@@ -62,7 +62,7 @@ ROOM = {  # the room given by name: the test or the file, its lines and the reas
     "tests/test_the_tensor24_decoder_bangs.py": (200, TENSOR24_DECODER_BANGS),
     "tests/test_the_tensor24_decoder_measure.py": (250, TENSOR24_DECODER_MEASURE),
     "tests/test_the_tensor24_files.py": (310, TENSOR24_FILES),
-    "tests/test_the_tensor24_run.py": (285, TENSOR24_RUN),
+    "tests/test_the_tensor24_run.py": (297, TENSOR24_RUN),
     "tests/test_the_tensor24_kinds.py": (80, TENSOR24_KINDS),
     "tests/test_the_tensor24_load.py": (140, TENSOR24_LOAD),
 }
