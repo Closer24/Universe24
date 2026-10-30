@@ -20,7 +20,8 @@ xy) get none.
     on the whole board, no source, sign changes over 4,000 rounds: the 00 slot and the trace swing at the notch's one
     beat; the E and T2 parts, with no notch and no gradient, stand still (no rest beat);
 (d) the run back with the notch and the source: 2,000 rounds out and 2,000 unticks back, bit for bit, on this lay,
-    where the 00 slot stands at rest and so every clock that reads it stands still;
+    where the moving 00 row's teeth read no row and every row that reads the 00 slot stands still, while the 00 slot
+    itself swings (the same lay as (b));
 (d2) the run back where the teeth move: the 00 slot laid at REST div 3 with the source, the xx slot at 10^9, under the
     loader's reads (every row reads the 00 slot, the 00 row its own) and under this probe's, with and without the
     notch: the first round where untick(tick(s)) is not s;

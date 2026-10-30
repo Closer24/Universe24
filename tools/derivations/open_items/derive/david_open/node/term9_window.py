@@ -36,16 +36,6 @@ def places(num, den, digits):
     return f"{whole}." + str(frac).rjust(digits, "0")
 
 
-def sci(num, den, digits=3):
-    """num over den in the form m x 10^k, num and den above 0."""
-    k = 0
-    while num >= 10 * den:
-        den, k = 10 * den, k + 1
-    while num < den:
-        num, k = 10 * num, k - 1
-    return f"{places(num, den, digits)} x 10^{k}"
-
-
 # (a) gamma_obs in a tied background, exact ratios with du = u_c div 10^9 (u_c as p over q)
 lines_a = []
 for gamma in (1, 2):

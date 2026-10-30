@@ -1,6 +1,6 @@
 # Term 13, the frozen clock: no static clock freezes on the slot form, and its strong field is refused
 
-David, 2026-10-30 (the third text, 18:xx UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
+David, 2026-10-30 (the fourth text, 19:xx UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
 close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's term
 13 (a clock freezes where its teeth grow without bound; whatever freezes is the act's own result, with no hold and no
 restore). It is derived blind beside the Boss's agent, whose draft stands on boss-derive (b271ddfb8, derive/boss/g2/
@@ -10,11 +10,13 @@ item standing (6526641319, item 3), one of them for the owner: Postulate 4 stand
 strong field. The items are folded here (section 7). The second text (toys-5 d94169dc3) went back to the same pair, and
 both refused it: the mathematician with two items, the physicist with three. Big Pic re-checked both and found every
 blocking item standing (6530163632, item 1), with two words of his own: Buchdahl's bound, and the exterior derived with
-the field's own source. They are folded here (section 8), and section 9 says how this text checked itself. It reads the
-act as built on main (0df0e8385), G2's second text (toys-5 8ea1592db) and term 9's second text (toys-5 ebaedd4e8), in
-the law's four layers (Postulate 4, item (10)). Energy and momentum are read in the clicks' spacetime (the owner's word
-of 16:4x UTC). The probe is derive/david_open/node/term13_frozen.py, its output term13_frozen.txt beside it, whole
-numbers alone, with no root and no search for one (decision 41).
+the field's own source. They are folded here (section 8). The third text (toys-5 ffb80e335) went back to the same pair:
+the physicist PASSED it, and the mathematician returned NOT PASSED on one stale sentence, section 1's surface "inside
+every real body"; both readers' items are folded here (section 9), and section 10 says how this text checked itself. It
+reads the act as built on main (0df0e8385), G2's third text (toys-5 fcd74a092) and term 9's second text (toys-5
+ebaedd4e8), in the law's four layers (Postulate 4, item (10)). Energy and momentum are read in the clicks' spacetime
+(the owner's word of 16:4x UTC). The probe is derive/david_open/node/term13_frozen.py, its output term13_frozen.txt
+beside it, whole numbers alone, with no root and no search for one (decision 41).
 
 **The finding in one line:**
 - **The law on the slot form.** With the ii slots tied to the 00 slot, the 00 row's pull through the grips is exactly
@@ -23,19 +25,25 @@ numbers alone, with no root and no search for one (decision 41).
 - **No static clock freezes.** Every real u has w at most 1 / (2 gamma), so a static field ends where w reaches that
   value, and it reaches it first inside a body. No static exterior holds a zero or negative grip, and no static clock
   freezes.
-- **The surface of vanishing grip** belongs to a point source alone. Its lattice radius 4 gamma G M / c^2 lies inside
-  every static body, and no static body holds the surface. Nature has the same: Buchdahl's bound keeps every static
-  ball outside 9/8 of its horizon's radius, so a frozen star made by a static ball is refused there too, and a body
-  inside must fall (Big Pic). Light that reaches the surface is turned back (probe (d), laid with
-  no root, the grip as the coordinate: the hostile physicist's hp5).
-- **Compactness.** The exterior's least sphere bounds a static, spherical body's compactness by 5^(-5/4) / gamma_ext,
-  where gamma_ext is the body's own ratio of its ii mass to its 00 mass: 0.134 at gamma_ext = 1, and 0.152 to 0.165 on
-  G2's pressure estimate.
+- **The surface of vanishing grip** belongs, among fields with grips at or above 0, to a point source alone (section 2).
+  Its lattice radius 4 gamma G M / c^2 lies inside every static body, and no static body holds the surface. General
+  relativity has a like bound for static balls of ordinary matter: Buchdahl's keeps a ball of isotropic perfect fluid,
+  its density not rising outward, outside 9/8 of its horizon's radius (Buchdahl, Phys. Rev. 116, 1027 (1959)), and
+  Andreasson's carries it to matter with p_r + 2 p_T <= rho and neither pressure below 0 (J. Differential Equations 245,
+  2243 (2008)). Anisotropic stresses can beat it, with 2 G M / (c^2 R) above 8/9 (Bowers and Liang 1974), and a
+  gravastar falls outside both. So a frozen star made by such a ball is refused there too, and a body inside must fall
+  (Big Pic). The slot form's bound asks nothing of the matter's stresses: it stands on the identity of section 2. Around
+  a point source, light that reaches the surface is turned back (probe (d), laid with no root, the grip as the
+  coordinate: the hostile physicist's hp5).
+- **Compactness.** On an open board, with no push of the field outside the matter, the exterior's least sphere bounds a
+  static, spherical body's compactness by 5^(-5/4) / gamma_ext, where gamma_ext is the body's own ratio of its ii mass
+  to its 00 mass: 0.134 at gamma_ext = 1, and 0.152 to 0.165 on G2's pressure estimate.
 - **The strong field is refused by nature:**
   - its critical curve, 16/9 of general relativity's in b, (16/9)^2 in b^2, by Sgr A*;
-  - its second-order light bending, 6 pi against 15 pi / 4, unmeasured so far;
   - two static bodies of 70 solar masses, which would touch 413.455 km apart or wider, where equal Newtonian point
     masses at GW150914's 75 Hz orbit would be about 350 km apart (LIGO and Virgo, PRL 116, 061102 (2016)).
+- **Unmeasured:** the strong field's second-order light bending, 6 pi against 15 pi / 4 at self-push 0, where G2's third
+  text gives epsilon = 4; under condition (ii) epsilon is OPEN.
 - **So Postulate 4 stands** (Big Pic): the slot form's strong field fails, and G2's 00 equation must give general
   relativity's light ring with no clock frozen.
 - **On the act as built** (a wrapped board, no notch), the 00 slot's board mean rises without bound, as the square of
@@ -52,10 +60,13 @@ numbers alone, with no root and no search for one (decision 41).
   the 00 slot is pulled through the grips the ii slots set. Deep in the field the grips slacken, so the 00 slot's pull
   weakens and it climbs faster.
 - **Where the static field ends.** A static field can climb only so far: past a certain depth no setting of the 00 slot
-  balances the pull. That depth is reached first inside a body, at its centre for a round one, so outside every static
-  body the grips stay above 0, and every clock there runs.
-- **The surface where the grips vanish** belongs to a point mass alone, inside every real body. At that surface light's
-  speed falls to 0, and light that reaches it comes back. Nothing static lies past it.
+  balances the pull. That depth is reached first inside a body, at its centre for a round one shallower than u = 1/2,
+  where the act's own source stays at or above 0 (section 2); the marginal ball holds a zero grip at its centre. Outside
+  every static body the grips stay above 0, and every clock there runs.
+- **The surface where the grips vanish** belongs to a point mass alone, and its radius lies inside every real body,
+  where the grip stays above 0 (at gamma = 1, inside the standing ball of radius 7 G M / c^2, (grip / g)^2 = 81/343 at
+  r = 4 G M / c^2; section 2). Around a point mass light's speed falls to 0 there, and light that reaches it comes back.
+  Nothing static with grips at or above 0 lies past it.
 - **The spheres.** Going in, the spheres around the mass first shrink and then grow again toward the surface where the
   grips vanish, so there is a smallest sphere, and no static body smaller than it stands on the board. How small that is
   depends on the body itself: on how its ii slots and its 00 slot weigh it.
@@ -88,18 +99,30 @@ numbers alone, with no root and no search for one (decision 41).
   and light's coordinate speed squared is N^2 (1 - gamma u) in units of the far light's.
 - **Where the static field ends** (DERIVED; CHECKED, probe (c6)). (1 - gamma u)^2 = 1 - 2 gamma w is an identity, so w
   is at most 1 / (2 gamma) for every real u: past it the quadratic has no real root at all, so no static field stands,
-  with grips of either sign. w is superharmonic wherever the source is at or above 0, so it peaks inside the body. A
-  ball with a uniform source has w(0) = 3 G M / (c^2 s), so it stands only for a radius s of at least 6 gamma G M / c^2.
-  Outside any static body every grip is above 0.
+  with grips of either sign. w is superharmonic wherever the source is at or above 0, so it peaks inside the body. The
+  act's own N2 source, J00 = J_ii (1 - 2 u) (below), turns negative where u > 1/2, so that peak, at the centre for a
+  round body, is shown only for bodies shallower than u = 1/2 (the hostile physicist). A ball with a uniform source has
+  w(0) = 3 G M / (c^2 s), so it stands only for a radius s of at least 6 gamma G M / c^2, and the marginal ball,
+  s = 6 gamma G M / c^2, holds a zero grip at its centre (1 - 2 gamma w(0) = 0, probe (c6)). Outside any static body
+  every grip is above 0, and that stands on the identity alone (the same reader).
 - **The surface of vanishing grip** (DERIVED; light's turn CHECKED on the act, probe (d)). At r = 4 gamma G M / c^2,
   u = 1 / gamma, W = (1 + 1 / gamma) rest and N^2 = gamma / (1 + gamma), 1/2 at gamma = 1: no clock freezes there. It
   has infinite area at a finite proper distance, its spatial curvature runs to minus infinity (the hostile physicist's
   hp1). Its radius lies inside every static body, and no static body holds it: inside a standing ball the grip at that
   radius stays above 0 (at s = 7, (grip / g)^2 = 81/343 at r = 4, the least inside 1/7; the hostile mathematician's m1).
-  Light's coordinate speed falls as (r - r0)^(1/4), so light reaches it in a finite number of rounds; a zero grip
-  carries no flux, so light turns back. Probe (d) lays it with no root, the grip as the coordinate (section 3).
-- **The smallest sphere** (DERIVED; CHECKED, probe (c5)). The spatial metric is A^2 times the flat one with A^4 = 1 / (1
-  - 4 G M / (c^2 r)) at gamma = 1, so the areal radius R = A r has R^4 = r^5 / (r - 4) in units of G M / c^2. The
+  It belongs to a point source alone among fields with grips at or above 0: the (c1) identity holds as a rational
+  function of x = grip / g for x < 0 too, so the exterior continues through the surface onto a static, source-free
+  second sheet with negative grips and A^2 = 1 / x < 0, where r > 4 gamma again and w = 2 / r (at
+  x = -1/2 and gamma = 1: r = 16/3, u = 3/2, w = 3/8 = 2 / r, the 00 flux -2; the hostile mathematician's t1 (B)),
+  unstable and no body's exterior. Light's coordinate speed falls as (r - r0)^(1/4), so light reaches it in a finite
+  number of rounds. On the lattice a zero-grip Mesh carries no flux. In the continuum, in the grip coordinate, light's
+  radial equation is (2 - x) J d_t^2 phi = d_x (p d_x phi) with J = dr / dx = 8 x / (1 - x^2)^2 and p = (1 - x^2)^2 / 8,
+  which is 1/8 at the surface, while the weight (2 - x) J vanishes there: a regular endpoint, which needs a boundary
+  condition (the hostile mathematician's t1 (C)). Probe (d)'s lay supplies it, grip_0 = 0, with grip_1 about 12.5 g
+  beside it (his t3). So light turns back at the lay's wall, by energy conservation. Probe (d) lays it with no root, the
+  grip as the coordinate (section 3).
+- **The smallest sphere** (DERIVED; CHECKED, probe (c5)). The spatial metric is A^2 times the flat one with A^4 =
+  1 / (1 - 4 G M / (c^2 r)) at gamma = 1, so the areal radius R = A r has R^4 = r^5 / (r - 4) in units of G M / c^2. The
   factorization r^5 - 3125 gamma^4 (r - 4 gamma) = (r - 5 gamma)^2 (r^3 + 10 gamma r^2 + 75 gamma^2 r + 500 gamma^3)
   makes the least on r > 4 gamma unique and global: at r = 5 gamma, R = 5^(5/4) gamma G M / c^2, near 7.48 gamma.
   - **The bound and its conditions.** A static, spherical body on an open board, its exterior tied at every order, has
@@ -115,10 +138,10 @@ numbers alone, with no root and no search for one (decision 41).
     With gamma_ext = 1 - (4/3) |E_grav| / (M c^2), the self-consistent bound is 0.152, 0.159 and 0.165 for polytropes of
     index 0, 1 and 3/2 (the hostile physicist's hp4).
   - The bound is written 5^(-5/4) / gamma_ext with these conditions. Which gamma_ext a body carries is OPEN with
-    condition (ii) and N2's source. G2's second pair finds N2's 00 source moving with the teeth, J00 = J_ii (1 - 2 u)
-    (G2's second pair, the mathematician's item 1; G2's third text, in draft): that takes M0 / Mi below 1 by the depth,
-    six times the pressure's raise on G2's mathematician's count, so the bound falls below 5^(-5/4) / gamma, against
-    J0030 and J0740 more than before.
+    condition (ii) and N2's source. G2's second pair finds N2's 00 source moving with the teeth, J00 = J_ii (1 - 2 u) at
+    first order (G2's second pair, the mathematician's item 1; G2's third text, toys-5 fcd74a092, which gives the exact
+    ratio <J00> / <J_ii> = (1 - u) / (1 + u)): that takes M0 / Mi below 1 by the depth, six times the pressure's raise
+    on G2's mathematician's count, so the bound falls below 5^(-5/4) / gamma, against J0030 and J0740 more than before.
 - **General relativity's field does not hold the slot form's equation** (CHECKED, probe (c2)). In isotropic radius,
   N = (1 - m) / (1 + m) and A = (1 + m)^2 with m = G M / (2 c^2 r). The slot form's flux r^2 (grip / g) du / dr, with
   u = N^-2 - 1 and grip / g = A^-2, is -2 / (1 - m^2)^3, computed from N and A by the quotient rule: -128/27,
@@ -127,7 +150,8 @@ numbers alone, with no root and no search for one (decision 41).
 - **The spatial metric departs at second order** (CHECKED, probe (c8)). The slot form's A^2 = 1 + 2 e + 6 e^2 + 20 e^3
   against general relativity's isotropic 1 + 2 e + (3/2) e^2 + (1/2) e^3: the second-order spatial coefficient 4 against
   1, and the second-order bending 6 pi (G M / (c^2 b))^2 against 15 pi / 4, a ratio of 8/5. -g00 departs at the next
-  order, -4 e^3 against -(3/2) e^3.
+  order, -4 e^3 against -(3/2) e^3. These are the tied exterior's, at self-push 0: G2's third text gives epsilon = 4
+  there and leaves epsilon OPEN under condition (ii), so the 8/5 holds at self-push 0 only.
 - **The horizon in the act's terms** (CHECKED, probe (c3)). N = 0 with A = 4 at r = G M / (2 c^2): W without bound at
   the grip g / A^2 = g / 16. The slot form's field stops at u = 1 / gamma, where its grips vanish.
 - **A uniform background** (term 9's hostile physicist; probe (c4); term 9's second text). On the slot form a uniform 00
@@ -161,12 +185,12 @@ numbers alone, with no root and no search for one (decision 41).
   up, to Big Pic first, through the Boss, and a law changes only on the owner's word (Solution24, step 13). Big Pic's
   frame reading (the metric as the one algebra's frame at each Node-clock, 6526641319 item 2) is its candidate home.
 - **The slots read as densities** (Big Pic's lead, 6530024233 items 3 and 7, checked here beyond his first order).
-  - Read as nature's densities, the act's dial is the time weight A = sqrt(h) / N, its grips B = N sqrt(h) h^ii and a
-    clock's spring C = N sqrt(h) m^2. In general relativity's isotropic exterior, with the scale (1 + M / 2r)^2 and
-    M = G M / c^2:
+  - Read as nature's densities, the act's dial is the time weight A_d = sqrt(h) / N (written A_d here, apart from the
+    scale A above), its grips B = N sqrt(h) h^ii and a clock's spring C = N sqrt(h) m^2. In general relativity's
+    isotropic exterior, with the scale (1 + M / 2r)^2 and M = G M / c^2:
     - B = 1 - (M / 2r)^2, unmoved at first order;
-    - A = (1 + M / 2r)^7 / (1 - M / 2r), 1 - 4 Phi at first order;
-    - a clock's C / A = N^2 m^2.
+    - A_d = (1 + M / 2r)^7 / (1 - M / 2r), 1 - 4 Phi at first order;
+    - a clock's C / A_d = N^2 m^2.
   - Each is a ratio at every whole isotropic radius, so this exterior lays whole with no root.
   - At the horizon, M / 2r = 1, the grips' density vanishes, the dial grows without bound and the clock stops: general
     relativity's frozen clock, in the act's own weights, against Postulate 4.
@@ -231,11 +255,14 @@ What the event board's counts do (term13_frozen.txt).
     round 460; they hold below 20 per mille again from round 870, and the line keeps 999.9 per mille at round 2,000.
   Light reaches the zero grip in a finite board time and is turned back.
 - **Two bodies touching** (probe (e)): two equal static slot-form bodies, 70 solar masses in all, G M / c^2 =
-  103363.75 m. Touching, their centres stand 413.455 km apart with surfaces at the lattice radius 4, and 516.81875 km
-  apart at the throat's lattice radius 5, both exact, each carry's remainder 0. At its areal radius 5^(5/4) the centres
-  stand between 772.8 and 772.9 km apart, the endpoints checked by fourth powers. Equal Newtonian point masses at
-  GW150914's 75 Hz orbit would be about 350 km apart (LIGO and Virgo, PRL 116, 061102 (2016)), 3.386 G M / c^2. All
-  three touching separations are wider, by ratios of 1.1813, 1.476625, and between 2.208 and 2.209.
+  103363.75 m. With their surfaces at the lattice radius 4, where the grips vanish, their centres would stand 413.455 km
+  apart: a bound no static body reaches, since no static body's surface sits there, and a shell at r_s = 4 + 1/q has
+  R^4 = q r_s^5 > 4^5 q, which grows without bound (the hostile mathematician's t2 (B)). At the throat's lattice radius
+  5 they stand 516.81875 km apart; both separations exact, each carry's remainder 0. At its areal radius 5^(5/4) the
+  centres stand between 772.8 and 772.9 km apart, the endpoints checked by fourth powers. Equal Newtonian point masses
+  at GW150914's 75 Hz orbit would be about 350 km apart (LIGO and Virgo, PRL 116, 061102 (2016)), 3.386 G M / c^2. All
+  three touching separations are wider, by ratios of 1.1813, 1.476625, and between 2.208 and 2.209, the first as a
+  bound.
 
 ## 4. In the clicks
 
@@ -264,20 +291,27 @@ image's calibration does not carry over unchanged.
   compactness near 0.130, inside the bound, and J0437 and J0740 would need surfaces inside the throat, whose interior is
   OPEN (the hostile physicist's hp1). On G2's pressure estimate the bound straddles J0030. That branch has its own test,
   the double pulsar's Shapiro range, whose factor (1 + gamma_ext) / 2 would read 0.916 to 0.929 for the double pulsar's
-  B at radii from 11 km (the hostile physicist's hp4 (3), on G2's earlier pressure estimate, which G2's second pair
-  turns above 1) against Kramer and others' agreement with general relativity within 7 x 10^-3 (PRX 11, 041050 (2021)).
-  - **On the teeth branch** (N2's 00 source moving with the teeth, J00 = J_ii (1 - 2 u)), gamma_ext = 1 / (1 - 2 <u>),
-    so the Shapiro factor exceeds 1 by more than <u>: near 0.3 at a neutron star's surface alone, and 0.4535 on the
-    slot form's own exterior at J0030's redshift (the hostile physicist's hp1 (d)). Against Kramer's 7 x 10^-3, the
-    slot form's neutron stars are refused there by more than 40 times its width.
+  B at radii from 11 to 13 km (the hostile physicist's hp4 (3), on G2's earlier pressure estimate, which G2's second
+  pair turns above 1) against Kramer and others' agreement with general relativity within 7 x 10^-3 (PRX 11, 041050
+  (2021)).
+  - **On the teeth branch** (N2's 00 source moving with the teeth, J00 = J_ii (1 - 2 u) at first order),
+    gamma_ext = 1 / (1 - 2 <u>) at that order, so the Shapiro factor exceeds 1 by <u> / (1 - 2 <u>), more than <u>. With
+    G2's exact ratio, <J00> / <J_ii> = (1 - u) / (1 + u) (its third text), the excess is <u> / (1 - <u>), still above
+    <u>. The depth <u> is near 0.3 at a neutron star's surface alone, and 0.4535 on the slot form's own exterior at
+    J0030's redshift (the hostile physicist's hp1 (d)). Against Kramer's 7 x 10^-3, the slot form's neutron stars are
+    refused there by more than 40 times its width.
 - **The second-order bending:** 6 pi against 15 pi / 4 in (G M / (c^2 b))^2, 17.51 against 10.94 microarcseconds at the
-  solar limb (probe (c8)): a departure, unmeasured so far.
+  solar limb (probe (c8)): a departure at self-push 0, where G2's third text gives epsilon = 4 (under condition (ii)
+  epsilon is OPEN), unmeasured so far.
 - **Two bodies touching** (probe (e)). GW150914 reached a 75 Hz orbit, where equal Newtonian point masses of 70 solar
-  masses in all would be about 350 km apart (LIGO and Virgo, PRL 116, 061102 (2016)), 3.386 G M / c^2. Two static
-  slot-form bodies of the same mass would touch wider apart: at 413.455 km with surfaces at the lattice radius
-  4 G m / c^2, at 516.81875 km at the throat's 5, and between 772.8 and 772.9 km at its areal radius 5^(5/4). So they
-  would touch before reaching a 75 Hz orbit. LIGO and Virgo find black holes the only known objects compact enough to
-  reach it without contact. The areal margin, a ratio between 2.208 and 2.209, is the robust one.
+  masses in all would be about 350 km apart (LIGO and Virgo, PRL 116, 061102 (2016)), 3.386 G M / c^2: LIGO and Virgo's
+  Newtonian estimate, where post-Newtonian corrections are large. Two static slot-form bodies of the same mass would
+  touch wider apart: wider than 413.455 km, the separation at the lattice radius 4 G m / c^2, a bound no static body
+  reaches (section 3); at 516.81875 km at the throat's 5; and between 772.8 and 772.9 km at its areal radius 5^(5/4). So
+  they would touch before reaching a 75 Hz orbit. LIGO and Virgo find black holes the only known objects compact enough
+  to reach it without contact. The areal margin, a ratio between 2.208 and 2.209, is the robust one: in general
+  relativity Kepler's law is exact in the areal radius for circular test orbits (the hostile physicist). So this test
+  supports Sgr A*'s refusal, and does not carry the refusal alone.
 - **No horizon, its tests:** no type I X-ray bursts from black-hole binaries (Narayan and Heyl 2002); no surface
   emission from Sgr A* (Broderick, Loeb and Narayan 2009; Sgr A*'s Paper VI, section 4). The slot form has no horizon to
   ring (GW250114, PRL 135, 111403 (2025), reads a Kerr hole's ringing and its area law). The target named for G2,
@@ -285,9 +319,10 @@ image's calibration does not carry over unchanged.
   too.
 - **Departures, named:** no horizon; the static field ending inside a body, and a point source's surface of vanishing
   grip where light turns back; the compactness bound 5^(-5/4) / gamma_ext; the critical curve 16/9 of general
-  relativity's in b (refused by Sgr A*); the second-order bending 8/5 of general relativity's; static bodies touching
-  wider apart than GW150914's 75 Hz orbit; a uniform background read at first order (term 9); the whole board slowing
-  on the act as built. Postulate 4 is kept.
+  relativity's in b (refused by Sgr A*); the second-order bending 8/5 of general relativity's at self-push 0; static
+  bodies touching wider apart than GW150914's 75 Hz orbit; a uniform background read at first order (term 9); the whole
+  board slowing on the act as built. Postulate 4 is kept for static fields on the slot form (Big Pic); the whole board's
+  slowing on the act as built is OPEN with term 9's notch and the moving clock's mend.
 
 ## 5. What stands (term 13's row for the architecture document, when its readers agree)
 
@@ -296,12 +331,16 @@ image's calibration does not carry over unchanged.
   every clock slows together, against the rounds.
 - **Board:** the 00 row's pull through grips tied to it is exactly the Laplacian of w = u - (gamma / 2) u^2, the tied
   field solving the ii rows' own equation at every gamma.
-- **Clicks:** the slot form's strong field is refused by nature (its critical curve by Sgr A*); the compact stars a
-  tension; Postulate 4 stands (Big Pic), and G2's 00 equation owes general relativity's light ring with no clock frozen.
-- **Algebra:** w = 2 G M / (c^2 r) outside a static, spherical, tied body on an open board; the bound 5^(-5/4) /
-  gamma_ext with its conditions; the smallest sphere 5^(5/4) gamma G M / c^2. **Status:** DRAFTED; the identities
-  CHECKED on the act, the exterior's numbers CHECKED as arithmetic in exact ratios; the law above OPEN, for Big Pic and
-  the owner.
+- **Clicks** (in the metric's terms, owed in the clicks): the slot form's strong field is refused by nature (its
+  critical curve by Sgr A*); the compact stars a tension on the tied branch and refused on the teeth branch, by the
+  double pulsar; Postulate 4 stands (Big Pic), and G2's 00 equation owes general relativity's light ring with no clock
+  frozen.
+- **Algebra:** w = 2 G M / (c^2 r) outside a static, spherical, tied body on an open board; the bound
+  5^(-5/4) / gamma_ext with its conditions; the smallest sphere 5^(5/4) gamma G M / c^2. **Status:** DRAFTED, the page's
+  status until its readers agree; the steps section 2 labels DERIVED (the strong field's law, the exterior, where the
+  static field ends, the surface of vanishing grip, the smallest sphere, the board's mean on the act as built) are
+  derived in the algebra; the identities CHECKED on the act, the exterior's numbers CHECKED as arithmetic in exact
+  ratios; the law above OPEN, for Big Pic and the owner.
 
 ## 6. OPEN
 
@@ -313,7 +352,10 @@ image's calibration does not carry over unchanged.
   field acts outside the matter, as general relativity's field energy does at second order, and the exterior and the
   bound are to be derived with it.
 - **The density reading** (Big Pic): whether the 00 row's own law moves the slots as densities, and the strong field
-  under that reading, whose exact exterior lays whole and freezes its clock at the horizon (2).
+  under that reading, whose exact exterior lays whole and freezes its clock at the horizon (2). Its C = N sqrt(h) m^2
+  asks the clock's spring to read the metric too (term 6). With the act's spring fixed, a clock's beat squared goes as
+  1 / A_d = 1 + 4 Phi at first order, against general relativity's N^2 = 1 + 2 Phi: twice the redshift, which Pound and
+  Rebka, Gravity Probe A and the Galileo clocks refuse (the hostile physicist's hp7 (2)).
 - **The dynamical collapse:** a body pressed past its least sphere, run on the act.
 - **The interior** of a static star on the act, and the throat's interior.
 - **Rotation** (the shift, term 10): Kerr's field and its ringdown.
@@ -336,17 +378,18 @@ image's calibration does not carry over unchanged.
 6. The two readings agree at every gamma (2).
 7. The law above: its source carries N, a rescaling and not a shift, both changes needed for general relativity's frozen
    clock (2).
-8. Minors: the tie at every order, the readings at zero beat, g_ii's departure at second order, "its areal radius" for
-   "its surface", the lattice and the continuum parted, the whole-number tie's divisibility, NICER's central values (1,
-   2, 4).
+8. Minors: the tie at every order, g_ii's departure at second order, "its areal radius" for "its surface", the lattice
+   and the continuum parted, NICER's central values (1, 2, 4). The readings at zero beat and the whole-number tie's
+   divisibility, listed here before, are struck: no body of this page has carried them (the hostile mathematician's
+   second and third readings).
 
 **The hostile physicist's eight:**
 
 1. The bound is 5^(-5/4) / gamma_ext with its conditions; the double pulsar named as the other branch's test; NICER kept
    as a tension, with error bars and J0437 (2, 4).
-2. Light reaching the vanishing grip turns back (probe (d), on the reader's root-free lay, hp5); the
-   surface's radius inside every static body, and no static body holding the surface; nothing static past it; Postulate
-   4's claim restricted to static fields (1, 2, 4).
+2. Light reaching the vanishing grip turns back (probe (d), on the reader's root-free lay, hp5); the surface's radius
+   inside every static body, and no static body holding the surface; nothing static with grips at or above 0 past it;
+   Postulate 4's claim restricted to static fields (1, 2, 4).
 3. The critical curve leads with Sgr A* (Table 2 and section 4); M87* conditional on the stellar mass; "critical curve"
    for "shadow" (4).
 4. The law above with general relativity's source, spherical only, A read as a slot, and Postulate 4 to the owner (2).
@@ -358,7 +401,8 @@ image's calibration does not carry over unchanged.
 ## 8. What changed, by the second reading's items and Big Pic's re-check
 
 **Big Pic's re-check** (6530163632, item 1): every blocking item of both readers stands. His words carried here:
-- "no static body holds the vanishing surface" stands, and nature has the same, by Buchdahl's bound (the finding, 2);
+- "no static body holds the vanishing surface" stands, and nature has the same, by Buchdahl's bound (the finding, 2), a
+  bound of general relativity for static balls of ordinary matter (section 9);
 - on the teeth branch the stars refuse the exterior, as the physicist says (4);
 - "no push outside the matter" must be named, and the exterior derived with it: named, and the exterior with the
   field's own source OPEN (2, 6);
@@ -385,20 +429,73 @@ His non-blocking items: the horizon tests bear on a horizonless ultracompact obj
 others, ApJL 971, L20 (2024), and the Event Horizon Telescope's M87 Paper VI, ApJL 875, L6 (2019) (4).
 
 **Under the owner's word "Sine is forbidden"** (17:20 UTC): probe (e) no longer brackets pi by Machin's arctangent
-series, which the word bars. It compares separations, which need no pi: two static bodies of 70 solar masses touch
-413.455 km apart at the lattice radius 4, 516.81875 km at the throat's 5 and between 772.8 and 772.9 km at the areal
-radius, against the 350 km LIGO and Virgo give for GW150914's 75 Hz orbit (the finding, 3, 4).
+series, which the word bars. It compares separations, which need no pi: two static bodies of 70 solar masses touch wider
+than 413.455 km apart, the lattice radius 4 being a bound no static body reaches, at 516.81875 km at the throat's 5 and
+between 772.8 and 772.9 km at the areal radius, against the 350 km LIGO and Virgo give for GW150914's 75 Hz orbit (the
+finding, 3, 4).
 
-## 9. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
+## 9. The third text's readers, folded
 
-- **The probe rerun:** term13_frozen.py on main's src at 0df0e8385, in 25 s by my own run, its output byte for byte
-  against the saved one; no root, no search for one, no log, no exponential and no circular function in its code, and
-  Sofer's gate reads it with no refusal and no note. Its brackets are the text's stated endpoints, checked by powers.
+The third text (toys-5 ffb80e335) went back to the same pair. The physicist PASSED it, with notes that change no result.
+The mathematician returned NOT PASSED on one sentence, section 1's "inside every real body. At that surface light's
+speed falls to 0", left from the second text, which the text's own standing ball refutes (at s = 7,
+(grip / g)^2 = 81/343 at r = 4).
+
+**The hostile mathematician's one, and his residuals:**
+1. NB1 in section 1: the surface belongs to a point mass alone, and its radius lies inside every real body, where the
+   grip stays above 0 (inside the standing s = 7 ball, (grip / g)^2 = 81/343 at r = 4); around a point mass light's
+   speed falls to 0 there, and light that reaches it comes back (1). Section 8's map of NB1 now holds as written.
+- NB2, mended in the third text, stands.
+- His residuals, each mended in place:
+  - (a) the lattice radius 4: the touching separation there, 413.455 km, is a bound no static body reaches, since a
+    shell at 4 + 1/q has R^4 = q r_s^5 > 4^5 q (3, 4, 8);
+  - (b) "belongs to a point source alone" holds among fields with grips at or above 0: past the surface the (c1)
+    identity continues onto a static, source-free second sheet with negative grips (the finding, 1, 2);
+  - (c) light's turn: on the lattice a zero grip carries no flux; in the continuum the surface is a regular endpoint
+    (p = 1/8 there, the weight 0) whose boundary condition the lay's grip_0 = 0 supplies, so light turns back at the
+    lay's wall, by energy conservation (2);
+  - (d) Buchdahl's bound with its hypotheses: an isotropic perfect fluid whose density does not rise outward (Buchdahl
+    1959), or matter with p_r + 2 p_T <= rho (Andreasson 2008); anisotropic stresses can beat 8/9 (the finding);
+  - (e) the dial written A_d, apart from the scale A (2, 6, 10);
+  - (f) G2's third text read as committed (toys-5 fcd74a092): epsilon OPEN under condition (ii), so the 8/5 bending
+    holds at self-push 0 only; its exact ratio (1 - u) / (1 + u) keeps the teeth branch's refusal, the excess
+    u / (1 - u) above u (the header, the finding, 2, 4);
+  - (g) "Postulate 4 is kept" conditioned to static fields on the slot form (4); the zero-beat and divisibility minors
+    struck from section 7, since no body carried them (7); the compactness bullet now says "on an open board" and "no
+    push of the field outside the matter" (the finding);
+  - (h) section 5's clicks row carries both branches (5);
+  - (i) the second-order bending moved from "refused by nature" to unmeasured (the finding).
+
+**The hostile physicist's notes** (none blocking):
+1. Buchdahl: as (d) (the finding).
+2. The density reading's spring: with the act's spring fixed, a clock's beat squared goes as 1 / A_d = 1 + 4 Phi, twice
+   general relativity's redshift, which Pound and Rebka, Gravity Probe A and the Galileo clocks refuse (6).
+3. The act's own N2 source turns negative where u > 1/2, so the peak at a round body's centre is shown for bodies
+   shallower than u = 1/2; the marginal ball holds a zero grip at its centre; the exterior's grips stand on the identity
+   alone (1, 2).
+4. Small points: "radii from 11 to 13 km" (4); the steps section 2 labels DERIVED named in section 5's status beside
+   DRAFTED (5); section 5's clicks row with both branches and "in the metric's terms" (5).
+5. Probe (e): the 350 km named as LIGO and Virgo's Newtonian estimate, Kepler's law exact in the areal radius in general
+   relativity, and the test as support for Sgr A*'s refusal, not its sole carrier (4).
+
+## 10. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
+
+- **The probe rerun:** term13_frozen.py, unchanged since the third text, on main's src at 0df0e8385, in 27 s by my own
+  run (25 s in the third text), its output byte for byte against the saved one; no root, no search for one, no log, no
+  exponential and no circular function in its code, and Sofer's gate reads it with no refusal and no note. Its brackets
+  are the text's stated endpoints, checked by powers.
+- **The third reading's cases rerun by me:** the mathematician's t1_surface, t2_density_and_e and t3_lambda, and the
+  physicist's hp7_third_text, each under a second, each byte for byte against its saved output.
 - **(e) derived again by hand:** 4 x 103,363.75 m = 413,455 m and 5 x 103,363.75 m = 516,818.75 m; 350 km is 3.386
   G M / c^2; the areal endpoints 772.8 and 772.9 km checked by fourth powers against 5^5 (G M / c^2)^4.
 - **Big Pic's density lead checked by hand:** with N = (1 - M / 2r) / (1 + M / 2r) and the scale (1 + M / 2r)^2,
-  B = N times the scale, A = the scale cubed over N, C / A = N^2 m^2; to first order A is 1 + 4 M / r and C is
+  B = N times the scale, A_d = the scale cubed over N, C / A_d = N^2 m^2; to first order A_d is 1 + 4 M / r and C is
   1 + 2 M / r.
+- **The third reading's figures derived again by hand:** the second sheet at x = -1/2 and gamma = 1:
+  r = 4 / (3/4) = 16/3, u = 3/2, w = 3/2 - 9/8 = 3/8 = 2 / r; p = x / J = (1 - x^2)^2 / 8, 1/8 at x = 0; a shell at
+  r_s = 4 + 1/q has R^4 = r_s^5 / (r_s - 4) = q r_s^5; with the act's spring fixed, 1 / A_d = 1 - 4 M / r against
+  N^2 = 1 - 2 M / r at first order; with G2's exact ratio gamma_ext = (1 + u) / (1 - u), so the Shapiro factor
+  (1 + gamma_ext) / 2 = 1 / (1 - u) exceeds 1 by u / (1 - u).
 - **Each step derived again:** the pull as the Laplacian of w at every gamma, by the tie; the exterior and the fluxes
   by the quotient rule as rational functions; the least sphere by its factorization; the identity (1 - gamma u)^2 = 1 -
   2 gamma w that bars a static field past the vanishing grip.
@@ -411,3 +508,6 @@ radius, against the 350 km LIGO and Virgo give for GW150914's 75 Hz orbit (the f
     site 508): it now reads "all but a few", and the line still has no whole lay.
   - The first text's lay, read against the act's rest, was gamma 7 and 14, not 1 and 2 (the mathematician's item 4):
     probe (a) is relaid at the act's rest, and its counts at gamma 1 and 2 stand, each grip scaling by one constant.
+  - The fourth text searched its own words again for each claim the third reading found stale or unscoped ("inside every
+    real body", "nothing static", "lattice radius 4", "point source alone", "Buchdahl", "in draft", "8/5", "Postulate 4
+    is kept", "a tension", "peaks", "from 11 km"): each now carries its condition or is moved.
