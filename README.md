@@ -37,7 +37,7 @@ A world is three files (`examples/tensor24/`): the universe (the integers den, f
 
 ## The documents
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): the parts in the order of the flow, who may import whom, who keeps which document.
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): the one document that tells the system and the one the work runs from: the parts, the Node-clock first, each told by the clock, the board and the clicks, with its algebra, home, test and status; who may import whom.
 - [docs/ALGEBRA.md](docs/ALGEBRA.md): the law. [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md): the decisions in force, the owner's words with their dates.
 - [docs/ENGINE.md](docs/ENGINE.md): the engine's document, the description of the system and the tests of one Node-clock. [docs/BIG_PICTURE.md](docs/BIG_PICTURE.md): the build in clocks, algebra and physics.
 - [docs/UNIVERSE24.md](docs/UNIVERSE24.md): what the one run must show, its gates, and the ledger of the derivations. [docs/CLOCK_WORDS.md](docs/CLOCK_WORDS.md): every clock word defined once.
