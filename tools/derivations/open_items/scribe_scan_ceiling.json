@@ -91,18 +91,6 @@
  },
  {
   "rule": "TWICE",
-  "file": "tensor24/decoder/records.py",
-  "detail": "1 + 1",
-  "count": 1
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/decoder/records.py",
-  "detail": "len(sides) + len(sides)",
-  "count": 1
- },
- {
-  "rule": "TWICE",
   "file": "tensor24/runner/load.py",
   "detail": "1 + 1",
   "count": 1
