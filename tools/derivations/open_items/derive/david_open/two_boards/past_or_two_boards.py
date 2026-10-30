@@ -38,6 +38,17 @@ K, H, T, C = (
 GENTLE = 2  # a gentler bang's heat, for the memory that passes it
 
 
+
+def places(x, k):
+    """A fraction to k places by long division in whole numbers, the last place rounded half to even, as a float's format does."""
+    scale = 10 ** k
+    n, d = abs(x.numerator) * scale, x.denominator
+    q, r = divmod(n, d)
+    if 2 * r > d or (2 * r == d and q % 2 == 1):
+        q += 1
+    sign = "-" if x < 0 and q else ""
+    return f"{sign}{q // scale}.{q % scale:0{k}d}"
+
 def swing_heat(step: int) -> int:
     """The swing: H at its bang (step 0 of each swing), falling to 0 at the top, rising toward the next bang."""
     t = step % T
@@ -98,7 +109,7 @@ def met(fwd: list[list[Fraction]], bwd: list[list[Fraction]]) -> list[list[Fract
     for a, b in zip(fwd, bwd, strict=True):
         prod = [x * y for x, y in zip(a, b, strict=True)]
         total = sum(prod)
-        out.append([x / total for x in prod])
+        out.append([Fraction(x, total) for x in prod])
     return out
 
 
@@ -125,9 +136,9 @@ def report(name: str, law: list[list[Fraction]], heat) -> list[str]:
         clicks_per_swing.append(clicks)
         tops.append(mean(law[n * T + T // 2]))
     out.append(
-        "  interesting clicks per swing: " + ", ".join(f"{float(c):.2f}" for c in clicks_per_swing)
+        "  interesting clicks per swing: " + ", ".join(places(c, 2) for c in clicks_per_swing)
     )
-    out.append("  depth at each swing's top:    " + ", ".join(f"{float(t):.2f}" for t in tops))
+    out.append("  depth at each swing's top:    " + ", ".join(places(t, 2) for t in tops))
     return out
 
 
@@ -229,8 +240,8 @@ def main() -> None:
     )
     lines.append("")
     lines.append("the two boards' lean, B2 less B1, in interesting clicks per swing (weight 1 + 3 k):")
-    lines.append("  the full bang:   " + ", ".join(f"{float(x):.2f}" for x in strong))
-    lines.append("  the gentle bang: " + ", ".join(f"{float(x):.2f}" for x in gentle))
+    lines.append("  the full bang:   " + ", ".join(places(x, 2) for x in strong))
+    lines.append("  the gentle bang: " + ", ".join(places(x, 2) for x in gentle))
     lines.append("")
     silent = met(b1, backward(swing_heat, steps, [1] * (K + 1)))
     same = all(x == y for a, b in zip(silent, b1, strict=True) for x, y in zip(a, b, strict=True))

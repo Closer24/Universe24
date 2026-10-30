@@ -19,6 +19,17 @@ import random
 from fractions import Fraction
 
 
+
+def places(x, k):
+    """A fraction to k places by long division in whole numbers, the last place rounded half to even, as a float's format does."""
+    scale = 10 ** k
+    n, d = abs(x.numerator) * scale, x.denominator
+    q, r = divmod(n, d)
+    if 2 * r > d or (2 * r == d and q % 2 == 1):
+        q += 1
+    sign = "-" if x < 0 and q else ""
+    return f"{sign}{q // scale}.{q % scale:0{k}d}"
+
 def nonneg(n):
     return (n // (n * n + 1)) + 1  # the algebra's one whether: 1 where n >= 0, 0 below
 
@@ -43,7 +54,7 @@ for L in range(1, 121):
         k = rng.randint(1, min(L, 6))
         cuts = sorted(rng.sample(range(1, L), k - 1)) if k > 1 else []
         sizes = [b - a for a, b in zip([0] + cuts, cuts + [L])]
-        if rng.random() < 0.3 and k > 1:  # a part of size 0 among them, which must never be drawn
+        if rng.randrange(10) < 3 and k > 1:  # a part of size 0 among them, which must never be drawn
             sizes.insert(rng.randrange(len(sizes)), 0)
         digits = [rng.randrange(10**30) for _ in range(7)]
         c0 = rng.randrange(10**12)
@@ -100,7 +111,7 @@ for _ in range(400):
         ups += 1 - down
     ok_draw += ups == sigma_up
     cos = Fraction(sm, rho * rho_d)  # cos theta, exact, since |S| = rho and |m| = rho_d
-    worst = max(worst, abs(Fraction(ups, L) - (1 + cos) / 2))
+    worst = max(worst, abs(Fraction(ups, L) - Fraction(1 + cos, 2)))
 print(f"(3) the twins: Fierz sigma_up = (rho rho_d + S . m) / 2 exact in {ok_fierz} of {n}; the carry's side drew up "
       f"exactly sigma_up times over the full turn in {ok_draw} of {n}; the largest |ups / L - cos^2(theta / 2)| = {worst}")
 
@@ -128,7 +139,7 @@ print("(4) the head's draw (the digits sorted, then composed by Horner modulo M;
       "combination of its digits, on equal parts where a fair draw gives 1/2:")
 for nd, base, M in ((2, 2, 64), (3, 2, 64), (4, 2, 64), (3, 3, 64), (3, 4, 64), (4, 3, 81), (3, 6, 1000), (7, 2, 1000)):
     p = head_equal_parts(nd, base, M)
-    print(f"    {nd} digits of base {base}, M {M}: P(up) = {p} = {float(p):.4f}")
+    print(f"    {nd} digits of base {base}, M {M}: P(up) = {p} = {places(p, 4)}")
 
 
 def sum_equal_parts(n_digits, base, L):
