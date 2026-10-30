@@ -31,3 +31,8 @@
 (h) the uniform wave at D = W div 400 laid at 10: 134 sign changes in 8000 rounds, a period of about 119 rounds and 54/134; the state returns exactly at round 120; 2 W / (A D) + 4 A = 120
 (h) the uniform wave at D = W div 400 laid at 30: 127 sign changes in 8000 rounds, a period of about 125 rounds and 125/127; the state returns exactly at round 126; 2 W / (A D) + 4 A = 146 and 20/30
 (h) the uniform wave at D = W div 400 laid at 1000: 127 sign changes in 8000 rounds, a period of about 125 rounds and 125/127; the state returns exactly at round 3141; 2 W / (A D) + 4 A = 4000 and 800/1000
+
+(i) the held count with its spring W div 16, X laid at 100000: the push's shift at the swing's top, g X^2 div 2 kappa, 199 against n = 1000000; least K 999551, X stays over 4000 rounds
+(i) the held count with its spring W div 16, X laid at 5000000: the push's shift at the swing's top, g X^2 div 2 kappa, 499999 against n = 1000000; least K -3786, X stays over 4000 rounds
+(i) the held count with its spring W div 16, X laid at 10000000: the push's shift at the swing's top, g X^2 div 2 kappa, 1999999 against n = 1000000; K below 0 first at round 4, X ran past 10^60 at round 49
+(i) the held count with its spring W div 16, X laid at 20000000: the push's shift at the swing's top, g X^2 div 2 kappa, 7999999 against n = 1000000; K below 0 first at round 2, X ran past 10^60 at round 29

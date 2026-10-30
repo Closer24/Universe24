@@ -1,6 +1,6 @@
 # Board to mass: how a mass enters on the board, how it comes out in the clicks, and what the 24 say of three generations
 
-David, 2026-10-30, 05:3x UTC, on the owner's words to David (in Hebrew; in translation):
+David, 2026-10-30, 05:5x UTC, on the owner's words to David (in Hebrew; in translation):
 
 - 03:0x UTC: "Prepare a page on this that everyone will agree on... board2mass. It has to explain why nature also shows three generations... On the board a mass is a spring with a coupling: what is the formula has to be understood. First you, then a hostile mathematician agent and a hostile physicist agent go over it after you finish. From the clocks, understand what the transformation from the board to the clicks is. And why those ratios are seen in the clicks, and why there are 3 generations, with all their ratios and properties."
 - Before it: "How a mass enters the board, in the four dimensions of the events' spacetime, and how it comes out of the click, whose spacetime is three dimensions, has to be understood, no?" (Sofer's 8.2: both are 3 + 1, and what differs is which 1.)
@@ -139,7 +139,8 @@ The owner's question of 04:3x, answered yes from the law and the act:
   - A one-leg term alone, with only the vertex K X X, does not make (n, 0) stationary.
 - **So G3's held hand needs a term that holds it:** a one-leg term with a spring of its own, or a one-leg term with the vertex of three held legs, or the law's "one quantum per Node-clock" as an act.
   - h K + c K^3 has only a local minimum, where K^2 = -h / 3c and c K > 0, behind a barrier of (4/3) |h| K. The vertex's push adds (g/2) <X X> to h, and once that reaches |h| the minimum is gone and the count runs away, as in m3 (c).
-  - Of these, only a spring of its own holds the count against a push of any size. Nature's held value is held by a quadratic and a quartic term. That is G3's toy, bounded at lambda = 1/Gamma (OPEN).
+  - A spring of its own keeps a minimum for a push of any size, but the push moves it down by (g/2) X X / kappa. As that shift nears n the count reaches 0, and then the hand it holds, a second-order hand as in m3, runs away (CHECKED, m3 (i); both readers' finding at the fourth reading). With the spring W div 16 the shift at the swing's top is 199 for X laid at 10^5, which holds; n / 2 at 5 x 10^6, where K, laid at n, swings to -3,786 and X still stays; 2 n at 10^7 and 8 n at 2 x 10^7, where X runs past 10^60 by rounds 49 and 29.
+  - So no term of one, two or three legs bounds the whole potential: with K at its spring's minimum, the potential left for X is (g/2) n X X - g^2 X^4 / (8 kappa), unbounded below. Only a four-leg term bounds it, as the quartic does in nature's held value, which is held by a quadratic and a quartic term. That is G3's toy, bounded at lambda = 1/Gamma (OPEN), beside the plan's G3 line, which lays only three-leg vertices.
 - **The held hand's own potential gravitates** (OPEN): a uniform potential is a vacuum energy, with rho + 3p = -2V. Its value at the held count is what gravitates, and that value depends on where the tensor operation sets the potential's zero. The depth of the well that holds it does not: kappa n^2 / 2 for a spring kappa, the change in vacuum energy as the count settles. For a held value like the Higgs field's, that depth is about m_H^2 v^2 / 8, 1.2 x 10^8 GeV^4, against the measured rho_Lambda of about 2.5 x 10^-47 GeV^4. That is the cosmological constant's problem, met here too.
 
 ## 4. From the board to the clicks: what the clocks do
@@ -337,7 +338,7 @@ Their origin, and their ratio to the electron's below 10^-6, are not treated her
 | the board holds every mode only while D < 2W | DERIVED; CHECKED | 3.4; m3 (b) |
 | a scalar hand type's range of masses is at most about sqrt W (kinetic), a first-order one's about its teeth; nature's range needs a premise on the neutrinos' scale | DERIVED | 3.4 |
 | the lone hand's 6-round beat is the carry's floor | CHECKED | 3.5; m3 (a), (f) |
-| the held hand drifts under the vertex; three-leg vertices alone hold no count | DERIVED; CHECKED | 3.6; m3 (c) |
+| the held hand drifts under the vertex; three-leg vertices alone hold no count; a spring of its own holds it only while the push's shift stays below about n; only a four-leg term bounds the potential | DERIVED; CHECKED | 3.6; m3 (c), (i) |
 | the held hand's potential at its count gravitates as a vacuum energy; its well's depth kappa n^2 / 2 is the change as the count settles | DERIVED (the zero OPEN); OPEN on the act | 3.6 |
 | motion cancels from the ratio of two rest beats | DERIVED at long waves | 4.2 |
 | the clicks read the rest beat through energy differences and the kinetic mass, going as sin omega0, through motion; they part at order omega0^2 | DERIVED | 4.3 |
@@ -364,7 +365,7 @@ Their origin, and their ratio to the electron's below 10^-6, are not treated her
 
 - **Boss, for G3:**
   1. **The held count's kind:** A1 or A2 gives a triplet one mass (6.1). Three masses need counts that cut the 24 further, E off its lines or T2 off the body diagonals, each with an A1 part large enough (6.2, 6.3). A T2 family loads as built.
-  2. **The held hand needs a spring of its own:** three-leg vertices alone hold no count, and under the vertex's push it drifts below 0 and the hand it holds runs away (3.6, m3 (c)). G3's toy must hold it.
+  2. **The held hand needs a term that holds it:** three-leg vertices alone hold no count, and under the vertex's push it drifts below 0 and the second-order hand it holds runs away (3.6, m3 (c)). A spring of its own holds it only while the push's shift (g/2) X X / kappa stays below about n (m3 (i)). Only a four-leg term bounds the whole potential, and the plan's G3 line lays only three-leg vertices. G3's toy must hold it: say which term the one plan lays.
   3. **The one plan against the split:** the kinds that split a triplet are the metric's own. If the one plan pairs a held E or T2 count with the metric's slots of the same kind, a held split shears space, and the cavities refuse that at parts in 10^18 (5.2). Say which vertices the one plan lays.
   4. **The integers:** a mass's beat is its band's only for swings of about a count a round or more (3.3). A scalar hand type spans masses of at most about sqrt W, so a range R asks W of at least R^2; if nature's range were held by scalar springs, DESI's neutrino sum would ask about 3.6 x 10^26, above the head's. Nature's wide range is the fermions', and a first-order (fermion) hand type spans about its teeth (3.4; OPEN).
   5. **Families of one kind and part come out alike** under the law and G3's single strength (7.3); as built they can differ only through their rows' strengths, the breach G3 removes. What tells them apart is OPEN.
@@ -374,7 +375,7 @@ Their origin, and their ratio to the electron's below 10^-6, are not treated her
 
 ## 10. The two hostile readers: what changed
 
-The first readings (04:4x and 04:5x UTC) read the first draft: the physicist toys-5 825ef7496, the mathematician the working copy that became a90f256c4. The second readings (05:1x and 05:2x UTC) read e9143fd41 with the clicks' framing at its top. Each reader reran the three probes every time, and each output matched its saved text.
+The first readings (04:4x and 04:5x UTC) read the first draft: the physicist toys-5 825ef7496, the mathematician the working copy that became a90f256c4. The second readings (05:1x and 05:2x UTC) read e9143fd41 with the clicks' framing at its top. The third (05:3x UTC) read 0b3b180af and agreed with minor fixes. The fourth (05:4x UTC) read 8b3454cf4 and agreed but for one sentence of 3.6, the same sentence for both. Each reader reran the three probes every time, and each output matched its saved text.
 
 | finding | by | changed |
 | --- | --- | --- |
@@ -406,6 +407,8 @@ The first readings (04:4x and 04:5x UTC) read the first draft: the physicist toy
 | round 2: the clicks read the rest beat through energy differences (Rainville et al., 2005) beside motion | physicist | 0, 4.3 |
 | round 2: the act's coupling rows carry their own strengths as built | mathematician | 7.3, 9 |
 | round 2, minor: the floor's period 2W / (A D) + 4A; no strict minimum; a one-leg term with the vertex of three held legs; whole when the values are whole; the trace a multiple of 3; 3 G^-1; statistics OPEN; the vacuum energy's zero; section 1's wordings; the table's scalar label; the uniform wave's periods; the baselines; a second-order spring's values are squares; Lange et al.'s bound on the potential; MICROSCOPE's reach through composition | both | 3.3, 3.6, 4.3, 6.2, 6.4, 7.8, 1, 7.1, 3.2, 4.4 |
+| round 3, minor: for swings above the floor; the floor's periods as exact first returns; the range's direction and the premise's ordering; the cubic spring's barrier; what gravitates; MICROSCOPE through composition; the ratios rational where the spring's values are; the rest beat through energy differences and the kinetic mass through motion; an angle set by the counts; up to a common factor | both | 0, 2, 3.3, 3.4, 3.6, 4.1, 4.3, 6.2, 9; m3 (h) |
+| round 4: a spring of its own keeps a minimum but holds the count only while the push's shift stays below about n; only a four-leg term bounds the whole potential | both | 3.6, 8, 9; m3 (i) |
 
 ## 11. The probes
 
@@ -413,4 +416,4 @@ Each runs as `python3 -I <probe> <src of tensor24-review at 2a6203a4a>` from der
 
 - **m1_kinds.py:** the 24 from kinds.turns and kinds.kinds on the head's star; the kinds' characters (irreducible, unlike, complete); for all eleven classes of subgroups, the invariant counts of each kind and the number of distinct values of a generic spring that keeps the subgroup, read from the characteristic polynomial's gcd with its derivative; the kinds on A4; the turns that fix eight held counts.
 - **m2_spring.py:** the act's tables C[K, T1 -> T1] for every kind and component; the A1 + E spring, its spread and the lines where two values meet; the diagonal Koide search and the nearest approach; the T2 discriminant; the A1 + E + T2 Koide solutions; the circulants by their polynomials and discriminants; the A2 mixing.
-- **m3_beat.py:** the head's tick on the example's files (the lone hand at 1, 2, 3 and 10^6; the uniform wave); the head's gear under a spring (periods, the top mode, the count of sign changes, the floor at small swings); the held hand under the vertex's push, with and without a spring of its own; a spring off the diagonal; the antisymmetric push on a real hand and on a hand of two parts.
+- **m3_beat.py:** the head's tick on the example's files (the lone hand at 1, 2, 3 and 10^6; the uniform wave); the head's gear under a spring (periods, the top mode, the count of sign changes, the floor at small swings); the held hand under the vertex's push, with and without a spring of its own, and with it under larger swings; a spring off the diagonal; the antisymmetric push on a real hand and on a hand of two parts.

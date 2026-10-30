@@ -19,7 +19,10 @@ W (a+ - 2 a + a-) = push, the remainder kept in the fine tooth. A spring D is a 
     -|v|, so the hand runs away with no A1 part and beats with an A1 part of 2 |v|;
 (h) the uniform wave under the spring D = W div 400 laid at amplitudes 1 to 1000: the band's beat (period about 126
     rounds) stands only once the swing is about a count a round or more; below, the carry's floor sets a different beat,
-    whose exact period, the first return of the hand's whole state, is 2 W / (A D) + 4 A.
+    whose exact period, the first return of the hand's whole state, is 2 W / (A D) + 4 A;
+(i) the held count with its spring W div 16, as in (c), under larger swings laid at 5 x 10^6, 10^7 and 2 x 10^7: the
+    push moves the count's minimum down by g X^2 / (2 kappa) at the swing's top, and once that nears n the count
+    crosses 0 and the gear runs away; the spring keeps a minimum, the whole potential stays unbounded below.
 
 Usage: python3 -I m3_beat.py <src of tensor24-review at 2a6203a4a>   (the example files are read from <src>/../examples/tensor24)
 """
@@ -195,3 +198,16 @@ for amp in (1, 2, 5, 10, 30, 1000):
           f" a period of about {q} rounds and {r}/{changes}; {told}; 2 W / (A D) + 4 A = {2 * 400 // amp + 4 * amp}"
           f"{'' if 2 * 400 % amp == 0 else ' and ' + str(2 * 400 % amp) + '/' + str(amp)}")
 
+
+print()
+kappa = W // 16
+for laid in (10 ** 5, 5 * 10 ** 6, 10 ** 7, 2 * 10 ** 7):
+    xs = pair(held_sprung, laid, n, 4000)
+    gone = len(xs) < 4000
+    shift, _ = carry(g * laid * laid, 2 * kappa, 0)
+    least = min(k for _, k in xs)
+    first = next((i + 1 for i, (_, k) in enumerate(xs) if k < 0), None)
+    fate = f"K below 0 first at round {first}, X ran past 10^60 at round {len(xs)}" if gone else (
+        f"least K {least}, X stays over 4000 rounds")
+    print(f"(i) the held count with its spring W div 16, X laid at {laid}: the push's shift at the swing's top,"
+          f" g X^2 div 2 kappa, {shift} against n = {n}; {fate}", flush=True)
