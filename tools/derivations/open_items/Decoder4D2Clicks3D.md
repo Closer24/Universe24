@@ -84,7 +84,7 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 | mass | the windings a clock the clicks build books per tick of its own clock (decision 37), counted in its own ticks so that motion leaves it alone. Which clock counts the beat, the composite's own count or its Node-clock's tick, is the schema's G7 field, and only the own count leaves motion out. A composite's mass holds its binding too | owed (mass.py; G6) |
 | a mass's width | the spread of the masses read over many lays of one species, against their mean life in their own ticks. One clock's life gives only the resolution of its own window | owed (mass.py; G6) |
 | a clock's parts | per species, where it stands: taken alone, taken once a click frees it from its clock, or never taken (a gear, read only as a fraction of its clock's wind in a hard click). A click line names a train and never one of its rows (1.6) | owed (mass.py; G5, G6) |
-| a generation | species alike in charge and spin, told apart by beat and life alone, each heavier one decaying into the lighter (1.6) | owed (mass.py; G6); what tells them apart on the board OPEN |
+| a generation | species alike in charge and spin, told apart by the beat, the life and the neutrino each pairs with, each heavier one decaying into lighter ones (1.6) | owed (mass.py; G6); what makes them on the board OPEN |
 | a probability | the shares of clicks over many lays alike, the draw by the sizes forward and back (decision 29). On finite records the shares carry the draws' spread: a spread is owed, any tolerance an integer of the files | built in the scheduler model; owed on the engine (G5) |
 | no signal | the cone check: each click binned by the settings outside its past cone, the shares compared. Its cone is the board's, one Mesh a round, the act's bound: about 245 hundredths of light's long-wave speed along an axis. So it guards locality. No signal inside light's cone needs light's cone read from the record: a setting stands outside a click's light cone only where light laid at the setting reaches the click's place after the click (the earliest long-wave take there comes later); otherwise the bin reads NOT READ. And the spread above | built (D8, the board's cone); light's cone and the spread owed |
 | a correlation at a distance | Bell's reading needs the joint outcomes of one birth's two clicks, by the two settings' frames; no signal alone is not Bell | owed (G5) |
@@ -93,6 +93,17 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 
 ### 1.4 The least a clock needs
 
+- **What a Node-clock lacks to make a clock** (the owner's word of 06:3x: pass it to the Boss and put it in the page;
+  6516545901, taken whole into TENSOR24_NODE.md by the Boss, 6516601236): a beat of its own. A gear on the head is
+  pulled only sideways, by its six neighbours, so it moves as light does. It becomes a clock, with a mass, only when a
+  term in its own Node-clock pulls it back toward 0: a held count standing against the push, a vertex that ties the
+  gear to it, D = g C n (the node's term 6, the gear's spring, apart from term 9, the volume's notch), a four-leg term
+  that holds the count, and swings above the floor (board2mass 3.1, 3.3 and 3.6). As one operation of the act
+  (6516692018; tools/derivations/open_items/ANIMATE-SPRING, on the head's gear step in whole numbers): contract
+  c = x . x through the 24's table; push each gear by -g k x - lam c x and the held count by -(g / 2) c - kappa
+  (k - n). The gear then beats as one spring at g n gives; with lam above g^2 / (2 kappa) it stays where it runs
+  away without it; and the step holds it only while every spring stays far below W. The strengths and the steady
+  count are the law's, OPEN at G3.
 - **To beat at every size, a gear needs a spring.** On the head no gear holds a beat. The example's lone gear is
   laid at 1 with its before slot at 0, so it is laid moving (its motion being now less before). It beats every 6
   rounds only because the pull it lends each neighbour, summed, stays at or above 0 and below one whole tooth, so
@@ -152,12 +163,12 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 - **A gear has no place** (line 468: "the gear, a component with no place"), so the move to spacetime places only its
   clock: a quark is never placed by light; its hadron is.
 - **The quarks.** In the law a quark is no object: the gear of a hand is the law's form of a parton, the quark
-  model's three the dimension's three (lines 326 and 1556), and the charges 2 / 3 and 1 / 3 are no objects of the law
-  (line 338). So "only part of a clock" is the law's confinement: a hand of three gears is one event, clicked whole;
-  in nature no fractional charge has ever been isolated. A clock's beat is not its gears': the law's confined mass is
-  the localisation's, not the parts' (line 342), as nature's proton weighs 938 MeV while its three quarks' masses come
-  to about 9 MeV in the usual scheme. The top falls apart before a clock forms round it (its life is shorter than the
-  time a hadron takes to form), so nature reads it only from its decay's clicks, never alone and never in a clock.
+  model's three the dimension's three (lines 326 and 1556). So "only part of a clock" is the law's confinement: a
+  hand of three gears is one event, clicked whole; in nature no fractional charge has ever been isolated. A clock's
+  beat is not its gears': nature's proton weighs 938 MeV while its three quarks' masses come to about 9 MeV in the
+  usual scheme, and a composite's mass holds its binding (1.3). The top falls apart before a clock forms round it (its
+  life is shorter than the time a hadron takes to form), so nature reads it only from its decay's clicks, never alone
+  and never in a clock.
 - **The electron.** A quantum of its own train (line 468): free, a click takes it whole, and its takes trace its path.
   Bound, it is a part of the atom, a bob, and it is seen through the atom: the atom's lines are the beats of two of
   its levels, born as light, and a line's quantum is taken whole at an absorber, whose own transition is the click's
@@ -169,14 +180,16 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
   path of takes, and the tau is read mostly from its decay's clicks. The quarks' generations are gears, read only
   through their clocks (the top aside, above).
 - **What the clicks decide about three rows.** A train of kind T1 holds three rows at every Node-clock, one per axis
-  (2.1). A click takes the whole train's winding and never a row's, so in the clicks the three rows are one
+  (2.1). A click takes the whole train's winding and never a row's, so in the clicks the three rows, unsplit, are one
   species' gears, as the law reads them (line 1556: a train of dimension 3, three gears one per axis, the colours as
-  the three axes), and not three species. Three generations, each taken alone, then stand as
-  three trains in the takes, the files' three pairs (line 340, a finding of the older engine kept by name: "the count
-  three is a count of the file's pairs and not of the rule"), unless G5's click takes a row alone, which the law's one
-  form refuses. David's board2mass (5.2) reads a T1 family's three rows as three species alike in the clicks; the
-  click's form at G5 decides between the two readings, and the decoder reads the answer from the trains its takes
-  name. What tells generations apart on the board is OPEN (board2mass 7.3; line 340 names the one missing law).
+  the three axes), and not three species. A click that takes one row alone would be a new rule, the owner's, and it
+  would end confinement (Sofer, 6516566266). The files lay families only, their kinds, parts and pairs, and declare no
+  particle and no mass (decision 35), so what makes three generations is OPEN (board2mass 7.3). One candidate stands
+  (David, 6516593088): a held E or T2 count gives the three rows three beats; each click still takes the train whole,
+  but a whole click's take balances only at resonance (docs/BIG_PICTURE.md 5.1's open line), so a take resonant with
+  one beat would tell the rows apart by its energy. Then the rows are the generations, and the colours stand
+  elsewhere, since rows cannot be both. G5 (the resonant take) and G3 (whether the one plan lays a held E or T2 count)
+  decide it, and the decoder reads the answer from the takes' energies.
 - **The owner's guess, the proton from the ordinary click and the electron from the split click.** Each form has its
   home, and the guess names both:
   - the whole click is confinement's: one hand holds the whole winding, every gear at once, so the proton's makeup
@@ -443,8 +456,8 @@ engine's own records as the stages bring them.
 - The spread for finite draws (the Boss's to rule), and with it the tide's step against the counts' jitter, the
   width's spread and the slit's widening.
 - Planck's constant in the textbook's units: the counts need none, and the units would need a Mesh in metres.
-- Whether a train's three rows are one species' gears or three species, and what tells generations apart on the
-  board (1.6; board2mass 5.2 and 7.3; the click's form at G5).
+- What makes three generations: the split rows the one candidate, decided at G5 (the resonant take) and G3 (a held E
+  or T2 count); unsplit, a train's three rows are one species' gears (1.6; board2mass 6 and 7.3).
 
 ## 6. The hostile readings
 
@@ -520,3 +533,11 @@ owed at G2 under Postulate 4 (1.3, 1.5), and the decoder never steps the engine 
 
 **Part 1.6 and the edits it brought** (0, item 7; 1.3's two rows; 2.1 at part 4; 4.3; 4.4, item 6; 5) went to both
 readers and to the writer for their readings; their words are folded here.
+
+- **The writer's law reading (Sofer, 6516566266): one sentence breached decision 35,** the three generations as three
+  trains, the files' three pairs: a file that lays one train per generation with its own pair declares three species
+  and three masses. It is replaced: the files lay families only, and what makes three generations is OPEN, with
+  David's candidate, the split rows (6516593088). Everything else holds no breach: the quotations from lines 156, 326,
+  458, 468, 1556 and 1562 are right, no click line names a row, and 2.1 and 4.4, item 6 match the heads.
+- **The owner's word to David, 06:1x ("The old engine is not interesting"):** 1.6 no longer cites lines 338, 340 and
+  342, findings of the older engine; the proton's beat rests on nature and on 1.3.
