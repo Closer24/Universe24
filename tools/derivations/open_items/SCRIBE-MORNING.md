@@ -2,7 +2,7 @@
 
 For the owner only: what only he can decide, and the law's side (a change of a law line needs his word). English; the Boss renders it in Hebrew. Each item: the question, where it stands, the recommendation. Entries are dated by the GitHub stamp of the post that brought them.
 
-**Standing at 21:1x UTC.** The Node-clock runs on node-live (a draft, no part of main); the night's frames stand as frames and raise no status. Term 5 stands DERIVED at one condition (item 3 below) and its push is built on node-live in the books' form, the well world re-laid; term 11 stands DERIVED for its pair at one Node-clock; the time gear's own law was refused by both its readers, and the escapement, refused by both, stands only where every Node-clock releases on the same rounds (Big Pic's p14); the coupling family is not solved.
+**Standing at 22:4x UTC.** The Node-clock runs on node-live at 87f88322d (a draft, no part of main), every commit of the night's plan landed and the second hostile code reader reading; the night's frames stand as frames and raise no status. Term 5 stands DERIVED at one condition (item 3 below) and its push is built on node-live in the books' form, the well world re-laid; term 9 stands DERIVED by both its pairs (David's 6535035694); term 11 stands DERIVED for its pair at one Node-clock; terms 12 and 13 passed their pairs and wait on a new pair at the end; the time gear's own law was refused by both its readers, and the escapement, refused by both, stands only where every Node-clock releases on the same rounds (Big Pic's p14); the coupling family is not solved.
 
 ## A. The law's side
 
@@ -34,4 +34,4 @@ For the owner only: what only he can decide, and the law's side (a change of a l
 
 ## C. Statuses that wait on his word
 
-17. READY for term 11 (its form at depth, item 7) and for term 5 (its unit, item 3) is the Boss's to give after his word; BUILT needs the road to main (the writer's APPROVED, the fast-forward on his word).
+17. READY for term 11 (its form at depth, item 7), for term 5 (its unit, item 3) and for term 9 (the notch's strength h, CHOSEN, side item 11) is the Boss's to give after his word; BUILT needs the road to main (the writer's APPROVED, the fast-forward on his word).
