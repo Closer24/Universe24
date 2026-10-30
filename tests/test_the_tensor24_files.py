@@ -284,7 +284,8 @@ def found(tmp_path, name, edit):
 
 
 def test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds(tmp_path):
-    """Every rule of the one checker's format, and two departures of one file each named once."""
+    """Every rule of the one checker's format, two departures of one file each named once, and the tool: the examples
+    hold and load, exit 0; given one file, argparse's usage error, exit 2."""
     assert departures(*(EXAMPLES / f"{name}.json" for name in NAMES)) == []
     for i, (rule, (name, edit, named)) in enumerate(sorted(edits().items())):
         lines = found(tmp_path / str(i), name, edit)
@@ -297,10 +298,6 @@ def test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its
         "universe.integers.full_rate: a whole number of at least 1, not 0",
         "universe.version: 1, not 2",
     ]
-
-
-def test_the_tool_holds_the_examples_and_leaves_a_count_of_files_not_three_to_argparse():
-    """The tool on the examples prints that they hold and load, exit 0; given one file, argparse's usage error, exit 2."""
     tool = Path(__file__).resolve().parents[1] / "tools" / "tensor24_files.py"
     held, one = (
         subprocess.run([sys.executable, "-I", str(tool), *argv], capture_output=True, text=True)

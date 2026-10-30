@@ -101,13 +101,34 @@ def refused(made, rule):
     )
 
 
+def squared_and_promised(made):
+    """A train is marked the four-vector's square where its part times its kinds' character is the square's: in every
+    order of the square's five kinds, and not for ten rows of three T1 kinds and one of A1. The promise, every fine
+    tooth within its teeth, is named where it fails, and the run back is exact exactly where it holds."""
+    w = 5
+    for tooth in (w, w + 1, -1):
+        r = np.zeros((1, SITES), dtype=object)
+        r[0, 2] = tooth
+        assert promises(r, w) == [f"row 0, site 2: the fine tooth {tooth} not within [0, {w})"]
+        assert not rewound(r, w)
+    r = np.zeros((1, SITES), dtype=object) + w - 1
+    assert promises(r, w) == [] and rewound(r, w)
+    family, other = ("A1", "T1", "A1", "E", "T2"), ("T1", "T1", "T1", "A1")
+    for kinds in [*sorted(set(itertools.permutations(family))), other]:
+        u = universe()
+        u["trains"].append({"name": "metric", "kinds": list(kinds), "part": 1})
+        held, found = loaded(made, u)
+        assert found == [] and held.trains.square.tolist() == [0] * len(TRAINS) + [int(kinds != other)]
+
+
 def test_the_load_lays_every_gear_on_its_trains_rows_or_names_each_refusal_and_raises_none(
     made, monkeypatch
 ):
-    """Each refusal names its broken file and its edge loads; a gear lands on its train's own rows, whole past 64 bits,
-    and off them is named; Sofer's fuzz: no gears key lays none and no term of J, and a board past one array or past
-    the machine's memory is named, nothing raised."""
+    """Each refusal names its broken file and its edge loads; a gear lands on its train's rows, whole past 64 bits, and
+    off them is named; Sofer's fuzz, a board past the arrays or the memory named, nothing raised; the square found by
+    its kinds' character; the promise the run back's own condition."""
     assert loaded(made, universe())[1] == [] and all(refused(made, rule) for rule in edits())
+    squared_and_promised(made)
     rows, site, now, before, tooth = (
         2,
         3,
@@ -158,23 +179,3 @@ def rewound(r, w):
     a = np.arange(SITES, dtype=object)[None, :] + 0
     s = State(a, a - 1, r, 0 * a)
     return all((x == y).all() for x, y in zip(untick(layout, tick(layout, s)), s, strict=True))
-
-
-def test_the_square_is_found_by_its_kinds_character_and_the_promise_is_the_run_backs_own_condition(made):
-    """A train is marked the four-vector's square where its part times its kinds' character is the square's: in every
-    order of the square's five kinds, and not for ten rows of three T1 kinds and one of A1. The promise, every fine
-    tooth within its teeth, is named where it fails, and the run back is exact exactly where it holds."""
-    w = 5
-    for tooth in (w, w + 1, -1):
-        r = np.zeros((1, SITES), dtype=object)
-        r[0, 2] = tooth
-        assert promises(r, w) == [f"row 0, site 2: the fine tooth {tooth} not within [0, {w})"]
-        assert not rewound(r, w)
-    r = np.zeros((1, SITES), dtype=object) + w - 1
-    assert promises(r, w) == [] and rewound(r, w)
-    family, other = ("A1", "T1", "A1", "E", "T2"), ("T1", "T1", "T1", "A1")
-    for kinds in [*sorted(set(itertools.permutations(family))), other]:
-        u = universe()
-        u["trains"].append({"name": "metric", "kinds": list(kinds), "part": 1})
-        held, found = loaded(made, u)
-        assert found == [] and held.trains.square.tolist() == [0] * len(TRAINS) + [int(kinds != other)]

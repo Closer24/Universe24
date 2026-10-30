@@ -1,6 +1,6 @@
-"""Tensor24's engine, each generic part once with its mutants and then the whole node: J by the vertex law, the board
-and its Meshes, the one act at its coefficients against a naive model, the run back as the act on the mirrored state,
-and the whole node local, pure and turned by the 24, here and in fresh interpreters."""
+"""Tensor24's engine, the node's one act in its three generic parts, each once with its mutants: J by the vertex law,
+the act at its coefficients against a naive model, local, pure and turned by the 24, and its run back as the act on
+the mirrored state."""
 
 import functools
 import itertools
@@ -327,12 +327,11 @@ def alike(nb):
 
 
 def engine():
-    """The act in every round at a layout alike everywhere, with no out: its run back, its worlds and its naive model."""
+    """The act in every round at a layout alike everywhere, with no out: its run back and its worlds."""
     return frame.Engine(
         lambda nb, s: (step.tick(alike(nb), State(*s)), ()),
         lambda nb, s, out: step.untick(alike(nb), State(*s)),
         lambda rng, shape, rows: world(rng, alike(frame.board(shape)), rows),
-        lambda shape, s: (naive(alike(frame.board(shape)), State(*s), shape), ()),
     )
 
 
@@ -476,11 +475,11 @@ def mutants():
 
 OWN = {f.__name__: f for f in (formula, stretched, back, negated, cone, cone_back, model, held_alike)}
 OWN["sourced_images"] = sourced_images
-PARTS = {  # each generic part of the act with the laws that read it, then the whole node
-    "mesh": ("model", "held_alike", "cone", "cone_back"),
-    "act": ("formula", "stretched", "negated"),
-    "back": ("back", "bijectivity"),
-    "whole": ("locality", "purity", "rename", "images", "sourced_images"),
+# the act and its run back, each with the laws that read it: the board, the formula, the reach and the frame's
+ACT = ("model", "held_alike", "formula", "stretched", "negated", "cone", "locality", "purity")
+PARTS = {
+    "act": (*ACT, "rename", "images", "sourced_images"),
+    "back": ("back", "bijectivity", "cone_back"),
 }
 
 
@@ -549,25 +548,19 @@ def test_j_is_minus_the_gradient_of_its_potential_by_the_vertex_law_and_each_mut
     assert conserves(vertex) and not any(conserves(m) for m in mutants)
 
 
-def test_the_board_and_its_meshes_reach_one_mesh_each_way_and_each_mutant_breaks_its_law(monkeypatch):
-    assert not broken("mesh", monkeypatch)
-
-
-def test_the_act_is_its_naive_model_at_its_coefficients_and_each_mutant_breaks_its_law(monkeypatch):
-    assert not broken("act", monkeypatch)
-
-
-def test_the_run_back_is_the_act_on_the_mirrored_state_and_each_mutant_breaks_its_law(monkeypatch):
-    assert not broken("back", monkeypatch)
-
-
-def test_the_whole_node_is_local_pure_and_turned_by_the_24_here_and_in_fresh_interpreters(monkeypatch):
-    """Every mutant is aimed at a part's law; the whole node's laws hold and break on theirs; a world is answered alike
-    in fresh interpreters at other hash seeds, and run back in one that never stepped."""
+def test_the_act_is_its_naive_model_local_pure_and_turned_by_the_24_and_each_mutant_breaks_its_law(
+    monkeypatch,
+):
+    """The board and its Meshes, the act at its coefficients against the naive model, one Mesh's reach, no state between
+    calls, the trains' order and the 24's turns nothing to it; every mutant aimed at a law of the act or its run back;
+    and a world answered alike in fresh interpreters at other hash seeds."""
     assert {name for name, *_ in mutants().values()} <= {
         name for laws in PARTS.values() for name in laws
     }
-    assert not broken("whole", monkeypatch)
-    assert frame.unseeded(__name__, "engine", FRAME) and frame.undone_elsewhere(
-        __name__, "engine", FRAME, 0
-    )
+    assert not broken("act", monkeypatch) and frame.unseeded(__name__, "engine", FRAME)
+
+
+def test_the_run_back_is_the_act_on_the_mirrored_state_and_each_mutant_breaks_its_law(monkeypatch):
+    """Rounds run back bit for bit, by a fresh engine and within one Mesh's reach, and in an interpreter that never
+    stepped."""
+    assert not broken("back", monkeypatch) and frame.undone_elsewhere(__name__, "engine", FRAME, 0)

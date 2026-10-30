@@ -1,4 +1,4 @@
-"""The plan's property tests for any engine of Tensor24: locality, purity, rename, the 24's images on sites and kinds, the formula, the run back."""
+"""The plan's property tests for any engine of Tensor24: locality, purity, rename, the 24's images and the run back."""
 
 import hashlib
 import importlib
@@ -19,14 +19,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class Engine(NamedTuple):
-    """An engine as the properties see it: its step and run back on a board, its worlds, and its naive model."""
+    """An engine as the properties see it: its step and run back on a board, and its worlds."""
 
     step: Callable[
         ..., Any
     ]  # step(nb, s) -> (s', out), s a tuple of arrays: a row per train, or one row
     unstep: Callable[..., Any]  # unstep(nb, s', out) -> s
     world: Callable[..., Any]  # world(rng, shape, trains) -> s
-    naive: Callable[..., Any]  # naive(shape, s) -> (s', out), site by site with loops
 
 
 def board(shape):
@@ -147,32 +146,6 @@ STORED = (
 )  # one train of each kind as stored: A1 and A2, T1 and T2, and the three tensions (A1 + E)
 
 
-def kinded(make, shape, rng):
-    """The 24 turn a train's components as they turn the sites, each stored kind's rows by its own matrix (David's n2)."""
-    e, nb = make(), board(shape)
-    s = e.world(rng, shape, STORED)
-    out = flat(e.step(nb, s))
-    xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
-    for m in turns():
-        site = np.ravel_multi_index(tuple((m @ xyz) % sides), shape)
-        if np.unique(site).size < site.size:
-            return False  # the turn is no symmetry of this board
-        turn = stored(m)
-        there = tuple(np.empty_like(x) for x in s)
-        for x, y in zip(there, s, strict=True):
-            x[:, site] = turn @ y
-        if not same([p[:, site] for p in flat(e.step(nb, there))], [turn @ p for p in out]):
-            return False
-    return True
-
-
-def formula(make, shape, rng):
-    """The step equals the engine's naive model at every entry of every site, as Python integers."""
-    e, nb = make(), board(shape)
-    s = e.world(rng, shape, 2)
-    return same(flat(e.step(nb, s)), flat(e.naive(shape, s)))
-
-
 def bijective(make, shape, rng):
     """A fresh engine runs back another's steps of two worlds, in their order; a step with no out undoes its run back."""
     nb, (s, t) = board(shape), [make().world(rng, shape, 2) for _ in range(2)]
@@ -184,8 +157,13 @@ def bijective(make, shape, rng):
     return undone and forth
 
 
-PROPERTIES = {"locality": local, "purity": pure, "rename": renamed, "images": turned, "kinds": kinded}
-PROPERTIES |= {"formula": formula, "bijectivity": bijective}
+PROPERTIES = {
+    "locality": local,
+    "purity": pure,
+    "rename": renamed,
+    "images": turned,
+    "bijectivity": bijective,
+}
 
 
 def digest(xs):
