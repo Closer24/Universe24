@@ -1,0 +1,88 @@
+The escapement form on edge_lib's board (the example universe, a cube of 3, 12 rows, every row reading the 00 slot, no cut)
+   the rest 6 grips (grip 15162856759112389000000), L_0 = 12 grips; 40 rounds per lay
+
+== standing at c00 = 0 (L = L_0: every round steps)
+   rounds run 40 (promise broke at None); L at the start 12 grips .. 12 grips, over the run 12 grips .. 12 grips (L_0 12 grips); 78 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 41 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 40 to 40 of 40 rounds; rounds where some site stepped 0
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 0 (exact)
+   control: the act as built on the same lay agrees state for state in 40 of 40 rounds (tau stands at 181954281109348668000000 = D div 2)
+
+== standing at c00 = 6 grips (L = 18 grips)
+   rounds run 40 (promise broke at None); L at the start 18 grips .. 18 grips, over the run 18 grips .. 18 grips (L_0 12 grips); 79 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 14 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 27 to 27 of 40 rounds; rounds where some site stepped 27
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 0 (exact)
+
+== rising by 1 grip a proper step from c00 = 6 grips
+   rounds run 40 (promise broke at None); L at the start 18 grips .. 18 grips, over the run 18 grips .. 36 grips (L_0 12 grips); 80 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 8 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 18 to 18 of 40 rounds; rounds where some site stepped 18
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 0 (exact)
+
+== rising by 1 grip + 1 a proper step from c00 = 6 grips
+   rounds run 40 (promise broke at None); L at the start 18 grips .. 18 grips, over the run 18 grips .. 36 grips + 18 (L_0 12 grips); 80 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 8 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 18 to 18 of 40 rounds; rounds where some site stepped 18
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 0 (exact)
+
+== falling by 1 grip a proper step from c00 = 60 grips
+   rounds run 40 (promise broke at None); L at the start 72 grips .. 72 grips, over the run 65 grips .. 72 grips (L_0 12 grips); 81 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 27 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 7 to 7 of 40 rounds; rounds where some site stepped 7
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 0 (exact)
+
+== falling by 3 grips + 1 a proper step from c00 = 120 grips
+   rounds run 40 (promise broke at None); L at the start 132 grips .. 132 grips, over the run 120 grips - 4 .. 132 grips (L_0 12 grips); 82 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 33 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 4 to 4 of 40 rounds; rounds where some site stepped 4
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 0 (exact)
+
+== varying in space and time: c00 drawn per site in [60, 70] grips with a velocity in [-1, 1] grips
+   rounds run 40 (promise broke at None); L at the start 72 grips + 0 permille .. 72 grips + 0 permille, over the run 65 grips + 0 permille .. 72 grips + 0 permille (L_0 12 grips); 81 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 27 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 7 to 7 of 40 rounds; rounds where some site stepped 7
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 0 (exact)
+
+== varying in space, standing: c00 laid per site at a drawn whole number of grips in [40, 60] (sites step on different rounds; the Meshes read across clocks; the 00 row's own pull then moves the clocks)
+   rounds run 40 (promise broke at None); L at the start 52 grips .. 72 grips, over the run 52 grips .. 96 grips - 280 permille (L_0 12 grips); 81 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 17 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 7 to 7 of 40 rounds; rounds where some site stepped 17
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 234121733857765482698835945685303477288492000000 (moves: sites step on different rounds, or a spring)
+
+== varying in space and time: c00 laid per site in [40, 60] grips with a velocity drawn in [-2, 2] grips a proper step
+   rounds run 40 (promise broke at None); L at the start 52 grips .. 72 grips, over the run 52 grips .. 89 grips + 317 permille (L_0 12 grips); 81 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 16 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 7 to 7 of 40 rounds; rounds where some site stepped 18
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 290497668623097573891234572548513583167439000000 (moves: sites step on different rounds, or a spring)
+
+== swinging: a hairspring on the 00 row about c00 = 6 grips, amplitude 1 grip(s), 4 f = D (the Nyquist beat of the 00 gear at rest)
+   rounds run 40 (promise broke at None); L at the start 19 grips .. 19 grips, over the run 17 grips .. 19 grips (L_0 12 grips); 79 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 14 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 27 to 27 of 40 rounds; rounds where some site stepped 27
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 0 (exact)
+
+== swinging: a hairspring on the 00 row about c00 = 6 grips, amplitude 1 grip(s), a slow swing, 4 f = D / 100
+   rounds run 40 (promise broke at None); L at the start 19 grips .. 19 grips, over the run 17 grips + 116 permille .. 19 grips (L_0 12 grips); 79 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 13 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 26 to 26 of 40 rounds; rounds where some site stepped 26
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 1918962761484580813461816476081659232257140000 (moves: sites step on different rounds, or a spring)
+
+== swinging: a hairspring on the 00 row about c00 = 6 grips, amplitude 3 grip(s), a deep swing of 3 grips, 4 f = D / 100
+   rounds run 40 (promise broke at None); L at the start 21 grips .. 21 grips, over the run 15 grips + 350 permille .. 21 grips (L_0 12 grips); 79 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 13 of 41 states (not an involution where the last and the next release differ)
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   proper steps per site 26 to 26 of 40 rounds; rounds where some site stepped 26
+   the rows' momentum SUM_sites (rest v + r): largest drift over the run 5756888284453742440390656959770327255649580000 (moves: sites step on different rounds, or a spring)
+

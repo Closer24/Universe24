@@ -1,0 +1,34 @@
+E. The control for P1 D: the same small pushes with odd periods and aperiodic, W0 = 10^4, 10^6 rounds; dA over the 10^5 rounds
+   before each mark; (dA / 10^5)^2 / (2 F) in permille (nature -> 1000, the edge -> 500; the symmetric form's lock-in at v = 1)
+  F = 1/5 (one count every 5 rounds, an odd period): nature's terminal v^2 = 2/5
+   t  100000: symmetric W    85005 dA  75005 v^2/2F  1406 | carried W    60006 dA  50006 v^2/2F   625 | twin W   110010 dA 100010 v^2/2F  2500 | order W    85005 dA  75005 v^2/2F  1406
+   t  300000: symmetric W   285005 dA 100000 v^2/2F  2500 | carried W   460018 dA 250006 v^2/2F 15625 | twin W   910030 dA 500010 v^2/2F 62502 | order W   285005 dA 100000 v^2/2F  2500
+   t  600000: symmetric W   585005 dA 100000 v^2/2F  2500 | carried W  1810036 dA 550006 v^2/2F 75626 | twin W  3610060 dA 1100010 v^2/2F 302505 | order W   585005 dA 100000 v^2/2F  2500
+   t 1000000: symmetric W   985005 dA 100000 v^2/2F  2500 | carried W  5010060 dA 950006 v^2/2F 225627 | twin W 10010100 dA 1900010 v^2/2F 902509 | order W   985005 dA 100000 v^2/2F  2500
+
+  F = 1/15 (one count every 15 rounds, an odd period): nature's terminal v^2 = 2/15
+   t  100000: symmetric W    35015 dA  25015 v^2/2F   469 | carried W    22508 dA  12508 v^2/2F   117 | twin W    35015 dA  25015 v^2/2F   469 | order W    35015 dA  25015 v^2/2F   469
+   t  300000: symmetric W   235015 dA 100000 v^2/2F  7500 | carried W   160016 dA  87508 v^2/2F  5743 | twin W   310030 dA 175015 v^2/2F 22972 | order W   235015 dA 100000 v^2/2F  7500
+   t  600000: symmetric W   535015 dA 100000 v^2/2F  7500 | carried W   610032 dA 187508 v^2/2F 26369 | twin W  1210060 dA 375015 v^2/2F 105477 | order W   535015 dA 100000 v^2/2F  7500
+   t 1000000: symmetric W   935015 dA 100000 v^2/2F  7500 | carried W  1672556 dA 312508 v^2/2F 73245 | twin W  3335105 dA 625015 v^2/2F 292982 | order W   935015 dA 100000 v^2/2F  7500
+
+  F = 1/63 (one count every 63 rounds, an odd period): nature's terminal v^2 = 2/63
+   t  100000: symmetric W    10000 dA      0 v^2/2F     0 | carried W    10000 dA      0 v^2/2F     0 | twin W    10000 dA      0 v^2/2F     0 | order W    10000 dA      0 v^2/2F     0
+   t  300000: symmetric W    10000 dA      0 v^2/2F     0 | carried W    10000 dA      0 v^2/2F     0 | twin W    10000 dA      0 v^2/2F     0 | order W    10000 dA      0 v^2/2F     0
+   t  600000: symmetric W   295063 dA 100000 v^2/2F 31500 | carried W   152532 dA  50000 v^2/2F  7875 | twin W   295063 dA 100000 v^2/2F 31500 | order W   295063 dA 100000 v^2/2F 31500
+   t 1000000: symmetric W   695063 dA 100000 v^2/2F 31500 | carried W   380064 dA  77532 v^2/2F 18935 | twin W   750126 dA 155063 v^2/2F 75740 | order W   695063 dA 100000 v^2/2F 31500
+
+  (aperiodic: 250000 pushes in 1000000 rounds, mean 1/4.0)
+  F about 1/4, aperiodic (a linear congruence): nature's terminal v^2 = 2/4
+   t  100000: symmetric W    90002 dA  80002 v^2/2F  1280 | carried W    70003 dA  60003 v^2/2F   720 | twin W   130006 dA 120006 v^2/2F  2880 | order W    90002 dA  80002 v^2/2F  1280
+   t  300000: symmetric W   290002 dA 100000 v^2/2F  2000 | carried W   570008 dA 310003 v^2/2F 19220 | twin W  1130016 dA 620006 v^2/2F 76881 | order W   290002 dA 100000 v^2/2F  2000
+   t  600000: symmetric W   590002 dA 100000 v^2/2F  2000 | carried W  2260015 dA 690002 v^2/2F 95220 | twin W  4510030 dA 1380004 v^2/2F 380882 | order W   590002 dA 100000 v^2/2F  2000
+   t 1000000: symmetric W   990002 dA 100000 v^2/2F  2000 | carried W  6260025 dA 1190002 v^2/2F 283220 | twin W 12510050 dA 2380004 v^2/2F 1132883 | order W   990002 dA 100000 v^2/2F  2000
+
+  (aperiodic: 62500 pushes in 1000000 rounds, mean 1/16.0)
+  F about 1/16, aperiodic (a linear congruence): nature's terminal v^2 = 2/16
+   t  100000: symmetric W    30002 dA  20002 v^2/2F   320 | carried W    20001 dA  10001 v^2/2F    80 | twin W    30002 dA  20002 v^2/2F   320 | order W    30002 dA  20002 v^2/2F   320
+   t  300000: symmetric W   230002 dA 100000 v^2/2F  8000 | carried W   150002 dA  80001 v^2/2F  5120 | twin W   290004 dA 160002 v^2/2F 20480 | order W   230002 dA 100000 v^2/2F  8000
+   t  600000: symmetric W   530002 dA 100000 v^2/2F  8000 | carried W   570004 dA 170001 v^2/2F 23120 | twin W  1130008 dA 340002 v^2/2F 92481 | order W   530002 dA 100000 v^2/2F  8000
+   t 1000000: symmetric W   930002 dA 100000 v^2/2F  8000 | carried W  1570006 dA 300000 v^2/2F 72000 | twin W  3130012 dA 600000 v^2/2F 288000 | order W   930002 dA 100000 v^2/2F  8000
+

@@ -1,0 +1,26 @@
+Cases made to break the carried dial (the carried board, the cube of 3, the half-open convention)
+
+A. the dial laid off the edge's dial by k grips on every gear, the clock standing at W = 12 grips, 40 rounds:
+   k =  1: the 00 row's departure at site 0 per round, times (-1)^t, takes the values ['1 grip']: (-1)^t k at every round; untick(tick s) = s 40 of 40, rewound True, books misses 0
+   k = -3: the 00 row's departure at site 0 per round, times (-1)^t, takes the values ['-3 grips']: (-1)^t k at every round; untick(tick s) = s 40 of 40, rewound True, books misses 0
+
+B. a hairspring f x^2 on the 00 row, the 00 slot laid at (a, b) = (A, -A) about its rest, A = 10^12 counts (6.6e-11 grip):
+   f = D (the Nyquist beat, omega = pi, the leapfrog's edge): rounds run 400; 78 bits; the 00 row's departure at rounds 0, 10, 20, 40, 400: [0, -39999999995600, -79999999982359, -159999999928399, -1599999992309895] counts (4 A = 4000000000000 a round at the beat); greatest 1599999992309895; untick(tick s) = s 400 of 400, rewound True
+   f = 9 D / 10 (omega about 2.5): rounds run 400; 78 bits; the 00 row's departure at rounds 0, 10, 20, 40, 400: [0, -907458969643, -1794040191859, -3423929337696, 1251663537075] counts (4 A = 4000000000000 a round at the beat); greatest 5999984501797; untick(tick s) = s 400 of 400, rewound True
+   f = D / 2 (omega = pi / 2): rounds run 400; 78 bits; the 00 row's departure at rounds 0, 10, 20, 40, 400: [0, 0, 0, 0, 0] counts (4 A = 4000000000000 a round at the beat); greatest 2000000000000; untick(tick s) = s 400 of 400, rewound True
+   at the beat the departure grows by 4 A a round and reaches the dial, 12 grips, after D / (4 A) = 45488570277 rounds, where the promise breaks
+
+C. the clock laid falling fast, uniform: W(b) = 36 grips, W(a) = 12 grips (a third in one round), and W(a) = 13 grips:
+   W(a) = 12 grips: the first round's reflected dial 4 W(a) - D = 0 grips; rounds run 0, the promise breaks before round 1; untick(tick s) = s 0 of 0
+   W(a) = 13 grips: the first round's reflected dial 4 W(a) - D = 3 grips; rounds run 1, the promise breaks before round 2; untick(tick s) = s 1 of 1
+
+D. one Node-clock, two gears (the 00 gear and a light gear), no neighbours, rest 6, both forms, exhaustive:
+   the carried 00: 87024 states, 87024 images (0 collisions), untick(tick s) = s misses 0
+   the carried board: 261072 states, 261072 images (0 collisions), untick(tick s) = s misses 0
+
+Reading: (A) the register is the state's and the act keeps whatever is laid in it, an alternating offset for ever: the
+departure is set at the lay and never pulled back (an involution has no contraction); the lay is the edge's dial. (B) only
+a clock bent the other way every round pumps the departure, by one second difference a round, until the reflected dial
+reaches 0; that takes a spring as strong as the dial (4 f = D), the leapfrog's own stability edge, and below the beat the
+departure stays within a few second differences. (C) 4 W(a) - D <= 0 is a clock falling to a third of itself in one round,
+and the promise names it before the round. (D) exhaustive: no collision and no run-back miss in either form.

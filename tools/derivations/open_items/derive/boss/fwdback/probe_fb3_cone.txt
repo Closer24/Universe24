@@ -1,0 +1,29 @@
+The 00 wave against light in a uniform well under the escapement form, a line of 6 Node-clocks, 6000 rounds;
+the mode 2A, A, -A, -2A, -A, A along z on one row; T^2 ratios in permille (1000 one cone).
+
+== the mode's amplitude A = grip / 1000
+   light at rest (c00 = 0): 391 periods over 5976 rounds (the act as built on the same lay: 391 over 5976)
+ Well: the 00 slot at 6 grips: L = 18 grips, L / L_0 = 18/12, W_eff / rest = 324/144 (2250 permille)
+   light in the well: 261 periods over 5984 rounds; T^2 against rest 2250 permille (nature W_eff / rest)
+   the 00 wave in the well: 261 periods over 5984 rounds; T_light^2 / T_00^2 = 1000 permille
+ Well: the 00 slot at 18 grips: L = 30 grips, L / L_0 = 30/12, W_eff / rest = 900/144 (6250 permille)
+   light in the well: 156 periods over 5962 rounds; T^2 against rest 6252 permille (nature W_eff / rest)
+   the 00 wave in the well: 156 periods over 5962 rounds; T_light^2 / T_00^2 = 1000 permille
+ Well: the 00 slot at 54 grips: L = 66 grips, L / L_0 = 66/12, W_eff / rest = 4356/144 (30250 permille)
+   light in the well: 70 periods over 5885 rounds; T^2 against rest 30257 permille (nature W_eff / rest)
+   the 00 wave in the well: 70 periods over 5885 rounds; T_light^2 / T_00^2 = 1000 permille
+
+== the mode's amplitude A = grip / 10
+   light at rest (c00 = 0): 391 periods over 5976 rounds (the act as built on the same lay: 391 over 5976)
+ Well: the 00 slot at 6 grips: L = 18 grips, L / L_0 = 18/12, W_eff / rest = 324/144 (2250 permille)
+   light in the well: 261 periods over 5984 rounds; T^2 against rest 2250 permille (nature W_eff / rest)
+   the 00 wave in the well: 261 periods over 5984 rounds; T_light^2 / T_00^2 = 1000 permille
+ Well: the 00 slot at 18 grips: L = 30 grips, L / L_0 = 30/12, W_eff / rest = 900/144 (6250 permille)
+   light in the well: 156 periods over 5962 rounds; T^2 against rest 6252 permille (nature W_eff / rest)
+   the 00 wave in the well: 156 periods over 5962 rounds; T_light^2 / T_00^2 = 1000 permille
+ Well: the 00 slot at 54 grips: L = 66 grips, L / L_0 = 66/12, W_eff / rest = 4356/144 (30250 permille)
+   light in the well: 70 periods over 5885 rounds; T^2 against rest 30257 permille (nature W_eff / rest)
+   the 00 wave in the well: 70 periods over 5885 rounds; T_light^2 / T_00^2 = 1000 permille
+
+Reading: the 00 row rides the escapement like light (every gear's teeth at rest, the clock in WHEN the Node-clock steps),
+so its wave runs on light's cone: one cone, with no cut and no dial of its own. Both beats scale as W_eff = rest (L / L_0)^2.

@@ -1,0 +1,50 @@
+A. rest 10000, free, the symmetric form by the one-step rule (the cell checked every round), 1000000 rounds:
+   W at the marks and, in permille, W against nature (sqrt(W) v kept), against v kept, against W v kept (1000 = that course)
+   v0 =  1: v first reaches 1 at round 1; v last changes at round 0
+        t 10000: W 20000, v 1 [nature 1280, v kept 1000, W v kept 1333]
+        t 100000: W 110000, v 1 [nature 5199, v kept 1000, W v kept 5761]
+        t 300000: W 310000, v 1 [nature 14078, v kept 1000, W v kept 15754]
+        t 1000000: W 1010000, v 1 [nature 45186, v kept 1000, W v kept 50751]
+   v0 =  2: v first reaches 1 at round 5000; v last changes at round 5000
+        t 10000: W 24999, v 1 [nature 976, v kept 833, W v kept 1249]
+        t 100000: W 114999, v 1 [nature 1582, v kept 547, W v kept 3225]
+        t 300000: W 314999, v 1 [nature 3774, v kept 516, W v kept 8200]
+        t 1000000: W 1014999, v 1 [nature 11541, v kept 504, W v kept 25691]
+   v0 =  3: v first reaches 1 at round 16665; v last changes at round 16665
+        t 10000: W 31666, v 2 [nature 1049, v kept 791, W v kept 1432]
+        t 100000: W 128330, v 1 [nature 998, v kept 413, W v kept 2699]
+        t 300000: W 328330, v 1 [nature 1913, v kept 360, W v kept 5955]
+        t 1000000: W 1028330, v 1 [nature 5346, v kept 341, W v kept 17595]
+   v0 =  5: v first reaches 1 at round 51181; v last changes at round 51181
+        t 10000: W 42606, v 2 [nature 1070, v kept 710, W v kept 1650]
+        t 100000: W 173786, v 1 [nature 908, v kept 340, W v kept 2990]
+        t 300000: W 373786, v 1 [nature 1022, v kept 247, W v kept 4641]
+        t 1000000: W 1073786, v 1 [nature 2195, v kept 214, W v kept 11518]
+   v0 = 10: v first reaches 1 at round 209369; v last changes at round 209369
+        t 10000: W 63244, v 4 [nature 988, v kept 574, W v kept 1904]
+        t 100000: W 281035, v 2 [nature 973, v kept 278, W v kept 3929]
+        t 300000: W 590403, v 1 [nature 1011, v kept 196, W v kept 5799]
+        t 1000000: W 1290403, v 1 [nature 953, v kept 128, W v kept 8321]
+   v0 = 30: v first reaches 1 at round None; v last changes at round 390401
+        t 10000: W 128442, v 8 [nature 1001, v kept 414, W v kept 2704]
+        t 100000: W 585875, v 4 [nature 988, v kept 194, W v kept 5711]
+        t 300000: W 1226636, v 3 [nature 1011, v kept 136, W v kept 8354]
+        t 1000000: W 2717036, v 2 [nature 990, v kept 90, W v kept 12301]
+   (nature's course has v ~ W^(-1/2) -> 0; the symmetric form's quotient is 1 for every tooth once v = 1, so W runs linearly thereafter)
+
+B. rest 1000000, free, v0 = 100, 1000000 rounds (the text's probe_tg7 B course, run 33 times longer):
+   t 30000: W 3115855, v 57 [nature 1000, v kept 778, W v kept 1386]
+   t 100000: W 6349643, v 40 [nature 1000, v kept 577, W v kept 1919]
+   t 300000: W 12837075, v 28 [nature 999, v kept 414, W v kept 2701]
+   t 1000000: W 28354710, v 19 [nature 999, v kept 280, W v kept 3999]
+   v first reaches 1 at round None; v last changes at round 892620
+
+C. rest 10000, the falling clock, free: v0 = -1, -2, -5; the rounds until the clock has no lawful split (W reaching 0):
+   v0 = -1: 7101 rounds, end W 15, v -20 (cell); the first changes of v (round, v): [(5001, -2), (6668, -3), (6945, -4), (7029, -5), (7062, -6), (7078, -7)] ...; 14 changes in all
+   v0 = -2: 3405 rounds, end W 16, v -34 (c<1); the first changes of v (round, v): [(1667, -3), (2779, -4), (3112, -5), (3245, -6), (3309, -7), (3343, -8)] ...; 20 changes in all
+   v0 = -5: 1338 rounds, end W 50, v -56 (cell); the first changes of v (round, v): [(334, -6), (731, -7), (943, -8), (1068, -9), (1145, -10), (1195, -11)] ...; 30 changes in all
+   (the fall quickens as the tooth reaches the bottom of its shrinking range: the mirror of the rising clock's floor)
+
+Reading: every free rising clock in the symmetric form decelerates only down to one count a round and then runs linearly for
+ever (v kept, the act as built's course); nature's sqrt(W) v kept is followed only while |v| >= 2. The one-step rule's cell
+check never failed on these courses (k is 0 or -1 a round, far inside k (k + 1) <= 2 c).

@@ -1,0 +1,28 @@
+The twin: the 00 row as a forward half A and a backward half B, each the other's clock (notes_02 lead 2); the cube of 3,
+the half-open convention, 40 rounds; every other row's dials W(b_B) + W(a_A) in, W(a_B) + W(a_A+) out.
+  standing at W = 12 grips, B laid as A: rounds 40; W over both halves 12 grips to 12 grips; 79 bits
+     untick(tick s) = s 40 of 40; rewound True; books P_(t+1) - P_t = 4 push misses 0 of 14040 gear-rounds; the 24: 24 at every one of the 40 rounds
+     |A - B| greatest over the sites at rounds 0, 10, 20, last: ['0 grips', '0 grips', '0 grips', '0 grips']
+  rising by 1 grip a round from W = 12 grips, B laid as A: rounds 40; W over both halves 12 grips to 33 grips + 486 permille; 80 bits
+     untick(tick s) = s 40 of 40; rewound True; books P_(t+1) - P_t = 4 push misses 0 of 14040 gear-rounds; the 24: 24 at every one of the 40 rounds
+     |A - B| greatest over the sites at rounds 0, 10, 20, last: ['0 grips', '0 grips + 328 permille', '1 grip - 213 permille', '2 grips - 287 permille']
+  falling by 1 grip a round from W = 60 grips, B laid as A: rounds 30 (the promise breaks before round 31); W over both halves -8 grips - 308 permille to 60 grips; 81 bits
+     untick(tick s) = s 30 of 30; rewound True; books P_(t+1) - P_t = 4 push misses 0 of 10530 gear-rounds; the 24: 24 at every one of the 30 rounds
+     |A - B| greatest over the sites at rounds 0, 10, 20, last: ['0 grips', '0 grips + 42 permille', '0 grips + 275 permille', '12 grips - 80 permille']
+
+== the halves laid apart: B one grip above A, standing at W = 12 grips (the difference a free field)
+  B = A + 1 grip: rounds 80; W over both halves 12 grips to 13 grips; 79 bits
+     untick(tick s) = s 80 of 80; rewound True; books P_(t+1) - P_t = 4 push misses 0 of 28080 gear-rounds; the 24: 24 at every one of the 80 rounds
+     |A - B| greatest over the sites at rounds 0, 10, 20, last: ['1 grip', '1 grip', '1 grip', '1 grip']
+
+== the mode of a grip on A alone along z (the difference A - B a wave), standing at W = 12 grips
+  the mode on A, B uniform: rounds 80; W over both halves 11 grips - 53 permille to 14 grips + 387 permille; 79 bits
+     untick(tick s) = s 80 of 80; rewound True; books P_(t+1) - P_t = 4 push misses 0 of 28080 gear-rounds; the 24: 24 at every one of the 80 rounds
+     |A - B| greatest over the sites at rounds 0, 10, 20, last: ['2 grips', '1 grip + 437 permille', '2 grips - 311 permille', '2 grips + 366 permille']
+
+== the line of 6: the 00 wave (the mode on both halves alike) against light, A = grip / 1000
+   W = 12 grips: light 275 periods over 5965 rounds; the 00 wave (A) 275 periods over 5965 rounds; T_light^2 / T_00^2 = 1000 permille
+   W = 24 grips: light 194 periods over 5961 rounds; the 00 wave (A) 194 periods over 5961 rounds; T_light^2 / T_00^2 = 1000 permille
+
+Reading: the twin runs back exactly with the same act, keeps every gear's P to the bit, holds the 24 and one cone, with no
+register, no root and no cut; its cost is the doubled 00 row, whose two halves part freely once laid apart.

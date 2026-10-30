@@ -1,0 +1,33 @@
+A. The course given from outside (probe_root's adiabatic courses, the half-open split): the carried dial against the plain dial
+   W 10000 -> 40000 by 1 a round (edge forms); L 100 -> 200 by 1 every 300 rounds, W = L^2 (root forms); 30000 rounds
+   edge, W + 1 a round, the free gear v0 = 1000000: states differing between plain and carried 0 of 30001; the dial's departure at most 0;
+      carried: round 0: W 10000, v^2 W 1000; round 7500: W 17500, v^2 W 571; round 15000: W 25000, v^2 W 399; round 22500: W 32500, v^2 W 307; round 29999: W 39999, v^2 W 249  (nature keeps sqrt(W) v: 1000)
+   edge, W + 1 a round, the hairspring -100 a: states differing between plain and carried 0 of 30001; carried: round 15000: W 25000, A/A0 915, T^2/W 997; round 22500: W 32500, A/A0 857, T^2/W 988
+   edge, W + 1 a round, carried, the course rising: untick(tick s) = s misses 0 of 30000
+   edge, W + 1 a round, carried, the course falling: untick(tick s) = s misses 0 of 30000
+   root, L + 1 every 300 rounds (a staircase), the free gear v0 = 1000000: states differing between plain and carried 29701 of 30001; the dial's departure at most 199;
+      carried: round 0: W 10000, v^2 W 1000; round 7500: W 15625, v^2 W 1562; round 15000: W 22500, v^2 W 2250; round 22500: W 30625, v^2 W 3062; round 29999: W 39601, v^2 W 445  (nature keeps sqrt(W) v: 1000)
+   root, L + 1 every 300 rounds (a staircase), the hairspring -100 a: states differing between plain and carried 29701 of 30001; carried: round 15000: W 22500, A/A0 1020, T^2/W 922; round 22500: W 30625, A/A0 1042, T^2/W 847
+   root, L + 1 every 300 rounds (a staircase), carried, the course rising: untick(tick s) = s misses 0 of 30000
+   root, L + 1 every 300 rounds (a staircase), carried, the course falling: untick(tick s) = s misses 0 of 29702; the promise (the reflected dial at least 1) breaks before round 29703
+   root, L + 1 a round (smooth), the free gear v0 = 1000000: states differing between plain and carried 0 of 30001; the dial's departure at most 0;
+      carried: round 0: W 100000000, v^2 W 1000; round 7500: W 306250000, v^2 W 999; round 15000: W 625000000, v^2 W 999; round 22500: W 1056250000, v^2 W 999; round 29999: W 1599920001, v^2 W 999  (nature keeps sqrt(W) v: 1000)
+   root, L + 1 a round (smooth), the hairspring -1000000 a: states differing between plain and carried 0 of 30001; carried: round 15000: W 625000000, A/A0 1000, T^2/W 1004; round 22500: W 1056250000, A/A0 1000, T^2/W 992
+   root, L + 1 a round (smooth), carried, the course rising: untick(tick s) = s misses 0 of 30000
+   root, L + 1 a round (smooth), carried, the course falling: untick(tick s) = s misses 0 of 30000
+
+B. The 00 gear its own clock, free (no push), the carried dial: the course it gives itself
+   the edge dial, W = rest + a, rest 10000, v0 = 1: rounds 30000; W at the marks {0: 10000, 7500: 17500, 15000: 22499, 22500: 26249, 30000: 29999}; (W^2 - W0^2) / (2 W0 v0 t) in permille [1375, 1354, 1308, 1333] (D v kept: W^2 linear in t); run back misses 0, books misses 0, departure at most 20000
+   the edge dial, W = rest + a, rest 10000, v0 = -1: rounds 5452 (the promise breaks before round 5453, W -70); W at the marks {0: 10000}; (W^2 - W0^2) / (2 W0 v0 t) in permille [] (D v kept: W^2 linear in t); run back misses 0, books misses 0, departure at most 15
+   the root dial, W = L^2, L0 100, v0 = 1: rounds 30000; W at the marks {0: 10000, 7500: 15202201, 15000: 58507201, 22500: 129937201, 30000: 229492201}; (W - W0) / (2 L0 v0 t) in permille [10128, 19499, 28872, 38247] (L v kept: W linear in t); run back misses 0, books misses 0, departure at most 29900
+   the root dial, W = L^2, L0 100, v0 = -1: rounds 55 (the promise breaks before round 56, L -21); W at the marks {0: 10000}; (W - W0) / (2 L0 v0 t) in permille [] (L v kept: W linear in t); run back misses 0, books misses 0, departure at most 2
+
+C. The 00 gear its own clock with a hairspring -g (count - centre): the upper half of the swing against the lower,
+   in rounds and in proper ticks (K rest-rate / rate: L0 / L under the root dial, read whole), at two amplitudes
+   the root dial, L0 1000, g 10, amplitude 100: swings 28; upper / lower in rounds 1680 permille, in proper ticks 1314 permille; the period 2083 rounds; run back misses 0, books misses 0, departure at most 8
+   the root dial, L0 1000, g 10, amplitude 333: swings 29; upper / lower in rounds 1422 permille, in proper ticks 908 permille; the period 1987 rounds; run back misses 0, books misses 0, departure at most 3
+   the edge dial, rest 1000000, g 10, amplitude 100000: swings 29; upper / lower in rounds 1045 permille, in ticks at the rate rest / W 915 permille (the rate^2, no root): the period 1985 rounds; run back misses 0, books misses 0, departure at most 76
+   the edge dial, rest 1000000, g 10, amplitude 333000: swings 29; upper / lower in rounds 1180 permille, in ticks at the rate rest / W 698 permille (the rate^2, no root): the period 1961 rounds; run back misses 0, books misses 0, departure at most 206
+
+Reading: the root dial's own swing is harmonic in the clock's proper time (the halves equal in proper ticks and unequal in
+rounds, the clock running slow while its count is high); the edge dial's is harmonic in neither.

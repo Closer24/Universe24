@@ -1,0 +1,43 @@
+The 00 wave against light in a uniform well, the half-open convention, a line of 6 Node-clocks, 6000 rounds;
+the mode 2A, A, -A, -2A, -A, A along z on one row; T_light^2 / T_00^2 in permille (1000 one cone; W / rest the cut's expectation).
+
+== the mode's amplitude A = grip / 1000
+ Well: the 00 slot at 6 grips, W = 12 grips = 2 x rest on every row that reads it
+   light, the edge (cut layout):                 275 periods over 5965 rounds
+   light, the carried board (no cut):            275 periods over 5965 rounds; against the edge's light 1000 permille
+   the 00 wave, the cut (the 00 row's teeth at rest)          : 391 periods over 5976 rounds; T_light^2 / T_00^2 =  2014 permille
+   the 00 wave, the order (the 00 row on its now dial)        :  34 periods over  733 rounds; T_light^2 / T_00^2 =  1012 permille
+   the 00 wave, the carried 00 (the 00 row carries its dial)  : 275 periods over 5965 rounds; T_light^2 / T_00^2 =  1000 permille
+   the 00 wave, the carried board (every gear carries)        : 275 periods over 5965 rounds; T_light^2 / T_00^2 =  1000 permille
+   the 00 wave, the act as built (the loader's lay)           :  34 periods over  733 rounds; T_light^2 / T_00^2 =  1012 permille
+ Well: the 00 slot at 18 grips, W = 24 grips = 4 x rest on every row that reads it
+   light, the edge (cut layout):                 194 periods over 5961 rounds
+   light, the carried board (no cut):            194 periods over 5961 rounds; against the edge's light 1000 permille
+   the 00 wave, the cut (the 00 row's teeth at rest)          : 391 periods over 5976 rounds; T_light^2 / T_00^2 =  4041 permille
+   the 00 wave, the order (the 00 row on its now dial)        :  48 periods over 1468 rounds; T_light^2 / T_00^2 =  1009 permille
+   the 00 wave, the carried 00 (the 00 row carries its dial)  : 194 periods over 5961 rounds; T_light^2 / T_00^2 =  1000 permille
+   the 00 wave, the carried board (every gear carries)        : 194 periods over 5961 rounds; T_light^2 / T_00^2 =  1000 permille
+   the 00 wave, the act as built (the loader's lay)           :  48 periods over 1468 rounds; T_light^2 / T_00^2 =  1009 permille
+
+== the mode's amplitude A = grip / 10
+ Well: the 00 slot at 6 grips, W = 12 grips = 2 x rest on every row that reads it
+   light, the edge (cut layout):                 275 periods over 5965 rounds
+   light, the carried board (no cut):            275 periods over 5965 rounds; against the edge's light 1000 permille
+   the 00 wave, the cut (the 00 row's teeth at rest)          : 391 periods over 5976 rounds; T_light^2 / T_00^2 =  2014 permille
+   the 00 wave, the order (the 00 row on its now dial)        :   2 periods over   42 rounds; T_light^2 / T_00^2 =  1066 permille
+   the 00 wave, the carried 00 (the 00 row carries its dial)  : 275 periods over 5965 rounds; T_light^2 / T_00^2 =  1000 permille
+   the 00 wave, the carried board (every gear carries)        : 275 periods over 5965 rounds; T_light^2 / T_00^2 =  1000 permille
+   the 00 wave, the act as built (the loader's lay)           :   2 periods over   42 rounds; T_light^2 / T_00^2 =  1066 permille
+ Well: the 00 slot at 18 grips, W = 24 grips = 4 x rest on every row that reads it
+   light, the edge (cut layout):                 194 periods over 5961 rounds
+   light, the carried board (no cut):            194 periods over 5961 rounds; against the edge's light 1000 permille
+   the 00 wave, the cut (the 00 row's teeth at rest)          : 391 periods over 5976 rounds; T_light^2 / T_00^2 =  4041 permille
+   the 00 wave, the order (the 00 row on its now dial)        :   4 periods over  118 rounds; T_light^2 / T_00^2 =  1084 permille
+   the 00 wave, the carried 00 (the 00 row carries its dial)  : 194 periods over 5961 rounds; T_light^2 / T_00^2 =  1000 permille
+   the 00 wave, the carried board (every gear carries)        : 194 periods over 5961 rounds; T_light^2 / T_00^2 =  1000 permille
+   the 00 wave, the act as built (the loader's lay)           :   4 periods over  118 rounds; T_light^2 / T_00^2 =  1084 permille
+
+Reading: one cone is 1000 permille within the count's resolution (one round in a span of thousands). The cut's 00 wave runs
+on a second cone, W / rest in speed squared; the order's and both carried forms' 00 waves run on light's cone, the dial of
+the 00 row being its own 2 W (the carried dial equals the edge's exactly while the clock stands, and the mode moves the
+00 slot by a part in 500 of a grip at the small amplitude, so the dial breathes with the wave by that part).

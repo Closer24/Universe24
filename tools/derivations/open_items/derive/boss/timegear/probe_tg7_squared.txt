@@ -1,0 +1,23 @@
+A. One gear, its own count the clock, W = rest + x, rest 6, a = 0, b in [-5, 6] (W(b) >= 1), s over [-D_in, D_in - 1], pushes 0 and 3:
+   push 0: 300 states, 96 with no lawful split (M < 0 or W(a+) < 0), 0 collisions; run back misses 0 of 204 mapped alone
+   push 3: 300 states, 84 with no lawful split (M < 0 or W(a+) < 0), 0 collisions; run back misses 0 of 216 mapped alone
+
+B. One gear its own clock (W = rest + a, rest 10^6), the symmetric form:
+   free, v0 = 100 (rising): rounds 30000; run back misses 0; round 0: W 1000000, v 100, v^2 W / (v0^2 W0) 1000; round 7500: W 1652859, v 78, v^2 W / (v0^2 W0) 1005; round 15000: W 2194159, v 68, v^2 W / (v0^2 W0) 1014; round 22500: W 2674904, v 61, v^2 W / (v0^2 W0) 995; round 30000: W 3115855, v 57, v^2 W / (v0^2 W0) 1012  (nature keeps sqrt(W) v: 1000)
+   free, v0 = -100 (falling): rounds 6666 (no lawful split before round 6667); run back misses 0; round 0: W 1000000, v -100, v^2 W / (v0^2 W0) 1000  (nature keeps sqrt(W) v: 1000)
+   the hairspring -10 a, amplitude 100000 (W from 900000 to 1100000): swings 29; upper / lower in rounds 1065 permille, in ticks at the rate rest / W (the rate squared) 938 permille; the period 1985 rounds; run back misses 0
+   the hairspring -10 a, amplitude 333000 (W from 667000 to 1333000): swings 29; upper / lower in rounds 1241 permille, in ticks at the rate rest / W (the rate squared) 803 permille; the period 1972 rounds; run back misses 0
+   (nature: the halves equal in proper ticks at the rate sqrt(rest / W); the probe cannot take a root, so it counts at
+    the squared rate, under which the halves must come out unequal the other way by the same factor: see the reading)
+
+C. The line of 6: the 00 wave (the mode 2A, A, -A, -2A, -A, A, A = grip / 1000, on the 00 row in the symmetric form) against light
+   W = 12 grips: light 275 periods over 5965 rounds; the 00 wave 48 periods over 1037 rounds; T_light^2 / T_00^2 = 1008 permille (1000 one cone)
+   W = 24 grips: light 194 periods over 5961 rounds; the 00 wave 69 periods over 2113 rounds; T_light^2 / T_00^2 = 1006 permille (1000 one cone)
+
+D. The cube of 3 (the 00 row reading itself, the symmetric form; every other row on the edge), 40 rounds:
+   standing at W = 12 grips: rounds 40; W_00 12 grips to 12 grips; untick(tick s) = s 40 of 40, rewound True; other rows' books misses 0, the 00 row's identity misses 0; the 24: 24 at every one of the 40 rounds; 79 bits
+   rising by 1 grip a round from W = 12 grips: rounds 40; W_00 12 grips to 39 grips + 160 permille; untick(tick s) = s 40 of 40, rewound True; other rows' books misses 0, the 00 row's identity misses 0; the 24: 24 at every one of the 40 rounds; 80 bits
+   falling by 1 grip a round from W = 60 grips: rounds 40; W_00 0 grips - 382 permille to 60 grips; untick(tick s) = s 40 of 40, rewound True; other rows' books misses 0, the 00 row's identity misses 0; the 24: 24 at every one of the 40 rounds; 81 bits
+
+Reading: the symmetric form is a bijection with the same act both ways, one cone, exact books (the round's identity on the 00
+row), the 24 whole, and nature's free motion (sqrt(W) v kept); its one carry is the root, written here as a search.

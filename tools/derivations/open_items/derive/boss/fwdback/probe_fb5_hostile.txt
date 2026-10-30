@@ -1,0 +1,52 @@
+Cases built to break the escapement form (rest 10000, L_0 20000)
+
+A. The floor test (rd_phys/probe_1 A): a constant push p for 4000 rounds at c00 = L_0 (L = 2 L_0: a proper step every other
+   round, W_eff = 4 rest): the displacement against nature's p T_proper^2 / (2 rest) with T_proper the proper steps taken;
+   the root dial moved NOTHING for p < L / 2 = 20000 here; the escapement keeps every push
+   p      1: a(T)         0 after 2000 proper steps; nature       200; ratio 0 permille
+   p     10: a(T)      2002 after 2000 proper steps; nature      2000; ratio 1001 permille
+   p     49: a(T)      9800 after 2000 proper steps; nature      9800; ratio 1000 permille
+   p     50: a(T)     10010 after 2000 proper steps; nature     10000; ratio 1001 permille
+   p     51: a(T)     10200 after 2000 proper steps; nature     10200; ratio 1000 permille
+   p    100: a(T)     20020 after 2000 proper steps; nature     20000; ratio 1001 permille
+   p   1000: a(T)    200200 after 2000 proper steps; nature    200000; ratio 1001 permille
+   p  20000: a(T)   4002000 after 2000 proper steps; nature   4000000; ratio 1000 permille
+   p  50000: a(T)  10005000 after 2000 proper steps; nature  10000000; ratio 1000 permille
+
+B. A hairspring g = 1 (omega^2 = g / rest in proper time, T about 628 proper steps) laid at a0, 12000 rounds at c00 = L_0:
+   the largest and smallest |a| seen and the upward zero crossings (nature: swings between -a0 and a0; the root dial froze a0 < 50)
+   a0    10: max |a|    10, min a    -10, upward crossings 3 in 6000 proper steps
+   a0    25: max |a|    25, min a    -25, upward crossings 6 in 6000 proper steps
+   a0    49: max |a|    49, min a    -49, upward crossings 10 in 6000 proper steps
+   a0    50: max |a|    50, min a    -50, upward crossings 10 in 6000 proper steps
+   a0    51: max |a|    51, min a    -51, upward crossings 10 in 6000 proper steps
+   a0   100: max |a|   100, min a   -100, upward crossings 10 in 6000 proper steps
+   a0  1000: max |a|  1000, min a  -1000, upward crossings 9 in 6000 proper steps
+
+C. The kick of 1: a push of 1 per proper step at c00 = 3 L_0 (L = 4 L_0, a step every fourth round): the round of the first notch
+   first notch at round 19998 = proper step 5000 (the tooth born at rest div 2 = 5000: nature's rest / 2 = 5000 proper steps); run back misses (0, True)
+
+D. The clock jumping (the 00 gear's velocity per proper step), a hairspring g = 100, 400 rounds: run back misses, rewound, proper steps, c00 range
+   halving: c00 from 15 L_0 falling by 3 L_0 a step (L 16 L_0 -> 13 -> 10 -> 7 -> 4 -> L_0), run to the last step in the domain: misses 0 of 51, rewound True, proper steps 5, c00 0 .. 300000
+   doubling: c00 from L_0 rising by 2 L_0 a step: misses 0 of 400, rewound True, proper steps 20, c00 20000 .. 820000
+   to the edge: c00 from 3 L_0 falling by 3 L_0 a step (L_0 exactly at one slot, 4 L_0 at the other): misses 0 of 5, rewound True, proper steps 1, c00 0 .. 60000
+   alternating: c00 = 5 L_0 with the 00 gear swinging +-5 L_0 a step (a spring 4 f = D on the 00 gear): misses 0 of 400, rewound True, proper steps 66, c00 0 .. 200000
+
+E. The domain's edge: c00 = -L_0 / 2 at both slots (L = L_0 / 2, D = L_0): the escapement's carry of 2 L_0 at D = L_0 turns 2:
+   q_tau at the lay 2; run back misses 20 of 20, rewound False: outside the domain L >= L_0 the form is not an act; the promise reads L >= L_0 at both slots
+
+F. tau laid at 0 and at D - 1 (rising and falling, within the domain); and a deep clock c00 = 20 L_0 (a step every 21st round), a hairspring g = 100
+   tau = 0, c00 = 6 L_0 rising L_0 a step: misses 0 of 100, rewound True, proper steps 9, max |a| / a0 1000 permille, c00 120000 .. 300000
+   tau = D - 1, c00 = 20 L_0 falling L_0 a step: misses 0 of 100, rewound True, proper steps 6, max |a| / a0 1000 permille, c00 280000 .. 400000
+   tau = 0, c00 = 20 L_0 falling L_0 a step: misses 0 of 100, rewound True, proper steps 5, max |a| / a0 1000 permille, c00 300000 .. 400000
+   deep clock c00 = 20 L_0 standing: misses 0 of 2100, rewound True, proper steps 100, max |a| / a0 1001 permille, c00 400000 .. 400000
+
+G. A long wave (one wavelength round a ring of 32, the light row, a triangle of peak 8000 counts) at c00 = 0 and at c00 = L_0 (L = 2 L_0, W_eff = 4 rest):
+   ten periods at site 0 (nature: T^2 goes as W_eff, so x4 in T^2, x2 in T); the run back over the run
+   c00 = 0 grips: ten periods 1106 rounds (crossings 67); untick(tick s) = s at every 40th round: 200 of 200
+   c00 = 12 grips: ten periods 2212 rounds (crossings 15); untick(tick s) = s at every 40th round: 200 of 200
+
+H. The lapse gradient (nature's force): a line of 2 Node-clocks with c00 = 0 at site 0 and c00 = L_0 at site 1, 400 rounds, light's row laid 1000 / -1000:
+   light's row: SUM_sites P start 0, end -249248 grips: the sum moves (site 1 steps every other round, so SUM F over the stepping sites is not 0);
+   per gear P+ - P = push on every proper step (exact by the standing act); run back 400 of 400; proper steps site 0: 31, site 1: 31
+   the whole run rewound True; mirror twice = identity on 305 of 401 states

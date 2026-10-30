@@ -1,0 +1,38 @@
+A1. The symmetric form by the one-step rule on the text's own lays (the line of 6, the mode on the 00 row): where the
+    promise k (k + 1) <= 2 c fails, k the 00 count's change of velocity in one round (counts a round squared):
+    A = grip / 1000 , W = 12 grips: refused at round 1; the carry's k0 = 2527564053861041674 against 2 c = 727695821583321772888000 (k0^2 div 2 c = 8779190228782 cells off: a root is needed)
+    A = grip / 1000 , W = 24 grips: refused at round 1; the carry's k0 = 1263676702984614468 against 2 c = 1455512946020716444888000 (k0^2 div 2 c = 1097124428904 cells off: a root is needed)
+    A = grip / 10000, W = 12 grips: refused at round 1; the carry's k0 = 252718491293394707 against 2 c = 727804994151987382088800 (k0^2 div 2 c = 87752401199 cells off: a root is needed)
+    A = grip / 10000, W = 24 grips: refused at round 1; the carry's k0 = 126358192644208610 against 2 c = 1455622118589382054088800 (k0^2 div 2 c = 10968775923 cells off: a root is needed)
+    A = grip / 10^6 , W = 12 grips: refused at round 1; the carry's k0 = 2527143214375934 against 2 c = 727817003134540599100888 (k0^2 div 2 c = 8774805 cells off: a root is needed)
+    A = grip / 10^6 , W = 24 grips: refused at round 1; the carry's k0 = 1263571501890324 against 2 c = 1455634127571935271100888 (k0^2 div 2 c = 1096850 cells off: a root is needed)
+    A = grip / 10^8 , W = 12 grips: refused at round 1; the carry's k0 = 25271427973973 against 2 c = 727817123224366131271016 (k0^2 div 2 c = 877 cells off: a root is needed)
+    A = grip / 10^8 , W = 24 grips: refused at round 1; the carry's k0 = 12635713976457 against 2 c = 1455634247661760803271016 (k0^2 div 2 c = 109 cells off: a root is needed)
+    (a notch of the 00 slot is a grip = den full_rate^2 counts; the bound 2 sqrt(W) is about 8.5 x 10^11 counts at W = 12 grips)
+
+A2. The 00 wave against light on the line of 6 at amplitudes where the promise holds, the symmetric form with no root, 6000 rounds;
+    T_light^2 / T_00^2 in permille (1000 one cone); the carried 00 beside.
+    A = grip / 10^9 , W = 12 grips: refused at round 1 (the carry's k0 = 2527142793607 against 2 c = 727817124316091817927104, 8 cells off): no measurement
+    A = grip / 10^9 , W = 24 grips: refused at round 61 (the carry's k0 = 1246052558025 against 2 c = 1455634248751519465529382, 1 cells off): no measurement
+    A = grip / 10^10, W = 12 grips: light 275 periods over 5965 rounds; the symmetric form 275 periods over 5965 rounds, T_light^2 / T_00^2 =  1000; the carried 00 275 periods over 5965 rounds,  1000
+    A = grip / 10^10, W = 24 grips: light 194 periods over 5961 rounds; the symmetric form 194 periods over 5961 rounds, T_light^2 / T_00^2 =  1000; the carried 00 194 periods over 5961 rounds,  1000
+    A = grip / 10^11, W = 12 grips: light 275 periods over 5965 rounds; the symmetric form 275 periods over 5965 rounds, T_light^2 / T_00^2 =  1000; the carried 00 275 periods over 5965 rounds,  1000
+    A = grip / 10^11, W = 24 grips: light 194 periods over 5961 rounds; the symmetric form 194 periods over 5961 rounds, T_light^2 / T_00^2 =  1000; the carried 00 194 periods over 5961 rounds,  1000
+
+B. The cut's dial with the push carried at rest / W(a) (the scaled push), the line of 6, 6000 rounds; T_light^2 / T_00^2 in permille:
+   A = grip / 1000, W = 12 grips: light 275 over 5965 rounds; the cut 391 over 5976,  2014; the scaled push  34 periods over  733 rounds, T_light^2 / T_00^2 =  1012
+   A = grip / 1000, W = 24 grips: light 194 over 5961 rounds; the cut 391 over 5976,  4041; the scaled push  48 periods over 1468 rounds, T_light^2 / T_00^2 =  1009
+   A = grip / 10  , W = 12 grips: light 275 over 5965 rounds; the cut 391 over 5976,  2014; the scaled push   2 periods over   42 rounds, T_light^2 / T_00^2 =  1066
+   A = grip / 10  , W = 24 grips: light 194 over 5961 rounds; the cut 391 over 5976,  4041; the scaled push   4 periods over  118 rounds, T_light^2 / T_00^2 =  1084
+
+C. The scaled push on the cube of 3 (the loader's lay), 40 rounds: the run back (mirror_half, the dial constant on the 00 row), the 24:
+   standing at W = 12 grips: rounds 40; untick(tick s) = s 40 of 40, rewound True; the 24: 24 at every one of the 40 rounds; the 00 row's books against 4 SUM P' misses 0, against 4 SUM P misses 0; 79 bits
+   rising by 1 grip a round from W = 12 grips: rounds 40; untick(tick s) = s 40 of 40, rewound True; the 24: 24 at every one of the 40 rounds; the 00 row's books against 4 SUM P' misses 0, against 4 SUM P misses 0; 81 bits
+   falling by 1 grip a round from W = 60 grips: rounds 40; untick(tick s) = s 40 of 40, rewound True; the 24: 24 at every one of the 40 rounds; the 00 row's books against 4 SUM P' misses 0, against 4 SUM P misses 0; 81 bits
+
+Reading: (A1) on the text's own lays the 00 count's acceleration is far beyond 2 sqrt(W) counts a round squared, so the symmetric
+form's quotient is a root there (the carry's estimate off by many cells); (A2) where the acceleration is below the bound the form is
+Rule3's carry plus a sign-carry and its cone can be measured with no root;
+(B, C) the cut's dial with the push carried at rest / W(a) runs on light's cone, runs back exactly and holds the 24 with two slots,
+no register and no root; what it pays is named: the push's remainder at W(a) dropped (the 00 row's books close on the carried
+push P', not on P), and the clock's own free course v kept (the act as built's).

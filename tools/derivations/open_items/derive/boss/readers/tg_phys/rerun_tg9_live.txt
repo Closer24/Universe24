@@ -1,0 +1,51 @@
+D. The three forms over a series of velocities, rest 10^6, 30000 rounds, free: W at the end against nature's course
+   (sqrt(W) v kept: 4 W0 W^3 / (W0^2 (2 W0 + 3 v0 t)^2) = 1000) and against the edge's own (W v kept: W^2 / (W0^2 + 2 W0 v0 t) = 1000)
+   v0 =   1: carried W  1030000 (against nature  1000, against W v kept  1000; departure       0); twin W(A)  1030000, W(B)  1030000 (A against nature  1000; A - B        0); symmetric W  1030000 (against nature  1000, against W v kept  1000)
+   v0 =   2: carried W  1060000 (against nature  1002, against W v kept  1003; departure       0); twin W(A)  1060000, W(B)  1060000 (A against nature  1002; A - B        0); symmetric W  1060000 (against nature  1002, against W v kept  1003)
+   v0 =   3: carried W  1090000 (against nature  1005, against W v kept  1006; departure       0); twin W(A)  1090000, W(B)  1090000 (A against nature  1005; A - B        0); symmetric W  1090000 (against nature  1005, against W v kept  1006)
+   v0 =  10: carried W  1264285 (against nature   961, against W v kept   999; departure       0); twin W(A)  1264285, W(B)  1264286 (A against nature   961; A - B       -1); symmetric W  1281111 (against nature  1000, against W v kept  1025)
+   v0 = 100: carried W  2645622 (against nature   612, against W v kept   999; departure      14); twin W(A)  2645555, W(B)  2645694 (A against nature   612; A - B     -139); symmetric W  3115855 (against nature  1000, against W v kept  1386)
+   v0 =  -2: carried W   940000 (against nature  1002, against W v kept  1004; departure       0); twin W(A)   940000, W(B)   940000 (A against nature  1002; A - B        0); symmetric W   940000 (against nature  1002, against W v kept  1004)
+   v0 = -10: carried W   633340 (against nature   839, against W v kept  1002; departure       2); twin W(A)   633340, W(B)   633338 (A against nature   839; A - B        2); symmetric W   671955 (against nature  1002, against W v kept  1128)
+   (at v0 = 1 the symmetric form's tooth drifts at 2 a round while its dial grows 2 a round, so its quotient never falls: the one
+    velocity where it departs from nature; the carried dial's departure and the twin's parting are the register's and the pair's own)
+
+One course, three forms: the 00 gear its own clock, free, W = rest + a, rest 10000, v0 = 1 count a round, 30000 rounds.
+Nature (sqrt(W) v kept): W^(3/2) - W0^(3/2) = (3/2) W0^(1/2) v0 t, so W(30000) is about 26,600; the edge's own law (W v kept)
+gives W^2 - W0^2 = 2 W0 v0 t, W(30000) about 26,458; the act as built (v kept) 40,000.
+
+A. the carried dial: round: W, v, the departure D - (W(b) + W(a)), P = 2 D v + s
+       0: W  10000, v  1, departure      0, P 39998
+    5000: W  15000, v  1, departure      0, P 39998
+   10000: W  19999, v  0, departure      1, P 39998
+   15000: W  22499, v  0, departure   5001, P 39998
+   20000: W  24999, v  0, departure  10001, P 39998
+   25000: W  27499, v  0, departure  15001, P 39998
+   30000: W  29999, v  0, departure  20001, P 39998
+   the quotient's pattern at rounds 9995..10015: [1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1]; at 20000..20012: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+   (once the momentum P = 2 D v + s sits at the half count, q jitters 1, 0, 1, 0 and the reflected dial grows 2 a round:
+    the clock's own whole-velocity jitter is a Nyquist drive of the register, and the departure is pumped for ever)
+
+B. the twin: round: W(A), W(B), v_A, v_B, A's dial 2 W(b_B) less A's own edge dial, A - B
+       0: W(A)  10000, W(B)  10000, v_A  1, v_B  1, dial less edge dial   -1, A - B     0
+    5000: W(A)  15000, W(B)  15000, v_A  1, v_B  1, dial less edge dial   -1, A - B     0
+   10000: W(A)  19999, W(B)  20000, v_A  0, v_B  1, dial less edge dial    0, A - B    -1
+   15000: W(A)  19999, W(B)  25000, v_A  0, v_B  1, dial less edge dial 10000, A - B -5001
+   20000: W(A)  19999, W(B)  30000, v_A  0, v_B  1, dial less edge dial 20000, A - B -10001
+   25000: W(A)  19999, W(B)  35000, v_A  0, v_B  1, dial less edge dial 30000, A - B -15001
+   30000: W(A)  19999, W(B)  40000, v_A  0, v_B  1, dial less edge dial 40000, A - B -20001
+   the quotients (A, B) at rounds 9995..10005: [(1, 1), (1, 1), (1, 1), (1, 1), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1)]; at 20000..20006: [(0, 1), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1)]
+
+C. the symmetric form (the root): round: W, v, s; W^3 / W0^3 against nature's (1 + 3 t / (2 W0))^2
+       0: W  10000, v  1, s      0; W^3 / W0^3 against (1 + 3 t / (2 W0))^2: 1000 permille
+    5000: W  15000, v  1, s -10000; W^3 / W0^3 against (1 + 3 t / (2 W0))^2: 1102 permille
+   10000: W  20000, v  1, s -20000; W^3 / W0^3 against (1 + 3 t / (2 W0))^2: 1280 permille
+   15000: W  25000, v  1, s -30000; W^3 / W0^3 against (1 + 3 t / (2 W0))^2: 1479 permille
+   20000: W  30000, v  1, s -40000; W^3 / W0^3 against (1 + 3 t / (2 W0))^2: 1687 permille
+   25000: W  35000, v  1, s -50000; W^3 / W0^3 against (1 + 3 t / (2 W0))^2: 1900 permille
+   30000: W  40000, v  1, s -60000; W^3 / W0^3 against (1 + 3 t / (2 W0))^2: 2115 permille
+   the quotient's pattern at rounds 9995..10015: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; at 20000..20012: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+Reading: the carried dial's register is pumped by the clock's own jitter (the departure grows without bound: a price
+no lay can avoid); the twin's dials follow the counts exactly, its halves part by a free difference that scales with W;
+the symmetric form follows nature's course to the permille with nothing beside the two slots and the tooth, by a root.

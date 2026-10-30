@@ -1,0 +1,30 @@
+The 00 gear alone, its own count the clock, W(x) = rest + x, rest = 6; a = 0, b in [-6, 6] (b > a a falling clock, b < a rising);
+the tooth s over its own home dial; the forward map (b, s) -> (a+, s+) and the run back mirror(form(mirror(next))) = state.
+
+ push = 0:
+   the self-read edge, D_in = w(b) + w(a), D_out = w(a) + w(a+):   312 states; the in side (b, s) -> N:   36 collisions; the out side N -> q:  145 under no q,   33 under two or more: no act
+   the tiling centre (the same dials, the out cells end to end):   312 states,   70 with no lawful split,   36 collisions; run back misses   95 of the   176 mapped alone
+   the lag, D_in = 2 w(b), D_out = 2 w(a)            :   312 states,    0 with no lawful split,   30 collisions; run back misses  202 of the   260 mapped alone
+   the order, D_in = D_out = 2 w(a), the tooth from 2 w(b):   312 states,    0 with no lawful split,   72 collisions; run back misses   12 of the   168 mapped alone
+   the cut, D = 2 rest                               :   312 states,    0 with no lawful split,    0 collisions; run back misses    0 of the   312 mapped alone
+   the carried dial, D_in = D, D_out = 4 w(a) - D    :  2184 states,    0 with no lawful split,    0 collisions; run back misses    0 of the  2184 mapped alone
+     mutant: D_out = D + 1 (injective, no involution):  2184 states,    0 with no lawful split,    0 collisions; run back misses 2184 of the  2184 mapped alone
+     mutant: D_out = D + 2 (w(a) - w(b)) (the edge's step):  2184 states,    0 with no lawful split,  328 collisions; run back misses 1184 of the  1646 mapped alone
+
+ push = 3:
+   the self-read edge, D_in = w(b) + w(a), D_out = w(a) + w(a+):   312 states; the in side (b, s) -> N:   36 collisions; the out side N -> q:  131 under no q,   36 under two or more: no act
+   the tiling centre (the same dials, the out cells end to end):   312 states,   67 with no lawful split,   36 collisions; run back misses   95 of the   179 mapped alone
+   the lag, D_in = 2 w(b), D_out = 2 w(a)            :   312 states,    0 with no lawful split,   30 collisions; run back misses  204 of the   260 mapped alone
+   the order, D_in = D_out = 2 w(a), the tooth from 2 w(b):   312 states,    0 with no lawful split,   72 collisions; run back misses   12 of the   168 mapped alone
+   the cut, D = 2 rest                               :   312 states,    0 with no lawful split,    0 collisions; run back misses    0 of the   312 mapped alone
+   the carried dial, D_in = D, D_out = 4 w(a) - D    :  2184 states,    0 with no lawful split,    0 collisions; run back misses    0 of the  2184 mapped alone
+     mutant: D_out = D + 1 (injective, no involution):  2184 states,    0 with no lawful split,    0 collisions; run back misses 2184 of the  2184 mapped alone
+     mutant: D_out = D + 2 (w(a) - w(b)) (the edge's step):  2184 states,    0 with no lawful split,  328 collisions; run back misses 1164 of the  1646 mapped alone
+
+Reading. A row whose own count is the clock: any in dial that moves with its before slot (the self-read edge, the lag)
+makes blocks over the velocities of unequal width, so (b, s) -> N collides; any out dial that moves with its next count
+(the self-read edge) leaves integers under no q and under two; the out cells laid end to end still fail the run back (the
+centre is forced to 2 q D_out + e, notes_01); the order's in dial 2 w(a) is the pivot's alone, but the tooth's home modulus
+was 2 w(b): collisions where the clock falls. What keeps (C1) and (C2) both: a dial that is the state's own register (the
+cut being the constant case), its out dial an involution at the pivot, 4 w(a) - D, so that the backward step gives D back.
+The no-split states of the tiling centre are jumps past W = 0 at this tiny rest; the carried dial has none.

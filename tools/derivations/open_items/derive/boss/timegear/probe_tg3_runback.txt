@@ -1,0 +1,127 @@
+The carried forms on the cube of 3 (the loader's lay, the 00 row reading itself), the half-open convention, 40 rounds:
+the carried 00 (the 00 row carries, the others on the edge) and the carried board (every gear carries, one pass).
+
+== standing at W = 12 grips
+  the carried 00
+     rounds run 40; W_00 over the run 12 grips to 12 grips; 79 bits
+     untick(tick s) = s 40 of 40; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 480
+     the 00 row: S 0 -> 0, P 0 -> 0; the dial's departure from W(b) + W(a): 00 row 0, other rows 0
+  the carried board
+     rounds run 40; W_00 over the run 12 grips to 12 grips; 79 bits
+     untick(tick s) = s 40 of 40; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 480
+     the 00 row: S 0 -> 0, P 0 -> 0; the dial's departure from W(b) + W(a): 00 row 0, other rows 0
+
+== rising by 1 grip a round from W = 12 grips
+  the carried 00
+     rounds run 40; W_00 over the run 12 grips to 33 grips - 383 permille; 80 bits
+     untick(tick s) = s 40 of 40; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 480
+     the 00 row: S 409397132496034503000000 -> 145404052482245651046783, P 1242 grips^2 -> 1242 grips^2; the dial's departure from W(b) + W(a): 00 row 1836643169752011412053, other rows 0
+  the carried board
+     rounds run 40; W_00 over the run 12 grips to 33 grips - 383 permille; 80 bits
+     untick(tick s) = s 40 of 40; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 480
+     the 00 row: S 409397132496034503000000 -> 145404052482245651046783, P 1242 grips^2 -> 1242 grips^2; the dial's departure from W(b) + W(a): 00 row 1836643169752011412053, other rows 1836643169752011412053
+
+== rising by 1 grip + 1 a round from W = 12 grips
+  the carried 00
+     rounds run 40; W_00 over the run 12 grips to 33 grips - 383 permille; 80 bits
+     untick(tick s) = s 40 of 40; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 480
+     the 00 row: S 409397132496034503000027 -> 145404052482245651046783, P 18832268094817587138001188 grips - 54 -> 18832268094817587138001188 grips - 54; the dial's departure from W(b) + W(a): 00 row 1836643169752011412056, other rows 0
+  the carried board
+     rounds run 40; W_00 over the run 12 grips to 33 grips - 383 permille; 80 bits
+     untick(tick s) = s 40 of 40; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 480
+     the 00 row: S 409397132496034503000027 -> 145404052482245651046783, P 18832268094817587138001188 grips - 54 -> 18832268094817587138001188 grips - 54; the dial's departure from W(b) + W(a): 00 row 1836643169752011412056, other rows 1836643169752011412056
+
+== falling by 1 grip a round from W = 12 grips
+  the carried 00
+     rounds run 6 (the promise breaks before round 7); W_00 over the run 1 grip - 340 permille to 12 grips; 79 bits
+     untick(tick s) = s 6 of 6; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 72
+     the 00 row: S -409397132496034503000000 -> -1576864553393817104856480, P -1350 grips^2 -> -1350 grips^2; the dial's departure from W(b) + W(a): 00 row 1 grip + 319 permille, other rows 0
+  the carried board
+     rounds run 6 (the promise breaks before round 7); W_00 over the run 1 grip - 340 permille to 12 grips; 79 bits
+     untick(tick s) = s 6 of 6; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 72
+     the 00 row: S -409397132496034503000000 -> -1576864553393817104856480, P -1350 grips^2 -> -1350 grips^2; the dial's departure from W(b) + W(a): 00 row 1 grip + 319 permille, other rows 1 grip + 319 permille
+
+== falling by 1 grip + 1 a round from W = 12 grips
+  the carried 00
+     rounds run 6 (the promise breaks before round 7); W_00 over the run 1 grip - 340 permille to 12 grips; 79 bits
+     untick(tick s) = s 6 of 6; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 72
+     the 00 row: S -409397132496034503000027 -> -1576864553393817104857074, P -20469856624801725150001404 grips - 54 -> -20469856624801725150001404 grips - 54; the dial's departure from W(b) + W(a): 00 row 1 grip + 319 permille, other rows 0
+  the carried board
+     rounds run 6 (the promise breaks before round 7); W_00 over the run 1 grip - 340 permille to 12 grips; 79 bits
+     untick(tick s) = s 6 of 6; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 72
+     the 00 row: S -409397132496034503000027 -> -1576864553393817104857074, P -20469856624801725150001404 grips - 54 -> -20469856624801725150001404 grips - 54; the dial's departure from W(b) + W(a): 00 row 1 grip + 319 permille, other rows 1 grip + 319 permille
+
+== falling by 3 grips a round from W = 36 grips
+  the carried 00
+     rounds run 6 (the promise breaks before round 7); W_00 over the run 2 grips - 20 permille to 36 grips; 80 bits
+     untick(tick s) = s 6 of 6; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 72
+     the 00 row: S -1228191397488103509000000 -> -4730593660181451314569305, P -12150 grips^2 -> -12150 grips^2; the dial's departure from W(b) + W(a): 00 row 4 grips - 41 permille, other rows 0
+  the carried board
+     rounds run 6 (the promise breaks before round 7); W_00 over the run 2 grips - 20 permille to 36 grips; 80 bits
+     untick(tick s) = s 6 of 6; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 72
+     the 00 row: S -1228191397488103509000000 -> -4730593660181451314569305, P -12150 grips^2 -> -12150 grips^2; the dial's departure from W(b) + W(a): 00 row 4 grips - 41 permille, other rows 4 grips - 41 permille
+
+== falling by 1 grip a round from W = 60 grips
+  the carried 00
+     rounds run 30 (the promise breaks before round 31); W_00 over the run 1 grip + 460 permille to 60 grips; 81 bits
+     untick(tick s) = s 30 of 30; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 360
+     the 00 row: S -409397132496034503000000 -> -3463876791729360236872530, P -6534 grips^2 -> -6534 grips^2; the dial's departure from W(b) + W(a): 00 row 3 grips - 79 permille, other rows 0
+  the carried board
+     rounds run 30 (the promise breaks before round 31); W_00 over the run 1 grip + 460 permille to 60 grips; 81 bits
+     untick(tick s) = s 30 of 30; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 360
+     the 00 row: S -409397132496034503000000 -> -3463876791729360236872530, P -6534 grips^2 -> -6534 grips^2; the dial's departure from W(b) + W(a): 00 row 3 grips - 79 permille, other rows 3 grips - 79 permille
+
+== falling by 1 grip + 1 a round from W = 60 grips
+  the carried 00
+     rounds run 30 (the promise breaks before round 31); W_00 over the run 1 grip + 460 permille to 60 grips; 81 bits
+     untick(tick s) = s 30 of 30; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 360
+     the 00 row: S -409397132496034503000027 -> -3463876791729360236879145, P -99074106064040349726006588 grips - 54 -> -99074106064040349726006588 grips - 54; the dial's departure from W(b) + W(a): 00 row 3 grips - 79 permille, other rows 0
+  the carried board
+     rounds run 30 (the promise breaks before round 31); W_00 over the run 1 grip + 460 permille to 60 grips; 81 bits
+     untick(tick s) = s 30 of 30; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 360
+     the 00 row: S -409397132496034503000027 -> -3463876791729360236879145, P -99074106064040349726006588 grips - 54 -> -99074106064040349726006588 grips - 54; the dial's departure from W(b) + W(a): 00 row 3 grips - 79 permille, other rows 3 grips - 79 permille
+
+== falling by 3 grips a round from W = 120 grips
+  the carried 00
+     rounds run 20 (the promise breaks before round 21); W_00 over the run 4 grips - 417 permille to 120 grips; 82 bits
+     untick(tick s) = s 20 of 20; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 240
+     the 00 row: S -1228191397488103509000000 -> -8502956655976056314807316, P -39366 grips^2 -> -39366 grips^2; the dial's departure from W(b) + W(a): 00 row 7 grips + 165 permille, other rows 0
+  the carried board
+     rounds run 20 (the promise breaks before round 21); W_00 over the run 4 grips - 417 permille to 120 grips; 82 bits
+     untick(tick s) = s 20 of 20; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 240
+     the 00 row: S -1228191397488103509000000 -> -8502956655976056314807316, P -39366 grips^2 -> -39366 grips^2; the dial's departure from W(b) + W(a): 00 row 7 grips + 165 permille, other rows 7 grips + 165 permille
+
+== varying in space: standing at W = 12 grips with a mode of 1 grip on the 00 row along z (W from 10 to 14 grips over the sites)
+  the carried 00
+     rounds run 40; W_00 over the run 11 grips - 58 permille to 14 grips + 315 permille; 79 bits
+     untick(tick s) = s 40 of 40; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 480
+     the 00 row: S 0 -> 12047558616565289271972, P 0 -> 0; the dial's departure from W(b) + W(a): 00 row 7624946758165462771096, other rows 0
+  the carried board
+     rounds run 40; W_00 over the run 11 grips - 58 permille to 14 grips + 315 permille; 79 bits
+     untick(tick s) = s 40 of 40; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 480
+     the 00 row: S 0 -> 12047558616565289271972, P 0 -> 0; the dial's departure from W(b) + W(a): 00 row 7624946758165462771096, other rows 7624946758165462771096
+
+== varying in time: a hairspring 1000000000000000000000 x^2 on the 00 row, the 00 slot laid at 1 grip (W = 7 grips) at rest: the clock swings by a grip, 80 rounds
+  the carried 00
+     rounds run 80; W_00 over the run 5 grips - 130 permille to 7 grips + 1 permille; 78 bits
+     untick(tick s) = s 80 of 80; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 960
+     the 00 row: S 0 -> 33207794616452929311573, P 0 -> 905363592417958184821443 grips - 138 permille; the dial's departure from W(b) + W(a): 00 row 331019276910976273665, other rows 0
+  the carried board
+     rounds run 80; W_00 over the run 5 grips - 130 permille to 7 grips + 1 permille; 78 bits
+     untick(tick s) = s 80 of 80; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 960
+     the 00 row: S 0 -> 33207794616452929311573, P 0 -> 905363592417958184821443 grips - 138 permille; the dial's departure from W(b) + W(a): 00 row 331019276910976273665, other rows 331019276910976273665
+
+== varying in both: the hairspring and a mode of half a grip on the 00 row, 80 rounds
+  the carried 00
+     rounds run 80; W_00 over the run 3 grips + 219 permille to 8 grips + 16 permille; 78 bits
+     untick(tick s) = s 80 of 80; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 960
+     the 00 row: S 0 -> 47221591165093797518970, P 0 -> 1112537362311793675704678 grips + 60 permille; the dial's departure from W(b) + W(a): 00 row 13770114501860200553716, other rows 0
+  the carried board
+     rounds run 80; W_00 over the run 3 grips + 219 permille to 8 grips + 16 permille; 78 bits
+     untick(tick s) = s 80 of 80; rewound to the start True; books P_(t+1) - P_t = 4 SUM push misses 0 of 960
+     the 00 row: S 0 -> 47221591165093797518970, P 0 -> 1112537362311793675704678 grips + 60 permille; the dial's departure from W(b) + W(a): 00 row 13770114501860200553716, other rows 13770114501860200553716
+
+Reading: the run back is exact at every round and the whole run rewinds, on every lay, with nothing kept outside the state;
+the books close to the bit on every row, the 00 row's P kept (the spring's pushes aside) where the order's drifted; the
+carried dial equals the edge's dial, W(b) + W(a), at every round on the standing and uniform lays (departure 0), and
+departs by the alternating sum of the clock's second differences where the clock bends.

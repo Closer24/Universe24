@@ -1,0 +1,35 @@
+The escapement form on one Node-clock (a test gear and the 00 gear on one escapement): rest 10000, L_0 20000
+   the adiabatic course: the 00 gear free at +1 per proper step from c00 = 0 (30000 rounds), and at -1 from 20000 (28000 rounds)
+
+A. The free gear v0 = 10^6 per proper step: the window velocity v (1000 rounds), v^2 W_eff against the start (nature 1000)
+   rising  : round 0: L 20494, v 976000, v^2 W_eff 1000; round 7500: L 26833, v 745000, v^2 W_eff 999; round 15000: L 31938, v 626000, v^2 W_eff 999; round 22500: L 36332, v 550000, v^2 W_eff 998; round 29000: L 39749, v 503000, v^2 W_eff 999; c00 at the end 20000
+   falling : round 0: L 39749, v 503000, v^2 W_eff 999; round 7000: L 36056, v 555000, v^2 W_eff 1001; round 14000: L 31938, v 626000, v^2 W_eff 999; round 21000: L 27203, v 735000, v^2 W_eff 999; round 27000: L 22361, v 895000, v^2 W_eff 1001; c00 at the end 1909
+
+B. The hairspring push -100 a, a0 = 10^7: A (largest |a| in the period at the mark), A/A0 (nature 1000), T^2/W_eff over ten periods (nature 1000)
+   rising  : round 7500: L 26831, A 10011851, A/A0 1000, T^2/W_eff 1000; round 15000: L 31981, A 10012377, A/A0 1000, T^2/W_eff 998; round 22500: L 36378, A 10012339, A/A0 1000, T^2/W_eff 998
+   falling : round 7000: L 35998, A 10009922, A/A0 1000, T^2/W_eff 1000; round 14000: L 31916, A 10012512, A/A0 1000, T^2/W_eff 998; round 21000: L 27205, A 10012488, A/A0 1000, T^2/W_eff 1000; round 27000: L 22433, A 10009384, A/A0 999, T^2/W_eff 997
+
+C. The run back untick(tick s) = s per round (the mirror flips tau at D = L(now) + L(before)), the hairspring; the whole run rewound; the mirror twice
+   rising  : misses 0 of 30000; rewound to the start True; mirror twice differs on 20000 rounds; proper steps 20000 of 30000
+   falling : misses 0 of 28000; rewound to the start True; mirror twice differs on 19817 rounds; proper steps 18091 of 28000
+
+D. The fast swing (probe_fp_swing's lay): rest 99856, L_0 199712; the 00 gear on its own hairspring about c00 = 30000 (the clock swings by its own motion); the test hairspring g = 201, a0 = 10^7
+   the beat at the mean clock, standing: 3866 rounds over 24 beats, about 161 a beat (about 140 proper steps)
+   half the beat (the swing's period 80 rounds), amplitude 5743 in L (5 percent of W_eff, L 223965 to 235459), 50 swings (4085 rounds): A_end/A_start 1000
+   half the beat (the swing's period 80 rounds), amplitude 22971 in L (20 percent of W_eff, L 206741 to 252683), 50 swings (4084 rounds): A_end/A_start 1000
+   the beat (the swing's period 161 rounds), amplitude 5743 in L (5 percent of W_eff, L 223966 to 235459), 50 swings (8174 rounds): A_end/A_start 1000
+   the beat (the swing's period 161 rounds), amplitude 22971 in L (20 percent of W_eff, L 206739 to 252685), 50 swings (8172 rounds): A_end/A_start 1000
+   ten beats (the swing's period 1613 rounds), amplitude 5743 in L (5 percent of W_eff, L 223964 to 235460), 50 swings (81899 rounds): A_end/A_start 1000
+   ten beats (the swing's period 1614 rounds), amplitude 22971 in L (20 percent of W_eff, L 206739 to 252687), 50 swings (81921 rounds): A_end/A_start 1000
+   a swing with g_00 = 603 (the swing's period 92 rounds), amplitude 5743 in L (5 percent of W_eff, L 223966 to 235455), 50 swings (4718 rounds): A_end/A_start 1000
+   a swing with g_00 = 603 (the swing's period 92 rounds), amplitude 22971 in L (20 percent of W_eff, L 206726 to 252698), 50 swings (4717 rounds): A_end/A_start 1000
+   a swing with g_00 = 703 (the swing's period 86 rounds), amplitude 5743 in L (5 percent of W_eff, L 223958 to 235466), 50 swings (4369 rounds): A_end/A_start 1000
+   a swing with g_00 = 703 (the swing's period 86 rounds), amplitude 22971 in L (20 percent of W_eff, L 206715 to 252707), 50 swings (4368 rounds): A_end/A_start 1000
+   a swing with g_00 = 904 (the swing's period 75 rounds), amplitude 5743 in L (5 percent of W_eff, L 223964 to 235460), 50 swings (3853 rounds): A_end/A_start 1000
+   a swing with g_00 = 904 (the swing's period 75 rounds), amplitude 22971 in L (20 percent of W_eff, L 206712 to 252712), 50 swings (3852 rounds): A_end/A_start 1000
+   a swing with g_00 = 1005 (the swing's period 72 rounds), amplitude 5743 in L (5 percent of W_eff, L 223961 to 235463), 50 swings (3654 rounds): A_end/A_start 1000
+   a swing with g_00 = 1005 (the swing's period 72 rounds), amplitude 22971 in L (20 percent of W_eff, L 206709 to 252715), 50 swings (3653 rounds): A_end/A_start 1000
+   (edge_final_phys/probe_fp_swing, the course given from outside: at half the beat the act as built x4.92 / x1280, the edge x4.78 / x1419, the root x1.000.)
+
+E. Two clocks at one site: hairsprings g = 100 and g = 400 on the rising course, the beats' ratio and the amplitudes' ratio at the marks (nature: constant)
+   round 7500: T1/T2 2016, A1/A2 996; round 15000: T1/T2 2012, A1/A2 996; round 22500: T1/T2 2014, A1/A2 997

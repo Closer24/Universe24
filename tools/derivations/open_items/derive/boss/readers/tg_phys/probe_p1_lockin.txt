@@ -1,0 +1,70 @@
+A. The free 00 gear from v0 = 1 count a round: the regime the text's own calibre words put the clock in ('2 counts a round against 2 W')
+  rest 10000, v0 = 1, 1000000 rounds, free; stride: every round stepped, read at the marks; dA = the count's change over
+  the 10000 rounds before the mark; nature = 4 W^3 / (W0 (2 W0 + 3 v0 t)^2), Wv = W^2 / (W0^2 + 2 W0 v0 t), v = W / (W0 + v0 t), permille
+   t    10000: symmetric W    20000 (nat  1280, Wv  1333, v  1000; dA  10000) | carried W    19999 (nat  1279, Wv  1333, v   999; dA   9999; E        1; q changes      1) | twin W    19999 (nat  1279, Wv  1333, v   999; dA   9999; W(B)    20000; A-B       -1) | order W    20000 (nat  1280, Wv  1333, v  1000; dA  10000)
+   t    30000: symmetric W    40000 (nat  2115, Wv  2285, v  1000; dA  10000) | carried W    29999 (nat   892, Wv  1285, v   749; dA   5000; E    20001; q changes   9999) | twin W    19999 (nat   264, Wv   571, v   499; dA      0; W(B)    40000; A-B   -20001) | order W    40000 (nat  2115, Wv  2285, v  1000; dA  10000)
+   t   100000: symmetric W   110000 (nat  5199, Wv  5761, v  1000; dA  10000) | carried W    64999 (nat  1072, Wv  2011, v   590; dA   5000; E    90001; q changes   9999) | twin W    19999 (nat    31, Wv   190, v   181; dA      0; W(B)   110000; A-B   -90001) | order W   110000 (nat  5199, Wv  5761, v  1000; dA  10000)
+   t   300000: symmetric W   310000 (nat 14078, Wv 15754, v  1000; dA  10000) | carried W   164999 (nat  2122, Wv  4463, v   532; dA   5000; E   290001; q changes   9999) | twin W    19999 (nat     3, Wv    65, v    64; dA      0; W(B)   310000; A-B  -290001) | order W   310000 (nat 14078, Wv 15754, v  1000; dA  10000)
+   t  1000000: symmetric W  1010000 (nat 45186, Wv 50751, v  1000; dA  10000) | carried W   514999 (nat  5990, Wv 13195, v   509; dA   5000; E   990001; q changes   9999) | twin W    19999 (nat     0, Wv    19, v    19; dA      0; W(B)  1010000; A-B  -990001) | order W  1010000 (nat 45186, Wv 50751, v  1000; dA  10000)
+
+  rest 100000, v0 = 1, 1000000 rounds, free; stride: every round stepped, read at the marks; dA = the count's change over
+  the 10000 rounds before the mark; nature = 4 W^3 / (W0 (2 W0 + 3 v0 t)^2), Wv = W^2 / (W0^2 + 2 W0 v0 t), v = W / (W0 + v0 t), permille
+   t   100000: symmetric W   200000 (nat  1280, Wv  1333, v  1000; dA  10000) | carried W   199999 (nat  1279, Wv  1333, v   999; dA   9999; E        1; q changes      1) | twin W   199999 (nat  1279, Wv  1333, v   999; dA   9999; W(B)   200000; A-B       -1) | order W   200000 (nat  1280, Wv  1333, v  1000; dA  10000)
+   t   300000: symmetric W   400000 (nat  2115, Wv  2285, v  1000; dA  10000) | carried W   299999 (nat   892, Wv  1285, v   749; dA   5000; E   200001; q changes   9999) | twin W   199999 (nat   264, Wv   571, v   499; dA      0; W(B)   400000; A-B  -200001) | order W   400000 (nat  2115, Wv  2285, v  1000; dA  10000)
+   t  1000000: symmetric W  1100000 (nat  5199, Wv  5761, v  1000; dA  10000) | carried W   649999 (nat  1072, Wv  2011, v   590; dA   5000; E   900001; q changes   9999) | twin W   199999 (nat    31, Wv   190, v   181; dA      0; W(B)  1100000; A-B  -900001) | order W  1100000 (nat  5199, Wv  5761, v  1000; dA  10000)
+
+B. The free 00 gear from v0 = 3 and v0 = 2 at rest 10^6: nature's sqrt(W) v kept resolved while |v| >= 2, lost at v = 1
+  rest 1000000, v0 = 3, 3000000 rounds, free; stride: every round stepped, read at the marks; dA = the count's change over
+  the 10000 rounds before the mark; nature = 4 W^3 / (W0 (2 W0 + 3 v0 t)^2), Wv = W^2 / (W0^2 + 2 W0 v0 t), v = W / (W0 + v0 t), permille
+   t   500000: symmetric W  2166666 (nat   962, Wv  1173, v   866; dA  20000) | carried W  2033332 (nat   795, Wv  1033, v   813; dA  10000; E       -2; q changes      0) | twin W  2033330 (nat   795, Wv  1033, v   813; dA  10000; W(B)  2033337; A-B       -7) | order W  2500000 (nat  1479, Wv  1562, v  1000; dA  30000)
+   t  1000000: symmetric W  3166666 (nat  1049, Wv  1432, v   791; dA  20000) | carried W  2533332 (nat   537, Wv   916, v   633; dA  10000; E       -2; q changes      0) | twin W  2533330 (nat   537, Wv   916, v   633; dA  10000; W(B)  2533337; A-B       -7) | order W  4000000 (nat  2115, Wv  2285, v  1000; dA  30000)
+   t  1500000: symmetric W  4166666 (nat  1204, Wv  1736, v   757; dA  20000) | carried W  3033332 (nat   464, Wv   920, v   551; dA  10000; E       -2; q changes      0) | twin W  3033330 (nat   464, Wv   920, v   551; dA  10000; W(B)  3033337; A-B       -7) | order W  5500000 (nat  2770, Wv  3025, v  1000; dA  30000)
+   t  2000000: symmetric W  4833330 (nat  1129, Wv  1797, v   690; dA  10000) | carried W  3533332 (nat   441, Wv   960, v   504; dA  10000; E       -2; q changes      0) | twin W  3533330 (nat   441, Wv   960, v   504; dA  10000; W(B)  3533337; A-B       -7) | order W  7000000 (nat  3430, Wv  3769, v  1000; dA  30000)
+   t  3000000: symmetric W  5833330 (nat   944, Wv  1790, v   583; dA  10000) | carried W  4533332 (nat   443, Wv  1081, v   453; dA  10000; E       -2; q changes      0) | twin W  4533330 (nat   443, Wv  1081, v   453; dA  10000; W(B)  4533337; A-B       -7) | order W 10000000 (nat  4756, Wv  5263, v  1000; dA  30000)
+
+  rest 1000000, v0 = 2, 2000000 rounds, free; stride: every round stepped, read at the marks; dA = the count's change over
+  the 10000 rounds before the mark; nature = 4 W^3 / (W0 (2 W0 + 3 v0 t)^2), Wv = W^2 / (W0^2 + 2 W0 v0 t), v = W / (W0 + v0 t), permille
+   t   500000: symmetric W  1999999 (nat  1279, Wv  1333, v   999; dA  19999) | carried W  1666666 (nat   740, Wv   925, v   833; dA  10000; E       -1; q changes      0) | twin W  1666666 (nat   740, Wv   925, v   833; dA  10000; W(B)  1666667; A-B       -1) | order W  2000000 (nat  1280, Wv  1333, v  1000; dA  20000)
+   t  1000000: symmetric W  2499999 (nat   976, Wv  1249, v   833; dA  10000) | carried W  2166666 (nat   635, Wv   938, v   722; dA  10000; E       -1; q changes      0) | twin W  2166666 (nat   635, Wv   938, v   722; dA  10000; W(B)  2166667; A-B       -1) | order W  3000000 (nat  1687, Wv  1800, v  1000; dA  20000)
+   t  2000000: symmetric W  3499999 (nat   874, Wv  1361, v   699; dA  10000) | carried W  3166666 (nat   648, Wv  1114, v   633; dA  10000; E       -1; q changes      0) | twin W  3166666 (nat   648, Wv  1114, v   633; dA  10000; W(B)  3166667; A-B       -1) | order W  5000000 (nat  2551, Wv  2777, v  1000; dA  20000)
+
+C. The lock-in: from rest (v = 0, s = 0, W0 = 10^4) one kick of 4 push = 2 W0 at round 0 (just overflowing the dial), then free.
+   Nature's momentum from the kick: sqrt(W0) v = push / sqrt(W0) = 50, so 4 W^3 against (2 W0^(3/2) + 150 t)^2 = (2 x 10^6 + 150 t)^2, permille.
+   symmetric t      12: W    10012, v  1, s  -20023; W^3 against nature's  1001 permille; the quotients of rounds 0..11: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   symmetric t     100: W    10100, v  1, s  -20199; W^3 against nature's  1015 permille
+   symmetric t   10000: W    20000, v  1, s  -39999; W^3 against nature's  2612 permille
+   symmetric t  100000: W   110000, v  1, s -219999; W^3 against nature's 18422 permille
+   symmetric t 1000000: W  1010000, v  1, s -2019999; W^3 against nature's 178376 permille
+   carried   t      12: W    10006, v  0, s   20000; W^3 against nature's  1000 permille; E 12; the quotients of rounds 0..11: [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]
+   carried   t     100: W    10050, v  0, s   20000; W^3 against nature's  1000 permille; E 100
+   carried   t   10000: W    15000, v  0, s   20000; W^3 against nature's  1102 permille; E 10000
+   carried   t  100000: W    60000, v  0, s   20000; W^3 against nature's  2989 permille; E 100000
+   carried   t 1000000: W   510000, v  0, s   20000; W^3 against nature's 22965 permille; E 1000000
+   order     t      12: W    10012, v  1, s  -20000; W^3 against nature's  1001 permille; the quotients of rounds 0..11: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   order     t     100: W    10100, v  1, s  -20000; W^3 against nature's  1015 permille
+   order     t   10000: W    20000, v  1, s  -20000; W^3 against nature's  2612 permille
+   order     t  100000: W   110000, v  1, s  -20000; W^3 against nature's 18422 permille
+   order     t 1000000: W  1010000, v  1, s  -20000; W^3 against nature's 178376 permille
+
+D. A constant small push F (one count every k rounds) on the 00 gear from rest, W0 = 10^4, 10^6 rounds: the terminal velocity.
+   On paper (notes_02): nature W v' + v^2/2 = F gives v^2 -> 2 F; the edge W v' + v^2 = F gives v^2 -> F; as built W v' = F gives no limit;
+   the symmetric form's v = k is stable iff k(k-1) <= 2F <= k(k+1): the integer nearest sqrt(2F), but never below 1 (the lock-in).
+   Measured: dA over the window of 10^5 rounds before each mark; (dA / 10^5)^2 / (2 F) in permille (nature -> 1000, the edge -> 500)
+  F = 1/4: nature's terminal v^2 = 2/4; the edge's 1/4; the symmetric form's integer nearest sqrt(2/4) floored at 1
+   t  100000: symmetric W    90004 dA  80004 v^2/2F  1280 | carried W    70006 dA  60006 v^2/2F   720 | twin W   130012 dA 120012 v^2/2F  2880 | order W    90004 dA  80004 v^2/2F  1280
+   t  300000: symmetric W   290004 dA 100000 v^2/2F  2000 | carried W   570016 dA 310006 v^2/2F 19220 | twin W  1130032 dA 620012 v^2/2F 76882 | order W   290004 dA 100000 v^2/2F  2000
+   t  600000: symmetric W   590004 dA 100000 v^2/2F  2000 | carried W  2260030 dA 690004 v^2/2F 95221 | twin W  4510060 dA 1380008 v^2/2F 380884 | order W   590004 dA 100000 v^2/2F  2000
+   t 1000000: symmetric W   990004 dA 100000 v^2/2F  2000 | carried W  6260050 dA 1190004 v^2/2F 283221 | twin W 12510100 dA 2380008 v^2/2F 1132887 | order W   990004 dA 100000 v^2/2F  2000
+
+  F = 1/16: nature's terminal v^2 = 2/16; the edge's 1/16; the symmetric form's integer nearest sqrt(2/16) floored at 1
+   t  100000: symmetric W    30016 dA  20016 v^2/2F   320 | carried W    20008 dA  10008 v^2/2F    80 | twin W    30016 dA  20016 v^2/2F   320 | order W    30016 dA  20016 v^2/2F   320
+   t  300000: symmetric W   230016 dA 100000 v^2/2F  8000 | carried W   150016 dA  80008 v^2/2F  5121 | twin W   290032 dA 160016 v^2/2F 20484 | order W   230016 dA 100000 v^2/2F  8000
+   t  600000: symmetric W   530016 dA 100000 v^2/2F  8000 | carried W   570032 dA 170008 v^2/2F 23122 | twin W  1130064 dA 340016 v^2/2F 92488 | order W   530016 dA 100000 v^2/2F  8000
+   t 1000000: symmetric W   930016 dA 100000 v^2/2F  8000 | carried W  1570048 dA 300000 v^2/2F 72000 | twin W  3130096 dA 600000 v^2/2F 288000 | order W   930016 dA 100000 v^2/2F  8000
+
+  F = 1/64: nature's terminal v^2 = 2/64; the edge's 1/64; the symmetric form's integer nearest sqrt(2/64) floored at 1
+   t  100000: symmetric W    10000 dA      0 v^2/2F     0 | carried W    10000 dA      0 v^2/2F     0 | twin W    10000 dA      0 v^2/2F     0 | order W    10000 dA      0 v^2/2F     0
+   t  300000: symmetric W    10000 dA      0 v^2/2F     0 | carried W    10000 dA      0 v^2/2F     0 | twin W    10000 dA      0 v^2/2F     0 | order W    10000 dA      0 v^2/2F     0
+   t  600000: symmetric W   290064 dA 100000 v^2/2F 32000 | carried W   150032 dA  50000 v^2/2F  8000 | twin W   290064 dA 100000 v^2/2F 32000 | order W   290064 dA 100000 v^2/2F 32000
+   t 1000000: symmetric W   690064 dA 100000 v^2/2F 32000 | carried W   370064 dA  70032 v^2/2F 15694 | twin W   730128 dA 140064 v^2/2F 62777 | order W   690064 dA 100000 v^2/2F 32000
+

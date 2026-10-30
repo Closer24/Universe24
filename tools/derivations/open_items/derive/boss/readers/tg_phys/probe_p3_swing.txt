@@ -1,0 +1,46 @@
+The 00 gear's own swing: push -g a on the 00 row (W = rest + a, rest 10^6); amplitudes as permille of the first swing's;
+T the swing's length in rounds; up/low the upper half (a > 0, the clock slow) over the lower, in rounds, permille;
+stride: every round; windows: single swings. Nature (the symmetric form's own continuum): A constant; up/low > 1000 in
+rounds (the clock runs slow at high W) and 1000 in proper ticks; the as-built (order): a'' = -g a / W.
+
+== g = 2000 (term 9's period, about 140 rounds)
+  -- A = 5 percent of W0 (50000 counts), 500 swings asked
+   symmetric: 515 swings, mean T 140, all up/low 1032; swing 1: A 1000, T 140, up/low 1028; swing 10: A 999, T 140, up/low 1028; swing 50: A 1000, T 141, up/low 1043; swing 100: A 1000, T 140, up/low 1028; swing 250: A 1000, T 140, up/low 1028; swing 500: A 1001, T 140, up/low 1028
+   carried  : 515 swings, mean T 140, all up/low 1022; swing 1: A 1000, T 140, up/low 1028; swing 10: A 1000, T 140, up/low 1028; swing 50: A 999, T 141, up/low 1014; swing 100: A 1000, T 140, up/low 1028; swing 250: A 1000, T 141, up/low 1014; swing 500: A 1001, T 140, up/low 1028; the register's departure E at the end -141, greatest |E| 220 (the dial about 2000000)
+   twin     : 515 swings, mean T 140, all up/low 1021; swing 1: A 1000, T 140, up/low 1028; swing 10: A 999, T 141, up/low 1014; swing 50: A 998, T 141, up/low 1014; swing 100: A 996, T 140, up/low 1028; swing 250: A 992, T 140, up/low 1028; swing 500: A 975, T 140, up/low 1028; |A - B| at the end 3975, greatest 4160
+   order    : 515 swings, mean T 140, all up/low 1040; swing 1: A 1000, T 140, up/low 1028; swing 10: A 999, T 141, up/low 1043; swing 50: A 999, T 141, up/low 1043; swing 100: A 999, T 141, up/low 1043; swing 250: A 999, T 140, up/low 1058; swing 500: A 999, T 140, up/low 1028
+  -- A = 20 percent of W0 (200000 counts), 500 swings asked
+   symmetric: 516 swings, mean T 140, all up/low 1136; swing 1: A 1000, T 140, up/low 1121; swing 10: A 1000, T 140, up/low 1153; swing 50: A 1000, T 140, up/low 1153; swing 100: A 999, T 140, up/low 1121; swing 250: A 999, T 140, up/low 1153; swing 500: A 999, T 140, up/low 1121
+   carried  : 517 swings, mean T 139, all up/low 1096; swing 1: A 1000, T 140, up/low 1121; swing 10: A 1000, T 140, up/low 1089; swing 50: A 1000, T 140, up/low 1089; swing 100: A 1000, T 140, up/low 1089; swing 250: A 1000, T 140, up/low 1089; swing 500: A 1000, T 140, up/low 1089; the register's departure E at the end 384, greatest |E| 466 (the dial about 2000000)
+   twin     : 517 swings, mean T 139, all up/low 1065; swing 1: A 1000, T 140, up/low 1121; swing 10: A 996, T 140, up/low 1089; swing 50: A 893, T 140, up/low 1089; swing 100: A 742, T 138, up/low 1090; swing 250: A 1431, T 140, up/low 1028; swing 500: A 1149, T 140, up/low 1089; |A - B| at the end 200879, greatest 526787
+   order    : 514 swings, mean T 140, all up/low 1173; swing 1: A 1000, T 140, up/low 1187; swing 10: A 999, T 141, up/low 1169; swing 50: A 999, T 140, up/low 1187; swing 100: A 999, T 141, up/low 1169; swing 250: A 999, T 141, up/low 1169; swing 500: A 999, T 140, up/low 1187
+  -- sub-notch amplitudes: the swing's peak velocity A omega with omega = sqrt(g / W0) = 0.0447 a round: A = 50 (2.2), 20 (0.9), 5 (0.22 counts a round)
+   A = 50 counts, 200 swings asked
+   symmetric: 202 swings, mean T 142, all up/low 1014; swing 1: A 1000, T 143, up/low 1014; swing 10: A 1000, T 143, up/low 1014; swing 50: A 1000, T 143, up/low 1014; swing 100: A 1000, T 143, up/low 1014; swing 200: A 980, T 141, up/low 1014
+   carried  : 205 swings, mean T 140, all up/low 1010; swing 1: A 1000, T 144, up/low 1000; swing 10: A 1115, T 139, up/low 1014; swing 50: A 1230, T 139, up/low 1014; swing 100: A 1096, T 141, up/low 1014; swing 200: A 1134, T 139, up/low 1014; the register's departure E at the end -6, greatest |E| 15 (the dial about 2000000)
+   twin     : 205 swings, mean T 140, all up/low 1010; swing 1: A 1000, T 144, up/low 1000; swing 10: A 1115, T 139, up/low 1014; swing 50: A 1230, T 139, up/low 1014; swing 100: A 1096, T 141, up/low 1014; swing 200: A 1134, T 139, up/low 1014; |A - B| at the end 0, greatest 0
+   order    : 202 swings, mean T 142, all up/low 1007; swing 1: A 1000, T 143, up/low 1014; swing 10: A 1000, T 143, up/low 1014; swing 50: A 1000, T 143, up/low 1014; swing 100: A 1000, T 142, up/low 1000; swing 200: A 1000, T 143, up/low 1014
+   A = 20 counts, 200 swings asked
+   symmetric: 222 swings, mean T 130, all up/low 1031; swing 1: A 1000, T 130, up/low 1031; swing 10: A 1000, T 130, up/low 1031; swing 50: A 1000, T 130, up/low 1031; swing 100: A 1000, T 130, up/low 1031; swing 200: A 1000, T 130, up/low 1031
+   carried  : 222 swings, mean T 130, all up/low 1031; swing 1: A 1000, T 130, up/low 1031; swing 10: A 1000, T 130, up/low 1031; swing 50: A 1000, T 130, up/low 1031; swing 100: A 1000, T 130, up/low 1031; swing 200: A 1000, T 130, up/low 1031; the register's departure E at the end 0, greatest |E| 1 (the dial about 2000000)
+   twin     : 222 swings, mean T 130, all up/low 1031; swing 1: A 1000, T 130, up/low 1031; swing 10: A 1000, T 130, up/low 1031; swing 50: A 1000, T 130, up/low 1031; swing 100: A 1000, T 130, up/low 1031; swing 200: A 1000, T 130, up/low 1031; |A - B| at the end 0, greatest 0
+   order    : 222 swings, mean T 130, all up/low 1031; swing 1: A 1000, T 130, up/low 1031; swing 10: A 1000, T 130, up/low 1031; swing 50: A 1000, T 130, up/low 1031; swing 100: A 1000, T 130, up/low 1031; swing 200: A 1000, T 130, up/low 1031
+   A = 5 counts, 200 swings asked
+   symmetric: 131 swings, mean T 220, all up/low 1018; swing 1: A 1000, T 220, up/low 1018; swing 10: A 1000, T 220, up/low 1018; swing 50: A 1000, T 220, up/low 1018; swing 100: A 1000, T 220, up/low 1018
+   carried  : 171 swings, mean T 168, all up/low 1094; swing 1: A 1000, T 181, up/low 1154; swing 10: A 1000, T 181, up/low 1154; swing 50: A 1285, T 147, up/low 1041; swing 100: A 1000, T 181, up/low 1154; the register's departure E at the end 4, greatest |E| 10 (the dial about 2000000)
+   twin     : 171 swings, mean T 168, all up/low 1094; swing 1: A 1000, T 181, up/low 1154; swing 10: A 1000, T 181, up/low 1154; swing 50: A 1285, T 147, up/low 1041; swing 100: A 1000, T 181, up/low 1154; |A - B| at the end 0, greatest 0
+   order    : 131 swings, mean T 220, all up/low 1018; swing 1: A 1000, T 220, up/low 1018; swing 10: A 1000, T 220, up/low 1018; swing 50: A 1000, T 220, up/low 1018; swing 100: A 1000, T 220, up/low 1018
+
+== g = 20 (adiabatic, about 1400 rounds)
+  -- A = 5 percent of W0 (50000 counts), 50 swings asked
+   symmetric: 50 swings, mean T 1404, all up/low 1032; swing 1: A 1000, T 1405, up/low 1030; swing 10: A 1000, T 1405, up/low 1033; swing 25: A 1000, T 1405, up/low 1033; swing 50: A 999, T 1405, up/low 1030
+   carried  : 50 swings, mean T 1404, all up/low 1021; swing 1: A 1000, T 1404, up/low 1023; swing 10: A 999, T 1405, up/low 1021; swing 25: A 999, T 1404, up/low 1023; swing 50: A 1000, T 1405, up/low 1021; the register's departure E at the end 45, greatest |E| 63 (the dial about 2000000)
+   twin     : 50 swings, mean T 1404, all up/low 1021; swing 1: A 1000, T 1404, up/low 1023; swing 10: A 999, T 1405, up/low 1021; swing 25: A 1000, T 1405, up/low 1021; swing 50: A 999, T 1404, up/low 1023; |A - B| at the end 125, greatest 190
+   order    : 50 swings, mean T 1405, all up/low 1042; swing 1: A 1000, T 1405, up/low 1045; swing 10: A 999, T 1405, up/low 1042; swing 25: A 1000, T 1406, up/low 1043; swing 50: A 999, T 1405, up/low 1042
+  -- A = 20 percent of W0 (200000 counts), 50 swings asked
+   symmetric: 50 swings, mean T 1401, all up/low 1136; swing 1: A 1000, T 1401, up/low 1135; swing 10: A 1000, T 1402, up/low 1137; swing 25: A 1000, T 1401, up/low 1135; swing 50: A 1000, T 1401, up/low 1135
+   carried  : 51 swings, mean T 1399, all up/low 1096; swing 1: A 1000, T 1399, up/low 1094; swing 10: A 1000, T 1399, up/low 1097; swing 25: A 1000, T 1399, up/low 1097; swing 50: A 1000, T 1399, up/low 1094; the register's departure E at the end -124, greatest |E| 128 (the dial about 2000000)
+   twin     : 51 swings, mean T 1399, all up/low 1096; swing 1: A 1000, T 1399, up/low 1094; swing 10: A 999, T 1399, up/low 1097; swing 25: A 998, T 1400, up/low 1095; swing 50: A 989, T 1399, up/low 1097; |A - B| at the end 5385, greatest 9449
+   order    : 50 swings, mean T 1407, all up/low 1173; swing 1: A 1000, T 1407, up/low 1174; swing 10: A 1000, T 1408, up/low 1172; swing 25: A 1000, T 1407, up/low 1171; swing 50: A 1000, T 1407, up/low 1171
+
+Reading: see the reader's notes.

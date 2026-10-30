@@ -1,0 +1,58 @@
+The 00 wave against light on a periodic line of 6 (two rows, push = GRIP x Laplacian, rest = 6 GRIP), 6000 rounds, the
+half-open convention; the mode 2A, A, -A, -2A, -A, A along z; the 00 row in the symmetric root form or carrying its dial,
+light on the edge reading the 00 row's counts. Periods from upward crossings: 'site 0' = a - base at site 0 (the text's
+measure); 'mode' = SUM_z m_z (a_z - base) (drift-free). Windows: rounds [0, 3000) and [3000, 6000); T_light^2 / T_00^2 in permille.
+
+== the well: the 00 slot at 6 grips, W = 12 grips
+  -- amplitude A = grip / 10000
+   light, site 0: first half 137 periods over 2972 rounds, second half 137 periods over 2972 rounds, whole 275 periods over 5965 rounds; mode: whole 275 periods over 5965 rounds
+   the 00 wave, carried  : site 0: first half 137 periods over 2972 rounds, second half 137 periods over 2972 rounds, whole 275 periods over 5965 rounds -> T_l^2/T_00^2 1000 permille
+                           mode:   first half 137 periods over 2972 rounds -> 1000; second half 137 periods over 2972 rounds -> 1000; whole 275 periods over 5965 rounds -> 1000 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 0/1000, 0/1000, 0/1000, 0/1000, 0/1000; the mode's amplitude first half / second half: 1000 permille
+   the 00 wave, symmetric: site 0: first half 137 periods over 2969 rounds, second half 16 periods over 346 rounds, whole 154 periods over 3336 rounds -> T_l^2/T_00^2 1002 permille
+                           mode:   first half 137 periods over 2972 rounds -> 1000; second half 137 periods over 2972 rounds -> 1000; whole 275 periods over 5965 rounds -> 1000 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 266/1000, 1064/1000, 4257/1000, 9577/1000, 38303/1000; the mode's amplitude first half / second half: 999 permille
+  -- amplitude A = grip / 1000 (the text's)
+   light, site 0: first half 137 periods over 2972 rounds, second half 137 periods over 2972 rounds, whole 275 periods over 5965 rounds; mode: whole 275 periods over 5965 rounds
+   the 00 wave, carried  : site 0: first half 137 periods over 2972 rounds, second half 137 periods over 2972 rounds, whole 275 periods over 5965 rounds -> T_l^2/T_00^2 1000 permille
+                           mode:   first half 137 periods over 2972 rounds -> 1000; second half 137 periods over 2972 rounds -> 1000; whole 275 periods over 5965 rounds -> 1000 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 0/1000, 0/1000, 0/1000, 0/1000, 0/1000; the mode's amplitude first half / second half: 1000 permille
+   the 00 wave, symmetric: site 0: first half 48 periods over 1037 rounds, second half n/a, whole 48 periods over 1037 rounds -> T_l^2/T_00^2 1008 permille
+                           mode:   first half 137 periods over 2972 rounds -> 1000; second half 137 periods over 2976 rounds -> 997; whole 275 periods over 5970 rounds -> 998 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 2664/1000, 10648/1000, 42560/1000, 95702/1000, 381856/1000; the mode's amplitude first half / second half: 999 permille
+  -- amplitude A = grip / 100
+   light, site 0: first half 137 periods over 2972 rounds, second half 137 periods over 2972 rounds, whole 275 periods over 5965 rounds; mode: whole 275 periods over 5965 rounds
+   the 00 wave, carried  : site 0: first half 137 periods over 2972 rounds, second half 137 periods over 2972 rounds, whole 275 periods over 5965 rounds -> T_l^2/T_00^2 1000 permille
+                           mode:   first half 137 periods over 2972 rounds -> 1000; second half 137 periods over 2972 rounds -> 1000; whole 275 periods over 5965 rounds -> 1000 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 0/1000, 2/1000, 5/1000, 3/1000, 3/1000; the mode's amplitude first half / second half: 1000 permille
+   the 00 wave, symmetric: site 0: first half 15 periods over 321 rounds, second half n/a, whole 15 periods over 321 rounds -> T_l^2/T_00^2 1027 permille
+                           mode:   first half 134 periods over 2966 rounds -> 960; second half 122 periods over 2971 rounds -> 793; whole 257 periods over 5960 rounds -> 874 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 26591/1000, 105582/1000, 411867/1000, 892130/1000, 3040929/1000; the mode's amplitude first half / second half: 969 permille
+
+== the well: the 00 slot at 18 grips, W = 24 grips
+  -- amplitude A = grip / 10000
+   light, site 0: first half 96 periods over 2950 rounds, second half 97 periods over 2980 rounds, whole 194 periods over 5961 rounds; mode: whole 194 periods over 5961 rounds
+   the 00 wave, carried  : site 0: first half 96 periods over 2950 rounds, second half 97 periods over 2980 rounds, whole 194 periods over 5961 rounds -> T_l^2/T_00^2 1000 permille
+                           mode:   first half 96 periods over 2950 rounds -> 1000; second half 97 periods over 2980 rounds -> 1000; whole 194 periods over 5961 rounds -> 1000 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 0/1000, 0/1000, 0/1000, 0/1000, 0/1000; the mode's amplitude first half / second half: 1000 permille
+   the 00 wave, symmetric: site 0: first half 96 periods over 2949 rounds, second half 97 periods over 2977 rounds, whole 194 periods over 5957 rounds -> T_l^2/T_00^2 1001 permille
+                           mode:   first half 96 periods over 2950 rounds -> 1000; second half 97 periods over 2980 rounds -> 1000; whole 194 periods over 5961 rounds -> 1000 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 65/1000, 263/1000, 1053/1000, 2369/1000, 9475/1000; the mode's amplitude first half / second half: 1000 permille
+  -- amplitude A = grip / 1000 (the text's)
+   light, site 0: first half 96 periods over 2950 rounds, second half 97 periods over 2980 rounds, whole 194 periods over 5961 rounds; mode: whole 194 periods over 5961 rounds
+   the 00 wave, carried  : site 0: first half 96 periods over 2950 rounds, second half 97 periods over 2980 rounds, whole 194 periods over 5961 rounds -> T_l^2/T_00^2 1000 permille
+                           mode:   first half 96 periods over 2950 rounds -> 1000; second half 97 periods over 2980 rounds -> 1000; whole 194 periods over 5961 rounds -> 1000 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 0/1000, 0/1000, 0/1000, 0/1000, 0/1000; the mode's amplitude first half / second half: 1000 permille
+   the 00 wave, symmetric: site 0: first half 69 periods over 2113 rounds, second half n/a, whole 69 periods over 2113 rounds -> T_l^2/T_00^2 1006 permille
+                           mode:   first half 96 periods over 2950 rounds -> 1000; second half 97 periods over 2981 rounds -> 999; whole 194 periods over 5962 rounds -> 999 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 659/1000, 2634/1000, 10531/1000, 23689/1000, 94716/1000; the mode's amplitude first half / second half: 999 permille
+  -- amplitude A = grip / 100
+   light, site 0: first half 96 periods over 2950 rounds, second half 97 periods over 2980 rounds, whole 194 periods over 5961 rounds; mode: whole 194 periods over 5961 rounds
+   the 00 wave, carried  : site 0: first half 96 periods over 2950 rounds, second half 97 periods over 2980 rounds, whole 194 periods over 5961 rounds -> T_l^2/T_00^2 1000 permille
+                           mode:   first half 96 periods over 2950 rounds -> 1000; second half 97 periods over 2980 rounds -> 1000; whole 194 periods over 5961 rounds -> 1000 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 2/1000, 0/1000, 0/1000, 1/1000, 2/1000; the mode's amplitude first half / second half: 1000 permille
+   the 00 wave, symmetric: site 0: first half 21 periods over 639 rounds, second half n/a, whole 21 periods over 639 rounds -> T_l^2/T_00^2 1019 permille
+                           mode:   first half 96 periods over 2958 rounds -> 994; second half 95 periods over 2973 rounds -> 963; whole 192 periods over 5962 rounds -> 979 permille
+                           the 00 slot's sum over the sites less 6 base, at rounds 0, 500, 1000, 2000, 3000, 6000, in units of A: 0/1000, 6592/1000, 26314/1000, 104869/1000, 234683/1000, 913422/1000; the mode's amplitude first half / second half: 995 permille
+
+Reading: see probe_p2_cone.txt's tail written by the reader.

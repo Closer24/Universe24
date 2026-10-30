@@ -1,0 +1,13 @@
+The 24 on the carried forms, the cube of 3, 40 rounds (the loader's lay, the 00 row reading itself), the half-open convention:
+per round, how many of the 24 turns hold (tick^n(turned s) = turned(tick^n s)).
+  standing at W = 12 grips, the carried 00: 24 at every one of the 40 rounds
+  standing at W = 12 grips, the carried board: 24 at every one of the 40 rounds
+  rising by 1 grip a round from W = 12 grips, the carried 00: 24 at every one of the 40 rounds
+  rising by 1 grip a round from W = 12 grips, the carried board: 24 at every one of the 40 rounds
+  falling by 1 grip + 1 a round from W = 12 grips, the carried 00: 24 at every one of the 6 rounds; the promise breaks before round 7
+  falling by 1 grip + 1 a round from W = 12 grips, the carried board: 24 at every one of the 6 rounds; the promise breaks before round 7
+  the mode of a grip on the 00 row along z, the carried 00: 24 at every one of the 40 rounds
+  the mode of a grip on the 00 row along z, the carried board: 24 at every one of the 40 rounds
+
+Reading: 24 of 24 at every round on every lay in both forms; the dial turns as the teeth do, unsigned, and the half-open
+tooth as -1 - s on a flipped row; the 00 row, A1, is fixed by every turn, so its own dial is the same at every image site.

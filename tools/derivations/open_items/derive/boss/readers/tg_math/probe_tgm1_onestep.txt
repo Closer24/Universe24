@@ -1,0 +1,37 @@
+A. The one-step rule k = k0 - [R < low(k0)], k0 the half-open carry of R at 2 c, against the true cell k, by construction:
+   for c in [1, 60], k in [1 - c, 14] (u = c + k >= 1), every s+ in [-u, u - 1]: M = u^2 + s+, R = M - c^2.
+   (c, k) pairs 2670; the rule exact on 896; the predicate k (k + 1) <= 2 c true on 896; agreement 2670 of 2670
+   the largest k (k + 1) where the rule is exact: (c, k) = (55, -11), k (k + 1) = 110 against 2 c = 110;
+   the smallest k (k + 1) where it fails: (c, k) = (1, 2), k (k + 1) = 6 against 2 c = 2
+   the post-check u (u - 1) <= M < u (u + 1) (two products): of 25484 misses in c <= 40 it catches 25484; a miss slips through where the one-step u lands in another cell: 0
+
+B. The symmetric form on one gear by the one-step rule (the cell checked each time), exhaustive over b and the tooth:
+   rest  6, a = 0, W(a) =  6, b in [-5, 5], push  0:  264 states,  60 with no image (W+<1 36, cell 24), 0 collisions; run back misses 0 of 204; images with an image of their own 154 of 204
+   rest  6, a = 0, W(a) =  6, b in [-5, 5], push  3:  264 states,  48 with no image (W+<1 36, cell 12), 0 collisions; run back misses 0 of 216; images with an image of their own 168 of 216
+   rest  6, a = 0, W(a) =  6, b in [-5, 5], push -5:  264 states,  80 with no image (W+<1 32, cell 48), 0 collisions; run back misses 0 of 184; images with an image of their own 116 of 184
+   rest  6, a = 3, W(a) =  9, b in [-5, 11], push  0:  612 states, 144 with no image (W+<1 62, cell 82), 0 collisions; run back misses 0 of 468; images with an image of their own 348 of 468
+   rest  6, a = 3, W(a) =  9, b in [-5, 11], push  3:  612 states, 132 with no image (W+<1 62, cell 70), 0 collisions; run back misses 0 of 480; images with an image of their own 360 of 480
+   rest  6, a = 3, W(a) =  9, b in [-5, 11], push -5:  612 states, 164 with no image (W+<1 56, cell 108), 0 collisions; run back misses 0 of 448; images with an image of their own 314 of 448
+   rest 10, a = 0, W(a) = 10, b in [-9, 9], push  0:  760 states, 180 with no image (W+<1 70, cell 110), 0 collisions; run back misses 0 of 580; images with an image of their own 424 of 580
+   rest 10, a = 0, W(a) = 10, b in [-9, 9], push  3:  760 states, 168 with no image (W+<1 74, cell 94), 0 collisions; run back misses 0 of 592; images with an image of their own 448 of 592
+   rest 10, a = 0, W(a) = 10, b in [-9, 9], push -5:  760 states, 200 with no image (W+<1 64, cell 136), 0 collisions; run back misses 0 of 560; images with an image of their own 398 of 560
+   rest 10, a = 3, W(a) = 13, b in [-9, 15], push  0: 1300 states, 312 with no image (W+<1 92, cell 220), 0 collisions; run back misses 0 of 988; images with an image of their own 728 of 988
+   rest 10, a = 3, W(a) = 13, b in [-9, 15], push  3: 1300 states, 300 with no image (W+<1 94, cell 206), 0 collisions; run back misses 0 of 1000; images with an image of their own 752 of 1000
+   rest 10, a = 3, W(a) = 13, b in [-9, 15], push -5: 1300 states, 332 with no image (W+<1 84, cell 248), 0 collisions; run back misses 0 of 968; images with an image of their own 688 of 968
+   (the no-image causes: W+<1 the next teeth below 1 (the clock reaching 0); c<1 the estimate's dial 4 W(a) - D_in below 1 (a clock
+    falling to a third in one round); cell: the one-step rule outside its promise k (k + 1) <= 2 c, refused by the post-check)
+
+C. The tie. The cell of u is [u (u - 1), u (u + 1) - 1]; at M = u (u + 1) the cell gives u + 1; the integer nearest sqrt(M) is
+   u, since (2 u + 1)^2 = 4 M + 1 > 4 M > (2 u - 1)^2. The law line's 'the whole count nearest the root' names the wrong count there:
+   u = 1: M = 2: the cell's u = 2; nearest to sqrt(M) by (2u+1)^2 = 9 > 4M = 8: 1; s+ = M - cell u^2 = -2 (in [-2, 1])
+   u = 2: M = 6: the cell's u = 3; nearest to sqrt(M) by (2u+1)^2 = 25 > 4M = 24: 2; s+ = M - cell u^2 = -3 (in [-3, 2])
+   u = 3: M = 12: the cell's u = 4; nearest to sqrt(M) by (2u+1)^2 = 49 > 4M = 48: 3; s+ = M - cell u^2 = -4 (in [-4, 3])
+   u = 4: M = 20: the cell's u = 5; nearest to sqrt(M) by (2u+1)^2 = 81 > 4M = 80: 4; s+ = M - cell u^2 = -5 (in [-5, 4])
+   u = 5: M = 30: the cell's u = 6; nearest to sqrt(M) by (2u+1)^2 = 121 > 4M = 120: 5; s+ = M - cell u^2 = -6 (in [-6, 5])
+   u = 6: M = 42: the cell's u = 7; nearest to sqrt(M) by (2u+1)^2 = 169 > 4M = 168: 6; s+ = M - cell u^2 = -7 (in [-7, 6])
+   (with 'nearest sqrt(M)' the tooth would be s+ = M - u^2 = u, outside [-u, u - 1]: the cells are right, the words are wrong)
+
+Reading: the root form's quotient is Rule3's carry at the dial 2 c plus one sign-carry wherever the velocity's change k in one round
+obeys k (k + 1) <= 2 c = 4 W(a) + 2 v (a promise the runner checks with two products); the search is needed only beyond it. The
+forward map is injective and runs back exactly where it is defined, but it is not total (the clock reaching 0, the estimate's dial
+below 1), and the law line's 'nearest the root' misnames the quotient at the tie M = u (u + 1).
