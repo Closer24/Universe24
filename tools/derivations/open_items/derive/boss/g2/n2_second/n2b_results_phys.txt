@@ -1,0 +1,36 @@
+== P1. the beat and light's period against the teeth W (the engine's act, the metric standing)
+  W = 3000 = 1 rest: the clock's 40 sign changes take 468 rounds (period^2 against rest: 1000 permille), light's standing wave of six Meshes 302 rounds (1000 permille); W / rest = 1000 permille
+  W = 6000 = 2 rest: the clock's 40 sign changes take 662 rounds (period^2 against rest: 2000 permille), light's standing wave of six Meshes 428 rounds (2008 permille); W / rest = 2000 permille
+  W = 12000 = 4 rest: the clock's 40 sign changes take 937 rounds (period^2 against rest: 4008 permille), light's standing wave of six Meshes 607 rounds (4039 permille); W / rest = 4000 permille
+  W = 24000 = 8 rest: the clock's 40 sign changes take 1326 rounds (period^2 against rest: 8027 permille), light's standing wave of six Meshes 859 rounds (8090 permille); W / rest = 8000 permille
+  so period^2 goes as W for the beat and for light alike: the rate N = sqrt(rest / W), N^2 = rest / W; a rate read as 1 / W would double the redshift
+
+== P2. light against the clock at one depth, with the ii slots lowered, 0 and raised (gamma)
+  at rest: the clock 704 rounds, light 455 rounds for 60 sign changes
+  c00 = 600, each ii slot -c00 / 12, the grip lowered to 400: the clock 772 rounds (period^2 ratio 1202 permille; W / rest = 1200), light 558 rounds (1503 permille; (W / rest) (grip_rest / grip) = 1500)
+  c00 = 600, each ii slot 0, the grip at rest 500: the clock 772 rounds (period^2 ratio 1202 permille; W / rest = 1200), light 499 rounds (1202 permille; (W / rest) (grip_rest / grip) = 1200)
+  c00 = 600, each ii slot +c00 / 12, the grip raised to 600: the clock 772 rounds (period^2 ratio 1202 permille; W / rest = 1200), light 455 rounds (1000 permille; (W / rest) (grip_rest / grip) = 1000)
+  light's slowing over the clock's, (1 + gamma): the lowered grip gives about 2 (gamma = 1), the rest grip 1 (gamma = 0), the raised grip about 0 (gamma = -1)
+
+== P3. the 00 slot's two forms against the act's own virial identity (one Node-clock, the clock's swing)
+  2000 rounds of the swing at W = 3000, g = 210: sum sigma_a^2 = 712823104303, sum sigma_b sigma_a = 687877615840, sum a^2 = 10174703916578
+  the sum form:     W sum (sigma_b^2 + sigma_a^2) = 4276833806055000 against 2 g sum a^2 = 4273375644962760: ratio 1000809 per million
+  the product form: 2 W^2 sum sigma_b sigma_a = 12381797085120000000 against g (2W - g) sum a^2 = 12371422492167190200: ratio 1000838 per million; against 2 W g sum a^2: 965809 per million
+  so the sum form's mean is 2 E / W with E the swing's energy (the virial identity W sum sigma_a^2 = g sum a^2 up to the carries), the product form's is short by g / 2W = 210 / 6000
+  the 00 push in the act's energy units, W (sigma_b^2 + sigma_a^2) - g a^2 = 4K - 2V = rho + 3 pr: summed over the 2000 rounds 2140145983573620, against 2000 times the swing's energy E (2E = W sigma^2 + g a a+ at the start = 2100000000000): ratio 1019117 per million: the active mass of a bound swing is its energy, and the potential's strength over the kinetic's is g / W, the act's own
+
+== P4. a travelling wave (null dust) and the normalization of the slots
+  a bump at rest split into two pulses after 60 rounds (c^2 = grip / W = 1 / 6): the pulse moving +z has sums S00 = 423733, S0z = -2030812, Szz = 9798908; the one moving -z: 423720, 2030812, 9798908; every other slot [0, 0, 0, 0, 0, 0, 0]
+  the null condition S0z^2 = S00 Szz: +z pulse 4124197379344 against 4152120683564 (993 permille); the sign of S0z follows the direction
+  the normalization: Szz / S00 = 4 / c^2 = 24 in the continuum; measured 231 / 10 (+z) and 231 / 10 (-z); -S0z / S00 = 2 / c = 4.9: measured 47 / 10
+  so J00 = Jzz = -J0z needs the strengths 1 : c / 2 : c^2 / 4 on (sigma sigma) : (sigma D) : (D D), c^2 = grip / W = 1 / 6 at the loader's rest: the ii slots' 1 / 24 is whole, the 0i slots' c / 2 is a root (OPEN at G4)
+  the T1 family's S through C[T1 x T1 -> A1] equals the sum of its three rows' S each as a scalar: True (three scalars', not Maxwell's)
+  a massive standing wave (the clock's spring, six Meshes) over 2000 rounds: the board sums of J00, Jxx, Jyy, Jzz accumulate to [-685541705570, 1274344764832, 1274344764832, 8920412844344]: sum J_ii is not 0, the wave presses on the wrap, so this board holds no von Laue lump (OPEN: a lump bound by its own forces, G3)
+
+== P5. the 00 slot's own wave
+  a standing wave of the 00 slot alone, six Meshes, the 00 row's teeth at rest: 40 sign changes in 302 rounds, light's at rest 302: the clock-rate wave runs at light's speed, c^2 = grip / rest
+  its own stride sources nothing (hypothesis (d) of M1): the harmonic h00 wave carries no energy here either
+
+== P6. Page and Geilker: a wave in two shares pushes the 00 slot at both
+  two lumps of one A1 train swinging on its spring, after 10 rounds: J00 summed near z = 20: -100602644, near z = 70: -100602644, elsewhere: -180956
+  the act reads both shares, and no click writes into a, p or r_d (term 11), so after a split both shares keep pushing: OPEN, what it needs is named in the text

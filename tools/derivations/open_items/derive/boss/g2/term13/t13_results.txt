@@ -1,0 +1,52 @@
+== 1. the clock's beat against its teeth (the engine's act, the metric standing): period^2 goes as W
+  W = 1 rest: 40 sign changes in 468 rounds; period^2 / period_rest^2 = 1000 permille against W / rest = 1000
+  W = 2 rest: 40 sign changes in 662 rounds; period^2 / period_rest^2 = 2000 permille against W / rest = 2000
+  W = 4 rest: 40 sign changes in 937 rounds; period^2 / period_rest^2 = 4008 permille against W / rest = 4000
+  W = 8 rest: 40 sign changes in 1326 rounds; period^2 / period_rest^2 = 8027 permille against W / rest = 8000
+  W = 16 rest: 40 sign changes in 1876 rounds; period^2 / period_rest^2 = 16068 permille against W / rest = 16000
+  N = sqrt(rest / W): the clock stops only where W grows without bound; at every finite W it beats
+
+== 2. the uniform swing with term 5 in energy units, no notch, the metric's drive at T_d = 1000: W over the rounds
+  round     0: W =      3000, the 00 row's rate p00 =          0, the clock gear's p =      30000 (its stride   10), count      0
+  round   500: W =     10714, the 00 row's rate p00 =      82067, the clock gear's p =      25170 (its stride    2), count     18
+  round  1000: W =     26807, the 00 row's rate p00 =     110073, the clock gear's p =      11100 (its stride    0), count    -14
+  round  1500: W =     47041, the 00 row's rate p00 =     138625, the clock gear's p =      65280 (its stride    1), count      1
+  round  2000: W =     73178, the 00 row's rate p00 =     178073, the clock gear's p =      31890 (its stride    0), count     10
+  round  2500: W =    105473, the 00 row's rate p00 =     212931, the clock gear's p =     108540 (its stride    1), count      6
+  round  3000: W =    143066, the 00 row's rate p00 =     241517, the clock gear's p =     107490 (its stride    0), count     -8
+  the promise W >= 1 held through every round: True
+  3000 rounds forth and back bit for bit: True
+  4K - 2V averages to the swing's energy, above 0, so the 00 slot is pushed up round after round; as W grows the swing slows and its energy drains into the clock's rate; nothing holds or restores W: it grows without bound, the clock slowing as 1 / sqrt(W), frozen at no finite round
+
+== 3. a lump on a board: the well against the board's mean
+  round     0: c00 at the lump       0, at the far site       0, the board's mean       0; the well (lump - far)      0; the xx slot at the lump      0, the clock gear's stride   10
+  round   250: c00 at the lump     388, at the far site     396, the board's mean     399; the well (lump - far)     -8; the xx slot at the lump     -2, the clock gear's stride  -10
+  round   500: c00 at the lump    3298, at the far site    3271, the board's mean    3288; the well (lump - far)     27; the xx slot at the lump     85, the clock gear's stride   19
+  round   750: c00 at the lump   11761, at the far site   11810, the board's mean   11783; the well (lump - far)    -49; the xx slot at the lump    202, the clock gear's stride   -2
+  round  1000: c00 at the lump   29000, at the far site   29054, the board's mean   28998; the well (lump - far)    -54; the xx slot at the lump    247, the clock gear's stride   -2
+  round  1250: c00 at the lump   58187, at the far site   58185, the board's mean   58162; the well (lump - far)      2; the xx slot at the lump    251, the clock gear's stride    2
+  round  1500: c00 at the lump   98997, at the far site   99047, the board's mean   99031; the well (lump - far)    -50; the xx slot at the lump    209, the clock gear's stride   -3
+  the promise held through every round: True
+  300 rounds forth and back bit for bit on this board: True
+  the well settles (the 00 wave carries the push away at light's speed) while the mean grows: on the slot form W grows without bound through the board's mean alone, every clock alike; a horizon at one Node-clock does not follow
+
+== 4. the grip's three regimes at the chosen ratio ii = -c00 / 12 (gamma = 1): the metric laid still
+  grip 500, W = rest: light's wave peak at rounds 20, 40, 60: [1118, 1215, 1997] (laid 2000); moved at all after 60 rounds: True; light's 20 sign changes in 149 rounds; the clock's 40 in 468 rounds; 60 rounds run back exact: True
+  grip 0, W = 2 rest: light's horizon: light's wave peak at rounds 20, 40, 60: [2000, 2000, 2000] (laid 2000); moved at all after 60 rounds: False; light's 20 sign changes in None rounds; the clock's 40 in 662 rounds; 60 rounds run back exact: True
+  grip -100, W = 2.2 rest: beyond it: light's wave peak at rounds 20, 40, 60: [12509, 144117, 1506217] (laid 2000); moved at all after 60 rounds: True; light's 20 sign changes in None rounds; the clock's 40 in 695 rounds; 60 rounds run back exact: True
+  at grip 0 light stands (the pull vanishes) while the clock beats at N^2 = 1 / 2; beyond, the Mesh pushes the neighbours apart and the strides grow without bound: the slot form's edge is light's, not the clock's
+
+== 5. the potential's push (eta_00 = -1) with no hold: W falls to the act's edge
+  round    0: W =   3000, p00 =        0, the xx slot      0 (the grips rise)
+  round   50: W =   2689, p00 =   -33600, the xx slot    276 (the grips rise)
+  round  100: W =   1818, p00 =   -67200, the xx slot   1388 (the grips rise)
+  round  150: W =    388, p00 =  -100800, the xx slot   5824 (the grips rise)
+  the promise W >= 1 breaks before round 161: the runner names it from outside; the act holds nothing
+  where rho + 3 pr < 0 persists (a potential held still) the slot form runs W down to 1: the clock races (N^2 = rest / W grows) and light with it; this edge is the carry's own, and no term restores it (term 9, OPEN)
+
+== 6. the cube's 24 on a clock moved by term 5 (the p-form), and on a clock rising fast
+  the clock standing (no term 5), W = 3000: turned run = run turned, rounds 1..6: [24, 24, 24, 24, 24, 24]; largest |delta a| [0, 0, 0, 0, 0, 0]
+  term 5 on, the clock moved by the matter, W from 3000 to 3228: [24, 3, 3, 3, 3, 3] (the counts a alone [24, 24, 6, 3, 3, 3]); largest |delta a| over the flipping turns [0, 0, 1, 1, 1, 1]
+  the 00 slot laid rising by 20 a round (no term 5), W from 3000 to 3120: [24, 3, 3, 3, 3, 3] (a alone [24, 24, 12, 6, 3, 3]); largest |delta a| [0, 0, 1, 1, 1, 1]
+  the 00 slot laid rising by 3000 a round (W doubling at the first round), W from 3000 to 21000: [24, 3, 3, 3, 3, 3] (a alone [24, 3, 3, 3, 3, 3]); largest |delta a| [0, 1, 2, 3, 4, 5]
+  the flip of a rate in its teeth, W - 1 - p, moves with W: the 21 sign-flipping turns depart from the second round wherever W moved, by whole notches where the shifted dividend crosses a carry; where W grows fast the departure is many notches a round

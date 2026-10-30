@@ -1,0 +1,56 @@
+== 0. the harness
+  the staged head's form with no stride read == step.tick (the head's act, the loader's clock read): True
+  standing clock: the first-order form equals the staged head's form for 300 rounds: True
+
+== M5. the run back of the first-order form, the clock moving (every row but the 00 row reads the 00 slot)
+  lay 22: W in [2821, 3202], 8960 site-rounds rising and 8906 falling; every r_d within [0, T_d): True; 300 rounds forth and back bit for bit: True; moved: True
+  lay 23: W in [2816, 3193], 8898 site-rounds rising and 8974 falling; every r_d within [0, T_d): True; 300 rounds forth and back bit for bit: True; moved: True
+  lay 24: W in [2824, 3208], 8936 site-rounds rising and 8913 falling; every r_d within [0, T_d): True; 300 rounds forth and back bit for bit: True; moved: True
+  lay 25: W in [2824, 3149], 8838 site-rounds rising and 8985 falling; every r_d within [0, T_d): True; 300 rounds forth and back bit for bit: True; moved: True
+
+== M1. the four hypotheses, each broken case
+  (a) two drive teeth laid at T_d + 3 and T_d + 2: 20 rounds; departs at round back 20 (the start's own round), rows [5, 6]
+      the head's form, one fine tooth laid at W + 4: departs at round back 20, rows [5, 6, 7, 8, 9]
+  (b) 00 <- sigma_b(T1 x) D_x(T1 x): one odd leg onto an even row: parity rule says breaks; departs at round back 1, rows [6]
+  (b) 0x <- sigma_b(A1) sigma_a(A1): two odd legs onto an odd row: parity rule says breaks; departs at round back 1, rows [7]
+  (b) 00 <- value(0x) value(T1 x): the 0x row's count, odd, onto an even row: parity rule says breaks; departs at round back 1, rows [6]
+  (b) 0x <- value(0y) value(T1 x) value(T1 y): one odd leg onto an odd row (holds): parity rule says holds; departs at round back None, rows []
+  (b) yz <- value(0y) value(0z): two odd legs onto an even row (holds): parity rule says holds; departs at round back None, rows []
+  (c) the matter's teeth read the 0x row too (odd): departs at round back 1, rows [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      the x grips read the 0x row (odd): departs at round back 1, rows [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+      control, the matter's teeth read the xx row too (even; xx reads 00, so a read of depth 2, three carries): departs at round back None
+      the same with two carries (one too few for the depth): departs at round back 2
+  (d) the 00 row's own strides squared onto the 00 slot: departs at round back 1, rows [6]
+      the A1 row pushed in pass 2 by its own strides squared (parity even, as its row): departs at round back 1, rows [5, 6, 7, 8, 9]
+      control, the same row pushed in pass 1 by its count squared: departs at round back None
+
+== M2. the metric's own rows as sources of the 00 and 0i slots
+  the ii and jk rows' strides onto 00 (squares) and 0i (times their gradients), the clock moving (W in [2829, 3213]): 300 rounds exact: True
+  the 0i rows' own strides squared onto 00 (parity even, but pass 2 pushes the 0i rows): departs at round back 1, rows [6]
+  the 00 row's own strides squared onto 00: departs at round back 1, rows [6]
+
+== M3. 4 rho = J00 + sum J_ii and 4 pr = J00 - (sum J_ii) / 3, read from the probe's own J (strength 1 per slot)
+  the uniform swing, stride 7, no spring, no potential: J00 = 98, J_ii = [0, 0, 0], uniform over the board: True; 4 rho = 98, 4 pr = 98 - 0 / 3 = 294 / 3: rho = pr = 98 / 4 (stiff, P = rho)
+  a count held still at 5, the potential 2V = x^2 (kv = 1): J00 = -25 (below 0: S00 = 0, 2 eta_00 V = -2V), J_ii = [25, 25, 25]; 4 rho = 50 = 4V, 4 pr = -150 / 3 = -4V: rho = V, pr = -V
+  a count held still with a gradient along z: board sums J00 = -1008, J_xx, J_yy, J_zz = [1080, 1080, 8856], J_0i = [0, 0, 72]: 4 rho = 10008, 4 pr = -14040 / 3 (the gradient's pressure is anisotropic: the trace, not 3 J_ii)
+
+== M4. the drift D inverts only where the clock's reads are acyclic
+  the 00 row reading itself, x -> x + p div (R + x) at R = 2, p = 10: (1, 4) and (2, 4): two counts, one image
+      the loader's lay (every row reads the 00 slot, the 00 row too): departs at round back 1, rows [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+      a cycle (00 reads xx, xx reads 00): the drift on a 40 x 40 grid of (c00, cxx) at fixed rates has 1599 images for 1600 states: not a bijection
+      its run back with the two-carry mirror: departs at round back 1, rows [6, 7, 9, 10, 11, 12, 15]
+      with six carries: departs at round back 52, rows [0, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15]
+      an acyclic chain of depth 2 (xx reads 00, every other row reads xx; W in [2812, 3159]): three carries, 300 rounds exact: True
+      the same with two carries: departs at round back 1, rows [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+== F. the moving-W finding (the 24's readers, 2026-10-30): the forward drift and the 24, in both forms
+  the head's r-form, no source (J = 0), the 00 slot rising by 1 a round from W = 14: after 40 rounds W = 54; the change of each T1 row's board sum of strides: [-21, -20, -20], the A1 row's: -14
+  the head's r-form, no source (J = 0), the 00 slot standing at W = 14 (control): after 40 rounds W = 14; the change of each T1 row's board sum of strides: [1, 0, -1], the A1 row's: 0
+  the first-order p-form, no source (J = 0), the 00 slot rising by 1 a round from W = 14: after 40 rounds W = 54; the change of each T1 row's board sum of strides: [4, -7, 2], the A1 row's: -11
+      the board sum of p per T1 row at round 0 and 40: [-60, 110, -72] -> [-60, 110, -72] (exactly kept: True)
+  the first-order p-form, no source (J = 0), the 00 slot standing at W = 14 (control): after 40 rounds W = 14; the change of each T1 row's board sum of strides: [1, 0, -1], the A1 row's: 0
+      the board sum of p per T1 row at round 0 and 40: [-33, 156, -87] -> [-33, 156, -87] (exactly kept: True)
+  the head's r-form, J = 0, the 00 slot standing at W = 14: turned run = run turned, rounds 1..6: [24, 24, 24, 24, 24, 24] (the counts a alone: [24, 24, 24, 24, 24, 24]); largest |delta a| over the flipping turns: [0, 0, 0, 0, 0, 0]
+  the head's r-form, J = 0, the 00 slot rising by 1 a round from W = 14: turned run = run turned, rounds 1..6: [24, 3, 3, 3, 3, 3] (the counts a alone: [24, 3, 3, 3, 3, 3]); largest |delta a| over the flipping turns: [0, 1, 1, 1, 2, 2]
+  the first-order p-form, J = 0, the 00 slot standing at W = 14: turned run = run turned, rounds 1..6: [24, 24, 24, 24, 24, 24] (the counts a alone: [24, 24, 24, 24, 24, 24]); largest |delta a| over the flipping turns: [0, 0, 0, 0, 0, 0]
+  the first-order p-form, J = 0, the 00 slot rising by 1 a round from W = 14: turned run = run turned, rounds 1..6: [24, 3, 3, 3, 3, 3] (the counts a alone: [24, 3, 3, 3, 3, 3]); largest |delta a| over the flipping turns: [0, 1, 1, 1, 2, 2]
