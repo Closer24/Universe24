@@ -130,6 +130,10 @@ RULES: dict[str, tuple[str, str]] = {
         "BLOCK",
         "a call of an integer root, the integer sine by search: no new call (law: No circularity that makes a phenomenon happen)",
     ),
+    "BOOKS": (
+        "BLOCK",
+        "the word book in a name, an attribute, a keyword, an import alias or a string of the engine, its loader, its runner or main.py: no store of accounts beside the state; a push is read by the tensor operation from the state of every gear (law: No books in the engine)",
+    ),
     "WORD": (
         "BLOCK",
         "a circular word in a name (cosine, sine, angle, theta, circle, quaternion ...): an angle or circle used as a rule",
@@ -308,6 +312,12 @@ DECODER_KEEPS = frozenset(
 # main.py: about 15 lines that pass the engine's functions into the runner, the one place that imports both; it is spared no rule
 # (the architect's table, eaf07f596: refused, every rule but the imports), so it holds no loop, branch, comparison or number
 MAIN = NEW_ENGINE + "/main.py"
+BOOK_SCOPE = (
+    NEW_ENGINE + "/algebra/",
+    NEW_ENGINE + "/engine/",
+    RUNNER,
+    MAIN,
+)  # no books in the engine, its loader, its runner or main.py (law line 102, the owner's word of 2026-10-30, 04:1x); the record's schema and the decoder keep the ledger's name until he rules
 CARRY_HOME = frozenset(
     {"core/acts.py", "core/rule3.py", NEW_ENGINE + "/algebra/carry.py"}
 )  # where Rule3's division and remainder are written (the architect's design, approved at eaf07f596: algebra/carry.py alone in the new engine)
@@ -417,6 +427,27 @@ def exempt(rel: str, rule: str) -> bool:
             return False  # the loader is spared no rule: it builds the engine's coefficients (the files' format, the driver, the rewind check and the rounds stay spared)
         return rule != "LOGREAD" or rel == REWIND  # the undo log is read by the rewind check alone
     return False
+
+
+def book_name(node: ast.AST, docstrings: set[ast.AST]) -> str:
+    """The name, attribute, keyword, alias or string (a docstring spared) in a node that holds the word book, else nothing."""
+    if isinstance(node, ast.Name):
+        text = node.id
+    elif isinstance(node, ast.Attribute):
+        text = node.attr
+    elif isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
+        text = node.name
+    elif isinstance(node, ast.arg):
+        text = node.arg
+    elif isinstance(node, ast.keyword):
+        text = node.arg or ""
+    elif isinstance(node, ast.alias):
+        text = node.asname or node.name
+    elif isinstance(node, ast.Constant) and isinstance(node.value, str) and node not in docstrings:
+        text = node.value
+    else:
+        return ""
+    return text if "book" in text.lower() else ""
 
 
 def spelt_operation(node: ast.AST, numpy: set[str]) -> bool:
@@ -1153,6 +1184,19 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add(
                     "TWICE", node, ast.unparse(node)
                 )  # not spared to the runner or the decoder: the loader's twos are the engine's
+    if rel.startswith(BOOK_SCOPE):
+        docstrings = {
+            body[0].value
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Module | ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef)
+            and (body := node.body)
+            and isinstance(body[0], ast.Expr)
+            and isinstance(body[0].value, ast.Constant)
+            and isinstance(body[0].value.value, str)
+        }
+        for node in ast.walk(tree):
+            if word := book_name(node, docstrings):
+                add("BOOKS", node, word)
     if rel.startswith(ACT) or rel == LOADER:
         for node in ast.walk(tree):
             if (
