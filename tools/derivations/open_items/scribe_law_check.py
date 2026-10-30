@@ -12,7 +12,10 @@ Four checks, each by a table the script holds:
 A script cannot prove that no two sentences of prose disagree: it reads what its tables name. Each contradiction a reader finds enters a table and is then found at every later run.
 The known list (scribe_law_check_known.json) holds the old engine's rows that stand until the re-cut (the owner's answer of 2026-10-30, 04:5x UTC); a finding beyond it refuses.
 
-Usage: python -I scribe_law_check.py [--law PATH] [--all] [--selftest] [--write-known]
+The same PAIRS table reads the live documents with --docs (README.md, llms.txt and the documents of docs/ but the law), each pair against the law's governing line, a hit above the document's ceiling
+(scribe_law_check_docs_known.json) refusing; the table grows with every contradiction a reader finds (the four readers of 2026-10-30, 08:xx UTC, added P14 to P17).
+
+Usage: python -I scribe_law_check.py [--law PATH] [--all] [--selftest] [--write-known] [--docs]
 Exit 0: no finding beyond the known list; exit 1: a new finding (printed with its line); the known rows print as counts, and by line with --all."""
 
 from __future__ import annotations
@@ -27,12 +30,15 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 DEFAULT_LAW = HERE.parent.parent.parent / "docs" / "ALGEBRA.md"
 KNOWN = HERE / "scribe_law_check_known.json"
+DOCS_KNOWN = HERE / "scribe_law_check_docs_known.json"
+ROOT = HERE.parent.parent.parent
+DOCS = ("README.md", "llms.txt", "docs/BIG_PICTURE.md", "docs/ENGINE.md", "docs/CLOCK_WORDS.md", "docs/FURTHER_RESEARCH.md", "docs/FOLLOW_UP_PAPERS.md", "docs/UNIVERSE24.md", "docs/HIGHLIGHTS.md")
 EXPECTED_LINES = 1960  # the law's fixed length (the keeper's tamper check: an edit holds its new text in its own line)
 POSTULATES = 7  # the law has Postulates 1 to 7
 CORE = 110  # the law's new core: the preface, the postulates and the decisions of Tensor24 stand in lines 1 to 110
 GENERIC_HEADS = frozenset({"Proof", "Theorem", "Status", "Alignment", "Note", "Remark"})  # clause names that may stand more than once (and "Alignment, <date>")
 HISTORY = re.compile(
-    r"cancel|struck|strike|withdrawn|superseded|retired|former|no longer|old engine|out of the law|kept by name|replaced by|renamed|is not interesting|stand as its record",
+    r"cancel|struck|strike|withdrawn|superseded|retire|former|no longer|old engine|out of the law|kept by name|replaced by|renamed|is not interesting|stand as its record|G1b|settled|gone|went with|left the|out of the engine|bind no Node-clock|binds no Node-clock",
     re.I,
 )  # words that mark a sentence as the record of what stood, not a claim of what stands
 
@@ -230,6 +236,14 @@ PAIRS: tuple[Pair, ...] = (
          "line 106: every bound is a clock's carry; decision 40 (e)", (106, r"Every bound is a clock's carry|each bound it still holds")),
     Pair("P13", "the old spring D / W = 2 / Gamma", r"D / W = 2 / Gamma",
          "decisions 40 (e) and 41: the head's notch has its own slot form", (35, r"decision 41")),
+    Pair("P14", "the width derived", r"The width is derived",
+         "line 100: the width is a key of the universe file and the engine holds no bound", (100, r"The width is a key of the universe file")),
+    Pair("P15", "a dial, a beat count or a time in the Node-clock's state", r"a rate dial and a count|5 G \+ 3\b|5 G \+ 2 T \+ 3|its dial turns|State\(a, b, r, go, rd",
+         "line 92 (4): the Node-clock's act holds no round and no time; line 80: no counter of its history; the state is 4 G since G1b", (92, r"its act holds no round and no time")),
+    Pair("P16", "the ruler's table", r"one table the load walks once|the ruler's tables?\b|the ruler table|Y\(c\) = rate",
+         "decisions 40 (e) and 41: no table and no refusal past a range; the slot form", (35, r"decision 41")),
+    Pair("P17", "the log's fire as a mask", r"log's fire as (?:its|the backward clock's) mask|fire from the log as its mask|forward log's fire",
+         "Postulate 5 (no mask) and the law's clause of decisions 33 and 34: the forward carry's bit where counts are staggered", (35, r"with the forward carry's bit")),
 )
 
 
@@ -237,11 +251,12 @@ def sentences_around(line: str, m: re.Match[str], width: int = 260) -> str:
     return line[max(0, m.start() - width) : m.end() + width]
 
 
-def check_pairs(lines: list[str], report: Report) -> dict[str, list[int]]:
+def check_pairs(lines: list[str], report: Report, law: list[str] | None = None) -> dict[str, list[int]]:
+    law = lines if law is None else law
     found: dict[str, list[int]] = {}
     for pair in PAIRS:
         gline, gre = pair.governed
-        if not (1 <= gline <= len(lines) and re.search(gre, lines[gline - 1])):
+        if not (1 <= gline <= len(law) and re.search(gre, law[gline - 1])):
             report.informational.append(f"{pair.code} moot: the governing text of line {gline} no longer stands")
             continue
         hits: list[int] = []
@@ -269,6 +284,42 @@ def run(lines: list[str], raw: str, expected: int = EXPECTED_LINES) -> Report:
     return report
 
 
+def scan_docs(law: list[str], paths: list[Path]) -> dict[str, dict[str, list[int]]]:
+    """Per document, per pair, the lines that hold a stale statement against the law's governing line (a sentence marked as history spared)."""
+    out: dict[str, dict[str, list[int]]] = {}
+    for path in paths:
+        if not path.exists():
+            continue
+        lines = path.read_text(encoding="utf-8").split("\n")
+        rep = Report()
+        found = check_pairs(lines, rep, law)
+        hits = {code: ln for code, ln in found.items() if ln}
+        if hits:
+            out[path.name] = hits
+    return out
+
+
+def docs_main(law_lines: list[str], argv: list[str]) -> int:
+    hits = scan_docs(law_lines, [ROOT / d for d in DOCS])
+    counts = {doc: {code: len(ln) for code, ln in by.items()} for doc, by in hits.items()}
+    if "--write-known" in argv:
+        DOCS_KNOWN.write_text(json.dumps(counts, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+        print(f"documents' ceilings written: {sum(sum(c.values()) for c in counts.values())} hits in {len(counts)} documents")
+        return 0
+    ceil = json.loads(DOCS_KNOWN.read_text(encoding="utf-8")) if DOCS_KNOWN.exists() else {}
+    refused = 0
+    for doc in sorted(counts):
+        for code, n in sorted(counts[doc].items()):
+            over = n > ceil.get(doc, {}).get(code, 0)
+            refused += over
+            title = next((p.title for p in PAIRS if p.code == code), code)
+            print(f"  {doc}: {code} {n} line(s) (ceiling {ceil.get(doc, {}).get(code, 0)}): {title}{' REFUSED' if over else ''}")
+            if "--all" in argv or over:
+                print("      lines", ", ".join(str(x) for x in hits[doc][code]))
+    print(f"the documents: {sum(sum(c.values()) for c in counts.values())} stale line(s) in {len(counts)} of {len(DOCS)} documents; {'REFUSED: above a ceiling' if refused else 'none above its ceiling'}")
+    return 1 if refused else 0
+
+
 def load_known(path: Path = KNOWN) -> dict[str, list[int]]:
     if not path.exists():
         return {}
@@ -290,6 +341,8 @@ def main(argv: list[str]) -> int:
     lines = raw.split("\n")
     if lines and lines[-1] == "":
         lines = lines[:-1]
+    if "--docs" in argv:
+        return docs_main(lines, argv)
     report = run(lines, raw)
     if "--write-known" in argv:
         out: dict[str, list[int]] = {}
@@ -375,6 +428,10 @@ def selftest() -> int:
         ("a stale root against line 100", long_law({51: "**Clause 51** the unit is largest_below(9 T^2) in the code"}), 100, {"P01"}),
         ("a stale root marked as history is spared", long_law({51: "**Clause 51** the former unit largest_below(9 T^2) is struck"}), 100, set()),
         ("a stale swap at the top against decision 27", long_law({51: "**Clause 51** the swap at a weak maximum", 1602 - 1560: "**Clause 42** x"}), 100, set()),
+        ("the width derived against line 100", long_law({51: "**Clause 51** The width is derived", 100: "**No float anywhere** never a logarithm, an exponential, a root or a float. The width is a key of the universe file"}), 100, {"P14"}),
+        ("a beat count dial against line 92 (4)", long_law({51: "**Clause 51** a rate dial and a count", 92: "**Clause 92** its act holds no round and no time"}), 100, {"P15"}),
+        ("a state of 5 G + 3 marked as history is spared", long_law({51: "**Clause 51** the former state 5 G + 3", 92: "**Clause 92** its act holds no round and no time"}), 100, set()),
+        ("the log's fire as a mask against the law's clause", long_law({51: "**Clause 51** the log's fire as its mask", 35: "**Clause 35** with the forward carry's bit"}), 100, {"P17"}),
     ]
     failed = 0
     for name, (lines, raw), expected, want in cases:
