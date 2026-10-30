@@ -1,0 +1,3 @@
+n = 0: the product's push equals the sum of the factors' pushes plus E exactly at 2400 of 2400 sites
+the head's law: its miss equals H exactly at 2400 of 2400 sites
+the mutants of E (a term dropped, a sign turned) fail at 2400 and 2400 of 2400 sites
