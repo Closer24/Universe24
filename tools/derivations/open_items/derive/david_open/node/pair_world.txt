@@ -1,3 +1,4 @@
 trains: firsts [0, 2, 8], rows per train [2, 6, 6], held [1, 0, 0], tied [0, 1, 1]; rows 14
 monomials: 772; four value legs: 532; of them joining the held train to one other: 96
+  their factors: four-leg monomials live (factor not 0) 24, joining and live 24 at the factors [60000]; every live four-leg monomial joins the held train to one other: True
 400 rounds: the act's passing opens the books in 146 (first at round 57); the background form in 0 (first at None); the held hand's |k|^2 from 0 to 2

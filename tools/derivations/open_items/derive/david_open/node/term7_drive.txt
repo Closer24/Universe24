@@ -32,6 +32,10 @@ the act's layout: three rows at the teeth W = 6000000, every Mesh at 1000000, ro
      73 on both, one lay, the teeth act's edge tooth laid 7 s + 4 r_d, 10,000 rounds:
   the edge tooth laid a multiple of 4: some count differs in 0 of 10000 rounds (first: None); the teeth act's tooth is 7 s + 4 r_d at every Node-clock in 10000 rounds
   the edge tooth laid at 3 modulo 4: some count differs in 9880 of 10000 rounds (first: 22); the teeth act's tooth is 7 s + 4 r_d at every Node-clock in 24 rounds
+  Meshes on, the grip 300 against 2,100, the edge tooth a multiple of 4: some count differs in 0 of 10000 rounds (first: None); the teeth act's tooth is 7 s + 4 r_d at every Node-clock in 10000 rounds
+  the edge tooth at 3 modulo 4, the teeth act's tooth offset by c = -21: some count differs in 0 of 10000 rounds (first: None); the teeth act's tooth is 7 s + 4 r_d + c at every Node-clock in 10000 rounds
+  the edge tooth at 3 modulo 4, the teeth act's tooth offset by c = -18: some count differs in 0 of 10000 rounds (first: None); the teeth act's tooth is 7 s + 4 r_d + c at every Node-clock in 10000 rounds
+  the edge tooth at 3 modulo 4, the teeth act's tooth offset by c = -22: some count differs in 7463 of 10000 rounds (first: 2507); the teeth act's tooth is 7 s + 4 r_d + c at every Node-clock in 2509 rounds
 (g) the drive inside the act's two passes: the metric's push J5 (the books' form) reads a row's momenta after the
     first drive, on J1 alone; 400 rounds out and 400 back by untick, cube of 3, two even rows, J5 on row 0:
   J5 reads row 1, which it does not push, T_d 7 and 7: J5 not 0 in 400 of 400 rounds; row 0's drive tooth moved in 400; the start returned bit for bit: True

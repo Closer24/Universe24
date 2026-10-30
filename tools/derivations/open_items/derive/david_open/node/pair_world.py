@@ -57,9 +57,15 @@ plan = lay.plan
 m = carry(len(plan.factor), 4, 0)[0]
 monomials = [(-int(plan.factor[i]), (int(plan.target[i]), int(plan.first[i]), int(plan.second[i]), int(plan.third[i])))
              for i in range(m)]
-four = [legs for _, legs in monomials if all(x >= 0 for x in legs)]
-joining = [legs for legs in four if len({train_of[g] for g in legs}) == 2 and {train_of[g] for g in legs} & {0}]
+four = [(f, legs) for f, legs in monomials if all(x >= 0 for x in legs)]
+joining = [(f, legs) for f, legs in four
+           if len({train_of[g] for g in legs}) == 2 and {train_of[g] for g in legs} & set(held_t)]
+live_four = [(f, legs) for f, legs in four if f != 0]
+live_joining = [(f, legs) for f, legs in joining if f != 0]
 print(f"monomials: {m}; four value legs: {len(four)}; of them joining the held train to one other: {len(joining)}")
+print(f"  their factors: four-leg monomials live (factor not 0) {len(live_four)}, joining and live {len(live_joining)}"
+      f" at the factors {sorted({f for f, _ in live_joining})}; every live four-leg monomial joins the held train to"
+      f" one other: {len(live_four) == len(live_joining)}")
 
 
 def valued(x):

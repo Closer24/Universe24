@@ -197,16 +197,16 @@ def sign(x):
     return int(x > 0) - int(x < 0)
 
 
-def lone(shape, teeth, t_d, f):
-    """One even row on a Mesh-less board (every grip 0), so every Node-clock is its own oscillator: the teeth, the drive's
-    teeth t_d, the kick's 1, the stretch 1, the row's own spring f."""
+def lone(shape, teeth, t_d, f, grip=0):
+    """One even row on a board whose every Mesh holds the grip (0: Mesh-less, every Node-clock its own oscillator): the
+    teeth, the drive's teeth t_d, the kick's 1, the stretch 1, the row's own spring f."""
     nb = board(shape)
     sites = nb.shape[1]
     spokes, meshes = geometry(nb, 3)
     one = np.ones((1, 1), dtype=object)
     gearing = Gearing(teeth * one, one.copy(), one.copy(), t_d * one, one.copy())
     click = Click(NONE_I, NONE_I, NONE_O, NONE_I, np.ones((1, 1), dtype=object))
-    parts = [nb, spokes, meshes, np.zeros((1, 3 * sites), dtype=object), gearing, plan_of([(f, (0, 0, UNIT, UNIT))]),
+    parts = [nb, spokes, meshes, np.full((1, 3 * sites), grip, dtype=object), gearing, plan_of([(f, (0, 0, UNIT, UNIT))]),
              UNREAD, UNREAD, click, NOPLAN]
     parts += [NOPLAN] * (len(Layout._fields) - len(parts))
     return Layout(*parts), sites
@@ -279,19 +279,19 @@ print(f"  the recurrence x+ = 2 x - x- - (146 / 42000) x at the scale 10^30: {re
       " changes")
 
 
-def twin_run(rounds, seed, residue):
+def twin_run(rounds, seed, residue, grip=0, offset=0):
     """The drive act (teeth 6,000, T_d 7, spring 73) and the teeth act (teeth 42,000, T_d 1, spring 73) from one lay, the
     edge tooth laid at `residue` modulo 4 (0 at rest) and the drive's tooth drawn within [0, 7), the teeth act's tooth
-    laid 7 s + 4 r_d: the rounds in which some count differs, the first, and the rounds in which the teeth act's tooth is
-    7 s + 4 r_d of the drive act's at every Node-clock."""
-    la, sites = lone((3, 3, 3), 6000, 7, 73)
-    lb, _ = lone((3, 3, 3), 42000, 1, 73)
+    laid 7 s + 4 r_d + offset: the rounds in which some count differs, the first, and the rounds in which the teeth
+    act's tooth is 7 s + 4 r_d + offset of the drive act's at every Node-clock."""
+    la, sites = lone((3, 3, 3), 6000, 7, 73, grip)
+    lb, _ = lone((3, 3, 3), 42000, 1, 73, 7 * grip)
     pick = generator(seed)
     sa = lone_lay(sites, seed)
     tooth = np.array([[4 * carry(pick(1000), 1000, 0)[1] + residue for _ in range(sites)]], dtype=object)
     rd = np.array([[carry(pick(10**6), 7, 0)[1] for _ in range(sites)]], dtype=object)
     sa = State(sa.a, sa.b, tooth, rd, sa.k)
-    sb = State(sa.a.copy(), sa.b.copy(), 7 * tooth + 4 * rd, np.zeros((1, sites), dtype=object), sa.k.copy())
+    sb = State(sa.a.copy(), sa.b.copy(), 7 * tooth + 4 * rd + offset, np.zeros((1, sites), dtype=object), sa.k.copy())
     differ = mapped = 0
     first = None
     for n in range(rounds):
@@ -299,16 +299,22 @@ def twin_run(rounds, seed, residue):
         if bool((sa.a != sb.a).any()):
             differ += 1
             first = n + 1 if first is None else first
-        mapped += int(bool((7 * sa.r + 4 * sa.rd == sb.r).all()))
+        mapped += int(bool((7 * sa.r + 4 * sa.rd + offset == sb.r).all()))
     return differ, first, mapped
 
 
 print("(f2) count for count: the drive act at the teeth 6,000 and T_d 7 against the teeth act at 42,000 and T_d 1, spring")
 print("     73 on both, one lay, the teeth act's edge tooth laid 7 s + 4 r_d, 10,000 rounds:")
-for label, residue in (("the edge tooth laid a multiple of 4", 0), ("the edge tooth laid at 3 modulo 4", 3)):
-    differ, first, mapped = twin_run(ROUNDS_F, 71, residue)
-    print(f"  {label}: some count differs in {differ} of {ROUNDS_F} rounds (first: {first}); the teeth act's tooth is 7 s +"
-          f" 4 r_d at every Node-clock in {mapped} rounds")
+for label, residue, grip, offset in (("the edge tooth laid a multiple of 4", 0, 0, 0),
+                                     ("the edge tooth laid at 3 modulo 4", 3, 0, 0),
+                                     ("Meshes on, the grip 300 against 2,100, the edge tooth a multiple of 4", 0, 300, 0),
+                                     ("the edge tooth at 3 modulo 4, the teeth act's tooth offset by c = -21", 3, 0, -21),
+                                     ("the edge tooth at 3 modulo 4, the teeth act's tooth offset by c = -18", 3, 0, -18),
+                                     ("the edge tooth at 3 modulo 4, the teeth act's tooth offset by c = -22", 3, 0, -22)):
+    differ, first, mapped = twin_run(ROUNDS_F, 71, residue, grip, offset)
+    form = "7 s + 4 r_d" if offset == 0 else "7 s + 4 r_d + c"
+    print(f"  {label}: some count differs in {differ} of {ROUNDS_F} rounds (first: {first}); the teeth act's tooth is {form}"
+          f" at every Node-clock in {mapped} rounds")
 
 def pushed_layout(t_d, reads):
     """Two even rows at the teeth W, every Mesh at GRIP, each row's own spring, the drive's teeth t_d per row, the kick's 1;
