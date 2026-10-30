@@ -13,7 +13,7 @@ Tensor24 is a purely algebraic engine: a board of Node-clocks, each a set of gea
 
 ## Solution24: how every question is solved
 
-Solution24 is our one method of solving, for a term, a part, a reading or a change of code: the owner's principle of the clock and the gear (law line 35) with solving from the big things (line 106), as the law has them, under the name he gave it (his word of 2026-10-30, 13:0x UTC). Every derivation, plan section and push says whether it addressed it.
+Solution24 is our one method of solving, for a term, a part, a reading or a change of code: the owner's principle of the clock and the gear (law line 35) with solving from the big things (line 106), as the law has them, under the name he gave it (his word of 2026-10-30, 13:0x UTC). Whenever there is a problem, in any part, it is solved by Solution24 (the owner's word of 13:1x UTC: "Always use it when there is a problem"), and every derivation, plan section and push says whether it addressed it.
 
 1. **Does it follow by itself?** Ask first whether it follows from the one act of the Node-clock on the board of clocks. If it does, nothing is added. If it does not, ask the clicks what shows that it is needed: what does not follow is named, never declared (Postulate 6 was the first case).
 2. **Take the picture.** A board of clocks, each a train of gears, the gears of neighbouring clocks meshing through their Meshes. Time belongs to the clock (its count, its beat, the order of its reads) and arithmetic to the gear (every number a gear's notch). The board is taken as it stands in our event space, which has no time.
@@ -196,7 +196,7 @@ The engine is five modules (engine/): step.py, mesh.py, contract.py, kinds.py an
 
 ## 4. How to write code
 
-The code writer reads this section first at every task, as its standing instruction. Each line is a law that refuses code, with its line of docs/ALGEBRA.md; the gate's rules and what holds each stand in tools/derivations/open_items/SCRIBE-GATE-1.md.
+The code writer reads Solution24 and this section first at every task, as its standing instruction. Each line is a law that refuses code, with its line of docs/ALGEBRA.md; the gate's rules and what holds each stand in tools/derivations/open_items/SCRIBE-GATE-1.md.
 
 **Who writes, and how a change goes in**
 
