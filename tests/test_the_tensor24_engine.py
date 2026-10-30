@@ -164,7 +164,7 @@ def back():
         rng = np.random.default_rng(10 + seed)
         layout, parted = varied(rng, least=1 + 1), varied(rng, least=1 + 1, clocked=True)
         s, t = world(rng, layout), world(rng, parted)
-        *_, end = rounds(step.tick, layout, s, SQUARING)
+        *_, (end, _) = rounds(step.act, layout, s, SQUARING)
         moved = step.tick(parted, t)
         exact = frame.same(rewind(step.untick, layout, end, SQUARING), s)
         if not (exact and frame.same(step.untick(parted, moved), t) and not frame.same(end, s)):
@@ -219,7 +219,7 @@ def cone_back():
     """Run back, a change reaches distance d in no fewer than d rounds."""
     for seed in range(3):
         layout, u, far, change = lit(seed)
-        *_, u = rounds(step.tick, layout, u, SIDE + SIDE)
+        *_, (u, _) = rounds(step.act, layout, u, SIDE + SIDE)
         v, first = u._replace(a=u.a + change, b=u.b + change), far * 0 + REACH
         for count in range(1, SIDE + SIDE + 1):
             u, v = step.untick(layout, u), step.untick(layout, v)

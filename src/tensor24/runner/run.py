@@ -1,7 +1,7 @@
 """Clock: the run from the three files to the record: every Node-clock steps every round, then all the rounds run back.
 Algebra: the act iterated; before each round the promise, every tooth within its edge's dial of both slots' teeth, and the wave's window, the Spokes' grips within the teeth per sense, are read; the start returns bit for bit.
 Board: the files checked and loaded, the rounds run, the rewind checked, the record and its ledger written.
-Clicks: it writes what the act gives: the record's header and end and the ledger beside them; click lines from G5.
+Clicks: it writes what the act gives: the record's header, its whole lines and its end, and the ledger beside them; a whole line per train and Node-clock whose click tooth's quotient is below 0 in a round, q the windings that left the train (the schema's whole click, q at least 1); a take is the same event at the train that took, and writes no line of its own.
 """
 
 import dataclasses
@@ -25,11 +25,11 @@ STEP = "step"  # a count line's place in its round: after the step
 
 
 class Engine(NamedTuple):
-    """The engine's functions as main.py passes them: the kinds and their tables, the layout, the round, its run back, the state, every gear's teeth at a state's two slots and every Spoke's grip at its now slot."""
+    """The engine's functions as main.py passes them: the kinds and their tables, the layout, the round's act (the state reached and its clicks), its run back, the state, every gear's teeth at a state's two slots and every Spoke's grip at its now slot."""
 
     made: Callable[..., Any]
     layout: Callable[..., Any]
-    tick: Callable[..., Any]
+    act: Callable[..., Any]
     untick: Callable[..., Any]
     state: Callable[..., Any]
     dials: Callable[..., Any]
@@ -93,6 +93,20 @@ def counts(round_: int, s: Any, trains: Any) -> list[dict[str, Any]]:
         )
         for site in range(s.a.shape[-1])
         for at, train in enumerate(trains[n] for n in range(len(trains)))
+    ]
+
+
+def clicked(round_: int, clicks: Any) -> list[dict[str, Any]]:
+    """One round's Whole lines of the record, in the schema's order (site, then train): per Node-clock and train whose click tooth's quotient is below 0, the line's place and q, the windings that left the train; the fields of the richer click (G3, G5) stand absent."""
+    return [
+        {
+            "kind": "whole",
+            "round": round_,
+            "site": int(site),
+            "train": int(train),
+            "q": int(-clicks[train, site]),
+        }
+        for site, train in np.argwhere(clicks.T < 0)
     ]
 
 
@@ -161,9 +175,11 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     found = promised(engine, layout, start) if ticks else []
     if found:
         return [f"round 1: {line}" for line in found]
+    events: list[dict[str, Any]] = []
     with ledger.open("w", encoding="utf-8") as counted:
-        for at, end in enumerate(rounds(engine.tick, layout, start, ticks), start=1):
+        for at, (end, clicks) in enumerate(rounds(engine.act, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))
+            events += clicked(at, clicks)
             # the promises of the round that reads this state, read from outside: every kept tooth within its
             # teeth, and the grips within the window
             found = promised(engine, layout, end) if at < ticks else []
@@ -173,6 +189,7 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     exact = int(stated(rewind(engine.untick, layout, end, ticks)) == stated(start))
     lines = [
         header(record, files, universe, shape, kinds, loaded, layout),
+        *events,
         {"kind": "end", "rounds": ticks, "digest": digest(stated(end)), "undone": ticks, "exact": exact},
     ]
     record.write_text("".join(json.dumps(line) + "\n" for line in lines), encoding="utf-8")
