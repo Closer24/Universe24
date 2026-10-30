@@ -11,7 +11,7 @@ from tensor24.engine import step
 from tensor24.engine.state import State
 from tensor24.main import layout, made
 from tensor24.runner.files import sites_of
-from tensor24.runner.load import load, mesh_unit
+from tensor24.runner.load import load, mesh_unit, star
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 from tests import frame
@@ -26,7 +26,7 @@ def built(gamma=GAMMA, shape=SHAPE):
     """The example's files at the full rate gamma, loaded, and their layout: (the universe, the loaded, the layout)."""
     u = json.loads((EXAMPLES / "universe.json").read_text(encoding="utf-8"))
     u["integers"]["full_rate"] = gamma
-    held, found = load(u, {"gears": []}, sites_of(list(shape)), *made(shape))
+    held, found = load(u, {"gears": []}, sites_of(list(shape)), *made(star(len(shape))))
     assert found == [] and held is not None
     return u, held, layout(u, list(shape), held)
 

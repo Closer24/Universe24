@@ -9,7 +9,7 @@ from typing import Any, NamedTuple
 
 from tensor24.record import schema
 from tensor24.runner.files import OPERANDS, departures, sites_of
-from tensor24.runner.load import load, promises
+from tensor24.runner.load import load, promises, star
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 
@@ -109,7 +109,7 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     files = [(path, path.read_text(encoding="utf-8")) for path in paths]
     universe, piece, setting = (json.loads(text) for _, text in files)
     shape = piece["shape"]
-    kinds, tables = engine.made(tuple(shape))
+    kinds, tables = engine.made(star(len(shape)))
     loaded, found = load(universe, setting, sites_of(shape), kinds, tables)
     if loaded is None:
         return found

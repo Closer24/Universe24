@@ -8,7 +8,7 @@ import pytest
 
 from tensor24.engine import kinds
 from tensor24.main import made as joint
-from tensor24.runner.load import common, tables
+from tensor24.runner.load import common, star, tables
 
 # Sofer's table (SOFER-KINDS-REFERENCE-1, scribe-5 d9d538ed4): the five characters on the five classes, the identity,
 # the third turns, the face half turns, the quarter turns and the edge half turns, whose sizes are SIZES
@@ -48,7 +48,7 @@ class Made(NamedTuple):
 
 
 def made():
-    matrix, weight = kinds.turns(kinds.axes(3))
+    matrix, weight = kinds.turns(star(3))
     ks, inverse = kinds.kinds(matrix), kinds.kinds(kinds.inverse(matrix))
     return Made(matrix, weight, ks, inverse, tables(ks, inverse, weight, kinds.projector))
 
@@ -321,7 +321,27 @@ def test_each_law_of_the_kinds_fails_on_its_mutant(mutant, good):
 
 
 def test_the_joint_makes_the_kinds_and_the_tables_the_load_reads(good):
-    """main.made, the one joint, gives these kinds and tables: its inverses the turns' own, so every table is kept."""
-    held, c = joint((4, 4, 4))
+    """main.made, the one joint, gives these kinds and tables from the star: its inverses the turns' own, so every table is kept."""
+    held, c = joint(star(3))
     assert all((x == y).all() for x, y in zip(held, good.kinds, strict=True))
     assert c.keys() == good.c.keys() and all((c[key] == good.c[key]).all() for key in c)
+
+
+def test_the_four_vectors_square_is_its_symmetric_square_a_signed_permutation_on_every_turn(good):
+    """kinds.square on the 24 is the four-vector's symmetric square (the stride fixed, the differences turned) on the pairs
+    00, 0i, ii and jk by the third axis: a signed permutation keeping the group law, its characters A1 twice, T1, E and
+    T2; with T1 where T2 stands it is not the square."""
+    at, (a1, _, _, t1, _) = good.weight == 1, good.kinds
+    turns, square = good.matrix[at], kinds.square(good.kinds)[at]
+    chi = np.einsum("gii->g", square)
+    p, q = np.array([(0, 0), (0, 1), (0, 2), (0, 3), (1, 1), (2, 2), (3, 3), (2, 3), (1, 3), (1, 2)]).T
+    four = np.array([np.diag([1, 0, 0, 0]) + np.pad(r, ((1, 0), (1, 0))) for r in turns])
+    rows = np.einsum("gpm,gqn->gpqmn", four, four)[:, p, q]
+    image = rows[:, :, p, q] + (p != q) * rows[:, :, q, p]
+    one = (np.abs(square).sum(axis=1) == 1).all() and (np.abs(square).sum(axis=-1) == 1).all()
+    product = kinds.square(kinds.kinds(np.einsum("aij,bjk->abik", turns, turns).reshape(-1, 3, 3)))
+    law = (product == np.einsum("aij,bjk->abik", square, square).reshape(-1, 10, 10)).all()
+    one1, _, e, three1, three2 = (np.einsum("gii->g", k[at]) for k in good.kinds)
+    mutant = kinds.beside(kinds.beside(a1, t1), kinds.beside(t1 * t1, t1))[at]
+    assert (square == image).all() and one and law
+    assert (mutant != image).any() and (chi == one1 + three1 + one1 + e + three2).all()

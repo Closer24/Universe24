@@ -7,9 +7,9 @@ from tensor24.engine import kinds, state, step
 from tensor24.runner import load, run
 
 
-def made(shape: tuple[int, ...]) -> tuple[kinds.Kinds, dict[Any, Any]]:
-    """The 24's kinds on the board's axes and their tables, as the load reads them."""
-    matrix, weight = kinds.turns(kinds.axes(len(shape)))
+def made(spokes: Any) -> tuple[kinds.Kinds, dict[Any, Any]]:
+    """The 24's kinds and their tables, derived once from the Node-clock's own star, its Spokes, as the load reads them."""
+    matrix, weight = kinds.turns(spokes)
     held = kinds.kinds(matrix)
     return held, load.tables(held, kinds.kinds(kinds.inverse(matrix)), weight, kinds.projector)
 

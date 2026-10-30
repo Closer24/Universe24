@@ -11,7 +11,7 @@ import numpy as np
 from tensor24.engine import kinds, state, step
 from tensor24.main import layout, made
 from tensor24.runner.files import sites_of
-from tensor24.runner.load import load
+from tensor24.runner.load import load, star
 from tests import frame
 
 UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
@@ -25,7 +25,7 @@ TICKS, SEEDS, REACH = (
 
 def loaded(universe, shape, gears=()):
     """The universe laid on the board with the setting's gears: the trains' rows, the layout and the state laid."""
-    held, found = load(universe, {"gears": list(gears)}, sites_of(list(shape)), *made(shape))
+    held, found = load(universe, {"gears": list(gears)}, sites_of(list(shape)), *made(star(len(shape))))
     assert found == [] and held is not None
     return held, layout(universe, list(shape), held), state.State(*held.state)
 

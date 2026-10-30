@@ -15,7 +15,7 @@ from tensor24.engine.state import State
 from tensor24.record import schema
 from tensor24.runner import run
 from tensor24.runner.files import NAMES, sites_of, whole
-from tensor24.runner.load import load
+from tensor24.runner.load import load, star
 
 ROOT = Path(__file__).resolve().parents[1]
 EXAMPLES = ROOT / "examples" / "tensor24"
@@ -82,7 +82,7 @@ def test_the_ledger_holds_every_trains_counts_at_every_node_clock_after_every_ro
     record = tmp_path / "run.jsonl"
     assert main.ran(PATHS, record) == []
     universe, piece, setting = (read(path) for path in PATHS)
-    held, _ = load(universe, setting, sites_of(piece["shape"]), *main.made(tuple(piece["shape"])))
+    held, _ = load(universe, setting, sites_of(piece["shape"]), *main.made(star(len(piece["shape"]))))
     laid, s, wanted = main.layout(universe, piece["shape"], held), State(*held.state), []
     for at in range(1, setting["ticks"] + 1):
         s = step.tick(laid, s)
