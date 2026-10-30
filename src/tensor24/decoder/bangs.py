@@ -1,4 +1,8 @@
-"""Row 46, each later bang shows more, read twice: from the clicks each bang lays, and the ledger's clocks held at its end."""
+"""Clock: the clocks' rate gears wind up and run down together; a bang lies between two bottoms of their load, and each later bang builds clocks of more parts.
+Algebra: the load per round; its bottoms, no higher than the round before and lower than the round after; each train's depth, one deeper than its deepest part; compared bang by bang.
+Board: the load, read from the ledger at the time gear the header names; the clicks of each bang and the trains they lay; the clocks the ledger holds at each bang's end.
+Clicks: row 46, each later bang shows more: more kinds of click and deeper clocks laid; shown, not shown or not read, with its cause.
+"""
 
 # What is to be seen (the owner's words: 2026-10-28, 14:44 UTC, "every bang adds more; the clock becomes more and more
 # complex"; 2026-10-29, 06:3x UTC, to Animate, "ever more complex clocks"). The bangs: no line marks a top once the
