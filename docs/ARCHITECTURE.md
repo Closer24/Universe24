@@ -22,11 +22,12 @@ Solution24 is our one method of solving, for a term, a part, a reading or a chan
 5. **Count the click.** A click is the carry's quotient where a winding is whole; two kinds and no third: the whole, where the wind decides, and the split, where a draw by the sizes chooses, the one place a choice enters. The beat and the time gear's turn are no clicks (line 35, items 4 and 5).
 6. **Check the conservation laws in the clicks.** The carry keeps its sum exactly, the books of every click close and the run back is exact to the bit; flux on the board, energy, momentum and charge follow from the symmetries; a conservation kept on the board and lost in the clicks is no solution (line 35, item 6).
 7. **Go both ways.** Forward from the clocks (gears, whole numbers, the one act) and backward from the clicks: the physics of nature seen in them is the direction and the test; what does not match nature is named, never hidden (line 35, item 7).
-8. **Two hostile readers.** Two hands derive blind before any code or document, and every derivation, the Boss's own included, passes a hostile mathematician and a hostile physicist, each new to it. Only then is it DERIVED, entered here by the writer, and only then does the Boss brief the code writer for main (Postulate 10; line 35, item 11).
-9. **Unify.** At every step look for several operations that are one; the one is written once and the others are its cases (line 104).
-10. **Put it in the document** the moment it is ready, in the four layers and with its status: no code starts on what is not DERIVED, and main takes a change only when its derivation stands here and its candidate is approved (section 4).
-11. **Say whether the method was addressed:** which clock or gear makes each term, what the clicks show (the books first) and what does not follow, asked of the clicks (line 35, item 8).
-12. **The aim and the end.** The board builds ever more complex clocks by its clicks and carries alone, nothing declared (line 35, item 9); the system is closed once the Node-clock works well (the owner's word of 12:4x UTC).
+8. **Run it locally.** Local runs are excellent: take the Node-clock and crack it locally, or run it and check it stage by stage, in a probe in whole numbers on the real act or in a draft of the code in the code writer's own worktree. Anything may be tried there; nothing of a draft is pushed or merged before it is DERIVED (line 35, item 12).
+9. **Two hostile readers.** Two hands derive blind before any code or document, and every derivation, the Boss's own included, passes a hostile mathematician and a hostile physicist, each new to it. Only then is it DERIVED, entered here by the writer, and only then does the Boss brief the code writer for main (Postulate 10; line 35, item 11).
+10. **Unify.** At every step look for several operations that are one; the one is written once and the others are its cases (line 104).
+11. **Put it in the document** the moment it is ready, in the four layers and with its status: no code starts on what is not DERIVED, and main takes a change only when its derivation stands here and its candidate is approved (section 4).
+12. **Say whether the method was addressed:** which clock or gear makes each term, what the clicks show (the books first) and what does not follow, asked of the clicks (line 35, item 8).
+13. **The aim and the end.** The board builds ever more complex clocks by its clicks and carries alone, nothing declared (line 35, item 9); the system is closed once the Node-clock works well (the owner's word of 12:4x UTC).
 
 ## 1. The parts
 
