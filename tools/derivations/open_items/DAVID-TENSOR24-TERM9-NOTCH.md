@@ -163,7 +163,8 @@ trace of the ii slots, laid as two monomials of the vertex law with one range fo
     - Checked in exact ratios at u_c = 1/1000, 1/50 and 1/10 for gamma 1 and 2 (term9_window (a)).
     - The same gamma_obs keeps beta = 2 - gamma_obs at third order (the hostile mathematician's t9_background (2)).
     - The case the probe must tell apart: a background read as a change of coordinates, the well's depth scaled with
-      the clocks and rods, gives gamma_obs = gamma at every u_c (term9_window (a2)).
+      the clocks and rods, gives gamma_obs = gamma at every u_c below 1 / gamma (term9_window (a2)); at the tied
+      rest's pole the ratio is 0/0 and the tied grip 0, and past it the grip is below 0, so no frame stands there.
   - **Against nature** (term9_window (b), (c)):
     - At the range of a period of the universe's age, 673 Mpc, u_c = 0.02163 and gamma_obs - 1 = 0.04423, 192 times
       Cassini's 2.3 x 10^-5 (Bertotti, Iess and Tortora, Nature 425, 374 (2003)).
@@ -177,11 +178,11 @@ trace of the ii slots, laid as two monomials of the vertex law with one range fo
       stays empty either way.
     So no strength serves.
   - **Under the law above** (Big Pic's form), which cannot stand on the cut and waits on the 00 row's own law (OPEN; the
-    finding): the static rest is a change of coordinates, the probe's (a2), so gamma_obs = gamma at every u_c and
-    Cassini no longer bars the rest. The window then reopens between 445 Mpc and the tied rest's pole, near 4,575 Mpc at
-    the cosmic mean density at gamma = 1 (the finding, section 6), and what stays is what moves in time: the swing at
-    the present epoch, against lunar laser ranging (section 4), and the rest's motion with the universe's matter, which
-    the board reads only with the expansion's law (OPEN).
+    finding): the static rest is a change of coordinates, the probe's (a2), so gamma_obs = gamma at every u_c below 1 /
+    gamma and Cassini no longer bars the rest. The window then reopens between 445 Mpc and the tied rest's pole, near
+    4,575 Mpc at the cosmic mean density at gamma = 1 (the finding, section 6), and what stays is what moves in time:
+    the swing at the present epoch, against lunar laser ranging (section 4), and the rest's motion with the universe's
+    matter, which the board reads only with the expansion's law (OPEN).
   - **A chosen gamma** of 0.95853 would cancel the rest at one place and time (term9_window (d)). That is against
     Postulate 6's gamma = 1 (G2), and the rest swings with the notch and changes with the matter within range.
   - **G at the tied rest** (the hostile physicist's C, third reading): with neither G2's rod factor nor N2's factor the
