@@ -1,0 +1,45 @@
+Hostile mathematician, N2's second text (term 5) and TERM13 (term 13), 2026-10-30. Checks: probe_theorem.py, probe_term13.py,
+probe_phys.py, probe_small.py (outputs *.txt beside them); repro/ holds the three probes rerun: all three result files equal
+bit for bit (PHYS_SAME, T13_SAME, MATH_SAME).
+
+TERM 5: NOT PASSED
+1 BLOCKING  theorem hypothesis (b) is not enough: pass 2's plan must also be invariant under the swap of the two stride planes
+            (R_P maps (sb, sa) to (-sa, -sb), so a lone stride monomial maps to its partner, not to +-itself). Monomials
+            passing rule (b) that depart at round back 1: sb(A1)^2 alone, sa(A1)^2 alone, sb(T1x) sa(T1y) alone, sb(A1) D_x(A1)
+            onto 0x alone; the pairs hold 60 rounds. Proof sketch step (2) is a non sequitur. Fix: hypothesis (e) swap symmetry.
+2 MINOR     hypothesis (c) says the reads 'land' on even rows: M5's own lay lands the 00 read on the odd 0i rows and holds;
+            the odd 0y row read into the even A1 row departs at 1. Fix: 'reading even rows only'.
+3 MINOR     proof step (3): even row's drive with J kept and tooth flipped gives the SAME quotient, remainder T_d-1-r_d (9718/9718);
+            the negated quotient is the odd row's (J negated, tooth kept).
+4 MINOR     'each row's momentum kept exactly on the torus under a moving W' is the identity p+ = p + F with sum F = 0 and J = 0;
+            under term 5 the 00 row's sum of p grows 0 -> 241,517 (t13 probe 2). Conservation belongs in the clicks (owner).
+5 MINOR     gamma sign: the plan as written pushes the ii slots up for every source (held count J_ii = +25, lump xx -> +250,
+            swing 0); gamma = 1 needs a negative ii strength; 'the sign lowers the grips where matter is' is not the plan's.
+6 MINOR     P4 23.1 / 4.7 'the lattice's dispersion' without a number: h = 8, 16, 32, 64 gives 23.13, 23.77, 23.94, 23.98 and
+            4.79, 4.87, 4.89, 4.90 (continuum 24, 4.90). Right, unmeasured in the text.
+7 MINOR     M3 'held gradient': not held (pull moves 36 of 60 sites), J_xx = J_yy = 1080 are the potential's; gradient alone
+            J00 = J_xx = J_yy = 0 (+72 from pass-1 motion), J_zz = 7776. rho = pr = 98/4 is the identity applied, not a measure.
+8 MINOR     P5 'the 00 wave runs at light's speed' measured at rest only: in a well the 00 wave keeps 302 rounds while light
+            takes 428, 607 (W = 2, 4 rest): speed^2 ratio 2008, 4039 permille. Superluminal in a well; name it.
+
+TERM 13: NOT PASSED
+1 BLOCKING  'the 00 source averages to the matter's energy': push / 2E by 500-round windows 1006, 942, 1095, 1477, 1480, 1076
+            permille; from round 1000 on 69-85% of the push comes from rounds with -W < p < 0 (stride -1, 2W each);
+            2E plateaus 59k, 52k, 53k, 47k, 53k (adiabatic 100k -> 43k); p00's gain per 500 rounds does not slow (28k, 28k,
+            40k, 35k, 29k). W's growth after round 500 is the floor's pump, not the energy.
+2 BLOCKING  'the well settles to a bounded depth' / Poisson: sampled every 25 rounds the well swings with width 43, 93, 160
+            over successive 500-round windows (growing), never settling; 'bounded' not shown. The OPEN clause's answer rests on it.
+3 MINOR     'N^2 = rest / W exactly': 4008, 8027, 16068 permille are the discrete law's second order (12W - g)/(12 rest - g)
+            = 4017, 8041, 16088 within one round's resolution (9, 12, 17). Exact to first order in g / W only.
+4 MINOR     'both edges are reached by the act alone': light's edge is laid by hand (probe 4); the act's run (probe 3) moves the
+            ii slots up, away from it.
+5 MINOR     'two clocks on one board keep their ratio': W_far / W_lump 995 -> 1000 permille from round 500 to 1500: the
+            redshift fades with the mean.
+6 MINOR     item 6 'the row sums kept in the p-form': the 00 row's sum is what the text shows growing; the books are the clicks'.
+7 MINOR     probe 5's held count carries V with the spring's g in the source while no spring acts on the hand (plans mixed).
+
+SOUND: results reproduce bit for bit; theorem mechanism right with the swap symmetry, and exact at W = 1 (1668-2208 matter
+site-rounds at W = 1 over 33-40 rounds, rest 3-4, grip 0); (W-1-p) div W = -(p div W): 0 misses for W in 1..7, 67-101 for W < 0;
+M1's broken cases; the 24 condition measured in both forms, mend deferred; P3's virial 1.000809 / 1.000838 and the g/2W
+shortfall agree with the exact discrete invariant (a+ - a)^2 + k a a+; rho, pr identities right; 3000-round run back under
+W 3000 -> 143066; light's edge arithmetic (grip = rest/6 - c00/6 = 0 at c00 = rest) right on the chosen ratio.

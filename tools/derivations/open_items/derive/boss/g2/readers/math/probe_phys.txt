@@ -1,0 +1,15 @@
+== 1. P4's travelling pulse: Szz / S00 (24 in the continuum) and -S0z / S00 (4.9) against the pulse's half width h
+  (the bump (h^2 - u^2)^2 for |u| < h, split into two pulses; the line long enough that the pulses do not meet)
+  h =  8, 96 sites, 60 rounds: Szz / S00 = 23125 permille of 1 (24000 in the continuum), -S0z / S00 = 4792 (4899), null S0z^2 / (S00 Szz) = 993
+  h = 16, 192 sites, 120 rounds: Szz / S00 = 23772 permille of 1 (24000 in the continuum), -S0z / S00 = 4871 (4899), null S0z^2 / (S00 Szz) = 998
+  h = 32, 384 sites, 240 rounds: Szz / S00 = 23940 permille of 1 (24000 in the continuum), -S0z / S00 = 4891 (4899), null S0z^2 / (S00 Szz) = 999
+  h = 64, 768 sites, 480 rounds: Szz / S00 = 23984 permille of 1 (24000 in the continuum), -S0z / S00 = 4897 (4899), null S0z^2 / (S00 Szz) = 999
+  the ratios climb toward 24 and 4.9 as the pulse widens: the text's 23.1 and 4.7 are the lattice's at h = 8, stated there without this check
+
+== 2. M3's third case, 'a count held still with a gradient along z': its J's by source
+  gradient part and the potential (the text's): J00 = -1008, J_xx, J_yy, J_zz = [1080, 1080, 8856], J_0i = [0, 0, 72]
+  the gradient part alone: J00 = 72, J_xx, J_yy, J_zz = [0, 0, 7776], J_0i = [0, 0, 72]
+  the potential alone: J00 = -1008, J_xx, J_yy, J_zz = [1080, 1080, 1080], J_0i = [0, 0, 72]
+  the gradient part with no stride read at all: J00 = 0, J_zz = 7776
+  the profile is not held: the Meshes' pull moves it at 36 of 60 sites in the round (sigma_a != 0), which is where the 72 on J_0z and the +72 on J00 come from
+  so J_xx = J_yy = 1080 are the potential's (2V = x^2 summed), not the gradient's; the gradient alone gives J00 = J_xx = J_yy = 0 up to the pass-1 motion, as the continuum has it

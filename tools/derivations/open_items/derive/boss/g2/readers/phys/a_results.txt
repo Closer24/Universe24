@@ -1,0 +1,37 @@
+== A0. the harness: the integer replica against n2b_lib.tick_first (probe 2's lay, p = 10 rest), 3000 rounds
+  replica == tick_first on (a, p, c00, p00, r_d00, xx, p_xx, r_dxx) at every round: True
+
+== A1. probe 2's run: the 00 source pushed each round against the act's energy 2E = p+^2 / W + g a a+, by windows of 500 rounds
+  window | <J00> (as pushed) | <2E_p> | <2E_sigma> = <W sigma_a^2 + g a a+> | <J00> / <2E_p> permille | floor's share of <J00> permille | rounds with sigma_a != 0 | W at end | xx at end | grip / rest permille
+      0- 500 |    164134 |   160991 |   158995 |   1019 |   -48 | 465 |   10714 |   3645 |  2596
+    500-1000 |     56013 |    59182 |    55551 |    946 |  -258 | 409 |   26807 |   6172 |  4281
+   1000-1500 |     57103 |    52218 |    46570 |   1093 |  -391 | 347 |   47041 |   7553 |  5202
+   1500-2000 |     78895 |    53257 |    50475 |   1481 |  -148 | 257 |   73178 |   8553 |  5868
+   2000-2500 |     69716 |    47260 |    36453 |   1475 |  -620 | 136 |  105473 |   9093 |  6228
+   2500-3000 |     57172 |    53075 |    32161 |   1077 | -1457 |  82 |  143066 |   9593 |  6562
+  2E at the start (p^2 / W, a = 0): 300000; the 00 gear's p00 at round 3000: 241517, its energy p00^2 / (2 rest) = 9721743 against the matter's E at the start 150000: ratio 64811 permille
+  reading: the text's 'its mean over a swing is E' is P3's at stride 26,458; here the strides are 0 to 2 from round ~500 and <J00> is read against the act's own 2E
+
+== A2. the same lay with the 00 slot sourced by the act's p^2 / W (one carry) in place of W sigma^2: W over the rounds
+  round     0: W (floor source, the text's) =    3000; W (exact p^2 / W source) =    3000; the hand's p:    30000 /    30000
+  round   500: W (floor source, the text's) =   10714; W (exact p^2 / W source) =   10970; the hand's p:    25170 /    31680
+  round  1000: W (floor source, the text's) =   26807; W (exact p^2 / W source) =   30043; the hand's p:    11100 /   -16410
+  round  1500: W (floor source, the text's) =   47041; W (exact p^2 / W source) =   57954; the hand's p:    65280 /    60450
+  round  2000: W (floor source, the text's) =   73178; W (exact p^2 / W source) =   94191; the hand's p:    31890 /    57090
+  round  2500: W (floor source, the text's) =  105473; W (exact p^2 / W source) =  140673; the hand's p:   108540 /   130170
+  round  3000: W (floor source, the text's) =  143066; W (exact p^2 / W source) =  202267; the hand's p:   107490 /   173430
+
+== A3. the ii slot under the written push (uniform swing: the gradient part is 0, the potential part +2V): sign and the clicks' light-against-clock ratio
+  round     0: c00 =       0, each ii slot =       0 (the chosen -c00 / 12 would be       0), grip =    500; c^2 = grip / W =   166 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =   166 permille (167 at rest): light's Mesh in beats^2 = rest / grip =  6000 permille (6000 at rest)
+  round   500: c00 =    7714, each ii slot =    3645 (the chosen -c00 / 12 would be    -642), grip =   7790; c^2 = grip / W =   727 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  2596 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   385 permille (6000 at rest)
+  round  1000: c00 =   23807, each ii slot =    6172 (the chosen -c00 / 12 would be   -1983), grip =  12844; c^2 = grip / W =   479 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  4281 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   233 permille (6000 at rest)
+  round  1500: c00 =   44041, each ii slot =    7553 (the chosen -c00 / 12 would be   -3670), grip =  15606; c^2 = grip / W =   331 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  5202 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   192 permille (6000 at rest)
+  round  2000: c00 =   70178, each ii slot =    8553 (the chosen -c00 / 12 would be   -5848), grip =  17606; c^2 = grip / W =   240 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  5868 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   170 permille (6000 at rest)
+  round  2500: c00 =  102473, each ii slot =    9093 (the chosen -c00 / 12 would be   -8539), grip =  18686; c^2 = grip / W =   177 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  6228 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   160 permille (6000 at rest)
+  round  3000: c00 =  140066, each ii slot =    9593 (the chosen -c00 / 12 would be  -11672), grip =  19686; c^2 = grip / W =   137 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  6562 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   152 permille (6000 at rest)
+  reading: the written push raises the grips where the matter is (gamma < 0 by P2's own reading, ii = +c00/12 -> gamma = -1), and in the clicks (lengths from light, time from the clock) the Mesh shortens: a contraction, light racing the clocks
+
+== A4. two hands a continuum reading cannot tell apart: p = -1 and p = +1 at a = 0 (|p| / W = 1 / 3000 of a notch per round), with the spring, 3000 rounds
+  p = -1: W at rounds 0, 1000, 2000, 3000: [3000, 3000, 3000, 3296]; the hand's count ranged over [-1, 1]
+  p = +1: W at rounds 0, 1000, 2000, 3000: [3000, 3000, 3000, 3000]; the hand's count ranged over [0, 0]
+  reading: the stride is floor(p / W), so p = -1 is a hand moving one notch down each round until the spring returns it: a one-notch relaxation swing whose source is 2W per moving round whatever its p-energy; p = +1 stands

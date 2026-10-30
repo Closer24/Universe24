@@ -1,0 +1,4 @@
+== D. <4K - 2V> against the swing's energy E on the engine's act, the sum form, at W = 3 x 10^7
+  harmonic, V = g a^2 / 2 (omega^2 = 1/10): over 20000 rounds the count ranged over [-1019, 1019], the largest stride 322; <4K - 2V> / E = 1024 permille
+  quartic, V = k a^4 / 4 (3 k a0^2 / W = 1/10): over 20000 rounds the count ranged over [-1012, 1012], the largest stride 132; <4K - 2V> / E = 2034 permille
+  reading: the identity 'active mass = energy' is the harmonic spring's K-bar = V-bar; a quartic hand sources twice its energy. P3 holds for term 6's spring alone and not for G3's vertex

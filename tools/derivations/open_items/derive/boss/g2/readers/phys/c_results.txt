@@ -1,0 +1,20 @@
+== C1. the static Poisson well a source S (p00 counts a round at one site, its mean removed) digs on this torus: grip Lap c = -(S delta - S / N)
+  Jacobi relaxation in integers scaled by 10^6, 6000 sweeps
+  S =    300 a round: well (centre less far) = 225 / 1000 of a notch of c00
+  S =   3000 a round: well (centre less far) = 2259 / 1000 of a notch of c00
+  S = 300000 a round: well (centre less far) = 225950 / 1000 of a notch of c00
+  reading: t13's lump pushes about 300 a round through T_d = 1000 (measured below), so its static well is well under one notch: nothing a whole count can show
+
+== C2. probe 3's run: the quoted well against the spread of c00 away from the lump, the push's total, and where the hand's energy is
+  round | lump - far | c00 spread off the lump (max - min) | board mean c00 | sum J00 / T_d this round (all sites) | at the lump | share of sum p^2 (the hand's) within dz <= 1 permille | xx at lump | xx far | the hand's 2E on the board: sum p^2 / W + sum g a^2 + sum grip (delta a)^2 | sum p (kept)
+      0 |      0 |      0 |       0 |     1200 |   1200 | 1000 |     0 |     0 |       300000 = 300000 + 0 + 0 | 30000
+     10 |      1 |      0 |       0 |      830 |     30 |  915 |     0 |     0 |       644259 = 230459 + 37800 + 376000 | 34830
+     25 |      0 |      0 |       0 |     2960 |    506 |  191 |     0 |     0 |      1608864 = 1102034 + 67830 + 439000 | 312450
+     50 |     -1 |      4 |      -3 |     3923 |    193 |  280 |     0 |     0 |      2964107 = 1192157 + 208950 + 1563000 | 248400
+    100 |     -9 |      8 |       5 |     7057 |    101 |  180 |     0 |     0 |      5009884 = 2204774 + 292110 + 2513000 | 82290
+    200 |      6 |     10 |     183 |    16933 |    449 |  170 |    -1 |    -4 |      9334304 = 4670734 + 360570 + 4303000 | -6750
+    400 |    -14 |     41 |    1691 |    24752 |    935 |  143 |    39 |    35 |     13057728 = 6999448 + 476280 + 5582000 | 574320
+    800 |    -12 |     51 |   14406 |    55941 |    834 |  128 |   214 |   212 |     24327683 = 14723813 + 660870 + 8943000 | 1512810
+   1200 |    -82 |     75 |   51359 |    75176 |   3621 |  117 |   253 |   239 |     29694029 = 20389489 + 624540 + 8680000 | 3311040
+   1500 |    -50 |     63 |   99031 |    56268 |   3656 |  307 |   209 |   217 |     29110754 = 16887324 + 1046430 + 11177000 | 7641660
+  reading: the hand's energy leaves the centre in tens of rounds (nothing binds it in space: the spring is a potential in a, the Mesh spreads a as a massive wave), the quoted 'well' is of the size of the site-to-site spread of the 00 wave, the hand's energy on the board grows (the drift a+ = a + floor(p / W) moves a count a whole notch wherever p < 0, however small), and the total push is that grown energy, not the lump's

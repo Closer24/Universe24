@@ -1,0 +1,9 @@
+== B1. gamma read on the metric term 5's written push makes (the uniform swing of t13 probe 2 / check A)
+  at round 126 the push has made c00 = 606, each ii slot = 524 (grip 1548); the chosen -c00 / 12 would be -50
+  laid still on the ring of 6: the clock 704 -> 773 rounds for 60 sign changes (period^2 ratio 1205 permille), light 455 -> 280 (378 permille); light's slowing over the clock's, 1 + gamma = -3035 permille (P2's laid -c00/12 gave 2490, 0 gave 1000, +c00/12 gave about 0)
+  reading: on the metric the act's own push makes, light speeds up where the clock slows: gamma well below -1; the gamma = 1 of P2 is on slots laid by hand with the opposite sign
+
+== B2. the laid -c00 / 12 at a small depth against P2's c00 = 600, with 600 sign changes: the slot form's own law 2 / (1 - u)
+  c00 = 60 (u = 20 permille), ii = -5: clock period^2 ratio 1020 permille (law 1 + u = 1020), light 1041 (law (1 + u) / (1 - u) = 1040); 1 + gamma read 2050 permille, the slot form's 2 / (1 - u) = 2040
+  c00 = 600 (u = 200 permille), ii = -50: clock period^2 ratio 1202 permille (law 1 + u = 1200), light 1503 (law (1 + u) / (1 - u) = 1500); 1 + gamma read 2490 permille, the slot form's 2 / (1 - u) = 2500
+  reading: P2's 2.49 at c00 = 600 is not 'about 2' but the slot form's own 2 / (1 - u) at u = 0.2; the first-order gamma = 1 shows only at small u

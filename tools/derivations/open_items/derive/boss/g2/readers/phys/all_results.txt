@@ -1,0 +1,103 @@
+== A0. the harness: the integer replica against n2b_lib.tick_first (probe 2's lay, p = 10 rest), 3000 rounds
+  replica == tick_first on (a, p, c00, p00, r_d00, xx, p_xx, r_dxx) at every round: True
+
+== A1. probe 2's run: the 00 source pushed each round against the act's energy 2E = p+^2 / W + g a a+, by windows of 500 rounds
+  window | <J00> (as pushed) | <2E_p> | <2E_sigma> = <W sigma_a^2 + g a a+> | <J00> / <2E_p> permille | floor's share of <J00> permille | rounds with sigma_a != 0 | W at end | xx at end | grip / rest permille
+      0- 500 |    164134 |   160991 |   158995 |   1019 |   -48 | 465 |   10714 |   3645 |  2596
+    500-1000 |     56013 |    59182 |    55551 |    946 |  -258 | 409 |   26807 |   6172 |  4281
+   1000-1500 |     57103 |    52218 |    46570 |   1093 |  -391 | 347 |   47041 |   7553 |  5202
+   1500-2000 |     78895 |    53257 |    50475 |   1481 |  -148 | 257 |   73178 |   8553 |  5868
+   2000-2500 |     69716 |    47260 |    36453 |   1475 |  -620 | 136 |  105473 |   9093 |  6228
+   2500-3000 |     57172 |    53075 |    32161 |   1077 | -1457 |  82 |  143066 |   9593 |  6562
+  2E at the start (p^2 / W, a = 0): 300000; the 00 gear's p00 at round 3000: 241517, its energy p00^2 / (2 rest) = 9721743 against the matter's E at the start 150000: ratio 64811 permille
+  reading: the text's 'its mean over a swing is E' is P3's at stride 26,458; here the strides are 0 to 2 from round ~500 and <J00> is read against the act's own 2E
+
+== A2. the same lay with the 00 slot sourced by the act's p^2 / W (one carry) in place of W sigma^2: W over the rounds
+  round     0: W (floor source, the text's) =    3000; W (exact p^2 / W source) =    3000; the hand's p:    30000 /    30000
+  round   500: W (floor source, the text's) =   10714; W (exact p^2 / W source) =   10970; the hand's p:    25170 /    31680
+  round  1000: W (floor source, the text's) =   26807; W (exact p^2 / W source) =   30043; the hand's p:    11100 /   -16410
+  round  1500: W (floor source, the text's) =   47041; W (exact p^2 / W source) =   57954; the hand's p:    65280 /    60450
+  round  2000: W (floor source, the text's) =   73178; W (exact p^2 / W source) =   94191; the hand's p:    31890 /    57090
+  round  2500: W (floor source, the text's) =  105473; W (exact p^2 / W source) =  140673; the hand's p:   108540 /   130170
+  round  3000: W (floor source, the text's) =  143066; W (exact p^2 / W source) =  202267; the hand's p:   107490 /   173430
+
+== A3. the ii slot under the written push (uniform swing: the gradient part is 0, the potential part +2V): sign and the clicks' light-against-clock ratio
+  round     0: c00 =       0, each ii slot =       0 (the chosen -c00 / 12 would be       0), grip =    500; c^2 = grip / W =   166 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =   166 permille (167 at rest): light's Mesh in beats^2 = rest / grip =  6000 permille (6000 at rest)
+  round   500: c00 =    7714, each ii slot =    3645 (the chosen -c00 / 12 would be    -642), grip =   7790; c^2 = grip / W =   727 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  2596 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   385 permille (6000 at rest)
+  round  1000: c00 =   23807, each ii slot =    6172 (the chosen -c00 / 12 would be   -1983), grip =  12844; c^2 = grip / W =   479 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  4281 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   233 permille (6000 at rest)
+  round  1500: c00 =   44041, each ii slot =    7553 (the chosen -c00 / 12 would be   -3670), grip =  15606; c^2 = grip / W =   331 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  5202 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   192 permille (6000 at rest)
+  round  2000: c00 =   70178, each ii slot =    8553 (the chosen -c00 / 12 would be   -5848), grip =  17606; c^2 = grip / W =   240 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  5868 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   170 permille (6000 at rest)
+  round  2500: c00 =  102473, each ii slot =    9093 (the chosen -c00 / 12 would be   -8539), grip =  18686; c^2 = grip / W =   177 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  6228 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   160 permille (6000 at rest)
+  round  3000: c00 =  140066, each ii slot =    9593 (the chosen -c00 / 12 would be  -11672), grip =  19686; c^2 = grip / W =   137 permille (1/6 = 167 at rest); c^2 / N^2 = grip / rest =  6562 permille (167 at rest): light's Mesh in beats^2 = rest / grip =   152 permille (6000 at rest)
+  reading: the written push raises the grips where the matter is (gamma < 0 by P2's own reading, ii = +c00/12 -> gamma = -1), and in the clicks (lengths from light, time from the clock) the Mesh shortens: a contraction, light racing the clocks
+
+== A4. two hands a continuum reading cannot tell apart: p = -1 and p = +1 at a = 0 (|p| / W = 1 / 3000 of a notch per round), with the spring, 3000 rounds
+  p = -1: W at rounds 0, 1000, 2000, 3000: [3000, 3000, 3000, 3296]; the hand's count ranged over [-1, 1]
+  p = +1: W at rounds 0, 1000, 2000, 3000: [3000, 3000, 3000, 3000]; the hand's count ranged over [0, 0]
+  reading: the stride is floor(p / W), so p = -1 is a hand moving one notch down each round until the spring returns it: a one-notch relaxation swing whose source is 2W per moving round whatever its p-energy; p = +1 stands
+== B1. gamma read on the metric term 5's written push makes (the uniform swing of t13 probe 2 / check A)
+  at round 126 the push has made c00 = 606, each ii slot = 524 (grip 1548); the chosen -c00 / 12 would be -50
+  laid still on the ring of 6: the clock 704 -> 773 rounds for 60 sign changes (period^2 ratio 1205 permille), light 455 -> 280 (378 permille); light's slowing over the clock's, 1 + gamma = -3035 permille (P2's laid -c00/12 gave 2490, 0 gave 1000, +c00/12 gave about 0)
+  reading: on the metric the act's own push makes, light speeds up where the clock slows: gamma well below -1; the gamma = 1 of P2 is on slots laid by hand with the opposite sign
+
+== B2. the laid -c00 / 12 at a small depth against P2's c00 = 600, with 600 sign changes: the slot form's own law 2 / (1 - u)
+  c00 = 60 (u = 20 permille), ii = -5: clock period^2 ratio 1020 permille (law 1 + u = 1020), light 1041 (law (1 + u) / (1 - u) = 1040); 1 + gamma read 2050 permille, the slot form's 2 / (1 - u) = 2040
+  c00 = 600 (u = 200 permille), ii = -50: clock period^2 ratio 1202 permille (law 1 + u = 1200), light 1503 (law (1 + u) / (1 - u) = 1500); 1 + gamma read 2490 permille, the slot form's 2 / (1 - u) = 2500
+  reading: P2's 2.49 at c00 = 600 is not 'about 2' but the slot form's own 2 / (1 - u) at u = 0.2; the first-order gamma = 1 shows only at small u
+== C1. the static Poisson well a source S (p00 counts a round at one site, its mean removed) digs on this torus: grip Lap c = -(S delta - S / N)
+  Jacobi relaxation in integers scaled by 10^6, 6000 sweeps
+  S =    300 a round: well (centre less far) = 225 / 1000 of a notch of c00
+  S =   3000 a round: well (centre less far) = 2259 / 1000 of a notch of c00
+  S = 300000 a round: well (centre less far) = 225950 / 1000 of a notch of c00
+  reading: t13's lump pushes about 300 a round through T_d = 1000 (measured below), so its static well is well under one notch: nothing a whole count can show
+
+== C2. probe 3's run: the quoted well against the spread of c00 away from the lump, the push's total, and where the hand's energy is
+  round | lump - far | c00 spread off the lump (max - min) | board mean c00 | sum J00 / T_d this round (all sites) | at the lump | share of sum p^2 (the hand's) within dz <= 1 permille | xx at lump | xx far | the hand's 2E on the board: sum p^2 / W + sum g a^2 + sum grip (delta a)^2 | sum p (kept)
+      0 |      0 |      0 |       0 |     1200 |   1200 | 1000 |     0 |     0 |       300000 = 300000 + 0 + 0 | 30000
+     10 |      1 |      0 |       0 |      830 |     30 |  915 |     0 |     0 |       644259 = 230459 + 37800 + 376000 | 34830
+     25 |      0 |      0 |       0 |     2960 |    506 |  191 |     0 |     0 |      1608864 = 1102034 + 67830 + 439000 | 312450
+     50 |     -1 |      4 |      -3 |     3923 |    193 |  280 |     0 |     0 |      2964107 = 1192157 + 208950 + 1563000 | 248400
+    100 |     -9 |      8 |       5 |     7057 |    101 |  180 |     0 |     0 |      5009884 = 2204774 + 292110 + 2513000 | 82290
+    200 |      6 |     10 |     183 |    16933 |    449 |  170 |    -1 |    -4 |      9334304 = 4670734 + 360570 + 4303000 | -6750
+    400 |    -14 |     41 |    1691 |    24752 |    935 |  143 |    39 |    35 |     13057728 = 6999448 + 476280 + 5582000 | 574320
+    800 |    -12 |     51 |   14406 |    55941 |    834 |  128 |   214 |   212 |     24327683 = 14723813 + 660870 + 8943000 | 1512810
+   1200 |    -82 |     75 |   51359 |    75176 |   3621 |  117 |   253 |   239 |     29694029 = 20389489 + 624540 + 8680000 | 3311040
+   1500 |    -50 |     63 |   99031 |    56268 |   3656 |  307 |   209 |   217 |     29110754 = 16887324 + 1046430 + 11177000 | 7641660
+  reading: the hand's energy leaves the centre in tens of rounds (nothing binds it in space: the spring is a potential in a, the Mesh spreads a as a massive wave), the quoted 'well' is of the size of the site-to-site spread of the 00 wave, the hand's energy on the board grows (the drift a+ = a + floor(p / W) moves a count a whole notch wherever p < 0, however small), and the total push is that grown energy, not the lump's
+== D. <4K - 2V> against the swing's energy E on the engine's act, the sum form, at W = 3 x 10^7
+  harmonic, V = g a^2 / 2 (omega^2 = 1/10): over 20000 rounds the count ranged over [-1019, 1019], the largest stride 322; <4K - 2V> / E = 1024 permille
+  quartic, V = k a^4 / 4 (3 k a0^2 / W = 1/10): over 20000 rounds the count ranged over [-1012, 1012], the largest stride 132; <4K - 2V> / E = 2034 permille
+  reading: the identity 'active mass = energy' is the harmonic spring's K-bar = V-bar; a quartic hand sources twice its energy. P3 holds for term 6's spring alone and not for G3's vertex
+== E1. the probe's scale (t13 probe 2 as shipped)
+  W = 3000, g = 210 (omega^2 = g / W = 70 permille), T_d = 1000, stride 10 (amplitude about 37 notches)
+  round | W | W / W0 permille | 2E = p+^2 / W + g a a+ | (2E)^2 W against the start, permille (1000 if adiabatic) | <J00> / <2E> over the last window, permille | the hand's largest |stride| in the window
+      0 |      3000 |   1000 |       300000 |   1000 |    n/a | 0
+    500 |     10714 |   3571 |       119610 |    567 |   1019 | 10
+   1000 |     26807 |   8935 |        45756 |    207 |    946 | 3
+   1500 |     47041 |  15680 |        90590 |   1429 |   1093 | 1
+   2000 |     73178 |  24392 |        34897 |    330 |   1481 | 1
+   2500 |    105473 |  35157 |       117996 |   5438 |   1475 | 1
+   3000 |    143066 |  47688 |        94200 |   4701 |   1077 | 1
+
+== E2. the large scale: the same omega^2, the floor a part in 2000 of the swing, T_d scaled so W moves at a like pace
+  W = 3000000, g = 210000 (omega^2 = g / W = 70 permille), T_d = 10000, stride 530 (amplitude about 2000 notches)
+  round | W | W / W0 permille | 2E = p+^2 / W + g a a+ | (2E)^2 W against the start, permille (1000 if adiabatic) | <J00> / <2E> over the last window, permille | the hand's largest |stride| in the window
+      0 |   3000000 |   1000 | 842700000000 |   1000 |    n/a | 0
+    500 |   6310889 |   2103 | 586336665772 |   1018 |   1005 | 532
+   1000 |  14615449 |   4871 | 389066558803 |   1038 |   1034 | 304
+   1500 |  26224743 |   8741 | 289170537564 |   1029 |    975 | 159
+   2000 |  40278051 |  13426 | 231001213303 |   1008 |   1046 | 104
+   2500 |  56288013 |  18762 | 197945906595 |   1035 |    922 | 75
+   3000 |  73933338 |  24644 | 166140439392 |    957 |   1019 | 59
+
+== E3. the large scale, a slower wind (T_d ten times larger), to see the invariant where W moves slowly
+  W = 3000000, g = 210000 (omega^2 = g / W = 70 permille), T_d = 100000, stride 530 (amplitude about 2000 notches)
+  round | W | W / W0 permille | 2E = p+^2 / W + g a a+ | (2E)^2 W against the start, permille (1000 if adiabatic) | <J00> / <2E> over the last window, permille | the hand's largest |stride| in the window
+      0 |   3000000 |   1000 | 842700000000 |   1000 |    n/a | 0
+   1000 |   4381501 |   1460 | 702469610617 |   1014 |   1013 | 533
+   2000 |   8120705 |   2706 | 510341958140 |    992 |   1007 | 403
+   3000 |  13600009 |   4533 | 396606550700 |   1004 |   1002 | 251
+   4000 |  20411910 |   6803 | 317192635396 |    963 |   1015 | 170
+   5000 |  28289781 |   9429 | 266065697208 |    940 |   1017 | 124
+   6000 |  37062132 |  12354 | 233685953002 |    950 |    966 | 97
+  reading: where the floor is small the invariant holds and the energy drains; at the probe's scale it does not: the hand's energy is held up by the drift's rounding, and what winds W is not the swing's energy

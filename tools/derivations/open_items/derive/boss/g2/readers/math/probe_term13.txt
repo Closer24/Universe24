@@ -1,0 +1,25 @@
+== 1. probe 1's period^2 ratios against W / rest and against the discrete oscillator's own law 4 sin^2 (omega / 2) = g / W
+  (to the next order, period^2 goes as (12 W - g) / (12 rest - g), not W / rest)
+  W =  1 rest: measured 1000 permille; W / rest 1000; (12 W - g) / (12 rest - g) 1000; one round's resolution 4 permille
+  W =  2 rest: measured 2000 permille; W / rest 2000; (12 W - g) / (12 rest - g) 2005; one round's resolution 6 permille
+  W =  4 rest: measured 4008 permille; W / rest 4000; (12 W - g) / (12 rest - g) 4017; one round's resolution 9 permille
+  W =  8 rest: measured 8027 permille; W / rest 8000; (12 W - g) / (12 rest - g) 8041; one round's resolution 12 permille
+  W = 16 rest: measured 16068 permille; W / rest 16000; (12 W - g) / (12 rest - g) 16088; one round's resolution 17 permille
+
+== 2. probe 2's swing: the 00 source's mean against the matter's energy, by windows of 500 rounds
+  window      W at end   mean 00 push   mean 2E (p^2/W + g a^2)   push / 2E   rounds with a stride of -1 from |p| < W   their share of the push   adiabatic 2E (from the start, 2E0 sqrt(rest / W))
+      1-  500      10714         164134                   163136     1006 permille     48 of 500        8 permille     158747
+    501- 1000      26807          56013                    59442      942 permille    159 of 500      419 permille     100359
+   1001- 1500      47041          57103                    52125     1095 permille    172 of 500      849 permille      75760
+   1501- 2000      73178          78895                    53415     1477 permille    129 of 500      727 permille      60742
+   2001- 2500     105473          69716                    47081     1480 permille     74 of 500      688 permille      50595
+   2501- 3000     143066          57172                    53124     1076 permille     51 of 500      830 permille      43442
+  the text: '4K - 2V averages to the swing's energy'; the push is 2 (4K - 2V) in the probe's doubled units, so push / 2E = 1000 permille is the claim
+
+== 3. probe 3's well (lump - far), sampled every 25 rounds: does it settle, or swing?
+  the well at rounds 0, 25, ..., 1500: [0, 0, -1, -5, -9, 4, -6, 7, 6, -6, -8, -2, 8, -28, -9, -23, -14, 10, -19, 15, 27, 12, 4, -2, -25, -25, 14, -1, 44, -14, -49, -23, -12, -33, 14, 4, 8, -6, -31, 11, -54, 5, -25, -11, 64, -89, -29, 71, -82, 19, 2, 50, 15, -39, 43, 45, -57, -38, -29, -63, -50]
+  rounds 0-475: the well's least -28, greatest 15, swing 43; the mean c00 at the window's end 2806
+  rounds 500-975: the well's least -49, greatest 44, swing 93; the mean c00 at the window's end 26760
+  rounds 1000-1475: the well's least -89, greatest 71, swing 160; the mean c00 at the window's end 94445
+  at round 1500: W at the lump 101997, far 102047; the two clocks' N^2 ratio W_far / W_lump = 1000 permille (1000 is no redshift); at round 500 it was 995 permille from the text's own numbers
+  the well swings about 0 with a width of tens and does not settle; the redshift between the two clocks fades as the mean grows: 'two clocks on one board keep their ratio' is not what the numbers say

@@ -1,0 +1,22 @@
+== 1. the swap of the two stride planes: monomials that pass the text's parity rule (b) and still depart
+  00 <- sigma_b(A1)^2 alone (no sigma_a partner): parity rule (b) says holds; departs at round back 1, rows [6]
+  00 <- sigma_a(A1)^2 alone: parity rule (b) says holds; departs at round back 1, rows [6]
+  00 <- sigma_b(T1 x) sigma_a(T1 y) alone (x != y, one ordering): parity rule (b) says holds; departs at round back 1, rows [6]
+  0x <- sigma_b(A1) D_x(A1) alone (no sigma_a partner): parity rule (b) says holds; departs at round back 1, rows [7]
+  control: 00 <- sigma_b(A1)^2 + sigma_a(A1)^2 (the pair): parity rule (b) says holds; departs at round back None, rows []
+  control: 00 <- sigma_b(T1 x) sigma_a(T1 y) + sigma_b(T1 y) sigma_a(T1 x): parity rule (b) says holds; departs at round back None, rows []
+  control: 00 <- sigma_b(A1) sigma_a(A1) alone (its own swap image): parity rule (b) says holds; departs at round back None, rows []
+  (at the first round the stride in and the stride out differ at 350 of 360 matter gears: the swap is not the identity)
+
+== 2. hypothesis (c) as written says the reads 'land' on even rows; what matters is which rows are read
+  the 00 slot (even) read into every other row, the odd 0i rows [7, 8, 9] among the targets (the text's own M5 lay): departs at round back None
+  the odd 0y row read into the even A1 row's teeth (one read, factor 1): departs at round back 1, rows [5, 6, 7, 8, 9]
+  the even yy row read into the odd 0x row's teeth (depth 2, three carries): departs at round back None
+
+== 3. the run back where W reaches 1 (small teeth; the text measured W in [2816, 3208] only)
+  rest 4: 37 rounds within the promise (W of the matter rows in [1, 1255], 1668 matter site-rounds at W = 1); those rounds forth and back bit for bit: True
+  rest 4: 33 rounds within the promise (W of the matter rows in [1, 3275], 1422 matter site-rounds at W = 1); those rounds forth and back bit for bit: True
+  rest 3: 40 rounds within the promise (W of the matter rows in [1, 90], 2208 matter site-rounds at W = 1); those rounds forth and back bit for bit: True
+
+== 4. (W - 1 - p) div W = -(p div W) for every whole p at every W >= 1, and fails at W <= 0 (the text's load-bearing line)
+  misses per W over p in [-50, 50]: {-3: 67, -2: 101, -1: 101, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0}

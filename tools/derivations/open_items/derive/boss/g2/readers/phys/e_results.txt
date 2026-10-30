@@ -1,0 +1,33 @@
+== E1. the probe's scale (t13 probe 2 as shipped)
+  W = 3000, g = 210 (omega^2 = g / W = 70 permille), T_d = 1000, stride 10 (amplitude about 37 notches)
+  round | W | W / W0 permille | 2E = p+^2 / W + g a a+ | (2E)^2 W against the start, permille (1000 if adiabatic) | <J00> / <2E> over the last window, permille | the hand's largest |stride| in the window
+      0 |      3000 |   1000 |       300000 |   1000 |    n/a | 0
+    500 |     10714 |   3571 |       119610 |    567 |   1019 | 10
+   1000 |     26807 |   8935 |        45756 |    207 |    946 | 3
+   1500 |     47041 |  15680 |        90590 |   1429 |   1093 | 1
+   2000 |     73178 |  24392 |        34897 |    330 |   1481 | 1
+   2500 |    105473 |  35157 |       117996 |   5438 |   1475 | 1
+   3000 |    143066 |  47688 |        94200 |   4701 |   1077 | 1
+
+== E2. the large scale: the same omega^2, the floor a part in 2000 of the swing, T_d scaled so W moves at a like pace
+  W = 3000000, g = 210000 (omega^2 = g / W = 70 permille), T_d = 10000, stride 530 (amplitude about 2000 notches)
+  round | W | W / W0 permille | 2E = p+^2 / W + g a a+ | (2E)^2 W against the start, permille (1000 if adiabatic) | <J00> / <2E> over the last window, permille | the hand's largest |stride| in the window
+      0 |   3000000 |   1000 | 842700000000 |   1000 |    n/a | 0
+    500 |   6310889 |   2103 | 586336665772 |   1018 |   1005 | 532
+   1000 |  14615449 |   4871 | 389066558803 |   1038 |   1034 | 304
+   1500 |  26224743 |   8741 | 289170537564 |   1029 |    975 | 159
+   2000 |  40278051 |  13426 | 231001213303 |   1008 |   1046 | 104
+   2500 |  56288013 |  18762 | 197945906595 |   1035 |    922 | 75
+   3000 |  73933338 |  24644 | 166140439392 |    957 |   1019 | 59
+
+== E3. the large scale, a slower wind (T_d ten times larger), to see the invariant where W moves slowly
+  W = 3000000, g = 210000 (omega^2 = g / W = 70 permille), T_d = 100000, stride 530 (amplitude about 2000 notches)
+  round | W | W / W0 permille | 2E = p+^2 / W + g a a+ | (2E)^2 W against the start, permille (1000 if adiabatic) | <J00> / <2E> over the last window, permille | the hand's largest |stride| in the window
+      0 |   3000000 |   1000 | 842700000000 |   1000 |    n/a | 0
+   1000 |   4381501 |   1460 | 702469610617 |   1014 |   1013 | 533
+   2000 |   8120705 |   2706 | 510341958140 |    992 |   1007 | 403
+   3000 |  13600009 |   4533 | 396606550700 |   1004 |   1002 | 251
+   4000 |  20411910 |   6803 | 317192635396 |    963 |   1015 | 170
+   5000 |  28289781 |   9429 | 266065697208 |    940 |   1017 | 124
+   6000 |  37062132 |  12354 | 233685953002 |    950 |    966 | 97
+  reading: where the floor is small the invariant holds and the energy drains; at the probe's scale it does not: the hand's energy is held up by the drift's rounding, and what winds W is not the swing's energy

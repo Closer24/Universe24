@@ -1,0 +1,9 @@
+== 1. the 00 slot's own standing wave against light's, at rest and in a well (the 00 row's teeth at rest, every other row's W = rest + c00)
+  c00 = 0 (W = 1 rest for light): the 00 wave's 40 sign changes in 302 rounds, light's in 302: the 00 wave's speed over light's, squared, 1000 permille
+  c00 = 3000 (W = 2 rest for light): the 00 wave's 40 sign changes in 302 rounds, light's in 428: the 00 wave's speed over light's, squared, 2008 permille
+  c00 = 9000 (W = 4 rest for light): the 00 wave's 40 sign changes in 302 rounds, light's in 607: the 00 wave's speed over light's, squared, 4039 permille
+  P5's 'runs at light's speed' holds at rest alone: in a well the 00 wave keeps c^2 = grip / rest while light slows to grip / W
+
+== 2. the drive under the flipped tooth: carry(J, T_d, T_d - 1 - r_d+) against the forward quotient (an even row), and carry(-J, T_d, r_d+) (an odd row)
+  of 9718 cases: even row (J kept, tooth flipped): the quotient the same 9718, the remainder T_d - 1 - r_d 9718; odd row (J negated, tooth kept): the quotient negated 9718, the remainder r_d 9718
+  so the proof sketch's step 3, 'the drive's flipped tooth gives the quotient's negative', is the odd row's case with the tooth unflipped; on an even row the quotient is the same and the gear's flipped dividend does the negating

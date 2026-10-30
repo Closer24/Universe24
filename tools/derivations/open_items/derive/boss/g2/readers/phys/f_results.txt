@@ -1,0 +1,6 @@
+== F. W at rounds 0, 2000, ..., 12000 for hands of very different energy (2E0 = p0^2 / W)
+  p0 =     -1 (2E0 =      0): W = [3000, 3000, 4296, 7010, 11010, 15010, 19010]
+  p0 =   -300 (2E0 =     30): W = [3000, 4138, 8138, 13877, 19877, 25877, 31877]
+  p0 =  -3000 (2E0 =   3000): W = [3000, 4943, 16012, 33299, 51299, 69299, 87299]
+  p0 =  30000 (2E0 = 300000): W = [3000, 73178, 233239, 441970, 664342, 891051, 1119051]
+  reading: once a hand's swing has fallen to the notch (strides 0 and 1) its source is set by W and the notch, not by the energy it was laid with; the growth then is the act's at sub-notch strides, which no continuum energy argument describes
