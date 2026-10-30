@@ -1,0 +1,34 @@
+(a) W = 90977140554674334000000, the grip 15162856759112389000000; term 6: g = 227442851386684, kappa = 5686071284667145875000, lam = 4 f2 = 4548860 (2 kappa lam >= g^2: True), n = 1000000
+    the plan empty: the pitch of the fine teeth, light 15162856759112389000000, matter 15162856759112389000000, the held count 15162856759112389000000 (W over the pitch: 6, 6, 6 values)
+    term 6: the pitch of the fine teeth, light 15162856759112389000000, matter 4, the held count 2 (W over the pitch: 6, 22744285138668583500000, 45488570277337167000000 values)
+(b) the fold d = V mod W:
+    the plan empty: 6 distinct values in 86400 draws; chi-square of the tenths on 9 57605.072; in one half, two rounds in a row 499, one Mesh apart 499 per mille
+    term 6: 86400 distinct values in 86400 draws; chi-square of the tenths on 9 2.299; in one half, two rounds in a row 500, one Mesh apart 500 per mille
+(c) Born, part 0 of sizes S1 and S2, term 6:
+    S1 = 1, S2 = 1: the law's d = V mod L: part 0 in 86400 of 86400 (expected 43200), z^2 86400.000;
+      the fold at W, cross products: part 0 in 43209 of 86400 (expected 43200), z^2 0.003; its partition noise 959 per mille of the binomial
+    S1 = 1, S2 = 2: the law's d = V mod L: part 0 in 28657 of 86400 (expected 28800), z^2 1.065;
+      the fold at W, cross products: part 0 in 28787 of 86400 (expected 28800), z^2 0.008; its partition noise 1013 per mille of the binomial
+    S1 = 3, S2 = 7: the law's d = V mod L: part 0 in 34391 of 86400 (expected 25920), z^2 3954.907;
+      the fold at W, cross products: part 0 in 25955 of 86400 (expected 25920), z^2 0.067; its partition noise 1007 per mille of the binomial
+    S1 = 1000000, S2 = 3000000: the law's d = V mod L: part 0 in 21611 of 86400 (expected 21600), z^2 0.007;
+      the fold at W, cross products: part 0 in 21611 of 86400 (expected 21600), z^2 0.007; its partition noise 1025 per mille of the binomial
+    S1 = 1000000000000000000000000000000, S2 = 3000000000000000000000000000000: the law's d = V mod L: part 0 in 86400 of 86400 (expected 21600), z^2 259200.000;
+      the fold at W, cross products: part 0 in 21611 of 86400 (expected 21600), z^2 0.007; its partition noise 1025 per mille of the binomial
+(c2) sizes read from the same state as V, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 at the Node-clock, the fold at W:
+    part 0 in 42837 of 86400 (expected 42802), z^2 0.108
+(c3) the draw only at the rounds where a Node-clock's swept area crosses a key (Omega = m_re p_im - m_im p_re):
+    14333 crossings; chi-square of the tenths of d on 9 9.734; Born on the state's sizes: part 0 in 7040 of 14333 (expected 7034), z^2 0.016
+(d) decision 29's dial, c one count a round, d = (c + V) mod L, sizes 1 and 1:
+    the plan empty, L = 70: with the dial, in one half two rounds in a row 505, one Mesh apart 508 per mille, partition noise 957; with c struck, partition noise 973 per mille
+    the plan empty, L = 1000: with the dial, in one half two rounds in a row 1000, one Mesh apart 1000 per mille, partition noise 0; with c struck, partition noise 0 per mille
+    the plan empty, L = 2000000: with the dial, in one half two rounds in a row 503, one Mesh apart 502 per mille, partition noise 996; with c struck, partition noise 996 per mille
+    term 6, L = 70: with the dial, in one half two rounds in a row 500, one Mesh apart 502 per mille, partition noise 940; with c struck, partition noise 968 per mille
+    term 6, L = 1000: with the dial, in one half two rounds in a row 501, one Mesh apart 500 per mille, partition noise 1024; with c struck, partition noise 1000 per mille
+    term 6, L = 2000000: with the dial, in one half two rounds in a row 500, one Mesh apart 494 per mille, partition noise 1032; with c struck, partition noise 1034 per mille
+(e) the run back, term 6:
+    the draw recomputed equal at 300 of 300 rounds back; the lay returns bit for bit: True
+(f) the 24: 24 turns; V at the image site equal at every site after a round: 24 of 24
+(g) the two hardest lays, term 6, the held count laid at n, d = V mod W:
+    a hot board, matter laid to 10 counts: 86400 distinct of 86400; chi-square 9.505; one half two rounds in a row 499; the part of 1 in 100 in 862 (expected 864), in two rounds running 13 (independent 8), partition noise 968
+    a cold board, one packet near 100 counts, read on its 27 Node-clocks: 10800 distinct of 10800; chi-square 12.238; one half two rounds in a row 502; the part of 1 in 100 in 127 (expected 108), in two rounds running 1 (independent 1), partition noise 1115

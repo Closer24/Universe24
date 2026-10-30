@@ -10,10 +10,12 @@
     and the square's slots' trace s1 + s2 + s3, which the push keeps at 0 and the carries may move;
 (f) the E family at a swing of 10^7 under (ii) and (iii), lam at the least whole bound and at 0;
 (g) a family of two parts, c the sum of both parts' squares: the beat of each part, and the pair at 10^7 under lam;
-(h) the held count's own E potential: the dimension of E's invariant forms of degree 2 to 6 under the 24 (a sum over
+(h) the held count's own E potential: the dimension of E's invariant forms of degree 0 to 9 under the 24 (a sum over
     the 24's matrices, ranks by fraction-free elimination); the act's three-leg table C[E, E -> E] not 0 and its
     cubic f(e) = (G e) . C(e, e) one of them; the lines where f is extreme at a fixed size, read off the Lagrange form
-    det[grad f, G e]; and on each line the E part of a T1 family's spring from C[E, T1 -> T1].
+    det[grad f, G e]; at gamma = 0 the five-leg term (e^T G e) f alone, on every whole point of one size, its least on
+    a line; and the E part of a T1 family's spring from C[E, T1 -> T1]: two of its three entries alike exactly on the
+    three lines, the sets compared point by point.
 
 Usage: python3 -I g3_kinds_and_parts.py <src of tensor24-review at 9751f91c1>
 """
@@ -28,7 +30,7 @@ from tensor24.engine import step  # noqa: E402
 from tensor24.runner import load as L  # noqa: E402
 
 W = 6 * 15162856759112389 * 1000 * 1000
-n, D, kappa = 10**6, W // 400, W // 16
+n, D, kappa = 10**6, carry(W, 400, 0)[0], carry(W, 16, 0)[0]
 g, _ = carry(D, n, 0)
 least = carry(g * g + 2 * kappa - 1, 2 * kappa, 0)[0]
 G = ((2, -1), (-1, 2))
@@ -98,7 +100,7 @@ for form, label in (("page", "(ii)"), ("gradient", "(iii)")):
         for lam, name in ((least, "the least lam"), (0, "lam 0")):
             seen, _, gone = run(form, mode, lam)
             out.append(f"{name} {'runs past 10^60 at round ' + str(gone) if gone else 'stays over 4,000 rounds'}")
-        print(f"    {label} mode ({mode[0] // 10**7}, {mode[1] // 10**7}): {'; '.join(out)}")
+        print(f"    {label} mode ({carry(mode[0], 10**7, 0)[0]}, {carry(mode[1], 10**7, 0)[0]}): {'; '.join(out)}")
 
 
 def two_parts(laid, lam, rounds=4000):
@@ -180,11 +182,11 @@ def rank(rows):
 
 
 dims = []
-for deg in range(2, 7):
+for deg in range(0, 10):
     images = [reynolds(a, deg - a, emats) for a in range(deg + 1)]
     dims.append(rank([[img.get((a, deg - a), 0) for a in range(deg + 1)] for img in images]))
-print(f"(h) E's invariant forms under the 24, degrees 2 to 6: {dims} (the form x^T G x, the cubic, its square's"
-      f" companion only at six legs)")
+print(f"(h) E's invariant forms under the 24, degrees 0 to 9: {dims}: x^T G x at two legs, the cubic f at three,"
+      f" (x^T G x)^2 at four, (x^T G x) f at five, (x^T G x)^3 and f^2 at six")
 
 inv = list(K.kinds(K.inverse(matrix)))
 tables = L.tables(held, inv, weight, K.projector)  # keyed (input, input, output), each (output, input, input)
@@ -238,7 +240,13 @@ for e in ((1, -1), (1, 2), (2, 1), (-1, 1), (-1, -2), (-2, -1)):
     print(f"    on the line through e = {e}: f = {f_act(list(e))}; the T1 family's E part diagonal {diagonal}, {d},"
           f" two alike {pair}")
 off = [(p, q) for p, q in itertools.product(range(-6, 7), repeat=2) if (p, q) != (0, 0)]
-three = sum(1 for p, q in off if len({spring_e[0][i][i] * p + spring_e[1][i][i] * q for i in range(3)}) == 3)
-on_lines = sum(1 for p, q in off if (p + q) * (2 * p - q) * (p - 2 * q) == 0)
-print(f"    on the 168 whole points off 0 with |e| up to 6: three different springs exactly off the three lines: {three}"
-      f" off, {on_lines} on, {three + on_lines == len(off)}")
+three = {(p, q) for p, q in off if len({spring_e[0][i][i] * p + spring_e[1][i][i] * q for i in range(3)}) == 3}
+on_lines = {(p, q) for p, q in off if (p + q) * (2 * p - q) * (p - 2 * q) == 0}
+print(f"    on the 168 whole points off 0 with |e| up to 6: three different springs on {len(three)}, the points off the three"
+      f" lines {len(off) - len(on_lines)}; the two sets are one: {three == set(off) - on_lines}")
+size = 3 * 231 * 231  # e^T G e / 2 = e1^2 - e1 e2 + e2^2 at the line point (231, -231)
+shell = [(p, q) for p in range(-480, 481) for q in range(-480, 481) if p * p - p * q + q * q == size]
+for sign in (1, -1):
+    five = min(shell, key=lambda e: sign * 2 * size * f_act(list(e)))
+    print(f"    gamma = 0 with the five-leg term {'+' if sign > 0 else '-'}(e^T G e) f alone, on the {len(shell)} whole points"
+          f" of one size: its least at {five}, on a line: {(five[0] + five[1]) * (2 * five[0] - five[1]) * (five[0] - 2 * five[1]) == 0}")

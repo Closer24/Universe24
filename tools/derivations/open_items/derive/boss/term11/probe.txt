@@ -1,0 +1,22 @@
+the giver's swept area at the lay 5000000000000000000000000000000; the key 714285714285714285714285714285 (odd); the birth (key - 1) div 2 = 357142857142857142857142857142
+1. The birth is the one tooth the flip leaves in place: flip(birth, key) = birth: True
+
+2. The forward run, 6000 rounds, the clicks pushing nothing:
+   rounds where the giver's area moved is not minus the taker's: 0 of 6000
+   rounds where the giver's click is not minus the taker's (the books, every round): 0 of 6000
+   the taker's clicks: 20 taken, 14 given back; its count from 0 to 7
+   rounds where key x the taker's count + (its tooth - the birth) is not the area moved into it: 0 of 6000
+
+3. The run back by the act alone, the click teeth flipped in the key by the mirror, no log read:
+   rounds whose gears return to the way out's: 6000 of 6000
+   rounds whose click teeth return to the way out's: 6000 of 6000; at the start, both at the birth: True
+   rounds where the mirrored tick's quotients are the way out's (the area at the now slot the mirror keeps): 6000 of 6000
+   the mutant, the click teeth not flipped by the mirror: rounds whose teeth return: 0 of 6000
+
+4. The birth, by every area from -3 keys to 3 keys at every key from 1 to 40 (a take and its give):
+   born at (key - 1) div 2: areas whose take and give are not opposite clicks: odd keys 0, even keys 120
+   born at key div 2: areas whose take and give are not opposite clicks: odd keys 0, even keys 120
+   born at 0: areas whose take and give are not opposite clicks: odd keys 2280, even keys 2400
+
+5. Born at 0 on the act (Animate's mutant), the same run: the giver's and the taker's clicks
+   rounds where the giver's count is not minus the taker's: 5999 of 6000
