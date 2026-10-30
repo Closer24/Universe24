@@ -304,9 +304,11 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     reading, named so, not a law. The middle form's prices: a still train books |A|/d of each change of the tie's
     energy, returned when the tie's energy returns; where one train is heavy most of its clicks are this
     back-and-forth, so the clicks' energy meaning holds over beats and in decays, not click by click; degrees above 4
-    need whole weights at one scale (OPEN); the hat's tie is degree 4 at weight 1. Unread by a pair, so not tonight's
-    build (NOT_CLOSED 29; its pair and the click's deriver, COUNT5's, with David). Also the lay's integers, f whole
-    and R fine together with the size's beat well below the teeth (David); the owner's word on a potential in the law
+    need whole weights at one scale (OPEN); the hat's tie is degree 4 at weight 1. David's background form's page
+    (6141992a2) was NOT PASSED by both its readers (David's 6535140258); its second text, with the middle form as the
+    hat's road, is pushed (toys-5 4cbece813) and back with its pair (David's 6535885172); not tonight's build
+    (NOT_CLOSED 29; its pair and the click's deriver, COUNT5's, with David). Also the lay's integers, f whole and R
+    fine together with the size's beat well below the teeth (David); the owner's word on a potential in the law
     (NOT_CLOSED 19).
   - Big Pic's word (#2187 6535643629 item 4): G3's eighth text's readers stand on every item. For the night, frame 6
     as built. The hat's corrected frame goes on Sofer's morning page: the held rows Mesh-less, the window 20 hat R^2
@@ -364,13 +366,13 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 - Choice: the gradient form, because it is the one stable light-matter vertex the readers found and the one the
   tables allow; alternative: a value vertex light-matter (tachyonic, refused).
 
-## 8. Term 9, the volume's notch [DRAFTED; "notch" CHOSEN]
+## 8. Term 9, the volume's notch [DERIVED: both its pairs passed it (David's 6535035694; Sofer's item 8); "notch" CHOSEN]
 
 - Form: V9 = 2 h c00^2 + h tr^2 as monomials of J's potential on every square train (David's page; load.notching).
 - Question: its size (the owner's), the pump of frame 1 at its swing.
 - Test: the board's mean held under a steady source (derive/boss/term9_edge: 23 million against 93 million at round
   400 without), 400 rounds back bit for bit.
-- Replaced by: David's pair's pass; the owner's word on h.
+- Replaced by: n/a, DERIVED; the owner's word on h.
 
 ## 9. Term 10, the shift and the shears: no reader (the price) [OPEN; NOT CLOSED 6]
 

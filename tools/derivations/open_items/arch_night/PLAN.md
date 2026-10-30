@@ -456,7 +456,9 @@ calibre condition).
     and 14/50, a rational point of the circle from (7, 1); whether law line 102's "any construction that finds one"
     reaches it is the owner's word (NOT_CLOSED 5).
   - Decision 40 (g), as Big Pic states it (#2187 6535643629 item 4): a hand that holds one quantum (D = 1) weighs W a
-    Node-clock, and a still hand in a hat weighs 0 and holds none; no frame on this act has both (NOT_CLOSED 19). The
+    Node-clock, and a still hand in a hat weighs 0 and holds none; no frame on this act has both (NOT_CLOSED 19).
+  - The owner's own word of 23:4x UTC, for Big Pic first, not ruled: the third click, which "chooses a path that no
+    one has chosen yet" (NOT_CLOSED 33), and a family with three hands (NOT_CLOSED 34); nothing in code tonight. The
     Boss lists them with the candidate's sha.
 - The hostile reader needs: the diff against the laws and section 4; the five worlds' records; the probes' outputs
   beside their probes in derive/boss/ (term11_pass, g3_frame, term5_books, term5_edge, term9_edge, drive_mirror,
