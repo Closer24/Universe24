@@ -1,6 +1,6 @@
 """Clock: every Node-clock made alike: the 24's tables, each train's rows, every gear's teeth and every Mesh's grip, each train's click tooth at its birth, and the setting's gears laid.
 Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s, T_k and T_d at 1; the key the universe file's CHOSEN integer, the click tooth born at (key - 1) div 2, the Spokes along one axis the divisor.
-Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth, its own at rest (the acyclic cut), its ii slots into each axis's grips; each train's area the cross of its two parts through its kinds' tables onto A1, the kind found by its character.
+Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth, its own at rest (the acyclic cut), its ii slots into each axis's grips, its 0i slots odd under the mirror, its 00 slot and ii trace on the notch's spring; each train's area the cross of its two parts through its kinds' tables onto A1, the kind found by its character, and the matter's four-vector squared through the same table onto the square's slots, the metric's push.
 Clicks: n/a: no number of the load reaches the clicks except through the act.
 """
 
@@ -246,6 +246,21 @@ def pushing(trains: Trains, c: Z, traces: Z, spokes: Z, strength: Z) -> tuple[Z,
     )
 
 
+def notching(trains: Trains, spokes: Z, strength: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
+    """Term 9, the volume's notch, as the monomials of J's potential: for every square train, 2 h c00 c00 and h c_ii c_jj over every ordered pair of its ii slots (h tr^2), h the strength CHOSEN in the universe file and the 2 the senses of an axis, so that the vertex law pushes the 00 slot back by -4 h c00 and each ii slot by -2 h tr while the E part and the shears get none; a train that is no square takes its monomials at the factor 0, its places wrapped."""
+    n, d = spokes.shape
+    senses, _ = carry(n, d, 0)
+    rows, axis = trains.size.sum(), np.arange(d, dtype=np.intp)
+    first, flag = trains.first.astype(np.intp), trains.square.astype(object) * strength
+    _, qii = carry(first[:, None] + 1 + d + axis[None, :], rows, 0)
+    one, two = np.broadcast_arrays(qii[:, :, None], qii[:, None, :])
+    legs_one = np.concatenate((first, one.reshape(-1).astype(np.intp)))
+    legs_two = np.concatenate((first, two.reshape(-1).astype(np.intp)))
+    factor = np.concatenate((senses * flag, np.repeat(flag, d * d)))
+    unit = 0 * legs_one - 1
+    return factor, (legs_one, legs_two, unit, unit)
+
+
 class Loaded(NamedTuple):
     """What the load makes of the universe and the setting: the trains' rows, J's potential, the state laid, the click's cross with its key, the metric's push."""
 
@@ -265,17 +280,16 @@ class Loaded(NamedTuple):
 def load(
     universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: Z, square: Z
 ) -> tuple[Loaded, list[str]]:
-    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds no monomial, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3); every train's key the universe file's one CHOSEN integer (its unit the train card's, G3), its click tooth born at (key - 1) div 2; the metric's push laid at the file's CHOSEN strength."""
+    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds the notch's monomials alone, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3); every train's key the universe file's one CHOSEN integer (its unit the train card's, G3), its click tooth born at (key - 1) div 2; the metric's push and the notch laid at the file's CHOSEN strengths."""
     labels, dims, reads = vocabulary(kinds, square)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
-    none = np.empty(0, dtype=np.intp)
     traces, _, _ = reads
     side = c.shape[-1]  # the axes' cube the tables stand in: the board's axes
     senses, _ = carry(len(star(side)), side, 0)  # the Spokes along one axis, its + and its -
     key = np.full((len(trains), 1), universe["chosen"]["key"], dtype=object)  # one key for the board
     birth, _ = carry(key - 1, senses, 0)  # the one tooth the mirror leaves in place
     state, laid = lay(setting.get("gears", []), trains, sites, birth)
-    potential = (none.astype(object), (none, none, none, none))
+    potential = notching(trains, star(side), universe["chosen"]["notch"])
     push = pushing(trains, c, traces, star(side), universe["chosen"]["push"])
     return Loaded(trains, potential, state, clicking(trains, c, traces, key), push), laid
 

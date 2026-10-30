@@ -31,14 +31,14 @@ def edits():
 
         return name, edit
 
-    whole = "a whole number of at least 1, not None"
+    whole, low = "a whole number of at least 1, not None", "a whole number of at least 0, not None"
     gone = {  # every key the format requires, each named where it stands when it is absent
         ("universe", "version"): "universe.version: 1, not None",
         ("universe", "integers"): "universe.integers: a mapping, not NoneType",
         ("universe", "trains"): "universe.trains: a list of one train or more",
         ("universe", "chosen"): "universe.chosen: a mapping, not NoneType",
         ("universe", "chosen", "key"): f"universe.chosen.key: {whole}",
-        ("universe", "chosen", "push"): "universe.chosen.push: a whole number of at least 0, not None",
+        **{("universe", "chosen", k): f"universe.chosen.{k}: {low}" for k in ("push", "notch")},
         **{("universe", "integers", k): f"universe.integers.{k}: {whole}" for k in ("den", "full_rate")},
         ("universe", "trains", 0, "name"): f"{train}.name: a label, not None",
         ("universe", "trains", 0, "kinds"): f"{train}.kinds: a list of the kinds' labels, not None",
@@ -55,7 +55,7 @@ def edits():
             "shape",
         ): "piece.shape: one side per axis, each a whole number of at least 1, not None",
         ("setting", "version"): "setting.version: 1, not None",
-        ("setting", "ticks"): "setting.ticks: a whole number of at least 0, not None",
+        ("setting", "ticks"): f"setting.ticks: {low}",
     }
     nulls = {
         ("setting", "gears"): "setting.gears: a list of rows, not NoneType"

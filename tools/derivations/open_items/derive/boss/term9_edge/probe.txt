@@ -1,0 +1,9 @@
+Term 9 on the edge (step.act), whole numbers: the example universe on a cube of 3, 12 rows at 27 sites
+the rest teeth 90977140554674334000000; the push's strength 15162856759112389000, the notch's h 2274428513866858350 (4 h / W = 1 / 10000)
+(a/b) a steady source (the gliding hand), no notch: the 00 slot's board sum at round 100: 5890320; round 200: 23444640; round 300: 52662960; round 400: 93545280; its least 1161, its most 93545280
+(a/b) a steady source (the gliding hand), the notch: the 00 slot's board sum at round 100: 5411124; round 200: 16571034; round 300: 23219433; round 400: 19243926; its least 1161, its most 23328000
+(c) the 00 slot laid uniform at 10^9, no source, 400 rounds: the read row's count from 1000000000 to -649846893 (least -1000006654, most 1000000000, 1 sign changes; alike at every site: True)
+(c) the ii trace laid uniform at 10^9, no source, 400 rounds: the read row's count from 1000000000 to 191557260 (least -1000018745, most 1000000000, 2 sign changes; alike at every site: True)
+(c) the E part, xx - yy laid uniform at 10^9, no source, 400 rounds: the read row's count from 1000000000 to 1000000000 (least 1000000000, most 1000000000, 0 sign changes; alike at every site: True)
+(c) the T2 part, yz laid uniform at 10^9, no source, 400 rounds: the read row's count from 1000000000 to 1000000000 (least 1000000000, most 1000000000, 0 sign changes; alike at every site: True)
+(d) 400 rounds out and 400 back with the notch and the source: the lay returns bit for bit: True

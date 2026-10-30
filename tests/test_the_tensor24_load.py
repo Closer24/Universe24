@@ -46,7 +46,7 @@ def made():
 
 
 def universe(trains=TRAINS):
-    return {"trains": copy.deepcopy(trains), "chosen": {"key": 1, "push": 0}}
+    return {"trains": copy.deepcopy(trains), "chosen": {"key": 1, "push": 0, "notch": 0}}
 
 
 def loaded(made, u, gears=()):
@@ -159,7 +159,9 @@ def test_the_load_lays_every_gear_on_its_trains_rows_or_names_each_refusal_and_r
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
     ks, c, square = made
     held, found = load(universe(), {}, SITES, ks, c, square)
-    assert found == [] and not any(len(x) for x in (held.potential[0], *held.potential[1]))
+    assert (
+        found == [] and not held.potential[0].any()
+    )  # the notch's monomials alone, at the factor 0 here
     _, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
     assert len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
 

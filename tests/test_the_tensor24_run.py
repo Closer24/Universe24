@@ -75,7 +75,7 @@ def geared_alike(held, laid):
     alike = all(len(set(np.broadcast_to(x, (rows, 1))[:, 0].tolist())) == 1 for x in laid.gearing[:-1])
     unit = np.eye(rows, dtype=int)[[t.first for t in held.trains if t.square][0]]  # the 00 slot's row
     read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
-    grips, plan = len(set(laid.grip.ravel().tolist())) == 1, all(len(x) == 0 for x in laid.plan)
+    grips, plan = len(set(laid.grip.ravel().tolist())) == 1, not laid.plan.factor.any()  # no notch
     return alike and grips and plan and (read == np.outer(ones - unit, unit)).all()
 
 
