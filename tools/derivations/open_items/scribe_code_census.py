@@ -2,7 +2,7 @@
 By an AST scan of every Python file of a tree it counts, per file: float literals, true divisions (a pathlib join is spared), powers whose exponent is no integer literal, imports of math, random, fractions, decimal,
 statistics, cmath, scipy, sympy or mpmath, calls of a root, an exponential, a logarithm, a circular function, round, float or pow, and numpy float dtypes (law: **No float anywhere in the system**, line 100,
 the probes too; **No circularity that makes a phenomenon happen**, line 102). A count is a finding to read, not a verdict: a test may lay a float on purpose to see it refused.
-Usage: python -I scribe_code_census.py <tree> [<tree> ...]    (LINES=1 in the environment prints each hit with its line)"""
+Usage: python -I scribe_code_census.py <tree> [<tree> ...]    (LINES=1 in the environment prints each hit with its line; run it with the repo's Python 3.14, since an older Python reports a file in the 3.14 syntax as unparsed, and the count of unparsed files is printed)"""
 
 import ast
 import sys
@@ -26,7 +26,7 @@ class Tally(Counter):
         DETAIL.append((str(self.path), getattr(node, "lineno", 0), key))
 
 
-PATHISH = ("path", "root", "dir", "here", "repo", "home", "base", "folder", "tmp", "parent", "file")
+PATHISH = ("path", "root", "dir", "here", "repo", "home", "base", "folder", "tmp", "parent", "file", "examples", "src")
 
 
 def path_join(node: ast.BinOp) -> bool:
@@ -58,7 +58,8 @@ def scan(path: Path) -> Counter:
     try:
         tree = ast.parse(path.read_text(encoding="utf-8"))
     except (SyntaxError, UnicodeDecodeError, ValueError):
-        c.note("unparsed", node)
+        c["unparsed"] += 1
+        DETAIL.append((str(path), 0, "unparsed"))
         return c
     for node in ast.walk(tree):
         if isinstance(node, ast.Constant) and isinstance(node.value, float):
@@ -107,7 +108,8 @@ def main(trees: list[str]) -> None:
             by_dir[top].update(c)
     total_files = sum(files_by_dir.values())
     total_bad = sum(len(v) for v in bad_by_dir.values())
-    print(f"files {total_files}; files with a hit {total_bad}")
+    unparsed = sum(1 for _, _, key in DETAIL if key == "unparsed")
+    print(f"files {total_files}; files with a hit {total_bad}" + (f"; unparsed {unparsed}" if unparsed else ""))
     for top in sorted(files_by_dir):
         n, b = files_by_dir[top], len(bad_by_dir[top])
         if b:
