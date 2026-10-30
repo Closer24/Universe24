@@ -13,7 +13,7 @@ few seconds.
 - Part B runs the same world with the centred tooth, in the probe alone. Solution24's step 8: a local run, never pushed
   as code.
 
-**Status: DRAFTED,** for a hostile mathematician and a hostile physicist.
+**Status: withdrawn as the mend.** Its physicist refused it and its mathematician agreed with changes (READERS_1.md). Its 24 hold only while the teeth keep their parity, which the law's line 100 forbids any act to lean on ("The teeth count has no parity condition"). The mend from above is the tooth on the edge between the double Node-clock's two slots, in one dial of both slots' teeth: d_t (W d_t a) = F with W on the edge, the term step.py says the act drops and G2 owes. That piece is the Boss's deriver's. This page stands as the step that found the sign flip as a negation.
 
 ## The answer
 
