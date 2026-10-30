@@ -14,9 +14,10 @@ pushed), the first hostile code reader's items folded (NOT_CLOSED 11, 25, 29 to 
 ROOM rises listed for the owner's word before main (section 0). At 21:5x UTC: node-live 36effecd5 (B3 the click world,
 A3 term 13 on the edge), M11 on the owner's list. At 22:0x UTC from #2187: term 5 DERIVED by the method; k0 the star's
 unit (Big Pic); the moving clock's road for the owner's morning (NOT_CLOSED 2); David's background form as the hat's
-road (NOT_CLOSED 29).
+road (NOT_CLOSED 29). At 22:2x UTC: node-live 87f88322d (B5 the gradient vertex and the mesh world; the first reader's
+minors all folded); the second hostile code reader reads f72067cdf..87f88322d.
 
-Statuses: BUILT/main (main 2bcf315b6), BUILT/live (node-live f72067cdf, worktree scratchpad/live), DERIVED (both
+Statuses: BUILT/main (main 2bcf315b6), BUILT/live (node-live 87f88322d, worktree scratchpad/live), DERIVED (both
 readers passed; to build), DRAFTED (readers in work), FRAME (a lawful placeholder with its CHOSEN strengths), OPEN
 (no lawful form tonight; the price taken is named in NOT_CLOSED.md). Paths are the worktree's. "Decoder reads"
 says what the record and the ledger carry of the part, which is all the decoder may read.
@@ -34,19 +35,23 @@ says what the record and the ledger carry of the part, which is all the decoder 
   DONE at 19:1x UTC: f5e6486c8 (frame 237, engine 251, load 137); the Boss set the night's ROOM ceilings (frame
   240, engine 300, load 140, run 300, files 310, decoder 600; load raised to 155 at 20:4x UTC for B2b's and B5's
   tests alone), each file's room its lines with no slack at every commit, Sofer reading them before main.
-- node-live f72067cdf (20:08 UTC) = commit 0 + C1 b10d7d008 (schema 1.3), C2 6b77872dc (the decoder's basic part), B1
+- node-live 87f88322d (22:22 UTC) = commit 0 + C1 b10d7d008 (schema 1.3), C2 6b77872dc (the decoder's basic part), B1
   c967980d0 (plans.py), A1 d6ec46ff0 (term 11's passing S), C3 ac3085db4 (the hand-per-quantum probe), A1b 939fa65a7
   (the push's readings), B2 c853dee00 (term 6's frame), B4 a9f8a440a (the click lines), A2 f72067cdf (the twisted 24
   in the engine's test), B2b df4fa644c (term 5 in the books' form at dial 2, k0 = 12; the well world re-laid, its
   run back 128 of 128; its price NOT_CLOSED 30), e88150989 (A: term 5's books in the engine's docstrings), 575973a20
   (A: B1's run back under the push held by hypothesis (d), M2, M12), e8161f301 (B3, the click world), 36effecd5 (A3,
-  term 13 measured on the edge). Next: B5 (writer B, its integers by the act or mesh 0) and B's folds; writer C the
-  hostile reader's checklist and the five worlds' runs. No B2c tonight.
-- The first hostile code reader on origin/main..f72067cdf (scratchpad/hcr1/REPORT.md, 21:2x UTC): one BLOCKING (B1:
+  term 13 measured on the edge), 9ccbc6481 (C: M10, M11, M4), 214739ddf (A: step.py's Algebra line states the half
+  once), 484fb8d72 (B: M1, M3, M4, M6, M7, Sofer's measure.py seam and the square card's winding), 87f88322d (B5:
+  the gradient vertex and the mesh world; M5 closed). Every planned commit is DONE but the whole; no B2c. The runs at
+  the head: tensor24, live, well and mesh exact; the click world at 9ccbc6481 exact, 4,212 lines, the books 0. Now:
+  the second hostile code reader on f72067cdf..87f88322d, writer C's whole, then the candidate (PLAN.md's road).
+- The first hostile code reader on origin/main..f72067cdf (scratchpad/hcr1/REPORT.md, 21:2x UTC; every item folded by
+  22:2x UTC): one BLOCKING (B1:
   the run back under term 5's push holds only while no plan reads a pushed row's momenta, hypothesis (d); B2b's
   route keeps it, NOT_CLOSED 30) and thirteen MINOR. Its M8, for the owner's word before main: tests_shape's ROOM
-  rises against main, frame 230 -> 237, engine 202 -> 300 (299 at its head, 300 after 575973a20), load 113 -> 147
-  (its ceiling 155), run 285 -> 291, the decoder lowered 600 -> 572; ARCHITECTURE section 4 says a ROOM is not
+  rises against main, at 87f88322d frame 230 -> 237, engine 202 -> 300, load 113 -> 155 (its ceiling), run 285 ->
+  295, the decoder lowered 600 -> 572; ARCHITECTURE section 4 says a ROOM is not
   raised with a code change; they stand under the Boss's ceilings, named and read by Sofer. Its M11 beside it:
   schema.MINOR = len(ADDED) at 3, a count behind a length with no cheap reading from the schema's structure (writer C
   names it open in schema.py's Algebra line). Both are on the owner's list with the candidate (PLAN.md, the road to
@@ -62,11 +67,11 @@ says what the record and the ledger carry of the part, which is all the decoder 
 | Part | Status | Files | What it does | Decoder reads |
 |---|---|---|---|---|
 | World, the three files | BUILT/main (examples/tensor24), BUILT/live (tensor24-live, tensor24-well) | examples/*/universe.json, piece.json, setting.json; examples/README.md | whole numbers lay a world: the integers, the trains (name, kinds, part, pinion = den), the CHOSEN strengths, the sides, the gears | the header carries the files verbatim with digests |
-| Loader (the Node-clock's initialization) | BUILT/live; the held hand's spring and tie and the hands' tie BUILT/live as FRAME (B2 c853dee00); term 5's books and k0 = 12 BUILT/live as FRAME (B2b df4fa644c) | runner/files.py, board.py, load.py, main.py; tools/tensor24_files.py | lays every Node-clock alike from the files and the star: section 2 below | the header's train cards (kinds, part, key, square flag) |
+| Loader (the Node-clock's initialization) | BUILT/live; the held hand's spring and tie and the hands' tie BUILT/live as FRAME (B2 c853dee00); term 5's books and k0 = 12 BUILT/live (B2b df4fa644c); the gradient vertex BUILT/live as FRAME (B5 87f88322d); an even key refused by name (484fb8d72) | runner/files.py, board.py, load.py, main.py; tools/tensor24_files.py | lays every Node-clock alike from the files and the star: section 2 below | the header's train cards (kinds, part, key, square flag) |
 | Node-clock (the act) | BUILT/live on the edge; terms by status in section 3 | engine/step.py, mesh.py, contract.py, kinds.py, state.py; algebra/carry.py | one act per gear per round: the pull, the drive, the kick, the momentum carried on the edge and split at the next edge, the metric's push, the notch, the click | nothing directly: the ledger's counts and the record's click lines |
-| Runner | BUILT/live (promise on the edge, the window, the click lines: B4 a9f8a440a) | runner/run.py, rounds.py, rewind.py; tools/tensor24_run.py | counts the rounds from outside, reads the promise and the window before each round, writes the record and the ledger, runs back | the record (header, click lines, end) and the ledger |
-| Record | BUILT/live at schema 1.3 (C1 b10d7d008; written by B4) | record/schema.py | the boundary: header, click lines, end; the ledger beside it | everything it reads |
-| Decoder | built on records made in memory; the BASIC part BUILT/live (C2 6b77872dc; the owner's word: only that tonight) | decoder/records.py, books.py, bangs.py, measure.py; tools/tensor24_decode.py | reads the record and the ledger from outside; tonight: reads schema 1.3's click lines and lists them, no verdict | n/a |
+| Runner | BUILT/live (promise on the edge, the window, the click lines: B4 a9f8a440a; the promise naming teeth below 1 as teeth: 484fb8d72) | runner/run.py, rounds.py, rewind.py; tools/tensor24_run.py | counts the rounds from outside, reads the promise and the window before each round, writes the record and the ledger, runs back | the record (header, click lines, end) and the ledger |
+| Record | BUILT/live at schema 1.3 (C1 b10d7d008; written by B4); MINOR = len(ADDED) named open (9ccbc6481; the owner's list) | record/schema.py | the boundary: header, click lines, end; the ledger beside it | everything it reads |
+| Decoder | built on records made in memory; the BASIC part BUILT/live (C2 6b77872dc; the owner's word: only that tonight), refusing by name the click lines schema 1.3 rules out (9ccbc6481) | decoder/records.py, books.py, bangs.py, measure.py; tools/tensor24_decode.py | reads the record and the ledger from outside; tonight: reads schema 1.3's click lines and lists them, no verdict | n/a |
 | Visualizer | owed (Animate's) | none | draws what the decoder reads | n/a |
 | Guards | BUILT | docs/ALGEBRA.md, tools/check.py, tests_shape.py, record_code_shape.py, documents_gates.py, the gate scribe_scan.py (+ selftest), scribe_law_check.py | refuse a push that breaks a law; the tests, one per generic part and the whole once; the 24's twisted action (a negated row's two teeth flipped) BUILT in the engine's test (A2 f72067cdf: 24 of 24 under the push with the clock moving, 21 of 24 failing with the teeth kept) | n/a |
 
@@ -80,12 +85,12 @@ says what the record and the ledger carry of the part, which is all the decoder 
 | The kinds found by character | BUILT/main (square, matter); BUILT/live as FRAME (held, tied, gripped: B2 c853dee00; the second square refused by name) | load.trains_of, files.vocabulary, files.held_departures | each train's character summed over its kinds times its part, against the square's: square = 1 where the gap is 0 (Rule3's quotient of 1 by gap^2 + 1), matter = lit(gap); tonight the same test against the held hand's character (A1 + A2) and the tied test (the character kept under A2's twist); the loader refuses a second square train by name, one metric family (t5f_math item 1: two make the clock's reads cyclic and the run back fails unseen) | yes: a character test, no name |
 | The gearing (rest, s, T_k, T_d, parity) | BUILT/live | load.geared | rest = 6 den Gamma^2 (6 the Spokes); s = T_k = T_d = 1 (the force's path); parity 0 on the square's 0i rows (one time index), 1 elsewhere, by the square flag and the slot's place after the 00 slot | yes |
 | The clocks' read and the grips' read | BUILT/live (the cut); the read factor k0 = Spokes x senses BUILT/live (B2b df4fa644c; the Boss's yes, 19:2x UTC; Big Pic reads it as the star's unit, derived and not a strength, the owner's to confirm as a unit, not to choose as a value; light's h_xx / h_00 1043 permille on the built loader) | load.geared (clock, stretch) | every row reads every square train's 00 slot at the factor k0 = Spokes x senses (12, from the star, as built in B2b; 1 before it) into its teeth, less its own row (lit of the rows' difference: the acyclic cut), so light's h_ii / h_00 reads 1 (the deriver's 0.92, the built loader's 1.043); each Spoke reads the square's ii slot of its axis at both ends of its Mesh at 1 | yes; the cut is a CHOSEN form (NOT_CLOSED 2); k0 NOT_CLOSED 26 |
-| J's plan (the potential) | BUILT/main (the vertex law); the monomials laid: term 9 BUILT/live; term 6's own spring and ties BUILT/live as FRAME (B2); the mesh plan in B5 | contract.pushes, plans.notching, plans.holding, plans.tying; B5 plans.meshing | each monomial f x_a x_b x_c x_d pushes each leg by -f times the other three; the loader lays the monomials from the kinds' tables at the CHOSEN strengths | yes, when laid from the tables |
+| J's plan (the potential) | BUILT/main (the vertex law); the monomials laid: term 9 BUILT/live; term 6's own spring and ties BUILT/live as FRAME (B2); the mesh plan BUILT/live as FRAME (B5 87f88322d) | contract.pushes, plans.notching, plans.holding, plans.tying, plans.meshing | each monomial f x_a x_b x_c x_d pushes each leg by -f times the other three; the loader lays the monomials from the kinds' tables at the CHOSEN strengths | yes, when laid from the tables |
 | Term 5's plan | BUILT/live in the books' form as FRAME (A1b 939fa65a7 the readings, B2b df4fa644c the plan), the 00 push reading the momenta of the rows on the force's path alone, so that no plan reads a pushed row's momenta (hypothesis (d); B2b's price, the metric's self-stress unpaid, NOT_CLOSED 30) | plans.pushing (the terms), step.stress (the readings: the six stretches, the momenta in and out, the unit) | every slot pushed by -dH/d slot of the act's own energy: the 00 slot by k0 SUM over the rows on the force's path of sigma_in sigma_out, each ii slot by minus its two Meshes' stretches squared over every row, jk and 0i by nothing; the factor 1 ("push" 1 or 0), the half by the drive's dial 2 | yes |
 | The drive's dial on the square's pushed rows (term 5's books) | BUILT/live (B2b df4fa644c); the mirror by parity at T_d > 1 BUILT/live | load.geared (drive), step.drive, step.mirror | T_d = senses (2) on the square's 00 and ii rows, the half that -dH/d slot carries, 1 elsewhere; the remainder kept, flipped on an even row and kept on an odd one | n/a |
 | The click's cross / passing | BUILT/live in the S form (A1 d6ec46ff0, B1 c967980d0); its books exact for monomials of two value legs, the held hand's tie (four) invisible to it only within the room (NOT_CLOSED 29) | plans.passing, plans.pairs_of | the form of each train through K x K -> A1 (pairs_of), one carry per train and Node-clock at the key | yes |
 | The lay of the gears | BUILT/live | load.lay | a, b, r (the edge tooth) from the setting; r_d at 0; the click tooth k born at (key - 1) div senses | yes |
-| The key, push, notch (and tonight hold, tie, mesh) | CHOSEN in the universe file | files.UNIVERSE["chosen"], load.load | the strengths the law leaves free, read by the loader, no number in the code; "mesh" is read by nothing until B5 and is refused by name above 0 until then, and an even key is refused by name (the first hostile code reader's M5 and M6, B's folds) | yes |
+| The key, push, notch (and tonight hold, tie, mesh) | CHOSEN in the universe file | files.UNIVERSE["chosen"], load.load | the strengths the law leaves free, read by the loader, no number in the code; "mesh" read by the Mesh plan since B5 (the first hostile code reader's M5 closed), and an even key refused by name, its parity read by Rule3's carry at the senses (M6, 484fb8d72) | yes |
 | The promises | BUILT/live | run.promises, run.window, step.dials, step.grips, mesh.held | before each round, read from outside: both slots' teeth at least 1 and every edge tooth within [-D, D), D = W(b) + W(a); the six Spokes' grips summed within [0, senses W] | yes |
 | The files' format | BUILT/live | files.py | every rule refuses by name; the tooth's range is the runner's promise, not the format's; pinion = den; RETIRED couplings | yes |
 
@@ -103,7 +108,7 @@ says what the record and the ledger carry of the part, which is all the decoder 
 | 8 | The kick | BUILT/live at T_k = 1 | step.kick, step.driven | K = s T_k q_d; the push on every gear s F + K | none |
 | 9 | The volume's notch | DRAFTED (David's page); strength "notch" CHOSEN | load.notching | V9 = 2 h c00^2 + h tr^2 as monomials of J's potential on every square train; -4 h c00 on the 00 slot, -2 h tr on each ii slot | the board's mean swing in the ledger |
 | 10 | The shift and the shears | OPEN (G4): the 0i and jk slots are pushed by term 5 and carried exactly, read by no gear | state (the square's rows), load.geared (the 0i parity) | no reader tonight; the price and the alternatives in NOT_CLOSED 6 | the 0i and jk slots in the ledger |
-| 11 | The whole click | DERIVED for the pair at one Node-clock at the rest teeth (COUNT5.md); BUILT/live in the S form (A1 d6ec46ff0) and written to the record (B4); its books exact for monomials of two value legs, OPEN for four (the held hand's tie: exact only within the room, NOT_CLOSED 29); it reads the value legs' plan alone, so neither the Mesh plan (NOT_CLOSED 4) nor J5 (NOT_CLOSED 31) is booked by a click; the key CHOSEN, its oddness refused by name in B's fold (M6) | step.act (today the area tau), tonight step.passing; load.passing; run (the click lines) | the passing S = X(S) + X(S+), X = the train's form over a J(b) - b J(a), carried at the odd key with the tooth KEPT under the mirror; the record's line carries q, and -q on the run back | the click lines: round, site, train, q, tooth before and after |
+| 11 | The whole click | DERIVED for the pair at one Node-clock at the rest teeth (COUNT5.md); BUILT/live in the S form (A1 d6ec46ff0) and written to the record (B4); its books exact for monomials of two value legs, OPEN for four (the held hand's tie: exact only within the room, NOT_CLOSED 29); it reads the value legs' plan alone, so neither the Mesh plan (NOT_CLOSED 4) nor J5 (NOT_CLOSED 31) is booked by a click; the key CHOSEN, its oddness refused by name (M6, 484fb8d72); the square's pairs at the factor 0 by its flag (M1, 484fb8d72) | step.act (today the area tau), tonight step.passing; load.passing; run (the click lines) | the passing S = X(S) + X(S+), X = the train's form over a J(b) - b J(a), carried at the odd key with the tooth KEPT under the mirror; the record's line carries q, and -q on the run back | the click lines: round, site, train, q, tooth before and after |
 | 12 | The split click | OPEN (David's draft, both readers NOT AGREED) | none | no draw is written tonight: a share below half a key moves a tooth and clicks nowhere (the spread take is not made whole) | none |
 | 13 | The frozen clock | MEASURED on the edge (A3 36effecd5): N^2 = rest / W within 0.7 ppm at every Node-clock of the re-laid well at strides far above a notch; at strides of one count a round the beat locks to the integers' cycle and reads no well (the calibre condition, NOT_CLOSED 23); OPEN (G2) where W has no bound | none of its own; derive/boss/frozen_edge/probe.py | a reading of the act, N^2 = rest / W: where W grows without bound a clock stops (NOT_CLOSED 7) | the 00 slot in the ledger |
 
@@ -143,9 +148,9 @@ declared cap). No code of their own tonight: the loader's five kinds stand; the 
 |---|---|---|
 | tensor24 | BUILT/main | the one bang: light (A1, part 2) and the metric at rest; push 0, notch 0, key 1; no vertex, no click |
 | tensor24-live | BUILT/live | the light pulse along z at 2^40 counts, c = 1 / sqrt 6 Meshes a round, the run back exact |
-| tensor24-well | BUILT/live, re-laid under the books' form in B2b (push 1, k0 12, the notch h 120000) | the held lump in whole numbers (lay.py): the clock deeper where the lump is, the well 3 parts in 10^4 of W at its deepest, the pulse lagging 0.09 Mesh, the run back 128 of 128; the second cone 1000142 to 1000302 ppm named OPEN; the metric's self-stress unpaid at 1 ppm of the matter's (NOT_CLOSED 30) |
+| tensor24-well | BUILT/live, re-laid under the books' form in B2b (push 1, k0 12, the notch h 120000) | the held lump in whole numbers (lay.py): the clock deeper where the lump is, the well 3 parts in 10^4 of W at its deepest, the pulse lagging 0.09 Mesh, the run back 128 of 128; the pulse train climbing to 1105 permille of its first tenth at 87f88322d (NOT_CLOSED 23); the second cone 1000142 to 1000302 ppm named OPEN; the metric's self-stress unpaid at 1 ppm of the matter's (NOT_CLOSED 30) |
 | tensor24-click | BUILT/live as FRAME (B3 e8161f301) | the pair world on a cube of 3: the held hand (A1, A2) turning at (1, 0) everywhere (the frame's own spring; the hat not tonight), two tied hands (T1, T2), the giver a line hand at (40, 0, 0) and the taker at rest, the hands' tie 96000 chosen by the act (the plan's 12000 is silent), the key 50811429: 4212 click lines, the books 0 at every round and site, the held train silent with k.k = 1, inside the room for the whole run (at most 1600 of 2500), the 24 and the run back exact; the envelope beating on two normal modes |
-| tensor24-mesh | FRAME tonight if time (PLAN B5; its integers by the act or mesh 0: at the plan's, mesh 1000 pushes the tied hand to 28 counts and 3000 runs away) | light (A1) on a tied hand through the gradient vertex (the Mesh leg), stable by g^2 < grip spring / 2; its exchange is booked by no click tonight (NOT_CLOSED 4) |
+| tensor24-mesh | BUILT/live as FRAME (B5 87f88322d), its integers chosen by the act (the plan's left the room) | light (A1) on a tied hand through the gradient vertex (the Mesh leg) on a ring of 180 at Gamma 10^4, hold 1, mesh 200000, 125 ticks: the tied hand moves at 106 Node-clocks where the pulse passes, hold x.x at most 900 of 2500, the held hand's k.k 1, light ending at 944 permille, the run back exact; no click line, its exchange booked by no click tonight (NOT_CLOSED 4); the no: mesh 250000 leaves the room at round 111 |
 
 ## 6. Where a part works for one family only (the owner's word), and its generic frame
 
@@ -155,9 +160,10 @@ declared cap). No code of their own tonight: the loader's five kinds stand; the 
   K x K -> A1. No name, no place, no complement: lit of a character gap, as the square and the matter flags are.
 - The hands' tie: every pair of distinct tied trains through K x K -> A1 at the one CHOSEN strength "tie"; a pair with
   no channel takes the factor 0.
-- The gradient vertex (the Mesh leg): every pair of a scalar train (kind A1) and a vector hand (kind T1 among its
-  kinds) through A1 x (T1 . T1) -> A1 at the CHOSEN strength "mesh": the tables select light to matter through the
-  Mesh, since A1 x T1 has no A1 channel at the value legs.
+- The gradient vertex (the Mesh leg), BUILT/live (B5 87f88322d): L every A1 row (by character) of a train that is no
+  square and not the held hand, M_j every row of one part of a tied train, C the tied kind's table with the axes'
+  kind onto A1 (the dot product for T1, nothing for T2), at the CHOSEN strength "mesh": the tables select light to
+  matter through the Mesh, since A1 x T1 has no A1 channel at the value legs; the held hand takes none.
 - Term 11's form: the train's pairs through K x K -> A1 (load.pairs_of), the same form term 5 reads: one form for the
   push, the passing and the area.
 - The mirror's parity: the 0i rows by the square flag and the slot's place, no name.

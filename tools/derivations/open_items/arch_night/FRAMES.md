@@ -130,11 +130,11 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 - Limits, named: the books are exact for monomials of two value legs; the held hand's tie, of four, is invisible to
   the passing only within the room (frame 6; NOT_CLOSED 29); the square train's passing form, taken by pairs_of in its
   slot basis (xx as A1, (yy, zz) as E), is kept by 8 of 24 turns (the code reader's M1, latent: the isotropic notch
-  gives the square X = 0), so the square's pairs take the factor 0 by its square flag, as pushing has them (B's fold;
+  gives the square X = 0), so the square's pairs take the factor 0 by its square flag, as pushing has them (484fb8d72;
   the form laid from the square's own representation is the alternative, not tonight): the metric clicks nowhere, and
   its exchange with matter is J5's, booked by no click (frame 5); the key's oddness, which the shared birth needs, is
-  refused by name when even (the code reader's M6, B's fold: an even key misses the pair's books in 8 of 400 rounds at
-  2^17 and 90 of 400 at 2^12).
+  refused by name when even, its parity read by Rule3's carry at the senses (the code reader's M6, 484fb8d72: an even
+  key misses the pair's books in 8 of 400 rounds at 2^17 and 90 of 400 at 2^12).
 - Replaced by: the owner's word on the key (odd, or exactly 2 K) and on the form at depth; the Mesh-leg count when
   derived (frame 5); a passing for monomials of four value legs (NOT_CLOSED 29).
 - Choice: S, because it counts each hand's two-round energy change exactly at the same cost as G (0 misses of 71,976)
@@ -199,11 +199,14 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   (COUNT5 M1: a spring gives 0, a vertex between two trains gives each the other's negative). The tie enters no
   train's passing only because the turning hand's now and before are orthogonal (a . b = 0 under the quarter turn,
   which kills the held train's part) and its norm exact (which kills the tied train's part, 2 hold f (x_a . x_b)
-  (|k_a|^2 - |k_b|^2)): the room again. Inside it the books are exact (the run test's pair world, B4's: 0 of 30 rounds
+  (|k_a|^2 - |k_b|^2)): the room again.
+  Inside it the books are exact (the run test's pair world, B4's, at f72067cdf: 0 of 30 rounds
   open; a still taker: 0 of 2,000); past it they open (the same world run past its 30 ticks, the taker swinging out of
   the room: 149 of 300 rounds open, the held train clicking in 102, |k|^2 in [0, 2]). So the click world's lay stays
   inside the room for its whole run and its measure counts the held train's clicks, 0 there (PLAN B3; NOT_CLOSED 29);
-  plans.holding's docstring names the limit at writer B's next fold (a docstring line, no code).
+  the run test's pair world is laid inside the room for ten beats since 484fb8d72 (the code reader's M3: Gamma 1000,
+  the giver at 14, the hands' tie 9600, the key 614401, 1260 rounds); plans.holding's docstring names the limit (a
+  docstring line, no code).
 - Test: on the click world, the held hand's quarter turn exact and |k|^2 = 1 at every site over ten tied beats
   (5,000 rounds), the largest count read from outside at 10^9 (no runaway); the tied hand's period by zero crossings
   against 2 hold f / W; a checkerboard seed on a TIED hand at small amplitude bounded past ten beats (its own spring
@@ -301,20 +304,35 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   frame's are exact within the room; alternatives: K = W (an untested modulation), the tie laid by name in a file
   (forbidden), (A1) x 2 as the held shape (not told from light by character), the hat (next, above).
 
-## 7. The gradient vertex, light on matter through the Mesh [FRAME; B5]
+## 7. The gradient vertex, light on matter through the Mesh [FRAME; BUILT/live as B5 87f88322d]
 
-- Form: for every pair of a scalar train L (kind A1, no square flag) and a vector hand M (kind T1 among its kinds,
-  tied), V = mesh x SUM_i M_i D_i L as two plan terms per axis and part: M_i's row pushed by -mesh D_i L and L's row
-  by +mesh D_i M (one potential, two pushes; the push on a gradient leg is the gradient of the other leg); the
-  tables select it: A1 x T1 has no A1 channel at the value legs, so light reaches a vector hand through the Mesh
-  alone. Strength "mesh"; its ground state mesh^2 below grip x (2 hold f) / 2 (COUNT5 P2's condition).
-- Question: the wind it passes is the Mesh flux, counted by no click (frame 5); which trains are light and which
-  matter is the kinds' (A1 against T1), no name.
-- Test: light's squares summed stand over 400 rounds on the mesh world where the value vertex grew x100 in COUNT5's
-  measure; the run back exact; the tied hand moves where the pulse passes.
-- The integers (the Boss, 21:5x UTC): at the plan's integers the mesh world leaves the room (mesh 1,000 pushes the
-  tied hand to 28 counts; mesh 3,000 runs away), so B chooses the world's integers by the act, as B3's were chosen,
-  or ships the world at mesh 0, the vertex laid and its strength CHOSEN at 0 like every other frame's.
+- Form, as built (plans.meshing): V = mesh x SUM_i C_ji M_j D_i L laid as one potential's two pushes, (L's difference
+  along i, unit, unit) at -mesh C onto M_j's row and (M_j's difference along i, unit, unit) at +mesh C onto L's row
+  (the push on a gradient leg is the gradient of the other leg); L every row of the trivial kind (A1, found by its
+  character) in a train that is no square and not the held hand; M_j every row of one part of a tied train; C the
+  table of the tied row's kind with the kind the board's axes turn by onto A1 (found by its character, the
+  four-vector square's on its 0i block): the dot product for T1, nothing for T2; a pair with no channel at the factor
+  0; no loop, branch or comparison. The tables select it: A1 x T1 has no A1 channel at the value legs, so light
+  reaches a vector hand through the Mesh alone. The held hand, Mesh-less, takes no gradient vertex (an early draft that
+  read its A1 row as a scalar broke its turn). Strength "mesh", read since B5 (the first hostile code reader's M5
+  closed); its ground state mesh^2 below grip x (2 hold f) / 2 (COUNT5 P2's condition).
+- Question: the wind it passes is the Mesh flux, counted by no click (frame 5; NOT_CLOSED 4); which trains are light
+  and which matter is the kinds' (A1 against T1), no name.
+- The mesh world (examples/tensor24-mesh/, derive/boss/mesh_lay/lay.py and lay.txt), its integers chosen by the act
+  as the click world's, since the plan's first integers (Gamma 1000, mesh 1,000 to 3,000) either move nothing or leave
+  the room and run away: a ring of 180 Node-clocks along x at den 1 and Gamma 10^4; light's first part the well
+  world's pulse, passing each Node-clock once; the held hand at (1, 0), its tooth at the dial's middle; a tied hand
+  at rest; hold 1, tie 0, push 0, notch 0, mesh 200,000 (mesh^2 4 10^10 below grip x 2 hold f / 2 = 6 10^12); 125
+  ticks. Measured: inside the room at every round (hold |x_tied|^2 at most 900 of Gamma div 4 = 2,500, growing
+  linearly by the tied hand's resonance with the pulse); the tied hand moving at 106 Node-clocks where the pulse
+  passes; the held hand's |k|^2 = 1; no click line; light ending at 944 permille of its start, within 71 permille of
+  the same files at mesh 0; the run back exact (125 of 125). The no: the same mesh reaches the room's edge at round
+  247, and mesh 250,000 leaves it at round 111.
+- Price, named: the vertex's terms are laid at the factor 0 in every world that holds no pair for it, and cost 10 to
+  30 per cent a round (the well 0.50 to 0.55 s, the click 0.066 to 0.079 s, the live 0.17 to 0.23 s), changing no
+  record; the mesh world is inside the room only for 125 rounds at this mesh.
+- Test: the load test's mesh plan (the two pushes of one potential; light with no vector hand lays nothing), within
+  its room of 155; the mesh world's run back and its measure above.
 - Replaced by: the Mesh-leg count (frame 5) and G3's plan.
 - Choice: the gradient form, because it is the one stable light-matter vertex the readers found and the one the
   tables allow; alternative: a value vertex light-matter (tachyonic, refused).
