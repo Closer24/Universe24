@@ -1,4 +1,5 @@
-"""The plan's property tests for any engine of Tensor24: locality, purity, rename, the 24's images and the run back."""
+"""The plan's property tests for any engine of Tensor24: locality, purity, rename, the 24's images and the run back;
+the board, its Spokes and its Meshes they are read on, and the half-open split on the edge's dial."""
 
 import hashlib
 import importlib
@@ -13,7 +14,7 @@ from typing import Any, NamedTuple
 
 import numpy as np
 
-from tensor24.engine.state import Click, Gearing, Layout, Plan, Read
+from tensor24.engine.state import Read
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,7 +22,9 @@ ROOT = Path(__file__).resolve().parents[1]
 class Engine(NamedTuple):
     """An engine as the properties see it: its step and run back on a board, and its worlds."""
 
-    step: Callable[..., Any]  # step(nb, s) -> (s', out), s a tuple of arrays: a row per train, or one
+    step: Callable[
+        ..., Any
+    ]  # step(nb, s) -> (s', out), s a tuple of arrays: a row per train, or one row
     unstep: Callable[..., Any]  # unstep(nb, s', out) -> s
     world: Callable[..., Any]  # world(rng, shape, trains) -> s
 
@@ -40,11 +43,13 @@ def near(x, shape):
 
 def flat(result):
     """A step's new state and its out as one row of arrays."""
-    return [*result[0], *result[1]]
+    state, out = result
+    return [*state, *out]
 
 
 def wide(rng, size):
     """Whole numbers whose every bit is drawn, across 2**256 either side of 0, as Python integers."""
+    # the second review (227cde2fe): a cut to 128 bits and a far read through a carry passed narrower worlds
     limbs = [rng.integers(0, 1 << 62, size).astype(object) << (62 * k) for k in range(5)]
     return sum(limbs) - (1 << 309)
 
@@ -126,21 +131,6 @@ def turned(make, shape, rng, trains=2):
     return True
 
 
-def stored(m):
-    """A turn on the kinds as stored, from the turn alone: A1 1, A2 the axes' sign, T1 the turn, T2 the two, the tensions |m|."""
-    sign = round(np.linalg.det(np.abs(m)))
-    blocks = [np.eye(1, dtype=int), sign * np.eye(1, dtype=int), m, sign * m, np.abs(m)]
-    turn = np.zeros((STORED, STORED), dtype=object)
-    at = 0
-    for block in blocks:
-        turn[at : at + len(block), at : at + len(block)] = block.tolist()
-        at += len(block)
-    return turn
-
-
-STORED = 1 + 1 + 3 + 3 + 3  # a train of each kind as stored: A1 and A2, T1 and T2, the tensions (A1 + E)
-
-
 def bijective(make, shape, rng):
     """A fresh engine runs back another's steps of two worlds, in their order; a step with no out undoes its run back."""
     nb, (s, t) = board(shape), [make().world(rng, shape, 2) for _ in range(2)]
@@ -148,6 +138,7 @@ def bijective(make, shape, rng):
     (s1, o1), (t1, p1) = e.step(nb, s), e.step(nb, t)
     back = make().unstep
     undone = same(back(nb, s1, o1), s) and same(back(nb, t1, p1), t)
+    # the third review (81521e0f4): a now slot doubled and halved back passed the rewind alone, and fails forth
     forth = bool(o1) or same(flat(make().step(nb, make().unstep(nb, s, o1))), [*s])
     return undone and forth
 
@@ -178,8 +169,14 @@ def fresh(code, args, hash_seed=0, given=""):
     """What a fresh interpreter prints, the tests and src on its path, at a hash seed."""
     paths = os.pathsep.join([str(ROOT), str(ROOT / "src")])
     env = {**os.environ, "PYTHONHASHSEED": str(hash_seed), "PYTHONPATH": paths}
-    how = {"cwd": ROOT, "env": env, "input": given, "capture_output": True, "text": True}
-    run = subprocess.run([sys.executable, "-c", code, *args], **how)
+    run = subprocess.run(
+        [sys.executable, "-c", code, *args],
+        cwd=ROOT,
+        env=env,
+        input=given,
+        capture_output=True,
+        text=True,
+    )
     return run.stdout.strip() or run.stderr
 
 
@@ -233,31 +230,8 @@ def unread():
     return Read(none, none.astype(object), none)
 
 
-def unclicked():
-    """The click of no term: one train whose passing is 0, its tooth carried at the key 1 from its birth, 0."""
-    none = np.zeros(0, dtype=np.intp)
-    return Click(none, none, none.astype(object), none, np.ones((1, 1), dtype=object))
-
-
 def dense(read, rows, landed):
     """A read as the matrix of its whole factors, per row it lands on and row it reads, the factors summed."""
     m = np.zeros((landed, rows), dtype=object)
     np.add.at(m, (read.target, read.first), read.factor)
     return m
-
-
-def plain(nb, meshes, grip, w):
-    """A layout of stage 4 in the generic records: the teeth W at rest and no clock read, s = 1, the force's
-    path (T_k = T_d = 1), no term of J."""
-    none = np.zeros(0, dtype=np.intp)
-    plan = Plan(none, none, none, none.astype(object), none)
-    reads = (unread(), unread(), unclicked(), plan)  # no clock, no grips' read, no click, no push
-    return Layout(nb, spokes(), meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, *reads)
-
-
-def holds(name, make, shape, seed):
-    """Whether the property holds on the engine at one seed; an engine that overflows a fixed width does not."""
-    try:
-        return PROPERTIES[name](make, shape, np.random.default_rng(seed))
-    except OverflowError:
-        return False
