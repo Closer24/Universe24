@@ -1,0 +1,154 @@
+--- (a) one row at rest within 1 at every site, (3, 3, 3)
+   the lay's Mesh energy: about 0.716 matter quanta per Node-clock (E_q = W/2)
+   round    0: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  100: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    4; staggered sum S       1; uniform sum U      27
+   round  200: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    8; staggered sum S       1; uniform sum U      27
+   round  300: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    9; staggered sum S       1; uniform sum U      27
+   round  400: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|   13; staggered sum S       1; uniform sum U      27
+   round  500: |k|^2 max     25, sites at 1:  10 of 27; matter max|x|   14; staggered sum S       7; uniform sum U      21
+   round  600: |k|^2 max   1000, sites at 1:   0 of 27; matter max|x|   19; staggered sum S     -85; uniform sum U     107
+   runaway at round 612
+--- (b) one row at rest within 1 at one site in five, (3, 3, 3)
+   the lay's Mesh energy: about 0.123 matter quanta per Node-clock (E_q = W/2)
+   round    0: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  100: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round  200: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  300: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  400: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round  500: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  600: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  700: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round  800: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  900: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1000: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 1100: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1200: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1300: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 1400: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1500: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1600: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 1700: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1800: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1900: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 2000: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2100: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2200: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 2300: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2400: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2500: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 2600: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2700: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2800: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 2900: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 3000: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   runaway at round None
+--- (c) one count at one site, (3, 3, 3)
+   the lay's Mesh energy: about 0.037 matter quanta per Node-clock (E_q = W/2)
+   round    0: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  100: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round  200: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  300: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  400: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round  500: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  600: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  700: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round  800: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round  900: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1000: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 1100: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1200: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1300: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 1400: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1500: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1600: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 1700: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1800: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 1900: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 2000: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2100: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2200: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 2300: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2400: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2500: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 2600: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2700: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 2800: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    0; staggered sum S       1; uniform sum U      27
+   round 2900: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   round 3000: |k|^2 max      1, sites at 1:  27 of 27; matter max|x|    1; staggered sum S       1; uniform sum U      27
+   runaway at round None
+--- (a) one row at rest within 1 at every site, (4, 4, 4)
+   the lay's Mesh energy: about 0.843 matter quanta per Node-clock (E_q = W/2)
+   round    0: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  100: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    7; staggered sum S       0; uniform sum U      64
+   round  200: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    8; staggered sum S       0; uniform sum U      64
+   round  300: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|   13; staggered sum S       0; uniform sum U      64
+   round  400: |k|^2 max     34, sites at 1:   8 of 64; matter max|x|   10; staggered sum S      -5; uniform sum U      63
+   runaway at round 418
+--- (b) one row at rest within 1 at one site in five, (4, 4, 4)
+   the lay's Mesh energy: about 0.093 matter quanta per Node-clock (E_q = W/2)
+   round    0: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  100: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round  200: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  300: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  400: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round  500: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  600: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  700: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round  800: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  900: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1000: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 1100: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1200: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1300: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 1400: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1500: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1600: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 1700: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1800: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1900: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 2000: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2100: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2200: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 2300: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2400: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2500: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 2600: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2700: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2800: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 2900: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 3000: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   runaway at round None
+--- (c) one count at one site, (4, 4, 4)
+   the lay's Mesh energy: about 0.015 matter quanta per Node-clock (E_q = W/2)
+   round    0: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  100: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round  200: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  300: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  400: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round  500: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  600: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  700: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round  800: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round  900: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1000: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 1100: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1200: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1300: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 1400: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1500: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1600: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 1700: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1800: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 1900: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 2000: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2100: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2200: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 2300: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2400: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2500: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 2600: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2700: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 2800: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    0; staggered sum S       0; uniform sum U      64
+   round 2900: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   round 3000: |k|^2 max      1, sites at 1:  64 of 64; matter max|x|    1; staggered sum S       0; uniform sum U      64
+   runaway at round None

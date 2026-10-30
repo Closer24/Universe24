@@ -1,0 +1,58 @@
+--- (a) k = (10,0) + checkerboard +-1 on re, no matter
+   round   max|re - base|   max|im|    |k|^2 min   |k|^2 max   max|count| (all rows)
+       0                1         0           81         121   11
+       1               12        10          104         104   10
+       2               23         0           49         169   13
+       4                5         0           25         225   15
+       8                9         0            1         361   19
+      16               17         0           49         729   27
+      32               33         0          529        1849   43
+      64               65         0         3025        5625   75
+     128              129         0        14161       19321   139
+     256              257         0        61009       71289   267
+--- (b) the same with a tied T1 hand at rest, A = 10 at every site (g A^2 = 100, inside one site's room)
+   round   max|re - base|   max|im|    |k|^2 min   |k|^2 max   max|count| (all rows)
+       0                1         0           81         121   11
+       1               14        10          100         116   10
+       2               23         1           50         170   13
+       4                5         1           26         226   15
+       8               15         5           34         601   24
+      16   81526743028381771   5648379097394891    7738264545305727153296387500618   6678514015243681594223513150363002   96483430154757852
+   runaway (read from outside)
+--- (b') the tied hand at A = 10 everywhere on the uniform k = (10,0), no perturbation
+   round   max|re - base|   max|im|    |k|^2 min   |k|^2 max   max|count| (all rows)
+       0                0         0          100         100   10
+       1               12        10          104         104   10
+       2               20         1          101         101   10
+       4                0         1          101         101   10
+       8                3         5           74          74   8
+      16                8         9           85          85   9
+      32               16        10          136         136   10
+      64               10        10          100         100   11
+     128               15         3           34          34   10
+     256                5         0           25          25   14
+--- (c) k = (1,0) + checkerboard +-1 on im (|k|^2 = 2 at every site), no matter
+   round   max|re - base|   max|im|    |k|^2 min   |k|^2 max   max|count| (all rows)
+       0                0         1            2           2   1
+       1                1         3            1           9   3
+       2                2         3           10          10   3
+       4                0         5           26          26   5
+       8                0         9           82          82   9
+      16                0        17          290         290   17
+      32                0        33         1090        1090   33
+      64                0        65         4226        4226   65
+     128                0       129        16642       16642   129
+     256                0       257        66050       66050   257
+--- (d) contrast: k = (10,0) + a wavelength-4 wave (+1,0,-1,0) along x on re
+   round   max|re - base|   max|im|    |k|^2 min   |k|^2 max   max|count| (all rows)
+       0                1         0           81         121   11
+       1               10        10          100         100   10
+       2               21         0           81         121   11
+       4                1         0           81         121   11
+       8                1         0           81         121   11
+      16                1         0           81         121   11
+      32                1         0           81         121   11
+      64                1         0           81         121   11
+     128                1         0           81         121   11
+     256                1         0           81         121   11
+Reading: own 2W + the Meshes' 2W at the zone corner = 4W, the window's top: the checkerboard grows linearly with no matter and faster with it; a long wave stays bounded.

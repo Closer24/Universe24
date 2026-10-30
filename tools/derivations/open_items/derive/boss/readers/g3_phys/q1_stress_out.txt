@@ -1,0 +1,24 @@
+--- (a) the held hand (A1 x 2) alone, den 1, Gamma 1000: K = 2 rest, W = rest; per round, both parts summed
+   round  (re, im)   2E/W   2p_sym/W   2p_now/W     (thousandths; rho = E, p = T - V)
+       0  ( 1, 0)    2.000      2.000      0.000
+       1  ( 0, 1)    2.000      2.000      0.000
+       2  (-1, 0)    2.000      2.000      0.000
+       3  ( 0,-1)    2.000      2.000      0.000
+       4  ( 1, 0)    2.000      2.000      0.000
+       5  ( 0, 1)    2.000      2.000      0.000
+       6  (-1, 0)    2.000      2.000      0.000
+       7  ( 0,-1)    2.000      2.000      0.000
+   mean over one turn (4 rounds): 2E/W = 2.000, 2p_sym/W = 2.000, 2p_now/W = 0.000
+   => rho = W per Node-clock per held quantum; w = p/rho = +1 (symmetric reading) or 0 on average (now-slot reading); never -1.
+--- (b) held hand at (q, 0): E per Node-clock in units of W (the energy grows as |k|^2, no minimum but k = 0)
+   k = (0, 0): 2E/W = 0.000  (|k|^2 = 0)
+   k = (1, 0): 2E/W = 2.000  (|k|^2 = 1)
+   k = (2, 0): 2E/W = 8.000  (|k|^2 = 4)
+   k = (3, 0): 2E/W = 18.000  (|k|^2 = 9)
+   k = (5, 0): 2E/W = 50.000  (|k|^2 = 25)
+--- (c) a tied T1 hand at one quantum (A^2 ~ Gamma/2: A = 22) with k held by hand at (1,0): its 2E/W from the same form
+   A = 22: 2E_x/W over 300 rounds: min 0.968, max 1.924; D_x values [0, 1, 22]..[0, 1, 22]
+   => one matter quantum holds about E = W/2; the held hand holds E = W |k|^2 = two matter quanta per Node-clock at |k|^2 = 1.
+--- (d) the potential's true minimum: k = (0, 0) is a fixed point of the act; matter at A = 4 beside it has no beat
+   k seen [(0, 0)]; x's values [4]; period n/a over 0 (no crossings = no beat: massless)
+   => the state of least energy of the plan is k = 0 with every tied hand massless; |k|^2 = 1 is an excited state with no restoring force.

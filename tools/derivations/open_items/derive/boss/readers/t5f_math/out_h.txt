@@ -1,0 +1,3 @@
+Probe H: the odd rows' strides under the mirror, and the books with the full grips, whole numbers
+H1. the 0i rows' strides in the mirrored round over 12 rounds (the 0i slots moving, strides to 3000, the clock moving): (sigma_in'', sigma_out'') = (+sigma_out, +sigma_in) at 0 of 1944 reads, = (-sigma_out, -sigma_in) at 0 of 1944; the even rows' = (-sigma_out, -sigma_in) at 1296 of 5832
+H2. probe_w's held lump, 40 rounds: M+ = M + 4 (F + P) on the 00 row with the FULL grips, bit for bit, in 40 of 40 rounds; the ii slots' part of F, largest 432400536, against the push's largest 655035411993655204799697600: 660 parts in 10^21; the window check at a permille of P could not see the ii part by about 10^18.

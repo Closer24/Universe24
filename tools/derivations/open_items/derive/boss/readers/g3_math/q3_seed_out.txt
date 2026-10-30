@@ -1,0 +1,15 @@
+(a) the tie off: every (re, im) is a fixed point of the turn (|k|^2 over 1000 rounds); the law fixes no magnitude
+   k = (1, 0): |k|^2 seen [1]
+   k = (2, 0): |k|^2 seen [4]
+   k = (1, 1): |k|^2 seen [2]
+   k = (3, 4): |k|^2 seen [25]
+   k = (10, 0): |k|^2 seen [100]
+   k = (7, -3): |k|^2 seen [58]
+   k = (0, 0): |k|^2 seen [0]
+(b) the held hand's fine tooth at birth against the tied hand (g 1): first round |k|^2 off, 3000 rounds; the loader's default is 0
+   A =  4 (one round's push 2 g A^2 / Gamma = 0.032 of W): 0: 1; W/8: None; W/4: None; W/2: None; 3W/4: None; 7W/8: None; W-1: None
+   A = 10 (one round's push 2 g A^2 / Gamma = 0.200 of W): 0: 1; W/8: 1; W/4: None; W/2: None; 3W/4: None; 7W/8: None; W-1: None
+(c) the walk of the held hand's tooth under a tied hand inside the room (g 1), in thousandths of W from the mid tooth, per 5000 rounds
+   A = 10 (g A^2 = 100): the walk per window [('-0.200', '0.000'), ('-0.200', '0.000'), ('-0.200', '0.000'), ('-0.200', '0.000')]; first |k|^2 off at round None
+   A = 14 (g A^2 = 196): the walk per window [('-0.448', '0.000'), ('-0.448', '0.000'), ('-0.448', '0.000'), ('-0.448', '0.000')]; first |k|^2 off at round None
+   A = 15 (g A^2 = 225): the walk per window [('-0.450', '0.002'), ('-0.450', '0.002'), ('-0.450', '0.002'), ('-0.450', '0.002')]; first |k|^2 off at round None

@@ -1,0 +1,5 @@
+u permille | 1 + gamma printed | from the unrounded periods (permille) | bounds from the permille rounding of the two ratios | 2/(1-u) printed | 2/(1-u) exact permille
+  20 | 2050 | 2058 | [1952, 2100] | 2040 | 2040
+  50 | 2100 | 2106 | [2058, 2120] | 2105 | 2105
+  200 | 2370 | 2369 | [2358, 2375] | 2500 | 2500
+reading: at u = 20 permille the printed 2050 is 41/20 of floored permilles; the unrounded quotient is 2058 and the floors alone allow 1952 to 2100; the agreement with 2 is at the few-percent level there, not the half percent the digits suggest; at u = 50 the unrounded 2106 against 2105 (the floors allow 2058 to 2120).

@@ -1,0 +1,11 @@
+the square-tied T1 hand (A 4, the beat 266 alone) beside a second tie on the same held hand, Gamma 1000, g 1
+   square tie alone, L = R = 0: |k|^2 seen [1], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 266.000 over 10 swings; max |x| 4; rounds 3000; ran away False
+   + G3's rocking tie Re(conj(L) k R), L = R at rest at 1: |k|^2 seen [0, 1, 2], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 366.285 over 7 swings; max |x| 4; rounds 3000; ran away False
+   + G3's rocking tie Re(conj(L) k R), L = R at rest at 2: |k|^2 seen [0, 1, 2, 4, 5, 9, 10, 16], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 37.479 over 73 swings; max |x| 6; rounds 3000; ran away False
+   + G3's rocking tie Re(conj(L) k R), L = R at rest at 4: |k|^2 seen [0, 1, 2, 4, 5, 8, 9, 10], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 14.474 over 198 swings; max |x| 10; rounds 3000; ran away False
+   + the linear tie (L.L) k_re, L at rest at 1: |k|^2 seen [0, 1, 2], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 366.285 over 7 swings; max |x| 4; rounds 3000; ran away False
+   + the linear tie (L.L) k_re, L at rest at 2: |k|^2 seen [0, 1, 2, 4, 5, 9, 10, 16], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 37.479 over 73 swings; max |x| 6; rounds 3000; ran away False
+   + the linear tie (L.L) k_re, L at rest at 4: |k|^2 seen [0, 1, 2, 4, 5, 8, 9, 10], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 14.474 over 198 swings; max |x| 10; rounds 3000; ran away False
+   + the rocking tie with L = (1, 0), R = (0, 1) (the push on k_im alone): |k|^2 seen [0, 1, 2, 4, 5], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 270.100 over 10 swings; max |x| 4; rounds 3000; ran away False
+   + the rocking tie with L = (2, 0), R = (0, 2) (the push on k_im alone): |k|^2 seen [0, 1, 2, 4, 5, 9, 10, 16], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 48.741 over 58 swings; max |x| 8; rounds 3000; ran away False
+   + the rocking tie with L = (4, 0), R = (0, 4) (the push on k_im alone): |k|^2 seen [0, 1, 2, 4, 5, 9, 10, 16], first 12 rounds [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; T1 period 35.160 over 75 swings; max |x| 6; rounds 3000; ran away False

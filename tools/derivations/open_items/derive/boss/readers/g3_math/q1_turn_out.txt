@@ -1,0 +1,29 @@
+(a) one row alone with its own spring K = c W (den 1, Gamma 8, W = 384), laid (a, b) = (1, 0), r = W/2, 400 rounds
+   c = 0/1: counts [1, 2, 3, 4, 5, 6, 7, 8]; largest |a| 401; orbit period None; ran away False
+   c = 1/2: counts [1, 2, 2, 1, -1, -2, -2, -1]; largest |a| 2; orbit period 9; ran away False
+   c = 1/1: counts [1, 1, 0, -1, -1, 0, 1, 1]; largest |a| 1; orbit period 6; ran away False
+   c = 3/2: counts [1, 1, -1, -1, 0, 1, 1, -1]; largest |a| 1; orbit period 5; ran away False
+   c = 2/1: counts [1, 0, -1, 0, 1, 0, -1, 0]; largest |a| 1; orbit period 4; ran away False
+   c = 5/2: counts [1, 0, -1, 0, 1, 0, -1, 0]; largest |a| 1; orbit period 4; ran away False
+   c = 3/1: counts [1, -1, 0, 1, -1, 0, 1, -1]; largest |a| 1; orbit period 3; ran away False
+   c = 7/2: counts [1, -1, 0, 1, -1, 0, 1, -1]; largest |a| 1; orbit period 3; ran away False
+   c = 4/1: counts [1, -2, 3, -4, 5, -6, 7, -8]; largest |a| 401; orbit period None; ran away False
+   c = 9/2: counts [1, -2, 4, -8, 16, -32, 64, -128]; largest |a| 1073741824; orbit period None; ran away True
+(b) one row alone at K = 2 W: now^2 + before^2 per row over 400 rounds (the act's own invariant, no second row needed)
+   (a, b) = (1, 0): first (a, b) [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0)]; now^2 + before^2 seen [1]
+   (a, b) = (2, 0): first (a, b) [(2, 0), (0, 2), (-2, 0), (0, -2), (2, 0)]; now^2 + before^2 seen [4]
+   (a, b) = (3, 1): first (a, b) [(3, 1), (-1, 3), (-3, -1), (1, -3), (3, 1)]; now^2 + before^2 seen [10]
+   (a, b) = (5, -2): first (a, b) [(5, -2), (2, 5), (-5, 2), (-2, -5), (5, -2)]; now^2 + before^2 seen [29]
+(c) G3's two rows at K = 2 W (own_turn), the now-slot square re^2 + im^2 and D per row, by the seed, 400 rounds
+   G3's quadrature a (1, 0) b (0, -1): k over the first rounds [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0), (0, 1)]; |k|^2 seen [1]; now^2 + before^2 per row [1]
+   in phase a (1, 1) b (0, 0): k over the first rounds [(1, 1), (0, 0), (-1, -1), (0, 0), (1, 1), (0, 0)]; |k|^2 seen [0, 2]; now^2 + before^2 per row [1]
+   half laid a (1, 0) b (0, 0): k over the first rounds [(1, 0), (0, 0), (-1, 0), (0, 0), (1, 0), (0, 0)]; |k|^2 seen [0, 1]; now^2 + before^2 per row [0, 1]
+   quadrature at 5: a (2, 1) b (1, -2): k over the first rounds [(2, 1), (-1, 2), (-2, -1), (1, -2), (2, 1), (-1, 2)]; |k|^2 seen [5]; now^2 + before^2 per row [5]
+   a (1, 1) b (1, -1): k over the first rounds [(1, 1), (-1, 1), (-1, -1), (1, -1), (1, 1), (-1, 1)]; |k|^2 seen [2]; now^2 + before^2 per row [2]
+(d) the tied T1 hand (Gamma 1000, g 1, A 4) against the held hand's seed: the beat follows the now-slot square, not the act
+   quadrature (1, 0) / (0, -1): |k|^2 first rounds [1, 1, 1, 1, 1, 1, 1, 1], set [1]; T1 period 266.000 over 14 swings; max |x| 4; ran away False
+   in phase (1, 1) / (0, 0): |k|^2 first rounds [2, 0, 2, 0, 2, 0, 2, 0], set [0, 2]; T1 period 268.000 over 14 swings; max |x| 4; ran away False
+   half laid (1, 0) / (0, 0): |k|^2 first rounds [1, 0, 1, 0, 1, 0, 1, 0], set [0, 1]; T1 period 516.000 over 7 swings; max |x| 4; ran away False
+(e) the sense: the mirror reverses it; the whole-speed tie does not see it (Gamma 1000, g 1, A 4, 2000 rounds)
+   k now (1, 0): forward after one round (0, 1); mirrored state's k (0, -1), one round on (-1, 0)
+   the tied hand's (a, r) under the two senses: rounds differing of 2000: 0

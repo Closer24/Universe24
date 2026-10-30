@@ -1,0 +1,16 @@
+--- p4's world: (A1) x 2 held hand, matter at rest within 1, seed 99
+   round    0: |k|^2 min 1, max 1, sites at 1: 27 of 27; matter's max |x| 1
+   round  100: |k|^2 min 1, max 1, sites at 1: 27 of 27; matter's max |x| 6
+   round  200: |k|^2 min 1, max 1, sites at 1: 27 of 27; matter's max |x| 9
+   round  300: |k|^2 min 0, max 10, sites at 1: 9 of 27; matter's max |x| 11
+   round  400: |k|^2 min 1, max 637, sites at 1: 1 of 27; matter's max |x| 17
+   runaway read from outside at round 413 (a count past 10^9)
+--- p4b's world: (A1, A2) held hand, matter at rest within 1, seed 7
+   round    0: |k|^2 min 1, max 1, sites at 1: 27 of 27; matter's max |x| 1
+   round  100: |k|^2 min 1, max 1, sites at 1: 27 of 27; matter's max |x| 7
+   round  200: |k|^2 min 1, max 1, sites at 1: 27 of 27; matter's max |x| 9
+   round  300: |k|^2 min 1, max 1, sites at 1: 27 of 27; matter's max |x| 10
+   round  400: |k|^2 min 1, max 26, sites at 1: 4 of 27; matter's max |x| 11
+   round  500: |k|^2 min 5, max 449, sites at 1: 0 of 27; matter's max |x| 20
+   runaway read from outside at round 510 (a count past 10^9)
+Reading: the text's 'bounded over 300 rounds' is a 300-round statement; what the same world does after is here.

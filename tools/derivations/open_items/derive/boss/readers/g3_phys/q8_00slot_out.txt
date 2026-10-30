@@ -1,0 +1,25 @@
+--- (a) the turn alone under the 00 slot c; the fine tooth at rest/2 and at W/2
+   c/rest     tooth at rest/2: first off    tooth at W/2: first off
+   -0.300         1 [1, 2]       away False              1 [1, 2]       away False
+   -0.260         1 [1, 2]       away False              1 [1, 2]       away False
+   -0.250      None [1]          away False              1 [1, 2]       away False
+   -0.240      None [1]          away False              1 [1, 2]       away False
+   -0.200      None [1]          away False           None [1]          away False
+   -0.100      None [1]          away False           None [1]          away False
+    0.000      None [1]          away False           None [1]          away False
+    0.100      None [1]          away False           None [1]          away False
+    0.200      None [1]          away False           None [1]          away False
+    0.300      None [1]          away False           None [1]          away False
+    0.330      None [1]          away False           None [1]          away False
+    0.340      None [1]          away False              1 [1, 2]       away False
+    0.400      None [1]          away False              1 [1, 2]       away False
+    0.450      None [1]          away False              1 [1, 2]       away False
+    0.490      None [1]          away False              1 [1, 2]       away False
+   => at the lay r = rest/2 the turn is exact for -rest/4 <= c < rest/2; at r = W/2 for -rest/5 <= c < rest/3: not +-rest/2.
+--- (b) the matter's room under the 00 slot: a tied T1 hand at A, c/rest in {0, 0.1, 0.2, 0.3}; first |k|^2 off (400 rounds)
+   c/rest   A=8 (64)   A=12 (144)   A=14 (196)   A=15 (225)
+    0.000        None        None        None        None
+    0.100        None        None        None        None
+    0.200        None        None        None        None
+    0.300        None        None        None        None
+   => the room is shared between the clock's slot and the matter: a deeper clock (gravity) bends the vacuum at less matter.

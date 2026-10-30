@@ -1,0 +1,6 @@
+--- (i) phase defect (0,1) amid (1,0): |k|^2 at the defect every 100 rounds: [1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5, 1, 5, 5]
+    last round the defect's |k|^2 was not 1: 2998; |k|^2 seen at the other 26 sites: [1]
+--- (iii) magnitude defect (2,0) amid (1,0): |k|^2 at the defect every 100 rounds: [4, 1, 2, 4, 1, 2, 4, 1, 2, 4, 1, 2, 4, 1, 2, 4, 1, 2, 4, 1, 2, 4, 1, 2, 4, 1, 2, 4, 1, 2]
+    last round the defect's |k|^2 was not 1: 2999; |k|^2 seen at the other 26 sites: [1]
+--- (v) defect (1,1) amid (1,0): |k|^2 at the defect every 100 rounds: [2, 1, 4, 2, 1, 4, 2, 1, 4, 2, 1, 4, 2, 1, 4, 2, 1, 4, 2, 1, 4, 2, 1, 4, 2, 1, 4, 2, 1, 4]
+    last round the defect's |k|^2 was not 1: 2999; |k|^2 seen at the other 26 sites: [1]

@@ -1,0 +1,12 @@
+(a) one hand of each kind tied through K x K -> A1 to the held hand, A 4: the period (G3's T1: 266)
+   train 1 kinds ['A1']: period 266.000 over 10 swings, max 4
+   train 2 kinds ['A2']: period 266.000 over 10 swings, max 4
+   train 3 kinds ['T1']: period 266.000 over 10 swings, max 4
+   train 4 kinds ['T2']: period 266.000 over 10 swings, max 4
+   light untied at rest 4: period n/a over 0 swings (stands at 4)
+   light tied on purpose: period 266.000 over 10 swings, max 4: the act ties whatever is laid
+(b) J of the plan under 200 random signed permutations of the 8 tied rows across the four trains (k fixed), and of k's 2 rows
+   J(P x) = P J(x) on the tied rows with J_k unmoved: 200 of 200; J(Q k) = Q J(k) with the tied rows unmoved: 200 of 200
+   so the whole-speed plan is kept by the signed permutations of its 8 tied rows (2^8 8! = 10,321,920) times those of k's 2 (8): no kind and no train is told
+(c) the pair rule applied to the held hand itself, (A1, A2) being of the shape (K, A2 x K): the self tie g f |k|^4 laid
+   |k|^2 seen [1]; the tooth's walk [-0.004, 0.000] of W (4 g / Gamma = 0.004 a round): absorbed by the slack, nothing in the plan refuses it

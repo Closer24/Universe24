@@ -1,0 +1,4 @@
+a ring of 64 with Meshes, Gamma 1000, a standing cosine wave at amplitude 50 (the lay's size sum x^2 = 80180); 3000 rounds
+predicted periods: light 156.8; the tied wave 104.6 (the rest beat alone 140.5)
+   light (no spring)           : the mode's period 156.944 over 18 swings; the size per 500 rounds [178359, 491876, 1089458, 1810060, 2845878, 4035064]; max |x| per 500 rounds [97, 143, 196, 235, 279, 324]; run back exact True
+   tied (the unit spring g f)  : the mode's period 104.703 over 27 swings; the size per 500 rounds [80180, 81519, 83118, 83906, 84369, 86851]; max |x| per 500 rounds [61, 65, 70, 74, 79, 80]; run back exact True

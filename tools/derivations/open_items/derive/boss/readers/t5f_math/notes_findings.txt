@@ -1,0 +1,18 @@
+Working notes (the final reader, term 5 fourth text), 2026-10-30. The report itself goes to the Boss by hand-back.
+
+REPRODUCED: out_e, out_g, out_m, out_r, out_w bit for bit on 9868ae570 (rerun/).
+
+THEOREM re-derived (see 00_plan.md items 5-7, 17-19 and findings in the report): exact on even rows (M_in'' = -M_out - 1,
+split(-1-n) = -split(n)), on odd rows (M_in'' = +M_out, the tooth kept, J'' = -J gives q'' = -q at the kept drive tooth),
+the 00 row's dial fixed at 2 rest so D_out'' = D_in; hypotheses sufficient; (e) silent on an odd row's strides (swapped, kept).
+
+A (out_a.txt): run back holds under a clock moving up to 522 permille a round, T_d 1/7/1000003, r_d random, notch 1,
+0i slots moving with random teeth, strengths to 10^36; dust to u = 0.2: 30 of 30. probe_e's "moving clock": u ~ 3.6e-17.
+B (out_b.txt): two square trains accepted by the loader; cyclic 00 reads; run back 0 of 12; promise silent. Control 12 of 12.
+C (out_c.txt): Green's function verified exactly at 125 sites; probe_w's class table exact; prediction 9400 and every class reproduced.
+D (out_d.txt): plan = text's formulas exactly; (e) holds numerically; T00 T_xx / T_0x^2 = 6 (T not rank one on the 0i block).
+E (out_e_turns.txt): 24 of 24 turns commute, 6 of 6 rounds, with teeth flipped under negation; 21 of 24 fail with teeth kept.
+F (out_f.txt): ties s = -D, D - 1: 12 of 12 everywhere; the closed mirror s -> -s fails at s = -D.
+G (out_g_res.txt): 1 + gamma at u = 0.02: printed 2050, unrounded 2058, floors allow [1952, 2100]; at 0.05: 2106 vs 2105.
+H (out_h.txt): books with full grips bit for bit 40 of 40; the ii part is 660 parts in 10^21 of P -> the window check had 10^18 slack.
+H-b (out_h2.txt): see file.

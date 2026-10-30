@@ -1,0 +1,10 @@
+--- Gamma 1000, A 12 (g A^2 = 144, room Gamma/4 = 250, one round's push 0.288 of W)
+   window   tooth walk re [min, max] /1000 W   tooth walk im [min, max]   max|x|   |k|^2 seen   first off
+      0      [ -336,     0]                  [ -336,     0]           12    [1]         None
+      1      [ -336,     0]                  [ -336,     0]           12    [1]         None
+      2      [ -336,     0]                  [ -336,     0]           12    [1]         None
+      3      [ -336,     0]                  [ -336,     0]           12    [1]         None
+      4      [ -336,     0]                  [ -336,     0]           12    [1]         None
+      5      [ -336,     0]                  [ -336,     0]           12    [1]         None
+      6      [ -336,     0]                  [ -336,     0]           12    [1]         None
+      7      [ -336,     0]                  [ -336,     0]           12    [1]         None

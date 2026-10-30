@@ -1,0 +1,18 @@
+--- (i) the turn at every magnitude, den 1, Gamma 1000, 400 rounds
+   k = (1, 0): |k|^2 seen [1]; tied masses would scale as |k|^2 = 1
+   k = (2, 0): |k|^2 seen [4]; tied masses would scale as |k|^2 = 4
+   k = (3, 0): |k|^2 seen [9]; tied masses would scale as |k|^2 = 9
+   k = (5, 0): |k|^2 seen [25]; tied masses would scale as |k|^2 = 25
+   k = (10, 0): |k|^2 seen [100]; tied masses would scale as |k|^2 = 100
+   k = (31, 0): |k|^2 seen [961]; tied masses would scale as |k|^2 = 961
+   k = (100, 0): |k|^2 seen [10000]; tied masses would scale as |k|^2 = 10000
+   k = (3, 4): |k|^2 seen [25]; tied masses would scale as |k|^2 = 25
+   k = (5, 12): |k|^2 seen [169]; tied masses would scale as |k|^2 = 169
+   k = (20, 21): |k|^2 seen [841]; tied masses would scale as |k|^2 = 841
+   k = (1000, 0): |k|^2 seen [1000000]; tied masses would scale as |k|^2 = 1000000
+   => no law fixes |k|^2 = 1; 'one quantum per Node-clock' is the seed's number (decision 40 (g) asks it 'from the law').
+--- (ii) the p4 world over 3000 rounds: |k|^2's spread over the 27 sites
+   round    0: |k|^2 over sites: min 1, max 1, sites at 1: 27 of 27; histogram {1: 27}; matter's max |x| 1
+   round   30: |k|^2 over sites: min 1, max 1, sites at 1: 27 of 27; histogram {1: 27}; matter's max |x| 4
+   round  100: |k|^2 over sites: min 1, max 1, sites at 1: 27 of 27; histogram {1: 27}; matter's max |x| 6
+   round  300: |k|^2 over sites: min 0, max 10, sites at 1: 9 of 27; histogram {0: 3, 1: 9, 4: 11, 9: 2, 10: 2}; matter's max |x| 11

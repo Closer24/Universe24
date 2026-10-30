@@ -1,0 +1,11 @@
+the tied T1 hand with the held hand against the same hand with the unit's spring g f |k|^2, bit for bit (a, b, r), Gamma 1000
+   A  4 g 1 k (1, 0) (g A^2 max|k_rho| =   16 against Gamma/4 = 250): rounds where the tied rows differ    0 of 3000, first None; |k|^2 seen [1]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True
+   A 10 g 1 k (1, 0) (g A^2 max|k_rho| =  100 against Gamma/4 = 250): rounds where the tied rows differ    0 of 3000, first None; |k|^2 seen [1]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True
+   A 15 g 1 k (1, 0) (g A^2 max|k_rho| =  225 against Gamma/4 = 250): rounds where the tied rows differ    0 of 3000, first None; |k|^2 seen [1]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True
+   A  4 g 3 k (1, 0) (g A^2 max|k_rho| =   48 against Gamma/4 = 250): rounds where the tied rows differ    0 of 3000, first None; |k|^2 seen [1]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True
+   A  4 g 1 k (1, 1) (g A^2 max|k_rho| =   16 against Gamma/4 = 250): rounds where the tied rows differ    0 of 3000, first None; |k|^2 seen [2]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True
+   A  4 g 1 k (2, 0) (g A^2 max|k_rho| =   32 against Gamma/4 = 250): rounds where the tied rows differ    0 of 3000, first None; |k|^2 seen [4]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True
+   A  6 g 1 k (3, 0) (g A^2 max|k_rho| =  108 against Gamma/4 = 250): rounds where the tied rows differ    0 of 3000, first None; |k|^2 seen [9]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True
+past the room:
+   A 16 g 1 k (1, 0) (g A^2 max|k_rho| =  256 against Gamma/4 = 250): rounds where the tied rows differ 2992 of 3000, first 2; |k|^2 seen [0, 1, 2]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True
+   A 12 g 1 k (2, 0) (g A^2 max|k_rho| =  288 against Gamma/4 = 250): rounds where the tied rows differ 2998 of 3000, first 2; |k|^2 seen [0, 1, 2, 4, 5, 8]; monomials 8 against 3; the drive's tooth stayed 0; run back exact True

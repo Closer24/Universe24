@@ -1,0 +1,10 @@
+the spring on the unit near the window's top, 18 lays each (A 1, 2, 3, 5, 20, 40 at rest and moving +-1), 600 rounds
+   K/W = 3.500: ran away  0 of 18; largest bounded |x| in thousandths of the lay's size 4000
+   K/W = 3.750: ran away  0 of 18; largest bounded |x| in thousandths of the lay's size 12000
+   K/W = 3.875: ran away  0 of 18; largest bounded |x| in thousandths of the lay's size 27000
+   K/W = 3.900: ran away  0 of 18; largest bounded |x| in thousandths of the lay's size 12000
+   K/W = 3.900: ran away  0 of 18; largest bounded |x| in thousandths of the lay's size 12000
+   K/W = 3.990: ran away  0 of 18; largest bounded |x| in thousandths of the lay's size 112000
+   K/W = 3.999: ran away  0 of 18; largest bounded |x| in thousandths of the lay's size 1002000
+   K/W = 4.000: ran away  0 of 18; largest bounded |x| in thousandths of the lay's size 1201000
+   K/W = 4.001: ran away 10 of 18; largest bounded |x| in thousandths of the lay's size 240149942666

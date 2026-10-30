@@ -1,0 +1,17 @@
+--- (a) the generic plan: every train t ties through its K x K -> A1 rows to |k|^2 at g = 1 (the held hand included)
+   monomials laid: 40; f = rest/Gamma = 6000; rest = 6000000
+   T1 hand   : period  266.000 over 14; max |count| 4
+   light     : period  266.000 over 14; max |count| 4
+   metric 00 : period  266.000 over 14; max |count| 4
+   metric ii : period  266.000 over 14; max |count| 4
+   held hand |k|^2 seen [1] (its self-tie |k|^4 adds 4 f |k|^2 k_rho a round, absorbed in the teeth)
+   => under the one generic plan light beats at the notch's beat like matter, and the 00 slot carries the spring 2f/W = 2/Gamma: the time gear's own.
+--- (b) the pair rule from the tables: a train ties iff its kinds are (K, A2 x K)
+   A2 x K -> : {'A1': ['A2'], 'A2': ['A1'], 'E': ['E'], 'T1': ['T2'], 'T2': ['T1']}
+   the probes' trains: ['A1', 'A1']: no pair; ['T1']: no pair; ['A1', 'A1']: no pair
+   the example universe: ['A1', 'A1']: no pair; ['A1', 'T1', 'A1', 'E', 'T2']: no pair
+   the text's pairs: ['T1', 'T2']: ties; ['A1', 'A2']: ties; ['E', 'E']: ties
+   => the probes' tied hand (one T1 kind) is no pair under the text's rule; the one pair among its kinds is the held hand (A1, A2) itself.
+--- (c) a (T1, T2) train tied by the rule (both kinds through their dot rows), A = 4 on one T1 row and one T2 row
+   T1 row: period 266.000 over 14; T2 row: period 266.000 over 14; the two hands of the pair: one beat.
+   => the norm tells no kind: every kind tied at one g has one mass; a spectrum needs g per train, a declared number.

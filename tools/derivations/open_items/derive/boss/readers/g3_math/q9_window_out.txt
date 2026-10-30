@@ -1,0 +1,13 @@
+(a) the held hand at (q, 0): the tied T1 hand (A 1) against the window's top 2 g |k|^2 / Gamma < 4, i.e. |k|^2 < 2000 at g 1
+   q = 10, |k|^2 =  100, K/W = 0.200: period 14.000; max |x| 1; |k|^2 seen [100]; rounds 2000; ran away False
+   q = 30, |k|^2 =  900, K/W = 1.800: period 4.000; max |x| 1; |k|^2 seen [900]; rounds 2000; ran away False
+   q = 40, |k|^2 = 1600, K/W = 3.200: period 3.000; max |x| 2; |k|^2 seen [1600]; rounds 2000; ran away False
+   q = 44, |k|^2 = 1936, K/W = 3.872: period 2.000; max |x| 18384981423; |k|^2 seen [1384, 1658, 1808, 1882]; rounds 16; ran away True
+   q = 45, |k|^2 = 2025, K/W = 4.050: period 2.000; max |x| 93043727099; |k|^2 seen [2017, 2025, 2026, 2029]; rounds 11; ran away True
+   q = 50, |k|^2 = 2500, K/W = 5.000: period 2.000; max |x| 29672437703283437; |k|^2 seen [2500, 2504, 2545, 7956]; rounds 7; ran away True
+(b) a ring of 64 with Meshes, the unit's spring g f (|k|^2 = 1 by fiat), a standing wave of the T1 hand's x at amplitude 50:
+    predicted 4 sin^2(omega/2) = 0.002 + 4 sin^2(pi/64)/6 = 0.003605, period 104.6 rounds; massless 156.8; mass alone 140.5
+    (the period at one site is a poor read here: the wave heats and the site's crossings blur; q11 reads the mode's projection)
+   with the spring: period 70.650 over 40 swings; max |x| 69; run back exact True
+   no spring (light): period 64.285 over 7 swings; max |x| 320; run back exact True
+    the lay's first values [50, 49, 49, 47, 46, 44] ... [-50, -50, -51, -50]

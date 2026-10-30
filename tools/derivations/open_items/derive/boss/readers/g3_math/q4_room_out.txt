@@ -1,0 +1,27 @@
+(a) the held hand (1, 0) with the tied T1 hand at A: first round |k|^2 off; the mean wind D_x (thousandths) and the period over 2000 rounds
+   A = 12 (g A^2 = 144): first off at round None; mean D_x 0.728; period 130.000; ran away False
+   A = 14 (g A^2 = 196): first off at round None; mean D_x 0.880; period 126.000; ran away False
+   A = 15 (g A^2 = 225): first off at round None; mean D_x 0.944; period 126.000; ran away False
+   A = 16 (g A^2 = 256): first off at round 1; mean D_x 1.103; period 113.937; ran away False
+   A = 18 (g A^2 = 324): first off at round 1; mean D_x 1.220; period 115.437; ran away False
+   A = 20 (g A^2 = 400): first off at round 1; mean D_x 1.343; period 118.000; ran away False
+   A = 22 (g A^2 = 484): first off at round 1; mean D_x 1.423; period 122.000; ran away False
+   A = 23 (g A^2 = 529): first off at round 1; mean D_x 1.457; period 124.133; ran away False
+(b) the unit's spring g f (|k|^2 = 1 held by fiat) at A: period measured, G3's formula Gamma/(g A) + 4 A, the harmonic 140.496, the mean D_x
+   A =   1: period  1004.000 over   2 swings; formula  1004.000; mean D_x   0.006 (2 A^2 / Gamma = 0.002); ran away False
+   A =   2: period   508.000 over   5 swings; formula   508.000; mean D_x   0.028 (2 A^2 / Gamma = 0.008); ran away False
+   A =   4: period   266.000 over  10 swings; formula   266.000; mean D_x   0.115 (2 A^2 / Gamma = 0.032); ran away False
+   A =   8: period   158.000 over  18 swings; formula   157.000; mean D_x   0.392 (2 A^2 / Gamma = 0.128); ran away False
+   A =  12: period   130.000 over  22 swings; formula   131.333; mean D_x   0.720 (2 A^2 / Gamma = 0.288); ran away False
+   A =  15: period   126.000 over  23 swings; formula   126.666; mean D_x   0.936 (2 A^2 / Gamma = 0.450); ran away False
+   A =  16: period   126.000 over  23 swings; formula   126.500; mean D_x   1.000 (2 A^2 / Gamma = 0.512); ran away False
+   A =  18: period   126.000 over  23 swings; formula   127.555; mean D_x   1.127 (2 A^2 / Gamma = 0.648); ran away False
+   A =  20: period   130.000 over  22 swings; formula   130.000; mean D_x   1.211 (2 A^2 / Gamma = 0.800); ran away False
+   A =  22: period   134.000 over  21 swings; formula   133.454; mean D_x   1.297 (2 A^2 / Gamma = 0.968); ran away False
+   A =  23: period   134.000 over  21 swings; formula   135.478; mean D_x   1.356 (2 A^2 / Gamma = 1.058); ran away False
+   A =  24: period   138.000 over  20 swings; formula   137.666; mean D_x   1.377 (2 A^2 / Gamma = 1.152); ran away False
+   A =  28: period   146.000 over  19 swings; formula   147.714; mean D_x   1.517 (2 A^2 / Gamma = 1.568); ran away False
+   A =  32: period   154.000 over  18 swings; formula   159.250; mean D_x   1.742 (2 A^2 / Gamma = 2.048); ran away False
+   A =  40: period   136.000 over  21 swings; formula   185.000; mean D_x   3.798 (2 A^2 / Gamma = 3.200); ran away False
+   A =  60: period   138.000 over  20 swings; formula   256.666; mean D_x   7.958 (2 A^2 / Gamma = 7.200); ran away False
+   A = 100: period   142.000 over  20 swings; formula   410.000; mean D_x  19.651 (2 A^2 / Gamma = 20.000); ran away False

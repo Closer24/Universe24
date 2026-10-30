@@ -1,0 +1,9 @@
+the engine's T1 matrix is the turn itself at 24 of 24 candidates; J not 0: True
+the sources J and F turn with the 24: 24 of 24 (as G3's p4b); turns with the A2 sign -1: 12
+   tick^1  commutes with the turn, teeth unflipped on negated rows: counts agree  3 of 24; (a, b, r, rd) agree  3 of 24
+   tick^1  commutes with the turn, teeth flipped on negated rows: counts agree 24 of 24; (a, b, r, rd) agree 24 of 24
+   tick^5  commutes with the turn, teeth unflipped on negated rows: counts agree  3 of 24; (a, b, r, rd) agree  3 of 24
+   tick^5  commutes with the turn, teeth flipped on negated rows: counts agree 24 of 24; (a, b, r, rd) agree 24 of 24
+   tick^50 commutes with the turn, teeth unflipped on negated rows: counts agree  3 of 24; (a, b, r, rd) agree  3 of 24
+   tick^50 commutes with the turn, teeth flipped on negated rows: counts agree 24 of 24; (a, b, r, rd) agree 24 of 24
+turns negating no row of this world: 3 of 24

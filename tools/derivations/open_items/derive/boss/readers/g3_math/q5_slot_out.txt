@@ -1,0 +1,26 @@
+(a) the turn with the 00 slot at c (W = rest + c, the own spring 2 rest, r born at rest/2): predicted exact iff -1/4 <= c/rest < 1/2
+   c/rest = -0.490: first |k|^2 off at round 1; |k|^2 seen [1, 2]; run back exact True; ran away False
+   c/rest = -0.400: first |k|^2 off at round 1; |k|^2 seen [1, 2]; run back exact True; ran away False
+   c/rest = -0.300: first |k|^2 off at round 1; |k|^2 seen [1, 2]; run back exact True; ran away False
+   c/rest = -0.260: first |k|^2 off at round 1; |k|^2 seen [1, 2]; run back exact True; ran away False
+   c/rest = -0.250: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest = -0.240: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest = -0.200: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest = -0.100: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest =  0.000: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest =  0.100: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest =  0.250: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest =  0.300: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest =  0.400: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest =  0.490: first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   c/rest =  0.500: first |k|^2 off at round 1; |k|^2 seen [1, 2]; run back exact True; ran away False
+(b) the tied T1 hand's beat at A 10 against c (the redshift): period over 3000 rounds
+   c/rest =  0.000: period 140.000 over 20 swings; |k|^2 seen [1]; first off None; run back exact True
+   c/rest =  0.100: period 150.000 over 19 swings; |k|^2 seen [1]; first off None; run back exact True
+   c/rest =  0.250: period 166.000 over 17 swings; |k|^2 seen [1]; first off None; run back exact True
+   c/rest =  0.400: period 180.000 over 15 swings; |k|^2 seen [1]; first off None; run back exact True
+(c) a moving clock: the 00 slot drifting a round (rising, then falling), 400 rounds: the turn and the run back
+   00 slot moving 0.001 of rest a round: the slot from 0 to 2400000 (c/rest 0.400); first |k|^2 off at round None; |k|^2 seen [1]; run back exact True; ran away False
+   00 slot moving 0.002 of rest a round: the slot from 0 to 4800000 (c/rest 0.800); first |k|^2 off at round 260; |k|^2 seen [0, 1, 2]; run back exact True; ran away False
+   00 slot moving -0.001 of rest a round: the slot from 0 to -2400000 (c/rest -0.400); first |k|^2 off at round 251; |k|^2 seen [0, 1, 2]; run back exact True; ran away False
+   00 slot moving -0.002 of rest a round: the slot from 0 to -3155987 (c/rest -0.525); first |k|^2 off at round 127; |k|^2 seen [0, 1, 2, 5, 17, 53]; run back exact None; ran away True

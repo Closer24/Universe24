@@ -1,0 +1,12 @@
+--- (i) one phase defect (0,1) amid (1,0), 3x3x3
+   |k|^2 seen over 400 rounds: defect [1, 5, 9]; neighbours [1]; far [1]; ran away False
+   |k|^2 at the end, sites with 1: 26 of 27; min 1, max 5
+--- (ii) a winding vacuum k(x) = i^x along x, 4x4x4 (the vacuum with momentum pi/2 per site)
+   |k|^2 seen over 400 rounds at every site: [1]; ran away False; sites with 1 at the end: 64 of 64
+   (the Meshes' pull on a part differing by one count from a neighbour is W/6 per Mesh; two differing neighbours give W/3 < W/2)
+--- (iii) a magnitude defect (2,0) amid (1,0), 3x3x3: the radial mode
+   |k|^2 seen over 400 rounds: defect [0, 1, 2, 4, 5]; neighbours [1]; far [1]; ran away False
+   |k|^2 at the end: min 1, max 1; sites with 1: 27 of 27
+--- (iv) a domain wall, 4x4x4: x in {0,1} at (1,0), x in {2,3} at (0,1)
+   |k|^2 seen over 400 rounds: [1]; ran away False; sites with 1 at the end: 64 of 64; max at the end 1
+Reading: the vacuum holds only where every neighbour turns in step (a global phase lock laid by the seed); a defect of one count is pushed by W per round, past the room.

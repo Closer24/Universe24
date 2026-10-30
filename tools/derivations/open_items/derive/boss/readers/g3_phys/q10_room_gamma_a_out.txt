@@ -1,0 +1,6 @@
+--- (a) first round |k|^2 leaves 1, against g A^2 as a share of Gamma (8 Gamma rounds)
+   Gamma    A^2~G/16   A^2~G/12   A^2~G/10   A^2~G/8    A^2~G/6    A^2~G/5    A^2~G/4
+    1000    A8:  None   A9:  None   A10:  None   A11:  None   A13:  None   A14:  None   A15:  None
+    3200    A14:  None   A16:  3251   A18:  None   A20:  1281   A23:  None   A25:  None   A28:    85
+   12800    A28:  None   A33:  None   A36:  None   A40:  4961   A46:  None   A51:  None   A56:   170
+   => the room in g A^2 is about Gamma/4 at Gamma 1000 but about Gamma/8 or less at Gamma 3200 and 12800: it is not Gamma/4.

@@ -1,0 +1,28 @@
+--- (b) past the room, Gamma 1000: per 500-round window, max |x| and the rounds at |k|^2 = 0, 1, 2 (of 500)
+   A = 20 (g A^2 = 400):
+      window  0: max|x|  20; rounds at |k|^2 0/1/2: 110/187/203
+      window  1: max|x|  20; rounds at |k|^2 0/1/2: 111/185/204
+      window  2: max|x|  20; rounds at |k|^2 0/1/2: 108/189/203
+      window  3: max|x|  20; rounds at |k|^2 0/1/2: 113/183/204
+      window  4: max|x|  20; rounds at |k|^2 0/1/2: 107/191/202
+      window  5: max|x|  20; rounds at |k|^2 0/1/2: 114/181/205
+      window  6: max|x|  20; rounds at |k|^2 0/1/2: 105/193/202
+      window  7: max|x|  20; rounds at |k|^2 0/1/2: 116/179/205
+      window  8: max|x|  20; rounds at |k|^2 0/1/2: 104/195/201
+      window  9: max|x|  20; rounds at |k|^2 0/1/2: 117/177/206
+      window 10: max|x|  20; rounds at |k|^2 0/1/2: 104/195/201
+      window 11: max|x|  20; rounds at |k|^2 0/1/2: 116/178/206
+   A = 24 (g A^2 = 576):
+      window  0: max|x|  24; rounds at |k|^2 0/1/2: 114/153/233
+      window  1: max|x|  24; rounds at |k|^2 0/1/2:  98/185/217
+      window  2: max|x|  24; rounds at |k|^2 0/1/2: 114/156/230
+      window  3: max|x|  24; rounds at |k|^2 0/1/2: 108/166/226
+      window  4: max|x|  24; rounds at |k|^2 0/1/2: 113/154/233
+      window  5: max|x|  24; rounds at |k|^2 0/1/2: 107/168/225
+      window  6: max|x|  24; rounds at |k|^2 0/1/2: 112/159/229
+      window  7: max|x|  24; rounds at |k|^2 0/1/2: 100/182/218
+      window  8: max|x|  24; rounds at |k|^2 0/1/2: 114/153/233
+      window  9: max|x|  24; rounds at |k|^2 0/1/2: 114/153/233
+      window 10: max|x|  24; rounds at |k|^2 0/1/2: 106/171/223
+      window 11: max|x|  24; rounds at |k|^2 0/1/2: 106/170/224
+   => the tied mass at the Node-clock is 2 g <|k|^2>/Gamma with <|k|^2> a mixture; the matter's envelope moves with the exchange.

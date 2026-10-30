@@ -1,0 +1,16 @@
+Probe C: the torus's Green's function on 5^3 from the full 125-site system, whole numbers
+  the full system solved: denominator 37658649036493735137881806000891149466269780532456934452056884765625000000000000000000000000; (-Delta)(N G) = N delta - 1 fails at 0 of 125 sites; sum (N G) = 0
+  against probe_w's class table: 0 of 125 sites differ (cross-multiplied, exact); classes found 10
+  predicted centre well, window mean: 9400 counts (remainder 9136203217312644474549217836637932482074089729378031915985047817230224609375000000000000000000000000000000000000000000 of 28550635054102014370157471673107526200127106983068792089852649951353669166564941406250000000000000000000000000000000000); probe_w printed 9400, measured 9402
+  class | sites | predicted well mean (counts) | probe_w's printed prediction
+  (0, 0, 0) | 1 | 9400 | 9400
+  (1, 0, 0) | 6 | 2270 | 2270
+  (1, 1, 0) | 12 | 689 | 689
+  (1, 1, 1) | 8 | 113 | 113
+  (2, 0, 0) | 6 | 286 | 286
+  (2, 1, 0) | 24 | -104 | -104
+  (2, 1, 1) | 24 | -322 | -322
+  (2, 2, 0) | 12 | -431 | -431
+  (2, 2, 1) | 24 | -546 | -546
+  (2, 2, 2) | 8 | -687 | -687
+  G(0) on the torus (zero mode removed) = 2080 / 10000 (the infinite cubic lattice's is 2527 / 10000)

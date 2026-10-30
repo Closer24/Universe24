@@ -1,0 +1,5 @@
+Probe B: two square trains against the acyclic-reads hypothesis, whole numbers on the edge form (step.act)
+one square (control): the loader accepted it (square flags [0, 1]); the clock's reads landing on a 00 row at factor 1: [(2, 0)]; W at the 00 rows at round 0: [90977140554674334000000]
+  one square (control): promise broken before 0 of 12 rounds; untick(tick s) = s held 12 of 12; the rewind departs at round back 0 (0: bit for bit)
+two squares: the loader accepted it (square flags [0, 1, 1]); the clock's reads landing on a 00 row at factor 1: [(2, 0), (2, 12), (12, 0), (12, 2)]; W at the 00 rows at round 0: [100977140554674334000000, 100977140554674334000000]
+  two squares: promise broken before 0 of 12 rounds; untick(tick s) = s held 0 of 12; the rewind departs at round back 1 (0: bit for bit)

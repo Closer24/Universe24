@@ -1,0 +1,5 @@
+Probe D: the shipped push plan checked numerically, whole numbers
+D1. hypothesis (e) as a number on random readings in [-50, 50] at 27 sites: J5'' = J5 on the even rows fails at 0 entries, J5'' = -J5 on the odd rows (0i) fails at 0 entries; J5 not 0 at 270 entries of 324
+D2. the plan's factor per matter row at strength 1: f = 1 (the A1 form's entry times the flags)
+    the plan against the text's closed formulas, mismatches by slot over 27 sites: {'00': 0, 'ii': 0, 'jk': 0, '0i': 0}
+D3. is T = v (x) v? at si = so = 30, D_x a = 7: T00 T_xx = 1058400, T_0x^2 = 176400: the ratio is (6, 0) = S/2 = 6 for any si = so; a rank-one T has T_0x^2 = T00 T_xx. With v = (sqrt(S) sigma, D_i a), T_0i would be sqrt(S) sigma D_i a = sqrt 12 sigma D_i a, no whole number: the built T_0i = 2 sigma D_i a is 2/sqrt 12 = 1/sqrt 3 of it.
