@@ -133,19 +133,13 @@ def load(
     return Loaded(trains, (none, none, none.astype(object), none), state), laid
 
 
-def mesh_unit(gamma: int) -> int:
-    """G by K-S1, the least G at which one notch of tension at the vacuum resolves, 2 G^2 (2 Gamma - 1) > Gamma^2: 16 at Gamma 1,000, as the head's mesh_unit_of finds it."""
-    return next(g for g in itertools.count(1) if (g + g) * g * (gamma + gamma - 1) > gamma * gamma)
-
-
 def geared(
     universe: dict[str, Any], trains: Trains, spokes: Z
 ) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], tuple[Z, Z, Z], Z]:
-    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes; every row reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself; every Spoke's grip reading each square's ii slot of its axis at both ends of its Mesh; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 G^2 per Mesh."""
+    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2, the 6 the board's Spokes; every row reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself; every Spoke's grip reading each square's ii slot of its axis at both ends of its Mesh; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 per Mesh, one notch of a slot moving a grip by one count, so the Mesh unit is 1."""
     integers, first, rows = universe["integers"], trains.first, trains.size.sum()
     den, gamma = integers["den"], integers["full_rate"]
-    g = mesh_unit(gamma)
-    grip = den * gamma * gamma * g * g
+    grip = den * gamma * gamma
     ones = np.ones((rows, 1), dtype=object)
     gearing = (
         len(spokes) * grip * ones,
