@@ -1,0 +1,11 @@
+One hairspring, the same amplitude a0, at W = 10000 and W = 40000 (the clock twice as slow), one beat each:
+  the beat: 63 and 126 rounds (ratio 2000 permille; nature sqrt(4) = 2000)
+  SUM v^2 over the beat (the area in the (a, v) plane): ratio deep/base 498 permille (W^(-1/2) gives 500)
+  SUM W v^2 (the edge's or the act as built's momentum against da): ratio 1995 permille (W^(+1/2) gives 2000)
+  SUM L v^2 (the root dial's momentum against da): ratio 997 permille (W^0 gives 1000)
+  the phasor sum SUM (a v+ - a+ v) = -SUM A^2 sin^2 omega, an (a, v) area again: ratio 499 permille (W^(-1/2) gives 500; the angle swept is 2 pi at every depth)
+  D W / rest with D = 2 W and rest = 10000: ratio 16000 permille
+
+  Reading: at two depths the swept area of one quantum-sized swing per beat goes as W^(-1/2), W^0 or W^(+1/2) by
+  which momentum the area is read with; under the root's momentum (nature's) it is the same
+  at every depth, so a key in those board units counts the same quanta at both depths. No reading gives D W / rest.

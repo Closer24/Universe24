@@ -1,0 +1,6 @@
+Probe 9: the canonical per-gear identity (N5) and the two bookings of the flux, checked by my own hand
+  2 dE_i = X_i + v-_i (r-_i - r+_i) on Animate's world: 0 misses of 71988 gear-rounds; |v- (r- - r+)| up to 4703773500000000000000000 (the remainders' work, about v x W; his 0 of 71,988 and 4.7 x 10^24)
+  his G2 world, the key a 700th, unbooked: lines light 274, bobs 327, site-rounds off 504
+  his G2 world, the key a 700th, booked to light (the text's): lines light 327, bobs 327, site-rounds off 0
+  his G2 world, the key a 700th, booked to the bobs: lines light 274, bobs 274, site-rounds off 0
+  div Phi odd (no whole half-and-half booking) at 0 of 19200 site-rounds on this world (his both-beats world: 8,940)

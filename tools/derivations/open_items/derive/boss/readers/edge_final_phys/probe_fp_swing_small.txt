@@ -1,0 +1,4 @@
+A 1 percent swing of W0 = 99856 at half the beat (period 70 rounds), the hairspring g = 201 (beat about 140)
+  100 swings (7000 rounds): as built A_end/A_start 1674; edge A_end/A_start 1474; root A_end/A_start 1000
+  300 swings (21000 rounds): as built A_end/A_start 8036; edge A_end/A_start 6782; root A_end/A_start 1000
+  (the root's L swings by 1 count, about 0.6 percent of W0, the smallest whole swing)

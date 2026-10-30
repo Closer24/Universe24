@@ -1,0 +1,13 @@
+The hairspring at W0 = 99856, g = 201: the beat 2801 rounds over 20 beats, about 140 a beat
+The clock swings: W = W0 + x (as built, edge), L = L0 + y with W = L^2 (root); the swing an integer oscillator
+
+  swing period 70 rounds (half the beat), size 5 percent of W0, 50 swings (3500 rounds): as built A_end/A_start 4916; edge A_end/A_start 4780; root A_end/A_start 1000
+  swing period 70 rounds (half the beat), size 20 percent of W0, 50 swings (3500 rounds): as built A_end/A_start 1280481; edge A_end/A_start 1418793; root A_end/A_start 1000
+  swing period 140 rounds (the beat), size 5 percent of W0, 50 swings (7000 rounds): as built A_end/A_start 1000; edge A_end/A_start 1000; root A_end/A_start 999
+  swing period 140 rounds (the beat), size 20 percent of W0, 50 swings (7000 rounds): as built A_end/A_start 965; edge A_end/A_start 967; root A_end/A_start 1000
+  swing period 1400 rounds (ten beats), size 5 percent of W0, 50 swings (70000 rounds): as built A_end/A_start 998; edge A_end/A_start 1005; root A_end/A_start 1000
+  swing period 1400 rounds (ten beats), size 20 percent of W0, 50 swings (70000 rounds): as built A_end/A_start 999; edge A_end/A_start 1008; root A_end/A_start 999
+
+  Reading: at a swing of half the beat the edge and the act as built pump the hand (a parametric resonance), the
+  root form does not at any rate: for a uniform lapse nature pumps nothing. EDGE2's 'every amplitude breathes within
+  its beat' holds on its adiabatic lay (ten beats) and not where term 9's swing is fast against a beat.

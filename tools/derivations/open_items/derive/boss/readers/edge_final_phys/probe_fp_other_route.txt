@@ -1,0 +1,15 @@
+The other route: the push read as F rest / W, rest = 10000, on the course W 10000 -> 40000 by 1 a round
+  edge dial, scaled push:
+    free gear: round 7500: W 17500, v 571416, v W / (v0 W0) 999 permille; round 15000: W 25000, v 399988, v W / (v0 W0) 999 permille; round 22500: W 32500, v 307682, v W / (v0 W0) 999 permille
+    hairspring round 7500: W 17500 | A/A0 1000 | T/T0 1000 | W/W0 1000 | T^2/W 1000 | T/W 1000
+    hairspring round 15000: W 25000 | A/A0 1000 | T/T0 1432 | W/W0 1428 | T^2/W 1436 | T/W 1002
+    hairspring round 22500: W 32500 | A/A0 1000 | T/T0 1851 | W/W0 1857 | T^2/W 1845 | T/W 996
+  as built, scaled push:
+    free gear: round 7500: W 17500, v 1000000, v W / (v0 W0) 1750 permille; round 15000: W 25000, v 1000000, v W / (v0 W0) 2500 permille; round 22500: W 32500, v 1000000, v W / (v0 W0) 3250 permille
+    hairspring round 7500: W 17500 | A/A0 1000 | T/T0 1000 | W/W0 1000 | T^2/W 1000 | T/W 1000
+    hairspring round 15000: W 25000 | A/A0 1196 | T/T0 1432 | W/W0 1428 | T^2/W 1436 | T/W 1002
+    hairspring round 22500: W 32500 | A/A0 1360 | T/T0 1851 | W/W0 1857 | T^2/W 1845 | T/W 996
+
+  Reading: with the pushes read as F rest / W the edge dial keeps the amplitude (nature's for a lapse) but the
+  beat goes as W, not sqrt(W): the clock's rate law becomes N = rest / W (light's c^2 = grip rest / W^2 too),
+  so this route changes term 13's N^2 = rest / W and every reading of depth as a rate, a law change of its own.

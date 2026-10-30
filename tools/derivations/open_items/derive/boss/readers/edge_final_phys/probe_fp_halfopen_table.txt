@@ -1,0 +1,29 @@
+EDGE2 section 3's table under the half-open convention (one carry, mirror -1 - s)
+
+A. The free gear, v^2 W against the start in permille; and 'W' read two ways for the root: at the now count L(a)^2
+   (probe_root's read) and at the dial's own mean, (D_in / 2)^2 with D_in = L(b) + L(a)
+   as built: round 0: W 10000, v 1000000, v^2 W 1000; round 7500: W 17500, v 1000000, v^2 W 1750; round 15000: W 25000, v 1000000, v^2 W 2500; round 22500: W 32500, v 1000000, v^2 W 3250; round 29999: W 39999, v 1000000, v^2 W 3999
+   edge    : round 0: W 10000, v 1000000, v^2 W 1000; round 7500: W 17500, v 571416, v^2 W 571; round 15000: W 25000, v 399988, v^2 W 399; round 22500: W 32500, v 307682, v^2 W 307; round 29999: W 39999, v 249997, v^2 W 249
+   root    : round 0: W 10000, v 1000000, v^2 W 1000, v^2 (D_in/2)^2 4000; round 7500: W 15625, v 803213, v^2 W 1008, v^2 (D_in/2)^2 4000; round 15000: W 22500, v 668896, v^2 W 1006, v^2 (D_in/2)^2 3999; round 22500: W 30625, v 573066, v^2 W 1005, v^2 (D_in/2)^2 4000; round 29999: W 39601, v 502513, v^2 W 1000, v^2 (D_in/2)^2 4000
+
+B. The hairspring: A/A0 (nature 1000), A^4 W, T^2/W, and the mean W over the span the period was read on
+   as built round  7500: W  17500 | A/A0  1000 | A^4 W  1000 | T^2/W at the mark's W  1000 | mean W over the span 17956 | T^2/W at the mean W  1000
+   as built round 15000: W  25000 | A/A0  1092 | A^4 W  2036 | T^2/W at the mark's W   993 | mean W over the span 25522 | T^2/W at the mean W   998
+   as built round 22500: W  32500 | A/A0  1166 | A^4 W  3433 | T^2/W at the mark's W   988 | mean W over the span 33031 | T^2/W at the mean W   997
+   edge     round  7500: W  17500 | A/A0  1000 | A^4 W  1000 | T^2/W at the mark's W  1000 | mean W over the span 17956 | T^2/W at the mean W  1000
+   edge     round 15000: W  25000 | A/A0   915 | A^4 W  1002 | T^2/W at the mark's W   993 | mean W over the span 25522 | T^2/W at the mean W   998
+   edge     round 22500: W  32500 | A/A0   857 | A^4 W  1003 | T^2/W at the mark's W   988 | mean W over the span 33031 | T^2/W at the mean W   997
+   root     round  7500: W  15625 | A/A0  1000 | A^4 W  1000 | T^2/W at the mark's W  1000 | mean W over the span 15848 | T^2/W at the mean W  1000
+   root     round 15000: W  22500 | A/A0   999 | A^4 W  1438 | T^2/W at the mark's W   999 | mean W over the span 22805 | T^2/W at the mean W   999
+   root     round 22500: W  30625 | A/A0   999 | A^4 W  1957 | T^2/W at the mark's W  1000 | mean W over the span 31099 | T^2/W at the mean W   999
+
+C. The beat at a standing clock (the discrete oscillator 4 sin^2(omega/2) = g/W; T^2/W against W = 10000)
+   W 10000: ten beats 628 rounds; T^2/W 1000
+   W 17500: ten beats 831 rounds; T^2/W 1000
+   W 32500: ten beats 1133 rounds; T^2/W 1001
+
+D. The run back under half-open on the course (the hairspring): untick(tick s) = s
+   edge rising: misses 0 of 30000
+   root rising: misses 0 of 30000
+   root falling: misses 0 of 30000
+   edge falling: misses 0 of 30000

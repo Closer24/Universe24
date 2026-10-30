@@ -1,0 +1,18 @@
+The root dial on the board (12 rows x 27 sites), L given uniform from outside, 40 rounds
+  the file's grip (den Gamma^2), L = 300000000000 (about the root of the rest teeth):
+    per gear P+ - P = 4 q_F: 0 misses (the one-gear books, as the text has them)
+    per row SUM F = 0: 0 row-rounds not 0 of 480 (the Meshes alike from both ends)
+    per row SUM q_F = 0: 230 row-rounds not 0 of 480; the largest |SUM q_F| in a row-round: 4
+    the row's P after 40 rounds less P at 0, per row: [36, 8, 0, 36, 0, -8, 0, 0, 0, 16, 32, 32]
+    the same in permille of one velocity notch per site at the last dial: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  a unit grip (the toy), L = 100:
+    per gear P+ - P = 4 q_F: 0 misses (the one-gear books, as the text has them)
+    per row SUM F = 0: 0 row-rounds not 0 of 480 (the Meshes alike from both ends)
+    per row SUM q_F = 0: 235 row-rounds not 0 of 480; the largest |SUM q_F| in a row-round: 5
+    the row's P after 40 rounds less P at 0, per row: [28, -40, 0, -48, -12, -32, 0, 0, 0, 44, 16, 84]
+    the same in permille of one velocity notch per site at the last dial: [2, 3, 0, 4, 1, 2, 0, 0, 0, 4, 1, 7]
+
+  Reading: the rounded push keeps each gear's books on q_F, but the Meshes' action and reaction sum to 0 in F,
+  not in round(F / L): the row's momentum, exact under the edge (probe_edge 4), random-walks under the root dial.
+  Immaterial in size at the calibre (one unit of q_F is 1 / (2 D) of a notch), not exact; the text's 'second edge
+  tooth for the push' would restore it.

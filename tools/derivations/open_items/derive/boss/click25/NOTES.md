@@ -185,3 +185,19 @@ G3 force self term: X = div Psi at 4,608/4,608; booked SUM |X - div Psi| = 0; li
 identity; (b) a quartic own term makes a lone hand click (218 at 40 percent): the linear spring only; (c) the line
 lay at the train's own key holds 3.5 quanta, the taker 0..4; (d) unequal beats: within Delta / (2 omega) per quantum.
 third text done: 16:48 UTC
+
+## 17:1x: term 11's count PASSED by both (t11_math/REPORT3.md). Three minors for COUNT4:
+- N5 who books the flux is a declaration: booked to light 327/327, to the bobs 274/274, 0 off either way; both-beats
+  world 7,745/7,745 vs 7,729/7,729; div Phi odd at 8,940 site-rounds there (no whole half booking). Canonical:
+  2 dE_i = X_i + v-_i (r-_i - r+_i), 2 E_i = W v+ v- - a J, 0 misses of 71,988. My re-derivation: from round t,
+  W q - W v = J(a) + r - r+, and round t-1, W v - W v- = J(b) + r- - r; sum gives W (q - v-) = J(a) + J(b) + r- - r+;
+  2E(t) - 2E(t-1) = W v (q - v-) - a J(a) + b J(b) = v (J(a) + J(b) + r- - r+) - a J(a) + b J(b) = X_i + v (r- - r+).
+  So v- is the velocity into round t (a - b), r- the tooth into round t-1, r+ the tooth out of round t: a two-round
+  identity. Fold: scope the beat clause to one beating hand + one without; two beating hands under a Mesh leg OPEN
+  beside road (b); give the identity as the reading.
+- N6 J(b) with a Mesh leg, and Phi, read the neighbours' BEFORE slot across the Mesh; the before slot is last round's
+  now, locality stands; ARCHITECTURE line 77's list of reads must name it before code.
+- N7 contract.pushes targets gear rows (source has rows + 1 entries), so a Mesh leg cannot be the pushed leg; a
+  derivative vertex is one potential's only when its reaction is laid as its own term (his G2 by hand). One sentence
+  in Open for G3.
+fourth text done: 17:13 UTC
