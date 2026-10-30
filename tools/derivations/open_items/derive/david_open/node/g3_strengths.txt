@@ -1,0 +1,10 @@
+(a) C[A1, A1 -> A1] as the spring's matrix over g n: [[1]]
+(a) C[A2, A2 -> A1] as the spring's matrix over g n: [[1]]
+(a) C[E, E -> A1] as the spring's matrix over g n: [[2, -1], [-1, 2]]
+(a) C[T1, T1 -> A1] as the spring's matrix over g n: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+(a) C[T2, T2 -> A1] as the spring's matrix over g n: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+(b) g = 227442851386685, kappa = W div 16, g^2 div 2 kappa = 4548857, so the least whole lam is 4548858
+    X laid at 100000: lam 0: stays over 4000 rounds, least K 999551; lam least: stays over 4000 rounds, least K 999555; lam twice the bound: stays over 4000 rounds, least K 999547
+    X laid at 10000000: lam 0: ran past 10^60 at round 49; lam least: stays over 4000 rounds, least K -2739187; lam twice the bound: stays over 4000 rounds, least K -3112719
+    X laid at 20000000: lam 0: ran past 10^60 at round 29; lam least: stays over 4000 rounds, least K -39861523; lam twice the bound: stays over 4000 rounds, least K -8012331
+    X laid at 100000000: lam 0: ran past 10^60 at round 15; lam least: ran past 10^60 at round 88; lam twice the bound: ran past 10^60 at round 14
