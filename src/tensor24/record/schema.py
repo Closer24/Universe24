@@ -1,5 +1,5 @@
 """Clock: the boundary between the board and the clicks: only the readers read it.
-Algebra: schema 1.3: JSON Lines of whole numbers of any width and labels, each line's kind its record's name in lower case.
+Algebra: schema 1.3: JSON Lines of whole numbers of any width and labels, each line's kind its record's name in lower case; its minor, MINOR = len(ADDED), is the count of its changes spelt as a length, which ARCHITECTURE section 6 left to be read from the schema with 1.3: not yet read from the schema's structure, it is named here, open for the owner (the first hostile code reader's M11).
 Board: the header (the files and their digests, the sides, each kind's characters on the 24, each train's kinds, part, winding, key and square flag), the click lines the run writes (a round, a Node-clock, a train, its q and its click tooth before and after), the end (the rounds, the digest, the run back exact or not) and the ledger's Count lines beside them.
 Clicks: its click lines name a train, a Node-clock and a round and carry q, the click tooth's carry signed, a give below 0 and a take above it; nothing is computed in it.
 """

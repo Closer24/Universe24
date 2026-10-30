@@ -512,13 +512,8 @@ def test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits(tmp_path):
 
 
 KIND = {"index": 0, "label": "A1", "dimension": 1, "characters": [1] * 24}  # its trace on each of the 24
-CARD = {**TRAINS[0], "key": 7, "square": 0}  # a 1.3 train card: its key and its square flag
-THIRTEEN = {
-    **B,
-    "minor": schema.MINOR,
-    "kinds": [KIND],
-    "trains": [CARD, {**TRAINS[1], "key": 7, "square": 0}],
-}
+CARDS = [{**train, "key": 7, "square": 0} for train in TRAINS]  # the 1.3 cards: key and square flag
+THIRTEEN = {**B, "minor": schema.MINOR, "kinds": [KIND], "trains": CARDS}
 
 
 def clicked(round_, site, train, q, tooth):
@@ -528,26 +523,32 @@ def clicked(round_, site, train, q, tooth):
 
 # a pair at the key 7, both teeth born at 3: the giver's tooth carried down one key, the taker's up one
 GIVE, TOOK = clicked(1, 0, 0, -1, (3, 6)), clicked(1, 0, 1, 1, (3, 0))
+# lines after a 1.3 header, each refused by name: off the order, the schema, the board or its train's card, or twice
+REFUSED = [
+    ([TOOK, GIVE], ORDER),
+    ([{**GIVE, "tooth": [*GIVE["tooth"], 0]}], SHAPE.format("tooth")),
+    ([{**GIVE, "site": B["sides"][0]}], OFF_SITE),
+    ([{**GIVE, "train": len(CARDS)}], "line 2 names train 2, which no train card names"),
+    ([{**GIVE, "q": 0}], "line 2 holds the click's q 0, a tooth that carried no key"),
+    ([{**GIVE, "tooth": [-1, 0]}], "line 2 holds the tooth -1, below 0"),
+    ([{**GIVE, "tooth": [0, CARDS[0]["key"]]}], "line 2 holds the tooth 7, not below train 0's key 7"),
+    ([GIVE, GIVE], "line 3 stands at the round, the site and the train of an earlier click line"),
+    ([{**GIVE, "kind": "whole"}], "line 2 holds the whole click's q -1, below 1"),
+]
 
 
 def test_a_record_of_schema_1_3_reads_its_click_lines_and_refuses_a_click_or_a_card_off_the_schema_or_the_board(
     tmp_path,
 ):
-    """Yes: a 1.3 record with two click lines, a give below 0 and a take, reads, its lines in the schema's order.
-    No: a click with a tooth of three entries or at a site off the board, a kind card's characters or a train card's
-    key off their shape, and the lines out of order, are refused by name, and a whole line's q below 1 still is."""
+    """Yes: a 1.3 record with a give below 0 and a take, two trains at one place at the teeth 0 and key - 1, reads in
+    order. No: each line of REFUSED, and a kind card's characters or a train card's key off its shape, by name."""
     record = read([THIRTEEN, GIVE, TOOK, E], tmp_path)
     assert record is not None and record.of("click") == [GIVE, TOOK] and record.of("whole") == []
-    assert cause_of([THIRTEEN, TOOK, GIVE, E], tmp_path) == ORDER
-    assert cause_of([THIRTEEN, {**GIVE, "tooth": [*GIVE["tooth"], 0]}, E], tmp_path) == SHAPE.format(
-        "tooth"
-    )
-    assert cause_of([THIRTEEN, {**GIVE, "site": 1 + 1}, E], tmp_path) == OFF_SITE
-    halved = {**KIND, "characters": [1, 0.5]}, {**CARD, "key": 0.5}
+    for lines, cause in REFUSED:
+        assert cause_of([THIRTEEN, *lines, E], tmp_path) == cause
+    halved = {**KIND, "characters": [1, 0.5]}, {**CARDS[0], "key": 0.5}
     assert cause_of([{**THIRTEEN, "kinds": [halved[0]]}, E], tmp_path) == LINE1.format("kinds")
     assert cause_of([{**THIRTEEN, "trains": [halved[1]]}, E], tmp_path) == LINE1.format("trains")
-    whole_ = {**GIVE, "kind": "whole"}
-    assert cause_of([THIRTEEN, whole_, E], tmp_path) == "line 2 holds the whole click's q -1, below 1"
 
 
 def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdict_and_the_tool_prints_them(
@@ -557,16 +558,15 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
     the taken and the net; the places where the sum of q over the trains is not 0 counted; the tool prints the list
     and the counts after the rows and raises nothing. No: a give with no take at its round counts its place as not 0."""
     held = clicks.counted(read([THIRTEEN, GIVE, TOOK, E], tmp_path))
-    assert held.lines == [GIVE, TOOK] and held.sites == {0: clicks.Tally(1 + 1, 1, 1, 0)}
+    assert held.lines == [GIVE, TOOK] and held.sites == {0: clicks.Tally(len(held.lines), 1, 1, 0)}
     assert held.trains == {0: clicks.Tally(1, 1, 0, -1), 1: clicks.Tally(1, 0, 1, 1)}
     assert (held.places, held.nonzero) == (1, 0)
-    more = clicks.counted(read([THIRTEEN, GIVE, TOOK, {**GIVE, "round": 1 + 1}, E], tmp_path))
-    twice = clicks.Tally(1 + 1, 1 + 1, 0, -(1 + 1))
-    assert (more.places, more.nonzero) == (1 + 1, 1) and more.trains[0] == twice
+    more = clicks.counted(read([THIRTEEN, GIVE, TOOK, {**GIVE, "round": E["rounds"]}, E], tmp_path))
+    assert (more.places, more.nonzero) == (len({(e["round"], e["site"]) for e in more.lines}), 1)
     run = tool(tmp_path / "record.jsonl")  # the record read last, as read() wrote it
     assert run.returncode == 0 and run.stderr == "" and run.stdout.startswith("row 15")
     lines = run.stdout.splitlines()
-    assert "the click lines: 3" in lines and "  round 2, site 0, train 0: q -1, tooth [3, 6]" in lines
+    assert "the click lines: 3" in lines and "  round 6, site 0, train 0: q -1, tooth [3, 6]" in lines
     assert "train 0: 2 lines, given 2, taken 0, net -2" in lines
     assert "site 0: 3 lines, given 2, taken 1, net -1" in lines
     assert lines[-1] == "the sum of q over the trains at a round and site: not 0 at 1 of 2 places"

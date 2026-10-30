@@ -14,17 +14,18 @@
 # digests are the runner's, which the decoder never reads); a whole click's q, where it holds one, at least 1, and
 # every holding's windings from 0 (the Boss's ruling of 2026-10-29, 04:4x UTC: a whole click is the carry's quotient
 # at least 1, and the wind a positive form), where a click line's q (schema 1.3) is the carry's quotient signed, a
-# give below 0 and a take above it, any whole number (the Boss's decision of 2026-10-30); a whole click that takes
-# at both ends books in its two ends alone, its own taken and laid empty, and one that takes at one end holds no end
-# (G3); the events keep the schema's order (round, kind, site, train). A field may stand absent where its writer
-# lacks it: a reading that needs it reads not read, the cause named. A record that breaks a rule is not read, and
-# the cause is named in ASCII: a field's name and a kind as Python's ascii() writes them, so a line feed or a lone
-# surrogate in a name stands escaped, and a board by its sides, never their product, which may pass the
-# interpreter's digits; nothing is raised. The lines are split at the line feed alone, so U+2028, U+0085 and their
-# kin stand inside a label as JSON lets them; a line nested past the interpreter's depth, or holding a whole number
-# past its digits (sys.get_int_max_str_digits(), which the tool lifts), is named so. The ledger beside the record is
-# read under its own guards: every line a JSON object, at a whole round and train, after the step or after the
-# clicks, its fields of their shape, each place once. The standard library and the record's schema alone.
+# give below 0 and a take above it (the Boss's decision of 2026-10-30), never 0; a click line's train has a card, its
+# teeth stand from 0 and below that card's key, and it stands once at its round, site and train (the first hostile
+# code reader's M10); a whole click that takes at both ends books in its two ends alone, its own taken and laid empty,
+# and one that takes at one end holds no end (G3); the events keep the schema's order (round, kind, site, train). A
+# field may stand absent where its writer lacks it: a reading that needs it reads not read, the cause named. A record
+# that breaks a rule is not read, and the cause is named in ASCII: a field's name and a kind as Python's ascii()
+# writes them, so a line feed or a lone surrogate in a name stands escaped, and a board by its sides, never their
+# product, which may pass the interpreter's digits; nothing is raised. The lines are split at the line feed alone, so
+# U+2028, U+0085 and their kin stand inside a label as JSON lets them; a line nested past the interpreter's depth, or
+# holding a whole number past its digits (sys.get_int_max_str_digits(), which the tool lifts), is named so. The ledger
+# beside the record is read under its own guards: every line a JSON object, at a whole round and train, after the step
+# or after the clicks, its fields of their shape, each place once. The standard library and the record's schema alone.
 
 import dataclasses
 import json
@@ -120,11 +121,8 @@ def fits(value: Any, shape: Any, shapes: Shapes) -> bool:
     rows = typing.get_args(shape)
     if Ellipsis in rows:
         return isinstance(value, list) and all(fits(item, rows[0], shapes) for item in value)
-    return (
-        isinstance(value, list)
-        and len(value) == len(rows)
-        and all(fits(item, row, shapes) for item, row in zip(value, rows, strict=True))
-    )
+    paired = isinstance(value, list) and len(value) == len(rows)
+    return paired and all(fits(item, row, shapes) for item, row in zip(value, rows, strict=True))
 
 
 def misfit(line: Line, fields: dict[str, Any], shapes: Shapes) -> str:
@@ -176,11 +174,8 @@ def board(header: Any) -> tuple[Any, Any, Any]:
 def carded(header: Line) -> str:
     """The first train card off the record: a winding below 1, or a train an earlier card names; or nothing."""
     cards = header.get("trains", [])
-    low = [
-        (n, t["winding"])
-        for n, t in enumerate(cards, start=1)
-        if whole(t.get("winding")) and t["winding"] < 1
-    ]
+    windings = [(n, t.get("winding")) for n, t in enumerate(cards, start=1)]
+    low = [(n, w) for n, w in windings if whole(w) and w < 1]
     if low:
         return f"train card {low[0][0]} holds the winding {low[0][1]}, below 1"
     trains = [t["index"] for t in cards if whole(t.get("index"))]
@@ -199,6 +194,11 @@ def place(e: Line) -> tuple[int, int, int, int]:
 def named(broken: list[int], cause: str) -> str:
     """The cause at the first broken line, its number in the cause's braces, or nothing."""
     return cause.format(broken[0]) if broken else ""
+
+
+def numbered(lines: Lines) -> list[tuple[int, Line]]:
+    """The lines read as JSON objects, each with its number in the file, the first 1."""
+    return [(n, line) for n, line in enumerate(lines, start=1) if isinstance(line, dict)]
 
 
 def jsoned(lines: Lines) -> str:
@@ -244,28 +244,19 @@ def kinded(lines: Lines) -> str:
 
 
 def placed(lines: Lines) -> str:
-    unplaced = [
-        n
-        for n, e in list(enumerate(lines, start=1))[1:-1]
-        if isinstance(e, dict) and not all(whole(e.get(key)) for key in PLACE)
-    ]
+    events = list(enumerate(lines, start=1))[1:-1]
+    unplaced = [n for n, e in events if isinstance(e, dict) and not all(whole(e.get(k)) for k in PLACE)]
     return f"line {unplaced[0]} stands at no whole round and site" if unplaced else ""
 
 
 def shaped(lines: Lines) -> str:
     shapes = schema_shapes()
     wrong = [
-        (n, misfit(line, shapes[line["kind"]], shapes))
-        for n, line in enumerate(lines, start=1)
-        if isinstance(line, dict) and line["kind"] in shapes
+        (n, misfit(e, shapes[e["kind"]], shapes)) for n, e in numbered(lines) if e["kind"] in shapes
     ]
-    found = [(n, name) for n, name in wrong if name]
     # a field's name printed in ASCII, so a surrogate or a line feed in it stands escaped in the cause
-    return (
-        f"line {found[0][0]}'s {ascii(found[0][1])[1:-1]} has not its shape in the schema"
-        if found
-        else ""
-    )
+    found = [f"line {n}'s {ascii(name)[1:-1]}" for n, name in wrong if name]
+    return f"{found[0]} has not its shape in the schema" if found else ""
 
 
 def valued(lines: Lines) -> str:
@@ -285,13 +276,30 @@ def valued(lines: Lines) -> str:
     return ""
 
 
+def clicked(lines: Lines) -> str:
+    """The first click line off the train cards: a train no card names, q 0, a tooth below 0 or not below its card's key, or an earlier click line's round, site and train."""
+    header = lines[0] if isinstance(lines[0], dict) else {}
+    keys = {t["index"]: t.get("key") for t in header.get("trains", []) if whole(t.get("index"))}
+    seen: set[tuple[int, int, int, int]] = set()
+    for n, e in [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]:
+        train, key, teeth = e.get("train"), keys.get(e.get("train")), e.get("tooth", [])
+        low, high = [k for k in teeth if k < 0], [k for k in teeth if whole(key) and k >= key]
+        if whole(train) and train not in keys:
+            return f"line {n} names train {train}, which no train card names"
+        if e.get("q") == 0:
+            return f"line {n} holds the click's q 0, a tooth that carried no key"
+        if low:
+            return f"line {n} holds the tooth {low[0]}, below 0"
+        if high:
+            return f"line {n} holds the tooth {high[0]}, not below train {train}'s key {key}"
+        if place(e) in seen:
+            return f"line {n} stands at the round, the site and the train of an earlier click line"
+        seen.add(place(e))
+    return ""
+
+
 def booked(lines: Lines) -> str:
-    clicks = [
-        (n, line)
-        for n, line in enumerate(lines, start=1)
-        if isinstance(line, dict) and line["kind"] == "whole"
-    ]
-    for n, click in clicks:
+    for n, click in [(n, e) for n, e in numbered(lines) if e["kind"] == "whole"]:
         ends = click.get("ends")
         if ends and (click.get("taken") or click.get("laid")):
             return f"line {n}'s whole click books at the click and again at its ends"
@@ -317,6 +325,7 @@ GUARDS: tuple[Guard, ...] = (
     placed,
     shaped,
     valued,
+    clicked,
     booked,
     ordered,
 )
@@ -328,27 +337,18 @@ def objects(lines: Lines) -> str:
 
 
 def standing(lines: Lines) -> str:
+    stray = [
+        n for n, e in numbered(lines) if not (all(whole(e.get(k)) for k in ENTRY) and e.get("at") in AT)
+    ]
     return named(
-        [
-            n
-            for n, line in enumerate(lines, start=1)
-            if isinstance(line, dict)
-            and not (all(whole(line.get(key)) for key in ENTRY) and line.get("at") in AT)
-        ],
-        "the ledger's line {} stands at no whole round and train, after the step or the clicks",
+        stray, "the ledger's line {} stands at no whole round and train, after the step or the clicks"
     )
 
 
 def fitted(lines: Lines) -> str:
     shapes = schema_shapes()
-    return named(
-        [
-            n
-            for n, line in enumerate(lines, start=1)
-            if isinstance(line, dict) and misfit(line, shapes["ledger"], shapes)
-        ],
-        "the ledger's line {} holds a field that has not its shape in the schema",
-    )
+    wrong = [n for n, e in numbered(lines) if misfit(e, shapes["ledger"], shapes)]
+    return named(wrong, "the ledger's line {} holds a field that has not its shape in the schema")
 
 
 def once(lines: Lines) -> str:
