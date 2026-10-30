@@ -1,0 +1,10 @@
+Probe P: a one-sense hand pumped by a line hand at twice its beat through g3 L_x (M.M), g3 = 7000000000, 6000 rounds, stride 500
+  L's spring 499687500000000000 (cos theta_L = cos 2 theta_M exactly); L's key 2 sin 2theta K_a = 142633977406094926436323738599, by squares 999999 millionths of Planck's; M's key the card's 71406246511186446276006877897
+  the wind M took per window, thousandths of M's key: [19, 66, 145, 292, 568, 1064, 1875, 2939, 3676, 2870, 61, -2829]
+  the wind L gave per window, thousandths of L's key:  [9, 32, 71, 145, 284, 536, 949, 1490, 1849, 1412, -10, -1429]
+  over the run: M took 10751 thousandths of its quanta, L gave 5341 of its: the ratio 2012 thousandths (pairs: 2,000)
+  the energy books of the cubic term, SUM (X_L + X_M) per window in thousandths of M's key: [0, 1, 2, 2, 1, -6, -22, -37, -18, 48, 82, 26]
+  M's 2E, window means in thousandths of M's key: [76, 116, 216, 424, 838, 1636, 3101, 5553, 8992, 12434, 13900, 12288]
+  M's area Omega (the two-slot action, road (a)), window means in millionths of K_a: [69991, 69994, 70003, 70001, 69993, 69978, 70033, 70059, 70090, 70151, 70070, 70062]
+  the plan's turn on M, re J_im - im J_re, SUM |tau_M| over the run: 0 (the area count's increment: nothing passes)
+  the wind's click on M at the card's key: the course 0..14, click rounds 19; the area's click on M: 0 (its increment is 0 in every round)

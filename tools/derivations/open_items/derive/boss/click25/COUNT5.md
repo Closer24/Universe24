@@ -9,24 +9,34 @@ on paper, his probes rerun byte for byte (rerun_c4/), and measured again by my o
 probe_phys5), with a case built against each reading. The minors of both readers are taken as they wrote them (the
 list at the end). The second deriver's work on the moving clock's form (scratchpad/fwdback/) is read, not repeated.
 
-**Status on the ladder:** OPEN at the items named below; the algebra the three earlier pairs passed stands (the
-antisymmetry of X at a quadratic one-potential vertex with its legs at the Node-clock, the Mesh flux Phi and Psi, the
-mirror lemma, the pair's invariant, the odd rounding). No code starts.
+**Status on the ladder:** sound (both final readers, 18:5x UTC: every blocking item CLOSED as a theorem with its OPEN
+named) and DERIVED for the pair at one Node-clock at the rest teeth, with the increment (S proposed, G the board-exact
+alternative) and the key (odd, or exactly 2 K) the owner's; READY is the Boss's word after those choices. The algebra
+the three earlier pairs passed stands (the antisymmetry of X at a quadratic one-potential vertex with its legs at the
+Node-clock, the Mesh flux Phi and Psi, the mirror lemma, the pair's invariant, the odd rounding). OPEN at the items
+named below (P1 at depth, P2 light on matter, P3 the spread take). No code starts before the Boss's word.
 
 ## Item M1. The click tooth's run back is the same act on the mirrored state
 
 - **The finding, re-derived.** The forward round reads S = (a_t, a_t-1) and produces S+ = (a_t+1, a_t); the backward
   round reads mirror(S+) and produces mirror(S). The lemma -X + k+ = -q key + k inverts the kept tooth only if the
   backward increment is minus the forward one, that is, only if the increment is odd under the reversal of the
-  round's window (a_t-1, a_t, a_t+1). X(S) alone and X(S+) alone are exchanged by that reversal, not negated: the
+  round's window (a_t-1, a_t, a_t+1). X(S) alone and X(S+) alone are each sent to minus the other by that reversal, so neither is odd by itself and
+  their sum is: the
   fourth text's run back carried forward on the produced state and back on the read state, two acts. Measured by one
   act (mirror, act, mirror, the tooth kept, 6,000 rounds): the read state's X returns the teeth 0 of 6,000, the
   produced state's 0, his sum X(S) + X(S+) 6,000 of 6,000 with the quotients negated. The claim "the run back is exact
   by the act alone" is withdrawn; the lemma stands.
-- **Two increments are odd under the window's reversal, and both run back by one act** (probe_sameact.txt): his S =
-  X(S) + X(S+), three contractions (J(b), J(a), J(a+)), and G = a+ J(b) - b J(a+), the next against the before, the
-  mirror's own pair (the mirror swaps before and next), two contractions (J(b), J(a+)), on the same window as the wind
-  D = now^2 - next x before (D even, G odd under the mirror, as a held wind and a passing should be). G is
+- **Two increments are odd under the window's reversal, and both run back by one act** (probe_sameact.txt; his c5_g by
+  his own code): S = X(S) + X(S+), and G = a+ J(b) - b J(a+), the next against the before, the mirror's own pair (the
+  mirror swaps before and next), on the same window as the wind D = now^2 - next x before (D even, G odd under the
+  mirror, as a held wind and a passing should be). Their cost is equal: beyond the act's own push J(a) both need J(b)
+  and J(a+). They differ in what they count exactly: S is the hand's two-round energy change, 2E(t+1) - 2E(t-1) = S_i
+  + Rule3's term per gear (0 misses of 71,976), G is not (23,992 misses): S - G per gear is a cyclic sum that is 0
+  summed over the board (5,998 of 5,998 rounds, the symmetric K) and does not telescope per hand (|S_M - G_M| up to
+  10 millionths of the two-round key a round, 7 thousandths over the run; SUM S_M / SUM X_M = 2.000, SUM G_M / SUM X_M
+  = 1.998). So S is proposed as the increment, counting each hand's energy exactly at the same cost; G is the
+  board-exact alternative. G is
   antisymmetric in the pair as an identity for a quadratic one-potential vertex, 0 for the own spring, runs back
   6,000 of 6,000 with the quotients negated, the books 0 misses, the taker 0..7; its summed passing is 1.996 of the
   one-round X's (S: 1.999): two rounds' passing. Time forward and backward, as the owner's word asks, and no price:
@@ -35,7 +45,7 @@ mirror lemma, the pair's invariant, the odd rounding). No code starts.
   whole, fixed by Planck's relation only to the nearest whole (K^2 W^2 = 16 f (2W - f) K_a^2 for S or G), so it may be
   taken odd and the shared birth stands; set to exactly 2 K it is even and the births are K - 1 and K, told apart, or
   EDGE's centred split. The owner's half-open decision on the key's parity is touched only on that second road.
-  No choice is made here between S and G, or between the odd key and 2 K.
+  S is proposed and G named beside it; the choice between the odd key and 2 K is the owner's.
 - **With a Mesh leg.** J(a+) needs the neighbours' next, which one pass does not have: for a vertex whose legs are at
   the Node-clock the symmetric click is one pass; for a Mesh leg it is OPEN with the Mesh flux (G3).
 - **Law line 1:** "the mirror negates X and keeps the click tooth, so a take run back is a give and the run back is
@@ -74,10 +84,13 @@ mirror lemma, the pair's invariant, the odd rounding). No code starts.
   one-part hand to theta^2 as its wind summed over its own turn, the turn being the clock's own count. Neither is a
   per-round key of wind; the per-round key at depth is irrational, and the decoder can read the depth's quanta from the
   record's passed wind and the Node-clock's 00 slot by squares alone (n^2 4 f (2W - f) K_a^2 <= X^2 W^2, whole numbers).
-- **No price chosen.** Three roads stand, each with what it needs: (a) the count of the area for two-part hands
-  (Planck at every depth, exact books under the common turn; the one-part hand and the line's sense as before); (b)
-  the count of wind at the rest key with the depth read by the decoder by squares (the click line a unit of the record
-  at a deep clock, not nature's quantum there); (c) the count of wind over the hand's own turn (a second dial, the beat,
+- **No price chosen.** Three roads stand, each with what it needs: (a) the count of the area for hands of ONE SENSE (Planck at every depth, 7.00 K_a at 1 x, 4 x and 16 x teeth,
+  exact books under the common turn): the area is the net turn, so it moves by nothing for the line hand (which
+  passes 3.5 quanta of wind with its area 0), under a charge-keeping vertex (light on charged matter: the plan's turn
+  on the hand 0 in every round while the wind count sees the pump), or at a pair, where the wind count reads 2 : 1 at
+  Planck's keys (the physicist's pp_pair, 2,012 thousandths); (b) the count of wind at the rest key with the depth
+  read by the decoder by squares (the click line a unit of the record at a deep clock, not nature's quantum there; a
+  local quantum below half a rest key writes no line: 7 counted as 2 at a quarter); (c) the count of wind over the hand's own turn (a second dial, the beat,
   which the law calls no click). The owner's word "D given or taken" and his "no price" meet here: which form is the
   click's is his; this text states the theorem and the forms. OPEN with G2 (the 00 slot's dynamics) as the physicist
   asks: the key at depth is G2's question whatever the form.
@@ -117,8 +130,10 @@ mirror lemma, the pair's invariant, the odd rounding). No code starts.
   the backward run from the realised click (line 1021; decision 34: the backward board carries the split click's which
   back along its twin to the birth). That meeting is what makes a spread take whole at one Node-clock: term 12's draw
   and the backward board, not term 11. Named OPEN for term 12 / G6, with the physicist's question to the Boss: term 11
-  is not READY as a closed count of energy in the clicks until that term exists; what it is READY for is the pair at
-  one Node-clock and the emitter's whole lines. "Never flickers" is scoped to a steady hand: a driven hand's reactive
+  is not a closed count of energy in the clicks until that term exists; what is sound, and DERIVED, is the pair at
+  one Node-clock at the rest teeth and the emitter's whole lines. Those lines are the emitter's record, not light's:
+  light's debit by the identity under the emitter is +6 while light holds 0.31 keys over the ring (his pg_emission),
+  so the emitter's lines stand as the emitter's until the spread take is made whole. "Never flickers" is scoped to a steady hand: a driven hand's reactive
   wind passes and returns, and the record's net over a window is the decoder's reading; the line stands as the passing
   of its round. "What one gives the other takes ... the record's one event" is scoped to two clocks at one Node-clock.
 
