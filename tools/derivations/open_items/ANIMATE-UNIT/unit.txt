@@ -1,0 +1,31 @@
+1. A count and a turn: the mirror and the 24 on the area and on a count.
+   states of a run (601) where the mirror sends the counts' cross of before and now to minus itself, on both hands: 601; where it keeps every gear's count summed over now and before: 601
+   turns of the 24 that keep every kind's table onto A1 (so every area through it, and every A1 count): 24 of 24
+   a one-part count of kind A1 has one row and no second part, so its cross has no term: the table's entries [(1, 0, 0)], crossed against no im row; its area is 0 at every count n
+
+2. The standing count of G3 and the turning count, one Node-clock, the same tied family.
+   W = 1352000000000000000000, F = 104000000000000000000, M = G = 10000000000, R = 13000, n = R^2 = 169000000, the tied swing 1000
+   the standing count: one part at n; the books' whole quanta of it in every round: 0 (no area to carry)
+   the standing count's largest move off n over 4000 rounds: 1 counts
+   the turning count's area at the lay, the key it sets: 87880000000000000000000000000 (W R^2 x 5 / 13 = 87880000000000000000000000000)
+   rounds where the act's push moves area into the turning count: 0 of 4000; rounds where its area moves by anything but Rule3's turn: 0 of 4000
+   its area off the key at most: 122670179471762340000000000 grains (1395882 billionths of a key); its books' whole quanta in every round, carried at the key from the birth: [1]
+   its radius squared off R^2 at most: 626535 counts squared (R^2 = 169000000)
+   the tied family's sign changes in 4000 rounds: 64 beside the standing count, 64 beside the turning one; their counts part by at most 33 of its swing 1000
+   the tied family's own area beside the turning count: from 0 to 0; the vertex moves none into it either (c reads both its parts' squares)
+
+3. The 24 on the turning count's world: every turn of the cube on the tied family, the count of kind A1 kept.
+   turns: 24; runs turned state for state over 1,000 rounds: 24; the count's area alike in every round: 24
+
+4. The key is no law of the act: the click writes nothing, and the clicks read the strengths times the key.
+   the click world with a stop lam = 1251 on the giver, the key a seventh of its area at the lay (714285714285714285714285714285): 34 clicks, net 6
+   the same at three times the key: gears alike in 6001 of 6001 rounds; 10 clicks, net 2
+   every swing x 3, the key x 9 and the stop / 9 (lam key kept): 34 clicks; rounds and signs alike with the first run: True; clicks in one run and not the other: 0
+   every swing x 3 and the key x 9 with the stop kept (lam key x 9): 14 clicks; clicks in one run and not the other: 48
+
+5. The 24 on a steady count, by its kind: how many turns keep it, every count with entries -2 to 2.
+   A1: the turns that keep it (counts with that many): 24: 4; the same for 2, 3 and -1 times every count: True
+   A2: the turns that keep it (counts with that many): 12: 4; the same for 2, 3 and -1 times every count: True
+   E: the turns that keep it (counts with that many): 8: 8, 4: 16; the same for 2, 3 and -1 times every count: True
+   T1: the turns that keep it (counts with that many): 4: 12, 3: 16, 2: 24, 1: 72; the same for 2, 3 and -1 times every count: True
+   T2: the turns that keep it (counts with that many): 6: 16, 4: 12, 2: 72, 1: 24; the same for 2, 3 and -1 times every count: True
