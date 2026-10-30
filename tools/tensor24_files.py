@@ -12,9 +12,11 @@ import json
 import sys
 from pathlib import Path
 
-from tensor24.main import made
-from tensor24.runner.files import NAMES, departures, sites_of
-from tensor24.runner.load import load
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+
+from tensor24.main import made  # noqa: E402
+from tensor24.runner.files import NAMES, departures, sites_of  # noqa: E402
+from tensor24.runner.load import load  # noqa: E402
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
 

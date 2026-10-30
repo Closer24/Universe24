@@ -6,7 +6,9 @@
 # lines stand from its first beat, each with a whole count and a k that is a bit, the counts rising and no k repeated,
 # at a whole count from 0 (before its first beat, no tick); else they are not read, and the cause is named. A line that
 # lacks its count or k stands as the line holds it, so it is seen. A Node-clock's lines are read once for all its
-# counts: the ticks before each stretch summed once, each count found among the stretches by bisection.
+# counts: the ticks before each stretch summed once, each count found among the stretches by bisection. The rate lines
+# stand in the records written before the schema 1.2 (the converter's); a 1.2 run writes none, every Node-clock
+# stepping in every round, so on its records these ticks read not read, and proper time is the ledger's to give.
 
 import bisect
 from typing import Any
