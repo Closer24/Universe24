@@ -6,7 +6,7 @@ Universe24 is the implementation of the law in [docs/ALGEBRA.md](docs/ALGEBRA.md
 
 ## The ground rules
 
-- A physics change starts from the law's line in `docs/ALGEBRA.md`, the open things listed by name for further research in [docs/FURTHER_RESEARCH.md](docs/FURTHER_RESEARCH.md), and passes the three tests, generic, vector and local, before it enters; a hypothesis that needs more is stated under its own name.
+- A physics change starts from the law's line in `docs/ALGEBRA.md`, the open things listed by name in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), and passes the three tests, generic, vector and local, before it enters; a hypothesis that needs more is stated under its own name.
 - The engine matches the law in its implementation, not only in its results: the step is one act at every Node-clock (`src/tensor24/engine/`), every division Rule3's carry, written once in `src/tensor24/algebra/carry.py`; each folder imports only what the architect's table allows ([docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)), and the gate refuses a push that breaks it.
 - Physical calculations use whole numbers of any size, the Node-clock's own gears and its six Meshes' gears; nothing is kept at a Node-clock beyond the law's own numbers, and the engine holds no number of physics: every value comes from the three files.
 - A click is the one measurement; a reading of the board's numbers is a diagnostic and is labelled so. Runs and tests are headless: inspect a run's record and its ledger, never a frame.
