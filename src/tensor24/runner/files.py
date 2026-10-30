@@ -9,9 +9,9 @@ from typing import Any, NamedTuple, TypeGuard
 import numpy as np
 
 # A kind among the 24's, a kind's whole basis and a gear's component within its train's rows are read against the
-# engine's kinds once they are made (held_departures); the fine tooth within its teeth is the promise, read before
-# every round where the teeth are (promises). No file declares a coupling: the coupling family's one plan lays the
-# terms at G3, so a universe's couplings are refused by name (RETIRED).
+# engine's kinds once they are made (held_departures). The fine tooth within its teeth is the round's promise, read by
+# the runner from outside before every round (run.promises). No file declares a coupling: the coupling family's one
+# plan lays the terms at G3, so a universe's couplings are refused by name (RETIRED).
 
 NAMES = ("universe", "piece", "setting")
 VERSION = 1
@@ -244,15 +244,6 @@ def held_departures(
                 f"setting.gears[{at}]: component {component} off train {train}'s {sizes[train]} rows"
             )
     return found
-
-
-def promises(r: Any, w: Any) -> list[str]:
-    """The engine's promise on a state the files lay or a run reaches, each departure named where it stands: every fine tooth within [0, w), its teeth."""
-    w = np.broadcast_to(w, r.shape)
-    return [
-        f"row {g}, site {x}: the fine tooth {r[g, x]} not within [0, {w[g, x]})"
-        for g, x in np.argwhere((r < 0) | (r >= w))
-    ]
 
 
 def entries(trains: list[dict[str, Any]], labels: tuple[str, ...]) -> tuple[Any, Any, Any]:

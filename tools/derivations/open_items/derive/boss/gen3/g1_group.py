@@ -1,6 +1,6 @@
 """g1: the 24's structure from the engine's own kinds.py and main.made, exactly (beside the engine; no file changed).
 
-usage: python3 -I g1_group.py > g1_group.txt
+usage: python3 -I g1_group.py > g1_group.txt, at tensor24-review 8a476db17, the head it was made at (its calls into src are that head's)
 
 Reads the committed act at src/ (tensor24-review's clean copy). Computes:
  1. the 24 turns (kinds.turns), each kind a homomorphism (checked), classes, orders, characters, orthonormality;

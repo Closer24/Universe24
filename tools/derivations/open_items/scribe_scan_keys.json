@@ -57,5 +57,6 @@
 "KEYS|tensor24/runner/files.py|UNIVERSE.integers.full_rate",
 "KEYS|tensor24/runner/files.py|UNIVERSE.integers.key",
 "KEYS|tensor24/runner/files.py|UNIVERSE.integers.trace",
-"KEYS|tensor24/runner/files.py|UNIVERSE.integers.width"
+"KEYS|tensor24/runner/files.py|UNIVERSE.integers.width",
+"KEYS|tensor24/runner/files.py|RETIRED.couplings"
 ]

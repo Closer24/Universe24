@@ -11,8 +11,9 @@ from tensor24.engine.state import State
 from tensor24.engine.step import tick, untick
 from tensor24.main import made as joint
 from tensor24.runner.board import board
-from tensor24.runner.files import held_departures, promises, vocabulary
+from tensor24.runner.files import held_departures, vocabulary
 from tensor24.runner.load import geometry, load, star
+from tensor24.runner.run import promises
 from tests.frame import plain
 
 D = 3

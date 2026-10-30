@@ -7,8 +7,10 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any, NamedTuple
 
+import numpy as np
+
 from tensor24.record import schema
-from tensor24.runner.files import OPERANDS, departures, held_departures, promises, sites_of, vocabulary
+from tensor24.runner.files import OPERANDS, departures, held_departures, sites_of, vocabulary
 from tensor24.runner.load import load, star
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
@@ -26,6 +28,15 @@ class Engine(NamedTuple):
     untick: Callable[..., Any]
     state: Callable[..., Any]
     teeth: Callable[..., Any]
+
+
+def promises(r: Any, w: Any) -> list[str]:
+    """The round's promise on the state it reads, read from outside, each departure named where it stands: every fine tooth within [0, w), its teeth."""
+    w = np.broadcast_to(w, r.shape)
+    return [
+        f"row {g}, site {x}: the fine tooth {r[g, x]} not within [0, {w[g, x]})"
+        for g, x in np.argwhere((r < 0) | (r >= w))
+    ]
 
 
 def digest(text: str) -> str:
@@ -120,10 +131,11 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
         return found
     layout = engine.layout(universe, shape, loaded)
     start = engine.state(*loaded.state)
-    found = promises(start.r, engine.teeth(layout, start))
-    if found:
-        return found
     ticks, end, ledger = setting["ticks"], start, ledger_of(record)
+    # every promise is the round's that reads the state: none where no round runs
+    found = promises(start.r, engine.teeth(layout, start)) if ticks else []
+    if found:
+        return [f"round 1: {line}" for line in found]
     with ledger.open("w", encoding="utf-8") as counted:
         for at, end in enumerate(rounds(engine.tick, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))

@@ -39,12 +39,11 @@ def world(rng, laid, moving=True):
     rows, n = len(laid.gearing.rest), laid.nb.shape[1]
     a, b = frame.wide(rng, (rows, n)), frame.wide(rng, (rows, n))
     clock = frame.dense(laid.clock, rows, rows)[0].tolist().index(1)
-    a[clock + 1 : clock + 10], b[clock + 1 : clock + 10] = (
-        0,
-        0,
-    )  # the family past its 00 slot at rest, the flat metric
-    a[clock] = rng.integers(0, REACH, n).astype(object) * moving
-    b[clock] = a[clock] - rng.integers(-(1 << 20), 1 << 20, n).astype(object) * moving
+    a[clock + 1 : clock + 10], b[clock + 1 : clock + 10] = 0, 0  # the 0i and jk slots at rest
+    # the 00 slot, and the ii slots the grips read, each a wave of counts in [0, REACH) with its strides, or still at 0
+    for slot in (clock, clock + 4, clock + 5, clock + 6):
+        a[slot] = rng.integers(0, REACH, n).astype(object) * moving
+        b[slot] = a[slot] - rng.integers(-(1 << 20), 1 << 20, n).astype(object) * moving
     teeth = frame.wide(rng, (rows, n)) % step.weight(laid.gearing, laid.clock, a)
     return State(a, b, teeth, 0 * a)
 
@@ -166,22 +165,28 @@ def test_every_order_of_the_familys_kinds_lays_and_runs_alike():
 
 
 def test_a_setting_breaking_the_promise_is_named_at_its_round_and_leaves_no_file(tmp_path):
-    """The 00 slot laid at minus the rest, W 0, is named before the first round; laid falling by a stride under a tooth
-    at the rest less 1, it is named at the second round; neither raises, nor leaves a record or a ledger."""
+    """The 00 slot laid at minus the rest, W 0, is named at the first round; laid falling by a stride under a tooth at the
+    rest less 1, at the second; neither raises, nor leaves a record or a ledger. A state no round reads runs exactly:
+    the falling one at one round, the W of 0 at none."""
     u, held, laid = built()
     at, rest = int(np.flatnonzero(held.trains.square)[0]), int(laid.gearing.rest[0, 0])
-    for gears, named in (
-        ([[at, 0, 0, -rest, -rest, 0]], "row"),
-        ([[at, 0, 0, 0, STRIDE, 0], [0, 0, 0, 0, 0, rest - 1]], "round 2: row"),
-    ):
-        setting = {"version": 1, "ticks": ROUNDS, "gears": gears}
+    low, falling = [[at, 0, 0, -rest, -rest, 0]], [[at, 0, 0, 0, STRIDE, 0], [0, 0, 0, 0, 0, rest - 1]]
+    cases = (
+        (low, ROUNDS, "round 1: row"),
+        (falling, ROUNDS, "round 2: row"),
+        (falling, 1, ""),
+        (low, 0, ""),
+    )
+    for gears, ticks, named in cases:
+        setting = {"version": 1, "ticks": ticks, "gears": gears}
         files = {"universe": u, "piece": {"version": 1, "shape": list(SHAPE)}, "setting": setting}
         for name, body in files.items():
             (tmp_path / f"{name}.json").write_text(json.dumps(body), encoding="utf-8")
         record = tmp_path / "record.json"
-        found = ran([tmp_path / f"{name}.json" for name in files], record)
-        assert found and found[0].startswith(named), found
-        assert not record.exists() and not ledger_of(record).exists()
+        found, wrote = ran([tmp_path / f"{name}.json" for name in files], record), record.exists
+        exact = wrote() and json.loads(record.read_text(encoding="utf-8").splitlines()[-1])["exact"]
+        departed = found[:1] != [] and found[0].startswith(named) and not ledger_of(record).exists()
+        assert (departed and not wrote()) if named else (found, exact) == ([], 1), found
 
 
 def test_two_families_the_files_choice_are_both_read_each_by_its_00_slot():
@@ -194,3 +199,52 @@ def test_two_families_the_files_choice_are_both_read_each_by_its_00_slot():
     read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
     assert found == [] and len(clocks) == 1 + 1
     assert (read == np.outer(ones, np.eye(rows, dtype=int)[clocks].sum(axis=0))).all()
+
+
+def naive(laid, held, s):
+    """One round site by site with loops: W the rest and every square's 00 slot, and each Spoke's grip its rest and every
+    square's ii slot of its axis at both ends of its Mesh, each slot read by its name in the square's basis."""
+    a, b, r = (x.tolist() for x in s[:3])
+    squares, d = [x.first for x in held.trains if x.square], len(SHAPE)
+    rest, grip = int(laid.gearing.rest[0, 0]), int(laid.grip[0, 0])
+    out = [np.zeros_like(s.a) for _ in "abr"]
+    for i, x in enumerate(itertools.product(*map(range, SHAPE))):
+        around = [np.ravel_multi_index(y, SHAPE) for y in frame.near(x, SHAPE)]  # +x, -x, +y, -y, +z, -z
+        w = rest + sum(a[f][i] for f in squares)
+        grips = [
+            grip + sum(a[f + 1 + d + k // 2][i] + a[f + 1 + d + k // 2][j] for f in squares)
+            for k, j in enumerate(around)
+        ]
+        for g in range(len(a)):
+            push = sum(k * (a[g][j] - a[g][i]) for k, j in zip(grips, around, strict=True))
+            q, kept = divmod(w * (a[g][i] - b[g][i]) + push + r[g][i], w)
+            out[0][g, i], out[1][g, i], out[2][g, i] = a[g][i] + q, a[g][i], kept
+    return out
+
+
+def test_one_loaded_round_is_a_naive_round_reading_each_squares_slots_by_name():
+    """The example, its family's kinds in another order, the family first and a one-row train last, two families, and
+    none: one loaded round equals the naive round, and with the grips' read ignored departs wherever a family stands."""
+    u, _, _ = built()
+    light, family = u["trains"]
+    rules, one = made(star(len(SHAPE))), dict(light, part=1)
+    again = dict(family, name="again", kinds=["A1", "E", "T2", "T1", "A1"])
+    worlds = (
+        [light, family],
+        [light, dict(again, name="metric")],
+        [family, one],
+        [family, light, again],
+        [light],
+    )
+    for seed, trains in enumerate(worlds):
+        v = dict(u, trains=trains)
+        held, found = load(v, {"gears": []}, sites_of(list(SHAPE)), *rules)
+        laid = layout(v, list(SHAPE), held)
+        rng, (rows, n) = np.random.default_rng(seed), (len(laid.gearing.rest), laid.nb.shape[1])
+        a, b = frame.wide(rng, (rows, n)), frame.wide(rng, (rows, n))
+        clocks = [x.first for x in held.trains if x.square]
+        a[clocks] = rng.integers(0, REACH, (len(clocks), n)).astype(object)
+        s = State(a, b, frame.wide(rng, (rows, n)) % step.weight(laid.gearing, laid.clock, a), 0 * a)
+        (*read, _), (*blind, _) = step.tick(laid, s), step.tick(laid._replace(stretch=frame.unread()), s)
+        model = naive(laid, held, s)
+        assert found == [] and frame.same(read, model) and frame.same(blind, model) is not bool(clocks)
