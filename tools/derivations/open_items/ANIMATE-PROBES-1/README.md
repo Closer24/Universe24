@@ -1,5 +1,9 @@
 # Animate's probes, kept with their outputs (the derivation protocol's step 3)
 
+**Record:** these probes run the old engine (src/event_universe) or read its records, which the owner's word of
+2026-10-30, 09:2x UTC, takes out ("only the new engine matters"). They stand for their findings, cited by the
+pages that name them, and are not run on the new engine.
+
 Every probe runs on the head's engine code (834cfd72e; src unchanged through 55a3483e) or on a scratch copy of it with one line changed, named below. Nothing here is engine code, and nothing was pushed to an engine branch.
 
 ## 1. The one big bang's course and the cap F1 (ANIMATE-TENSOR24-READINGS.md, part A)

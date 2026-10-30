@@ -6,8 +6,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
-
 from tensor24.decoder import measure, records
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
@@ -63,55 +61,48 @@ LAWFUL = [(0, PLUS), (0, MINUS), (1, PLUS), (1, MINUS)]
 SIGNALLING = [(0, PLUS), (0, PLUS), (1, PLUS), (1, MINUS)]
 
 
-@pytest.mark.parametrize(
-    ("rows", "far", "kind", "named"),
-    [
-        (LAWFUL, 100, "SHOWN", "every click's law is the same"),
-        (LAWFUL + [(0, PLUS), (0, MINUS)], (100, (4, 5)), "SHOWN", "the lays: 6"),
-        (SIGNALLING, 100, "NOT SHOWN", "at round +100, site 150 reads 0 of 2"),
-        (
-            [(0, REFUSED), (0, PLUS), (1, PLUS), (1, REFUSED)],
-            100,
-            "SHOWN",
-            "compared: 1; the lays: 4",
-        ),
-        ([(0, REFUSED), (0, REFUSED), (1, PLUS), (1, PLUS)], 100, "NOT SHOWN", "('refused',)"),
-        (
-            [(0, ELSEWHERE), (0, PLUS), (1, PLUS), (1, ELSEWHERE)],
-            100,
-            "SHOWN",
-            "compared: 2; the lays: 4",
-        ),
-        ([(0, PLUS), (0, PLUS), (1, PLUS), (1, ELSEWHERE)], 100, "NOT SHOWN", "('none',)"),
-        (LAWFUL + [(1, PLUS), (1, MINUS)], 100, "SHOWN", "the lays: 6"),
-        (SIGNALLING, 200, "NOT READ", "no setting outside a click's past cone drew two frames"),
-    ],
-)
-def test_the_cone_check_bins_each_click_by_the_frames_drawn_outside_its_past_cone(
-    rows, far, kind, named
-):
-    far, unset = far if isinstance(far, tuple) else (far, ())
-    found = measure.cone_check(built(pairs(rows, far, unset)))
-    assert (found["kind"], named in found["cause"]) == (kind, True), found
+CONES = [
+    (LAWFUL, 100, "SHOWN", "every click's law is the same"),
+    (LAWFUL + [(0, PLUS), (0, MINUS)], (100, (4, 5)), "SHOWN", "the lays: 6"),
+    (SIGNALLING, 100, "NOT SHOWN", "at round +100, site 150 reads 0 of 2"),
+    (
+        [(0, REFUSED), (0, PLUS), (1, PLUS), (1, REFUSED)],
+        100,
+        "SHOWN",
+        "compared: 1; the lays: 4",
+    ),
+    ([(0, REFUSED), (0, REFUSED), (1, PLUS), (1, PLUS)], 100, "NOT SHOWN", "('refused',)"),
+    (
+        [(0, ELSEWHERE), (0, PLUS), (1, PLUS), (1, ELSEWHERE)],
+        100,
+        "SHOWN",
+        "compared: 2; the lays: 4",
+    ),
+    ([(0, PLUS), (0, PLUS), (1, PLUS), (1, ELSEWHERE)], 100, "NOT SHOWN", "('none',)"),
+    (LAWFUL + [(1, PLUS), (1, MINUS)], 100, "SHOWN", "the lays: 6"),
+    (SIGNALLING, 200, "NOT READ", "no setting outside a click's past cone drew two frames"),
+]
 
 
-@pytest.mark.parametrize(
-    ("lines", "head", "cause"),
-    [
-        (pairs(LAWFUL), HEAD, "the header's sides make no board"),
-        ([e for e in pairs(LAWFUL) if "birth" not in e], BOARD, "no click names its lay (G5)"),
-        ([e for e in pairs(LAWFUL) if "axes" not in e], BOARD, "no setting names its lay"),
-        (pairs(LAWFUL) + [setting(2, 45, [1, 50], 1 + 1)], BOARD, "draws no frame of its axes"),
-        (pairs(LAWFUL) + [{**setting(2, 45, [1, 50], 0), "members": [[1]]}], BOARD, "names no lay"),
-        (pairs(LAWFUL) + [{**take(3, 45, [1, 50], Z, PLUS), "written": 0}], BOARD, "writes no line"),
-    ],
-)
-def test_the_cone_check_names_what_it_cannot_read(lines, head, cause):
-    found = measure.cone_check(built(lines, head))
-    assert (found["kind"], cause in found["cause"]) == ("NOT READ", True), found
+CONES_UNREAD = [
+    (pairs(LAWFUL), HEAD, "the header's sides make no board"),
+    ([e for e in pairs(LAWFUL) if "birth" not in e], BOARD, "no click names its lay (G5)"),
+    ([e for e in pairs(LAWFUL) if "axes" not in e], BOARD, "no setting names its lay"),
+    (pairs(LAWFUL) + [setting(2, 45, [1, 50], 1 + 1)], BOARD, "draws no frame of its axes"),
+    (pairs(LAWFUL) + [{**setting(2, 45, [1, 50], 0), "members": [[1]]}], BOARD, "names no lay"),
+    (pairs(LAWFUL) + [{**take(3, 45, [1, 50], Z, PLUS), "written": 0}], BOARD, "writes no line"),
+]
 
 
-def test_the_cone_is_one_mesh_a_round_the_shorter_way_round_each_side():
+def test_the_cone_check_reads_each_click_against_the_frames_drawn_outside_its_past_cone():
+    """The cone check: one Mesh a round the shorter way; each click binned by the frames outside its past cone, or not read, named."""
+    for rows, far, kind, named in CONES:
+        far, unset = far if isinstance(far, tuple) else (far, ())
+        found = measure.cone_check(built(pairs(rows, far, unset)))
+        assert (found["kind"], named in found["cause"]) == (kind, True), found
+    for lines, head, cause in CONES_UNREAD:
+        found = measure.cone_check(built(lines, head))
+        assert (found["kind"], cause in found["cause"]) == ("NOT READ", True), found
     sides = [3, 4, 5]  # the site (x 4 + y) 5 + z, z the fastest
 
     def site(x, y, z):
@@ -148,63 +139,58 @@ HOME = [tick(A, 10, 5, 15), tick(A, 30, 5, 45), tick(A, 50, 5, 75), tick(A, 90, 
 TRIP = [tick(B, 10, 5, 15), tick(B, 20, 9, 30), tick(B, 30, 9, 60), tick(B, 50, 5, 120)]
 
 
-@pytest.mark.parametrize(
-    ("lines", "kind", "named"),
-    [
-        (GROUND + HOME + TRIP, "SHOWN", "(the clocks: 2; the pairs of clicks: 4)"),
-        (
-            GROUND + HOME[:2] + [tick(A, 50, 5, 70)] + TRIP,
-            "NOT SHOWN",
-            "30 over 10 ticks between rounds 10 and 30",
-        ),
-        (
-            GROUND + [{k: v for k, v in e.items() if k != "clock"} for e in HOME],
-            "NOT READ",
-            "names its clock",
-        ),
-        (
-            GROUND + TRIP[1:3] + [tick(A, 20, 5, 9), tick(A, 30, 9, 18)],
-            "SHOWN",
-            "(the clocks: 1; the pairs of clicks: 1)",
-        ),
-        (
-            GROUND + [tick(A, 10, 5, 15), tick(A, 30, 9, 75)],
-            "NOT READ",
-            "two sites is not on the record",
-        ),
-        (rate(9, [1] * 100) + HOME, "NOT READ", "the rate lines of site 5"),
-        (GROUND + HOME + [{**TRIP[0], "tooth": 7}], "NOT READ", "reads no clock, face or count"),
-        (GROUND + HOME + [{**TRIP[0], "clock": [2, 5, 0]}], "NOT READ", "reads no clock, face or count"),
-    ],
-)
-def test_proper_time_is_read_twice_and_agrees_through_one_beat(lines, kind, named):
-    found = measure.proper(built(lines))
-    assert (found["kind"], named in found["cause"]) == (kind, True), found
+PROPER = [
+    (GROUND + HOME + TRIP, "SHOWN", "(the clocks: 2; the pairs of clicks: 4)"),
+    (
+        GROUND + HOME[:2] + [tick(A, 50, 5, 70)] + TRIP,
+        "NOT SHOWN",
+        "30 over 10 ticks between rounds 10 and 30",
+    ),
+    (
+        GROUND + [{k: v for k, v in e.items() if k != "clock"} for e in HOME],
+        "NOT READ",
+        "names its clock",
+    ),
+    (
+        GROUND + TRIP[1:3] + [tick(A, 20, 5, 9), tick(A, 30, 9, 18)],
+        "SHOWN",
+        "(the clocks: 1; the pairs of clicks: 1)",
+    ),
+    (
+        GROUND + [tick(A, 10, 5, 15), tick(A, 30, 9, 75)],
+        "NOT READ",
+        "two sites is not on the record",
+    ),
+    (rate(9, [1] * 100) + HOME, "NOT READ", "the rate lines of site 5"),
+    (GROUND + HOME + [{**TRIP[0], "tooth": 7}], "NOT READ", "reads no clock, face or count"),
+    (GROUND + HOME + [{**TRIP[0], "clock": [2, 5, 0]}], "NOT READ", "reads no clock, face or count"),
+]
 
 
-@pytest.mark.parametrize(
-    ("lines", "kind", "named"),
-    [
-        (GROUND + HOME + TRIP, "SHOWN", "count apart (compared: 1)"),
-        (GROUND + HOME + TRIP[:-1] + [tick(B, 50, 5, 75)], "NOT SHOWN", "count 60 each"),
-        (
-            GROUND + HOME + [tick(B, 10, 5, 15), tick(B, 20, 5, 30), tick(B, 50, 5, 75)],
-            "NOT READ",
-            "two paths",
-        ),
-        (
-            GROUND + [HOME[0], HOME[2]] + TRIP,
-            "NOT READ",
-            "meet twice by two paths",
-        ),  # A's path between unread
-    ],
-)
-def test_the_twins_count_apart_where_their_paths_differ(lines, kind, named):
-    found = measure.twins(built(lines))
-    assert (found["kind"], named in found["cause"]) == (kind, True), found
+TWINS = [
+    (GROUND + HOME + TRIP, "SHOWN", "count apart (compared: 1)"),
+    (GROUND + HOME + TRIP[:-1] + [tick(B, 50, 5, 75)], "NOT SHOWN", "count 60 each"),
+    (
+        GROUND + HOME + [tick(B, 10, 5, 15), tick(B, 20, 5, 30), tick(B, 50, 5, 75)],
+        "NOT READ",
+        "two paths",
+    ),
+    (
+        GROUND + [HOME[0], HOME[2]] + TRIP,
+        "NOT READ",
+        "meet twice by two paths",
+    ),  # A's path between unread
+]
 
 
-def test_a_duration_is_a_clocks_own_count_and_a_board_tick_is_refused_by_name():
+def test_a_duration_is_a_clocks_own_count_read_twice_and_the_twins_count_apart():
+    """A duration is a clock's own count: proper time read twice and agreeing, the twins apart, a board tick refused."""
+    for lines, kind, named in PROPER:
+        found = measure.proper(built(lines))
+        assert (found["kind"], named in found["cause"]) == (kind, True), found
+    for lines, kind, named in TWINS:
+        found = measure.twins(built(lines))
+        assert (found["kind"], named in found["cause"]) == (kind, True), found
     clocked, _ = measure.faces(built(GROUND + HOME + TRIP))
     assert measure.elapsed(clocked, A, (10, 5), (50, 5)) == 60
     assert (
@@ -214,7 +200,8 @@ def test_a_duration_is_a_clocks_own_count_and_a_board_tick_is_refused_by_name():
     )
 
 
-def test_the_tool_prints_the_measurements_rules(tmp_path):
+def test_the_ledger_and_the_tool_hold_the_measurements_rules(tmp_path):
+    """The ledger's lines stand once at each place, and the tool prints the measurements' rules."""
     path = tmp_path / "measure.jsonl"
     record = built(pairs(LAWFUL) + GROUND + HOME + TRIP)
     lines = [record.header, *record.events, record.end]
@@ -233,9 +220,6 @@ def test_the_tool_prints_the_measurements_rules(tmp_path):
         "the ledger: the ledger is absent" not in found.stdout
         and "the ledger: the ledger's line 1 " in found.stdout
     )
-
-
-def test_the_ledgers_count_lines_stand_once_at_each_round_site_and_train(tmp_path):
     count = {"round": 1, "at": "step", "site": 0, "train": 1, "count": [0]}
     for lines, cause in (
         ([count, {**count, "site": 1}], ""),

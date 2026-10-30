@@ -1,5 +1,9 @@
 # Animate's probes of the many bangs, kept with their outputs (the derivation protocol's step 3)
 
+**Record:** these probes run the old engine (src/event_universe) or read its records, which the owner's word of
+2026-10-30, 09:2x UTC, takes out ("only the new engine matters"). They stand for their findings, cited by the
+pages that name them, and are not run on the new engine.
+
 The draft is ANIMATE-MANY-BANGS.md. Nothing here is engine code, and nothing was pushed to an engine branch.
 
 ## 1. many_bangs.py: the course on the engine

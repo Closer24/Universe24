@@ -7,7 +7,6 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import pytest
 
 from tensor24.decoder import books, clocks, records
 
@@ -171,15 +170,13 @@ def cause_of(lines, tmp_path):
     return records.read(str(path))[1]
 
 
-@pytest.mark.parametrize("name", sorted(BROKEN))
-def test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard(tmp_path, name):
-    lines, guard, cause = BROKEN[name]
-    assert cause_of(lines, tmp_path) == cause
-    kept = tuple(g for g in records.GUARDS if g.__name__ != guard)
-    assert not unread(str(tmp_path / "record.jsonl"), kept)
-
-
-def test_a_cause_two_guards_see_is_named_by_the_first_and_the_files_that_cannot_be_read(tmp_path):
+def test_the_record_is_read_by_its_schema_and_each_guard_refuses_its_own_broken_record(tmp_path):
+    """The reader's one law: a record of the schema reads; each broken one is refused by its own guard, named, and read without that guard."""
+    for name in sorted(BROKEN):
+        lines, guard, cause = BROKEN[name]
+        assert cause_of(lines, tmp_path) == cause
+        kept = tuple(g for g in records.GUARDS if g.__name__ != guard)
+        assert not unread(str(tmp_path / "record.jsonl"), kept)
     assert cause_of([H], tmp_path) == "the record holds no header and end"
     assert cause_of([{**H, "major": True}, E], tmp_path) == "the header holds no major version"
     halves = {**rate(1, 0, 1, 1), "count": 0.5, "k": 0.5}
@@ -189,9 +186,6 @@ def test_a_cause_two_guards_see_is_named_by_the_first_and_the_files_that_cannot_
         None,
         "the record's file cannot be read",
     )
-
-
-def test_a_record_of_the_schema_reads_its_lines_split_at_the_line_feed_alone(tmp_path):
     label = "a\u2028b\u0085c\u2029d"
     lines = [H, PAIR, TAKE, {**rate(1, 0, 1, 1), "note": label}, E]
     # each line ends in a return and a line feed, and holds returns as white space between its tokens
@@ -202,9 +196,6 @@ def test_a_record_of_the_schema_reads_its_lines_split_at_the_line_feed_alone(tmp
     assert cause == "" and record is not None and record.of("whole") == [PAIR, TAKE]
     assert record.of("rate")[0]["note"] == label
     assert cause_of([B, EDGED, E], tmp_path) == ""
-
-
-def test_a_line_with_no_kind_and_the_order_by_site_kind_and_train(tmp_path):
     one, zero = {**TAKE, "train": 1}, {**TAKE, "train": 0}
     cases = [
         [{"round": 1, "site": 0}],
@@ -214,10 +205,7 @@ def test_a_line_with_no_kind_and_the_order_by_site_kind_and_train(tmp_path):
     ]
     got = [cause_of([H, *lines, E], tmp_path) for lines in [*cases, [one, zero], [zero, one]]]
     assert got == [NO_JSON, ORDER, "", ORDER, ORDER, ""]
-
-
-def test_a_turnover_line_is_refused_by_its_kind(tmp_path):
-    """Schema 1.2 retires the turnover line: the reader names it among the kinds it holds not, as any such line."""
+    # Schema 1.2 retires the turnover line: the reader names it among the kinds it holds not, as any such line.
     turnover = {"kind": "turnover", "round": 1, "site": 0, "count": 1, "q": 1, "x": 0}
     assert cause_of([H, turnover, E], tmp_path) == "the line kinds ['turnover'] are unknown"
 
@@ -261,15 +249,18 @@ LEDGER_BROKEN = {  # each broken ledger's line after GOOD's four, the guard with
 }
 
 
-@pytest.mark.parametrize("name", sorted(LEDGER_BROKEN))
-def test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard(tmp_path, name):
-    line, guard, cause = LEDGER_BROKEN[name]
-    path = tmp_path / "ledger.jsonl"
-    path.write_text(text([*GOOD, line]), encoding="utf-8")
-    assert records.read_ledger(str(path)) == (None, cause)
-    kept = tuple(g for g in records.LEDGER_GUARDS if g.__name__ != guard)
-    assert not unread(str(path), kept, records.read_ledger)
-    assert records.read_ledger(str(tmp_path / "absent.jsonl")) == (None, "the ledger's file is absent")
+def test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard(tmp_path):
+    for name in sorted(LEDGER_BROKEN):
+        line, guard, cause = LEDGER_BROKEN[name]
+        path = tmp_path / "ledger.jsonl"
+        path.write_text(text([*GOOD, line]), encoding="utf-8")
+        assert records.read_ledger(str(path)) == (None, cause)
+        kept = tuple(g for g in records.LEDGER_GUARDS if g.__name__ != guard)
+        assert not unread(str(path), kept, records.read_ledger)
+        assert records.read_ledger(str(tmp_path / "absent.jsonl")) == (
+            None,
+            "the ledger's file is absent",
+        )
 
 
 def read(lines, tmp_path):
@@ -282,20 +273,6 @@ def read(lines, tmp_path):
 def kind(lines, held, tmp_path):
     """Row 15's verdict's kind on a record of the given lines and a ledger."""
     return books.row_15(read(lines, tmp_path), held)["kind"]
-
-
-def test_the_books_close_at_each_end_and_the_verdict(tmp_path):
-    one_open = click(1, 0, ends=[ENDED[0], end_of(1, [holding(0, (5, 0))], [holding(1, (0, 4))])])
-    twisted = [
-        end_of(0, [holding(0, (5, 0))], [holding(1, (0, 6))]),
-        end_of(1, [holding(0, (5, 0))], [holding(1, (0, 4))]),
-    ]
-    assert books.closes(PAIR, WOUND) and not books.closes(one_open, WOUND)
-    assert not books.closes(click(1, 0, ends=twisted), WOUND)
-    opened = click(1, 0, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
-    assert kind([H, opened, E], GOOD, tmp_path) == "NOT SHOWN"
-    absent = books.row_15(read([H, TAKE, E], tmp_path), None)
-    assert absent["kind"] == "NOT READ" and absent["cause"].startswith("the ledger is absent")
 
 
 OPEN = {  # a whole click whose holdings sum to nothing and whose books still do not hold the click (the seventh review)
@@ -316,16 +293,8 @@ OPEN = {  # a whole click whose holdings sum to nothing and whose books still do
 }
 
 
-@pytest.mark.parametrize("name", sorted(OPEN))
-def test_the_books_hold_the_click_they_book(tmp_path, name):
-    from_kept = click(1, 0, [holding(1, (0, 0), (5, 1))], [holding(0, (0, 4))], train=1)
-    assert books.closes({**TAKE, "q": 1 + 1 + 1}, WOUND) and books.closes(from_kept, WOUND)
-    assert books.closes(PAIR, WOUND) and not books.closes(OPEN[name], WOUND)
-    held = ledger(1, {0: (4, 4), 1: (6, 6)})
-    assert kind([THIRD, OPEN[name], E], held, tmp_path) == "NOT SHOWN"
-
-
-def test_the_wind_over_every_train_round_by_round(tmp_path):
+def test_the_wind_is_read_over_every_train_at_every_round_with_a_click(tmp_path):
+    """The ledger's wind, read over every train of the header, round by round, a split click moving it between trains."""
     two = read([H, TAKE, {**TAKE, "round": 1 + 1, "count": 1 + 1}, E], tmp_path)
     second = ledger(1 + 1, {0: (4, 8), 1: (6, 2)})
     over, under = ledger(1, {0: (0, 5), 1: (10, 6)}), ledger(1, {0: (0, 3), 1: (10, 6)})
@@ -340,9 +309,6 @@ def test_the_wind_over_every_train_round_by_round(tmp_path):
         books.row_15(two, held)["kind"] == "NOT SHOWN"
         for held in ([*over, *second], [*under, *second], swapped)
     )
-
-
-def test_the_wind_is_read_over_every_train_of_the_header(tmp_path):
     no_train = books.row_15(read([{**H, "trains": []}, TAKE, E], tmp_path), GOOD)
     held = [
         ledger(1, {7: (5, 5)}),
@@ -354,11 +320,6 @@ def test_the_wind_is_read_over_every_train_of_the_header(tmp_path):
     assert all(kind([H, TAKE, E], lines, tmp_path) == "NOT READ" for lines in held)
     assert no_train["kind"] == "NOT READ" and no_train["cause"].startswith("the header names no train")
     assert books.second_reading(read([{**H, "trains": []}, TAKE, E], tmp_path), [])["read"] == 0
-
-
-def test_a_split_click_moves_wind_between_trains_and_the_ledger_reads_at_every_round_with_a_click(
-    tmp_path,
-):
     record = read([H, TAKE, {"kind": "split", "round": 1 + 1, "site": 0, "count": 1 + 1}, E], tmp_path)
     moved = [*GOOD, *ledger(1 + 1, {0: (4, 1), 1: (6, 9)})]
     some = books.row_15(record, GOOD)
@@ -391,16 +352,34 @@ LACKING = {  # a whole click that lacks a field its books are read from (Sofer's
 }
 
 
-@pytest.mark.parametrize("name", sorted(LACKING))
-def test_a_whole_click_that_lacks_a_field_of_its_books_reads_the_row_not_read(tmp_path, name):
-    cause = "the whole click at round 1, site 0 lacks a field its books are read from"
-    beside = [LACKING[name], {**TAKE, "site": 1}]  # beside a click whose books close, the books unnamed
-    for clicks in ([LACKING[name]], beside):
-        verdict = books.row_15(read([H, *clicks, E], tmp_path), GOOD)
-        assert verdict["kind"] == "NOT READ" and verdict["cause"] == cause
-
-
-def test_a_part_read_that_fails_is_not_shown_beside_a_click_that_lacks_a_field(tmp_path):
+def test_the_books_close_where_they_hold_the_click_and_read_not_shown_or_not_read_otherwise(tmp_path):
+    """Row 15's one law: the books close at each end where they hold the click they book; else not shown, or not read with the cause."""
+    one_open = click(1, 0, ends=[ENDED[0], end_of(1, [holding(0, (5, 0))], [holding(1, (0, 4))])])
+    twisted = [
+        end_of(0, [holding(0, (5, 0))], [holding(1, (0, 6))]),
+        end_of(1, [holding(0, (5, 0))], [holding(1, (0, 4))]),
+    ]
+    assert books.closes(PAIR, WOUND) and not books.closes(one_open, WOUND)
+    assert not books.closes(click(1, 0, ends=twisted), WOUND)
+    opened = click(1, 0, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
+    assert kind([H, opened, E], GOOD, tmp_path) == "NOT SHOWN"
+    absent = books.row_15(read([H, TAKE, E], tmp_path), None)
+    assert absent["kind"] == "NOT READ" and absent["cause"].startswith("the ledger is absent")
+    for name in sorted(OPEN):
+        from_kept = click(1, 0, [holding(1, (0, 0), (5, 1))], [holding(0, (0, 4))], train=1)
+        assert books.closes({**TAKE, "q": 1 + 1 + 1}, WOUND) and books.closes(from_kept, WOUND)
+        assert books.closes(PAIR, WOUND) and not books.closes(OPEN[name], WOUND)
+        held = ledger(1, {0: (4, 4), 1: (6, 6)})
+        assert kind([THIRD, OPEN[name], E], held, tmp_path) == "NOT SHOWN"
+    for name in sorted(LACKING):
+        cause = "the whole click at round 1, site 0 lacks a field its books are read from"
+        beside = [
+            LACKING[name],
+            {**TAKE, "site": 1},
+        ]  # beside a click whose books close, the books unnamed
+        for clicks in ([LACKING[name]], beside):
+            verdict = books.row_15(read([H, *clicks, E], tmp_path), GOOD)
+            assert verdict["kind"] == "NOT READ" and verdict["cause"] == cause
     opened = click(1, 1, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
     held = ledger(1, {0: (0, 8), 1: (10, 2)})
     both = books.row_15(read([H, LACKING["its taken"], opened, E], tmp_path), held)
@@ -418,7 +397,8 @@ def ticked(seed, beats=60):
     return ks, lines
 
 
-def test_the_ticks_from_a_record_whose_counts_are_not_its_rounds(tmp_path):
+def test_the_ticks_are_read_from_the_rate_lines_and_never_from_the_rounds(tmp_path):
+    """A Node-clock's ticks come from its rate lines from its first beat, never from the record's rounds."""
     lines = [
         rate(1, 0, 1, 1),
         rate(1 + 1, 1, 1, 0),
@@ -430,9 +410,6 @@ def test_the_ticks_from_a_record_whose_counts_are_not_its_rounds(tmp_path):
     assert [clocks.ticks_to(held[0], c) for c in counts] == [0, 1, 1, 1, 1 + 1]
     assert [clocks.ticks_to(held[1], c) for c in (1, 1 + 1)] == [0, 1]
     assert clocks.ticks_at(held[0], [*counts, -1, None]) == [0, 1, 1, 1, 1 + 1, None, None]
-
-
-def test_the_ticks_are_not_read_where_the_rate_lines_stand_from_no_first_beat():
     unread_lines = {
         "the count is no whole number from 0": [([(1, 1)], -1), ([(1, 1)], True), ([(1, 1)], None)],
         "its Node-clock holds no rate line": [([], 1)],
@@ -543,12 +520,13 @@ LAWS = {  # each law, and its mutant: one function of the decoder replaced
 }
 
 
-@pytest.mark.parametrize("name", sorted(LAWS))
-def test_each_law_of_the_readings_holds_and_fails_on_its_mutant(tmp_path, monkeypatch, name):
-    law, module, attribute, mutant = LAWS[name]
-    assert law(tmp_path)
-    monkeypatch.setattr(module, attribute, mutant)
-    assert not law(tmp_path)
+def test_each_law_of_the_readings_holds_and_fails_on_its_mutant(tmp_path, monkeypatch):
+    for name in sorted(LAWS):
+        with monkeypatch.context() as patch:
+            law, module, attribute, mutant = LAWS[name]
+            assert law(tmp_path)
+            patch.setattr(module, attribute, mutant)
+            assert not law(tmp_path)
 
 
 def tool(*args):

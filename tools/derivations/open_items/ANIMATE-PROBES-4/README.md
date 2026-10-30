@@ -1,5 +1,9 @@
 # Animate's toys for the clocks' roots (the owner's word of 2026-10-28, 15:2x UTC)
 
+**Record:** these probes run the old engine (src/event_universe) or read its records, which the owner's word of
+2026-10-30, 09:2x UTC, takes out ("only the new engine matters"). They stand for their findings, cited by the
+pages that name them, and are not run on the new engine.
+
 The page is ANIMATE-CLOCK-ROOTS.md. These are toys that check whether a law would work in an engine. Nothing here is engine code, and nothing was pushed to an engine branch. Both run with no engine: `python -I local_tick.py` and `python -I kind_kept.py` (the second reads ANIMATE-PROBES-2/kinds_ladder.py and ANIMATE-PROBES-3/ladder_pauli.py).
 
 ## local_tick.py: law A, a clock's time is the carry of its own dial

@@ -1,5 +1,9 @@
 # The decoder, first slice (Animate)
 
+**Record:** these probes read the old engine's records (src/event_universe) through tools/tensor24_convert.py,
+which left with it on the owner's word of 2026-10-30, 09:2x UTC ("only the new engine matters"). They stand for
+their findings, cited by the pages that name them, and are not run on the new engine.
+
 The owner's word to the Boss, 16:1x UTC (6474211874): "Approved, build it. You on the engine. Animate on the decoder." His word to Animate, 16:4x UTC (Hebrew, translated): "Are you building the decoder or waiting?" His order of 16:3x UTC, through the Boss: "I will be back in 12 hours. Sync everyone, build everything and check it. Push when ready."
 
 The decoder's modules moved out of this folder into src/tensor24/decoder (reader-5 c94ecaa9), to the record's schema, now 1.1 (src/tensor24/record/schema.py). They carry:
