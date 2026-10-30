@@ -1,1 +1,0 @@
-{"universe": "universe_ga2.json", "shape": [4, 4, 4], "intervals": 230, "seed": [{"lay": "wave", "row": 0, "quanta": 5, "p1": [0, 0, 1, 1, 2, 2, 3, 3, 1, 1, 0, 0, 3, 3, 2, 2], "cz": 4, "mirror": 0}]}

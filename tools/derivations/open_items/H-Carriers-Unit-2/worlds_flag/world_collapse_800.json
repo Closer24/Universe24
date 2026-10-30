@@ -1,1 +1,0 @@
-{"universe": "universe_middle.json", "shape": [9, 9, 9], "intervals": 600, "seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 2, "centre": [4, 4, 4], "width": 3, "quanta": 400}], "pm2_weight": "carrier"}

@@ -1,1 +1,0 @@
-{"universe": "universe_toy_both.json", "shape": [3, 3, 3], "intervals": 20, "seed": [{"lay": "sea", "row": 0}, {"lay": "hole", "at": [0, 0, 0]}, {"lay": "at", "row": 0, "centre": [1, 0, 0], "quanta": 1}]}
