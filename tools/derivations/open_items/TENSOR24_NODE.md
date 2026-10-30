@@ -52,8 +52,8 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
 | 8 | the kick K | the drive's quotient | K = T_k s q_d; s = 1 | BUILT at T_k = 1 |
 | 9 | the volume's notch | the metric family's own slots | the board's swing and its top (Postulate 4), the metric family's own; it pulls no other gear's count, so it gives no species a rest beat | OPEN (G2): see 4.3 |
 | 10 | the shift and shears | the 0i and jk slots | read by the gradient's and the pull's contractions (frame dragging, waves) | OPEN (G4): see 4.4 |
-| 11 | the whole click | the drive's carry | q quanta click, the remainder kept in r_d: the record's how much and when | DERIVED (G5): see 4.5 |
-| 12 | the split click | the parts' sizes sigma | the draw by a rank count over the sizes; a full slot refuses after the draw (decision 40 (b)) | OPEN (G5): see 4.5 |
+| 11 | the whole click | the drive's carry of the swept area | q quanta click on the area the coupling moves in a round, the key the teeth, the remainder kept in r_d: the record's how much and when | DERIVED (G5): see 4.5 |
+| 12 | the split click | the parts' sizes sigma | the draw by a rank count over the sizes, after the whole click whose quantum it places; a full slot refuses after the draw (decision 40 (b)) | OPEN (G5): see 4.5 |
 | 13 | the frozen clock and the horizon | the teeth and the drive | a clock freezes where its teeth outgrow its drive and the carry never fires: no hold and no restore of its own | OPEN (G2): see 4.6 |
 
 ## 4. The open terms, each with its question and its deriver
@@ -146,8 +146,23 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
 - **A click credits a train's whole winding, never one of its rows** (lines 468 and 1556): one drive for every row of a
   train (term 7), the whole click that drive's carry. A click that takes one row would be a new rule, the owner's
   (Sofer's recommendation: no, since it would end confinement).
-- **The whole click:** the drive's carry at the train's winding, q = E div w_c, the remainder kept. DERIVED, with M2's
-  three questions OPEN (light's w_c = 0, a negative wind, the quantum per mode).
+- **The whole click** (David, 6516852295; CHECKED on the head's gear, toys-5 b107499b9): counted on a two-part hand's
+  swept area, Omega = re p_im - im p_re, with p = W (a - b) + r each part's stride and kept tooth, the wind over the
+  frequency, the step's own invariant. The drive reads the area the coupling moves in a round, its teeth the key, the
+  same for every train and every mode: q, r_d+ = carry(the area moved, key, r_d). M2's three questions close:
+  - light's winding is no longer 0: the key is every train's winding;
+  - the quantum per mode: at equal wind Omega grows as 1 / omega, so a click carries the key times the mode's own beat,
+    E = n h nu per mode;
+  - a negative wind gives Omega of the other sign and a negative quotient, its kept tooth in [0, key), with no if:
+    quanta of the other sense.
+  - OPEN: under the carries Omega walks by the clock's own quotients and kept teeth (its largest drift about 4 x 10^-5
+    of Omega in 20,000 rounds); the place in the clock's state that holds it exactly is sought inside the clock or its
+    spring, not as a new law (the owner's word to David, 6516907240). What the coupling moves is term 6's vertex, so the
+    click's last form follows it.
+- **Both clicks in one round** (the owner's question of 06:5x UTC, put to David, Animate and Sofer in 6516945354): the
+  Boss recommends yes, in a fixed order, never a split without a whole: the whole click first (how much and when), then,
+  where the winding it releases is shared among parts, the split click (which part receives that quantum). OPEN until
+  their three answers.
 - **The split click:** the draw by a rank count over the parts' sizes (Born); the product draw over sigma_f sigma_b on
   the doubled Node-clock (the forward and the backward halves); a full slot refuses after the draw and the quantum goes
   back to its giver (decision 40 (b)). OPEN: the draw's fairness, and the doubled node's form on the act.
