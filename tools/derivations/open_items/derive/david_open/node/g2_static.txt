@@ -1,0 +1,4 @@
+(a) the clock, spring s = rest div 400, sign changes in 4,000 rounds at W = rest, 4 rest and 9 rest: [64, 32, 21] (times 1, 2 and 3: [64, 64, 63]); the run back bit for bit: True
+(b) light on the mode (1, 0, -1, 0), sign changes at site 0 in 4,000 rounds, (W over rest, grip over g): (1, 1) 746; (4, 1) 369; (1, 4) 1568; (4, 4) 746; the same grip / W gives the same count: True
+(c) sum over the six Meshes of (v_i + v_j)(u_j - u_i) = -(sum of u_j^2 - u_i^2) wherever v = -u, at all 216 Node-clocks of a whole field: True
+(d) ((1 + u) G - 1) times q^4 at q = 10^3, 10^4 and 10^5, G = 1 + 2 Phi + (4 - 2 gamma) Phi^2, Phi = -1 / q: gamma 0: [8000, 80000, 800000]; gamma 1: [4, 4, 4]; gamma 2: [-8000, -80000, -800000] (of order q, so the residual is third order: beta = 2 - gamma)
