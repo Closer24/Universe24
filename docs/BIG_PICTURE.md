@@ -188,7 +188,7 @@ The words "two boards", "the forward board" and "the backward board" in the sect
 
 ### The method addressed (1.1)
 
-This follows **How to think about solutions: the principle of the clock and the gear** (docs/ALGEBRA.md on scribe-5; the owner's wording of 03:14 UTC, and its item (9) on his word of 06:3x UTC), question by question:
+This follows **How to think about solutions: the principle of the clock and the gear** (docs/ALGEBRA.md on scribe-5; the owner's wording of 03:14 UTC, its item (9) on his word of 06:3x UTC and its item (10) on his word of 2026-10-30, 07:3x UTC), question by question:
 1. **Does each term follow by itself from the one tensor act?**
    - Every term here is the carry, the contraction or the 24's tables.
    - The new factors are read from the ruler, a table the load walks once: the click's source factor (5.1) and the draw's pitch (5.2).
@@ -212,6 +212,7 @@ This follows **How to think about solutions: the principle of the clock and the 
    - backward, from nature's clicks to the gears: Bell at a distance gives the backward board (section 10.1), and the null redshift tests give the click's ruler factor (5.1).
 8. **The enforcement:** each section names its status word. What is not derived is named open or the owner's.
 9. **The aim of the board is ever more complex clocks:** section 11.
+10. **Every explanation goes by the clock, then the algebra, then the physics** (the owner's word of 2026-10-30, 07:3x UTC; ALGEBRA.md line 35, item (10)): the clock's explanation and the algebra's are owed by every explanation, the physical one comes last and may be left out. The sections of this document are brought into that order as each is next touched.
 
 ## 2. The one mechanism: the carry
 
