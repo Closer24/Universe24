@@ -2801,6 +2801,298 @@ INDEX_CASES: list[tuple[str, str, str, int, int]] = [
 ]
 
 
+def hidden_cases() -> tuple[int, int]:
+    """The rules ENUM and LENGTH, a number behind a name and a count spelt as a length (the owner's question of 2026-10-30, 09:0x UTC), in
+    the new engine and its tools alone; the cases made and those that parted."""
+    made = parted = 0
+
+    def check(label: str, ok: bool) -> None:
+        nonlocal made, parted
+        made += 1
+        parted += not ok
+        print(f"{'ok     ' if ok else 'PARTED '} the hidden numbers' rules: {label}")
+
+    def found(rel: str, source: str, rule: str) -> list[str]:
+        return sorted(hit.detail for hit in gate.scan(rel, source) if hit.rule == rule)
+
+    check("ENUM is a refusal", gate.RULES["ENUM"][0] == "BLOCK")
+    check("LENGTH is a note", gate.RULES["LENGTH"][0] == "WARN")
+    enums = (
+        ("an import of enum", NEW_STEP, "import enum\n", ["import enum"]),
+        ("a from-import of enum", NEW_STEP, "from enum import Enum\n", ["import enum"]),
+        (
+            "a class of IntEnum",
+            NEW_STEP,
+            "from enum import IntEnum\n\n\nclass A(IntEnum):\n    X = 1\n",
+            ["class of IntEnum", "import enum"],
+        ),
+        (
+            "a class of enum.Flag",
+            NEW_STEP,
+            "import enum\n\n\nclass A(enum.Flag):\n    pass\n",
+            ["class of Flag", "import enum"],
+        ),
+        (
+            "auto() beside its class",
+            NEW_STEP,
+            "from enum import Enum, auto\n\n\nclass A(Enum):\n    X = auto()\n",
+            ["call auto", "class of Enum", "import enum"],
+        ),
+        (
+            "the functional Enum",
+            NEW_STEP,
+            'from enum import Enum\n\nA = Enum("A", "x y")\n',
+            ["call Enum", "import enum"],
+        ),
+        ("a class of no enumeration", NEW_STEP, "class A:\n    pass\n", []),
+        ("a name that only looks like one", NEW_STEP, "x = flag.value\n", []),
+        ("an enumeration in a tool", TOOL_FILES, "import enum\n", ["import enum"]),
+        ("an enumeration in the runner", NEW_RUNNER, "import enum\n", ["import enum"]),
+        ("an enumeration in a test is not read", TESTS, "import enum\n", []),
+        ("an enumeration in the old engine is not read", READER, "import enum\n", []),
+    )
+    for label, rel, source, want in enums:
+        check(f"ENUM: {label}", found(rel, source, "ENUM") == want)
+    lengths = (
+        (
+            "a tuple written out",
+            NEW_STEP,
+            'def f():\n    return len(("a", "b"))\n',
+            ["len of a display"],
+        ),
+        ("a list written out", NEW_STEP, "def f():\n    return len([1, 0])\n", ["len of a display"]),
+        ("a string", NEW_STEP, 'def f():\n    return len("abc")\n', ["len of a display"]),
+        (
+            "a constant the module binds to a label tuple",
+            NEW_STEP,
+            'AXES = ("x", "y", "z")\n\n\ndef f():\n    return len(AXES)\n',
+            ["len(AXES)"],
+        ),
+        (
+            "a lower-case name the module binds to a tuple",
+            NEW_STEP,
+            'labels = ("a", "b")\n\n\ndef f():\n    return len(labels)\n',
+            ["len(labels)"],
+        ),
+        (
+            "an all-capitals constant bound in another module",
+            NEW_LOADER,
+            "from tensor24.runner.files import GEAR\n\n\ndef f():\n    return len(GEAR)\n",
+            ["len(GEAR)"],
+        ),
+        ("a parameter", NEW_STEP, "def f(a):\n    return len(a)\n", []),
+        ("an array's shape", NEW_STEP, "def f(a):\n    return len(a.shape)\n", []),
+        ("a one-letter capital", NEW_STEP, "def f(N):\n    return len(N)\n", []),
+        (
+            "a list a function builds",
+            NEW_STEP,
+            "def f(a):\n    b = [x for x in a]\n    return len(b)\n",
+            [],
+        ),
+        ("a tool's constant", TOOL_FILES, 'AXES = ("x", "y")\nn = len(AXES)\n', ["len(AXES)"]),
+        ("a test is not read", TESTS, "def f():\n    return len((1, 0))\n", []),
+        ("the old engine is not read", READER, "def f():\n    return len((1, 0))\n", []),
+    )
+    for label, rel, source, want in lengths:
+        check(f"LENGTH: {label}", found(rel, source, "LENGTH") == want)
+    tiers = {
+        hit.rule: hit.tier
+        for hit in gate.scan(NEW_STEP, "import enum\n\n\ndef f():\n    return len((1, 0))\n")
+    }
+    check(
+        "an ENUM hit is a refusal and a LENGTH hit a note",
+        tiers.get("ENUM") == "BLOCK" and tiers.get("LENGTH") == "WARN",
+    )
+    return made, parted
+
+
+PROBE = "tools/derivations/open_items/derive/p/probe.py"
+
+
+def probe_cases() -> tuple[int, int]:
+    """The rules PROBE and DIVIDE, the gate on a probe a push adds or changes under tools/derivations/ (the owner's 'Yes' of 2026-10-30,
+    09:0x UTC to the gate for probes, and his word that division is allowed only with Rule3): what the two rules read in a probe, the
+    paths they read, and the push through git (a new probe refused, a changed one held to its base, a rename quiet, the frozen list);
+    the cases made and those that parted."""
+    made = parted = 0
+
+    def check(label: str, ok: bool) -> None:
+        nonlocal made, parted
+        made += 1
+        parted += not ok
+        print(f"{'ok     ' if ok else 'PARTED '} the probes' rules: {label}")
+
+    def found(source: str, rule: str = "PROBE") -> list[str]:
+        return sorted(hit.detail for hit in gate.probe_hits(PROBE, source) if hit.rule == rule)
+
+    check("PROBE is a refusal", gate.RULES["PROBE"][0] == "BLOCK")
+    check("DIVIDE is a note", gate.RULES["DIVIDE"][0] == "WARN")
+    NPS = "import numpy as np\n"
+    probes = (
+        ("a float literal", "x = 0.5\n", ["float literal"]),
+        ("a complex literal", "x = 1j\n", ["float literal"]),
+        ("a true division", "x = a / b\n", ["true division"]),
+        ("an augmented true division", "x /= 2\n", ["true division"]),
+        ("a pathlib join with a string", 'p = Path(".") / "a"\n', []),
+        ("a join under a path-like name", "out = HERE / name\n", []),
+        ("a join under a parent", "p = Path(f).parent / n\n", []),
+        ("a division of two names", "x = num / den\n", ["true division"]),
+        ("round", "x = round(y)\n", ["call round"]),
+        ("float()", "x = float(y)\n", ["call float"]),
+        ("a root through math", "import math\nx = math.sqrt(2)\n", ["call sqrt", "import math"]),
+        ("a root through numpy", NPS + "x = np.sqrt(2)\n", ["call sqrt"]),
+        ("numpy's random", NPS + "x = np.random.rand(3)\n", ["np.random"]),
+        ("a numpy float type", NPS + "x = np.float64(1)\n", ["np.float64"]),
+        ("numpy's pi", NPS + "x = np.pi\n", ["np.pi"]),
+        ("a circular function", "from math import cos\nx = cos(a)\n", ["call cos", "import math"]),
+        ("a float dtype", NPS + "x = np.zeros(3, dtype=float)\n", ["float dtype"]),
+        ("a float dtype as a string", NPS + 'x = np.zeros(3, dtype="float64")\n', ["float dtype"]),
+        ("astype(float)", "x = a.astype(float)\n", ["float dtype"]),
+        ("dtype object is lawful", NPS + "x = np.zeros(3, dtype=object)\n", []),
+        ("isinstance with float is no float", "ok = isinstance(x, float)\n", []),
+        ("a negative power", "x = a ** -1\n", ["negative power"]),
+        ("a positive power and a variable power are whole", "x = a ** 2 + b ** n\n", []),
+        ("an import of random", "import random\n", ["import random"]),
+        ("an import of fractions", "import fractions\n", ["import fractions"]),
+        ("a Fraction from fractions", "from fractions import Fraction\n", ["import fractions"]),
+        ("an import of decimal", "import decimal\n", ["import decimal"]),
+        ("an import of statistics", "import statistics\n", ["import statistics"]),
+        ("an import of scipy", "import scipy.linalg\n", ["import scipy"]),
+        ("an import of sympy", "import sympy\n", ["import sympy"]),
+        ("a probe of whole numbers", "import itertools\n\nx = sum(range(10)) * 3\ny = x * x + 7\n", []),
+        (
+            "Rule3's carry imported from the engine",
+            "from tensor24.algebra.carry import carry\n\nq, r = carry(n, d, 0)\n",
+            [],
+        ),
+        ("a file that does not parse", "def (:\n", []),
+    )
+    for label, source, want in probes:
+        check(f"PROBE: {label}", found(source) == want)
+    divides = (
+        ("a floor division", "q = a // b\n", ["floor division"]),
+        ("a remainder", "r = a % b\n", ["remainder"]),
+        ("divmod", "q, r = divmod(a, b)\n", ["divmod"]),
+        ("the augmented forms", "a //= 2\nb %= 3\n", ["floor division", "remainder"]),
+        ("a printf format is no remainder", 's = "%d" % n\n', []),
+        ("Rule3's carry", "from tensor24.algebra.carry import carry\n\nq, r = carry(n, d, 0)\n", []),
+    )
+    for label, source, want in divides:
+        check(f"DIVIDE: {label}", found(source, "DIVIDE") == want)
+    reads = (
+        (PROBE, True),
+        ("tools/derivations/pair_rides/x.py", True),
+        ("tools/derivations/open_items/derive/p/README.md", False),
+        ("tools/derivations/open_items/scribe_scan.py", False),
+        ("tools/derivations/open_items/scribe_scan_selftest.py", False),
+        ("tools/derivations/open_items/derive/__pycache__/p.py", False),
+        ("tools/tensor24_files.py", False),
+        ("tools/check.py", False),
+        ("tests/test_p.py", False),
+        ("src/tensor24/engine/step.py", False),
+    )
+    for name, want in reads:
+        check(f"{name} is {'read' if want else 'not read'}", gate.probe_path(name) == want)
+    saved = gate.allowance, gate.frozen
+    gate.allowance = lambda repo=gate.REPO: Counter()
+    gate.frozen = lambda repo=gate.REPO: Counter()
+    try:
+        with without_git_variables(), tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            git = [
+                "git",
+                "-C",
+                scratch,
+                "-c",
+                "user.name=selftest",
+                "-c",
+                "user.email=selftest@example.invalid",
+            ]
+
+            def run(*args: str) -> str:
+                return subprocess.run(
+                    [*git, *args], capture_output=True, text=True, check=True
+                ).stdout.strip()
+
+            def commit(files: dict[str, str | None]) -> str:
+                for name, text in files.items():
+                    if text is None:
+                        (root / name).unlink()
+                        continue
+                    (root / name).parent.mkdir(parents=True, exist_ok=True)
+                    (root / name).write_text(text, encoding="utf-8")
+                run("add", "-A")
+                run("commit", "-q", "-m", "selftest")
+                return run("rev-parse", "HEAD")
+
+            def read(rev: str) -> tuple[int, str]:
+                out = io.StringIO()
+                return gate.check_revision(root, rev, base, out), out.getvalue()
+
+            def branch(name: str, files: dict[str, str | None]) -> str:
+                run("checkout", "-q", "-B", name, base)
+                return commit(files)
+
+            folder = "tools/derivations/open_items/derive/p/"
+            old = folder + "old.py"
+            run("init", "-q")
+            base = commit({old: "x = 0.5\n", folder + "clean.py": "y = 1\n", "README.md": "the base\n"})
+            status, text = read(branch("new_float", {folder + "new.py": "y = 0.25\n"}))
+            check(
+                "a new probe with a float is refused, named",
+                status == 1
+                and "REFUSED PROBE" in text
+                and "float literal" in text
+                and "refusals 1" in text,
+            )
+            status, text = read(branch("new_clean", {folder + "ok.py": "y = 2 * 3\n"}))
+            check("a new probe of whole numbers is quiet", status == 0 and text == "")
+            status, text = read(branch("held", {old: "x = 0.5\ny = 1\n"}))
+            check("a changed probe that holds its count is quiet", status == 0 and "PROBE" not in text)
+            status, text = read(branch("raised", {old: "x = 0.5\ny = 0.25\n"}))
+            check(
+                "a changed probe that raises its count is refused",
+                status == 1 and "REFUSED PROBE" in text,
+            )
+            status, text = read(branch("lowered", {old: "x = 1\n"}))
+            check("a changed probe that lowers its count is quiet", status == 0 and "PROBE" not in text)
+            status, text = read(branch("moved", {old: None, folder + "moved.py": "x = 0.5\n"}))
+            check("the same probe moved is no new hit", status == 0 and "PROBE" not in text)
+            status, text = read(branch("divided", {folder + "d.py": "z = a / b\n"}))
+            check("a new probe with a true division is refused", status == 1 and "true division" in text)
+            status, text = read(branch("floor", {folder + "f.py": "q = a // b\n"}))
+            check(
+                "a new probe with a floor division is a note and no refusal",
+                status == 0 and "note    DIVIDE" in text and "REFUSED" not in text,
+            )
+            status, text = read(branch("outside", {"tools/other/p.py": "x = 0.5\n"}))
+            check("a probe outside tools/derivations/ is not read", status == 0 and "PROBE" not in text)
+            status, text = read(
+                branch("own", {"tools/derivations/open_items/scribe_scan.py": "x = 0.5\n"})
+            )
+            check("the gate's own file is no probe", status == 0 and "PROBE" not in text)
+            status, text = read(branch("doc", {folder + "README.md": "a line\n"}))
+            check("a document under tools/derivations/ is not read", status == 0 and text == "")
+            gate.frozen = lambda repo=gate.REPO: Counter(
+                {("PROBE", folder + "frozen.py", "float literal"): 1}
+            )
+            status, text = read(branch("frozen_one", {folder + "frozen.py": "y = 0.25\n"}))
+            check("a hit the frozen list holds is quiet", status == 0 and "PROBE" not in text)
+            status, text = read(branch("frozen_two", {folder + "frozen.py": "y = 0.25\nz = 0.5\n"}))
+            check(
+                "a second hit beside the frozen one is refused", status == 1 and "REFUSED PROBE" in text
+            )
+            gate.frozen = lambda repo=gate.REPO: Counter()
+            gate.allowance = lambda repo=gate.REPO: Counter(
+                {("PROBE", folder + "word.py", "true division"): 1}
+            )
+            status, text = read(branch("word", {folder + "word.py": "z = a / b\n"}))
+            check("a hit the owner's list holds is quiet", status == 0 and "PROBE" not in text)
+    finally:
+        gate.allowance, gate.frozen = saved
+    return made, parted
+
+
 def main() -> int:
     parted = 0
     for label, rel, source, want in CASES:
@@ -3099,8 +3391,12 @@ def main() -> int:
     parted += key_parted
     declare_total, declare_parted = declare_cases()
     parted += declare_parted
+    hidden_total, hidden_parted = hidden_cases()
+    parted += hidden_parted
+    probe_total, probe_parted = probe_cases()
+    parted += probe_parted
     print(
-        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + declare_total + 2 + 5} cases, {parted} parted"
+        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + declare_total + hidden_total + probe_total + 2 + 5} cases, {parted} parted"
     )
     return 1 if parted else 0
 
