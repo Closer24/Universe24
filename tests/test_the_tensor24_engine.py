@@ -71,8 +71,7 @@ def world(rng, layout, rows=ROWS):
 
 
 def naive(layout, s):
-    """The act site by site with loops and plain integers: the readings, J term by term from both plans, the drive, the push, the
-    momentum on the edge split at the next edge's dial, the 00 count first; the click of no term keeps its tooth."""
+    """The act site by site with loops and plain integers: the readings, J term by term from both plans, the drive, the push, the momentum on the edge split at the next edge's dial, the 00 count first; the click of no term keeps its tooth."""
     nb, _, _, grip, gearing, plan, clock, stretch, _, _, mesh = layout
     rest, s_, kick, drive, _ = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     monomials = [t for p in (plan, mesh) for t in zip(*(x.tolist() for x in p), strict=True)]
@@ -125,8 +124,7 @@ def engine():
 
 
 def pair(g, hands=2):
-    """One Node-clock, its own neighbour through every Spoke, and its state: T1 hands of six rows, the spring on every row and the
-    vertex g between matching rows as monomials, the pairs each row with itself; the giver a line hand."""
+    """One Node-clock, its own neighbour through every Spoke, and its state: T1 hands of six rows, the spring on every row and the vertex g between matching rows as monomials, the pairs each row with itself; the giver a line hand."""
     rows, nb = HAND * hands, np.zeros((6, 1), dtype=np.intp)
     one = np.concatenate((np.arange(rows), np.arange(HAND * (hands > 1))))
     two = np.concatenate((np.arange(rows), np.arange(HAND, HAND + HAND * (hands > 1))))
@@ -142,15 +140,15 @@ def pair(g, hands=2):
     return layout, State(a, a.copy(), 0 * a, 0 * a, (KEY - 1) // 2 + 0 * key)
 
 
-def pushed():
-    """The layout alike everywhere on the cube, the square's rows laid (the 00, the 0i and the ii), with the push's plan in the books'
-    form on the agreed planes: each ii slot pushed by minus its axis's two stretches squared on every row, the 00 slot by k0 times each other row's momenta in and out, k0 the clock read's factor, Spokes times senses, landing the 00 slot on the other rows; the spring on every row and T_d above 1, so the drive carries."""
+def pushed(path=False):
+    """The layout alike everywhere on the cube, the square's rows laid (the 00, the 0i and the ii), with the push's plan in the books' form on the agreed planes: each ii slot pushed by minus its axis's two stretches squared on every row, the 00 slot by k0 times each other row's momenta in and out, or where path the 0i rows' alone, the rows the push does not land on (hypothesis (d)), k0 the clock read's factor, Spokes times senses, landing the 00 slot on the other rows; the spring on every row and T_d above 1, so the drive carries."""
     spokes, rows = len(frame.spokes(len(SHAPE))), np.arange(SQUARE, dtype=np.intp)
     k0, stretch, unit = spokes * (spokes // len(SHAPE)), np.arange(spokes * SQUARE), 0 * rows - 1
-    first = np.concatenate((stretch, spokes * SQUARE + rows[1:]))
-    second = np.concatenate((stretch, (spokes + 1) * SQUARE + rows[1:]))
-    factor = np.array([-1] * len(stretch) + [k0] * (SQUARE - 1), dtype=object)
-    target = np.concatenate((np.repeat(np.repeat(rows[-len(SHAPE) :], 2), SQUARE), 0 * rows[1:]))
+    read = rows[1 : 1 + len(SHAPE)] if path else rows[1:]  # the rows whose momenta the 00 slot reads
+    first = np.concatenate((stretch, spokes * SQUARE + read))
+    second = np.concatenate((stretch, (spokes + 1) * SQUARE + read))
+    factor = np.array([-1] * len(stretch) + [k0] * len(read), dtype=object)
+    target = np.concatenate((np.repeat(np.repeat(rows[-len(SHAPE) :], 2), SQUARE), 0 * read))
     push = Plan(first, second, 0 * first + (spokes + 2) * SQUARE, factor, target)
     clock = Read(0 * rows[1:], k0 + 0 * rows[1:].astype(object), rows[1:])
     plan = contract.pushes(np.full(SQUARE, 1 << 10, dtype=object), (rows, rows, unit, unit))
@@ -159,8 +157,7 @@ def pushed():
 
 
 def twisted(layout, s, m, flipped=True):
-    """A turn m of the 24 on a state of the square's rows: the sites moved, the 0i rows turned by m and the ii rows by its axes; a
-    negated row's counts negated and its teeth flipped, -1 - s and T_d - 1 - r_d, or the teeth left as they stand."""
+    """A turn m of the 24 on a state of the square's rows: the sites moved, the 0i rows turned by m and the ii rows by its axes; a negated row's counts negated and its teeth flipped, -1 - s and T_d - 1 - r_d, or the teeth left as they stand."""
     xyz, sides = np.indices(FRAME).reshape(len(FRAME), -1), np.array(FRAME)[:, None]
     site = np.ravel_multi_index(tuple(m.T @ xyz % sides), FRAME)  # each site's source under the turn
     turn, axes = np.eye(SQUARE, dtype=object), len(FRAME)
@@ -222,16 +219,17 @@ def test_the_act_is_its_naive_model_on_the_edge_local_pure_and_turned_by_the_24(
 
 def test_the_click_tooth_carries_the_pairs_passing_and_the_mirror_keeps_it():
     """Yes: a line hand and a hand at rest tied at one Node-clock click with their quotients summing to 0 and their teeth to key - 1 in
-    every round, run back by the same act on the mirrored state with the quotients negated. No: a lone hand with its spring clicks nowhere, its tooth at its birth."""
+    every round, run back by the same act on the mirrored state with the quotients negated. No: a lone hand with its spring clicks nowhere, its tooth at its birth; and the click tooth flipped under the mirror instead of kept does not return the teeth (FRAMES 4's no, which A1 struck on an identity that fails: -n + (d - 1 - r') is not -q d + (d - 1 - r) in general)."""
     layout, s = pair(1 << 10)
     steps = list(rounds(step.act, layout, s, BEATS))
     states, clicks = [s, *(t for t, _ in steps)], [q for _, q in steps]
     assert any(q.any() for q in clicks) and all(int(q.sum()) == 0 for q in clicks)
     assert all(int(t.k.sum()) == KEY - 1 for t in states)
     backs = [step.act(layout, step.mirror(layout, s1)) for s1 in states[1:]]
-    undone = [step.mirror(layout, m) for m, _ in backs]
-    assert all(frame.same(u, t) for u, t in zip(undone, states[:-1], strict=True))
+    assert all(frame.same(step.mirror(layout, m), t) for (m, _), t in zip(backs, states, strict=False))
     assert all(frame.same([q], [-r]) for (_, q), r in zip(backs, clicks, strict=True))
+    flips = [step.tick(layout, step.mirror(layout, t)._replace(k=KEY - 1 - t.k)) for t in states[1:]]
+    assert not all(frame.same([KEY - 1 - f.k], [t.k]) for f, t in zip(flips, states, strict=False))
     lone, t = pair(0, hands=1)
     quiet = list(rounds(step.act, lone, t, BEATS))
     assert frame.same([quiet[-1][0].k], [t.k]) and not any(q.any() for _, q in quiet)
@@ -270,7 +268,7 @@ def test_the_24_turn_the_act_alike_under_the_twisted_action_and_not_with_the_tee
 def test_the_run_back_is_exact_where_every_tooth_stands_within_its_edges_dial_and_not_past_it():
     """Yes: rounds run back bit for bit, by a fresh engine and in an interpreter that never stepped, the act on the mirrored state, the
     mirror by parity its own inverse: an even row's slots swapped and its teeth flipped, -1 - s and T_d - 1 - r_d, an odd row's counts
-    negated and swapped and its teeth kept, the click tooth kept. No: a tooth at its edge's dial, one notch past its last, runs back to another state; a tooth not flipped on an even row too; and one half of the passing alone, the fourth text's, carried at the key does not run back."""
+    negated and swapped and its teeth kept, the click tooth kept; and one round under the push whose 00 slot reads the momenta of no row the push lands on (hypothesis (d)). No: a tooth at its edge's dial, one notch past its last, runs back to another state; a tooth not flipped on an even row too; the push reading the ii rows' momenta, which J5 lands on, so that the stress reads a momentum out at the drive's first quotient that the round does not take; and one half of the passing alone, the fourth text's, carried at the key does not run back."""
     for seed in SEEDS:
         rng = np.random.default_rng(10 + seed)  # every divisor from 2, so a swap of T_k and T_d shows
         layout, parted = varied(rng, least=2), varied(rng, least=2, clocked=True, cubed=True)
@@ -283,6 +281,9 @@ def test_the_run_back_is_exact_where_every_tooth_stands_within_its_edges_dial_an
         sign, rd = 2 * even - 1, t.rd + even * (odd.gearing.drive - 1 - t.rd - t.rd)
         law = State(sign * t.b, sign * t.a, t.r - even * (2 * t.r + 1), rd, t.k)  # the mirror by parity
         assert frame.same(step.mirror(odd, t), law) and frame.same(step.mirror(odd, law), t)
+    lawful, drawn = pushed(path=True), world(np.random.default_rng(24), pushed(), SQUARE)
+    assert frame.same(step.untick(lawful, step.tick(lawful, drawn)), drawn)  # hypothesis (d) kept
+    assert not frame.same(step.untick(pushed(), step.tick(pushed(), drawn)), drawn)  # the ii rows read
     past = s._replace(r=s.r + 0)
     past.r[0, 0] = sum(step.weight(layout.gearing, layout.clock, x) for x in (s.a, s.b))[0, 0]
     assert not frame.same(step.untick(layout, step.tick(layout, past)), past)
