@@ -1,6 +1,6 @@
 # Board to mass: how a mass enters on the board, how it comes out in the clicks, and what the 24 say of three generations
 
-David, 2026-10-30, 05:5x UTC, on the owner's words to David (in Hebrew; in translation):
+David, 2026-10-30, 06:1x UTC, on the owner's words to David (in Hebrew; in translation):
 
 - 03:0x UTC: "Prepare a page on this that everyone will agree on... board2mass. It has to explain why nature also shows three generations... On the board a mass is a spring with a coupling: what is the formula has to be understood. First you, then a hostile mathematician agent and a hostile physicist agent go over it after you finish. From the clocks, understand what the transformation from the board to the clicks is. And why those ratios are seen in the clicks, and why there are 3 generations, with all their ratios and properties."
 - Before it: "How a mass enters the board, in the four dimensions of the events' spacetime, and how it comes out of the click, whose spacetime is three dimensions, has to be understood, no?" (Sofer's 8.2: both are 3 + 1, and what differs is which 1.)
@@ -72,7 +72,7 @@ The facts the page has to meet, each a reading of records (PDG 2024 unless named
 
 The owner's question of 04:3x, answered yes from the law and the act:
 
-- **Line 90:** a train (a family) is a tensor whose kind is one of the 24's five. What differs between families is the kind and the file's pair, never a branch of the code; no coupling is declared in any file (decision 35), and line 90's older words "the pair, the couplings" read so. As built, the universe file still holds coupling rows with their strengths, a breach G3 removes (7.3). The Node-clock's step is one act, the same for every family.
+- **Line 90:** a train (a family) is a tensor whose kind is one of the 24's five, and "what differs between families is the kind and the integers of the universe file (the pair), never a branch of the code" (line 90 since scribe-5 df9bcd1a6). No coupling is declared in any file (decision 35): the head took the files' couplings key out at tensor24-review 8ea447532, and the one plan lays the terms at G3 (7.3). The Node-clock's step is one act, the same for every family.
 - **Line 96:** a Node-clock and a Mesh do not know what they run. No act and no reading of a Node-clock names a family; the shape and the pair decide everything.
 - **The coupling family** (decision 40 (d), (g) and (h)): an ordinary family of the one hand type, with its leg in every source by the one plan, only three-leg vertices, and a steady count of one quantum per Node-clock from the law.
 - **On the act** (tensor24-review 5176be5e0):
@@ -292,11 +292,11 @@ In every reading the electron is a remainder of the other two. The page draws no
 
 ### 7.3 What tells the families apart
 
-Under the law no file declares a coupling (decision 35, line 35) and no act names a family, and the plan gives the coupling family one strength from its vertex law (decision 40; G3, not built). Then every family of one kind and part meets the same held counts through the same vertex law, and has the same spring. As built, the act's coupling rows still carry a strength each (runner/files.py's row fields, load.plan), a breach the plan removes at G3; until then families of one kind can differ through their rows' strengths.
+Under the law no file declares a coupling (decision 35, line 35) and no act names a family, and the plan gives the coupling family one strength from its vertex law (decision 40; G3, not built). Then every family of one kind and part meets the same held counts through the same vertex law, and has the same spring. Up to tensor24-review 8ea447532 the act's coupling rows carried a strength each (runner/files.py's row fields, load.plan); that push took them out, so no file sets a strength and the layout's plan holds no term until G3.
 
 - The electron's, the up quarks', the down quarks' and the neutrinos' families would then share one set of ratios and one mass basis, so there would be no mixing.
 - Nature refuses that: m_mu / m_e = 207, m_c / m_u about 590, m_s / m_d about 20.
-- What differs between families under the law is their kind, their part and the file's pair (line 90 as decision 35 reads it). Whether those set four different spectra is OPEN.
+- What differs between families under the law is their kind, their part and the file's pair (line 90). Whether those set four different spectra is OPEN.
 
 ### 7.4 Mixing
 
@@ -355,7 +355,7 @@ Their origin, and their ratio to the electron's below 10^-6, are not treated her
 | the form a + B cos (phi + 2 pi k / 3) predicts nothing alone | DERIVED | 6.5 |
 | the ratios' numbers | OPEN (G3's vertex law and held counts) | 6.5, 7.1 |
 | Koide's 2/3 on whole counts: never on the diagonal spring; often with T2 | DERIVED; CHECKED | 7.2; m2 |
-| families of one kind and part come out alike under the law and G3's single strength; as built, rows' strengths can differ | DERIVED (the law); the act as built | 7.3 |
+| families of one kind and part come out alike under the law and G3's single strength; the rows' own strengths left the files at 8ea447532 | DERIVED (the law); the act at 8ea447532 | 7.3 |
 | what tells the families apart | OPEN | 7.3 |
 | mixing | none from commuting springs (DERIVED); the rest OPEN; tri-bimaximal REFUSED by nature | 7.4 |
 | CP violation, the neutrinos' masses, flavour changes, domain walls | OPEN | 7.5 to 7.7 |
@@ -368,7 +368,7 @@ Their origin, and their ratio to the electron's below 10^-6, are not treated her
   2. **The held hand needs a term that holds it:** three-leg vertices alone hold no count, and under the vertex's push it drifts below 0 and the second-order hand it holds runs away (3.6, m3 (c)). A spring of its own holds it only while the push's shift (g/2) X X / kappa stays below about n (m3 (i)). Only a four-leg term bounds the whole potential, and the plan's G3 line lays only three-leg vertices. G3's toy must hold it: say which term the one plan lays.
   3. **The one plan against the split:** the kinds that split a triplet are the metric's own. If the one plan pairs a held E or T2 count with the metric's slots of the same kind, a held split shears space, and the cavities refuse that at parts in 10^18 (5.2). Say which vertices the one plan lays.
   4. **The integers:** a mass's beat is its band's only for swings of about a count a round or more (3.3). A scalar hand type spans masses of at most about sqrt W, so a range R asks W of at least R^2; if nature's range were held by scalar springs, DESI's neutrino sum would ask about 3.6 x 10^26, above the head's. Nature's wide range is the fermions', and a first-order (fermion) hand type spans about its teeth (3.4; OPEN).
-  5. **Families of one kind and part come out alike** under the law and G3's single strength (7.3); as built they can differ only through their rows' strengths, the breach G3 removes. What tells them apart is OPEN.
+  5. **Families of one kind and part come out alike** under the law and G3's single strength (7.3); the rows' own strengths, the one way they could differ, left the files at 8ea447532. What tells them apart is OPEN.
   6. **The equivalence:** inertia and weight part at order omega0^2 on the step (4.4).
 - **Sofer:** line 35's "whose kind is to derive" has its answer here: A1 and A2 give no split, and E or T2 counts do. No line of the law changes without the owner's word. The row for 8.2: the mass, on the board a hand's rest beat held by a spring to a held hand (G3); in the clicks, read through energy differences (the rest beat) and through motion (the kinetic mass), by squares at leading order.
 - **Animate:** your rest beat in the clock's own ticks is the board's side (4.2). The clicks read it through energy differences, and the kinetic mass through motion; the two equal each other at first order and part at order omega0^2 (4.3). Your width and your least stand (4.3).
