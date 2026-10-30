@@ -139,14 +139,18 @@ def tick(layout: Layout, s: State) -> State:
 
 
 def mirror(layout: Layout, s: State) -> State:
-    """The state mirrored, time's reversal: on an even row the slots swapped and the edge's tooth flipped on its dial, s -> -1 - s (the law's (iii), read in no teeth); on an odd row the counts negated and swapped and the tooth kept; the drive's tooth flipped in its teeth and the click tooth in its key; its own inverse on any clock, standing or moving."""
+    """The state mirrored, time's reversal: on an even row the slots swapped, the edge's tooth flipped on its dial, s -> -1 - s (the law's (iii), read in no teeth), and the drive's fine tooth flipped in its teeth; on an odd row the counts negated and swapped and both teeth kept, as the source the drive carries is negated there (the carry's sign law: n + r = q T + r' and -n + r' = -q T + r); the click tooth flipped in its key; its own inverse on any clock, standing or moving."""
     _, _, _, _, gearing, _, _, _, click, _ = layout
     a, b, tooth, rd, k = s
     _, _, _, teeth, even = gearing
     _, _, _, _, key = click
     tau = halves(layout) * even - 1
     return State(
-        tau * b, tau * a, tooth - even * (halves(layout) * tooth + 1), flip(rd, teeth), flip(k, key)
+        tau * b,
+        tau * a,
+        tooth - even * (halves(layout) * tooth + 1),
+        rd + even * (flip(rd, teeth) - rd),
+        flip(k, key),
     )
 
 

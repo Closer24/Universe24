@@ -1,0 +1,7 @@
+The drive tooth's mirror on an odd row: the example universe on a cube of 3, T_d = 7 on the square's rows
+1. the drive alone, J = 8 at T_d = 5, the run back with -J: the tooth kept returns -q at 5 of 5 teeth and the tooth at 5 of 5; the tooth flipped returns -q at 1 of 5 and the tooth at 1 of 5
+2. the hand moving under the push at the strength 15162856759112389000, T_d = 7 on the square's rows: the odd rows' fine tooth moved at 71 of 81 gears in round 1 (J no multiple of 7 there)
+   the mirror as built, the odd rows' tooth kept: untick(tick s) = s on all ten slots and the light in 12 of 12 rounds, on the even rows alone in 12 of 12, on the odd 0i rows alone in 12 of 12; the 12 rounds rewound bit for bit: True
+   the mutant, the tooth flipped on every row: untick(tick s) = s on all ten slots and the light in 0 of 12 rounds, on the even rows alone in 12 of 12, on the odd 0i rows alone in 0 of 12; the 12 rounds rewound bit for bit: False
+   mirror twice the identity at 13 of 13 states
+3. the 24 under the push with T_d = 7, rounds 1 to 6: [24, 24, 24, 24, 24, 24] with a negated row's fine tooth flipped in its teeth by the turn (the carry's sign law), [1, 1, 1, 1, 1, 1] with the fine tooth left as it stands
