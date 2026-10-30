@@ -250,6 +250,11 @@ def held_departures(
     return found
 
 
+def columns(gears: list[list[int]]) -> list[Any]:
+    """The held gears as the load's arrays: per field of a gear's row, in the format's order, its entries in the setting's."""
+    return [np.array(values, dtype=object) for _, *values in zip(GEAR, *gears, strict=True)]
+
+
 def entries(trains: list[dict[str, Any]], labels: tuple[str, ...]) -> tuple[Any, Any, Any]:
     """The held trains as the load's arrays: each kind's index among the engine's labels and its train's, in the file's order, and each train's part."""
     pairs = [(labels.index(label), at) for at, train in enumerate(trains) for label in train["kinds"]]
