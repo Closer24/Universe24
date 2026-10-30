@@ -11,11 +11,18 @@ His word of 04:2x UTC on the same page (in translation, his first person plural 
 sure that in the plan the coordinates fit, and that the links lengthen at the Node-clocks, right? So it is not
 always a fixed space in time. Check that everything converges in sound mathematics." That is part 3.5.
 
-Written on reader-5 at tensor24-review 97037fa3c (G1b (i), part 2), and revised for the two hostile readings (part 6).
+His word of 06:0x UTC (in translation): "Think of everything as clock parts, and when each is seen in the clicks
+alone. The three generations: the quarks are only part of a clock, and so are not seen alone; the electron is seen
+through the atom. Decode everything from a look at the clock parts, and then the transfer to spacetime, where they
+were measured as clicks of two forms. Maybe the proton from an ordinary click and the electron from a split click."
+That is part 1.6.
+
+Written on reader-5 at tensor24-review 97037fa3c (G1b (i), part 2), revised for the two hostile readings (part 6), and
+brought to 8ea447532 (part 4's grips; no file declares a coupling) with part 1.6.
 The page is a plan: it adds no law. **The engine writes no click before G5**, so every reading this page calls
 "built" is built and tested on records made in memory, and every reading on the engine's own records is owed.
 
-## 0. The whole picture in six lines
+## 0. The whole picture in seven lines
 
 1. The board holds events in three axes of place and one tick, the great clock's count of rounds. No act reads the
    tick (law, line 695: the great clock's tick is no observable).
@@ -27,6 +34,8 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 5. The board is no fixed space: a Node-clock keeps its label for ever, and the Mesh between two labels lengthens and
    shortens (part 3.5). So the decoder reads no length from labels and no duration from rounds.
 6. Every reading says SHOWN, or NOT SHOWN with its pair, or NOT READ with its cause, and never raises.
+7. Clock parts first: a click takes a whole quantum and never a gear, so a gear (the law's form of a quark) is read
+   only through its clock's clicks, and only a clock is placed in spacetime (part 1.6).
 
 ## 1. In clocks: from the clicks received to the view of nature
 
@@ -74,6 +83,8 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 | a horizon | no quantum laid inside is taken outside within the run (the record is finite and the board cyclic) | owed (light.py; part 3.5 on a stand-in) |
 | mass | the windings a clock the clicks build books per tick of its own clock (decision 37), counted in its own ticks so that motion leaves it alone. Which clock counts the beat, the composite's own count or its Node-clock's tick, is the schema's G7 field, and only the own count leaves motion out. A composite's mass holds its binding too | owed (mass.py; G6) |
 | a mass's width | the spread of the masses read over many lays of one species, against their mean life in their own ticks. One clock's life gives only the resolution of its own window | owed (mass.py; G6) |
+| a clock's parts | per species, where it stands: taken alone, taken once a click frees it from its clock, or never taken (a gear, read only as a fraction of its clock's wind in a hard click). A click line names a train and never one of its rows (1.6) | owed (mass.py; G5, G6) |
+| a generation | species alike in charge and spin, told apart by beat and life alone, each heavier one decaying into the lighter (1.6) | owed (mass.py; G6); what tells them apart on the board OPEN |
 | a probability | the shares of clicks over many lays alike, the draw by the sizes forward and back (decision 29). On finite records the shares carry the draws' spread: a spread is owed, any tolerance an integer of the files | built in the scheduler model; owed on the engine (G5) |
 | no signal | the cone check: each click binned by the settings outside its past cone, the shares compared. Its cone is the board's, one Mesh a round, the act's bound: about 245 hundredths of light's long-wave speed along an axis. So it guards locality. No signal inside light's cone needs light's cone read from the record: a setting stands outside a click's light cone only where light laid at the setting reaches the click's place after the click (the earliest long-wave take there comes later); otherwise the bin reads NOT READ. And the spread above | built (D8, the board's cone); light's cone and the spread owed |
 | a correlation at a distance | Bell's reading needs the joint outcomes of one birth's two clicks, by the two settings' frames; no signal alone is not Bell | owed (G5) |
@@ -116,6 +127,73 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 - From inside, the next click is a draw with the rule's shares. On the record, from outside, the past and the future
   both stand.
 
+### 1.6 Clock parts first, then spacetime (the owner's word of 06:0x)
+
+- **First the parts, then spacetime.** The decoder reads first, per species, where it stands among a clock's parts
+  (the table below). Then it moves each take to spacetime: placed by light, an echo in a clock's own count (part 3),
+  and read in its two forms, the whole click's how much and when, the split click's which and where (1.2).
+- **The two clicks, in the owner's own words** (law, line 156, **The two kinds of click**): the whole click, "one
+  hand holds the whole winding; there is nothing to choose"; the split click, "the winding is divided between two
+  twins, upper and lower", and "the choice is made by a draw according to the size of the parts", the detector's
+  click.
+- **So no click takes a gear alone.** A hand of several gears holds its winding as one, and no gear holds a winding
+  of its own: the click credits a whole quantum of a hand, never a gear or a fraction of it (line 468), and a gear has
+  no form, no count, no place and no click of its own (line 326, **The gear of a hand**). The law names it
+  **Confinement is the click's** (line 1556): no click ever reports one gear alone. The record says the same: a click
+  line names a train and never one of its rows (schema 1.2's Whole and Split lines). Derived in the law on the older
+  engine; on this engine owed at G5 (the click's one form) and G6 (hands that click).
+
+| What it is | In a clock | Taken alone | How the clicks show it |
+|---|---|---|---|
+| a gear (the law's form of a quark, a parton) | a wheel inside a watch | never | only inside its clock's clicks; a hard click reads the gears' winds as fractions of the hand's, three summing to one (line 1556) |
+| a part of a bound clock (the electron in the atom, a nucleon in the nucleus) | a watch in a case | once a click frees it, with energy (line 468: what nature splits with energy is a bob) | through its clock's clicks: the atom's light and the atom's split clicks |
+| a quantum of its own train (a free electron, a proton) | a watch on its own | yes | its own takes |
+
+- **A gear has no place** (line 468: "the gear, a component with no place"), so the move to spacetime places only its
+  clock: a quark is never placed by light; its hadron is.
+- **The quarks.** In the law a quark is no object: the gear of a hand is the law's form of a parton, the quark
+  model's three the dimension's three (lines 326 and 1556), and the charges 2 / 3 and 1 / 3 are no objects of the law
+  (line 338). So "only part of a clock" is the law's confinement: a hand of three gears is one event, clicked whole;
+  in nature no fractional charge has ever been isolated. A clock's beat is not its gears': the law's confined mass is
+  the localisation's, not the parts' (line 342), as nature's proton weighs 938 MeV while its three quarks' masses come
+  to about 9 MeV in the usual scheme. The top falls apart before a clock forms round it (its life is shorter than the
+  time a hadron takes to form), so nature reads it only from its decay's clicks, never alone and never in a clock.
+- **The electron.** A quantum of its own train (line 468): free, a click takes it whole, and its takes trace its path.
+  Bound, it is a part of the atom, a bob, and it is seen through the atom: the atom's lines are the beats of two of
+  its levels, born as light, and a line's quantum is taken whole at an absorber, whose own transition is the click's
+  unit (line 458). Its spin is read through the atom too: Stern and Gerlach's split clicks took silver atoms, and a
+  free electron's two beams blur (line 1562: "the click's object is the atom, not the electron").
+- **The generations.** In the clicks the electron, the muon and the tau are one clock design at three beats: one
+  charge and one spin, and only the beat (the mass), the life (the width) and the neutrino each pairs with differ,
+  each heavier one living shorter and decaying into lighter ones. All three are taken alone: the muon leaves a long
+  path of takes, and the tau is read mostly from its decay's clicks. The quarks' generations are gears, read only
+  through their clocks (the top aside, above).
+- **What the clicks decide about three rows.** A train of kind T1 holds three rows at every Node-clock, one per axis
+  (2.1). A click takes the whole train's winding and never a row's, so in the clicks the three rows are one
+  species' gears, as the law reads them (line 1556: a train of dimension 3, three gears one per axis, the colours as
+  the three axes), and not three species. Three generations, each taken alone, then stand as
+  three trains in the takes, the files' three pairs (line 340, a finding of the older engine kept by name: "the count
+  three is a count of the file's pairs and not of the rule"), unless G5's click takes a row alone, which the law's one
+  form refuses. David's board2mass (5.2) reads a T1 family's three rows as three species alike in the clicks; the
+  click's form at G5 decides between the two readings, and the decoder reads the answer from the trains its takes
+  name. What tells generations apart on the board is OPEN (board2mass 7.3; line 340 names the one missing law).
+- **The owner's guess, the proton from the ordinary click and the electron from the split click.** Each form has its
+  home, and the guess names both:
+  - the whole click is confinement's: one hand holds the whole winding, every gear at once, so the proton's makeup
+    shows only through clicks of the whole proton and, in a hard click, its gears' fractions;
+  - the split click is the detector's draw between two twins, upper and lower, and the electron's spin is read there,
+    through its atom.
+  - Neither form belongs to one species. An electron whose winding sits whole in one hand clicks with nothing to
+    choose, as the whole click does; a proton's spin is drawn upper or lower by split clicks, as the electron's is,
+    and it too was first read through a clock: Frisch and Stern read the proton's magnetic moment in 1933 from beams
+    of hydrogen molecules.
+  - What differs by species is how far the split's draw spreads the takes: at one speed the heavier species' takes
+    spread less, so a proton's takes trace one sharp path while an electron's spread into a slit's fringes; at one
+    momentum every species spreads alike (neutrons and large molecules show fringes too). So the guess holds as a
+    matter of degree, not of kind.
+  - The decoder tests it with no formula, per species: which form of click takes it, how far its takes spread over
+    many lays alike, and which of its readings come only through its clock (owed: mass.py, G5 and G6).
+
 ## 2. In the tensor algebra
 
 ### 2.1 From the star to the metric family
@@ -134,9 +212,10 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
   (kinds.square; decision 39's ten gears; decision 41, the slots held as the densitized inverse metric).
 - **The clock** is the family's 00 slot. What is found by its character is the family itself: the loader marks the
   train whose kinds' character is the square's (G1b (i), part 2, 97037fa3c), with no name, place or role.
-- **At G1b** all ten slots stand as laid, 00 at 0, and only 00 is read, as every gear's teeth. All ten take their
-  sources from G2; the diagonal ij slots are to be read as the axes' grips at G1b (i) part 4 (the plan: "Part 4
-  owes").
+- **At G1b** all ten slots stand as laid, 00 at 0. The 00 slot is read as every gear's teeth, and since part 4
+  (tensor24-review f85c271d0) each ii slot as its axis's grips, read at both ends of a Mesh at the now slot, so a
+  Mesh's grip is the same from either end and the run back stays exact. No act reads the 0i and jk slots before G2,
+  where all ten take their sources.
 
 ### 2.2 The act, in the algebra (planned, G2 to G4)
 
@@ -316,7 +395,7 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 | bangs.py | row 46, each later bang shows more: the load from the header's time-gear lines (older records) | built; moves to the clock family's 00 slots at task 111 |
 | clocks.py | the rate lines of the records written before schema 1.2 | built |
 | light.py | the light line, the echo, the redshift, time dilation, the count by signals (D6's second reading), the free path, the tide, the growing or swinging echoes, the horizon | owed; its test room given (tests/test_the_tensor24_decoder_light.py, 250 lines) |
-| mass.py | the rest beat per species in its own ticks, the width against the mean life, the least life and the least span, the slit's spread | owed; its test room to be asked |
+| mass.py | the rest beat per species in its own ticks, the width against the mean life, the least life and the least span, the slit's spread; per species, where it stands among a clock's parts and how far its takes spread (1.6) | owed; its test room to be asked |
 
 Every reading is built first on records made in memory, each test failing on its own mutant, and then read on the
 engine's own records as the stages bring them.
@@ -340,6 +419,10 @@ engine's own records as the stages bring them.
    parts span, or the decoder reads the region from the clock's own clicks. Sofer's reading from the law (6515502852): one
    site per click on the record is lawful (the alignment of 2026-10-25 at the end of line 983), and **No click names
    a Node-clock** binds the reading, which this page makes a region; the region form per reading stays owed at G6.
+6. **The header's `couplings` and `operands`:** no file declares a coupling (decision 35; tensor24-review 8ea447532),
+   and no reading of the decoder reads either key, so schema 1.3 retires both (Animate's word on the Boss's 6515656552,
+   item 4). Should a reading ever need G3's one plan, the reader derives it read only from the header's kinds and
+   board by the loader's own derivation, as in item 4: a copy in the header could disagree with what the act laid.
 
 ### 4.5 The order of work
 
@@ -360,6 +443,8 @@ engine's own records as the stages bring them.
 - The spread for finite draws (the Boss's to rule), and with it the tide's step against the counts' jitter, the
   width's spread and the slit's widening.
 - Planck's constant in the textbook's units: the counts need none, and the units would need a Mesh in metres.
+- Whether a train's three rows are one species' gears or three species, and what tells generations apart on the
+  board (1.6; board2mass 5.2 and 7.3; the click's form at G5).
 
 ## 6. The hostile readings
 
@@ -432,3 +517,6 @@ on the engine and found it as the page gives it.
 96, 100, 102, 695, 983 and 985 to 987 and Postulates 1 to 6. His two wordings are folded: the run back from G2 is
 owed at G2 under Postulate 4 (1.3, 1.5), and the decoder never steps the engine (1.1). His citation is folded too
 (decision 40 (b) is the plan's), and 4.4, item 5 is closed from the law's side.
+
+**Part 1.6 and the edits it brought** (0, item 7; 1.3's two rows; 2.1 at part 4; 4.3; 4.4, item 6; 5) went to both
+readers and to the writer for their readings; their words are folded here.
