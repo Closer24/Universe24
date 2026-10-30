@@ -17,28 +17,27 @@ tools/derivations/open_items/scribe_law_check.py reads docs/ALGEBRA.md and runs 
 
 **Repaired at once** (three lines, exact old and new text, 1,960 lines kept): line 1165 said "the 48 rotations" and now says the 48 are the 24 rotations and their 24 mirror images; line 1786 linked an anchor no heading gives (the bold name beside it stays); line 187 held a stray closing parenthesis for a semicolon.
 
-**Known, standing until the re-cut** (scribe_law_check_known.json; 142 lines in 16 checks, printed at every run; the owner's answer of 04:5x: the old engine is frozen and its rows stand until the re-cut removes them):
+**Known, standing until the re-cut** (scribe_law_check_known.json; 130 lines in 15 checks, printed at every run; the owner's answer of 04:5x: the old engine is frozen and its rows stand until the re-cut removes them):
 
 | check | what | lines | in the core (1 to 110) |
 |---|---|---|---|
-| P01 | an integer root named as a code primitive (largest_below and its kin), against line 100 and decision 41 | 38 | 96, 100 |
+| P01 | an integer root named as a code primitive (largest_below and its kin), against line 100 and decision 41 | 34 | 96, 100 |
 | P03 | an act from outside the Node-clock, against line 92 (3) | 1 | |
 | P04 | the click as an act outside the reversal, against Postulates 2 and 4 | 5 | |
-| P05 | the time gear's exponential memo, against decision 41 | 15 | |
-| P06 | a refusal past a range, against decision 40 (e) | 3 | |
+| P05 | the time gear's exponential memo, against decision 41 | 14 | |
+| P06 | a refusal past a range, against decision 40 (e) | 1 | |
 | P07 | a declaration as a status, against line 35 | 12 | |
-| P08 | the swap at the top, against decision 27 (cancelled) | 3 | 80, 92, 98 |
+| P08 | the swap at the top, against decision 27 (cancelled) | 2 | 80, 92 |
 | P09 | a parity rule on Gamma, T or den, against K-S2 and decision 40 (h) | 3 | 100, 110 |
-| P10 | real arithmetic in a reading, against line 100 | 21 | |
-| P11 | a special rule for a horizon or a frozen clock, against decision 40 (a) and the owner's 07:1x word | 21 | 92 |
-| P12 | a bound read as a clamp, against line 106 and decision 40 (e) | 1 | 106 |
+| P10 | real arithmetic in a reading, against line 100 | 18 | |
+| P11 | a special rule for a horizon or a frozen clock, against decision 40 (a) and the owner's 07:1x word | 20 | 92 |
 | P13 | the old spring D / W = 2 / Gamma, against decisions 40 (e) and 41 | 1 | 35 |
-| P14 | the width derived (the law's older clause), against line 100 | 4 | |
+| P14 | the width derived (the law's older clause), against line 100 | 3 | |
 | S5 | a parenthesis unbalanced (348, 799, 1558) | 3 | |
 | S6 | a clause name that stands twice (358, 390, 446, 807, 1079, 1326, 1344, 1576, 1578, 1580, 1596, 1598) | 12 | |
 | S7 | a heading that carries a clause (1254) | 1 | |
 
-The lines of each check are in `python -I scribe_law_check.py --all`. **Ten of the 142 stand in the law's new core** (lines 1 to 110: 35, 80, 92, 96, 98, 100, 106, 110): they are the rows of the old engine that the new core's own lines still carry.
+The lines of each check are in `python -I scribe_law_check.py --all`. **8 of the 130 stand in the law's new core** (lines 1 to 110: 35, 80, 92, 96, 100, 110): they are the rows of the old engine that the new core's own lines still carry. The history window of the script (a sentence marked as history is spared) was narrowed to the sentence's neighbourhood and the root pattern of P01 to a root named, which removed rows that the law itself marks as its record (line 106's list of the departures of the code, P12) and the over-broad reading of line 100's "each is one primitive"; P13 (line 35's old spring) is never spared, since the clause still stands and waits on the owner's rule for the head's notch. **The core re-cut is prepared** (the keeper's edit323, a dry run until the owner's word on question a): 8 exact edits on lines 80, 92, 96, 98, 100 and 110, 1,960 lines kept, taking the law check from 130 rows to 123 and the core from 8 rows to 1 (line 35's spring).
 
 ## C. The recommendation for the re-cut
 

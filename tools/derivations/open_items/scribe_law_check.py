@@ -38,7 +38,7 @@ POSTULATES = 7  # the law has Postulates 1 to 7
 CORE = 110  # the law's new core: the preface, the postulates and the decisions of Tensor24 stand in lines 1 to 110
 GENERIC_HEADS = frozenset({"Proof", "Theorem", "Status", "Alignment", "Note", "Remark"})  # clause names that may stand more than once (and "Alignment, <date>")
 HISTORY = re.compile(
-    r"cancel|struck|strike|withdrawn|superseded|retire|former|no longer|old engine|out of the law|kept by name|replaced by|renamed|is not interesting|stand as its record|G1b|settled|gone|went with|left the|out of the engine|bind no Node-clock|binds no Node-clock",
+    r"cancel|struck|strike|withdrawn|superseded|retire|former|no longer|old engine|out of the law|kept by name|replaced by|renamed|is not interesting|stand as its record|G1b|settled|gone|went with|left the|out of the engine|bind no Node-clock|binds no Node-clock|departs from it|code departs",
     re.I,
 )  # words that mark a sentence as the record of what stood, not a claim of what stands
 
@@ -207,10 +207,12 @@ class Pair:
     stale: str  # a regex: the stale statement
     law: str  # what forbids it, in words, with its place
     governed: tuple[int, str]  # (a line of the law, a regex it must still hold): the rule is live while the governing text stands
+    spare: bool = True  # a sentence marked as history is spared; False for a clause that still stands and waits on the owner's rule
+    window: int = 260  # the characters each side of a match that are read for a history word
 
 
 PAIRS: tuple[Pair, ...] = (
-    Pair("P01", "an integer root named as a code primitive", r"largest_below|one integer root|each is one primitive named by its clause|\bisqrt\b",
+    Pair("P01", "an integer root named as a code primitive", r"largest_below|one integer root|\bisqrt\b",
          "line 100 (never a root), line 102 and decision 41: no root in the code", (100, r"never a logarithm, an exponential, a root or a float")),
     Pair("P02", "the couplings as a file's declaration", r"the pair, the couplings|a `couplings` key|couplings key",
          "decision 35: no particle, mass or coupling is declared in any file", (35, r"no particle, no mass and no coupling is declared in any file")),
@@ -233,9 +235,9 @@ PAIRS: tuple[Pair, ...] = (
     Pair("P11", "a special rule for a horizon or a frozen clock", r"BH-S1|\*\*The horizon\*\*|the frozen load|hold and restore|ends in a frozen clock",
          "the owner's word of 07:1x at line 90: no specific law for when a link lengthens, shortens or decouples; decision 40 (a): horizons included", (90, r"No special code and no specific law for a clock or a link")),
     Pair("P12", "a bound read as a clamp", r"read at 0 for the rate|read within its hold|the typed floor|a tension at or past Gamma read at the teeth",
-         "line 106: every bound is a clock's carry; decision 40 (e)", (106, r"Every bound is a clock's carry|each bound it still holds")),
+         "line 106: every bound is a clock's carry; decision 40 (e)", (106, r"Every bound is a clock's carry|each bound it still holds"), True, 420),
     Pair("P13", "the old spring D / W = 2 / Gamma", r"D / W = 2 / Gamma",
-         "decisions 40 (e) and 41: the head's notch has its own slot form", (35, r"decision 41")),
+         "decisions 40 (e) and 41: the head's notch has its own slot form", (35, r"decision 41"), False),
     Pair("P14", "the width derived", r"The width is derived",
          "line 100: the width is a key of the universe file and the engine holds no bound", (100, r"The width is a key of the universe file")),
     Pair("P15", "a dial, a beat count or a time in the Node-clock's state", r"a rate dial and a count|5 G \+ 3\b|5 G \+ 2 T \+ 3|its dial turns|State\(a, b, r, go, rd",
@@ -262,7 +264,7 @@ def check_pairs(lines: list[str], report: Report, law: list[str] | None = None) 
         hits: list[int] = []
         for n, line in enumerate(lines, 1):
             for m in re.finditer(pair.stale, line):
-                if HISTORY.search(sentences_around(line, m)):
+                if pair.spare and HISTORY.search(sentences_around(line, m, pair.window)):
                     continue
                 hits.append(n)
                 break
