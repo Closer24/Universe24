@@ -1,6 +1,7 @@
 """The 24's 43 tables with no seed chosen, and the Mesh unit as one carry: the Boss's (a) and (b) of #2187 6515625919.
 
-Whole numbers alone (integers and quotients of two; no float, no root). On the head's own 24 and five kinds:
+Whole numbers alone (no float, no root, no fraction: a quotient is compared by cross-multiplying). On the head's own 24
+and five kinds:
 (1) every channel C[i, k -> m] with a table has multiplicity 1: its group sum P has trace 24;
 (2) one seed every channel keeps, B to the power of the seed's index (the first index heaviest), through P times its
     transpose: the head's 43 tables bit for bit after the greatest common divisor, at B = 2, 3 and 5;
@@ -18,9 +19,9 @@ Whole numbers alone (integers and quotients of two; no float, no root). On the h
 Usage: python3 -I tb_tables.py <src of tensor24-review at 8ea447532>
 """
 
+import functools
 import itertools
 import sys
-from fractions import Fraction
 
 import numpy as np
 
@@ -57,6 +58,14 @@ def channels(inputs):
     return out
 
 
+def times(base, m):
+    """base multiplied by itself m times (1 at m = 0)."""
+    out = 1
+    for _ in range(m):
+        out *= base
+    return out
+
+
 def gcd(values):
     g = 0
     for v in values:
@@ -65,6 +74,22 @@ def gcd(values):
             a, b = b, a % b
         g = a
     return g
+
+
+def quotient(num, den):
+    """num / den as a reduced whole pair (den > 0), printed as a quotient prints."""
+    if den < 0:
+        num, den = -num, -den
+    g = gcd([num, den]) or 1
+    return num // g, den // g
+
+
+def shown(q):
+    return str(q[0]) if q[1] == 1 else f"{q[0]}/{q[1]}"
+
+
+def order(p, q):
+    return (p[0] * q[1] > q[0] * p[1]) - (p[0] * q[1] < q[0] * p[1])
 
 
 chan = channels(inv)
@@ -77,7 +102,7 @@ for B in (2, 3, 5):
     same = 0
     for i, k, m, shape, P in chan:
         n = P.shape[0]
-        x = np.array([B ** (n - 1 - j) for j in range(n)], dtype=object)
+        x = np.array([times(B, n - 1 - j) for j in range(n)], dtype=object)
         v = P.dot(P.T).dot(x)
         g = gcd(v)
         same += int(
@@ -102,25 +127,25 @@ for i, k, m, shape, P in chan:
     S = P.dot(form)
     sym += int((S == S.T).all())
     j = next(t for t in range(n) if u[t])
-    c = Fraction(int(S[j, j]), u[j] * u[j])
-    rank1 += int(all(Fraction(int(S[r, s])) == c * u[r] * u[s] for r in range(n) for s in range(n)))
+    c = quotient(int(S[j, j]), u[j] * u[j])
+    rank1 += int(all(int(S[r, s]) * c[1] == c[0] * u[r] * u[s] for r in range(n) for s in range(n)))
     d = [int(S[t, t]) for t in range(n)]
-    p = Fraction(sum(a * a for a in d), sum(d))
-    hit = all(Fraction(int(S[j, s])) / p == u[j] * u[s] for s in range(n))
+    p = (sum(a * a for a in d), sum(d))  # the quotient p[0] / p[1]
+    hit = all(int(S[j, s]) * p[1] == u[j] * u[s] * p[0] for s in range(n))
     boss += int(hit)
     if not hit:
         off.append(name(i, k, m))
-    s1, s2, s3, s4 = (sum(a**q for a in d) for q in (1, 2, 3, 4))
+    s1, s2, s3, s4 = (sum(times(a, q) for a in d) for q in (1, 2, 3, 4))
     num, den = s1 * s4 - s2 * s3, 5 * (s1 * s3 - s2 * s2)
     if den == 0:
         zero += int(num == 0 and max(abs(a) for a in u) == 1)
     else:
         q, r = divmod(num, den)
-        power += int(r == 0 and q == c)
+        power += int(r == 0 and q * c[1] == c[0])
     cs.append(c)
 print(
     f"    S = P (3 G^-1 on an E output, G on each E input): whole and symmetric on {sym} of 43; c u u^T on {rank1};"
-    f" c in {sorted({str(c) for c in cs}, key=Fraction)}"
+    f" c in {[shown(q) for q in sorted(set(cs), key=functools.cmp_to_key(order))]}"
 )
 print(f"(4) the diagonal reading: the table on {boss} of 43; off on the {len(off)} holding a 2: {off}")
 print(

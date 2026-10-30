@@ -3,8 +3,35 @@
 (a) C[E, E -> A1] as the spring's matrix over g n: [[2, -1], [-1, 2]]
 (a) C[T1, T1 -> A1] as the spring's matrix over g n: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
 (a) C[T2, T2 -> A1] as the spring's matrix over g n: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
-(b) g = 227442851386685, kappa = W div 16, g^2 div 2 kappa = 4548857, so the least whole lam is 4548858
-    X laid at 100000: lam 0: stays over 4000 rounds, least K 999551; lam least: stays over 4000 rounds, least K 999555; lam twice the bound: stays over 4000 rounds, least K 999547
-    X laid at 10000000: lam 0: ran past 10^60 at round 49; lam least: stays over 4000 rounds, least K -2739187; lam twice the bound: stays over 4000 rounds, least K -3112719
-    X laid at 20000000: lam 0: ran past 10^60 at round 29; lam least: stays over 4000 rounds, least K -39861523; lam twice the bound: stays over 4000 rounds, least K -8012331
-    X laid at 100000000: lam 0: ran past 10^60 at round 15; lam least: ran past 10^60 at round 88; lam twice the bound: ran past 10^60 at round 14
+(b) on g and kappa from 1 to 40 (1,600 pairs, n = 3): the identity holds at lam = least - 1, least, least + 1 on 81 points each in 1600 pairs; 2 kappa least >= g^2 in 1600; a point with V < 0 at least - 1 in 1600; g^2 div (2 kappa) + 1 above the ceiling in 136 pairs, exactly where 2 kappa divides g^2 in 1600 of 1,600
+    on the probe's numbers: g = 227442851386685, kappa = W div 16, 2 kappa divides g^2: False; the least whole lam 4548858; 2 kappa least - g^2 = 11056751168873926210775 >= 0; at 4548857, V < 0 at c = 37504431719006873534815810329227015625000001: True
+(b2) two families sharing K, each with its own four-leg term: the identity on 72 points: True; at the one-family least lam, V < 0 at c1 = c2 = 37504431719006873534815810329227015625000001 on the valley: True; the two-family least whole lam 9097715 (the ceiling of 2 g^2 / (2 kappa)); one four-leg term on the summed C at the one-family least, V >= 0 at the same points: True
+(c) X laid at rest, K at n:
+    at 100000: lam 0: stays over 4000 rounds; least K 999551, below 0 in 0 rounds; the valley's K at the largest swing 999800; the largest c 10 tenths of the laid one, its reach 10 tenths; the gear's sign changes 64
+      the least lam: stays over 4000 rounds; least K 999555, below 0 in 0 rounds; the valley's K at the largest swing 999800; the largest c 10 tenths of the laid one, its reach 10 tenths; the gear's sign changes 64
+      twice the least: stays over 4000 rounds; least K 999547, below 0 in 0 rounds; the valley's K at the largest swing 999800; the largest c 10 tenths of the laid one, its reach 10 tenths; the gear's sign changes 64
+    at 10000000: lam 0: runs past 10^60 at round 49
+      the least lam: stays over 4000 rounds; least K -2739187, below 0 in 1933 rounds; the valley's K at the largest swing -1003150; the largest c 10 tenths of the laid one, its reach 19 tenths; the gear's sign changes 64
+      twice the least: stays over 4000 rounds; least K -3112719, below 0 in 1913 rounds; the valley's K at the largest swing -1005649; the largest c 10 tenths of the laid one, its reach 13 tenths; the gear's sign changes 95
+    at 20000000: lam 0: runs past 10^60 at round 29
+      the least lam: stays over 4000 rounds; least K -39861523, below 0 in 3131 rounds; the valley's K at the largest swing -39377640; the largest c 50 tenths of the laid one, its reach 49 tenths; the gear's sign changes 62
+      twice the least: stays over 4000 rounds; least K -8012331, below 0 in 2555 rounds; the valley's K at the largest swing -7082465; the largest c 10 tenths of the laid one, its reach 13 tenths; the gear's sign changes 206
+    at 100000000: lam 0: runs past 10^60 at round 15
+      the least lam: runs past 10^60 at round 88
+      twice the least: runs past 10^60 at round 14
+(c2) two families laid alike, sharing K:
+    at 10000000: each its own term, the one-family least: runs past 10^60 at round 66
+      each its own term, twice the one-family least: stays over 4000 rounds, least K -5957747, sign changes 68 and 68
+      each its own term, the two-family least 9097715: stays over 4000 rounds, least K -5957742, sign changes 68 and 68
+      one term on the summed C, the one-family least: stays over 4000 rounds, least K -5957747, sign changes 68 and 68
+    at 20000000: each its own term, the one-family least: runs past 10^60 at round 43
+      each its own term, twice the one-family least: stays over 4000 rounds, least K -142459085, sign changes 69 and 69
+      each its own term, the two-family least 9097715: stays over 4000 rounds, least K -145587377, sign changes 72 and 72
+      one term on the summed C, the one-family least: stays over 4000 rounds, least K -142459085, sign changes 69 and 69
+(c3) the least lam, one family or two under one summed term, sign changes in 4,000 rounds (the mass 63.7): 1 at 10000000: from n [64], from the valley -999999 [61]; 1 at 20000000: from n [62], from the valley -6999999 [55]; 2 at 10000000: from n [68, 68], from the valley -2999999 [59, 59]; 2 at 20000000: from n [69, 69], from the valley -14999999 [49, 49]
+(c4) sign changes in 4,000 rounds (the mass 63.7), the held hand laid at n unless named:
+    the least lam laid at 1.4 x 10^7 68; 3.0 x 10^7 76; 4.0 x 10^7 78; 5.0 x 10^7 runs away at round 1627
+    above the least: least + 100 at 4 x 10^7 67; least + 3000 at 4 x 10^7 61; least + 10000 at 2 x 10^7 64
+    two families, the first swinging alone, the second at rest: 1 x 10^7: each its own term 95/0, one summed term at the one-family least 64/0; 2 x 10^7: each its own term 206/0, one summed term at the one-family least 62/0
+    kappa at k g n, its own least lam, the held hand laid on its valley, laid at 10^7 and 2 x 10^7: 25 g n: 61 and 55; 9 g n: 59 and 65; 4 g n: 60 and 72; 2 g n: 52 and 48; 1 g n: 73 and 30
+(d) sign changes over 4,000 rounds: the gear laid at 10^5 with K at n, 64; the held hand laid 10^5 off n with no swing, 319; 4 sin^2 (omega / 2) = spring / W gives 4,000 omega / pi = 63.7 and 319.2
