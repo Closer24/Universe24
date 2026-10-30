@@ -546,6 +546,10 @@ def test_j_is_minus_the_gradient_of_its_potential_by_the_vertex_law_and_each_mut
         lambda *v: vertex(*v, plan=lambda p: p._replace(factor=-p.factor)),
     )
     assert conserves(vertex) and not any(conserves(m) for m in mutants)
+    # the tenth review (fc8c810ff): J took its caller's int64 gears' width, overflowing past 64 bits; back at aa8565cb2
+    factor, legs, x, _ = potential(np.random.default_rng(0))
+    wide = factor * (1 << 70)  # strengths past 64 bits
+    assert frame.same([vertex(wide, legs, x.astype(np.int64))], [vertex(wide, legs, x)])
 
 
 def test_the_act_is_its_naive_model_local_pure_and_turned_by_the_24_and_each_mutant_breaks_its_law(
