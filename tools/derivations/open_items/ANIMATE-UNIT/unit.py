@@ -5,7 +5,7 @@ value OPEN at G3), on the owner's words to Animate: "Check with David which piec
 from the clocks to the algebra to the physics in the clicks; think of the 24 operations". README.md beside it reads it.
 Every division is Rule3's carry; nothing here holds a float, a root, a circular call, a random draw or a fraction.
 
-Run: python3 tools/derivations/open_items/ANIMATE-UNIT/unit.py (about two minutes); its output is unit.txt.
+Run: python3 tools/derivations/open_items/ANIMATE-UNIT/unit.py (about twenty seconds); its output is unit.txt.
 """
 
 import importlib.util
@@ -195,24 +195,25 @@ def turn_t1(s: State, m: list[list[int]], parts: list[list[int]], teeth: int) ->
 
 
 def part_one() -> None:
-    print("1. A count and a turn: the mirror and the 24 on the area and on a count.")
+    print("1. A count and a turn: what the mirror and the 24 keep, exactly and up to the grain.")
     dot = table("T1", "T1")
     layout = node(turning(), T_ROWS, W)
     start = laid(T_ROWS, {0: (R, 12 * P), 1: (0, -5 * P), 2: (A, A)})
     states = run(layout, start, 600)
-    odd = even = 0
+    odd = 0
     for s in states:
         m = State(s.b, s.a, flip(s.r, W), s.rd)  # the act's own mirror at fixed teeth
         odd += crossed(m, T_XRE, T_XIM, dot) == -crossed(s, T_XRE, T_XIM, dot) and crossed(
             m, T_RE, T_IM, table("A1", "A1")
         ) == -crossed(s, T_RE, T_IM, table("A1", "A1"))
-        even += all(m.a[x, 0] + m.b[x, 0] == s.a[x, 0] + s.b[x, 0] for x in range(T_ROWS))
     print(
-        f"   states of a run (601) where the mirror sends the counts' cross of before and now to minus itself, on both "
-        f"hands: {odd}; where it keeps every gear's count summed over now and before: {even}"
+        "   the mirror sends the counts' cross of before and now to minus itself (an identity wherever the table is "
+        f"symmetric; checked on the 601 states of a run, both hands): {odd} of 601"
     )
     tables = {kind: table(kind, kind) for kind in LABELS}
-    kept = 0
+    kept, symmetric = 0, True
+    for tab in tables.values():
+        symmetric &= sorted((e, j, i) for e, j, i in tab) == sorted((e, i, j) for e, j, i in tab)
     for g in ON:
         mats = {
             "A1": KINDS.a1[g],
@@ -224,7 +225,6 @@ def part_one() -> None:
         ok = True
         for kind, tab in tables.items():
             mat = [[int(v) for v in row] for row in mats[kind]]
-            # C[K, K -> A1] is kept by every turn: m^T C m = C
             dim = len(mat)
             c = [[0] * dim for _ in range(dim)]
             for e, j, i in tab:
@@ -237,38 +237,32 @@ def part_one() -> None:
                     )
         kept += ok
     print(
-        f"   turns of the 24 that keep every kind's table onto A1 (so every area through it, and every A1 count): "
-        f"{kept} of {len(ON)}"
-    )
-    one = [(e, j, i) for e, j, i in table("A1", "A1")]
-    print(
-        f"   a one-part count of kind A1 has one row and no second part, so its cross has no term: the table's entries "
-        f"{one}, crossed against no im row; its area is 0 at every count n"
+        f"   the five kinds' tables onto A1 are symmetric: {symmetric}; turns of the 24 that keep every one "
+        f"(D^T C D = C): {kept} of {len(ON)}"
     )
 
 
 def part_two() -> tuple[int, list[State], list[State]]:
     print("\n2. The standing count of G3 and the turning count, one Node-clock, the same tied family.")
-    dot, one = table("T1", "T1"), table("A1", "A1")
+    one = table("A1", "A1")
     s_states = run(node(standing(), S_ROWS, W), laid(S_ROWS, {S_K: (N, N), S_RE[0]: (A, A)}), ROUNDS)
     t_layout = node(turning(), T_ROWS, W)
     t_start = laid(T_ROWS, {0: (R, 12 * P), 1: (0, -5 * P), T_XRE[0]: (A, A)})
     t_states = run(t_layout, t_start, ROUNDS)
     key = area(t_start, T_RE, T_IM, one, W)
     print(f"   W = {W}, F = {F}, M = G = {M}, R = {R}, n = R^2 = {N}, the tied swing {A}")
-    print(
-        "   the standing count: one part at n; the books' whole quanta of it in every round: 0 (no area to carry)"
-    )
     off = max(abs(s.a[S_K, 0] - N) for s in s_states)
     print(f"   the standing count's largest move off n over {ROUNDS} rounds: {off} counts")
     birth, _ = carry(key - 1, 2, 0)
+    _, parity = carry(key, 2, 0)
     print(
-        f"   the turning count's area at the lay, the key it sets: {key} (W R^2 x 5 / 13 = {carry(W * R * R * 5, 13, 0)[0]})"
+        f"   the turning count's area at the lay, the key it sets here: {key} (W R^2 x 5 / 13 = "
+        f"{carry(W * R * R * 5, 13, 0)[0]}); odd: {parity == 1} (no click fires here, so its parity reads nothing)"
     )
     pushed = held = 0
     worst = 0
     radius = 0
-    quanta = set()
+    windings = set()
     for t in range(ROUNDS):
         s, nxt = t_states[t], t_states[t + 1]
         _, j = step.sources(t_layout, s.a)
@@ -279,14 +273,15 @@ def part_two() -> tuple[int, list[State], list[State]]:
         worst = max(worst, abs(area(nxt, T_RE, T_IM, one, W) - key))
         radius = max(radius, abs(nxt.a[0, 0] ** 2 + nxt.a[1, 0] ** 2 - N))
         q, _ = carry(area(nxt, T_RE, T_IM, one, W), key, birth)
-        quanta.add(q)
+        windings.add(q)
     print(
-        f"   rounds where the act's push moves area into the turning count: {pushed} of {ROUNDS}; rounds where its area "
-        f"moves by anything but Rule3's turn: {held} of {ROUNDS}"
+        f"   rounds where the act's push moves area into the turning count (tau, what term 11's click carries): "
+        f"{pushed} of {ROUNDS}, so its clicks: 0; rounds where its area moves by anything but Rule3's turn: "
+        f"{held} of {ROUNDS}"
     )
     print(
-        f"   its area off the key at most: {worst} grains ({in_billionths(worst, key)} of a key); its books' whole "
-        f"quanta in every round, carried at the key from the birth: {sorted(quanta)}"
+        f"   its area off the key at most: {worst} grains ({in_billionths(worst, key)} of a key); its windings at "
+        f"the key (its swept area carried at the key from the birth), in every round: {sorted(windings)}"
     )
     print(f"   its radius squared off R^2 at most: {radius} counts squared (R^2 = {N})")
     xs = [s.a[S_RE[0], 0] for s in s_states]
@@ -296,36 +291,56 @@ def part_two() -> tuple[int, list[State], list[State]]:
         f"beside the turning one; their counts part by at most {max(abs(u - v) for u, v in zip(xs, xt, strict=True))} "
         f"of its swing {A}"
     )
-    area_x = [area(s, T_XRE, T_XIM, dot, W) for s in t_states]
-    print(
-        f"   the tied family's own area beside the turning count: from {min(area_x)} to {max(area_x)}; "
-        f"the vertex moves none into it either (c reads both its parts' squares)"
-    )
     return key, t_states, s_states
 
 
-def part_three(t_states: list[State]) -> None:
+def part_three() -> None:
     print(
-        "\n3. The 24 on the turning count's world: every turn of the cube on the tied family, the count of kind A1 kept."
+        "\n3. The 24 on the click world (ANIMATE-CLICK/click.py, the giver and the taker turning): what every turn "
+        "keeps exactly, and what only up to the grain."
     )
-    t_layout = node(turning(), T_ROWS, W)
-    one = table("A1", "A1")
-    start = t_states[0]
-    alike = areas = 0
-    for g in ON:
-        m = [[int(v) for v in row] for row in KINDS.t1[g]]
-        other = run(t_layout, turn_t1(start, m, [T_XRE, T_XIM], W), 1000)
-        alike += all(
-            same(x, turn_t1(y, m, [T_XRE, T_XIM], W))
-            for x, y in zip(other, t_states[:1001], strict=True)
+    g = carry(click.F, 10, 0)[0]
+    layout = click_node(click.potential(g))
+    base = lay_click(click.A)
+    key = carry(click.swept(click.LRE, click.LIM, base.a[:, 0], click.stride(base)), 7, 0)[0]
+    rounds = 600
+    found, states = clicks_of(layout, base, key, rounds)
+    dot = table("T1", "T1")
+    gre, gim = [click.LRE + c for c in range(3)], [click.LIM + c for c in range(3)]
+    tre, tim = [click.MRE + c for c in range(3)], [click.MIM + c for c in range(3)]
+    parts = [gre, gim, tre, tim]
+
+    def tau(s: State) -> int:
+        _, j = step.sources(layout, s.a)
+        return moved(s, list(j[:, 0]), tre, tim, dot)
+
+    taus = [tau(s) for s in states]
+    count = {"state": 0, "cross": 0, "tau": 0, "area": 0, "clicks": 0}
+    worst = 0
+    for g24 in ON:
+        m = [[int(v) for v in row] for row in KINDS.t1[g24]]
+        other_found, other = clicks_of(layout, turn_t1(base, m, parts, click.W), key, rounds)
+        pairs = list(zip(other, states, strict=True))
+        count["state"] += all(same(x, turn_t1(y, m, parts, click.W)) for x, y in pairs)
+        count["cross"] += all(
+            crossed(x, gre, gim, dot) == crossed(y, gre, gim, dot)
+            and crossed(x, tre, tim, dot) == crossed(y, tre, tim, dot)
+            for x, y in pairs
         )
-        areas += all(
-            area(x, T_RE, T_IM, one, W) == area(y, T_RE, T_IM, one, W)
-            for x, y in zip(other, t_states[:1001], strict=True)
-        )
+        count["tau"] += [tau(x) for x in other] == taus
+        diffs = [area(x, gre, gim, dot, click.W) - area(y, gre, gim, dot, click.W) for x, y in pairs]
+        count["area"] += all(d == 0 for d in diffs)
+        worst = max(worst, max(abs(d) for d in diffs))
+        count["clicks"] += other_found == found
+    grains, _ = carry(worst, click.W - 1, 0)
     print(
-        f"   turns: {len(ON)}; runs turned state for state over 1,000 rounds: {alike}; the count's area alike in every "
-        f"round: {areas}"
+        f"   turns: {len(ON)}; runs turned state for state over {rounds} rounds: {count['state']}; the counts' cross "
+        f"of both hands alike in every round: {count['cross']}; tau, the area the push moves into the taker, alike: "
+        f"{count['tau']}; the clicks alike: {count['clicks']}"
+    )
+    print(
+        f"   the giver's swept area with its fine teeth alike in every round: {count['area']} of {len(ON)}; under the "
+        f"others it moves by up to {grains} times W - 1 (a flipped tooth turns a stride p into -p + W - 1)"
     )
 
 
@@ -366,12 +381,13 @@ def click_node(monomials: list[tuple[int, tuple[int, ...]]]) -> Layout:
 
 def part_four() -> None:
     print(
-        "\n4. The key is no law of the act: the click writes nothing, and the clicks read the strengths times the key."
+        "\n4. The key is no law of the act: the click writes nothing; by homogeneity the clicks read a four-leg "
+        "strength times the key, in the continuum, and on the act up to Rule3's grain."
     )
     g, lam = (
         carry(click.F, 10, 0)[0],
         1251,
-    )  # 1251 = 9 x 139; at the giver's swing the stop stiffens it by about 2 per cent
+    )  # 1251 = 9 x 139; at the giver's swing the stop stiffens it by 2 per cent
     base = lay_click(click.A)
     key, _ = carry(click.swept(click.LRE, click.LIM, base.a[:, 0], click.stride(base)), 7, 0)
     rounds = 6000
@@ -386,18 +402,36 @@ def part_four() -> None:
         f"   the same at three times the key: gears alike in {gears} of {rounds + 1} rounds; {len(three)} clicks, net "
         f"{sum(q for _, q in three)}"
     )
-    scaled, _ = clicks_of(
+    scaled, sc = clicks_of(
         click_node(quartic(carry(lam, 9, 0)[0], g)), lay_click(3 * click.A), 9 * key, rounds
     )
+    exact = sum(
+        1
+        for x, y in zip(sc, s1, strict=True)
+        if all(u == 3 * v for u, v in zip(x.a[:, 0], y.a[:, 0], strict=True))
+    )
     print(
-        f"   every swing x 3, the key x 9 and the stop / 9 (lam key kept): {len(scaled)} clicks; rounds and signs "
-        f"alike with the first run: {scaled == one}; clicks in one run and not the other: "
-        f"{len(set(scaled) ^ set(one))}"
+        f"   every swing x 3, the key x 9 and the stop / 9 (lam key kept): {len(scaled)} clicks; clicks in one run and "
+        f"not the other: {len(set(scaled) ^ set(one))}; rounds whose counts are exactly 3 times the first run's: "
+        f"{exact} of {rounds + 1} (Rule3's grain does not scale)"
     )
     unscaled, _ = clicks_of(click_node(quartic(lam, g)), lay_click(3 * click.A), 9 * key, rounds)
     print(
         f"   every swing x 3 and the key x 9 with the stop kept (lam key x 9): {len(unscaled)} clicks; clicks in one run "
         f"and not the other: {len(set(unscaled) ^ set(one))}"
+    )
+    lam2 = 1296  # 6^4: the stop over s^2 is whole at every s that divides 36
+    first, _ = clicks_of(click_node(quartic(lam2, g)), base, key, rounds)
+    moved_by = []
+    for s in (2, 3, 4, 6, 9):
+        sq = s * s
+        other, _ = clicks_of(
+            click_node(quartic(carry(lam2, sq, 0)[0], g)), lay_click(s * click.A), sq * key, rounds
+        )
+        moved_by.append((s, len(set(other) ^ set(first))))
+    print(
+        f"   with the stop lam = {lam2}: {len(first)} clicks; every swing x s, the key x s^2 and the stop / s^2: "
+        f"(s, clicks in one run and not the other): {moved_by}"
     )
 
 
@@ -465,8 +499,8 @@ def part_six() -> None:
 
 def main() -> None:
     part_one()
-    _, t_states, _ = part_two()
-    part_three(t_states)
+    part_two()
+    part_three()
     part_four()
     part_five()
     part_six()
