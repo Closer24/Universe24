@@ -1,6 +1,6 @@
 """g2: which vacua of the 24 leave one triplet three states the act can tell apart, exactly (beside the engine).
 
-usage: python3 -I g2_breaking.py > g2_breaking.txt
+usage: python3 -I g2_breaking.py > g2_breaking.txt, at tensor24-review 8a476db17, the head it was made at (its calls into src are that head's)
 
 From the engine's kinds.py (the 24 and their kinds, integer matrices), in Fractions:
  1. every subgroup of the 24 and its conjugacy class;

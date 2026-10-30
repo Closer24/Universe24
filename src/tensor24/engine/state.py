@@ -26,11 +26,11 @@ class Plan(NamedTuple):
 
 
 class Read(NamedTuple):
-    """A linear read of the gears' now counts, the clocks': per term the row read, its whole factor, the row it lands in."""
+    """A linear read of the gears' now counts: per term the row read, its whole factor, the row or Spoke it lands on."""
 
     first: Z  # (terms,): the row read
     factor: Z  # (terms,): its whole factor
-    target: Z  # (terms,): the gear's row whose teeth it lands in
+    target: Z  # (terms,): the gear's row whose teeth it lands in (the clock's), or the Spoke whose grip (the grips')
 
 
 class Gearing(NamedTuple):

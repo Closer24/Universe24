@@ -115,7 +115,7 @@ def test_a_departing_file_or_a_broken_promise_is_named_and_no_record_is_written(
     setting["gears"][0][-1] = TOOTH
     edits = (
         ("universe", universe, "universe.version: 1, not 2"),
-        ("setting", setting, "row 0, site 0: the fine tooth"),
+        ("setting", setting, "round 1: row 0, site 0: the fine tooth"),
     )
     for name, held, named in edits:
         paths = list(PATHS)

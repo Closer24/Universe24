@@ -1,6 +1,6 @@
 """The ruler's length L(Gamma) walked by the engine's own runner/load.ruler_of, for many Gamma, against a closed form.
 
-usage: python3 -I ruler.py > ruler.txt
+usage: python3 -I ruler.py > ruler.txt, at tensor24-review 8a476db17, the head it was made at (its calls into src are that head's)
 
 Derivation chain (nothing fitted): ruler_of walks the hollow side p0(c) = round(Gamma (1 - 1/Gamma)^c) (exact carries,
 Gamma^3 at the resolution Gamma^2) and stops at the first c where round(p0^2 / Gamma) = 0, i.e. 2 p0^2 < Gamma (half

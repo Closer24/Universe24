@@ -1,6 +1,6 @@
 """The tensors' numbers: what the 24 rotations, the five kinds and the 43 tables can make, from the engine's own made().
 
-usage: python3 -I tensors.py > tensors.txt
+usage: python3 -I tensors.py > tensors.txt, at tensor24-review 8a476db17, the head it was made at (its calls into src are that head's)
 
 Derivation chain: every table is the group sum of one seed made primitive (runner/load.tables), so its entries are the
 smallest whole numbers in their ratio; a coupling row multiplies the file's strength by one entry; a chain of couplings

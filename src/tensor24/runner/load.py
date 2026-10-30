@@ -92,7 +92,9 @@ def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z,
     member = np.eye(len(part), dtype=object)[of]  # each kind's train, one of each row
     dim = np.array(dims, dtype=object)[kind]
     size, count = part * (dim @ member), member.sum(axis=0)
-    square = (part[:, None] * (member.T @ traces[kind]) == squared).all(axis=-1).astype(int)
+    # Rule3's quotient of 1 by one more than the characters' squared gap: 1 where the gap is 0 on every turn, else 0
+    gap = part[:, None] * (member.T @ traces[kind]) - squared
+    square, _ = carry(1, (gap * gap).sum(axis=-1) + 1, 0)
     return Trains(np.cumsum(size) - size, size, part, square, np.cumsum(count) - count, count, kind, dim)
 
 
@@ -139,7 +141,7 @@ def mesh_unit(gamma: int) -> int:
 def geared(
     universe: dict[str, Any], trains: Trains, spokes: Z
 ) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], tuple[Z, Z, Z], Z]:
-    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes; every row reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 G^2 per Mesh."""
+    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes; every row reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself; every Spoke's grip reading each square's ii slot of its axis at both ends of its Mesh; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 G^2 per Mesh."""
     integers, first, rows = universe["integers"], trains.first, trains.size.sum()
     den, gamma = integers["den"], integers["full_rate"]
     g = mesh_unit(gamma)
