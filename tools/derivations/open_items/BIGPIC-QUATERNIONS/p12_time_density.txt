@@ -1,0 +1,12 @@
+PASS A1. the out edge's states (D, s), s in [-D, D), counted by the fine value D^2 + s, tile the whole numbers one to one: every number below 400^2 + 400 is met exactly once
+PASS A2. the deriver's law at fixed W is a bijection of the out edge's states, and the run back is the mirror: the backward step from (D_out, -1 - s+) returns (D_in, -1 - s) in all 189504 cases (W 8 to 39, D_in within 4 of 2 W, push -3 to 3)
+PASS A3. D_out read from its fine value by one carry by 4 W and compares is exact; at W = 10,000 one compare after the carry places it while |D_out - 2 W| < 200 (twice the root of W is 200), and a second compare is needed only beyond
+PASS A4. with no push the law keeps W v^2, sqrt(W) v squared: 998 permille of the start after 931 rounds, as W triples (the deriver's sqrt(W) v kept to within 14 permille)
+PASS B1. the books road runs back exactly: 300 rounds, the mirror, 300 rounds give the mirrored lay, every row and tooth
+PASS B2. the 00 row's own step divides nothing and keeps no tooth, and the dial's total over the ring stands at every round (the grips' double divergence sums to 0)
+PASS B3. a uniform rest of the dial and the grips stands exactly at every rest tried
+PASS B4. a bump in the dial alone, with the grips at rest, stands exactly for 300 rounds: the 00 row carries no wave of its own, so it has no second cone
+PASS B5. over 60 rounds the dial moves only where the grips' row has moved (one Mesh wider, the double divergence's reach): the dial moved at 49 Nodes, the grips at 47
+PASS B6. one cone: a matter lay equal to the grips' lay moves equal to it, Node for Node and tooth for tooth, for 200 rounds, the dial moving under both
+PASS B7. the dial is the slowdown: a matter packet's peak reaches Node 40 at round 125 over a flat dial and at round 139 across a raised dial between
+ALL PASS

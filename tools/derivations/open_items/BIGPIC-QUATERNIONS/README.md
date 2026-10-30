@@ -12,7 +12,7 @@ and his families reader.
 - Test cases come from a whole-number stream (`qlib.Stream`, a linear congruential map).
 
 Run one: `python3 tools/derivations/open_items/BIGPIC-QUATERNIONS/p1_ring.py`. Each output is the `.txt` beside it. All
-eleven run in about half a minute.
+twelve run in about half a minute.
 
 ## The probes
 
@@ -30,6 +30,7 @@ eleven run in about half a minute.
 | `p9_act.py` | Free two-part and four-part hands on the act with the carry, window means of 12,000 rounds over 240,000. The two-part turn holds to under one grain, its wind wanders up to 10, and the four-part turns wander up to 27. | 6527540022 item 3.2 |
 | `p10_cells.py` | The half-open carry's mirror. The draw's run back: the mirrored pointer against the parts read from the other end picks the same part (8,790 cases). An odd increment's tooth is kept on the run back, not flipped. A beat with a whole sine: W = a^2 + b^2 and k = 4 b^2. | 6528150081; 6528217535 |
 | `p11_hand_per_quantum.py` | The owner's word (18:4x UTC): "Try a hand per quantum." Each quantum has its own hand, moved by the one act, and the record weighs a pair of clicks by the determinant (half-speed) or the permanent (whole-speed) of the two hands at the two clicked places. One mode twice: every pair weight 0, on the lay and after 300 rounds (the exclusion). One hand per family cannot exclude: the sum 2 psi gives a weight that is not 0. Two orthogonal modes of one spin: 0 at one place (the exchange hole), not 0 in all (the triplet and the Fermi sea fill). Up and down in one mode: not 0, together at one place. A third quantum in one orbital: 0, with a control that is not. The permanent at one place is twice the told-apart weight (bunching) where the determinant is 0. The family's one hand moved equals the sum of its quanta's hands moved, to the teeth (18 counts in 729,829,905). | the owner's word of 18:4x UTC |
+| `p12_time_density.py` | The Boss's ask (6531004963 item 3): does the time gear's own law have a whole form with no root? Part A, the deriver's law D_in^2 + D_out^2 = 8 W^2 + 4 push + s - s+: the out edge's states (D, s), s in [-D, D), counted by the fine value D^2 + s, tile the whole numbers one to one; the law is a reflection of the fine value, a bijection whose run back is the mirror (189,504 cases); D_out read from its fine value is one carry by 4 W and one compare while it moves less than twice the root of W from 2 W (measured at W = 10,000: 200); with no push it keeps W v^2 (998 permille as W triples). Part B, the books road on a ring of 64: the 00 row by d_t^2 A = -d_x^2 G at a fixed dial with no beat of its own, the grips' row and the matter row by the edge act at the dial it produced first: the run back exact over 300 rounds, the 00 row dividing nothing, the dial's total standing, a uniform rest standing at every rest tried, a bump in the dial alone standing (no wave of its own), the dial moving only inside the grips' reach, a matter lay equal to the grips' lay moving equal to it (one cone), and a raised dial delaying a matter packet (125 against 139 rounds). | the Boss's 6531004963 item 3 |
 
 ## Numbers that differ from the posts by the stream
 
