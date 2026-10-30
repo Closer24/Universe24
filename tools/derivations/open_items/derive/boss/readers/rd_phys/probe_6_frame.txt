@@ -1,0 +1,31 @@
+PROBE 6: the frame reading
+
+A. The frame's square M = Phi Phi^T for Phi = (L, l) = (3, 1, -1, 2) (probe_rootdial's phi0):
+   M (00 = L^2, 0k = L l_k, kk = l_k^2, jk = l_j l_k):
+           9      3     -3      6
+           3      1     -1      2
+          -3     -1      1     -2
+           6      2     -2      4
+   det M = 0; every 2 x 2 minor 0 (rank one): True; trace = N(Phi) = 15; 00 - xx - yy - zz = Re(Phi^2) = 3
+   A symmetric tensor of rank one has no inverse: as g_mu,nu it gives ds^2 = (Phi . dx)^2, zero on a 3-dimensional space of
+   directions: no light cone, no spatial distance. It is one vector's square, not a metric and not a tetrad (a tetrad is four).
+
+B. ADM: the inverse tetrad's time leg is e_0 = (1/N)(1, -N^i). Set Phi = L_rest e_0, so L = L_rest / N and l_k = -L N^k.
+   With flat space legs e_i = (0, d_i) the inverse metric is g^{mu nu} = -e_0 e_0 + sum_i e_i e_i, i.e. L_rest^2 g = -M + L_rest^2 diag(0,1,1,1):
+   L_rest^2 g^{mu nu} (L_rest = 1):
+          -9     -3      3     -6
+          -3      0      1     -2
+           3      1      0      2
+          -6     -2      2     -3
+   det = -9 (invertible, a metric); its 00 is -L^2 (W = -L_rest^2 g^00: the root dial's L is 1/N, the time leg), its 0k is -L l_k,
+   its kk is L_rest^2 - l_k^2: the frame's kk = l_k^2 is the SHIFT's share of the length slot with the opposite sign, and the
+   space legs (the grips, h^{ij}: six independent slots) are absent. 'kk = l_k^2 = the grips' misreads the shift squared as the length.
+
+C. A static well: the grips moved (ii slots g != 0), no shift (0k = 0), W = L^2: the slots (L^2, 0, 0, 0, g, g, g, 0, 0, 0):
+   g = 0: rank one True, det 0: a frame square (no well)
+   g = 1: rank one False, det 9: NOT any frame square: the frame reading cannot hold a well with spatial curvature (gamma = 1) at zero shift
+   g = 5: rank one False, det 1125: NOT any frame square: the frame reading cannot hold a well with spatial curvature (gamma = 1) at zero shift
+
+D. What the frame's square buys with l = 0 (the act as built reads no 0k slot): the slots (L^2, 0,0,0, 0,0,0, 0,0,0): the time leg
+   alone; W = L^2 is the root dial; nothing else of the ten slots is reached. With l != 0 the 0k slots become L l_k (quadratic),
+   so term 10's shift read changes; the six spatial slots must stay gears of their own or the shears (E, T2) have no freedom.

@@ -1,0 +1,66 @@
+PROBE 1: the push floor of the root dial, one gear, the clock standing at L = 100 (W = 10000)
+
+A. A constant push p for 2000 rounds: the displacement a(T) as built (remainder kept; nature's p T^2 / 2W) and
+   on the root dial (remainder dropped); F_eff = L round_odd(p / L); permille of the as-built displacement
+   nature: a(T) = p x 200 at these T, W
+   p     1: built a        0 | root a        0 | F_eff     0 (    0 permille of p) | root/built     0 permille
+   p    10: built a     1002 | root a        0 | F_eff     0 (    0 permille of p) | root/built     0 permille
+   p    25: built a     4005 | root a        0 | F_eff     0 (    0 permille of p) | root/built     0 permille
+   p    49: built a     8820 | root a        0 | F_eff     0 (    0 permille of p) | root/built     0 permille
+   p    50: built a     9010 | root a    20020 | F_eff   100 ( 2000 permille of p) | root/built  2221 permille
+   p    51: built a     9220 | root a    20020 | F_eff   100 ( 1960 permille of p) | root/built  2171 permille
+   p    75: built a    14010 | root a    20020 | F_eff   100 ( 1333 permille of p) | root/built  1428 permille
+   p    99: built a    18810 | root a    20020 | F_eff   100 ( 1010 permille of p) | root/built  1064 permille
+   p   100: built a    19020 | root a    20020 | F_eff   100 ( 1000 permille of p) | root/built  1052 permille
+   p   101: built a    19210 | root a    20020 | F_eff   100 (  990 permille of p) | root/built  1042 permille
+   p   149: built a    28819 | root a    20020 | F_eff   100 (  671 permille of p) | root/built   694 permille
+   p   150: built a    29020 | root a    40040 | F_eff   200 ( 1333 permille of p) | root/built  1379 permille
+   p   151: built a    29220 | root a    40040 | F_eff   200 ( 1324 permille of p) | root/built  1370 permille
+   p   199: built a    38820 | root a    40040 | F_eff   200 ( 1005 permille of p) | root/built  1031 permille
+   p   200: built a    39040 | root a    40040 | F_eff   200 ( 1000 permille of p) | root/built  1025 permille
+   p   250: built a    49050 | root a    60040 | F_eff   300 ( 1200 permille of p) | root/built  1224 permille
+   p  1000: built a   199200 | root a   200200 | F_eff  1000 ( 1000 permille of p) | root/built  1005 permille
+   p  5000: built a  1000000 | root a  1001000 | F_eff  5000 ( 1000 permille of p) | root/built  1001 permille
+
+B. A hairspring g = 1 (omega^2 = g/W, T = 628 rounds) laid at a0, 6000 rounds (about 9.5 beats):
+   the largest and the smallest |a| seen, and the upward zero crossings; nature: a swings between -a0 and a0
+   a0    10 built: max |a|    10, min |a|     0, upward zero crossings   3
+   a0    10 root : max |a|    10, min |a|    10, upward zero crossings   0
+   a0    25 built: max |a|    25, min |a|     0, upward zero crossings   7
+   a0    25 root : max |a|    25, min |a|    25, upward zero crossings   0
+   a0    49 built: max |a|    49, min |a|     0, upward zero crossings  10
+   a0    49 root : max |a|    49, min |a|    49, upward zero crossings   0
+   a0    50 built: max |a|    50, min |a|     0, upward zero crossings  10
+   a0    50 root : max |a|    50, min |a|     0, upward zero crossings  15
+   a0    51 built: max |a|    51, min |a|     0, upward zero crossings  10
+   a0    51 root : max |a|    51, min |a|     0, upward zero crossings  15
+   a0    75 built: max |a|    75, min |a|     0, upward zero crossings  10
+   a0    75 root : max |a|    75, min |a|     0, upward zero crossings  12
+   a0   100 built: max |a|   100, min |a|     0, upward zero crossings  10
+   a0   100 root : max |a|   100, min |a|     0, upward zero crossings  10
+   a0   150 built: max |a|   150, min |a|     0, upward zero crossings   9
+   a0   150 root : max |a|   150, min |a|     0, upward zero crossings  10
+   a0  1000 built: max |a|  1000, min |a|     0, upward zero crossings   9
+   a0  1000 root : max |a|  1006, min |a|     0, upward zero crossings   9
+   the root dial's dead band: |g a| < L/2, so |a| < 50 at g = 1: no force, no swing, a frozen displacement
+
+C. The drive's kick: a push K = T_k s q_d = 1 a round (q_d = 1 whole turn of the drive, T_k = s = 1 as BUILT), F = 0:
+      100 rounds: as built a = 0 (r = 100); root dial a = 0 (s = 0)
+     1000 rounds: as built a = 0 (r = 1000); root dial a = 0 (s = 0)
+    10000 rounds: as built a = 1 (r = 0); root dial a = 0 (s = 0)
+   the smallest kick the root dial passes is L/2 = 50, and it passes as L = 100: a whole turn of the drive is lost,
+   or the strengths s, T_k must carry a factor of the order of L, and then the kick is quantised in units of L.
+
+D. At the calibre, den = 6 k^2 with k = 50,000,000 and Gamma = 1000 (L_rest = 6 k Gamma = 3 x 10^11, den = 1.5 x 10^16):
+   den 15000000000000000, L_rest 300000000000, W_rest = L_rest^2 = 90000000000000000000000 = 6 den Gamma^2 = 90000000000000000000000: True
+   the pull of one count of difference on one Spoke: grip = den Gamma^2 = 15000000000000000000000; the floor L/2 = 150000000000;
+   the dropped part is below L / (2 grip) = 10 x 10^-12 of one count's pull: the deriver's 10^-11 holds for the pull;
+   the kick at T_k = s = 1 is 1 against the floor 150000000000: lost; the spring -g a is lost below |a| = L / (2 g);
+   light's c^2 = grip / W_rest = 1/6 at rest in either law (grip 15000000000000000000000 x 6 = W_rest 90000000000000000000000: True).
+
+E. The staircase is a bias, not a noise: a constant push p = 49 at L = 100 is dropped EVERY round (as-built accumulates it);
+   p = 51 is doubled every round. Over a run of n rounds the bias on the momentum is n (F_eff - p) / L in units of L v:
+   p 49: per round  -49 of 49 (relative -1000 permille), the same sign every round
+   p 51: per round  +49 of 51 (relative  +960 permille), the same sign every round
+   p 149: per round  -49 of 149 (relative  -329 permille), the same sign every round
+   p 151: per round  +49 of 151 (relative  +324 permille), the same sign every round

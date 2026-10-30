@@ -1,0 +1,25 @@
+PROBE 4: a long wave (one wavelength round a ring of 32) on the root dial
+
+A. Standing clock, grip 36: nature's c^2 = grip / L^2, the fundamental's period T = 32 L / 6 (the lattice's dispersion adds 1.6 permille)
+   L 102, peak amplitude  8000: ten periods 5447 rounds, T 544700 milli-rounds against nature's 544 (1001 permille); peak push at the lay 72000 against the floor L/2 = 51
+   L 102, peak amplitude    80: upward zero crossings at site 0 in 6528 rounds: 6 (FROZEN or no wave); peak push at the lay 720 against the floor L/2 = 51
+   L 102, peak amplitude     8: upward zero crossings at site 0 in 6528 rounds: 4 (FROZEN or no wave); peak push at the lay 72 against the floor L/2 = 51
+   L 204, peak amplitude  8000: ten periods 10888 rounds, T 1088800 milli-rounds against nature's 1088 (1000 permille); peak push at the lay 72000 against the floor L/2 = 102
+   L  51, peak amplitude  8000: ten periods 2723 rounds, T 272300 milli-rounds against nature's 272 (1001 permille); peak push at the lay 72000 against the floor L/2 = 25
+
+B. The frozen band: grip 36 at L = 150 against grip L^2 / 6 = 3750 (the law's grip = W / 6) at the same L, peak amplitude 8 (amp 1), 3000 rounds
+   grip    36: sites whose count moved from the lay after 3000 rounds: 0 of 32; site 0 upward zero crossings 0; peak push 72 against the floor 75
+   grip  3750: sites whose count moved from the lay after 3000 rounds: 32 of 32; site 0 upward zero crossings 3; peak push 7500 against the floor 75
+   at the calibre the pull of one count is grip = L^2 / 6 >> L: the frozen band is below one count of curvature; at the lattice-scale
+   worlds of the deriver's probes (rest 36, L 6 to 73, grip 6) a wave of whole counts can be frozen or forced by the floor.
+
+C. The rising clock, grip 36, peak amplitude 8000: L from 102 to 204 by one count every 150 rounds (15,300 rounds, 12 to 24 periods);
+   nature keeps the proper energy 32 E = sum P^2 + 16 grip sum (da)^2 and the amplitude; the act as built keeps neither
+   root dial (permille of the start): L 112: E 998, max|a| 999; L 122: E 997, max|a| 893; L 132: E 1003, max|a| 909; L 142: E 998, max|a| 848; L 153: E 1001, max|a| 818; L 163: E 1001, max|a| 802; L 173: E 1005, max|a| 846; L 183: E 997, max|a| 852; L 193: E 996, max|a| 870; L 204: E 1000, max|a| 910
+   as built (amplitude, permille of the start): L 112: max|a| 1024; L 122: max|a| 1178; L 132: max|a| 1326; L 142: max|a| 1446; L 153: max|a| 1602; L 163: max|a| 1789; L 173: max|a| 2115; L 183: max|a| 2274; L 193: max|a| 2586; L 204: max|a| 2901
+
+D. The 00 row's cone on the cut: the same wave on a row at L_rest = 6 (the 00 row's own teeth) and on a row at L = 12 (every other row
+   at a depth where W = 4 W_rest), grip 6 (the deriver's small world): the periods' ratio is L / L_rest, so c^2 parts by W / W_rest
+   L  6: ten periods 783 rounds
+   L 12: ten periods 1568 rounds
+   L 24: crossings 8

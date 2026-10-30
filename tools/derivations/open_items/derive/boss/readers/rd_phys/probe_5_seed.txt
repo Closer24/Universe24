@@ -1,0 +1,52 @@
+PROBE 5: den = 6 k^2
+
+A. The law's named dens against den = 6 k^2 (a square times 6 is even and divisible by 3):
+   the example universe's 15162856759112389: divisible by 2 False, by 3 False: is NOT 6 k^2
+   the den of the hand (K-S3) 3311818282: divisible by 2 True, by 3 False: is NOT 6 k^2
+   cheap runs 697786: divisible by 2 True, by 3 False: is NOT 6 k^2
+   K1's smallest set 2042: divisible by 2 True, by 3 False: is NOT 6 k^2
+   the bare 3-cube's 1021: divisible by 2 False, by 3 False: is NOT 6 k^2
+
+B. Lifts of den = 6 k^2 (den^2 = x^2 + y^2, 0 < x < y): a lift exists iff k has a prime factor 1 mod 4
+   k  1: den     6 = 6 k^2, k's primes [], primes 1 mod 4 []: lifts 0 []
+   k  2: den    24 = 6 k^2, k's primes [2], primes 1 mod 4 []: lifts 0 []
+   k  3: den    54 = 6 k^2, k's primes [3], primes 1 mod 4 []: lifts 0 []
+   k  4: den    96 = 6 k^2, k's primes [2, 2], primes 1 mod 4 []: lifts 0 []
+   k  5: den   150 = 6 k^2, k's primes [5], primes 1 mod 4 [5]: lifts 2 [(42, 144), (90, 120)]
+   k  6: den   216 = 6 k^2, k's primes [2, 3], primes 1 mod 4 []: lifts 0 []
+   k  7: den   294 = 6 k^2, k's primes [7], primes 1 mod 4 []: lifts 0 []
+   k  8: den   384 = 6 k^2, k's primes [2, 2, 2], primes 1 mod 4 []: lifts 0 []
+   k  9: den   486 = 6 k^2, k's primes [3, 3], primes 1 mod 4 []: lifts 0 []
+   k 10: den   600 = 6 k^2, k's primes [2, 5], primes 1 mod 4 [5]: lifts 2 [(168, 576), (360, 480)]
+   k 11: den   726 = 6 k^2, k's primes [11], primes 1 mod 4 []: lifts 0 []
+   k 12: den   864 = 6 k^2, k's primes [2, 2, 3], primes 1 mod 4 []: lifts 0 []
+   k 13: den  1014 = 6 k^2, k's primes [13], primes 1 mod 4 [13]: lifts 2 [(390, 936), (714, 720)]
+   k 14: den  1176 = 6 k^2, k's primes [2, 7], primes 1 mod 4 []: lifts 0 []
+   k 15: den  1350 = 6 k^2, k's primes [3, 5], primes 1 mod 4 [5]: lifts 2 [(378, 1296), (810, 1080)]
+   k 16: den  1536 = 6 k^2, k's primes [2, 2, 2, 2], primes 1 mod 4 []: lifts 0 []
+   k 17: den  1734 = 6 k^2, k's primes [17], primes 1 mod 4 [17]: lifts 2 [(816, 1530), (966, 1440)]
+   k 18: den  1944 = 6 k^2, k's primes [2, 3, 3], primes 1 mod 4 []: lifts 0 []
+   k 19: den  2166 = 6 k^2, k's primes [19], primes 1 mod 4 []: lifts 0 []
+   k 20: den  2400 = 6 k^2, k's primes [2, 2, 5], primes 1 mod 4 [5]: lifts 2 [(672, 2304), (1440, 1920)]
+   k 21: den  2646 = 6 k^2, k's primes [3, 7], primes 1 mod 4 []: lifts 0 []
+   k 22: den  2904 = 6 k^2, k's primes [2, 11], primes 1 mod 4 []: lifts 0 []
+   k 23: den  3174 = 6 k^2, k's primes [23], primes 1 mod 4 []: lifts 0 []
+   k 24: den  3456 = 6 k^2, k's primes [2, 2, 2, 3], primes 1 mod 4 []: lifts 0 []
+   k 25: den  3750 = 6 k^2, k's primes [5, 5], primes 1 mod 4 [5, 5]: lifts 4 [(1050, 3600), (1320, 3510), (2016, 3162)]...
+   k 26: den  4056 = 6 k^2, k's primes [2, 13], primes 1 mod 4 [13]: lifts 2 [(1560, 3744), (2856, 2880)]
+   k 27: den  4374 = 6 k^2, k's primes [3, 3, 3], primes 1 mod 4 []: lifts 0 []
+   k 28: den  4704 = 6 k^2, k's primes [2, 2, 7], primes 1 mod 4 []: lifts 0 []
+   k 29: den  5046 = 6 k^2, k's primes [29], primes 1 mod 4 [29]: lifts 2 [(246, 5040), (3480, 3654)]
+   k 30: den  5400 = 6 k^2, k's primes [2, 3, 5], primes 1 mod 4 [5]: lifts 2 [(1512, 5184), (3240, 4320)]
+
+C. The numbers at den = 6 k^2, Gamma = 1000:
+   k 1: den 6, L_rest = 6 k Gamma = 6000, W_rest = 6 den Gamma^2 = 36000000 = L_rest^2 True, grip = den Gamma^2 = 6000000,
+      c^2 = grip / W_rest = 1/6 (True); the floor L_rest / 2 against one count's pull: 500000000 x 10^-12 = 3 / L_rest
+   k 5: den 150, L_rest = 6 k Gamma = 30000, W_rest = 6 den Gamma^2 = 900000000 = L_rest^2 True, grip = den Gamma^2 = 150000000,
+      c^2 = grip / W_rest = 1/6 (True); the floor L_rest / 2 against one count's pull: 100000000 x 10^-12 = 3 / L_rest
+   k 50000000: den 15000000000000000, L_rest = 6 k Gamma = 300000000000, W_rest = 6 den Gamma^2 = 90000000000000000000000 = L_rest^2 True, grip = den Gamma^2 = 15000000000000000000000,
+      c^2 = grip / W_rest = 1/6 (True); the floor L_rest / 2 against one count's pull: 10 x 10^-12 = 3 / L_rest
+
+D. What is typed: k (or den = 6 k^2 checked by one multiplication), a structural condition on the seed the law does not have (K-S3's
+   'chosen by its structure' names the bands' closure, den >= Gamma, two lifts, the heavy lift's window); it fixes den's parity (even),
+   its divisibility by 3, and gives every prime of den but 2 and 3 an even exponent (so den's lifts are k's, doubled).

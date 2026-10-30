@@ -1,0 +1,47 @@
+PROBE 3: two clocks at one site under a uniform change of the clock's rate, the root dial (half-open), rising and falling
+
+A. Free gears (nature keeps L v: 1000 permille): v0 = 10^6 (many notches a stride), v0 = 1 (one notch a round),
+   v0 = 0 with the tooth s0 = 150 (a sub-notch momentum: P = 150 of a notch's 2 D = 400 at L = 100)
+   rising  v0 1000000 s0   0: round 0: L 100, v 1000000, s 0, P 400000000 (1000 permille of P0), a 1000000; round 7500: L 125, v 800000, s 0, P 400000000 (1000 permille of P0), a 6725095753; round 15000: L 150, v 666667, s -200, P 400000000 (1000 permille of P0), a 12214591908; round 22500: L 175, v 571429, s -300, P 400000000 (1000 permille of P0), a 16853285005; round 29999: L 200, v 501253, s 106, P 400000000 (1000 permille of P0), a 20869353762
+   rising  v0       1 s0   0: round 0: L 100, v 1, s 0, P 400 (1000 permille of P0), a 1; round 7500: L 125, v 1, s -100, P 400 (1000 permille of P0), a 7501; round 15000: L 150, v 1, s -200, P 400 (1000 permille of P0), a 15001; round 22500: L 175, v 1, s -300, P 400 (1000 permille of P0), a 22501; round 29999: L 200, v 1, s -398, P 400 (1000 permille of P0), a 30000
+   rising  v0       0 s0 150: round 0: L 100, v 0, s 150, P 150 (1000 permille of P0), a 0; round 7500: L 125, v 0, s 150, P 150 (1000 permille of P0), a 0; round 15000: L 150, v 0, s 150, P 150 (1000 permille of P0), a 0; round 22500: L 175, v 0, s 150, P 150 (1000 permille of P0), a 0; round 29999: L 200, v 0, s 150, P 150 (1000 permille of P0), a 0
+   falling v0 1000000 s0   0: round 0: L 200, v 1000000, s 0, P 800000000 (1000 permille of P0), a 1000000; round 7500: L 175, v 1142857, s 100, P 800000000 (1000 permille of P0), a 7991707493; round 15000: L 150, v 1333333, s 200, P 800000000 (1000 permille of P0), a 17212521113; round 22500: L 125, v 1600000, s 0, P 800000000 (1000 permille of P0), a 28112311525; round 29999: L 100, v 1990050, s -100, P 800000000 (1000 permille of P0), a 41439703628
+   falling v0       1 s0   0: round 0: L 200, v 1, s 0, P 800 (1000 permille of P0), a 1; round 7500: L 175, v 1, s 100, P 800 (1000 permille of P0), a 7501; round 15000: L 150, v 1, s 200, P 800 (1000 permille of P0), a 15001; round 22500: L 125, v 2, s -200, P 800 (1000 permille of P0), a 24902; round 29999: L 100, v 2, s -4, P 800 (1000 permille of P0), a 39900
+   falling v0       0 s0 150: round 0: L 200, v 0, s 150, P 150 (1000 permille of P0), a 0; round 7500: L 175, v 0, s 150, P 150 (1000 permille of P0), a 0; round 15000: L 150, v 0, s 150, P 150 (1000 permille of P0), a 0; round 22500: L 125, v 0, s 150, P 150 (1000 permille of P0), a 0; round 29999: L 100, v 0, s 150, P 150 (1000 permille of P0), a 0
+   rising  sub-notch hand s0 = 150: a after 29999 rounds 0; nature's sum of (P0/4)/L 7825: 0 permille
+   falling sub-notch hand s0 = 150: a after 29999 rounds 0; nature's sum of (P0/4)/L 7770: 0 permille
+
+B. Hairsprings g = 100 (omega^2 = g / W: T = 63 rounds at L = 100, 126 at L = 200). Nature: A/A0 = 1000, T^2/W = 1000
+   (i) a0 = 10^7: many notches a round (v_max = 10^6)
+   rising  a0 1e7 round  7500: L 125 | A  10008970 | A/A0  1000 | T^2/W  1000 | 10 T   711 rounds
+   rising  a0 1e7 round 15000: L 150 | A  10008653 | A/A0   999 | T^2/W  1001 | 10 T   854 rounds
+   rising  a0 1e7 round 22500: L 175 | A  10006784 | A/A0   999 | T^2/W  1003 | 10 T   997 rounds
+   falling a0 1e7 round  7500: L 175 | A  10003694 | A/A0  1000 | T^2/W  1000 | 10 T   983 rounds
+   falling a0 1e7 round 15000: L 150 | A  10004021 | A/A0  1000 | T^2/W   998 | 10 T   842 rounds
+   falling a0 1e7 round 22500: L 125 | A  10005381 | A/A0  1000 | T^2/W   999 | 10 T   702 rounds
+   (ii) a0 = 5: below one notch a round (v_max = 0.5 at L = 100, 0.25 at L = 200): the tooth carries the momentum
+   rising  a0 5   round  7500: L 125 | A         6 | A/A0  1000 | T^2/W  1000 | 10 T   676 rounds
+   rising  a0 5   round 15000: L 150 | A         6 | A/A0  1000 | T^2/W  1230 | 10 T   900 rounds
+   rising  a0 5   round 22500: L 175 | A         6 | A/A0  1000 | T^2/W  1823 | 10 T  1278 rounds
+   falling a0 5   round  7500: L 175 | A         6 | A/A0  1000 | T^2/W  1000 | 10 T  1223 rounds
+   falling a0 5   round 15000: L 150 | A         7 | A/A0  1166 | T^2/W   563 | 10 T   787 rounds
+   falling a0 5   round 22500: L 125 | A         7 | A/A0  1166 | T^2/W   520 | 10 T   630 rounds
+   (iii) a0 = 1: one count: v_max = 0.1 a round
+   rising  a0 1   round  7500: L 125 | A         1 | A/A0  1000 | T^2/W  1000 | 10 T  2360 rounds
+   (iv) g = 37, a0 = 3: the floor bites (g a0 / L = 1.11 -> q_F = 1 at the turning point): the beat against sqrt(W/g)
+   rising  g37 a3 round  7500: L 125 | A         3 | A/A0  1000 | T^2/W  1000 | 10 T  2434 rounds
+   rising  g37 a300 round  7500: L 125 | A       307 | A/A0  1000 | T^2/W  1000 | 10 T  1177 rounds
+   rising  g37 a300 round 15000: L 150 | A       311 | A/A0  1013 | T^2/W  1002 | 10 T  1414 rounds
+   rising  g37 a300 round 22500: L 175 | A       323 | A/A0  1052 | T^2/W  1002 | 10 T  1650 rounds
+
+C. The same hands with the tie-even split (probe_root's convention) for the record, rising:
+   free v0 1e6: round 0: L 100, v 1000000, P 400000000 (1000 permille); round 7500: L 125, v 800000, P 400000000 (1000 permille); round 15000: L 150, v 666667, P 400000000 (1000 permille); round 22500: L 175, v 571429, P 400000000 (1000 permille); round 29999: L 200, v 501253, P 400000000 (1000 permille)
+   tie-even a0 1e7 round  7500: L 125 | A  10008981 | A/A0  1000 | T^2/W  1000 | 10 T   711 rounds
+   tie-even a0 1e7 round 15000: L 150 | A  10008594 | A/A0   999 | T^2/W  1001 | 10 T   854 rounds
+   tie-even a0 1e7 round 22500: L 175 | A  10006739 | A/A0   999 | T^2/W  1003 | 10 T   997 rounds
+
+D. Notches per beat and quanta in proper units, the hairspring a0 = 1e7 rising (nature keeps both):
+   round  7500: L 125 | T 79 | v_max 807146 | v_max T 63764534 | A 10008970 | L v_max 100893250 (proper velocity) | g A^2 (2 E_proper) 10017948046090000
+   round 15000: L 150 | T 94 | v_max 671726 | v_max T 63142244 | A 10008653 | L v_max 100758900 (proper velocity) | g A^2 (2 E_proper) 10017313487440900
+   round 22500: L 175 | T 109 | v_max 575085 | v_max T 62684265 | A 10006784 | L v_max 100639875 (proper velocity) | g A^2 (2 E_proper) 10013572602265600
+   nature: v_max T, A and g A^2 constant; v_max ~ 1/L, T ~ L. (E_proper / omega_proper = g A^2 / (2 sqrt g): constant iff A is.)

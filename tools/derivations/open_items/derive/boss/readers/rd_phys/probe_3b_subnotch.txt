@@ -1,0 +1,33 @@
+PROBE 3b: below one notch a round, g = 100 (nature's T = 2 pi sqrt(W / g): 62.8 rounds at L = 100, 477 upward crossings in 30,000)
+
+a0 = 5 (v_max = 500 milli-notches a round at L = 100)
+   standing root      : crossings  500; max |a| per window of 6000: [5, 5, 5, 5, 5]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   standing root-exact: crossings  500; max |a| per window of 6000: [5, 5, 5, 5, 5]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   standing built     : crossings  500; max |a| per window of 6000: [5, 5, 5, 5, 5]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   standing edge      : crossings  500; max |a| per window of 6000: [5, 5, 5, 5, 5]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   rising   root      : crossings  320; max |a| per window of 6000: [6, 6, 6, 6, 5]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 1000, T^2/W 1230; L 175: A/A0 1000, T^2/W 1823
+   rising   root-exact: crossings  274; max |a| per window of 6000: [5, 5, 5, 4, 4]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 800, T^2/W 1738; L 175: A/A0 800, T^2/W 2225
+   rising   built     : crossings  339; max |a| per window of 6000: [5, 6, 7, 8, 10]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 1166, T^2/W 1028; L 175: A/A0 1333, T^2/W 1050
+   rising   edge      : crossings  217; max |a| per window of 6000: [5, 4, 3, 3, 2]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 1000, T^2/W 1367; L 175: A/A0 666, T^2/W 3957
+
+a0 = 20 (v_max = 2000 milli-notches a round at L = 100)
+   standing root      : crossings  484; max |a| per window of 6000: [20, 20, 20, 20, 20]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   standing root-exact: crossings  484; max |a| per window of 6000: [20, 20, 20, 20, 20]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   standing built     : crossings  484; max |a| per window of 6000: [20, 20, 20, 20, 20]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   standing edge      : crossings  484; max |a| per window of 6000: [20, 20, 20, 20, 20]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   rising   root      : crossings  326; max |a| per window of 6000: [20, 21, 21, 22, 22]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 1000, T^2/W 1262; L 175: A/A0 1047, T^2/W 1135
+   rising   root-exact: crossings  327; max |a| per window of 6000: [20, 20, 21, 21, 21]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 1050, T^2/W 1255; L 175: A/A0 1050, T^2/W 1077
+   rising   built     : crossings  331; max |a| per window of 6000: [23, 23, 24, 24, 24]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 1000, T^2/W 1066; L 175: A/A0 1043, T^2/W 1307
+   rising   edge      : crossings  341; max |a| per window of 6000: [20, 19, 17, 17, 14]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 894, T^2/W 991; L 175: A/A0 789, T^2/W 801
+
+a0 = 200 (v_max = 20000 milli-notches a round at L = 100)
+   standing root      : crossings  477; max |a| per window of 6000: [210, 210, 210, 210, 210]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1034, T^2/W 1000; L 100: A/A0 1034, T^2/W 1000
+   standing root-exact: crossings  477; max |a| per window of 6000: [210, 210, 210, 210, 210]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1034, T^2/W 1000; L 100: A/A0 1034, T^2/W 1000
+   standing built     : crossings  477; max |a| per window of 6000: [200, 200, 200, 200, 200]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1000, T^2/W 1000
+   standing edge      : crossings  477; max |a| per window of 6000: [210, 210, 210, 210, 210]; marks: L 100: A/A0 1000, T^2/W 1000; L 100: A/A0 1034, T^2/W 1000; L 100: A/A0 1034, T^2/W 1000
+   rising   root      : crossings  332; max |a| per window of 6000: [218, 218, 218, 206, 215]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 1014, T^2/W 999; L 175: A/A0 1000, T^2/W 1003
+   rising   root-exact: crossings  332; max |a| per window of 6000: [239, 242, 240, 223, 228]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 991, T^2/W 996; L 175: A/A0 939, T^2/W 1004
+   rising   built     : crossings  332; max |a| per window of 6000: [210, 232, 244, 252, 266]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 1163, T^2/W 1001; L 175: A/A0 1187, T^2/W 1003
+   rising   edge      : crossings  332; max |a| per window of 6000: [209, 199, 172, 150, 135]; marks: L 125: A/A0 1000, T^2/W 1000; L 150: A/A0 838, T^2/W 1001; L 175: A/A0 731, T^2/W 996
+
+Reading: the exact mutant (the push's remainder kept) tells the dropped remainder's share from the whole count's.

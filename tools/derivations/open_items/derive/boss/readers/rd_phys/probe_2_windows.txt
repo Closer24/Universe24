@@ -1,0 +1,156 @@
+PROBE 2: the hairspring on the root dial by windows, L = 100 standing, g = 37 (T = 103 rounds), 300,000 rounds
+   a0 is the displacement at rest; g a0 / L is the push in root-counts at the turning point (the floor is 1/2)
+
+ROOT  a0        1 (g a0 / L = 370 permille): 32 E0 = 592
+   to round  30000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round  60000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round  90000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round 120000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round 150000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round 180000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round 210000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round 240000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round 270000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+   to round 300000: max |a|        1 ( 1000 permille of a0) | 32 E min 592 mean 592 max 592 | E mean  1000 permille of E0 | up-crossings 0
+BUILT a0        1:
+   to round  30000: max |a|        1 ( 1000 permille of a0) | 2 W E min 1369 max 100910729 | up-crossings 55
+   to round  60000: max |a|        1 ( 1000 permille of a0) | 2 W E min 1369 max 100910729 | up-crossings 55
+   to round  90000: max |a|        1 ( 1000 permille of a0) | 2 W E min 1369 max 100910729 | up-crossings 55
+   to round 300000: max |a|        1 ( 1000 permille of a0) | 2 W E min 1369 max 100910729 | up-crossings 54
+
+ROOT  a0        2 (g a0 / L = 740 permille): 32 E0 = 2368
+   to round  30000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16701 max 43984 | E mean  7052 permille of E0 | up-crossings 144
+   to round  60000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16711 max 43984 | E mean  7057 permille of E0 | up-crossings 144
+   to round  90000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16691 max 43984 | E mean  7048 permille of E0 | up-crossings 144
+   to round 120000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16717 max 43984 | E mean  7059 permille of E0 | up-crossings 145
+   to round 150000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16687 max 43984 | E mean  7046 permille of E0 | up-crossings 144
+   to round 180000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16723 max 43984 | E mean  7062 permille of E0 | up-crossings 144
+   to round 210000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16685 max 43984 | E mean  7046 permille of E0 | up-crossings 144
+   to round 240000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16721 max 43984 | E mean  7061 permille of E0 | up-crossings 145
+   to round 270000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16687 max 43984 | E mean  7046 permille of E0 | up-crossings 144
+   to round 300000: max |a|        2 ( 1000 permille of a0) | 32 E min 2368 mean 16719 max 43984 | E mean  7060 permille of E0 | up-crossings 144
+BUILT a0        2:
+   to round  30000: max |a|        2 ( 1000 permille of a0) | 2 W E min 12321 max 102764096 | up-crossings 107
+   to round  60000: max |a|        2 ( 1000 permille of a0) | 2 W E min 12321 max 102764096 | up-crossings 107
+   to round  90000: max |a|        2 ( 1000 permille of a0) | 2 W E min 12321 max 102764096 | up-crossings 107
+   to round 300000: max |a|        2 ( 1000 permille of a0) | 2 W E min 12321 max 102764096 | up-crossings 107
+
+ROOT  a0        3 (g a0 / L = 1110 permille): 32 E0 = 5328
+   to round  30000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20085 max 46944 | E mean  3769 permille of E0 | up-crossings 141
+   to round  60000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20082 max 46944 | E mean  3769 permille of E0 | up-crossings 142
+   to round  90000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20085 max 46944 | E mean  3769 permille of E0 | up-crossings 141
+   to round 120000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20082 max 46944 | E mean  3769 permille of E0 | up-crossings 142
+   to round 150000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20085 max 46944 | E mean  3769 permille of E0 | up-crossings 141
+   to round 180000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20082 max 46944 | E mean  3769 permille of E0 | up-crossings 142
+   to round 210000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20085 max 46944 | E mean  3769 permille of E0 | up-crossings 141
+   to round 240000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20083 max 46944 | E mean  3769 permille of E0 | up-crossings 142
+   to round 270000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20085 max 46944 | E mean  3769 permille of E0 | up-crossings 141
+   to round 300000: max |a|        3 ( 1000 permille of a0) | 32 E min 5328 mean 20083 max 46944 | E mean  3769 permille of E0 | up-crossings 142
+BUILT a0        3:
+   to round  30000: max |a|        3 ( 1000 permille of a0) | 2 W E min 49284 max 105360201 | up-crossings 155
+   to round  60000: max |a|        3 ( 1000 permille of a0) | 2 W E min 49284 max 105360201 | up-crossings 154
+   to round  90000: max |a|        3 ( 1000 permille of a0) | 2 W E min 49284 max 105360201 | up-crossings 155
+   to round 300000: max |a|        3 ( 1000 permille of a0) | 2 W E min 49284 max 105360201 | up-crossings 154
+
+ROOT  a0        5 (g a0 / L = 1850 permille): 32 E0 = 14800
+   to round  30000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round  60000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round  90000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round 120000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round 150000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round 180000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round 210000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round 240000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round 270000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+   to round 300000: max |a|        5 ( 1000 permille of a0) | 32 E min 14800 mean 31732 max 58064 | E mean  2144 permille of E0 | up-crossings 250
+BUILT a0        5:
+   to round  30000: max |a|        5 ( 1000 permille of a0) | 2 W E min 308025 max 112780625 | up-crossings 231
+   to round  60000: max |a|        5 ( 1000 permille of a0) | 2 W E min 308025 max 112780625 | up-crossings 231
+   to round  90000: max |a|        5 ( 1000 permille of a0) | 2 W E min 308025 max 112780625 | up-crossings 230
+   to round 300000: max |a|        5 ( 1000 permille of a0) | 2 W E min 308025 max 112780625 | up-crossings 231
+
+ROOT  a0       10 (g a0 / L = 3700 permille): 32 E0 = 59200
+   to round  30000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76904 max 102464 | E mean  1299 permille of E0 | up-crossings 333
+   to round  60000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76902 max 102464 | E mean  1299 permille of E0 | up-crossings 333
+   to round  90000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76904 max 102464 | E mean  1299 permille of E0 | up-crossings 334
+   to round 120000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76904 max 102464 | E mean  1299 permille of E0 | up-crossings 333
+   to round 150000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76902 max 102464 | E mean  1299 permille of E0 | up-crossings 333
+   to round 180000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76904 max 102464 | E mean  1299 permille of E0 | up-crossings 334
+   to round 210000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76904 max 102464 | E mean  1299 permille of E0 | up-crossings 333
+   to round 240000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76902 max 102464 | E mean  1299 permille of E0 | up-crossings 333
+   to round 270000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76904 max 102464 | E mean  1299 permille of E0 | up-crossings 334
+   to round 300000: max |a|       10 ( 1000 permille of a0) | 32 E min 59200 mean 76904 max 102464 | E mean  1299 permille of E0 | up-crossings 333
+BUILT a0       10:
+   to round  30000: max |a|       10 ( 1000 permille of a0) | 2 W E min 4141225 max 145273396 | up-crossings 312
+   to round  60000: max |a|       10 ( 1000 permille of a0) | 2 W E min 4141225 max 145273396 | up-crossings 313
+   to round  90000: max |a|       10 ( 1000 permille of a0) | 2 W E min 4141225 max 145273396 | up-crossings 312
+   to round 300000: max |a|       10 ( 1000 permille of a0) | 2 W E min 4141225 max 145273396 | up-crossings 313
+
+ROOT  a0       30 (g a0 / L = 11100 permille): 32 E0 = 532800
+   to round  30000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round  60000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round  90000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round 120000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round 150000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round 180000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round 210000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round 240000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round 270000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+   to round 300000: max |a|       30 ( 1000 permille of a0) | 32 E min 517392 mean 546162 max 588256 | E mean  1025 permille of E0 | up-crossings 300
+BUILT a0       30:
+   to round  30000: max |a|       30 ( 1000 permille of a0) | 2 W E min 181871761 max 555028601 | up-crossings 300
+   to round  60000: max |a|       30 ( 1000 permille of a0) | 2 W E min 181871761 max 555028601 | up-crossings 300
+   to round  90000: max |a|       30 ( 1000 permille of a0) | 2 W E min 181871761 max 555028601 | up-crossings 300
+   to round 300000: max |a|       30 ( 1000 permille of a0) | 2 W E min 181871761 max 555028601 | up-crossings 300
+
+ROOT  a0      100 (g a0 / L = 37000 permille): 32 E0 = 5920000
+   to round  30000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6074928 max 6429008 | E mean  1026 permille of E0 | up-crossings 290
+   to round  60000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6076104 max 6429008 | E mean  1026 permille of E0 | up-crossings 291
+   to round  90000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6074858 max 6429008 | E mean  1026 permille of E0 | up-crossings 290
+   to round 120000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6076142 max 6429008 | E mean  1026 permille of E0 | up-crossings 291
+   to round 150000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6074829 max 6429008 | E mean  1026 permille of E0 | up-crossings 290
+   to round 180000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6076196 max 6429008 | E mean  1026 permille of E0 | up-crossings 290
+   to round 210000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6074829 max 6429008 | E mean  1026 permille of E0 | up-crossings 291
+   to round 240000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6076248 max 6429008 | E mean  1026 permille of E0 | up-crossings 290
+   to round 270000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6074815 max 6429008 | E mean  1026 permille of E0 | up-crossings 291
+   to round 300000: max |a|      102 ( 1020 permille of a0) | 32 E min 5751136 mean 6076276 max 6429008 | E mean  1026 permille of E0 | up-crossings 290
+BUILT a0      100:
+   to round  30000: max |a|      100 ( 1000 permille of a0) | 2 W E min 3073952489 max 4420552689 | up-crossings 290
+   to round  60000: max |a|      100 ( 1000 permille of a0) | 2 W E min 3073952489 max 4420552689 | up-crossings 291
+   to round  90000: max |a|      100 ( 1000 permille of a0) | 2 W E min 3073952489 max 4420552689 | up-crossings 291
+   to round 300000: max |a|      100 ( 1000 permille of a0) | 2 W E min 3073952489 max 4420552689 | up-crossings 291
+
+ROOT  a0     1000 (g a0 / L = 370000 permille): 32 E0 = 592000000
+   to round  30000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591880675 max 614924432 | E mean   999 permille of E0 | up-crossings 290
+   to round  60000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591921673 max 614924432 | E mean   999 permille of E0 | up-crossings 291
+   to round  90000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591845857 max 614924432 | E mean   999 permille of E0 | up-crossings 290
+   to round 120000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591885614 max 614924432 | E mean   999 permille of E0 | up-crossings 291
+   to round 150000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591880306 max 614924432 | E mean   999 permille of E0 | up-crossings 290
+   to round 180000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591892358 max 614924432 | E mean   999 permille of E0 | up-crossings 291
+   to round 210000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591892785 max 614924432 | E mean   999 permille of E0 | up-crossings 290
+   to round 240000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591840243 max 614924432 | E mean   999 permille of E0 | up-crossings 291
+   to round 270000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591939701 max 614924432 | E mean   999 permille of E0 | up-crossings 291
+   to round 300000: max |a|     1004 ( 1004 permille of a0) | 32 E min 567455632 mean 591880694 max 614924432 | E mean   999 permille of E0 | up-crossings 290
+BUILT a0     1000:
+   to round  30000: max |a|     1005 ( 1005 permille of a0) | 2 W E min 341183453281 max 390028519025 | up-crossings 290
+   to round  60000: max |a|     1005 ( 1005 permille of a0) | 2 W E min 341183453281 max 390028519025 | up-crossings 291
+   to round  90000: max |a|     1005 ( 1005 permille of a0) | 2 W E min 341183453281 max 390028519025 | up-crossings 290
+   to round 300000: max |a|     1005 ( 1005 permille of a0) | 2 W E min 341183453281 max 390028519025 | up-crossings 291
+
+ROOT  a0  1000000 (g a0 / L = 370000000 permille): 32 E0 = 592000000000000
+   to round  30000: max |a|  1000519 ( 1000 permille of a0) | 32 E min 574531913156368 mean 592588832509462 max 610641793394896 | E mean  1000 permille of E0 | up-crossings 290
+   to round  60000: max |a|  1000539 ( 1000 permille of a0) | 32 E min 574567476062864 mean 592614597116750 max 610666874937872 | E mean  1001 permille of E0 | up-crossings 291
+   to round  90000: max |a|  1000510 ( 1000 permille of a0) | 32 E min 574546613284192 mean 592587442686072 max 610631442359056 | E mean  1000 permille of E0 | up-crossings 290
+   to round 120000: max |a|  1000522 ( 1000 permille of a0) | 32 E min 574535567897488 mean 592583802037677 max 610640545312832 | E mean  1000 permille of E0 | up-crossings 291
+   to round 150000: max |a|  1000550 ( 1000 permille of a0) | 32 E min 574587267847232 mean 592634678999564 max 610679578497104 | E mean  1001 permille of E0 | up-crossings 290
+   to round 180000: max |a|  1000560 ( 1000 permille of a0) | 32 E min 574565076291456 mean 592629310838969 max 610692217891856 | E mean  1001 permille of E0 | up-crossings 291
+   to round 210000: max |a|  1000596 ( 1000 permille of a0) | 32 E min 574633596055648 mean 592680855393090 max 610734200283488 | E mean  1001 permille of E0 | up-crossings 290
+   to round 240000: max |a|  1000583 ( 1000 permille of a0) | 32 E min 574641531846416 mean 592678380961250 max 610718308011392 | E mean  1001 permille of E0 | up-crossings 291
+   to round 270000: max |a|  1000590 ( 1000 permille of a0) | 32 E min 574626414492992 mean 592684055456583 max 610728178629392 | E mean  1001 permille of E0 | up-crossings 290
+   to round 300000: max |a|  1000599 ( 1000 permille of a0) | 32 E min 574607139720800 mean 592672329214418 max 610736846884432 | E mean  1001 permille of E0 | up-crossings 291
+BUILT a0  1000000:
+   to round  30000: max |a|  1000504 ( 1000 permille of a0) | 2 W E min 359070797572725881 max 381642468348526225 | up-crossings 290
+   to round  60000: max |a|  1000512 ( 1000 permille of a0) | 2 W E min 359072677565738401 max 381646696151804689 | up-crossings 291
+   to round  90000: max |a|  1000477 ( 1000 permille of a0) | 2 W E min 359067781519943476 max 381623515330828801 | up-crossings 290
+   to round 300000: max |a|  1000572 ( 1000 permille of a0) | 2 W E min 359112255990544404 max 381693274979876756 | up-crossings 291
+
