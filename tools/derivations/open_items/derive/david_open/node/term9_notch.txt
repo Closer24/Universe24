@@ -1,0 +1,4 @@
+(a) a source J = 3 x 10^22 pinned at one Node-clock of 64, no notch: round 500: the sum 43959, its least 685; round 1000: the sum 170843, its least 2665; round 2000: the sum 671762, its least 10452; round 4000: the sum 2662342, its least 41572
+(b) the same with the notch, 2 f9 = 11231745747490658518 (W div 8100): the sum over 4,000 rounds from -695 to 5847, about the rest 2671; sign changes about it 14, against 14.1 from the notch's beat
+(c) laid uniform at 10^9, no source, 4,000 rounds (the notch's beat gives 14.1 at the rest teeth): the 00 slot: 14 sign changes, moved True; the ii trace: 17 sign changes, moved True; the E part, xx - yy: 0 sign changes, moved False; the T2 part, yz: 0 sign changes, moved False
+(d) 2,000 rounds out and 2,000 back with the notch and the source: the lay returns bit for bit: True
