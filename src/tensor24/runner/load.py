@@ -13,7 +13,7 @@ import numpy as np
 
 from tensor24.algebra.carry import Z, carry, lit
 from tensor24.runner.board import board
-from tensor24.runner.files import columns, entries, vocabulary
+from tensor24.runner.files import GEAR, entries, vocabulary
 
 
 class Train(NamedTuple):
@@ -112,7 +112,8 @@ def lay(gears: list[list[int]], trains: Trains, sites: int) -> tuple[tuple[Z, ..
         return (), [
             f"piece.shape: {rows} rows at {sites} sites, more than the arrays of this machine hold ({error})"
         ]
-    train, component, site, now, before, tooth = columns(gears)
+    # the format's fields head the gears' rows, so a setting of no gears lays every field empty
+    train, component, site, now, before, tooth = np.array([GEAR, *gears], dtype=object)[1:].T
     at = (trains.first[train.astype(np.intp)] + component).astype(np.intp), site.astype(np.intp)
     a[at], b[at], r[at] = now, before, tooth
     return (a, b, r, rd), []
