@@ -1,0 +1,56 @@
+1. the squares of every kind (Sym^2 + Alt^2 = K x K)
+   A1   : Sym^2 {'A1': 1}; Alt^2 {}
+   A2   : Sym^2 {'A1': 1}; Alt^2 {}
+   E    : Sym^2 {'A1': 1, 'E': 1}; Alt^2 {'A2': 1}
+   T1   : Sym^2 {'A1': 1, 'E': 1, 'T2': 1}; Alt^2 {'T1': 1}
+   T2   : Sym^2 {'A1': 1, 'E': 1, 'T2': 1}; Alt^2 {'T1': 1}
+   E1/2 : Sym^2 {'T1': 1}; Alt^2 {'A1': 1}
+   E5/2 : Sym^2 {'T1': 1}; Alt^2 {'A1': 1}
+   G3/2 : Sym^2 {'A2': 1, 'T1': 2, 'T2': 1}; Alt^2 {'A1': 1, 'E': 1, 'T2': 1}
+   kinds where Sym^2 + Alt^2 differs from K x K: 0
+2. the exchange sign e and where A1 lies
+   A1   : e = +1; A1 in Sym^2; two equal clocks fuse into {'A1': 1}
+   A2   : e = +1; A1 in Sym^2; two equal clocks fuse into {'A1': 1}
+   E    : e = +1; A1 in Sym^2; two equal clocks fuse into {'A1': 1, 'E': 1}
+   T1   : e = +1; A1 in Sym^2; two equal clocks fuse into {'A1': 1, 'E': 1, 'T2': 1}
+   T2   : e = +1; A1 in Sym^2; two equal clocks fuse into {'A1': 1, 'E': 1, 'T2': 1}
+   E1/2 : e = -1; A1 in Alt^2; two equal clocks fuse into {'A1': 1}
+   E5/2 : e = -1; A1 in Alt^2; two equal clocks fuse into {'A1': 1}
+   G3/2 : e = -1; A1 in Alt^2; two equal clocks fuse into {'A1': 1, 'E': 1, 'T2': 1}
+3. the ladders from the calibre with the twin hands {A1, E1/2}
+   (equal) every pair of one kind equal
+   bang 1: 2 kinds ['A1', 'E1/2']
+   bang 2: 2 kinds ['A1', 'E1/2']
+   bang 3: 2 kinds ['A1', 'E1/2']
+   bang 4: 2 kinds ['A1', 'E1/2']
+   bang 5: 2 kinds ['A1', 'E1/2']
+   bang 6: 2 kinds ['A1', 'E1/2']
+   all eight kinds stand at no bang
+   (fitting) the first rung's twin pair unequal (the fitting's quantum and antiquantum)
+   bang 1: 2 kinds ['A1', 'E1/2']
+   bang 2: 3 kinds ['A1', 'T1', 'E1/2']
+   bang 3: 6 kinds ['A1', 'E', 'T1', 'T2', 'E1/2', 'G3/2']
+   bang 4: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 5: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 6: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   all eight kinds stand at bang 4
+   (table) every pair whole
+   bang 1: 2 kinds ['A1', 'E1/2']
+   bang 2: 3 kinds ['A1', 'T1', 'E1/2']
+   bang 3: 6 kinds ['A1', 'E', 'T1', 'T2', 'E1/2', 'G3/2']
+   bang 4: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 5: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 6: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   all eight kinds stand at bang 4
+   the bang at which all eight stand: equal None, fitting 4, table 4
+4. the mutant: the exchange sign read backwards
+   two equal twins fuse into {'T1': 1} (David's rule: A1 alone)
+   (equal, mutant)
+   bang 1: 2 kinds ['A1', 'E1/2']
+   bang 2: 3 kinds ['A1', 'T1', 'E1/2']
+   bang 3: 4 kinds ['A1', 'T1', 'E1/2', 'G3/2']
+   bang 4: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 5: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   bang 6: 8 kinds ['A1', 'A2', 'E', 'T1', 'T2', 'E1/2', 'E5/2', 'G3/2']
+   all eight kinds stand at bang 4
+   the mutant's ladder climbs to all eight at bang 4, where the law's stays at two kinds: it fails

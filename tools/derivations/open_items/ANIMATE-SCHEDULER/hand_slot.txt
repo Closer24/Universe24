@@ -1,0 +1,15 @@
+A band joined by a hand and a slot at once (part 5's board), under decision 40 (b), a full slot refusing
+after the draw; the withdrawn weighing, a full slot weighing 0, for contrast
+  no slot limit (two free):
+    a0, b0: far + 1/2 (withdrawn 1/2), near + 1/2 (withdrawn 1/2); refused: near 0, quantum 0; slot kept True
+    a1, b0: far + 1/2 (withdrawn 1/2), near + 1/2 (withdrawn 1/2); refused: near 0, quantum 0; slot kept True
+    a0, b1: far + 1/2 (withdrawn 1/2), near + 1/2 (withdrawn 1/2); refused: near 0, quantum 0; slot kept True
+    a1, b1: far + 1/2 (withdrawn 1/2), near + 1/2 (withdrawn 1/2); refused: near 0, quantum 0; slot kept True
+  one free slot at site 55:
+    a0, b0: far + 1/2 (withdrawn 11/29), near + 1/2 (withdrawn 2/3); refused: near 1/8, quantum 1/8; slot kept True
+    a1, b0: far + 1/2 (withdrawn 67/174), near + 1/2 (withdrawn 2/3); refused: near 1/8, quantum 1/8; slot kept True
+    a0, b1: far + 1/2 (withdrawn 11/29), near + 1/2 (withdrawn 2/3); refused: near 1/8, quantum 1/8; slot kept True
+    a1, b1: far + 1/2 (withdrawn 107/174), near + 1/2 (withdrawn 2/3); refused: near 1/8, quantum 1/8; slot kept True
+Part 3's tie, two independent quanta at z's one free slot, B born at site 30 (tick 0):
+  A's click at x (site 4, tick 6), spacelike to B's birth: B not born 2/5; B born 2/5 (withdrawn 10/19)
+  A at z (site 20, tick 10), on B's birth's light cone: B not born, taken 3/5; B born, taken 12/25, refused 3/25

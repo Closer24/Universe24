@@ -1,0 +1,27 @@
+Meshes that lengthen, read by clicks alone (a stand-in for G2), whole numbers only
+
+1. One label distance, Node-clock 0 to Node-clock 5, and its echo in Node-clock 0's own count, laid at rounds (0, 500, 1000, 1500, 2000):
+   still   : [40, 40, 40, 40, 40]
+   growing : [40, 152, 263, 375, 485]
+   doubling: [40, 80, 160, 608, None]
+   The label distance is 5 every time; the echo is a length, the label is none (a site's difference is no length).
+
+2. The horizon, under doubling Meshes: the farthest Node-clock whose quantum, laid at a round, is ever taken at Node-clock 0
+   laid at round    0: taken from Node-clocks 1 to 39, and from none beyond it within 6000 rounds
+   laid at round  800: taken from Node-clocks 1 to 39, and from none beyond it within 6000 rounds
+   laid at round 1600: taken from Node-clocks 1 to 11, and from none beyond it within 6000 rounds
+   laid at round 2400: taken from Node-clocks 1 to 2, and from none beyond it within 6000 rounds
+   laid at round 3200: taken from no Node-clock, and from none beyond it within 6000 rounds
+   The horizon closes in, in labels: what is laid later beyond it is never taken here.
+
+3. The redshift: a clock at Node-clock 20 lays one quantum every 10 rounds; Node-clock 0 counts its own rounds between the takes
+   still   : the first gaps [10, 10, 10, 10, 10], the last [10, 10, 10]; gaps above 10: 0 of 99
+   growing : the first gaps [14, 14, 16, 14, 17], the last [13, 18, 14]; gaps above 10: 99 of 99
+
+4. The swing: Meshes lengthen to the top at round 1500 and shorten after it; Node-clock 0 takes quanta laid every 10 rounds
+   from Node-clock  2: after the top, the first gap below 10 at round 1555; before it, 0 gaps above 10 (still red)
+   from Node-clock 10: after the top, the first gap below 10 at round 1668; before it, 9 gaps above 10 (still red)
+   from Node-clock 30: after the top, the first gap below 10 at round 1908; before it, 24 gaps above 10 (still red)
+   The nearest turns blue first, and the far light keeps arriving red long after the top: the clicks still see the expansion.
+
+5. The cone: light crosses at most one Mesh a round, under every law above, by its carry (one unit a round, a Mesh at least one unit).

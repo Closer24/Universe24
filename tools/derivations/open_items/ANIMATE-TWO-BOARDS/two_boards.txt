@@ -1,0 +1,38 @@
+one pair born at one Node-clock, two detectors choosing late; draft D's axes; every draw enumerated whole
+
+F, one forward board, the history kept
+  the twins' direction drawn at the birth: S = -82/87 = -0.9425; E = -7/29, -7/29, -20/87, 20/87
+  every forward-only history, at most: |S| = 2 (the 16 fixed answers per setting, exhausted)
+  the twins' direction the last bang's record (the chosen path), 4096 bangs: S = -1.4689
+  the twins' direction the last bang's record (the chosen path), 65536 bangs: S = -1.4139
+
+O, two boards, ordered by the board's tick
+  A first: S = -82/29 = -2.8276; E = -21/29, -21/29, -20/29, 20/29
+  B first gives the same law: True
+  the marginals, every setting: a,b: 1/2, 1/2; a,b': 1/2, 1/2; a',b: 1/2, 1/2; a',b': 1/2, 1/2
+  one history at every digit; the second twin holds the first outcome from the first click's tick on
+
+U, two boards, no order: the consistent histories at every pair of digits
+  a,b (a . b = 21/29): of 3364 digit pairs, 0 with none, 1600 with one, 1764 with two (441/841, (a . b)^2 = 441/841); the sweeps from a silent future settle at 2482 and cycle at 882
+  a,b' (a . b = 21/29): of 3364 digit pairs, 0 with none, 1600 with one, 1764 with two (441/841, (a . b)^2 = 441/841); the sweeps from a silent future settle at 2482 and cycle at 882
+  a',b (a . b = 20/29): of 3364 digit pairs, 0 with none, 1764 with one, 1600 with two (400/841, (a . b)^2 = 400/841); the sweeps from a silent future settle at 2564 and cycle at 800
+  a',b' (a . b = -20/29): of 3364 digit pairs, 0 with none, 1764 with one, 1600 with two (400/841, (a . b)^2 = 400/841); the sweeps from a silent future settle at 2564 and cycle at 800
+  a fair choice where two agree: S = -106/29 = -3.6552; E = -777/841, -777/841, -760/841, 760/841
+  the marginals: a,b: 1/2, 1/2; a,b': 1/2, 1/2; a',b: 1/2, 1/2; a',b': 1/2, 1/2
+  Tsirelson's bound, nature's largest: |S| at most 2 sqrt 2 = 2.8284
+
+B, two boards, the draw at the birth (the settings carried back, the outcomes carried out)
+  one draw over the four parts: S = -82/29 = -2.8276; E = -21/29, -21/29, -20/29, 20/29
+  the four parts in another order give the same law: True; equal to O's: True
+  the marginals: a,b: 1/2, 1/2; a,b': 1/2, 1/2; a',b: 1/2, 1/2; a',b': 1/2, 1/2
+  one history at every digit; each twin carries only its own outcome, out from the birth
+
+a loop: the second setting chosen by the first outcome (b' after +, b after -), the first setting a'
+  under B, the four parts with the first end's outcome outer (the cause's order): of 116 digits at the birth, 0 with no consistent history, 116 with one, 0 with two
+    its law (+1,+1) 49/116, (+1,-1) 9/116, (-1,+1) 49/116, (-1,-1) 9/116, equal to O's: True
+  under B, the four parts with the second's outer: of 116 digits at the birth, 40 with no consistent history, 36 with one, 40 with two
+  under O, the first click first: one history at every digit, the law (+1,+1) 49/116, (+1,-1) 9/116, (-1,+1) 49/116, (-1,-1) 9/116
+
+one quantum over three absorbers, sizes 5, 3 and 2 (Grangier)
+  F, each absorber alone at its share 1/2, 3/10, 1/5: two or more click at once with odds 1/4 = 0.250 (g2 above 0)
+  B, one draw at the source over the sizes carried back: each absorber's odds 1/2, 3/10, 1/5, and two never click at once (g2 = 0)
