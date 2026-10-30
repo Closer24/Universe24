@@ -1,0 +1,48 @@
+== 0. the harness is the head's act where no stride is read
+tick_head(now plan, no rate plan) == step.tick(head): True
+
+== 1. N3: a uniform swing, no spring, stride 7 (strength 1 per slot)
+  A1 gear: 00 slot 98, diagonal [0, 0, 0], 0i [0, 0, 0], jk [0, 0, 0], the same at every site: True;  4 rho = 98, 4 p = 98
+  T1 gear x: 00 slot 98, diagonal [0, 0, 0], 0i [0, 0, 0], jk [0, 0, 0], the same at every site: True;  4 rho = 98, 4 p = 98
+  strides in 1, out -1: 00 slot 2 (sigma_b^2 + sigma_a^2; the product form 2 sb sa would be -2), diagonal 0
+  strides in 6, out 8: 00 slot 100 (sigma_b^2 + sigma_a^2; the product form 2 sb sa would be 96), diagonal 0
+
+== 2. S = sum C (v_b (x) v_b + v_a (x) v_a) under the 24 and under the reversal (one site, varied readings)
+  S on the turned readings = square(g) S on all 24 of 24 turns of the 24
+  under the reversal (sigma_b, sigma_a) -> (-sigma_a, -sigma_b): S -> tau S with tau = [1, -1, -1, -1, 1, 1, 1, 1, 1, 1]: True
+  (rows' parity laid from the four-vector's reversal: odd slots [7, 8, 9])
+
+== 3. candidate (ii): the metric reads the matter's stride at the now slot squared, unstaged (head's form)
+  parity mirror False: first round back that departs: 1, rows departing there: [6, 7, 8, 9]
+  parity mirror True: first round back that departs: 1, rows departing there: [6, 7, 8, 9]
+
+== 4. candidate (i): staged (the matter steps first, the metric reads sigma_b = a - b and sigma_a = a+ - a)
+  standing clock, parity mirror False: departs at round back 1, rows [7, 8, 9]
+  standing clock, parity mirror True: departs at round back None, rows []
+  standing clock, parity mirror, lay 13: 300 rounds forth and back exact: True; the state moved: True
+  standing clock, parity mirror, lay 14: 300 rounds forth and back exact: True; the state moved: True
+  standing clock, parity mirror, lay 15: 300 rounds forth and back exact: True; the state moved: True
+  moving clock, lay 16: W in [2855, 3306], 8926 site-rounds where the clock fell; rounds whose promise breaks (r >= W(a)): 300, the first at round 0; the run back departs at round back 1 (round 300 forth)
+  moving clock, lay 17: W in [2830, 3261], 8934 site-rounds where the clock fell; rounds whose promise breaks (r >= W(a)): 298, the first at round 1; the run back departs at round back 1 (round 300 forth)
+
+== 5. candidate (iii): the first-order form, each rate in its own slot (p), mirror R = R_P o D^-1
+  (a) standing clock: the first-order form equals the staged head's form for 300 rounds: True
+  (b) moving clock, lay 22: W in [2821, 3202], 8875 site-rounds where a matter clock fell; 300 rounds forth and back bit for bit: True; moved: True; largest count 618040
+  (b) moving clock, lay 23: W in [2816, 3193], 8942 site-rounds where a matter clock fell; 300 rounds forth and back bit for bit: True; moved: True; largest count 606259
+  (b) moving clock, lay 24: W in [2824, 3208], 8882 site-rounds where a matter clock fell; 300 rounds forth and back bit for bit: True; moved: True; largest count 544658
+  (b) moving clock, lay 25: W in [2824, 3149], 8953 site-rounds where a matter clock fell; 300 rounds forth and back bit for bit: True; moved: True; largest count 501579
+  (b') moving clock, the uniform mirror (no parity): departs at round back 1, rows [7, 8, 9]
+  (c) the 00 row's drift x -> x + p div (R + x) at R = 2, p = 10: 1 -> 4 and 2 -> 4: two counts, one image
+      run with the 00 row reading itself: departs at round back 1, rows [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+
+== 6. the self-push: the metric reading its own rate, and its own gradient
+  head's form, its own stride into the now, squared: departs at round back 1, rows [6]
+  first-order form, its own stride into the now, squared: departs at round back 1, rows [6]
+  head's form, its own stride out (pass 1's): departs at round back 1, rows [6]
+  first-order form, its own stride out (pass 1's): departs at round back 1, rows [6]
+  head's form, its own gradient at the now slot (ii, jk): exact 300 rounds: True
+  first-order form, its own gradient, the clock moving: exact 300 rounds: True
+
+== 7. locality: the staged act at a site reads its own gears and its six neighbours' alone
+  head's form: every site's new state unchanged by every count beyond its six neighbours: True
+  first-order form: every site's new state unchanged by every count beyond its six neighbours: True

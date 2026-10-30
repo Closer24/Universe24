@@ -60,7 +60,7 @@ def varied(
     every = np.arange(rows, dtype=np.intp)
     two = np.repeat(rng.permutation(rows)[: 1 + 1], rows) if clocked else every  # every gear reads both
     read = Read(two, draw(rng, 1, 4, len(two)), np.tile(every, 1 + 1)) if clocked else frame.unread()
-    highs = (PLANES * rows,) * 2 + (PLANES * rows + 1, rows)  # the third reading may be the unit
+    highs = (PLANES * rows + 1,) * 3 + (rows,)  # any reading may be the unit, the readings' last row
     index = [rng.integers(0, high, size=TERMS).astype(np.intp) for high in highs]
     # three readings only where the act is read for one round, since they cube the counts; else the unit
     index[2] = index[2] if cubed else 0 * index[2] + PLANES * rows
@@ -289,10 +289,15 @@ def cube():
 
 
 def sourced_images():
-    """The sources turn with the board under the 24: the force and J of the turned state, the turned force and J."""
-    nb, plan = frame.board(CUBE), cube()
+    """The sources turn with the board under the 24, J of two readings and of three (the third the A1 value no turn moves)."""
+    return all(turned(plan) for plan in (cube(), cube()._replace(third=0 * cube().third)))
+
+
+def turned(plan):
+    """One plan's sources under the 24 on the cube, and J not 0."""
     # A1 and A2, T1 and T2, as stored: the load lays no row of its own
-    n, rows = nb.shape[1], 1 + 1 + 3 + 3
+    nb, rows = frame.board(CUBE), 1 + 1 + 3 + 3
+    n = nb.shape[1]
     ones = np.ones((1, n), dtype=object)
     gearing = Gearing(ones, ones, ones, ones)
     grip = 3 * ones.repeat(3, axis=1)
@@ -395,9 +400,10 @@ def mutants():
     def reread(order):
         return lambda a, nb: seen(a, nb[order])
 
-    def forceless(plan, readings, gears):
-        cut = len(readings) - len(gears)
-        return contract.contract(plan, np.concatenate((readings[:cut], 0 * readings[cut:])), gears)
+    def forceless(plan, readings, gears):  # the force's rows read as 0, the unit kept
+        cut, unit = len(readings) - len(gears) - 1, readings[-1:]
+        kept = np.concatenate((readings[:cut], 0 * readings[cut:-1], unit))
+        return contract.contract(plan, kept, gears)
 
     def thirdless(plan, readings, gears):  # every term's third reading the unit, its own ignored
         return contract.contract(

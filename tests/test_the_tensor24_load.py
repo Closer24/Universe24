@@ -157,7 +157,7 @@ def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
     """Sofer's fuzz of stage 6: no gears key loads as none and lays no term of J, and a board past one array is named."""
     ks, c, square = made
     held, found = load(universe(), {}, SITES, ks, c, square)
-    assert found == [] and not any(len(x) for x in held.plan)
+    assert found == [] and not any(len(x) for x in (held.potential[0], *held.potential[1]))
     _, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
     assert len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
 

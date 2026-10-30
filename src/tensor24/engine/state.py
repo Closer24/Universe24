@@ -51,6 +51,6 @@ class Layout(NamedTuple):
     meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired by the load (load.geometry); a grip its own conjugate
     grip: Z  # (rows or 1, Meshes): a gear row's grip on each Mesh, once per Mesh; a train's rows alike from 7b's load
     gearing: Gearing
-    plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, and the force
+    plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, the force, the unit last
     clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
     stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh

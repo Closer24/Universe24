@@ -3,7 +3,7 @@
 from pathlib import Path
 from typing import Any
 
-from tensor24.engine import kinds, state, step
+from tensor24.engine import contract, kinds, state, step
 from tensor24.runner import load, run
 
 
@@ -11,15 +11,20 @@ def made(spokes: Any) -> tuple[kinds.Kinds, dict[Any, Any], Any]:
     """The 24's kinds and their tables, and the four-vector's square on the 24, derived once from the Node-clock's own star, its Spokes, as the load reads them: every candidate weighed by Rule3, 0 off the 24."""
     matrix, weight = kinds.turns(spokes)
     held = kinds.kinds(matrix)
-    c = load.tables(held, kinds.kinds(kinds.inverse(matrix)), weight, kinds.projector)
+    c = load.tables(kinds.stacked(held), kinds.stacked(kinds.kinds(kinds.inverse(matrix))), weight)
     turned = kinds.weighed(held, weight)
     return turned, c, kinds.square(turned)
 
 
 def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> state.Layout:
     """The layout the load reads from the three files, in the engine's records."""
-    nb, spokes, meshes, grip, gearing, plan, clock, stretch = load.laid_out(universe, shape, loaded)
-    typed = state.Gearing(*gearing), state.Plan(*plan), state.Read(*clock), state.Read(*stretch)
+    nb, spokes, meshes, grip, gearing, potential, clock, stretch = load.laid_out(universe, shape, loaded)
+    typed = (
+        state.Gearing(*gearing),
+        contract.pushes(*potential),
+        state.Read(*clock),
+        state.Read(*stretch),
+    )
     return state.Layout(nb, spokes, meshes, grip, *typed)
 
 

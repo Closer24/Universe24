@@ -2,14 +2,12 @@
 
 # The engine's kinds come in as arguments, as main.py passes them: the runner imports no engine module.
 
-import itertools
-from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from typing import Any, NamedTuple
 
 import numpy as np
 
-from tensor24.algebra.carry import Z, carry
+from tensor24.algebra.carry import Z, carry, lit
 from tensor24.runner.board import board
 from tensor24.runner.files import GEAR, entries, vocabulary
 
@@ -51,39 +49,41 @@ class Trains:
         return Train(int(self.first[t]), kinds, dims, int(self.part[t]), int(self.square[t]))
 
 
-def common(values: Any) -> int:
-    """The greatest common divisor of whole numbers, by Euclid's carries; 0 where all are 0."""
-    g = 0
-    for value in values:
-        a, b = abs(value), g
-        while b:
-            a, b = b, carry(a, b, 0)[1]
-        g = a
-    return g
+def first(x: Z) -> Z:
+    """1 at the first 1 along the last axis of an array of 0s and 1s, 0 elsewhere: each entry times the zero test of the count of 1s before it."""
+    before = np.cumsum(x, axis=-1) - x
+    alone, _ = carry(1, before * before + 1, 0)
+    return x * alone
 
 
-def primitive(c: Z) -> Z:
-    """A table over its entries' greatest common divisor, its first entry that is not 0 positive: the strength its one scale."""
-    g = common(c)
-    if not g:
-        return c
-    q, _ = carry(c, g, 0)
-    return q if next(x for x in q if x) > 0 else -q
-
-
-def tables(
-    kinds: Sequence[Z], inverse: Sequence[Z], weight: Z, projector: Callable[..., Z]
-) -> dict[Any, Z]:
-    """C[i, k -> m] for every three kinds: the group sum of each elementary seed in turn, the first not 0, made primitive."""
-    found = {}
-    every = range(len(kinds))
-    for i, k, m in itertools.product(every, every, every):
-        shape = tuple(kinds[n].shape[-1] for n in (m, i, k))
-        seeds = projector(weight, kinds[m], inverse[i], inverse[k]).reshape(int(np.prod(shape)), -1).T
-        found[(i, k, m)] = primitive(next((seed for seed in seeds if seed.any()), seeds[0])).reshape(
-            shape
-        )
-    return found
+def tables(held: Z, inverse: Z, weight: Z) -> Z:
+    """C[i, k -> m] for every three kinds at once in the axes' cube, no seed chosen and no channel searched: the group sum S of rho_m(g) Psi_m x rho_i(g^-1)^T Phi_i x rho_k(g^-1)^T Phi_k, Psi and Phi the two forms each kind's matrices keep, is c u u^T on a channel and 0 off one; c is its diagonal's entry that divides every other, u its row there over c, times the sign of its first entry not 0 by Rule3's sign test."""
+    kinds, side = len(held), held.shape[-1]
+    cube = (kinds, kinds, kinds, -1)
+    # each kind's two kept forms: Psi the sum of rho rho^T, the output's; Phi the sum of rho^T rho, an input's
+    out = np.einsum("mgxy,myz->mgxz", held, np.einsum("g,mgxy,mgzy->mxz", weight, held, held))
+    into = np.einsum("igpa,ipz->igaz", inverse, np.einsum("g,mgyx,mgyz->mxz", weight, held, held))
+    outward, inward = np.einsum("mgxx->mgx", out), np.einsum("igaa->iga", into)
+    diagonal = np.einsum("g,mgx,iga,kgb->ikmxab", weight, outward, inward, inward).reshape(cube)
+    # the diagonal's entries not 0 are c times a square; c is the one that divides every other
+    zero, _ = carry(1, diagonal * diagonal + 1, 0)
+    _, rest = carry(diagonal[..., None, :], (diagonal + zero)[..., :, None], 0)
+    whole, _ = carry(1, rest * rest + 1, 0)
+    at = first(lit(diagonal) * np.prod(whole, axis=-1))
+    c = (at * diagonal).sum(axis=-1)
+    # S's row there, each factor's own row read at the entry's place
+    place = at.reshape(kinds, kinds, kinds, side, side, side)
+    outer = np.einsum("ikmx,mgxy->ikmgy", np.einsum("ikmxab->ikmx", place), out)
+    middle = np.einsum("ikma,igap->ikmgp", np.einsum("ikmxab->ikma", place), into)
+    inner = np.einsum("ikmb,kgbq->ikmgq", np.einsum("ikmxab->ikmb", place), into)
+    row = np.einsum("g,ikmgy,ikmgp,ikmgq->ikmypq", weight, outer, middle, inner).reshape(cube)
+    none, _ = carry(1, c * c + 1, 0)  # 1 where no channel stands: its row is 0
+    u, _ = carry(row, (c + none)[..., None], 0)
+    lead = (first(lit(u)) * u).sum(axis=-1)
+    # the sign of the first entry not 0: the sign test of it less the sign test of its negative
+    up, _ = carry(lead, lead * lead + 1, 0)
+    down, _ = carry(-lead, lead * lead + 1, 0)
+    return ((up - down)[..., None] * u).reshape(kinds, kinds, kinds, side, side, side)
 
 
 def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z, Z]) -> Trains:
@@ -115,22 +115,24 @@ def lay(gears: list[list[int]], trains: Trains, sites: int) -> tuple[tuple[Z, ..
 
 
 class Loaded(NamedTuple):
-    """What the load makes of the universe and the setting: the trains' rows, J's plan, the state laid."""
+    """What the load makes of the universe and the setting: the trains' rows, J's potential, the state laid."""
 
     trains: Trains
-    plan: tuple[Z, Z, Z, Z, Z]  # J's plan: three readings, the factor and the target per term
+    potential: tuple[
+        Z, tuple[Z, Z, Z, Z]
+    ]  # J's potential: per monomial its factor and its four legs, the unit (-1) for a leg it lacks
     state: tuple[Z, ...]
 
 
 def load(
-    universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: dict[Any, Z], square: Z
+    universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: Z, square: Z
 ) -> tuple[Loaded, list[str]]:
-    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's plan holds no term, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3)."""
+    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds no monomial, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3)."""
     labels, dims, reads = vocabulary(kinds, square)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
     none = np.empty(0, dtype=np.intp)
     state, laid = lay(setting.get("gears", []), trains, sites)
-    return Loaded(trains, (none, none, none, none.astype(object), none), state), laid
+    return Loaded(trains, (none.astype(object), (none, none, none, none)), state), laid
 
 
 def geared(
@@ -183,10 +185,10 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's eight parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's plan, every gear's clock and the grips' read; main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's eight parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's potential, every gear's clock and the grips' read; main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
     nb = board((sx, sy, sz))
     spokes, meshes = geometry(nb, len(shape))
     gearing, clock, stretch, grip = geared(universe, loaded.trains, spokes)
     grips = np.full((1, len(shape) * nb.shape[1]), grip, dtype=object)
-    return nb, spokes, meshes, grips, gearing, loaded.plan, clock, stretch
+    return nb, spokes, meshes, grips, gearing, loaded.potential, clock, stretch

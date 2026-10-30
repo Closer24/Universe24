@@ -161,25 +161,40 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
     No ratio against nature's is claimed: a held count's parts sit where its own potential is least (decision 40 (h)).
   - **The ceiling beside the floor** (Animate's readers, 6518153643): the beat is the mass only while the push moves
     the held count far less than n. At twice the bound, laid at 10^7 and 2 x 10^7, the gear stays bounded but the held
-    count falls below 0 and the beat is 95 and 206 sign changes in 4,000 rounds, not the mass's 64. The act on the
-    engine gives the same numbers, the held count's least -3,112,715 and -8,012,335.
-  - **BUILT in the act** (the owner's word to the Boss, 07:4x UTC: start implementing). In clocks: each gear's
-    hairspring, its stiffness the held count's, and a spring that stiffens as it winds. In algebra: J's contraction
-    reads up to three readings a term, a gather, a product of three and a scattered sum, and the readings gain the unit
-    as their last row (engine/contract.py, step.sources, the Plan's third reading). So the gear's spring (one reading
-    and two units), the three-leg vertex (two readings and the unit) and the four-leg term (three readings) are the
-    same term. The loader's plan stays empty until G3: no strength is typed or laid. The tests choose g, lam, kappa and
-    n (tests/test_the_tensor24_spring.py) and the act gives Animate's numbers exactly: the runaway with no four-leg term
-    at rounds 49 and 29 (laid at 10^7 and 2 x 10^7), at half the bound at 205 and 50, held at twice it; the vertex's
-    gear at a small swing within a round of its own spring at the steady count, and that spring within a round of the
-    exact recurrence;
-    the 24's turn exact; the beat alike along an axis and off it; the run back bit for bit. The formula law reads the
-    three readings against the naive model, and its mutant (the third reading taken as the unit) fails it.
+    count falls below 0 and the beat is 95 and 206 sign changes in 4,000 rounds, not the mass's 64. A probe of the act
+    gives the same numbers, the held count's least -3,112,715 and -8,012,335.
+  - **BUILT in the act** (the owner's word to the Boss, 07:4x UTC: start implementing; and of 08:4x UTC: everything
+    generic now). In clocks: each gear's hairspring, its stiffness the held count's, and a spring that stiffens as it
+    winds. In algebra:
+    - J's contraction reads up to three readings a term, a gather, a product of three and a scattered sum, and the
+      readings gain the unit as their last row (engine/contract.py, step.sources, the Plan's third reading), so the
+      gear's spring, the three-leg vertex and the four-leg term are the same term;
+    - **the vertex law is the engine's own** (contract.pushes): the potential is a list of monomials, each a whole
+      factor times four legs, the unit (-1) for each it lacks, and every leg that is a gear's is pushed by minus the
+      factor times the other three, so each vertex pushes all its legs and keeps one energy. The loader lays the
+      potential, empty until G3 (no strength typed or laid), and main.py makes it the plan.
+    - The tests choose g, lam, kappa and n (tests/test_the_tensor24_spring.py) and hold the properties: the gear on its
+      own spring within a round of the exact recurrence, the vertex's gear at a small swing within a round of it, the
+      runaway below the bound and the swing held at twice it, the 24's turn exact, the beat alike along an axis and off
+      it, the run back bit for bit. A probe of the act gives Animate's numbers exactly (the runaway at rounds 49 and 29
+      with no four-leg term, 205 and 50 at half the bound). The formula law reads three readings, any of them the
+      unit, against the naive model, and its mutant (the third reading taken as the unit) fails it; the sources turn
+      under the 24 with a third reading on the cube.
 - **The strength:** in the vertex law, read through the ruler, no file holding it (decision 35); no single integer serves
   all tables (David, 6501657960, item 5). OPEN.
 - **The tables:** read in the square's basis where E stands, so E's ten oblique tables are never read (David,
-  6516176163, item 4). The tables' derivation with no seed and no search: the row of S = P times E's form at its first
-  diagonal entry not 0 (the Boss's 6515929376, David's closed form). DERIVED.
+  6516176163, item 4). BUILT (the node's initialization, on the owner's word of 08:4x UTC: everything generic now), with
+  no seed, no search, no greatest common divisor and no branch:
+  - **in clocks:** the 24 turns of the Node-clock's own star are summed once, and each product of two kinds' gears onto a
+    third is the one pattern every turn leaves as it is;
+  - **in algebra:** every channel's group sum S, rho_m(g) Psi_m x rho_i(g^-1)^T Phi_i x rho_k(g^-1)^T Phi_k, with Psi
+    and Phi the two forms each kind's matrices keep (the sum of rho rho^T and of rho^T rho, the identity's multiple on
+    the orthogonal kinds and E's form and its adjugate on E), is c u u^T, as David found with E's form (6516176163).
+    c is the diagonal's entry that divides every other (every table of the 24 has an entry 1 in size, and none above 2), u is S's row
+    there over c, and the table is u times the sign of its first entry not 0, by Rule3's sign test; all 125 channels
+    at once in the axes' cube (runner/load.py, tables; engine/kinds.py, stacked), equal to the old seed-by-seed tables
+    bit for bit on every channel. The gate's last 12 BLOCK-tier hits of the new engine (tables, primitive and common)
+    are gone; its notes are the membership weights at the start (the zero test, the sign test, "not 0" by one carry).
 - **The held count:** a family's components are read against no direction of the board, or the clicks see a turn change
   one species into another (David's G3 findings). OPEN: which vertices the one plan lays.
 
