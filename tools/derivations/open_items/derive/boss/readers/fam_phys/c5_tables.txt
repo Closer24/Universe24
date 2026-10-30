@@ -1,0 +1,19 @@
+The charge-keeping tables on the act, and the 24-gear leak under one (c5_tables.py)
+1. G3/2's table averaged over I on the act under the 48 lifts (probe_induced 4's run with the refused table replaced).
+   equivariant under 48 of 48; kept by I: True; 72 entries not 0
+   G3/2 (8 gears), the I-averaged table on the act, J through its own table (72 entries), rounds 1..4:
+      W = 9: 72 pushes, J not 0 at 293 of 567 gears, 79 bits; the true 48 hold 48 of 48; random signed permutations in the kind's place 0 of 48; the table with one entry raised 4 of 48
+      W = 10: 72 pushes, J not 0 at 293 of 567 gears, 76 bits; the true 48 hold 48 of 48; random signed permutations in the kind's place 0 of 48; the table with one entry raised 4 of 48
+      W = 1: 72 pushes, J not 0 at 293 of 567 gears, 127 bits; the true 48 hold 48 of 48; random signed permutations in the kind's place 0 of 48; the table with one entry raised 4 of 48
+
+2. The 24-gear train's table averaged over its own I (right i): the doublet-quartet blocks and the leak out of spin 1/2.
+   equivariant under 48 of 48; kept by I: True; entries not 0 1128 (the generic table's 1344); blocks not 0 (doublet-quartet, doublet-doublet, quartet-quartet): 1440, 1080, 1272
+   the free act:
+   one state laid (2 phi): both present at 768 Node-clock-rounds; the whole wedge D over |h_phi|^2 |h_chi|^2 summed: 0 thousandths; the whole's part outside spin 1/2 over the run: 0 thousandths
+      the board's winding w_I (both laid): 10321920 -> 10405986; SUM |h|^2 1290240 -> 4971757443
+   the partner laid (T phi): both present at 768 Node-clock-rounds; the whole wedge D over |h_phi|^2 |h_chi|^2 summed: 999 thousandths; the whole's part outside spin 1/2 over the run: 0 thousandths
+      the board's winding w_I (both laid): 4128768 -> 4132713; SUM |h|^2 516096 -> 1111529447
+   another spin-1/2 hand laid: both present at 768 Node-clock-rounds; the whole wedge D over |h_phi|^2 |h_chi|^2 summed: 443 thousandths; the whole's part outside spin 1/2 over the run: 0 thousandths
+      the board's winding w_I (both laid): 4030464 -> 4068462; SUM |h|^2 503808 -> 301272611
+   the I-averaged table, light drawn within 1,000:
+   one state laid (2 phi): both present at 768 Node-clock-rounds; the whole wedge D over |h_phi|^2 |h_chi|^2 summed: 0 thousandths; the whole's part outside spin 1/2 over the run: 695 thousandths

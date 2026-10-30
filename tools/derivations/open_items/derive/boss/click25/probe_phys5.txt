@@ -1,0 +1,18 @@
+Probe 12: the final physicist's three blocking items, by my own code
+(1) the same action at the rest teeth and at 4 x rest, the giver and the taker, g = f div 10
+   W = 1 x rest, the giver's area 7000 thousandths of K_a; the card's key 71383396512302866613198555697: the taker's course 0..7, click rounds 34, totals [-6, 6], the books miss in 0
+   W = 1 x rest, the giver's area 7000 thousandths of K_a; the local key 71383396512302866613198555697: the taker's course 0..7, click rounds 34, totals [-6, 6], the books miss in 0
+   the card's key checked by squares at these teeth: 1000 thousandths of Planck's 1,000
+   W = 4 x rest, the giver's area 7001 thousandths of K_a; the card's key 71383396512302866613198555697: the taker's course 0..4, click rounds 9, totals [-1, 1], the books miss in 0
+   W = 4 x rest, the giver's area 7001 thousandths of K_a; the local key 35700067748177870872738710593: the taker's course 0..7, click rounds 16, totals [-2, 2], the books miss in 0
+   the card's key checked by squares at these teeth: 3998 thousandths of Planck's 1,000
+
+(2) light's uniform mode (the site-sum of light's row) on the two seas, window means at a stride of 50, thousandths of the lay's
+   the value vertex g L M (my sea): the uniform mode [1065, 1582, 2958, 5940, 12151, 24968, 51355, 105650]; the sum of squares [3199, 3040, 2958, 2818, 2762, 2945, 3216, 3829]
+   the derivative vertex g SUM M (L+ - L-): the uniform mode [-31, 63, -37, -25, 62, -43, -18, 60]; the sum of squares [1727, 1732, 1719, 1731, 1721, 1730, 1728, 1725]
+   the pair's stiffness at k = 0 for the value vertex: [[0, g], [g, 2 f]], determinant -g^2 = -2500000000; the derivative vertex's 4 G f (1 - cos k) - 4 g^2 sin^2 k is positive at every k since g^2 = 2500000000 < G f / 2 = 500000000000
+
+(3) one excited bob in a derivative sea (48 Node-clocks, g = G div 20, 800 rounds): the emitter's lines against the others'
+   the emitter's wind at the lay 7000 thousandths of the key; every 100 rounds: the emitter [7000, 6799, 6677, 6594, 6406, 6344, 6082, 5768]; the other bobs together [0, 21, 79, 165, 303, 428, 583, 823]; light [0, 178, 244, 240, 292, 232, 340, 410]
+   the emitter's lines 1, net -1; the other bobs' lines 0, net 0, the largest |net| at one site 0; light's row writes no tooth here
+   the wind the other bobs took net over the run: 1045 thousandths of the key (the board's books), against their lines' net 0 (the clicks')

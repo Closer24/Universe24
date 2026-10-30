@@ -1,0 +1,8 @@
+Probe 10: the click tooth's run back as one act (mirror, act, mirror), four rules for the increment (Animate's world, 6,000 rounds)
+  the one-round key 71428571400000000000000000001; the key for the two-round forms, the nearest odd whole to twice it: 142857142800000000000000000003
+  B the read state's X(S): forward books miss in 0 rounds, the taker 0..7; the run back by one act: the gears return in 6000 of 6000, the teeth in 0, the quotients negated in 5960
+  I the produced state's X(S+): forward books miss in 0 rounds, the taker 0..7; the run back by one act: the gears return in 6000 of 6000, the teeth in 0, the quotients negated in 5960
+  S the sum X(S) + X(S+): forward books miss in 0 rounds, the taker 0..7; the run back by one act: the gears return in 6000 of 6000, the teeth in 6000, the quotients negated in 6000
+  G the next against the before, a+ J(b) - b J(a+): forward books miss in 0 rounds, the taker 0..7; the run back by one act: the gears return in 6000 of 6000, the teeth in 6000, the quotients negated in 6000
+  the summed passing to the taker over the run, in thousandths of the one-round X's: G 1996, S 1999
+  G: G_L + G_M != 0 in 0 rounds; G on the backward round is -G in all but 0 rounds; the free hand's SUM |G| = 0

@@ -1,0 +1,7 @@
+c5 probe: G against S on Animate's world (6,000 rounds), by my own code
+  the one-round key 71428571400000000000000000001; the two-round key, the nearest odd whole to twice it: 142857142800000000000000000003 (odd: True)
+  (a) G at the odd key, one shared birth: forward books miss 0 of 6000, the taker 0..7, k_L + k_M = key - 1 at 6001 of 6001; the run back by the same act: gears 6000, teeth 6000, quotients negated 6000 of 6000
+  (b) 2E(t+1) - 2E(t-1) = S_i + Rule3 per gear: misses 0 of 71976; the same with G_i: misses 23992 of 71976
+      S - G summed over all gears is 0 in 5998 of 5998 rounds (the cyclic sum against a symmetric K)
+  (c) per hand: |S_M - G_M| up to 10 millionths of the two-round key a round; SUM (S_M - G_M) over the run 7 thousandths of the key; SUM S_M over SUM X_M 2000 thousandths, SUM G_M over SUM X_M 1998
+  so both run back by one act and both close the pair's books; S is the hand's two-round energy change exactly (to Rule3) on this board, G is not: the choice between them is also a choice of what the click counts.

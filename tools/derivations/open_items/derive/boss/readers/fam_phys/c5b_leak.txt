@@ -1,0 +1,29 @@
+The 24-gear train's leak out of spin 1/2 at its width (c5b_leak.py)
+W = 1000000; the lay phi at 0 and 2 phi at 13, |phi|^2 = 258048, entries within 192; thirty rounds.
+
+the lays turning by k = 8 (before = now + k I now; the text's k = 8 moves a gear by 8 times its size each round):
+   light drawn within 1000:
+      the free act: leak out of spin 1/2 0 thousandths; the widest gear 13 bits over 30 rounds (within the law's 128); SUM |h|^2 end over lay 3853358 thousandths; w_I end over lay 1008 thousandths
+      the generic table (the text's probe_pauli3 3): leak out of spin 1/2 982 thousandths; the widest gear 2494 bits over 26 rounds, past the law's 128 from round 22; SUM |h|^2 end over lay about 2^4980  thousandths; w_I end over lay about 2^3727 (negative) thousandths
+      the I-averaged table: leak out of spin 1/2 696 thousandths; the widest gear 3136 bits over 25 rounds, past the law's 128 from round 21; SUM |h|^2 end over lay about 2^6264  thousandths; w_I end over lay about 2^1561  thousandths
+   light drawn within 100:
+      the generic table (the text's probe_pauli3 3): leak out of spin 1/2 921 thousandths; the widest gear 3819 bits over 27 rounds, past the law's 128 from round 22; SUM |h|^2 end over lay about 2^7629  thousandths; w_I end over lay about 2^5716 (negative) thousandths
+      the I-averaged table: leak out of spin 1/2 697 thousandths; the widest gear 2654 bits over 25 rounds, past the law's 128 from round 21; SUM |h|^2 end over lay about 2^5299  thousandths; w_I end over lay about 2^1320  thousandths
+   light drawn within 10:
+      the generic table (the text's probe_pauli3 3): leak out of spin 1/2 965 thousandths; the widest gear 3846 bits over 27 rounds, past the law's 128 from round 22; SUM |h|^2 end over lay about 2^7684  thousandths; w_I end over lay about 2^5757 (negative) thousandths
+      the I-averaged table: leak out of spin 1/2 697 thousandths; the widest gear 2664 bits over 25 rounds, past the law's 128 from round 21; SUM |h|^2 end over lay about 2^5321  thousandths; w_I end over lay about 2^1326  thousandths
+
+the lays turning by k = 1 (before = now + k I now; the text's k = 8 moves a gear by 1 times its size each round):
+   light drawn within 1000:
+      the free act: leak out of spin 1/2 1 thousandths; the widest gear 10 bits over 30 rounds (within the law's 128); SUM |h|^2 end over lay 60561 thousandths; w_I end over lay 1006 thousandths
+      the generic table (the text's probe_pauli3 3): leak out of spin 1/2 596 thousandths; the widest gear 14 bits over 30 rounds (within the law's 128); SUM |h|^2 end over lay 11982202 thousandths; w_I end over lay -6438 thousandths
+      the I-averaged table: leak out of spin 1/2 543 thousandths; the widest gear 16 bits over 30 rounds (within the law's 128); SUM |h|^2 end over lay 242495909 thousandths; w_I end over lay 942 thousandths
+   light drawn within 100:
+      the generic table (the text's probe_pauli3 3): leak out of spin 1/2 119 thousandths; the widest gear 11 bits over 30 rounds (within the law's 128); SUM |h|^2 end over lay 317041 thousandths; w_I end over lay -1487 thousandths
+      the I-averaged table: leak out of spin 1/2 334 thousandths; the widest gear 13 bits over 30 rounds (within the law's 128); SUM |h|^2 end over lay 4981498 thousandths; w_I end over lay 990 thousandths
+   light drawn within 10:
+      the generic table (the text's probe_pauli3 3): leak out of spin 1/2 120 thousandths; the widest gear 11 bits over 30 rounds (within the law's 128); SUM |h|^2 end over lay 315342 thousandths; w_I end over lay -1853 thousandths
+      the I-averaged table: leak out of spin 1/2 367 thousandths; the widest gear 13 bits over 30 rounds (within the law's 128); SUM |h|^2 end over lay 5485027 thousandths; w_I end over lay 1001 thousandths
+
+Read: where the hands stay within the width, the leak says what light does to the doublet; where they run past
+it, the number is a runaway's.

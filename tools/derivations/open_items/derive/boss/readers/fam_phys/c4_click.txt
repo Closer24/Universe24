@@ -1,0 +1,48 @@
+The pair click of the third text, on TERM11's world and in its algebra (c4_click.py)
+1. Spin 1/2 inside the 24-gear train on TERM11's world (I = right i, T = right j), e = -1.
+   phi = 24 P1 psi, entries within 24, |phi|^2 = 4032; T phi its Kramers partner, <phi, T phi> = (0, 0), D(phi, T phi) = |phi|^4: True
+   one giver on phi (the text's run on spin 1/2):
+      term 11's count on the taker climbs to 7; the counts at the end [-2, 2]
+      S_e over the room at each key beyond the first (thousandths): [0, 0, 0, 0, 0, 0, None, 0]
+      the pair click's books: taken 2, returned 7; the gears keep every key the books return
+   two givers in step, phi and T phi (the two lines of the pair):
+      term 11's count on the taker climbs to 7; the counts at the end [-2, 5, -2]
+      S_e over the room at each key beyond the first (thousandths): [0, 0, 0, 0, 0, 0, None, 0, 0, 0, 0, 0, 0]
+      the pair click's books: taken 2, returned 12; the gears keep every key the books return
+   two givers, the partner's spring 1 per cent stiffer:
+      term 11's count on the taker climbs to 7; the counts at the end [-2, 5, -2]
+      S_e over the room at each key beyond the first (thousandths): [0, 0, 0, 0, 0, 1, None, 94, 1, 0, 0, 0, 5]
+      the pair click's books: taken 6, returned 8; the gears keep every key the books return
+   two givers, the partner's spring 10 per cent stiffer:
+      term 11's count on the taker climbs to 6; the counts at the end [-1, 1, 0]
+      S_e over the room at each key beyond the first (thousandths): [12, 1, 1, 2, 92, None]
+      the pair click's books: taken 7, returned 0; the gears keep every key the books return
+   The third key, by the rule's own algebra (standing = phi + T phi, two keys on two lines):
+      D(phi + T phi, phi) = 16257024 = |phi|^4 x (1, 0); D(phi + T phi, T phi) = |phi|^4 x (1, 0): a third key on either line is TAKEN (S_- = room x 500 thousandths)
+
+2. G3/2 on eight gears on TERM11's world (I the signed permutation, J the partner of norm 54), e = -1.
+   one giver on phi (probe_click 1):
+      term 11's count on the taker climbs to 7; the counts at the end [-2, 2]
+      S_e over the room at each key beyond the first (thousandths): [0, 0, 0, 0, 0, 0, None, 0]
+      the pair click's books: taken 2, returned 7; the gears keep every key the books return
+   two givers in step, phi and J phi / 7:
+      term 11's count on the taker climbs to 7; the counts at the end [-2, 5, -3]
+      S_e over the room at each key beyond the first (thousandths): [0, 0, 0, 0, 0, 0, None, 0, 0, 0, 0, 0, 0]
+      the pair click's books: taken 2, returned 12; the gears keep every key the books return
+   two givers, the partner's spring 1 per cent stiffer:
+      term 11's count on the taker climbs to 7; the counts at the end [-2, 5, -3]
+      S_e over the room at each key beyond the first (thousandths): [0, 0, 0, 0, 0, 0, None, 103, 1, 0, 0, 0, 0]
+      the pair click's books: taken 4, returned 10; the gears keep every key the books return
+   the third key: D(7 phi + J phi, phi) over the room = 524 thousandths: TAKEN; G3/2 has rank 4 over C_I (four lines: 4 of the eight gears' 8 from phi, I phi, J phi, I J phi), so a per-line rule would give four per orbital (a quartet), not two
+
+3. Light's own one-line test: D on a Gaussian hand (A1 at part 2) is identically 0; the sign e alone parts light from G3/2.
+   D(z, w) = 0 on 20 of 20 random pairs: True (one complex dimension: every two hands are on one line); S_+ over the room on six of them, thousandths: [2000, 2000, 2000, 2000, 2000, 2000] (2,000 always: the 'stimulated weight' is the identity |z|^2 |w|^2 + |<z, w>|^2 = 2 |z|^2 |w|^2)
+   With e = -1 light would return every key; with e = +1 G3/2 would take every key: the click's exclusion is the sign e, the kind's full turn declared into the weight,
+   and D (Cauchy-Schwarz: 0 iff one I-line) is kind-blind, as the T1 cross was.
+
+4. What the reading stores and writes (probe_click.py read).
+   stores: `last_gain`, the taker's now at its last key, a whole hand (8 or 24 numbers) per train per Node-clock, beside
+   the click tooth: the arriving hand is now - last_gain, not a gear of the act; the text's 'both are the Node-clock's own gears' is not so.
+   compares: `s_e * THOUSAND < room` (line 102), a threshold; the text names the whole criterion Open.
+   writes: nothing; `returned += 1` (line 103) returns no key: term 11's count climbs to 7 while the books say returned 7 (probe_click 1):
+   the gears and the books disagree about the same seven keys, as in FAMILIES.md's probe_pair 3, now inside the click's own definition.

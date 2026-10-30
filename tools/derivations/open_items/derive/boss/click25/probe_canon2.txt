@@ -1,0 +1,3 @@
+Probe 11: the general energy form on a rising clock with no Mesh (the clock's term alone)
+  the teeth W_t = W + t read by round t (every tooth within its teeth, the clock rising); gear-rounds checked 35988:
+  the text's form 2 dE = X + v-(r- - r+): 11996 misses; with the clock's term (W_t - W_t-1) v-^2 added: 0 misses; the clock's term up to 2500900081 (one count of teeth a round times v^2)
