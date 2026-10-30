@@ -7,19 +7,26 @@ the spaces need a conversion and how: from the board of events in time (the pres
 and from the clicks what is seen in nature. Then what the code needs, no formulas, simple operations only. Have it
 approved by your agents, a hostile mathematician and a hostile physicist. Show it to me."
 
-Written on reader-5 at tensor24-review 97037fa3c (G1b (i), part 2). The two hostile readings and what changed for
-them are part 6. The page is a plan: it adds no law, and every reading in it that waits on a stage says which.
+His word of 04:2x UTC on the same page (in translation, his first person plural rendered without a person): "Make
+sure that in the plan the coordinates fit, and that the links lengthen at the Node-clocks, right? So it is not
+always a fixed space in time. Check that everything converges in sound mathematics." That is part 3.5.
 
-## 0. The whole picture in five lines
+Written on reader-5 at tensor24-review 97037fa3c (G1b (i), part 2), and revised for the two hostile readings (part 6).
+The page is a plan: it adds no law. **The engine writes no click before G5**, so every reading this page calls
+"built" is built and tested on records made in memory, and every reading on the engine's own records is owed.
+
+## 0. The whole picture in six lines
 
 1. The board holds events in three axes of place and one tick, the great clock's count of rounds. No act reads the
    tick (law, line 695: the great clock's tick is no observable).
-2. A click keeps the place and a clock's own count, and loses the tick. That is the "4D to 3D" of the name: the
-   board's shared fourth axis gives way to each clock's own count (docs/BIG_PICTURE.md 8.2: both are three and one,
-   and what differs is which one).
+2. "3D" in the name counts axes: the clicks keep three axes of place and no fourth, and time comes back as each
+   clock's own count (docs/BIG_PICTURE.md 8.2: both are three and one, and what differs is which one). That a click
+   loses the tick is derived in toys and owed on the act at G5.
 3. The decoder reads only clicks and counts. It converts nothing by a formula: the clocks convert, by counting.
 4. What nature shows is what clocks count and how light links one click to another.
-5. Every reading says SHOWN, or NOT SHOWN with its pair, or NOT READ with its cause, and never raises.
+5. The board is no fixed space: a Node-clock keeps its label for ever, and the Mesh between two labels lengthens and
+   shortens (part 3.5). So the decoder reads no length from labels and no duration from rounds.
+6. Every reading says SHOWN, or NOT SHOWN with its pair, or NOT READ with its cause, and never raises.
 
 ## 1. In clocks: from the clicks received to the view of nature
 
@@ -41,61 +48,71 @@ them are part 6. The page is a plan: it adds no law, and every reading in it tha
   - it sets when the next jump comes (with 45 seconds kept, the minutes hand jumps after 15 more, not after 60);
   - it loses nothing (every second is counted, and nothing is rounded away);
   - it lets the clock run back exactly (knowing the remainder, the clock returns to the very same moment).
-- **The split click is "which, and where".** A tower clock has two bells. At the hour, one bell rings. Which one is
-  drawn by the bells' sizes (a bell twice the size is drawn two hours of every three, on average). A bell still
-  ringing from before is busy: it refuses, and the strike goes back to the giver (decision 40 (b)).
+- **The split click is "which, and where".** A tower clock has two bells, and at the hour one rings. Which one is
+  drawn by the sizes, the run forward's times the run back's (decision 29); where the run back's are alike, by the
+  forward's alone (decision 40 (b)). A bell still ringing is busy: it refuses, and the strike goes back to the giver.
 - **At 1:59** there is a whole click alone: the minute has one place to go. **At 2:00** there are two whole clicks
   in a chain (the minutes hand to 00, the hours hand to 2) and a split click after them (which bell).
 
 ### 1.3 The readings: each term of nature, and the clicks that read it
 
-| Nature's term | The clicks that read it | Stands or owed |
+"Built" is built and tested on records made in memory; "owed" names the module or the stage it waits on.
+
+| Nature's term | The clicks that read it | State |
 |---|---|---|
-| proper time, the time a clock lives through | a clock's own count between two of its clicks: the clock summed its path by ticking, and the decoder reads the sum on its face | stands (D6's first reading) |
-| the board's tick is no duration | a difference of rounds is refused by name: "compares board ticks, no reading" | stands (D7) |
-| a light path | a quantum's lay and its take: the take names its lay, so the two clicks stand on one light line | owed (light.py) |
-| a distance | an echo: a clock lays a quantum, a far clock takes it and lays one back, and the first clock counts its own teeth from its lay to the echo's take; two distances compare as two counts. Two-way only: the law's theorem gives Lorentz's composition exactly for two-way clicks (**The measured speed**, **The two-way reading**), and the one-way reading is open | owed (light.py) |
-| time dilation, the satellites' clocks | one clock lays a quantum at each of its teeth; another counts its own teeth between the takes; the two counts compared | owed (light.py) |
-| proper time read a second time | the count carried by signals: a clock lays one quantum a tooth, and the clock it leaves and meets again takes them; the quanta taken between the meetings are the traveller's own count | owed (light.py; D6's second reading) |
-| a geodesic, the free path | the twin reading: two clocks meet twice by two paths and count apart; the one that falls free counts more | the count apart stands; "the free one counts more" owed |
-| true curvature, against a relabelling of the board | a tide: two free clocks side by side trade echoes; each echo's count keeps its step, or its step changes | owed (light.py) |
-| expansion, gravitational waves | the echoes between free clocks all growing, or swinging | owed (light.py) |
-| a horizon | no quantum laid inside is ever taken outside | owed (light.py) |
-| mass | the rest beat: the windings a clock the clicks build books per tick of its own clock where it stands still (decision 37), counted in its own ticks, so motion does not change it | owed (mass.py; G6) |
-| a mass's width | the clock's life: a beat read over few of its own ticks is spread, over many sharp | owed (mass.py; G6) |
-| a probability | the shares of clicks over many lays alike: the draw is by the sizes | stands in the scheduler model; owed on the engine (G5) |
-| a correlation at a distance, and no signal | the cone check: each click binned by the settings outside its past cone, the shares compared exactly; the correlations by the settings' frames | the check stands (D8); the correlations owed (G5) |
-| uncertainty | the slit: the narrower the opening, the wider the clicks on a far screen; in time, the shorter a clock's life, the wider its beat | owed (G6) |
-| the arrow of time | the record only grows: a whole click writes what the state alone cannot undo, and a split click chooses from the past's remainders | read by the books (stands) |
+| proper time | a clock's own count between two of its clicks: the clock summed its path by ticking, and the decoder reads the sum on its face. That the count is the metric's measure of the path holds where the engine is right: with the metric at rest; from G2, where a clock falls, the step drops a term and promises no exact run back (engine/step.py) | built (D6's first reading); on the engine owed from G2 |
+| no duration from rounds | a difference of rounds read as a duration is refused by name ("compares board ticks, no reading"); rounds still order the clicks and bound the cone | built (D7) |
+| no length from labels | a difference of sites read as a length is refused by name, as rounds are (part 3.5) | owed (measure.py) |
+| a light path | a quantum's lay and its take. They lie on light's cone only for a long-wave quantum with no mass: the engine's light disperses (at G1b, measured by the physicist: 0.995 of the long-wave speed at wavelength 16, 0.978 at 8 and 0.913 at 4 along an axis; at one wavenumber a face diagonal is 2.7 percent faster than an axis) | owed (light.py) |
+| a distance | an echo: the first clock's own count from its lay to the echo's take, less the far clock's own count from its take to its lay back. Two-way only. The two-way composition at light's speed is the law's theorem on the older engine, for long flashes on an empty board with light at one speed (**The two-way reading**, **The measured speed**); on this engine, whose light disperses, it is owed anew. The two-way speed tests light's constancy; the one-way reading and the twins test the clocks | owed (light.py) |
+| the redshift | a one-way count ratio: one clock lays a quantum at each of its teeth, another counts its own teeth between the takes, each take paired with its own lay's tooth. It is the first-order Doppler and the lapse together | owed (light.py) |
+| time dilation | read only for clocks standing still on a static board, from both directions' ratios together (Ives and Stilwell's way), or over a closed path (the twins) | owed (light.py) |
+| proper time read a second time | the count carried by signals: a clock lays one quantum a tooth; each lay is followed by its birth link to its take, and every lay the home clock did not take is named (taken elsewhere, refused, in flight). The home clock's takes are at most the traveller's own count, and equal to it only if none is missing; a short wave can be slower than the traveller | owed (light.py) |
+| a geodesic, the free path | the twins: two clocks meet twice by two paths, and both counts are read. A clock is free where no click books a push on it between the meetings. The free one counts more only against nearby paths (over an orbit, a clock held still counts more than a free one); on the wrapped board two free clocks can meet again, the one at rest in the board's frame counting more, so each path's winding round the board is reported. Equal counts on paths that are images under a turn, a reflection or a shift are no fault | owed; measure.twins is to be mended, for it names equal counts a fault |
+| true curvature, against a relabelling | a tide: two free clocks start at rest to each other and trade echoes; the echo spans are compared over whole spans by cross products. A change of the span's step is a tide only for clocks free and at rest to each other at the start (a sideways motion changes the step on a flat board too), and whole counts jitter by one | owed (light.py); the jitter's spread open |
+| expansion, gravitational waves | the echoes between many free clocks all growing, or swinging. Free clocks flying apart on a flat board also give growing echoes (Milne's case), so expansion is read with the redshift growing with distance, and the clocks free and at rest to the light's sources at the start | owed (light.py; part 3.5 on a stand-in) |
+| a horizon | no quantum laid inside is taken outside within the run (the record is finite and the board cyclic) | owed (light.py; part 3.5 on a stand-in) |
+| mass | the windings a clock the clicks build books per tick of its own clock (decision 37), counted in its own ticks so that motion leaves it alone. Which clock counts the beat, the composite's own count or its Node-clock's tick, is the schema's G7 field, and only the own count leaves motion out. A composite's mass holds its binding too | owed (mass.py; G6) |
+| a mass's width | the spread of the masses read over many lays of one species, against their mean life in their own ticks. One clock's life gives only the resolution of its own window | owed (mass.py; G6) |
+| a probability | the shares of clicks over many lays alike, the draw by the sizes forward and back (decision 29). On finite records the shares carry the draws' spread: a spread is owed, any tolerance an integer of the files | built in the scheduler model; owed on the engine (G5) |
+| no signal | the cone check: each click binned by the settings outside its past cone, the shares compared. Its cone is the board's, one Mesh a round, the act's bound: about 2.45 times light's long-wave speed along an axis. So it guards locality. No signal inside light's cone needs light's cone read from the record's own light lines, and the spread above | built (D8, the board's cone); light's cone and the spread owed |
+| a correlation at a distance | Bell's reading needs the joint outcomes of one birth's two clicks, by the two settings' frames; no signal alone is not Bell | owed (G5) |
+| uncertainty | the slit: the narrower the opening, the wider the clicks on a far screen, read only beyond the far field (a screen farther than the opening's square over the wavelength), and on the wrapped board a slit is a grating. Part 2.6's count is of supports, not of widths. In time, the width above | owed (G6) |
+| the arrow of time | where the arrow shows in the clicks is owed: the books read conservation at each click, which holds both ways of time, and the law's rewind undoes every click (Postulate 4) | owed (G5) |
 
 ### 1.4 The least a clock needs
 
-- **To tick, a gear needs something that pulls it back.** On the head that is its six neighbours: the example's lone
-  gear beats every 6 rounds only by their pull (the grip on its six Meshes together equals its teeth, so it steps
-  back by its last step; David's check, 6514509411, run again in whole numbers by Animate). With no pull, a gear
-  laid at rest stands still and one laid moving drifts. So the least that ticks on the head is a star, a Node-clock
-  and its six neighbours. At G3 a held count beside the gear can pull it back too (a spring), and only that beat,
-  where the neighbours pull nothing, is a mass. The star's beat is no mass.
+- **To beat at every size, a gear needs a spring.** On the head no gear holds a beat. The example's lone gear beats
+  every 6 rounds only when it is laid at 1 or 2 from rest: its pull on its six neighbours then stays below one
+  whole tooth, so they never carry, and its next count is its last step (David's check, 6514509411). Laid at 3, at
+  -1, or moving, the neighbours carry, all 64 Node-clocks move and no period shows (the physicist's run, checked
+  again by Animate). So the 6-round beat is a rounding effect below one tooth, not a clock. A beat at every size
+  needs a held count's spring (G3), and only that beat, where the neighbours pull nothing, is the mass of one
+  quantum.
 - **To click, two clocks:** a giver and a taker, the taker a clock with parts. Light alone never clicks (law, line
   35: the light is not in the clicks).
-- **To show a sharp mass, a life and a size:**
-  - in time, many ticks of its own: one click is one round, and a click at one round holds every beat (part 2.6),
-    so a mass is read only through many clicks of one clock, and the watch is the clock's own life;
-  - in place, enough Node-clocks to stay together: a clock squeezed onto few Node-clocks holds many motions (part
-    2.6), so to stand still and beat steadily it spreads over as many as its binding allows. Nature's atoms have a
-    size and do not collapse the same way.
+- **To show a sharp mass, a life and a binding:**
+  - in time, many ticks of its own: one click is one round, a click at one round holds every beat (part 2.6), and so
+    a mass is read only through many clicks of one clock; the watch is the clock's own life;
+  - in place, a binding: the motions a wave holds do not by themselves make it move (the example's gear holds all
+    64 motions on one Node-clock and stands while laid at 1 or 2). What holds a composite together, and so its size,
+    is its binding against the cost of confining it (law, line 987: the uncertainty principle is the hand's and the
+    click's), owed at G3 and G6, and the Mesh bounds it from below.
 - **Levels are complexity:** a clock of clocks is one level above its deepest part (the decoder's depth rule in
-  bangs.py). Each level moves once per whole turn of the level below, so high levels move rarely: a clock of ten
-  levels of sixty moves its top hand once in about 19 billion years, more than the universe's age.
+  bangs.py). In a clock of hands each hand moves once per whole turn of the one below, so with sixty to a turn the
+  tenth hand moves once per sixty turns of the ninth, and so on down; how rarely that is in years depends on the
+  first hand's unit, which the board does not have. Whether composites gear so is not derived.
 
 ### 1.5 The past and the future
 
-- The run is fixed by the files and the seeds, and it runs back exactly (60 rounds run back slot for slot on the
-  example, ANIMATE-UNCERTAINTY part 1). So the future stands as the past does.
+- The run is fixed by the files and the seeds. With the metric at rest it runs back exactly (60 rounds slot for slot
+  on the example, ANIMATE-UNCERTAINTY part 1); from G2, where a clock falls, the step promises no exact run back.
 - A click holds the past exactly: its giver and its taker, where the quantum came from and where it went.
-- No Node-clock holds the future, and what decides the next click reaches a Node-clock one Mesh a round. So from
-  inside the next click is a draw with the rule's shares; from outside, on the record, the past and the future both
-  stand.
+- **The run back brings the settings' frames to the source,** so the source's draw holds the future's part (the
+  meeting of the two runs: derived in toys, owed at G5). What no Node-clock holds is an outcome before its draw; and
+  the cone check guards that no click's share shows a distant setting.
+- From inside, the next click is a draw with the rule's shares. On the record, from outside, the past and the future
+  both stand.
 
 ## 2. In the tensor algebra
 
@@ -103,69 +120,79 @@ them are part 6. The page is a plan: it adds no law, and every reading in it tha
 
 - **The star:** a Node-clock's six Spokes, the plus and the minus of each of three axes, laid by the files at the
   initialization (load.star).
-- **The 24 turns:** every matrix whose rows are three of the Spokes, kept where Rule3 weighs it 1 (the cube's turns;
-  kinds.turns).
-- **The five kinds:** what the 24 act on, A1, A2, E, T1 and T2, of 1, 1, 2, 3 and 3 rows, each found by its character
-  with nothing typed (kinds.kinds).
+- **The 24 turns:** every matrix whose rows are three of the Spokes, kept where Rule3 weighs it 1: the 24 signed
+  permutations of determinant 1, the cube's turns (kinds.turns).
+- **The five kinds:** what the 24 act on, A1, A2, E, T1 and T2, of 1, 1, 2, 3 and 3 rows, made from the turns by
+  recipe with nothing typed (kinds.kinds: T1 the turn, A2 its sign, E from the axes it permutes, T2 the sign times
+  the turn); their characters are checked against the 24's in the tests.
 - **The four-vector:** a row's derivative pair, its stride (A1, which every turn leaves alone) and its differences
   along the three axes (T1, which turn as the turn itself).
 - **Its symmetric square, the metric family:** ten slots on the index pairs, 00 (A1, the tick's weight), the three
   0i (T1, the lean), the three ii (A1 and E, the Meshes' weights along the axes) and the three jk (T2, the shears)
   (kinds.square; decision 39's ten gears; decision 41, the slots held as the densitized inverse metric).
-- **The clock** is the family's 00 slot, found by its kinds' character, with no name, place or role (G1b (i), part
-  2, 97037fa3c). At G1b every slot but 00 lies at rest, the flat metric; the others take their sources at G2.
+- **The clock** is the family's 00 slot. What is found by its character is the family itself: the loader marks the
+  train whose kinds' character is the square's (G1b (i), part 2, 97037fa3c), with no name, place or role.
+- **At G1b** all ten slots stand as laid, 00 at 0, and only 00 is read, as every gear's teeth. All ten take their
+  sources from G2; the Boss's part 3 reads the diagonal ij slots as the axes' grips.
 
-### 2.2 The act, in the algebra
+### 2.2 The act, in the algebra (planned, G2 to G4)
 
 - Every row's operator contracts its own derivative pair with the family's slots, index with index, through the
-  24's tables (the 00 slot with the stride twice, the 0i slots with the stride and a difference, the ij slots with
-  the differences).
-- Each Node-clock derives its tables once from its own star and does every operation on its six neighbours alone
-  (decision 42). So every term the act makes is local, and nothing reaches farther than one Mesh a round (checked:
-  ANIMATE-UNCERTAINTY part 1, 60 rounds).
+  24's tables: the 00 slot with the stride twice, the 0i slots with the stride and a difference, the ij slots with
+  the differences.
+- Each Node-clock derives its tables once from its own star and reads its six neighbours alone (engine/mesh.py;
+  decision 42), so nothing reaches farther than one Mesh a round (the G0 cone gate).
 
 ### 2.3 What a click carries, in kinds
 
 - **Counts the 24 leave alone (A1):** windings, teeth, a clock's count, the number of quanta laid and taken. A
   turn of the board changes none of them.
 - **The sign of a vector along a chosen frame:** a setting draws a frame (a T1 direction), and a take writes its
-  outcome along it, plus or minus. The sign is what is left when the vector meets the frame, so it too is unchanged
-  by a turn that turns both.
+  outcome along it, plus or minus. The sign is what is left when the vector meets the frame, so a turn that turns
+  both leaves it.
 - **Never a component that turns with the board.** A click line may name a frame as the setting drew it; a reading
   compares outcomes along frames and never one component of a vector alone.
 
 ### 2.4 The invariants, and who forms them
 
 - **A reading is unchanged** under the 24's turns (a relabelling of the axes), a shift of the board (a relabelling
-  of the sites), a permutation of the trains (a relabelling of the trains; the record's side of G0, task 106) and a
-  change of the rounds' origin (the tick is no observable). A reading that changes under any of them reads the
-  labels and is refused.
+  of the sites), a permutation of the trains (task 106) and a change of the rounds' origin (the tick is no
+  observable). A reading that changes under any of them reads the labels and is refused.
+- **The relabellings leave the board's own frame,** the frame of its rest: a reading that says "at rest" means at
+  rest on the board, which the clicks can show (the board's frame in the shadow, D4). So wherever rest would enter,
+  the reading is in a clock's own count instead.
 - **A clock's own count is, where the engine is right, the metric's measure of the clock's path,** made by the clock
-  itself, beat by beat, round by round. The decoder never forms it from the slots: forming it from them takes a
-  division and, where space curves, a root (decision 41 refuses both, and the owner's word to Animate refuses any
-  formula in the decoder).
+  itself, beat by beat. The decoder never forms it from the slots: that takes a root for any moving clock (decision
+  41 refuses a root and a division by a root), and the owner's word refuses any formula in the decoder.
 
 ### 2.5 Four to three, in kinds
 
 - The board's four-vector index is A1 (the stride, the tick shared by every Node-clock) and T1 (the three axes).
-- A click keeps T1, the three axes of place, as light brings them: a distance is an echo's count.
-- A click replaces the shared A1 by each clock's own count: there is no common time in the clicks, only the time each
-  clock lives through. That is the one of the "three and one" that differs between the board and the clicks.
+- The clicks keep the three axes only as light brings them: as echo counts and as signs along frames, each a count
+  the 24 leave alone (part 2.3).
+- The clicks hold no preferred common time. Clocks matched by light build a common time in each frame, and none of
+  them is the board's tick. Time in the clicks is each clock's own count: the one of the "three and one" that
+  differs.
 
 ### 2.6 Uncertainty, in the algebra (ANIMATE-UNCERTAINTY, checked in whole numbers)
 
-- **A place** is a Node-clock. **A motion** is a pattern that a step along a Mesh leaves as itself, turned alike at
-  every Node-clock. A board has as many motions as Node-clocks, and every wave is made of them in one way.
+- **A place** is a Node-clock. **A wave holds** the Node-clocks whose whole count is not 0.
+- **A motion** is a pattern that every step along a Mesh, on each of the three axes, leaves as itself, turned alike at
+  every Node-clock, taken at size 1. A board has as many motions as Node-clocks, and every wave is made of them in
+  one way. Motions take turn values: a wave of whole numbers holds each motion together with its reverse (on a ring
+  of 5, a whole wave with no constant part holds at least 4).
 - **The step moves the place,** so no wave is sharp in both: one Node-clock holds every motion, and one motion fills
   the whole board.
-- **The count:** the Node-clocks a wave holds times the motions it holds are never fewer than the board's
-  Node-clocks (a theorem on a wrapped board, Donoho and Stark's; checked exactly on every wave of -1, 0 and 1 on
-  rings of 2 to 10 and on 3,000 drawn waves on each of two boards). The law holds the same fact under **No click names
-  a Node-clock**: a quantum confined to one Node-clock is every wave number at once.
-- **In time,** the same: on the example gear's ring of 6 rounds its beat holds 4 rounds and 2 beats, and a click at
-  one round holds all 6 beats.
-- **No law of its own** (law, line 985: the uncertainty relation is not a rule of its own): it follows from the
-  Node-clock, the Mesh and the round.
+- **The count:** for a wave not all 0, the Node-clocks it holds times the motions it holds are never fewer than the
+  board's Node-clocks (Donoho and Stark's theorem on a wrapped board; checked exactly on every wave of -1, 0 and 1 on
+  rings of 2 to 10 and on 3,000 drawn waves on each of two boards). It counts supports, not widths. The law holds
+  the same fact (line 987, and **No click names a Node-clock**: a quantum confined to one Node-clock is every wave
+  number at once).
+- **The motions held do not by themselves make a wave move:** the example's gear holds all 64 and stands (part 1.4).
+- **In time,** the same count holds on a clock's own ring of ticks: a click at one tick holds every beat, and a beat
+  is read sharp only over many ticks (the width, part 1.3). The probe's ring of 6 rounds shows it on the example's
+  gear, in rounds; the decoder reads it in a clock's own ticks.
+- **No law of its own** (line 985): it follows from the Node-clock, the Mesh and the round.
 
 ## 3. Why the spaces need a conversion, and how
 
@@ -177,15 +204,20 @@ them are part 6. The page is a plan: it adds no law, and every reading in it tha
 
 ### 3.2 Why the board's numbers cannot be read as nature's
 
-1. **No one inside holds the tick.** An observer is made of clocks, and no clock reads the round (line 695). A
-   reading by rounds is a reading no one inside could make.
-2. **A round is not worth the same time everywhere.** The tick's weight is a slot of the metric family, and from G2
-   on it differs from Node-clock to Node-clock. A round at one Node-clock and a round at another are two different
-   amounts of time.
-3. **The board has a frame, and nature has none.** The lattice's axes and sites are the board's own frame. What is
-   real must not change when the board is turned, shifted or relabelled (part 2.4).
-4. **A click is not a point of the board.** It is where the run forward (the past arriving) meets the run back (the
-   future arriving), and with its lay it spans the Mesh between a giver and a taker (docs/BIG_PICTURE.md 8.2).
+1. **No one inside holds the tick.** An observer is made of clocks, and no clock reads the round (line 695).
+2. **A round is not worth the same time everywhere,** and **a moving clock's own count differs from its Node-clock's
+   ticks.** The tick's weight is the 00 slot, and from G2 on it differs from Node-clock to Node-clock.
+3. **A Mesh is not the same length everywhere or at every round.** The Meshes' weights are the ii and jk slots, and
+   from G2 on they move: the links lengthen in the expansion and shorten in the contraction (part 3.5).
+4. **The board has a frame, and nature has none.** The lattice's axes and sites are the board's frame; what is real
+   must not change when the board is turned, shifted or relabelled (part 2.4).
+5. **The lattice shows at short waves:** the engine's light disperses (part 1.3), and the act's bound, one Mesh a
+   round, is not light's cone.
+6. **The board wraps:** a path can wind round it, and two free clocks can meet again.
+7. **Counts are whole:** they jitter by one, and an effect below one tooth can look like a clock (part 1.4).
+8. **A click is not a point of the board.** It is where the run forward (the past arriving) meets the run back (the
+   future arriving), and with its lay it spans the Mesh between a giver and a taker (docs/BIG_PICTURE.md 8.2;
+   derived in toys, owed at G5).
 
 ### 3.3 How: from the board to the clicks
 
@@ -197,25 +229,64 @@ them are part 6. The page is a plan: it adds no law, and every reading in it tha
 ### 3.4 How: from the clicks to nature
 
 - By the readings of part 1.3, each a count or a comparison of counts.
-- Two-way readings only for distances and speeds (part 1.3): two-way clicks give Lorentz's composition at light's
-  speed exactly, the moving clock's own rate cancelling (law: **The measured speed**, a theorem).
+- Distances and speeds two-way only, at long wavelength, owed anew on this engine (part 1.3).
 - Two readings of one thing must agree (proper time on the face and by the signals; a mass by its beat and by its
   windings), and where they do not, the reading says NOT SHOWN with both.
+
+### 3.5 Meshes that lengthen: the board is no fixed space (the owner's check of 04:2x)
+
+- **The labels stay, the Meshes lengthen.** A Node-clock keeps its site for ever: the board's coordinates hold
+  their labels the way comoving coordinates do. What lengthens is the Mesh: in the expansion the source pushes the
+  count up and the Mesh lengthens (docs/BIG_PICTURE.md 7), the Meshes' weights being the family's ii and jk slots,
+  which move from G2 on; the clicks lengthen the expansion (decision 30, the owner's "Clicks lengthen").
+- **So a site's difference is no length,** as a round's difference is no duration: the decoder refuses both by
+  name, and reads a length only by light, an echo in a clock's own count.
+- **Where a clock stands, nothing shows:** a uniform lengthening is a change of units there; it shows only through
+  light from another time (docs/BIG_PICTURE.md 7: what the clicks see).
+- **The cone check stays sound:** one Mesh a round is the act's bound in labels, whatever a Mesh's length, and
+  light's own cone narrows inside it as the Meshes lengthen (docs/BIG_PICTURE.md 6, item 7). The check never reads
+  a setting inside the act's bound as outside it.
+- **The two directions of time:** the record is written by the run forward alone; the run back writes nothing and
+  shows only in the split clicks' shares. So the decoder reads the lengthening along the record's order, whichever
+  way the board's own scale turns. After the top the nearest light turns blue first, and the far light, sent during
+  the expansion, keeps arriving red: the clicks still see the expansion for a long time (docs/BIG_PICTURE.md 7).
+- **Checked on a stand-in** (tools/derivations/open_items/ANIMATE-LINKS, whole numbers; the engine's Meshes move
+  from G2 on, and the Boss's travelling-wave file comes with G2's first test). A line of 40 Node-clocks keeps its
+  labels while its Meshes lengthen; light crosses a Mesh by its carry:
+  - the echo between Node-clocks 0 and 5, in Node-clock 0's own count: 40 at every lay when nothing lengthens; 40,
+    152, 263, 375 and 485 when every Mesh grows a unit every 50 rounds; 40, 80, 160, 608 and then none when every
+    Mesh doubles every 400 rounds. The label distance is 5 every time;
+  - the horizon under doubling: a quantum laid at round 1,600 reaches Node-clock 0 from Node-clocks up to 11 only,
+    at round 2,400 up to 2, at round 3,200 from none;
+  - the redshift: quanta laid every 10 rounds from Node-clock 20 arrive 10 apart when nothing lengthens, and more
+    than 10 apart, all 99, when the Meshes grow;
+  - the swing: after the top, the gaps from Node-clock 2 fall below 10 at round 1,555 with no red gap after the top;
+    from Node-clock 10 at round 1,668, after 9 red gaps; from Node-clock 30 at round 1,908, after 24;
+  - the cone: never more than one Mesh a round.
+- **Why it closes:** every reading the decoder makes is a count of a clock's own ticks or of clicks, and every
+  comparison is of two such counts. None of them reads a Mesh's length or a round's worth, so nothing in the
+  decoder breaks as the Meshes lengthen or a round's worth changes. The lengthening shows only through the counts it
+  changes (the echoes grow, the beats redden, a horizon closes in), which is what nature shows of an expansion.
 
 ## 4. In code: what the decoder needs, by simple operations alone
 
 ### 4.1 The operations
 
 - **Used:** read a line; check its form and refuse a bad line by name; group by a key; order by round; follow a link
-  (a take to its lay, a clock to its clicks); count; subtract two whole counts; compare (equal, less); compare two
-  fractions by their cross products; a quotient with its remainder (a fraction is two whole numbers, line 100).
-- **Never:** a root, a power, a float, a logarithm, an exponential, a circular function, a typed table of values, a
-  number beyond 0 and 1 in the code, a physics formula, and the board's tick read as a duration.
+  (a take to its lay, a clock to its clicks); count; add and subtract whole counts; multiply whole counts; compare
+  (equal, less); compare two fractions by their cross products; a quotient with its remainder (line 100: a reading is
+  a quotient with its remainder, a bit length or a count over a span).
+- **A spread, owed:** shares read from finite draws differ by chance, so a comparison of shares needs a spread. Any
+  tolerance is an integer of the files, never a number in the code, compared by whole products (the Boss's to rule,
+  as measure.py already says).
+- **Never:** a root, a power with a fractional exponent, a float, a logarithm, an exponential, a circular function, a
+  typed table of values, a number beyond 0 and 1 in the code, a physics formula, a round's difference read as a
+  duration, a site's difference read as a length.
 
-### 4.2 Three structures, built once from the record
+### 4.2 Four structures, built once from the record
 
 - **The chains:** per clock (its "clock" field, the lay that made it), its clicks in round order with their teeth.
-- **The arrows:** per take, its lay (its "birth" field); per lay, its takes.
+- **The arrows:** per take, its lay (its "birth" field); per lay, its takes, or its refusal, or none in the run.
 - **The frames:** per setting (a split click), the frames it drew among and the one drawn.
 - **The ledger as written:** per round, Node-clock and train, its counts.
 
@@ -223,13 +294,13 @@ them are part 6. The page is a plan: it adds no law, and every reading in it tha
 
 | Module | What it reads | State |
 |---|---|---|
-| records.py | the record and the ledger, each bad line refused by name | stands |
-| books.py | the books close at every click | stands |
-| measure.py | D6's first reading (a clock's own count), D7 (no board tick as a duration), the twins, D8 (the cone check) | stands |
-| bangs.py | row 46: each later bang shows more, the load from the clock family's 00 slots on the count lines | stands; moves to the family at task 111 |
-| clocks.py | the rate lines of the records written before schema 1.2 | stands |
-| light.py | the light line, the echo, the count by signals (D6's second reading), the count ratio, the free path's larger count, the tide, the growing or swinging echoes, the horizon | owed; its test room given (tests/test_the_tensor24_decoder_light.py, 250 lines) |
-| mass.py | the rest beat per species in its own ticks, the width against the life, the least life and the least span, the slit's spread | owed; its test room to be asked |
+| records.py | the record and the ledger, each bad line refused by name | built |
+| books.py | the books close at every click (conservation, both ways of time) | built |
+| measure.py | D6's first reading (a clock's own count); D7 (no duration from rounds); the cone check (D8, on the board's cone) | built; to mend: the twins (equal counts on image paths no fault, "free" by clicks, the winding reported); the site refusal; the cone check on light's cone read from the record, with a spread |
+| bangs.py | row 46, each later bang shows more: the load from the header's time-gear lines (older records) | built; moves to the clock family's 00 slots at task 111 |
+| clocks.py | the rate lines of the records written before schema 1.2 | built |
+| light.py | the light line, the echo, the redshift, time dilation, the count by signals (D6's second reading), the free path, the tide, the growing or swinging echoes, the horizon | owed; its test room given (tests/test_the_tensor24_decoder_light.py, 250 lines) |
+| mass.py | the rest beat per species in its own ticks, the width against the mean life, the least life and the least span, the slit's spread | owed; its test room to be asked |
 
 Every reading is built first on records made in memory, each test failing on its own mutant, and then read on the
 engine's own records as the stages bring them.
@@ -240,35 +311,80 @@ engine's own records as the stages bring them.
 2. **On every take, its lay** (the "birth" field); **on every clock's click, its clock and its teeth** ("clock" and
    "tooth"); **on every setting, its frames and the one drawn** ("axes", "members", "drawn"). These are schema 1.2's
    further fields (ANIMATE-SCHEMA-1.2), planned at G5.
-3. **A universe file that lays a travelling wave,** so that the trade-off of part 2.6 is read on the engine's own run.
+3. **A universe file that lays a travelling wave:** the Boss's, with G2's first test (his 6514633855, item 5).
 4. **The clock family found from the record alone,** for row 46 and the ledger's 00 slots. Two forms, the choice the
    Boss's:
    - (a) the reader derives the square from the header's own board with the loader's own derivation, called read
-     only, and finds the train whose kinds' characters are the square's: nothing written for it, one source for the
+     only, and finds the train whose kinds' character is the square's: nothing written for it, one source for the
      derivation (recommended);
-   - (b) the header names the train the loader found: simplest, but a role written into the record.
+   - (b) the header names the train the loader marked (Train.square): simplest, but a role written into the record.
 5. **A click's region:** the law's **No click names a Node-clock** asks a reading of a region, never of one
-   Node-clock, and schema 1.2 writes one site per click. At G6, a composite's click names the Node-clocks its parts
-   span, or the decoder reads the region from the clock's own clicks. Open, the Boss's and Sofer's.
+   Node-clock; its alignment of 2026-10-25 makes the click the Node-clock's close and reads a bob over several
+   Node-clocks; schema 1.2 writes one site per click. Each reading that uses one site (the twins' meeting, proper time
+   at one Node-clock, the cone's Meshes) needs a region form at G6: a composite's click names the Node-clocks its
+   parts span, or the decoder reads the region from the clock's own clicks. Open, the Boss's and Sofer's.
 
 ### 4.5 The order of work
 
-1. Task 111: row 46 and the ledger's 00 slots, on the Boss's word on 4.4, item 4.
-2. light.py on records made in memory.
-3. mass.py on records made in memory, its room asked first.
-4. G5: the reader follows the click lines as the engine writes them, and every reading runs on them; most read NOT
-   READ, named, until composites click.
-5. G6: the readings on composites, against nature's numbers.
+1. Mend measure.twins and add the site refusal, on records made in memory.
+2. Task 111: row 46 and the ledger's 00 slots, on the Boss's word on 4.4, item 4.
+3. light.py on records made in memory, light's cone read from the record's own light lines.
+4. mass.py on records made in memory, its room asked first.
+5. G5: the reader follows the click lines as the engine writes them, and every reading runs on them; most read NOT
+   READ, named, until composites click; the spread for the draws, on the Boss's rule.
+6. G6: the readings on composites, against nature's numbers.
 
 ## 5. What does not follow, and is open
 
 - The click as the meeting of the two runs, on the act (G5); the region a click reports (4.4, item 5).
 - A clock that both takes and lives (G6); the held count's law, which a mass needs (G3).
-- The one-way reading and a material ruler (law, **The measured speed**: open by name).
+- Light's speed and the two-way composition on this engine, whose light disperses; the one-way reading and a
+  material ruler (law, **The measured speed**: open by name).
+- The spread for finite draws (the Boss's to rule), and with it the tide's step against the counts' jitter, the
+  width's spread and the slit's widening.
 - Planck's constant in the textbook's units: the counts need none, and the units would need a Mesh in metres.
-- The width as nature reads it is the life's inverse; on the board it is read as two counts compared, and its
-  agreement with nature's widths waits on composites.
 
 ## 6. The hostile readings
 
-To be filled by the two readers' findings and what changed for each.
+Both readers worked read only, checked claims against the code and the law, and ran the engine in scratch scripts.
+
+**The hostile mathematician: approve with changes** (five blocking findings, eleven minor). What held: the group
+theory of part 2.1 (exactly 24 of 216 candidates weigh 1, the det-1 signed permutations, closed; all five kinds
+homomorphisms with orthonormal characters; kinds.square is the conjugation slot for slot: 00 A1, 0i T1, ii A1 and E,
+jk T2); the uncertainty probe again byte for byte, and the ring results found again by exact circulant rank. What
+changed for the findings:
+1. "In place" (1.4): the engine refutes "a clock squeezed onto few Node-clocks spreads"; a wave's motions do not by
+   themselves move it. Rewritten; "a wave holds" defined (2.6).
+2. The twins (1.3): equal counts on image paths are no fault; measure.twins is to be mended (4.3, 4.5).
+3. Ten levels in years (1.4): the years hid a unit; dropped.
+4. 2.1 and 2.2's state: at G1b all ten slots stand as laid and only 00 is read; 2.2 marked planned.
+5. The operations (4.1): add and multiply listed; a spread owed with any tolerance an integer of the files; the
+   readings that counts alone left undefined ("free", the width, the slit, the tide's step) defined or listed open.
+6. to 16. "3D" read as axes (0); the kinds made by recipe, the family found by character (2.1); a motion defined on
+   every axis, whole waves holding motions in pairs, "not all 0" (2.6); the lone gear's step worded as its next count
+   being its last step (1.4); T1 kept only as counts (2.5); statuses on the click as meeting (0, 3.2); D7 worded on
+   durations (1.3); decision 41 worded on roots, the board's rest frame (2.4); the draw by both sizes (1.2, 1.3);
+   Doppler, "within the run", "built" and "exactly" (1.3); four structures, line 100's words, bangs.py's state, the
+   cone's citation (4.1 to 4.3, 2.2).
+
+**The hostile physicist: approve with changes** (eight blocking findings, five minor). What changed:
+1. Overclaims: "built" means on records made in memory (head of 1.3); the arrow row owed, the books reading
+   conservation; proper time and the run back exact only with the metric at rest, owed from G2; 2.2's locality cited
+   to mesh.py.
+2. The distance: the two-way theorem is the older engine's; this engine's light disperses (his measure, in 1.3); owed
+   anew; the far clock's delay subtracted from an echo.
+3. The count by signals: at most the traveller's count; every lay followed by its birth link, every missing one named.
+4. Time dilation: a one-way ratio is the redshift; dilation read on a static board from both directions, or over a
+   closed path.
+5. The free path: up to a conjugate point only; the winding on the wrapped board reported; "free" read by clicks;
+   equal counts no fault.
+6. The cone check: its cone is the board's, about 2.45 times light's along an axis, so it guards locality; light's cone
+   to be read from the record; a spread; no signal is not Bell.
+7. The future (1.5): the run back brings the settings' frames to the source; what no Node-clock holds is an outcome
+   before its draw.
+8. The star: the 6-round beat is a rounding effect at sizes 1 and 2; a beat at every size needs the spring (1.4).
+9. to 13. The mass holds its binding, the clock that counts it named, the width over many lays (1.3, 1.4); the tide,
+   Milne's case, the horizon within the run, the slit's far field and grating (1.3); no preferred common time, and
+   the lattice's further reasons in 3.2; the region form and the law's alignment (4.4); the years (1.4).
+
+Their second reading of this revision follows in the thread with each verdict.
