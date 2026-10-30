@@ -37,7 +37,11 @@ xy) get none.
 (e) the waves of period 64 on a ring of 64 along x: light, the E part, the T2 part, the 00 slot and the ii trace, each
     laid alone on the triangle wave 10^9 (32 - 2 min(x, 64 - x)), whole at every site and largest at x = 0, the notch
     on: sign changes at x = 0 over 4,000 rounds against the count of the same lay's exact linear run on the whole ring,
-    in the same rounds and in tenths over ten times the rounds.
+    in the same rounds and in tenths over ten times the rounds;
+(f) the order and the reach on this notch (the fifth text): the three ii slots laid uniform at rest at c0, no source;
+    over the expanding half (the grip falling) the sign of G2's scale factor's second difference, A ~ grip^(-1/2), read
+    exactly by squares with no root, and the grips' largest over their least, the reach's stated whole part tested by
+    squares; at c0 = 10^9, 9/10, 999975/10^6 and 999999/10^6 of GRIP / 2.
 
 The expected counts of (b), (c) and (e) are no closed form and no search: each runs an exact linear recurrence from its
 section's own lay at rest (x- = x) taken 10^40 times larger, each division by Rule3's carry with its fine tooth kept,
@@ -399,3 +403,54 @@ for name, rows, spring in rows_e:
 print("(e) on a ring of 64 along x, each slot laid alone on the triangle wave 10^9 (32 - 2 min(x, 64 - x)), the notch"
       " on, sign changes at x = 0 in 4,000 rounds, against the same lay's exact linear run on the ring at 10^40 times"
       " its size (its count in the same rounds, then in tenths over 40,000): " + "; ".join(lines_e))
+
+
+# (f) the order and the reach on this page's notch: the three ii slots laid uniform and at rest at c0, so the grip
+# GRIP + 2 c (both ends of each Mesh) starts at its largest and G2's scale factor A ~ grip^(-1/2) at its least; over the
+# expanding half (the grip falling) the sign of A's second difference A+ - 2 A + A- read exactly with no root: for
+# x = grip+, y = grip-, z = grip its sign is that of 2 z (x y)^(1/2) - (4 x y - z (x + y)): + where 4 x y - z (x + y)
+# is below 0, else the sign of 4 z^2 x y - (4 x y - z (x + y))^2; the reach, A's largest over its least, is the grips'
+# ratio's square root, its stated whole part tested by squares
+def a_second(x, y, z):
+    lhs = 4 * x * y - z * (x + y)
+    if lhs < 0:
+        return 1
+    d = 4 * z * z * x * y - lhs * lhs
+    return int(d > 0) - int(d < 0)
+
+
+def expanding_half(c0, rounds=2000):
+    s = laid({slot_xx: c0, slot_xx + 1: c0, slot_xx + 2: c0})
+    grip = [GRIP + 2 * c0]
+    for t in range(1, rounds + 1):
+        s = step.tick(lay_f, s)
+        g = GRIP + int(s.a[slot_xx, 0]) + int(s.a[slot_xx, nb[0, 0]])
+        if g <= 0:
+            return None, None, None, grip, t
+        if g >= grip[-1] and t > 1:
+            break
+        grip.append(g)
+    signs = [a_second(grip[t + 1], grip[t - 1], grip[t]) for t in range(1, len(grip) - 1)]
+    return len(grip) - 1, signs.count(1), signs.count(-1), grip, None
+
+
+lay_f = layout(False, True)
+lines_f = []
+for label, c0, bracket in (("the probe's own lay, c0 = 10^9", 10**9, None),
+                           ("c0 = 9/10 of GRIP / 2", carry(9 * GRIP, 20, 0)[0], None),
+                           ("c0 = 999975/10^6 of GRIP / 2", carry(999975 * GRIP, 2 * 10**6, 0)[0], 389),
+                           ("c0 = 999999/10^6 of GRIP / 2", carry(999999 * GRIP, 2 * 10**6, 0)[0], None)):
+    falling, plus, minus, grip, zero_at = expanding_half(c0)
+    if zero_at is not None:
+        lines_f.append(f"{label}: the grips pass 0 at round {zero_at}")
+        continue
+    most, least = max(grip), min(grip)
+    ratio_whole, ratio_rest = carry(10 * most, least, 0)
+    text = (f"{label}: {falling} rounds falling; A's second difference + for {plus} rounds, - for {minus}; the grips'"
+            f" largest over least {carry(ratio_whole, 10, 0)[0]}.{carry(ratio_whole, 10, 0)[1]}")
+    if bracket is not None:
+        text += (f"; {bracket}^2 <= that ratio < {bracket + 1}^2: "
+                 f"{bracket * bracket * least <= most < (bracket + 1) * (bracket + 1) * least}")
+    lines_f.append(text)
+print(f"(f) the order and the reach on this notch, (f9 / 3) tr^2 (the trace's spring 2 f9 = W div"
+      f" {carry(REST, 2 * F9, 0)[0]}), the three ii slots laid uniform at rest, no source: " + "; ".join(lines_f))

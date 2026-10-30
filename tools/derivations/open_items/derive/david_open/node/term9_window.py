@@ -89,7 +89,7 @@ for lam in (673, 445):
     shift_num, shift_den = 2 * uc_num, uc_den - uc_num
     lines_b.append(f"lambda = {lam} Mpc: u_c = {places(uc_num, uc_den, 5)}, the clicks' gamma - 1 ="
                    f" {places(shift_num, shift_den, 5)},"
-                   f" {places(shift_num * 100000, shift_den * 23, 0)} times Cassini's"
+                   f" {places(shift_num * 1000000, shift_den * 23, 1)} times Cassini's"
                    " 2.3 x 10^-5")
 print("; ".join(lines_b))
 
