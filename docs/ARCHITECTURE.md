@@ -1,193 +1,175 @@
 # Tensor24: the architecture
 
-The owner's words, through David, Animate and the Boss (2026-10-30, in Hebrew, in translation): "Pass to the writer that everything must be gathered under an architecture document, and to work by it." (09:5x UTC, to David, his 6519867280); "Sofer is preparing an architecture document for the whole system, including the page you and Animate built. Make sure he does it well and clearly, and from there everything is derived. And in the architecture document, every section must be explained: how it works in the clock, how it is in physics in the clicks, how it is on the event board, and what its algebra is." (10:1x UTC, to David, his 6520218195); "Pass it to Sofer, and he embeds it in the architecture document he is building." (10:0x UTC, to Animate, her 6520283599, of the decoder's page); "Find out in the world how architecture documents work for small physical systems like ours, pass it to Sofer, and close together on how he should do it." (10:1x UTC, to David, his 6520277889). This is that document.
+The one document that tells the system and how it is built, and the one the work runs from. The owner's words of 2026-10-30 (in Hebrew, in translation): "something not bloated that fits the Node-clock"; "one uniform document that is clear and clean and orderly, the big parts at the top, and below how each part is implemented and how it works together"; "a single document, with the decoder in it, no more splitting documents". The law ([docs/ALGEBRA.md](ALGEBRA.md)) governs it and the owner decides it.
 
-**What it is.** The one place the whole system is told as a structure: its parts in the order of the flow, what each part does, what it reads and writes, where it lives in the code, what verifies it and what state it is in. The law ([docs/ALGEBRA.md](ALGEBRA.md)) governs it and the owner decides it; every other page of the system derives its part's place and its layers from here (TENSOR24_NODE.md, TENSOR24_PLAN.md, the decoder's page, [docs/BIG_PICTURE.md](BIG_PICTURE.md), the engine's document [docs/ENGINE.md](ENGINE.md)), and a sentence of one of them that disagrees with this document is that page's to mend, or comes to the writer with the reason. The writer keeps it as he keeps the law: a change of a part, of a wall between folders or of a status is entered here first, and with the owner's word where it touches a line of the law.
+Tensor24 is a purely algebraic engine: a board of clocks, each clock a train of gears that mesh with its six neighbours, and one act at every Node-clock every round, alike everywhere. Nothing of nature is typed; the physics is read from the clicks alone.
 
-**The four layers.** Every section tells its part in four paragraphs, in the order where the part is simplest and each closing the others (the law's principle, line 35, item (10)):
+**Each part answers the same questions**, a few lines each, and one general flag, n/a, stands where a layer does not apply:
 
-- **Clock:** how it works as clock parts, gears and Meshes.
-- **Clicks:** what the clicks read of it, the physics; the physics is after the clicks, never the board's numbers, and the step from the board to the clicks is the delicate one and is named.
-- **Event board:** what stands and moves at each Node-clock, Mesh and round.
-- **Algebra:** its tensor algebra, whole numbers and Rule3's carry.
+- **Clock:** what the clock actually does.
+- **Board:** what the board does in terms of the clocks, the board taken as it stands in our event space, which has no time: time is each Node-clock's own count and nothing else.
+- **Clicks:** what physics shows in the clicks, the board's shadow; the physics stands behind the clicks, and the step from the board to the clicks is the delicate one.
+- **Algebra:** one line of its algebra, in whole numbers and Rule3's carry. Then its **home** in the code, its **test** and its **status**.
 
-Each part then gives its **home** in the code, what it **reads and writes**, its **verification** (the law and the mutant that fails it) and its **status**: BUILT, DERIVED (owed in code only), CHECKED (a probe shows it), OPEN (owed a derivation, by name) or owed (not written). The shape follows arc42 (goals, constraints, context, strategy, building blocks, runtime, concepts, decisions, quality, risks, glossary) with the verification and validation ladder of ASME V&V 10 as the ground of the fourth layers (David's survey, 6520277889): the clock is the conceptual model, the algebra the mathematical model, the event board the computational model, and the clicks what is read against nature.
-
-## A. The whole
-
-**A.1 Purpose and quality goals.** A world that shows what nature shows, in whole numbers, with nothing typed that the clicks must show. The goals, each a line of the law: whole numbers only (line 100); locality, a Node-clock reads itself and its six Meshes and nothing else (line 92); the run back exact, the step on the mirrored state (Postulates 2 and 4); no number beyond 0 and 1 in the code, the numbers standing in the three files; nothing declared, no file names a particle, a mass or a coupling (decision 35); one act at every Node-clock, no special code for a clock or a link (line 90); nature is in the clicks, not in the board (the owner's word of 05:0x UTC, the decoder's page).
-
-**A.2 Constraints.** The law's rules (lines 90 to 106); the gate, which refuses a push that raises a count of any rule ([SCRIBE-GATE-1.md](../tools/derivations/open_items/SCRIBE-GATE-1.md)); the documents' gates; the architect's table of who may import whom (below); only the Boss writes engine code and only Animate the decoder's (decision 40), David derives, the writer keeps the law and the documents, the owner decides.
-
-**A.3 Context.** In: three files of whole numbers (the universe, the piece, the setting). Out: a record of the schema and a ledger beside it. Read: the record by the decoder, and by the visualizer (owed). Beside the run: the law, the gate, the census, the documents' gates, the tests and `tools/check.py`.
-
-**A.4 Strategy.** One act at every Node-clock, the same code at every place; the 24 turns of the cube derived once from the Node-clock's own star; the clicks the only physics.
-
-**A.5 The whole, in four layers.**
-
-- **Clock:** a board of clocks, a torus of Node-clocks, each a train of gears that mesh with its six neighbours through six Meshes, one through each Spoke; time is each Node-clock's own gear rate and no count stands inside it (line 92, item (4)).
-- **Clicks:** the great clock reads itself, and a click is the one measurement: a whole click credits a train's whole winding, a split click draws a part by the sizes of the parts, and there is no third kind; nature is read from the clicks alone.
-- **Event board:** every round, at every Node-clock, every gear of every row steps once in one pass at its now slot; the state per gear row is the notch now and before and two fine teeth, a and b, r and r_d; nothing is queued or sent between Node-clocks.
-- **Algebra:** one tensor operation on arrays: the gather of the neighbours' counts (mesh.pull), the contraction of the readings through the plan and the 24's tables (contract), and Rule3's carry elementwise (step.gear): q, r+ = carry(W (a - b) + s F + K, W, r), a+ = a + q, b+ = a.
+## 1. The parts
 
 ```
- world        loader          Node-clock       runner          record       decoder     visualizer
- 3 files  ->  runner/files, -> engine/,    ->  runner/run, ->  record/  ->  decoder/ -> (owed)
-              board, load      algebra/        rounds, rewind  schema
-                                  ^                |
-                                  +---- main.py ---+   the one joint between the Node-clock and the runner
+ world        loader           Node-clock        runner           record        decoder       visualizer
+ 3 files  ->  runner/files, -> engine/,     ->  runner/run,  ->  record/   ->  decoder/  ->  (owed)
+              board, load      algebra/          rounds, rewind   schema
+                                   ^                  |
+                                   +----- main.py ----+    the one joint between the Node-clock and the runner
 ```
 
-## B. The parts
+**The Node-clock is the most important part** (the owner's word of 2026-10-30, 11:2x UTC): every other part lays it, runs it or reads it, and it is told first below.
 
-### B.1 The world: three files
+| Part | What it is | Home | Status |
+|---|---|---|---|
+| World | three files of whole numbers: the universe, the piece, the setting | examples/tensor24/ | BUILT |
+| Loader | the Node-clock's initialization: lays the clocks from the three files | runner/files.py, board.py, load.py | BUILT |
+| **Node-clock** | the one act at every Node-clock, every round: the core | engine/, algebra/carry.py | BUILT; terms OPEN at G2 to G5 |
+| Runner | the rounds, counted from outside, and the run back | runner/run.py, rounds.py, rewind.py | BUILT |
+| Record | the boundary between the board and the clicks | record/schema.py | BUILT at schema 1.2 |
+| Decoder | reads the record's clicks against what nature shows (Animate's) | decoder/ | built; every row not read until G5 |
+| Visualizer | draws what the decoder reads (Animate's) | owed | owed |
+| Guards | the law, the gate, the tests, the documents' gates | docs/ALGEBRA.md, tools/, tests/ | BUILT |
 
-- **Clock:** the files lay the clocks. The universe: the families (a name, its kinds, its part, its pinion) and the integers den, full_rate and width. The piece: the board's three sides. The setting: the gears laid, a row each, and the number of ticks.
-- **Clicks:** nothing physical. A file declares no particle, no mass and no coupling (the law's clause **Nothing is declared**, decision 35, line 35): every particle appears by itself in the clicks, a mass is measured only there (decision 37).
-- **Event board:** universe.json (version, integers, trains), piece.json (version, shape), setting.json (version, ticks, gears: rows of train, component, site, a, b, r). No fourth file is a world.
-- **Algebra:** whole numbers alone; a side, a part and an integer that counts at least 1; every train, kind, part and site a row refers to is named in the files; the teeth and the grips come from den and full_rate by one formula (the teeth 6 den Gamma^2 and the grip den Gamma^2 per Mesh, Gamma the full rate).
-- **Home:** `examples/tensor24/`. **Reads and writes:** read by the loader; written by hand. **Verification:** tests/test_the_tensor24_files.py (the examples hold; each rule refuses its own broken file, by name). **Status:** BUILT.
+## 2. How they work together: one round
 
-### B.2 The loader
+The loader lays the board from the three files. The runner gives every Node-clock its turn in every round: each one reads itself and its six Meshes at the now slot, steps every gear once through Rule3's carry, and writes only its own state; nothing is queued or sent between Node-clocks, and the order of work is no law. Where the carry of the drive completes a whole winding a click leaves (none is written before G5). The runner writes the record and the decoder reads it. The run back is the same act on the mirrored state and returns the start bit for bit. main.py passes the Node-clock's functions to the runner, so the two never import each other.
 
-- **Clock:** it lays the clocks on the board: every site with its six neighbours through six Spokes, the wrap on every axis, and the gears on their rows; it is the Node-clock's initialization from the outside.
-- **Clicks:** the record's header names each train's kinds and part as the files lay them, so a click names a train and never a row (schema 1.2); no number of the loader reaches the clicks except through the act.
-- **Event board:** the board from the piece's sides (each site's six neighbours, the wrap by Rule3 on each coordinate), the teeth and grips from the universe's integers, the gears laid from the setting, the 24's tables made once at the start.
-- **Algebra:** arrays of Python integers; the 24 by Rule3's weight over every matrix of three Spokes; each channel's group sum c u u^T, one invariant line, read in closed form with no seed, no search and no loop (David's tb_seed.py, checked by the writer, 6520003245); the tables' unit stays with the strength, which G3 derives (the writer's three conditions, 6520003245).
-- **Home:** `src/tensor24/runner/files.py`, `board.py`, `load.py`; `main.made`; the tool `tools/tensor24_files.py` checks the three files alone. **Reads and writes:** reads the three files, writes the layout and the state's arrays; every departure of the files is named and no record is written past one. **Verification:** tests/test_the_tensor24_load.py, tests/test_the_tensor24_files.py, tests/test_the_tensor24_kinds.py. **Status:** BUILT; the strengths OPEN (G3).
+## 3. The parts
 
-### B.3 The Node-clock
+### The Node-clock (the core)
 
-- **Clock:** the one act, every round, at every Node-clock alike: it reads itself and its six Meshes and nothing else (lines 90 and 92); no special code and no specific law for a slowing, a grip, a sending, a receiving, a lengthening, a shortening or a freezing, which are the act's own results (line 90). A gear is a dial, a coarse wheel and a fine tooth; a train is a tensor whose kind is a way the 24 turns act; a held hand with a hairspring in its own Node-clock is what makes a clock of a hand, and its rest beat is its mass.
-- **Clicks:** the clicks are the act's outputs: a whole click is the drive's carry of the swept area (term 11, DERIVED, G5), a split click the draw by a rank count over the parts' sizes (term 12, OPEN, G5); the engine writes no click before G5. What the clicks read of the act: the rest beat as a mass, proper time as a clock's own count.
-- **Event board:** at every Node-clock and every round the state per gear row is (a, b, r, r_d); the teeth W are the rest plus the metric's 00 slots (decision 41's slot form), each Spoke's grip the rest plus the ii slots at both ends of its Mesh; the round reads the now slot alone, in one pass, with no queue and no send.
-- **Algebra:** q, r+ = carry(W (a - b) + s F + K, W, r), with the pull F the sum over the six Spokes of grip times (neighbour minus own), the source J through the plan (the vertex law: each vertex pushes all its legs), the drive (q_d, r_d+) = carry(J, T_d, r_d) and the kick K = T_k s q_d; the run back is the same act on the mirrored state. The thirteen terms, one by one: TENSOR24_NODE.md, section 3.
-- **Home:** `src/tensor24/engine/` (contract.py, kinds.py, mesh.py, state.py, step.py) and `src/tensor24/algebra/` (carry.py); `src/tensor24/main.py` passes its functions into the runner. **Reads and writes:** reads its own gears and its six Meshes' at the now slot; writes its own state. **Verification:** tests/test_the_tensor24_engine.py (J by the vertex law; the act against its naive model: the board, one Mesh's reach, purity, the trains' order, the 24's turns, the fresh interpreters; the run back, every mutant failing its law inside its test), test_the_tensor24_algebra.py (the carry), test_the_tensor24_kinds.py (the 24, its kinds, their square and the tables); the whole node is read once, on our bang, by test_the_tensor24_run.py (tests/frame.py keeps the properties the engine's tests read). **Status:** terms 1 to 4 and 8 BUILT; term 6 the contraction BUILT, its strengths and plan OPEN (G3); term 7 DERIVED (G3); terms 5, 9 and 13 OPEN (G2; the first-order form of term 5 is the Boss's draft N2, f3cbebe0c, for David's reading), term 10 OPEN (G4), term 11 DERIVED and term 12 OPEN (G5).
+- **Clock:** a clock of many hands, one gear per row. Every round every gear moves once: its six neighbours pull it through the Meshes and the coupling pushes it; it turns by what its teeth carry and keeps the rest as its fine tooth; the drive carries the coupling's push the same way. No gear waits, sends or is singled out, and there is no special code and no law of the Node-clock's for a slowing, a grip, a sending, a receiving, a lengthening, a shortening or a freezing: these are the act's own results (law, lines 90 and 92).
+- **Board:** one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot. The teeth W are the rest plus the metric family's 00 slots here; each Spoke's grip is the rest plus the ii slots at both ends of its Mesh. The run back is the same act on the mirrored state, exact while every fine tooth stands within its teeth.
+- **Clicks:** none is written before G5. A whole click will be the drive's carry of a train's swept area; a split click will be the draw over the parts' sizes. The clicks read the rest beat as a mass, and a clock's own count as its proper time.
+- **Algebra:** q, r+ = carry(W (a - b) + s (F + T_k q_d), W, r); a+ = a + q; b+ = a. F is the sum over the six Spokes of grip (neighbour - own); q_d, r_d+ = carry(J, T_d, r_d); J is the plan's contraction of up to three readings through the 24's tables, each monomial pushing all its legs.
+- **Home:** engine/step.py, engine/mesh.py, engine/contract.py, engine/kinds.py, engine/state.py (the five modules of the engine), algebra/carry.py, main.py. **Test:** test_the_tensor24_engine.py (J; the act against its naive model; the run back), test_the_tensor24_algebra.py, test_the_tensor24_run.py (the whole once, on our bang). **Status:** by term, below.
 
-#### B.3.1 The mass (term 6; the decoder's page 1.7 and 3.8; G3), the standard section David worked
+**The metric family** (a train of the Node-clock, no row apart)
 
-- **Clock:** a hand becomes a clock where a hairspring in its own Node-clock pulls it back toward 0; the hairspring's stiffness is a held hand's count, the held hand has a spring of its own, and a stop bounds a large swing.
-- **Clicks:** the rest beat is read as a mass through energy differences, and the kinetic mass through motion; ratios go by squares at first order, and the round's unit cancels there; light and gravity read massless, to a bound, through the delicate conversion; one g gives one mass, which nature refuses.
-- **Event board:** at every Node-clock, every round, the gear's count steps on its six neighbours' pull through the Meshes and on the held count beside it; the rest beat, 4 sin^2 (omega0 / 2) = g n / W, is a reading of the clicks (the decoder's page 3.8.2; no act computes a sine), counted in rounds, above the floor and below the ceiling.
-- **Algebra:** c = the sum of C[i, j -> A1] x_i x_j through the 24's table; V = (g / 2) k c + (lam / 4) c^2 + (kappa / 2) (k - n)^2; the pushes P and Q are minus its derivatives; V is bounded below exactly when lam is at least g^2 / (2 kappa); E is read through its form G.
-- **Home:** `engine/contract.py`, term 6 of TENSOR24_NODE.md. **Status:** built at the test's strengths; the strengths OPEN at G3.
+- **Clock:** the clock's own train: its 00 slot is every gear's teeth here, its ii slots are each Mesh's grip; it is found by its kinds' character.
+- **Board:** it rides the act like every train; its push from the matter is owed (term 5).
+- **Clicks:** a deeper 00 slot is a slower clock, read by its clicks as proper time; gravity reads massless.
+- **Algebra:** the four-vector's symmetric square, a scalar, the vector, a scalar, E and the shears (the 00, 0i, trace, traceless diagonal and jk slots), with W = rest + the 00 slots, linear (decision 41). **Status:** the reads BUILT; its push is OPEN, owed at G2 (N2's first-order form).
 
-### B.4 The runner
+**The thirteen terms** of the Node-clock's act
 
-- **Clock:** it counts the rounds from outside, since no Node-clock holds one; it gives every Node-clock its turn in every round and runs the whole back to see that it returns.
-- **Clicks:** none; it writes what the act wrote.
-- **Event board:** rounds one after another to the setting's ticks, each a full pass of every Node-clock; the promise (the teeth stand at least 1 and the fine teeth within their teeth) read from outside before each round (line 92); the rewind runs the rounds back by the engine's run back alone, with no log read.
-- **Algebra:** the engine's tick, passed in and iterated; the run back the mirrored tick; the start must return bit for bit.
-- **Home:** `src/tensor24/runner/run.py`, `rounds.py`, `rewind.py`; the tool `tools/tensor24_run.py` runs the three files to a record and a ledger. **Reads and writes:** reads the loader's layout and state, writes the record and its ledger. **Verification:** tests/test_the_tensor24_run.py (the whole once, on our bang, the three example files: one formula, a round the naive round, every order and turn alike, the run to a record and a ledger the decoder reads, the run back exact, a departure named with nothing written, by the run and by its tool). **Status:** BUILT.
+| # | Term | Clock | Board | Clicks | Algebra | Status |
+|---|---|---|---|---|---|---|
+| 1 | The readings | a gear looks at itself and at its six neighbours | its value, its difference along each axis and the pull, at the now slot | none of their own | the readings' rows: the value, three gradients, the force, then the unit | BUILT |
+| 2 | The teeth W | how much a gear carries in one turn, so a deeper clock turns slower | the rest plus the 00 slots here | proper time | W = T + the sum of the 00 slots, linear | BUILT |
+| 3 | The grips | how hard a Mesh holds its two gears | the rest grip plus its axis's ii slots, here and at the neighbour, alike from both ends | lengths and the speed of light, as the clicks read them | grip = den Gamma^2 + the ii slots at both ends | BUILT |
+| 4 | The pull F | each neighbour tugs a gear toward its own count | the sum over the Spokes of grip (neighbour - own) | waves, and light travelling | F as above | BUILT |
+| 5 | The metric's push | the matter's motion winds the clock's own train | each square slot pushed by its part of 2T + 2 eta V | gravity, read by the clocks' rates | T = sum of C[K x K -> A1] v (x) v onto the ten slots | OPEN (G2): N2's first-order form |
+| 6 | The vertex and the spring | a hairspring ties a hand to a held hand in its own clock, and a vertex couples trains | J from the plan, every leg pushed | the rest beat as a mass | each monomial f x_a x_b x_c x_d pushes each leg by -f times the other three | the contraction BUILT; the strengths and the plan OPEN (G3) |
+| 7 | The drive | one wheel carries the coupling's push for every row | q_d, r_d+ = carry(J, T_d, r_d) | where the clicks will come from | Rule3's carry at T_d | DERIVED (G3), in code at T_d = 1 |
+| 8 | The kick | the drive's whole turns pushed into the gear | K = T_k s q_d | none of its own | as written | BUILT at T_k = 1 |
+| 9 | The volume's notch | the board's mean count swings and returns | the metric family's own swing and its top | the universe's swing (Postulate 4), with gravity's polarizations massless | owed in the slot form | OPEN (G2) |
+| 10 | The shift and the shears | the now leans toward a neighbour, and stretches by direction | the 0i and jk slots, read by the gradient's and the pull's contractions | frame dragging and waves | owed after G2 | OPEN (G4) |
+| 11 | The whole click | when a train's swept area completes a whole key, the drive carries it once | the area summed over the train's rows through the A1 table, carried at the key, the rest kept in r_d | one quantum per mode, E = n h nu; a negative wind is a negative quotient, with no if | q, r_d+ = carry(the area moved, key, r_d) | DERIVED (G5), owed in code |
+| 12 | The split click | when parts share a winding, the great clock draws which part takes it | a rank count over the parts' sizes after the carry; a full slot refuses after the draw, and the quantum returns to its giver | Born's rule; both clicks can fall in one round, on different trains | the draw | OPEN (G5): its fairness and the draw's c |
+| 13 | The frozen clock | a clock whose teeth outgrow its drive never fires | where that holds is the horizon, with no hold and no restore | a horizon | derived on the slot form | OPEN (G2), on the act |
 
-### B.5 The record
+**The mass** (term 6; David's, with G3's results)
 
-- **Clock:** the boundary between the board and the clicks: the runner writes it, the decoder reads it, no act reads it (line 92: only the readers read the record).
-- **Clicks:** the record is the clicks' only source: its header names each train's kinds and part; its click lines (none before G5) name a train, a Node-clock and a tick; the ledger carries each train's counts.
-- **Event board:** JSON Lines, one line per record, its kind its record's name in lower case; for the example world a header, an end and one Count line per round, Node-clock and train (1,280 on the example).
-- **Algebra:** whole numbers and labels, nothing computed in it; its width is whole numbers of any size.
-- **Home:** `src/tensor24/record/schema.py`, schema 1.2. **Reads and writes:** written by the runner, read by the decoder. **Verification:** the decoder's tests read it under the schema's rules and refuse each broken record by its cause. **Status:** BUILT at schema 1.2; schema 1.3 is the Boss's next push: the header carries each kind's characters and each train's square flag as whole numbers, the couplings retire, the classes and the draw drop until a reading needs them (his 6520580216).
+- **Clock:** a hairspring ties a hand to a held hand in its own clock, so it swings by itself.
+- **Board:** a tied hand beats at its rest rate at every clock alike; light's hands have no hairspring and only travel from clock to clock.
+- **Clicks:** the beat is read as a mass, through energy differences and through motion; light reads massless.
+- **Algebra:** the spring g C n, 4 sin^2 (omega0 / 2) = g n / W. **Home:** engine/contract.py, term 6. **Status:** built; the strengths OPEN at G3.
+- **G3's results** (David's DAVID-TENSOR24-G3.md, toys-5 1ae9a6c29): the bound holds for one tied family or one summed four-leg term, and with a term on each family the sum of g_f^2 / (2 kappa lam_f) is at most 1; the ceiling is the smaller of lam's excess scale and the held hand's own (x near kappa / g), never the held hand's sign; light and the metric stay off k (OPEN, no row apart); E is read through its form; an E held count's own potential of up to four legs stands where two of a T1 family's springs meet.
 
-### B.6 The decoder (the decoder's page, embedded)
+**The families and the three hands:** owed from David in the same form (his (e): the decoder's page 1.8 and 3.9 to 3.11).
 
-Animate's page, `tools/derivations/open_items/Decoder4D2Clicks3D.md`, holds the decoder's plan and the mass in full, from the board's events to the clicks and from the clicks to what nature shows; this section is its four layers in the architecture's order, and the page stays the derivation underneath (its parts 1 to 5 and 8). The decoder reads only what the new engine writes.
+### The world: the three files
 
-- **Clock (page part 1):** each reading is a clock's own count or a light link; the clock family's 00 slot is each Node-clock's own teeth; the two clicks told in a clock; the mass, the three hands and uncertainty told in clock parts (1.7 to 1.11).
-- **Clicks (page part 2, 1.3, 4.4):** the facts of nature to meet, each read by the clicks and no number of the board: proper time and the twins, the cone checked by click, the books at the click (the conservation, row 15), each later bang showing more (row 46), the mass as the rest beat read through energy differences.
-- **Event board (page 4.1, 4.2, 4.5, and the step in 4.3 and 4.6):** the board's space is no fixed space (the Meshes lengthen); the board's numbers cannot be read as nature's; they reach the clicks only as ratios at first order, and as departures of order omega0^2 beyond, and the board holds no unit for the round; the step from the board to the clicks is the delicate one.
-- **Algebra (page part 3):** from the star to the metric family, the act in the algebra, what a click carries in kinds, the invariants, four to three in kinds, uncertainty (checked in whole numbers), families standing only in the files, mass on the board as a spring with a coupling (3.7, 3.8).
-- **Home:** `src/tensor24/decoder/` (records.py, books.py, bangs.py, measure.py; clocks.py goes with the rate lines no run writes, and family.py is the first to build: it derives the clock family from the header's kinds' characters and square flags by the algebra alone, schema 1.3, with no import across the wall); the tool `tools/tensor24_decode.py`. **Reads and writes:** reads a record and its ledger, prints each row's verdict (shown, not shown or not read, with its cause); writes nothing. **Verification:** tests/test_the_tensor24_decoder.py, test_the_tensor24_decoder_bangs.py, test_the_tensor24_decoder_cases.py, test_the_tensor24_decoder_measure.py (one per generic part with its mutant). **Status:** the decoder as built reads the record and the ledger whole; every row reads NOT READ until G5 (no click line); the decoder's code is built after the page's approval, from the Boss's head once his cut is whole (the owner's word to Animate, 10:0x UTC: "Wait until he finishes everything, and then work from the branch of the whole system. Bring the decoder's page for approval.").
+- **Clock:** before the first round, the files say which trains every Node-clock carries (each a name, its kinds among the 24's five, its part and its pinion), how many Node-clocks stand on each axis, and which gears are set where.
+- **Board:** at round 0 every gear stands at 0 except the ones the setting lays. Nothing else is laid: no coupling, strength, particle or mass (decision 35).
+- **Clicks:** none come from the files; everything the clicks show comes out of the act (a mass is measured only there, decision 37).
+- **Algebra:** whole numbers only; every side, part and integer is at least 1; no fourth file is a world.
+- **Home:** examples/tensor24/ (universe.json, piece.json, setting.json), the one bang. **Test:** test_the_tensor24_files.py. **Status:** BUILT.
 
-### B.7 The readings
+### The loader, the Node-clock's initialization
 
-- **Clock:** the reads of the clicks that the engine's folders share, taken once where they are alike.
-- **Clicks:** the same reads, kept out of both the engine and the decoder.
-- **Event board:** none.
-- **Algebra:** none.
-- **Home:** `src/tensor24/readings/`, an empty package; it may import the algebra and the record. **Status:** owed.
+- **Clock:** it makes every Node-clock alike from its star of six Spokes: the 24 turns that leave the star the same, the five kinds by which a train's gears turn with them, and the tables that gear one kind into another. Then it sets every gear's teeth and every Mesh's grip, and lays the setting's gears.
+- **Board:** each Node-clock's six neighbours, by the wrap on each axis. Every row's teeth rest at 6 den Gamma^2 (6 is the Spokes), and every Mesh's grip at den Gamma^2. The metric family is found by its kinds' character alone: its 00 slot is every row's teeth, its ii slots are each axis's grips. s, T_k and T_d stay at 1 until G3.
+- **Clicks:** the record's header names each train's kinds and part, so a click names a train, never a row. No number of the loader reaches the clicks except through the act.
+- **Algebra:** the 24 are the matrices of three Spokes that Rule3's weight keeps (24 of 216). A channel's group sum is c u u^T, and its table u is the primitive row, read where the diagonal entry divides every other, with the sign by Rule3's sign test; all 125 channels go in one einsum, with no loop, seed or search.
+- **Home:** runner/files.py (reads the files and refuses by name), runner/board.py, runner/load.py, main.py (made); tools/tensor24_files.py (checks and loads the files). **Test:** test_the_tensor24_files.py, test_the_tensor24_load.py, test_the_tensor24_kinds.py. **Status:** BUILT; the strengths OPEN (G3).
 
-### B.8 The visualizer
+### The runner
+
+- **Clock:** it counts the rounds from outside, since no Node-clock holds a count. It gives every Node-clock its turn in every round, then runs all the rounds back to see the start return.
+- **Board:** before each round it reads the promise, every fine tooth within its teeth (so the teeth are at least 1), and names where it breaks. After the rounds it rewinds by the act's run back alone. The end's digest is the state reached.
+- **Clicks:** it writes what the act gives: the record's header and end, and the ledger beside them; click lines from G5.
+- **Algebra:** the act iterated; the start returns bit for bit. **Home:** runner/run.py, runner/rounds.py, runner/rewind.py; tools/tensor24_run.py. **Test:** test_the_tensor24_run.py. **Status:** BUILT.
+
+### The record
+
+- **Clock:** the boundary between the board and the clicks; only the readers read it.
+- **Board:** nothing of the board crosses it except what its lines name. The header: the files with their digests, the board's sides, and each train's kinds, part and winding. The end: the rounds, the digest, and whether the run back was exact. The ledger beside it: one count line per round, Node-clock and train (1,280 on the example).
+- **Clicks:** its click lines, from G5, name a train, a Node-clock and a tick; nothing is computed in it.
+- **Algebra:** whole numbers of any width, and labels. **Home:** record/schema.py. **Test:** test_the_tensor24_run.py and the decoder's tests. **Status:** BUILT at schema 1.2; schema 1.3, the Boss's next push, puts each kind's characters and each train's square flag in the header, retires the couplings and drops the classes and the draw.
+
+### The decoder (Animate's)
+
+- **Clock:** the watchmaker outside the case. It reads only what clocks count and how light links one clock's count to another's: a reading is a clock's own count between two of its clicks, never a round read as a duration and never a label's difference read as a length. Clock parts first: a click takes a whole train and never one of its gears, so a gear is read only through its clock's clicks, and only a clock is placed in spacetime.
+- **Board:** the board reaches it only through the record and the ledger beside it, read from outside; it never steps the engine, never reads its arrays and never writes into a run. The step from the board to the clicks is the delicate one: the board is no fixed space (a Node-clock keeps its label while the Mesh between two labels lengthens and shortens), its round, teeth and grips are no observables, they reach the clicks only as ratios at first order and as departures of order omega0^2 beyond, and the board holds no unit for the round.
+- **Clicks:** nature is read in the clicks, the board's shadow. Every reading says shown, not shown or not read, each with its cause, and raises nothing.
+- **Algebra:** read a line and refuse a bad one by name; group, order by round, follow a link (a take to its lay, a clock to its clicks); count, add, subtract and multiply whole counts; compare fractions by cross products; Rule3's quotient with its remainder. Never a root, a float, a logarithm, a circular function, a physics formula or a number beyond 0 and 1 in the code; a spread for finite draws is an integer of the files.
+- **Home:** decoder/ (it imports the record and the algebra alone) and tools/tensor24_decode.py. **Test:** test_the_tensor24_decoder.py, test_the_tensor24_decoder_bangs.py, test_the_tensor24_decoder_cases.py, test_the_tensor24_decoder_measure.py (Animate's five: the record, the ledger, the clock family, row 46's load, and the whole once on the example). **Status:** built on records made in memory; on the example's record every row not read until G5.
+
+**What it reads.** The record's header (the files, the sides and the order of the sites, the kinds, the trains with their kinds, parts and windings; from schema 1.3 each kind's characters and each train's square flag), its click lines from G5 (a whole click: its train, Node-clock and round, its quotient, its takes with their lays; a split click: its parts' sizes, the frames it drew among and the one drawn), and its end (the rounds, the digest, the rounds run back, exact or not); the ledger's count lines, one per round, Node-clock and train, the train's counts there row by row. The clock family is the train flagged as the four-vector's square; its first row is the 00 slot, each Node-clock's own teeth.
+
+**The readings** (what the clicks read; status):
+
+1. **Row 15, the books:** at a whole click each train's taken equals its laid, at its own winding: conservation, both ways of time; built in memory, on the engine at G5.
+2. **Row 46, each later bang shows more:** the load, the clock family's 00 slot summed over the board, falls to a bottom between bangs; each later bang's click kinds and deepest clock grow (ever more complex clocks); the load first, on the count lines, the rest at G5.
+3. **D6, proper time:** a clock's own count between two of its clicks; built in memory, on the engine at G5, and from G2 where a clock moves.
+4. **D7:** a difference of rounds read as a duration is refused by name; built.
+5. **D8, the cone:** each click binned by the settings outside its past cone, so no signal; built on the board's cone, one Mesh a round; light's cone owed.
+6. **The twins, the free path:** two clocks meet twice by two paths, and the free one counts more against nearby paths; equal counts on image paths are no fault; to mend.
+7. **Light:** a light path is a lay and its take; a distance an echo in one clock's own count, two-way only; the redshift a one-way count ratio; time dilation read from both directions or over a closed path; proper time a second time by signals; a tide between free clocks; echoes growing or swinging; a horizon; owed (light.py).
+8. **Mass:** the rest beat per species in its own ticks (decision 37), the width against the mean life, and where a species stands among a clock's parts: a gear never taken alone, a bound part freed by a click, a free quantum taken alone; owed (mass.py, G6).
+9. **A probability:** the shares of split clicks over many lays alike, against the sizes, with their spread; at G5.
+10. **A correlation at a distance:** the joint outcomes of one birth's two clicks by the two settings' frames, on two boards; at G5.
+
+**What it needs from the engine** (the Boss's): the click lines (G5), with each take's lay, each clock's click with its clock and teeth, and each setting's frames and the one drawn; each train's windings and wind in the ledger with G5's click; composites that click (G6); a click's region where a reading uses one site (G6); a universe that lays a travelling wave (G2). **The build, in order:** family.py from schema 1.3's header (exactly one train flagged, else not read with the count); row 46's load on the count lines; clocks.py out (the rate lines no run writes); the five tests; the twins and the site refusal mended; light.py; mass.py; G5's clicks; G6's composites. **Open:** the spread for finite draws (the Boss's rule); light's cone read from the record; a click's region (G6); the draw's dial c (G5).
+
+**Uncertainty**
+
+- **Clock:** one tick holds every beat, and only many ticks tell a beat; one Node-clock holds every motion, and a sharp motion fills the whole board.
+- **Board:** the Node-clocks a wave holds times the motions it holds are never fewer than the board's Node-clocks, a count with no law of its own (whole numbers, every ring of 2 to 10 and two boards: ANIMATE-UNCERTAINTY).
+- **Clicks:** a click at one round holds every beat, so a mass is read only through many clicks of one clock; the draw puts a click's place in the detector's region, and within it the motion is open.
+- **Algebra:** a wave's support times its transform's support is at least the board's size, by exact rank. **Status:** CHECKED.
+
+### The algebra (algebra/carry.py)
+
+- **Clock:** a dial turns, and what it cannot hold stays at the Node-clock as its remainder.
+- **Board:** n + r = q d + r' at every gear, every round: the quotient leaves as the event, the remainder stays as the memory that makes the run back exact.
+- **Clicks:** the quotient is the click; nothing else is measured.
+- **Algebra:** n + r = q d + r' with 0 <= r' < d: the one place a division is written; the operations are three, on whole numbers: addition, multiplication and the carry; no float, no root, no exponential (lines 100 and 102). **Home:** algebra/carry.py. **Test:** test_the_tensor24_algebra.py. **Status:** BUILT.
+
+### The visualizer (Animate's)
 
 - **Clock:** the board's clocks drawn as they turn.
+- **Board:** the Node-clocks, the Meshes and the rounds as the record has them.
 - **Clicks:** the clicks drawn where they land, with the decoder's verdicts beside them.
-- **Event board:** the Node-clocks, the Meshes and the rounds as the record has them.
-- **Algebra:** none: it draws what the decoder reads and computes nothing.
-- **Home:** Animate's; the old engine's pages (tools/page.py and tools/bangs_page.py read its record) left with it. **Status:** owed; the new record's visualizer waits on the click lines (G5).
+- **Algebra:** n/a: it computes nothing. **Status:** owed; it waits for the click lines (G5).
 
-### B.9 The tools
+### The guards, beside the run
 
-- **Clock:** none; the tools run the parts, they are no part of the clock.
-- **Clicks:** `tools/tensor24_decode.py` reads a record's clicks and prints each row's verdict.
-- **Event board:** `tools/tensor24_files.py` checks the three files and the load's refusals by name; `tools/tensor24_run.py` runs them to a record and a ledger; each puts `src/` on its path and calls the package.
-- **Algebra:** none; no tool holds a formula.
-- **Home:** `tools/`. **Verification:** the tests of the parts they call. **Status:** BUILT.
+- **Clock:** the law's clause "The system is a system of clocks, and it is always checked" (line 106): the guards read every push and every line.
+- **Board:** the tests run on a board: each generic part has one small test and one test that nothing above it broke, the whole run once on our bang (line 106); tools/check.py runs the gates and the tests together.
+- **Clicks:** the decoder's rows are the validation: what the clicks read is set against what nature shows.
+- **Algebra:** the gate (tools/derivations/open_items/scribe_scan.py) is the algebra's law in a script: it refuses a push that raises a count of a number beyond 0 and 1, a float, a root, a loop, a branch, a comparison, a clamp, a mask, an enumeration, a probe with a float, or a module whose docstring lacks these four layers, and it keeps the table below.
+- **Home:** docs/ALGEBRA.md, tools/, tests/. **Status:** BUILT.
 
-### B.10 The guards, beside the run
+## 4. Who may import whom
 
-- **Clock:** the law's clause **The system is a system of clocks, and it is always checked** (line 106): the guards read every push and every line.
-- **Clicks:** the decoder's rows are the validation: what the clicks read is set against what nature shows (part F).
-- **Event board:** the tests run worlds on boards (tests/test_the_tensor24_*.py: each generic part once with its mutant, then one test of the whole node on a board, the owner's word to the Boss of 2026-10-30, 09:2x UTC), and `tools/check.py` runs the gates and the tests together.
-- **Algebra:** the gate (`tools/derivations/open_items/scribe_scan.py`) is the algebra's law in a script: it refuses a push that raises a count of a number beyond 0 and 1, a float, a root, a loop, a branch, a comparison, a clamp, a mask, an enumeration or a probe with a float, and it enforces the table of who may import whom; the census (`scribe_code_census.py`) counts per file what the whole-number rules forbid; the law's own check (`scribe_law_check.py`, with `--docs`) finds a contradiction between two lines of the law and between the law and a document; the documents' gates (`tools/documents_gates.py`) hold the documents to the tree.
-- **Home:** the law, the gate, the census, the checks, the tests. **Status:** BUILT; the tests' cut to one per generic part is the Boss's, and the gate's counts follow it.
-
-## C. One round
-
-**Clock.** A Node-clock reads its six neighbours' counts through its six Meshes, each Mesh read once from both ends; it steps every gear once; it writes only its own state. **Clicks.** Where the carry of the drive completes a whole winding a click leaves, a whole click at the Node-clock that holds the winding, or a split click where two parts share it and the great clock draws; the click is written as one line of the record and lasts one tick (owed from G5). **Event board.** One pass over every Node-clock and every gear row, in this order: the readings and the sources (the value, the gradient along each axis, the pull, the plan's terms: step.sources); the drive (step.drive); the push, the force and the kick (step.driven); the teeth (step.weight); the gear's carry (step.gear). **Algebra.** One tensor operation: the gather (mesh.pull), the contraction through the plan and the 24's tables (contract), the two carries in series, the drive's and the gear's, the only nonlinearity. The run back is the same act on the mirrored state, mirrored again (step.mirror, step.untick), exact where the fine teeth stand within their teeth and the teeth stand at least 1.
-
-## D. The crosscutting concepts
-
-- **Rule3's carry and whole numbers.** *Clock:* a dial turns and what it cannot hold stays at the Node-clock as its remainder. *Clicks:* the quotient leaves as the event, the remainder stays as the memory that makes the run back exact. *Event board:* n + r = q d + r' at every gear, every round. *Algebra:* `algebra/carry.py`, the one place a division is written, with the fine tooth's flip at the mirror.
-- **The 24 and the kinds.** *Clock:* the cube's 24 turns exchange and reflect a train's gears; five kinds (A1 the scalar, A2 the pseudoscalar, E, T1 the vector, T2 the shears). *Clicks:* a click names a train and its kind, never a row. *Event board:* the same code at every site, the act alike under the 24's turns of sites and components. *Algebra:* the 24 by Rule3's weight over every matrix of three Spokes, the kinds' matrices, the tables' group sums (`engine/kinds.py`, `runner/load.py`).
-- **Locality and no queue.** *Clock:* a Node-clock reads itself and its six Meshes (line 92); no Node-clock sends. *Clicks:* a click's effect travels one Mesh per tick; Bell at a distance stands on two boards. *Event board:* one pass, the order of work and no law (line 98). *Algebra:* the dependency radius of one tick is one Mesh, tested forward and backward.
-- **The record's schema.** *Clock:* the boundary between the board and the clicks. *Clicks:* the only source of what nature shows. *Event board:* a header, the clicks, an end, and the ledger's counts. *Algebra:* whole numbers and labels (`record/schema.py`).
-- **The promise, read from outside.** *Clock:* the Node-clock holds no round and no time; the promise that the teeth stand at least 1 and the fine teeth within their teeth is read before every round by the runner. *Clicks:* none. *Event board:* checked at the load and before every round. *Algebra:* `step.teeth`, the promise's measure.
-
-## E. The decisions
-
-The law stays the law; a decision is in force as [docs/HIGHLIGHTS.md](HIGHLIGHTS.md) and the law's clauses record it, and the plan's section 14 (TENSOR24_PLAN.md) numbers them. The ones that shape the parts, one line each (status, where): 27 the runner first, the act at the top cancelled, the doubler's hold (APPROVED, line 35); 28 Bell at a distance on two boards (APPROVED, line 35); 29 the product draw, the take by way (b) (APPROVED, line 35); 35 nothing declared (APPROVED, line 35); 36 the same clock and the same ruler for every act (APPROVED); 37 masses are measured only in clicks (APPROVED, line 35); 38 the Node-clock is one generic node (APPROVED); 39 the great clock is the whole metric (APPROVED); 40 the final picture approved and the build resumed, with (a) to (h) (APPROVED); 41 no root and no table in the code, now or later, the metric gears hold the tick's weight (APPROVED, line 35); 42 the Node-clock is independent and disconnected from the world, the 24's tables its own design (APPROVED, line 92); 43 the old engine frozen and the work run with no waiting (APPROVED; the old engine has since left the tree, 2026-10-30, 4cb5359ce).
-
-## F. Verification and validation
-
-- **Code verification:** each generic part is tested once with its mutant, then one test of the whole node on a board (the owner's word to the Boss, 09:2x UTC): the carry, the kinds and the 24's tables, the contraction with the vertex law, the pull through the Mesh, the run back, the files and the load's refusals, the record under the schema, the decoder's readers; the gate and the documents' gates beside them.
-- **Each solution's verification:** the run back exact in its stated domain, the floor and the ceiling of the swing, the step's domain, the act alike under the 24's turns, the grip alike from both ends.
-- **Validation:** the facts to meet (the decoder's page, part 2), each read by the clicks and never from the board's numbers, each with its status (shown, not shown or not read); no row can read SHOWN before the engine writes a click (G5).
-
-## G. Risks and the open items
-
-G2: the first-order form of term 5 (N2) and the notch and the frozen clock (terms 9 and 13); G3: the strengths per channel and the plan (the tables' unit, the four-leg form, which families tie to k, the held count's own potential, n's unit); G4: the shift and the shears (term 10); G5: the click as the act's output and the split's draw, with the draw's c (law decision 29 names the Node-clock's beat count, which the build holds none of since G1b); the visualizer and the readings; six counts hidden in label tuples (AXES and GEAR and ADDED in the Boss's code; WAYS, ENDS and a header and end pair in the decoder's) to be read from the star, the piece and the schema; the old spring of line 35, which waits on the owner's rule for the head's notch.
-
-## H. The glossary
-
-The clock words are defined once each in [docs/CLOCK_WORDS.md](CLOCK_WORDS.md) and in the law, each in its own place.
-
-## The trace table
-
-One row each; the gates can read it (the paths and the tests named here exist at the head).
-
-| Part or term | Law line | Code | Test | Status |
-|---|---|---|---|---|
-| The world's three files | 35 (nothing declared) | examples/tensor24/ | test_the_tensor24_files.py | BUILT |
-| The loader | 92 (2) | runner/files.py, board.py, load.py | test_the_tensor24_load.py | BUILT |
-| The 24 and the kinds | 94 | engine/kinds.py | test_the_tensor24_kinds.py | BUILT |
-| Term 1, the readings | 90 | engine/mesh.py, step.py | test_the_tensor24_engine.py | BUILT |
-| Term 2, the teeth W | 35 (decision 41) | engine/step.py | test_the_tensor24_engine.py | BUILT |
-| Term 3, the grips | 90 | engine/mesh.py | test_the_tensor24_engine.py | BUILT |
-| Term 4, the pull F | 90 | engine/mesh.py | test_the_tensor24_engine.py | BUILT |
-| Term 5, the metric's push | 35 (decision 40) | engine/contract.py | test_the_tensor24_engine.py | OPEN (G2) |
-| Term 6, the vertex and the spring | 96 | engine/contract.py | test_the_tensor24_engine.py | BUILT the contraction, OPEN (G3) |
-| Terms 7 and 8, the drive and the kick | 98 | engine/step.py | test_the_tensor24_engine.py | DERIVED at G3 and BUILT |
-| Terms 9, 10 and 13 | 35, 90 | (none yet) | (none yet) | OPEN at G2 and G4 |
-| Terms 11 and 12, the two clicks | 35 | (none yet) | (none yet) | DERIVED and OPEN at G5 |
-| The whole node, on our bang | 90 | engine/ and algebra/, runner/ | test_the_tensor24_run.py | BUILT |
-| Rule3's carry | 31 | algebra/carry.py | test_the_tensor24_algebra.py | BUILT |
-| The runner and the rewind | 92 (4) | runner/run.py, rounds.py, rewind.py | test_the_tensor24_run.py | BUILT |
-| The record | 92 (5) | record/schema.py | test_the_tensor24_decoder.py | BUILT |
-| The decoder | 35 (decision 37) | decoder/ | test_the_tensor24_decoder_measure.py | built, every row NOT READ until G5 |
-| The readings and the visualizer | 106 | readings/ | (none yet) | owed |
-
-## Who may import whom
-
-The architect's table (section 4 of the design approved at eaf07f596); the gate's ISOLATE rule reads it, and the standard library is allowed everywhere, numpy in the engine and the runner alone.
+The architect's table; the gate's ISOLATE rule reads it. The standard library is allowed everywhere, numpy in the engine and the runner alone.
 
 | Folder | May import |
 |---|---|
@@ -199,30 +181,18 @@ The architect's table (section 4 of the design approved at eaf07f596); the gate'
 | decoder | algebra, decoder, readings, record |
 | main.py | engine, runner |
 
-## The documents under it
+## 5. What is open
 
-| Document | What it holds | Kept by |
-|---|---|---|
-| [README.md](../README.md), `llms.txt` | the front page and the short map | Sofer |
-| [docs/ARCHITECTURE.md](ARCHITECTURE.md) | this: the parts, the four layers, who may import whom, the trace | Sofer |
-| [docs/ALGEBRA.md](ALGEBRA.md) | the law | Sofer, on the owner's word |
-| [docs/HIGHLIGHTS.md](HIGHLIGHTS.md) | the decisions in force | Sofer |
-| [docs/BIG_PICTURE.md](BIG_PICTURE.md) | the whole told by the clock, the algebra and the physics | Sofer |
-| [docs/ENGINE.md](ENGINE.md) | the engine's document | Sofer |
-| [docs/UNIVERSE24.md](UNIVERSE24.md) | what the one run must show, and the ledger | Sofer |
-| [docs/CLOCK_WORDS.md](CLOCK_WORDS.md), [docs/FURTHER_RESEARCH.md](FURTHER_RESEARCH.md), [docs/FOLLOW_UP_PAPERS.md](FOLLOW_UP_PAPERS.md), [CHANGELOG.md](../CHANGELOG.md) | the clock words, what does not match nature, the papers proposed, what changed | Sofer |
-| `tools/derivations/open_items/TENSOR24_NODE.md`, `TENSOR24_PLAN.md` | the Node-clock's terms, and the stages and decisions | the Boss |
-| `tools/derivations/open_items/Decoder4D2Clicks3D.md` | the decoder's plan and the mass, derived under B.6 | Animate |
-| `tools/derivations/open_items/SCRIBE-GATE-1.md`, `SCRIBE-LAW-AUDIT-2.md`, `SCRIBE-ROUTINE.md` | the gate, the law's check, the keeper's routine | Sofer |
+**G2:** the first-order form of term 5 (N2, in David's reading) and the notch and the frozen clock (terms 9 and 13), and the exponential clock beside the slot form (Postulate 6), both kept written until the test. **G3:** the strengths per channel and the plan, the tables' unit, which families tie to k, the held count's own potential, n's unit. **G4:** the shift and the shears (term 10). **G5:** the clicks, the split's draw and its c, the visualizer. Beside them: the counts hidden in label tuples (len(GEAR), len(ADDED), WAYS, ENDS), to be read from the star, the piece and the schema with schema 1.3; the spring of line 35, which waits on the owner's rule for the head's notch.
 
-## How each works by it
+## 6. The documents
 
-- **The Boss** builds the engine, the loader and the runner against lines 90 to 106 of the law and the Node-clock's terms, and asks this document where a new function belongs and which folder may import it; he updates the status words of B.1 to B.5 and the trace rows with each push, or says so and the writer does.
-- **Animate** works the record, the decoder and the visualizer against the schema and the decoder's page; B.6 is hers to keep true to the page, the writer keeps its form.
-- **David** derives: each derivation names the part it serves and tells it in the four layers; a derivation that needs a change of a part's wall or of the law goes to the writer first.
-- **Sofer** keeps this document and the law, reads every push against both, and lets the gate hold the table; each push he reads moves the status words that it moves.
-- **The owner** decides; no part changes its place or its wall without his word.
+One document tells the system: this one. Beside it stand the law ([docs/ALGEBRA.md](ALGEBRA.md)); the entry files ([README.md](../README.md), `llms.txt`); the project files (`LICENSE`, `CITATION.cff`, `pyproject.toml`, [CONTRIBUTING.md](../CONTRIBUTING.md), [CHANGELOG.md](../CHANGELOG.md)); and the work's records under tools/derivations (the Boss's derivation pages, David's derivations, the keeper's `SCRIBE-GATE-1.md`, `SCRIBE-LAW-AUDIT-2.md` and `SCRIBE-ROUTINE.md`), which no part depends on. The other documents of docs/ are records of the work, folded into this one: [ENGINE](ENGINE.md), [BIG_PICTURE](BIG_PICTURE.md), [CLOCK_WORDS](CLOCK_WORDS.md), [FURTHER_RESEARCH](FURTHER_RESEARCH.md), [FOLLOW_UP_PAPERS](FOLLOW_UP_PAPERS.md), [HIGHLIGHTS](HIGHLIGHTS.md) and [UNIVERSE24](UNIVERSE24.md). The old engine and its worlds stand in git's history alone.
 
-## What this document does not hold
+**Who keeps what.** The Boss keeps the status lines of the world, the loader, the Node-clock, the runner and the record true at each push; Animate those of the decoder and the visualizer; David derives, each derivation telling its part in these questions and going to the writer as a section of this document; the writer keeps the form and the law and reads every push against both; the owner decides, and no part changes its place or its wall without his word.
 
-The state of the build by the hour, the counts of tests and the numbers of the readings; they stand in `TENSOR24_PLAN.md`, in the ledger of [docs/UNIVERSE24.md](UNIVERSE24.md) and in the thread, and the status words here follow them. The old engine (`src/event_universe`, out of the working tree since 2026-10-30, the owner's word to the Boss, 09:3x UTC: "Yes, all of it now") stands in git's history alone.
+## 7. The glossary
+
+- **Node-clock:** a site of the board: a train of gears, one act per round. **Gear:** a dial with its count now and before and its fine teeth. **Mesh, Spoke:** the link between two neighbouring Node-clocks, one through each of a Node-clock's six Spokes.
+- **Round:** one full pass of every Node-clock, counted by the runner. **Carry:** Rule3's division, a quotient that leaves and a remainder that stays. **Click:** the carry's quotient where a winding is whole: the one measurement.
+- **The 24, the kinds:** the cube's turns and the five kinds that tie a train's gears. **Board:** the event board. **Bang:** the one run from the seed.

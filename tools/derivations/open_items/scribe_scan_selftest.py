@@ -2149,7 +2149,7 @@ def without_git_variables() -> Iterator[None]:
 
 
 def counts(rel: str, source: str) -> dict[str, int]:
-    return dict(Counter(hit.rule for hit in gate.scan(rel, source)))
+    return dict(Counter(hit.rule for hit in gate.scan(rel, source) if hit.rule != "DOCLAYER"))  # DOCLAYER reads a module's docstring: its own cases (layer_cases)
 
 
 TOOL_NAMES = (
@@ -2428,7 +2428,7 @@ def key_cases() -> tuple[int, int]:
         status, text = read(branch("removed", {files: "ZZ_ALPHA = ()\n"}))
         check("a key removed is no note", status == 0 and "note   KEYS" not in text)
         status, text = read(
-            branch("other", {"src/tensor24/runner/load.py": 'ZZ_ALPHA = ("one", "two")\n'})
+            branch("other", {"src/tensor24/runner/load.py": FOUR + 'ZZ_ALPHA = ("one", "two")\n'})
         )
         check(
             "a collection in another module of the runner is no key", status == 0 and "KEYS" not in text
@@ -2903,6 +2903,52 @@ def hidden_cases() -> tuple[int, int]:
         "an ENUM hit is a refusal and a LENGTH hit a note",
         tiers.get("ENUM") == "BLOCK" and tiers.get("LENGTH") == "WARN",
     )
+    return made, parted
+
+
+FOUR = '"""A part.\n\nClock: it turns.\nAlgebra: the carry.\nBoard: one pass.\nClicks: n/a\n"""\n'
+
+
+def layer_cases() -> tuple[int, int]:
+    """The rule DOCLAYER, a module of the new engine whose docstring lacks the four layers (the owner's word of 2026-10-30, 11:0x UTC: the
+    documentation states the algebra, the physics behind the clicks, the physics on the board and the clock, a general flag where a layer
+    is not needed); the cases made and those that parted."""
+    made = parted = 0
+
+    def check(label: str, ok: bool) -> None:
+        nonlocal made, parted
+        made += 1
+        parted += not ok
+        print(f"{'ok     ' if ok else 'PARTED '} the layers' rule: {label}")
+
+    def missing(rel: str, source: str) -> list[str]:
+        return sorted(hit.where for hit in gate.scan(rel, source) if hit.rule == "DOCLAYER")
+
+    check("DOCLAYER is a refusal", gate.RULES["DOCLAYER"][0] == "BLOCK")
+    cases = (
+        ("the four layers, one the general flag", NEW_STEP, FOUR, []),
+        ("no docstring", NEW_STEP, "x = 0\n", ["missing: Clock, Algebra, Board, Clicks"]),
+        ("a one-line docstring", NEW_STEP, '"""The Node-clock\'s step."""\n', ["missing: Clock, Algebra, Board, Clicks"]),
+        ("a layer missing", NEW_STEP, '"""A part.\n\nClock: a.\nAlgebra: b.\nClicks: c.\n"""\n', ["missing: Board"]),
+        ("a label with no text", NEW_STEP, '"""A part.\n\nClock:\nAlgebra: b.\nBoard: c.\nClicks: d.\n"""\n', ["missing: Clock"]),
+        ("labels inside a sentence", NEW_STEP, '"""The Clock: a. Algebra: b. Board: c. Clicks: d."""\n', ["missing: Clock, Algebra, Board, Clicks"]),
+        ("indented labels", NEW_STEP, '"""A part.\n\n    Clock: a.\n    Algebra: b.\n    Board: c.\n    Clicks: n/a\n"""\n', []),
+        ("a package's init is not read", NEW_ROOT, "x = 0\n", []),
+        ("the runner is read", NEW_RUNNER, "x = 0\n", ["missing: Clock, Algebra, Board, Clicks"]),
+        ("the decoder is read", NEW_DECODER, FOUR, []),
+        ("the old engine is not read", READER, "x = 0\n", []),
+        ("a test is not read", TESTS, "x = 0\n", []),
+        ("a tool is not read", TOOL_FILES, "x = 0\n", []),
+    )
+    for label, rel, source, want in cases:
+        check(label, missing(rel, source) == want)
+    keys = {
+        hit.key
+        for source in ('"""A part."""\n', '"""A part.\n\nClock: a.\n"""\n', "x = 0\n")
+        for hit in gate.scan(NEW_STEP, source)
+        if hit.rule == "DOCLAYER"
+    }
+    check("one key per module, whatever its missing layers", len(keys) == 1)
     return made, parted
 
 
@@ -3395,8 +3441,10 @@ def main() -> int:
     parted += hidden_parted
     probe_total, probe_parted = probe_cases()
     parted += probe_parted
+    layer_total, layer_parted = layer_cases()
+    parted += layer_parted
     print(
-        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + declare_total + hidden_total + probe_total + 2 + 5} cases, {parted} parted"
+        f"selftest: {len(CASES) + index_cases + tier_cases + closed_cases + wall_cases + dynamic_cases + floor_cases + tool_total + key_total + declare_total + hidden_total + probe_total + layer_total + 2 + 5} cases, {parted} parted"
     )
     return 1 if parted else 0
 

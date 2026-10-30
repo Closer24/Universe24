@@ -15,7 +15,7 @@ The known list (scribe_law_check_known.json) holds the old engine's rows that st
 The same PAIRS table reads the live documents with --docs (README.md, llms.txt and the documents of docs/ but the law), each pair against the law's governing line, a hit above the document's ceiling
 (scribe_law_check_docs_known.json) refusing; the table grows with every contradiction a reader finds (the four readers of 2026-10-30, 08:3x UTC, added P14 to P17).
 
-With --arch ROOT it reads the trace table of docs/ARCHITECTURE.md against the tree at ROOT (the Boss's head): every path of a code cell and every test of a test cell must be there.
+With --arch ROOT it reads the architecture document against the tree at ROOT (the Boss's head): every path of a part's Home line and every test of its Test line must be there (the older form, a trace table under the heading "The trace table", is read as before).
 Usage: python -I scribe_law_check.py [--law PATH] [--all] [--selftest] [--write-known] [--docs] [--arch ROOT]
 Exit 0: no finding beyond the known list; exit 1: a new finding (printed with its line); the known rows print as counts, and by line with --all."""
 
@@ -34,7 +34,7 @@ KNOWN = HERE / "scribe_law_check_known.json"
 DOCS_KNOWN = HERE / "scribe_law_check_docs_known.json"
 ROOT = HERE.parent.parent.parent
 ARCH = ROOT / "docs" / "ARCHITECTURE.md"
-DOCS = ("README.md", "llms.txt", "docs/BIG_PICTURE.md", "docs/ENGINE.md", "docs/CLOCK_WORDS.md", "docs/FURTHER_RESEARCH.md", "docs/FOLLOW_UP_PAPERS.md", "docs/UNIVERSE24.md", "docs/HIGHLIGHTS.md")
+DOCS = ("README.md", "llms.txt", "docs/ARCHITECTURE.md", "docs/BIG_PICTURE.md", "docs/ENGINE.md", "docs/CLOCK_WORDS.md", "docs/FURTHER_RESEARCH.md", "docs/FOLLOW_UP_PAPERS.md", "docs/UNIVERSE24.md", "docs/HIGHLIGHTS.md")
 EXPECTED_LINES = 1960  # the law's fixed length (the keeper's tamper check: an edit holds its new text in its own line)
 POSTULATES = 7  # the law has Postulates 1 to 7
 CORE = 110  # the law's new core: the preface, the postulates and the decisions of Tensor24 stand in lines 1 to 110
@@ -337,6 +337,33 @@ def trace_rows(text: str) -> list[list[str]]:
     return rows[1:]
 
 
+def home_rows(text: str) -> list[tuple[str, str, str]]:
+    """The parts of the architecture document that carry a Home line: (the part's heading, the paths of its Home, the tests of its Test), the line's other words left out."""
+    rows: list[tuple[str, str, str]] = []
+    part = ""
+    for line in text.split("\n"):
+        if line.startswith("### "):
+            part = line[4:].strip()
+        if "**Home:**" in line:
+            home = line.split("**Home:**", 1)[1].split("**Status:**")[0]
+            test = ""
+            if "**Test:**" in home:
+                home, test = home.split("**Test:**", 1)
+            rows.append((part, home.strip().rstrip("."), test.strip().rstrip(".")))
+    return rows
+
+
+def home_paths(home: str) -> list[str]:
+    """The paths a Home line names, relative to the repository: tools/, tests/, docs/ and examples/ stand as written, any other path in src/tensor24; a parenthesis and a word that is no path (term 6) are left out."""
+    found: list[str] = []
+    for token in re.split(r"[,;]| and ", re.sub(r"\([^)]*\)", "", home)):
+        token = token.strip().strip("`")
+        if not token or " " in token or not ("/" in token or token.endswith(".py")):
+            continue
+        found.append(token if token.startswith(("tools/", "tests/", "docs/", "examples/")) else "src/tensor24/" + token)
+    return found
+
+
 def trace_paths(code: str) -> list[str]:
     """The paths a trace row's code cell names, relative to the repository: a bare file name stands in the folder of the path before it, src/tensor24 holds the rest."""
     found: list[str] = []
@@ -359,7 +386,18 @@ def check_trace(text: str, root: Path) -> list[str]:
     out: list[str] = []
     rows = trace_rows(text)
     if not rows:
-        return ["docs/ARCHITECTURE.md: no trace table"]
+        homes = home_rows(text)
+        if not homes:
+            return ["docs/ARCHITECTURE.md: no Home line and no trace table"]
+        for part, home, test in homes:
+            for path in home_paths(home):
+                if not (root / path).exists():
+                    out.append(f"{part}: the code {path} is not in the tree")
+            for name in re.split(r"[,;]| and ", re.sub(r"\([^)]*\)", "", test)):
+                name = name.strip().strip("`")
+                if name.endswith(".py") and not (root / "tests" / name).is_file():
+                    out.append(f"{part}: the test {name} is not in the tree")
+        return out
     for cells in rows:
         if len(cells) != 5:
             out.append(f"trace row of {len(cells)} cells, not 5: {cells[0][:40]}")
@@ -381,7 +419,7 @@ def arch_main(argv: list[str]) -> int:
     found = check_trace(ARCH.read_text(encoding="utf-8"), root)
     for line in found:
         print("  " + line)
-    print(f"the trace table of docs/ARCHITECTURE.md against {root}: {len(trace_rows(ARCH.read_text(encoding='utf-8')))} rows; " + (f"{len(found)} departure(s)" if found else "every path and test stands"))
+    print(f"docs/ARCHITECTURE.md against {root}: {len(trace_rows(ARCH.read_text(encoding='utf-8'))) or len(home_rows(ARCH.read_text(encoding='utf-8')))} rows; " + (f"{len(found)} departure(s)" if found else "every path and test stands"))
     return 1 if found else 0
 
 
@@ -518,17 +556,25 @@ def selftest() -> int:
         "| The click | 35 | (none yet) | (none yet) | OPEN |\n"
         "| The world | 35 | examples/tensor24/ | test_a.py | BUILT |\n\n## Next\n"
     )
+    home_doc = (
+        "### The loader\n\n- **Home:** runner/files.py, runner/board.py; tools/x.py. **Test:** test_a.py. **Status:** BUILT.\n\n"
+        "### The act\n\n- **Home:** engine/step.py (the act), algebra/carry.py and main.py. **Test:** test_a.py, test_b.py. **Status:** by term.\n"
+    )
     with tempfile.TemporaryDirectory() as scratch:
         root = Path(scratch)
-        for folder in ("src/tensor24/runner", "src/tensor24/engine", "src/tensor24/algebra", "examples/tensor24", "tests"):
+        for folder in ("src/tensor24/runner", "src/tensor24/engine", "src/tensor24/algebra", "examples/tensor24", "tests", "tools"):
             (root / folder).mkdir(parents=True)
-        for name in ("src/tensor24/runner/files.py", "src/tensor24/runner/board.py", "tests/test_a.py", "tests/test_b.py"):
+        for name in ("src/tensor24/runner/files.py", "src/tensor24/runner/board.py", "src/tensor24/engine/step.py", "src/tensor24/algebra/carry.py", "src/tensor24/main.py", "tools/x.py", "tests/test_a.py", "tests/test_b.py"):
             (root / name).write_text("", encoding="utf-8")
         trace_cases = (
             ("a trace table whose every path and test stands", table, set()),
             ("a code path that is not in the tree", table.replace("board.py", "gone.py"), {"The loader: the code src/tensor24/runner/gone.py is not in the tree"}),
             ("a test that is not in the tree", table.replace("test_b.py", "test_gone.py"), {"The act: the test test_gone.py is not in the tree"}),
-            ("a document with no trace table", "# Title\n", {"docs/ARCHITECTURE.md: no trace table"}),
+            ("a document with no trace table", "# Title\n", {"docs/ARCHITECTURE.md: no Home line and no trace table"}),
+            ("Home lines whose every path and test stands", home_doc, set()),
+            ("a Home path that is not in the tree", home_doc.replace("runner/board.py", "runner/gone.py"), {"The loader: the code src/tensor24/runner/gone.py is not in the tree"}),
+            ("a Test that is not in the tree", home_doc.replace("test_b.py", "test_gone.py"), {"The act: the test test_gone.py is not in the tree"}),
+            ("a Home with a word that is no path", home_doc.replace("main.py.", "main.py, term 6."), set()),
         )
         for name, text, want in trace_cases:
             got = set(check_trace(text, root))

@@ -268,11 +268,15 @@ RULES: dict[str, tuple[str, str]] = {
         "WARN",
         "a floor division, a remainder or divmod in a probe under tools/derivations/ that a push adds or changes: the one division is Rule3's carry with its remainder kept (tensor24.algebra.carry.carry) (the owner's word of 2026-10-30, 09:0x UTC: division is allowed only with Rule3); a note, the count per file may not rise",
     ),
-}
+    "DOCLAYER": (
+        "BLOCK",
+        "a module of the new engine whose docstring lacks the four layers, Clock:, Algebra:, Board: and Clicks:, each at the start of a line and carrying a text or the one general flag n/a: a part is told in the clock, the algebra, the event board and the physics behind the clicks (law: item (10) (e) of the principle, line 35; the owner's word of 2026-10-30, 11:0x UTC); the standing modules convert and the count only falls",
+    ),}
 
 BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sympy mpmath".split())
 NUMPY_NAMES = frozenset({"np", "numpy"})
 DISPLAY_NODES = (ast.Tuple, ast.List, ast.Set, ast.Dict)  # a label tuple, a list, a set or a dict written out
+LAYERS = ("Clock", "Algebra", "Board", "Clicks")  # the four layers a part of the new engine states in its docstring (the rule DOCLAYER)
 ENUM_NAMES = frozenset("Enum IntEnum StrEnum Flag IntFlag ReprEnum auto".split())  # the standard library's enumerations: a number behind a name
 PROBES = "tools/derivations/"  # the probes (the derivations, toys and hands under it): the rules PROBE and DIVIDE read the files a push adds or changes
 PROBE_CALLS = frozenset(
@@ -1246,6 +1250,12 @@ def format_keys(tree: ast.Module) -> list[tuple[ast.AST, str]]:
     return keys
 
 
+def layers_missing(doc: str | None) -> list[str]:
+    """The layers a module's docstring does not state: a line that opens with the layer's label, a colon and a text (n/a is a text: the one general flag)."""
+    text = doc or ""
+    return [layer for layer in LAYERS if not re.search(rf"^[ \t]*{layer}:[ \t]*\S", text, re.MULTILINE)]
+
+
 def scan(rel: str, source: str) -> list[Hit]:
     """Every hit of every rule in one module (rel: its path inside src/event_universe, another package's under its name; a test's under tests/, the rule PIN alone; a tool's under tools/, the rules NUMBER and FLOAT alone)."""
     tree = ast.parse(source)
@@ -1294,6 +1304,8 @@ def scan(rel: str, source: str) -> list[Hit]:
             add(
                 "ISOLATE", tree, f"unlisted path {rel}"
             )  # the architect's table names the folders: no wall covers another
+        if parts[-1] != "__init__.py" and (missing := layers_missing(ast.get_docstring(tree))):
+            hits.append(Hit("DOCLAYER", rel, 1, "the four layers", "missing: " + ", ".join(missing)))  # one hit per module, its key constant
     numpy = set(NUMPY_NAMES)
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
