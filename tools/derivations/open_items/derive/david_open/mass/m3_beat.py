@@ -12,7 +12,11 @@ W (a+ - 2 a + a-) = push, the remainder kept in the fine tooth. A spring D is a 
     the count drifts below 0 and the gear runs away; with a spring of its own (W div 16, off the gear's doubled beat)
     it stays, a little below where it was laid;
 (d) a spring between two gears alone, off the diagonal: the mode X + Y beats and the mode X - Y runs away;
-(e) the antisymmetric push a T1 count gives a real gear: it runs away.
+(e) the antisymmetric push a T1 count gives a real gear: it runs away;
+(f) the lone gear laid at 1, 2, 3 and 10^6 on the head's tick: the 6-round beat stands only while every neighbour's
+    push stays below one tooth (the carry's floor), and at 10^6 the gear spreads to its neighbours;
+(g) a T1 count along z on a hand of two parts, read as the hermitian i M on the mode (1, -i, 0): its value there is
+    -|v|, so the hand runs away with no A1 part and beats with an A1 part of 2 |v|.
 
 Usage: python3 -I m3_beat.py <src of tensor24-review>   (the example files are read from <src>/../examples/tensor24)
 """
@@ -40,11 +44,13 @@ def run(gears, rounds):
     assert not found, found
     layout = main.layout(universe, shape, loaded)
     s = main.ENGINE.state(*loaded.state)
-    seen, moved = [], set()
-    for _ in range(rounds):
+    seen, moved, first = [], set(), None
+    for at in range(rounds):
         s = step.tick(layout, s)
         seen.append(int(s.a[0, 0]))
         moved |= {x for x in range(1, sites) if s.a[0, x] != 0}
+        first = first if first is not None or not moved else at + 1
+    run.first = first
     return seen, moved, layout
 
 
@@ -126,7 +132,7 @@ for name, push in (("with no law of its own", held_free), ("with a spring of its
     print(f"(c) the held count {name}: K at rounds 250, 500, 1000, 2000 (as far as it ran): {shown};"
           f" below 0 first at round {first}; {'X ran past 10^60 at round ' + str(len(xs)) if gone else 'X stays'}"
           f"; least K {min(ks) if not gone else 'past -10^60'}, most {max(ks)}", flush=True)
-print("    (laid K = 10^6, X = 10^5 at rest, D = g K = W div 400)")
+print("    (laid K = 10^6, X = 10^5 at rest; g = (W div 400) div K, so g K is W div 400 less", D - g * n, ")")
 print()
 off = lambda x, y: (-D * y, -D * x)  # noqa: E731
 same = pair(off, A, A, 400)
@@ -136,3 +142,32 @@ print("(d) a spring off the diagonal alone, D = W div 400: X = Y laid, X after 4
 anti = pair(lambda x, y: (D * y, -D * x), A, 0, 400)
 print("(e) the T1 count's antisymmetric push on a real gear, D = W div 400: X after 100, 200, 400 rounds",
       [anti[i][0] for i in (99, 199, 399)])
+
+
+print()
+for amp in (1, 2, 3, 10 ** 6):
+    seen, moved, _ = run([[0, 0, 0, amp, 0, 0]], 24)
+    six = all(seen[i] == seen[i + 6] for i in range(18))
+    print(f"(f) the lone gear laid at {amp}: first rounds {seen[:6]}; period 6 kept: {six};"
+          f" neighbours moved: {len(moved)}, the first at round {run.first}")
+
+
+def hand(n0, v, rounds, amp=A):
+    """A T1 hand of two parts, (re, im) for x, y, z; the push -(n0 + i M) X with M the cross product with (0, 0, v)."""
+    m = [[0, -v, 0], [v, 0, 0], [0, 0, 0]]
+    re, im = [amp, 0, 0], [0, -amp, 0]
+    b_re, b_im, r_re, r_im = list(re), list(im), [0] * 3, [0] * 3
+    for _ in range(rounds):
+        p_re = [sum(m[k][j] * im[j] for j in range(3)) - n0 * re[k] for k in range(3)]
+        p_im = [-sum(m[k][j] * re[j] for j in range(3)) - n0 * im[k] for k in range(3)]
+        out = [step.gear(re[k], b_re[k], r_re[k], W, p_re[k]) for k in range(3)]
+        outi = [step.gear(im[k], b_im[k], r_im[k], W, p_im[k]) for k in range(3)]
+        re, b_re, r_re = [list(x) for x in zip(*out)]
+        im, b_im, r_im = [list(x) for x in zip(*outi)]
+    return re[0]
+
+
+v = W // 400
+print(f"(g) the T1 count along z on a hand, laid on the mode (1, -i, 0) at 10^5, v = W div 400: x after 400 rounds"
+      f" {hand(0, v, 400)} with no A1 part; {hand(2 * v, v, 400)} with the A1 part 2 v")
+

@@ -15,6 +15,19 @@ Probes, in whole numbers alone (the owner's word through Sofer, 6514488548: "Onl
 
 Only the Boss writes engine code (decision 40). This page is a derivation and its checks, nothing more. Two hostile readers, a mathematician and a physicist (the owner's ask), read it beside the next stage, and their findings fold at the next push (decision 43). The status words are the protocol's: DERIVED (follows from the law and the act as built), CHECKED (a probe shows it), OPEN (neither), REFUSED (nature or the law refuses it).
 
+## Corrections accepted from the hostile mathematician (04:5x UTC)
+
+These stand over the text below until the rewrite folds them in, with the hostile physicist's findings, at the next push. Each is checked in m1 to m3 as rerun.
+
+1. **Three masses need a held count that splits T1 into three one-dimensional kinds:** E off its three lines (not "with both of its components": E (1, 0) gives n0 + 1, n0 - 1 and n0), or T2 off the body diagonals, or a mix. A1 + E + T2 hold every whole symmetric spring. A T2 train loads on the act as built, and E does not. On a hand of two parts, A1 + T1 as well, if the plan joins the two parts as i M (OPEN). (m1: the half turn about a face diagonal and the Klein group of the T2 count (0, 0, 1) added, both giving three values on a real gear; m2: a T2 count's discriminant 4 |t|^6 - 108 (t1 t2 t3)^2, 0 only on the body diagonals.)
+2. **Koide's 2/3 on whole counts:** never met exactly on the diagonal A1 + E spring alone, the theorem's whole scope. With a T2 part it is met exactly: m2 finds 336 whole counts at n0 = 4 with three distinct values above 0, one of them E (-3, -5) and T2 (-2, 0, 1).
+3. **The exact relation is 4 sin^2 (omega0 / 2) = D / W.** m_A^2 / m_B^2 = D_A / D_B holds to first order in D / W, and is a ratio of whole numbers only for a diagonal spring.
+4. **Every traceless count needs an A1 part above minus its least value,** or a gear runs away. m3 (g): a T1 count on a hand, laid on (1, -i, 0), runs away with no A1 part and beats with an A1 part of 2 |v|.
+5. **The lone gear's 6-round beat stands only at amplitudes 1 and 2,** by the carry's floor (m3 (f): at 3 a neighbour carries at round 2; at 10^6 the gear spreads at once).
+6. **"Why three, never four" rests on two assumptions:** a family alike in all but mass is one kind's components, and spin's twin kinds are not the family's (the 24's double cover holds a kind of four).
+7. **A mass that joins two hands squares to a diagonal spring;** only a spring off the diagonal, alone, runs away.
+8. **Inertial and gravitational mass as one count is OPEN:** it needs a quantum to be a fixed action (line 332), so that its energy is that action times its beat.
+
 ## 0. The answer in short
 
 - **On the board, a mass is a gear held by a spring inside its own Node-clock.** Light's gear is meshed only sideways, to its six neighbours. A massive gear is also meshed inward, through a three-leg vertex, to a held count at its own Node-clock. Because the held count stands still, the vertex pulls the gear back toward 0 in proportion to its own value: a spring, D = g C n (the coupling's strength, the 24's table entry, the held count).

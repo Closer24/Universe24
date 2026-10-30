@@ -9,6 +9,8 @@ subgroup | order | held kinds it keeps (invariant vectors of A1, A2, E, T1, T2) 
   C4, quarter turns about z: 4 | {'A1': 1, 'A2': 0, 'E': 1, 'T1': 1, 'T2': 0} | 2, 3
   Z3, about (1,1,1): 3 | {'A1': 1, 'A2': 1, 'E': 0, 'T1': 1, 'T2': 1} | 2, 3
   C2, the half turn about z: 2 | {'A1': 1, 'A2': 1, 'E': 2, 'T1': 1, 'T2': 1} | 3, 3
+  C2', the half turn about (1,1,0): 2 | {'A1': 1, 'A2': 0, 'E': 1, 'T1': 1, 'T2': 2} | 3, 3
+  V4', the half turns about z, (1,1,0) and (1,-1,0): 4 | {'A1': 1, 'A2': 0, 'E': 1, 'T1': 0, 'T2': 1} | 3, 3
   1, nothing kept: 1 | {'A1': 1, 'A2': 1, 'E': 2, 'T1': 3, 'T2': 3} | 3, 3
 
 the kinds on the even half A4 (12 turns): m_1, m_3, and the complex pair 1' + 1''
@@ -17,3 +19,21 @@ the kinds on the even half A4 (12 turns): m_1, m_3, and the complex pair 1' + 1'
   E: m_1 0, m_3 0, 1' + 1'' 1 pair(s)
   T1: m_1 0, m_3 1, 1' + 1'' 0 pair(s)
   T2: m_1 0, m_3 1, 1' + 1'' 0 pair(s)
+
+the five kinds are irreducible, unlike one another and complete: sum over the 24 of chi_a chi_b, and sum of dim^2
+  A1: A1 24, A2 0, E 0, T1 0, T2 0
+  A2: A1 0, A2 24, E 0, T1 0, T2 0
+  E: A1 0, A2 0, E 24, T1 0, T2 0
+  T1: A1 0, A2 0, E 0, T1 24, T2 0
+  T2: A1 0, A2 0, E 0, T1 0, T2 24
+  sum of the squared dimensions: 24 = the order 24
+
+the turns that keep one held count fixed, named where they are a subgroup above (E in its basis (e1 - e2, e2 - e3)):
+  E (1, 0): 4 turns, D2, the three half turns
+  E (2, 7): 4 turns, D2, the three half turns
+  E (1, 2): 8 turns, D4, the z axis kept
+  T2 (0, 0, 1): 4 turns, V4', the half turns about z, (1,1,0) and (1,-1,0)
+  T2 (1, 1, 1): 6 turns, D3, the line (1,1,1) kept
+  T2 (1, 2, 3): 1 turns, 1, nothing kept
+  T1 (0, 0, 1): 4 turns, C4, quarter turns about z
+  T1 (1, 1, 1): 3 turns, Z3, about (1,1,1)

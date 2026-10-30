@@ -14,7 +14,13 @@
 
 (c) the held count with no law of its own: K at rounds 250, 500, 1000, 2000 (as far as it ran): [800187, 142793]; below 0 first at round 537; X ran past 10^60 at round 686; least K past -10^60, most 999987
 (c) the held count with a spring of its own, W div 16: K at rounds 250, 500, 1000, 2000 (as far as it ran): [999999, 999999, 999981, 999914]; below 0 first at round None; X stays; least K 999559, most 1000243
-    (laid K = 10^6, X = 10^5 at rest, D = g K = W div 400)
+    (laid K = 10^6, X = 10^5 at rest; g = (W div 400) div K, so g K is W div 400 less 760000 )
 
 (d) a spring off the diagonal alone, D = W div 400: X = Y laid, X after 400 rounds 38325 ; X = -Y laid, X after 400 rounds 24812700041447
 (e) the T1 count's antisymmetric push on a real gear, D = W div 400: X after 100, 200, 400 rounds [-1602744, 41579439, -1481206931]
+
+(f) the lone gear laid at 1: first rounds [1, 0, -1, -1, 0, 1]; period 6 kept: True; neighbours moved: 0, the first at round None
+(f) the lone gear laid at 2: first rounds [2, 0, -2, -2, 0, 2]; period 6 kept: True; neighbours moved: 0, the first at round None
+(f) the lone gear laid at 3: first rounds [3, 0, -2, -1, 0, -1]; period 6 kept: False; neighbours moved: 63, the first at round 2
+(f) the lone gear laid at 1000000: first rounds [1000000, 166666, -500001, -425927, 37036, 289094]; period 6 kept: False; neighbours moved: 63, the first at round 1
+(g) the T1 count along z on a hand, laid on the mode (1, -i, 0) at 10^5, v = W div 400: x after 400 rounds 24812700041447 with no A1 part; 38332 with the A1 part 2 v

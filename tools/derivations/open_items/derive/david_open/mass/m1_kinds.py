@@ -54,6 +54,14 @@ groups = {
     "C4, quarter turns about z": [g for g in keep if t1[g][2][2] == 1],
     "Z3, about (1,1,1)": [g for g in keep if same(t1[g], eye) or same(t1[g], cyc) or same(t1[g], cyc.dot(cyc))],
     "C2, the half turn about z": [g for g in keep if same(t1[g], eye) or same(t1[g], np.diag([-1, -1, 1]))],
+    "C2', the half turn about (1,1,0)": [
+        g for g in keep if same(t1[g], eye) or same(t1[g], np.array([[0, 1, 0], [1, 0, 0], [0, 0, -1]], dtype=object))
+    ],
+    "V4', the half turns about z, (1,1,0) and (1,-1,0)": [
+        g for g in keep if same(t1[g], eye) or same(t1[g], np.diag([-1, -1, 1]))
+        or same(t1[g], np.array([[0, 1, 0], [1, 0, 0], [0, 0, -1]], dtype=object))
+        or same(t1[g], np.array([[0, -1, 0], [-1, 0, 0], [0, 0, -1]], dtype=object))
+    ],
     "1, nothing kept": [g for g in keep if same(t1[g], eye)],
 }
 
@@ -141,3 +149,31 @@ for lab, k in zip(labels, held):
     m1 = sum(chi.values()) // 12
     m3 = sum(chi[g] * chi3[g] for g in a4) // 12
     print(f"  {lab}: m_1 {m1}, m_3 {m3}, 1' + 1'' {(dim - m1 - 3 * m3) // 2} pair(s)")
+
+
+print()
+print("the five kinds are irreducible, unlike one another and complete: sum over the 24 of chi_a chi_b, and sum of dim^2")
+chars = {lab: {g: int(np.trace(np.array(k[g], dtype=object))) for g in keep} for lab, k in zip(labels, held)}
+for a in labels:
+    print(f"  {a}: " + ", ".join(f"{b} {sum(chars[a][g] * chars[b][g] for g in keep)}" for b in labels))
+print("  sum of the squared dimensions:", sum(k.shape[-1] ** 2 for k in held), "= the order 24")
+
+
+def act(k, g, v):
+    m = np.array(k[g], dtype=object)
+    return tuple(int(x) for x in m.dot(np.array(v, dtype=object)))
+
+
+def stabiliser(lab, v):
+    k = held[labels.index(lab)]
+    return sorted(g for g in keep if act(k, g, v) == tuple(v))
+
+
+names = {tuple(sorted(hs)): name for name, hs in groups.items()}
+print()
+print("the turns that keep one held count fixed, named where they are a subgroup above (E in its basis (e1 - e2, e2 - e3)):")
+for lab, v in (("E", (1, 0)), ("E", (2, 7)), ("E", (1, 2)), ("T2", (0, 0, 1)), ("T2", (1, 1, 1)), ("T2", (1, 2, 3)),
+               ("T1", (0, 0, 1)), ("T1", (1, 1, 1))):
+    hs = stabiliser(lab, v)
+    print(f"  {lab} {v}: {len(hs)} turns, {names.get(tuple(hs), 'a conjugate of one above')}")
+

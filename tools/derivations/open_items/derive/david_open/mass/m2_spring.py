@@ -18,6 +18,7 @@ and z of C[x, y, z] n_y X_z, a 3 x 3 matrix M(n) on X. That matrix is the spring
 Usage: python3 -I m2_spring.py <src of tensor24-review>
 """
 
+import itertools
 import sys
 from fractions import Fraction
 
@@ -174,3 +175,48 @@ print("an A2 count: C[A2, T1 -> T1] zero:", not np.array(tables[(at["A2"], T1, T
       "; C[A2, T2 -> T1]:", mm, ", M M^T", mmt)
 print("  so with a T1 gear (spring a) and a T2 gear (spring a') mixed by b: (lambda - a)(lambda - a') = b^2 (M M^T)_00,"
       " two masses, each three alike")
+
+
+print()
+print("a T2 count on its own, t = (t1, t2, t3): polynomial lambda^3 - |t|^2 lambda - 2 t1 t2 t3,"
+      " discriminant 4 |t|^6 - 108 (t1 t2 t3)^2")
+for tv in ((0, 0, 1), (1, 2, 3), (2, 1, 1), (1, 1, 1), (1, -1, 1)):
+    p = charpoly(combine([(tv[0], t2[0]), (tv[1], t2[1]), (tv[2], t2[2])]))
+    tt, pr = sum(x * x for x in tv), tv[0] * tv[1] * tv[2]
+    assert p == [-2 * pr, -tt, 0, 1] and disc(p) == 4 * tt ** 3 - 108 * pr * pr
+    print(f"  t = {tv}: discriminant {disc(p)}")
+print("  4 |t|^6 - 108 (t1 t2 t3)^2 = 4 ((t1^2 + t2^2 + t3^2)^3 - 27 t1^2 t2^2 t3^2), 0 only where t1^2 = t2^2 = t3^2:"
+      " off the body diagonals a T2 count gives three masses")
+
+
+def spring6(n0, e1, e2, tv):
+    return [[n0 + e1, tv[2], tv[1]], [tv[2], n0 - e1 + e2, tv[0]], [tv[1], tv[0], n0 - e2]]
+
+
+def positive(s):
+    """All three leading minors above 0: every value of the spring above 0, so no gear runs away."""
+    m1 = s[0][0]
+    m2 = s[0][0] * s[1][1] - s[0][1] * s[1][0]
+    p = charpoly([[(x, 0) for x in row] for row in s])
+    return m1 > 0 and m2 > 0 and -p[0] > 0
+
+
+print()
+print("an A1 + E + T2 count holds every whole symmetric spring (1 + 2 + 3 numbers). Koide's 2/3 on its values, read as"
+      " the roots of the masses: tr S^2 / (tr S)^2 = 2/3, that is 2 (e1^2 - e1 e2 + e2^2 + |t|^2) = 3 n0^2")
+n0, sols = 4, []
+for e1, e2, *tv in itertools.product(range(-6, 7), repeat=5):
+    if 2 * (e1 * e1 - e1 * e2 + e2 * e2 + sum(x * x for x in tv)) == 3 * n0 * n0:
+        s = spring6(n0, e1, e2, tv)
+        if positive(s) and disc(charpoly([[(x, 0) for x in row] for row in s])) != 0:
+            sols.append((e1, e2, tuple(tv)))
+s = spring6(n0, -3, -5, (-2, 0, 1))
+tr, tr2 = sum(s[i][i] for i in range(3)), sum(s[i][j] ** 2 for i in range(3) for j in range(3))
+print(f"  at n0 = 4: {len(sols)} whole counts meet it with three distinct values all above 0; one: E (-3, -5), T2 (-2, 0, 1),"
+      f" spring {s}, tr S^2 / (tr S)^2 = {Fraction(tr2, tr * tr)}")
+print("  so the theorem of no whole solution holds for the diagonal A1 + E spring alone")
+d = [389 - 361, 389 + 361 + 179, 389 - 179]
+gap = Fraction(sum(x * x for x in d), sum(d) ** 2) - Fraction(2, 3)
+print(f"  on the diagonal spring the nearest whole approach is from below by 1 / (9 n0^2): n0 = 389, E (-361, 179),"
+      f" values {d}, Koide's ratio less 2/3 = {gap}")
+
