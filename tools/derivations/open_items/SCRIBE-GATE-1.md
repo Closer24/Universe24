@@ -172,6 +172,10 @@ His question: "There are no numbers hidden behind enums and such, right?" and hi
 - **Tested:** 93 new cases (the enumerations and lengths, what the two probe rules read and spare, the paths, and the push through git: a new probe refused, a changed one held to its base, a rename quiet, the frozen list and the owner's list); the self-test holds 1,270 cases, 0 parted.
 - **What they do not see:** a real number made through a library the lists do not name; a numerator and a denominator kept apart and divided by hand; a power with a variable exponent; a floor division inside a library; a count hidden in a tuple's unpacking (a, b, c = shape). The keeper reads for them.
 
+## The lists after the old engine left (2026-10-30, 10:3x UTC)
+
+The Boss's cut (tensor24-review 4cb5359ce, 2c87a07ed and 9143d7092) and the loader's closing took the new engine's deleting rules to 0 at both live heads, so the ceiling (scribe_scan_ceiling.json) is empty and holds every one of those keys at 0: a loop, a branch, a comparison, a clamp, a twice, a choose, a family's name or a place in a list in src/tensor24 is a refusal at its first hit. The owner's list (scribe_scan_allowed.json) fell from 125 entries to 115: the loader's nine and the converter's two (tools/tensor24_convert.py, out on Animate's branch) left; the 115 that stand are declarations in the old engine's tests and example worlds, which go with them when reader-5 merges the Boss's cut. PIN stands at 0 on every file (the decoder's asserts read properties since 910f68880), so no entry holds it. The frozen probes (scribe_scan_probes.json) fall by regeneration when a head converts a probe (rn/post137/probes_freeze.py).
+
 ## What it cannot do
 
 - The three rules of 15:1x read shapes and names: an index held in a variable that the loader sets to a family's place (rows[k]), a family named by a number or by a string built by a join, and any family name beside the five kinds and 'gradient' pass, and Sofer reads the loader and the act whole at each push; the rules reach tensor24/engine and runner/load.py alone, not the algebra (whose kinds are the 24's own structure), the decoder or the other runner modules.
