@@ -21,6 +21,8 @@ Tensor24 is a purely algebraic engine: a board of clocks, each clock a train of 
                                    +----- main.py ----+    the one joint between the Node-clock and the runner
 ```
 
+**The Node-clock is the most important part** (the owner's word of 2026-10-30, 11:2x UTC): every other part lays it, runs it or reads it, and it is told first below.
+
 | Part | What it is | Home | Status |
 |---|---|---|---|
 | World | three files of whole numbers: the universe, the piece, the setting | examples/tensor24/ | BUILT |
@@ -37,22 +39,6 @@ Tensor24 is a purely algebraic engine: a board of clocks, each clock a train of 
 The loader lays the board from the three files. The runner gives every Node-clock its turn in every round: each one reads itself and its six Meshes at the now slot, steps every gear once through Rule3's carry, and writes only its own state; nothing is queued or sent between Node-clocks, and the order of work is no law. Where the carry of the drive completes a whole winding a click leaves (none is written before G5). The runner writes the record and the decoder reads it. The run back is the same act on the mirrored state and returns the start bit for bit. main.py passes the Node-clock's functions to the runner, so the two never import each other.
 
 ## 3. The parts
-
-### The world: the three files
-
-- **Clock:** before the first round, the files say which trains every Node-clock carries (each a name, its kinds among the 24's five, its part and its pinion), how many Node-clocks stand on each axis, and which gears are set where.
-- **Board:** at round 0 every gear stands at 0 except the ones the setting lays. Nothing else is laid: no coupling, strength, particle or mass (decision 35).
-- **Clicks:** none come from the files; everything the clicks show comes out of the act (a mass is measured only there, decision 37).
-- **Algebra:** whole numbers only; every side, part and integer is at least 1; no fourth file is a world.
-- **Home:** examples/tensor24/ (universe.json, piece.json, setting.json), the one bang. **Test:** test_the_tensor24_files.py. **Status:** BUILT.
-
-### The loader, the Node-clock's initialization
-
-- **Clock:** it makes every Node-clock alike from its star of six Spokes: the 24 turns that leave the star the same, the five kinds by which a train's gears turn with them, and the tables that gear one kind into another. Then it sets every gear's teeth and every Mesh's grip, and lays the setting's gears.
-- **Board:** each Node-clock's six neighbours, by the wrap on each axis. Every row's teeth rest at 6 den Gamma^2 (6 is the Spokes), and every Mesh's grip at den Gamma^2. The metric family is found by its kinds' character alone: its 00 slot is every row's teeth, its ii slots are each axis's grips. s, T_k and T_d stay at 1 until G3.
-- **Clicks:** the record's header names each train's kinds and part, so a click names a train, never a row. No number of the loader reaches the clicks except through the act.
-- **Algebra:** the 24 are the matrices of three Spokes that Rule3's weight keeps (24 of 216). A channel's group sum is c u u^T, and its table u is the primitive row, read where the diagonal entry divides every other, with the sign by Rule3's sign test; all 125 channels go in one einsum, with no loop, seed or search.
-- **Home:** runner/files.py (reads the files and refuses by name), runner/board.py, runner/load.py, main.py (made); tools/tensor24_files.py (checks and loads the files). **Test:** test_the_tensor24_files.py, test_the_tensor24_load.py, test_the_tensor24_kinds.py. **Status:** BUILT; the strengths OPEN (G3).
 
 ### The Node-clock (the core)
 
@@ -96,6 +82,22 @@ The loader lays the board from the three files. The runner gives every Node-cloc
 - **G3's results** (David's DAVID-TENSOR24-G3.md, toys-5 1ae9a6c29): the bound holds for one tied family or one summed four-leg term, and with a term on each family the sum of g_f^2 / (2 kappa lam_f) is at most 1; the ceiling is the smaller of lam's excess scale and the held hand's own (x near kappa / g), never the held hand's sign; light and the metric stay off k (OPEN, no row apart); E is read through its form; an E held count's own potential of up to four legs stands where two of a T1 family's springs meet.
 
 **The families and the three hands:** owed from David in the same form (his (e): the decoder's page 1.8 and 3.9 to 3.11).
+
+### The world: the three files
+
+- **Clock:** before the first round, the files say which trains every Node-clock carries (each a name, its kinds among the 24's five, its part and its pinion), how many Node-clocks stand on each axis, and which gears are set where.
+- **Board:** at round 0 every gear stands at 0 except the ones the setting lays. Nothing else is laid: no coupling, strength, particle or mass (decision 35).
+- **Clicks:** none come from the files; everything the clicks show comes out of the act (a mass is measured only there, decision 37).
+- **Algebra:** whole numbers only; every side, part and integer is at least 1; no fourth file is a world.
+- **Home:** examples/tensor24/ (universe.json, piece.json, setting.json), the one bang. **Test:** test_the_tensor24_files.py. **Status:** BUILT.
+
+### The loader, the Node-clock's initialization
+
+- **Clock:** it makes every Node-clock alike from its star of six Spokes: the 24 turns that leave the star the same, the five kinds by which a train's gears turn with them, and the tables that gear one kind into another. Then it sets every gear's teeth and every Mesh's grip, and lays the setting's gears.
+- **Board:** each Node-clock's six neighbours, by the wrap on each axis. Every row's teeth rest at 6 den Gamma^2 (6 is the Spokes), and every Mesh's grip at den Gamma^2. The metric family is found by its kinds' character alone: its 00 slot is every row's teeth, its ii slots are each axis's grips. s, T_k and T_d stay at 1 until G3.
+- **Clicks:** the record's header names each train's kinds and part, so a click names a train, never a row. No number of the loader reaches the clicks except through the act.
+- **Algebra:** the 24 are the matrices of three Spokes that Rule3's weight keeps (24 of 216). A channel's group sum is c u u^T, and its table u is the primitive row, read where the diagonal entry divides every other, with the sign by Rule3's sign test; all 125 channels go in one einsum, with no loop, seed or search.
+- **Home:** runner/files.py (reads the files and refuses by name), runner/board.py, runner/load.py, main.py (made); tools/tensor24_files.py (checks and loads the files). **Test:** test_the_tensor24_files.py, test_the_tensor24_load.py, test_the_tensor24_kinds.py. **Status:** BUILT; the strengths OPEN (G3).
 
 ### The runner
 
