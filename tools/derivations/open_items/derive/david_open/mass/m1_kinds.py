@@ -69,7 +69,7 @@ def poly_mul(p, q):
 def poly_mod(p, q):
     p = [Fraction(x) for x in p]
     while len(p) >= len(q) and any(p):
-        f = p[-1] / q[-1]
+        f = Fraction(p[-1], q[-1])
         shift = len(p) - len(q)
         for i, c in enumerate(q):
             p[shift + i] -= f * c

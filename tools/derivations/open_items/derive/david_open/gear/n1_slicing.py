@@ -23,13 +23,13 @@ from fractions import Fraction as F
 
 
 def course_f(w):
-    f = w / (1 - w)
+    f = F(w, 1 - w)
     assert (2 * w - 2) * 3 * f + 6 * w == 0
     return f
 
 
 def static_gamma(w):
-    gamma = w / (3 * w - 1)
+    gamma = F(w, 3 * w - 1)
     assert w * (6 * gamma - 2) == 2 * gamma
     return gamma
 
@@ -62,7 +62,7 @@ def main():
         print(f"{str(w):6} {str(f):13} {str(gamma) if gamma is not None else 'none (w = 1/3)':18} "
               f"{str(row) if row is not None else '-':>4}  {str(einstein):>5}")
     print("w = 1/2 (the free count, Box_g x = 0):", f"f = {course_f(F(1, 2))}, gamma = {static_gamma(F(1, 2))}")
-    print("f = 1/3 (the square cell):", f"w = {F(1, 3) / (1 + F(1, 3))}, gamma = {static_gamma(F(1, 4))}")
+    print("f = 1/3 (the square cell):", f"w = {F(F(1, 3), 1 + F(1, 3))}, gamma = {static_gamma(F(1, 4))}")
 
 
 if __name__ == "__main__":

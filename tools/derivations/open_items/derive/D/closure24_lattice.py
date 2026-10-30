@@ -524,7 +524,7 @@ if __name__ == "__main__":
     out("closure24_lattice.py: draft D's lattice probe, integers only, the head's carry and mid (core/acts.py) for Rule3")
     out(f"world: W {W}, s {STRETCH}, light (g, D) {LIGHT}, heavy (g, D) {HEAVY}, bob notches K {K}, room {ROOM}, L {L} Meshes, first click at tick {T_A}")
     out("settings: a = (1, 0) axis z rho 1; a' = (1, 1) axis x rho 2; b = (5, 2) axis (20, 0, 21) rho 29; b' = (5, -2) axis (-20, 0, 21) rho 29")
-    out("S = E(a,b) + E(a,b') + E(a',b) - E(a',b'); singlet S = -82/29 = -2.8275; local isotropic S = -82/87 = -0.9425; Bell's bound |S| <= 2")
+    out(f"S = E(a,b) + E(a,b') + E(a',b) - E(a',b'); singlet S = -82/29 = {fmt(-82, 29)}; local isotropic S = -82/87 = {fmt(-82, 87)}; Bell's bound |S| <= 2")
     out("delta = the partner's click tick less the first click's; spacelike delta <= L - 2 (neither the partner's reading nor its draw can read the first click), edge delta = L - 1 (its draw can), timelike delta >= L (the message has arrived)")
     out()
 

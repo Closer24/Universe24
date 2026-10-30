@@ -28,9 +28,9 @@ from tensor24.engine import step  # noqa: E402
 from tensor24.runner import load as L  # noqa: E402
 from tensor24.runner.files import sites_of  # noqa: E402
 
-ex = Path(sys.argv[1]).parent / "examples" / "tensor24"
-universe = json.loads((ex / "universe.json").read_text())
-shape = json.loads((ex / "piece.json").read_text())["shape"]
+ex = Path(sys.argv[1]).parent.joinpath("examples", "tensor24")
+universe = json.loads(ex.joinpath("universe.json").read_text())
+shape = json.loads(ex.joinpath("piece.json").read_text())["shape"]
 sites = sites_of(shape)
 kinds, tables = main.made(L.star(len(shape)))
 

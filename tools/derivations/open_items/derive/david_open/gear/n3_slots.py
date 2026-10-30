@@ -37,7 +37,7 @@ def main():
         print(f"1. d = {d}: 00 slot {s[0][0]} = (d - 2) rho + d p; each diagonal slot {s[1][1]} = rho - p; "
               f"the diagonal in all {sum(s[i][i] for i in range(1, d + 1))} = d (rho - p)")
     v, g, V = F(3), [F(1), F(-2), F(5)], F(4)
-    K, G = v * v / 2, sum(x * x for x in g) / 2
+    K, G = F(v * v, 2), F(sum(x * x for x in g), 2)
     t = [[0] * 4 for _ in range(4)]
     t[0][0] = K + G + V
     for i in range(3):
@@ -52,7 +52,7 @@ def main():
     print(f"2. one gear (v {v}, g {[int(x) for x in g]}, V {V}): 00 = 4K - 2V = {s[0][0]}; "
           f"ii = 2 g_i^2 + 2V = {[int(s[i][i]) for i in range(1, 4)]}; 0i = -2 v g_i = {[int(s[0][i]) for i in range(1, 4)]}; "
           f"ij = 2 g_i g_j = {[int(s[1][2]), int(s[1][3]), int(s[2][3])]}")
-    rho, p = K + G + V, K - G / 3 - V
+    rho, p = K + G + V, K - F(G, 3) - V
     assert sum(s[i][i] for i in range(1, 4)) == 3 * (rho - p)
     assert s[0][0] == rho + 3 * p
     print(f"3. the diagonal in all {sum(s[i][i] for i in range(1, 4))} = 3 (rho - p); the 00 slot = rho + 3p = {rho + 3 * p}")

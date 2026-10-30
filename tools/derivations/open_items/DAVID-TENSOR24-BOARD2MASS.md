@@ -83,7 +83,12 @@ The Standard Model holds all of it with three copies put in by hand and the mass
   - The round's unit cancels in the ratio: no one measures the board.
   - On the board the ratio is omega0_A / omega0_B, so the clicks compare masses by squares with no root: m_A^2 / m_B^2 = D_A / D_B = (g C n)_A / (g C n)_B, a ratio of whole numbers. Every row has the same teeth W, so W cancels too.
 - **The width is the clock's life** (Animate's reading; agreed): a beat counted over few of its own ticks is spread, over many sharp. Nature's width times life is hbar. On the board a spring with no way out beats sharp. A three-leg vertex to lighter trains drains the beat, and its life sets the width. OPEN on the act (G5, G6).
-- **Gravity reads the same beat** (DERIVED from decision 40 (a)): a beating gear's books, its kinetic part and its spring's part, push the metric's 00 slot by rho + 3p like every train's. So the inertial mass, the beat, and the gravitational mass, the books, are one count, which is the equivalence MICROSCOPE tests.
+- **The least a clock needs** (Animate, 6514643547, on the owner's word to her: "Pass it to David, it will help him"):
+  - to tick, a Node-clock with its six neighbours, never one alone (2.3);
+  - to click, two clocks, a giver and a taker with parts;
+  - to show a sharp mass, many of its own ticks (its life) and enough Node-clocks to stay together (its span).
+  So the least mass the clicks can see is set by the simplest clock that can both take and live long, not by the watcher.
+- **Gravity reads the same beat** (DERIVED from decision 40 (a), read under the owner's law of 04:1x, line 102: no books in the engine, a push read by the tensor operation itself from every gear's state): what the tensor operation reads from a beating gear, its rate, its differences and its spring's part, pushes the metric's 00 slot by rho + 3p, as for every train. So the inertial mass, the beat, and the gravitational mass, what the metric reads, are one count, which is the equivalence MICROSCOPE tests.
 
 ## 4. Three components, three species: what the 24 give
 
@@ -96,11 +101,11 @@ The 24's turns, made from the Node-clock's six Spokes, have five kinds of 1, 1, 
 - **The step is blind to the component** (CHECKED on the head): every row of every train steps at the same teeth W, and the loader lays one grip, den Gamma^2 G^2, on every Mesh for every row (load.geared). So the three components of a T1 train each step as the same wave, at the same light speed.
 - **The vertices at one Node-clock read components, not places.** A turn of the 24 applied to the components alone, with the places left where they are, keeps the pull, which is blind to the component, and keeps every vertex whose legs are all read at the Node-clock itself, since the tables are the 24's own. So the family's components can be turned among themselves apart from the board's places.
 - **In the clicks the three components are then three species**, alike in everything the 24 keep alike: the same speed, the same spin and the same couplings through A1. Their pair to A1, T1 x T1 -> A1, is the dot product, x with x, y with y and z with z, so an A1 train such as light couples to the three alike: universality.
-- **The condition** (OPEN, G3's to keep): no coupling row reads the family's components against a direction of the board, whether the gradient (a T1 reading of an A1 train, made from the Spokes) or a train whose components are the board's own directions (the metric's 0i slots, T1; its jk slots, T2; its E part). If one does, the components turn with the places, and the clicks would see a turn of the laboratory change one species into another. Nature refuses that, to the precision of the clock comparisons. The books' tensor of a T1 train is a sum over its components, so decision 40 (a) keeps the condition.
+- **The condition** (OPEN, G3's to keep): no coupling row reads the family's components against a direction of the board, whether the gradient (a T1 reading of an A1 train, made from the Spokes) or a train whose components are the board's own directions (the metric's 0i slots, T1; its jk slots, T2; its E part). If one does, the components turn with the places, and the clicks would see a turn of the laboratory change one species into another. Nature refuses that, to the precision of the clock comparisons. The stress the tensor operation reads from a T1 train is a sum over its components, so decision 40 (a) keeps the condition.
 
 ### 4.3 Why three, and never four
 
-DERIVED under the condition: a family alike in all but mass is one kind's components, and the 24 hold no kind of more than three. So a family is one, two or three species, and three is the number of the board's axes. Nature's N = 2.9963 +- 0.0074 agrees. What does not follow (OPEN): why every one of nature's fermion families is a triplet and none is a single or the E pair, and how spin one half rides on a T1 train (the twin kinds wait on OPEN 3).
+DERIVED under the condition: a family alike in all but mass is one kind's components, and the 24 hold no kind of more than three. So a family is one, two or three species, and three is the number of the board's axes. Nature's N = 2.9963 +- 0.0074 agrees. What does not follow (OPEN): why every one of nature's fermion families is a triplet and none is a single or the E pair, and how spin one half rides on a T1 train (the twin kinds wait on OPEN 3). A hand of three parts loads at 5176be5e0 (the part's check is out), but that three is the files' choice, an internal one, and explains nothing; the 24's T1 is the three the page derives.
 
 ## 5. Three masses: what splits the triplet
 
@@ -116,7 +121,7 @@ DERIVED under the condition: a family alike in all but mass is one kind's compon
   - They sum to 3 n0, and their spread about the mean is 2 (e1^2 - e1 e2 + e2^2) (checked at every |e1|, |e2| <= 9).
   - Two of them meet only on three lines, e1 = -e2, e2 = 2 e1 and e1 = 2 e2. Of the 48 whole (e1, e2) in [-3, 3]^2 other than (0, 0), 38 give three masses.
 - **By the subgroups** (CHECKED, m1): an E count with both components off those lines keeps only the three half turns D2, under which T1 splits into three different one-dimensional kinds, so three masses. On one of the lines it keeps D4, and T1 splits as one plus two.
-- **What it costs on the act:** the loader refuses a train of kind E ("E has no whole basis the 24 permute; it stands beside A1 in the tensions (stage 7c)"). An E held count is a kind the act cannot hold as built.
+- **What it costs on the act:** the files' checker refuses a train of kind E on its own (runner/files.py at 5176be5e0: "a kind with no whole basis the 24 permute stands only in the four-vector's square, whose basis is whole"). E loads inside the metric's square and nowhere else, so an E held count is a kind the act cannot hold as built.
 
 ### 5.3 On a hand of two parts
 
@@ -182,7 +187,7 @@ The charged leptons in the form a + B cos (phi + 2 pi k / 3), read on three quan
 | why every fermion family is a triplet; spin one half on a T1 train | OPEN | 4.3 |
 | an A1 or A2 held count gives a triplet one mass | DERIVED; CHECKED; nature REFUSES it as the generations' law | 5.1; m1, m2 |
 | three masses need an E count with both components, or a T1 count on a hand | DERIVED; CHECKED | 5.2, 5.3; m1, m2 |
-| the loader refuses a train of kind E | the act as built | 5.2 |
+| the files' checker refuses a train of kind E on its own | the act as built (5176be5e0) | 5.2 |
 | the form a + B cos (phi + 2 pi k / 3) | DERIVED; it predicts nothing alone | 5.4 |
 | the ratios' numbers | OPEN (G3's vertex law and held counts) | 5.4, 6.1 |
 | the squares' reading needs a cancellation to 2.5 x 10^-7 at the electron | DERIVED from nature's numbers; stands against that reading unless a law explains it | 6.1 |
@@ -193,7 +198,7 @@ The charged leptons in the form a + B cos (phi + 2 pi k / 3), read on three quan
 ## 8. For the team
 
 - **Boss, for G3:**
-  1. The held count's kind: A1 or A2 gives a triplet one mass (5.1). Three masses need an E count with both components, or a T1 count on a hand (5.2, 5.3). The loader refuses E trains (stage 7c).
+  1. The held count's kind: A1 or A2 gives a triplet one mass (5.1). Three masses need an E count with both components, or a T1 count on a hand (5.2, 5.3). The files' checker refuses an E train on its own (5176be5e0).
   2. Three-leg vertices alone hold no count (Euler, 2.4). Under the vertex's push the count drifts and the gear it holds runs away (m3 (c)). G3's toy has to hold it, by a term of its own or by the law's act for "one quantum per Node-clock".
   3. The family's components must not be read against a direction of the board (4.2), or the clicks would see a turn change a species.
   4. A mass that joins two trains is a spring off the diagonal and runs away on the second-order gear (6.4): N2's first-order form.
@@ -202,7 +207,7 @@ The charged leptons in the form a + B cos (phi + 2 pi k / 3), read on three quan
 
 ## 9. The probes
 
-Each runs as `python3 -I <probe> <src of tensor24-review>` from derive/david_open/mass/, in whole numbers alone (integers and quotients of two, no float, no root, no cosine), its output beside it as <probe>.txt:
+Each runs as `python3 -I <probe> <src of tensor24-review at 2a6203a4a>` from derive/david_open/mass/, in whole numbers alone (integers and quotients of two, no float, no root, no cosine), its output beside it as <probe>.txt:
 
 - **m1_kinds.py:** the 24 from kinds.turns and kinds.kinds on the head's star; for nine subgroups the invariant vectors of each kind and the number of distinct values of a generic spring that keeps the subgroup, by the characteristic polynomial's gcd with its derivative; the kinds on A4 by characters.
 - **m2_spring.py:** the act's tables C[K, T1 -> T1] for every kind and component; the A1 + E spring, its spread and the lines where two values meet; the Koide search; the circulants by their characteristic polynomials and discriminants; the A2 mixing.
