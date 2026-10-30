@@ -1,4 +1,8 @@
-"""The Node-clock's step: every gear's impulse, drive and carry at the teeth its clock gives it, in one pass every round, and the run back as the step on the mirrored state."""
+"""Clock: every round every gear moves once: its neighbours pull it, the coupling pushes it, it turns by what its teeth carry and keeps the rest; the drive carries the coupling's push the same way.
+Algebra: q, r+ = carry(W (a - b) + s (F + T_k q_d), W, r); a+ = a + q; b+ = a; q_d, r_d+ = carry(J, T_d, r_d); the run back is the tick on the mirrored state, mirrored.
+Board: one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot; W is the rest plus the metric family's 00 slots here.
+Clicks: none before G5; a deeper 00 slot is a slower clock, read in the clicks as proper time.
+"""
 
 import numpy as np
 

@@ -1,4 +1,8 @@
-"""The contraction: J's terms from one potential, products of three readings into their targets through the 24's tables, and the clocks' linear read."""
+"""Clock: a vertex couples a Node-clock's gears: each term of one potential pushes every one of its legs by the others.
+Algebra: each monomial f x_a x_b x_c x_d pushes each leg by -f times the other three, the unit for a leg it lacks, summed into J; read is the clocks' linear read.
+Board: at every Node-clock alike, on its own readings at the now slot: the value, the three gradients, the force, then the unit.
+Clicks: the rest beat a spring gives is read as a mass; the strengths are open (G3).
+"""
 
 import numpy as np
 

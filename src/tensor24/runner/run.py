@@ -1,4 +1,8 @@
-"""The run: the three files checked and loaded, every Node-clock stepping in every round to the setting's ticks, the rewind checked, the record and its ledger written."""
+"""Clock: the run from the three files to the record: every Node-clock steps every round, then all the rounds run back.
+Algebra: the act iterated; before each round the promise, every fine tooth within its teeth, is read; the start returns bit for bit.
+Board: the files checked and loaded, the rounds run, the rewind checked, the record and its ledger written.
+Clicks: it writes what the act gives: the record's header and end and the ledger beside them; click lines from G5.
+"""
 
 import dataclasses
 import hashlib

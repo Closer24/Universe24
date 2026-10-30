@@ -1,4 +1,8 @@
-"""The load: the 24's tables, the trains' rows and the metric family found by its kinds, the gears laid, and the layout: the board, and every coefficient by one formula of the files' integers."""
+"""Clock: every Node-clock made alike: the 24's tables, each train's rows, every gear's teeth and every Mesh's grip, and the setting's gears laid.
+Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s, T_k and T_d at 1.
+Board: the metric family found by its kinds' character: its 00 slot read into every row's teeth, its ii slots into each axis's grips.
+Clicks: n/a: no number of the load reaches the clicks except through the act.
+"""
 
 # The engine's kinds come in as arguments, as main.py passes them: the runner imports no engine module.
 

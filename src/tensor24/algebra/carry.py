@@ -1,4 +1,8 @@
-"""Rule3's carry, the one place a division is written, and the fine tooth's flip at the mirror."""
+"""Clock: a dial counts a push in whole turns of its teeth, and what is left stays as its fine tooth.
+Algebra: Rule3's carry, n + r = q d + r' with 0 <= r' < d, the one place a division is written; the mirror flips a tooth r to w - 1 - r.
+Board: at every gear, every round, the quotient leaves as the gear's step and the remainder stays, which makes the run back exact.
+Clicks: a click will be such a quotient where a winding is whole (G5); nothing else is measured.
+"""
 
 from typing import Any
 

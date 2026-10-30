@@ -1,4 +1,8 @@
-"""The board's 24 turns and the five kinds they act on, whole-number matrices made from the six Spokes, no table typed."""
+"""Clock: every Node-clock is made alike from its star of six Spokes: the 24 turns that leave the star the same, and the five kinds by which a train's gears turn with them.
+Algebra: the 24 are the matrices of three Spokes that Rule3's weight keeps, 24 of 216; A1, A2, E, T1 and T2 are built from their matrices, with no table typed.
+Board: the same turns and kinds at every Node-clock; the four-vector's square (the 00, 0i, ii and jk slots) is the metric family's kinds.
+Clicks: n/a: a kind is no observable; a click names a train, whose kinds say how it turns.
+"""
 
 from typing import NamedTuple
 

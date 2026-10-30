@@ -1,4 +1,8 @@
-"""The engine's records: the Node-clocks' state, the layout read once at load, J's plan, and the clocks' read."""
+"""Clock: what a Node-clock holds: each gear's count now and before, its fine tooth, and its drive's fine tooth.
+Algebra: whole-number arrays a, b, r and r_d, and the layout's coefficients and plans, read once at load.
+Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan and the clocks' read.
+Clicks: n/a: these hold the board, not its shadow.
+"""
 
 from typing import NamedTuple
 

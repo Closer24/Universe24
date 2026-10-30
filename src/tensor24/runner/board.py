@@ -1,4 +1,8 @@
-"""The board from its shape: each site's six neighbours, the wrap by Rule3 on each coordinate."""
+"""Clock: each Node-clock's six neighbours, one through each Spoke.
+Algebra: a site's index from its three coordinates, and the wrap on each axis by Rule3's carry.
+Board: the board from its shape: every site with its six neighbours, each axis wrapped.
+Clicks: n/a: the board's labels are no lengths.
+"""
 
 import numpy as np
 

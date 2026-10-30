@@ -1,4 +1,8 @@
-"""The record's schema 1.2: JSON Lines of whole numbers and labels, each record line's kind its record's name in lower case."""
+"""Clock: the boundary between the board and the clicks: only the readers read it.
+Algebra: schema 1.2: JSON Lines of whole numbers of any width and labels, each line's kind its record's name in lower case.
+Board: the header (the files and their digests, the sides, each train's kinds, part and winding), the end (the rounds, the digest, the run back exact or not) and the ledger's Count lines beside them.
+Clicks: its click lines, from G5, name a train, a Node-clock and a round; nothing is computed in it.
+"""
 
 from dataclasses import dataclass
 

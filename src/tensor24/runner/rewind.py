@@ -1,4 +1,8 @@
-"""The rewind check: the rounds run back by the engine's run back alone, with no log read."""
+"""Clock: all the rounds run back, to see the start return.
+Algebra: the engine's untick iterated, with no log read.
+Board: the state after the rounds, rewound round by round by the act's run back alone.
+Clicks: n/a.
+"""
 
 from collections.abc import Callable
 from typing import Any

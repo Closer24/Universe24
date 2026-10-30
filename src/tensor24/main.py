@@ -1,4 +1,8 @@
-"""Tensor24's one joint: the engine's functions passed into the runner, the only module that imports both."""
+"""Clock: the one joint: the Node-clock's act handed to the runner that turns it.
+Algebra: n/a: it computes nothing; it passes the engine's functions and the layout to the runner.
+Board: the board's layout made from the loaded files, then the run.
+Clicks: n/a.
+"""
 
 from pathlib import Path
 from typing import Any

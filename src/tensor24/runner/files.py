@@ -1,4 +1,8 @@
-"""The three files read and checked: whole numbers alone, the integers and the sides at least 1, each train, kind, part and site referred to there; then read against the engine's kinds, and laid out as the load's arrays."""
+"""Clock: before the first round the files say which trains every Node-clock carries, how many stand on each axis, and which gears are laid where.
+Algebra: whole numbers only, every side, part and integer at least 1, each departure refused by name; then the trains read against the engine's kinds.
+Board: the three files read and checked, then laid out as the load's arrays; nothing else is laid: no coupling, strength, particle or mass.
+Clicks: n/a: nothing the clicks show comes from the files.
+"""
 
 import json
 from collections import Counter

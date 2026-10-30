@@ -3,7 +3,9 @@ through the Boss, records 2239 and 2241; #1198, gate 7: no recorded baseline fil
 
 For every Python file under `src/` the counts: total lines, docstring lines, comment lines and
 references to records or decisions ("record 2234", "decision 3"). A file within the limits (every
-docstring one line, no record reference, under 400 lines) passes whatever its counts. A file
+docstring one line, a module's the four layers, no record reference, under 400 lines) passes
+whatever its counts; the four layers are Clock, Algebra, Board and Clicks, one line each in that
+order (the owner's word of 2026-10-30, 11:0x UTC; Sofer's DOCLAYER rule asks for them). A file
 beyond them holds each count at or below the same file's at the merge base (CHECK_BASE, else
 origin/main), read from git; a new file beyond them fails. Two functions of `src/` with one
 abstracted body fail beyond the merge base's groups. The old engine's rules (Rule3's arithmetic
@@ -31,6 +33,7 @@ from merge_base import base_ref, carried, tree_at  # noqa: E402
 
 NEW_FILE_LINES = 400
 DUPLICATE_MIN_STATEMENTS = 2
+LAYERS = ("Clock:", "Algebra:", "Board:", "Clicks:")  # a module docstring's four layers, one line each
 RECORD_REFERENCE = re.compile(r"\b(?:record|records|decision|decisions)\s+\d+", re.IGNORECASE)
 COUNTS = (
     "lines",
@@ -57,6 +60,14 @@ def docstring_of(node: ast.AST) -> ast.Expr | None:
     return None
 
 
+def layered(node: ast.AST) -> bool:
+    """A module's docstring told in the four layers, one line each and in their order."""
+    lines = (ast.get_docstring(node) or "").splitlines() if isinstance(node, ast.Module) else []
+    return len(lines) == len(LAYERS) and all(
+        line.startswith(f"{layer} ") for line, layer in zip(lines, LAYERS, strict=True)
+    )
+
+
 def shape_of(path: Path) -> dict[str, int]:
     """The counts of one file of `src/`."""
     text = path.read_text(encoding="utf-8")
@@ -69,7 +80,7 @@ def shape_of(path: Path) -> dict[str, int]:
             if doc is not None:
                 end = doc.end_lineno or doc.lineno
                 docstring_lines.update(range(doc.lineno, end + 1))
-                multi_line += end > doc.lineno
+                multi_line += end > doc.lineno and not layered(node)
     comment_lines = {
         token.start[0]
         for token in tokenize.generate_tokens(io.StringIO(text).readline)
@@ -165,7 +176,7 @@ def record(root: Path) -> dict[str, Any]:
 
 
 def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
-    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line, a record reference or 400 lines."""
+    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line (a module's beyond the four layers), a record reference or 400 lines."""
     found: list[str] = []
     if shape["multi_line_docstrings"]:
         found.append(f"{rel} has {shape['multi_line_docstrings']} docstring(s) beyond one line")
