@@ -220,7 +220,7 @@ PAIRS: tuple[Pair, ...] = (
          "line 35: declared by the file is no status; declared stands for a scale or a seed alone", (35, r"declared-by-the-file is no status|no status")),
     Pair("P08", "the swap at the top", r"swap at a (?:fed )?weak maximum|the turn is the swap|trigger at the weak maximum|the swap's trigger",
          "decision 27: cancelled, there is no act at the top and the tick has four acts", (1602, r"there is no act at the top")),
-    Pair("P09", "a parity rule on Gamma, T or den", r"Gamma odd|\bT even|den even",
+    Pair("P09", "a parity rule on Gamma or den", r"Gamma odd|\bden even",
          "K-S2: Gamma of either parity; decision 40 (h): no rule on den's parity", (110, r"Gamma of either parity")),
     Pair("P10", "real arithmetic in a reading", r"in real arithmetic|rounded once",
          "line 100: no float anywhere, the probes too", (100, r"Only whole numbers are allowed")),
