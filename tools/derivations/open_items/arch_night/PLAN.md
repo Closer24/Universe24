@@ -58,9 +58,12 @@ part). Every commit of the order below is DONE but the whole; no B2c (David's ha
 FRAMES.md 6). The load test stands at 155, its ceiling. The checks at 996df846f: gate5 0 refusals with the same 6
 notes; the full check exit 0, 27 passed; tensor24 10 of 10, live 100 of 100, well 128 of 128 and mesh 125 of 125, each
 exact, digests 540e503cad44, cfef203d5dd5, 05586b5db17f and 00fd62494c9a, every record and ledger byte-identical to
-87f88322d's; the click world exact at 9ccbc6481 with 4,212 lines and the books 0, its 5,000 rounds running at
-996df846f (its line to follow). Now: a third hostile code reader on 87f88322d..996df846f, then the candidate (the road
-to main below).
+87f88322d's; the click world exact at 996df846f (rerun after the container restart): 5,000 of 5,000 rounds undone,
+4,212 click lines at 2,106 places, the books 0 (the sum of q over the trains not 0 at 0 places), the held train (2)
+with 0 lines, the giver (3) at (2106, 1107, 999, -108) and the taker (4) at (2106, 999, 1107, 108), digest
+f351582ede39, its record and ledger byte-identical to the earlier run's; so all five worlds are measured at the
+candidate's sha. Now: a third hostile code reader on 87f88322d..996df846f, then the candidate (the road to main
+below).
 
 The second hostile code reader read f72067cdf..87f88322d (scratchpad/hcr2/REPORT.md: no BLOCKING, seven MINOR). DONE:
 - A (7dcb31607): his 6, A's part, state.py's docstrings saying what the loader lays.
@@ -420,11 +423,15 @@ calibre condition).
   says so, so the candidate fast-forwards. The Boss pushes it to tensor24-review; the writer reads the sha for faking
   and posts the approval; main moves, no force.
 - The checks at the candidate's sha: `CHECK_BASE=origin/main python tools/check.py --full` exit 0; the hook's gate 0
-  refusals, its notes listed (the KEYS notes for key, push, notch, hold, tie and mesh; B2's INDICATORs; the load test's
-  PINs) for Sofer; the five worlds run by the run tool, each run back exact (tensor24, live, well, click, mesh), their
-  digests beside the sha; the click world's books 0 at every round and site. At 996df846f: gate5 0 refusals with the
-  same 6 notes; the full check exit 0, 27 passed; tensor24, live, well and mesh exact at the digests above, every
-  record and ledger byte-identical to 87f88322d's; the click world's 5,000 rounds running, its line to follow.
+  refusals, its notes listed (the KEYS notes for key, push, notch, hold, tie and mesh; B2's INDICATORs; the load
+  test's PINs) for Sofer; the five worlds run by the run tool, each run back exact (tensor24, live, well, click,
+  mesh), their digests beside the sha; the click world's books 0 at every round and site. At 996df846f: gate5 0
+  refusals with the same 6 notes; the full check exit 0, 27 passed; tensor24, live, well and mesh exact at the digests
+  above, every record and ledger byte-identical to 87f88322d's; the click world exact at 996df846f (rerun after the
+  container restart): 5,000 of 5,000 rounds undone, 4,212 click lines at 2,106 places, the books 0 (the sum of q over
+  the trains not 0 at 0 places), the held train (2) with 0 lines, the giver (3) at (2106, 1107, 999, -108) and the
+  taker (4) at (2106, 999, 1107, 108), digest f351582ede39, its record and ledger byte-identical to the earlier run's;
+  so all five worlds are measured at the candidate's sha.
 - For the owner's word before main, the owner's list:
   - M8 (the first hostile code reader): tests_shape's ROOM rises against main, frame 230 -> 237, engine 202 -> 300,
     load 113 -> 155 (its ceiling, by B5), run 285 -> 295 (by B's fold 484fb8d72), and the decoder lowered 600 -> 572
@@ -436,14 +443,21 @@ calibre condition).
     (ARCHITECTURE section 6 tied reading it from the schema to 1.3); writer C names it open in schema.py's Algebra
     line (9ccbc6481).
   - The two showcases, named exceptions to "a frame's strengths are 0 in the shipped worlds" (the second hostile code
-    reader's 7): the click world ships hold 1 and tie 96000 (frame 6) and the mesh world hold 1 and mesh 200000 (frame
-    7), as B3 and B5 planned; the well world's push 1 and notch 120000 are term 5's and term 9's, not a frame's; the
-    other two worlds hold every strength at 0 with key 1 (NOT_CLOSED 11).
+    reader's 7): the click world ships hold 1 and tie 96000 (frame 6), its showcase line saying "valid inside the
+    room" (Big Pic, #2187 6535643629 item 3's last line), and the mesh world hold 1 and mesh 200000 (frame 7), as B3
+    and B5 planned; the well world's push 1 and notch 120000 are term 5's and term 9's, not a frame's; the other two
+    worlds hold every strength at 0 with key 1 (NOT_CLOSED 11).
   - The frames and prices that need his word, from NOT_CLOSED.md: k0 confirmed as the star's unit (26); the cut and
-    the moving clock's road for his morning (2); decision 40 (g) and a potential in the law, the hat's direction (19);
-    the metric's self-stress against the two-plan road (30); the jk and 0i slots pushed by nothing (6); the key at
-    depth (3).
-  The Boss lists them with the candidate's sha.
+    the moving clock's road for his morning, its moving-clock part standing and its claim on gamma fallen (2); slow
+    matter's gravity on this act's books' form, gamma 0 until the slots' own laws mix the trace (32); a potential in
+    the law, the hat's direction (19); the metric's self-stress against the two-plan road (30); the jk and 0i slots
+    pushed by nothing (6); the key at depth (3).
+  - G5's mathematician's M7, for the owner's ruling: probe (g)'s Pythagorean lay sets the hand's before slot at 48/50
+    and 14/50, a rational point of the circle from (7, 1); whether law line 102's "any construction that finds one"
+    reaches it is the owner's word (NOT_CLOSED 5).
+  - Decision 40 (g), as Big Pic states it (#2187 6535643629 item 4): a hand that holds one quantum (D = 1) weighs W a
+    Node-clock, and a still hand in a hat weighs 0 and holds none; no frame on this act has both (NOT_CLOSED 19). The
+    Boss lists them with the candidate's sha.
 - The hostile reader needs: the diff against the laws and section 4; the five worlds' records; the probes' outputs
   beside their probes in derive/boss/ (term11_pass, g3_frame, term5_books, term5_edge, term9_edge, drive_mirror,
   hand_per_quantum, frozen_edge, and the lays' accounts of well_lay, click_lay and mesh_lay); FRAMES.md and
