@@ -1,0 +1,2 @@
+2S - eta tr S = 2 v v + 2 eta V on 2000 whole four-vectors and springs: True
+uniform swing, stride 7, no spring: the page's form gives 00 = 49, each ii = 49; the full stress gives 00 = 98 (rho + 3p), each ii = 0 (rho - p)
