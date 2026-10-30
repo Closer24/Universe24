@@ -1,6 +1,6 @@
 """Clock: what a Node-clock holds: each gear's count now and before, the tooth of the edge between them, its drive's fine tooth, and each train's click tooth.
 Algebra: whole-number arrays a, b, r, r_d and k, and the layout's coefficients and plans, read once at load.
-Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan, the clocks' read, the click's cross with its key, and the metric's push, term 5's plan on the readings and the momenta.
+Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan on the value legs, the clocks' read, the click's passing with its key, the metric's push, term 5's plan on the readings and the momenta, and the plan's terms with a Mesh leg, the gradient vertex, none until the loader lays them.
 Clicks: n/a: these hold the board, not its shadow.
 """
 
@@ -40,11 +40,11 @@ class Read(NamedTuple):
 
 
 class Click(NamedTuple):
-    """The whole click's passing, laid at load: per term the row whose count enters, the row whose push it meets (the same row, each gear's own), the factor 1, the train the passing moves into; and every train's key, CHOSEN in the universe file."""
+    """The whole click's passing, laid at load: per term a pair of a train's rows through its kinds' table with itself onto A1 (the loader's pairs; one row twice until the pairs are laid), the form's entry, the train the passing moves into; and every train's key, CHOSEN in the universe file."""
 
-    first: Z  # (terms,): the row whose count the term reads
-    second: Z  # (terms,): the row whose push the term reads, the same row
-    factor: Z  # (terms,): the term's factor, 1, Python integers
+    first: Z  # (terms,): the pair's first row, whose count the term reads
+    second: Z  # (terms,): the pair's second row, whose push the term reads
+    factor: Z  # (terms,): the form's entry, Python integers
     target: Z  # (terms,): the train whose passing the term moves
     key: Z  # (trains, 1): the key each train's click tooth carries at, at least 1
 
@@ -60,7 +60,7 @@ class Gearing(NamedTuple):
 
 
 class Layout(NamedTuple):
-    """The board read once: the neighbours, the Spokes' directions, each Spoke's Mesh, the grips, the gearing, J's plan, the clocks and the grips' read, and the click's cross."""
+    """The board read once: the neighbours, the Spokes' directions, each Spoke's Mesh, the grips, the gearing, J's plan on the value legs, the clocks and the grips' read, the click's passing, the metric's push, and the plan's terms with a Mesh leg."""
 
     nb: Z  # (6, N): +x, -x, +y, -y, +z, -z, each the other's opposite (the load makes the relation symmetric)
     spokes: Z  # (6, d): each Spoke's direction on the board's axes, a unit vector or its opposite, in nb's order
@@ -70,5 +70,6 @@ class Layout(NamedTuple):
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, the force, the unit last
     clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
     stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh
-    click: Click  # every train's swept area as the cross of its parts with the kick through the A1 table, and its key
+    click: Click  # every train's passing as its pairs' form over a J(b) - b J(a), and its key
     push: Plan  # term 5, the metric's push: the matter's four-vector squared through the A1 table onto the square's slots, 2T - eta T, as terms on the readings with the momenta in and out added, the unit last
+    mesh: Plan  # the plan's terms with a Mesh leg, the gradient vertex, on the same readings as the plan: the loader lays them (none until the gradient vertex), and the drive alone reads them, the passing never

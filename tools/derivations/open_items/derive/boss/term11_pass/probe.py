@@ -1,18 +1,22 @@
-"""Term 11's increment S, the two-round passing, measured on the live act (the Boss's code writer, 2026-10-30;
-COUNT5.md item M1, the S row of probe_sameact on the live code): Animate's world, one Node-clock whose neighbours are
-itself, the giver and the taker, T1 hands of three components with a re part and an im part, their own springs f
-and term 6's vertex g between them, the teeth W at rest, 6,000 rounds; whole numbers and Rule3's carry alone.
+"""Term 11's passing S, the click tooth kept, measured on the live act (the Boss's code writer, 2026-10-30; COUNT5.md
+item M1, the S row of probe_sameact on the live code, and the night's PLAN A1): Animate's world, one Node-clock whose
+neighbours are itself, the giver and the taker, T1 hands of three components with a re part and an im part, their own
+springs f and term 6's vertex g between them, the teeth W at rest, 6,000 rounds; then the 24 on a cube of 3 with the
+same plan laid at every site and every count drawn; whole numbers and Rule3's carry alone.
 
 Clock: each train's click tooth carries S = X(S) + X(S+), the passing of the state the round reads plus the state it
-produces, at the key the nearest odd whole to twice the one-round key, born at (key - 1) div 2; the mirror keeps the
-tooth, and the run back is one act on the mirrored state, its quotients negated.
-Algebra: X(S) = SUM a J(b) - b J(a) over a hand's gears and X(S+) the same on (a+, a); their sum is odd under the
-reversal of the round's window (before, now, next), so -S + k+ = -q key + k returns the tooth; each half alone is not.
-Board: one Node-clock, two hands of six gears; the books SUM over the hands of q = 0 every round; the taker's course.
+produces, X the train's pairs' form over a J(b) - b J(a) with J the value legs' plan on the Node-clock's own counts,
+at the key the nearest odd whole to twice the one-round key, born at (key - 1) div 2; the mirror keeps the tooth,
+and the run back is one act on the mirrored state, its quotients negated.
+Algebra: S is odd under the reversal of the round's window (before, now, next), so -S + k+ = -q key + k returns the
+tooth; each half alone is not; under a turn of the 24 a negated row's edge tooth is -1 - s and its drive tooth
+T_d - 1 - r_d, the twisted action, and the act commutes with it.
+Board: one Node-clock, two hands of six gears; the books SUM over the hands of q = 0 every round; the taker's course;
+the cube of 3 by 3 by 3 with the hands at every site, the turned run against the run turned, clicks too.
 Clicks: the live act's own clicks against S read from outside; the run back by the act on the mirrored state, the
 teeth returned and the quotients negated; the fourth text's halves, X(S) and X(S+) alone, carried from outside.
 
-Run: .venv/bin/python tools/derivations/open_items/derive/boss/term11_S/probe.py; its output is probe.txt beside it.
+Run: .venv/bin/python tools/derivations/open_items/derive/boss/term11_pass/probe.py; its output is probe.txt beside it.
 """
 
 import sys
@@ -22,12 +26,14 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[6]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT))
 
 from tensor24 import main  # noqa: E402
 from tensor24.algebra.carry import carry  # noqa: E402
-from tensor24.engine import step  # noqa: E402
+from tensor24.engine import contract, step  # noqa: E402
 from tensor24.engine.state import Click, Gearing, Layout, Plan, Read, State  # noqa: E402
 from tensor24.runner import load as loading  # noqa: E402
+from tests import frame  # noqa: E402
 
 W = 10**20  # the teeth at rest
 F, _ = carry(W, 800, 0)  # each hand's own spring: a beat of about 2 pi 20 rounds
@@ -36,9 +42,9 @@ ROUNDS = 6000
 COMPONENTS = 3  # a T1 hand's components; its two parts make six gears
 GIVER, TAKER, HANDS = 0, 1, 2
 ROWS = 2 * COMPONENTS * HANDS
-PLANES = 1 + 3 + 1  # the readings' planes: the value, the three gradients, the force
-UNIT = PLANES * ROWS  # the unit, the readings' last row
 SEVENTH = 7  # the one-round key: the giver's wind at the lay in sevenths, times the teeth, made odd
+CUBE, TURNS = (3, 3, 3), 6  # the 24's board and the rounds they are read over
+SPAN, SEED = 1000, 11  # the cube's counts drawn within [-SPAN, SPAN] from the recurrence
 
 
 def hand(h):
@@ -75,42 +81,39 @@ def potential(g):
 
 
 def plan(monomials):
-    """J's terms from one potential: each monomial pushes every leg by minus its factor times its other legs, the unit standing for each leg it lacks of three."""
-    terms = []
-    for factor, legs in monomials:
-        for p, leg in enumerate(legs):
-            terms.append(((*legs[:p], *legs[p + 1 :], UNIT, UNIT, UNIT)[:3], -factor, leg))
-    readings, factor, target = zip(*terms, strict=True)
-    return Plan(
-        *(np.array(x, dtype=np.intp) for x in zip(*readings, strict=True)),
-        np.array(factor, dtype=object),
-        np.array(target, dtype=np.intp),
+    """J's terms from one potential by the engine's own vertex law: each monomial pushes every leg by minus its factor times its other legs, the unit (-1) standing for each leg it lacks of four."""
+    factor = np.array([f for f, _ in monomials], dtype=object)
+    legs = tuple(
+        np.array([legs[p] if p < len(legs) else -1 for _, legs in monomials], dtype=np.intp)
+        for p in range(4)
     )
+    return contract.pushes(factor, legs)
+
+
+def clicking(key):
+    """The passing's pairs: each row with itself at the factor 1, into its hand, at the key."""
+    row = np.arange(ROWS, dtype=np.intp)
+    train = np.repeat(np.arange(HANDS, dtype=np.intp), 2 * COMPONENTS)
+    return Click(row, row, np.ones(ROWS, dtype=object), train, key + np.zeros((HANDS, 1), dtype=object))
 
 
 def node(g, key):
     """One Node-clock whose neighbours are itself, so no Mesh pulls it, its push J from the potential; the click's passing one term per row into its hand, at the key."""
     nb = np.zeros((6, 1), dtype=np.intp)
-    spokes = loading.star(3)
     meshes, _ = carry(np.arange(6), 2, 0)
     none = np.zeros(0, dtype=np.intp)
     unread = Read(none, none.astype(object), none)
     empty = Plan(none, none, none, none.astype(object), none)
     ones = np.ones((1, 1), dtype=object)
-    row = np.arange(ROWS, dtype=np.intp)
-    train = np.repeat(np.arange(HANDS, dtype=np.intp), 2 * COMPONENTS)
-    click = Click(row, row, np.ones(ROWS, dtype=object), train, key + np.zeros((HANDS, 1), dtype=object))
+    reads = (unread, unread, clicking(key), empty, empty)
     return Layout(
         nb,
-        spokes,
+        loading.star(3),
         meshes[:, None],
         ones.repeat(3, axis=1),
         Gearing(W * ones, 1, 1, 1, 1),
         plan(potential(g)),
-        unread,
-        unread,
-        click,
-        empty,
+        *reads,
     )
 
 
@@ -138,13 +141,13 @@ def wind(s, s1, gears):
 
 
 def pushes(layout, x):
-    _, j = step.sources(layout, x)
-    return j[:, 0]
+    """The value legs' plan on a Node-clock's own counts, as the passing reads it."""
+    return contract.contract(layout.plan, step.valued(x), x)
 
 
 def wronskian(layout, first, second):
-    """Per hand, SUM over its gears of first J(second) - second J(first), the pushes the act's own sources."""
-    jf, js = pushes(layout, first), pushes(layout, second)
+    """Per hand, SUM over its gears of first J(second) - second J(first), the pushes the value legs' plan on the counts."""
+    jf, js = pushes(layout, first)[:, 0], pushes(layout, second)[:, 0]
     f, s = first[:, 0], second[:, 0]
     return tuple(sum(f[i] * js[i] - s[i] * jf[i] for i in gears_of(h)) for h in range(HANDS))
 
@@ -190,6 +193,75 @@ def carried(rule, layout, states, key):
     return misses, (lo, hi), returned, negated
 
 
+def recurrence(seed):
+    """Whole numbers from a fixed recurrence, each step one carry: no random module."""
+    v = seed
+    while True:
+        _, v = carry(v * 6364136223846793005 + 1442695040888963407, 1 << 64, 0)
+        yield v
+
+
+def drawn(src, low, high):
+    """A whole number in [low, high] from the recurrence's high bits, by two carries."""
+    top, _ = carry(next(src), 1 << 33, 0)
+    _, x = carry(top, high - low + 1, 0)
+    return low + x
+
+
+def cube(g):
+    """The cube of 3 with the hands at every site, their springs and vertex the one plan, the grips 1, the teeth W, every count drawn within the span, every tooth 0, the click teeth at the birth of a key read off the first round's passing."""
+    nb = frame.board(CUBE)
+    n, ones = nb.shape[1], np.ones((1, 1), dtype=object)
+    none = np.zeros(0, dtype=np.intp)
+    unread = Read(none, none.astype(object), none)
+    empty = Plan(none, none, none, none.astype(object), none)
+    src = recurrence(SEED)
+    a = np.array([[drawn(src, -SPAN, SPAN) for _ in range(n)] for _ in range(ROWS)], dtype=object)
+    b = np.array([[drawn(src, -SPAN, SPAN) for _ in range(n)] for _ in range(ROWS)], dtype=object)
+    grip, gearing = ones.repeat(3 * n, axis=1), Gearing(W * ones, 1, 1, 1, 1)
+    probe = Layout(
+        nb,
+        frame.spokes(),
+        frame.meshes_of(nb),
+        grip,
+        gearing,
+        plan(potential(g)),
+        unread,
+        unread,
+        clicking(1),
+        empty,
+        empty,
+    )
+    s = State(a, b, 0 * a, 0 * a, 0 * a[:HANDS])
+    s1, _ = step.act(probe, s)
+    passing = step.passing(probe.click, a, b, pushes(probe, a), pushes(probe, b)) + step.passing(
+        probe.click, s1.a, a, pushes(probe, s1.a), pushes(probe, a)
+    )
+    key = odd(carry(int(abs(passing).max()), 3, 0)[0] + 1)
+    birth, _ = carry(key - 1, 2, 0)
+    return probe._replace(click=clicking(key)), s._replace(k=birth + 0 * s.k), key
+
+
+def twisted(m, layout, s):
+    """The state turned by m with the twisted action: the sites moved, each hand's components turned by m on both parts, a negated row's counts negated, its edge tooth -1 - s and its drive tooth T_d - 1 - r_d, the click teeth moved with their sites."""
+    xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
+    site = np.ravel_multi_index(tuple(carry(m @ xyz, sides, 0)[1]), CUBE)
+    turn = np.zeros((ROWS, ROWS), dtype=object)
+    for block in range(carry(ROWS, COMPONENTS, 0)[0]):
+        turn[
+            block * COMPONENTS : (block + 1) * COMPONENTS, block * COMPONENTS : (block + 1) * COMPONENTS
+        ] = m.tolist()
+    there = State(*(np.empty_like(x) for x in s))
+    for x, y in zip(there, s, strict=True):
+        x[:, site] = y
+    teeth = np.broadcast_to(layout.gearing.drive, s.rd.shape)
+    there.a[:, site], there.b[:, site] = turn @ s.a, turn @ s.b
+    # a kept row's teeth as they stand, a negated row's -1 - s and T_d - 1 - r_d: the signed rows halved by one carry
+    there.r[:, site] = carry(turn @ (2 * s.r + 1) - 1, 2, 0)[0]
+    there.rd[:, site] = carry(turn @ (2 * s.rd + 1 - teeth) + teeth - 1, 2, 0)[0]
+    return there, site
+
+
 def report():
     out = []
 
@@ -198,7 +270,7 @@ def report():
         out.append(line)
 
     say(
-        f"Term 11's increment S on the live act: Animate's world, the giver and the taker at one Node-clock, {ROUNDS} rounds"
+        f"Term 11's passing S on the live act: Animate's world, the giver and the taker at one Node-clock, {ROUNDS} rounds"
     )
     g, _ = carry(F, 10, 0)
     probe = node(g, 1)
@@ -260,13 +332,35 @@ def report():
         )
     # 4. the passing's scale: SUM S against SUM X(S) to the taker over the run, in thousandths
     sx = sum(wronskian(layout, states[t].a, states[t].b)[TAKER] for t in range(1, ROUNDS + 1))
-    ss = sum(
-        sum(increment("S", layout, states[t], states[t + 1])[TAKER] for _ in (0,))
-        for t in range(1, ROUNDS)
-    )
+    ss = sum(increment("S", layout, states[t], states[t + 1])[TAKER] for t in range(1, ROUNDS))
     ratio, _ = carry(1000 * ss, sx, 0)
     say(
         f"4. the summed passing to the taker over the run, S against the one-round X, in thousandths: {ratio}"
+    )
+    # 5. the 24 on the cube with the plan laid: the turned run equals the run turned, the clicks moved with their sites
+    board, s0, key = cube(g)
+    held, plain, clicked = [0] * TURNS, [0] * TURNS, 0
+    for m in frame.turns():
+        t, site = twisted(m, board, s0)
+        kept, _ = twisted(
+            m, board, s0
+        )  # the plain action: the sites and the rows moved, no tooth flipped
+        kept.r[:, site], kept.rd[:, site] = s0.r, s0.rd
+        s = s0
+        for n in range(TURNS):
+            s, q = step.act(board, s)
+            t, qt = step.act(board, t)
+            image, _ = twisted(m, board, s)
+            moved = np.empty_like(q)
+            moved[:, site] = q
+            held[n] += int(same(t, image) and bool(np.array_equal(qt, moved)))
+            clicked += int(q.any())
+            if n == 0:
+                plain[n] += int(same(step.act(board, kept)[0], image))
+    say(
+        f"5. the 24 on a cube of 3 with the plan laid, the key {key}, {TURNS} rounds: the turned run equals the run turned, clicks too,"
+        f" at {held} turns of 24 (the twisted action: a negated row's counts negated, its edge tooth -1 - s, its drive tooth kept at"
+        f" T_d = 1); with the teeth left as they stand {plain[0]} of 24 hold at round 1; clicks fell in {clicked} of {24 * TURNS} turned rounds"
     )
     Path(__file__).with_name("probe.txt").write_text("\n".join(out) + "\n", encoding="utf-8")
 

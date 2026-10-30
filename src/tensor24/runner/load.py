@@ -226,6 +226,9 @@ def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tupl
     spokes, meshes = geometry(nb, len(shape))
     gearing, clock, stretch, grip = geared(universe, loaded.trains, spokes)
     grips = np.full((1, len(shape) * nb.shape[1]), grip, dtype=object)
+    none = np.zeros(
+        0, dtype=np.intp
+    )  # the plan's terms with a Mesh leg: none until the gradient vertex is laid
     return (
         nb,
         spokes,
@@ -237,4 +240,5 @@ def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tupl
         stretch,
         loaded.click,
         loaded.push,
+        (none, none, none, none.astype(object), none),
     )

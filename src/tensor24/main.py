@@ -22,7 +22,7 @@ def made(spokes: Any) -> tuple[kinds.Kinds, dict[Any, Any], Any]:
 
 def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> state.Layout:
     """The layout the load reads from the three files, in the engine's records."""
-    nb, spokes, meshes, grip, gearing, potential, clock, stretch, click, push = load.laid_out(
+    nb, spokes, meshes, grip, gearing, potential, clock, stretch, click, push, mesh = load.laid_out(
         universe, shape, loaded
     )
     typed = (
@@ -32,6 +32,7 @@ def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> s
         state.Read(*stretch),
         state.Click(*click),
         state.Plan(*push),
+        state.Plan(*mesh),
     )
     return state.Layout(nb, spokes, meshes, grip, *typed)
 

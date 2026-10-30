@@ -17,7 +17,7 @@ def seen(a: Z, nb: Z) -> Z:
 
 def gripped(layout: Layout, a: Z) -> Z:
     """What the grips' read lands on every Spoke at every site: each read row's now counts at both ends of the Spoke's Mesh, so the Mesh's grip is the same from either end."""
-    nb, _, _, _, _, _, _, stretch, _, _ = layout
+    nb, _, _, _, _, _, _, stretch, _, _, _ = layout
     first, factor, target = stretch
     here = a[first]
     landed = np.zeros(nb.shape, dtype=object)
@@ -27,11 +27,11 @@ def gripped(layout: Layout, a: Z) -> Z:
 
 def held(layout: Layout, a: Z) -> Z:
     """Every Spoke's grip at every gear and site: its train's grip on the Spoke's Mesh at rest, and what the grips' read lands on it at the now slot."""
-    _, _, meshes, grip, _, _, _, _, _, _ = layout
+    _, _, meshes, grip, _, _, _, _, _, _, _ = layout
     return grip[:, meshes] + gripped(layout, a)
 
 
 def pull(layout: Layout, a: Z) -> Z:
     """The Meshes' pull on every gear: its grip on each Spoke's Mesh times the neighbour less its own now, summed over the Spokes."""
-    nb, _, _, _, _, _, _, _, _, _ = layout
+    nb, _, _, _, _, _, _, _, _, _, _ = layout
     return ((seen(a, nb) - a[:, None, :]) * held(layout, a)).sum(axis=1)

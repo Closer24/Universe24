@@ -1,4 +1,4 @@
-Term 11's increment S on the live act: Animate's world, the giver and the taker at one Node-clock, 6000 rounds
+Term 11's passing S on the live act: Animate's world, the giver and the taker at one Node-clock, 6000 rounds
 the teeth 100000000000000000000, the spring 125000000000000000, the vertex 12500000000000000; the one-round key 71428571400000000000000000001, the key for S, the nearest odd whole to twice it, 142857142800000000000000000003
 1. the live act, 6000 rounds: the books (the hands' quotients summed) miss in 0 rounds, the taker's course 0..7; the act's own clicks and teeth equal S read from outside, X(S) + X(S+) carried at the key, in 6000 of 6000 rounds
 2. the run back, mirror, act, mirror, 6000 times: the gears return in 6000 of 6000 rounds, the click teeth in 6000, the quotients negated in 6000; the start returned bit for bit: True
@@ -6,3 +6,4 @@ the teeth 100000000000000000000, the spring 125000000000000000, the vertex 12500
 3. X(S) alone, the read state's carried from outside at the key 71428571400000000000000000001: the books miss in 0 rounds, the taker 0..7; the run back by one act with the tooth kept returns the teeth in 0 of 6000 rounds and negates the quotients in 5964
 3. X(S+) alone, the produced state's carried from outside at the key 71428571400000000000000000001: the books miss in 0 rounds, the taker 0..7; the run back by one act with the tooth kept returns the teeth in 0 of 6000 rounds and negates the quotients in 5960
 4. the summed passing to the taker over the run, S against the one-round X, in thousandths: 1999
+5. the 24 on a cube of 3 with the plan laid, the key 30880783333333333333335, 6 rounds: the turned run equals the run turned, clicks too, at [24, 24, 24, 24, 24, 24] turns of 24 (the twisted action: a negated row's counts negated, its edge tooth -1 - s, its drive tooth kept at T_d = 1); with the teeth left as they stand 3 of 24 hold at round 1; clicks fell in 144 of 144 turned rounds
