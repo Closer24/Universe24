@@ -203,6 +203,19 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   (5,000 rounds), the largest count read from outside at 10^9 (no runaway); the tied hand's period by zero crossings
   against 2 hold f / W; a checkerboard seed on a TIED hand at small amplitude bounded past ten beats (its own spring
   plus its Meshes' 2 W stays below 4 W); light standing untied; the run back exact; the 24 (B2's probe, B3's measure).
+- The click world as built (B3, e8161f301; examples/tensor24-click/, derive/boss/click_lay/ lay.py, lay.txt, measure.py,
+  measure.txt): a cube of 3 at den 1 and Gamma 10^4, push 0, notch 0, hold 1, mesh 0, 5,000 ticks; the held hand at
+  (1, 0) with its before (0, -1) and every edge tooth at s = 0; the giver a line hand at its turning point (40, 0, 0),
+  the taker at rest. The tie and A were chosen by the act: at the plan's first tie, 12,000 (a tenth of the tied spring),
+  the taker's push stays in its tooth and the world is silent (no count moves, no click falls in 5,000 rounds: the
+  no in lay.txt), so the tie is 96,000, 800 permille of the tied spring 120,000 (the pair's stiffness 24,000
+  positive); A = 40 stays inside the room over the whole run (hold (|x_giver|^2 + |x_taker|^2) at the held hand at
+  most 1,600 of Gamma div 4 = 2,500), where at A 46 and 48 the act leaves the room and the held train clicks; the key
+  50,811,429 (odd, about seven keys a beat). Measured: 4,212 click lines; the pair's books 0 at every round and
+  Node-clock where a line stands; the held train silent and |k|^2 = 1 at every Node-clock and round; the 24 at 24 of
+  24 turns under the twisted action, the clicks included; the run back exact; the largest count 40. The envelope is
+  not constant: the strong tie beats on the pair's two normal modes (each beat's most falling from 1,600 to about
+  1,000), the frame's "constant envelope" withdrawn for a tie this strong.
 - The hostile mathematician's verdict, NOT PASSED, four blocking (g3_math/REPORT.md), folded: (1) the whole-speed
   plan's J is one norm of the tied rows' vector, kept by 200 of 200 random signed permutations of the tied rows
   ACROSS trains: it tells no kind and no train, so which train is held, which ties and which is light must come from
@@ -289,6 +302,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   matter is the kinds' (A1 against T1), no name.
 - Test: light's squares summed stand over 400 rounds on the mesh world where the value vertex grew x100 in COUNT5's
   measure; the run back exact; the tied hand moves where the pulse passes.
+- The integers (the Boss, 21:5x UTC): at the plan's integers the mesh world leaves the room (mesh 1,000 pushes the
+  tied hand to 28 counts; mesh 3,000 runs away), so B chooses the world's integers by the act, as B3's were chosen,
+  or ships the world at mesh 0, the vertex laid and its strength CHOSEN at 0 like every other frame's.
 - Replaced by: the Mesh-leg count (frame 5) and G3's plan.
 - Choice: the gradient form, because it is the one stable light-matter vertex the readers found and the one the
   tables allow; alternative: a value vertex light-matter (tachyonic, refused).

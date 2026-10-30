@@ -45,13 +45,14 @@ by the loader, so the owner plays with the files in the morning, not the code.
 
 ## The order (dependencies first), with each commit's change, test and probe
 
-State at 21:2x UTC (the architect who took over): pushed on origin/node-live e88150989, in order: 0 (f5e6486c8), C1
+State at 21:5x UTC (the architect who took over): pushed on origin/node-live 36effecd5, in order: 0 (f5e6486c8), C1
 (b10d7d008), C2 (6b77872dc), B1 (c967980d0), A1 (d6ec46ff0), C3 (ac3085db4, the hand-per-quantum probe), A1b
-(939fa65a7), B2 (c853dee00), B4 (a9f8a440a), A2 (f72067cdf), B2b (df4fa644c), then A's docstring commit (e88150989:
-term 5 in the books' form in the engine's docstrings, no behaviour change). The load test's ceiling is 155 from 20:4x
+(939fa65a7), B2 (c853dee00), B4 (a9f8a440a), A2 (f72067cdf), B2b (df4fa644c), A's docstring commit (e88150989: term
+5 in the books' form in the engine's docstrings, no behaviour change), A's folds of B1, M2 and M12 (575973a20), B3
+(e8161f301, the click world) and A3 (36effecd5, term 13 measured on the edge). The load test's ceiling is 155 from 20:4x
 UTC, raised by the Boss for B2b's and B5's tests alone. No B2c: David's hat does not replace the own spring tonight
-(B2c below; FRAMES.md 6). Next: B3, then B5 (writer B); writer C the hostile reader's checklist and the five worlds'
-runs.
+(B2c below; FRAMES.md 6). Next: B5 (writer B) and B's folds; writer C the hostile reader's checklist and the five
+worlds' runs.
 
 The first hostile code reader read origin/main..f72067cdf (scratchpad/hcr1/REPORT.md: one BLOCKING, thirteen MINOR);
 its items go to their writers as folds, each with its test in the file's room:
@@ -278,6 +279,14 @@ the clock deeper where the matter is.
 
 ### Commit B3 (B; after B2 and B4): the click world, examples/tensor24-click/
 
+DONE at 21:43 UTC: pushed as e8161f301 (FRAMES.md 6 has its numbers). As built, against the text below: the tie and A
+chosen by the act, the tie 96000 (800 permille of the tied spring 120000, the pair's stiffness 24000 positive),
+since the plan's 12000 gives a silent world (no count moves and no click falls in 5000 rounds); A = 40, inside the
+room over the whole run (at most 1600 of Gamma div 4 = 2500; at A 46 and 48 the act leaves it and the held train
+clicks); the key 50811429; the taker at rest. Measured: 4212 click lines, the books 0 everywhere, the held train
+silent and |k|^2 = 1, the 24 at 24 of 24 with the clicks, the run back exact, the largest count 40. The envelope is
+not constant: the strong tie beats on two normal modes, so the text's "tied hands' envelope constant" is withdrawn.
+
 - The generator tools/derivations/open_items/derive/boss/click_lay/lay.py (whole numbers, Rule3, joinpath, no train
   declared in code; its account lay.txt), reading universe.json and piece.json and writing setting.json: a cube of 3,
   den 1, full_rate 10000 (rest 6 10^8, f = 60000, the tied beat 2 pi sqrt(Gamma / 2) about 444 rounds), five trains:
@@ -334,6 +343,9 @@ the clock deeper where the matter is.
 - examples/tensor24-mesh/ by derive/boss/mesh_lay/lay.py: light (A1, part 2) as a pulse along x (the well world's
   pulse form), the held hand at (1, 0), one tied hand (T1, T2) at rest at every site, mesh = 3000 (mesh^2 below
   grip x 2 f / 2: the derivative vertex's ground state, COUNT5 P2), hold 1, tie 0, push 0, notch 0, ticks 400.
+  These integers leave the room (the Boss, 21:5x UTC: mesh 1000 pushes the tied hand to 28 counts, mesh 3000 runs
+  away): B chooses the world's integers by the act, as B3's were, inside the room for the whole run with the bound
+  in lay.txt, or ships the world at mesh 0 (the vertex laid, its strength CHOSEN at 0), named in the README.
 - Measured: light's squares summed stand (no tachyon: within a few percent over the run), the tied hand's rows move
   where the pulse passes, the run back exact; the click lines: none from the Mesh leg (its wind is the Mesh flux,
   counted by no click tonight: NOT_CLOSED 4), said in the README section.
@@ -341,6 +353,10 @@ the clock deeper where the matter is.
   difference and +mesh on L's row from M's, per axis; light with no vector hand lays nothing.
 
 ### Commit A3 (A; if time): term 13 measured on the edge (a probe, no code)
+
+DONE at 21:52 UTC: pushed as 36effecd5 (derive/boss/frozen_edge/probe.py and probe.txt); NOT_CLOSED 7 carries its
+measure (N^2 = rest / W within 0.7 ppm at strides far above a notch) and item 23 the count-level lock-in (the
+calibre condition).
 
 - derive/boss/frozen_edge/probe.py: on the well world's lay, N^2 = rest / W by the hand's period at the crests
   against the void, and the ratio against W (TERM5_FOURTH sec. 6 asks it); the result goes to NOT_CLOSED 7.
@@ -371,11 +387,16 @@ the clock deeper where the matter is.
   the writer reads the sha for faking and posts the approval; main moves, no force.
 - The full check: `CHECK_BASE=origin/main python tools/check.py --full` exit 0 at the head; the hook's gate 0
   refusals and the KEYS notes (key, push, notch, hold, tie, mesh) for Sofer.
-- For the owner's word before main (the first hostile code reader's M8): tests_shape's ROOM rises against main,
-  frame 230 -> 237, engine 202 -> 299, load 113 -> 147 (its ceiling 155), run 285 -> 291, and the decoder lowered
-  600 -> 572. ARCHITECTURE section 4 says a ROOM is not raised with a code change; these stand under the Boss's
-  ceilings of the night, named and read by Sofer, not hidden, and main takes them only on the owner's word (or the
-  writer's and Sofer's, as section 4 names them). The Boss lists them with the candidate's sha.
+- For the owner's word before main, the owner's list:
+  - M8 (the first hostile code reader): tests_shape's ROOM rises against main, frame 230 -> 237, engine 202 -> 300
+    (299 at the reader's head, 300 after A's 575973a20), load 113 -> 147 (its ceiling 155), run 285 -> 291, and the
+    decoder lowered 600 -> 572 (the files test 310 at main's 310). ARCHITECTURE section 4 says a ROOM is not
+    raised with a code change; these stand under the Boss's ceilings of the night, named and read by Sofer, not
+    hidden, and main takes them only on the owner's word (or the writer's and Sofer's, as section 4 names them).
+  - M11: schema.MINOR = len(ADDED) at 3, a count behind a length with no cheap reading from the schema's structure
+    (ARCHITECTURE section 6 tied reading it from the schema to 1.3); writer C names it open in schema.py's Algebra
+    line.
+  The Boss lists both with the candidate's sha.
 - The hostile reader needs: the diff against the laws and section 4; the five worlds' records; the probes'
   outputs (term11_pass, g3_frame, term5_edge, term9_edge, drive_mirror, well_lay, click_lay, mesh_lay); FRAMES.md
   and NOT_CLOSED.md beside the candidate, so that every CHOSEN strength and every price is read as named, not hidden.

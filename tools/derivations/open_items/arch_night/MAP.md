@@ -11,7 +11,8 @@ Updated at 20:4x UTC by the architect who took over at 20:2x UTC: the statuses a
 judged (not tonight: FRAMES.md 6, NOT_CLOSED 29); B2b's price (NOT_CLOSED 30); term 5's fifth text passed by its
 physicist; the moving clock's two texts refused (NOT_CLOSED 2). Updated again at 21:2x UTC: node-live e88150989 (B2b
 pushed), the first hostile code reader's items folded (NOT_CLOSED 11, 25, 29 to 31; FRAMES.md 1, 3, 4, 5), the
-ROOM rises listed for the owner's word before main (section 0).
+ROOM rises listed for the owner's word before main (section 0). At 21:5x UTC: node-live 36effecd5 (B3 the click world,
+A3 term 13 on the edge), M11 on the owner's list.
 
 Statuses: BUILT/main (main 2bcf315b6), BUILT/live (node-live f72067cdf, worktree scratchpad/live), DERIVED (both
 readers passed; to build), DRAFTED (readers in work), FRAME (a lawful placeholder with its CHOSEN strengths), OPEN
@@ -35,15 +36,19 @@ says what the record and the ledger carry of the part, which is all the decoder 
   c967980d0 (plans.py), A1 d6ec46ff0 (term 11's passing S), C3 ac3085db4 (the hand-per-quantum probe), A1b 939fa65a7
   (the push's readings), B2 c853dee00 (term 6's frame), B4 a9f8a440a (the click lines), A2 f72067cdf (the twisted 24
   in the engine's test), B2b df4fa644c (term 5 in the books' form at dial 2, k0 = 12; the well world re-laid, its
-  run back 128 of 128; its price NOT_CLOSED 30), e88150989 (A: term 5's books in the engine's docstrings). Next: B3,
-  B5 (writer B); writer C the hostile reader's checklist and the five worlds' runs; the first hostile code reader's
-  folds with their writers (PLAN.md). No B2c tonight.
+  run back 128 of 128; its price NOT_CLOSED 30), e88150989 (A: term 5's books in the engine's docstrings), 575973a20
+  (A: B1's run back under the push held by hypothesis (d), M2, M12), e8161f301 (B3, the click world), 36effecd5 (A3,
+  term 13 measured on the edge). Next: B5 (writer B, its integers by the act or mesh 0) and B's folds; writer C the
+  hostile reader's checklist and the five worlds' runs. No B2c tonight.
 - The first hostile code reader on origin/main..f72067cdf (scratchpad/hcr1/REPORT.md, 21:2x UTC): one BLOCKING (B1:
   the run back under term 5's push holds only while no plan reads a pushed row's momenta, hypothesis (d); B2b's
   route keeps it, NOT_CLOSED 30) and thirteen MINOR. Its M8, for the owner's word before main: tests_shape's ROOM
-  rises against main, frame 230 -> 237, engine 202 -> 299, load 113 -> 147 (its ceiling 155), run 285 -> 291, the
-  decoder lowered 600 -> 572; ARCHITECTURE section 4 says a ROOM is not raised with a code change; they stand under
-  the Boss's ceilings, named and read by Sofer, and are listed with the candidate (PLAN.md, the road to main).
+  rises against main, frame 230 -> 237, engine 202 -> 300 (299 at its head, 300 after 575973a20), load 113 -> 147
+  (its ceiling 155), run 285 -> 291, the decoder lowered 600 -> 572; ARCHITECTURE section 4 says a ROOM is not
+  raised with a code change; they stand under the Boss's ceilings, named and read by Sofer. Its M11 beside it:
+  schema.MINOR = len(ADDED) at 3, a count behind a length with no cheap reading from the schema's structure (writer C
+  names it open in schema.py's Algebra line). Both are on the owner's list with the candidate (PLAN.md, the road to
+  main).
 - The gate: the pre-push hook runs scratchpad/t24b/tools/derivations/open_items/scribe_scan.py --hook with
   venv314; every commit is checked by the hook's gate against origin/main and by `python tools/check.py --full`
   with CHECK_BASE=origin/main. The ratchets: record_code_shape (400 lines, docstrings' four layers), tests_shape
@@ -98,7 +103,7 @@ says what the record and the ledger carry of the part, which is all the decoder 
 | 10 | The shift and the shears | OPEN (G4): the 0i and jk slots are pushed by term 5 and carried exactly, read by no gear | state (the square's rows), load.geared (the 0i parity) | no reader tonight; the price and the alternatives in NOT_CLOSED 6 | the 0i and jk slots in the ledger |
 | 11 | The whole click | DERIVED for the pair at one Node-clock at the rest teeth (COUNT5.md); BUILT/live in the S form (A1 d6ec46ff0) and written to the record (B4); its books exact for monomials of two value legs, OPEN for four (the held hand's tie: exact only within the room, NOT_CLOSED 29); it reads the value legs' plan alone, so neither the Mesh plan (NOT_CLOSED 4) nor J5 (NOT_CLOSED 31) is booked by a click; the key CHOSEN, its oddness refused by name in B's fold (M6) | step.act (today the area tau), tonight step.passing; load.passing; run (the click lines) | the passing S = X(S) + X(S+), X = the train's form over a J(b) - b J(a), carried at the odd key with the tooth KEPT under the mirror; the record's line carries q, and -q on the run back | the click lines: round, site, train, q, tooth before and after |
 | 12 | The split click | OPEN (David's draft, both readers NOT AGREED) | none | no draw is written tonight: a share below half a key moves a tooth and clicks nowhere (the spread take is not made whole) | none |
-| 13 | The frozen clock | OPEN (G2): a reading of the act, N^2 = rest / W | none of its own | where W grows without bound a clock stops; to be measured again on the edge (TERM5_FOURTH sec. 6) | the 00 slot in the ledger |
+| 13 | The frozen clock | MEASURED on the edge (A3 36effecd5): N^2 = rest / W within 0.7 ppm at every Node-clock of the re-laid well at strides far above a notch; at strides of one count a round the beat locks to the integers' cycle and reads no well (the calibre condition, NOT_CLOSED 23); OPEN (G2) where W has no bound | none of its own; derive/boss/frozen_edge/probe.py | a reading of the act, N^2 = rest / W: where W grows without bound a clock stops (NOT_CLOSED 7) | the 00 slot in the ledger |
 
 **The metric family**: the reads BUILT/live (the clock's and the grips' read, k0 = 12), its push BUILT/live as a
 FRAME (term 5 in the books' form at dial 2, B2b; the fifth text PASSED by its physicist at k0 = 12; its price
@@ -136,8 +141,8 @@ declared cap). No code of their own tonight: the loader's five kinds stand; the 
 | tensor24 | BUILT/main | the one bang: light (A1, part 2) and the metric at rest; push 0, notch 0, key 1; no vertex, no click |
 | tensor24-live | BUILT/live | the light pulse along z at 2^40 counts, c = 1 / sqrt 6 Meshes a round, the run back exact |
 | tensor24-well | BUILT/live, re-laid under the books' form in B2b (push 1, k0 12, the notch h 120000) | the held lump in whole numbers (lay.py): the clock deeper where the lump is, the well 3 parts in 10^4 of W at its deepest, the pulse lagging 0.09 Mesh, the run back 128 of 128; the second cone 1000142 to 1000302 ppm named OPEN; the metric's self-stress unpaid at 1 ppm of the matter's (NOT_CLOSED 30) |
-| tensor24-click | FRAME tonight (PLAN B3, after B2b) | the pair world: the held hand (A1, A2) turning at (1, 0) everywhere (the frame's own spring; the hat not tonight), two tied hands (T1, T2) beating, the hands' tie between them, a line hand laid as the giver: clicks appear in the record, the books close per round and site while the lay stays inside the room for the whole run, the held train's clicks counted (0 there; NOT_CLOSED 29) |
-| tensor24-mesh | FRAME tonight if time (PLAN B5) | light (A1) on a tied hand through the gradient vertex (the Mesh leg), stable by g^2 < grip spring / 2; its exchange is booked by no click tonight (NOT_CLOSED 4) |
+| tensor24-click | BUILT/live as FRAME (B3 e8161f301) | the pair world on a cube of 3: the held hand (A1, A2) turning at (1, 0) everywhere (the frame's own spring; the hat not tonight), two tied hands (T1, T2), the giver a line hand at (40, 0, 0) and the taker at rest, the hands' tie 96000 chosen by the act (the plan's 12000 is silent), the key 50811429: 4212 click lines, the books 0 at every round and site, the held train silent with k.k = 1, inside the room for the whole run (at most 1600 of 2500), the 24 and the run back exact; the envelope beating on two normal modes |
+| tensor24-mesh | FRAME tonight if time (PLAN B5; its integers by the act or mesh 0: at the plan's, mesh 1000 pushes the tied hand to 28 counts and 3000 runs away) | light (A1) on a tied hand through the gradient vertex (the Mesh leg), stable by g^2 < grip spring / 2; its exchange is booked by no click tonight (NOT_CLOSED 4) |
 
 ## 6. Where a part works for one family only (the owner's word), and its generic frame
 
