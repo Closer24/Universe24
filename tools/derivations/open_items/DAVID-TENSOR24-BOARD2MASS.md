@@ -5,6 +5,7 @@ David, 2026-10-30, 05:0x UTC, on the owner's words to David (in Hebrew; in trans
 - 03:0x UTC: "Prepare a page on this that everyone will agree on... board2mass. It has to explain why nature also shows three generations... On the board a mass is a spring with a coupling: what is the formula has to be understood. First you, then a hostile mathematician agent and a hostile physicist agent go over it after you finish. From the clocks, understand what the transformation from the board to the clicks is. And why those ratios are seen in the clicks, and why there are 3 generations, with all their ratios and properties."
 - Before it: "How a mass enters the board, in the four dimensions of the events' spacetime, and how it comes out of the click, whose spacetime is three dimensions, has to be understood, no?" (Sofer's 8.2: both are 3 + 1, and what differs is which 1.)
 - 04:3x UTC: "Think in clock terms, not gears. What does the page say? Check whether trains are allowed at all, because everything must be generic and tensor, and a Node-clock is local: only in the definition of the families and the couplings, the coupling family, right?" (Section 2: yes.)
+- 05:0x UTC: "Finish only as far as the hostile ones agree with you. Remember that nature is in the clicks, not in the board. Let the writer also confirm that there are no breaches of the laws in the page."
 
 Animate's reading of the mass and the clock (#2187 6514375401 and 6514643547) stands here as the clicks' side (section 4).
 
@@ -16,10 +17,13 @@ Probes, in whole numbers alone (the owner's word through Sofer, 6514488548), eac
 
 Only the Boss writes engine code (decision 40). This page is a derivation and its checks, nothing more. Its first draft went to two hostile readers, a mathematician and a physicist (the owner's ask). Both found errors, and section 10 lists what changed. The status words are the protocol's: DERIVED (follows from the law and the act as built, or from the band the step obeys), CHECKED (a probe shows it), OPEN (neither), REFUSED (nature or the law refuses it).
 
+**Nature is in the clicks, not in the board** (the owner's word of 05:0x; line 695, the great clock's tick is no observable; 8.2). Every number from nature on this page is a reading of records: counts of clicks, their rates and their ratios. The board's own numbers, its teeth W, its springs D, its grips and its round, are never measured. The page sets against nature only what the board's clicks would read, and the board's sections (2 and 3) are the mechanism behind them, no claim about nature on their own.
+
 **Words.** In clock terms (the owner's ask): a Node-clock is a clock at one place. A **hand** is the law's gear, a dial with its carried remainder (line 90). A **family** is the law's train, a tensor of one kind defined in the universe file alone (line 96). A family of kind T1 puts three hands in every Node-clock, one for each axis.
 
 ## 0. The answer in short
 
+- **Nature is in the clicks, not in the board.** Every comparison with nature below is what the board's clicks would read; the board itself is never measured.
 - **Families stand only in the files** (section 2). The Node-clock knows none of them. Every hand steps by the one act, and the coupling family is one family among the others.
 - **On the board, a mass is a hand held by a spring inside its own Node-clock** (section 3).
   - Light's hand is pulled only sideways, by its six neighbours' hands. A massive hand is also tied, through a three-leg vertex, to a held hand at its own Node-clock: the coupling family's hand standing at its steady count.
@@ -38,9 +42,9 @@ Only the Boss writes engine code (decision 40). This page is a derivation and it
   - A T2 family loads on the act as built.
 - **What does not follow** (section 7): the ratios' numbers, what tells the electron, the quarks and the neutrino families apart, mixing, CP violation, the neutrinos' masses and the left-right mass's step. Koide's 2/3 is a test; on the diagonal spring alone no whole counts meet it, and with a T2 part many do.
 
-## 1. What nature shows
+## 1. What nature shows, in the clicks
 
-The facts the page has to meet (PDG 2024 unless named):
+The facts the page has to meet, each a reading of records (PDG 2024 unless named):
 
 - **Three generations, no fourth light one:** the Z's width counts the light active neutrinos.
   - The 2006 LEP combination gave N = 2.9840 +- 0.0082. The beam-beam correction (Voutsinas et al., 2019) moved it to 2.9918 +- 0.0081, and the luminosity correction (Janot and Jadach, 2020) to 2.9963 +- 0.0074.
@@ -109,7 +113,7 @@ The owner's question of 04:3x, answered yes from the law and the act:
   - So every mass beats below a quarter turn a round.
 - **The lightest, and the range:** a spring is a whole number, D >= 1, so D / W >= 1 / W, about 4.3 x 10^-26 at the head's W.
   - One hand type then holds masses spanning at most about sqrt (2W), 6.8 x 10^12.
-  - Nature's top quark over its second neutrino is at least 172.57 GeV / 8.7 meV, about 2.0 x 10^13. So the board's W must be at least (m_max / m_min)^2 / 2, about 2 x 10^26, above the head's.
+  - The range of masses the clicks read in nature, the top quark over the second neutrino, is at least 172.57 GeV / 8.7 meV, about 2.0 x 10^13. For the board's clicks to read it, the board's W must be at least (m_max / m_min)^2 / 2, about 2 x 10^26, above the head's.
   - If a round were the Planck time, the electron would need D / W of about 1.75 x 10^-45, and W of at least about 5.7 x 10^44. The board's numbers are unmeasured; only ratios reach the clicks.
 
 ### 3.5 What is not a mass
