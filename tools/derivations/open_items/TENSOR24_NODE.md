@@ -86,9 +86,27 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
   - the floor: the beat is the mass only for swings of about a count a round or more (board2mass 3.3);
   - to click, a second clock and the click on the act (4.5); to show a sharp mass, a life and a binding (G6).
 - **The legs:** three-leg vertices alone hold no count (David's board2mass 3.6: a cubic form's stationary rays are flat,
-  and the push drives the count below 0). OPEN: the four-leg term that bounds the whole potential, as nature's quartic.
-  Decision 40 (g)'s "an ordinary family" sets no number of legs, so the four-leg term is David's derivation and the
-  Boss's; it goes to the owner only if that derivation reads 40 (g) otherwise.
+  and the push drives the count below 0); a four-leg term bounds the whole potential, as nature's quartic. Decision
+  40 (g)'s "an ordinary family" sets no number of legs, so the four-leg term is David's derivation and the Boss's; it
+  goes to the owner only if that derivation reads 40 (g) otherwise.
+- **The gear's spring as one operation** (Animate, 6516692018; CHECKED on the head's gear step in whole numbers,
+  reader-5 61610aeee, ANIMATE-SPRING). At every Node-clock, every round, at the now slot, with x a family's gears there
+  and k the coupling family's held count there:
+  - contract: c = the sum over i, j of C[i, j -> kind(k)] x_i x_j, through the 24's table (the dot x . x for a T1 family
+    and an A1 count);
+  - push each gear: P_i = -g k x_i - lam c x_i, the spring and its bound; push the held count: Q = -(g / 2) c - kappa
+    (k - n). P and Q are sources of the drive (term 7) and reach the step through the kick (term 8);
+  - both are minus the derivatives of one potential, V = (g / 2) k c + (lam / 4) c c + (kappa / 2) (k - n)^2, so the
+    vertex pushes every leg. The halves and quarters are the potential's form, not the act's: each x leg of the vertex
+    pushes once, so the 2 of the derivative of a square comes from the vertex's two x legs, and no fraction enters.
+  - DERIVED: with k at its steady count n, each gear beats by itself with D = g n, 4 sin^2 (omega0 / 2) = D / W, its
+    mass (decision 37); the potential is bounded below exactly when lam is above g^2 / (2 kappa); through A1, (x . x)^2,
+    a T1 family beats alike along an axis and off it, where the sum of x_i^4 the 24 also allow reads the board's axes.
+  - CHECKED: the beat at 10^5 (a period of about 126 rounds); the runaway with no four-leg term and at half the bound,
+    held at twice it over 4,000 rounds; and the board's limit, every spring far below W, since at 10^8 the local spring
+    passes 4 W and the step beats no more. A clock needs both: lam above g^2 / (2 kappa), and every spring below W.
+  - OPEN (G3, David): g, lam, kappa and n from the law (decision 35; decision 40 (g)); a hat of the held family itself,
+    -(mu / 2) k k + (nu / 4) k^4, giving n and kappa from its two strengths; which families the one plan ties to k.
 - **The strength:** in the vertex law, read through the ruler, no file holding it (decision 35); no single integer serves
   all tables (David, 6501657960, item 5). OPEN.
 - **The tables:** read in the square's basis where E stands, so E's ten oblique tables are never read (David,
