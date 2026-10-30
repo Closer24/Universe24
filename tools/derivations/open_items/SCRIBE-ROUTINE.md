@@ -36,6 +36,8 @@ The standing rules and the hourly check-in of Sofer (the documents' keeper of Cl
 7. **Re-arm** the check-in for 60 minutes: `update_trigger` with enabled true and run_once_at (the trigger disables itself on firing; send no prompt unless this file's pointer must change, the call echoes the prompt).
 8. **The mirrors** (each hourly check-in, after the state is rewritten): the last word of the owner in the thread has its entry in SCRIBE-OWNER-WORDS.md; docs/ARCHITECTURE.md says what the heads hold (the status words of its parts, its Home and Test lines read against the Boss's head by `scribe_law_check.py --arch <worktree>`), and follows the last posts of the Boss, Animate and David on their parts; README.md and llms.txt name the documents that stand (the architecture and the law).
 
+**The lists move every gate at once.** The gate reads the owner's lists (scribe_scan_allowed.json, the ceiling, the keys, the probes) from origin/scribe-5 (PUBLISHED in scribe_scan.py), so a push of mine that lowers an allowance changes the check of main and of every branch at that minute. A file's deletion goes to scribe-5 first and the Boss merges it; the list is pruned only when main holds the deletion, after `gate_working.py origin/main` reads refusals 0 with the pruned list (the lesson of 2026-10-30, 12:3x: with five probes deleted here and the list pruned, the gate read 20 refusals on main's tree).
+
 Never run the scratchpad's p3/pass3.py or p4/pass4.py again on the converted documents.
 
 ## The state at 2026-10-30, 12:0x UTC
