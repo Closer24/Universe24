@@ -1,6 +1,6 @@
 # Board to mass: how a mass enters on the board, how it comes out in the clicks, and what the 24 say of three generations
 
-David, 2026-10-30, 05:0x UTC, on the owner's words to David (in Hebrew; in translation):
+David, 2026-10-30, 05:3x UTC, on the owner's words to David (in Hebrew; in translation):
 
 - 03:0x UTC: "Prepare a page on this that everyone will agree on... board2mass. It has to explain why nature also shows three generations... On the board a mass is a spring with a coupling: what is the formula has to be understood. First you, then a hostile mathematician agent and a hostile physicist agent go over it after you finish. From the clocks, understand what the transformation from the board to the clicks is. And why those ratios are seen in the clicks, and why there are 3 generations, with all their ratios and properties."
 - Before it: "How a mass enters the board, in the four dimensions of the events' spacetime, and how it comes out of the click, whose spacetime is three dimensions, has to be understood, no?" (Sofer's 8.2: both are 3 + 1, and what differs is which 1.)
@@ -17,7 +17,7 @@ Probes, in whole numbers alone (the owner's word through Sofer, 6514488548), eac
 
 Only the Boss writes engine code (decision 40). This page is a derivation and its checks, nothing more. Its first draft went to two hostile readers, a mathematician and a physicist (the owner's ask). Both found errors, and section 10 lists what changed. The status words are the protocol's: DERIVED (follows from the law and the act as built, or from the band the step obeys), CHECKED (a probe shows it), OPEN (neither), REFUSED (nature or the law refuses it).
 
-**Nature is in the clicks, not in the board** (the owner's word of 05:0x; line 695, the great clock's tick is no observable; 8.2). Every number from nature on this page is a reading of records: counts of clicks, their rates and their ratios. The board's own numbers, its teeth W, its springs D, its grips and its round, are never measured. The page sets against nature only what the board's clicks would read, and the board's sections (2 and 3) are the mechanism behind them, no claim about nature on their own.
+**Nature is in the clicks, not in the board** (the owner's word of 05:0x; line 695, the great clock's tick is no observable; 8.2). Every number from nature on this page is a reading of records: counts of clicks, their rates and their ratios. The board's own numbers, its teeth W, its springs D, its grips and its round, are never measured directly: at first order they cancel from every reading of the clicks, and at order omega0^2 they show only as small departures (4.3, 4.4), which nature's null results bound. The page sets against nature only what the board's clicks would read, and the board's sections (2 and 3) are the mechanism behind them, no claim about nature on their own.
 
 **Words.** In clock terms (the owner's ask): a Node-clock is a clock at one place. A **hand** is the law's gear, a dial with its carried remainder (line 90). A **family** is the law's train, a tensor of one kind defined in the universe file alone (line 96). A family of kind T1 puts three hands in every Node-clock, one for each axis.
 
@@ -29,16 +29,16 @@ Only the Boss writes engine code (decision 40). This page is a derivation and it
   - Light's hand is pulled only sideways, by its six neighbours' hands. A massive hand is also tied, through a three-leg vertex, to a held hand at its own Node-clock: the coupling family's hand standing at its steady count.
   - Because the held hand stands, the vertex pulls the hand back toward 0: a spring, D = g C n (the coupling's strength, the 24's table entry, the held count).
   - The hand then swings by itself even when its neighbours swing with it. That rest beat is the mass: exactly 4 sin^2 (omega0 / 2) = D / W, and omega0^2 = D / W while D is far below W.
-  - Two conditions hold it. The swing must be at least about one count a round, or the carry's floor sets a slower beat. And the held hand needs a law of its own, or it drifts and the hand runs away.
-- **In the clicks, a mass is read through motion** (section 4), as recoils, orbits and bindings read it. On the board that reads the band's curve, which equals the rest beat to first order. The round never reaches the clicks.
-  - Masses compare by squares, m_A^2 / m_B^2 = D_A / D_B, to first order in D / W.
+  - Two conditions hold it. The swing must be at least about one count a round, or the carry's floor sets a different beat. And the held hand needs a law of its own, or it drifts and the hand runs away.
+- **In the clicks, a mass is read through differences of energy and through motion** (section 4): reaction and photon energies read the rest beat, and recoils and orbits read the band's curve. The two agree at first order, and there the round cancels. At order omega0^2 they part, and the round shows as small departures that nature bounds.
+  - Masses compare by squares, m_A^2 / m_B^2 = D_A / D_B, at leading order.
   - Inertial and gravitational mass agree at first order, because every hand reads the same teeth W. They part at order omega0^2, and MICROSCOPE bounds that.
 - **Three** (section 5): the 24's kinds have 1, 1, 2, 3 and 3 hands, and the largest is three, the number of the board's axes. That three of a T1 family are three species alike in the clicks needs four assumptions and one condition.
   - The condition: no coupling reads the family's hands, the held hands that split them or the grips against a direction of the board.
   - The condition pulls against the plan's one plan, since the kinds that split a triplet are the metric's own (OPEN, G3).
   - So the 24 give a natural three, not a derived one.
 - **Three masses** (section 6): a held count of kind A1 or A2, the plan's two candidates, gives a triplet one mass.
-  - Three masses need held counts that cut the 24 to a group under which the three hands are three different one-dimensional kinds: E off its three lines, T2 off the body diagonals, or a mix, each with an A1 part large enough.
+  - Three masses need held counts that cut the 24 to a group under which the three hands fall into one-dimensional pieces: E off its three lines, T2 off the body diagonals, or a mix, each with an A1 part large enough.
   - A T2 family loads on the act as built.
 - **What does not follow** (section 7): the ratios' numbers, what tells the electron, the quarks and the neutrino families apart, mixing, CP violation, the neutrinos' masses and the left-right mass's step. Koide's 2/3 is a test; on the diagonal spring alone no whole counts meet it, and with a T2 part many do.
 
@@ -53,7 +53,7 @@ The facts the page has to meet, each a reading of records (PDG 2024 unless named
   - Lepton universality holds to a few parts in a thousand, with a tension of about 3 sigma in the B mesons' R(D) and R(D*).
 - **The masses are far apart.**
   - Charged leptons: 0.51099895 MeV, 105.6583755 MeV, 1776.93 +- 0.09 MeV.
-  - Up quarks: 2.16 MeV, 1.27 GeV, 172.57 GeV. Down quarks: 4.70 MeV, 93.5 MeV, 4.18 GeV. The light ones are in the MS-bar scheme, the top near its pole mass.
+  - Up quarks: 2.16 MeV, 1.27 GeV, 172.57 GeV. Down quarks: 4.70 MeV, 93.5 MeV, 4.18 GeV. All but the top are in the MS-bar scheme, the top near its pole mass.
   - Neutrinos: KATRIN bounds the mass below 0.45 eV. The squared differences are 7.53 x 10^-5 eV^2 and about 2.5 x 10^-3 eV^2.
 - **The generations mix.**
   - The quarks' mixing has |V_us| = 0.2243 and a CP-violating phase, with Jarlskog's invariant about 3.1 x 10^-5. Kobayashi and Maskawa (1973) showed that three generations are the least that can carry such a phase.
@@ -63,16 +63,16 @@ The facts the page has to meet, each a reading of records (PDG 2024 unless named
 - **A short life is a broad mass:** width times life is hbar. The Z's width, 2.4955 +- 0.0023 GeV, is a life of 2.64 x 10^-25 s.
 - **Free fall is universal:** MICROSCOPE (2022) bounds the Eotvos parameter at (-1.5 +- 2.3 +- 1.5) x 10^-15.
 - **Space is the same in every direction:** cavity comparisons bound a difference in light's speed by direction at 9.2 +- 10.7 parts in 10^19 (Nagel et al., 2015).
-- **No flavour changes without mixing:** mu -> e gamma is below 1.5 x 10^-13 (MEG II, 2025).
+- **Charged-lepton flavour holds:** mu -> e gamma is below 1.5 x 10^-13 (MEG II, 2025).
 - **The Standard Model:**
-  - It holds the charged fermions with three copies put in by hand. Their masses and mixings come from couplings to the Higgs field's held value of 246 GeV, held by a potential whose curvature is the Higgs boson's mass of 125 GeV: thirteen free numbers, and no reason for three.
+  - It holds the charged fermions with three copies put in by hand. Their masses and mixings come from couplings to the Higgs field's held value of 246 GeV, held by a potential whose curvature is the Higgs boson's mass of 125 GeV: thirteen free numbers, and no reason for exactly three.
   - In its minimal form the neutrinos are massless.
 
 ## 2. Families stand only in the files
 
 The owner's question of 04:3x, answered yes from the law and the act:
 
-- **Line 90:** a train (a family) is a tensor whose kind is one of the 24's five. What differs between families is the kind and the universe file's integers (the pair, the couplings), never a branch of the code. The Node-clock's step is one act, the same for every family.
+- **Line 90:** a train (a family) is a tensor whose kind is one of the 24's five. What differs between families is the kind and the file's pair, never a branch of the code; no coupling is declared in any file (decision 35), and line 90's older words "the pair, the couplings" read so. The Node-clock's step is one act, the same for every family.
 - **Line 96:** a Node-clock and a Mesh do not know what they run. No act and no reading of a Node-clock names a family; the shape and the pair decide everything.
 - **The coupling family** (decision 40 (d), (g) and (h)): an ordinary family of the one hand type, with its leg in every source by the one plan, only three-leg vertices, and a steady count of one quantum per Node-clock from the law.
 - **On the act** (tensor24-review 5176be5e0):
@@ -96,15 +96,15 @@ The owner's question of 04:3x, answered yes from the law and the act:
   - On the head 6 grip = W exactly: grip 3881691330332771584000000 and W 23290147981996629504000000, the loader's teeth 6 den Gamma^2 G^2 and grip den Gamma^2 G^2 per Mesh (CHECKED, m3 (a)).
 - **The band** (DERIVED, the identity of the linear step, the remainder dropped): a wave of wave number k beats omega a round with W (2 - 2 cos omega) = grip sum_i (2 - 2 cos k_i) + D.
 - **The rest beat, exactly:** at k = 0, 4 sin^2 (omega0 / 2) = D / W.
-- **At long waves, with D far below W:** omega^2 = c0^2 k^2 + omega0^2, with c0^2 = grip / W = 1/6 (light's 1 / sqrt 6 Mesh a round) and omega0^2 = D / W. This is the relativistic form. If a quantum is a fixed action (line 332), so that its energy is hbar times its beat, the mass is m = hbar omega0 / c0^2.
+- **At long waves, with D far below W:** omega^2 = c0^2 k^2 + omega0^2, with c0^2 = grip / W = 1/6 (light's 1 / sqrt 6 Mesh a round) and omega0^2 = D / W. This is the relativistic form. If a quantum is a fixed action (line 332 at scribe-5 7880f9ec7: "The action of one quantum is T"), so that its energy is hbar times its beat, the mass is m = hbar omega0 / c0^2.
 - **Checked by counting, with no cosine** (m3 (b)): at D = W div k^2 the uniform wave's sign changes over 20,000 rounds, times k, read 6368 at k = 8, 16 and 32, about 20,000 / pi. So the beat goes as the root of the spring.
-- **Exact periods** where the step allows them (m3 (b)): 6, 4 and 3 rounds for the uniform wave at D = W, 2W and 3W. At 3W the board's top mode runs away, though (3.4).
+- **Exact periods of the uniform wave alone** (m3 (b)): 6, 4 and 3 rounds at D = W, 2W and 3W. The board holds only D < 2W, and at 2W its top mode is already at the edge (3.4).
 
 ### 3.3 The floor: the formula needs a swing of about a count a round
 
 - **Below it, the carry's floor sets the beat** (CHECKED, m3 (h)): under the spring D = W div 400, whose band period is about 126 rounds, the uniform wave laid at 1 beats with period 800, at 2 with 400, at 5 about 180 and at 10 about 119. Only at 30 and at 1000 does it reach the band's 126.
-  - Below the floor the period is about 2W / (A D): it goes as the spring itself, not its root.
-- **So the beat is the mass only once A omega0 is at least about 1.** At the smallest spring the head holds (D = 1, omega0 about 2 x 10^-13 a round), that is about 5 x 10^12 counts a hand. "One quantum per Node-clock" must be read in counts that large (OPEN).
+  - Below the floor the period is about 2W / (A D) + 4A (the hostile mathematician's exact count: 804, 408, 180 and 120 at amplitudes 1, 2, 5 and 10): slower than the band's at the smallest swings and a little faster near A omega0 of 1, reaching the band near A omega0 of 1.5.
+- **So the beat is the mass only once A omega0 is at least about 1.** At the smallest spring the head holds (D = 1, omega0 about 2 x 10^-13 a round), that is about 5 x 10^12 counts of swing. The held count stands still and is not limited by the floor; what falls under it is a small swing of the massive hand, and whether one quantum's swing lies above it depends on how many counts a quantum's swing holds (line 332; OPEN).
 
 ### 3.4 The board's limits
 
@@ -112,9 +112,10 @@ The owner's question of 04:3x, answered yes from the law and the act:
   - At D = 2W it grows by two starts a round (49 times its start at round 24). At D = 3W it runs away (17,393,796,001 times its start in 24 rounds).
   - So every mass beats below a quarter turn a round.
 - **The lightest, and the range:** a spring is a whole number, D >= 1, so D / W >= 1 / W, about 4.3 x 10^-26 at the head's W.
-  - One hand type then holds masses spanning at most about sqrt (2W), 6.8 x 10^12.
-  - The range of masses the clicks read in nature, the top quark over the second neutrino, is at least 172.57 GeV / 8.7 meV, about 2.0 x 10^13. For the board's clicks to read it, the board's W must be at least (m_max / m_min)^2 / 2, about 2 x 10^26, above the head's.
-  - If a round were the Planck time, the electron would need D / W of about 1.75 x 10^-45, and W of at least about 5.7 x 10^44. The board's numbers are unmeasured; only ratios reach the clicks.
+  - A second-order (scalar) hand type then holds masses spanning at most about sqrt W in the kinetic reading (4.8 x 10^12 at the head's W), or (pi / 2) sqrt W in the rest beat's, so it needs W of at least R^2 for a range R.
+  - The range the clicks read in nature, the top quark over the lightest mass not 0, is at least the top over the second neutrino. That neutrino is at least 8.7 meV, which bounds the range from above, so a lower bound needs the neutrinos' scale: KATRIN's 0.45 eV gives R of at least 3.8 x 10^11 (W of at least 1.5 x 10^23); Planck's sum below 0.12 eV, at least 4.3 x 10^12 (W of at least 1.9 x 10^25); DESI's sum below 0.064 eV (2025), at least 1.9 x 10^13 (W of at least 3.6 x 10^26, above the head's 2.3 x 10^25). That is for scalar springs.
+  - But they are fermions, and a fermion's mass on a first-order step (7.8) is linear in its counts: its rest beat goes as M / T, so the range one hand type holds is about its teeth T. The head's teeth of about 10^25 would hold 2 x 10^13, and an electron at a Planck round would need T of about 2.4 x 10^22 (OPEN, N2's form).
+  - If a round were the Planck time, a scalar of the electron's mass would need D / W of about 1.75 x 10^-45, and W of at least about 5.7 x 10^44. The board's numbers reach the clicks only as ratios at first order, and as departures of order omega0^2 beyond (4.3, 4.4).
 
 ### 3.5 What is not a mass
 
@@ -129,11 +130,11 @@ The owner's question of 04:3x, answered yes from the law and the act:
   - K falls to 800,187 by round 250 and to 142,793 by round 500. It passes below 0 at round 537, the spring turns over, and X runs past 10^60 by round 686.
   - With a spring of its own (W div 16), K stays between 999,559 and 1,000,243 over 2,000 rounds.
 - **Three-leg vertices alone hold no count** (DERIVED):
-  - A potential of three-leg vertices is a cubic form V, odd in its counts, so it is unbounded below and has no minimum anywhere.
+  - A potential of three-leg vertices is a cubic form V, odd in its counts, so it is unbounded below, and it has no strict minimum: its stationary points lie on flat lines, neutrally stable along them.
   - At any stationary phi* that is not 0, Euler's identity gives V(phi*) = 0. Since grad V(t phi*) = t^2 grad V(phi*), the whole line through phi* is stationary, and nothing pulls the count back along it.
   - A one-leg term alone, with only the vertex K X X, does not make (n, 0) stationary.
-- **So G3's held hand needs a spring of its own, with its rest at the held count** (a two-leg term with a one-leg term, or the law's "one quantum per Node-clock" as an act). Nature's held value is held by a quadratic and a quartic term. That is G3's toy, bounded at lambda = 1/Gamma (OPEN).
-- **The held hand's own potential gravitates** (OPEN): its stress is a uniform vacuum energy, with rho + 3p = -2V. For a held value like the Higgs field's, V is about m_H^2 v^2 / 8, 1.2 x 10^8 GeV^4, against the measured rho_Lambda of about 2.5 x 10^-47 GeV^4. That is the cosmological constant's problem, met here too.
+- **So G3's held hand needs a term that holds it:** a one-leg term with a spring of its own, or a one-leg term with the vertex of three held legs (h K + c K^3 has a minimum where K^2 = -h / 3c and c K > 0), or the law's "one quantum per Node-clock" as an act. Nature's held value is held by a quadratic and a quartic term. That is G3's toy, bounded at lambda = 1/Gamma (OPEN).
+- **The held hand's own potential gravitates** (OPEN): a uniform potential is a vacuum energy, with rho + 3p = -2V. Its value at the held count depends on where the tensor operation sets the potential's zero, but the depth of the well that holds it does not: kappa n^2 / 2 for a spring kappa. For a held value like the Higgs field's, that depth is about m_H^2 v^2 / 8, 1.2 x 10^8 GeV^4, against the measured rho_Lambda of about 2.5 x 10^-47 GeV^4. That is the cosmological constant's problem, met here too.
 
 ## 4. From the board to the clicks: what the clocks do
 
@@ -144,18 +145,19 @@ The board is 3 + the tick, and the clicks are the same 3 + each clock's own coun
 ### 4.2 Motion cancels (DERIVED at long waves, the Boss's D7, 8.1 item 10)
 
 - A packet of the massive hand moving at v beats, at its own place, omega - k v = omega0^2 / omega = omega0 sqrt (1 - v^2 / c^2) a round: slower per round, which is time dilation.
-- Two clocks moving together share the factor, so the ratio of their rest beats is the same at every speed. That is Animate's reading on the board: the mass is the rest beat counted in the clock's own ticks, invariant, with no formula (decision 37).
+- Two clocks moving together share the factor, so the ratio of their rest beats is the same at every speed, provided every species that interacts has the same limiting speed; lattice interactions generically spoil that at some order (Collins et al., 2004), so it is a condition on the board. That is Animate's reading on the board: the mass is the rest beat counted in the clock's own ticks, invariant, with no formula (decision 37).
 
 ### 4.3 What the clicks read
 
-- **A rest beat alone is no click's reading.** A quantum's rest phase is a phase common to all its states, and its mass cancels in every difference of energies (Wolf et al., 2011, on the Compton-clock claim).
-- **Masses are read through motion:** recoils, orbits in a field and bindings, as Penning traps, recoil measurements and spectra read them.
-  - On the board these read the band's curve at k = 0, the kinetic mass, which goes as sin omega0, not omega0. It equals the rest beat to first order in omega0.
+- **A rest beat alone is no click's reading:** a quantum's rest phase is common to all its states (Wolf et al., 2011, on the 2010 redshift claim). The clicks read masses in two ways:
+  - **through differences of energy** (reaction energies, photon energies, mass defects), which read the rest beat, omega0;
+  - **through motion** (Penning traps, recoils, orbits), which reads the band's curve at k = 0, the kinetic mass, going as sin omega0.
+  - They agree at first order and part at order omega0^2 / 6. Rainville et al. (2005) compared exactly these two readings, a Penning trap's mass difference against a capture's photon energy: 1 - Delta m c^2 / E = (-1.4 +- 4.4) x 10^-7. That is a click-level bound on the parting, beside MICROSCOPE's (4.4).
 - **Ratios:**
   - exactly, sin^2 (omega0A / 2) / sin^2 (omega0B / 2) = D_A / D_B;
-  - m_A^2 / m_B^2 = D_A / D_B holds only to first order in D / W, and it shifts with W, and so with the gravitational potential, at that order;
-  - it is a ratio of whole numbers only for a diagonal spring. A spring off the diagonal has masses that are its values, in general not rational (the complex circulant of 6.2 has 9 and 3 +- sqrt 3).
-  - The round's unit cancels from every ratio.
+  - m_A^2 / m_B^2 = D_A / D_B holds at leading order. Its corrections are of relative size (D_A - D_B) / W: -(D_A - D_B) / 4W in the kinetic reading and +(D_A - D_B) / 12W in the rest beat's. It also shifts with W, and so with the gravitational potential; atomic clocks bound that shift for the proton-to-electron ratio at (c^2 / mu)(d mu / d Phi) = 7 +- 45 parts in 10^8 (Lange et al., 2021);
+  - on a second-order step a spring's values are the masses' squares. They are whole numbers when the spring's values are rational (A1 5 and T2 (0, 0, 2) give 3, 5 and 7), and in general not rational off the diagonal (the complex circulant of 6.2 gives 9 and 3 +- sqrt 3).
+  - The round's unit cancels from every ratio at first order. At order omega0^2 the ratios carry D / W itself, the corrections above, so the round reaches the clicks there, as a condition the board's rest beats must meet.
 - **The width is the clock's life** (Animate's reading; agreed): a beat counted over few of its own ticks is spread, over many sharp. On the board a spring with no way out beats sharp. A three-leg vertex to lighter families drains the beat, and its life sets the width. OPEN on the act (G5, G6).
 - **The least a clock needs** (Animate, 6514643547, on the owner's word to her: "Pass it to David, it will help him"):
   - to tick, a Node-clock with its six neighbours, never one alone (3.5);
@@ -170,8 +172,8 @@ The board is 3 + the tick, and the clicks are the same 3 + each clock's own coun
   - the kinetic mass, the band's curve at k = 0, goes as sin omega0;
   - the passive gravitational mass, the beat's response to W, goes as 2 tan (omega0 / 2), since W d omega0 / dW = -tan (omega0 / 2).
 - **So a hand falls in a gradient of W with an acceleration proportional to sec^2 (omega0 / 2)**, and heavier hands fall faster by about omega0^2 / 4.
-  - The hostile physicist's run on the step agrees: 1.0398 against 1.0411 at omega0 = 0.4, and 1.4635 against 1.4680 at 1.2.
-  - So MICROSCOPE's 10^-15 bounds the rest beats a round, and with them the round's length.
+  - The hostile physicist's float run of the step's linear rule on a chain, outside the repository, agrees: 1.0398 against 1.0411 at omega0 = 0.4, and 1.4635 against 1.4680 at 1.2.
+  - So MICROSCOPE's 10^-15 bounds the rest beats a round, and with them the round's length. It reaches them only through the composition of its titanium and platinum masses (an electron share of about 3.3 x 10^-5, a binding share of about 9 x 10^-4), and for composite masses only through a model of how their parts beat.
 - **The active side:** the tensor operation reads a beating hand's rho + 3p = 2W (stride)^2 - D a^2 per Node-clock. That swings at twice the beat between +2D A^2 and -D A^2, and only its mean, D A^2 / 2, is rho.
 - **The law's "the clock's read at the factor 1"** is a placeholder until (e)'s exact read at G2. Both sides are OPEN on the act.
 
@@ -230,25 +232,25 @@ The page derives "at most three" only under these:
 
 ### 6.2 What gives three
 
-- **The rule** (DERIVED; CHECKED, m1 over all eleven classes of subgroups): the held counts must cut the 24 to a group under which T1 is three different one-dimensional kinds.
-  - On a real hand: D2 (the three half turns about the axes), the Klein group of the half turns about z, (1, 1, 0) and (1, -1, 0), a single half turn about an axis or a face diagonal, or nothing.
-  - On a hand of two parts, also Z3 and C4.
+- **The rule** (DERIVED; CHECKED, m1 over all eleven classes of subgroups): the held counts must cut the 24 to a group under which T1 has only one-dimensional pieces, real ones on a real hand.
+  - **Where the three pieces all differ,** the group fixes the mass basis: D2 (the three half turns about the axes) and the Klein group of the half turns about z, (1, 1, 0) and (1, -1, 0), on a real hand; also Z3 and C4 on a hand of two parts.
+  - **Where some pieces repeat,** the masses still differ for generic counts, but the counts set the basis: a single half turn about an axis or a face diagonal, or nothing kept. Only these leave room for a mixing angle (7.4).
 - **It is met by:**
   - **E off its three lines** (m2): an A1 + E count (n0; e1, e2) gives n0 + e1, n0 - e1 + e2 and n0 - e2. They sum to 3 n0, with spread 2 (e1^2 - e1 e2 + e2^2), a polynomial identity. Two meet only on the lines e1 = -e2, e2 = 2 e1 and e1 = 2 e2. E (1, 0) gives three values, and it is fixed by D2 alone; E (1, 2), on a line, is fixed by D4 and gives two (m1).
   - **T2 off the body diagonals** (m2): the spring [[0, t3, t2], [t3, 0, t1], [t2, t1, 0]] has the polynomial lambda^3 - |t|^2 lambda - 2 t1 t2 t3 and the discriminant 4 ((t1^2 + t2^2 + t3^2)^3 - 27 t1^2 t2^2 t3^2), which is 0 only where t1^2 = t2^2 = t3^2. T2 (0, 0, 1) gives three values and is fixed by the Klein group above (m1).
-  - **Any mix:** A1 + E + T2 hold every whole symmetric spring (1 + 2 + 3 numbers).
+  - **Any mix:** with one strength, A1 + E + T2 hold every whole symmetric spring whose trace is a multiple of 3 (1 + 2 + 3 numbers; the trace is 3 n0), and with the vertex law's own strengths every rational one.
   - **On a hand, A1 + T1,** if the plan joins the two parts as the hermitian i M (OPEN). T1 alone gives 0 and plus and minus |v|, and with A1 and T2 along a body diagonal it is the complex circulant a + b P + b* P^T (m2: lambda^3 - 15 lambda^2 + 60 lambda - 54). A T2 count alone along that diagonal leaves a pair alike (m2: lambda^3 - 3 lambda - 2).
-- **On the act:** a T2 family loads as built. E loads only inside a family whose kinds' characters are the four-vector's square (runner/files.py at 5176be5e0), and the act reads such a family as a metric family, its 00 slot the clock.
+- **On the act:** the probes read the act at 2a6203a4a, where a family of kind E is refused outright. At 5176be5e0 a T2 family loads, and E loads only inside a family whose kinds' characters are the four-vector's square (runner/files.py), which the act reads as a metric family, its 00 slot the clock.
 
 ### 6.3 An A1 part large enough
 
 - **Every traceless count needs an A1 part above minus its least value,** or a hand runs away. E (1, 0) and T2 (0, 0, 1) each need n0 > 1, and T1 on a hand needs n0 > |v|.
 - **On a real hand, a T1 count's push is antisymmetric, with values plus and minus i |v|, and the hand runs away** (CHECKED, m3 (e): -1,602,744, then 41,579,439, then -1,481,206,931 at rounds 100, 200 and 400).
-- **On a hand of two parts, read as i M on the mode (1, -i, 0):** x reaches 24,812,700,041,447 at round 400 with no A1 part, and stays at 38,332 with an A1 part of 2 |v| (CHECKED, m3 (g)).
+- **On a hand of two parts, read as i M on the mode (1, -i, 0):** x reaches 24,812,700,041,447 at round 400 with no A1 part, and with an A1 part of 2 |v| it beats (38,332 at round 400) (CHECKED, m3 (g)).
 
 ### 6.4 E's own form
 
-The act's E basis (e1 - e2, e2 - e3) is not orthogonal: its Gram matrix is G = [[2, -1], [-1, 2]]. The table that pushes E from X X is G^-1 times the one that pushes X from E, so the vertex comes from one potential only if an E count's own spring and stress use G.
+The act's E basis (e1 - e2, e2 - e3) is not orthogonal: its Gram matrix is G = [[2, -1], [-1, 2]]. The table that pushes E from X X is 3 G^-1 times the one that pushes X from E (exactly, on the act's tables), so the vertex comes from one potential only if an E count's own spring and stress use G.
 
 ### 6.5 The form predicts nothing alone
 
@@ -262,7 +264,7 @@ The charged leptons in the form a + B cos (phi + 2 pi k / 3):
 
 | reading | B / a | lightest / a | where the step gives it |
 | --- | --- | --- | --- |
-| the squares, m^2 | 1.98944 | 2.47 x 10^-7 | the second-order step as built: 4 sin^2 (omega0 / 2) = D / W |
+| the squares, m^2 | 1.98944 | 2.47 x 10^-7 | a scalar's second-order spring, D linear in the counts; a charged lepton's M^dagger M is quadratic in them, so no step gives its m^2 linear |
 | the masses, m | 1.83341 | 8.14 x 10^-4 | a first-order step's singular values (7.8) |
 | the roots, sqrt m | 1.41421 (sqrt 2 = 1.414214) | 0.0404 | none named |
 
@@ -283,11 +285,11 @@ In every reading the electron is a remainder of the other two. The page draws no
 
 ### 7.3 What tells the families apart
 
-Under the law no file holds a strength and no act names a family. So every family of one kind and part meets the same held counts through the same vertex law, and has the same spring.
+Under the law no file declares a coupling (decision 35, line 35) and no act names a family, and the plan gives the coupling family one strength from its vertex law (decision 40; G3, not built). Then every family of one kind and part meets the same held counts through the same vertex law, and has the same spring. As built, the act's coupling rows still carry a strength each (runner/files.py's row fields, load.plan), a breach the plan removes at G3; until then families of one kind can differ through their rows' strengths.
 
 - The electron's, the up quarks', the down quarks' and the neutrinos' families would then share one set of ratios and one mass basis, so there would be no mixing.
 - Nature refuses that: m_mu / m_e = 207, m_c / m_u about 590, m_s / m_d about 20.
-- What differs between families under the law is their kind, their part and the file's pair (line 90). Whether those set four different spectra is OPEN.
+- What differs between families under the law is their kind, their part and the file's pair (line 90 as decision 35 reads it). Whether those set four different spectra is OPEN.
 
 ### 7.4 Mixing
 
@@ -313,7 +315,7 @@ Their origin, and their ratio to the electron's below 10^-6, are not treated her
 
 - **Nature's charged fermion masses join the left hand and the right hand** in the first-order equation. Squared to second order, such a mass is M^dagger M on the diagonal, never below 0, so it never runs away (the hostile readers' finding; the first draft was wrong here). The masses are then M's singular values, so the counts' signs do no harm.
 - **Only a spring off the diagonal alone runs away** (DERIVED, CHECKED, m3 (d)): with push_X = -D Y and push_Y = -D X, the mode X - Y takes -D. Laid as X = -Y = 10^5 with D = W div 400, X reaches 24,812,700,041,447 at round 400; laid as X = Y it beats within its start (38,325 at round 400).
-- **A first-order step is needed for spinor structure, chirality and Fermi statistics, not for stability** (N2's form; OPEN).
+- **A first-order step is needed for spinor structure and chirality, not for stability** (N2's form; OPEN). Fermi statistics is quantum and is not settled by an integer step (OPEN).
 - **Such a step meets the doublers** at the board's corner wave numbers (Nielsen and Ninomiya, 1981):
   - the corners fall 1 + 3 + 3 + 1 under the 24, with chiralities alternating and summing to 0;
   - the two triplets have opposite chirality, so they cannot be chiral generations, and as orbits of wave numbers each is A1 + E, not T1;
@@ -326,25 +328,27 @@ Their origin, and their ratio to the electron's below 10^-6, are not treated her
 | families stand only in the files; the Node-clock knows none | the law (lines 90, 96) and the act (5176be5e0) | 2 |
 | a mass is a held hand's rest beat, D = g C n, 4 sin^2 (omega0 / 2) = D / W | DERIVED (linear step); CHECKED by counts | 3.1, 3.2; m3 (b) |
 | the beat is the mass only for swings of about a count a round or more | CHECKED | 3.3; m3 (h) |
-| the board holds every mode only while D < 2W; its range of masses is at most sqrt (2W) | DERIVED; CHECKED | 3.4; m3 (b) |
+| the board holds every mode only while D < 2W | DERIVED; CHECKED | 3.4; m3 (b) |
+| a scalar hand type's range of masses is at most about sqrt W (kinetic), a first-order one's about its teeth; nature's range needs a premise on the neutrinos' scale | DERIVED | 3.4 |
 | the lone hand's 6-round beat is the carry's floor | CHECKED | 3.5; m3 (a), (f) |
 | the held hand drifts under the vertex; three-leg vertices alone hold no count | DERIVED; CHECKED | 3.6; m3 (c) |
-| the held hand's potential is a vacuum energy | DERIVED; OPEN on the act | 3.6 |
+| the held hand's well has a depth kappa n^2 / 2, which gravitates as a vacuum energy | DERIVED (its zero OPEN); OPEN on the act | 3.6 |
 | motion cancels from the ratio of two rest beats | DERIVED at long waves | 4.2 |
-| the clicks read masses through motion, the kinetic mass going as sin omega0 | DERIVED | 4.3 |
-| m_A^2 / m_B^2 = D_A / D_B to first order in D / W; whole only for diagonal springs | DERIVED | 4.3 |
+| the clicks read the rest beat through energy differences and the kinetic mass, going as sin omega0, through motion; they part at order omega0^2 | DERIVED | 4.3 |
+| m_A^2 / m_B^2 = D_A / D_B at leading order, corrections of relative size (D_A - D_B) / W; whole when the spring's values are rational | DERIVED | 4.3 |
 | the width is the clock's life | Animate's reading, agreed; OPEN on the act | 4.3 |
 | inertia and weight agree at first order and part at order omega0^2 (fall as sec^2 (omega0 / 2)) | DERIVED from the band; OPEN on the act | 4.4 |
 | a T1 family is three species alike, coupled alike through A1 | DERIVED under 5.2's condition; the condition OPEN and in tension with the one plan | 5.2 |
 | spin rides on another kind than the family | DERIVED from 5.2; OPEN 3 | 5.3 |
 | at most three alike | DERIVED under 5.4's four assumptions; nature's alikeness has another reason | 5.4 |
 | A1 or A2 held counts give a triplet one mass | DERIVED; CHECKED; nature REFUSES it as the generations' law | 6.1; m1, m2 |
-| three masses need counts that cut the 24 to D2, the Klein group, a half turn or nothing (Z3 and C4 on a hand) | DERIVED; CHECKED | 6.2; m1, m2 |
-| T2 families load on the act; E only inside the metric's square | the act as built (5176be5e0) | 6.2 |
+| three masses need counts under which T1 has only one-dimensional pieces: D2 or the Klein group (basis fixed), a half turn or nothing (basis set by the counts); Z3 and C4 on a hand | DERIVED; CHECKED | 6.2; m1, m2 |
+| T2 families load on the act; E only inside the metric's square | the act at 5176be5e0 (E refused outright at 2a6203a4a, the probes' baseline) | 6.2 |
 | traceless counts need an A1 part large enough | DERIVED; CHECKED | 6.3; m3 (e), (g) |
 | the form a + B cos (phi + 2 pi k / 3) predicts nothing alone | DERIVED | 6.5 |
 | the ratios' numbers | OPEN (G3's vertex law and held counts) | 6.5, 7.1 |
 | Koide's 2/3 on whole counts: never on the diagonal spring; often with T2 | DERIVED; CHECKED | 7.2; m2 |
+| families of one kind and part come out alike under the law and G3's single strength; as built, rows' strengths can differ | DERIVED (the law); the act as built | 7.3 |
 | what tells the families apart | OPEN | 7.3 |
 | mixing | none from commuting springs (DERIVED); the rest OPEN; tri-bimaximal REFUSED by nature | 7.4 |
 | CP violation, the neutrinos' masses, flavour changes, domain walls | OPEN | 7.5 to 7.7 |
@@ -356,15 +360,15 @@ Their origin, and their ratio to the electron's below 10^-6, are not treated her
   1. **The held count's kind:** A1 or A2 gives a triplet one mass (6.1). Three masses need counts that cut the 24 further, E off its lines or T2 off the body diagonals, each with an A1 part large enough (6.2, 6.3). A T2 family loads as built.
   2. **The held hand needs a spring of its own:** three-leg vertices alone hold no count, and under the vertex's push it drifts below 0 and the hand it holds runs away (3.6, m3 (c)). G3's toy must hold it.
   3. **The one plan against the split:** the kinds that split a triplet are the metric's own. If the one plan pairs a held E or T2 count with the metric's slots of the same kind, a held split shears space, and the cavities refuse that at parts in 10^18 (5.2). Say which vertices the one plan lays.
-  4. **The integers:** a mass's beat is its band's only for swings of about a count a round or more (3.3), and one hand type spans masses of at most sqrt (2W), so nature's range asks W of at least about 2 x 10^26 (3.4).
-  5. **Families of one kind and part come out alike** under the law (7.3); what tells them apart is OPEN.
+  4. **The integers:** a mass's beat is its band's only for swings of about a count a round or more (3.3). A scalar hand type spans masses of at most about sqrt W, so a range R asks W of at least R^2: with DESI's neutrino sum, about 3.6 x 10^26, above the head's. A first-order (fermion) hand type spans about its teeth (3.4; OPEN).
+  5. **Families of one kind and part come out alike** under the law and G3's single strength (7.3); as built they can differ only through their rows' strengths, the breach G3 removes. What tells them apart is OPEN.
   6. **The equivalence:** inertia and weight part at order omega0^2 on the step (4.4).
 - **Sofer:** line 35's "whose kind is to derive" has its answer here: A1 and A2 give no split, and E or T2 counts do. No line of the law changes without the owner's word. The row for 8.2: the mass, on the board a hand's rest beat held by a spring to a held hand (G3); in the clicks, read through motion, by squares to first order.
 - **Animate:** your rest beat in the clock's own ticks is the board's side (4.2). The clicks read the ratio through motion, the kinetic mass, which equals the rest beat to first order (4.3). Your width and your least stand (4.3).
 
 ## 10. The two hostile readers: what changed
 
-Both read the first draft (toys-5 825ef7496), reran the three probes, and reported, the mathematician at 04:4x and the physicist at 04:5x UTC.
+The first readings (04:4x and 04:5x UTC) read the first draft: the physicist toys-5 825ef7496, the mathematician the working copy that became a90f256c4. The second readings (05:1x and 05:2x UTC) read e9143fd41 with the clicks' framing at its top. Each reader reran the three probes every time, and each output matched its saved text.
 
 | finding | by | changed |
 | --- | --- | --- |
@@ -387,6 +391,15 @@ Both read the first draft (toys-5 825ef7496), reran the three probes, and report
 | CP violation, the neutrinos' masses, flavour changes, domain walls left out | physicist | 7.5 to 7.7 |
 | the doublers' chiralities | physicist | 7.8 |
 | D <= 2W should be D < 2W; mixing a permutation; E's form uses G; numbers (the Z's width, N's chain, the alpha drift, Brannen's error, KATRIN, the neutrinos' splitting) | both | 3.4, 7.4, 6.4, 1 |
+| round 1, minor: the band is the linear step's identity, not the integer step's; the Euler line runs both ways; the approach to 2/3 from below; the characters and stabilisers cited from m1; the T1 runaway read from its eigenvalues; the Planck figures; the baselines; g K, the polynomial identity, co-moving clocks | mathematician | 3.2, 3.6, 7.2, 5.1, 6.3, 3.4, 6.2 |
+| round 1: unsplit hands tied to space are one spin-1 species' polarizations; motion cancels only with one limiting speed for every species (Collins et al., 2004); MICROSCOPE tests the passive side | physicist | 5.2, 4.2, 4.4 |
+| round 2: the round reaches the clicks at order omega0^2 | physicist | top, 0, 3.4, 4.3 |
+| round 2: the rule needs only one-dimensional pieces, repeats allowed (both readers' round-1 wording had "different") | both | 0, 6.2, 8 |
+| round 2: the sqrt (2W) range is a scalar's; a fermion's is its first-order teeth | physicist | 3.4, 9 |
+| round 2: the range's bound pointed the wrong way; it needs a premise on the neutrinos' scale; W of at least R^2 in the kinetic reading | mathematician | 3.4, 9 |
+| round 2: the clicks read the rest beat through energy differences (Rainville et al., 2005) beside motion | physicist | 0, 4.3 |
+| round 2: the act's coupling rows carry their own strengths as built | mathematician | 7.3, 9 |
+| round 2, minor: the floor's period 2W / (A D) + 4A; no strict minimum; a one-leg term with the vertex of three held legs; whole when the values are whole; the trace a multiple of 3; 3 G^-1; statistics OPEN; the vacuum energy's zero; section 1's wordings; the table's scalar label; the uniform wave's periods; the baselines; a second-order spring's values are squares; Lange et al.'s bound on the potential; MICROSCOPE's reach through composition | both | 3.3, 3.6, 4.3, 6.2, 6.4, 7.8, 1, 7.1, 3.2, 4.4 |
 
 ## 11. The probes
 

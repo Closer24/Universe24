@@ -14,7 +14,7 @@ subgroup H of the 24 the probe reads two things, both exact:
 The restriction of each kind to the even half A4 (the turns where A2 is +1) is read by characters: m_1 trivial,
 m_3 the triplet (T1's character), and the complex pair 1' + 1'' the rest.
 
-Usage: python3 -I m1_kinds.py <src of tensor24-review>
+Usage: python3 -I m1_kinds.py <src of tensor24-review at 2a6203a4a>
 """
 
 import sys

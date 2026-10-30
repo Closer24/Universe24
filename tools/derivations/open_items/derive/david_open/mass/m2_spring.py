@@ -15,7 +15,7 @@ and z of C[x, y, z] n_y X_z, a 3 x 3 matrix M(n) on X. That matrix is the spring
   the complex circulant;
 - an A2 count: no T1 -> T1 spring at all (A2 x T1 is T2), and the T1 - T2 mixing C[A2, T2 -> T1].
 
-Usage: python3 -I m2_spring.py <src of tensor24-review>
+Usage: python3 -I m2_spring.py <src of tensor24-review at 2a6203a4a>
 """
 
 import itertools

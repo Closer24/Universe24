@@ -21,7 +21,7 @@ W (a+ - 2 a + a-) = push, the remainder kept in the fine tooth. A spring D is a 
     rounds) stands only once the swing is about a count a round or more; below, the carry's floor sets a slower beat,
     its period about 2 W / (A D) = 800 / A rounds.
 
-Usage: python3 -I m3_beat.py <src of tensor24-review>   (the example files are read from <src>/../examples/tensor24)
+Usage: python3 -I m3_beat.py <src of tensor24-review at 2a6203a4a>   (the example files are read from <src>/../examples/tensor24)
 """
 
 import json
