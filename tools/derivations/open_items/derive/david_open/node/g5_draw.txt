@@ -1,34 +1,105 @@
-(a) W = 90977140554674334000000, the grip 15162856759112389000000; term 6: g = 227442851386684, kappa = 5686071284667145875000, lam = 4 f2 = 4548860 (2 kappa lam >= g^2: True), n = 1000000
-    the plan empty: the pitch of the fine teeth, light 15162856759112389000000, matter 15162856759112389000000, the held count 15162856759112389000000 (W over the pitch: 6, 6, 6 values)
-    term 6: the pitch of the fine teeth, light 15162856759112389000000, matter 4, the held count 2 (W over the pitch: 6, 22744285138668583500000, 45488570277337167000000 values)
-(b) the fold d = V mod W:
-    the plan empty: 6 distinct values in 86400 draws; chi-square of the tenths on 9 57605.072; in one half, two rounds in a row 499, one Mesh apart 499 per mille
-    term 6: 86400 distinct values in 86400 draws; chi-square of the tenths on 9 2.299; in one half, two rounds in a row 500, one Mesh apart 500 per mille
-(c) Born, part 0 of sizes S1 and S2, term 6:
-    S1 = 1, S2 = 1: the law's d = V mod L: part 0 in 86400 of 86400 (expected 43200), z^2 86400.000;
-      the fold at W, cross products: part 0 in 43209 of 86400 (expected 43200), z^2 0.003; its partition noise 959 per mille of the binomial
-    S1 = 1, S2 = 2: the law's d = V mod L: part 0 in 28657 of 86400 (expected 28800), z^2 1.065;
-      the fold at W, cross products: part 0 in 28787 of 86400 (expected 28800), z^2 0.008; its partition noise 1013 per mille of the binomial
-    S1 = 3, S2 = 7: the law's d = V mod L: part 0 in 34391 of 86400 (expected 25920), z^2 3954.907;
-      the fold at W, cross products: part 0 in 25955 of 86400 (expected 25920), z^2 0.067; its partition noise 1007 per mille of the binomial
-    S1 = 1000000, S2 = 3000000: the law's d = V mod L: part 0 in 21611 of 86400 (expected 21600), z^2 0.007;
-      the fold at W, cross products: part 0 in 21611 of 86400 (expected 21600), z^2 0.007; its partition noise 1025 per mille of the binomial
-    S1 = 1000000000000000000000000000000, S2 = 3000000000000000000000000000000: the law's d = V mod L: part 0 in 86400 of 86400 (expected 21600), z^2 259200.000;
-      the fold at W, cross products: part 0 in 21611 of 86400 (expected 21600), z^2 0.007; its partition noise 1025 per mille of the binomial
-(c2) sizes read from the same state as V, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 at the Node-clock, the fold at W:
-    part 0 in 42837 of 86400 (expected 42802), z^2 0.108
-(c3) the draw only at the rounds where a Node-clock's swept area crosses a key (Omega = m_re p_im - m_im p_re):
-    14333 crossings; chi-square of the tenths of d on 9 9.734; Born on the state's sizes: part 0 in 7040 of 14333 (expected 7034), z^2 0.016
-(d) decision 29's dial, c one count a round, d = (c + V) mod L, sizes 1 and 1:
-    the plan empty, L = 70: with the dial, in one half two rounds in a row 505, one Mesh apart 508 per mille, partition noise 957; with c struck, partition noise 973 per mille
-    the plan empty, L = 1000: with the dial, in one half two rounds in a row 1000, one Mesh apart 1000 per mille, partition noise 0; with c struck, partition noise 0 per mille
-    the plan empty, L = 2000000: with the dial, in one half two rounds in a row 503, one Mesh apart 502 per mille, partition noise 996; with c struck, partition noise 996 per mille
-    term 6, L = 70: with the dial, in one half two rounds in a row 500, one Mesh apart 502 per mille, partition noise 940; with c struck, partition noise 968 per mille
-    term 6, L = 1000: with the dial, in one half two rounds in a row 501, one Mesh apart 500 per mille, partition noise 1024; with c struck, partition noise 1000 per mille
-    term 6, L = 2000000: with the dial, in one half two rounds in a row 500, one Mesh apart 494 per mille, partition noise 1032; with c struck, partition noise 1034 per mille
-(e) the run back, term 6:
-    the draw recomputed equal at 300 of 300 rounds back; the lay returns bit for bit: True
-(f) the 24: 24 turns; V at the image site equal at every site after a round: 24 of 24
-(g) the two hardest lays, term 6, the held count laid at n, d = V mod W:
-    a hot board, matter laid to 10 counts: 86400 distinct of 86400; chi-square 9.505; one half two rounds in a row 499; the part of 1 in 100 in 862 (expected 864), in two rounds running 13 (independent 8), partition noise 968
-    a cold board, one packet near 100 counts, read on its 27 Node-clocks: 10800 distinct of 10800; chi-square 12.238; one half two rounds in a row 502; the part of 1 in 100 in 127 (expected 108), in two rounds running 1 (independent 1), partition noise 1115
+(a) W = 90977140554674334000000, the grip 15162856759112389000000, H = W div 2 = 45488570277337167000000
+    term 6: g = 227442851386684, kappa = 5686071284667145875000, lam = 4 f2 = 4548860, n = 1000000
+    2 kappa lam >= g^2: True
+    each train's pitch, the gcd of W and every move of each of its fine teeth, 420 rounds from the lay:
+    the plan empty: light the grip, matter the grip, the held count the grip
+      W over the pitch: 6, 6, 6 values
+    term 6: light the grip, matter 4, the held count 2
+      W over the pitch: 6, 22744285138668583500000, 45488570277337167000000 values
+(b) the pointer e under term 6, rounds 21 to 420 at all 216 Node-clocks, 86400 draws:
+    86400 distinct values; every e even: True; the gcd of all differences of e 4, every e 2 more than a multiple of it
+    e at 0 in 0 draws and at H in 0
+    chi-square of the tenths of H on 9: 8.096
+    in one half, two rounds running 497, one Mesh apart 498 per mille (500 for independent draws)
+    the star discrepancy D_N of e over H: 3521 ppm; the bound 2 D_N: 7042 ppm
+    the root of N times D_N: 1.035 (for independent uniform draws, mean 0.869, above 1.358 one time in 20)
+    the largest |freq(part) - share| over (c)'s five Born tests by e: 2418 ppm; each within 2 D_N: True
+(c) Born, part 0 of sizes S1 and S2, term 6, the draws of (b); t the round, s_t = tick(s_(t-1)), 21 to 420;
+    V the raw sum of the fine teeth over x and its six neighbours in s_t; D the sum there of their digits,
+    r div the row's pitch at load from (a): light the grip, matter 4, the held count 2;
+    (ii) to (iv) draw part 0 where d < S1:
+    sizes 1 : 1, part 0 expected in 43200 of 86400:
+      (i) the new rule on e, ranked by size, ties 86400: part 0 in 43122 of 86400 (expected 43200), z^2 0.281
+      (ii) the raw sum mod L, c struck: part 0 in 86400 of 86400 (expected 43200), z^2 86400.000
+      (iii) decision 29's digits, c struck: part 0 in 43371 of 86400 (expected 43200), z^2 1.353
+      (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 43103 of 86400 (expected 43200), z^2 0.435
+    sizes 1 : 2, part 0 expected in 28800 of 86400:
+      (i) the new rule on e, ranked by size, ties 0: part 0 in 28925 of 86400 (expected 28800), z^2 0.813
+      (ii) the raw sum mod L, c struck: part 0 in 28657 of 86400 (expected 28800), z^2 1.065
+      (iii) decision 29's digits, c struck: part 0 in 28983 of 86400 (expected 28800), z^2 1.744
+      (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 28791 of 86400 (expected 28800), z^2 0.004
+    sizes 3 : 7, part 0 expected in 25920 of 86400:
+      (i) the new rule on e, ranked by size, ties 0: part 0 in 26021 of 86400 (expected 25920), z^2 0.562
+      (ii) the raw sum mod L, c struck: part 0 in 34391 of 86400 (expected 25920), z^2 3954.907
+      (iii) decision 29's digits, c struck: part 0 in 25932 of 86400 (expected 25920), z^2 0.007
+      (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 26035 of 86400 (expected 25920), z^2 0.728
+    sizes 10^6 : 3 x 10^6, part 0 expected in 21600 of 86400:
+      (i) the new rule on e, ranked by size, ties 0: part 0 in 21809 of 86400 (expected 21600), z^2 2.696
+      (ii) the raw sum mod L, c struck: part 0 in 21611 of 86400 (expected 21600), z^2 0.007
+      (iii) decision 29's digits, c struck: part 0 in 21767 of 86400 (expected 21600), z^2 1.721
+      (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 21770 of 86400 (expected 21600), z^2 1.783
+    sizes 10^30 : 3 x 10^30, part 0 expected in 21600 of 86400:
+      (i) the new rule on e, ranked by size, ties 0: part 0 in 21809 of 86400 (expected 21600), z^2 2.696
+      (ii) the raw sum mod L, c struck: part 0 in 86400 of 86400 (expected 21600), z^2 259200.000
+      (iii) decision 29's digits, c struck: part 0 in 86400 of 86400 (expected 21600), z^2 259200.000
+      (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 86400 of 86400 (expected 21600), z^2 259200.000
+    sizes read from the state, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 at x in s_in's now slot, by e ranked by size:
+      part 0 in 42774 of 86400 (expected 42802), z^2 0.073, ties 4
+(d) six lays, the old lay's generator at six seeds, term 6, rounds 21 to 420, 86400 draws each:
+    seed 20261030: chi-square of e's tenths on 9 8.096; at 1:1 part 0 in 43122 of 86400 (expected 43200), z^2 0.281
+    seed 1: chi-square of e's tenths on 9 12.572; at 1:1 part 0 in 43081 of 86400 (expected 43200), z^2 0.655
+    seed 2: chi-square of e's tenths on 9 6.304; at 1:1 part 0 in 43179 of 86400 (expected 43200), z^2 0.020
+    seed 3: chi-square of e's tenths on 9 5.974; at 1:1 part 0 in 43282 of 86400 (expected 43200), z^2 0.311
+    seed 4: chi-square of e's tenths on 9 16.203; at 1:1 part 0 in 42820 of 86400 (expected 43200), z^2 6.685
+    seed 5: chi-square of e's tenths on 9 4.112; at 1:1 part 0 in 43252 of 86400 (expected 43200), z^2 0.125
+    mean chi-square 8.876 over the six; the null: mean 9, sd 4.242 for one lay, 1.732 for the mean of six;
+    the mean's z^2 0.005
+    the six z^2 at 1:1: 0.281, 0.655, 0.020, 0.311, 6.685, 0.125
+(e) the run back inside the act, term 6, 300 rounds from the old lay:
+    forward: s_t = tick(s_(t-1)) for t = 1 to 300; a draw at every Node-clock from (s_(t-1), s_t),
+    at 1:1 and at the sizes in s_(t-1)'s now slot, each adding 1 to books[x][part]
+    backward: for t = 300 down to 1, m = mirror(s_t), m_out = tick(m); the same draw from (m, m_out),
+    taking 1 from the books; s_(t-1) recovered as mirror(m_out)
+    the pointer e equal at 64800 of 64800 draws
+    the part equal at 64800 of 64800 (1:1) and at 64800 of 64800 (the state's sizes, ties 2)
+    the books all 0 at the end: True (1:1), True (the state's sizes)
+    s_(t-1) recovered bit for bit at 300 of 300 rounds; mirror(m_out) equal to the engine's untick at 300 of 300
+    the lay returns bit for bit: True
+    control, the old rule d = V mod W on the raw teeth of the state after the tick, read the same way on (m, m_out):
+      the part at 1:1 equal at 32358 of 64800; its books end with 424 of 432 entries not 0
+(f) the 24: 24 turns; rounds 1 to 5 from the old lay, each input state turned and ticked;
+    at x the split between its +x and -x neighbours, sizes m_re^2 + 1 at those two in s_in's now slot;
+    covariant where the turned board's draw at x's image is the image of the original's;
+    1080 draws a turn, each count listed once:
+    12 turns taking +x to a + direction:
+      the act turned with the board in [5] of 5 rounds; e equal at the image at [1080]
+      ranked by size: covariant at [1080], ties [0]
+      the parts in their given order, + side first, not ranked: covariant at [1080]
+      sizes 1 and 1, all ties, broken in the given order: covariant at [1080]
+    12 turns taking +x to a - direction:
+      the act turned with the board in [5] of 5 rounds; e equal at the image at [1080]
+      ranked by size: covariant at [1080], ties [0]
+      the parts in their given order, + side first, not ranked: covariant at [658]
+      sizes 1 and 1, all ties, broken in the given order: covariant at [0]
+(g) the vacuum: term 6; light laid moving at every Node-clock (seed 7, as the hostile reader's g5_vacuum.py); matter
+    laid at rest at 0 and the held count at rest at n; 400 rounds. Light taken as T1, as in the theory, so P runs
+    over matter and the held count; light passed every Node-clock and nothing else moved
+    matter and the held count still at rest after 400 rounds: True
+    e: at most 1 distinct value at any Node-clock, 1 over the board, e = [42]; frozen in every round: True
+    light's own fine teeth: 6 distinct values, each on the grip's lattice about H: True
+    a 1:1 split there: part 0 in 86400 of 86400 draws
+    with light's rows counted in P (the probe's A1 trains, as in (b)): at most 3 distinct e
+    at a Node-clock, 3 over the board; a 1:1 split, part 0 in 28757 of 86400
+(h) the two hardest lays of the old probe, term 6, the held count laid at n, e read in rounds 21 to 420;
+    the lags pool one Node-clock's pairs over the Node-clocks read:
+    a hot board, matter laid to 10 counts, all 216 Node-clocks: 86400 distinct e of 86400
+      chi-square of e's tenths on 9: 12.523; joint tenths at t and t + 1: 81.334 on 81; at t and t + 2: 74.049 on 81
+      at 1:1 part 0 in 43299 of 86400 (expected 43200), z^2 0.453
+    a cold board, one packet near 100 counts, its 27 Node-clocks: 10800 distinct e of 10800
+      chi-square of e's tenths on 9: 14.979; joint tenths at t and t + 1: 96.609 on 81; at t and t + 2: 88.443 on 81
+      at 1:1 part 0 in 5309 of 10800 (expected 5400), z^2 3.067
+(i) decision 29's dial with the plan empty, the old lay, 1000 rounds; L = 1000, sizes 500 and 500;
+    V the raw sum of the fine teeth over x and its six neighbours in s_t:
+    V mod 1000 takes [0] at every Node-clock in every round; frozen: True
+    the dial, d = (t + V) mod 1000, t the round: part 0 exactly 500 times at each of the 216 Node-clocks: True
+    c struck, d = V mod 1000: part 0 in 216000 of 216000 draws
