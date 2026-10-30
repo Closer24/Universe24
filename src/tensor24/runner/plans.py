@@ -1,7 +1,7 @@
-"""Clock: the plans every Node-clock reads, laid once at the load from the kinds' tables and the universe file's CHOSEN strengths: the metric's push, the volume's notch and each train's passing.
-Algebra: every plan is whole factors on rows of the readings: term 5's blocks of the matter's stress through K x K -> A1 onto the square's slots, term 9's monomials of J's potential, and term 11's pairs of each train's rows through its own form onto A1, the table's entry the factor.
-Board: one plan for every Node-clock alike; a train that lacks a term takes it at the factor 0, its places wrapped, so no plan names a train.
-Clicks: n/a: a plan reaches the clicks only through the act.
+"""Clock: the plans every Node-clock reads, laid once at the load from the kinds' tables and the universe file's CHOSEN strengths: the metric's push, the volume's notch, the held hand's spring and tie, the hands' tie and each train's passing.
+Algebra: every plan is whole factors on rows of the readings: term 5's blocks of the matter's stress through K x K -> A1 onto the square's slots, the monomials of J's potential (term 9's notch, term 6's own spring (rest; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), and term 11's pairs of each train's rows through its own form onto A1, the table's entry the factor.
+Board: one plan for every Node-clock alike; a train that lacks a term takes it at the factor 0, its places wrapped, so no plan names a train: which train is held, tied or light is read off its character by the load.
+Clicks: the tied hand's beat, 2 hold f |k|^2 / W at the Node-clock, is what the clicks read as its mass, one beat per tied train (the frame's price, FRAMES 6); a plan reaches the clicks only through the act.
 """
 
 import numpy as np
@@ -36,6 +36,86 @@ def passing(trains: Z, c: Z, traces: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
     """Term 11, every train's passing as the act reads it, with its key: each pair of the train's rows through its kinds' table with itself onto A1 (pairs_of), the entry the factor, so that the train's form over a J(b) - b J(a), the dot product for a vector hand and 1 for a scalar, is summed into the train; the key the universe file's one CHOSEN odd whole, the same for every train."""
     one, two, entry, train = pairs_of(trains, c, traces)
     return one, two, entry, train, key
+
+
+def rows_of(trains: Z) -> tuple[Z, Z, Z, Z, Z]:
+    """Every row of the board once, as the load lays them (a train's kinds in the file's order, each kind's components, the parts running fastest): the row, its train, its kind, its component within the kind and its part."""
+    kind, dim, part = trains.kind, trains.dim.astype(np.intp), trains.part.astype(np.intp)
+    of = np.repeat(
+        np.arange(len(trains), dtype=np.intp), trains.count.astype(np.intp)
+    )  # each entry's train
+    before = np.cumsum(dim) - dim
+    within = (
+        before - before[trains.start.astype(np.intp)][of]
+    )  # each entry's components before it in its train
+    size = dim * part[of]  # each entry's rows: its components times its train's part
+    each = np.repeat(np.arange(len(kind), dtype=np.intp), size)
+    place = np.arange(size.sum(), dtype=np.intp) - np.repeat(np.cumsum(size) - size, size)
+    component, offset = carry(place, part[of][each], 0)
+    row = trains.first[of[each]] + (within[each] + component) * part[of][each] + offset
+    return row.astype(np.intp), of[each], kind[each], component.astype(np.intp), offset.astype(np.intp)
+
+
+def holding(trains: Z, c: Z, traces: Z, rest: Z, hold: Z, gamma: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
+    """Term 6's frame, the held hand's monomials of J's potential: every held row's own spring (rest; rho, rho, 1, 1), which pushes the row by -2 rest rho as the leg stands twice, the theorem of the turn (K = 2 W turns the hand (re, im) -> (-im, re) a round with its square still), and every tied train's tie to the held hand's square, (hold x f x C_yz; x_y, x_z, k_rho, k_rho) for each pair of the train's rows through its form onto A1 (pairs_of's entry) and each held row, f = rest div Gamma the clock's one notch (CHOSEN with its reason, G3 2.4), so that a tied hand beats at 2 hold f |k|^2 / W in the dispersion's measure; hold the strength CHOSEN in the universe file, 1 the unit; a row that is not held and a train that is not tied take the factor 0."""
+    f, _ = carry(rest, gamma, 0)
+    row, of, _, _, _ = rows_of(trains)
+    held = trains.held[of]  # 1 at the held hand's rows
+    unit = 0 * row - 1
+    one, two, entry, train = pairs_of(trains, c, traces)
+    tie = hold * f * (entry * trains.tied[train])[:, None] * held[None, :]
+    blocks = np.concatenate(
+        (
+            spread(row, row, unit, unit, rest * held),
+            spread(one[:, None], two[:, None], row[None, :], row[None, :], tie),
+        ),
+        axis=1,
+    )
+    first, second, third, fourth, factor = blocks
+    return factor, (
+        first.astype(np.intp),
+        second.astype(np.intp),
+        third.astype(np.intp),
+        fourth.astype(np.intp),
+    )
+
+
+def tying(trains: Z, c: Z, traces: Z, tie: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
+    """Term 6's frame, the hands' tie: for every two distinct tied trains X and Y, each unordered pair once, (tie x C_yz; x_y, y_z, 1, 1) over their rows of one part through the kinds' table of X's kind with Y's onto A1, the kind whose character is its own square (the dot product for T1 with T1 and T2 with T2, 1 for A1 with A1 and A2 with A2, 0 across two kinds); tie the strength CHOSEN in the universe file (a ground state below 2 hold f); a pair with no channel, two rows of different parts, an untied train and a train with itself take the factor 0."""
+    gap = traces * traces - traces
+    trivial = 1 - lit((gap * gap).sum(axis=-1))
+    form = np.einsum(
+        "m,jkmyxi->jkxi", trivial, c
+    )  # each kind with each kind onto A1, component by component
+    row, of, kind, component, offset = rows_of(trains)
+    later = of[None, :] - of[:, None]  # how far the second row's train stands after the first's
+    down, _ = carry(
+        -later, later * later + 1, 0
+    )  # -1 where it stands after, 0 where it does not: the sign test
+    gap = offset[:, None] - offset[None, :]
+    same, _ = carry(1, gap * gap + 1, 0)  # 1 where the two rows are of one part
+    channel = form[kind[:, None], kind[None, :], component[:, None], component[None, :]]
+    factor = tie * trains.tied[of][:, None] * trains.tied[of][None, :] * -down * same * channel
+    unit = 0 * row[:, None] - 1
+    first, second, third, fourth, factor = spread(row[:, None], row[None, :], unit, unit, factor)
+    return factor, (
+        first.astype(np.intp),
+        second.astype(np.intp),
+        third.astype(np.intp),
+        fourth.astype(np.intp),
+    )
+
+
+def joined(*potentials: tuple[Z, tuple[Z, Z, Z, Z]]) -> tuple[Z, tuple[Z, Z, Z, Z]]:
+    """Several potentials as one: their monomials' factors and four legs concatenated, in their order."""
+    factors, legs = zip(*potentials, strict=True)
+    first, second, third, fourth = zip(*legs, strict=True)
+    return np.concatenate(factors), (
+        np.concatenate(first),
+        np.concatenate(second),
+        np.concatenate(third),
+        np.concatenate(fourth),
+    )
 
 
 def spread(*parts: Z) -> Z:

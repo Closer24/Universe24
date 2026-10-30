@@ -1,6 +1,6 @@
-"""Clock: every Node-clock made alike: the 24's tables, each train's rows, every gear's teeth and every Mesh's grip, each train's click tooth at its birth, and the setting's gears laid.
+"""Clock: every Node-clock made alike: the 24's tables, each train's rows, every gear's teeth and every Mesh's grip, the held hand's spring and the ties of the coupling family, each train's click tooth at its birth, and the setting's gears laid.
 Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s, T_k and T_d at 1; the key the universe file's CHOSEN integer, the click tooth born at (key - 1) div 2, the Spokes along one axis the divisor.
-Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth, its own at rest (the acyclic cut), its ii slots into each axis's grips, its 0i slots odd under the mirror; the plans (runner/plans.py) laid from the kinds' tables at the universe file's CHOSEN strengths: the matter's stress onto the square's slots (the metric's push), the notch's monomials, and each train's passing through its own form onto A1, the kind found by its character.
+Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth, its own at rest (the acyclic cut), its ii slots into each axis's grips, its 0i slots odd under the mirror; the held hand found by its character, the one-dimensional kinds together, its rows' grips 0 (a site-local oscillator), the tied trains by their character kept under the sign kind's twist; the plans (runner/plans.py) laid from the kinds' tables at the universe file's CHOSEN strengths: the matter's stress onto the square's slots (the metric's push), the monomials of the notch, the held hand's spring and tie and the hands' tie, and each train's passing through its own form onto A1, the kind found by its character.
 Clicks: n/a: no number of the load reaches the clicks except through the act.
 """
 
@@ -14,7 +14,7 @@ import numpy as np
 from tensor24.algebra.carry import Z, carry, lit
 from tensor24.runner.board import board
 from tensor24.runner.files import GEAR, entries, vocabulary
-from tensor24.runner.plans import notching, passing, pushing
+from tensor24.runner.plans import holding, joined, notching, passing, pushing, tying
 
 
 class Train(NamedTuple):
@@ -40,6 +40,9 @@ class Trains:
     part: Z
     square: Z
     matter: Z  # 1 where the train's kinds' character is not the square's: the matter, which sources the metric's push
+    held: Z  # 1 where the character is the held hand's, the one-dimensional kinds together at part 1: its own spring 2 rest
+    tied: Z  # 1 where the character is kept under the sign kind's twist and is not the held hand's: tied to the held hand
+    gripped: Z  # 1 where the character is not the held hand's: its rows hold their Meshes' grips; the held hand holds none
     start: Z
     count: Z
     kind: Z
@@ -92,18 +95,34 @@ def tables(held: Z, inverse: Z, weight: Z) -> Z:
     return ((up - down)[..., None] * u).reshape(kinds, kinds, kinds, side, side, side)
 
 
-def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z, Z]) -> Trains:
-    """Each train's rows from its kinds and part, and 1 where its kinds' character is the four-vector's square's: its rows that square's basis, its first 00."""
-    traces, _, squared = reads
+def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z, Z, Z, Z]) -> Trains:
+    """Each train's rows from its kinds and part, and its character, its kinds' traces summed times its part, against the characters the files read off the kinds, 1 where the gap is 0 on every turn by Rule3's quotient of 1 by gap^2 + 1 and lit of the gap where it is not: the four-vector's square's (square: its rows that square's basis, its first 00; matter the rest), the held hand's, the one-dimensional kinds together (held, A1 + A2 at part 1; gripped the rest), and its own under the twist, the sign kind's character (tied where kept and not the held hand's: a train of the kinds K and the twist's K, light and the square untied)."""
+    traces, _, squared, hand, twist = reads
     member = np.eye(len(part), dtype=object)[of]  # each kind's train, one of each row
     dim = np.array(dims, dtype=object)[kind]
     size, count = part * (dim @ member), member.sum(axis=0)
-    # Rule3's quotient of 1 by one more than the characters' squared gap: 1 where the gap is 0 on every turn, else 0
-    gap = part[:, None] * (member.T @ traces[kind]) - squared
+    character = part[:, None] * (member.T @ traces[kind])
+    gap = character - squared
     away = (gap * gap).sum(axis=-1)
     square, _ = carry(1, away + 1, 0)
+    off = character - hand
+    apart = (off * off).sum(axis=-1)
+    held, _ = carry(1, apart + 1, 0)
+    twisted = character * twist[None, :] - character
+    kept, _ = carry(1, (twisted * twisted).sum(axis=-1) + 1, 0)
     return Trains(
-        np.cumsum(size) - size, size, part, square, lit(away), np.cumsum(count) - count, count, kind, dim
+        np.cumsum(size) - size,
+        size,
+        part,
+        square,
+        lit(away),
+        held,
+        kept * lit(apart),
+        lit(apart),
+        np.cumsum(count) - count,
+        count,
+        kind,
+        dim,
     )
 
 
@@ -144,27 +163,38 @@ class Loaded(NamedTuple):
 def load(
     universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: Z, square: Z
 ) -> tuple[Loaded, list[str]]:
-    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds the notch's monomials alone, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3); every train's key the universe file's one CHOSEN integer, its click tooth born at (key - 1) div 2, its passing the pairs of its rows through its form; the metric's push and the notch laid at the file's CHOSEN strengths."""
+    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds the notch's monomials, the held hand's own spring and tie and the hands' tie, laid from the 24's tables c and the file's CHOSEN strengths, as no file declares a coupling; every train's key the universe file's one CHOSEN integer, its click tooth born at (key - 1) div 2, its passing the pairs of its rows through its form; the metric's push and the notch laid at the file's CHOSEN strengths."""
     labels, dims, reads = vocabulary(kinds, square)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
-    traces, _, _ = reads
+    traces, *_ = reads
     side = c.shape[-1]  # the axes' cube the tables stand in: the board's axes
     senses, _ = carry(len(star(side)), side, 0)  # the Spokes along one axis, its + and its -
     key = np.full((len(trains), 1), universe["chosen"]["key"], dtype=object)  # one key for the board
     birth, _ = carry(key - 1, senses, 0)  # the one tooth the mirror leaves in place
     state, laid = lay(setting.get("gears", []), trains, sites, birth)
-    potential = notching(trains, star(side), universe["chosen"]["notch"])
-    push = pushing(trains, c, traces, star(side), universe["chosen"]["push"])
+    chosen, _, rest = universe["chosen"], *teeth(universe, star(side))
+    potential = joined(
+        notching(trains, star(side), chosen["notch"]),
+        holding(trains, c, traces, rest, chosen["hold"], universe["integers"]["full_rate"]),
+        tying(trains, c, traces, chosen["tie"]),
+    )
+    push = pushing(trains, c, traces, star(side), chosen["push"])
     return Loaded(trains, potential, state, passing(trains, c, traces, key), push), laid
+
+
+def teeth(universe: dict[str, Any], spokes: Z) -> tuple[Z, Z]:
+    """The grip at rest and the teeth at rest from the files' integers: den Gamma^2 per Mesh, and Spokes times it, the 6 the board's Spokes (David's table at rest)."""
+    integers = universe["integers"]
+    grip = integers["den"] * integers["full_rate"] * integers["full_rate"]
+    return grip, len(spokes) * grip
 
 
 def geared(
     universe: dict[str, Any], trains: Trains, spokes: Z
 ) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], tuple[Z, Z, Z], Z]:
     """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2, the 6 the board's Spokes; every row but the slot's own reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself, the 00 row's teeth at rest; every Spoke's grip reading each square's ii slot of its axis at both ends of its Mesh; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 per Mesh, one notch of a slot moving a grip by one count, so the Mesh unit is 1."""
-    integers, first, rows = universe["integers"], trains.first, trains.size.sum()
-    den, gamma = integers["den"], integers["full_rate"]
-    grip = den * gamma * gamma
+    first, rows = trains.first, trains.size.sum()
+    grip, rest = teeth(universe, spokes)
     ones = np.ones((rows, 1), dtype=object)
     # the square's 0i slots, the rows after its 00 slot, are odd under time's reversal (one time index): their parity
     # is 0, every other row's 1; a lone train's places wrap harmlessly at the factor 0
@@ -176,7 +206,7 @@ def geared(
         even, (at.astype(np.intp), 0 * at.astype(np.intp)), -np.repeat(trains.square, d).astype(object)
     )
     gearing = (
-        len(spokes) * grip * ones,
+        rest * ones,
         ones,
         ones.copy(),
         ones.copy(),
@@ -220,12 +250,15 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's ten parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's potential, every gear's clock and the grips' read, the click's cross with its key, the metric's push; main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's eleven parts: the board and its Spokes from the piece's sides, every coefficient from the universe's integers, the grips per row, den Gamma^2 on every Mesh of a row whose train is not the held hand and 0 on the held hand's rows (a site-local oscillator: its quarter turn is exact at every Node-clock whatever its neighbours do, and its stability at every wavevector the one Node-clock's; the ii slots' read still lands on its Spokes, so a world with the held hand keeps the push at 0 or its summed grips within the window, which the runner refuses by name otherwise), J's potential, every gear's clock and the grips' read, the passing's pairs with their key, the metric's push, the plan's terms with a Mesh leg (none until the gradient vertex is laid); main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
     nb = board((sx, sy, sz))
     spokes, meshes = geometry(nb, len(shape))
     gearing, clock, stretch, grip = geared(universe, loaded.trains, spokes)
-    grips = np.full((1, len(shape) * nb.shape[1]), grip, dtype=object)
+    rows = np.repeat(
+        loaded.trains.gripped, loaded.trains.size.astype(np.intp)
+    )  # 1 but on the held hand's rows
+    grips = np.outer(rows, np.full(len(shape) * nb.shape[1], grip, dtype=object))
     none = np.zeros(
         0, dtype=np.intp
     )  # the plan's terms with a Mesh leg: none until the gradient vertex is laid

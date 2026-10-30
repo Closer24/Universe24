@@ -67,8 +67,15 @@ UNIVERSE = {
     "version": VERSIONED,
     "integers": {"den": ONE, "full_rate": ONE, "width": ONE},
     # the free strengths, each CHOSEN by name: the whole click's key (G5; its value G3's), the metric's push and the
-    # volume's notch (G2)
-    "chosen": {"key": ONE, "push": NONE_BELOW, "notch": NONE_BELOW},
+    # volume's notch (G2), the held hand's tie, the hands' tie and the gradient vertex through the Mesh (G3's frame)
+    "chosen": {
+        "key": ONE,
+        "push": NONE_BELOW,
+        "notch": NONE_BELOW,
+        "hold": NONE_BELOW,
+        "tie": NONE_BELOW,
+        "mesh": NONE_BELOW,
+    },
     "trains": [TRAIN],
 }
 PIECE = {"version": VERSIONED, "shape": SIDES}
@@ -213,22 +220,28 @@ def departures(universe: Path, piece: Path, setting: Path) -> list[str]:
     ]
 
 
-def vocabulary(kinds: Any, square: Any) -> tuple[tuple[str, ...], tuple[int, ...], tuple[Any, Any, Any]]:
-    """The engine's kinds as the files are read against them: their labels and dimensions, each one's character on the 24, 1 where its basis is whole, and the four-vector's square's character; every kind 0 off the 24."""
+def vocabulary(
+    kinds: Any, square: Any
+) -> tuple[tuple[str, ...], tuple[int, ...], tuple[Any, Any, Any, Any, Any]]:
+    """The engine's kinds as the files are read against them: their labels and dimensions, each one's character on the 24, 1 where its basis is whole, the four-vector's square's character, the held hand's (the one-dimensional kinds together, whose trace squared is the unit's: A1 + A2) and the twist's (the held hand's less the unit's: the sign kind's); every kind 0 off the 24."""
     labels = tuple(name.upper() for name in kinds._fields)
     dims = tuple(k.shape[-1] for k in kinds)
     traces = np.stack([np.einsum("gii->g", k) for k in kinds])
     # whole: each row one Spoke's sign on the 24, its squares summing to 1 there and to 0 off them
     sums = [np.einsum("gij,gij->gi", k, k) for k in kinds]
     wholes = np.array([int((s * s == s).all()) for s in sums], dtype=object)
-    return labels, dims, (traces, wholes, np.einsum("gii->g", square))
+    (unit,) = [
+        trace for trace in traces if (trace * trace == trace).all()
+    ]  # the trivial kind's, 1 on the 24
+    hand = sum(trace for trace in traces if (trace * trace == unit).all())  # the one-dimensional kinds'
+    return labels, dims, (traces, wholes, np.einsum("gii->g", square), hand, hand - unit)
 
 
 def held_departures(
     universe: Any, setting: Any, read: tuple[tuple[str, ...], tuple[int, ...], Any]
 ) -> list[str]:
     """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the 24's, a kind with no whole basis outside the four-vector's square, the square in two trains or more (every row's teeth read every square's 00 slot but its own, so two squares would read each other and no dial would be its own), a gear's component off its train's rows."""
-    labels, dims, (traces, wholes, squared) = read
+    labels, dims, (traces, wholes, squared, *_) = read
     found, sizes, squares = [], [], []
     for at, train in enumerate(universe["trains"]):
         where = f"universe.trains[{at}]"
