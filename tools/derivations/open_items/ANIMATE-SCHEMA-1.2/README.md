@@ -94,7 +94,7 @@ Two quanta laid at sites 10 and 30, over x (4) and z (20) and over y (36) and z,
 2. **The first reading, the beat:** at each of its whole clicks, its face (K4: the sweep Q and the tooth), per tick of its own clock (G7, so the beat is in its own proper time). Where its clicks book no momentum (rows 23 and 71), it is the rest beat.
 3. **The second reading, the windings:** the windings its click books (K3, at its card's unit, G4), with the kept.
 4. **They agree through the one key:** q = 2 Q div key at every click (rows 40 and 66). The mass is the number the two readings share.
-5. **Moving:** where its clicks book momentum p, the two readings give its energy E. The mass is the invariant E^2 - (c p)^2, with c the cone the clicks read, and it equals the rest reading. A difference that turns with the direction of motion is the board's frame showing in the shadow (root II, the causal-set test).
+5. **Moving:** the beat is read in the clock's own count (G7, part 6), and no motion changes it: a moving clock reads its rest beat at its clicks, with no formula turning its energy and momentum into a mass (the owner's word to Animate, 2026-10-30: no formulas). A beat that turns with the direction of motion is the board's frame showing in the shadow (root II, the causal-set test).
 6. **A species:** the trains the clicks build with the same parts and the same charge booked. One species has one mass: every lay of it reads one rest beat.
 7. **Stable:** its windings are held in the ledger from its lay to the end, with no click taking them (row 46). Where a click takes them, the rounds between are its lifetime.
 8. **A mass ratio:** two species' rest beats read at one load, a ratio of whole numbers, set against nature's with the tries counted.
@@ -104,7 +104,7 @@ Two quanta laid at sites 10 and 30, over x (4) and z (20) and over y (36) and z,
 - two lays of one species read two rest beats;
 - the composite comes apart before its beat is read twice;
 - a rest beat, read in its own proper time (G7), moves with the load: the swing showing in a mass, against **The same clock and the same ruler for every act** (line 693). The Boss's side finding predicts it for a binding made by a value x value coupling row, whose strength reads no ruler (6495615190, item 4);
-- a moving train's invariant differs from its rest reading.
+- a moving clock's beat, read in its own count, differs from its rest beat.
 
 **Guards:** G2 (parts), G4 (unit), G7 (load), G3 (work, for a moving mass's energy) and G5 (one lay followed through its clicks).
 
@@ -132,7 +132,7 @@ The owner's text to the Boss (space and time are a four-dimensional spacetime's 
      - (ii) the sum of the rate gear's count, N, along its path, from G1's lines (or G7 on each click).
    - A disagreement is named, never averaged.
    - The round is order alone: which click is before which, and the cone from the round, the site and light's speed. It is never a duration.
-2. **Invariants only:** proper counts; rest beats (E^2 - (c p)^2 of a clock's booked clicks, part 4); intervals between clicks, from proper counts and the cone.
+2. **Invariants only, and no formula** (the owner's word to Animate, 2026-10-30): a clock's own count between two of its clicks, the clock itself being the sum along its path; its rest beat, read in that count (part 4); a quantum's lay and its take, two events on one light line; a distance by echo, a clock's own count between laying a quantum and taking its echo.
    - A reading that compares rounds as times is refused by name: "compares board ticks, no reading".
    - Every row that reads a duration (the bang's length, q per era, the gravity rows 10, 12, 13, 30 and 45) reads it from proper counts.
 3. **The twin reading:** two clocks whose clicks share a first and a last event (a meeting at one Node-clock at one round), their own counts between the two compared.
