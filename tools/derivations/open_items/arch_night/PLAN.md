@@ -38,10 +38,10 @@ by the loader, so the owner plays with the files in the morning, not the code.
    keys, each a whole number of at least 0, 0 on the three shipped worlds: `"hold"` (the held hand's tie), `"tie"`
    (the hands' tie at the Node-clock), `"mesh"` (the gradient vertex through the Mesh). FRAMES.md has each form.
 5. **The run tool and the decode tool** keep their command lines.
-6. **Term 5 tonight** (the final physicist's two blocking items, t5f_phys/REPORT.md): the push's plan in the law's
-   form (B2b, ready to build now), and its strength fixed by the books through the drive's dial on the square's rows
-   (B6, as soon as the fifth text g2_t5/TERM5_FIFTH.md names the dial). The universe's "push" stays a whole number
-   read by the loader: 1 the law's push at the books' dial, 0 no gravity; the well world is re-laid under it.
+6. **Term 5 tonight** (the final physicist's two blocking items answered by the deriver's derivation from the act's
+   own energy, the Boss's frame of 19:2x UTC): the push in the books' form at dial 2 (A1b the readings, B2b the plan
+   and the dial, one merged commit replacing the earlier "2K at the factor / 2 G_i centred / 1152" plan). The
+   universe's "push" is 1 where the books close and 0 where there is no gravity; the well world is re-laid under it.
 
 ## The order (dependencies first), with each commit's change, test and probe
 
@@ -137,41 +137,63 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
   back exact; the largest count over the run. G3.md's p1, p2, p6 reproduced on the loader's plan, and the
   physicist's q6b and q11 rerun on the Mesh-less held train (no runaway where his found them at 196 to 510).
 
-### Commit B2b (B; after B1, before B3): term 5's push in the law's form
+### Commit A1b (A; after A1, small): the push's readings for the books' form
 
-- plans.pushing: the blocks become the law's 2T - eta T on the matter's own stress, v (x) v for the scalar: the 00
-  slot takes the momenta planes squared at the factor senses x scale x scale x f (+S 2K: the two momenta in and out,
-  so `spread(so, sw, senses * whole, q00)` and `spread(to, tw, senses * whole, q00)`), each ii slot its own axis's
-  difference squared at -senses x f (`spread(go, gw, senses * back, qii)`); the gradients' block on the 00 slot
-  (`half`), the momenta's blocks on the ii slots (`less`) and the other axes' block (`other`) leave; the jk and 0i
-  blocks stay as built. The docstring: the law's form on rho and p (00 <- rho + sum p = 2K, ii <- 2 G_i, the
-  pressure read), the built -eta (v.v) gone, gamma unmeasurable until a slow source exists.
-- Test (load, plain assertions on the plan contracted on a laid state): a hand at rest with a slope along z (the
-  tent) pushes the 00 slot by 0, the zz slot by -senses f (D_z a)^2 and xx, yy, jk, 0i by 0; a hand gliding alike at
-  every site (no gradient) pushes the 00 slot by senses S^2 f (si^2 + so^2) and every ii slot by 0; the mirror
-  theorem's hypothesis (e) still holds (the plan reads the momenta as a swap-symmetric pair), so the run back 12 of
-  12 (A's engine test covers the act; here one round back on a cube of 3).
-- Probe (B, derive/boss/term5_law/probe.py): the physicist's probe_l and probe_s rerun on the built plan: the two
-  forms agree on null matter (the travelling pulse within 6 percent) and differ on dust and the tent as his report
-  says; light against the clock at u = 1/50: clock 1040, light 1040.
+- step.stress reads, for the push's plan, the Node-clock's six stretches per row at the now slot (each Spoke's
+  neighbour less own: `mesh.stretches(layout, a)` = seen(a, nb) - a[:, None, :], the same read the pull makes, and
+  pull now uses it), the two momenta in rest-dial turns (sigma_in, sigma_out as built) and the unit:
+  `flat = concatenate((stretches(layout, a).reshape(-1, sites), sigma_in, sigma_out, ones))`, the planes in that
+  order: Spoke s, row r at s x rows + r; sigma_in at Spokes x rows + r; sigma_out at (Spokes + 1) x rows + r; the
+  unit last. The value, difference and force planes leave the push's readings (nothing of the push reads them).
+- Test (engine): stress on a laid state against its closed sums: a hand at rest with a slope g along z (the tent)
+  pushes the zz slot by -(the two z-Meshes' stretches squared, 2 g^2) per row and the 00, xx, yy, jk and 0i slots
+  by 0; a hand gliding alike at every site pushes the 00 slot by the read's factor times the sum over the rows but
+  the 00 of sigma_in sigma_out and every ii slot by 0.
 
-### Commit B6 (B; when g2_t5/TERM5_FIFTH.md names the dial; else by 01:00 UTC with the physicist's model as the
-### price, NOT_CLOSED 18): term 5's strength fixed by the books through the drive's dial
+### Commit B2b (B; after B1 and A1b, before B3; the one commit that replaces the earlier B2b and B6): term 5 in the
+### books' form at dial 2 (the deriver's derivation from the act's own energy, the Boss's frame of 19:2x UTC)
 
-- load.geared: the drive's teeth T_d on the square's rows the dial the fifth text derives, written as a product of
-  the star's counts and nothing typed (the physicist's model on the law's form: 8 S^2 = senses^3 x scale^2 = 1152,
-  scale = Spokes x senses), 1 on every other row: per row `1 + square_row * (dial - 1)`, the same form as the
-  mirror's parity line `rd + even * (flip(rd, teeth) - rd)`, no branch, the square rows' flag the one load.geared
-  already spreads over a train's rows for the parity. The remainder r_d kept within [0, T_d),
-  flipped on an even row and kept on an odd one (built at 9868ae570, measured at T_d = 7 on the square's ten rows).
-  universe "push" = 1 means the law's push at the dial; 0 none.
-- Test (load): the drive's teeth on the square's rows equal the dial and 1 elsewhere, on the example universe and
-  with the trains' order swapped; the run back with the drive's tooth moving (the engine test's own, A).
-- Probe (B, derive/boss/term5_books/probe.py, whole numbers): the physicist's energy per gear 16H summed over the
-  metric's rows and the matter's over windows on the gliding hand and the bump: the metric's gain over the matter's
-  loss at the dial 1000 permille within the remainder's share, against 588 f and 1152 f at T_d = 1; the run back.
-- The well world re-laid (lay.py rerun with push 1 at the dial, the metric at the first run's mean), the README's
-  numbers moved; the live and the example worlds unchanged (push 0).
+- The derivation, in one line: the act's energy is H = (1/2) W v_in v_out + (1/2) SUM_Mesh grip Delta^2 with the
+  reads W = rest + k0 c00 into every row but the 00 and grip = grip_rest + ii at both ends; the books close iff each
+  slot is pushed by -dH/d slot: the 00 slot by the sum over every row but the 00 of sigma_in x sigma_out (the
+  momenta in and out in rest-dial turns, swap-symmetric) times the read's factor k0, each ii slot by minus the sum
+  over every row of its two Meshes' stretches squared at the now slot, (a(x + e_i) - a(x))^2 + (a(x) - a(x - e_i))^2
+  (not the centred (D_i a)^2, which misses the Meshes at a crest or a foot: 757 permille on the tent), both halved
+  by the dial 2 with the remainder kept; the jk and 0i slots by nothing, since nothing reads them (a push there is
+  energy from nothing: a finding for the owner against line 35's "ten slots each pushed", NOT_CLOSED 6). Measured by
+  the deriver on the live act (probe_f): the matter's loss against the metric's gain, dust 1000 permille (the built
+  form 588000, the 2K-plan 1151999), a held tent and bump 1000 to eight digits, free fast matter 1133 and 1041 (the
+  pairing now x next, not local in one Mesh: OPEN), the run back 12 of 12. No strength anywhere: the factor is 1.
+- plans.pushing on A1b's readings: for every square train, for every row r but its 00 row, one term (sigma_in[r],
+  sigma_out[r], unit) at the factor k0 x push landing on the 00 slot (k0 the clock read's factor, 1 as built: the
+  chain rule carries the read's factor into the push, so one number serves both); for every row r and every Spoke
+  s, one term (stretch[s, r], stretch[s, r], unit) at the factor -push landing on the ii slot of the Spoke's axis
+  (the axis from the star, `along = (spokes * spokes) @ axis`, as geared reads it for the grips); no term on the jk
+  and 0i slots. "push" in the universe file is 1 where the books close (gravity on) and 0 where there is none; it
+  multiplies the factor and nothing else, and the docstring says a value other than 1 opens the books by that
+  factor. The old blocks (whole, half, less, back, other, the jk and 0i blocks) leave.
+- load.geared: the drive's teeth on the pushed rows of the square, its 00 and ii rows, are senses: per row
+  `1 + pushed_row * (senses - 1)`, pushed_row the flag of those rows spread as the parity's is, 1 on every other
+  row; the remainder r_d kept within [0, T_d), flipped on an even row (built at 9868ae570). The notch's monomials on
+  those rows are carried by the same dial (h is CHOSEN and re-chosen with it).
+- Test (load, plain assertions on the plan contracted on a laid state): the tent along z pushes the zz slot by
+  -(Delta_+^2 + Delta_-^2) summed over the rows (-2 g^2 for a slope g on one row), xx and yy by 0, the 00 slot by 0,
+  jk and 0i by 0 (no term lands there); the gliding hand pushes the 00 slot by k0 x the sum over the rows but the 00
+  of sigma_in sigma_out and every ii slot by 0; the drive's teeth senses on the 00 and ii rows and 1 elsewhere, the
+  same with the trains' order swapped; push 0 lays every factor 0.
+- Probe (B, derive/boss/term5_books/probe.py: the deriver's probe_f rerun on the built loader, whole numbers): the
+  matter's energy loss against the metric's gain by windows at dial 2 on dust, the held tent, the held bump and
+  free fast matter (1000, 1000, 1000, 1133 / 1041 permille as he found), the run back 12 of 12 with r_d moving on
+  the pushed rows; and the sign read on the well world: the 00 slot deepens where the matter is (a slower clock,
+  gravity's sign) or the finding goes to the owner at once.
+- The well world re-laid under the books' form (lay.py rerun with push 1 at dial 2, the notch h re-chosen so that
+  the board's mean is held, written with its window, the metric at the first run's mean), the README's numbers
+  moved; the live and the example worlds unchanged (push 0).
+- On the Boss's yes only: the clock's read at k0 = Spokes x senses from the star (load.geared's clock factor),
+  which GR's gamma = 1 for light needs (the deriver: light's h_ii / h_00 is 144 at k0 = 1, measured 132, and 1 at
+  k0 = 12, measured 0.92; the dial 2 stands either way). It moves load.geared's one factor, the load test's pin of
+  that factor, and the well world's lay and README (regenerated anyway); nothing in the act. Otherwise k0 stays 1
+  and the read factor is NOT_CLOSED 26.
 
 ### Commit C1 (C; from node-live's head): schema 1.3
 
@@ -278,6 +300,11 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
   light's rows, round by round): the coupling family's mathematician found a smooth light wave of amplitude 50 on a
   ring of 64 heating by the act's rounding from 80,180 to 4,035,064 in 3,000 rounds (max |x| 50 to 324) where the
   tied wave went 80,180 to 86,851 (NOT_CLOSED 23); a world whose light grows is named with its numbers.
+- C also runs Pauli's probe (derive/boss/hand_per_quantum/probe.py, whole numbers, no src; FRAMES.md 12): two
+  whole-speed hands of one kind on their springs with no tie, and one hand laid as their sum: after one round the
+  momenta add exactly at every gear and site; over 1,000 rounds the summed counts part from the sum's counts by
+  teeth alone (the largest gap per gear reported); with a tie between the two the one-round sum differs by exactly
+  the tie's push. Output probe.txt beside it; NOT_CLOSED 28 cites it.
 - C walks the hostile reader's list (ARCHITECTURE section 4) over the whole diff origin/main..node-live: a test bent
   or of nothing; a number behind a name or a count typed; a gate or a list edited; an if, a loop or a mask in the
   Node-clock; code the document does not name (listed for the writer's mends); a docstring off the four layers.
@@ -303,9 +330,9 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
 
 | Hour | A | B | C |
 |---|---|---|---|
-| 19-20 | commit 0, the merge | B1 plans.py, B2 the frame's plans, B2b the law's push | C1 schema 1.3 |
-| 20-22 | A1 the passing S, Layout.mesh, the kept tooth; the probe | B4 click lines and header; rebase on 0 | C2 clicks.py and the tool; the tests |
+| 19-20 | commit 0, the merge (done) | B1 plans.py, B2 the frame's plans | C1 schema 1.3 |
+| 20-22 | A1 the passing S, Layout.mesh, the kept tooth; A1b the push's readings; the probe | B4 click lines and header; B2b the books' form at dial 2 | C2 clicks.py and the tool; the tests |
 | 22-00 | A2 the engine's tests complete | B3 the click world, its generator and README | the first end-to-end run of the four worlds |
-| 00-02 | A3 term 13's probe; folds | B6 the books' dial and the well re-laid; B5 meshing and the mesh world | the five worlds, the gate, the full check |
+| 00-02 | A3 term 13's probe; folds | the well re-laid under the books' form; B5 meshing and the mesh world | the five worlds, the gate, the full check |
 | 02-04 | folds from the hostile reader | folds; README | the hostile reader's list over the whole diff |
 | 04-05 | the candidate's sha to the Boss; NOT_CLOSED.md current | | the report |

@@ -43,39 +43,41 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   passed, and the cut's price is measured and named; alternatives: the carried dial (a register per gear, resonant),
   the twin (two half-gears per 00 row), the root (refused).
 
-## 3. Term 5, the metric's push: the law's form, the strength by the books [FRAME; the fourth text NOT PASSED]
+## 3. Term 5, the metric's push: the books' form at dial 2 [FRAME, the Boss's of 19:2x UTC; the fourth text NOT PASSED by the final physicist, PASSED by the final mathematician; the fifth text in writing]
 
-- Form (the final physicist's item 1, t5f_phys/REPORT.md): the law's 2T - eta T on the matter's own stress (rho, p),
-  which for the engine's scalar is v (x) v: the 00 slot pushed by +S 2K (K = S (sigma_in^2 + sigma_out^2), the
-  momenta in whole turns of the rest dial) and each ii slot by -2 G_i (G_i = (D_i a)^2, its own gradient squared);
-  the jk and 0i slots as built; the built form's -eta (v.v) (the gradients on the 00 slot, the momenta and the other
-  axes on the ii slots) leaves, and with it "gamma = 1 on dust", which was that term. S = Spokes x senses from the
-  star; the drive carries J1 + J5.
-- Strength (item 2): at every integer strength the metric's rows gain 588 f (built) or 1152 f (the law's form) times
-  what the matter loses, so the books do not close; the law's line 35 says the books fix it. The strength is the
-  one that closes them, a fraction of a count realized exactly by Rule3's carry at the drive's teeth on the square's
-  rows (T_d the dial, the remainder kept; the mirror by parity at T_d > 1 is built): DERIVED, not CHOSEN, once the
-  fifth text (g2_t5/TERM5_FIFTH.md) derives the dial from the books. The universe's "push" stays a whole number:
-  1 the law's push at the dial, 0 none.
-- Question: the dial's value and its derivation (the physicist's model 8 S^2 = 1152 on the law's form, unmeasured);
-  the 0i slots' sign and unit (no reader before term 10); the second order in u; the 00 wave in a well (frame 2);
-  gamma unmeasurable until a slow source exists (term 6's spring).
-- Test: the tent pushes the 00 slot by 0 and the zz grip alone; the gliding hand pushes the ii slots by 0; the two
-  forms agree on null matter (the travelling pulse within 6 percent); the books: the metric's gain over the matter's
-  loss 1000 permille within the remainder's share at the dial (B6's probe); the run back under the push.
-- The final mathematician PASSED the fourth text with eight minors (t5f_math/HANDBACK_text.txt), folded here: the
-  loader refuses a second square train by name (item 1: two square trains make the clock's reads cyclic and the run
-  back fails with nothing warning; B builds it), the 24 under the push hold only with the twisted action (item 8;
-  frame 1, A2), the 0i block's unit stays OPEN (item 3: T00 T_xx / T_0x^2 = 6, no whole root), an odd row's strides
-  are swapped and kept under the mirror and a pushed row's strides read J1's kick alone (item 4: hypothesis (d) is
-  load-bearing twice), "the clock moving" is to be measured at u of 10^-2 or more (item 2: his 15 of 15 lump runs
-  and dust at u = 0.2, T_d up to 1000003, bit for bit), the books' identity is the act's and its ii part is to be
-  stated (item 5), 1 + gamma on unrounded periods with its bounds (item 6), (b) is (e) restricted to self-partnered
-  monomials (item 7).
-- Replaced by: the fifth text passing its pair (then DERIVED, the same code).
-- Choice: the law's form because the law says it and the readers measured the built form's departure; the dial
-  because a fraction of a count is a carry's remainder and nothing else in this engine; the alternative, an integer
-  strength CHOSEN, leaves the books open by 588 f (refused by the reader, and by line 35).
+- Form (the deriver's derivation from the act's own energy, TERM5_FIFTH.md to follow): H = (1/2) W v_in v_out +
+  (1/2) SUM_Mesh grip Delta^2 with W = rest + k0 c00 read into every row but the 00 and grip = grip_rest + ii at
+  both ends; the books close iff every slot is pushed by -dH/d slot: the 00 slot by k0 times the sum over every row
+  but the 00 of sigma_in x sigma_out (the momenta in and out in rest-dial turns, swap-symmetric), each ii slot by
+  minus the sum over every row of its two Meshes' stretches squared at the now slot, (a(x + e_i) - a(x))^2 +
+  (a(x) - a(x - e_i))^2, each halved by the drive's dial 2 on the pushed rows with the remainder kept in r_d; the jk
+  and 0i slots pushed by nothing (nothing reads them). No strength: the factor is 1; the universe's "push" is 1
+  (gravity) or 0 (none). The read's factor k0 is 1 as built (the S^2 the fourth text put in the push belongs to the
+  00 slot's read); GR's gamma = 1 for light needs k0 = Spokes x senses = 12 (light's h_ii / h_00 144 at 1, 1 at 12,
+  measured 132 and 0.92): Big Pic's and the owner's, built tonight only on the Boss's yes (PLAN B2b).
+- Why this form: the final physicist's two blocking items (the built form adds -eta (v.v); the books open by 588 f
+  at every integer strength, 1152 f on the 2K-plan) are both answered by the one derivation from the act's energy,
+  with no strength to choose; line 35's "the books fix it" is met. Measured by the deriver on the live act (probe_f):
+  dust 1000 permille against 588000 and 1151999; a held tent and bump 1000 to eight digits; the run back 12 of 12.
+- Prices and limits, named: the jk and 0i slots are pushed by nothing (against line 35's "ten slots each pushed": the
+  owner's, NOT_CLOSED 6); free fast matter closes the books to 1133 (tent) and 1041 (bump) permille, the discrete
+  pairing now x next being not local in one Mesh (OPEN, NOT_CLOSED 27); the sign is to be read on the well world (the
+  clock deepens where matter is, or the finding goes to the owner); gamma on slow matter waits on term 6's spring; the
+  0i block's unit stays OPEN; the second order in u and the 00 wave in a well as before (frame 2).
+- The final mathematician PASSED the fourth text with eight minors (t5f_math/HANDBACK_text.txt), folded: the loader
+  refuses a second square train by name (item 1; B2), the 24 under the push hold only with the twisted action (item 8;
+  frame 1, A2), an odd row's strides swapped and kept under the mirror and a pushed row's strides reading J1's kick
+  alone (item 4), "the clock moving" measured at u of 10^-2 or more (item 2), the books' identity named the act's
+  (item 5), 1 + gamma on unrounded periods with bounds (item 6), (b) as (e) on self-partnered monomials (item 7).
+- Test: the tent pushes the zz slot alone, by minus its two Meshes' stretches squared, and the 00 slot by 0; the
+  gliding hand pushes the 00 slot by k0 SUM sigma_in sigma_out and the ii slots by 0; the drive's teeth senses on the
+  pushed rows; the books on dust, the held tent and bump 1000 permille by windows at dial 2 (B2b's probe); the run
+  back with r_d moving; the well world re-laid and its clock deeper where the lump is.
+- Replaced by: the fifth text passing the final physicist (his two items) and its mathematician; then DERIVED, the
+  same code.
+- Choice: the books' form at dial 2, because it is derived from the act's own energy with nothing chosen and closes
+  the books where the readers measured them open; the alternatives: the law's form at an integer strength (books open
+  by 1152 f), the built form (588 f, the wrong stress), both refused by the readers and by line 35.
 
 ## 4. Term 11, the whole click: the passing S with the kept tooth [DERIVED for the pair; to build A1]
 
@@ -219,3 +221,34 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   hand at its turning point (a = b), no root and no sine; the key and the strengths CHOSEN in the universe file
   with their windows in lay.txt.
 - Test: the measures of PLAN B3 and B5 on the runner's record and ledger.
+
+## 12. Pauli: a hand per quantum (Big Pic's direction, #2187 6530886681, on the owner's word "Try a hand per quantum. If the whole history chooses, that is very strong") [FRAME; the night's direction; no code of its own tonight]
+
+- Form (Big Pic's check in whole numbers, reader-5 c081a8b6d, BIGPIC-QUATERNIONS/p11_hand_per_quantum.py): each
+  half-speed quantum has its own hand and the family's hand is their sum, so law line 1021's one hand stands as the
+  sum; the board is unchanged, the parts' hands moved by the act summing to the family's hand to the teeth (the
+  carry's rounding); each click reads its own row locally (term 11 per train); a pair of like clicks is weighed by
+  the determinant of their rows for a half-speed family and by the permanent for a whole-speed one, so one mode
+  twice weighs 0 (the exchange hole at one place), two go to an orbital, a third weighs 0, and light bunches. This
+  is FAMILIES4's theorem taken by its first escape: a second hand per quantum over the whole board, read in the
+  modes' overlap, with no threshold, no stored hand and no cap.
+- What stands in the files and the loader tonight: a hand per quantum is one train per quantum; the files already
+  lay any number of trains of one whole-speed kind (the click world's two (T1, T2) trains are two hands of one
+  kind), and the act moves them alike with nothing declared. The half-speed kinds (E1/2, E5/2, G3/2 from the 48
+  units) are not among the loader's five, so a half-speed hand per quantum cannot be laid tonight: that is the
+  half-speed gear, another agent's (NOT_CLOSED 8).
+- What is not built tonight: the weighing of a pair of like clicks by the determinant or the permanent is term 12's
+  draw and the decoder's reading, and the decoder stays basic while the clicks are not closed (the Boss's call); the
+  conditional hand for quanta born apart (Bell's road, decision 34) is OPEN and the owner's.
+- Test tonight (a probe, no src): on the engine's act, two whole-speed hands x and y of one kind on their springs
+  with no tie between them, and a third world with one hand z laid as x + y: after one round the momenta add
+  exactly, M_x + M_y = M_z at every gear and site (the push is linear in the hands: the springs and the pull), and
+  over many rounds the counts a_x + a_y part from a_z by teeth alone (the carry's rounding: the largest gap per gear
+  measured, Big Pic's "to the teeth"); with a tie between x and y the one-round sum differs by exactly the tie's
+  push. A plain, exact statement of "the board is unchanged" for whole-speed hands; the half-speed case waits on its
+  gear.
+- Replaced by: the half-speed gear and the two-board click (decision 34) derived and read by their pair; the owner's
+  word on the conditional hand.
+- Choice: the hand per quantum, because it is the one escape FAMILIES4's theorem leaves (no threshold, no stored
+  hand, no cap) and Big Pic checked its board in whole numbers; the alternatives (a declared cap, a stored hand, a
+  local pairing read as Pauli) are refused by the law and by the physicist's readings.
