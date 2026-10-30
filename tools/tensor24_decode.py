@@ -1,10 +1,9 @@
 """The decoder's tool (Animate's): one record of the schema read, with its ledger beside it where one is named, and its
 readings printed: row 15's verdict with its two readings, row 46's with its two, the ledger read or the cause it is
-not, the measurement's rules (the cone check by click, proper time read twice and the twin reading), and each whole
-click's ticks from the rate lines of a record written before the schema 1.2.
+not, and the measurement's rules (the cone check by click and the twin reading).
 Nothing is raised: a record or a ledger that is not read is named with its cause, and the rows that need it read NOT
 READ. The interpreter's bound on a whole number's digits is lifted, since the schema's numbers are whole numbers of
-any width. Each Node-clock's rate lines are read once for all its whole clicks.
+any width.
 
 Usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]
 """
@@ -15,33 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from tensor24.decoder import bangs, books, clocks, measure, records  # noqa: E402
-
-
-def ticks(record: records.Record) -> str:
-    """Each whole click's ticks from its Node-clock's rate lines: how many are read, the first not read, the last."""
-    lines, clicks = clocks.stretches(record), record.of("whole")
-    by_site: dict[int, list[int]] = {}
-    for at, c in enumerate(clicks):
-        by_site.setdefault(c["site"], []).append(at)
-    found: dict[int, int | None] = {}
-    for site, ats in by_site.items():
-        found |= dict(
-            zip(
-                ats,
-                clocks.ticks_at(lines.get(site, []), [clicks[at].get("count") for at in ats]),
-                strict=True,
-            )
-        )
-    read = [found[at] for at in range(len(clicks)) if found[at] is not None]
-    unread = [c for at, c in enumerate(clicks) if found[at] is None]
-    first = (
-        f", the first not read at round {unread[0]['round']}, site {unread[0]['site']}: "
-        f"{clocks.unread(lines.get(unread[0]['site'], []), unread[0].get('count'))}"
-        if unread
-        else ""
-    )
-    return f"the whole clicks' ticks from the rate lines: {len(read)} read, {len(unread)} not read{first}; the last read {read[-1:]}"
+from tensor24.decoder import bangs, books, measure, records  # noqa: E402
 
 
 def main(argv: list[str]) -> int:
@@ -62,9 +35,7 @@ def main(argv: list[str]) -> int:
     print(f"row 46: {bangs.row_46(record, ledger, why)}")
     print(f"the ledger: {why if ledger is None else f'read, {len(ledger)} lines'}")
     print(f"the cone check (D8): {measure.cone_check(record)}")
-    print(f"proper time (D6): {measure.proper(record)}")
     print(f"the twin reading (D6): {measure.twins(record)}")
-    print(ticks(record))
     return 0
 
 

@@ -1,4 +1,4 @@
-"""The measurement's rules on the record (D6 to D8): proper time twice, the twins, the cone check by click."""
+"""The measurement's rules on the record (D6 to D8): a duration as a clock's own count, the twins, the cone check by click."""
 
 # The rules (the owner's text to the Boss, space and time the shadows of one four-dimensional spacetime, and his word
 # "This is also important for the decoder, no?"; the Boss's D6 to D8, entered at 6499774896; ANIMATE-SCHEMA-1.2,
@@ -8,11 +8,9 @@
 # own count, and a reading that asks one between two events of no common clock is refused by name.
 #
 # A clock is named on each of its whole clicks by "clock", the round and site of the lay that made it, and its face
-# reads its own count there in "tooth", the teeth from that lay, before and after the click (K4). Proper time read
-# twice (D6): between two of a clock's clicks at one Node-clock, (i) its own count, the later click's tooth after less
-# the earlier's, and (ii) its Node-clock's ticks between the two beats, from the rate lines (clocks.py). The two agree
-# through the clock's beat, its own count per tick, one number at every pair, compared by cross products. A clock
-# whose clicks stand at two sites has no pair at one Node-clock there: its path between them is not on the record.
+# reads its own count there in "tooth", the teeth from that lay, before and after the click (K4). Proper time (D6):
+# between two of a clock's clicks, its own count, the later click's tooth after less the earlier's; a duration asked
+# between two events of no common clock is refused by name (D7). Its second reading, by signals, is light's, owed.
 #
 # The twin reading: two clocks that meet twice, a click of each at one round and site and again at a later meeting;
 # each one's own count between the meetings, and its path, the sites of its clicks between (a clock with no click
@@ -34,7 +32,6 @@ import json
 from typing import Any
 
 from tensor24.algebra.carry import carry
-from tensor24.decoder import clocks
 from tensor24.decoder.records import Record, whole
 
 Line = dict[str, Any]
@@ -228,53 +225,6 @@ def elapsed(clocked: dict[Event, list[Line]], clock: Event, early: Event, late: 
     if early not in at or late not in at:
         return NO_READING
     return counted(at[early], at[late])
-
-
-def proper(record: Record) -> dict[str, Any]:
-    """Proper time read twice: SHOWN through one beat, NOT SHOWN with the first pair off it, or NOT READ."""
-    clocked, unread = faces(record)
-    if unread:
-        return verdict("NOT READ", unread)
-    if not clocked:
-        return verdict("NOT READ", "no whole click names its clock")
-    lines, pairs = clocks.stretches(record), 0
-    beats: dict[Event, tuple[int, int]] = {}
-    for clock, run in clocked.items():
-        read: list[tuple[int, int, Line, Line]] = []
-        for early, late in zip(run, run[1:], strict=False):
-            if early["site"] != late["site"]:
-                continue
-            here = lines.get(early["site"], [])
-            ticks = clocks.ticks_at(here, [early["count"], late["count"]])
-            if ticks[0] is None or ticks[1] is None:
-                return verdict(
-                    "NOT READ",
-                    f"the rate lines of site {early['site']}: {clocks.unread(here, late['count'])}",
-                )
-            read.append((counted(early, late), ticks[1] - ticks[0], early, late))
-        pairs += len(read)
-        for (own, ticked, early, late), (own2, ticked2, early2, late2) in zip(
-            read, read[1:], strict=False
-        ):
-            if own * ticked2 != own2 * ticked:
-                cause = (
-                    f"the clock laid at round {clock[0]}, site {clock[1]} counts {own} over {ticked} ticks between "
-                    f"rounds {early['round']} and {late['round']}, and {own2} over {ticked2} between rounds "
-                    f"{early2['round']} and {late2['round']}"
-                )
-                return verdict("NOT SHOWN", cause, pairs=pairs)
-        if read:
-            beats[clock] = (read[0][0], read[0][1])
-    if not pairs:
-        return verdict(
-            "NOT READ",
-            "no clock clicks twice at one Node-clock: its path between two sites is not on the record",
-        )
-    cause = (
-        "each clock's own count agrees with its Node-clock's ticks through one beat "
-        f"(the clocks: {len(beats)}; the pairs of clicks: {pairs})"
-    )
-    return verdict("SHOWN", cause, pairs=pairs, beats=sorted(beats.items()))
 
 
 def twins(record: Record) -> dict[str, Any]:

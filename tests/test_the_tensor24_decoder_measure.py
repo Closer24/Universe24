@@ -1,5 +1,5 @@
 """Tensor24's decoder, the measurement's rules (D6 to D8) on records built in memory (N5): the cone check by click,
-proper time read twice, the twin reading and no duration read from the board's tick; each failing on its mutant."""
+a duration as a clock's own count, the twin reading and no duration read from the board's tick; each failing on its mutant."""
 
 import json
 import subprocess
@@ -142,34 +142,6 @@ HOME = [tick(A, 10, 5, 15), tick(A, 30, 5, 45), tick(A, 50, 5, 75), tick(A, 90, 
 TRIP = [tick(B, 10, 5, 15), tick(B, 20, 9, 30), tick(B, 30, 9, 60), tick(B, 50, 5, 120)]
 
 
-PROPER = [
-    (GROUND + HOME + TRIP, "SHOWN", "(the clocks: 2; the pairs of clicks: 4)"),
-    (
-        GROUND + HOME[:2] + [tick(A, 50, 5, 70)] + TRIP,
-        "NOT SHOWN",
-        "30 over 10 ticks between rounds 10 and 30",
-    ),
-    (
-        GROUND + [{k: v for k, v in e.items() if k != "clock"} for e in HOME],
-        "NOT READ",
-        "names its clock",
-    ),
-    (
-        GROUND + TRIP[1:3] + [tick(A, 20, 5, 9), tick(A, 30, 9, 18)],
-        "SHOWN",
-        "(the clocks: 1; the pairs of clicks: 1)",
-    ),
-    (
-        GROUND + [tick(A, 10, 5, 15), tick(A, 30, 9, 75)],
-        "NOT READ",
-        "two sites is not on the record",
-    ),
-    (rate(9, [1] * 100) + HOME, "NOT READ", "the rate lines of site 5"),
-    (GROUND + HOME + [{**TRIP[0], "tooth": 7}], "NOT READ", "reads no clock, face or count"),
-    (GROUND + HOME + [{**TRIP[0], "clock": [2, 5, 0]}], "NOT READ", "reads no clock, face or count"),
-]
-
-
 TWINS = [
     (GROUND + HOME + TRIP, "SHOWN", "count apart (compared: 1)"),
     (GROUND + HOME + TRIP[:-1] + [tick(B, 50, 5, 75)], "NOT SHOWN", "count 60 each"),
@@ -186,11 +158,8 @@ TWINS = [
 ]
 
 
-def test_a_duration_is_a_clocks_own_count_read_twice_and_the_twins_count_apart():
-    """A duration is a clock's own count: proper time read twice and agreeing, the twins apart, a board tick refused."""
-    for lines, kind, named in PROPER:
-        found = measure.proper(built(lines))
-        assert (found["kind"], named in found["cause"]) == (kind, True), found
+def test_a_duration_is_a_clocks_own_count_and_the_twins_count_apart():
+    """A duration is a clock's own count between two of its clicks: the twins apart, a board tick refused."""
     for lines, kind, named in TWINS:
         found = measure.twins(built(lines))
         assert (found["kind"], named in found["cause"]) == (kind, True), found
@@ -216,7 +185,7 @@ def test_the_ledger_and_the_tool_hold_the_measurements_rules(tmp_path):
     found = subprocess.run(
         [sys.executable, "-I", str(TOOL), str(path)], capture_output=True, text=True, check=True
     )
-    for rule in ("the cone check (D8)", "proper time (D6)", "the twin reading (D6)"):
+    for rule in ("the cone check (D8)", "the twin reading (D6)"):
         assert f"{rule}: {{'kind': 'SHOWN'" in found.stdout
     broken = tmp_path / "measure.ledger.jsonl"
     broken.write_text("no ledger\n", encoding="utf-8")

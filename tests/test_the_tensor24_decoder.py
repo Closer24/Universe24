@@ -1,14 +1,12 @@
 """Tensor24's decoder: a record and its ledger read under the schema's rules, each broken one not read with its own cause
-and nothing raised; row 15's two readings; the ticks from the rate lines; each law failing on its own mutant."""
+and nothing raised; row 15's two readings; each law failing on its own mutant."""
 
 import json
 import subprocess
 import sys
 from pathlib import Path
 
-import numpy as np
-
-from tensor24.decoder import books, clocks, records
+from tensor24.decoder import books, records
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
 DIGITS = (
@@ -390,44 +388,6 @@ def test_the_books_close_where_they_hold_the_click_and_read_not_shown_or_not_rea
     )
 
 
-def ticked(seed, beats=60):
-    """A Node-clock's k at each beat, and its rate lines: at its first beat and wherever k changes."""
-    ks = [int(k) for k in np.random.default_rng(seed).integers(0, 1 + 1, size=beats)]
-    lines = [(count, k) for count, k in enumerate(ks, start=1) if count == 1 or ks[count - 1 - 1] != k]
-    return ks, lines
-
-
-def test_the_ticks_are_read_from_the_rate_lines_and_never_from_the_rounds(tmp_path):
-    """A Node-clock's ticks come from its rate lines from its first beat, never from the record's rounds."""
-    lines = [
-        rate(1, 0, 1, 1),
-        rate(1 + 1, 1, 1, 0),
-        rate(1 + 1 + 1, 1, 1 + 1, 1),
-        rate(4, 0, 1 + 1, 0),
-        rate(6, 0, 4, 1),
-    ]
-    held, counts = clocks.stretches(read([H, *lines, E], tmp_path)), (0, 1, 1 + 1, 1 + 1 + 1, 4)
-    assert [clocks.ticks_to(held[0], c) for c in counts] == [0, 1, 1, 1, 1 + 1]
-    assert [clocks.ticks_to(held[1], c) for c in (1, 1 + 1)] == [0, 1]
-    assert clocks.ticks_at(held[0], [*counts, -1, None]) == [0, 1, 1, 1, 1 + 1, None, None]
-    unread_lines = {
-        "the count is no whole number from 0": [([(1, 1)], -1), ([(1, 1)], True), ([(1, 1)], None)],
-        "its Node-clock holds no rate line": [([], 1)],
-        "a rate line of its Node-clock holds no whole count and k": [([(1, None)], 1), ([(1.0, 1)], 1)],
-        "a rate line of its Node-clock holds a k that is no bit": [
-            ([(1, 1 + 1)], 1 + 1 + 1),
-            ([(1, -1)], 1),
-        ],
-        "its Node-clock's first rate line stands at no first beat": [([(1 + 1, 1)], 1 + 1)],
-        "its Node-clock's rate lines do not rise in count": [([(1, 1), (1, 0)], 1 + 1)],
-        "its Node-clock's rate lines repeat a k": [([(1, 1), (1 + 1 + 1, 1)], 4)],
-    }
-    for cause, cases in unread_lines.items():
-        assert all(
-            clocks.unread(lines, c) == cause and clocks.ticks_to(lines, c) is None for lines, c in cases
-        )
-
-
 def law_books(tmp_path):
     broken = click(1, 0, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
     return books.closes(TAKE, WOUND) and not books.closes(broken, WOUND)
@@ -456,20 +416,6 @@ def law_lacking(tmp_path):
         return kind([H, LACKING["its taken"], E], GOOD, tmp_path) == "NOT READ"
     except KeyError:
         return False
-
-
-def law_ticks(tmp_path):
-    held = []
-    for seed in (0, 1, 1 + 1):
-        ks, lines = ticked(seed)
-        counts = list(range(len(ks) + 1))
-        held += [clocks.ticks_to(lines, count) == sum(ks[:count]) for count in counts]
-        held += [clocks.ticks_at(lines, counts) == [sum(ks[:count]) for count in counts]]
-    return all(held)
-
-
-def law_bit(tmp_path):
-    return clocks.ticks_to([(1 + 1, 1)], 1 + 1) is None and clocks.ticks_to([(1, 1 + 1)], 1) is None
 
 
 def law_line_feed(tmp_path):
@@ -501,13 +447,6 @@ LAWS = {  # each law, and its mutant: one function of the decoder replaced
         "unread_books",
         lambda click, winding: "",
     ),
-    "the ticks counted from the rate lines": (
-        law_ticks,
-        clocks,
-        "ticks_at",
-        lambda lines, counts: [sum(k for c, k in lines if c <= count) for count in counts],
-    ),
-    "the ticks read from a first beat and a bit alone": (law_bit, clocks, "stands", lambda lines: ""),
     "the lines split at the line feed alone": (
         law_line_feed,
         records,
@@ -536,14 +475,14 @@ def tool(*args):
 
 
 def test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits(tmp_path):
-    names = ("record", "ledger", "broken", "clicked", "wide")
-    record, good, broken, clicked, wide = (tmp_path / f"{name}.jsonl" for name in names)
+    names = ("record", "ledger", "broken", "wide")
+    record, good, broken, wide = (tmp_path / f"{name}.jsonl" for name in names)
     number = (
         '{"kind": "rate", "round": 1, "site": 0, "count": 1, "dial": ' + "9" * (DIGITS + 1) + ', "k": 1}'
     )
     for path, lines in zip(
-        (record, good, broken, clicked, wide),
-        ([H, TAKE, rate(1, 0, 1, 1), E], GOOD, [H, "no json", E], [H, TAKE, E], [H, number, E]),
+        (record, good, broken, wide),
+        ([H, TAKE, rate(1, 0, 1, 1), E], GOOD, [H, "no json", E], [H, number, E]),
         strict=True,
     ):
         path.write_text(text(lines), encoding="utf-8")
@@ -557,22 +496,14 @@ def test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits(tmp_path):
     finally:
         sys.set_int_max_str_digits(bound)
     usages = [tool(), tool(broken, broken, broken)]
-    shown, absent, lifted, unread_run, ticks_run = (
-        tool(*args)
-        for args in ((record, good), (record, tmp_path / "absent.jsonl"), (wide,), (broken,), (clicked,))
+    shown, absent, lifted, unread_run = (
+        tool(*args) for args in ((record, good), (record, tmp_path / "absent.jsonl"), (wide,), (broken,))
     )
     assert all(
         run.returncode == 1 + 1 and run.stdout == "" and run.stderr.startswith("usage:")
         for run in usages
     )
-    assert all(
-        run.returncode == 0 and run.stderr == ""
-        for run in (shown, absent, lifted, unread_run, ticks_run)
-    )
-    assert "'kind': 'SHOWN'" in shown.stdout and "1 read, 0 not read" in shown.stdout
+    assert all(run.returncode == 0 and run.stderr == "" for run in (shown, absent, lifted, unread_run))
+    assert "'kind': 'SHOWN'" in shown.stdout
     assert "the ledger's file is absent" in absent.stdout and lifted.stdout.startswith("row 15")
     assert unread_run.stdout == f"not read: {NO_JSON}\n"
-    unticked = (
-        "0 read, 1 not read, the first not read at round 1, site 0: its Node-clock holds no rate line"
-    )
-    assert unticked in ticks_run.stdout
