@@ -37,7 +37,7 @@ A world is three files (`examples/tensor24/`): the universe (the integers den, f
 
 ## The documents
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): the one document that tells the system and the one the work runs from: the parts, the Node-clock first, each told by the clock, the board and the clicks, with its algebra, home, test and status; who may import whom; the glossary.
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): the one document that tells the system and the one the work runs from: the parts, the Node-clock first, each told by the clock, the algebra, the board and the clicks, with its home, test and status; who may import whom; the glossary.
 - [docs/ALGEBRA.md](docs/ALGEBRA.md): the law: the postulates at its head, the decisions in force, one bold line per rule, each clause quoting the owner's words it stands on.
 - [CHANGELOG.md](CHANGELOG.md): what changed since the new engine. `tools/derivations/open_items/`: the gate (`SCRIBE-GATE-1.md`), the keeper's records (`SCRIBE-OWNER-WORDS.md`, `SCRIBE-LAW-AUDIT-2.md`) and the derivations, two blind hands per question with their numbers; the law's text is the one place that is current.
 
