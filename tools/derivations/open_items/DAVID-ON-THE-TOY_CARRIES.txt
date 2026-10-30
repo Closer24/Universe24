@@ -1,0 +1,96 @@
+diff --git a/src/event_universe/core/paces.py b/src/event_universe/core/paces.py
+index c3cee831f..cd899cfaa 100644
+--- a/src/event_universe/core/paces.py
++++ b/src/event_universe/core/paces.py
+@@ -37,10 +37,12 @@ class Side:
+     carry: int
+     clocks: list[int] = field(default_factory=list)
+     links: list[int] = field(default_factory=list)
++    numerators: list[int] = field(default_factory=list)
+ 
+     def reach(self, gamma: int, size: int) -> None:
+         """The side filled through the size |c|: the pace rounded(N, Gamma^2) half up, the Link's pace from it, p_0^2 over Gamma rounded once, then one carried division per content."""
+         while len(self.clocks) <= size:
++            self.numerators.append(int(self.scaled))
+             pace = int(rounded(self.scaled, gamma * gamma))
+             self.clocks.append(pace)
+             self.links.append(int(rounded(pace * pace, gamma)))
+@@ -136,3 +138,8 @@ def clock_of(gamma: int, contents: Any) -> Any:
+ def link_pace_of(gamma: int, contents: Any) -> Any:
+     """The Link's pace at every Node from the content read on the Link (`link_pace` through the table)."""
+     return looked_up(lambda side: side.links, gamma, contents)
++
++
++def numerator_of(gamma: int, contents: Any) -> Any:
++    """The clock's numerator N(c) at every Node (the blind build of the carried paces): the table's scaled power before its rounding."""
++    return looked_up(lambda side: side.numerators, gamma, contents)
+diff --git a/src/event_universe/interval.py b/src/event_universe/interval.py
+index 13449ef2b..968b486c5 100644
+--- a/src/event_universe/interval.py
++++ b/src/event_universe/interval.py
+@@ -81,7 +81,7 @@ class Interval:
+         node = self.node
+         self.c = np.asarray(volume.level_of(node.gamma, self.at(self.carrier.lines[0])), dtype=object)
+         node.start_content = self.c
+-        self.p0, self.pi = readings.paces_of(node, self.c)
++        self.p0, self.pi = readings.carried_paces(node, self.c, self.direction)
+         node.start_clock = self.p0
+         if self.frozen is None:
+             self.frozen = readings.frozen_of(node, self.c)
+diff --git a/src/event_universe/node.py b/src/event_universe/node.py
+index 03f57ea48..85f17e9f9 100644
+--- a/src/event_universe/node.py
++++ b/src/event_universe/node.py
+@@ -84,6 +84,9 @@ class Node:
+         self.beats = [zeros(shape) for _ in range(nr)]
+         self.proper, self.closes, self.interval = zeros(shape), zeros(shape), 0
+         self.take_rem = zeros(shape)
++        self.carry0 = zeros(shape) + acts.born(self.gamma * self.gamma)
++        self.carry1 = zeros(shape) + acts.born(self.gamma)
++        self.paces_now = None
+         self.log: list[dict[str, Any]] = []
+         self.turns: list[tuple[int, int]] = []
+         self.stack: list[dict[str, Any]] = []
+diff --git a/src/event_universe/readings.py b/src/event_universe/readings.py
+index 2f457e412..dd05dbcd2 100644
+--- a/src/event_universe/readings.py
++++ b/src/event_universe/readings.py
+@@ -17,10 +17,24 @@ if TYPE_CHECKING:
+ 
+ 
+ def paces_of(node: Node, content: Any) -> tuple[Any, Any]:
+-    """The Node's two paces from its content, the clock p_0 and the Link's pace p_i (X2: paces(content)), one reading."""
++    """The Node's two paces from its content, the clock p_0 and the Link's pace p_i (X2: paces(content)), one reading; the carried pair of the interval where one stands (the blind build)."""
++    found = getattr(node, "paces_now", None)
++    if found is not None:
++        return found
+     return paces.clock_of(node.gamma, content), paces.link_pace_of(node.gamma, content)
+ 
+ 
++def carried_paces(node: Node, content: Any, direction: int) -> tuple[Any, Any]:
++    """The blind build of the toy's carried paces: the clock N(c) = q_0 Gamma^2 + r_0 and the Link pace p_0^2 = q Gamma + r, each one carried division of the Node with its remainder kept per Node across intervals, advanced once per interval forward and inverted once backward (acts.divide at -1 with the same numerator)."""
++    from event_universe.core import acts
++    g = node.gamma
++    numerator = np.asarray(paces.numerator_of(g, content), dtype=object)
++    p0, node.carry0 = acts.divide(numerator, g * g, node.carry0, direction)
++    pi, node.carry1 = acts.divide(p0 * p0, g, node.carry1, direction)
++    node.paces_now = (p0, pi)
++    return node.paces_now
++
++
+ def frozen_of(node: Node, content: Any) -> Any:
+     """The frozen mask from the content (BH-S1): the Nodes whose Link pace reads 0 at the interval's start, one reading for the interval, the close and the writer."""
+     pace = np.asarray(paces_of(node, content)[1], dtype=object)
+diff --git a/src/event_universe/run.py b/src/event_universe/run.py
+index 0d189c41a..c27cfc76f 100644
+--- a/src/event_universe/run.py
++++ b/src/event_universe/run.py
+@@ -171,7 +171,7 @@ def arrays(node: Node) -> list[Any]:
+ def state(node: Node) -> list[Any]:
+     """Every integer array of the Node's state: the lines' levels and remainders, the records' standing, crossings and beats, the proper count, the closes and the take's remainder (the one list the census counts and the run back compares; the former comparison of the lines and the take's remainder alone, which left the five counters the bodies' closing reads unchecked, kept by name, the Boss's 6421253357 item 4, 2026-10-26)."""
+     found = arrays(node) + node.standing + node.crossed + node.beats + [node.proper, node.closes]
+-    return [*found, node.take_rem]
++    return [*found, node.take_rem, node.carry0, node.carry1]
+ 
+ 
+ def census(node: Node) -> tuple[int, int]:

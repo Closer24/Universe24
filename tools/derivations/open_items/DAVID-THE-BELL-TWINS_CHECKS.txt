@@ -1,0 +1,33 @@
+DAVID-THE-BELL-TWINS_CHECKS.txt: the checks of DAVID-THE-BELL-TWINS.md. The build: a local worktree of 97e5b3fd6 with DAVID-THE-BELL-TWINS.patch applied (bobs.py: bell_turn, bell_answers and the index; striking.py: the strike calls bell_answers after the bobs; predicates.py: row 56 reads the clicks' answers). Each check a harness in scratchpad/field; nothing pushed to src.
+
+1. The quaternions' turns of the twins' axis (bobs.bell_turn on the up twin, read as the spin's axis over the norm): (1,0,0,0) keeps z; (1,0,1,0) turns z to (2,0,0)/2; (12,0,5,0) turns z to (120,0,119)/169; (12,0,-5,0) to (-120,0,119)/169.
+
+2. The rule alone (bell_rule2.py: the build's own bell_turn and the split's comparison, a fair 64-bit linear congruential stream for the draws, the choices and which end clicks first; 200,000 pairs; Born's exact cells read by the harness from the turns' axes):
+   pairs 200000: E thousandths per cell {(0, 0): -707, (0, 1): 708, (1, 0): -707, (1, 1): -706}; Born's exact E per cell {(0, 0): '-120/169', (0, 1): '120/169', (1, 0): '-119/169', (1, 1): '-119/169'}; S thousandths -2829 against Born's -2828 (-478/169); the + end's answers per the - end's setting {0: {-1: 49997, 1: 50102}, 1: {1: 49713, -1: 50188}}
+
+3. The bang through the build, 13 seeds at 500 ticks (bell_run3.py: the world's wave seed at each quanta, the turns and the outside choices handed over; the chart with the rewind of 20; bell_final.py the reading):
+   charts 13, the rewind {'{"intervals": 20, "exact": 20}': 13}; pairs answered at both ends 688 (367 in one strike); the first clicks' answers {-1: 409, 1: 440}
+     cell (0, 0): pairs 154, the same answer 21, E thousandths -727
+     cell (0, 1): pairs 163, the same answer 131, E thousandths 607
+     cell (1, 0): pairs 181, the same answer 22, E thousandths -756
+     cell (1, 1): pairs 190, the same answer 22, E thousandths -768
+     S = -88174439/30830635 = -2859 thousandths, its spread about 106 thousandths (Tsirelson 2828, the local bound 2000)
+     the + end's answers for the - end's setting 0: {-1: 168, 1: 149}
+     the + end's answers for the - end's setting 1: {-1: 193, 1: 178}
+     the - end's answers for the + end's setting 0: {1: 182, -1: 153}
+     the - end's answers for the + end's setting 1: {1: 169, -1: 184}
+     the cone: 688 of 688 pairs with the two clicks' mesh distance within the ticks back to the birth and forward again
+
+4. The board untouched: the twins build's charts at 500 ticks against the cosine build's of the same seed, the answers dropped, every key but the rows' timings equal: 5, 20, 1.5 and 10 million quanta, all equal. The cosine build's charts equal 97e5b3fd6's on 13 seeds at 250 ticks (DAVID-THE-BELL-CLICK_CHECKS.txt item 3).
+
+5. The final code (names in place of index literals) repeats the runs' answers click by click: 447 answers at 5 million quanta, 500 ticks; the rewind 20 of 20.
+
+6. The full check on the build, the machine quiet (CHECK_BASE=origin/engine-5.0-test tools/check.py --full in the build's worktree):
+   All checks passed!
+   the engine gates hold against the merge base
+   the shape of the code holds against the merge base
+   the shape of tests/ holds against the merge base
+   the documents' six gates hold
+   ======================== 117 passed in 68.33s (0:01:08) ========================
+
+7. The rewind and the phenomenon: the rewind 20 of 20 at all 13 seeds (item 3, 'the rewind'); the phenomenon is item 3's S beyond the local bound at Born's 478/169, with no cosine, dot product or root in the engine's code.

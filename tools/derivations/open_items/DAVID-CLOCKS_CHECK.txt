@@ -1,0 +1,80 @@
+"""Checks of the clock reading on the engine's own acts (core/acts, core/rule3, core/paces, features/phase)."""
+import random
+from event_universe.core.acts import divide, mirror, born
+from event_universe.core.rule3 import rule3, flux_total
+from event_universe.core import paces
+from event_universe.features import phase
+
+random.seed(7)
+# 1. the carried division is an exact integer leapfrog: V = w (now - before) + r, V' = V + F
+bad = 0
+for _ in range(200000):
+    w = random.choice([2, 4, 6, 1000, 6 * 7 * 10**6, 2 * 10**6])
+    now, before = random.randint(-10**9, 10**9), random.randint(-10**9, 10**9)
+    r = random.randrange(w)
+    D = random.randint(0, 3 * w)
+    flux = random.randint(-10**12, 10**12)
+    a_next, r2 = rule3(flux, D, w, now, before, r, 1)
+    V, F = w * (now - before) + r, flux - D * now
+    V2 = w * (a_next - now) + r2
+    bad += V2 != V + F or not (0 <= r2 < w)
+    # back: the act at -1 from (a_next, now, r2) returns (before, r)
+    b, rb = rule3(flux, D, w, now, a_next, r2, -1)
+    bad += (b, rb) != (before, r)
+print("1. leapfrog identity V' = V + F and the exact step back, failures:", bad)
+
+# 2. the momentum read P = V - w/2 under the two mirrors with the slots exchanged
+badT = badC = 0
+for _ in range(100000):
+    w = random.choice([4, 6, 1000, 2 * 10**6])
+    now, before, r = random.randint(-10**6, 10**6), random.randint(-10**6, 10**6), random.randrange(1, w)
+    P = w * (now - before) + r - w // 2
+    PT = w * (before - now) + (w - 1 - r) - w // 2
+    PC = w * (before - now) + ((w - r) % w) - w // 2
+    badT += PT != -P - 1
+    badC += PC != -P
+print("2. T gives -P-1, failures:", badT, "; C gives -P (r != 0), failures:", badC)
+# born at the half wall = P = 0 at rest
+print("   born remainder w/2 at rest gives P =", 0 * 1000 + born(1000) - 1000 // 2)
+
+# 3. C o T is one tick, the centre {1, A}
+w = 12
+T = lambda r: w - 1 - r
+C = lambda r: (w - r) % w
+print("3. C(T(r)) - r mod w over the dial:", sorted({(C(T(r)) - r) % w for r in range(w)}), "; C fixes", [r for r in range(w) if C(r) == r], "; T fixes", [r for r in range(w) if T(r) == r])
+
+# 4. the family's rest clock: with no Links and the vacuum's pace, K / w = num / den (cos omega_0)
+den, gam = 1655909141, 1000
+for num in [den, den - 1, 1655000000, 1200000000]:
+    from event_universe.core.rule3 import rule_integers
+    rl = rule_integers(num, den, gam, gam, gam)
+    K2 = rl.self_coefficient + sum(rl.reaches)  # 2K with the six Links at rest: S + SUM R
+    w_ = rl.wall
+    print("4. num/den =", num, "/", den, ": 2K/w == 2 num/den exactly:", K2 * den == 2 * num * w_, "; mass D =", rl.mass)
+
+# 5. the proper clock: p_0 = Gamma (1 - 1/Gamma)^c, the content the number of 1/Gamma slowings; the frozen content
+for c in [0, 1, 10, 100, 1000, 3000]:
+    print("5. content", c, "clock", paces.clock(gam, c), "link pace", paces.link_pace(gam, c))
+print("   frozen content (Link pace rounds to 0):", paces.frozen_content(gam))
+
+# 6. every family's rest clock slows by the Node's clock alike: 1 - cos(omega_0') = (1 - num/den) (p_0/Gamma)^2
+from fractions import Fraction as Fr
+import math
+for c in [0, 100, 1000, 3000]:
+    p0 = paces.clock(gam, c)
+    row = []
+    for num in [1655000000, 1200000000]:
+        rl = rule_integers(num, den, gam, p0, gam)
+        K2 = rl.self_coefficient + sum(rl.reaches)
+        cosw = Fr(K2, 2 * rl.wall)
+        w_rest = math.acos(float(cosw))
+        w_vac = math.acos(num / den)
+        row.append(round(w_rest / w_vac, 6))
+    print("6. content", c, "p0/Gamma", p0 / gam, "omega_0'/omega_0 for two families:", row)
+# 7. the reach over the wall (the wave's stiffness) goes as the Link pace squared, (p_0/Gamma)^4: the speed as the clock twice
+for c in [0, 100, 1000]:
+    p0, pl = paces.clock(gam, c), paces.link_pace(gam, c)
+    rl = rule_integers(den, den, gam, p0, pl)
+    print("7. content", c, "R/w", rl.reaches[0] / rl.wall, " (pl/Gamma)^2 =", (pl / gam) ** 2, " (p0/Gamma)^4 =", (p0 / gam) ** 4)
+# 8. the phase line, the reference clock: the angle per act and the period in acts
+print("8. phase line D, K0:", phase.D(gam), phase.K0(gam), "angle per act ~ 1/Gamma; half turn in acts ~ pi Gamma =", round(math.pi * gam))

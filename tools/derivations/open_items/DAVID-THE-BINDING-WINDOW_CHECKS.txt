@@ -1,0 +1,77 @@
+DAVID-THE-BINDING-WINDOW_CHECKS.txt: the checks of DAVID-THE-BINDING-WINDOW.md, on 97e5b3fd6 (scratchpad worktree of the head), each a harness in scratchpad/field; no src touched.
+
+1. The bang at 250 ticks with its seed's quanta varied: bang_q.py (tests/worlds/world_bang.json, the seed's quanta replaced; the chart with the rewind of 20), 13 seeds.
+
+2. The reading over the 13 seeds: binding_window.py (row 76 by phenomena.nuclear_binding on the reckoner's Chart; per heavy family the fittings, the chimes, the distinct pairs, those one fitting's two children, the chiming clocks laid at before their first chime; the light's wind a clock at tick 10 and the heavy families on the board at the last tick, in gapped 2's winding, its chimes' booked).
+
+bang250_q1500000.json: the seed's quanta 1500000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 1182669; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 9583, 'gapped 1': 1868}
+  row 76 NOT SHOWN:: {'gapped 2': [0, 0, 15, 30], 'gapped 1': [4, 4, 2, 8]}
+  gapped 2: fittings 14 (ticks [3, 5, 10]...); chimes 30 at 30 ticks on 1 clocks; distinct pairs 0, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 1 of 1
+    sets {((2, 1, 2),): 30}; sides {}; chiming ticks from 103 to 248, by their remainder in five {3: 30}, steps between them {5: 29}
+  gapped 1: fittings 35 (ticks [2, 22, 23, 24, 31, 32]...); chimes 8 at 4 ticks on 4 clocks; distinct pairs 2, one mesh apart 2; of them a fitting's two children 2; chiming clocks laid at before their first chime 4 of 4
+bang250_q2000000.json: the seed's quanta 2000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 1578267; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 1664, 'gapped 1': 3255}
+  row 76 NOT SHOWN:: {'gapped 2': [0, 0, 36, 36], 'gapped 1': [5, 9, 2, 10]}
+  gapped 2: fittings 46 (ticks [2, 24, 26, 27, 28, 29]...); chimes 36 at 36 ticks on 1 clocks; distinct pairs 0, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 1 of 1
+    sets {((2, 0, 2),): 36}; sides {}; chiming ticks from 73 to 247, by their remainder in five {3: 8, 2: 28}, steps between them {5: 34, 4: 1}
+  gapped 1: fittings 39 (ticks [2, 4, 5, 9, 16, 21]...); chimes 10 at 4 ticks on 4 clocks; distinct pairs 6, one mesh apart 2; of them a fitting's two children 2; chiming clocks laid at before their first chime 4 of 4
+bang250_q2500000.json: the seed's quanta 2500000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 1973598; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 74, 'gapped 1': 3817}
+  row 76 NOT SHOWN:: {}
+  gapped 2: fittings 32 (ticks [2, 3, 4]...); chimes 0 at 0 ticks on 0 clocks; distinct pairs 0, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 0 of 0
+  gapped 1: fittings 81 (ticks [2, 4, 8, 9, 18, 28]...); chimes 0 at 0 ticks on 0 clocks; distinct pairs 0, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 0 of 0
+bang250_q3000000.json: the seed's quanta 3000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 2365673; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 9837, 'gapped 1': 9586}
+  row 76 NOT SHOWN:: {'gapped 2': [30, 316, 78, 212]}
+  gapped 2: fittings 30 (ticks [3, 4, 5, 10, 20]...); chimes 212 at 66 ticks on 6 clocks; distinct pairs 15, one mesh apart 2; of them a fitting's two children 2; chiming clocks laid at before their first chime 6 of 6
+  gapped 1: fittings 14 (ticks [3, 5, 20]...); chimes 0 at 0 ticks on 0 clocks; distinct pairs 0, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 0 of 0
+bang250_q4000000.json: the seed's quanta 4000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 3159821; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 3477, 'gapped 1': 13441}
+  row 76 SHOWN: gap: {'gapped 2': [20, 20, 0, 40], 'gapped 1': [74, 314, 150, 225]}
+  gapped 2: fittings 46 (ticks [2, 4, 8, 9, 21, 26]...); chimes 40 at 20 ticks on 2 clocks; distinct pairs 1, one mesh apart 1; of them a fitting's two children 1; chiming clocks laid at before their first chime 2 of 2
+    sets {((3, 0, 3), (3, 3, 3)): 20}; sides {((3, 0, 3), (3, 3, 3)): 1}; chiming ticks from 152 to 247, by their remainder in five {2: 20}, steps between them {5: 19}
+  gapped 1: fittings 23 (ticks [3, 10, 17, 20, 27, 30]...); chimes 225 at 91 ticks on 5 clocks; distinct pairs 10, one mesh apart 2; of them a fitting's two children 2; chiming clocks laid at before their first chime 5 of 5
+bang250_q5000000.json: the seed's quanta 5000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 3951374; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 21821, 'gapped 1': 6722}
+  row 76 SHOWN: gap: {'gapped 2': [49, 173, 98, 156], 'gapped 1': [12, 13, 25, 42]}
+  gapped 2: fittings 119 (ticks [2, 4, 5, 16, 31, 46]...); chimes 156 at 62 ticks on 24 clocks; distinct pairs 88, one mesh apart 11; of them a fitting's two children 9; chiming clocks laid at before their first chime 24 of 24
+  gapped 1: fittings 36 (ticks [2, 12, 13, 16, 30, 51]...); chimes 42 at 30 ticks on 4 clocks; distinct pairs 4, one mesh apart 3; of them a fitting's two children 2; chiming clocks laid at before their first chime 4 of 4
+bang250_q7000000.json: the seed's quanta 7000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 5522320; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 13207, 'gapped 1': 6437}
+  row 76 NOT SHOWN:: {'gapped 2': [78, 230, 40, 156]}
+  gapped 2: fittings 23 (ticks [3, 5, 7, 10, 20, 27]...); chimes 156 at 40 ticks on 4 clocks; distinct pairs 6, one mesh apart 2; of them a fitting's two children 2; chiming clocks laid at before their first chime 4 of 4
+  gapped 1: fittings 38 (ticks [2, 3, 4, 5, 10, 12]...); chimes 0 at 0 ticks on 0 clocks; distinct pairs 0, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 0 of 0
+bang250_q10M.json: the seed's quanta 10000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 7902092; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 9914, 'gapped 1': 87}
+  row 76 SHOWN: gap: {'gapped 2': [27, 65, 35, 80], 'gapped 1': [18, 34, 27, 36]}
+  gapped 2: fittings 58 (ticks [2, 7, 8, 9, 12, 16]...); chimes 80 at 37 ticks on 6 clocks; distinct pairs 7, one mesh apart 3; of them a fitting's two children 3; chiming clocks laid at before their first chime 6 of 6
+  gapped 1: fittings 35 (ticks [4, 8, 18, 19, 26, 86]...); chimes 36 at 14 ticks on 4 clocks; distinct pairs 6, one mesh apart 2; of them a fitting's two children 2; chiming clocks laid at before their first chime 4 of 4
+bang250_q14000000.json: the seed's quanta 14000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 11040600; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 13544, 'gapped 1': 1155}
+  row 76 NOT SHOWN:: {'gapped 1': [15, 21, 13, 33]}
+  gapped 2: fittings 24 (ticks [3, 10, 20]...); chimes 0 at 0 ticks on 0 clocks; distinct pairs 0, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 0 of 0
+  gapped 1: fittings 45 (ticks [4, 8, 19, 21, 41, 66]...); chimes 33 at 16 ticks on 8 clocks; distinct pairs 9, one mesh apart 3; of them a fitting's two children 3; chiming clocks laid at before their first chime 8 of 8
+bang250_q20M.json: the seed's quanta 20000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 15774811; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 6812, 'gapped 1': 4183}
+  row 76 NOT SHOWN:: {'gapped 2': [0, 132, 90, 138], 'gapped 1': [0, 142, 71, 143]}
+  gapped 2: fittings 28 (ticks [3, 4, 5, 40, 60]...); chimes 138 at 48 ticks on 3 clocks; distinct pairs 3, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 3 of 3
+    sets {((1, 1, 1), (3, 3, 1)): 6, ((0, 0, 2), (1, 1, 1), (3, 3, 1)): 42}; sides {((0, 0, 2), (1, 1, 1)): 3, ((1, 1, 1), (3, 3, 1)): 4, ((0, 0, 2), (3, 3, 1)): 3}; chiming ticks from 13 to 248, by their remainder in five {3: 48}, steps between them {5: 47}
+  gapped 1: fittings 27 (ticks [3, 4, 5]...); chimes 143 at 48 ticks on 3 clocks; distinct pairs 3, one mesh apart 0; of them a fitting's two children 0; chiming clocks laid at before their first chime 3 of 3
+    sets {((0, 0, 3), (2, 0, 2)): 1, ((0, 0, 3), (2, 0, 2), (2, 2, 3)): 47}; sides {((0, 0, 3), (2, 2, 3)): 4, ((2, 0, 2), (2, 2, 3)): 3, ((0, 0, 3), (2, 0, 2)): 3}; chiming ticks from 13 to 248, by their remainder in five {3: 48}, steps between them {5: 47}
+bang250_q30000000.json: the seed's quanta 30000000; returns 100; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 23655411; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 13176, 'gapped 1': 3306}
+  row 76 SHOWN: gap: {'gapped 2': [40, 40, 86, 86], 'gapped 1': [1, 1, 7, 7]}
+  gapped 2: fittings 20 (ticks [3, 5, 7, 10, 17, 20]...); chimes 86 at 46 ticks on 3 clocks; distinct pairs 1, one mesh apart 1; of them a fitting's two children 1; chiming clocks laid at before their first chime 3 of 3
+    sets {((1, 0, 2), (1, 3, 2)): 40, ((2, 2, 1),): 6}; sides {((1, 0, 2), (1, 3, 2)): 1}; chiming ticks from 52 to 248, by their remainder in five {2: 40, 3: 6}, steps between them {5: 34, 1: 6, 4: 5}
+  gapped 1: fittings 44 (ticks [3, 4, 8, 9, 11, 15]...); chimes 7 at 6 ticks on 3 clocks; distinct pairs 1, one mesh apart 1; of them a fitting's two children 1; chiming clocks laid at before their first chime 3 of 3
+    sets {((2, 0, 0), (2, 3, 0)): 1, ((0, 2, 0),): 5}; sides {((2, 0, 0), (2, 3, 0)): 1}; chiming ticks from 63 to 248, by their remainder in five {3: 6}, steps between them {165: 1, 5: 4}
+bang250_q50000000.json: the seed's quanta 50000000; returns 74; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 39442973; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 125328, 'gapped 1': 20262}
+  row 76 NOT SHOWN:: {'gapped 2': [80, 1951, 594, 926], 'gapped 1': [186, 1170, 264, 420]}
+  gapped 2: fittings 28 (ticks [4, 5, 6, 26, 31]...); chimes 926 at 205 ticks on 12 clocks; distinct pairs 66, one mesh apart 8; of them a fitting's two children 4; chiming clocks laid at before their first chime 12 of 12
+  gapped 1: fittings 20 (ticks [3, 4, 5]...); chimes 420 at 78 ticks on 8 clocks; distinct pairs 28, one mesh apart 4; of them a fitting's two children 4; chiming clocks laid at before their first chime 8 of 8
+bang250_q200000000.json: the seed's quanta 200000000; returns 6; the rewind {'intervals': 20, 'exact': 20}; the light's wind a clock at tick 10, heavy windings 157109501; the heavy families on the board at tick 250, thousandths of a winding {'gapped 2': 11000, 'gapped 1': 8063}
+  row 76 NOT SHOWN:: {'gapped 2': [12, 125, 72, 122], 'gapped 1': [62, 676, 204, 624]}
+  gapped 2: fittings 36 (ticks [2, 3, 4, 5]...); chimes 122 at 51 ticks on 10 clocks; distinct pairs 37, one mesh apart 4; of them a fitting's two children 4; chiming clocks laid at before their first chime 10 of 10
+  gapped 1: fittings 18 (ticks [3, 4, 10]...); chimes 624 at 226 ticks on 6 clocks; distinct pairs 15, one mesh apart 2; of them a fitting's two children 2; chiming clocks laid at before their first chime 6 of 6
+over the seeds: distinct pairs one mesh apart 53, of them one fitting's two children 46
+
+3. The chance of no two clocks one mesh apart among k clocks drawn at random on the periodic board of cube 4: tri_chance.py, every set counted.
+k 2: sets with no two one mesh apart 1824 of 2016, thousandths 904
+k 3: sets with no two one mesh apart 30720 of 41664, thousandths 737
+k 4: sets with no two one mesh apart 342400 of 635376, thousandths 538
+
+4. At 20 million, the share of each heavy family's wind on the board held at the clocks it chimes on (heavy_stand.py, thousandths, the clock lines' winds at the tick's start):
+  gapped 2 (line 1): distinct pairs one mesh apart 0, of them a fitting's two children 0; chiming clocks 3, laid at by a fitting before the first chime 3; the wind's share at the chiming clocks, thousandths, {25: 320, 50: 418, 100: 313, 150: 313, 200: 313, 250: 312}
+  gapped 1 (line 2): distinct pairs one mesh apart 0, of them a fitting's two children 0; chiming clocks 3, laid at by a fitting before the first chime 3; the wind's share at the chiming clocks, thousandths, {25: 415, 50: 466, 100: 467, 150: 468, 200: 467, 250: 467}
+
+5. The rewind and the phenomenon: every seed runs back 20 of 20 exact (item 2, 'the rewind'); the phenomenon read is row 76 by the engine's own reading (item 2, 'row 76'), with the standing triangle at 20 million (item 2, 'sets', 'sides', 'chiming ticks').

@@ -1,0 +1,489 @@
+diff --git a/src/event_universe/assembly/setting.py b/src/event_universe/assembly/setting.py
+index 7fe644d6b..d635d7e0f 100644
+--- a/src/event_universe/assembly/setting.py
++++ b/src/event_universe/assembly/setting.py
+@@ -24,9 +24,9 @@ HALF_SPANS = (
+     3,
+ )  # the envelope's half spans the raised cosine knows (the lay's `width`; 1 the one Node, a born pair's own form)
+ FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
+-    "sea": frozenset({"lay", "row", "quanta", "sense"}),
++    "sea": frozenset({"lay", "row", "quanta", "sense", "hand"}),
+     "hole": frozenset({"lay", "at"}),
+-    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top"}),
++    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top", "hand"}),
+     "wave": frozenset({"lay", "row", "quanta", "p1", "cz", "mirror"}),
+ }
+ Ratio = tuple[Any, Any]
+@@ -43,6 +43,10 @@ def set_piece(node: Clock, lays: list[dict[str, Any]]) -> None:
+         if beyond:
+             raise ValueError(f"a field of no form of the law in the lay {form!r}: {', '.join(beyond)}")
+         row = node.by_index[int(lay["row"])] if "row" in lay else None
++        if "hand" in lay:
++            if row is None or row.twin is None or int(lay["hand"]) not in (0, 1):
++                raise ValueError("a lay names a hand of a train of twin hands: 0 or 1")
++            row = row if int(lay["hand"]) == 0 else row.twin
+         if row is not None and row not in node.hands():
+             raise ValueError("a lay is onto a record (a plane)")
+         if form == "sea" and "quanta" not in lay:
+diff --git a/src/event_universe/clock.py b/src/event_universe/clock.py
+index 5c2c4e833..906f0e3f5 100644
+--- a/src/event_universe/clock.py
++++ b/src/event_universe/clock.py
+@@ -95,6 +95,7 @@ class Clock:
+         self.start_gears: list[list[Gear]] = []
+         self.pitches: dict[tuple[int, int, tuple[int, ...]], int] = {}
+         self.vernier_read: dict[tuple[tuple[int, ...], int], tuple[int, int] | None] = {}
++        self.twin_ends: dict[tuple[int, tuple[int, ...], tuple[int, ...]], tuple[int, int]] = {}
+         self.rest_rates: dict[tuple[int, int], int] = {}
+ 
+         for line in self.train(REGULATOR).gears[:1]:
+diff --git a/src/event_universe/run.py b/src/event_universe/run.py
+index 4ac1f72ea..18ad80033 100644
+--- a/src/event_universe/run.py
++++ b/src/event_universe/run.py
+@@ -18,7 +18,7 @@ from event_universe.core.rates import sine_rim
+ from event_universe.core.spokes import AXES, SIDES, spoke_of
+ from event_universe.meshes import factors, mesh_lead
+ from event_universe.reckoner import THOUSAND
+-from event_universe.trains import OFFSET, REGULATOR, Gear, zeros
++from event_universe.trains import OFFSET, REGULATOR, Gear, twin_of, zeros
+ 
+ if TYPE_CHECKING:
+     from event_universe.clock import Clock
+@@ -64,6 +64,7 @@ def fitting(
+         "birth",
+         at,
+         line_pair=s,
++        **({} if twin_of(node.hands(), s) == s else {"plus_hand": twin_of(node.hands(), s)}),
+         senses=[-1, 1],
+         W_children=w_children,
+         minus=list(ends[0]),
+diff --git a/src/event_universe/striking.py b/src/event_universe/striking.py
+index f2d399d68..4daae6b45 100644
+--- a/src/event_universe/striking.py
++++ b/src/event_universe/striking.py
+@@ -14,7 +14,7 @@ from event_universe.core.spokes import AXES, across, spoke_of
+ from event_universe.draw import vernier
+ from event_universe.meshes import factors, train_lead, train_twist
+ from event_universe.run import fitting, jammed
+-from event_universe.trains import HAND, Gear, Train
++from event_universe.trains import HAND, Gear, Train, twin_of
+ from event_universe.unspring import (
+     fitted_advanced,
+     fitted_notches,
+@@ -56,6 +56,7 @@ def engage(
+     sh: Any,
+     rules: list[tuple[Gear, rule3.Gearing]],
+     frozen: Any,
++    other: tuple[int, Any, list[Gear]] | None = None,
+ ) -> list[Fitting]:
+     """The Link close of one record, the same for every record (SL-S1, the generic close): every Link once from its +a end; a meeting where both ends hold a whole quantum of the record at the interval's start and neither end is frozen (counted as `met`); the + child at the end the record's own current flows into where the twist of its transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); a record with a gap meets as the conjugate pair alone, the two ends' charges of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; refused by name `sense` where not), and at rest, no current across the Link, as the pair at rest (MG-S1: the + child at the end whose charge is positive, the birth's orientation read at -1, the twist not read, its number read after the stop in `births`); the Link's one number read at the current's end names the children's record (`list_of`; one read per Node and record in a close). Returns the births as (the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room, the taken record)."""
+     born: list[Fitting] = []
+@@ -64,14 +65,27 @@ def engage(
+     currents = [node.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
+     twists = [train_twist(start, axis) for axis in range(AXES)]
+     charges = hands.sweep(row.size, start) if row is not node.unsprung() else None
++    far, far_charges = standing, charges
++    if other is not None:
++        q, q_sh, q_start = other
++        far = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(q_sh) & ~frozen
++        currents = [
++            c + node.rim * train_lead(q_start, spoke_of(axis, 0)) for axis, c in enumerate(currents)
++        ]
++        twists = [t + train_twist(q_start, axis) for axis, t in enumerate(twists)]
++        far_charges = hands.sweep(row.size, q_start)
+     for axis in range(AXES):
+-        both = standing & across(standing, spoke_of(axis, 0))
++        both = standing & across(far, spoke_of(axis, 0))
+         for where in zip(*np.nonzero(both), strict=True):
+             at = tuple(int(x) for x in where)
+             j = neighbour(node, at, spoke_of(axis, 0))
+             node.counts["met"] += 1
+             flow, h = int(currents[axis][at]), int(twists[axis][at])
+-            w = [0, 0] if charges is None else [int(charges[at]), int(charges[j])]
++            w = (
++                [0, 0]
++                if charges is None or far_charges is None
++                else [int(charges[at]), int(far_charges[j])]
++            )
+             rest = flow == 0 and w[0] * w[1] < 0
+             if (flow == 0 or h == 0) and not rest:
+                 jammed(node, at, "orientation" if flow == 0 else "twist", link=list(j), row=rec)
+@@ -84,6 +98,9 @@ def engage(
+             else:
+                 into, outof = (j, at) if flow > 0 else (at, j)
+             plus, minus = (into, outof) if rest or h > 0 else (outof, into)
++            if other is not None:
++                ends_of = {at: rec, j: other[0]}
++                node.twin_ends[(rec, minus, plus)] = (ends_of[minus], ends_of[plus])
+             if rest:
+                 born.append(Fitting(into, list_of(node, rec, 0), minus, plus, 0, rec))
+                 continue
+@@ -97,26 +114,43 @@ def engage(
+     return born
+ 
+ 
++def twin_at(
++    node: Clock, rec: int, owns: list[Any], plane_starts: list[list[Gear]]
++) -> tuple[int, Any, list[Gear]] | None:
++    """The hand's twin with its wind and its gears at the tick's start, where its train is twin hands."""
++    twin = node.hands()[rec].twin
++    if twin is None:
++        return None
++    q = node.hands().index(twin)
++    return q, owns[q], plane_starts[q]
++
++
+ def jam(node: Clock, born: list[Fitting], owns: list[Any]) -> list[Fitting]:
+     """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both and read their bound on their own quantum at the take, the light's unit at the end as MG-S1's share reads it, the light a sea the merger pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
+     records = node.hands()
+     inverse = [k for k in born if records[k.gear_ratio] is node.unsprung() is not records[k.rec]]
+     kept = []
+     for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
+-        if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
++        if int(owns[s][minus]) > 0 or int(owns[twin_of(records, s)][plus]) > 0:
+             jammed(node, at, "lay", standing=int(owns[s][minus]), unit=node.windings[s], row=rec)
+             continue
+         kept.append(Fitting(at, s, minus, plus, room, rec))
+     landing: dict[tuple[int, tuple[int, ...]], int] = {}
+     for _at, s, minus, plus, _room, _rec in kept:
+         landing[(s, minus)] = landing.get((s, minus), 0) + 1
+-        landing[(s, plus)] = landing.get((s, plus), 0) + 1
++        landing[(twin_of(records, s), plus)] = landing.get((twin_of(records, s), plus), 0) + 1
+     crowded = [
+-        k for k in kept if landing[(k.gear_ratio, k.minus)] > 1 or landing[(k.gear_ratio, k.plus)] > 1
++        k
++        for k in kept
++        if landing[(k.gear_ratio, k.minus)] > 1 or landing[(twin_of(records, k.gear_ratio), k.plus)] > 1
+     ]
+     for at, s, minus, plus, _room, rec in crowded:
+         jammed(
+-            node, at, "lay", children_at_one_node=max(landing[(s, minus)], landing[(s, plus)]), row=rec
++            node,
++            at,
++            "lay",
++            children_at_one_node=max(landing[(s, minus)], landing[(twin_of(records, s), plus)]),
++            row=rec,
+         )
+     return [k for k in kept if k not in crowded] + inverse
+ 
+@@ -150,7 +184,10 @@ def fittings(
+         row, rule = records[rec], rules[rec]
+         if row is not node.unsprung():
+             for kid in kids:
+-                ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
++                ends: list[Any] = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
++                ends_hands = node.twin_ends.get((rec, kid.minus, kid.plus))
++                if ends_hands is not None:
++                    ends = [(w_, wall, h) for (w_, wall), h in zip(ends, ends_hands, strict=True)]
+                 drawn: list[Any] = []
+ 
+                 def draw(
+@@ -238,7 +275,8 @@ def undo(node: Clock, frame: dict[str, Any]) -> None:
+             exact = entry.get("exact_lay", [None, None])
+             for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
+                 if laid is None:
+-                    advance(node, s, tuple(where), fitted_notches(node.hands()[s], sense, a, b), -1)
++                    h = s if sense < 0 else twin_of(node.hands(), s)
++                    advance(node, h, tuple(where), fitted_notches(node.hands()[h], sense, a, b), -1)
+                 else:
+                     move(node, s, laid[0], tuple(where), -laid[1])
+             if "cross" in entry:
+@@ -252,7 +290,7 @@ def undo(node: Clock, frame: dict[str, Any]) -> None:
+                     unbooked.add((where, row, at))
+                     recoil(node, where, take["dP_take"], take["clock"], -1)
+                 if "taken_levels" in take:
+-                    advance(node, row, where, tuple(take["taken_levels"]))
++                    advance(node, take.get("hand", row), where, tuple(take["taken_levels"]))
+                     node.strikes[where] += 1
+                     continue
+                 toward = 1 if take["taker"][1] > take["taker"][0] else -1
+@@ -278,7 +316,7 @@ def strike(
+         return
+     c = node.start_load
+     node.start_gears = plane_starts
+-    node.pitches, node.vernier_read = {}, {}
++    node.pitches, node.vernier_read, node.twin_ends = {}, {}, {}
+     frozen = readings.stopped_of(node, c)
+     read = factors(node, None, frozen)
+     r_emitter = readings.gearing_of(node, node.unsprung(), c, read)
+@@ -290,7 +328,15 @@ def strike(
+     born = [
+         b
+         for rec in range(len(node.hands()))
+-        for b in engage(node, rec, plane_starts[rec], owns[rec], rules, frozen)
++        for b in engage(
++            node,
++            rec,
++            plane_starts[rec],
++            owns[rec],
++            rules,
++            frozen,
++            twin_at(node, rec, owns, plane_starts),
++        )
+     ]
+     born_nodes = fittings(node, jam(node, born, owns), c, read, rules)
+     bobs(node, plane_starts, owns, born_nodes, frozen, r_emitter)
+diff --git a/src/event_universe/tick.py b/src/event_universe/tick.py
+index 4a7dcea5c..187cb9c90 100644
+--- a/src/event_universe/tick.py
++++ b/src/event_universe/tick.py
+@@ -10,9 +10,18 @@ from event_universe import hands, readings
+ from event_universe.core import rates
+ from event_universe.core.acts import carry, mid
+ from event_universe.core.rule3 import carries, held_numerator
+-from event_universe.core.spokes import AXES, SPOKES, across
++from event_universe.core.spokes import AXES, SPOKES, across, transverse
+ from event_universe.features import stretch
+-from event_universe.meshes import centred_count, coupling_of, factors, meshes_of, offsets, pawls, skewed
++from event_universe.meshes import (
++    centred_count,
++    coupling_of,
++    factors,
++    gradient,
++    meshes_of,
++    offsets,
++    pawls,
++    skewed,
++)
+ from event_universe.regulation import net_flow, rest_rate_of, shear_parts, stress_parts, tensor_parts
+ from event_universe.run import rewind_note
+ from event_universe.trains import OFFSET, REGULATOR, Gear, Train, ratchet_of, zeros
+@@ -162,12 +171,33 @@ class Tick:
+                 m - (rule.teeth + rule.teeth - rule.hold) * a
+                 for a, m in zip(self.starts[k], arrivals, strict=True)
+             ]
++        self.twin_pulls()
+         self.release = zeros(node.size)
+         for r, cpl in self.hand_couplings:
+             k = self.where[id(r)]
+             flow = cpl * hands.form(hands.quarter(r.size), self.pull[k], self.starts[k])
+             self.release = self.release + self.stretch_now * flow
+ 
++    def twin_pulls(self) -> None:
++        """The twins' gearing to the offset (SR-S3 on twin hands): the offset's one-mesh curl Phi at the tick's start turns a train of twin hands through the Pauli gearing on its four gears (three_up, twelve_up, three_down, twelve_down): sigma_x swaps the twins, sigma_y = i sigma_x sigma_z, sigma_z reverses the down twin; per gear the numerator SUM_j grip_j SUM_a Phi_a (sigma_a x), one carry at the gear's drive teeth SPOKES (full rate + full rate), the carries added to the gear's pull (the coefficient grip / (2 full rate) per spoke, g = 2), the fine tooth kept on the gear's drive wheel."""
++        node = self.clock
++        cx, cy, cz = offset_curl(self.odd)
++        for r in self.hands:
++            if r.twin is None or self.hands.index(r) > self.hands.index(r.twin):
++                continue
++            ku, kd = self.where[id(r)], self.where[id(r.twin)]
++            up, dn = self.starts[ku], self.starts[kd]
++            grip = sum(readings.gearing_of(node, r, self.load, self.factors).grips)
++            pauli = (
++                (r, ku, dn, (dn[1], -dn[0]), up),
++                (r.twin, kd, up, (-up[1], up[0]), [-g for g in dn]),
++            )
++            for hand, k, sx, sy, sz in pauli:
++                for i, gear in enumerate(self.gears(hand)):
++                    numerator = grip * (cx * sx[i] + cy * sy[i] + cz * sz[i])
++                    q, gear.dfine = carry(numerator, gear.dteeth, gear.dfine, self.going)
++                    self.pull[k][i] = self.pull[k][i] + q
++
+     def impulse(self) -> None:
+         """(2) The kick (the former `kicks`): every riding line's momentum at the start read at the mean wall of the carrier's two levels as the rows hold them, P = W (a_now - a_before) + r - W div 2, and kicked by X_now F in the direction; the shape-4 row's time line kicked besides by the records' charge read at the kick (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the records with a gap of N.J.u_in + N.J.u_out, N the levels at the start and u the odd rounding of 2 P + 1 over 2 w X_now, the plane's -(re u_im - im u_re) in and out, the same integers in either direction and its own mirror under the exchange and the conjugation; one carried division at the line's write wall T with the carry kept in its write remainder, the quotient landing as the kick w X_now q before the line's one division; the charge summed over the records before the shape-4 row is met, which rests on rows.order_of, H-Confirm-Build-11; the former level write of 2 W of the records after the step kept by name: a source pinned to the step's end, whose mirror under the exchange is a start, so the fall wrote 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the carrier's source from every riding row alike, line by line u_in u_out + (-a F) div w, w the row's wall."""
+         node = self.clock
+@@ -284,6 +314,15 @@ class Tick:
+         node.stack.append(kept)
+ 
+ 
++def offset_curl(odd: list[Any]) -> list[Any]:
++    """The offset's one-mesh curl at every clock, Phi_a = d_b A_c - d_c A_b from its odd gears, d_b the centred difference through the axis b's two spokes (the struck hands.curl, 6501cd679)."""
++    found = []
++    for a in range(AXES):
++        b, c = transverse(a)
++        found.append(gradient(odd[c], b) - gradient(odd[b], c))
++    return found
++
++
+ def run(node: Clock, direction: int) -> None:
+     """One interval in the direction, five acts: the readings, the kick, the division, the swap at the top, the close; backward the close and the swap are undone at the Interval's making, the lays come off before the kick (the reverse order: the last laid, the first undone), the kick and the division are the same acts at -1 and the interval is counted down."""
+     interval = Tick(node, direction)
+diff --git a/src/event_universe/trains.py b/src/event_universe/trains.py
+index 09606f6c8..4251441f3 100644
+--- a/src/event_universe/trains.py
++++ b/src/event_universe/trains.py
+@@ -8,7 +8,7 @@ import numpy as np
+ 
+ from event_universe.core.acts import mid
+ from event_universe.core.rule3 import carries, held_teeth
+-from event_universe.core.spokes import AXES
++from event_universe.core.spokes import AXES, SPOKES
+ 
+ REGULATOR = 1 + AXES + AXES + AXES  # the regulator: its time gear, AXES tensions, fluxes and shears
+ OFFSET = AXES + 1  # the shape of the row at (den, den): its time line and its AXES odd lines
+@@ -25,12 +25,13 @@ def zeros(shape: tuple[int, ...]) -> Any:
+ class Train:
+     """One row of the Node as the universe file names it: a shape (its count of lines), a pair (num, den) for Rule3's rule, or a wall of its own for a row with no Links (the phase row); its lines."""
+ 
+-    __slots__ = ("size", "ratio", "teeth", "gears")
++    __slots__ = ("size", "ratio", "teeth", "gears", "twin")
+ 
+     def __init__(
+         self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Gear]
+     ) -> None:
+         self.size, self.ratio, self.teeth, self.gears = shape, pair, wall, lines
++        self.twin: Train | None = None
+ 
+     @property
+     def spring(self) -> int | None:
+@@ -95,7 +96,9 @@ def gears_of(
+ 
+ def order_key(row: Train) -> tuple[bool, int]:
+     """The acts' order as a key compared and never tested: the row with its own wall first, then every row by the count of lines it writes, a row whose write reads other rows after them (the records writing nothing, the emitter its one line, the shape-4 row its four, the carrier its ten), the ties in the file's order."""
+-    return row.teeth is None, sum(1 for line in row.gears if line.dteeth is not None)
++    return row.teeth is None, 0 if row.twin is not None else sum(
++        1 for line in row.gears if line.dteeth is not None
++    )
+ 
+ 
+ def trains_of(calibre: dict[str, Any], size: tuple[int, ...], w: int) -> tuple[list[Train], list[Train]]:
+@@ -104,21 +107,37 @@ def trains_of(calibre: dict[str, Any], size: tuple[int, ...], w: int) -> tuple[l
+     den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
+     trace = int(ints["trace"])
+     by_index: list[Train] = []
++    everything: list[Train] = []
++    regulating = (den - carries(den, gamma), den)
+     for r in calibre["rows"]:
+         shape = int(r["shape"])
+         pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
+         wall = None if r.get("wall") is None else int(r["wall"])
+         if shape == 1 and wall is None:
+             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
++        if pair is not None and pair[0] < pair[1] and pair != regulating and shape == HAND + HAND:
++            twins = []
++            for _ in range(carries(shape, HAND)):
++                walls = [SPOKES * (gamma + gamma)] * HAND
++                twins.append(Train(HAND, pair, wall, gears_of(size, HAND, pair, wall, w, walls)))
++            twins[0].twin, twins[1].twin = twins[1], twins[0]
++            by_index.append(twins[0])
++            everything.extend(twins)
++            continue
+         walls = drive_teeth(shape, pair, den, gamma, action, trace)
+         lines = gears_of(size, shape, pair, wall, w, walls)
+         by_index.append(Train(shape, pair, wall, lines))
+-    rows = sorted(by_index, key=order_key)
++        everything.append(by_index[-1])
++    rows = sorted(everything, key=order_key)
+     walled = [r for r in rows if r.teeth is not None]
+     planes = [r for r in rows if r.size == HAND]
+     emitters = [r for r in planes if r.ratio == (den, den)]
+     carriers = [r for r in rows if r.size == REGULATOR]
+     potentials = [r for r in rows if r.size == OFFSET]
++    if not potentials:
++        raise ValueError(
++            "the shape-4 row stands at (den, den): a train of four gears at a gap is twin hands"
++        )
+     if len(walled) != 1 or len(emitters) != 1 or len(carriers) != 1 or len(potentials) != 1:
+         raise ValueError(
+             "the universe names one row with its own wall, one plane at the gap 0, one shape-10 row and one shape-4 row"
+@@ -141,6 +160,12 @@ def train_of(rows: list[Train], shape: int, pair: tuple[int, int] | None = None)
+     )
+ 
+ 
++def twin_of(records: list[Train], s: int) -> int:
++    """The + fitted hand's hand: the twin of the - fitted hand's hand where its train is twin hands (the pair's spin kept), the same hand otherwise."""
++    twin = records[s].twin
++    return s if twin is None else records.index(twin)
++
++
+ def ratchet_of(rows: list[Train]) -> Train:
+     """The one row with a wall of its own and no Links."""
+     return next(r for r in rows if r.teeth is not None)
+diff --git a/src/event_universe/unspring.py b/src/event_universe/unspring.py
+index 86bc8f045..5c2681274 100644
+--- a/src/event_universe/unspring.py
++++ b/src/event_universe/unspring.py
+@@ -29,14 +29,19 @@ def fitted_advanced(
+     levels_of: Callable[[tuple[int, ...], int], tuple[int, ...]],
+ ) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:
+     """The two children laid by the one lay act, the - child at the - end and the + child at the + end, each end's levels by `levels_of` at the end and its sense (the charged child's child_levels at the charge T div 2 with the charge's sign on the re line, GP-S1, the owner's word of 2026-10-26, 04:3x UTC; a merger's light the exact take at -1, `light_levels`, MG-S1), each lay's momentum booked per line of the row at its Node before it is laid (momentum_per_line, the Boss's 6413599502 (b)), the second end read on the board the first lay changed (the sum exact); the former child_at, close.child_laid and light_children one function (NL-S1's stroke 4, 2026-10-26). Returns the lays' momentum summed and per end (dP_lay_ends, the J hands' key, AJ-S2), each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the record's levels at each Node before the lay (the residue)."""
++    from event_universe.trains import twin_of
++
++    twins = (s, twin_of(node.hands(), s))
+     row = node.hands()[s]
+     assert row.ratio is not None
+-    stood, ends = stood_at(row, minus, plus), []
+-    for where, sense in ((minus, -1), (plus, 1)):
++    stood = [stood_at(node.hands()[h], minus, plus)[k] for k, h in enumerate(twins)]
++    ends = []
++    for where, sense, h in ((minus, -1, twins[0]), (plus, 1, twins[1])):
+         levels = levels_of(where, sense)
+-        ends.append(push_per_gear(node, row.gears, row.ratio[0], where, levels))
+-        advance(node, s, where, levels)
+-    return [a + b for a, b in zip(*ends, strict=True)], senses_at(row, minus, plus), stood, ends
++        ends.append(push_per_gear(node, node.hands()[h].gears, row.ratio[0], where, levels))
++        advance(node, h, where, levels)
++    senses = [senses_at(node.hands()[h], minus, plus)[k] for k, h in enumerate(twins)]
++    return [a + b for a, b in zip(*ends, strict=True)], senses, stood, ends
+ 
+ 
+ def unsprung_notches(
+@@ -136,16 +141,18 @@ def read_ends(
+     cause: int,
+     rec: int,
+     cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
+-) -> list[tuple[tuple[int, ...], int, Any, int, int | None, int, int]] | None:
++) -> list[tuple[tuple[int, ...], int, Any, int, int | None, int, int, int]] | None:
+     """The take act's reads (CR-S2, the owner's word of 2026-10-26, 06:1x UTC: every end read before any is written, refused by name `stop` at the first that cannot pay, the first end's refusal sparing the second's read): at the gap-0 row the end owes the walls booked less the take's remainder standing there (EX-S1) and its line by the fall's sign is read for the least count paying it (take.fall_of); at a record with a gap the end's levels are read whole with the share the board loses by their lay at -1 (`share_fall`, MG-S1, the birth read at -1), owing the wall. Returns per end (the Node, the wall, the levels or the count, the fall, the line or None, the remainder before, the owed), or None; the former merger_falls kept by name."""
+-    row = node.hands()[rec]
+     found = []
+-    for where, wall in ends:
++    for end in ends:
++        where, wall = end[0], end[1]
++        r = int(end[-1]) if len(end) > len((where, wall)) else rec
++        row = node.hands()[r]
+         rem_was = 0 if row is not node.unsprung() else int(node.slack[where])
+         owed = wall - rem_was
+         if row is not node.unsprung():
+             levels: Any = notches_at(row, where)
+-            fall, k = wind_fall(node, rec, rule, where, levels, cache or {}), None
++            fall, k = wind_fall(node, r, rule, where, levels, cache or {}), None
+             short = fall < wall
+         else:
+             levels, fall, k = unwind.fall_of(node, where, owed, rule, row)
+@@ -155,21 +162,21 @@ def read_ends(
+             entry = {"event": "refused", "i": node.ticks, "node": list(where), "cause": "stop"}
+             node.log.append(entry | {"fall": fall, "walls": wall, "owed": owed, "row": rec})
+             return None
+-        found.append((where, wall, levels, fall, k, rem_was, owed))
++        found.append((where, wall, levels, fall, k, rem_was, owed, r))
+     return found
+ 
+ 
+-Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int]
++Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int, int]
+ 
+ 
+ def unspring_end(node: Clock, rec: int, read: Read) -> tuple[dict[str, Any], list[int]]:
+     """One end of a merger's take written: its whole levels laid at -1, the end's entry with the momentum the start books and its recoil, and the live board's momentum less the start's (the cross term's share)."""
+-    where, wall, levels, fall, _k, _rem_was, _owed = read
+-    row = node.hands()[rec]
++    where, wall, levels, fall, _k, _rem_was, _owed, r = read
++    row = node.hands()[r]
+     assert row.ratio is not None
+     live = push_per_gear(node, row.gears, row.ratio[0], where, tuple(levels), -1)
+-    moment = push_per_gear(node, node.start_gears[rec], row.ratio[0], where, tuple(levels), -1)
+-    advance(node, rec, where, levels, -1)
++    moment = push_per_gear(node, node.start_gears[r], row.ratio[0], where, tuple(levels), -1)
++    advance(node, r, where, levels, -1)
+     node.strikes[where] -= 1
+     size = sum(abs(x) for x in levels)
+     entry = dict(
+@@ -178,6 +185,7 @@ def unspring_end(node: Clock, rec: int, read: Read) -> tuple[dict[str, Any], lis
+         booked=wall,
+         levels=size,
+         taken_levels=list(levels),
++        **({} if r == rec else {"hand": r}),
+         dP_take=moment,
+         **recoil(node, where, moment, int(node.start_rate[where]), 1),
+     )
+@@ -186,7 +194,7 @@ def unspring_end(node: Clock, rec: int, read: Read) -> tuple[dict[str, Any], lis
+ 
+ def unsprung_end(node: Clock, rec: int, read: Read) -> dict[str, Any]:
+     """One end of the light's take written: the taken line moved toward its before by the count (take.move, CR-S1), the fall above what was owed its new remainder (EX-S1), the momentum booked and its recoil."""
+-    where, wall, levels, fall, k, rem_was, owed = read
++    where, wall, levels, fall, k, rem_was, owed, _r = read
+     row = node.hands()[rec]
+     assert row.ratio is not None and k is not None
+     z = row.gears[k]

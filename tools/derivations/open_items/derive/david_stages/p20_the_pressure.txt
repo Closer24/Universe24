@@ -1,0 +1,30 @@
+(1) the action of a train on the law's metric N A = 1, its own source of Phi:
+  -dL/dPhi = 2 v^2 - mu phi^2 against rho + T_ii, exact rationals at 1,000 random points: largest miss 0
+  rho - T_ii against minus the trace T^mu_mu: largest miss 0
+  the derivative itself by a centred difference at 1,000 random points: largest miss 3.3e-10
+  so the books' own source of the load is rho + T_ii = rho + 3p (pointwise); rho - T_ii is minus the trace
+(2) the act on a float board (192, 16, 16), the cone kappa = 1/6, 600 ticks, each packet at the energy 1:
+  light: the energy kept to 3.7e-16 of itself; the summed source per tick over the energy:
+    exact 2.0142, force 2.0143, gradient 1.9488, mesh 2.0143, trace 0.0000, trace, pointwise -0.0327
+  dust: the energy kept to 7.5e-16 of itself; the summed source per tick over the energy:
+    exact 1.0423, force 1.0402, gradient 1.0383, mesh 1.0402, trace 1.0111, trace, pointwise 1.0091
+  dust, wide: the energy kept to 5.3e-15 of itself; the summed source per tick over the energy:
+    exact 1.0009, force 1.0119, gradient 1.0119, mesh 1.0119, trace 1.0037, trace, pointwise 1.0092
+  light over dust at one energy: exact 1.932, force 1.936, gradient 1.877, mesh 1.936, trace 0.000, trace, pointwise -0.032
+  light over dust, wide at one energy: exact 2.012, force 1.991, gradient 1.926, mesh 1.991, trace 0.000, trace, pointwise -0.032
+  the head's own variables: light's trace over its forms, the balance weight, 11.693 (2 / kappa = 12 for long waves)
+    the head's sign, b forms - trace: light 0.0000, dust 23.0591, wide dust 23.2871; light over wide dust 0.000
+    the count's sign, b forms + trace: light 46.7704, dust 23.7114, wide dust 23.4833; light over wide dust 1.992
+(3) 7a's own act, exact integers, the board (96, 6, 6), the train at W 150 and the grip 25 (kappa 1/6):
+  force    light: the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 9.8526e+12 -> 9.8526e+12; the source per tick per energy 2.0142
+  force    dust : the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 3.1235e+13 -> 3.1235e+13; the source per tick per energy 1.0392
+  force    wide : the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 1.2819e+13 -> 1.2819e+13; the source per tick per energy 1.0139
+  gradient light: the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 9.8526e+12 -> 9.8526e+12; the source per tick per energy 1.9292
+  gradient dust : the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 3.1235e+13 -> 3.1235e+13; the source per tick per energy 1.0391
+  gradient wide : the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 1.2819e+13 -> 1.2819e+13; the source per tick per energy 1.0138
+  trace    light: the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 9.8526e+12 -> 9.8526e+12; the source per tick per energy 0.0000
+  trace    dust : the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 3.1235e+13 -> 3.1235e+13; the source per tick per energy 1.0222
+  trace    wide : the time gear's summed impulse moved by the summed J at every tick: True; run back 40 of 40: True; the energy 1.2819e+13 -> 1.2819e+13; the source per tick per energy 0.9935
+  force: light over dust at one energy 1.938, over the wide dust 1.987
+  gradient: light over dust at one energy 1.857, over the wide dust 1.903
+  trace: light over dust at one energy 0.000, over the wide dust 0.000

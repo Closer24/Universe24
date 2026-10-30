@@ -1,0 +1,52 @@
+DAVID-THE-MIRRORS-FITTING_CHECKS.txt: the checks of DAVID-THE-MIRRORS-FITTING.md, on 97e5b3fd6 (scratchpad worktree of the head), each a harness in scratchpad/field; no src touched.
+
+1. The engagement through the 48 images (engage_mirror.py: at every striking, striking.engage read on the clock as the striking holds it and on each image: every array at the image clock, each spoke's factor at its image spoke, a sprung hand's three gear negated and its twelve kept under a reflection, the draw's number held at 0 in both reads; each image's fittings (the unwind's clock, the - end, the + end) against the original's mapped kept and exchanged):
+   world_nature.json 5 to tick 14: fittings read at the engagement 1137; images by kind and their fittings against the original's mapped {('rotation', 'kept'): 264, ('reflection', 'exchanged'): 264}
+   world_ga2.json  to tick 3: fittings read at the engagement 192; images by kind and their fittings against the original's mapped {('rotation', 'kept'): 72, ('reflection', 'exchanged'): 72}
+   world_bang.json  to tick 8: fittings read at the engagement 512; images by kind and their fittings against the original's mapped {('rotation', 'kept'): 192, ('reflection', 'exchanged'): 192}
+
+2. The lay's jam on each reflection's image with the two ends exchanged, and the children's notches (jam_mirror.py; the children by unspring.fitted_notches, (three now, three before, twelve now, twelve before)):
+   world_nature.json 5 to tick 14: the jam on each reflection's image with the ends exchanged, against the original's kept mapped: {'alike': 264}
+     the child at the sense +1: (three now, three before, twelve now, twelve before) = (125, 0, 0, 144)
+     the child at the sense -1: (three now, three before, twelve now, twelve before) = (-125, 0, 0, 144)
+     the + child's image at the signs (1, 1): (125, 0, 0, 144): the + child
+     the + child's image at the signs (-1, 1): (-125, 0, 0, 144): the - child
+     the + child's image at the signs (1, -1): (125, 0, 0, -144): no child
+     the + child's image at the signs (-1, -1): (-125, 0, 0, -144): no child
+   world_ga2.json  to tick 3: the jam on each reflection's image with the ends exchanged, against the original's kept mapped: {'alike': 72}
+     the child at the sense +1: (three now, three before, twelve now, twelve before) = (125, 0, 0, 144)
+     the child at the sense -1: (three now, three before, twelve now, twelve before) = (-125, 0, 0, 144)
+     the + child's image at the signs (1, 1): (125, 0, 0, 144): the + child
+     the + child's image at the signs (-1, 1): (-125, 0, 0, 144): the - child
+     the + child's image at the signs (1, -1): (125, 0, 0, -144): no child
+     the + child's image at the signs (-1, -1): (-125, 0, 0, -144): no child
+   world_bang.json  to tick 8: the jam on each reflection's image with the ends exchanged, against the original's kept mapped: {'alike': 192}
+     the child at the sense +1: (three now, three before, twelve now, twelve before) = (125, 0, 0, 144)
+     the child at the sense -1: (three now, three before, twelve now, twelve before) = (-125, 0, 0, 144)
+     the + child's image at the signs (1, 1): (125, 0, 0, 144): the + child
+     the + child's image at the signs (-1, 1): (-125, 0, 0, 144): the - child
+     the + child's image at the signs (1, -1): (125, 0, 0, -144): no child
+     the + child's image at the signs (-1, -1): (-125, 0, 0, -144): no child
+   (the engagements with fittings to these ticks are all the unsprung hand's, whose sweep the coupling 0 weights out, so no sign pair of a sprung hand enters them)
+
+3. The binding control (nofield.py: the bang's world with the universe's row of one gear dropped; control.py and the counts below on the chart; bang250_q5000000.json the bang with its field):
+   bang100_nofield.json: ticks 100; fittings by line {0: 32, 1: 34, 2: 50, 3: 129}; chimes by line {0: 4026}; returns 40; the rewind {'intervals': 20, 'exact': 20}; heavy clock-ticks at a whole winding {1: 350, 2: 120}; heavy wind on the board at the last tick, thousandths of a winding {1: 6427, 2: 71}
+   bang250_nofield.json: ticks 250; fittings by line {0: 33, 1: 34, 2: 50, 3: 240}; chimes by line {0: 12591}; returns 100; the rewind {'intervals': 20, 'exact': 20}; heavy clock-ticks at a whole winding {1: 1070, 2: 120}; heavy wind on the board at the last tick, thousandths of a winding {1: 6380, 2: 71}
+   bang250_q5000000.json: ticks 250; fittings by line {0: 16, 1: 119, 2: 36, 3: 279}; chimes by line {0: 11469, 1: 156, 2: 42}; returns 100; the rewind {'intervals': 20, 'exact': 20}; heavy clock-ticks at a whole winding {1: 1232, 2: 1048}; heavy wind on the board at the last tick, thousandths of a winding {1: 21821, 2: 6731}
+   bang100_nofield.json cut at 100: held fields 0; the board's share one mesh from a clock 6 of 63
+   bang250_nofield.json cut at 250: held fields 0; the board's share one mesh from a clock 6 of 63
+   bang250_q5000000.json cut at 100: held fields 1; the board's share one mesh from a clock 6 of 63
+     gapped 2: fittings 60, chimes 12; row 76's pairs one mesh apart 6 of 14 (above twice the board's share); distinct pairs 6, one mesh apart 2: one fitting's two children 2, two fittings' children 0
+   bang250_q5000000.json cut at 250: held fields 1; the board's share one mesh from a clock 6 of 63
+     gapped 2: fittings 119, chimes 156; row 76's pairs one mesh apart 49 of 173 (above twice the board's share); distinct pairs 88, one mesh apart 11: one fitting's two children 9, two fittings' children 2
+     gapped 1: fittings 36, chimes 42; row 76's pairs one mesh apart 12 of 13 (above twice the board's share); distinct pairs 4, one mesh apart 3: one fitting's two children 2, two fittings' children 1
+
+4. The cycle setting and the chiral (settings_count.py: the world run on the head, the chimes and fittings at the marked ticks, the refusals by cause; ga2_pick.py the hand each fitting's draw picks and the hands standing at its ends):
+   world_ga2.json  ticks 20: chimes and fittings at ticks {10: (256, 64), 14: (512, 64), 15: (640, 64), 20: (640, 64)}; first fitting at 2; refusals by cause {'orientation': 1280, 'twist': 1280, 'lay': 1216, 'stop': 4992}; counts {'births': 64, 'laid_back': 640, 'refused_stop': 4992, 'turns': 0, 'met': 8832, 'laid': 0}
+   tick 1: fittings at the engagement 64, the picked hand {2: 64}, the unwound hand {2: 64}; hands standing at an end (hand, 1 if standing) over the fittings {(0, 0): 64, (1, 0): 64, (2, 1): 64}
+   tick 2: fittings at the engagement 64, the picked hand {0: 32, 1: 32}, the unwound hand {2: 64}; hands standing at an end (hand, 1 if standing) over the fittings {(0, 0): 64, (1, 0): 64, (2, 1): 64}
+   tick 3: fittings at the engagement 448, the picked hand {2: 416, 0: 16, 1: 16}, the unwound hand {0: 192, 1: 192, 2: 64}; hands standing at an end (hand, 1 if standing) over the fittings {(0, 1): 448, (1, 1): 448, (2, 1): 448}
+   births 64
+   world_nature.json 5 ticks 30: chimes and fittings at ticks {10: (0, 9), 14: (3, 11), 15: (4, 11), 20: (13, 11), 30: (246, 11)}; first fitting at 5; refusals by cause {'orientation': 89, 'twist': 78, 'lay': 2376, 'stop': 2049, 'sense': 2511}; counts {'births': 11, 'laid_back': 0, 'refused_stop': 2049, 'turns': 539, 'met': 7034, 'laid': 0}
+
+5. The rewind and the phenomenon: the bang without its field runs back 20 of 20 (item 3, 'the rewind'); the phenomenon is item 1's exchange at every reflection and item 3's silence of the heavy families without the field.

@@ -1,0 +1,118 @@
+DAVID-OWN-BEAT_CHECKS.txt: the checks of DAVID-OWN-BEAT.md (David, 2026-10-27, 16:3x UTC), on the head 0d59ff812 (engine-5.0-test), no src touched.
+What they show: (1) the clock works: every run is the engine's own chart (run.chart) with its rewind of 20 ticks compared bit for bit, the reference notch in the state and in the rewind note; (2) the phenomenon: under a quarter turn of the chiming hand's train at the seed the own beat's chimes are the same list (tick, clock, hand), while the head's move (and on pair_3 vanish).
+
+== 1. The act, as the harness builds it (beat3.py: the head's bobs with the beat read on the dot with the reference; the three rewind patches)
+    def refs(clock):
+        if not hasattr(clock, "ref"):
+            clock.ref = {}
+        return clock.ref
+
+    def bobs(clock, hand_starts, winds, fitted_clocks, stopped, r_unsprung):
+        """The head's chiming with one change: the beat is read on the hand's own axis, the dot of its notch with the notch at which it began to wind (its reference, kept at the first tick of a winding whose notch is not 0, the crossing timer restarted there), in place of the three gear: the beat the ticks between two zero crossings of that dot (CK-S1's reading of a crossing)."""
+        ref = refs(clock)
+        rec0 = clock.hands().index(clock.unsprung())
+        net = sum((train_lead(hand_starts[rec0], spoke) for spoke in range(SPOKES)), start=0)
+        for rec, hand in enumerate(clock.hands()):
+            if hand is clock.unsprung():
+                continue
+            wound_now = np.vectorize(lambda v, w=clock.windings[rec]: 1 if int(v) >= w else 0, otypes=[object])(winds[rec])
+            three, twelve = hand.gears
+            r3, r12 = ref.get(rec, (np.zeros(clock.size, dtype=object), np.zeros(clock.size, dtype=object)))
+            unset = np.vectorize(lambda a, b: 1 if int(a) == 0 and int(b) == 0 else 0, otypes=[object])(r3, r12)
+            starting = (wound_now == 1) & ((clock.wound[rec] == 0) | (unset == 1))
+            r3 = np.where(starting, three.now, r3)
+            r12 = np.where(starting, twelve.now, r12)
+            ref[rec] = (r3, r12)
+            clock.crossed[rec] = np.where(starting, 0, clock.crossed[rec])
+            clock.wound[rec] = np.where(wound_now == 1, clock.wound[rec] + 1, 0)
+            d_before = r3 * three.before + r12 * twelve.before
+            d_now = r3 * three.now + r12 * twelve.now
+            crossing = np.vectorize(lambda b, n: 1 if (int(b) * int(n) < 0 or (int(b) == 0) != (int(n) == 0)) else 0, otypes=[object])(d_before, d_now)
+            timed = np.vectorize(lambda v: 1 if int(v) > 0 else 0, otypes=[object])(clock.crossed[rec])
+            clock.beats[rec] = np.where((crossing == 1) & (timed == 1), clock.crossed[rec], clock.beats[rec])
+            clock.crossed[rec] = np.where(crossing == 1, 1, np.where(timed == 1, clock.crossed[rec] + 1, 0))
+            chiming = np.vectorize(lambda st, bt: 1 if (int(bt) > 0 and int(st) >= int(bt)) else 0, otypes=[object])(clock.wound[rec], clock.beats[rec])
+            for where in zip(*np.nonzero(chiming == 1), strict=True):
+                at = tuple(int(x) for x in where)
+                if at in fitted_clocks or stopped[at]:
+                    continue
+                got = U.unwinds(clock, [(at, clock.windings[rec])], r_unsprung, 1)
+                clock.wound[rec][at] = 0
+                if got is None:
+                    continue
+                (unwind,) = got
+                notches, now, k = unwind["levels"], unwind["taken_now_was"], unwind["taken_line"]
+                clock.counts["body_clicks"] += 1
+                face = B.face_of(clock, rec, at, hand_starts)
+                entry = chime(clock, rec, at, unwind, face, hand_starts[rec])
+                if int(net[at]) == 0:
+                    move(clock, rec0, k, at, now - int(clock.hands()[rec0].gears[k].now[at]))
+                    entry["laid_back"], entry["dP_take"] = notches, [0] * AXES
+                    tally = recoil(clock, at, [-x for x in clock.last_push], entry["clock"], 1)
+                    entry["recoil"], entry["carry"] = [0] * AXES, tally["carry"]
+                    clock.counts["laid_back"] += 1
+                clock.log.append(entry)
+
+    SK.bobs = B.bobs = bobs
+    real_note, real_undo, real_state = RUN.rewind_note, SK.undo, RUN.state
+
+    def rewind_note(clock, *args):
+        note = real_note(clock, *args)
+        note["counters"] = (*note["counters"], {rec: (a.copy(), b.copy()) for rec, (a, b) in refs(clock).items()})
+        return note
+
+    def undo(clock, note):
+        real_undo(clock, dict(note, counters=note["counters"][:3]))
+        clock.ref = note["counters"][3]
+
+    def state(clock):
+        return real_state(clock) + [a for rec in sorted(refs(clock)) for a in refs(clock)[rec]]
+
+    TK.rewind_note = RUN.rewind_note = rewind_note
+    SK.undo = undo
+    RUN.state = state
+
+
+
+== 2. The quarter turn at the seed (beat3.py)
+class Turned(Clock):
+    def __init__(self, *args, **kw):
+        super().__init__(*args, **kw)
+        if turned_row >= 0:
+            hand = self.by_index[turned_row]
+            three, twelve = hand.gears
+            three.now, twelve.now = -twelve.now, three.now.copy()
+            three.before, twelve.before = -twelve.before, three.before.copy()
+
+
+
+== 3. The runs: venv314/bin/python beat3.py WORLD 120 20 ROW BEAT for the three worlds, BEAT head and own, ROW -1 (none turned) and 2 (the chiming hand's train turned)
+world_plasma_3.json 120 ticks, the beat head, row -1 turned a quarter: chimes 135 by hand {1: 135}, their ticks and clocks 722bb3aee1f4, the first [(4, (0, 0, 0), 1), (4, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_plasma_3.json 120 ticks, the beat head, row 2 turned a quarter: chimes 135 by hand {1: 135}, their ticks and clocks bc664c6bc555, the first [(3, (0, 0, 0), 1), (3, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_plasma_3.json 120 ticks, the beat own, row -1 turned a quarter: chimes 135 by hand {1: 135}, their ticks and clocks 88d5eb884a0a, the first [(5, (0, 0, 0), 1), (5, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_plasma_3.json 120 ticks, the beat own, row 2 turned a quarter: chimes 135 by hand {1: 135}, their ticks and clocks 88d5eb884a0a, the first [(5, (0, 0, 0), 1), (5, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_pair_3.json 120 ticks, the beat head, row -1 turned a quarter: chimes 81 by hand {1: 81}, their ticks and clocks 2bd3899a99b3, the first [(4, (0, 0, 0), 1), (4, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_pair_3.json 120 ticks, the beat head, row 2 turned a quarter: chimes 0 by hand {}, their ticks and clocks 4f53cda18c2b, the first [], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_pair_3.json 120 ticks, the beat own, row -1 turned a quarter: chimes 108 by hand {1: 108}, their ticks and clocks 013458470fbf, the first [(4, (0, 0, 0), 1), (4, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_pair_3.json 120 ticks, the beat own, row 2 turned a quarter: chimes 108 by hand {1: 108}, their ticks and clocks 013458470fbf, the first [(4, (0, 0, 0), 1), (4, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_universe_3.json 120 ticks, the beat head, row -1 turned a quarter: chimes 189 by hand {1: 108, 2: 81}, their ticks and clocks 9897fecfdc58, the first [(4, (0, 0, 0), 1), (4, (0, 0, 0), 2)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_universe_3.json 120 ticks, the beat head, row 2 turned a quarter: chimes 216 by hand {1: 135, 2: 81}, their ticks and clocks e99b505ae068, the first [(3, (0, 0, 0), 1), (3, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_universe_3.json 120 ticks, the beat own, row -1 turned a quarter: chimes 189 by hand {1: 108, 2: 81}, their ticks and clocks 75b47be2113d, the first [(5, (0, 0, 0), 1), (5, (0, 0, 0), 2)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_universe_3.json 120 ticks, the beat own, row 2 turned a quarter: chimes 189 by hand {1: 108, 2: 81}, their ticks and clocks 75b47be2113d, the first [(5, (0, 0, 0), 1), (5, (0, 0, 0), 2)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+
+== 4. The committed charts (60 ticks; ROW 0 is the light turned)
+world_hole.json 60 ticks, the beat head, row -1 turned a quarter: chimes 2262 by hand {0: 2118, 1: 71, 2: 73}, their ticks and clocks c443a2be3f47, the first [(9, (4, 1, 2), 0), (9, (4, 2, 1), 0)], fittings 18, the rewind {'intervals': 20, 'exact': 20}
+world_hole.json 60 ticks, the beat head, row 0 turned a quarter: chimes 1198 by hand {0: 1050, 1: 77, 2: 71}, their ticks and clocks 16cac93d8ba6, the first [(9, (3, 2, 3), 1), (9, (3, 2, 4), 1)], fittings 20, the rewind {'intervals': 20, 'exact': 20}
+world_hole.json 60 ticks, the beat own, row -1 turned a quarter: chimes 2341 by hand {0: 2282, 1: 39, 2: 20}, their ticks and clocks b6b118f71740, the first [(11, (0, 1, 2), 0), (11, (0, 2, 1), 0)], fittings 13, the rewind {'intervals': 20, 'exact': 20}
+world_hole.json 60 ticks, the beat own, row 0 turned a quarter: chimes 601 by hand {0: 525, 1: 32, 2: 44}, their ticks and clocks 4a9de795552b, the first [(14, (2, 4, 3), 2), (22, (3, 1, 3), 0)], fittings 18, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json 60 ticks, the beat head, row -1 turned a quarter: chimes 3003 by hand {0: 2916, 1: 40, 2: 47}, their ticks and clocks a91e78f59223, the first [(4, (0, 1, 3), 0), (5, (0, 1, 2), 0)], fittings 16, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json 60 ticks, the beat head, row 0 turned a quarter: chimes 2247 by hand {0: 2093, 1: 87, 2: 67}, their ticks and clocks e54271ae4144, the first [(6, (2, 3, 4), 0), (7, (2, 2, 4), 0)], fittings 18, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json 60 ticks, the beat own, row -1 turned a quarter: chimes 4526 by hand {0: 4466, 1: 22, 2: 38}, their ticks and clocks 111356dbb1b1, the first [(6, (0, 1, 2), 0), (6, (0, 1, 3), 0)], fittings 16, the rewind {'intervals': 20, 'exact': 20}
+world_nature.json 60 ticks, the beat own, row 0 turned a quarter: chimes 1559 by hand {0: 1467, 1: 57, 2: 35}, their ticks and clocks 0f01da5854c2, the first [(10, (1, 3, 3), 0), (11, (2, 3, 4), 0)], fittings 15, the rewind {'intervals': 20, 'exact': 20}
+world_bodies.json 120 ticks, the beat own, row -1 turned a quarter: chimes 18300 by hand {0: 16235, 1: 2065}, their ticks and clocks 68c0477f7353, the first [(4, (2, 2, 1), 1), (4, (2, 2, 2), 1)], fittings 26, the rewind {'intervals': 20, 'exact': 20}
+
+== 5. pair_3 again on the head 5f8680de2 (the tensors' fold): the same hashes
+world_pair_3.json 120 ticks, the beat head, row -1 turned a quarter: chimes 81 by hand {1: 81}, their ticks and clocks 2bd3899a99b3, the first [(4, (0, 0, 0), 1), (4, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_pair_3.json 120 ticks, the beat head, row 2 turned a quarter: chimes 0 by hand {}, their ticks and clocks 4f53cda18c2b, the first [], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_pair_3.json 120 ticks, the beat own, row -1 turned a quarter: chimes 108 by hand {1: 108}, their ticks and clocks 013458470fbf, the first [(4, (0, 0, 0), 1), (4, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}
+world_pair_3.json 120 ticks, the beat own, row 2 turned a quarter: chimes 108 by hand {1: 108}, their ticks and clocks 013458470fbf, the first [(4, (0, 0, 0), 1), (4, (0, 0, 1), 1)], fittings 0, the rewind {'intervals': 20, 'exact': 20}

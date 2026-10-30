@@ -1,0 +1,77 @@
+DAVID-FOUR-PHENOMENA_CHECKS.txt: the scripts and outputs behind DAVID-FOUR-PHENOMENA.md (David, 2026-10-27), on the head 608d97134. The clock checked working: the head's full check exit 0 (108 passed) on toys-5 with these files.
+
+====================================================================================================
+1. Polarization at the chimes: the emitter along x, along y, and at rest (the control)
+---------------------------------------- pol.py
+"""Polarization at the chimes: an emitter (a charged packet of the middle's heavy hand, one sense, moving along x or along y) and a neutral detector bob four clocks away along z; the offset's odd gears (the potential A) read from the detector's chime frames ("odd", spoke by spoke) and at the detector's centre, the x part against the y part (argv: the axis the emitter moves along, the ticks)."""
+import json, os, sys, time
+sys.set_int_max_str_digits(0)
+WT = os.environ.get("WT", "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/wt_g4")
+sys.path.insert(0, WT + "/src")
+from event_universe.clock import Clock
+from event_universe.trains import OFFSET
+axis, ticks = sys.argv[1], int(sys.argv[2])
+u = json.load(open(WT + "/tests/worlds/universe_middle.json"))
+h = int(u["integers"]["den"]) // 8
+wave = {"x": [h, 0, 0], "y": [0, h, 0], "none": None}[axis]
+emitter = {"lay": "at", "row": 2, "centre": [4, 4, 2], "width": 2, "quanta": 125, "sense": 1}
+if wave:
+    emitter["wave"] = wave
+seed = [{"lay": "sea", "row": 0}, {"lay": "at", "row": 2, "centre": [4, 4, 6], "width": 2, "quanta": 125}, emitter]
+t0 = time.time()
+node = Clock(u, {"shape": [9, 9, 9], "intervals": ticks, "seed": seed})
+field = [0, 0, 0]
+for _ in range(ticks):
+    node.tick()
+    odd = node.train(OFFSET).gears[1:4]
+    for a in range(3):
+        field[a] += abs(int(odd[a].now[4, 4, 6]))
+chimes = [e for e in node.log if e.get("event") == "credit" and e["node"][2] >= 5]
+at_chimes = [0, 0, 0]
+for e in chimes:
+    o = e["frame"]["odd"]
+    for a in range(3):
+        at_chimes[a] += abs(o[2 * a]) + abs(o[2 * a + 1])
+print(f"the emitter moving along {axis}: the detector's {len(chimes)} chimes read the odd gears |A_x|, |A_y|, |A_z| summed {at_chimes}; "
+      f"the detector's centre over {ticks} ticks {field}; fittings {node.counts['births']}; {time.time() - t0:.0f} s", flush=True)
+---------------------------------------- output: out_pol.txt
+the emitter moving along x: the detector's 3323 chimes read the odd gears |A_x|, |A_y|, |A_z| summed [12230, 711, 11441]; the detector's centre over 40 ticks [31, 0, 43]; fittings 39; 55 s
+the emitter moving along y: the detector's 3644 chimes read the odd gears |A_x|, |A_y|, |A_z| summed [1155, 14553, 11663]; the detector's centre over 40 ticks [0, 33, 42]; fittings 36; 56 s
+DONE
+the emitter moving along none: the detector's 3286 chimes read the odd gears |A_x|, |A_y|, |A_z| summed [1346, 1283, 10838]; the detector's centre over 40 ticks [0, 0, 60]; fittings 36; 58 s
+DONE2
+
+====================================================================================================
+The spin one half test's short setting (the twin build in the engine; run from the head's tree)
+---------------------------------------- full_turn_short.py
+"""The spin one half test's setting, shortened: one mode of the heavy lift's up twin on a cube of side c with a held curl along x and the neutral control, the twins' pulls on against off; the overlap with the free run and S_z at each tick, the ticks where the overlap is least and most, and the seconds (argv: the side, the curl, the ticks)."""
+import json, sys, time
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from clk import doubled, hold_curl, neutral, twins_of
+side, curl, ticks = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+calibre = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(calibre["rows"][2]["pair"])
+neutral(); hold_curl(curl, 0, 0)
+import event_universe.tick as T
+real = T.Tick.twin_pulls
+from event_universe.clock import Clock
+t0 = time.time()
+piece = {"shape": [side] * 3, "intervals": ticks, "seed": [{"lay": "sea", "row": 2, "hand": 0, "quanta": 1, "sense": 1}]}
+on, off = Clock(calibre, piece), Clock(calibre, piece)
+up, dn = twins_of(on, pair)
+gears = lambda n: [*n.hands()[up].gears, *n.hands()[dn].gears]
+rows = []
+for t in range(1, ticks + 1):
+    T.Tick.twin_pulls = real; on.tick()
+    T.Tick.twin_pulls = lambda self: None; off.tick()
+    a, b = gears(on), gears(off)
+    dot = sum(int((x.now * y.now).sum()) for x, y in zip(a, b)); norm = sum(int((y.now * y.now).sum()) for y in b)
+    u = sum(int((x.now * x.now).sum()) for x in a[:2]); d = sum(int((x.now * x.now).sum()) for x in a[2:])
+    rows.append((t, (u - d) / (u + d), dot / norm))
+least = min(rows, key=lambda r: r[2]); most = max((r for r in rows if r[0] > least[0]), key=lambda r: r[2], default=None)
+print(f"side {side} curl {curl} ticks {ticks}: the overlap least {least[2]:+.3f} at tick {least[0]} (S_z {least[1]:+.3f}), "
+      f"then most {most[2]:+.3f} at tick {most[0]} (S_z {most[1]:+.3f}); {time.time() - t0:.1f} s")
+---------------------------------------- output: out_spin_short.txt
+side 3 curl 16000 ticks 40: the overlap least -1.017 at tick 14 (S_z +0.902), then most +1.027 at tick 38 (S_z +0.814); 2.5 s
+

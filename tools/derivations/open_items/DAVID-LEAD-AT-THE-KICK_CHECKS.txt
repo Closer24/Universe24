@@ -1,0 +1,85 @@
+DAVID-LEAD-AT-THE-KICK checks, 2026-10-27, 20:1x UTC, on the head 9e1f1a8be (no src touched).
+Harness: CLAMP=3/4 the light cone's letter (DAVID-LIGHT-CONE_CHECKS.txt); LEAD=1 the lead at the kick (lead_kick.py: in Tick.impulse,
+the offset's odd gears a = 1..3: q, dfine = carry(lead[a-1], dteeth, dfine, going); p_other[a] += going * teeth * stretch_now * q;
+in Tick.advances the offset drive by the lead struck). bang_clamp.py BACK=10, chart_clamp.py the rewind of 20.
+
+1. The squaring under the light cone alone (1,000,000 quanta, CLAMP=3, the board's largest X bits on even ticks from 70):
+   70:41 72:40 74:42 76:42 78:44 80:48 82:54 84:64 86:86 88:129 90:218 92:391 94:739 96:1435 98:2826 100:5611 102:11178 104:22312 106:44580 108:89116 110:178185 112:356325 114:712602 116:1425158 118:2850272 120:5700498 
+
+2. The clock that squares, ticks 88 and 89 (trace_kick.py; per driven gear at the clock: the stride, the fine tooth, the momentum
+   p_side = w_side stride + fine - w_side div 2, the velocities over d = 2 teeth X_now and their product):
+   t88 clock 23: X before 23 bits, now 86, next 86; turned True, stopped True; forms 7 bits (sign +); mean wall / start wall 0.5
+       hand1.0: a 6b, stride 0, fine 168b, p_side 118b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 49b, teeth 85b)
+       hand1.1: a 12b, stride 0, fine 168b, p_side 124b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 54b, teeth 85b)
+       hand2.0: a 1b, stride 0, fine 168b, p_side 110b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 66b, teeth 85b)
+       hand2.1: a 1b, stride 0, fine 168b, p_side 112b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 66b, teeth 85b)
+       hand3.0: a 5b, stride 0, fine 168b, p_side 117b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 70b, teeth 85b)
+       hand3.1: a 3b, stride 0, fine 168b, p_side 115b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 68b, teeth 85b)
+       hand4.0: a 17b, stride 0, fine 168b, p_side 129b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 0b (pull 0b, teeth 85b)
+       hand4.1: a 18b, stride 0, fine 168b, p_side 128b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.0: a 4b, stride 0, fine 168b, p_side 113b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.1: a 6b, stride -16, fine 168b, p_side 173b, u_in 4b, u_out 4b, u_in u_out 7b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.2: a 6b, stride 3, fine 168b, p_side 171b, u_in 2b, u_out 2b, u_in u_out 3b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.3: a 6b, stride 10, fine 168b, p_side 173b, u_in 3b, u_out 3b, u_in u_out 5b, a pull / teeth 0b (pull 0b, teeth 85b) || w_side 169b, d 171b
+   t89 clock 23: X before 86 bits, now 23, next 129; turned False, stopped False; forms 133 bits (sign +); mean wall / start wall 4.638e+18
+       hand1.0: a 6b, stride 0, fine 168b, p_side 118b, u_in 12b, u_out 12b, u_in u_out 23b, a pull / teeth 1b (pull 63b, teeth 85b)
+       hand1.1: a 12b, stride 0, fine 168b, p_side 124b, u_in 17b, u_out 17b, u_in u_out 33b, a pull / teeth 1b (pull 68b, teeth 85b)
+       hand2.0: a 1b, stride 0, fine 168b, p_side 110b, u_in 4b, u_out 4b, u_in u_out 7b, a pull / teeth 1b (pull 79b, teeth 85b)
+       hand2.1: a 1b, stride 0, fine 168b, p_side 112b, u_in 5b, u_out 5b, u_in u_out 10b, a pull / teeth 1b (pull 79b, teeth 85b)
+       hand3.0: a 5b, stride 0, fine 168b, p_side 117b, u_in 10b, u_out 10b, u_in u_out 19b, a pull / teeth 4b (pull 84b, teeth 85b)
+       hand3.1: a 3b, stride 0, fine 168b, p_side 115b, u_in 8b, u_out 8b, u_in u_out 15b, a pull / teeth 1b (pull 82b, teeth 85b)
+       hand4.0: a 17b, stride 0, fine 168b, p_side 129b, u_in 22b, u_out 22b, u_in u_out 44b, a pull / teeth 0b (pull 0b, teeth 85b)
+       hand4.1: a 18b, stride 0, fine 168b, p_side 128b, u_in 22b, u_out 22b, u_in u_out 43b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.0: a 4b, stride 0, fine 168b, p_side 113b, u_in 6b, u_out 7b, u_in u_out 12b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.1: a 7b, stride 16, fine 168b, p_side 173b, u_in 67b, u_out 67b, u_in u_out 133b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.2: a 6b, stride -3, fine 168b, p_side 171b, u_in 64b, u_out 64b, u_in u_out 128b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.3: a 6b, stride -10, fine 168b, p_side 173b, u_in 66b, u_out 66b, u_in u_out 131b, a pull / teeth 0b (pull 0b, teeth 85b) || w_side 169b, d 108b
+   t90 clock 23: X before 23 bits, now 129, next 129; turned True, stopped True; forms 9 bits (sign +); mean wall / start wall 0.5
+       hand1.0: a 6b, stride 0, fine 212b, p_side 118b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 49b, teeth 85b)
+       hand1.1: a 12b, stride 0, fine 212b, p_side 124b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 54b, teeth 85b)
+       hand2.0: a 1b, stride 0, fine 212b, p_side 110b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 66b, teeth 85b)
+       hand2.1: a 1b, stride 0, fine 212b, p_side 112b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 66b, teeth 85b)
+       hand3.0: a 5b, stride 0, fine 212b, p_side 117b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 70b, teeth 85b)
+       hand3.1: a 3b, stride 0, fine 212b, p_side 115b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 1b (pull 68b, teeth 85b)
+       hand4.0: a 17b, stride 0, fine 212b, p_side 129b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 0b (pull 0b, teeth 85b)
+       hand4.1: a 18b, stride 0, fine 212b, p_side 128b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.0: a 4b, stride 0, fine 212b, p_side 114b, u_in 0b, u_out 0b, u_in u_out 0b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.1: a 7b, stride 33, fine 212b, p_side 218b, u_in 5b, u_out 5b, u_in u_out 9b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.2: a 6b, stride -2, fine 212b, p_side 214b, u_in 1b, u_out 1b, u_in u_out 1b, a pull / teeth 0b (pull 0b, teeth 85b)
+       offset5.3: a 6b, stride -6, fine 212b, p_side 215b, u_in 2b, u_out 2b, u_in u_out 4b, a pull / teeth 0b (pull 0b, teeth 85b) || w_side 213b, d 215b
+
+3. The bang, the summary per run (X bits after tick 5), then the run's own last line:
+   run1M_c3.txt: LEAD=0 120 ticks, X bits 30 to 5700498 (the largest at tick 120), light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=3: fittings 133, chimes 3339, the rewind {'intervals': 10, 'exact': 10}
+   lead1M.txt: LEAD=1 120 ticks, X bits 30 to 43 (the largest at tick 91), light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=4: fittings 139, chimes 3008, the rewind {'intervals': 10, 'exact': 10}
+   run25_c3.txt: LEAD=0 60 ticks, X bits 31 to 723 (the largest at tick 60), light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=3: fittings 118, chimes 692, the rewind {'intervals': 10, 'exact': 10}
+   lead25.txt: LEAD=1 120 ticks, X bits 31 to 65 (the largest at tick 60), light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=4: fittings 146, chimes 1882, the rewind {'intervals': 10, 'exact': 10}
+   run5M_c3_200.txt: LEAD=0 200 ticks, X bits 10 to 52 (the largest at tick 43), light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=3: fittings 94, chimes 4550, the rewind {'intervals': 10, 'exact': 10}
+   lead5M.txt: LEAD=1 200 ticks, X bits 10 to 50 (the largest at tick 75), light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=4: fittings 90, chimes 5898, the rewind {'intervals': 10, 'exact': 10}
+   lead_only25.txt: LEAD=1 60 ticks, X bits 10 to 1425 (the largest at tick 49), light clock-ticks past the edge 1279, hill clock-ticks 22 | CLAMP=0: fittings 178, chimes 241, the rewind {'intervals': 10, 'exact': 10}
+   lead_only1M.txt: LEAD=1 60 ticks, X bits 26 to 214 (the largest at tick 10), light clock-ticks past the edge 1676, hill clock-ticks 0 | CLAMP=0: fittings 82, chimes 434, the rewind {'intervals': 10, 'exact': 10}
+
+4. The charts (chart_clamp.py; 'the same' = the committed record key by key):
+   the lead at the kick alone on the head (LEAD=1 CLAMP=0):
+   hole, CLAMP=0: fittings 6 (unspringings 2), chimes 8, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record the same | ticks past the edge 16, the largest edge 2.927e+07, mesh ends above G^2 25880, clock-ticks on a hill 4
+   chiral, CLAMP=0: fittings 5 (unspringings 0), chimes 3323, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 12, the largest edge 1.16, mesh ends above G^2 11492, clock-ticks on a hill 94
+   bodies, CLAMP=0: fittings 13 (unspringings 10), chimes 8095, rows SHOWN 30, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 3, the largest edge 1.103, mesh ends above G^2 142734, clock-ticks on a hill 21
+   both letters (LEAD=1 CLAMP=4):
+   hole, CLAMP=4: fittings 13 (unspringings 0), chimes 647, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 23420, clock-ticks on a hill 35
+   chiral, CLAMP=4: fittings 2 (unspringings 0), chimes 3143, rows SHOWN 32, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 11476, clock-ticks on a hill 97
+   bodies, CLAMP=4: fittings 10 (unspringings 10), chimes 475, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 147738, clock-ticks on a hill 21
+   as built (CLAMP=0, LEAD=0):
+   hole, CLAMP=0: fittings 6 (unspringings 2), chimes 8, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record the same | ticks past the edge 16, the largest edge 2.927e+07, mesh ends above G^2 25880, clock-ticks on a hill 4
+   chiral, CLAMP=0: fittings 5 (unspringings 0), chimes 3323, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record the same | ticks past the edge 12, the largest edge 1.16, mesh ends above G^2 11492, clock-ticks on a hill 94
+   bodies, CLAMP=0: fittings 13 (unspringings 10), chimes 8094, rows SHOWN 30, the rewind {'intervals': 20, 'exact': 20}, the record the same | ticks past the edge 3, the largest edge 1.103, mesh ends above G^2 142734, clock-ticks on a hill 21
+
+5. The committed records' chimes at a clock with a mesh factor above the vacuum's G^2 = 256 (the credit's frame):
+   hole: 8 chimes, 8 above, the largest factor 205289
+   chiral: 3323 chimes, 3093 above, the largest factor 268
+   bodies: 8094 chimes, 8057 above, the largest factor 290
+
+6. The letter's code (tick.py, Tick.impulse, beside the sweep's kick on gear 0):
+       for a, n in enumerate(self.lead, start=1):
+           odd = self.trains[k][a]
+           q, odd.dfine = carry(n, odd.dteeth, odd.dfine, self.going)
+           p_other[a] = p_other[a] + self.going * clock.teeth * self.stretch_now * q
+   and in Tick.advances the loop 'for gear, n in zip(clock.train(OFFSET).gears, [None, *self.lead])' struck.

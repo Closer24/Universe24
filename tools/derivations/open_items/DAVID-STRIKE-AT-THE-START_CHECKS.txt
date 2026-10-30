@@ -1,0 +1,36 @@
+DAVID-STRIKE-AT-THE-START checks (R14), 2026-10-27, 20:3x UTC, on the head 9e1f1a8be (no src touched).
+Harness: START=1 (start_factors.py): the striking's one read, striking.py 332 'read = factors(clock, None, stopped)', returns
+clock.start_factors (the tick's own, the step's). With CLAMP=4 LEAD=1 the two letters (DAVID-LIGHT-CONE, DAVID-LEAD-AT-THE-KICK).
+chart_k.py lays the chart's light sea k times (the seed's 'sea' lay repeated); the rewind of 20; bang_clamp.py BACK=10.
+
+1. The bang, 120 ticks (X bits after tick 5):
+   lead1M.txt: START=0, 120 ticks, X bits 30 to 43, light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=4: fittings 139, chimes 3008, the rewind {'intervals': 10, 'exact': 10}
+   r14_1M_both.txt: START=1, 120 ticks, X bits 30 to 40, light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=4: fittings 140, chimes 3456, the rewind {'intervals': 10, 'exact': 10}
+   lead25.txt: START=0, 120 ticks, X bits 31 to 65, light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=4: fittings 146, chimes 1882, the rewind {'intervals': 10, 'exact': 10}
+   r14_25_both.txt: START=1, 120 ticks, X bits 32 to 45, light clock-ticks past the edge 0, hill clock-ticks 0 | CLAMP=4: fittings 102, chimes 2560, the rewind {'intervals': 10, 'exact': 10}
+
+2. The charts (chart_clamp.py):
+   the head (CLAMP=0 LEAD=0 START=0):
+   hole, CLAMP=0: fittings 6 (unspringings 2), chimes 8, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record the same | ticks past the edge 16, the largest edge 2.927e+07, mesh ends above G^2 25880, clock-ticks on a hill 4
+   chiral, CLAMP=0: fittings 5 (unspringings 0), chimes 3323, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record the same | ticks past the edge 12, the largest edge 1.16, mesh ends above G^2 11492, clock-ticks on a hill 94
+   bodies, CLAMP=0: fittings 13 (unspringings 10), chimes 8094, rows SHOWN 30, the rewind {'intervals': 20, 'exact': 20}, the record the same | ticks past the edge 3, the largest edge 1.103, mesh ends above G^2 142734, clock-ticks on a hill 21
+   the head and R14 (START=1):
+   hole, CLAMP=0: fittings 2 (unspringings 0), chimes 0, rows SHOWN 19, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 16, the largest edge 2.927e+07, mesh ends above G^2 25880, clock-ticks on a hill 4
+   chiral, CLAMP=0: fittings 3 (unspringings 0), chimes 2108, rows SHOWN 31, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 12, the largest edge 1.176, mesh ends above G^2 13960, clock-ticks on a hill 97
+   bodies, CLAMP=0: fittings 11 (unspringings 10), chimes 1403, rows SHOWN 31, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 3, the largest edge 1.103, mesh ends above G^2 136908, clock-ticks on a hill 21
+   both letters (CLAMP=4 LEAD=1):
+   hole, CLAMP=4: fittings 13 (unspringings 0), chimes 647, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 23420, clock-ticks on a hill 35
+   chiral, CLAMP=4: fittings 2 (unspringings 0), chimes 3143, rows SHOWN 32, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 11476, clock-ticks on a hill 97
+   bodies, CLAMP=4: fittings 10 (unspringings 10), chimes 475, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 147738, clock-ticks on a hill 21
+   both letters and R14:
+   hole, CLAMP=4: fittings 14 (unspringings 3), chimes 387, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 23348, clock-ticks on a hill 33
+   chiral, CLAMP=4: fittings 1 (unspringings 0), chimes 0, rows SHOWN 17, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 15198, clock-ticks on a hill 94
+   bodies, CLAMP=4: fittings 14 (unspringings 11), chimes 6060, rows SHOWN 29, the rewind {'intervals': 20, 'exact': 20}, the record moved | ticks past the edge 0, the largest edge 1, mesh ends above G^2 147330, clock-ticks on a hill 21
+
+3. The light's sea laid k times, both letters and R14 (chart_k.py):
+   chiral, the light's sea x1, CLAMP=4 LEAD=1 START=1: fittings 1, chimes 0, rows SHOWN 17, the rewind {'intervals': 20, 'exact': 20} | ticks past the edge 0
+   chiral, the light's sea x2, CLAMP=4 LEAD=1 START=1: fittings 9, chimes 2154, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20} | ticks past the edge 0
+   chiral, the light's sea x3, CLAMP=4 LEAD=1 START=1: fittings 2, chimes 1404, rows SHOWN 31, the rewind {'intervals': 20, 'exact': 20} | ticks past the edge 0
+   chiral, the light's sea x4, CLAMP=4 LEAD=1 START=1: fittings 7, chimes 1458, rows SHOWN 35, the rewind {'intervals': 20, 'exact': 20} | ticks past the edge 0
+   hole, the light's sea x2, CLAMP=4 LEAD=1 START=1: fittings 9, chimes 260, rows SHOWN 31, the rewind {'intervals': 20, 'exact': 20} | ticks past the edge 0
+   bodies, the light's sea x2, CLAMP=4 LEAD=1 START=1: fittings 16, chimes 7030, rows SHOWN 30, the rewind {'intervals': 20, 'exact': 20} | ticks past the edge 0

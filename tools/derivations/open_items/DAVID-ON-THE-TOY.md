@@ -1,0 +1,331 @@
+# David on the toy: four answers for the Boss's picture (2026-10-27, 05:3x UTC; the Boss's task of 05:16 under the owner's order of 05:1x, "consult with David; a generic engine that keeps our big laws"; read on toys-5 e48273be8, whose src is 5b6e14802's with the amplitude declared from the file)
+
+Short, by number; the code lines cited are the head's. Where I did not measure, I say unknown.
+
+## (a) The run back under the carried paces
+
+1. **Recoverable by the mirror, no stack.** The carry is undone exactly by the one carried division at -1 with the same numerator: forward u = N + r_prev, q = u div w, r = u mod w; backward acts.divide(N, w, r, -1) (core/acts.py:18-22) forms N + (w - 1 - r) = (q + 1) w - 1 - r_prev, whose quotient is q and whose remainder, mirrored back, is r_prev, bit for bit for every 0 <= r_prev < w. So the two carries (the clock's r_0 at the wall Gamma^2, the Link pace's r at the wall Gamma) live in the state as two arrays per Node and nothing goes on the frame's stack for them.
+2. **The condition: the same N backward.** N is a function of the content at the interval's start; backward the content is re-read from the start level (interval.py:67-69, `at`: the before slot, the now slot at a still Node) after the swap is undone at the Interval's making from the frame's turned and frozen masks (interval.py:35-47; run.py:151-154), the same integer as forward, so the inverse is exact. The toy's missing piece is one line per pace: readings.paces_of with the direction, the inverse division at -1 (today paces_of(node, content), readings.py:19-21, has no direction and no carry).
+3. **Once per interval, or the inverse breaks.** The carry must advance exactly once per interval forward and be inverted exactly once backward. Today paces_of is called at interval.py:84 (the readings, once), at readings.py:26 (frozen_of, again from the same content), at readings.py:63 (readings.rule, called per record at the close, close.py:184 and :260-265, and per row at interval.py:108) and at node.py:112 (the Node's making). With a carry inside paces_of every one of these would advance it again: the carried paces must be read once into the Interval (self.p0, self.pi) and every rule and the frozen mask built from the cached pair; the toy's env flag inside paces_of is the wrong place for the carry if those callers still reach it. Unknown whether the toy caches; if it does not, the forward and backward call counts must agree exactly, which they do not today (the close's rules are built forward only).
+4. **BH-S1 and the frozen Node.** The law: at a frozen Node no act changes its state, every line restored (ALGEBRA.md, BH-S1). A carry advancing at a frozen Node changes its state by a reading. Either the letter excepts the carries (a reading's carry, not an act's) or the advance is masked at frozen Nodes in both directions; the frozen mask is booked in the frame (run.py:154), so the backward reads the same mask either way. Unknown which the toy does; it must be one of the two and the same both ways.
+5. **The whole-state run back (66dd3e352).** It stays bit for bit if the two carry arrays are listed in run.state (run.py:177-181, the one list the census counts and the run back compares) and 1 to 4 hold; the census count per Node moves from 98 to 100 on the toy universe (the Reader's row reads the count constant through the run still), and the pins move with it (tests/test_the_board.py:178 the census 99, tests/test_the_node.py:560 the state hash). Not measured: the toy's code is not on the branch.
+
+## (b) The one exclusion at the close
+
+1. **None of the four identities depends on which births are admitted.** MS-S1 (merger.walls_of, merger.py:84-104: each child's wall its own quantum, the take what the lay books) is per admitted birth; the children's walls summed at the gap 0 (close.py:149, `takes(node, [(at, sum(sum(walls[kid]) for kid in kids))], ...)`) is a sum over the kids kept, per close; EX-S1's remainder at the Node (node.take_rem, carried per Node across takes, the identity tests/test_the_record.py:217) is per take; the crowded lay (close.py:100-108, two children of one plane at one Node in one close refused) is a count over the kids kept and stands whatever the sense rule says. So: none, as long as the crowding refusal stays.
+2. **The one identity to guard is that a birth is a pair.** close.refuse today refuses the whole birth (`continue` at close.py:94-96) and children_laid lays both children, the - child at the - end and the + child at the + end (merger.py:32-40, senses_at), the pair's charges summing to zero (tests/test_the_record.py:214, `sum(signs) == 0 and 0 not in signs`) and the take paying both walls (close.py:149). If the toy's rule refuses ONE end (the child whose sense the standing charge already has) and admits the other alone, the birth is a single child: the pair's zero charge and the take's two walls break there, and the Wronskian's +-T div 2 per pair (MS-S1) is laid once. The rule must refuse the birth whole, not an end; unknown which the toy does.
+3. **What the rule replaces is a clause, not an identity:** the lay refused by state where the standing row's spin density agrees with the child's at the centre (SR-S4, the seed's refusal, loader/seed.py) and the owns > 0 test of close.refuse (close.py:94, the plane already standing at its Node). The standing charge read by gram.charge at the end (close.py:54 reads it for every record but the emitter) is the full state's, as the owner's word has it; the refusals' counts (refused_sense, refused_lay) move, and so do the records' births (70 against 44 by 20 on the toy), which is the course and not a broken identity.
+
+## (c) Bell, the credit's sense born at the click: one paragraph
+
+On the law as written the credit carries the standing record's sense at the Node, which is the child's birth sense (merger.senses_at, merger.py:40; the close logs it with the birth and the credit reads the standing row), so the outcome never reads the click and S = -2 exactly under every reading, as the Boss measured. The click's take is one carried division of the Node (EX-S1, take.fall_of, take.py:35-38, through core/acts.divide), whose outputs are the quotient (the levels taken), the remainder (the take's remainder kept at the Node, EX-S1) and the mirror the remainder stands under, the direction's w - 1 - r or the negation's (w - r) mod w (F48-S1, The-48-Holds_COMPARISON.md section 5; core/acts.py:8-16), which at every division is the remainder's side of the half wall, the fixed point of the negation's mirror. That bit the law already produces at every click, so READING it is a reading of an act in the law and not a new act. Making it the credit's SENSE is a new act of the close: the sense enters the child's lay (merger.child_levels, merger.py:18-22, sense a and sense b), the standing charge (gram.charge) and the refusals (close.refuse), so a sense born at the click would re-lay the child and change every record, a clause and not a reading, with its derivation owed: that the bit at the two ends of a pair correlates through the Link's own lattice (gcd(w, R_ji), the Link's draw, draw.py:17-40) and not through the shared birth, and that it is independent of the setting the detector reads (the proper clock's parity), which is what 4 < S^2 <= 8 needs. Unknown whether it is; not to be built on this reading. I could not find a clause tagged CX-S1 in docs/ALGEBRA.md on this head and answered from the acts as written.
+
+## (d) The generic engine: the bug list on 5b6e14802, by file and line, one line each
+
+1. merger.py:18-22 (child_levels): the child laid on the row's first line, `vector = [1] + [0] * (len(row.lines) - 1)`, generic in the shape, no role; LIVE, lawful (MS-S1, the same integers for every row).
+2. merger.py:145-147, :175, :221, :238 (`row is not node.emitter()`): the emitter's take the exact take (take.fall_of) and every other record's a share fall; src knows a ROLE here, the gap-0 plane picked as the plane of the potential row's pair (node.py:137, `row_of(self.rows_, PLANE, self.row(POTENTIAL).pair)`), a role by the shape-4 row and not by the row's own shape and pair; LIVE.
+3. close.py:39-41, :54, :91, :132, :212, :260 and bodies.py:31-34 (`node.emitter()`, `rec0`): the same role at the close, the refusals and the bodies' credits; LIVE. These, with 2, are the one family src knows: light as the row whose pair is the potential's.
+4. close.py:187-188 (levels_of -> child_levels(row, sense, node.A, node.B)): the charged children at (A, B) for every record row; generic; LIVE, lawful.
+5. close.py:272 (`bodies(node, plane_starts, owns, born_nodes, frozen, r_emitter)`): the emitter's rule passed by name to the bodies' credits; the role of 2; LIVE.
+6. merger.py:36 and :95 (`for where, sense in ((minus, -1), (plus, 1))`): the child's sense fixed by the end's NAME; for a Link birth the name is the current's sign (close.meet, close.py:55-66, the + child at the end the current flows into, links.py:149-151), the algebra's; for a merger's light children (MG-S1, merger.py:46-50) the ends are the taken pair's and the sense is by the name alone: LIVE, a name and not a role, the orientation bug (a) of my 6416853809.
+7. The two ends' write order: CLOSED by CR-S2 and CL-S2 (merger.read_ends / write_ends, every end read before any is written, close.py:115; the logged reads at the start, the cross term booked once at the meeting's Node); not live.
+8. digit_of: no function of that name in src on 5b6e14802; the one-Link read is draw.read_number (draw.py:17-48), which returns (carry, room) composed over the digits or None; whether the former "returning its inputs" survives in it is unknown, not re-measured.
+9. Beside the list, the other sites where src reads a shape constant outside rows.py, every one a shape and not a role: PLANE as the pair's stride (merger.py:55, :76-77; take.py:80, :108; links.py:138; gram.py:41-51; draw.py:21), QUARTET for the spinor's Gram and scale (gram.py:33-58, readings.py:58), CARRIER for the wall's row and its time and axis lines (interval.py:56, :242; node.py:104-119, :262; links.py:67; readings.py:32; take.py:115), POTENTIAL for the current's row (interval.py:57, :259). The one role is the emitter (2, 3, 5); the one name is the merger's sense (6).
+
+## The picture in one line
+
+The carries can run back exactly by the mirror alone, once per interval and symmetric at the frozen Nodes; the exclusion breaks no identity if a birth stays a pair; the click's third output is a bit the law already makes, and its use as the sense would be a new act; the engine's one role is the emitter, read through the potential row's pair at node.py:137.
+
+## (e) The owner's word of 05:4x UTC, and what David does under it
+
+The owner, in David's session, 05:4x UTC (in translation): "work closely with the Boss; let him update you and make sure he is not wrong; think of solutions, generic; if laws are missing, or laws that constrain are to be removed, try to check; do not contradict our big things."
+
+So, to the Boss: (1) push the toy's copy (5b6e14802 with the flags) to a branch of its own, so that its claims can be measured by a second hand (the run back under the carries, the pair at the exclusion, the four Bell readings, the horizon breathing on the 48-interval world); nothing in a session reaches the other. (2) Until it is pushed, David builds the carried paces blind from the description in (a) (both paces as carried divisions with the remainder kept per Node across intervals, advanced once per interval, inverted once backward) in his scratch and measures the same world (b19, 48 intervals) against the numbers quoted: no Node frozen for good, 12 to 40 of 64 frozen per interval, the width 33 to 60 bits, one exact return at 8 with 32 births, 188 births by 48, 310 credits; where the numbers agree the toy is confirmed blind, where they part the difference is named. (3) The big things the owner names are the ones every check keeps: one algebra of the Node (Rule3's line, the four acts, every division one act with its remainder), integers alone, the run back exact, one Link's read, the generic row (a shape and a pair, no role), the 48, the one bang and the clicks' algebra; a law that constrains is a candidate to drop only where a measurement shows the big things hold without it (as the width did).
+
+## (f) The carried paces built blind and measured (05:3x UTC), against the toy's numbers
+
+Built in David's worktree on e48273be8 from the description in (a) alone, the diff beside this document as DAVID-ON-THE-TOY_CARRIES.txt (src +22 -3: core/paces keeps the clock's numerator N(c) beside the clocks; readings.carried_paces the two carried divisions, N(c) = q_0 Gamma^2 + r_0 and p_0^2 = q Gamma + r, the two remainders kept per Node as node.carry0 and node.carry1, born at the half walls, advanced once per interval at the readings and inverted once backward by acts.divide at -1 with the same numerator; every other reader of the paces given the interval's cached pair; the two carries listed in run.state). Measured on the Reader's 48-interval world of the bang (b19_cyc_q12000000_48) with the engine's own refusal rule (the owns > 0 of close.refuse, not the toy's exclusion):
+
+- **The run back is exact, 20 of 20, with the two carries in the state and every counter compared.** So (a) stands measured on this build: the carry is undone by the mirror alone, nothing on the stack.
+- **The numbers part from the toy's.** Frozen per interval 0 to 60 of 64 (0 at 1, 2, 4, 5, 7 and 9; 60 at 8; 16 to 56 from 10 on; the toy: 12 to 40). The carrier's largest level 26 to 52 bits at the even intervals and 178, 296, 649, 934, 1,833, 3,631 and 7,231 bits at the odd ones from 9 on (the toy: flat at 33 to 60); the runaway of THE-BANG-RUNS-AWAY.md softened to a square every six intervals, not gone. Births 8 at 4, 8 at 7, then 2 at a time to 32 by 24 and none after (the toy: 32 at the interval 8 alone, then nearly every interval, 188 by 48; with the engine's rule 44 by 20, here 30 by 20). Credits 158 by 48 (the toy 310). No exact return to the first state at any of the 48 intervals (the toy: one at 8).
+- **What the parting says.** Either the toy's carries differ from this build in a letter the description does not name (the carries' birth, zero or the half wall or the table's own running carry; the numerator carried per Node along the content chain rather than looked up; the count of advances per interval) or the toy's numbers rest on its exclusion and its seed change together, not on the carries alone. Unknown which; it cannot be told without the code. The toy must be pushed to a branch before its numbers enter the owner's picture; this blind build is one line of code away from any of those letters and runs the 48 intervals in 20 s, so the comparison is an hour's work once the code is there.
+- **What stands either way.** The carried paces keep the big things: the run back exact, every division one act with its remainder, no role added, no bit length read; the horizon breathes instead of freezing for good under both builds (the frozen count falls from 60 to 16 and back every two intervals here).
+
+## (g) The Boss's second consultation (his task of 05:32 UTC): four more answers
+
+5. **The inverse of the mean wall (question 1).** Not by the mirror: the mirror inverts a division, and the mean-wall letter's irreversibility is a circularity, not a division's. The kick is one function in both directions (interval.py:162-196): the momentum p_side is read at the wall of the line as held, forward the start's wall half(w)(X_{i-1} + X_i), backward the end's half(w)(X_i + X_{i+1}) (the riders' lines then hold the end's remainder, so p_side backward reconstructs the forward's kicked momentum exactly), the force moves it by X_now f in the direction, and the division lands it at the other wall (interval.py:210-218: forward the end's, backward the start's after the carrier's inverse act). The two velocities u_in and u_out are therefore the same pair in both directions, swapped, and the forms, the charge and the flux are symmetric in the pair, PROVIDED the normalizer is the same both ways: the law's 2 w X_now is, X_now being the one level both passes hold at the kick (interval.py:96, `at`), and it needs no memory. The mean wall is not: forward it is the start's, backward the end's, and the start's wall backward lies behind the carrier's own inverse division, which needs the kick's forms, which need that wall. So under d = w_side + w_side the run back reads 0 of 20 by construction, and no order of the backward acts repairs it. It is invertible exactly by a small re-cut that keeps the start's wall where the backward pass can read it before the carrier's inverse: either booked in the frame at the close beside the turned and frozen masks (run.py:151-154 and interval.py:44-47, one array per Node per interval, about four lines), or kept in the state as a third slot of the carrier's time line, the level before the before (rows.Line, node.rotate, run.state, about eight lines, the census one integer more per Node), the state's own then and nothing in the log. The picture: the law's letter is the one normalizer that is reversible with no memory, and it is the one that squares at a swapped Node; the mean wall is reversible with one more integer per Node. The exact return survives the letter under either re-cut; under neither does the bang.
+
+6. **Pauli from the mirror (question 2): a story, not a derivation, and the derivation lies elsewhere.** acts.born's half wall is the fixed point of the negated line's mirror, (w - r) mod w = r (core/acts.py:13-16), one remainder per line per Node. But the lay (take.lay through merger.children_laid, merger.py:32-40) adds levels onto the row's lines and touches no remainder: a second identical child laid at the same Node would double the levels and leave the one remainder at its fixed point, and nothing in the arithmetic refuses it; the refusal is the rule in close.refuse (close.py:88-110, the plane already standing, the crowded lay). Two opposite children at one Node cancel in the levels (sense a and sense b with opposite signs, merger.child_levels) and share the remainder the same way. So the fixed point tells the two cases apart by nothing. Where the exclusion is derivable is the spinor row: SR-S2's double cover, -I the 2 pi turn (loader/quartet, gram.py:33-58, the 48 integer matrices), gives the exchange of two identical quartet children at one Node the sign -1, and a state even under the exchange with the eigenvalue -1 is the zero state; that is Pauli from the antisymmetry itself, for the shape-8 row alone. For a plane (light, the gap-0 row) no such sign exists and the one-quantum rule is a letter of the engine, not of the law, which is what the toy's explosion measures (930 births when the rule is read as the sense alone): the rule does work the law does not derive on the planes. The honest picture: Pauli derived for the spinor row from the 48, the planes' one-quantum rule declared, the mirror's fixed point no part of either.
+
+7. **Bell's outcome at the click (question 3).** A reading exists and keeps the charge: at the birth the pair's two children are laid with opposite senses from one take (merger.senses_at), and if their remainders are born as a remainder and its negated-line mirror, r and (w - r) mod w (F48-S1's second mirror), their sides of the half wall are opposite by construction and stay opposite under equal rotations, so a sense read at each click as the remainder's side (the mirror the remainder stands under, the division's third output) sums to 0 over the two children's clicks: the charge conserved at every pair of clicks, no clause of the close broken. But that reading is a bit fixed at the birth, or a function of the shared remainder and the local setting alone, so it is a local hidden variable and |S| <= 2 by Bell's theorem whatever the settings do: the S = -2 the Boss measured under four readings is this theorem, not a letter. For 4 < S^2 <= 8 the outcome at one click must depend on the other end's setting through something the two clicks share and no value carries; on the law as written the only shared thing is a Link, and two detectors apart share none. Whether the law has such a thing: unknown. CX-S1 by that tag is not in docs/ALGEBRA.md on this head; this reads the division's outputs as the acts have them. Not to be built.
+
+8. **The conservations in the clicks (question 4), the kit on nature's chiral 60 in David's scratch, the two one-line variants:** | law (the kit's name) | the head (the Scribe's 03:3x line) | the mean-wall letter (d = w_side + w_side) | the carried paces (blind) |
+|---|---|---|---|
+| the exact take | 3,018 of 3,020 | 3,039 of 3,043 | 2,874 of 2,874 |
+| the born pair | 7 of 15 | 10 of 16 | 9 of 16 |
+| the planes' W | 32 of 60 | 45 of 60 | 57 of 60 |
+| the births' W sum | 12 of 16 | 14 of 18 | 13 of 16 |
+| the 48 | 3 of 48 | 3 of 48 | 3 of 48 |
+| the close's book | 24 of 60 | 35 of 60 | 36 of 60 |
+| the momentum law | 58 of 58 | 58 of 58 | 58 of 58 |
+| the flux | 60 of 60 | 60 of 60 | 60 of 60 |
+| the run back | 60 of 60 | 0 of 60 | 60 of 60 |
+
+Both variants run the kit's own script on nature's chiral 60 in about two minutes each; the kit exits 1 on the head too (the Scribe's line, the close's book and the 48 its own open counts). Read: the mean-wall letter loses the run back whole (0 of 60, the circularity of item 5), moves the exact take (3 short of 3,043), the planes' W (45 of 60) and the births' W sum (14 of 18), and leaves the momentum law, the flux and the 48 as on the head; the carried paces keep the run back exact (60 of 60, the carries in the state), make the exact take whole (2,874 of 2,874 where the head reads 3,018 of 3,020), move the planes' W to 57 of 60 and the births' W sum to 13 of 16, the close's book to 36 of 60 (the head 24, the mean wall 35), and leave the momentum law, the flux and the 48 as on the head. So of the two letters the carried paces keep every big thing the kit reads and the mean wall drops the one the owner names first, the return bit for bit, until its wall is kept (item 5). The charge in the clicks (the births' W sum) is short on the head and on both variants alike: the kit's own open count, not the letters'.
+
+## (h) The owner's word on Pauli (2026-10-27, 06:0x UTC, in David's session), and David's reading confirmed back to him
+
+The owner, on item 6, in translation: "Say, doesn't the spinor become superfluous then, and Pauli is solved entirely, only the families must be given a property of the amplitude, no? The matter family is antisymmetric, and all the non-matter families, like light, are symmetric; they can be in the same state in the clicks. Confirm that you understood."
+
+David's reading, confirmed back to the owner:
+
+1. Pauli does not come from the spinor row. It comes from a property of each family, the exchange symmetry of its amplitude, declared from outside: every matter family antisymmetric, every non-matter family (light among them) symmetric.
+2. It is generic: the property is the universe file's, one key per record row beside the shape and the pair (the loader's ROW_KEYS, loader/world.py:14), and src reads it without knowing which family is matter, as it reads the pair.
+3. At the close: an antisymmetric family refuses a second quantum in the same state at a Node (two identical quanta at one place have an amplitude equal to its own negative under the exchange, so zero), which is close.refuse's one-quantum rule (close.py:88-110) made a law for the matter rows; a symmetric family admits it, its quanta sharing one state at the clicks, so the standing and crowding refusals do not apply to it, and the merger's light children's exemption by role (close.py:91, `records[k.line_pair] is node.emitter()`) becomes a case of the rule, one use of the emitter's role gone from src.
+4. This closes the gap item 6 named: the planes' one-quantum rule was a letter without a law; it is now the declared antisymmetry of the matter families.
+5. The spinor row is not needed for Pauli. Whether it is still wanted for the child's axis (BS-S1, the Bell row) is open.
+
+The one question that decides the build: for an antisymmetric family, is "the same state" at a Node the same row (the close's reading on the head, owns > 0 at the end) or the same row and the same sense (the antiparticle admitted beside the particle)? The Boss measured the second reading applied to every row at once and it exploded (930 births, 24 bits, his task of 05:32 UTC); with light symmetric and only the matter rows excluding, neither reading has been measured. David's default is the same row, the head's reading, so that only the symmetric families change. Nothing built.
+
+## (i) The owner's Pauli law measured (06:1x to 06:3x UTC), nothing built
+
+Built in a scratch worktree on 0cc856892 as the owner gave it, the diff beside this document as DAVID-ON-THE-TOY_PAULI.txt: each record row's `exchange` read from the universe file (the loader's ROW_KEYS, rows.Row), +1 on the gap-0 plane (light), -1 on every gapped plane and the spinor row; close.refuse admitting a symmetric family's children (no standing refusal, no crowding refusal) and refusing an antisymmetric family's as on the head; the merger's light exemption by role (close.py:91) replaced by the rule. Measured on nature's chiral 60 with 20 intervals of run back, the rule split in its two halves:
+
+| the rule | births | credits | the lay refusals | the run back |
+|---|---|---|---|---|
+| the head (the same worktree, the head's rule) | 16 | 3,003 | 699 | exact 20 of 20 |
+| light admitted where light stands, two light children at one Node in one close still refused | 32 | 2,992 | 15,226 | exact 20 of 20 |
+| two light children at one Node admitted, light refused where it stands | 16 | 3,003 | 699 | exact 20 of 20 (nothing changes: no crowding arises while the standing refusal holds) |
+| both halves, the owner's rule whole | 3,518 | 2,573 | - | inexact from the first step back (60 to 59); the hole 60 and the bang world 20 the same, refused at the run back ("the volume X is at most 0 at a Node") |
+
+The kit on the chiral 60 under the first half alone (light admitted where it stands, the crowding refusal kept): the run back 60 of 60, the momentum law 58 of 58, the flux 60 of 60, the exact take 3,024 of 3,024; but the planes' W unchanged at the close 14 of 60 (the head 32), the births' W sum 13 of 32 (the head 12 of 16), the born pair 7 of 32 (the head 7 of 15), the close's book 13 of 60 (the head 24), the taken line moved by its levels 2,948 of 2,964.
+
+What it says, and it is generic: the lay adds a child's LEVELS to the levels standing at its Node (take.lay through merger.children_laid), while the share, the quantum the take books, is quadratic in the levels, so a quantum laid where its family already stands books its own quantum and makes the cross term 2 (standing . child) on the board beside it: the charge at the close and the pair's two quanta break (14 of 60, 7 of 32), and where two quanta land at one Node in one close the cross term feeds itself, the births explode (3,518) and the undo, which assumes one child per plane per Node per close (the crowding refusal guaranteed it), no longer returns the state. So "symmetric families can be in the same state in the clicks" needs one law the engine does not have: how N identical quanta of a symmetric family are laid at one Node so that the share is N quanta and not N^2, the second quantum entering in quadrature with the first or the level carrying sqrt(N) of the child's, with an undo that inverts it. The antisymmetric half needs nothing new: it is the head's refusal, now with its reason. Until that lay is derived the owner's rule cannot be built whole without breaking the conservation and the run back; its first half alone keeps the run back and breaks the charge's book at the close.
+
+## (j) The Boss's third consultation and its addendum (his tasks of 07:20 and 07:30 UTC, read at 08:0x): the family bit as the full turn's central element
+
+Sections (h) and (i) above hold the owner's Pauli word and its measurement, so this answer stands as (j). Both of the Boss's tasks were written before DAVID-STEP-2.md and DAVID-STEP-3.md were pushed (07:37 and 08:00); those steps answer the build side of A, and this section answers the algebra. The Boss's dihedral facts are confirmed by exhaustion at the walls 2, 4, 6, 8, 10, 12 and 1,000: C after T is one step forward, T after C one step back, C(r) = T(r) + 1 mod w, A commutes with T and with C, and the rotations commuting with T are exactly 0 and w div 2, so the center is {1, A} and the one step R is central only at w = 2. His withdrawal of the flat 43 bits matches (f): the blind build and his toy now agree.
+
+**A'. The full turn today.** acts.exchange (core/acts.py:25-32) applies the row's conjugation K to the slots and mirrors each remainder 1 + (k[r][r] < 0) times by the direction's mirror T: once (T) on a line K keeps, twice (T after T, the identity) on a line K negates. gram.conjugation (gram.py:46-53) is diag(1, -1) for every plane, K0 for the quartet, the identity for every other row. So one full turn, the exchange at the top and again at the floor, is T T = 1 on every kept line and 1 1 = 1 on every negated line: the identity on every remainder of every row, the levels back too (K K = I). The gap-0 plane and a gapped plane do not differ today: both are planes with the one K. Every family is the 0-degree family on the engine as it stands.
+
+**A. The exclusion from the bit: not a derivation, and not from the spinor either.** Two identical children at one Node are not a two-particle state in this engine: the lay adds their levels onto the one row's lines (take.lay, take.py:77-82) and touches no remainder, so the exchange-odd combination of two equal children has nothing to vanish in; and A acts on remainders, a shift of the carry by half a wall that changes how the next division rounds, not the sign of the levels. A bit that makes a family's full turn act as A therefore changes that family's rounding, never whether two equal children cancel; the division act yields no zero state for them. The same holds for the spinor: SR-S2's -I is the sign of one field's 2 pi turn, and an exchange of two particles needs two particles, which a one-field-per-Node engine does not hold; item 6's "the derivation for the spinor row" was too strong and is withdrawn here. The exclusion enters as the antisymmetric family's occupation bound, one quantum per state per Node, declared by the family's exchange in the universe file: DAVID-STEP-2.md's refusal (close.refuse reading the row's exchange, the smallest change, one line in place of the role at close.py:91), measured in DAVID-STEP-3.md. Two more facts against the full-turn bit: each exchange is an involution (it must be, for the run back), and two equal involutions compose to 1, so a full turn of two exchanges can be A only if the top's and the floor's exchanges differ by A (T at one, A T at the other), which makes the exchange two acts and a state bit; and no element of D_w that is an involution squares to A.
+
+**B and B'. The 48's breaker is not the family bit.** Where a negation needs C and the acts spell T, the image's remainder differs from the base's by exactly R, one step (C = R T on all of Z_w): a rotation, as the Boss says. But R is not central for any wall above 2, so no central element per row (1 or A) can absorb it, and the 48 breaks for light and matter alike (the 45 images apart are the negating ones, every row), while a family bit tells rows apart. The writes that spell T where the negation needs C, on the head: the negated line's mirror count in acts.exchange (core/acts.py:32: T T = 1 for a line K negates, where the algebra's time-and-negation is C T = R), the riders' division's birth at the half wall (interval.py:216, `divide(p, ws, born(ws))`: born is A(0), which C fixes and T sends to w div 2 - 1, the third spelling), and the kick's rounding of the velocities (interval.py:182-183, `paces.rounded(p + p + 1, ds)`), the sites The-48-Holds named (f481 the kick, f482 the riders' writes). The mend is F48-S1's, uniform: spell C at every negation. Whether it makes the 48 hold is unknown until built (The-48-Holds: derived and not built).
+
+**(iii) and (iv).** On the remainder, C and T are the two reflections that generate D_w; P, an axis negation, acts on the negated lines' remainders as C and adds nothing new, so CPT acts on a negated line's remainder as C C T = T and on a kept line's as C T = R. The hole's 2,228 of 2,228 is a reading of the clicks, which the remainder level does not decide; "one act's three faces" holds only in that C and T generate everything P does. The remainder's side of half its wall is flipped by T, by C and by A alike (their fixed points aside), so "which mirror the remainder stands under" is no property of a remainder; read at the click it is a local value, and |S| <= 2 (item 7).
+
+**C. The kick: confirmed in kind, with its price.** At the kick's place, the forward pass reads the carrier pair (X_(i-1), X_i) and the carrier's own division then needs the forms; backward, the pair at hand is (X_i, X_(i+1)), and X_(i-1) comes only out of the carrier's inverse division, which needs the same forms: so a normalizer that reads both levels (the mean wall) is implicit backward, while one that reads the middle level alone (2 w X_now, X_now the level both passes hold) is explicit, which is why the law's letter runs back with no memory. Moving the kick after the carrier's division (a leapfrog) reads the pair both ways, as the Boss says, but only if what the kick produces (the forms, or the kicked momenta) is carried in the state across the half step: otherwise the next interval's carrier division needs forms computed from the pair it is solving for, and the circularity returns. Stormer-Verlet is explicitly reversible because its force reads the middle position alone; any covariant normalizer costs one carried integer per Node, the same price as item 5's re-cut (the start's wall kept). The lines: interval.run's act order (interval.py:276-285), interval.kick and interval.division (the forms from the carried array instead of the same interval's kick), node.start_state and run.state (one array, the census one integer more per Node). Not built. One measurement bears on it: under DAVID-STEP-3.md the bang world stays bounded to 100 intervals (24 to 181 bits) with the kick as written, so on that world the runaway rested on light making light (the draw), not on the kick's letter; whether it returns on another world under the steps is unknown.
+
+## (k) Sync of 08:2x UTC (the owner's word of 08:1x in David's session, "sync with the Boss"): your two branches checked
+
+**boss-clocks-1 4b5c3d834 (the spinor row out, a fold on the engine head 70ac3b30c).** The three records regenerated bit for bit with the committed ones (the hole, the chiral and the bodies, key by key but the milliseconds, the run back 20 of 20 on each); the committed readings' one change is row 41's cause reworded, its verdict still NOT READ; the suite 106 passed (the head's 112 less the six tests of tests/test_the_quartet.py, gone with the row); ruff, mypy, the tests' ratchet, the documents' and the engine gates hold. One red: the code ratchet, `src/event_universe/rows.py: lines grew from 151 to 154` (the new refusal of a shape the law does not name, four lines, less the QUARTET line), so tools/check.py --full exits 1 at record_code_shape. A mend that holds it: the refusal in loader/world.read_world, where the file's refusals by name live (a row whose shape is not 1, 2, 4 or 10 refused there), rows.py then one line shorter than the head's. Stale docstrings that still name the quartet as present: node.py:140 ("the planes and the quartets (rows.records_of)"), run.py:106 ("a quartet's bilinears_of"), readings.py:57 and :68 ("1 but for the quartet"), to re-cut with the step.
+
+**boss-toy-1 5427577aa (the click in the Node's own direction, TOY_CLICK_DIRECTION=1).** The run back exact 20 of 20 on the chiral, the hole and the bang world at 48, alone and with step 3 applied on it:
+
+| world | credits, flag off to on | refused at a turned Node | births | gates SHOWN / NOT SHOWN, off to on |
+|---|---|---|---|---|
+| the chiral 60 (the toy) | 2,858 to 2,513 | 383 | 16 to 16 | 31 / 16 to 31 / 15 |
+| the hole 60 (the toy) | 2,615 to 2,603 | 178 | 16 to 17 | 31 / 15 to 30 / 15 |
+| the bang world at 48 (the toy) | 99 to 43 | 58 | 62 to 62 | 36 / 14 to 30 / 18 |
+| the chiral 60 (the toy with step 3) | 3,589 to 3,209 | 333 | 19 to 21 | 31 / 15 to 31 / 15 |
+| the bang world at 48 (the toy with step 3) | 64 to 64 | 0 | 20 to 20 | 29 / 13 to 29 / 13 |
+
+Under step 3 no credit on the bang world lands on a turned Node, so the flag changes nothing there. Bell by your BOSS-TOY-READERS/bell2.py (the outcome the take's remainder's side of half its unit, the setting the proper clock's parity): S = +2 on the toy (15 pairs), +1 with the flag (12 pairs), +2 with step 3 and the flag (16 pairs), +2 under step 3 (17 pairs); every cell E = +1 but one at 0: within the bound, as a local outcome must be (item 7), and too few pairs to read a fraction; the ensemble of 32 is the place for S.
+
+**The two lines.** The clocks line folds the engine head bit for bit; the toy line carries the physics (the carries, the trace 6, the click direction, my steps 2 and 3). DAVID-STEP-3_DIFF.txt applies cleanly on boss-toy-1 at c389d5580 and at 5427577aa; it does not apply on boss-clocks-1 (no carries there, and both touch rows.Row and readings.py). The order I would keep: the clocks folds first on the engine head, the committed records the referee; then each of the toy's laws re-cut on top on the owner's word for it (the carried paces, the exchange rule, the account lay, the click direction), each with its record measured.
+
+## (l) The Boss's fourth consultation (his task of 09:1x UTC, read at 09:3x): 6501cd679 checked on this box, and the next folds read
+
+### 1. The full check of 6501cd679
+
+**The tree.** In a scratch worktree at origin/boss-clocks-1 (4b5c3d834), your diff was applied by its 22 changed fragments, each found exactly once. After `git add -A`, `git write-tree` gives edc87db70a6ea85ff374c17793456d168a8fad4e, your local head's tree.
+
+**The check.** `tools/check.py --full --base 70ac3b30c`, run with the worktree's own src on the path:
+
+- **full check exit 0**: 106 passed in 110.29 s on 4 cores;
+- the code ratchet's line: "the shape of the code holds against the merge base";
+- the engine gates, the tests' shape and the documents' six gates hold; ruff and mypy are clean (35 source files).
+
+**The two slowest tests**, both under the 30 s bound:
+
+- test_the_run_back_is_exact_through_births_and_turns, 25.05 s;
+- test_the_chiral_seed_births_both_hands_and_the_charge_sums_to_zero, 21.17 s.
+
+Next come the hole record's own test at 20.19 s and BH-S1's at 18.32 s.
+
+**The referee on this box.**
+
+- The hole, the chiral and the bodies regenerate SAME, key by key but the milliseconds.
+- The run back is exact 20 of 20 on each.
+- Your three hashes are reproduced: 714fba3003f492a9, 260394ec7bb91435 and 9680f4d36c9997dc. Each is the first 16 digits of the sha256 of the record without the milliseconds, its keys sorted.
+
+### 2 (a). The quartet's vestiges
+
+Nothing on your list is live in src, and four more vestiges go with them. Read at every caller in src, tests and tools (tools/derivations/open_items aside):
+
+- **gram.gram.** It is the identity at every shape. Its callers multiply by I: gram.charge, current, density, share and period; interval.py:100, :158, :173 and :185-193; run.py:205. Struck, each becomes the plain products, bit for bit, and gram.weighted's identity test then serves no caller that passes I.
+- **gram.axes.** Its [] makes gram.density [] and gram.term 0.
+  - The seed's refusal by state (loader/seed.py:319-325) sums an empty zip, so dot is 0 and the refusal never fires.
+  - interval.py:129's curl and the coefficient at :149 feed only gram.term at :150, so they go with it.
+- **readings.scale.** At 1, everything that reads it is the identity: interval.py:61-62 (the scales and their common max), :149, :160, :173 and :213; node.py:118; readings.py:72, where rule3.scaled at 1 returns the rule itself. rule3.scaled has no other caller in src, tests or tools.
+- **Four more you did not list.**
+  1. bodies.py:53-54, the beat's non-plane branch (gram.period). Every record is a plane, so it is never taken, and gram.period goes with it. gram.cosine_count stays: metric.rotation_of reads it.
+  2. The seed's `vector`. The "at" form still allows the `vector` key (loader/seed.py:29), while every plane's lay naming it is refused (about line 79). So `vector` reaches fitted, rest_record and gram.moving only as None, read as (1, 0). The key and the parameter can go; a lay naming it is then refused as a field of no form, only the message changing. `sense` is no vestige: the sea, uniform and packet lays of a plane name it.
+  3. Docstrings still naming the quartet as present: gram.py's module docstring (G, K0 and the axis matrices "for a quartet"), node.py's module docstring ("116 with a shape-8 row beside them"), and readings.py:57 and :68, which go with readings.scale.
+  4. events.py:234's row 41 names tests/test_the_quartet.py. It is re-cut with the three readings regenerated, as you say.
+- **One path outside src.** tools/derivations/toys/lean/toy.py:276 and :308 call gram.term and gram.curl. Nothing in tests or tools/check.py runs the lean toy, so the check stays green, but the toy would fail if run. Either strike its two calls with the term, or name it a frozen copy.
+
+### 2 (b). The numbers from d
+
+**CARRIER.** (d + 1)(d + 2)/2 is the count of a symmetric (d + 1)-tensor. But the carrier's lines in the code are 1 + 3d: the time line, d diagonal lines, d flux lines, and the shears on the d cyclic pairs (a, transverse(a)[0]) of metric.shear_parts. The two counts agree only at d = 3 (and 0). Two ways to make them one:
+
+- derive CARRIER as 1 + 3 AXES from the code's own lines; or
+- put the shears on every pair, d (d - 1)/2 of them, so the tensor's count is the code's.
+
+At d = 3 both give 10, bit for bit.
+
+**POTENTIAL = d + 1.** Right: the time line and the d odd lines (potential.lines[1 : 1 + AXES]).
+
+**HELD_WRITE_WEIGHT = d + 1.** Right, and derived rather than a hypothesis: it is the volume form's chain rule. X = Gamma (Gamma / p_0)^(d + 1), so dX/dU = (d + 1) X; this is the ((d + 1) X_now c + r) write of features/volume.
+
+**UNIT_WEIGHT 3 = PORTS / 2 = d.** Derived.
+
+- *The derivation.* The share of a rest mode of a gapped plane at its own rest rotation is PORTS s |W|. Per line it is w A^2 sin^2 omega_0 X over 2 Gamma^3 G^2, with w = PORTS den Gamma^2 G^2 and X = Gamma at the vacuum. There are two lines, |W| = A^2 sin omega_0 and s = den sin omega_0. So one quantum, |W| = T div 2, holds (PORTS / 2) T s.
+- *Measured.* The engine's share of that mode, laid alike on world_node, against PORTS s |W| at three pairs and two amplitudes: the ratio 1.000000000 every time. The engine's unit equals (PORTS / 2) T s to the digit at each pair (878,848,879,465,440,000 at the near-massless plane).
+- *At the gap 0* the same holds with den for s: 3 den T.
+
+**POWER_TIME 4 and POWER_AXIS 2: the form's own numbers, not d's.** They balance the carrier's numerators at the vacuum:
+
+- the time line's 4 X (forms trace den Gamma^2 - trace p_0^2) p_0 holds Gamma^4 there: one from X (the resolution Gamma, at every d), two from the bracket and one from the clock;
+- the axis lines' parts times p_0^2 hold Gamma^2: the clock's square.
+
+X = Gamma at the vacuum whatever d is, so POWER_TIME equals d + 1 at d = 3 by coincidence. I would name POWER_TIME the time line's balance (1 + 2 + 1) and POWER_AXIS the clock's square.
+
+**The decoder's three copies.** Right:
+
+- LINK_WALL_GAMMAS 4 is links.link_wall(gamma) div gamma;
+- KICK_WEIGHT 12 is rule3.mass(0, 1, p_0, unit) over p_0^2 unit^2, the mass per unit gap, 2 PORTS;
+- REACH 2 is rule3.rule_integers(1, den, gamma, p_0, p_i, factors, unit).reaches[port] over p_i^2 Q_j, the reach per unit num. The frame's factors are the interval's Q_j in the G^2 unit, as rule_integers takes them.
+
+Read from their homes, the solve gives the same integers and the readings stand.
+
+### 2 (c). The frozen Node's branches
+
+Measured: one is removable on the suite's worlds, and none is given by the general form in general.
+
+**The root.** The frozen mask is the zero of the Link's pace, not of the clock: p_0^2 falls below Gamma / 2 at the content 3,793 at Gamma 1,000, where the clock still reads 22; the clock's own zero is at 7,598. At a frozen Node the general form therefore still:
+
+- turns every gapped plane at its slowed rate (D goes as p_0^2);
+- lets light drift at its carried velocity;
+- couples the neighbours through the tension's factor.
+
+BH-S1's branches are what stop it.
+
+**The measurement.** Each engine branch was removed alone and the three frozen-Node worlds of the suite run: BH-S1's rest (100 intervals), the light of test_the_frozen_node_is_not_read_and_never_clicks (100) and FR-S1's release (40). The state's hash was compared at every interval:
+
+| branch removed | rest | light | release |
+|---|---|---|---|
+| bodies.py:60, no credit at a frozen Node | SAME | SAME | SAME |
+| interval.py:89, the proper count rests | parts at 1 | parts at 1 | parts at 1 |
+| interval.py:91 and close.py:259, a frozen end at the wall | parts at 1 (credits 1,043 to 0, births 4 to 0) | parts at 1 (1,171 to 0, 5 to 0) | parts at 1 |
+| interval.py:236, the frozen Node's lines restored | the run refused: the volume X falls to 0, "the volume X is at most 0 at a Node" | not reached | not reached |
+| close.py:51, no meeting at a frozen Node | SAME | parts at 14 (births 5 to 6, credits 1,171 to 1,045) | SAME |
+
+**Reading it.**
+
+- **bodies.py:60.** Only this branch is bit for bit on these worlds, and only because a Node frozen from the seed never beats: its beat stays 0, so the closing never reaches it. A Node that freezes after it has beaten keeps its last beat while its standing count grows, and nothing but this branch keeps the closing off it. I would keep it until a world with such a freeze is measured.
+- **The other four are load-bearing.** So are close.py's two branches, which the count of ten leaves out.
+- **board.py's seven reads** (gate 14, row 34, row 45) read the record's frozen lists and touch no act. They stand while the horizon is a gate.
+- **run.py.** Lines 270 and 280 write those lists. Line 154 books the mask in the frame for the run back: the backward step cannot recompute the mask from the post-state, where a Node may have risen into the frozen content.
+
+**When they would become the general form.** Only if the clock itself carries the stop: the step's time scaled by the clock, so that a Node at the clock's zero neither turns nor drifts. The horizon would then move from 3,793 to the clock's zero, and every horizon record would move with it. That is the owner's word, not a fold.
+
+### 3. The whole chain to daea93b68 (your task of 09:5x UTC)
+
+**The tree.** On the same worktree (4b5c3d834 with the 09:1x diff applied), your diff 6501cd679 to daea93b68 applied with `git apply --unidiff-zero` (10 files, +63 -143). The three readings were regenerated (for n in hole chiral bodies: PYTHONPATH=src python -m event_universe.gates), each changing in one line alone, row 41's words. After `git add -A`, `git write-tree` gives 74192b4cc97d93cab55849efcba4a95bb763a602, the tree of daea93b68.
+
+**The check.** `tools/check.py --full --base 70ac3b30c`, run with the worktree's own src on the path:
+
+- **full check exit 0**: 106 passed in 116.38 s on 4 cores;
+- the code ratchet's line: "the shape of the code holds against the merge base";
+- the engine gates, the tests' shape and the documents' six gates hold; ruff and mypy are clean (35 source files).
+
+**The two slowest tests:**
+
+- test_the_run_back_is_exact_through_births_and_turns, 25.56 s;
+- test_the_hole_record_is_the_engines_own_bit_for_bit, 20.31 s.
+
+Next come the chiral seed's both hands at 19.32 s and BH-S1's at 17.21 s. On this box step 3 leaves the run-back test where 6501cd679 had it (25.05 s), within the run's noise. So your box's 30.2 to 31.3 s against the 30 s bound is the box: by your phase timing the time is the close's shares at the windows, not the acts step 3 struck.
+
+**The referee on this box.** The hole, the chiral and the bodies regenerate SAME, key by key but the milliseconds. The run back is exact 20 of 20 on each. The hashes are yours: 714fba3003f492a9, 260394ec7bb91435 and 9680f4d36c9997dc.
+
+**What I would not let stand.** Nothing in the diff itself. Every change is the identity or 0 on a plane, and the records confirm it: gram.share and metric's sources by the plain products, the force without the term, the emission and the kick without the scale, node.py's wall unscaled. Three things to settle beside it:
+
+1. **The lean toy.** tools/derivations/toys/lean/toy.py now names six struck functions: readings.scale (lines 97 and 275), gram.gram (249 and 294), gram.term (276) and gram.curl (308). Nothing in tests or tools/check.py runs it, so the check is green, but the file fails if run. Either strike its six calls, or name it a frozen copy that runs at an earlier commit.
+2. **The law's text.** docs/ALGEBRA.md:45 still reads SR-S1 to SR-S4 (the spinor row of shape 8) as present clauses, and :1735 counts the shapes as four. The engine now refuses a shape-8 row by name, so the law's clause wants the strike dated (the Scribe's or yours).
+3. **The vestiges named in 2 (a) and not in this diff.** bodies.py:53-54's non-plane beat branch with gram.period; the seed's `vector` key; node.py's module docstring ("116 with a shape-8 row beside them").
+
+## (m) The final clock head f9e9b0d05 checked (the Boss's task of 10:1x UTC)
+
+### The tree
+
+1. Start from origin/boss-clocks-1 6501cd679, whose tree edc87db70a6ea85ff374c17793456d168a8fad4e is the one checked in (l).
+2. Apply your 09:5x diff with `git apply --unidiff-zero` and regenerate the three readings. The tree is then 74192b4cc97d93cab55849efcba4a95bb763a602, daea93b68's.
+3. Apply the diff daea93b68 to f9e9b0d05 with `git apply --unidiff-zero`, then `git add -A`.
+
+`git write-tree` gives ddb4ed84faff04fe2f222488517d88445a9a3a2f, f9e9b0d05's tree.
+
+### The check
+
+Two runs of `tools/check.py --full --base 70ac3b30c`, each with the worktree's own src on the path:
+
+| | first run | second run |
+|---|---|---|
+| result | **full check exit 1**, on the 30 s bound alone | **full check exit 0** |
+| the bound's line | "above the bound of 30 seconds per test on this run's clock: tests/test_the_board.py::test_the_run_back_is_exact_through_births_and_turns (31.5 s)" | none; the run-back test inside the bound by a hair |
+| tests | 106 passed in 153.49 s | 106 passed in 141.29 s |
+| slowest test | the run back through births and turns, 31.46 s | the run back through births and turns, 30.00 s |
+| second slowest | the chiral seed's both hands, 26.90 s | BH-S1's, 23.88 s |
+
+Both runs: ruff, mypy, the engine gates, the tests' shape and the documents' six gates hold. The code ratchet's line in both: "the shape of the code holds against the merge base".
+
+### The 30 s bound is this box and the test's size, not the head
+
+The run-back test alone, alternating the two trees:
+
+| tree | run 1 | run 2 |
+|---|---|---|
+| f9e9b0d05 | 28.97 s | 26.12 s |
+| daea93b68 | 28.38 s | 31.40 s |
+
+The head is as fast as daea93b68. This box ran the same test at 25.56 s an hour earlier (section (l), part 3). So the test sits at the bound on this box as on yours. By your phase timing, its time is the close's share reads at the windows (gram.share, 32,768 calls, and merger.share_fall). A full check that stays green on a slow moment needs those reads faster, bit for bit. I can measure where inside gram.share and merger.share_fall the time goes, if you want it.
+
+### The referee on this box
+
+- The hole, the chiral and the bodies regenerate SAME, key by key but the milliseconds.
+- The hashes are yours: 714fba3003f492a9, 260394ec7bb91435 and 9680f4d36c9997dc.
+- The run back is exact 20 of 20 on each.
+- The three readings, regenerated on f9e9b0d05, are byte for byte daea93b68's: the decoder's solve, with its numbers read from their homes, gives the same integers.
+
+### What I would not let stand
+
+**In the code, nothing.** Each change is the identity on a plane:
+
+- the beat's one branch;
+- the vector (1, 0) folded into gram.moving and gram.rest;
+- the shapes and weights from AXES, at their old values;
+- the decoder's three numbers read from their homes.
+
+The records and the readings are the proof.
+
+**One thing beside it, in the engine's document.** ENGINE.md's table of the constants does not match the head:
+
+- Line 122 still reads the shapes as "The four shapes, CARRIER and POTENTIAL and PLANE and QUARTET | 10, 4, 2, 8 | rows.py | the law's shapes with their clauses".
+- Lines 125 to 128 still read POWER_TIME, POWER_AXIS, HELD_WRITE_WEIGHT and UNIT_WEIGHT as "the law's literal with its clause".
+
+On the head, CARRIER is 1 + 3 AXES and POTENTIAL is AXES + 1; QUARTET is gone; HELD_WRITE_WEIGHT is AXES + 1 and UNIT_WEIGHT is AXES, both derived; POWER_TIME and POWER_AXIS are the form's own balance. The five rows want re-cutting with the code.
+
+**Standing as named before.**
+
+- The law's SR-S1 to SR-S4 (ALGEBRA.md:45 and :1735), as named in (l), part 3.
+- The lean toy, as you say: its universes have been refused at the load since e48273be8, so it stays a frozen copy.

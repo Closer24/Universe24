@@ -1,0 +1,41 @@
+DAVID-TEMPERATURE checks, 2026-10-28, 01:2x UTC, on the Boss's heads 97e5b3fd6 (worktree scratchpad/wt_g14) and e910698f9 (scratchpad/wt_g13), each worktree's own src on the path; no src touched. Harnesses under scratchpad/field: bang_q.py (the bang at a given quanta of its wave seed, the chart with the rewind of 20), read_bang.py, kinds.py.
+
+1. The bang at 1,500,000, 2,000,000 and 3,000,000 quanta on 97e5b3fd6 (250 ticks):
+   1500000: bang250_q1500000.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 207, chimes 11547, rows SHOWN 41, the rewind {'intervals': 20, 'exact': 20}
+       73 SHOWN exact: at every one of 290 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 247 of 1051, 306 of 1100, 183 
+       76 NOT SHOWN: no family chimes bound one mesh apart in the held field's well above twice the board's own share 6 of 63
+   75 temperature and equipartition :: {"families exchanging at the clicks": ["gapped 0", "gapped 2", "gapped 1", "gap 0"], "bangs read (the spans between the exact returns)": 50, "wind per mode at the first and the last bang (thousandths of the light's winding)": {"gapped 0": [126, 405], "gapped 2": [126, 194], "gapped 1": [630, 41], "gap 0": [1237963866, 1222684322]}, "wind per mode at the last bang in the family's own windings (the occupation)": {"gapped 0": 754, "gapped 2": 0, "gapped 1": 0, "gap 0": 1222684}, "course per bang at every eighth (the bang's first interval, the families' wind per mode)": [[1, [126, 126, 630, 1237963866]], [30, [81, 192, 153, 1223621180]], [60, [319, 193, 3, 1223544664]], [90, [367, 193, 34, 1223353300]], [120, [393, 193, 37, 1222949496]], [150, [385, 193, 39, 1222790504]], [180, [336, 193, 40, 1222580416]], [210, [314, 192, 40, 1222482502]], [240, [391, 192
+   2000000: bang250_q2000000.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 349, chimes 12297, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+       73 SHOWN exact: at every one of 480 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 232 of 1112, 304 of 1113, 307 
+       76 NOT SHOWN: no family chimes bound one mesh apart in the held field's well above twice the board's own share 6 of 63
+   75 temperature and equipartition :: {"families exchanging at the clicks": ["gapped 0", "gapped 2", "gapped 1", "gap 0"], "bangs read (the spans between the exact returns)": 50, "wind per mode at the first and the last bang (thousandths of the light's winding)": {"gapped 0": [252, 364], "gapped 2": [1260, 33], "gapped 1": [630, 68], "gap 0": [1650620968, 1629416923]}, "wind per mode at the last bang in the family's own windings (the occupation)": {"gapped 0": 679, "gapped 2": 0, "gapped 1": 0, "gap 0": 1629416}, "course per bang at every eighth (the bang's first interval, the families' wind per mode)": [[1, [252, 1260, 630, 1650620968]], [30, [104, 55, 97, 1631134424]], [60, [258, 33, 67, 1631065302]], [90, [367, 33, 67, 1630833781]], [120, [394, 33, 67, 1630682063]], [150, [374, 34, 67, 1630471003]], [180, [369, 33, 67, 1630424878]], [210, [396, 33, 67, 1630141224]], [240, [347, 33, 67, 
+   3000000: bang250_q3000000.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 282, chimes 12830, rows SHOWN 41, the rewind {'intervals': 20, 'exact': 20}
+       73 SHOWN exact: at every one of 390 merger ends the pair's share taken is the light's quantum booked and the remainder's rise (taken + the remainder before - the r
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its momentum's change with the kick's sign on 274 of 1164, 354 of 1101, 226 
+       76 NOT SHOWN: no family chimes bound one mesh apart in the held field's well above twice the board's own share 6 of 63
+   75 temperature and equipartition :: {"families exchanging at the clicks": ["gapped 0", "gapped 2", "gapped 1", "gap 0"], "bangs read (the spans between the exact returns)": 50, "wind per mode at the first and the last bang (thousandths of the light's winding)": {"gapped 0": [756, 355], "gapped 2": [252, 190], "gapped 1": [126, 191], "gap 0": [2475939405, 2443333705]}, "wind per mode at the last bang in the family's own windings (the occupation)": {"gapped 0": 661, "gapped 2": 0, "gapped 1": 0, "gap 0": 2443333}, "course per bang at every eighth (the bang's first interval, the families' wind per mode)": [[1, [756, 252, 126, 2475939405]], [30, [66, 192, 191, 2445313904]], [60, [230, 192, 192, 2445215846]], [90, [343, 192, 192, 2445217195]], [120, [365, 192, 192, 2444778950]], [150, [355, 192, 192, 2444481406]], [180, [419, 192, 192, 2444378448]], [210, [437, 192, 192, 2444128442]], [240, [
+
+2. The close's exchanges on the bang at 5,000,000 quanta (e910698f9, bang250_g13.json, 250 ticks):
+   births from the light 171 , mergers 279 , credits 11667
+   windings the close books over 250 ticks: 2891312525119201440049936 = 1765.6 light windings; 35.3 a bang
+   the light sea: 4,068,416 light windings a mode (the Boss, row 75 at the last bang) times 64 modes = 260378624 ; the close books 6.78 parts in a million of it
+
+3. The seed's lay (assembly/cycle.set_cycle on 97e5b3fd6): the light laid at the least hand length whose least wind a clock pays target = n times the light's winding, n the lay's quanta:
+   cycle.py:71:    target = n * clock.windings[rec]
+   cycle.py:72:    high = least_at(lambda hand_length: least_wind(hand_length) >= target)
+
+4. The harness (bang_q.py):
+   """The bang at a given quanta of its wave seed (argv: quanta, ticks, out json): the chart with the rewind of 20, saved."""
+   import os, sys, json
+   sys.set_int_max_str_digits(0)
+   WT = os.environ["WT"]
+   sys.path.insert(0, WT + "/src")
+   from event_universe.run import chart
+   q, ticks, out = int(sys.argv[1]), int(sys.argv[2]), sys.argv[3]
+   world = json.load(open(WT + "/tests/worlds/world_bang.json"))
+   uni = json.load(open(WT + "/tests/worlds/" + world["universe"]))
+   seed = dict(world["seed"][0], quanta=q)
+   found = json.loads(json.dumps(chart(uni, dict(world, intervals=ticks, seed=[seed]), 20, lambda line: None)))
+   json.dump(found, open(out, "w"))

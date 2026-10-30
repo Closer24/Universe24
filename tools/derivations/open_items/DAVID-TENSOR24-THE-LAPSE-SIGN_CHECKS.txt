@@ -1,0 +1,645 @@
+DAVID-TENSOR24-THE-LAPSE-SIGN_CHECKS.txt: the checks of DAVID-TENSOR24-THE-LAPSE-SIGN.md.
+A helper's probes, rerun by David on toys-5 with its own src (engine-5.0-test 987cacf4f's src is 8b657aa57's): every run
+identical to the helper's. probe.py wraps the engine's carry and recomputes the forms, the stress and the time gear's
+numerator per train at every tick, matching the engine's arrays exactly (all_exact in every record); its test mode holds the
+regulator at the vacuum. The engine's side is exact integers; the lattice's law of x and the gas are compared in floating point.
+
+== the tables (report.py over the runs: 600 ticks in both modes, the plane waves, the per-mode law, the gas) ==
+
+== mode test (regulator held at the vacuum: on-shell lattice means), 600 ticks, toy calibre K=6, 5^3 (cycle 4^3)
+light_x_test           x=0.6908 head(1-x)=0.3092 flip(1+x)=1.6908 blocks+-0.0046 tick[min,max]=[-0.070,0.750] kin/pot=+0.314 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.0998 flip 0.0998 clamps 0/0 x_modes=0.6921
+light_x_k2_test        x=0.7941 head(1-x)=0.2059 flip(1+x)=1.7941 blocks+-0.0044 tick[min,max]=[-0.504,0.916] kin/pot=+0.440 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.0623 flip 0.0624 clamps 0/0 x_modes=0.7952
+light_diag_test        x=0.6941 head(1-x)=0.3059 flip(1+x)=1.6941 blocks+-0.0035 tick[min,max]=[0.121,0.471] kin/pot=-0.019 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.101 flip 0.101 clamps 0/0 x_modes=0.6875
+light_x_q100_test      x=0.6921 head(1-x)=0.3079 flip(1+x)=1.6921 blocks+-0.0026 tick[min,max]=[-0.081,0.746] kin/pot=+0.339 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 2.23 flip 2.23 clamps 85/94 x_modes=0.6932
+light_diag_q100_test   x=0.0703 head(1-x)=0.9297 flip(1+x)=1.0703 blocks+-0.3094 tick[min,max]=[0.141,27.765] kin/pot=-0.186 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 5.26e+44 flip 5.28e+44 clamps 17548/17823 x_modes=0.6886  ** births 123: contaminated, excluded
+light_cycle_test       x=0.6667 head(1-x)=0.3333 flip(1+x)=1.6667 blocks+-0.0000 tick[min,max]=[0.333,0.333] kin/pot=+0.000 turned/tick=0.0 (field 0.0/64) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.00667 flip 0.0333 clamps 0/0 x_modes=0.6667
+dust_row2_test         x=0.0636 head(1-x)=0.9364 flip(1+x)=1.0636 blocks+-0.0043 tick[min,max]=[0.863,1.000] kin/pot=+0.099 turned/tick=0.0 (field 0.0/123) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.00321 flip 0.00321 clamps 0/0 x_modes=0.0689
+dust_row2_w3_test      x=0.0330 head(1-x)=0.9670 flip(1+x)=1.0330 blocks+-0.0022 tick[min,max]=[0.931,1.000] kin/pot=+0.125 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.00148 flip 0.00148 clamps 0/0 x_modes=0.0331
+dust_row3_test         x=0.0787 head(1-x)=0.9213 flip(1+x)=1.0787 blocks+-0.0043 tick[min,max]=[0.848,0.999] kin/pot=+0.098 turned/tick=0.0 (field 0.0/123) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.00276 flip 0.00276 clamps 0/0 x_modes=0.0724
+dust_row2_q100_test    x=0.0687 head(1-x)=0.9313 flip(1+x)=1.0687 blocks+-0.0002 tick[min,max]=[0.863,1.000] kin/pot=+0.106 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.24 flip 0.24 clamps 0/0 x_modes=0.0686
+dust_row3_q100_test    x=0.0728 head(1-x)=0.9272 flip(1+x)=1.0728 blocks+-0.0006 tick[min,max]=[0.855,0.999] kin/pot=+0.110 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.241 flip 0.241 clamps 0/0 x_modes=0.0721
+dust_sea_row2_test     x=0.0000 head(1-x)=1.0000 flip(1+x)=1.0000 blocks+-0.0000 tick[min,max]=[1.000,1.000] kin/pot=+0.162 turned/tick=0.0 (field 0.0/125) Phi@turned=0.00 X=[1000, 1000] maxN/hold head 0.00403 flip 0.00403 clamps 0/0 x_modes=0.0000
+light/dust over 5 light x 6 dust settings: head sign 0.206..0.362, flipped 1.545..1.794
+central pair light_x_q100 / dust_row2_q100: head 0.3306 (blocks +-0.0029), flipped 1.5833
+
+== mode head (the engine as is, observed only), 600 ticks, toy calibre K=6, 5^3 (cycle 4^3)
+light_x_head           x=0.5966 head(1-x)=0.4034 flip(1+x)=1.5966 blocks+-0.0240 tick[min,max]=[-0.101,0.777] kin/pot=-0.215 turned/tick=61.6 (field 44.8/108) Phi@turned=0.28 X=[903, 1032] maxN/hold head 0.0159 flip 0.0167 clamps 0/0 x_modes=0.6921
+light_x_k2_head        x=0.5991 head(1-x)=0.4009 flip(1+x)=1.5991 blocks+-0.0317 tick[min,max]=[-0.272,0.756] kin/pot=-0.248 turned/tick=55.2 (field 46.9/117) Phi@turned=0.30 X=[933, 1041] maxN/hold head 0.023 flip 0.023 clamps 0/0 x_modes=0.7952
+light_diag_head        x=0.6615 head(1-x)=0.3385 flip(1+x)=1.6615 blocks+-0.0293 tick[min,max]=[-0.225,0.685] kin/pot=-0.303 turned/tick=55.5 (field 41.9/111) Phi@turned=0.30 X=[911, 1040] maxN/hold head 0.0207 flip 0.0209 clamps 0/0 x_modes=0.6875
+light_x_q100_head      x=0.5738 head(1-x)=0.4262 flip(1+x)=1.5738 blocks+-0.2009 tick[min,max]=[-2.816,0.769] kin/pot=+0.618 turned/tick=5.2 (field 4.6/124) Phi@turned=-0.22 X=[1000, 164216] maxN/hold head 0.392 flip 0.392 clamps 0/0 x_modes=0.6932
+light_diag_q100_head   x=0.6736 head(1-x)=0.3264 flip(1+x)=1.6736 blocks+-0.1512 tick[min,max]=[-0.804,0.669] kin/pot=-0.083 turned/tick=6.3 (field 5.9/124) Phi@turned=-0.11 X=[692, 263092] maxN/hold head 0.255 flip 0.261 clamps 0/0 x_modes=0.6886
+light_cycle_head       x=0.1326 head(1-x)=0.8674 flip(1+x)=1.1326 blocks+-0.2290 tick[min,max]=[-0.077,0.999] kin/pot=+1.920 turned/tick=0.2 (field 0.2/64) Phi@turned=0.00 X=[1000, 4351445882] maxN/hold head 0.0848 flip 0.0863 clamps 0/0 x_modes=0.6667  ** births 76: contaminated, excluded
+dust_row2_head         x=0.0687 head(1-x)=0.9313 flip(1+x)=1.0687 blocks+-0.0001 tick[min,max]=[0.863,0.998] kin/pot=-0.000 turned/tick=122.8 (field 24.8/27) Phi@turned=0.66 X=[998, 1003] maxN/hold head 0.00263 flip 0.00263 clamps 0/0 x_modes=0.0689
+dust_row2_w3_head      x=0.0339 head(1-x)=0.9661 flip(1+x)=1.0339 blocks+-0.0000 tick[min,max]=[0.934,0.998] kin/pot=+0.109 turned/tick=125.0 (field 117.0/117) Phi@turned=1.00 X=[1000, 1000] maxN/hold head 0.000777 flip 0.000777 clamps 0/0 x_modes=0.0331
+dust_row3_head         x=0.0732 head(1-x)=0.9268 flip(1+x)=1.0732 blocks+-0.0000 tick[min,max]=[0.856,0.997] kin/pot=+0.057 turned/tick=124.3 (field 26.3/27) Phi@turned=0.79 X=[1000, 1001] maxN/hold head 0.00251 flip 0.00251 clamps 0/0 x_modes=0.0724
+dust_row2_q100_head    x=0.0513 head(1-x)=0.9487 flip(1+x)=1.0513 blocks+-0.0063 tick[min,max]=[0.864,0.999] kin/pot=+0.398 turned/tick=7.1 (field 6.7/124) Phi@turned=0.05 X=[967, 9467] maxN/hold head 0.24 flip 0.24 clamps 0/0 x_modes=0.0686
+dust_row3_q100_head    x=0.0558 head(1-x)=0.9442 flip(1+x)=1.0558 blocks+-0.0081 tick[min,max]=[0.857,0.998] kin/pot=+0.369 turned/tick=5.4 (field 4.9/124) Phi@turned=0.05 X=[925, 7861] maxN/hold head 0.241 flip 0.241 clamps 0/0 x_modes=0.0721
+dust_sea_row2_head     x=0.0000 head(1-x)=1.0000 flip(1+x)=1.0000 blocks+-0.0000 tick[min,max]=[1.000,1.000] kin/pot=+0.328 turned/tick=0.6 (field 0.6/125) Phi@turned=0.00 X=[1000, 3774] maxN/hold head 0.00399 flip 0.00399 clamps 0/0 x_modes=0.0000
+light/dust over 5 light x 6 dust settings: head sign 0.326..0.460, flipped 1.466..1.674
+
+== plane waves, test field (engine integers vs lattice per-mode formula), amplitude 20000, 12 ticks
+plane_row0_100_L4_s1     k/pi=[0.5, 0.0, 0.0] x_engine=0.6000010 x_formula=0.6000000 head=0.40000 flip=1.60000 kin/pot=0.6667
+plane_row0_100_L5_s1     k/pi=[0.4, 0.0, 0.0] x_engine=0.7396962 x_formula=0.7396946 head=0.26030 flip=1.73970 kin/pot=0.7697
+plane_row0_100_L6_s1     k/pi=[0.3333333333333333, 0.0, 0.0] x_engine=0.8181840 x_formula=0.8181818 head=0.18182 flip=1.81818 kin/pot=0.8333
+plane_row0_100_L8_s1     k/pi=[0.25, 0.0, 0.0] x_engine=0.8973580 x_formula=0.8973584 head=0.10264 flip=1.89736 kin/pot=0.9024
+plane_row0_100_L10_s1    k/pi=[0.2, 0.0, 0.0] x_engine=0.9342485 x_formula=0.9342460 head=0.06575 flip=1.93425 kin/pot=0.9363
+plane_row0_100_L12_s1    k/pi=[0.16666666666666666, 0.0, 0.0] x_engine=0.9543196 x_formula=0.9543218 head=0.04568 flip=1.95432 kin/pot=0.9553
+plane_row0_100_L16_s1    k/pi=[0.125, 0.0, 0.0] x_engine=0.9743023 x_formula=0.9743005 head=0.02570 flip=1.97430 kin/pot=0.9746
+plane_row0_111_L5_s1     k/pi=[0.4, 0.4, 0.4] x_engine=1.0000000 x_formula=1.0000000 head=-0.00000 flip=2.00000 kin/pot=0.3090
+plane_row0_111_L8_s1     k/pi=[0.25, 0.25, 0.25] x_engine=1.0000000 x_formula=1.0000000 head=-0.00000 flip=2.00000 kin/pot=0.7071
+plane_row0_110_L5_s1     k/pi=[0.4, 0.4, 0.0] x_engine=0.8503727 x_formula=0.8503729 head=0.14963 flip=1.85037 kin/pot=0.5393
+plane_row0_110_L8_s1     k/pi=[0.25, 0.25, 0.0] x_engine=0.9459081 x_formula=0.9459029 head=0.05409 flip=1.94591 kin/pot=0.8047
+plane_row0_200_L5_s1     k/pi=[0.8, 0.0, 0.0] x_engine=0.1367104 x_formula=0.1367099 head=0.86329 flip=1.13671 kin/pot=0.3970
+plane_row2_100_L5_s0     k/pi=[0.4, 0.0, 0.0] x_engine=0.0496530 x_formula=0.0496529 head=0.95035 flip=1.04965 kin/pot=0.1248
+plane_row2_100_L8_s0     k/pi=[0.25, 0.0, 0.0] x_engine=0.0276110 x_formula=0.0276110 head=0.97239 flip=1.02761 kin/pot=0.1463
+plane_row2_200_L5_s0     k/pi=[0.8, 0.0, 0.0] x_engine=0.0187481 x_formula=0.0187481 head=0.98125 flip=1.01875 kin/pot=0.0644
+plane_row2_111_L5_s0     k/pi=[0.4, 0.4, 0.4] x_engine=0.1470083 x_formula=0.1470083 head=0.85299 flip=1.14701 kin/pot=0.0501
+
+== lattice light gas from the per-mode formula (equal forms per mode)
+equipartition_whole_zone         x=0.6295 head=0.3705 flip=1.6295
+equipartition_|k|<1.000pi        x=0.6625 head=0.3375 flip=1.6625
+equipartition_|k|<0.500pi        x=0.9026 head=0.0974 flip=1.9026
+equipartition_|k|<0.250pi        x=0.9759 head=0.0241 flip=1.9759
+equipartition_|k|<0.125pi        x=0.9942 head=0.0058 flip=1.9942
+
+== venv314/bin/python -I vacuum_peek.py (the vacuum: the time gear before and after the carry, the turnovers per tick) ==
+empty
+  start X now/before at (0,0,0): 1000 1000  centre: 1000 1000  forms sum 0  forms centre 0
+  after carry X now at (0,0,0): 998  centre: 998
+ tick 1 turned 125 X now/before (0,0,0) 1000 1000 centre 1000 1000
+  start X now/before at (0,0,0): 1000 1000  centre: 1000 1000  forms sum 0  forms centre 0
+  after carry X now at (0,0,0): 998  centre: 998
+ tick 2 turned 125 X now/before (0,0,0) 1000 1000 centre 1000 1000
+  start X now/before at (0,0,0): 1000 1000  centre: 1000 1000  forms sum 0  forms centre 0
+  after carry X now at (0,0,0): 998  centre: 998
+ tick 3 turned 125 X now/before (0,0,0) 1000 1000 centre 1000 1000
+  start X now/before at (0,0,0): 1000 1000  centre: 1000 1000  forms sum 0  forms centre 0
+  after carry X now at (0,0,0): 998  centre: 998
+ tick 4 turned 125 X now/before (0,0,0) 1000 1000 centre 1000 1000
+heavy
+  start X now/before at (0,0,0): 1000 1000  centre: 1000 1000  forms sum 72940  forms centre 22500
+  after carry X now at (0,0,0): 998  centre: 1001
+ tick 1 turned 124 X now/before (0,0,0) 1000 1000 centre 1001 1000
+  start X now/before at (0,0,0): 1000 1000  centre: 1001 1000  forms sum 73176  forms centre 21900
+  after carry X now at (0,0,0): 998  centre: 1000
+ tick 2 turned 125 X now/before (0,0,0) 1000 1000 centre 1000 1001
+  start X now/before at (0,0,0): 1000 1000  centre: 1000 1001  forms sum 72940  forms centre 22500
+  after carry X now at (0,0,0): 998  centre: 999
+ tick 3 turned 124 X now/before (0,0,0) 1000 1000 centre 999 1000
+  start X now/before at (0,0,0): 1000 1000  centre: 999 1000  forms sum 72914  forms centre 22478
+  after carry X now at (0,0,0): 998  centre: 1000
+ tick 4 turned 124 X now/before (0,0,0) 1000 1000 centre 1000 999
+
+== probe.py ==
+"""GR-sign probe: the regulator's time-gear source on light and on dust, integers only.
+
+Reads, never edits, /home/user/Universe24.  Tick.carry is wrapped: before the engine's own carry
+runs, the wrapper reads tick.forms, tick.stress, tick.rate, tick.stretch_now (as impulse left them)
+and recomputes, per driven train, the forms' parts (u_in u_out and floor(-a F / w)) and, per hand,
+the stress trace, checking that they sum exactly to the engine's arrays.  It then calls the engine's
+carry unchanged.  Every recorded number is a Python int (sums of the engine's object arrays).
+
+Modes
+  head : the engine's run, observed only (the wrapper changes nothing).
+  test : a probe-only counterfactual, the "test field": the regulator's own act is skipped (Clock.act
+         on the 7-gear regulator returns its gears unchanged) and its gears are put back to the
+         vacuum after every tick, so X = Gamma, p0 = Gamma at every clock and tick, no turnover
+         fires, and the hands run Rule3 freely on the vacuum's lattice.  The source is still read
+         exactly as the engine reads it (same forms, same stress, same held_numerator).
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+import time
+from fractions import Fraction
+from pathlib import Path
+
+sys.path[:0] = ["/home/user/Universe24/src", "/home/user/Universe24"]
+
+import numpy as np  # noqa: E402
+
+from event_universe import hands, readings  # noqa: E402
+from event_universe import tick as T  # noqa: E402
+from event_universe.clock import Clock  # noqa: E402
+from event_universe.core import rates  # noqa: E402
+from event_universe.core.acts import mid  # noqa: E402
+from event_universe.core.rule3 import HELD_DRIVE_WEIGHT, carries, held_numerator  # noqa: E402
+from event_universe.core.spokes import AXES  # noqa: E402
+from event_universe.regulation import stress_of, tensor_parts  # noqa: E402
+from event_universe.trains import REGULATOR, Gear, zeros  # noqa: E402
+from tests.laws import world_of  # noqa: E402
+
+OUT = Path(__file__).resolve().parent / "out"
+OUT.mkdir(exist_ok=True)
+
+STATE: dict = {"mode": "head", "records": [], "tick": None}
+
+_orig_carry = T.Tick.carry
+_orig_act = Clock.act
+
+
+def isum(a) -> int:
+    """Exact integer sum of an object array (or an int)."""
+    if np.ndim(a) == 0:
+        return int(a)
+    return int(sum(int(x) for x in np.asarray(a).reshape(-1)))
+
+
+def train_name(clock: Clock, r) -> str:
+    idx = clock.by_index.index(r) if r in clock.by_index else None
+    if idx is None and r.twin is not None:
+        idx = clock.by_index.index(r.twin)
+    return f"row{idx}"
+
+
+def probe_carry(self) -> None:
+    """Read the tick's source as impulse left it, then run the engine's carry unchanged."""
+    clk = self.clock
+    K, rim, G = clk.trace, clk.rim, clk.full_rate
+    k_reg = self.where[id(self.regulator)]
+    X, rate = self.stretch_now, self.rate
+    trace, _traceless = tensor_parts(self.stress[:AXES])
+
+    # --- per-train breakdown, recomputed with the impulse's own formulas -------------------
+    d = (clk.teeth + clk.teeth) * X
+    w_side = readings.mean_teeth(clk, self.regulator.gears[0])
+    forms_sum = zeros(clk.size)
+    trace_sum = zeros(clk.size)
+    per = {}
+    for r in self.driven:
+        k = self.where[id(r)]
+        p_side = [w_side * (g.now - g.before) + g.fine - mid(w_side) for g in self.trains[k]]
+        u_in = [rates.rounded(p + p + 1, d) for p in p_side]
+        u_out = [rates.rounded(p + p + 1, d) for p in self.impelled[k]]
+        kin = zeros(clk.size)
+        pot = zeros(clk.size)
+        for prod, pull in zip(
+            hands.products(u_in, u_out), hands.products(self.starts[k], self.pull[k]), strict=True
+        ):
+            kin = kin + prod
+            pot = pot + carries(-pull, self.train_teeth[k])
+        forms_sum = forms_sum + kin + pot
+        entry = {"kin": isum(kin), "pot": isum(pot)}
+        if r in self.hands:
+            velocity = [x + y for x, y in zip(u_in, u_out, strict=True)]
+            st = stress_of(self.starts[k], velocity)
+            tr = r.ratio[0] * sum(st[:AXES])
+            trace_sum = trace_sum + tr
+            entry["trace"] = isum(tr)
+            entry["P"] = isum(rate * rate * tr)
+        per[train_name(clk, r)] = entry
+    exact_forms = bool(np.all(forms_sum == self.forms))
+    exact_trace = bool(np.all(trace_sum == trace))
+
+    # --- the source as the engine forms it ------------------------------------------------
+    E = K * rim * G * G * self.forms  # the forms' term, K rim Gamma^2 Phi
+    P = rate * rate * trace  # the stress term, p0^2 tau
+    B_head, B_flip = E - P, E + P
+    N_head = held_numerator(K, X, self.forms, trace, rate, rim, G)  # the engine's own numerator
+    exact_numerator = bool(np.all(N_head == HELD_DRIVE_WEIGHT * X * rate * B_head))
+    N_flip = HELD_DRIVE_WEIGHT * X * rate * B_flip
+    hold = X * self.trains[k_reg][0].dteeth
+    clamp_head = (N_head > hold) | (N_head < -hold)
+    clamp_flip = (N_flip > hold) | (N_flip < -hold)
+    absN = np.abs(N_head)
+    nz = self.forms != 0
+    rec = {
+        "tick": clk.ticks,
+        "Phi": isum(self.forms),
+        "tau": isum(trace),
+        "E": isum(E),
+        "P": isum(P),
+        "B_head": isum(B_head),
+        "B_flip": isum(B_flip),
+        "N_head": isum(N_head),
+        "N_flip": isum(N_flip),
+        "clamp_head": int(clamp_head.sum()),
+        "clamp_flip": int(clamp_flip.sum()),
+        # the largest |N| / hold at any clock, as an exact fraction's float (head and flipped)
+        "max_N_over_hold_head": float(max(Fraction(int(a), int(h)) for a, h in zip(absN.flat, hold.flat))),
+        "max_N_over_hold_flip": float(
+            max(Fraction(abs(int(a)), int(h)) for a, h in zip(N_flip.flat, hold.flat))
+        ),
+        "X_min": int(min(X.flat)),
+        "X_max": int(max(X.flat)),
+        "p0_min": int(min(np.asarray(rate).flat)),
+        "p0_max": int(max(np.asarray(rate).flat)),
+        "forms_clocks": int(nz.sum()),
+        "per": per,
+        "exact": exact_forms and exact_trace and exact_numerator,
+    }
+    STATE["records"].append(rec)
+    STATE["forms_mask"] = nz.copy()
+    STATE["forms_arr"] = self.forms.copy()
+    _orig_carry(self)
+
+
+def probe_act(self, gears, r, meshes, numerators, going, flow=None, top=None, kept=None):
+    """Test mode only: the regulator's act skipped (its gears returned unchanged)."""
+    if STATE["mode"] == "test" and len(gears) == REGULATOR:
+        same = [g.copy() for g in gears]
+        return gears, same
+    return _orig_act(self, gears, r, meshes, numerators, going, flow, top, kept)
+
+
+T.Tick.carry = probe_carry
+Clock.act = probe_act
+
+
+def build(world: str, shape, seed, universe: str | None = None) -> Clock:
+    calibre, piece = world_of(world)
+    if universe is not None:  # the piece's keys kept, the calibre read from another universe file
+        calibre = json.loads((Path("/home/user/Universe24/tests/worlds") / universe).read_text())
+    return Clock(calibre, {**piece, "shape": list(shape), "seed": seed})
+
+
+def vacuum_regulator(clock: Clock) -> list[Gear]:
+    return [g.copy() for g in clock.train(REGULATOR).gears]
+
+
+def run(
+    name: str, world: str, shape, seed, ticks: int, mode: str, universe: str | None = None, setter=None
+) -> dict:
+    STATE["mode"], STATE["records"] = mode, []
+    clock = build(world, shape, seed, universe)
+    if setter is not None:  # a probe-made setting laid by the engine's own advance act
+        setter(clock)
+    vac = vacuum_regulator(clock)
+    lay_log = [e for e in clock.log if e.get("event") == "lay"]
+    t0 = time.time()
+    for _ in range(ticks):
+        clock.tick()
+        rec = STATE["records"][-1]
+        turned = clock.turned_over
+        mask = STATE["forms_mask"]
+        rec["turned"] = int(turned.sum())
+        rec["turned_where_forms"] = int((turned & mask).sum())
+        rec["Phi_at_turned"] = isum(np.where(turned, STATE["forms_arr"], 0))
+        rec["births"] = clock.counts["births"]
+        rec["laid"] = clock.counts["laid"]
+        if mode == "test":  # the regulator back to the vacuum, every gear and tooth
+            for g, v in zip(clock.train(REGULATOR).gears, vac, strict=True):
+                g.now, g.before, g.fine = v.now.copy(), v.before.copy(), v.fine.copy()
+                if v.dfine is not None:
+                    g.dfine = v.dfine.copy()
+    secs = time.time() - t0
+    out = {
+        "name": name,
+        "world": world,
+        "universe": universe,
+        "shape": list(shape),
+        "seed": seed,
+        "mode": mode,
+        "ticks": ticks,
+        "seconds": round(secs, 1),
+        "lay": lay_log,
+        "K": clock.trace,
+        "rim": clock.rim,
+        "Gamma": clock.full_rate,
+        "key": clock.key,
+        "counts": clock.counts,
+        "records": STATE["records"],
+    }
+    (OUT / f"{name}.json").write_text(json.dumps(out, default=int))
+    return out
+
+
+def summary(out: dict, skip: int = 0, blocks: int = 5) -> dict:
+    """Time averages as exact fractions of the integer sums; the spread over blocks and ticks."""
+    recs = out["records"][skip:]
+    E = sum(r["E"] for r in recs)
+    Bh = sum(r["B_head"] for r in recs)
+    Bf = sum(r["B_flip"] for r in recs)
+    P = sum(r["P"] for r in recs)
+    head = Fraction(Bh, E)
+    flip = Fraction(Bf, E)
+    x = Fraction(P, E)
+    per_tick = [Fraction(r["B_head"], r["E"]) for r in recs if r["E"]]
+    n = len(recs) // blocks
+    block = []
+    for b in range(blocks):
+        part = recs[b * n : (b + 1) * n]
+        eb = sum(r["E"] for r in part)
+        block.append(float(Fraction(sum(r["B_head"] for r in part), eb)))
+    kin = sum(sum(v["kin"] for v in r["per"].values()) for r in recs)
+    pot = sum(sum(v["pot"] for v in r["per"].values()) for r in recs)
+    pt = [float(v) for v in per_tick]
+    return {
+        "name": out["name"],
+        "mode": out["mode"],
+        "ticks_used": len(recs),
+        "head": float(head),
+        "flip": float(flip),
+        "x": float(x),
+        "head_frac": f"{head.numerator}/{head.denominator}" if head.denominator < 10**12 else None,
+        "block_head": block,
+        "block_spread": max(block) - min(block),
+        "tick_head_mean": float(np.mean(pt)),
+        "tick_head_std": float(np.std(pt)),
+        "tick_head_min": min(pt),
+        "tick_head_max": max(pt),
+        "kin_over_pot": float(Fraction(kin, pot)) if pot else None,
+        "clamp_head_total": sum(r["clamp_head"] for r in recs),
+        "clamp_flip_total": sum(r["clamp_flip"] for r in recs),
+        "max_N_over_hold_head": max(r["max_N_over_hold_head"] for r in recs),
+        "max_N_over_hold_flip": max(r["max_N_over_hold_flip"] for r in recs),
+        "turned_mean": float(np.mean([r["turned"] for r in recs])),
+        "turned_where_forms_mean": float(np.mean([r["turned_where_forms"] for r in recs])),
+        "forms_clocks_mean": float(np.mean([r["forms_clocks"] for r in recs])),
+        "Phi_turned_share": float(
+            Fraction(sum(r["Phi_at_turned"] for r in recs), sum(r["Phi"] for r in recs))
+        )
+        if sum(r["Phi"] for r in recs)
+        else None,
+        "X_range": [min(r["X_min"] for r in recs), max(r["X_max"] for r in recs)],
+        "p0_range": [min(r["p0_min"] for r in recs), max(r["p0_max"] for r in recs)],
+        "Phi_first_last": [recs[0]["Phi"], recs[-1]["Phi"]],
+        "births": recs[-1]["births"],
+        "laid": recs[-1]["laid"],
+        "all_exact": all(r["exact"] for r in out["records"]),
+    }
+
+== run_all.py ==
+"""Run every setting in both modes and write out/<name>.json and out/summary.json."""
+import json, sys
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import probe
+
+RIM = 15162856759112389          # universe_toy.json's den (K = 6)
+def stride(num, den):             # h = rim sin(k / 2), sin given as an exact fraction num/den
+    return RIM * num // den
+
+H5 = stride(587785, 1000000)      # sin(pi/5): k = 2 pi / 5, the 5-torus's first mode
+H10 = stride(309017, 1000000)     # sin(pi/10): k = pi / 5
+
+C = [2, 2, 2]
+SETTINGS = {
+    "light_x":    ("world_sea.json", [5,5,5], [{"lay":"at","row":0,"centre":C,"width":2,"quanta":4,"wave":[H5,0,0]}]),
+    "light_x_k2": ("world_sea.json", [5,5,5], [{"lay":"at","row":0,"centre":C,"width":2,"quanta":4,"wave":[H10,0,0]}]),
+    "light_diag": ("world_sea.json", [5,5,5], [{"lay":"at","row":0,"centre":C,"width":2,"quanta":4,"wave":[H5,H5,H5]}]),
+    "light_cycle":("world_sea.json", [4,4,4], [{"lay":"wave","row":0,"quanta":5,"p1":[0,0,1,1,2,2,3,3,1,1,0,0,3,3,2,2],"cz":1,"mirror":0}]),
+    "dust_row2":  ("world_sea.json", [5,5,5], [{"lay":"at","row":2,"centre":C,"width":2,"quanta":1}]),
+    "dust_row2_w3":("world_sea.json", [5,5,5], [{"lay":"at","row":2,"centre":C,"width":3,"quanta":1}]),
+    "dust_row3":  ("world_sea.json", [5,5,5], [{"lay":"at","row":3,"centre":C,"width":2,"quanta":1}]),
+    "dust_sea_row2": ("world_sea.json", [5,5,5], [{"lay":"sea","row":2,"quanta":1,"sense":0}]),
+    # the same lays at 100 quanta (hand length about 10x): the integer rounding's share 10x smaller
+    "light_x_q100":   ("world_sea.json", [5,5,5], [{"lay":"at","row":0,"centre":C,"width":2,"quanta":100,"wave":[H5,0,0]}]),
+    "light_diag_q100":("world_sea.json", [5,5,5], [{"lay":"at","row":0,"centre":C,"width":2,"quanta":100,"wave":[H5,H5,H5]}]),
+    "dust_row2_q100": ("world_sea.json", [5,5,5], [{"lay":"at","row":2,"centre":C,"width":2,"quanta":100}]),
+    "dust_row3_q100": ("world_sea.json", [5,5,5], [{"lay":"at","row":3,"centre":C,"width":2,"quanta":100}]),
+}
+
+if __name__ == "__main__":
+    ticks = int(sys.argv[1]) if len(sys.argv) > 1 else 600
+    names = sys.argv[2:] or list(SETTINGS)
+    path = probe.OUT / f"summary_{ticks}.json"
+    allsum = json.loads(path.read_text()) if path.exists() else {}
+    for mode in ("head", "test"):
+        for name in names:
+            world, shape, seed = SETTINGS[name]
+            out = probe.run(f"{name}_{mode}", world, shape, seed, ticks, mode)
+            s = probe.summary(out)
+            allsum[f"{name}_{mode}"] = s
+            print(json.dumps({k: s[k] for k in ("name","head","flip","x","block_spread","kin_over_pot","turned_mean","turned_where_forms_mean","forms_clocks_mean","Phi_turned_share","clamp_head_total","clamp_flip_total","max_N_over_hold_head","X_range","births","all_exact")}), flush=True)
+    path.write_text(json.dumps(allsum, indent=1))
+
+== planewave.py ==
+"""Long-wave check in the test field: travelling plane waves of the light (and of the heavy row 2) on
+L^3 boards, laid with the engine's own integer angle pairs (setting.rim_point, meshes.offset_pair,
+setting.running_rotation, hands.moving) and the engine's one advance act (unwind.advance), then run
+by the engine with the regulator held at the vacuum (probe mode "test"); Phi and tau of a travelling
+wave are constant per clock, so a few ticks suffice.  The lattice prediction per mode is
+x = rho_h * 2 SUM_a sin^2 k_a / (K sin^2 omega), cos omega = rho_h mean_a cos k_a (rho_h = pinion/rim)."""
+import json, math, sys
+from fractions import Fraction
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import probe
+import numpy as np
+from event_universe import hands
+from event_universe.assembly.setting import rim_point, running_rotation, angle_of
+from event_universe.meshes import offset_pair
+from event_universe.unwind import advance
+from event_universe.trains import zeros
+
+def plane_setter(row, n_vec, amplitude, sense=1):
+    """A travelling plane wave z = A e^{i(k.x - omega t)} on the hand of the row, k = 2 pi n / L
+    (sense 1); at sense 0 the conjugate pair (both senses summed, the twelve gears cancelling: a real
+    travelling wave on the three gear, no sweep and no lead, as the head's rest lay sets a sprung hand)."""
+    def setter(clock):
+        L, rim = clock.cube, clock.rim
+        train = clock.by_index[row]
+        rec = clock.hands().index(train)
+        points, along = [], []
+        for n in n_vec:
+            h = int(round(rim * math.sin(math.pi * n / L)))   # h = rim sin(k/2): the stride's input integer
+            pt = rim_point(rim, h)
+            points.append(pt)
+            seq = [(rim, 0)]
+            for _ in range(1, L):
+                c, s = offset_pair(seq[-1][0], seq[-1][1], pt[0], pt[1], rim)
+                seq.append((int(c), int(s)))
+            along.append(seq)
+        rot = running_rotation(train.ratio[0], rim, points)
+        C, S = zeros(clock.size), zeros(clock.size)
+        for at in np.ndindex(*clock.size):
+            C[at], S[at] = angle_of(rim, [along[a][at[a]] for a in range(3)])
+        Cb, Sb = offset_pair(C, S, rot[0], rot[1], rim)
+        base = zeros(clock.size) + amplitude
+        for sn in ((1,) if sense else (-1, 1)):
+            gears = hands.moving(base, (C, S), (Cb, Sb), rim, sn)
+            advance(clock, rec, Ellipsis, tuple(x for g in gears for x in (g.now, g.before)))
+    return setter
+
+def predicted(rho, K, L, n_vec):
+    k = [2 * math.pi * n / L for n in n_vec]
+    cw = rho * sum(math.cos(q) for q in k) / 3
+    s2 = 1 - cw * cw
+    return rho * 2 * sum(math.sin(q) ** 2 for q in k) / (K * s2)
+
+if __name__ == "__main__":
+    ticks = int(sys.argv[2]) if len(sys.argv) > 2 else 6
+    rows = []
+    which = sys.argv[1] if len(sys.argv) > 1 else "all"
+    cases = [(0, (1, 0, 0), L, 1) for L in (4, 5, 6, 8, 10, 12, 16)]
+    cases += [(0, (1, 1, 1), L, 1) for L in (5, 8)] + [(0, (1, 1, 0), L, 1) for L in (5, 8)] + [(0, (2, 0, 0), 5, 1)]
+    cases += [(2, (1, 0, 0), L, 0) for L in (5, 8)] + [(2, (2, 0, 0), 5, 0)] + [(2, (1, 1, 1), 5, 0)]
+    if which == "heavy":
+        cases = [c for c in cases if c[0] == 2]
+    for row, n_vec, L, sense in cases:
+        name = f"plane_row{row}_{''.join(map(str, n_vec))}_L{L}_s{sense}"
+        out = probe.run(name, "world_sea.json", [L, L, L], [], ticks, "test", setter=plane_setter(row, n_vec, 20000, sense))
+        recs = out["records"]
+        E = sum(r["E"] for r in recs); P = sum(r["P"] for r in recs)
+        x = Fraction(P, E)
+        rho = 1.0 if row == 0 else 2458210083751875 / 15162856759112389
+        xp = predicted(rho, out["K"], L, n_vec)
+        per_tick = [float(Fraction(r["P"], r["E"])) for r in recs]
+        row_ = {"name": name, "row": row, "n": n_vec, "L": L, "k_over_pi": [2 * n / L for n in n_vec],
+                "x_engine": float(x), "x_predicted": xp, "head": float(1 - x), "flip": float(1 + x),
+                "x_tick_min": min(per_tick), "x_tick_max": max(per_tick),
+                "kin_over_pot": float(Fraction(sum(sum(v['kin'] for v in r['per'].values()) for r in recs),
+                                               sum(sum(v['pot'] for v in r['per'].values()) for r in recs))),
+                "births": recs[-1]["births"], "exact": all(r["exact"] for r in recs), "seconds": out["seconds"]}
+        rows.append(row_)
+        print(json.dumps(row_), flush=True)
+    (probe.OUT / f"planewaves_{which}.json").write_text(json.dumps(rows, indent=1))
+
+== modes.py ==
+"""The lattice per-mode prediction for each packet's own mode content (floats: a prediction only, the
+engine's numbers stay integer): the laid hand's gears FFT'd at the start (now, and before corrected by
+its fine tooth: velocity = P / w_side), each mode k of each gear a free Rule3 oscillator with
+cos omega_k = rho_h mean_a cos k_a; its conserved forms Phi_k = |a_n|^2 + |a_{n-1}|^2 - 2 cos w Re(a_n a*_{n-1})
+(the engine's u_in u_out + floor(-aF/w) in Fourier form) and its time-mean stress rho_h 4 SUM_a sin^2 k_a
+<|a_k|^2>; x_pred = SUM stress / (K SUM Phi).  Compared with the test field's measured time-mean x."""
+import json, sys
+import numpy as np
+sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parent))
+import probe, run_all
+from event_universe.core.acts import mid
+from event_universe import readings
+from event_universe.trains import REGULATOR
+
+summ = json.loads((probe.OUT / "summary_600.json").read_text())
+rows = []
+for name in ["light_x", "light_x_k2", "light_diag", "light_cycle", "dust_row2", "dust_row2_w3", "dust_row3", "dust_sea_row2",
+             "light_x_q100", "light_diag_q100", "dust_row2_q100", "dust_row3_q100"]:
+    world, shape, seed = run_all.SETTINGS[name]
+    clock = probe.build(world, shape, seed)
+    row = seed[0]["row"]
+    train = clock.by_index[row]
+    rho = train.ratio[0] / train.ratio[1]
+    K = clock.trace
+    w_side = int(readings.mean_teeth(clock, clock.train(REGULATOR).gears[0]).flat[0])
+    L = clock.cube
+    k1 = 2 * np.pi * np.fft.fftfreq(L) # per-axis wave numbers
+    kx, ky, kz = np.meshgrid(k1, k1, k1, indexing="ij")
+    cosw = rho * (np.cos(kx) + np.cos(ky) + np.cos(kz)) / 3
+    sinw = np.sqrt(np.maximum(1 - cosw ** 2, 0))
+    s2 = np.sin(kx) ** 2 + np.sin(ky) ** 2 + np.sin(kz) ** 2
+    phi = 0.0; stress = 0.0; phi_alt = 0.0
+    for g in train.gears:
+        now = np.array(g.now, dtype=float)
+        vel = (w_side * (np.array(g.now, dtype=object) - np.array(g.before, dtype=object))
+               + np.array(g.fine, dtype=object) - mid(w_side)).astype(float) / w_side
+        a_n, a_b = np.fft.fftn(now), np.fft.fftn(now - vel)
+        Phi_k = np.abs(a_n) ** 2 + np.abs(a_b) ** 2 - 2 * cosw * np.real(a_n * np.conj(a_b))
+        ok = sinw > 1e-12
+        A = np.where(ok, (a_n * np.exp(1j * np.arccos(np.clip(cosw, -1, 1))) - a_b) / (2j * np.where(ok, sinw, 1)), 0)
+        B = a_n - A
+        mean_sq = np.where(ok, np.abs(A) ** 2 + np.abs(B) ** 2, np.abs(a_n) ** 2)
+        phi += Phi_k.sum(); stress += (rho * 4 * s2 * mean_sq).sum()
+        phi_alt += np.where(ok, 2 * (np.abs(A) ** 2 + np.abs(B) ** 2) * sinw ** 2, Phi_k).sum()
+    x_pred = stress / (K * phi)
+    meas = summ[f"{name}_test"]["x"]
+    rows.append({"name": name, "rho_h": rho, "x_pred_modes": x_pred, "x_test_measured": meas,
+                 "x_head_measured": summ[f"{name}_head"]["x"], "phi_check": phi_alt / phi})
+    print(json.dumps(rows[-1]))
+(probe.OUT / "modes_prediction.json").write_text(json.dumps(rows, indent=1))
+
+== gas.py ==
+"""Lattice light 'gas' (floats, a prediction from the per-mode formula the engine was shown to obey):
+x_L(k) = 2 SUM_a sin^2 k_a / (6 sin^2 omega), cos omega = mean_a cos k_a, averaged with equal forms per
+mode (equipartition) over the whole Brillouin zone, and over |k| < k_max (a long-wave gas)."""
+import json, numpy as np
+L = 96
+k1 = 2 * np.pi * np.fft.fftfreq(L)
+kx, ky, kz = np.meshgrid(k1, k1, k1, indexing="ij")
+c = (np.cos(kx) + np.cos(ky) + np.cos(kz)) / 3
+s2w = 1 - c * c
+num = 2 * (np.sin(kx) ** 2 + np.sin(ky) ** 2 + np.sin(kz) ** 2)
+ok = s2w > 1e-12
+x = np.where(ok, num / (6 * np.where(ok, s2w, 1)), 1.0)
+kk = np.sqrt(kx ** 2 + ky ** 2 + kz ** 2)
+out = {"equipartition_whole_zone": {"x": float(x[ok].mean()), "head": float(1 - x[ok].mean()), "flip": float(1 + x[ok].mean())}}
+for kmax in (np.pi, np.pi / 2, np.pi / 4, np.pi / 8):
+    m = ok & (kk < kmax)
+    out[f"equipartition_|k|<{kmax/np.pi:.3f}pi"] = {"x": float(x[m].mean()), "head": float(1 - x[m].mean()), "flip": float(1 + x[m].mean())}
+print(json.dumps(out, indent=1))
+json.dump(out, open("out/gas_prediction.json", "w"), indent=1)
+
+== report.py ==
+"""Collect the saved outputs into out/results.txt (and print it)."""
+import json, itertools
+from pathlib import Path
+OUT = Path(__file__).resolve().parent / "out"
+S = json.loads((OUT / "summary_600.json").read_text())
+P = json.loads((OUT / "planewaves_all.json").read_text())
+M = {r["name"]: r for r in json.loads((OUT / "modes_prediction.json").read_text())}
+G = json.loads((OUT / "gas_prediction.json").read_text())
+lines = []
+w = lines.append
+def row(n):
+    s = S[n]
+    base = n.rsplit("_", 1)[0]
+    pred = M.get(base, {}).get("x_pred_modes")
+    flag = "" if (s["births"] == 0) else f"  ** births {s['births']}: contaminated, excluded"
+    w(f"{n:22s} x={s['x']:.4f} head(1-x)={s['head']:.4f} flip(1+x)={s['flip']:.4f} blocks+-{s['block_spread']/2:.4f} "
+      f"tick[min,max]=[{s['tick_head_min']:.3f},{s['tick_head_max']:.3f}] kin/pot={s['kin_over_pot']:+.3f} "
+      f"turned/tick={s['turned_mean']:.1f} (field {s['turned_where_forms_mean']:.1f}/{s['forms_clocks_mean']:.0f}) "
+      f"Phi@turned={s['Phi_turned_share'] if s['Phi_turned_share'] is not None else 0:.2f} X={s['X_range']} "
+      f"maxN/hold head {s['max_N_over_hold_head']:.3g} flip {s['max_N_over_hold_flip']:.3g} clamps {s['clamp_head_total']}/{s['clamp_flip_total']}"
+      + (f" x_modes={pred:.4f}" if pred is not None else "") + flag)
+light = ["light_x", "light_x_k2", "light_diag", "light_x_q100", "light_diag_q100", "light_cycle"]
+dust = ["dust_row2", "dust_row2_w3", "dust_row3", "dust_row2_q100", "dust_row3_q100", "dust_sea_row2"]
+for mode in ("test", "head"):
+    w(f"\n== mode {mode} ({'regulator held at the vacuum: on-shell lattice means' if mode == 'test' else 'the engine as is, observed only'}), 600 ticks, toy calibre K=6, 5^3 (cycle 4^3)")
+    for n in light + dust:
+        if f"{n}_{mode}" in S:
+            row(f"{n}_{mode}")
+    ok = lambda n: f"{n}_{mode}" in S and S[f"{n}_{mode}"]["births"] == 0
+    L = [n for n in light if ok(n)]; D = [n for n in dust if ok(n)]
+    rh = [S[f"{l}_{mode}"]["head"] / S[f"{d}_{mode}"]["head"] for l, d in itertools.product(L, D)]
+    rf = [S[f"{l}_{mode}"]["flip"] / S[f"{d}_{mode}"]["flip"] for l, d in itertools.product(L, D)]
+    w(f"light/dust over {len(L)} light x {len(D)} dust settings: head sign {min(rh):.3f}..{max(rh):.3f}, flipped {min(rf):.3f}..{max(rf):.3f}")
+    if mode == "test":
+        l, d = S["light_x_q100_test"], S["dust_row2_q100_test"]
+        w(f"central pair light_x_q100 / dust_row2_q100: head {l['head']/d['head']:.4f} (blocks +-{(l['block_spread']/2)/d['head'] + l['head']*(d['block_spread']/2)/d['head']**2:.4f}), "
+          f"flipped {l['flip']/d['flip']:.4f}")
+w("\n== plane waves, test field (engine integers vs lattice per-mode formula), amplitude 20000, 12 ticks")
+for r in P:
+    w(f"{r['name']:24s} k/pi={r['k_over_pi']} x_engine={r['x_engine']:.7f} x_formula={r['x_predicted']:.7f} head={r['head']:.5f} flip={r['flip']:.5f} kin/pot={r['kin_over_pot']:.4f}")
+w("\n== lattice light gas from the per-mode formula (equal forms per mode)")
+for k, v in G.items():
+    w(f"{k:32s} x={v['x']:.4f} head={v['head']:.4f} flip={v['flip']:.4f}")
+txt = "\n".join(lines)
+(OUT / "results.txt").write_text(txt + "\n")
+print(txt)
+
+== vacuum_peek.py ==
+import sys
+sys.path[:0] = ["/home/user/Universe24/src", "/home/user/Universe24"]
+import numpy as np
+from tests.laws import world_of
+from event_universe.clock import Clock
+from event_universe.trains import REGULATOR
+from event_universe import tick as T
+
+def build(world, **changes):
+    cal, piece = world_of(world)
+    return Clock(cal, {**piece, **changes})
+
+orig_carry = T.Tick.carry
+def carry(self):
+    reg = self.trains[self.where[id(self.regulator)]][0]
+    print("  start X now/before at (0,0,0):", reg.now[0,0,0], reg.before[0,0,0], " centre:", reg.now[2,2,2], reg.before[2,2,2],
+          " forms sum", sum(self.forms.flat), " forms centre", self.forms[2,2,2])
+    orig_carry(self)
+    reg2 = self.clock.train(REGULATOR).gears[0]
+    print("  after carry X now at (0,0,0):", reg2.now[0,0,0], " centre:", reg2.now[2,2,2])
+T.Tick.carry = carry
+
+for name, changes in [
+    ("empty", dict(shape=[5,5,5], seed=[])),
+    ("heavy", dict(shape=[5,5,5], seed=[{"lay":"at","row":2,"centre":[2,2,2],"width":2,"quanta":1}])),
+]:
+    try:
+        c = build("world_sea.json", **changes)
+    except Exception as e:
+        print(name, "refused:", e); continue
+    print(name)
+    for t in range(4):
+        c.tick()
+        reg = c.train(REGULATOR).gears[0]
+        print(" tick", c.ticks, "turned", int(c.turned_over.sum()), "X now/before (0,0,0)", reg.now[0,0,0], reg.before[0,0,0], "centre", reg.now[2,2,2], reg.before[2,2,2])

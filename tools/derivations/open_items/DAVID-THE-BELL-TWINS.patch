@@ -1,0 +1,166 @@
+diff --git a/src/event_universe/bobs.py b/src/event_universe/bobs.py
+index 4d3098729..7ece0a719 100644
+--- a/src/event_universe/bobs.py
++++ b/src/event_universe/bobs.py
+@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
+ import numpy as np
+ 
+ from event_universe.core import rule3
+-from event_universe.core.rule3 import carries, largest_below
++from event_universe.core.rule3 import carries, largest_below, remainder
+ from event_universe.core.spokes import AXES, SPOKE_SIDES, SPOKES
+ from event_universe.draw import vernier
+ from event_universe.hands import dot, sweep, twin_pairs, wind
+@@ -200,3 +200,102 @@ def face_of(
+         "X": clock.standard_length,
+         "factors": [int(f[at]) for f in clock.start_factors],
+     }
++
++
++_BELL_INDEX: dict[int, dict[str, Any]] = {}
++BELL_DETECTORS: dict[
++    str, Any
++] = {}  # the detectors as the run hands them over (each end's two turns, the choices)
++
++
++def _bell_index(clock: Any) -> dict[str, Any]:
++    """The born pairs and their answered ends read from the log, rebuilt where the log was cut back (the rewind)."""
++    held = _BELL_INDEX.get(id(clock))
++    stale = (
++        held is None
++        or len(clock.log) < held["n"]
++        or (held["n"] > 0 and clock.log[held["n"] - 1] is not held["last"])
++    )
++    found: dict[str, Any] = (
++        {"n": 0, "by_child": {}, "answered": {}, "last": None} if stale or held is None else held
++    )
++    _BELL_INDEX[id(clock)] = found
++    for pos in range(found["n"], len(clock.log)):
++        e = clock.log[pos]
++        if e["event"] == "birth":
++            for end, where in enumerate((e["minus"], e["plus"])):
++                found["by_child"].setdefault((tuple(where), int(e["line_pair"])), []).append(
++                    (int(e["i"]), pos, end)
++                )
++        elif e["event"] == "credit" and "bell" in e:
++            b = e["bell"]
++            found["answered"][(b["pair"], b["end"])] = (b["answer"], tuple(b["turn"]))
++    found["n"] = len(clock.log)
++    found["last"] = clock.log[-1] if clock.log else None
++    return found
++
++
++def bell_turn(q: tuple[int, ...], twins: tuple[int, ...]) -> tuple[int, ...]:
++    """The twins turned by a detector's quaternion (a, b, c, d), the doublet's one turn on integers as a hand's turn by a Gaussian is the singlet's: the up twin u0 + u1 i and the down twin v0 + v1 i go to (a - d i) u + (-c - b i) v and (c - b i) u + (a + d i) v, their winds times a^2 + b^2 + c^2 + d^2."""
++    a, b, c, d = q
++    u0, u1, v0, v1 = twins
++    return (
++        a * u0 + d * u1 - c * v0 + b * v1,
++        a * u1 - d * u0 - c * v1 - b * v0,
++        c * u0 + b * u1 + a * v0 - d * v1,
++        c * u1 - b * u0 + a * v1 + d * v0,
++    )
++
++
++def bell_answers(clock: Any, gearings: list[Any], log_from: int) -> None:
++    """The detector's click on a born pair as the split's continuation (the owner's orders of 2026-10-28, 02:59 and 04:01 UTC: the click solution built locally, no cosine in the code): a fitting's two children are one singlet from the birth to the first click of either; each detector turns the twins by its own quaternion (`bell_turn`, from the turns the run hands over, the choice between each end's two made outside the board) and splits them by the split's own draw, the up twin where c (W_up + W_down) < room W_up (bobs.splits), the winds the twins' squared Gaussians; the first child's twins stand equal, so it splits half and half, and its answer closes the partner's twins to the opposite twin turned by the first quaternion; the partner's detector turns them back by its own (its conjugate) and splits them, so Born's odds come from the twins alone. Two clicks of one pair in one strike take the - end first by its role. The answers are readings in the credit lines (no gear written), the rewind cutting them with the log; nothing where the run hands over no detectors. A local build for David's verification."""
++    if not BELL_DETECTORS:
++        return
++    turns, choices = BELL_DETECTORS["turns"], BELL_DETECTORS["choices"]
++    index = _bell_index(clock)
++    clicks: dict[int, dict[int, int]] = {}
++    for pos in range(log_from, len(clock.log)):
++        e = clock.log[pos]
++        if e["event"] != "credit":
++            continue
++        at, line, tick = tuple(e["node"]), int(e["line"]), int(e["i"])
++        for born, fit, end in index["by_child"].get((at, line), []):
++            if born < tick and (fit, end) not in index["answered"] and end not in clicks.get(fit, {}):
++                clicks.setdefault(fit, {})[end] = pos
++                break
++    for fit in sorted(clicks):
++        for end in sorted(clicks[fit]):
++            e = clock.log[clicks[fit][end]]
++            at, line = tuple(e["node"]), int(e["line"])
++            drawn = vernier(clock, at, gearings, clock.windings[line])
++            if drawn is None:
++                continue
++            c, room = drawn
++            bit = int(choices[int(remainder(len(index["answered"]), len(choices)))])
++            q = tuple(int(x) for x in turns[end][bit])
++            partner = index["answered"].get((fit, 1 - end))
++            if partner is None:
++                twins: tuple[int, ...] = (1, 0, 1, 0)
++                closed = 0
++            else:
++                first, (a, b, k, d) = partner
++                twins = (-k, -b, a, d) if first > 0 else (a, -d, k, -b)
++                w, x, y, z = q
++                twins = bell_turn((w, -x, -y, -z), twins)
++                closed = 1
++            u0, u1, v0, v1 = twins
++            up, down = u0 * u0 + u1 * u1, v0 * v0 + v1 * v1
++            answer = 1 if c * (up + down) < room * up else -1
++            index["answered"][(fit, end)] = (answer, q)
++            e["bell"] = {
++                "pair": fit,
++                "end": end,
++                "setting": bit,
++                "turn": list(q),
++                "twins": list(twins),
++                "answer": answer,
++                "axis_closed": closed,
++                "draw": [c, room],
++            }
++    index["n"] = len(clock.log)
++    index["last"] = clock.log[-1] if clock.log else None
+diff --git a/src/event_universe/predicates.py b/src/event_universe/predicates.py
+index aa2ae24e4..5d28a7fd6 100644
+--- a/src/event_universe/predicates.py
++++ b/src/event_universe/predicates.py
+@@ -273,7 +273,19 @@ def two_slits(chart: Chart) -> dict[str, Any]:
+ def bell(chart: Chart) -> dict[str, Any]:
+     """Row 56: Bell (QG-S3, BK-S1; the reading of The-Setting-From-The-Frame_COMPARISON.md section 3, the Boss's 6411759969): S as the count over the fitted pairs' four cells, the setting at each end the detector's own datum at its strike (the dial's parity, two-valued) and the outcome the fitted hand's own sense from the fitting line; nature's band 4 < S^2 <= 8 SHOWN as nature, else NOT SHOWN with the cause named: the outcome reads no datum of the detector, the fitted hand has no axis (BS-S1 owed), so every filled cell reads E = -1 and S^2 = 4."""
+     cells: dict[tuple[int, int], list[int]] = {}
++    answered: dict[int, dict[int, tuple[int, int]]] = {}
++    for k in chart.chimes:
++        if "bell" in k:
++            answered.setdefault(int(k["bell"]["pair"]), {})[int(k["bell"]["end"])] = (
++                int(k["bell"]["setting"]),
++                int(k["bell"]["answer"]),
++            )
++    for got in answered.values():
++        if 0 in got and 1 in got:
++            cells.setdefault((got[0][0], got[1][0]), []).append(got[0][1] * got[1][1])
+     for b, (a, c) in zip(chart.fittings, chart.sweeps_of(), strict=True):
++        if answered:
++            break
+         if not a or not c:
+             continue
+         ends = [
+diff --git a/src/event_universe/striking.py b/src/event_universe/striking.py
+index 04a7283de..1065bdf70 100644
+--- a/src/event_universe/striking.py
++++ b/src/event_universe/striking.py
+@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, NamedTuple
+ import numpy as np
+ 
+ from event_universe import hands, readings
+-from event_universe.bobs import bobs, splits
++from event_universe.bobs import bell_answers, bobs, splits
+ from event_universe.core import rule3
+ from event_universe.core.rule3 import carries, remainder
+ from event_universe.core.spokes import AXES, across, spoke_of
+@@ -357,6 +357,7 @@ def strike(
+         assert rewind_note is not None
+         undo(clock, rewind_note)
+         return
++    log_from = len(clock.log)
+     c = clock.start_load
+     clock.start_gears = hand_starts
+     clock.pitches, clock.vernier_read, clock.twin_ends = {}, {}, {}
+@@ -386,3 +387,4 @@ def strike(
+     fitted_clocks = fittings(clock, jam(clock, fits, winds), c, read, gearings)
+     splits(clock, hand_starts, (winds, hand_gearings, gearings), fitted_clocks, stopped, r_unsprung)
+     bobs(clock, hand_starts, winds, fitted_clocks, stopped, r_unsprung)
++    bell_answers(clock, gearings, log_from)

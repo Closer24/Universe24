@@ -1,0 +1,19 @@
+(1) the run back over two ticks, 300 random rounds each (a drive J = 3 a F, grips one per Mesh):
+  the drive's teeth falling, T_d 9 then 4, W 5 throughout: exact in 0 of 300
+  the drive's teeth rising, T_d 4 then 9, W 5 throughout: exact in 300 of 300
+  the gear's teeth falling, W 9 to 4 to 7, T_d 6 throughout: exact in 300 of 300
+(2) the time gear as the count c, two held sources m m composed (runs at (0, 0), (m1, 0), (0, m2), (m1, m2)):
+  a uniform board (no pull), teeth 1, the drive on the force's path, 200 ticks: the strides miss by 0, the counts by 0 (the deepest count 2613000)
+  a uniform board (no pull), teeth 6, the drive on the force's path, 200 ticks: the strides miss by 0, the counts by 66 (the deepest count 435500)
+  the (6, 6, 6) board, the masses at two Node-clocks, teeth 6, 120 ticks: the counts miss by 27 (the deepest count 1418216)
+  the mutant (the act on X, Gamma = 1,000,000): the counts miss by up to 186,689 (c_1 279,320 and c_2 380,721 there)
+(3) the law's rate line, p0 = Gamma (1 - 1 / Gamma)^c to the unit (the head's core/rates.rate), Gamma = 1,000:
+  |Gamma rate(c1 + c2) - rate(c1) rate(c2)| at most 1312 over c1, c2 below 400 (Gamma^2 = 1000000)
+  the stretch's mutant at c1 = c2 = 100: Gamma p0(X_1 + X_2 - Gamma) - p0(c1) p0(c2) = 23827
+(4) the board's summed impulse moves by SUM K - D SUM a, exactly, at every tick of 40: True
+  no spring: the count at 100, 300, 600: 9,090, 81,270, 324,540; its largest in the first 140 ticks 17,766 at tick 140; its lows at none (2 pi sqrt(Gamma / 2) = 140.5)
+  the clock's one notch, D / W = 2 / Gamma: the count at 100, 300, 600: 1,097, 318, 1,028; its largest in the first 140 ticks 1,801 at tick 70; its lows at [140, 280, 421, 561] (2 pi sqrt(Gamma / 2) = 140.5)
+(5) the ruler Y, Y+ Y- T_0 = Y^2 (T_0 + N):
+  no source, Y_0 = 7^6, Y_1 = 7^5 8: Y_t = 7^(6 - t) 8^t kept to t = 6: True, the last remainder 0
+  the mutant (X = Y^4 / Gamma^3 linear in the tick) at t = 2: Y_2 = 146615.06 for 153664
+  sources 3e-06 and 5e-06 per tick, 400 ticks from rest (slowdowns 0.2720 and 0.4933): (Y_12 Y_0 - Y_1 Y_2) / Y_0^2 = -1.88e-06; the mutant's 4 e1 e2 = 5.37e-01

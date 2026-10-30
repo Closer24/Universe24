@@ -1,0 +1,22 @@
+way (b), the radial take, 300 ticks on a ring of 8:
+  the child's sweep Q_child = -12,800; the light's sweep at the start -2,465,008, -308,000 at site 0; its kept form 912,912,000, so 370.3 per unit of sweep
+  quotients 546, laid 16 at 2 click ticks, refused 530 (laid back, a Books line each)
+  the click's write moved Q_light + Q_matter - SUM kept by [0] at every click tick
+  light's sweep moved by 203,632 at the takes, the children carry -204,800; the kept at the end [-215, -77, -215, -77, -215, -77, -215, -77], at most 652 in size at any tick
+  light's kept form fell by 75,411,600 at the takes: 370.3 per unit of sweep taken, against its own 370.3; the children hold 221.6 per unit of sweep, so the sweep balances and the energy only at resonance
+  between the clicks the act moves the same sum by Rule3's torques alone: at most 7,953 a tick, -4,613 over the run
+  the books' windings: their total took 1 value(s)
+  the run back through every take, lay and tick, from the out's write: True
+  the 24: the run of the turned start equals the turned run at every one of 301 states: True
+  the mutant, the miss dropped (the kept not booked): the click's write moved the sum by 2 value(s) from 816 to 1,872; run back True
+  the mutant, the take dropped (no write on light's gears, the click probe's gap): the click's write moved the sum by 1 value(s) from -102,400 to -102,400; run back True
+  the mutant, the out without the take's write: the click's write moved the sum by 1 value(s) from 0 to 0; run back False
+the tangential take, for comparison, 300 ticks on a ring of 8:
+  the click's write moved Q_light + Q_matter - SUM kept by [0] at every click tick
+  light's sweep moved by 203,608 at the takes, the children carry -204,800; the kept at the end [130, -437, 122, -435, 133, -422, 141, -424], at most 437 in size at any tick
+  light's kept form fell by 75,076,800 at the takes: 368.7 per unit of sweep taken, against its own 370.3; the children hold 221.6 per unit of sweep, so the sweep balances and the energy only at resonance
+the energy form, for comparison, one child at site 0 of the start: owed 2,836,800 of the kept form; delta [-2, -7]; its linear term -2,690,000; the quadratic part W |delta|^2 = 31,800 left to the kept
+one quantum, split, half at A and half at B: light's sweep -13,050 against the child's -12,800; quotients 130, laid 12; light's sweep -13,050 -> 126,018 and its kept form 10,492,800 -> 169,447,600; the kept at most 2,941; the click's write moved the sum by [0]; run back True
+  its sweep density in the child's sense, over the Node-clocks and ticks, from -89,372 to 62,229: it takes both signs, so a Node-clock alone cannot read whether one quantum stands on the board
+one quantum, whole at A: light's sweep -12,852 against the child's -12,800; quotients 64, laid 9; light's sweep -12,852 -> 87,159 and its kept form 10,356,600 -> 49,877,000; the kept at most 3,531; the click's write moved the sum by [0]; run back True
+  its sweep density in the child's sense, over the Node-clocks and ticks, from -111,076 to 77,323: it takes both signs, so a Node-clock alone cannot read whether one quantum stands on the board

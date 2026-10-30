@@ -1,0 +1,98 @@
+DAVID-DISENGAGED-MESH_CHECKS.txt: the checks of DAVID-DISENGAGED-MESH.md (David, 2026-10-27, 17:5x UTC), on the head 5f8680de2 (engine-5.0-test); no src touched.
+What they show: (1) the clock works: every run's rewind is exact (the horizon setting by the test's own run_back_exact, 20 of 20; the charts by run.chart's rewind of 20, 20 of 20); (2) the phenomenon: with the act no fitting is laid across a mesh whose factor reads 0 at the tick's start, the Boss's two births at tick 10 refused, and the committed charts the same bit for bit.
+
+== 1. The act (mesh_act.py: the head's striking.engage with one refusal added, reading the tick's own start factors)
+def engage(clock, rec, start, wind, gearings, stopped, other=None):
+    fits = []
+    hand, winding = clock.hands()[rec], clock.windings[rec]
+    wound = (wind >= winding) & ~stopped
+    axis_leads = [clock.rim * train_lead(start, spoke_of(axis, 0)) for axis in range(AXES)]
+    twists = train_twists(start)
+    hand_sweeps = hands.sweep(start) if hand is not clock.unsprung() else None
+    far, far_sweeps = wound, hand_sweeps
+    if other is not None:
+        q, q_wind, q_start = other
+        far = (q_wind >= winding) & ~stopped
+        axis_leads = [c + clock.rim * train_lead(q_start, spoke_of(axis, 0)) for axis, c in enumerate(axis_leads)]
+        twists = [t + u for t, u in zip(twists, train_twists(q_start), strict=True)]
+        far_sweeps = hands.sweep(q_start)
+    for axis in range(AXES):
+        both = wound & across(far, spoke_of(axis, 0))
+        for where in zip(*np.nonzero(both), strict=True):
+            at = tuple(int(x) for x in where)
+            j = neighbour(clock, at, spoke_of(axis, 0))
+            clock.counts["met"] += 1
+            if int(clock.start_factors[spoke_of(axis, 0)][at]) == 0:
+                clock.counts.setdefault("refused_disengaged", 0)
+                jammed(clock, at, "disengaged", link=list(j), row=rec)
+                continue
+            lead, h = int(axis_leads[axis][at]), int(twists[axis][at])
+            w = [0, 0] if hand_sweeps is None or far_sweeps is None else [int(hand_sweeps[at]), int(far_sweeps[j])]
+            rest = lead == 0 and w[0] * w[1] < 0
+            if (lead == 0 or h == 0) and not rest:
+                jammed(clock, at, "orientation" if lead == 0 else "twist", link=list(j), row=rec)
+                continue
+            if hand_sweeps is not None and w[0] * w[1] >= 0:
+                jammed(clock, at, "sense", link=list(j), row=rec, charges=w)
+                continue
+            if rest:
+                into, outof = (at, j) if w[0] > 0 else (j, at)
+            else:
+                into, outof = (j, at) if lead > 0 else (at, j)
+            plus, minus = (into, outof) if rest or h > 0 else (outof, into)
+            if other is not None:
+                twins = {at: rec, j: other[0]}
+                clock.twin_ends[(rec, minus, plus)] = (twins[minus], twins[plus])
+            if rest:
+                fits.append(SK.Fitting(into, SK.list_of(clock, rec, 0), minus, plus, 0, rec))
+                continue
+            if (into, rec) not in clock.vernier_read:
+                clock.vernier_read[(into, rec)] = SK.vernier(clock, into, gearings, winding)
+            drawn = clock.vernier_read[(into, rec)]
+            if drawn is None:
+                continue
+            number, room = drawn
+            fits.append(SK.Fitting(into, SK.list_of(clock, rec, number), minus, plus, room, rec))
+    return fits
+
+
+SK.engage = engage
+
+== 2. Both ends' factors of the centre's x meshes at each tick's start, the own beat, no act (sides.py own)
+ticks 0: the +x mesh: the centre's 0, (2, 1, 1)'s 0; the -x mesh: the centre's 0, (0, 1, 1)'s 0
+ticks 1: the +x mesh: the centre's 456, (2, 1, 1)'s 456; the -x mesh: the centre's 456, (0, 1, 1)'s 456
+ticks 2: the +x mesh: the centre's 1095, (2, 1, 1)'s 1095; the -x mesh: the centre's 1095, (0, 1, 1)'s 1095
+ticks 3: the +x mesh: the centre's 1484, (2, 1, 1)'s 1484; the -x mesh: the centre's 1483, (0, 1, 1)'s 1483
+ticks 4: the +x mesh: the centre's 3411, (2, 1, 1)'s 3411; the -x mesh: the centre's 3411, (0, 1, 1)'s 3411
+ticks 5: the +x mesh: the centre's 1484, (2, 1, 1)'s 1484; the -x mesh: the centre's 1483, (0, 1, 1)'s 1483
+ticks 6: the +x mesh: the centre's 1095, (2, 1, 1)'s 1095; the -x mesh: the centre's 1095, (0, 1, 1)'s 1095
+ticks 7: the +x mesh: the centre's 897, (2, 1, 1)'s 897; the -x mesh: the centre's 1028, (0, 1, 1)'s 1028
+ticks 8: the +x mesh: the centre's 1752, (2, 1, 1)'s 1752; the -x mesh: the centre's 775, (0, 1, 1)'s 775
+ticks 9: the +x mesh: the centre's 0, (2, 1, 1)'s 0; the -x mesh: the centre's 0, (0, 1, 1)'s 0
+ticks 10: the +x mesh: the centre's 1752, (2, 1, 1)'s 1752; the -x mesh: the centre's 132077, (0, 1, 1)'s 132077
+ticks 11: the +x mesh: the centre's 0, (2, 1, 1)'s 0; the -x mesh: the centre's 0, (0, 1, 1)'s 0
+
+== 3. The horizon setting (horizon.py BEAT MESH WAVE: the test's world_node.json, the centre fed by fed_horizon, 20 ticks)
+beat head, mesh head, wave 0: the x factors 0 at the start of the ticks [0, 9, 13, 17]; births at the centre []; chimes [(0, 0), (-1, 0), (1, 0), (1, 0), (1, 0), (0, 0)]; refused as disengaged None; the rewind 20 of 20
+beat own, mesh head, wave 0: the x factors 0 at the start of the ticks [0, 9, 11, 13, 15, 17, 19]; births at the centre [(10, (0, 1, 1), (1, 1, 1), 255), (10, (0, 1, 1), (1, 1, 1), 255)]; chimes [(0, 0), (0, 0), (0, 0), (0, 0)]; refused as disengaged None; the rewind 20 of 20
+beat own, mesh act, wave 0: the x factors 0 at the start of the ticks [0, 9, 13, 17]; births at the centre [(11, (0, 1, 1), (1, 1, 1), 201), (11, (0, 1, 1), (1, 1, 1), 201)]; chimes [(0, 0), (0, 0)]; refused as disengaged 189; the rewind 20 of 20
+beat head, mesh act, wave 0: the x factors 0 at the start of the ticks [0, 9, 13, 17]; births at the centre []; chimes [(0, 0), (-1, 0), (1, 0), (1, 0), (1, 0), (0, 0)]; refused as disengaged 226; the rewind 20 of 20
+beat head, mesh head, wave 1: the x factors 0 at the start of the ticks [0, 9, 13, 17]; births at the centre []; chimes []; refused as disengaged None; the rewind 20 of 20
+beat head, mesh act, wave 1: the x factors 0 at the start of the ticks [0, 9, 13, 17]; births at the centre []; chimes []; refused as disengaged 66; the rewind 20 of 20
+beat own, mesh head, wave 1: the x factors 0 at the start of the ticks [0, 9, 13, 17]; births at the centre []; chimes []; refused as disengaged None; the rewind 20 of 20
+beat own, mesh act, wave 1: the x factors 0 at the start of the ticks [0, 9, 13, 17]; births at the centre []; chimes []; refused as disengaged 66; the rewind 20 of 20
+
+== 4. The charts with the wave and the own beat (chart_mesh.py CHART ACT), and the one big bang (bang_zeros.py ACT WAVE)
+hole, the wave and the own beat, the act 0: fittings 0 (unspringings 0), chimes 0, refused as disengaged 0, start factors at 0 0, the rewind {'intervals': 20, 'exact': 20}, the hash b14922cc01314743
+hole, the wave and the own beat, the act 1: fittings 0 (unspringings 0), chimes 0, refused as disengaged 0, start factors at 0 0, the rewind {'intervals': 20, 'exact': 20}, the hash b14922cc01314743
+chiral, the wave and the own beat, the act 0: fittings 2 (unspringings 0), chimes 2079, refused as disengaged 0, start factors at 0 0, the rewind {'intervals': 20, 'exact': 20}, the hash 9560c1ff2d18a807
+chiral, the wave and the own beat, the act 1: fittings 2 (unspringings 0), chimes 2079, refused as disengaged 0, start factors at 0 0, the rewind {'intervals': 20, 'exact': 20}, the hash 9560c1ff2d18a807
+bodies, the wave and the own beat, the act 0: fittings 0 (unspringings 0), chimes 93, refused as disengaged 0, start factors at 0 0, the rewind {'intervals': 20, 'exact': 20}, the hash 552a80eece722329
+bodies, the wave and the own beat, the act 1: fittings 0 (unspringings 0), chimes 93, refused as disengaged 0, start factors at 0 0, the rewind {'intervals': 20, 'exact': 20}, the hash 552a80eece722329
+the one big bang, at the head, the act 0: start factors at 0 17532, refused as disengaged 0, fittings 92, chimes 404, the rewind {'intervals': 20, 'exact': 20}
+the one big bang, at the head, the act 1: start factors at 0 18076, refused as disengaged 2548, fittings 78, chimes 684, the rewind {'intervals': 20, 'exact': 20}
+the one big bang, the wave and the own beat, the act 0: start factors at 0 18132, refused as disengaged 0, fittings 74, chimes 142, the rewind {'intervals': 20, 'exact': 20}
+
+== 5. The second finding: the strike's factors against the tick's start factors (moments.py hole 60)
+hole 60 ticks: (clock, spoke) pairs 45000, the strike's factor differs from the start's at 15942; 0 at the start and not at the strike 0, 0 at the strike and not at the start 0
+the one big bang, the wave and the own beat, the act 1: the run stands past 29 minutes of CPU at 17:53 UTC (pid 13756), its result for a later line

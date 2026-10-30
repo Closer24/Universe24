@@ -1,0 +1,44 @@
+DAVID-PAULI-DYNAMICS_CHECKS.txt: the checks of DAVID-PAULI-DYNAMICS.md (David, 2026-10-27, 18:4x UTC), on the head 5f8680de2 (engine-5.0-test); no src touched.
+What they show: (1) the clock works: every run is the engine's own chart (run.chart) with its rewind of 10 ticks compared bit for bit, 10 of 10; (2) the phenomenon: the bound |W| < 2 A B fails on the hole twins at 62 clock-ticks with or without the striking's exclusion, by the field's own gathering at one clock (no act at the clock after tick 4), and not with plain hands.
+
+== 1. The exclusion act (pauli_act.py: the head's engagement, a fitting refused by name where its target twin already sweeps A B at its clock at the tick's start)
+def excluded(clock, s, minus, plus):
+    """The fitting's two ends' target hands (s at the - end, its twin at the + end), where they are twin hands: either already sweeping a whole fitted quantum at its clock at the tick's start."""
+    hs = clock.hands()
+    if hs[s].twin is None:
+        return False
+    quantum = abs(int(clock.A) * int(clock.B))
+    for p, where in ((s, minus), (hands.twin_of(hs, s), plus)):
+        if abs(sweep_at(clock.start_gears[p], where)) >= quantum:
+            return True
+    return False
+
+== 2. The runs (pauli.py WORLD TICKS EXCLUDE: the world with every sprung train as twins, the wave, the own beat and the split chime; the bound read after every forward tick)
+world_hole_56.json as twins, 60 ticks, the exclusion 0: fittings from light 41, unspringings 86, chimes 2021, split chimes 4, refused as excluded 0; twin hands past 2 A B at 62 clock-ticks (ticks [22, 23, 24, 25, 30, 31, 32, 33]), the largest |W| 11.835 A B; the rewind {'intervals': 10, 'exact': 10}
+world_hole_56.json as twins, 60 ticks, the exclusion 1: fittings from light 41, unspringings 86, chimes 2021, split chimes 4, refused as excluded 241; twin hands past 2 A B at 62 clock-ticks (ticks [22, 23, 24, 25, 30, 31, 32, 33]), the largest |W| 11.835 A B; the rewind {'intervals': 10, 'exact': 10}
+world_nature.json as twins, 20 ticks, the exclusion 0: fittings from light 2, unspringings 1, chimes 181, split chimes 0, refused as excluded 0; twin hands past 2 A B at 0 clock-ticks (ticks []), the largest |W| 1.000 A B; the rewind {'intervals': 10, 'exact': 10}
+world_nature.json as twins, 20 ticks, the exclusion 1: fittings from light 2, unspringings 1, chimes 181, split chimes 0, refused as excluded 0; twin hands past 2 A B at 0 clock-ticks (ticks []), the largest |W| 1.000 A B; the rewind {'intervals': 10, 'exact': 10}
+
+== 3. The first breach (pauli_trace.py; pauli_trace2.py with TWINS=0 for plain hands and PULLS=0 for the twins' pull off)
+the first breach: tick 22, twin hand 0 (ratio 15162854575528411), clock (0, 4, 4); |W| / A B over the ticks before at that clock and its six neighbours' largest:
+  tick 15: here 0.718, the neighbours' largest 0.042
+  tick 16: here 0.764, the neighbours' largest 0.005
+  tick 17: here 0.820, the neighbours' largest 0.050
+  tick 18: here 0.914, the neighbours' largest 0.100
+  tick 19: here 1.083, the neighbours' largest 0.100
+  tick 20: here 1.354, the neighbours' largest 0.038
+  tick 21: here 1.947, the neighbours' largest 0.076
+  tick 22: here 3.962, the neighbours' largest 0.139
+entries touching the clock: [('birth', 4, 1, False), ('birth', 4, 1, False)]
+-- plain hands (TWINS=0):
+no twin hand passes 2 A B in 60 ticks; the largest notch bits by tick [14, 14, 1
+-- the twins' pull off (PULLS=0):
+the first breach: tick 22, twin hand 0 (ratio 15162854575528411), clock (0, 4, 4); |W| / A B over the ticks before at that clock and its six neighbours' largest:
+  tick 22: here 3.962, the neighbours' largest 0.152
+-- each twin's sweep over the board at the breach (PULLS=1 TWINS=1):
+  twin hand 0: the board's sweep -4.363 A B (positive 1.467, negative -5.830); at the breach clock -3.962
+  twin hand 1: the board's sweep +4.029 A B (positive 5.511, negative -1.482); at the breach clock +3.684
+  twin hand 2: the board's sweep +0.916 A B (positive 1.754, negative -0.838); at the breach clock +0.000
+  twin hand 3: the board's sweep -1.125 A B (positive 0.299, negative -1.424); at the breach clock +0.000
+  twin hand 4: the board's sweep -5.802 A B (positive 0.012, negative -5.815); at the breach clock +0.000
+  twin hand 5: the board's sweep +5.792 A B (positive 5.802, negative -0.010); at the breach clock +0.000

@@ -1,0 +1,1445 @@
+DAVID-SPIN-SOLVED.md's checks (David, 2026-10-27). Every script ran on this box from a worktree of the engine head 900fc2f4a with
+DAVID-SPIN-SOLVED_DIFF.txt applied (PYTHONPATH=<worktree>/src venv314/bin/python <script> <args>, inside the worktree), but where an
+output says the head (a worktree of 9a5469453, whose records are the same as 900fc2f4a's). The patches are the diff as four steps.
+
+========================================================================
+== build/patch1.py: the doublet from the numbers, the seed's plane, G0 (withdrawn, off unless SPIN_G0=1)
+========================================================================
+"""Spin on two planes, patch 1 (scratch, on the engine head): the doublet from the numbers, the seed's lay into
+either plane, G0 (the child at its own family's rest form at one e, behind SPIN_G0=1). Run inside the worktree."""
+import sys
+
+def edit(path, pairs):
+    s = open(path).read()
+    for old, new in pairs:
+        assert s.count(old) == 1, (path, old[:80], s.count(old))
+        s = s.replace(old, new)
+    open(path, "w").write(s)
+
+# rows.py: the partner slot and the doublet read from the count and the pair
+edit("src/event_universe/rows.py", [
+    ('''    __slots__ = ("shape", "pair", "wall", "lines")
+
+    def __init__(
+        self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Line]
+    ) -> None:
+        self.shape, self.pair, self.wall, self.lines = shape, pair, wall, lines
+''', '''    __slots__ = ("shape", "pair", "wall", "lines", "partner")
+
+    def __init__(
+        self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Line]
+    ) -> None:
+        self.shape, self.pair, self.wall, self.lines = shape, pair, wall, lines
+        self.partner: Row | None = None
+'''),
+    ('''    by_index: list[Row] = []
+    for r in universe["rows"]:
+        shape = int(r["shape"])
+        pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
+        wall = None if r.get("wall") is None else int(r["wall"])
+        if shape == 1 and wall is None:
+            raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
+        walls = write_walls(shape, pair, den, gamma, action, trace)
+        lines = lines_of(board, shape, pair, wall, w, walls)
+        by_index.append(Row(shape, pair, wall, lines))
+    rows = sorted(by_index, key=order_key)
+''', '''    by_index: list[Row] = []
+    everything: list[Row] = []
+    clock = (den - quotient(den, gamma), den)
+    for r in universe["rows"]:
+        shape = int(r["shape"])
+        pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
+        wall = None if r.get("wall") is None else int(r["wall"])
+        if shape == 1 and wall is None:
+            raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
+        if pair is not None and pair[0] < pair[1] and pair != clock and shape == PLANE + PLANE:
+            made = []
+            for _ in range(quotient(shape, PLANE)):
+                walls = write_walls(PLANE, pair, den, gamma, action, trace)
+                made.append(Row(PLANE, pair, wall, lines_of(board, PLANE, pair, wall, w, walls)))
+            made[0].partner, made[1].partner = made[1], made[0]
+            by_index.append(made[0])
+            everything.extend(made)
+            continue
+        walls = write_walls(shape, pair, den, gamma, action, trace)
+        lines = lines_of(board, shape, pair, wall, w, walls)
+        by_index.append(Row(shape, pair, wall, lines))
+        everything.append(by_index[-1])
+    rows = sorted(everything, key=order_key)
+'''),
+])
+
+# seed.py: a lay names the plane of a doublet
+edit("src/event_universe/loader/seed.py", [
+    ('''    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top"}),''',
+     '''    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top", "plane"}),'''),
+    ('''        row = node.by_index[int(lay["row"])] if "row" in lay else None
+''', '''        row = node.by_index[int(lay["row"])] if "row" in lay else None
+        if "plane" in lay:
+            if row is None or row.partner is None or int(lay["plane"]) not in (0, 1):
+                raise ValueError("a lay names a plane of a row of two planes: 0 or 1")
+            row = row if int(lay["plane"]) == 0 else row.partner
+'''),
+])
+
+# merger.py: G0, the child at its own family's rest form at one e (behind SPIN_G0=1)
+edit("src/event_universe/merger.py", [
+    ('''    lines = gram.moving(1, (sense * a, 0), (0, sense * b), 1, sense)
+    return tuple(int(x) for line in lines for x in (line.now, line.before))
+''', '''    import os
+
+    if os.environ.get("SPIN_G0") == "1" and row.pair is not None and row.pair[0] != row.pair[1]:
+        from event_universe.loader.seed import sine_den
+
+        num, den = row.pair
+        s, e = sine_den(num, den), a * b
+        low, high = 0, 1
+        while high * rule3.quotient(high * s, den) < e:
+            low, high = high, high + high
+        while high - low > 1:
+            mid = rule3.quotient(low + high, 2)
+            low, high = (mid, high) if mid * rule3.quotient(mid * s, den) < e else (low, mid)
+        lines = gram.rest(high, num, den, s, sense)
+        return tuple(int(x) for line in lines for x in (line.now, line.before))
+    lines = gram.moving(1, (sense * a, 0), (0, sense * b), 1, sense)
+    return tuple(int(x) for line in lines for x in (line.now, line.before))
+'''),
+])
+print("patch 1 applied")
+
+========================================================================
+== build/patch2.py: the children in opposite planes
+========================================================================
+"""Spin on two planes, patch 2: a birth lays the - child in the drawn plane and the + child in its partner (S_z kept,
+the light carrying none); the refusal, the crowding, the lay, the undo and the log read the + child's own plane."""
+
+def edit(path, pairs):
+    s = open(path).read()
+    for old, new in pairs:
+        assert s.count(old) == 1, (path, old[:80], s.count(old))
+        s = s.replace(old, new)
+    open(path, "w").write(s)
+
+# rows.py: the + child's plane, the partner where the row has one
+edit("src/event_universe/rows.py", [
+    ('''def walled_of(rows: list[Row]) -> Row:''', '''def plus_plane(records: list[Row], s: int) -> int:
+    """The + child's plane: the partner of the - child's plane where its row is two planes (the pair's spin kept), the same plane otherwise."""
+    partner = records[s].partner
+    return s if partner is None else records.index(partner)
+
+
+def walled_of(rows: list[Row]) -> Row:'''),
+])
+
+# close.py: the refusal and the crowding at the + child's own plane; the undo's lay
+edit("src/event_universe/close.py", [
+    ('''from event_universe.rows import PLANE, Line, Row
+''', '''from event_universe.rows import PLANE, Line, Row, plus_plane
+'''),
+    ('''        if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
+''', '''        if int(owns[s][minus]) > 0 or int(owns[plus_plane(records, s)][plus]) > 0:
+'''),
+    ('''        landing[(s, plus)] = landing.get((s, plus), 0) + 1
+''', '''        landing[(plus_plane(records, s), plus)] = landing.get((plus_plane(records, s), plus), 0) + 1
+'''),
+    ('''        k for k in kept if landing[(k.line_pair, k.minus)] > 1 or landing[(k.line_pair, k.plus)] > 1
+''', '''        k
+        for k in kept
+        if landing[(k.line_pair, k.minus)] > 1
+        or landing[(plus_plane(records, k.line_pair), k.plus)] > 1
+'''),
+    ('''            node, at, "lay", children_at_one_node=max(landing[(s, minus)], landing[(s, plus)]), row=rec
+''', '''            node,
+            at,
+            "lay",
+            children_at_one_node=max(landing[(s, minus)], landing[(plus_plane(records, s), plus)]),
+            row=rec,
+'''),
+    ('''            for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
+                if laid is None:
+                    lay(node, s, tuple(where), child_levels(node.records()[s], sense, a, b), -1)
+''', '''            for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
+                if laid is None:
+                    p = s if sense < 0 else plus_plane(node.records(), s)
+                    lay(node, p, tuple(where), child_levels(node.records()[p], sense, a, b), -1)
+'''),
+])
+
+# merger.py: the two children laid each in its own plane
+edit("src/event_universe/merger.py", [
+    ('''    row = node.records()[s]
+    assert row.pair is not None
+    stood, ends = stood_at(row, minus, plus), []
+    for where, sense in ((minus, -1), (plus, 1)):
+        levels = levels_of(where, sense)
+        ends.append(momentum_per_line(node, row.lines, row.pair[0], where, levels))
+        lay(node, s, where, levels)
+    return [a + b for a, b in zip(*ends, strict=True)], senses_at(row, minus, plus), stood, ends
+''', '''    from event_universe.rows import plus_plane
+
+    planes = (s, plus_plane(node.records(), s))
+    row = node.records()[s]
+    assert row.pair is not None
+    stood = [stood_at(node.records()[p], minus, plus)[k] for k, p in enumerate(planes)]
+    ends = []
+    for where, sense, p in ((minus, -1, planes[0]), (plus, 1, planes[1])):
+        levels = levels_of(where, sense)
+        ends.append(momentum_per_line(node, node.records()[p].lines, row.pair[0], where, levels))
+        lay(node, p, where, levels)
+    senses = [senses_at(node.records()[p], minus, plus)[k] for k, p in enumerate(planes)]
+    return [a + b for a, b in zip(*ends, strict=True)], senses, stood, ends
+'''),
+])
+
+# run.py: the birth's entry names the + child's plane
+edit("src/event_universe/run.py", [
+    ('''        line_pair=s,
+        senses=[-1, 1],
+''', '''        line_pair=s,
+        plus_line=plus_plane(node.records(), s),
+        senses=[-1, 1],
+'''),
+])
+s = open("src/event_universe/run.py").read()
+if "from event_universe.rows import" in s and "plus_plane" not in s.split("def ")[0]:
+    s = s.replace("from event_universe.rows import ", "from event_universe.rows import plus_plane, ", 1)
+    open("src/event_universe/run.py", "w").write(s)
+print("patch 2 applied")
+
+========================================================================
+== build/patch3.py: the merger across the two planes
+========================================================================
+"""Spin on two planes, patch 3: two quanta of one doublet meet across its two planes (the record at the Link's +a end,
+its partner at the other, opposite in charge), the merger taking each end from its own plane, so the merger is the
+birth read at -1 with the spin kept; the undo lays each end back on its own plane."""
+
+def edit(path, pairs):
+    s = open(path).read()
+    for old, new in pairs:
+        assert s.count(old) == 1, (path, old[:80], s.count(old))
+        s = s.replace(old, new)
+    open(path, "w").write(s)
+
+edit("src/event_universe/close.py", [
+    # meet: the doublet's meeting across its two planes
+    ('''def meet(
+    node: Node, rec: int, start: list[Line], sh: Any, rules: list[tuple[Line, rule3.Rule]], frozen: Any
+) -> list[Birth]:''', '''def meet(
+    node: Node,
+    rec: int,
+    start: list[Line],
+    sh: Any,
+    rules: list[tuple[Line, rule3.Rule]],
+    frozen: Any,
+    other: tuple[int, Any, list[Line]] | None = None,
+) -> list[Birth]:'''),
+    ('''    standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
+    currents = [node.den * row_current(start, port_of(axis, 0)) for axis in range(AXES)]
+    twists = [row_twist(start, axis) for axis in range(AXES)]
+    charges = gram.charge(row.shape, start) if row is not node.emitter() else None
+    for axis in range(AXES):
+        both = standing & across(standing, port_of(axis, 0))
+''', '''    standing = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(sh) & ~frozen
+    currents = [node.den * row_current(start, port_of(axis, 0)) for axis in range(AXES)]
+    twists = [row_twist(start, axis) for axis in range(AXES)]
+    charges = gram.charge(row.shape, start) if row is not node.emitter() else None
+    far, far_charges = standing, charges
+    if other is not None:
+        q, q_sh, q_start = other
+        far = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(q_sh) & ~frozen
+        currents = [c + node.den * row_current(q_start, port_of(axis, 0)) for axis, c in enumerate(currents)]
+        twists = [t + row_twist(q_start, axis) for axis, t in enumerate(twists)]
+        far_charges = gram.charge(row.shape, q_start)
+    for axis in range(AXES):
+        both = standing & across(far, port_of(axis, 0))
+'''),
+    ('''            w = [0, 0] if charges is None else [int(charges[at]), int(charges[j])]
+''', '''            w = [0, 0] if charges is None else [int(charges[at]), int(far_charges[j])]
+'''),
+    ('''            plus, minus = (into, outof) if rest or h > 0 else (outof, into)
+''', '''            plus, minus = (into, outof) if rest or h > 0 else (outof, into)
+            if other is not None:
+                planes = {at: rec, j: other[0]}
+                node.end_planes[(rec, minus, plus)] = (planes[minus], planes[plus])
+'''),
+    # births: the merger's two ends each from its own plane
+    ('''                ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
+''', '''                ends: list[Any] = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
+                planes = node.end_planes.get((rec, kid.minus, kid.plus))
+                if planes is not None:
+                    ends = [(w_, wall, p) for (w_, wall), p in zip(ends, planes, strict=True)]
+'''),
+    # undo: each taken end laid back on its own plane
+    ('''                    lay(node, row, where, tuple(take["taken_levels"]))
+''', '''                    lay(node, take.get("plane", row), where, tuple(take["taken_levels"]))
+'''),
+    # click: the per-close map of the merger's planes, and the partner passed to meet
+    ('''    node.lattices, node.drawn = {}, {}
+''', '''    node.lattices, node.drawn, node.end_planes = {}, {}, {}
+'''),
+    ('''        for b in meet(node, rec, plane_starts[rec], owns[rec], rules, frozen)
+''', '''        for b in meet(node, rec, plane_starts[rec], owns[rec], rules, frozen, partner_of(node, rec, owns, plane_starts))
+'''),
+    ('''def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:''', '''def partner_of(
+    node: Node, rec: int, owns: list[Any], plane_starts: list[list[Line]]
+) -> tuple[int, Any, list[Line]] | None:
+    """The record's partner plane with its standing share and its start, where its row is two planes."""
+    partner = node.records()[rec].partner
+    if partner is None:
+        return None
+    q = node.records().index(partner)
+    return q, owns[q], plane_starts[q]
+
+
+def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:'''),
+])
+
+edit("src/event_universe/merger.py", [
+    ('''    row = node.records()[rec]
+    found = []
+    for where, wall in ends:
+        rem_was = 0 if row is not node.emitter() else int(node.take_rem[where])
+        owed = wall - rem_was
+        if row is not node.emitter():
+            levels: Any = levels_at(row, where)
+            fall, k = share_fall(node, rec, rule, where, levels, cache or {}), None
+''', '''    found = []
+    for end in ends:
+        where, wall = end[0], end[1]
+        r = end[2] if len(end) > 2 else rec
+        row = node.records()[r]
+        rem_was = 0 if row is not node.emitter() else int(node.take_rem[where])
+        owed = wall - rem_was
+        if row is not node.emitter():
+            levels: Any = levels_at(row, where)
+            fall, k = share_fall(node, r, rule, where, levels, cache or {}), None
+'''),
+    ('''        found.append((where, wall, levels, fall, k, rem_was, owed))
+    return found
+
+
+Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int]
+''', '''        found.append((where, wall, levels, fall, k, rem_was, owed, r))
+    return found
+
+
+Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int, int]
+'''),
+    ('''    where, wall, levels, fall, _k, _rem_was, _owed = read
+    row = node.records()[rec]
+    assert row.pair is not None
+    live = momentum_per_line(node, row.lines, row.pair[0], where, tuple(levels), -1)
+    moment = momentum_per_line(node, node.start_lines[rec], row.pair[0], where, tuple(levels), -1)
+    lay(node, rec, where, levels, -1)
+''', '''    where, wall, levels, fall, _k, _rem_was, _owed, r = read
+    row = node.records()[r]
+    assert row.pair is not None
+    live = momentum_per_line(node, row.lines, row.pair[0], where, tuple(levels), -1)
+    moment = momentum_per_line(node, node.start_lines[r], row.pair[0], where, tuple(levels), -1)
+    lay(node, r, where, levels, -1)
+'''),
+    ('''        taken_levels=list(levels),
+''', '''        taken_levels=list(levels),
+        plane=r,
+'''),
+    ('''    where, wall, levels, fall, k, rem_was, owed = read
+''', '''    where, wall, levels, fall, k, rem_was, owed, _r = read
+'''),
+])
+print("patch 3 applied")
+
+========================================================================
+== build/patch4.py: the coupling, SR-S3 on two planes (the later lines of the diff add the test controls HOLD_CURL, HOLD_CURL_GRAD_Z and HOLD_CURL_X_BELOW, and name a doublet birth's + plane alone)
+========================================================================
+"""Spin on two planes, patch 4: the coupling SR-S3 on two planes. The curl Phi of the potential's odd lines turns a
+doublet by the Pauli matrices: the numerator SUM_j R_j SUM_a Phi_a (sigma_a x) per line, one carried division at the
+wall 2 PORTS Gamma (the coefficient R / (2 Gamma) per Port, g = 2), its remainder carried in the line's write
+remainder (so the swap mirrors it, the restore keeps it, the state counts it); behind SPIN_TERM (on unless 0)."""
+
+def edit(path, pairs):
+    s = open(path).read()
+    for old, new in pairs:
+        assert s.count(old) == 1, (path, old[:80], s.count(old))
+        s = s.replace(old, new)
+    open(path, "w").write(s)
+
+edit("src/event_universe/rows.py", [
+    ('''from event_universe.core.ports import AXES
+''', '''from event_universe.core.ports import AXES, PORTS
+'''),
+    ('''            made = []
+            for _ in range(quotient(shape, PLANE)):
+                walls = write_walls(PLANE, pair, den, gamma, action, trace)
+''', '''            made = []
+            for _ in range(quotient(shape, PLANE)):
+                walls = [PORTS * (gamma + gamma)] * PLANE
+'''),
+    ('''    return row.wall is None, sum(1 for line in row.lines if line.wwall is not None)
+''', '''    return row.wall is None, 0 if row.partner is not None else sum(1 for line in row.lines if line.wwall is not None)
+'''),
+])
+
+edit("src/event_universe/interval.py", [
+    ('''from event_universe.core.ports import AXES, PORTS, across
+''', '''from event_universe.core.ports import AXES, PORTS, across, port_of, transverse
+'''),
+    ('''        self.emission = zeros(node.shape)
+        for r, cpl in self.planes:
+''', '''        self.spin_term()
+        self.emission = zeros(node.shape)
+        for r, cpl in self.planes:
+'''),
+    ('''    def kick(self) -> None:''', '''    def spin_term(self) -> None:
+        """The doublet's coupling (SR-S3 on two planes): the one-Link curl Phi of the potential's odd lines at the start turns a row of two planes by the Pauli matrices on its four lines (re_up, im_up, re_dn, im_dn): sigma_x swaps the planes, sigma_y = i sigma_x sigma_z, sigma_z negates the down plane; per line the numerator SUM_j R_j SUM_a Phi_a (sigma_a x), one carried division at the line's write wall 2 PORTS Gamma, the quotient added to the line's force (the coefficient R / (2 Gamma) per Port, g = 2), the remainder carried in the line."""
+        import os
+
+        if os.environ.get("SPIN_TERM", "1") != "1":
+            return
+        node = self.node
+
+        def gradient(a: Any, axis: int) -> Any:
+            return across(a, port_of(axis, 0)) - across(a, port_of(axis, 1))
+
+        curl = []
+        for a in range(AXES):
+            b, c = transverse(a)
+            curl.append(gradient(self.odd[c], b) - gradient(self.odd[b], c))
+        for r in self.records:
+            if r.partner is None or self.records.index(r) > self.records.index(r.partner):
+                continue
+            ku, kd = self.where[id(r)], self.where[id(r.partner)]
+            x = (self.starts[ku][0], self.starts[ku][1], self.starts[kd][0], self.starts[kd][1])
+            sx, sy, sz = (x[2], x[3], x[0], x[1]), (x[3], -x[2], -x[1], x[0]), (x[0], x[1], -x[2], -x[3])
+            reach = sum(readings.rule_of(node, r, self.c, self.factors).reaches)
+            lines = [*self.lines(r), *self.lines(r.partner)]
+            for j, line in enumerate(lines):
+                numerator = reach * (curl[0] * sx[j] + curl[1] * sy[j] + curl[2] * sz[j])
+                q, line.wr = divide(numerator, line.wwall, line.wr, self.direction)
+                k, i = (ku, j) if j < 2 else (kd, j - 2)
+                self.force[k][i] = self.force[k][i] + q
+
+    def kick(self) -> None:'''),
+])
+print("patch 4 applied")
+
+========================================================================
+== doublet_world.py: the helper: a committed record's universe with its gapped plane rows named as rows of four lines
+========================================================================
+"""A committed record's world with every gapped plane row of its universe named as one row of four lines (a doublet),
+run forward n intervals and back b: births by plane pair, clicks by plane, the run back exact."""
+import copy, json, sys, collections
+sys.set_int_max_str_digits(0)
+from event_universe.node import Node
+from event_universe.run import state_hash
+
+def doubled(universe):
+    u = copy.deepcopy(universe)
+    den, gamma = int(u["integers"]["den"]), int(u["integers"]["node_clock"])
+    clock = den - den // gamma
+    for r in u["rows"]:
+        if r.get("pair") and int(r["shape"]) == 2 and int(r["pair"][0]) not in (den, clock):
+            r["shape"] = 4
+    return u
+
+if __name__ == "__main__":
+    record = json.load(open(sys.argv[1]))
+    n, back = int(sys.argv[2]), int(sys.argv[3])
+    u = doubled(record["universe"]) if (len(sys.argv) < 5 or sys.argv[4] != "plain") else record["universe"]
+    node = Node(u, dict(record["world"], intervals=n))
+    recs = node.records()
+    print("planes:", [(k, r.pair[1] - r.pair[0], None if r.partner is None else recs.index(r.partner)) for k, r in enumerate(recs)])
+    kept = []
+    for _ in range(n):
+        node.step(); kept.append(state_hash(node))
+    births = [e for e in node.log if e["event"] == "birth"]
+    pairs = collections.Counter((e["line_pair"], e.get("plus_line")) for e in births)
+    clicks = collections.Counter(e["line"] for e in node.log if e["event"] == "credit")
+    print(f"{n} intervals: births {len(births)} by (- plane, + plane) {dict(pairs)}; clicks by plane {dict(clicks)}; refused_lay {node.counts['refused_lay']}")
+    for _ in range(back):
+        node.step(-1)
+    print(f"the run back {back}: exact {state_hash(node) == kept[n - back - 1]}")
+
+========================================================================
+== same_as_head.py: G1, the control: no doublet, the head's own state
+========================================================================
+"""The state hash after n intervals of a committed record's world (G1, the control: a universe naming no doublet runs as the head)."""
+import json, sys
+sys.set_int_max_str_digits(0)
+from event_universe.node import Node
+from event_universe.run import state_hash
+r = json.load(open(sys.argv[1])); n = int(sys.argv[2])
+node = Node(r["universe"], dict(r["world"], intervals=n))
+for _ in range(n): node.step()
+print(sys.argv[1].split("/")[-1], n, state_hash(node)[:16], "births", node.counts["births"], "clicks", node.counts["body_clicks"])
+
+---- its output (control.txt)
+(head 9a5469453 worktree, then the scratch build 900fc2f4a + the diff)
+hole.json 20 2a2cf7426cf6a7d7 births 15 clicks 489
+hole.json 20 2a2cf7426cf6a7d7 births 15 clicks 489
+chiral.json 30 c2c11f072d6630db births 16 clicks 1501
+chiral.json 30 c2c11f072d6630db births 16 clicks 1501
+
+========================================================================
+== spin_book.py: the spin kept at the close, the run back (SPIN_G0=0)
+========================================================================
+"""On a doublet world: every birth's two planes, every merger's two taken planes, the spin book (up children minus
+down children, up taken minus down taken, per family), and the run back exact."""
+import json, sys, collections
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.node import Node
+from event_universe.run import state_hash
+
+record = json.load(open(sys.argv[1]))
+n, back = int(sys.argv[2]), int(sys.argv[3])
+node = Node(doubled(record["universe"]), dict(record["world"], intervals=n))
+recs = node.records()
+up = {k for k, r in enumerate(recs) if r.partner is not None and k < recs.index(r.partner)}
+kept = []
+for _ in range(n):
+    node.step(); kept.append(state_hash(node))
+book = collections.Counter()
+mergers = []
+for e in node.log:
+    if e["event"] != "birth":
+        continue
+    if "takes" in e:
+        planes = [t.get("plane", e["taken_row"]) for t in e["takes"]]
+        mergers.append(planes)
+        for p in planes:
+            book["taken up" if p in up else "taken down"] += 1
+    else:
+        for p in (e["line_pair"], e.get("plus_line", e["line_pair"])):
+            if recs[p].partner is not None:
+                book["born up" if p in up else "born down"] += 1
+print(f"{sys.argv[1].split('/')[-1]} as doublets, {n} intervals: births {node.counts['births']}, mergers {len(mergers)} taken planes {mergers[:8]}; the book {dict(book)}")
+spin = (book["born up"] - book["born down"]) - (book["taken up"] - book["taken down"])
+print(f"  S_z made by the close (born up - born down - (taken up - taken down)): {spin}")
+for _ in range(back):
+    node.step(-1)
+print(f"  the run back {back}: exact {state_hash(node) == kept[n - back - 1]}")
+
+---- its output (spin_book_hole.txt)
+hole.json as doublets, 60 intervals: births 38, mergers 6 taken planes [[3, 2], [3, 2], [3, 2], [3, 2], [4, 5], [2, 3]]; the book {'born up': 32, 'born down': 32, 'taken down': 6, 'taken up': 6}
+  S_z made by the close (born up - born down - (taken up - taken down)): 0
+  the run back 20: exact True
+
+---- its output (spin_book_chiral.txt)
+chiral.json as doublets, 60 intervals: births 34, mergers 2 taken planes [[4, 5], [3, 2]]; the book {'born down': 32, 'born up': 32, 'taken up': 2, 'taken down': 2}
+  S_z made by the close (born up - born down - (taken up - taken down)): 0
+  the run back 20: exact True
+
+========================================================================
+== charge_at_clicks.py: Pauli in the clicks by the charge
+========================================================================
+"""At every click, the clicking plane's charge |W| at its Node (the Wronskian at the interval's start, the credit's
+own reading of its sense) in units of one e = T div 2 (MS-S1: the charge is one e for every row): the count of
+quanta Pauli speaks of, against the energy count (share div unit); and the census of |W| div e per matter plane per
+Node over the run. Run on a committed record's world (DOUBLET=1 names its gapped planes as doublets)."""
+import json, os, sys, collections
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+import numpy as np
+from event_universe import bodies as B, close as C, gram
+from event_universe.node import Node
+
+record = json.load(open(sys.argv[1]))
+universe = doubled(record["universe"]) if os.environ.get("DOUBLET") == "1" else record["universe"]
+world = record["world"]
+by_charge, census = collections.Counter(), collections.Counter()
+orig = B.bodies
+def watched(node, plane_starts, owns, born_nodes, frozen, r_emitter):
+    e = node.A * node.B
+    before = len(node.log)
+    for rec, row in enumerate(node.records()):
+        if row is node.emitter():
+            continue
+        w = gram.charge(row.shape, plane_starts[rec])
+        q = np.vectorize(lambda v: abs(int(v)) // e, otypes=[object])(w)
+        census[rec] = max(census[rec], int(q.max()))
+    orig(node, plane_starts, owns, born_nodes, frozen, r_emitter)
+    for ent in node.log[before:]:
+        if ent["event"] != "credit":
+            continue
+        rec, at = ent["line"], tuple(ent["node"])
+        w = int(gram.charge(node.records()[rec].shape, plane_starts[rec])[at])
+        by_charge[(rec, abs(w) // e)] += 1
+C.bodies = watched
+node = Node(universe, world)
+for _ in range(world["intervals"]):
+    node.step()
+print(f"{sys.argv[1].split('/')[-1]}{' as doublets' if os.environ.get('DOUBLET') == '1' else ''}: {world['intervals']} intervals")
+for rec in sorted({k[0] for k in by_charge}):
+    dist = {q: n for (r, q), n in sorted(by_charge.items()) if r == rec}
+    print(f"  plane {rec}: |W| div e at its clicks {dist}")
+print(f"  the census, the most |W| div e of a matter plane at any Node at any interval: {dict(census)}")
+
+---- its output (charge_head.txt)
+(on the head, the three committed records)
+hole.json: 60 intervals
+  plane 0: |W| div e at its clicks {0: 2113, 1: 5}
+  plane 1: |W| div e at its clicks {0: 71}
+  plane 2: |W| div e at its clicks {0: 73}
+  the census, the most |W| div e of a matter plane at any Node at any interval: {0: 1, 1: 1, 2: 1}
+chiral.json: 60 intervals
+  plane 0: |W| div e at its clicks {0: 2904, 1: 12}
+  plane 1: |W| div e at its clicks {0: 30, 1: 10}
+  plane 2: |W| div e at its clicks {0: 43, 1: 4}
+  the census, the most |W| div e of a matter plane at any Node at any interval: {0: 1, 1: 1, 2: 1}
+bodies.json: 120 intervals
+  plane 0: |W| div e at its clicks {0: 17167, 1: 6}
+  plane 1: |W| div e at its clicks {0: 766, 1: 5}
+  the census, the most |W| div e of a matter plane at any Node at any interval: {0: 1, 1: 1}
+(on the scratch build, DOUBLET=1 SPIN_G0=0)
+hole.json as doublets: 60 intervals
+  plane 0: |W| div e at its clicks {0: 3737, 1: 2}
+  plane 1: |W| div e at its clicks {0: 3739, 1: 1}
+  plane 2: |W| div e at its clicks {0: 42, 1: 8}
+  plane 3: |W| div e at its clicks {0: 38, 1: 7}
+  plane 4: |W| div e at its clicks {0: 36, 1: 3}
+  plane 5: |W| div e at its clicks {0: 46, 1: 5}
+  the census, the most |W| div e of a matter plane at any Node at any interval: {0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+chiral.json as doublets: 60 intervals
+  plane 0: |W| div e at its clicks {0: 5359, 1: 3}
+  plane 1: |W| div e at its clicks {0: 5237, 1: 1}
+  plane 2: |W| div e at its clicks {0: 28, 1: 3}
+  plane 3: |W| div e at its clicks {0: 18, 1: 6}
+  plane 4: |W| div e at its clicks {0: 28, 1: 1}
+  plane 5: |W| div e at its clicks {0: 25, 1: 2}
+  the census, the most |W| div e of a matter plane at any Node at any interval: {0: 1, 1: 1, 2: 1, 3: 1, 4: 1, 5: 1}
+
+========================================================================
+== senses_at_clicks.py: the count per sense at the clicks, on the head
+========================================================================
+"""At every click, the clicking plane's hand at its Node split into its two senses (the plane's two rotating parts at
+the family's rest turn: z_now = a + b, z_before = a e^(i w) + b e^(-i w), cos w = num / den), each part's charge in e
+(|a|^2 s / den over T div 2): N+ and N-, the count of quanta of each sense Pauli speaks of; the census of the larger
+of the two over every matter plane, Node and interval. A reading in floats beside the engine, the engine untouched."""
+import json, os, sys, collections, math
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe import bodies as B, close as C
+from event_universe.core.paces import sine_den
+from event_universe.node import Node
+
+record = json.load(open(sys.argv[1]))
+universe = doubled(record["universe"]) if os.environ.get("DOUBLET") == "1" else record["universe"]
+world = record["world"]
+at_clicks, census = collections.Counter(), collections.Counter()
+orig = B.bodies
+
+def counts(row, lines, at, e, den):
+    num = row.pair[0]; s = sine_den(num, den)
+    w = math.atan2(s, num)
+    zn = complex(int(lines[0].now[at]), int(lines[1].now[at])); zb = complex(int(lines[0].before[at]), int(lines[1].before[at]))
+    ei = complex(math.cos(w), math.sin(w))
+    a = (zb - zn / ei) / (ei - 1 / ei); b = zn - a
+    k = (s / den) / e
+    return abs(a) ** 2 * k, abs(b) ** 2 * k
+
+def watched(node, plane_starts, owns, born_nodes, frozen, r_emitter):
+    e, den = node.A * node.B, node.den
+    before = len(node.log)
+    orig(node, plane_starts, owns, born_nodes, frozen, r_emitter)
+    for ent in node.log[before:]:
+        if ent["event"] != "credit":
+            continue
+        rec, at = ent["line"], tuple(ent["node"])
+        n1, n2 = counts(node.records()[rec], plane_starts[rec], at, e, den)
+        at_clicks[(rec, int(max(n1, n2) + 0.5), int(min(n1, n2) + 0.5))] += 1
+        census[rec] = max(census[rec], round(max(n1, n2), 2))
+C.bodies = watched
+node = Node(universe, world)
+for _ in range(world["intervals"]):
+    node.step()
+print(f"{sys.argv[1].split('/')[-1]}{' as doublets' if os.environ.get('DOUBLET') == '1' else ''}: {world['intervals']} intervals")
+for rec in sorted({k[0] for k in at_clicks}):
+    dist = collections.Counter()
+    for (r, hi, lo), n in at_clicks.items():
+        if r == rec:
+            dist[(hi, lo)] += n
+    top = sorted(dist.items(), key=lambda kv: -kv[1])[:6]
+    print(f"  plane {rec}: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: {top}; the largest at a click {max(h for h, l in dist)}")
+print(f"  the largest single sense at any click, per plane: {dict(census)}")
+
+---- its output (senses_head.txt)
+(on the head)
+bodies.json: 120 intervals
+  plane 0: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: [((0, 0), 16243), ((1, 1), 519), ((2, 2), 111), ((3, 3), 89), ((4, 4), 52), ((5, 5), 36)]; the largest at a click 88
+  plane 1: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: [((0, 0), 426), ((1, 1), 156), ((2, 2), 107), ((7, 7), 22), ((1, 0), 21), ((6, 6), 14)]; the largest at a click 25
+  the largest single sense at any click, per plane: {1: 25.33, 0: 87.59}
+hole.json: 60 intervals
+  plane 0: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: [((0, 0), 558), ((1, 1), 430), ((2, 2), 255), ((3, 3), 121), ((4, 4), 99), ((5, 5), 63)]; the largest at a click 1073
+  plane 1: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: [((0, 0), 39), ((1, 0), 32)]; the largest at a click 1
+  plane 2: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: [((0, 0), 39), ((1, 0), 34)]; the largest at a click 1
+  the largest single sense at any click, per plane: {0: 1073.2, 1: 1.06, 2: 1.13}
+chiral.json: 60 intervals
+  plane 0: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: [((0, 0), 785), ((1, 1), 581), ((2, 2), 235), ((3, 3), 143), ((4, 4), 119), ((5, 5), 77)]; the largest at a click 1558
+  plane 1: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: [((1, 0), 35), ((0, 0), 5)]; the largest at a click 1
+  plane 2: (the larger sense, the smaller sense) in quanta, rounded, at its clicks, the most frequent: [((0, 0), 29), ((1, 0), 18)]; the largest at a click 1
+  the largest single sense at any click, per plane: {0: 1557.52, 1: 1.06, 2: 1.2}
+(the light lift's split at its rest turn is no count: its quanta held at one Node move fast, section 6 of the document)
+
+========================================================================
+== zeeman.py: the two beats' one-interval shift against the derived
+========================================================================
+"""G5's first half, the two beats' one-interval shift (the struck SR-S3 test on two planes): the toy universe with its
+lifts as doublets, the light's sea and a packet of 100 quanta of the heavy lift at the 5-cube's centre in one plane,
+the potential's odd line A_x held at -B0 (y - c) (Phi_z = 2 B0 by the centred curl); one interval with the coupling on
+and off; per line at the centre the shift against the derived num B0 x_now div (3 den Gamma), the plane laid shifted
+with its lines (up) or against them (down)."""
+import copy, json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.core.rule3 import signed_quotient
+from event_universe.node import Node
+from event_universe.rows import POTENTIAL
+
+B0, C = 400, (2, 2, 2)
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+
+def node_for(plane, term):
+    os.environ["SPIN_TERM"] = term
+    world = {"shape": [5, 5, 5], "intervals": 1, "seed": [{"lay": "sea", "row": 0},
+             {"lay": "at", "row": 2, "plane": plane, "centre": list(C), "width": 2, "quanta": 100, "sense": 1}]}
+    node = Node(universe, world)
+    ax = node.row(POTENTIAL).lines[1]
+    for y in range(5):
+        ax.now[:, y, :] = -B0 * (y - C[1])
+        ax.before[:, y, :] = -B0 * (y - C[1])
+    return node
+
+for plane, sign in ((0, 1), (1, -1)):
+    on, off = node_for(plane, "1"), node_for(plane, "0")
+    recs = on.records()
+    up = next(r for r in recs if r.partner is not None and r.pair == tuple(universe["rows"][2]["pair"]))
+    lines_of = lambda n: [*[r for r in n.records() if r.pair == up.pair][0].lines, *[r for r in n.records() if r.pair == up.pair][1].lines]
+    now = [int(l.now[C]) for l in lines_of(on)]
+    os.environ["SPIN_TERM"] = "1"; on.step()
+    os.environ["SPIN_TERM"] = "0"; off.step()
+    shifts = [int(a.now[C]) - int(b.now[C]) for a, b in zip(lines_of(on), lines_of(off))]
+    num, den, gamma = up.pair[0], on.den, on.gamma
+    sz = [1, 1, -1, -1]
+    derived = [int(signed_quotient(num * B0 * x * s, 3 * den * gamma)) for x, s in zip(now, sz)]
+    ok = all(abs(s - d) <= 1 for s, d in zip(shifts, derived))
+    print(f"plane {plane} ({'up' if plane == 0 else 'down'}) laid: lines at the centre {now}; shift on - off {shifts}; derived {derived}; within one level: {ok}")
+
+---- its output (zeeman.txt)
+plane 0 (up) laid: lines at the centre [733, 0, 0, 0]; shift on - off [15, 0, 0, 0]; derived [15, 0, 0, 0]; within one level: True
+plane 1 (down) laid: lines at the centre [0, 0, 733, 0]; shift on - off [0, 0, -15, 0]; derived [0, 0, -15, 0]; within one level: True
+
+========================================================================
+== transverse_one.py: the transverse coupling's one-interval transfer
+========================================================================
+"""One interval of a transverse field: up laid at the centre, A_z = B0 (y - c) held (Phi_x = 2 B0): the down plane's
+lines at the centre after one interval, on minus off, against the derived num B0 x div (3 den Gamma) of the up lines."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.core.rule3 import signed_quotient
+from event_universe.node import Node
+from event_universe.rows import POTENTIAL
+
+B0, N, C = int(sys.argv[1]), 9, (4, 4, 4)
+steps = int(sys.argv[2]) if len(sys.argv) > 2 else 1
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(universe["rows"][2]["pair"])
+def make(term):
+    world = {"shape": [N] * 3, "intervals": steps, "seed": [{"lay": "at", "row": 2, "plane": 0, "centre": list(C), "width": 2, "quanta": 100, "sense": 1}]}
+    node = Node(universe, world)
+    return node
+def hold(node):
+    az = node.row(POTENTIAL).lines[3]
+    for y in range(N):
+        az.now[:, y, :] = B0 * (y - C[1]); az.before[:, y, :] = B0 * (y - C[1])
+def lines(node):
+    planes = [r for r in node.records() if r.pair == pair]
+    return [*planes[0].lines, *planes[1].lines]
+on, off = make("1"), make("0")
+x0 = [int(l.now[C]) for l in lines(on)]
+for t in range(steps):
+    for node, term in ((on, "1"), (off, "0")):
+        hold(node); os.environ["SPIN_TERM"] = term; node.step()
+    a, b = lines(on), lines(off)
+    print(f"after {t + 1}: on {[int(l.now[C]) for l in a]}  off {[int(l.now[C]) for l in b]}  diff {[int(x.now[C]) - int(y.now[C]) for x, y in zip(a, b)]}")
+num, den, gamma = pair[0], on.den, on.gamma
+print("derived first-interval shift on the down lines from the up lines:", [int(signed_quotient(num * B0 * x, 3 * den * gamma)) for x in x0[:2]])
+
+---- its output (transverse.txt)
+(transverse_one.py 400 6, SPIN_G0=1, no births)
+after 1: on [41, -683, 15, 0]  off [41, -683, 0, 0]  diff [0, 0, 15, 0]
+after 2: on [-662, -168, 4, -13]  off [-662, -168, 0, 0]  diff [0, 0, 4, -13]
+after 3: on [41, 683, 15, 0]  off [41, 683, 0, 0]  diff [0, 0, 15, 0]
+after 4: on [658, -162, -6, 1]  off [658, -162, 0, 0]  diff [0, 0, -6, 1]
+after 5: on [-54, -678, -2, -1]  off [-54, -678, 0, 0]  diff [0, 0, -2, -1]
+after 6: on [-619, 145, 6, -14]  off [-619, 145, 0, 0]  diff [0, 0, 6, -14]
+derived first-interval shift on the down lines from the up lines: [15, 0]
+
+========================================================================
+== full_turn.py: a packet's precession dephasing (B0 400, width 3, no sea): the limit
+========================================================================
+"""The full turn's sign on the board: one quantum-packet of the heavy lift laid in the up plane at a 9-cube's centre,
+a held transverse field A_z = B0 (y - c) (Phi_x = 2 B0) re-laid at every interval (the held control), run with the
+spin's coupling on and off. Per interval: the spin's z part S_z / N of the on run, and the overlap O = (on . off) /
+(off . off) over every Node's four lines. Spin one half: S_z = cos(theta), O = cos(theta / 2); so S_z is back at +1
+after one full precession while O is -1 there, and O is back at +1 only after two."""
+import json, os, sys, math
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.node import Node
+from event_universe.rows import POTENTIAL
+
+B0, n = int(sys.argv[1]), int(sys.argv[2])
+N, C = 9, (4, 4, 4)
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+SEA = [] if os.environ.get("NO_SEA") == "1" else [{"lay": "sea", "row": 0}]
+world = {"shape": [N] * 3, "intervals": n, "seed": [*SEA,
+         {"lay": "at", "row": 2, "plane": 0, "centre": list(C), "width": int(os.environ.get("WIDTH", "2")), "quanta": 100, "sense": 1}]}
+
+def hold(node):
+    az = node.row(POTENTIAL).lines[3]
+    for y in range(N):
+        az.now[:, y, :] = B0 * (y - C[1]); az.before[:, y, :] = B0 * (y - C[1])
+
+def doublet_lines(node, pair):
+    planes = [r for r in node.records() if r.pair == pair]
+    return [*planes[0].lines, *planes[1].lines]
+
+if os.environ.get("NO_ORBIT") == "1":
+    import event_universe.links as L, event_universe.interval as I
+    real = L.coupling_of
+    def coupling(r):
+        return 0 if getattr(r, "partner", None) is not None else real(r)
+    L.coupling_of = coupling; I.coupling_of = coupling
+on, off = Node(universe, world), Node(universe, world)
+pair = tuple(universe["rows"][2]["pair"])
+rows = []
+for t in range(1, n + 1):
+    for node, term in ((on, "1"), (off, "0")):
+        hold(node); os.environ["SPIN_TERM"] = term; node.step()
+    a, b = doublet_lines(on, pair), doublet_lines(off, pair)
+    dot = sum(int((x.now * y.now).sum()) for x, y in zip(a, b))
+    norm = sum(int((y.now * y.now).sum()) for y in b)
+    up = sum(int((x.now * x.now).sum()) for x in a[:2]); dn = sum(int((x.now * x.now).sum()) for x in a[2:])
+    rows.append((t, (up - dn) / (up + dn), dot / norm))
+step = int(os.environ.get("EVERY", "1"))
+for t, sz, o in rows:
+    if t % step == 0 or t == 1:
+        print(f"interval {t:3d}: S_z / N {sz:+.3f}   overlap with the free run {o:+.3f}   births {on.counts['births']}")
+
+---- its output (full_turn_400.txt)
+interval   1: S_z / N +0.999   overlap with the free run +1.000   births 0
+interval  10: S_z / N +0.986   overlap with the free run +0.996   births 0
+interval  20: S_z / N +0.981   overlap with the free run +0.995   births 0
+interval  30: S_z / N +0.973   overlap with the free run +0.989   births 0
+interval  40: S_z / N +0.971   overlap with the free run +0.994   births 0
+interval  50: S_z / N +0.964   overlap with the free run +0.984   births 0
+interval  60: S_z / N +0.960   overlap with the free run +0.991   births 0
+interval  70: S_z / N +0.964   overlap with the free run +1.003   births 0
+interval  80: S_z / N +0.952   overlap with the free run +0.991   births 0
+interval  90: S_z / N +0.951   overlap with the free run +0.971   births 0
+interval 100: S_z / N +0.969   overlap with the free run +0.989   births 0
+interval 110: S_z / N +0.937   overlap with the free run +0.986   births 0
+interval 120: S_z / N +0.936   overlap with the free run +0.963   births 0
+interval 130: S_z / N +0.955   overlap with the free run +0.959   births 0
+interval 140: S_z / N +0.957   overlap with the free run +1.000   births 0
+interval 150: S_z / N +0.938   overlap with the free run +0.991   births 0
+interval 160: S_z / N +0.929   overlap with the free run +0.945   births 0
+interval 170: S_z / N +0.936   overlap with the free run +0.945   births 0
+interval 180: S_z / N +0.952   overlap with the free run +0.951   births 0
+interval 190: S_z / N +0.953   overlap with the free run +0.959   births 0
+interval 200: S_z / N +0.950   overlap with the free run +0.983   births 0
+interval 210: S_z / N +0.943   overlap with the free run +0.993   births 0
+interval 220: S_z / N +0.948   overlap with the free run +0.862   births 0
+interval 230: S_z / N +0.945   overlap with the free run +0.913   births 0
+interval 240: S_z / N +0.946   overlap with the free run +0.936   births 0
+interval 250: S_z / N +0.943   overlap with the free run +0.939   births 0
+interval 260: S_z / N +0.932   overlap with the free run +0.903   births 0
+interval 270: S_z / N +0.916   overlap with the free run +0.821   births 0
+interval 280: S_z / N +0.925   overlap with the free run +0.815   births 0
+interval 290: S_z / N +0.956   overlap with the free run +0.878   births 0
+interval 300: S_z / N +0.957   overlap with the free run +0.910   births 0
+interval 310: S_z / N +0.944   overlap with the free run +0.903   births 0
+interval 320: S_z / N +0.926   overlap with the free run +0.818   births 0
+EXIT 0
+
+========================================================================
+== full_turn_uniform.py: the full turn's sign on the board, one mode (HOLD_CURL=16000,0,0 then 8000,0,0, NO_ORBIT=1)
+========================================================================
+"""The full turn's sign on the board, one mode: the heavy lift laid uniform at every Node of a 5-cube in the up plane
+(the fourth form, k = 0), the spin's coupling reading a held uniform curl (HOLD_CURL="Phi_x,Phi_y,Phi_z", a control),
+the doublet's orbital coupling off (NO_ORBIT=1, a control), run with the spin's term on and off. Per interval: S_z / N
+and the overlap O = (on . off) / (off . off). Spin one half: S_z = cos(theta), O = cos(theta / 2)."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.node import Node
+
+n = int(sys.argv[1])
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(universe["rows"][2]["pair"])
+world = {"shape": [5, 5, 5], "intervals": n, "seed": [{"lay": "sea", "row": 2, "plane": 0, "quanta": 1, "sense": 1}]}
+if os.environ.get("NO_ORBIT") == "1":
+    import event_universe.links as L, event_universe.interval as I
+    real = L.coupling_of
+    L.coupling_of = I.coupling_of = lambda r: 0 if getattr(r, "partner", None) is not None else real(r)
+def lines(node):
+    planes = [r for r in node.records() if r.pair == pair]
+    return [*planes[0].lines, *planes[1].lines]
+on, off = Node(universe, world), Node(universe, world)
+every = int(os.environ.get("EVERY", "1"))
+for t in range(1, n + 1):
+    for node, term in ((on, "1"), (off, "0")):
+        os.environ["SPIN_TERM"] = term; node.step()
+    a, b = lines(on), lines(off)
+    dot = sum(int((x.now * y.now).sum()) for x, y in zip(a, b)); norm = sum(int((y.now * y.now).sum()) for y in b)
+    up = sum(int((x.now * x.now).sum()) for x in a[:2]); dn = sum(int((x.now * x.now).sum()) for x in a[2:])
+    if t % every == 0 or t == 1:
+        print(f"interval {t:3d}: S_z / N {(up - dn) / (up + dn):+.3f}   overlap with the free run {dot / norm:+.3f}")
+
+---- its output (full_turn_uniform_x16.txt)
+interval   1: S_z / N +0.682   overlap with the free run +1.000
+interval   2: S_z / N +0.500   overlap with the free run +0.824
+interval   3: S_z / N +0.032   overlap with the free run +0.763
+interval   4: S_z / N -0.398   overlap with the free run +0.548
+interval   5: S_z / N -0.759   overlap with the free run +0.335
+interval   6: S_z / N -0.888   overlap with the free run +0.217
+interval   7: S_z / N -0.952   overlap with the free run -0.153
+interval   8: S_z / N -0.942   overlap with the free run -0.161
+interval   9: S_z / N -0.492   overlap with the free run -0.557
+interval  10: S_z / N -0.244   overlap with the free run -0.564
+interval  11: S_z / N +0.146   overlap with the free run -0.801
+interval  12: S_z / N +0.534   overlap with the free run -0.887
+interval  13: S_z / N +0.845   overlap with the free run -0.934
+interval  14: S_z / N +0.902   overlap with the free run -1.017
+interval  15: S_z / N +0.943   overlap with the free run -1.007
+interval  16: S_z / N +0.956   overlap with the free run -0.952
+interval  17: S_z / N +0.601   overlap with the free run -0.961
+interval  18: S_z / N +0.353   overlap with the free run -0.817
+interval  19: S_z / N +0.070   overlap with the free run -0.708
+interval  20: S_z / N -0.234   overlap with the free run -0.675
+interval  21: S_z / N -0.684   overlap with the free run -0.369
+interval  22: S_z / N -0.698   overlap with the free run -0.410
+interval  23: S_z / N -0.930   overlap with the free run -0.132
+interval  24: S_z / N -0.984   overlap with the free run +0.026
+interval  25: S_z / N -0.989   overlap with the free run +0.039
+interval  26: S_z / N -0.749   overlap with the free run +0.387
+interval  27: S_z / N -0.704   overlap with the free run +0.352
+interval  28: S_z / N -0.450   overlap with the free run +0.533
+interval  29: S_z / N -0.163   overlap with the free run +0.714
+interval  30: S_z / N +0.151   overlap with the free run +0.675
+interval  31: S_z / N +0.246   overlap with the free run +0.868
+interval  32: S_z / N +0.552   overlap with the free run +0.901
+interval  33: S_z / N +0.825   overlap with the free run +0.919
+interval  34: S_z / N +0.760   overlap with the free run +1.002
+interval  35: S_z / N +0.972   overlap with the free run +1.009
+interval  36: S_z / N +0.977   overlap with the free run +1.006
+interval  37: S_z / N +0.991   overlap with the free run +0.986
+interval  38: S_z / N +0.814   overlap with the free run +1.027
+interval  39: S_z / N +0.784   overlap with the free run +0.927
+interval  40: S_z / N +0.711   overlap with the free run +0.886
+interval  41: S_z / N +0.385   overlap with the free run +0.935
+interval  42: S_z / N +0.262   overlap with the free run +0.732
+interval  43: S_z / N +0.099   overlap with the free run +0.725
+interval  44: S_z / N -0.094   overlap with the free run +0.752
+
+---- its output (full_turn_uniform_x.txt)
+interval   1: S_z / N +0.913   overlap with the free run +1.000
+interval   4: S_z / N +0.545   overlap with the free run +0.884
+interval   8: S_z / N -0.238   overlap with the free run +0.655
+interval  12: S_z / N -0.872   overlap with the free run +0.247
+interval  16: S_z / N -0.942   overlap with the free run -0.172
+interval  20: S_z / N -0.651   overlap with the free run -0.401
+interval  24: S_z / N -0.019   overlap with the free run -0.711
+interval  28: S_z / N +0.513   overlap with the free run -0.875
+interval  32: S_z / N +0.863   overlap with the free run -0.970
+interval  36: S_z / N +0.996   overlap with the free run -0.997
+interval  40: S_z / N +0.926   overlap with the free run -0.965
+interval  44: S_z / N +0.595   overlap with the free run -0.921
+interval  48: S_z / N +0.361   overlap with the free run -0.787
+interval  52: S_z / N -0.021   overlap with the free run -0.708
+interval  56: S_z / N -0.380   overlap with the free run -0.580
+interval  60: S_z / N -0.713   overlap with the free run -0.374
+interval  64: S_z / N -0.857   overlap with the free run -0.264
+interval  68: S_z / N -0.942   overlap with the free run -0.173
+interval  72: S_z / N -0.987   overlap with the free run +0.036
+interval  76: S_z / N -0.899   overlap with the free run +0.235
+interval  80: S_z / N -0.794   overlap with the free run +0.320
+interval  84: S_z / N -0.641   overlap with the free run +0.418
+interval  88: S_z / N -0.372   overlap with the free run +0.575
+interval  92: S_z / N -0.372   overlap with the free run -0.395
+interval  96: S_z / N -0.641   overlap with the free run -0.290
+interval 100: S_z / N -0.794   overlap with the free run -0.247
+
+========================================================================
+== beats_in_clicks.py: Kramers and the two beats in the clicks (NO_ORBIT=1, 40 intervals)
+========================================================================
+"""The two beats and Kramers in the clicks: the heavy lift laid uniform in both planes of its doublet (one quantum per
+plane per Node, Pauli's two states), the light's sea for the clicks' takes, the spin's coupling reading a held uniform
+curl along z (HOLD_CURL, a control; 0,0,0 for Kramers), the doublet's orbital coupling off (NO_ORBIT=1, a control).
+Read from the credits alone: per plane the clicks and the beats they log (the beat: the ticks of half a turn)."""
+import json, os, sys, collections
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.node import Node
+
+n = int(sys.argv[1])
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(universe["rows"][2]["pair"])
+world = {"shape": [5, 5, 5], "intervals": n, "seed": [{"lay": "sea", "row": 0},
+         {"lay": "sea", "row": 2, "plane": 0, "quanta": 1, "sense": 1}, {"lay": "sea", "row": 2, "plane": 1, "quanta": 1, "sense": 1}]}
+if os.environ.get("NO_ORBIT") == "1":
+    import event_universe.links as L, event_universe.interval as I
+    real = L.coupling_of
+    L.coupling_of = I.coupling_of = lambda r: 0 if getattr(r, "partner", None) is not None else real(r)
+node = Node(universe, world)
+recs = node.records()
+up = next(k for k, r in enumerate(recs) if r.pair == pair)
+dn = recs.index(recs[up].partner)
+for _ in range(n):
+    node.step()
+beats = collections.defaultdict(collections.Counter)
+for e in node.log:
+    if e["event"] == "credit" and e["line"] in (up, dn):
+        beats["up" if e["line"] == up else "down"][e["beat"]] += 1
+for name in ("up", "down"):
+    c = beats[name]; total = sum(c.values())
+    mean = sum(b * k for b, k in c.items()) / total if total else float("nan")
+    print(f"  {name}: {total} clicks, the beats they log {dict(sorted(c.items()))}, mean beat {mean:.3f} ticks")
+print(f"  births {node.counts['births']}, refused_lay {node.counts['refused_lay']}")
+
+---- its output (beats.txt)
+held curl 0,0,0:
+  up: 625 clicks, the beats they log {2: 625}, mean beat 2.000 ticks
+  down: 625 clicks, the beats they log {2: 625}, mean beat 2.000 ticks
+  births 0, refused_lay 0
+held curl 0,0,16000:
+  up: 375 clicks, the beats they log {2: 250, 3: 125}, mean beat 2.333 ticks
+  down: 750 clicks, the beats they log {2: 750}, mean beat 2.000 ticks
+  births 0, refused_lay 0
+
+========================================================================
+== four_pi_clicks.py: the full turn's sign in the clicks (HOLD_CURL=0,0,16000 HOLD_CURL_X_BELOW=3 NO_ORBIT=1, 90 intervals; the windows summed in the document)
+========================================================================
+"""The full turn's sign in the clicks: the heavy lift laid uniform in both planes of its doublet on a 6-cube (the beam
+polarised along x), every level scaled to 97 / 100 so that no Node stands at a whole quantum, the light's sea for the
+takes, the spin's coupling reading a held curl along z in the half x < 3 alone (HOLD_CURL, HOLD_CURL_X_BELOW: the
+control), the doublet's orbital coupling off (NO_ORBIT, a control). The two halves meet at x = 2|3 and across the
+wrap at x = 5|0. Read from the credits alone: per interval the clicks at the boundary Nodes and in the bulk; beside it,
+on the board, the spin's x part in the held half (cos theta) and the up plane's phase across the boundary."""
+import json, os, sys, math, collections
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.node import Node
+
+n = int(sys.argv[1]); N = 6
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(universe["rows"][2]["pair"])
+world = {"shape": [N] * 3, "intervals": n, "seed": [{"lay": "sea", "row": 0},
+         {"lay": "sea", "row": 2, "plane": 0, "quanta": 1, "sense": 1}, {"lay": "sea", "row": 2, "plane": 1, "quanta": 1, "sense": 1}]}
+if os.environ.get("NO_ORBIT") == "1":
+    import event_universe.links as L, event_universe.interval as I
+    real = L.coupling_of
+    L.coupling_of = I.coupling_of = lambda r: 0 if getattr(r, "partner", None) is not None else real(r)
+node = Node(universe, world)
+recs = node.records()
+up = next(k for k, r in enumerate(recs) if r.pair == pair); dn = recs.index(recs[up].partner)
+for k in (up, dn):
+    for line in recs[k].lines:
+        line.now = line.now * 97 // 100; line.before = line.before * 97 // 100
+boundary = {2, 3, 5, 0}
+seen = 0
+for t in range(1, n + 1):
+    node.step()
+    new = [e for e in node.log[seen:] if e["event"] == "credit" and e["line"] in (up, dn)]
+    seen = len(node.log)
+    edge = sum(1 for e in new if e["node"][0] in boundary)
+    bulk = len(new) - edge
+    a, b = recs[up].lines, recs[dn].lines
+    sx = sum(int((a[0].now[:3] * b[0].now[:3] + a[1].now[:3] * b[1].now[:3]).sum()) for _ in [0])
+    nn = sum(int((x.now[:3] * x.now[:3]).sum()) for x in (*a, *b))
+    pl = math.atan2(int(a[1].now[1, 2, 2]), int(a[0].now[1, 2, 2])); pr = math.atan2(int(a[1].now[4, 2, 2]), int(a[0].now[4, 2, 2]))
+    d = (pl - pr + math.pi) % (2 * math.pi) - math.pi
+    print(f"interval {t:3d}: clicks at the boundary {edge:3d}, in the bulk {bulk:3d};  board: S_x in the held half {2 * sx / nn:+.3f}, up's phase left - right {math.degrees(d):+7.1f} deg")
+
+---- its output (four_pi_clicks_90.txt)
+interval   1: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.686, up's phase left - right   +21.6 deg
+interval   2: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.523, up's phase left - right   +34.8 deg
+interval   3: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.046, up's phase left - right   +38.8 deg
+interval   4: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.337, up's phase left - right   +62.9 deg
+interval   5: clicks at the boundary  72, in the bulk   0;  board: S_x in the held half -0.717, up's phase left - right   +65.9 deg
+interval   6: clicks at the boundary  72, in the bulk   0;  board: S_x in the held half -0.794, up's phase left - right   +78.1 deg
+interval   7: clicks at the boundary  72, in the bulk   0;  board: S_x in the held half -0.977, up's phase left - right   +98.0 deg
+interval   8: clicks at the boundary  72, in the bulk  36;  board: S_x in the held half -0.969, up's phase left - right   +97.6 deg
+interval   9: clicks at the boundary  72, in the bulk   0;  board: S_x in the held half -0.675, up's phase left - right  +112.4 deg
+interval  10: clicks at the boundary  72, in the bulk   0;  board: S_x in the held half -0.606, up's phase left - right  +129.3 deg
+interval  11: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.291, up's phase left - right  +125.9 deg
+interval  12: clicks at the boundary  72, in the bulk   0;  board: S_x in the held half -0.043, up's phase left - right  +143.0 deg
+interval  13: clicks at the boundary  72, in the bulk   0;  board: S_x in the held half +0.250, up's phase left - right  +155.7 deg
+interval  14: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.422, up's phase left - right  +151.8 deg
+interval  15: clicks at the boundary 144, in the bulk  36;  board: S_x in the held half +0.549, up's phase left - right  +168.1 deg
+interval  16: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half +0.868, up's phase left - right  +179.8 deg
+interval  17: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.797, up's phase left - right  +174.9 deg
+interval  18: clicks at the boundary 144, in the bulk  72;  board: S_x in the held half +0.832, up's phase left - right  -171.7 deg
+interval  19: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.936, up's phase left - right  -159.2 deg
+interval  20: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.895, up's phase left - right  -165.4 deg
+interval  21: clicks at the boundary 144, in the bulk  72;  board: S_x in the held half +0.709, up's phase left - right  -155.4 deg
+interval  22: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.718, up's phase left - right  -141.8 deg
+interval  23: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.693, up's phase left - right  -145.4 deg
+interval  24: clicks at the boundary 144, in the bulk  36;  board: S_x in the held half +0.408, up's phase left - right  -142.5 deg
+interval  25: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half +0.345, up's phase left - right  -127.9 deg
+interval  26: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.281, up's phase left - right  -126.7 deg
+interval  27: clicks at the boundary  72, in the bulk  36;  board: S_x in the held half +0.049, up's phase left - right  -129.8 deg
+interval  28: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.033, up's phase left - right  -118.0 deg
+interval  29: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.188, up's phase left - right  -109.6 deg
+interval  30: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.336, up's phase left - right  -115.3 deg
+interval  31: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.351, up's phase left - right  -110.6 deg
+interval  32: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.523, up's phase left - right   -98.2 deg
+interval  33: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.705, up's phase left - right   -98.1 deg
+interval  34: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.634, up's phase left - right  -101.8 deg
+interval  35: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.710, up's phase left - right   -92.8 deg
+interval  36: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.903, up's phase left - right   -84.7 deg
+interval  37: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.892, up's phase left - right   -87.6 deg
+interval  38: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.848, up's phase left - right   -88.2 deg
+interval  39: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.913, up's phase left - right   -78.6 deg
+interval  40: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.978, up's phase left - right   -72.3 deg
+interval  41: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.973, up's phase left - right   -77.7 deg
+interval  42: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.917, up's phase left - right   -76.6 deg
+interval  43: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.868, up's phase left - right   -66.7 deg
+interval  44: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.921, up's phase left - right   -62.1 deg
+interval  45: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.952, up's phase left - right   -67.9 deg
+interval  46: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.793, up's phase left - right   -65.8 deg
+interval  47: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.700, up's phase left - right   -54.4 deg
+interval  48: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.798, up's phase left - right   -51.2 deg
+interval  49: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.794, up's phase left - right   -58.1 deg
+interval  50: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.569, up's phase left - right   -54.6 deg
+interval  51: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.484, up's phase left - right   -44.4 deg
+interval  52: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.577, up's phase left - right   -40.7 deg
+interval  53: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.516, up's phase left - right   -47.7 deg
+interval  54: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.305, up's phase left - right   -45.8 deg
+interval  55: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.241, up's phase left - right   -35.1 deg
+interval  56: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.276, up's phase left - right   -31.4 deg
+interval  57: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half -0.172, up's phase left - right   -37.7 deg
+interval  58: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half -0.037, up's phase left - right   -37.4 deg
+interval  59: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half +0.007, up's phase left - right   -27.9 deg
+interval  60: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.062, up's phase left - right   -22.0 deg
+interval  61: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.168, up's phase left - right   -28.5 deg
+interval  62: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half +0.214, up's phase left - right   -29.6 deg
+interval  63: clicks at the boundary   0, in the bulk  36;  board: S_x in the held half +0.256, up's phase left - right   -20.2 deg
+interval  64: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.375, up's phase left - right   -13.3 deg
+interval  65: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.470, up's phase left - right   -19.3 deg
+interval  66: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.439, up's phase left - right   -22.0 deg
+interval  67: clicks at the boundary   0, in the bulk  72;  board: S_x in the held half +0.463, up's phase left - right   -14.4 deg
+interval  68: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.626, up's phase left - right    -6.3 deg
+interval  69: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.720, up's phase left - right    -8.8 deg
+interval  70: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.649, up's phase left - right   -13.4 deg
+interval  71: clicks at the boundary   0, in the bulk  72;  board: S_x in the held half +0.647, up's phase left - right    -8.7 deg
+interval  72: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.777, up's phase left - right    -0.5 deg
+interval  73: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.889, up's phase left - right    +0.9 deg
+interval  74: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.816, up's phase left - right    -4.5 deg
+interval  75: clicks at the boundary   0, in the bulk  72;  board: S_x in the held half +0.787, up's phase left - right    -2.7 deg
+interval  76: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.874, up's phase left - right    +4.0 deg
+interval  77: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.962, up's phase left - right    +8.7 deg
+interval  78: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.935, up's phase left - right    +5.2 deg
+interval  79: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.903, up's phase left - right    +2.8 deg
+interval  80: clicks at the boundary   0, in the bulk  72;  board: S_x in the held half +0.930, up's phase left - right    +8.0 deg
+interval  81: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.964, up's phase left - right   +15.2 deg
+interval  82: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.974, up's phase left - right   +16.0 deg
+interval  83: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.977, up's phase left - right   +10.3 deg
+interval  84: clicks at the boundary   0, in the bulk 108;  board: S_x in the held half +0.958, up's phase left - right   +12.5 deg
+interval  85: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.910, up's phase left - right   +20.5 deg
+interval  86: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.915, up's phase left - right   +26.0 deg
+interval  87: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.979, up's phase left - right   +21.9 deg
+interval  88: clicks at the boundary   0, in the bulk 108;  board: S_x in the held half +0.953, up's phase left - right   +19.1 deg
+interval  89: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.830, up's phase left - right   +25.0 deg
+interval  90: clicks at the boundary   0, in the bulk   0;  board: S_x in the held half +0.789, up's phase left - right   +33.0 deg
+
+========================================================================
+== run_back_spin.py: the run back with the coupling on
+========================================================================
+"""The run back with the spin's coupling on: (a) a doublet packet in both planes and the light's sea, A_z = B0 (y - c)
+set once before the first interval and left to the engine's own acts (the curl the coupling reads moves with the
+board); (b) the same with the curl held uniform (HOLD_CURL, the control, the same in both directions). Forward n,
+back b, every integer of the state compared (run.state_hash)."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.node import Node
+from event_universe.rows import POTENTIAL
+from event_universe.run import state_hash
+
+n, back, B0 = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+N, C = 7, (3, 3, 3)
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+lay = {"lay": "at", "row": 2, "centre": list(C), "width": 2, "quanta": 50, "sense": 1}
+world = {"shape": [N] * 3, "intervals": n, "seed": [{"lay": "sea", "row": 0}, dict(lay, plane=0), dict(lay, plane=1, sense=-1)]}
+node = Node(universe, world)
+az = node.row(POTENTIAL).lines[3]
+for y in range(N):
+    az.now[:, y, :] = B0 * (y - C[1]); az.before[:, y, :] = B0 * (y - C[1])
+kept = []
+for _ in range(n):
+    node.step(); kept.append(state_hash(node))
+exact = 0
+for k in range(back):
+    node.step(-1)
+    exact += state_hash(node) == kept[n - 2 - k] if n - 2 - k >= 0 else 0
+print(f"  held curl {os.environ.get('HOLD_CURL', 'none')}: births {node.counts['births']} turns {node.counts['turns']}; the run back {exact} of {back} exact")
+
+---- its output (run_back_spin.txt)
+  held curl none: births 0 turns 1; the run back 20 of 20 exact
+  held curl 4000,2000,8000: births 0 turns 1; the run back 20 of 20 exact
+
+========================================================================
+== child_wall.py: G0 withdrawn: the child's wall, and why_light_lift.py's births refused at the take
+========================================================================
+"""A child's wall (merger.walls_of: its lay's share over the end and its six neighbours) per family, in its own unit
+and in the light's, under the head's quarter-turn lay and under G0's rest form, at the hole world's start."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+from event_universe import merger, readings
+from event_universe.links import factors
+from event_universe.node import Node
+record = json.load(open(sys.argv[1]))
+for g0 in ("0", "1"):
+    os.environ["SPIN_G0"] = g0
+    node = Node(record["universe"], dict(record["world"], intervals=1))
+    c, fac = readings.content(node), factors(node)
+    light = node.records().index(node.emitter())
+    for s, row in enumerate(node.records()):
+        if s == light:
+            continue
+        rule = readings.rule(node, row.pair, c, fac)
+        at, other = (2, 2, 2), (3, 2, 2)
+        w = merger.walls_of(node, s, at, other, rule, {})
+        lv = merger.child_levels(row, 1, node.A, node.B)
+        print(f"G0={g0} plane {s}: the child's levels {lv}; its wall {w[0]} = {w[0] / node.units[s]:.3f} of its own unit = {w[0] / node.units[light]:.3f} of the light's")
+
+---- its output (g0.txt)
+(child_wall.py on the hole world's start)
+G0=0 plane 0: the child's levels (125, 0, 0, 144); its wall 1654009903854256729287 = 1882.019 of its own unit = 1.010 of the light's
+G0=0 plane 1: the child's levels (125, 0, 0, 144); its wall 1654009903854256729287 = 1.024 of its own unit = 1.010 of the light's
+G0=0 plane 2: the child's levels (125, 0, 0, 144); its wall 1654009903854256729287 = 1.025 of its own unit = 1.010 of the light's
+G0=1 plane 0: the child's levels (6000, 5999, 0, 3); its wall 3274631652010650751367670 = 3726046.341 of its own unit = 1999.667 of the light's
+G0=1 plane 1: the child's levels (136, 22, 0, 134); its wall 1680165831763725600312 = 1.040 of its own unit = 1.026 of the light's
+G0=1 plane 2: the child's levels (136, 23, 0, 134); its wall 1682212817426205772827 = 1.042 of its own unit = 1.027 of the light's
+(why_light_lift.py, the hole 60 as doublets with SPIN_G0=1, then the head's universe with G0 off)
+named by the meetings, by the children's plane: {4: 99, 0: 77, 3: 82, 6: 324, 1: 96, 5: 74, 2: 94}
+kept by the refusal: {4: 5, 0: 36, 3: 8, 6: 215, 1: 36, 5: 7, 2: 6}
+born: {4: 5, 3: 8, 5: 7, 2: 4, 6: 2}
+refused 'stop' (the take could not pay), by the taken row: {6: 131, 5: 41, 4: 39, 3: 58, 2: 75}
+named by the meetings, by the children's plane: {2: 124, 3: 9135, 0: 122, 1: 147}
+kept by the refusal: {0: 8, 1: 12, 2: 11, 3: 9009}
+born: {0: 5, 1: 7, 2: 6}
+refused 'stop' (the take could not pay), by the taken row: {0: 8702, 3: 129, 1: 164, 2: 143}
+
+========================================================================
+== why_light_lift.py: (its output above, with child_wall.py's)
+========================================================================
+"""Births and refusals by plane on a doublet world: which planes the light's draws named and why each was refused."""
+import json, os, sys, collections
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe import close as C
+from event_universe.node import Node
+record = json.load(open(sys.argv[1])); n = int(sys.argv[2])
+universe = doubled(record["universe"]) if os.environ.get("DOUBLET", "1") == "1" else record["universe"]
+named = collections.Counter(); kept_c = collections.Counter()
+orig_refuse = C.refuse
+def watched(node, born, owns):
+    for b in born: named[b.line_pair] += 1
+    kept = orig_refuse(node, born, owns)
+    for b in kept: kept_c[b.line_pair] += 1
+    return kept
+C.refuse = watched
+node = Node(universe, dict(record["world"], intervals=n))
+for _ in range(n): node.step()
+births = collections.Counter(e["line_pair"] for e in node.log if e["event"] == "birth")
+stops = collections.Counter(e.get("row") for e in node.log if e["event"] == "refused" and e.get("cause") == "stop")
+print("named by the meetings, by the children's plane:", dict(named))
+print("kept by the refusal:", dict(kept_c))
+print("born:", dict(births))
+print("refused 'stop' (the take could not pay), by the taken row:", dict(stops))
+
+========================================================================
+== sg_board.py: Stern-Gerlach on the board: the spin force
+========================================================================
+"""Stern-Gerlach on the board: the two planes' packets (laid at the centre, 200 quanta each) in a held curl with a
+gradient along z (HOLD_CURL, HOLD_CURL_GRAD_Z), the orbital coupling off (NO_ORBIT); per interval each plane's weight
+centroid along z (SUM z |hand|^2 / SUM |hand|^2) in thousandths of a Link from the centre, with the term on (SPIN_TERM)."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+import numpy as np
+from event_universe.node import Node
+
+n, N, C = int(sys.argv[1]), 9, (4, 4, 4)
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(universe["rows"][2]["pair"])
+lay = {"lay": "at", "row": 2, "centre": list(C), "width": 2, "quanta": 200, "sense": 1}
+sea = [] if os.environ.get("NO_SEA") == "1" else [{"lay": "sea", "row": 0}]
+planes = [dict(lay, plane=int(p)) for p in os.environ.get("PLANES", "0,1").split(",")]
+world = {"shape": [N] * 3, "intervals": n, "seed": [*sea, *planes]}
+if os.environ.get("NO_ORBIT") == "1":
+    import event_universe.links as L, event_universe.interval as I
+    real = L.coupling_of
+    L.coupling_of = I.coupling_of = lambda r: 0 if getattr(r, "partner", None) is not None else real(r)
+node = Node(universe, world)
+recs = node.records()
+up = next(k for k, r in enumerate(recs) if r.pair == pair); dn = recs.index(recs[up].partner)
+zs = np.zeros((N, N, N), dtype=object)
+for k in range(N): zs[:, :, k] = k - C[2]
+def centroid(rec):
+    w = sum(line.now * line.now for line in recs[rec].lines)
+    total = int(w.sum())
+    return int((w * zs).sum()) * 1000 // total if total else 0
+for t in range(1, n + 1):
+    node.step()
+    if t % 5 == 0:
+        print(f"interval {t:3d}: up {centroid(up):+6d} milli, down {centroid(dn):+6d} milli")
+
+---- its output (sg_board.txt)
+(sg_board.py, NO_SEA=1 NO_ORBIT=1 HOLD_CURL=0,0,400 HOLD_CURL_GRAD_Z=0,0,400, both planes, 40 intervals)
+interval  5: up     +3 milli, down     -5 milli
+interval 10: up     +1 milli, down     -4 milli
+interval 15: up     +4 milli, down     -4 milli
+interval 20: up     +1 milli, down     -3 milli
+interval 25: up    +22 milli, down    +18 milli
+interval 30: up    +68 milli, down    +58 milli
+interval 35: up    +53 milli, down    +38 milli
+interval 40: up    +84 milli, down    +76 milli
+(the gradient 4000: PLANES=0 with SPIN_TERM 1 then 0; PLANES=1; PLANES=0,1)
+SPIN_TERM=1, the up plane alone:
+interval  20: up    +61 milli, down     +0 milli
+interval  25: up   +144 milli, down     +0 milli
+interval  30: up   +112 milli, down     +0 milli
+SPIN_TERM=0, the up plane alone:
+interval  20: up     +0 milli, down     +0 milli
+interval  25: up     +0 milli, down     +0 milli
+interval  30: up     +0 milli, down     +0 milli
+SPIN_TERM=1, the down plane alone:
+interval  15: up     +0 milli, down     -8 milli
+interval  20: up     +0 milli, down    +27 milli
+interval  25: up     +0 milli, down    -42 milli
+interval  30: up     +0 milli, down   -100 milli
+both planes, gradient 4000:
+interval  15: up    +36 milli, down    -38 milli
+interval  20: up    +35 milli, down    -35 milli
+interval  25: up    +29 milli, down    -33 milli
+interval  30: up    +52 milli, down    -94 milli
+
+========================================================================
+== stern_gerlach.py: Stern-Gerlach in the clicks at the struck row's parameters
+========================================================================
+"""The two spots in the clicks (gate 42, the struck row's world on two planes): the 9-cube, the toy universe's lifts as
+doublets, the light's sea, the heavy lift laid at the centre in both planes alike (200 quanta each, the same phase: the
+beam polarised along x), the held A_x = -(y - c)(B0 + b (z - c)) re-laid at every interval (the control the struck
+row's world carried), the spin's coupling on or off (SPIN_TERM). Read from the credits alone: per plane the clicks and
+their centroid along z (the gradient's axis) in thousandths of a Link from the centre."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.node import Node
+from event_universe.rows import POTENTIAL
+
+n, B0, b = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+N, C = 9, (4, 4, 4)
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(universe["rows"][2]["pair"])
+lay = {"lay": "at", "row": 2, "centre": list(C), "width": 2, "quanta": 200, "sense": 1}
+world = {"shape": [N] * 3, "intervals": n, "seed": [{"lay": "sea", "row": 0}, dict(lay, plane=0), dict(lay, plane=1)]}
+node = Node(universe, world)
+recs = node.records()
+up = next(k for k, r in enumerate(recs) if r.pair == pair); dn = recs.index(recs[up].partner)
+ax = node.row(POTENTIAL).lines[1]
+for t in range(n):
+    for y in range(N):
+        for z in range(N):
+            v = -(y - C[1]) * (B0 + b * (z - C[2]))
+            ax.now[:, y, z] = v; ax.before[:, y, z] = v
+    node.step()
+for name, rec in (("up", up), ("down", dn)):
+    zs = [e["node"][2] for e in node.log if e["event"] == "credit" and e["line"] == rec]
+    cen = (sum(zs) * 1000 // len(zs) - C[2] * 1000) if zs else None
+    print(f"  {name}: {len(zs)} clicks, the centroid along z {cen} milli")
+
+---- its output (sg_60.txt)
+SPIN_TERM=1, 60 intervals:
+  up: 349 clicks, the centroid along z 369 milli
+  down: 351 clicks, the centroid along z 398 milli
+SPIN_TERM=0, 60 intervals:
+  up: 355 clicks, the centroid along z 270 milli
+  down: 337 clicks, the centroid along z 356 milli
+DONE
+
+========================================================================
+== stern_gerlach2.py: Stern-Gerlach in the clicks on the spin force alone, the gradients 400 and 4000
+========================================================================
+"""The two spots in the clicks, the spin force alone (the curl held with a gradient along z by HOLD_CURL and HOLD_CURL_GRAD_Z, the doublet's orbital coupling off by NO_ORBIT; the controls), otherwise as stern_gerlach.py: (gate 42, the struck row's world on two planes): the 9-cube, the toy universe's lifts as
+doublets, the light's sea, the heavy lift laid at the centre in both planes alike (200 quanta each, the same phase: the
+beam polarised along x), the held A_x = -(y - c)(B0 + b (z - c)) re-laid at every interval (the control the struck
+row's world carried), the spin's coupling on or off (SPIN_TERM). Read from the credits alone: per plane the clicks and
+their centroid along z (the gradient's axis) in thousandths of a Link from the centre."""
+import json, os, sys
+sys.set_int_max_str_digits(0)
+sys.path.insert(0, sys.argv[0].rsplit("/", 1)[0])
+from doublet_world import doubled
+from event_universe.node import Node
+from event_universe.rows import POTENTIAL
+
+n, B0, b = int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3])
+N, C = 9, (4, 4, 4)
+universe = doubled(json.load(open("tests/worlds/universe_toy.json")))
+pair = tuple(universe["rows"][2]["pair"])
+lay = {"lay": "at", "row": 2, "centre": list(C), "width": 2, "quanta": 200, "sense": 1}
+world = {"shape": [N] * 3, "intervals": n, "seed": [{"lay": "sea", "row": 0}, dict(lay, plane=0), dict(lay, plane=1)]}
+if os.environ.get("NO_ORBIT") == "1":
+    import event_universe.links as L, event_universe.interval as I
+    real = L.coupling_of
+    L.coupling_of = I.coupling_of = lambda r: 0 if getattr(r, "partner", None) is not None else real(r)
+node = Node(universe, world)
+recs = node.records()
+up = next(k for k, r in enumerate(recs) if r.pair == pair); dn = recs.index(recs[up].partner)
+ax = None
+for t in range(n):
+    for y in ([] if ax is None else range(N)):
+        for z in range(N):
+            v = -(y - C[1]) * (B0 + b * (z - C[2]))
+            ax.now[:, y, z] = v; ax.before[:, y, z] = v
+    node.step()
+for name, rec in (("up", up), ("down", dn)):
+    zs = [e["node"][2] for e in node.log if e["event"] == "credit" and e["line"] == rec]
+    cen = (sum(zs) * 1000 // len(zs) - C[2] * 1000) if zs else None
+    print(f"  {name}: {len(zs)} clicks, the centroid along z {cen} milli")
+
+---- its output (sg2_40.txt)
+SPIN_TERM=1, 40 intervals, the spin force alone:
+  up: 276 clicks, the centroid along z 137 milli
+  down: 266 clicks, the centroid along z 150 milli
+SPIN_TERM=0, 40 intervals, the spin force alone:
+  up: 219 clicks, the centroid along z 54 milli
+  down: 206 clicks, the centroid along z 208 milli
+DONE
+
+---- its output (sg3_60.txt)
+SPIN_TERM=1, 60 intervals, the spin force alone, gradient 4000:
+  up: 1915 clicks, the centroid along z -232 milli
+  down: 1841 clicks, the centroid along z -32 milli
+SPIN_TERM=0, 60 intervals, the spin force alone, gradient 4000:
+  up: 338 clicks, the centroid along z -169 milli
+  down: 316 clicks, the centroid along z 300 milli
+DONE
+

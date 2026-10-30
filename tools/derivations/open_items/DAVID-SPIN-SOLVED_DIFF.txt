@@ -1,0 +1,474 @@
+diff --git a/src/event_universe/close.py b/src/event_universe/close.py
+index fabc08ce6..144eb75fb 100644
+--- a/src/event_universe/close.py
++++ b/src/event_universe/close.py
+@@ -14,7 +14,7 @@ from event_universe.core.rule3 import quotient, remainder
+ from event_universe.draw import read_number
+ from event_universe.links import factors, row_current, row_twist
+ from event_universe.merger import child_levels, children_laid, light_levels, summed, takes, walls_of
+-from event_universe.rows import PLANE, Line, Row
++from event_universe.rows import PLANE, Line, Row, plus_plane
+ from event_universe.run import birth, refused
+ from event_universe.take import lay, move, neighbour, recoil
+ 
+@@ -43,7 +43,13 @@ def list_of(node: Node, rec: int, number: int) -> int:
+ 
+ 
+ def meet(
+-    node: Node, rec: int, start: list[Line], sh: Any, rules: list[tuple[Line, rule3.Rule]], frozen: Any
++    node: Node,
++    rec: int,
++    start: list[Line],
++    sh: Any,
++    rules: list[tuple[Line, rule3.Rule]],
++    frozen: Any,
++    other: tuple[int, Any, list[Line]] | None = None,
+ ) -> list[Birth]:
+     """The Link close of one record, the same for every record (SL-S1, the generic close): every Link once from its +a end; a meeting where both ends hold a whole quantum of the record at the interval's start and neither end is frozen (counted as `met`); the + child at the end the record's own current flows into where the twist of its transverse currents is right-handed, at the other end where left-handed (F = 0 and h = 0 refused by name); a record with a gap meets as the conjugate pair alone, the two ends' charges of opposite sign (SL-S2's selector with no name, W_minus W_plus < 0; refused by name `sense` where not), and at rest, no current across the Link, as the pair at rest (MG-S1: the + child at the end whose charge is positive, the birth's orientation read at -1, the twist not read, its number read after the stop in `births`); the Link's one number read at the current's end names the children's record (`list_of`; one read per Node and record in a close). Returns the births as (the take's Node, the children's record, the - child's Node, the + child's Node, the draw's room, the taken record)."""
+     born: list[Birth] = []
+@@ -52,14 +58,21 @@ def meet(
+     currents = [node.den * row_current(start, port_of(axis, 0)) for axis in range(AXES)]
+     twists = [row_twist(start, axis) for axis in range(AXES)]
+     charges = gram.charge(row.shape, start) if row is not node.emitter() else None
++    far, far_charges = standing, charges
++    if other is not None:
++        q, q_sh, q_start = other
++        far = np.vectorize(lambda v: int(v) >= unit, otypes=[bool])(q_sh) & ~frozen
++        currents = [c + node.den * row_current(q_start, port_of(axis, 0)) for axis, c in enumerate(currents)]
++        twists = [t + row_twist(q_start, axis) for axis, t in enumerate(twists)]
++        far_charges = gram.charge(row.shape, q_start)
+     for axis in range(AXES):
+-        both = standing & across(standing, port_of(axis, 0))
++        both = standing & across(far, port_of(axis, 0))
+         for where in zip(*np.nonzero(both), strict=True):
+             at = tuple(int(x) for x in where)
+             j = neighbour(node, at, port_of(axis, 0))
+             node.counts["met"] += 1
+             flow, h = int(currents[axis][at]), int(twists[axis][at])
+-            w = [0, 0] if charges is None else [int(charges[at]), int(charges[j])]
++            w = [0, 0] if charges is None else [int(charges[at]), int(far_charges[j])]
+             rest = flow == 0 and w[0] * w[1] < 0
+             if (flow == 0 or h == 0) and not rest:
+                 refused(node, at, "orientation" if flow == 0 else "twist", link=list(j), row=rec)
+@@ -72,6 +85,9 @@ def meet(
+             else:
+                 into, outof = (j, at) if flow > 0 else (at, j)
+             plus, minus = (into, outof) if rest or h > 0 else (outof, into)
++            if other is not None:
++                planes = {at: rec, j: other[0]}
++                node.end_planes[(rec, minus, plus)] = (planes[minus], planes[plus])
+             if rest:
+                 born.append(Birth(into, list_of(node, rec, 0), minus, plus, 0, rec))
+                 continue
+@@ -85,26 +101,44 @@ def meet(
+     return born
+ 
+ 
++def partner_of(
++    node: Node, rec: int, owns: list[Any], plane_starts: list[list[Line]]
++) -> tuple[int, Any, list[Line]] | None:
++    """The record's partner plane with its standing share and its start, where its row is two planes."""
++    partner = node.records()[rec].partner
++    if partner is None:
++        return None
++    q = node.records().index(partner)
++    return q, owns[q], plane_starts[q]
++
++
+ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
+     """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both and read their bound on their own quantum at the take, the light's unit at the end as MG-S1's share reads it, the light a sea the merger pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
+     records = node.records()
+     inverse = [k for k in born if records[k.line_pair] is node.emitter() is not records[k.rec]]
+     kept = []
+     for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
+-        if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
++        if int(owns[s][minus]) > 0 or int(owns[plus_plane(records, s)][plus]) > 0:
+             refused(node, at, "lay", standing=int(owns[s][minus]), unit=node.units[s], row=rec)
+             continue
+         kept.append(Birth(at, s, minus, plus, room, rec))
+     landing: dict[tuple[int, tuple[int, ...]], int] = {}
+     for _at, s, minus, plus, _room, _rec in kept:
+         landing[(s, minus)] = landing.get((s, minus), 0) + 1
+-        landing[(s, plus)] = landing.get((s, plus), 0) + 1
++        landing[(plus_plane(records, s), plus)] = landing.get((plus_plane(records, s), plus), 0) + 1
+     crowded = [
+-        k for k in kept if landing[(k.line_pair, k.minus)] > 1 or landing[(k.line_pair, k.plus)] > 1
++        k
++        for k in kept
++        if landing[(k.line_pair, k.minus)] > 1
++        or landing[(plus_plane(records, k.line_pair), k.plus)] > 1
+     ]
+     for at, s, minus, plus, _room, rec in crowded:
+         refused(
+-            node, at, "lay", children_at_one_node=max(landing[(s, minus)], landing[(s, plus)]), row=rec
++            node,
++            at,
++            "lay",
++            children_at_one_node=max(landing[(s, minus)], landing[(plus_plane(records, s), plus)]),
++            row=rec,
+         )
+     return [k for k in kept if k not in crowded] + inverse
+ 
+@@ -131,7 +165,10 @@ def births(
+         row, rule = records[rec], rules[rec]
+         if row is not node.emitter():
+             for kid in kids:
+-                ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
++                ends: list[Any] = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
++                planes = node.end_planes.get((rec, kid.minus, kid.plus))
++                if planes is not None:
++                    ends = [(w_, wall, p) for (w_, wall), p in zip(ends, planes, strict=True)]
+                 drawn: list[Any] = []
+ 
+                 def draw(
+@@ -217,7 +254,8 @@ def undo(node: Node, frame: dict[str, Any]) -> None:
+             exact = entry.get("exact_lay", [None, None])
+             for where, sense, laid in zip((entry["minus"], entry["plus"]), (-1, 1), exact, strict=True):
+                 if laid is None:
+-                    lay(node, s, tuple(where), child_levels(node.records()[s], sense, a, b), -1)
++                    p = s if sense < 0 else plus_plane(node.records(), s)
++                    lay(node, p, tuple(where), child_levels(node.records()[p], sense, a, b), -1)
+                 else:
+                     move(node, s, laid[0], tuple(where), -laid[1])
+             if "cross" in entry:
+@@ -231,7 +269,7 @@ def undo(node: Node, frame: dict[str, Any]) -> None:
+                     unbooked.add((where, row, at))
+                     recoil(node, where, take["dP_take"], take["clock"], -1)
+                 if "taken_levels" in take:
+-                    lay(node, row, where, tuple(take["taken_levels"]))
++                    lay(node, take.get("plane", row), where, tuple(take["taken_levels"]))
+                     node.closes[where] += 1
+                     continue
+                 toward = 1 if take["taker"][1] > take["taker"][0] else -1
+@@ -257,7 +295,7 @@ def click(
+         return
+     c = node.start_content
+     node.start_lines = plane_starts
+-    node.lattices, node.drawn = {}, {}
++    node.lattices, node.drawn, node.end_planes = {}, {}, {}
+     frozen = readings.frozen_of(node, c)
+     read = factors(node, None, frozen)
+     r_emitter = readings.rule_of(node, node.emitter(), c, read)
+@@ -269,7 +307,7 @@ def click(
+     born = [
+         b
+         for rec in range(len(node.records()))
+-        for b in meet(node, rec, plane_starts[rec], owns[rec], rules, frozen)
++        for b in meet(node, rec, plane_starts[rec], owns[rec], rules, frozen, partner_of(node, rec, owns, plane_starts))
+     ]
+     born_nodes = births(node, refuse(node, born, owns), c, read, rules)
+     bodies(node, plane_starts, owns, born_nodes, frozen, r_emitter)
+diff --git a/src/event_universe/interval.py b/src/event_universe/interval.py
+index dbfe5f8e7..9a7717a19 100644
+--- a/src/event_universe/interval.py
++++ b/src/event_universe/interval.py
+@@ -9,7 +9,7 @@ import numpy as np
+ from event_universe import gram, readings
+ from event_universe.core import paces
+ from event_universe.core.acts import born, divide
+-from event_universe.core.ports import AXES, PORTS, across
++from event_universe.core.ports import AXES, PORTS, across, port_of, transverse
+ from event_universe.core.rule3 import held_numerator, quotient
+ from event_universe.features import volume
+ from event_universe.links import centred_count, coupling_of, factors, folded, frames, links_of, phases
+@@ -157,12 +157,56 @@ class Interval:
+                 m - (rule.wall + rule.wall - rule.self_coefficient) * a
+                 for a, m in zip(self.starts[k], arrivals, strict=True)
+             ]
++        self.spin_term()
+         self.emission = zeros(node.shape)
+         for r, cpl in self.planes:
+             k = self.where[id(r)]
+             flow = cpl * gram.form(gram.rotation(r.shape), self.force[k], self.starts[k])
+             self.emission = self.emission + self.x_now * flow
+ 
++    def spin_term(self) -> None:
++        """The doublet's coupling (SR-S3 on two planes): the one-Link curl Phi of the potential's odd lines at the start turns a row of two planes by the Pauli matrices on its four lines (re_up, im_up, re_dn, im_dn): sigma_x swaps the planes, sigma_y = i sigma_x sigma_z, sigma_z negates the down plane; per line the numerator SUM_j R_j SUM_a Phi_a (sigma_a x), one carried division at the line's write wall 2 PORTS Gamma, the quotient added to the line's force (the coefficient R / (2 Gamma) per Port, g = 2), the remainder carried in the line."""
++        import os
++
++        if os.environ.get("SPIN_TERM", "1") != "1":
++            return
++        node = self.node
++
++        def gradient(a: Any, axis: int) -> Any:
++            return across(a, port_of(axis, 0)) - across(a, port_of(axis, 1))
++
++        curl = []
++        for a in range(AXES):
++            b, c = transverse(a)
++            curl.append(gradient(self.odd[c], b) - gradient(self.odd[b], c))
++        held = os.environ.get("HOLD_CURL")
++        if held:
++            curl = [zeros(node.shape) + int(v) for v in held.split(",")]
++            grad = os.environ.get("HOLD_CURL_GRAD_Z")
++            if grad:
++                z = np.zeros(node.shape, dtype=object)
++                for k in range(node.shape[2]):
++                    z[:, :, k] = k - node.shape[2] // 2
++                curl = [c + int(g) * z for c, g in zip(curl, grad.split(","), strict=True)]
++            below = os.environ.get("HOLD_CURL_X_BELOW")
++            if below:
++                mask = np.zeros(node.shape, dtype=bool)
++                mask[: int(below), :, :] = True
++                curl = [np.where(mask, c, 0) for c in curl]
++        for r in self.records:
++            if r.partner is None or self.records.index(r) > self.records.index(r.partner):
++                continue
++            ku, kd = self.where[id(r)], self.where[id(r.partner)]
++            x = (self.starts[ku][0], self.starts[ku][1], self.starts[kd][0], self.starts[kd][1])
++            sx, sy, sz = (x[2], x[3], x[0], x[1]), (x[3], -x[2], -x[1], x[0]), (x[0], x[1], -x[2], -x[3])
++            reach = sum(readings.rule_of(node, r, self.c, self.factors).reaches)
++            lines = [*self.lines(r), *self.lines(r.partner)]
++            for j, line in enumerate(lines):
++                numerator = reach * (curl[0] * sx[j] + curl[1] * sy[j] + curl[2] * sz[j])
++                q, line.wr = divide(numerator, line.wwall, line.wr, self.direction)
++                k, i = (ku, j) if j < 2 else (kd, j - 2)
++                self.force[k][i] = self.force[k][i] + q
++
+     def kick(self) -> None:
+         """(2) The kick (the former `kicks`): every riding line's momentum at the start read at the mean wall of the carrier's two levels as the rows hold them, P = W (a_now - a_before) + r - W div 2, and kicked by X_now F in the direction; the shape-4 row's time line kicked besides by the records' charge read at the kick (PL-S1, the owner's word of 2026-10-25, 22:50 UTC, through the Boss, 6404425423: SUM over the records with a gap of N.J.u_in + N.J.u_out, N the levels at the start and u the odd rounding of 2 P + 1 over 2 w X_now, the plane's -(re u_im - im u_re) in and out, the same integers in either direction and its own mirror under the exchange and the conjugation; one carried division at the line's write wall T with the carry kept in its write remainder, the quotient landing as the kick w X_now q before the line's one division; the charge summed over the records before the shape-4 row is met, which rests on rows.order_of, H-Confirm-Build-11; the former level write of 2 W of the records after the step kept by name: a source pinned to the step's end, whose mirror under the exchange is a start, so the fall wrote 2 W(top - 1 - k) where the inverted recurrence needs 2 W(top - k)); and the carrier's source from every riding row alike, line by line u_in u_out + (-a F) div w, w the row's wall."""
+         node = self.node
+diff --git a/src/event_universe/loader/seed.py b/src/event_universe/loader/seed.py
+index 5727c8246..817400fbb 100644
+--- a/src/event_universe/loader/seed.py
++++ b/src/event_universe/loader/seed.py
+@@ -24,9 +24,9 @@ HALF_SPANS = (
+     3,
+ )  # the envelope's half spans the raised cosine knows (the lay's `width`; 1 the one Node, a born pair's own form)
+ FIELDS = {  # the fields of each form of the law; a field of no form is refused by name (MV-S3)
+-    "sea": frozenset({"lay", "row", "quanta", "sense"}),
++    "sea": frozenset({"lay", "row", "quanta", "sense", "plane"}),
+     "hole": frozenset({"lay", "at"}),
+-    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top"}),
++    "at": frozenset({"lay", "row", "centre", "quanta", "width", "sense", "wave", "top", "plane"}),
+     "wave": frozenset({"lay", "row", "quanta", "p1", "cz", "mirror"}),
+ }
+ Pair = tuple[Any, Any]
+@@ -43,6 +43,10 @@ def lay_world(node: Node, lays: list[dict[str, Any]]) -> None:
+         if beyond:
+             raise ValueError(f"a field of no form of the law in the lay {form!r}: {', '.join(beyond)}")
+         row = node.by_index[int(lay["row"])] if "row" in lay else None
++        if "plane" in lay:
++            if row is None or row.partner is None or int(lay["plane"]) not in (0, 1):
++                raise ValueError("a lay names a plane of a row of two planes: 0 or 1")
++            row = row if int(lay["plane"]) == 0 else row.partner
+         if row is not None and row not in node.records():
+             raise ValueError("a lay is onto a record (a plane)")
+         if form == "sea" and "quanta" not in lay:
+diff --git a/src/event_universe/merger.py b/src/event_universe/merger.py
+index c75a554d4..3dd6192fb 100644
+--- a/src/event_universe/merger.py
++++ b/src/event_universe/merger.py
+@@ -17,6 +17,21 @@ if TYPE_CHECKING:
+ 
+ def child_levels(row: Any, sense: int, a: int, b: int) -> tuple[int, ...]:
+     """A child's levels at one end, now and before per line of the row's shape: the one lay of the law laid at the unit (gram.moving, MV-S1's form; the seed's rest lay the same lay at the row's own pair), the now pair (sense A, 0) and the before pair (0, sense B) at the quarter turn along the vector (1, 0, ...), so re_now sense A and im_before B (GP-S1's two integers, A B = T div 2) and 0 on every other level; the former plane-typed four and the child's own spelling kept by name (the Boss's 6414464356: the rest lay and child_at one lay)."""
++    import os
++
++    if os.environ.get("SPIN_G0") == "1" and row.pair is not None and row.pair[0] != row.pair[1]:
++        from event_universe.loader.seed import sine_den
++
++        num, den = row.pair
++        s, e = sine_den(num, den), a * b
++        low, high = 0, 1
++        while high * rule3.quotient(high * s, den) < e:
++            low, high = high, high + high
++        while high - low > 1:
++            mid = rule3.quotient(low + high, 2)
++            low, high = (mid, high) if mid * rule3.quotient(mid * s, den) < e else (low, mid)
++        lines = gram.rest(high, num, den, s, sense)
++        return tuple(int(x) for line in lines for x in (line.now, line.before))
+     lines = gram.moving(1, (sense * a, 0), (0, sense * b), 1, sense)
+     return tuple(int(x) for line in lines for x in (line.now, line.before))
+ 
+@@ -29,14 +44,19 @@ def children_laid(
+     levels_of: Callable[[tuple[int, ...], int], tuple[int, ...]],
+ ) -> tuple[list[int], list[int], list[list[int]], list[list[int]]]:
+     """The two children laid by the one lay act, the - child at the - end and the + child at the + end, each end's levels by `levels_of` at the end and its sense (the charged child's child_levels at the charge T div 2 with the charge's sign on the re line, GP-S1, the owner's word of 2026-10-26, 04:3x UTC; a merger's light the exact take at -1, `light_levels`, MG-S1), each lay's momentum booked per line of the row at its Node before it is laid (momentum_per_line, the Boss's 6413599502 (b)), the second end read on the board the first lay changed (the sum exact); the former child_at, close.child_laid and light_children one function (NL-S1's stroke 4, 2026-10-26). Returns the lays' momentum summed and per end (dP_lay_ends, the J hands' key, AJ-S2), each child's Wronskian at its Node (its sense, the owner's word 3; -+(T div 2) where the plane stood at nothing) and the record's levels at each Node before the lay (the residue)."""
++    from event_universe.rows import plus_plane
++
++    planes = (s, plus_plane(node.records(), s))
+     row = node.records()[s]
+     assert row.pair is not None
+-    stood, ends = stood_at(row, minus, plus), []
+-    for where, sense in ((minus, -1), (plus, 1)):
++    stood = [stood_at(node.records()[p], minus, plus)[k] for k, p in enumerate(planes)]
++    ends = []
++    for where, sense, p in ((minus, -1, planes[0]), (plus, 1, planes[1])):
+         levels = levels_of(where, sense)
+-        ends.append(momentum_per_line(node, row.lines, row.pair[0], where, levels))
+-        lay(node, s, where, levels)
+-    return [a + b for a, b in zip(*ends, strict=True)], senses_at(row, minus, plus), stood, ends
++        ends.append(momentum_per_line(node, node.records()[p].lines, row.pair[0], where, levels))
++        lay(node, p, where, levels)
++    senses = [senses_at(node.records()[p], minus, plus)[k] for k, p in enumerate(planes)]
++    return [a + b for a, b in zip(*ends, strict=True)], senses, stood, ends
+ 
+ 
+ def light_levels(
+@@ -138,14 +158,16 @@ def read_ends(
+     cache: dict[tuple[int, tuple[int, ...]], int] | None = None,
+ ) -> list[tuple[tuple[int, ...], int, Any, int, int | None, int, int]] | None:
+     """The take act's reads (CR-S2, the owner's word of 2026-10-26, 06:1x UTC: every end read before any is written, refused by name `stop` at the first that cannot pay, the first end's refusal sparing the second's read): at the gap-0 row the end owes the walls booked less the take's remainder standing there (EX-S1) and its line by the fall's sign is read for the least count paying it (take.fall_of); at a record with a gap the end's levels are read whole with the share the board loses by their lay at -1 (`share_fall`, MG-S1, the birth read at -1), owing the wall. Returns per end (the Node, the wall, the levels or the count, the fall, the line or None, the remainder before, the owed), or None; the former merger_falls kept by name."""
+-    row = node.records()[rec]
+     found = []
+-    for where, wall in ends:
++    for end in ends:
++        where, wall = end[0], end[1]
++        r = end[2] if len(end) > 2 else rec
++        row = node.records()[r]
+         rem_was = 0 if row is not node.emitter() else int(node.take_rem[where])
+         owed = wall - rem_was
+         if row is not node.emitter():
+             levels: Any = levels_at(row, where)
+-            fall, k = share_fall(node, rec, rule, where, levels, cache or {}), None
++            fall, k = share_fall(node, r, rule, where, levels, cache or {}), None
+             short = fall < wall
+         else:
+             levels, fall, k = take.fall_of(node, where, owed, rule, row)
+@@ -155,21 +177,21 @@ def read_ends(
+             entry = {"event": "refused", "i": node.interval, "node": list(where), "cause": "stop"}
+             node.log.append(entry | {"fall": fall, "walls": wall, "owed": owed, "row": rec})
+             return None
+-        found.append((where, wall, levels, fall, k, rem_was, owed))
++        found.append((where, wall, levels, fall, k, rem_was, owed, r))
+     return found
+ 
+ 
+-Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int]
++Read = tuple[tuple[int, ...], int, Any, int, int | None, int, int, int]
+ 
+ 
+ def merger_end(node: Node, rec: int, read: Read) -> tuple[dict[str, Any], list[int]]:
+     """One end of a merger's take written: its whole levels laid at -1, the end's entry with the momentum the start books and its recoil, and the live board's momentum less the start's (the cross term's share)."""
+-    where, wall, levels, fall, _k, _rem_was, _owed = read
+-    row = node.records()[rec]
++    where, wall, levels, fall, _k, _rem_was, _owed, r = read
++    row = node.records()[r]
+     assert row.pair is not None
+     live = momentum_per_line(node, row.lines, row.pair[0], where, tuple(levels), -1)
+-    moment = momentum_per_line(node, node.start_lines[rec], row.pair[0], where, tuple(levels), -1)
+-    lay(node, rec, where, levels, -1)
++    moment = momentum_per_line(node, node.start_lines[r], row.pair[0], where, tuple(levels), -1)
++    lay(node, r, where, levels, -1)
+     node.closes[where] -= 1
+     size = sum(abs(x) for x in levels)
+     entry = dict(
+@@ -178,6 +200,7 @@ def merger_end(node: Node, rec: int, read: Read) -> tuple[dict[str, Any], list[i
+         booked=wall,
+         levels=size,
+         taken_levels=list(levels),
++        **({} if r == rec else {"plane": r}),
+         dP_take=moment,
+         **recoil(node, where, moment, int(node.start_clock[where]), 1),
+     )
+@@ -186,7 +209,7 @@ def merger_end(node: Node, rec: int, read: Read) -> tuple[dict[str, Any], list[i
+ 
+ def light_end(node: Node, rec: int, read: Read) -> dict[str, Any]:
+     """One end of the light's take written: the taken line moved toward its before by the count (take.move, CR-S1), the fall above what was owed its new remainder (EX-S1), the momentum booked and its recoil."""
+-    where, wall, levels, fall, k, rem_was, owed = read
++    where, wall, levels, fall, k, rem_was, owed, _r = read
+     row = node.records()[rec]
+     assert row.pair is not None and k is not None
+     z = row.lines[k]
+diff --git a/src/event_universe/rows.py b/src/event_universe/rows.py
+index e188c2dc4..eb9af6717 100644
+--- a/src/event_universe/rows.py
++++ b/src/event_universe/rows.py
+@@ -7,7 +7,7 @@ from typing import Any
+ import numpy as np
+ 
+ from event_universe.core.acts import born
+-from event_universe.core.ports import AXES
++from event_universe.core.ports import AXES, PORTS
+ from event_universe.core.rule3 import held_wall, quotient
+ 
+ CARRIER = 1 + AXES + AXES + AXES  # the wall's row: the time line, then AXES tensions, fluxes and shears
+@@ -25,12 +25,13 @@ def zeros(shape: tuple[int, ...]) -> Any:
+ class Row:
+     """One row of the Node as the universe file names it: a shape (its count of lines), a pair (num, den) for Rule3's rule, or a wall of its own for a row with no Links (the phase row); its lines."""
+ 
+-    __slots__ = ("shape", "pair", "wall", "lines")
++    __slots__ = ("shape", "pair", "wall", "lines", "partner")
+ 
+     def __init__(
+         self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Line]
+     ) -> None:
+         self.shape, self.pair, self.wall, self.lines = shape, pair, wall, lines
++        self.partner: Row | None = None
+ 
+     @property
+     def gap(self) -> int | None:
+@@ -95,7 +96,7 @@ def lines_of(
+ 
+ def order_key(row: Row) -> tuple[bool, int]:
+     """The acts' order as a key compared and never tested: the row with its own wall first, then every row by the count of lines it writes, a row whose write reads other rows after them (the records writing nothing, the emitter its one line, the shape-4 row its four, the carrier its ten), the ties in the file's order."""
+-    return row.wall is None, sum(1 for line in row.lines if line.wwall is not None)
++    return row.wall is None, 0 if row.partner is not None else sum(1 for line in row.lines if line.wwall is not None)
+ 
+ 
+ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[list[Row], list[Row]]:
+@@ -104,16 +105,28 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
+     den, gamma, action = int(ints["den"]), int(ints["node_clock"]), int(ints["quantum_action"])
+     trace = int(ints["trace"])
+     by_index: list[Row] = []
++    everything: list[Row] = []
++    clock = (den - quotient(den, gamma), den)
+     for r in universe["rows"]:
+         shape = int(r["shape"])
+         pair = None if r.get("pair") is None else (int(r["pair"][0]), int(r["pair"][1]))
+         wall = None if r.get("wall") is None else int(r["wall"])
+         if shape == 1 and wall is None:
+             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
++        if pair is not None and pair[0] < pair[1] and pair != clock and shape == PLANE + PLANE:
++            made = []
++            for _ in range(quotient(shape, PLANE)):
++                walls = [PORTS * (gamma + gamma)] * PLANE
++                made.append(Row(PLANE, pair, wall, lines_of(board, PLANE, pair, wall, w, walls)))
++            made[0].partner, made[1].partner = made[1], made[0]
++            by_index.append(made[0])
++            everything.extend(made)
++            continue
+         walls = write_walls(shape, pair, den, gamma, action, trace)
+         lines = lines_of(board, shape, pair, wall, w, walls)
+         by_index.append(Row(shape, pair, wall, lines))
+-    rows = sorted(by_index, key=order_key)
++        everything.append(by_index[-1])
++    rows = sorted(everything, key=order_key)
+     walled = [r for r in rows if r.wall is not None]
+     planes = [r for r in rows if r.shape == PLANE]
+     emitters = [r for r in planes if r.pair == (den, den)]
+@@ -141,6 +154,12 @@ def row_of(rows: list[Row], shape: int, pair: tuple[int, int] | None = None) ->
+     )
+ 
+ 
++def plus_plane(records: list[Row], s: int) -> int:
++    """The + child's plane: the partner of the - child's plane where its row is two planes (the pair's spin kept), the same plane otherwise."""
++    partner = records[s].partner
++    return s if partner is None else records.index(partner)
++
++
+ def walled_of(rows: list[Row]) -> Row:
+     """The one row with a wall of its own and no Links."""
+     return next(r for r in rows if r.wall is not None)
+diff --git a/src/event_universe/run.py b/src/event_universe/run.py
+index 19a8c8a89..9eb0dae96 100644
+--- a/src/event_universe/run.py
++++ b/src/event_universe/run.py
+@@ -18,7 +18,7 @@ from event_universe.core.ports import AXES, SIDES, port_of
+ from event_universe.decoder import THOUSAND
+ from event_universe.links import factors, link_current
+ from event_universe.loader.world import load_world
+-from event_universe.rows import CARRIER, POTENTIAL, Line, zeros
++from event_universe.rows import plus_plane, CARRIER, POTENTIAL, Line, zeros
+ 
+ if TYPE_CHECKING:
+     from event_universe.node import Node
+@@ -64,6 +64,7 @@ def birth(
+         "birth",
+         at,
+         line_pair=s,
++        **({} if plus_plane(node.records(), s) == s else {"plus_line": plus_plane(node.records(), s)}),
+         senses=[-1, 1],
+         W_children=w_children,
+         minus=list(ends[0]),

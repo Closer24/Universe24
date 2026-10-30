@@ -1,0 +1,27 @@
+The twins' shared hand forced by the 24, and the room of closed composites (David, 2026-10-29)
+
+1. The 24 and their lifts
+  the turns (rows three Spokes, determinant 1): 24
+  the lifts: 48, norms [1, 2, 4]; each lift's turn among the 24: True; turns reached 24, two lifts each: True
+  the lifts closed under the product (up to a whole factor): True; det M(q) = N(q) at every lift: True; M(p) M(q) = M(pq): True
+
+2. The twins' joint hand at a birth alike under the 24
+  two halves, (M(q) x M(q)) psi = N(q) psi at all 48 lifts: 1 line, spanned by (0, -1, 1, 0) in the order (11, 12, 21, 22); at the two generators alone: 1 line, the same True
+  so psi = e1 x e2 - e2 x e1 up to its sign, the Boss's shared hand (total zero), forced by a birth alike under the 24
+  two halves split as A1 + T1: (tr M)^2 / N = 1 + tr R at every lift: True
+  two vector twins (T1 x T1), (R x R) v = v at all 24 turns: 1 line, spanned by (1, 0, 0, 0, 1, 0, 0, 0, 1), the identity e1 x e1 + e2 x e2 + e3 x e3
+
+3. The forced hand's sizes in the Boss's frames
+  settings 00: sizes [4, 25, 25, 4], E = -21/29
+  settings 01: sizes [4, 25, 25, 4], E = -21/29
+  settings 10: sizes [9, 49, 49, 9], E = -20/29
+  settings 11: sizes [49, 9, 9, 49], E = 20/29
+  S = -82/29; every marginal 1/2: True
+
+4. The room of closed composites (A1 joint hands of n halves)
+  halves n: 2, 4, 6, 8, 10, 12, 14, 16
+  closed under the 24: 1, 2, 5, 15, 51, 187, 715, 2795
+  closed under the sphere (Catalan): 1, 2, 5, 14, 42, 132, 429, 1430
+  each pair of halves more multiplies the 24's count by 2.00, 2.50, 3.00, 3.40, 3.67, 3.82, 3.91
+  the null space itself at n = 2, 4, 6: 1, 2, 5 (the count's 1, 2, 5)
+  an odd number of halves has no closed hand (n = 1 to 15): True

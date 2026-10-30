@@ -1,0 +1,357 @@
+DAVID-SPIN-DOUBLET.md's checks (David, 2026-10-27). Every script below ran on this box; its output follows it.
+The algebra (1) is exact fractions and needs nothing; the measurements (2) to (5) ran on the engine head 9a5469453 (origin/engine-5.0-test)
+from a worktree with its own src on the path: PYTHONPATH=<worktree>/src venv314/bin/python <script> <args>, inside the worktree.
+
+================================================================
+== doublet_check.py
+================================================================
+"""Two planes per matter family (a doublet), the integer facts the plan stands on.
+
+The doublet's four lines are (re_up, im_up, re_dn, im_dn): psi_up = re_up + i im_up, psi_dn = re_dn + i im_dn.
+Every matrix here is exact (fractions), every claim asserted.
+"""
+from fractions import Fraction as Fr
+import itertools, random
+
+def mat(rows): return [[Fr(x) for x in r] for r in rows]
+def mul(a, b): return [[sum(a[i][k] * b[k][j] for k in range(len(b))) for j in range(len(b[0]))] for i in range(len(a))]
+def add(*ms): return [[sum(m[i][j] for m in ms) for j in range(len(ms[0][0]))] for i in range(len(ms[0]))]
+def scal(c, m): return [[c * x for x in r] for r in m]
+def neg(m): return scal(Fr(-1), m)
+def eq(a, b): return all(a[i][j] == b[i][j] for i in range(len(a)) for j in range(len(a[0])))
+def tr(m): return [list(r) for r in zip(*m)]
+def apply(m, v): return [sum(m[i][k] * v[k] for k in range(len(v))) for i in range(len(m))]
+I = mat([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
+def key(m): return tuple(tuple(r) for r in m)
+def integer(m): return all(x.denominator == 1 for r in m for x in r)
+
+# the complex structure J (multiply both planes by i) and the Pauli matrices on the lines
+J = mat([[0,-1,0,0],[1,0,0,0],[0,0,0,-1],[0,0,1,0]])
+sx = mat([[0,0,1,0],[0,0,0,1],[1,0,0,0],[0,1,0,0]])           # swap up and down
+sy = mat([[0,0,0,1],[0,0,-1,0],[0,-1,0,0],[1,0,0,0]])         # up <- -i dn, dn <- i up
+sz = mat([[1,0,0,0],[0,1,0,0],[0,0,-1,0],[0,0,0,-1]])
+mI = neg(I)
+print("1. The Pauli matrices on the four lines are integer, square to I and anticommute:")
+for a, b in itertools.combinations([sx, sy, sz], 2):
+    assert eq(add(mul(a, b), mul(b, a)), scal(Fr(0), I))
+for s in (sx, sy, sz):
+    assert integer(s) and eq(mul(s, s), I) and eq(tr(s), s) and eq(mul(J, s), mul(s, J))
+assert eq(mul(sx, sy), mul(J, sz))  # sx sy = i sz
+print("   checked: sigma_a integer, symmetric, sigma_a^2 = I, pairwise anticommuting, commuting with J, sx sy = i sz")
+
+# the half-turns' lifts U_a = -i sigma_a
+Ux, Uy, Uz = (mul(neg(J), s) for s in (sx, sy, sz))
+print("2. The half-turns' lifts U_a = -i sigma_a: integer, U_a^2 = -I, U_x U_y = U_z, the group they make:")
+for U in (Ux, Uy, Uz):
+    assert integer(U) and eq(mul(U, U), mI)
+assert eq(mul(Ux, Uy), Uz)
+group = {key(I)}
+frontier = [I]
+while frontier:
+    new = []
+    for g in frontier:
+        for h in (Ux, Uy, Uz):
+            p = mul(g, h)
+            if key(p) not in group:
+                group.add(key(p)); new.append(p)
+    frontier = new
+Q8 = [ [list(r) for r in g] for g in group]
+centre = [g for g in Q8 if all(eq(mul(g, h), mul(h, g)) for h in Q8)]
+assert len(Q8) == 8 and len(centre) == 2
+print(f"   checked: order {len(Q8)} (the quaternion group), centre {{I, -I}}: two half-turns about one axis give -I, the full turn's sign")
+
+# Kramers' time reversal T = (i sigma_y) K on the lines: (re_up, im_up, re_dn, im_dn) -> (re_dn, -im_dn, -re_up, im_up)
+T = mat([[0,0,1,0],[0,0,0,-1],[-1,0,0,0],[0,1,0,0]])
+print("3. Kramers' time reversal T = (i sigma_y) K:")
+assert integer(T) and eq(mul(T, T), mI)
+assert eq(mul(T, J), mul(neg(J), T))                     # antilinear: anticommutes with i
+for U in (Ux, Uy, Uz): assert eq(mul(T, U), mul(U, T))  # commutes with the turns
+for s in (sx, sy, sz): assert eq(mul(T, s), mul(neg(s), T))  # flips the spin (T sigma = -sigma T on the lines)
+print("   checked: integer, T^2 = -I, T J = -J T (antilinear), T commutes with every U_a, T sigma_a = -sigma_a T")
+# on one plane every antilinear map squares to +I (checked in DAVID-ONE-CLOCK_CHECKS.txt); the doublet's T is the -1 a plane cannot give
+
+# the share and the spin density as quadratic forms on the lines
+def form_of(s):  # psi^dagger s psi as a real symmetric matrix on the lines: Re(psi^dag s psi) = v . s v  (s Hermitian and J-commuting)
+    return s
+N = I
+def quad(m, v): return sum(v[i] * m[i][j] * v[j] for i in range(4) for j in range(4))
+def spin(v): return tuple(quad(s, v) for s in (sx, sy, sz))
+random.seed(5)
+vs = [[Fr(random.randint(-9, 9)) for _ in range(4)] for _ in range(200)]
+print("4. The share N = |up|^2 + |dn|^2 and the spin density S_a = psi^dag sigma_a psi:")
+for v in vs:
+    s, n = spin(v), quad(N, v)
+    assert s[0]**2 + s[1]**2 + s[2]**2 == n**2          # a pure doublet's spin has the length of its share
+    w = apply(Uz, v); assert spin(w) == (-s[0], -s[1], s[2]) and quad(N, w) == n
+    w = apply(Ux, v); assert spin(w) == (s[0], -s[1], -s[2])
+    w = apply(T, v); assert spin(w) == (-s[0], -s[1], -s[2]) and quad(N, w) == n
+    w = apply(mI, v); assert spin(w) == s
+print("   checked on 200 random doublets: |S| = N; U_z turns S by a half-turn about z, U_x about x; U and -U the same turn (the 2:1 cover); T sends S to -S and keeps N")
+
+# the 120-degree turn about (1,1,1): U3 = (I + Ux + Uy + Uz) / 2, the cyclic relabelling of the axes
+U3 = scal(Fr(1, 2), add(I, Ux, Uy, Uz))
+print("5. The 120-degree turn about the body diagonal (the axes' cycle, a relabelling in the 48):")
+assert not integer(U3)
+cube = I
+for _ in range(3): cube = mul(cube, U3)
+assert eq(cube, mI)
+even = [v for v in vs if sum(v) % 2 == 0]
+for v in even:
+    w = apply(U3, v)
+    assert all(x.denominator == 1 for x in w) and sum(w) % 2 == 0
+    s = spin(v); assert spin(w) in ((s[2], s[0], s[1]), (s[1], s[2], s[0]))
+odd = [v for v in vs if sum(v) % 2 == 1]
+assert any(any(x.denominator != 1 for x in apply(U3, v)) for v in odd)
+cyc = spin(apply(U3, even[0])), spin(even[0])
+print(f"   checked: entries +-1/2; U3^3 = -I (order 6); integer on the doublets whose four lines sum to an even number ({len(even)} of 200) and keeps that sum even; off it on the odd ones; it cycles S's three components")
+group = {key(I)}; frontier = [I]
+while frontier:
+    new = []
+    for g in frontier:
+        for h in (Ux, Uy, Uz, U3):
+            p = mul(g, h)
+            if key(p) not in group: group.add(key(p)); new.append(p)
+    frontier = new
+assert len(group) == 24
+for g in group:
+    g = [list(r) for r in g]
+    for v in even[:40]:
+        w = apply(g, v); assert all(x.denominator == 1 for x in w) and sum(w) % 2 == 0
+print(f"   checked: U_x, U_y, U_z and U3 make a group of order {len(group)} (the binary tetrahedral group, the double cover of the cube's 12 turns that keep the tetrahedron), every element integer on the even doublets")
+
+# the quarter turn about z: (I + Uz)/sqrt 2 is irrational; times the phase e^{i pi/4} it is diag(1, i)
+print("6. The quarter turns (90 degrees about an axis):")
+Pz = mat([[1,0,0,0],[0,1,0,0],[0,0,0,-1],[0,0,1,0]])  # diag(1, i): up kept, dn times i
+four = I
+for _ in range(4): four = mul(four, Pz)
+assert eq(four, I)
+for v in vs:
+    s = spin(v); w = apply(Pz, v); assert spin(w) in ((-s[1], s[0], s[2]), (s[1], -s[0], s[2])) and quad(N, w) == quad(N, v)
+# about x: e^{i pi/4} (I - i sx)/sqrt 2 = ((I + J) + (I - J) sx) / 2
+Px = scal(Fr(1, 2), add(I, J, mul(add(I, neg(J)), sx)))
+for v in even:
+    w = apply(Px, v); assert all(x.denominator == 1 for x in w) and sum(w) % 2 == 0
+    s = spin(v); assert spin(w) in ((s[0], -s[2], s[1]), (s[0], s[2], -s[1])) and quad(N, w) == quad(N, v)
+four = I
+for _ in range(4): four = mul(four, Px)
+assert eq(four, I)
+print("   checked: the genuine lift (I + U_a)/sqrt 2 needs sqrt 2 (no integer doublet holds it); up to the phase e^{i pi/4} the lift is integer (diag(1, i) about z; ((I + J) + (I - J) sigma_x) / 2 about x on the even doublets), turns S and N as the quarter turn does, and its fourth power is +I: the sign of four quarter turns is lost with the phase, two half-turns keep it")
+
+# the precession: the up hand turned by -theta/2 and the down by +theta/2; theta = 2 pi gives -I
+print("7. The precession in a held field along z: up and dn turned oppositely by half the angle; at 2 pi the doublet is -I, at 4 pi +I:")
+import math
+for theta, want in ((2 * math.pi, -1), (4 * math.pi, 1)):
+    c, s = math.cos(theta / 2), math.sin(theta / 2)
+    assert abs(c - want) < 1e-12 and abs(s) < 1e-12
+print("   checked (the half angle's cosine is -1 at 2 pi and +1 at 4 pi); the interference of a precessed arm with a free one, |1 + cos(theta/2)| / 2 summed over the planes, has the period 4 pi")
+print("ALL CHECKED")
+
+---- its output
+1. The Pauli matrices on the four lines are integer, square to I and anticommute:
+   checked: sigma_a integer, symmetric, sigma_a^2 = I, pairwise anticommuting, commuting with J, sx sy = i sz
+2. The half-turns' lifts U_a = -i sigma_a: integer, U_a^2 = -I, U_x U_y = U_z, the group they make:
+   checked: order 8 (the quaternion group), centre {I, -I}: two half-turns about one axis give -I, the full turn's sign
+3. Kramers' time reversal T = (i sigma_y) K:
+   checked: integer, T^2 = -I, T J = -J T (antilinear), T commutes with every U_a, T sigma_a = -sigma_a T
+4. The share N = |up|^2 + |dn|^2 and the spin density S_a = psi^dag sigma_a psi:
+   checked on 200 random doublets: |S| = N; U_z turns S by a half-turn about z, U_x about x; U and -U the same turn (the 2:1 cover); T sends S to -S and keeps N
+5. The 120-degree turn about the body diagonal (the axes' cycle, a relabelling in the 48):
+   checked: entries +-1/2; U3^3 = -I (order 6); integer on the doublets whose four lines sum to an even number (91 of 200) and keeps that sum even; off it on the odd ones; it cycles S's three components
+   checked: U_x, U_y, U_z and U3 make a group of order 24 (the binary tetrahedral group, the double cover of the cube's 12 turns that keep the tetrahedron), every element integer on the even doublets
+6. The quarter turns (90 degrees about an axis):
+   checked: the genuine lift (I + U_a)/sqrt 2 needs sqrt 2 (no integer doublet holds it); up to the phase e^{i pi/4} the lift is integer (diag(1, i) about z; ((I + J) + (I - J) sigma_x) / 2 about x on the even doublets), turns S and N as the quarter turn does, and its fourth power is +I: the sign of four quarter turns is lost with the phase, two half-turns keep it
+7. The precession in a held field along z: up and dn turned oppositely by half the angle; at 2 pi the doublet is -I, at 4 pi +I:
+   checked (the half angle's cosine is -1 at 2 pi and +1 at 4 pi); the interference of a precessed arm with a free one, |1 + cos(theta/2)| / 2 summed over the planes, has the period 4 pi
+ALL CHECKED
+
+================================================================
+== quarter_turn_lay.py
+================================================================
+"""The child's lay at the quarter turn (merger.child_levels: re_now = A, im_before = B, A B = T div 2, MS-S1's one e)
+against its family's rest clock: the share of that lay over the family's unit is den / s (s the pair's sine,
+s^2 <= den^2 - num^2), about 1 / sin(omega_0). Computed from the universe's integers with the engine's own
+sine_den, set beside the children measured on the head (child_quanta.py)."""
+import json, sys
+sys.set_int_max_str_digits(0)
+from event_universe.loader.seed import sine_den
+
+for name in ("hole", "bodies"):
+    u = json.load(open(f"examples/records/{name}.json"))["universe"]
+    den = int(u["integers"]["den"])
+    print(f"{name} universe, den {den}:")
+    for r in u["rows"]:
+        if int(r["shape"]) != 2 or int(r["pair"][0]) == den:
+            continue
+        num = int(r["pair"][0])
+        s = sine_den(num, den)
+        print(f"  the plane at num {num}: cos omega_0 = num / den = {num / den:.6f}, s = {s}, den div s = {den // s} (a child at the quarter turn holds about this many of its own quanta)")
+
+---- its output
+hole universe, den 15162856759112389:
+  the plane at num 15162854575528411: cos omega_0 = num / den = 1.000000, s = 8137489624680, den div s = 1863 (a child at the quarter turn holds about this many of its own quanta)
+  the plane at num 2458210083751875: cos omega_0 = num / den = 0.162121, s = 14962266816278236, den div s = 1 (a child at the quarter turn holds about this many of its own quanta)
+  the plane at num 2580388913625285: cos omega_0 = num / den = 0.170178, s = 14941680566515936, den div s = 1 (a child at the quarter turn holds about this many of its own quanta)
+bodies universe, den 1655909141:
+  the plane at num 1655880909: cos omega_0 = num / den = 0.999983, s = 9669460, den div s = 171 (a child at the quarter turn holds about this many of its own quanta)
+  the plane at num 506298091: cos omega_0 = num / den = 0.305752, s = 1576609440, den div s = 1 (a child at the quarter turn holds about this many of its own quanta)
+
+================================================================
+== quanta_at_clicks.py
+================================================================
+"""On the engine head, the quanta standing in a body's own plane at every click (its share div its unit at the Node,
+the reading the click itself makes), and the light's share in the body's unit at the same Node, on a committed record's
+world; and the census: the most quanta any non-light plane holds at any Node at any interval.
+Run: PYTHONPATH=<worktree>/src python quanta_at_clicks.py <record.json>"""
+import json, sys, collections
+sys.set_int_max_str_digits(0)
+import numpy as np
+from event_universe import bodies as B, close as C
+from event_universe.node import Node
+
+rec_path = sys.argv[1]
+record = json.load(open(rec_path))
+universe, world = record["universe"], record["world"]
+at_clicks = collections.Counter()      # (line, quanta in its own plane) at each click
+light_at_clicks = collections.Counter()
+census = collections.Counter()         # line -> max quanta at any Node, any interval
+seen = {"clicks": 0}
+orig = B.bodies
+
+def watched(node, plane_starts, owns, born_nodes, frozen, r_emitter):
+    before = len(node.log)
+    rec0 = node.records().index(node.emitter())
+    for rec, row in enumerate(node.records()):
+        if row is node.emitter():
+            continue
+        unit = node.units[rec]
+        q = np.vectorize(lambda v: int(v) // unit, otypes=[object])(owns[rec])
+        census[rec] = max(census[rec], int(q.max()))
+    orig(node, plane_starts, owns, born_nodes, frozen, r_emitter)
+    for e in node.log[before:]:
+        if e["event"] != "credit":
+            continue
+        rec, at = e["line"], tuple(e["node"])
+        unit = node.units[rec]
+        at_clicks[(rec, int(owns[rec][at]) // unit)] += 1
+        light_at_clicks[int(owns[rec0][at]) // unit] += 1
+        seen["clicks"] += 1
+
+C.bodies = watched
+node = Node(universe, world)
+for _ in range(world["intervals"]):
+    node.step()
+name = rec_path.split("/")[-1]
+credits = [e for e in node.log if e["event"] == "credit"]
+print(f"{name}: {world['intervals']} intervals, {seen['clicks']} clicks (the record: {sum(1 for e in record['log'] if e['event'] == 'credit')})")
+for rec in sorted({k[0] for k in at_clicks}):
+    dist = {q: n for (r, q), n in sorted(at_clicks.items()) if r == rec}
+    top = sorted(dist)[-5:]
+    print(f"  plane {rec}: quanta standing in its own plane at its clicks, min {min(dist)}, max {max(dist)}; clicks at 1 quantum {dist.get(1, 0)}, at 2 or more {sum(n for q, n in dist.items() if q >= 2)}; the top values {top}")
+print(f"  the census, most quanta a non-light plane held at any Node at any interval: {dict(census)}")
+lq = sorted(light_at_clicks)
+print(f"  the light's share in the body's unit at the clicks: min {lq[0]}, max {lq[-1]}, clicks with the light at 2 or more of the body's quanta {sum(n for q, n in light_at_clicks.items() if q >= 2)}")
+
+---- its output
+(run on examples/records/hole.json, chiral.json and bodies.json)
+hole.json: 60 intervals, 2262 clicks (the record: 2262)
+  plane 0: quanta standing in its own plane at its clicks, min 1, max 2416; clicks at 1 quantum 2, at 2 or more 2116; the top values [2052, 2095, 2132, 2136, 2416]
+  plane 1: quanta standing in its own plane at its clicks, min 1, max 2; clicks at 1 quantum 62, at 2 or more 9; the top values [1, 2]
+  plane 2: quanta standing in its own plane at its clicks, min 1, max 4; clicks at 1 quantum 28, at 2 or more 45; the top values [1, 2, 3, 4]
+  the census, most quanta a non-light plane held at any Node at any interval: {0: 2416, 1: 3, 2: 5}
+  the light's share in the body's unit at the clicks: min -387, max 12865, clicks with the light at 2 or more of the body's quanta 2087
+chiral.json: 60 intervals, 3003 clicks (the record: 3003)
+  plane 0: quanta standing in its own plane at its clicks, min 1, max 2443; clicks at 1 quantum 6, at 2 or more 2910; the top values [2263, 2265, 2381, 2383, 2443]
+  plane 1: quanta standing in its own plane at its clicks, min 1, max 1; clicks at 1 quantum 40, at 2 or more 0; the top values [1]
+  plane 2: quanta standing in its own plane at its clicks, min 1, max 2; clicks at 1 quantum 42, at 2 or more 5; the top values [1, 2]
+  the census, most quanta a non-light plane held at any Node at any interval: {0: 2443, 1: 1, 2: 2}
+  the light's share in the body's unit at the clicks: min -2060, max 20666, clicks with the light at 2 or more of the body's quanta 2824
+bodies.json: 120 intervals, 17944 clicks (the record: 17944)
+  plane 0: quanta standing in its own plane at its clicks, min 1, max 236; clicks at 1 quantum 1587, at 2 or more 15586; the top values [193, 200, 206, 225, 236]
+  plane 1: quanta standing in its own plane at its clicks, min 1, max 70; clicks at 1 quantum 240, at 2 or more 531; the top values [20, 24, 27, 61, 70]
+  the census, most quanta a non-light plane held at any Node at any interval: {0: 243, 1: 94}
+  the light's share in the body's unit at the clicks: min -45, max 1849, clicks with the light at 2 or more of the body's quanta 17140
+
+================================================================
+== child_quanta.py
+================================================================
+"""On the engine head, the quanta a child stands at in its own plane the moment it is laid (its share at the Node's rule
+div its unit, at both ends), per plane, on a committed record's world."""
+import json, sys, collections
+sys.set_int_max_str_digits(0)
+from event_universe import close as C, gram, readings
+from event_universe.links import factors
+from event_universe.node import Node
+
+record = json.load(open(sys.argv[1]))
+universe, world = record["universe"], record["world"]
+found = collections.defaultdict(list)
+orig = C.children
+
+def watched(node, at, kids, take, rec, c, fac):
+    touched = orig(node, at, kids, take, rec, c, fac)
+    for _at, s, minus, plus, _room, _rec in kids:
+        row = node.records()[s]
+        rule = readings.rule(node, row.pair, c, fac)
+        sh = gram.share(node, row.lines, rule)
+        found[s].append((int(sh[minus]) // node.units[s], int(sh[plus]) // node.units[s], "takes" in take))
+    return touched
+
+C.children = watched
+node = Node(universe, world)
+for _ in range(world["intervals"]):
+    node.step()
+light = node.records().index(node.emitter())
+print(sys.argv[1].split("/")[-1], "the light is plane", light)
+for s in sorted(found):
+    print(f"  children of plane {s}: {len(found[s])} births, quanta at the two ends at the lay (- end, + end, a merger's light): {found[s][:8]}")
+
+---- its output
+(run on examples/records/hole.json)
+hole.json the light is plane 3
+  children of plane 0: 5 births, quanta at the two ends at the lay (- end, + end, a merger's light): [(1863, 1902, False), (1902, 1863, False), (1863, 1902, False), (1902, 1863, False), (2074, 1732, False)]
+  children of plane 1: 7 births, quanta at the two ends at the lay (- end, + end, a merger's light): [(1, 1, False), (1, 1, False), (1, 1, False), (1, 1, False), (1, 1, False), (1, 1, False), (2, 2, False)]
+  children of plane 2: 6 births, quanta at the two ends at the lay (- end, + end, a merger's light): [(1, 1, False), (1, 1, False), (2, 1, False), (3, 2, False), (4, 3, False), (4, 4, False)]
+
+================================================================
+== doubled_price.py
+================================================================
+"""The price of two planes per matter family on the engine head, measured with the head's own acts: the hole world
+run with its universe as written and with every gapped plane row named twice (the loader admits a repeated pair,
+CS5-S2, each row a record of its own: the doublet's lines and counters without the field's coupling). Reports the
+integers per Node (run.census), the seconds per interval, the births and clicks, and the run back exact."""
+import copy, json, sys, time, hashlib
+sys.set_int_max_str_digits(0)
+from event_universe.node import Node
+from event_universe.run import census, state_hash
+
+record = json.load(open(sys.argv[1]))
+n, back = int(sys.argv[2]), int(sys.argv[3])
+universe, world = record["universe"], dict(record["world"], intervals=n)
+den = int(universe["integers"]["den"])
+doubled = copy.deepcopy(universe)
+rows = []
+for r in universe["rows"]:
+    rows.append(r)
+    if r.get("pair") and int(r["shape"]) == 2 and int(r["pair"][0]) != den:
+        rows.append(dict(r))
+doubled["rows"] = rows
+for name, u in (("as written", universe), ("every gapped plane twice", doubled)):
+    node = Node(u, world)
+    t0 = time.time()
+    kept = []
+    for _ in range(n):
+        node.step()
+        kept.append(state_hash(node))
+    t1 = time.time()
+    ints, bits = census(node)
+    for _ in range(back):
+        node.step(-1)
+    exact = state_hash(node) == kept[n - back - 1]
+    planes = len(node.records())
+    print(f"{name}: {planes} planes, {ints} integers per Node, {bits} bits widest, {(t1 - t0) / n:.3f} s per interval over {n}, births {node.counts['births']}, clicks {node.counts['body_clicks']}, the run back {back} exact {exact}")
+
+---- its output
+(run as: doubled_price.py examples/records/hole.json 60 20; a first run read 0.296 and 0.525 s per interval, the second below)
+as written: 4 planes, 99 integers per Node, 112 bits widest, 0.289 s per interval over 60, births 18, clicks 2262, the run back 20 exact True
+every gapped plane twice: 7 planes, 126 integers per Node, 112 bits widest, 0.496 s per interval over 60, births 25, clicks 4497, the run back 20 exact True
+

@@ -1,0 +1,2 @@
+T-even, going advanced: the read turns wrong at 1024 cases with L even and 0 with L odd
+T-odd, going kept:      the read turns wrong at 1024 cases with L even and 0 with L odd

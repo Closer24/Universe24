@@ -1,0 +1,5 @@
+the head's, X = Gamma N^-4 harmonic: the advance is k = 0.3318 (M = 1e-3) and 0.3333 (M = 1e-4) of general relativity's
+the ruler Y = Gamma / N harmonic: the advance is k = 0.8349 (M = 1e-3) and 0.8335 (M = 1e-4) of general relativity's
+ln Y harmonic (Einstein's lapse equation on this metric): the advance is k = 1.0038 (M = 1e-3) and 1.0005 (M = 1e-4) of general relativity's
+Schwarzschild's metric (the control): the advance is k = 1.0045 (M = 1e-3) and 1.0007 (M = 1e-4) of general relativity's
+so k = (2 + 2 gamma - beta) / 3 with gamma = 1 reads beta = 3 for the head's law, 1.5 for the harmonic ruler and 1 for ln Y

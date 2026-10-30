@@ -1,0 +1,75 @@
+DAVID-THE-BELL-CLICK_CHECKS.txt: the checks of DAVID-THE-BELL-CLICK.md. The build: a local worktree of 97e5b3fd6 with DAVID-THE-BELL-CLICK.patch applied (bobs.py: bell_answers and its two helpers; striking.py: the strike calls bell_answers after the bobs; predicates.py: row 56 reads the clicks' answers where present). Each check a harness in scratchpad/field; nothing pushed to src.
+
+1. The rule alone (bell_rule.py: the build's own integer comparison _bell_opposite, the cube's four directions, a fair 64-bit linear congruential stream for the draws, the settings and which end clicks first; 200,000 pairs):
+   pairs 200000: E thousandths per cell {(0, 0): -707, (0, 1): 708, (1, 0): -708, (1, 1): -708}; S thousandths -2831 (Tsirelson 2828); the + end's answers per the - end's setting {0: {-1: 49939, 1: 50160}, 1: {1: 49728, -1: 50173}}
+
+2. The bang through the build, 13 seeds at 500 ticks (bell_run2.py: the world's wave seed at each quanta, the detectors handed over with the outside choices; the chart with the rewind of 20; bell_final.py the reading). Eight charts from the build's first form (bell_run.py), whose answers equal the final form's (item 5), five from the final form:
+   charts 13, the rewind {'{"intervals": 20, "exact": 20}': 13}; pairs answered at both ends 688 (367 in one strike); the first clicks' answers {1: 440, -1: 409}
+     cell (0, 0): pairs 154, the same answer 26, E thousandths -662
+     cell (0, 1): pairs 163, the same answer 130, E thousandths 595
+     cell (1, 0): pairs 181, the same answer 28, E thousandths -690
+     cell (1, 1): pairs 190, the same answer 21, E thousandths -778
+     S = -588522709/215814445 = -2726 thousandths, its spread about 112 thousandths (Tsirelson 2828, the local bound 2000)
+     the + end's answers for the - end's setting 0: {-1: 169, 1: 148}
+     the + end's answers for the - end's setting 1: {-1: 194, 1: 177}
+     the - end's answers for the + end's setting 0: {1: 189, -1: 146}
+     the - end's answers for the + end's setting 1: {1: 173, -1: 180}
+     the cone: 688 of 688 pairs with the two clicks' mesh distance within the ticks back to the birth and forward again
+
+3. The board untouched (bell_same.py: the build's chart at 250 ticks against 97e5b3fd6's chart of the same seed, the answers dropped: every key but the rows' timings equal, and every row of the gates read alike):
+   bb_outside_1500000.json vs bang250_q1500000.json: answers 36; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_2000000.json vs bang250_q2000000.json: answers 60; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_2500000.json vs bang250_q2500000.json: answers 68; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_3000000.json vs bang250_q3000000.json: answers 98; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_4000000.json vs bang250_q4000000.json: answers 120; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_5000000.json vs bang250_q5000000.json: answers 161; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_7000000.json vs bang250_q7000000.json: answers 74; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_14000000.json vs bang250_q14000000.json: answers 53; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_30000000.json vs bang250_q30000000.json: answers 56; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_50000000.json vs bang250_q50000000.json: answers 64; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_200000000.json vs bang250_q200000000.json: answers 80; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_10000000.json vs bang250_q10M.json: answers 104; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+   bb_outside_20000000.json vs bang250_q20M.json: answers 64; keys equal without the answers True (unequal: []); rows read otherwise []; the rewind {'intervals': 20, 'exact': 20}
+
+4. The choices' source, 13 seeds at 250 ticks (bell_read.py), outside and the detector's own datum (the light's fine tooth at the click, the first form):
+   outside:
+     charts 13; pairs answered at both ends 456 (248 in one strike); first clicks' answers {-1: 283, 1: 299}
+       cell (0, 0): pairs 95, same 15, E thousandths -684
+       cell (0, 1): pairs 114, same 92, E thousandths 614
+       cell (1, 0): pairs 120, same 21, E thousandths -650
+       cell (1, 1): pairs 127, same 17, E thousandths -732
+       S = -388087/144780 = -2680 thousandths (Tsirelson 2828, the local bound 2000)
+       + end's answer given the - end's setting 0: {-1: 116, 1: 93}
+       + end's answer given the - end's setting 1: {-1: 129, 1: 118}
+       - end's answer given the + end's setting 0: {1: 121, -1: 94}
+       - end's answer given the + end's setting 1: {1: 111, -1: 130}
+   inside:
+     charts 13; pairs answered at both ends 456 (248 in one strike); first clicks' answers {-1: 283, 1: 299}
+       cell (0, 0): pairs 189, same 32, E thousandths -661
+       cell (0, 1): pairs 59, same 48, E thousandths 627
+       cell (1, 0): pairs 58, same 10, E thousandths -655
+       cell (1, 1): pairs 150, same 25, E thousandths -666
+       S = -844127/323379 = -2610 thousandths (Tsirelson 2828, the local bound 2000)
+       + end's answer given the - end's setting 0: {-1: 126, 1: 122}
+       + end's answer given the - end's setting 1: {1: 106, -1: 102}
+       - end's answer given the + end's setting 0: {1: 129, -1: 118}
+       - end's answer given the + end's setting 1: {-1: 109, 1: 100}
+
+5. The two forms give the same answers: at 5 million quanta, 161 answers at 250 ticks and 447 at 500 ticks equal click by click between the first form (bell_click.py with its own stream) and the final form (the rule in bobs.py, the stream handed over).
+
+6. Row 56 as the build's engine reads one chart at 500 ticks (gates on the chart):
+   bbf_5000000.json row 56: 192 pairs; NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -2440940 / 862920 (the outcome the child's sense fixed at the bi
+   bbf_20000000.json row 56: 34 pairs; NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -218 / 70 (the outcome the child's sense fixed at the birth, rea
+   bbf_30000000.json row 56: 29 pairs; NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -58 / 20 (the outcome the child's sense fixed at the birth, read
+   bbf_50000000.json row 56: 28 pairs; SHOWN as nature: 4 < S^2 <= 8 at the pairs' clicks, S = -726 / 360 (above the local bound 2, within Tsirelson's 2 sqrt 2
+   bbf_200000000.json row 56: 32 pairs; NOT SHOWN as nature: |S| <= 2 at the pairs' clicks, S = -1526 / 504 (the outcome the child's sense fixed at the birth, r
+
+7. The full check on the build (CHECK_BASE=origin/engine-5.0-test tools/check.py --full in the build's worktree):
+   All checks passed!
+   the engine gates hold against the merge base
+   the shape of the code holds against the merge base
+   the shape of tests/ holds against the merge base
+   the documents' six gates hold
+   ======================== 117 passed in 71.27s (0:01:11) ========================
+
+8. The rewind and the phenomenon: the rewind 20 of 20 at all 13 seeds at 250 ticks (item 3) and at 500 ticks (item 2, 'the rewind'); the phenomenon is item 2's S beyond the local bound and item 1's limit at Tsirelson's.

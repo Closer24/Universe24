@@ -1,0 +1,33 @@
+(1) the ruler's table, Y(c) = rate(-c) on the hills' side, to the stopped load:
+  Gamma 1,000: the stopped load 3,793 (the mesh rate there 0, one load before 1; the rate there 22, the clock's last rate 23); the table's last entry Y(3,792) = 44,429
+    read at -7: 1,000, -1: 1,000, 0: 1,000, 1: 1,001, 2: 1,002, 3,791: 44,385, 3,792: 44,429, 3,793: 44,429, 3,794: 44,429, 10,000: 44,429, 1,000,000: 44,429
+  Gamma 1,200: the stopped load 4,668 (the mesh rate there 0, one load before 1; the rate there 24, the clock's last rate 25); the table's last entry Y(4,667) = 58,739
+    read at -7: 1,200, -1: 1,200, 0: 1,200, 1: 1,201, 2: 1,202, 4,666: 58,690, 4,667: 58,739, 4,668: 58,739, 4,669: 58,739, 10,000: 58,739, 1,000,000: 58,739
+  Z(0) = 6,000 = T; Z at the table's end 34,445,497,418 (5,740,916 times its rest)
+(2) a ring of 32 Node-clocks at Gamma 1,200: the time gear first, then a light gear whose W and W+ read the ruler:
+  a held source of 160,000 a tick at Node-clock 16, set at tick 0 and taken away at tick 400:
+    the deep count's largest 15,687 at tick 246, its smallest -12,640; past the stopped load 4,668 at 503 ticks, from 15 to 884
+    the time gear on its own teeth (W = 600, never read from the ruler): its count leaves the stopped load for the last time at tick 885 and reads -1,236 at the end; its impulse moved at 503 of the 503 ticks past the stopped load
+    the light's summed impulse: one value at every tick: True (1,152,000); the hand-over W = last W+ at every tick and Node-clock: True
+    the light at the deep Node-clock (tick, count, W, stride, impulse):
+          0        0           12,000           2              36,000
+         15    4,806   58,796,896,366           0             312,000
+        449   -5,500           12,000       2,750          32,996,000
+        884    4,967   68,890,994,836         115   7,774,903,132,000
+        899   -1,236           12,000  75,997,141     911,965,696,000
+    past the stopped load its stride reads 0 at 407 of 503 ticks, and its impulse is never 0 there: True (from 312,000 to 7,774,903,132,000)
+    after the last tick past the stopped load, the deep light's largest stride 509,588,070 notches a tick
+    the run back through 900 ticks, every change of the source restored: exact True
+  the same source raised over 900 ticks, held for 600, lowered over 900, then 600 ticks free:
+    the deep count's largest 8,836 at tick 911, its smallest -242; past the stopped load 4,668 at 1396 ticks, from 501 to 1896
+    the time gear on its own teeth (W = 600, never read from the ruler): its count leaves the stopped load for the last time at tick 1897 and reads -106 at the end; its impulse moved at 1395 of the 1396 ticks past the stopped load
+    the light's summed impulse: one value at every tick: True (1,152,000); the hand-over W = last W+ at every tick and Node-clock: True
+    the light at the deep Node-clock (tick, count, W, stride, impulse):
+          0        0           12,000           3              36,000
+        501    4,671   68,890,994,836           0             116,000
+       1198    8,731   68,890,994,836           0             116,000
+       1896    4,686   68,890,994,836           0             116,000
+       2999     -106           12,000         168           2,016,000
+    past the stopped load its stride reads 0 at 1396 of 1396 ticks, and its impulse is never 0 there: True (from 116,000 to 116,000)
+    after the last tick past the stopped load, the deep light's largest stride 253 notches a tick
+    the run back through 3000 ticks, every change of the source restored: exact True
