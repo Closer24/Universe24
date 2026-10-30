@@ -99,9 +99,9 @@ def naive(layout, s):
 
 def formula():
     """At three drawn layouts, every gear clocked by two rows' counts, the grips read at both ends of each Mesh and J
-    of three readings, the act equals the naive model at every entry."""
+    of three readings, the act equals the naive model at every entry, each layout stepped on two worlds in turn."""
     layouts = [(rng, varied(rng, clocked=True, cubed=True)) for rng in map(np.random.default_rng, SEEDS)]
-    states = [(layout, world(rng, layout)) for rng, layout in layouts]
+    states = [(layout, world(rng, layout)) for rng, layout in layouts for _ in "st"]
     return all(frame.same(step.tick(layout, s), naive(layout, s)) for layout, s in states)
 
 
@@ -175,7 +175,8 @@ def test_j_is_minus_the_gradient_of_its_potential_and_a_potential_of_no_term_pus
 def test_the_act_is_its_naive_model_local_pure_and_turned_by_the_24():
     """Yes: at layouts parted everywhere the act is its naive model, and the trains' order and the 24's turns are
     nothing to it. No: it reads nothing past one Mesh's reach, keeps no state, and reads no clock by its place."""
-    # B2 of G1's hostile reader (9f1cf7944): every clock read at the last row, by its place, passed every test
+    # B2 of G1's hostile reader (9f1cf7944): every clock read at the last row, by its place, passed every test; the
+    # cut's review, its X1: a J kept per plan passed while the frame's purity read a layout with no J
     assert formula() and holding(PROPERTIES)
     # the second review (227cde2fe): a module's cache and the hash seed passed purity within one interpreter
     assert frame.unseeded(__name__, "engine", FRAME)
