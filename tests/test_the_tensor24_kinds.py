@@ -1,6 +1,7 @@
 """Tensor24's kinds and tables: the 24 from the Spokes, the five kinds against the groups' own definitions, and C."""
 
 import itertools
+import math
 from typing import Any, NamedTuple
 
 import numpy as np
@@ -8,7 +9,7 @@ import pytest
 
 from tensor24.engine import kinds
 from tensor24.main import made as joint
-from tensor24.runner.load import common, star, tables
+from tensor24.runner.load import star, tables
 
 # Sofer's table (SOFER-KINDS-REFERENCE-1, scribe-5 d9d538ed4): the five characters on the five classes, the identity,
 # the third turns, the face half turns, the quarter turns and the edge half turns, whose sizes are SIZES
@@ -50,7 +51,10 @@ class Made(NamedTuple):
 def made():
     matrix, weight = kinds.turns(star(3))
     ks, inverse = kinds.kinds(matrix), kinds.kinds(kinds.inverse(matrix))
-    return Made(matrix, weight, ks, inverse, tables(ks, inverse, weight, kinds.projector))
+    return Made(matrix, weight, ks, inverse, tables(kinds.stacked(ks), kinds.stacked(inverse), weight))
+
+
+KEYS = list(itertools.product(range(len(LABELS)), repeat=3))
 
 
 def product(a, b):
@@ -179,20 +183,18 @@ def channels(m):
         wanted = n in product(i, k)
         if int((x[i] * x[k] * x[n]).sum()) != order * wanted or bool(c.any()) != wanted:
             return False
-        if wanted and (common(c.flat) != 1 or next(x for x in c.flat if x) < 0):
+        if wanted and (math.gcd(*(int(x) for x in c.flat)) != 1 or next(x for x in c.flat if x) < 0):
             return False
     return True
 
 
 def equivariant(m):
     """Every C is kept by every one of the 24: rho_m(g) C (rho_i(g^-1) x rho_k(g^-1)) = C."""
-    keep, _ = the24(m)
-    for (i, k, n), c in m.c.items():
-        for g in keep:
-            if not (
-                np.einsum("xy,ypq,pa,qb->xab", m.kinds[n][g], c, m.inverse[i][g], m.inverse[k][g]) == c
-            ).all():
-                return False
+    (keep, _), held, back = the24(m), kinds.stacked(m.kinds), kinds.stacked(m.inverse)
+    for (i, k, n), g in itertools.product(KEYS, keep):
+        c = m.c[i, k, n]
+        if not (np.einsum("xy,ypq,pa,qb->xab", held[n][g], c, back[i][g], back[k][g]) == c).all():
+            return False
     return True
 
 
@@ -234,10 +236,8 @@ def mutants():
         return m._replace(kinds=type(m.kinds)(*changed))
 
     def table(m, key, f):
-        c = dict(m.c)
-        c[tuple(LABELS.index(label) for label in key)] = f(
-            np.array(c[tuple(LABELS.index(label) for label in key)])
-        )
+        c, at = np.array(m.c), tuple(LABELS.index(label) for label in key)
+        c[at] = f(np.array(c[at]))
         return m._replace(c=c)
 
     def entry(m, x):
@@ -256,24 +256,18 @@ def mutants():
         x.flat[1] += 1
         return x
 
-    def first_seed(m):
-        held = {}
-        for key, c in m.c.items():
-            p = kinds.projector(m.weight, m.kinds[key[-1]], m.inverse[key[0]], m.inverse[key[1]])
-            seeds = p.reshape(c.size, -1).T
-            held[key] = next((seed for seed in seeds if seed.any()), seeds[0]).reshape(c.shape)
+    # each table read off its group sum at every seed, as the load once did seed by seed
+    def seeded(m, read):
+        held = np.zeros_like(m.c)
+        for i, k, n in KEYS:
+            p = np.einsum("g,gxy,gpa,gqb->xabypq", m.weight, m.kinds[n], m.inverse[i], m.inverse[k])
+            x, a, b = p.shape[:3]
+            held[i, k, n][:x, :a, :b] = read(p.reshape(x * a * b, -1).T).reshape(x, a, b)
         return m._replace(c=held)
 
     def cycled(m, x):
         cycle = np.roll(EYE, 1, axis=0)
         return np.einsum("ij,gjk,lk->gil", cycle, x, cycle)
-
-    def one_seed(m):
-        sums = {
-            key: kinds.projector(m.weight, m.kinds[key[-1]], m.inverse[key[0]], m.inverse[key[1]])
-            for key in m.c
-        }
-        return m._replace(c={key: p.sum(axis=(3, 4, 5)) for key, p in sums.items()})
 
     return {
         "the reflections weighed in": (
@@ -292,12 +286,15 @@ def mutants():
         ),
         "A2's sign dropped": ("orthonormal", lambda m: kind(m, "A2", lambda m, x: 0 * x + 1)),
         "E as A1 beside A2": ("spokes", lambda m: kind(m, "E", beside)),
-        "C from one fixed seed of ones": ("channels", one_seed),
+        "C from one fixed seed of ones": ("channels", lambda m: seeded(m, lambda s: s.sum(axis=0))),
         "the cross doubled, not primitive": (
             "channels",
             lambda m: table(m, ("T1", "T1", "T1"), lambda x: x + x),
         ),
-        "the first seed's group sum, its content kept": ("channels", first_seed),
+        "the first seed's group sum, its content kept": (
+            "channels",
+            lambda m: seeded(m, lambda seeds: next((seed for seed in seeds if seed.any()), seeds[0])),
+        ),
         "the cross's sign turned": ("channels", lambda m: table(m, ("T1", "T1", "T1"), lambda x: -x)),
         "an entry of C changed": ("equivariant", lambda m: table(m, ("T1", "T1", "T1"), bumped)),
         "the dot negated": ("classical", lambda m: table(m, ("T1", "T1", "A1"), lambda x: -x)),
@@ -327,7 +324,7 @@ def test_the_joint_makes_the_kinds_and_the_tables_the_load_reads(good):
     w, fixed = good.weight[:, None, None], (np.einsum("gii->i", square) == good.weight.sum()).tolist()
     assert all((x == w * y).all() for x, y in zip(held, good.kinds, strict=True))
     assert (square == w * kinds.square(good.kinds)).all() and fixed.index(True) == 0 and sum(fixed) == 1
-    assert c.keys() == good.c.keys() and all((c[key] == good.c[key]).all() for key in c)
+    assert (c == good.c).all()
 
 
 def test_the_four_vectors_square_is_its_symmetric_square_a_signed_permutation_on_every_turn(good):

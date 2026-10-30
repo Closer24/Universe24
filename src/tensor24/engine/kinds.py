@@ -80,6 +80,16 @@ def square(held: Kinds) -> Z:
     return beside(beside(a1, t1), beside(t1 * t1, t2))
 
 
-def projector(weight: Z, m: Z, i: Z, k: Z) -> Z:
-    """The sum over the 24 of rho_m(g) x rho_i(g^-1) x rho_k(g^-1): at a seed (y, p, q), C[i, k -> m] from that seed."""
-    return np.einsum("g,gxy,gpa,gqb->xabypq", weight, m, i, k)
+def placed(m: Z, side: int) -> Z:
+    """A stack of matrices set in a square of the given side at its first rows and columns, every entry beside them 0."""
+    put = np.eye(side, m.shape[-1], dtype=object)
+    return np.einsum("ij,gjk,lk->gil", put, m, put)
+
+
+def stacked(held: Kinds) -> Z:
+    """The five kinds as one stack, (kinds, candidates, d, d), each set in the axes' square: one array for the tables."""
+    a1, a2, e, t1, t2 = held
+    side = t1.shape[-1]
+    return np.stack(
+        (placed(a1, side), placed(a2, side), placed(e, side), placed(t1, side), placed(t2, side))
+    )

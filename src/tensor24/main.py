@@ -11,7 +11,7 @@ def made(spokes: Any) -> tuple[kinds.Kinds, dict[Any, Any], Any]:
     """The 24's kinds and their tables, and the four-vector's square on the 24, derived once from the Node-clock's own star, its Spokes, as the load reads them: every candidate weighed by Rule3, 0 off the 24."""
     matrix, weight = kinds.turns(spokes)
     held = kinds.kinds(matrix)
-    c = load.tables(held, kinds.kinds(kinds.inverse(matrix)), weight, kinds.projector)
+    c = load.tables(kinds.stacked(held), kinds.stacked(kinds.kinds(kinds.inverse(matrix))), weight)
     turned = kinds.weighed(held, weight)
     return turned, c, kinds.square(turned)
 

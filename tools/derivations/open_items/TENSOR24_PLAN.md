@@ -405,7 +405,7 @@ On the owner's word to David: "a generic solution for everything". This is David
 ## 11. The code: the architect's design (approved with changes)
 
 1. **The five laws, in five places:**
-   - **the kind table:** kinds, in engine/kinds.py; the tables C in runner/load.py, from each elementary seed in turn (the loop at load), made primitive; contract, one gather, a product of up to three readings (the unit for each a term lacks, the node's term 6) and one scattered sum, in engine/contract.py;
+   - **the kind table:** kinds, in engine/kinds.py; the tables C in runner/load.py, every channel at once in the axes' cube, the group sum with each kind's two kept forms read at its diagonal entry that divides every other, with no seed, search, divisor loop or branch (the node's initialization); contract, one gather, a product of up to three readings (the unit for each a term lacks, the node's term 6) and one scattered sum, in engine/contract.py;
    - **the tick:** step, with shift and pull, in engine/mesh.py and engine/step.py; from stage 7a every gear's sources (its force, and J on the value, the centred difference along each axis and the force), its drive (every source's one way in, the kick) and its carry, at coefficients the layout holds until stage 7b gears them from the lapse; stage 7c brings the regulator's block, the strides before and after with their mirror, and the head compared act by act on every train;
    - **the turnover:** cancelled as an act by decision 27; T = J K stands as each kind's time reversal, one per-row sign built at load and read by the tests alone (the architect's ruling of 2026-10-29 at stages 7b and 10);
    - **the click:** click_whole and click_split, in engine/click.py;

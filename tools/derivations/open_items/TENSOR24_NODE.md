@@ -178,8 +178,18 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
 - **The strength:** in the vertex law, read through the ruler, no file holding it (decision 35); no single integer serves
   all tables (David, 6501657960, item 5). OPEN.
 - **The tables:** read in the square's basis where E stands, so E's ten oblique tables are never read (David,
-  6516176163, item 4). The tables' derivation with no seed and no search: the row of S = P times E's form at its first
-  diagonal entry not 0 (the Boss's 6515929376, David's closed form). DERIVED.
+  6516176163, item 4). BUILT (the node's initialization, on the owner's word of 08:4x UTC: everything generic now), with
+  no seed, no search, no greatest common divisor and no branch:
+  - **in clocks:** the 24 turns of the Node-clock's own star are summed once, and each product of two kinds' gears onto a
+    third is the one pattern every turn leaves as it is;
+  - **in algebra:** every channel's group sum S, rho_m(g) Psi_m x rho_i(g^-1)^T Phi_i x rho_k(g^-1)^T Phi_k, with Psi
+    and Phi the two forms each kind's matrices keep (the sum of rho rho^T and of rho^T rho, the identity's multiple on
+    the orthogonal kinds and E's form and its adjugate on E), is c u u^T, as David found with E's form (6516176163).
+    c is the diagonal's entry that divides every other (every table of the 24 has an entry 1 in size, and none above 2), u is S's row
+    there over c, and the table is u times the sign of its first entry not 0, by Rule3's sign test; all 125 channels
+    at once in the axes' cube (runner/load.py, tables; engine/kinds.py, stacked), equal to the old seed-by-seed tables
+    bit for bit on every channel. The gate's last 12 BLOCK-tier hits of the new engine (tables, primitive and common)
+    are gone; its notes are the membership weights at the start (the zero test, the sign test, "not 0" by one carry).
 - **The held count:** a family's components are read against no direction of the board, or the clicks see a turn change
   one species into another (David's G3 findings). OPEN: which vertices the one plan lays.
 
