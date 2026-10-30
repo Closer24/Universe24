@@ -69,7 +69,7 @@ What is open stands by name in section 6 of [docs/ARCHITECTURE.md](docs/ARCHITEC
 
 ## Contributing
 
-Contributions are welcome, through forks and pull requests. A physics change starts from the law's line in [docs/ALGEBRA.md](docs/ALGEBRA.md), on the owner's word, the old clause kept by name and dated, and every change runs `python tools/check.py`. The rules and the checks are in [CONTRIBUTING.md](CONTRIBUTING.md). An error in a derivation, a disagreement with a measurement or a reproduction that fails is reported through the issue template, as [CONTRIBUTING.md](CONTRIBUTING.md) describes.
+Contributions are welcome, through forks and pull requests. A physics change starts from the law's line in [docs/ALGEBRA.md](docs/ALGEBRA.md), on the owner's word, the changed line holding its new wording alone, and every change runs `python tools/check.py`. The rules and the checks are in [CONTRIBUTING.md](CONTRIBUTING.md). An error in a derivation, a disagreement with a measurement or a reproduction that fails is reported through the issue template, as [CONTRIBUTING.md](CONTRIBUTING.md) describes.
 
 ## Licence and citation
 
