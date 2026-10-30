@@ -2,14 +2,20 @@
 square found by its kinds' character, and each refusal named."""
 
 import itertools
+import json
+from pathlib import Path
 
 import numpy as np
 
 from tensor24.main import made as joint
+from tensor24.runner import load as loading
 from tensor24.runner.board import board
 from tensor24.runner.files import AXES, held_departures, sites_of, vocabulary
 from tensor24.runner.load import geometry, load, star
 from tests import frame
+
+UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
+GEARED = loading.geared
 
 SHAPE = (3, 4, 5)  # a board of sides that differ, so no two axes are taken for each other
 TRAINS = [
@@ -38,6 +44,12 @@ def loaded(made, trains, gears=()):
 
 def no_room(*args, **kwargs):
     raise MemoryError("no room")
+
+
+def off(universe, trains, spokes):
+    """The audit's mutant loader: every row's teeth at rest one den Gamma^2 more than the Spokes' grips."""
+    (rest, *ones), clock, stretch, grip = GEARED(universe, trains, spokes)
+    return (rest + grip, *ones), clock, stretch, grip
 
 
 def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_each_refusal(monkeypatch):
@@ -69,6 +81,20 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     )  # the last train's last row
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1 and not rd.any()
     assert not any(np.shares_memory(x, y) for x, y in pairs) and not len(held.potential[0])
+    integers = json.loads(UNIVERSE.read_text(encoding="utf-8"))["integers"]
+    universe, rate = {"integers": integers, "trains": TRAINS}, integers["full_rate"]
+    # den Gamma^2 from the files' integers, and the star's Spokes, counted
+    grip, spokes = integers["den"] * rate * rate, len(frame.spokes(len(SHAPE)))
+
+    def pinned():  # every row's teeth at rest 6 den Gamma^2, each grip den Gamma^2, and s, T_k and T_d at 1
+        _, _, _, grips, (rest, *ones), *_ = loading.laid_out(universe, list(SHAPE), held)
+        at_one = all((x == 1).all() for x in ones)
+        return at_one and (rest == spokes * grip).all() and (grips == grip).all()
+
+    assert pinned()
+    with monkeypatch.context() as patch:
+        patch.setattr(loading, "geared", off)
+        assert not pinned()
     for kinds in [*sorted(set(itertools.permutations(SQUARE))), LIKE]:
         held, found = loaded(made, [*TRAINS, {"name": "metric", "kinds": list(kinds), "part": 1}])
         assert found == [] and held.trains.square.tolist() == [0] * len(TRAINS) + [int(kinds != LIKE)]
