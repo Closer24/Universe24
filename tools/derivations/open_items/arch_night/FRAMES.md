@@ -50,19 +50,19 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 
 ## 3. Term 5, the metric's push: the books' form at dial 2 [DERIVED by the method (the Boss, 22:0x UTC): the fourth text PASSED by the final mathematician (eight minors), the fifth text (TERM5_FIFTH.md) PASSED by the final physicist on his two items at k0 = Spokes x senses = 12 (boss-derive 9fd820527, readers/t5f_phys/REPORT2.md; at k0 = 1 not gravity), the mathematician not re-reading the fifth text and the end's new pair reading it; BUILT/live as B2b df4fa644c on the Boss's frame of 19:2x UTC, with its price, NOT_CLOSED 30]
 
-- Form (the deriver's derivation from the act's own energy, TERM5_FIFTH.md to follow): H = (1/2) W v_in v_out +
-  (1/2) SUM_Mesh grip Delta^2 with W = rest + k0 c00 read into every row but the 00 and grip = grip_rest + ii at
-  both ends; the books close iff every slot is pushed by -dH/d slot: the 00 slot by k0 times the sum over every row
-  but the 00 of sigma_in x sigma_out (the momenta in and out in rest-dial turns, swap-symmetric; as built, over the
-  rows on the force's path alone, the price below), each ii slot by
-  minus the sum over every row of its two Meshes' stretches squared at the now slot, (a(x + e_i) - a(x))^2 +
-  (a(x) - a(x - e_i))^2, each halved by the drive's dial 2 on the pushed rows with the remainder kept in r_d; the jk
-  and 0i slots pushed by nothing (nothing reads them). No strength: the factor is 1; the universe's "push" is 1
-  (gravity) or 0 (none). The read's factor k0 is 1 as built (the S^2 the fourth text put in the push belongs to the
-  00 slot's read); GR's gamma = 1 for light needs k0 = Spokes x senses = 12 (light's h_ii / h_00 144 at 1, 1 at 12,
-  measured 132 and 0.92): BUILT in B2b (df4fa644c) on the Boss's yes of 19:2x UTC; Big Pic reads k0 = 12 as the
-  star's unit, derived and not a strength, for the owner to confirm as a unit and not to choose as a value
-  (NOT_CLOSED 26).
+- Form (the deriver's derivation from the act's own energy, TERM5_FIFTH.md to follow): H = (1/2) W v_in v_out + (1/2)
+  SUM_Mesh grip Delta^2 with W = rest + k0 c00 read into every row but the 00 and grip = grip_rest + ii at both ends;
+  the books close iff every slot is pushed by -dH/d slot: the 00 slot by k0 times the sum over every row but the 00 of
+  sigma_in x sigma_out (the momenta in and out in rest-dial turns, swap-symmetric; as built, over the rows on the
+  force's path alone, the price below), each ii slot by minus the sum over every row of its two Meshes' stretches
+  squared at the now slot, (a(x + e_i) - a(x))^2 + (a(x) - a(x - e_i))^2, each halved by the drive's dial 2 on the
+  pushed rows with the remainder kept in r_d; the jk and 0i slots pushed by nothing (nothing reads them). No strength:
+  the factor is 1; the universe's "push" is 1 (gravity) or 0 (none), held at load since 996df846f (files.SWITCH
+  refuses any other push by name: "0 or 1, the metric's push off or on: term 5 claims no strength"; the second hostile
+  code reader's 2). The read's factor k0 is 1 as built (the S^2 the fourth text put in the push belongs to the 00
+  slot's read); GR's gamma = 1 for light needs k0 = Spokes x senses = 12 (light's h_ii / h_00 144 at 1, 1 at 12,
+  measured 132 and 0.92): BUILT in B2b (df4fa644c) on the Boss's yes of 19:2x UTC; Big Pic reads k0 = 12 as the star's
+  unit, derived and not a strength, for the owner to confirm as a unit and not to choose as a value (NOT_CLOSED 26).
 - Why this form: the final physicist's two blocking items (the built form adds -eta (v.v); the books open by 588 f
   at every integer strength, 1152 f on the 2K-plan) are both answered by the one derivation from the act's energy,
   with no strength to choose; line 35's "the books fix it" is met. Measured by the deriver on the live act (probe_f):
@@ -74,7 +74,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   (the 00 slot 22 at the crests against 0 in the void after one round, 141 against 29 after five); light's h_xx /
   h_00 1043 permille at k0 = 12 on the built loader; gamma on slow matter waits on term 6's spring; the 0i block's unit
   stays OPEN; the second order in u and the 00 wave in a well as before (frame 2); J5 enters no train's passing, so
-  the matter's exchange with the metric is booked by no click (frame 5; NOT_CLOSED 31).
+  the matter's exchange with the metric is booked by no click (frame 5; NOT_CLOSED 31). Reported, not ruled, for Big
+  Pic's word (David, #2187 6535482726; NOT_CLOSED 32): G2's fourth text NOT PASSED by both its readers, who find
+  that on the slot reading the books' form sources no gravity from matter at rest.
 - The run back under the push, and B2b's price (the first hostile code reader's B1; the Boss's decision of 20:4x UTC;
   NOT_CLOSED 30): the run back under term 5's push holds only while no plan reads a pushed row's momenta (the mirror
   theorem's hypothesis (d)). step.stress reads M_out at the drive's quotient on J1 alone (K1, its remainder dropped),
@@ -134,7 +136,8 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   the form laid from the square's own representation is the alternative, not tonight): the metric clicks nowhere, and
   its exchange with matter is J5's, booked by no click (frame 5); the key's oddness, which the shared birth needs, is
   refused by name when even, its parity read by Rule3's carry at the senses (the code reader's M6, 484fb8d72: an even
-  key misses the pair's books in 8 of 400 rounds at 2^17 and 90 of 400 at 2^12).
+  key misses the pair's books in 8 of 400 rounds at 2^17 and 90 of 400 at 2^12); since 996df846f files.py, ODD's
+  message and load.py give that reason, the pair's two teeth summing to key - 1 (the second reader's 3).
 - Replaced by: the owner's word on the key (odd, or exactly 2 K) and on the form at depth; the Mesh-leg count when
   derived (frame 5); a passing for monomials of four value legs (NOT_CLOSED 29).
 - Choice: S, because it counts each hand's two-round energy change exactly at the same cost as G (0 misses of 71,976)
@@ -174,7 +177,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   div Gamma (the clock's one notch, CHOSEN with its reason, G3 2.4), so its beat is 4 sin^2(omega / 2) = 2 hold f
   |k|^2 / W; light (A1, A1) and the square are untied by the same test; two tied trains exchange through the hands'
   tie (tie x C_yz; x_y, y_z, 1, 1), one strength for every pair with a channel. Strengths: "hold" (1 the unit),
-  "tie"; f and the own factor from den and Gamma; all 0 on the shipped worlds, so nothing shipped can run away.
+  "tie"; f and the own factor from den and Gamma; 0 on the shipped worlds but the frame's own showcase, the click
+  world (hold 1, tie 96000; the mesh world ships hold 1 for frame 7's), each a named exception on the owner's list
+  (PLAN.md's road to main) to "a frame's strengths are 0 in the shipped worlds".
 - Why this form (the physicist's item 1): with its grip the held hand's own spring 2 W plus the six Meshes' 2 W on a
   checkerboard reach 4 W, the window's top, and the vacuum runs away on every board (rounds 196 to 510 with no
   matter; by round 16 with a tied hand at A = 10); without Meshes every mode is the site's, and the room is the
@@ -330,9 +335,16 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   247, and mesh 250,000 leaves it at round 111.
 - Price, named: the vertex's terms are laid at the factor 0 in every world that holds no pair for it, and cost 10 to
   30 per cent a round (the well 0.50 to 0.55 s, the click 0.066 to 0.079 s, the live 0.17 to 0.23 s), changing no
-  record; the mesh world is inside the room only for 125 rounds at this mesh.
-- Test: the load test's mesh plan (the two pushes of one potential; light with no vector hand lays nothing), within
-  its room of 155; the mesh world's run back and its measure above.
+  record; the mesh world is inside the room only for 125 rounds at this mesh. And a role read by place (the second
+  hostile code reader's 4; plans.py:175 and :177): the vertex pairs L and M by part index, so light, of part 2, couples
+  by its first part alone and its second part passes matter untouched in every world (the plan lands on light's row 0
+  alone; the mesh world lays its pulse on the coupled part). The alternative, not tonight: the vertex laid for every
+  part of L against every part of M (NOT_CLOSED 4).
+- Test: the load test's mesh plan within its room of 155: each term's factor and target, and since 996df846f its
+  second and third readings the unit, so the two pushes are one potential's (the second hostile code reader's 1: his
+  two mutants, a cubic vertex and the third reading set to the first, passed it before and fail it now); light with
+  no vector hand lays nothing; the unit laid as -1, the readings' last row, as the other plans lay it (his 5, no
+  record moving); the mesh world's run back and its measure above.
 - Replaced by: the Mesh-leg count (frame 5) and G3's plan.
 - Choice: the gradient form, because it is the one stable light-matter vertex the readers found and the one the
   tables allow; alternative: a value vertex light-matter (tachyonic, refused).

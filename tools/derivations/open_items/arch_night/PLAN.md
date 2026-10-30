@@ -35,7 +35,8 @@ by the loader, so the owner plays with the files in the morning, not the code.
    "rate" and "books" lines stay what the records read before (no run writes them), so the old readers read NOT READ
    by name on a 1.3 record and nothing of theirs is edited tonight.
 4. **The loader's new plans** (B2, B5), laid from the kinds' tables and the universe's "chosen" block, three new
-   keys, each a whole number of at least 0, 0 on the three shipped worlds: `"hold"` (the held hand's tie), `"tie"`
+   keys, each a whole number of at least 0, 0 on the three worlds shipped then (the click and mesh worlds later ship
+   their frames' strengths as showcases, the owner's list): `"hold"` (the held hand's tie), `"tie"`
    (the hands' tie at the Node-clock), `"mesh"` (the gradient vertex through the Mesh). FRAMES.md has each form.
 5. **The run tool and the decode tool** keep their command lines.
 6. **Term 5 tonight** (the final physicist's two blocking items answered by the deriver's derivation from the act's
@@ -45,17 +46,33 @@ by the loader, so the owner plays with the files in the morning, not the code.
 
 ## The order (dependencies first), with each commit's change, test and probe
 
-State at 22:2x UTC (the architect who took over): pushed on origin/node-live 87f88322d, in order: 0 (f5e6486c8), C1
-(b10d7d008), C2 (6b77872dc), B1 (c967980d0), A1 (d6ec46ff0), C3 (ac3085db4, the hand-per-quantum probe), A1b
-(939fa65a7), B2 (c853dee00), B4 (a9f8a440a), A2 (f72067cdf), B2b (df4fa644c), A's docstring commit (e88150989), A's
-folds of B1, M2 and M12 (575973a20), B3 (e8161f301, the click world), A3 (36effecd5, term 13 on the edge), C's folds
-(9ccbc6481: M10, M11, M4), A's Algebra line (214739ddf: term 5's half stated once), B's folds (484fb8d72: M1, M3, M4,
-M6, M7, Sofer's measure.py seam and the square card's winding) and B5 (87f88322d, the gradient vertex and the mesh
-world, which closes M5). Every commit of the order below is DONE but the whole; no B2c (David's hat is not tonight's:
-B2c below; FRAMES.md 6). The load test stands at 155, its ceiling. The runs at the head: tensor24 (10 of 10), live
-(100 of 100), well (128 of 128) and mesh (125 of 125) exact; the click world at 9ccbc6481 exact with 4,212 lines and
-the books 0. Now: the second hostile code reader reads f72067cdf..87f88322d; writer C the whole (the five worlds'
-records, the hostile reader's checklist); then the second reader's folds and the candidate (the road to main below).
+State at 23:2x UTC (the architect who took over): pushed on origin/node-live 996df846f, the final head, in order: 0
+(f5e6486c8), C1 (b10d7d008), C2 (6b77872dc), B1 (c967980d0), A1 (d6ec46ff0), C3 (ac3085db4, the hand-per-quantum
+probe), A1b (939fa65a7), B2 (c853dee00), B4 (a9f8a440a), A2 (f72067cdf), B2b (df4fa644c), A's docstring commit
+(e88150989), A's folds of B1, M2 and M12 (575973a20), B3 (e8161f301, the click world), A3 (36effecd5, term 13 on the
+edge), C's folds (9ccbc6481: M10, M11, M4), A's Algebra line (214739ddf: term 5's half stated once), B's folds
+(484fb8d72: M1, M3, M4, M6, M7, Sofer's measure.py seam and the square card's winding), B5 (87f88322d, the gradient
+vertex and the mesh world, which closes M5), A's docstrings (7dcb31607: state.py's Plan, Layout.mesh, the Board line
+and Click, the second reader's 6, A's part) and B's last folds (996df846f: the second reader's 1, 2, 3, 5 and 6, B's
+part). Every commit of the order below is DONE but the whole; no B2c (David's hat is not tonight's: B2c below;
+FRAMES.md 6). The load test stands at 155, its ceiling. The checks at 996df846f: gate5 0 refusals with the same 6
+notes; the full check exit 0, 27 passed; tensor24 10 of 10, live 100 of 100, well 128 of 128 and mesh 125 of 125, each
+exact, digests 540e503cad44, cfef203d5dd5, 05586b5db17f and 00fd62494c9a, every record and ledger byte-identical to
+87f88322d's; the click world exact at 9ccbc6481 with 4,212 lines and the books 0, its 5,000 rounds running at
+996df846f (its line to follow). Now: a third hostile code reader on 87f88322d..996df846f, then the candidate (the road
+to main below).
+
+The second hostile code reader read f72067cdf..87f88322d (scratchpad/hcr2/REPORT.md: no BLOCKING, seven MINOR). DONE:
+- A (7dcb31607): his 6, A's part, state.py's docstrings saying what the loader lays.
+- B (996df846f): his 1, the vertex's load test asserting each term's second and third readings the unit (his two
+  mutants, a cubic vertex and the third reading set to the first, now fail it); his 2, files.SWITCH (a whole number
+  that is its own square) refusing by name any push other than 0 or 1, "0 or 1, the metric's push off or on: term 5
+  claims no strength"; his 3, the odd key's reason stated as the pair's two teeth summing to key - 1 in files.py, ODD's
+  message and load.py; his 5, the unit laid as -1, the readings' last row, in plans.pushing and plans.meshing, the same
+  row, no record moving; his 6, B's part, files.py's Board line naming the six CHOSEN strengths and examples/README
+  the five worlds.
+- The architect: his 4, light's second part taking no gradient vertex, named as a price (FRAMES.md 7; NOT_CLOSED 4);
+  his 7, the documents' numbers given as they stand and the two showcases put on the owner's list.
 
 The first hostile code reader read origin/main..f72067cdf (scratchpad/hcr1/REPORT.md: one BLOCKING, thirteen MINOR).
 DONE, every item folded by its writer, each with its test in the file's room:
@@ -299,10 +316,10 @@ not constant: the strong tie beats on two normal modes, so the text's "tied hand
   two tied hands (T1, T2, part 1): the giver laid as a line hand at its turning point, a = b = (A, 0, 0) on T1 at
   every site, the taker at 0; every edge tooth at the dial's middle, which on the edge form is s = 0, the format's
   default (the old act's r = W div 2 is s = 0 on a still clock, EDGE2's s = 4 r - D; the coupling family's
-  mathematician's 3b: the room exists only for a held tooth born there, and the probe runs the no at s = -D, where
-  the turn is off at round 1 for any tied matter); A within the room the physicist measured (hold A^2 at most 0.45 quantum at peak, two
-  trains sharing it: 2 hold A^2 below Gamma div 4), A = 32 at Gamma 10,000 (1024 of 1250; 0.2 quantum at peak);
-  "chosen": key K, push 0, notch 0, hold 1, tie 12000 (a tenth of the tied spring 2 hold f = 120000: the pair's
+  mathematician's 3b: the room exists only for a held tooth born there, and the probe runs the no at s = -D, where the
+  turn is off at round 1 for any tied matter); A within the room the physicist measured (hold A^2 at most 0.45 quantum
+  at peak, two trains sharing it: 2 hold A^2 below Gamma div 4), A = 32 at Gamma 10,000 (1024 of 1250; 0.2 quantum at
+  peak); "chosen": key K, push 0, notch 0, hold 1, tie 12000 (a tenth of the tied spring 2 hold f = 120000: the pair's
   stiffness positive), mesh 0; ticks 5000, past ten tied beats (the physicist's rule). The key CHOSEN as the nearest
   odd whole to twice the one-round key the probe measures (the giver's two-round energy change per round over its
   first beat, divided so that about seven keys pass in a beat: a chosen unit of wind below the quantum, Planck's key
@@ -398,23 +415,30 @@ calibre condition).
 
 ## The road to main at the end (ready for the candidate)
 
-- The candidate: node-live's head once the second hostile code reader's folds land (it reads f72067cdf..87f88322d
-  now; the first reader's are DONE). main has not moved since 2bcf315b6 unless the Boss says so, so the candidate
-  fast-forwards. The Boss pushes it to tensor24-review; the writer reads the sha for faking and posts the approval;
-  main moves, no force.
+- The candidate: node-live's final head 996df846f (the first and second readers' folds DONE; a third reader on
+  87f88322d..996df846f now, his folds if any before the sha goes). main has not moved since 2bcf315b6 unless the Boss
+  says so, so the candidate fast-forwards. The Boss pushes it to tensor24-review; the writer reads the sha for faking
+  and posts the approval; main moves, no force.
 - The checks at the candidate's sha: `CHECK_BASE=origin/main python tools/check.py --full` exit 0; the hook's gate 0
   refusals, its notes listed (the KEYS notes for key, push, notch, hold, tie and mesh; B2's INDICATORs; the load test's
   PINs) for Sofer; the five worlds run by the run tool, each run back exact (tensor24, live, well, click, mesh), their
-  digests beside the sha; the click world's books 0 at every round and site.
+  digests beside the sha; the click world's books 0 at every round and site. At 996df846f: gate5 0 refusals with the
+  same 6 notes; the full check exit 0, 27 passed; tensor24, live, well and mesh exact at the digests above, every
+  record and ledger byte-identical to 87f88322d's; the click world's 5,000 rounds running, its line to follow.
 - For the owner's word before main, the owner's list:
   - M8 (the first hostile code reader): tests_shape's ROOM rises against main, frame 230 -> 237, engine 202 -> 300,
-    load 113 -> 155 (its ceiling), run 285 -> 295, and the decoder lowered 600 -> 572 (the files test 310 at main's
-    310); the figures at 87f88322d, to be re-read at the candidate's sha. ARCHITECTURE section 4 says a ROOM is not
-    raised with a code change; these stand under the Boss's ceilings of the night, named and read by Sofer, not
-    hidden, and main takes them only on the owner's word (or the writer's and Sofer's, as section 4 names them).
+    load 113 -> 155 (its ceiling, by B5), run 285 -> 295 (by B's fold 484fb8d72), and the decoder lowered 600 -> 572
+    (the files test 310 at main's 310); the figures re-read at 996df846f from tools/tests_shape.py against
+    origin/main, unchanged. ARCHITECTURE section 4 says a ROOM is not raised with a code change; these stand under the
+    Boss's ceilings of the night, named and read by Sofer, not hidden, and main takes them only on the owner's word
+    (or the writer's and Sofer's, as section 4 names them).
   - M11: schema.MINOR = len(ADDED) at 3, a count behind a length with no cheap reading from the schema's structure
     (ARCHITECTURE section 6 tied reading it from the schema to 1.3); writer C names it open in schema.py's Algebra
     line (9ccbc6481).
+  - The two showcases, named exceptions to "a frame's strengths are 0 in the shipped worlds" (the second hostile code
+    reader's 7): the click world ships hold 1 and tie 96000 (frame 6) and the mesh world hold 1 and mesh 200000 (frame
+    7), as B3 and B5 planned; the well world's push 1 and notch 120000 are term 5's and term 9's, not a frame's; the
+    other two worlds hold every strength at 0 with key 1 (NOT_CLOSED 11).
   - The frames and prices that need his word, from NOT_CLOSED.md: k0 confirmed as the star's unit (26); the cut and
     the moving clock's road for his morning (2); decision 40 (g) and a potential in the law, the hat's direction (19);
     the metric's self-stress against the two-plan road (30); the jk and 0i slots pushed by nothing (6); the key at
@@ -431,7 +455,9 @@ calibre condition).
   with the kept tooth and the click line, the value legs alone in its passing (no Mesh plan, no J5); term 13
   measured on the edge; the 24's twisted action (law line 94); the record at 1.3; the decoder's basic part
   (clicks.py) and its refusals; runner/plans.py and the five worlds; the before slot read across the Mesh named in
-  the Node-clock's reads (COUNT4 N6); section 6 from NOT_CLOSED.md.
+  the Node-clock's reads (COUNT4 N6); section 6 from NOT_CLOSED.md; runner/plans.py's Home and Test lines, which no
+  line of ARCHITECTURE names yet (scribe_law_check --arch: 1 departure, the first reader's M9 half and the second
+  reader's note), Sofer's mend on the road to main.
 
 ## Timeline (UTC)
 
