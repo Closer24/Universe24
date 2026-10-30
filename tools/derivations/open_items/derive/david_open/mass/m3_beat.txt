@@ -24,3 +24,10 @@
 (f) the lone gear laid at 3: first rounds [3, 0, -2, -1, 0, -1]; period 6 kept: False; neighbours moved: 63, the first at round 2
 (f) the lone gear laid at 1000000: first rounds [1000000, 166666, -500001, -425927, 37036, 289094]; period 6 kept: False; neighbours moved: 63, the first at round 1
 (g) the T1 count along z on a hand, laid on the mode (1, -i, 0) at 10^5, v = W div 400: x after 400 rounds 24812700041447 with no A1 part; 38332 with the A1 part 2 v
+
+(h) the uniform wave at D = W div 400 laid at 1: 20 sign changes in 8000 rounds, a period of 800 rounds and 0/20
+(h) the uniform wave at D = W div 400 laid at 2: 40 sign changes in 8000 rounds, a period of 400 rounds and 0/40
+(h) the uniform wave at D = W div 400 laid at 5: 89 sign changes in 8000 rounds, a period of 179 rounds and 69/89
+(h) the uniform wave at D = W div 400 laid at 10: 134 sign changes in 8000 rounds, a period of 119 rounds and 54/134
+(h) the uniform wave at D = W div 400 laid at 30: 127 sign changes in 8000 rounds, a period of 125 rounds and 125/127
+(h) the uniform wave at D = W div 400 laid at 1000: 127 sign changes in 8000 rounds, a period of 125 rounds and 125/127
