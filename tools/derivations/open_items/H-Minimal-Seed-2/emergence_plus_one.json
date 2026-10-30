@@ -1,5 +1,0 @@
-{"universe": "universe_z2.json", "shape": [5, 5, 5], "intervals": 300,
- "seed": [
-  {"sea": 1},
-  {"at": {"pair": [1655909141, 1655909141], "centre": [1, 0, 0], "sigma_tenths": 0, "quanta": 1}}
- ]}

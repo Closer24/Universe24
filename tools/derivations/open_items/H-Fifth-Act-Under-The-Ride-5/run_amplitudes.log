@@ -1,6 +1,0 @@
-320 {"per_step_matched": 60, "chained_matched": 60, "chained_first_unmatched": null, "turn_intervals": 40, "turned_nodes_forward": 402, "backward_misses": 0, "backward_false_tops": 0, "former_reading_misses": 0, "former_reading_false_tops": 0, "births": 2, "charge_sum": 0, "largest_state_integer_bits": 76}
-
-260 {"per_step_matched": 60, "chained_matched": 60, "chained_first_unmatched": null, "turn_intervals": 60, "turned_nodes_forward": 962, "backward_misses": 0, "backward_false_tops": 0, "former_reading_misses": 0, "former_reading_false_tops": 0, "births": 1, "charge_sum": 0, "largest_state_integer_bits": 76}
-
-200 {"per_step_matched": 60, "chained_matched": 60, "chained_first_unmatched": null, "turn_intervals": 60, "turned_nodes_forward": 1074, "backward_misses": 0, "backward_false_tops": 0, "former_reading_misses": 0, "former_reading_false_tops": 0, "births": 1, "charge_sum": 0, "largest_state_integer_bits": 76}
-

@@ -1,3 +1,0 @@
-{"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/qc2/tests/worlds/world_hole.json", "verdict": "EQUAL", "head": "c7060288e55c497b24f74111e1fd559df24
-{"world": "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/qc2/tests/worlds/world_nature.json", "verdict": "EQUAL", "head": "4e5b63f9ac2f2fa7cc686ad902a42bd5c
-worlds bit for bit with the head: 2 of 2

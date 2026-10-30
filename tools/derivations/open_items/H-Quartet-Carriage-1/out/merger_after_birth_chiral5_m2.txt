@@ -1,1 +1,0 @@
-{"record": "/dev/shm/tmp/qe1/chiral5_m2.json", "pairs merged on their own Link later, by children's row: [merged, born, the delays]": {"2": [4, 4, [1, 1, 1, 1]], "1": [0, 9, []], "0": [0, 2, []], "3": [0, 4, []]}}

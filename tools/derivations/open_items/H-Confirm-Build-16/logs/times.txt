@@ -1,8 +1,0 @@
-world_chiral_60 exit 0 16 s
-world_universe_400 exit 0 19 s
-world_hole_60 exit 0 8 s
-world_pair_3_400 exit 0 6 s
-world_bodies_300 exit 0 25 s
-world_plasma_3_170 exit 0 2 s
-world_ga2_450 exit 0 30 s
-ALL_DONE

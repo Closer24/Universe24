@@ -1,1 +1,0 @@
-{'intervals': 60, 'turns': 619, 'births': 16, 'clicks': 67, 'exact': 60, 'first mismatch at interval': None}

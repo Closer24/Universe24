@@ -1,9 +1,0 @@
-src/event_universe/decoder.py  parent:   engine-head: 
-src/event_universe/gates.py  parent:   engine-head: 
-src/event_universe/events.py  parent:   engine-head: 
-src/event_universe/board.py  parent:   engine-head: 
-src/event_universe/clicks.py  parent:   engine-head: 
-src/event_universe/predicates.py  parent:   engine-head: 
-src/event_universe/circle.py  parent:   engine-head: 
-tools/page.py  parent: 168/42  engine-head: 
-tools/phenomena.py  parent:   engine-head: 

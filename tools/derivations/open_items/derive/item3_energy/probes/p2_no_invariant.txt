@@ -1,0 +1,9 @@
+one gear, W = 1, D = 1 (control): 15 unknowns, 120 exact equations from the engine's tick; kept space dim 3; kept on every transition: E True, Pi False, the fine teeth r True
+one gear, W = 2, D = 1: 30 unknowns, 160 exact equations from the engine's tick; kept space dim 1; kept on every transition: E False, Pi False, the fine teeth r False
+one gear, W = 3, D = 1: 45 unknowns, 200 exact equations from the engine's tick; kept space dim 1; kept on every transition: E False, Pi False, the fine teeth r False
+one gear, W = 3, D = 2: 45 unknowns, 200 exact equations from the engine's tick; kept space dim 1; kept on every transition: E False, Pi False, the fine teeth r False
+one gear, W = 2, D = 2 (s K = 2, not invertible mod W): 30 unknowns, 160 exact equations from the engine's tick; kept space dim 6; kept on every transition: E True, Pi False, the fine teeth r True
+two gears, W = 1, D = 0, grips (1, 2) (control): 15 unknowns, 120 exact equations from the engine's tick; kept space dim 4; kept on every transition: E True, Pi True, the fine teeth r True
+two gears, W = 2, D = 0, grips (1, 2): 60 unknowns, 200 exact equations from the engine's tick; kept space dim 7; kept on every transition: E False, Pi True, the fine teeth r False
+two gears, W = 2, D = 1, grips (1, 1): 60 unknowns, 200 exact equations from the engine's tick; kept space dim 1; kept on every transition: E False, Pi False, the fine teeth r False
+two gears, W = 3, D = 1, grips (1, 1): 135 unknowns, 300 exact equations from the engine's tick; kept space dim 1; kept on every transition: E False, Pi False, the fine teeth r False

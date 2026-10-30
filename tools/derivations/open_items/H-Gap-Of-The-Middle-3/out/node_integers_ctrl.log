@@ -1,1 +1,0 @@
-{"world": "w.json", "intervals": 13, "shape": [3, 3, 3], "width_bits": 125, "host_bits": 63, "counts": {"35": 0, "139": 5, "243": 6}, "same_count_throughout": false, "largest_bit_length": 103, "largest_at": "volume write 1", "largest_interval": 1, "seconds": 0.967, "bits": 128, "within": true}

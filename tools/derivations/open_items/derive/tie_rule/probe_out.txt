@@ -1,0 +1,2 @@
+going per gear: N commutes with the step in 200000 of 200000 cases
+going shared by the Node-clock: in 161202 of 200000 cases

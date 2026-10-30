@@ -1,0 +1,5 @@
+seed 0: locality forward 54 of 60 sites hold, run back 54 of 60 sites hold
+seed 1: locality forward 55 of 60 sites hold, run back 55 of 60 sites hold
+seed 2: locality forward 51 of 60 sites hold, run back 51 of 60 sites hold
+seed 3: locality forward 53 of 60 sites hold, run back 53 of 60 sites hold
+purity (inputs frozen, worlds asked in turn, run back exact): True

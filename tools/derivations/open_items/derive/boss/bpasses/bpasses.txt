@@ -1,0 +1,33 @@
+Rule B's three passes on one board of Node-clocks, in exact integers
+
+1-2. Three pairs at once (frames a = 1, a' = 1 + i; b = 5 + 2i, b' = 5 - 2i)
+  64 runs (each detector's digit over its turn; each birth's digit over its full turn inside a run); (passes, steps) per run: {(3, 39): 64}
+  reads 359424, reads farther than one site: 0; runs where every setting read at a click equals the one the birth drew with: 64 of 64
+  pair 0: born at site 9, tick 0; A at 4 clicks at tick 7, B at 15 at 6; birth turns 58, 58, 116, 116
+    S = -82/29, S^2 = 6724/841 (4 < S^2: True, S^2 < 8: True); E at 00, 01, 10, 11: -21/29, -21/29, -20/29, 20/29
+    A's marginal at 00, 01, 10, 11: 1/2, 1/2, 1/2, 1/2; B's: 1/2, 1/2, 1/2, 1/2; one moves with the other's setting: False
+    its law is the same under all 16 settings of the other pairs: True; alone: True
+    carries back and forward: A's 7 steps each (5 sites, 2 held), B's 6 (6 sites, 0 held)
+  pair 1: born at site 17, tick 3; A at 12 clicks at tick 8, B at 24 at 13; birth turns 58, 58, 116, 116
+    S = -82/29, S^2 = 6724/841 (4 < S^2: True, S^2 < 8: True); E at 00, 01, 10, 11: -21/29, -21/29, -20/29, 20/29
+    A's marginal at 00, 01, 10, 11: 1/2, 1/2, 1/2, 1/2; B's: 1/2, 1/2, 1/2, 1/2; one moves with the other's setting: False
+    its law is the same under all 16 settings of the other pairs: True; alone: True
+    carries back and forward: A's 5 steps each (5 sites, 0 held), B's 10 (7 sites, 3 held)
+  pair 2: born at site 26, tick 1; A at 19 clicks at tick 12, B at 31 at 7; birth turns 58, 58, 116, 116
+    S = -82/29, S^2 = 6724/841 (4 < S^2: True, S^2 < 8: True); E at 00, 01, 10, 11: -21/29, -21/29, -20/29, 20/29
+    A's marginal at 00, 01, 10, 11: 1/2, 1/2, 1/2, 1/2; B's: 1/2, 1/2, 1/2, 1/2; one moves with the other's setting: False
+    its law is the same under all 16 settings of the other pairs: True; alone: True
+    carries back and forward: A's 11 steps each (7 sites, 4 held), B's 6 (5 sites, 1 held)
+  the broken runner (A reads B's setting at B's site and draws there, B reads its part at A's site): S = -82/29, -82/29, -82/29; reads farther than one site: 384 (2 per pair per run)
+
+3. GHZ on one birth: free settings, and a loop of two steps
+  free settings, 8 settings x 64 digits in each order; (passes, steps) per run: {(3, 66): 1024}
+    one-party marginals at every setting triple: 1/2; two-party marginals that move with the third party's setting: 0 of 48
+    Mermin's products: XXX -> [1]; XYY -> [-1]; YXY -> [-1]; YYX -> [-1]; the two orders give one joint law at every setting: True
+  the loop: B's setting from A's outcome by light, C's from B's; (click, light heard) ticks {'A': (6, None), 'B': (12, 11), 'C': (22, 21)}
+    2 x 64 digits (A's, the birth's three), 4 candidate settings carried back at each; (passes, steps) per run: {(3, 66): 1024}
+    digits by the number of histories agreeing at both ends: cause's order (A from its marginal, B from its row given A, C last) {1: 128}; reversed order (C, then B given C, A last) {0: 32, 1: 64, 2: 32}
+    histories over all digits: 128 and 128; the same multiset of (settings, parts) in both orders: True
+    the runner building it in the cause's order: (passes, steps) {(7, 154): 128}; it finds the one history at 128 of 128 digits; in the reversed order it stops at (passes, steps, parts drawn) (4, None, 0)
+    marginals over the histories, at A's setting X then Y: A's 1/2, A's 1/2, B's 1/2, B's 1/2, C's 1/2, C's 3/4
+  reads farther than one site in all the GHZ runs: 0

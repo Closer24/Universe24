@@ -1,5 +1,0 @@
-base hole60 seconds 2 run back {'intervals': 10, 'exact': 10} counts {"births": "8", "body_clicks": "0", "turns": "570", "refused_lay": "56", "refused_orientation": "126", "refused_twist": "105", "refused_stop": "8", "taken": "26778443656756367583872", "booked": "25854797058528791808000", "laid": "0"}
-off hole60 seconds 1 run back {'intervals': 10, 'exact': 10} counts {"births": "8", "body_clicks": "0", "turns": "570", "refused_lay": "56", "refused_orientation": "126", "refused_twist": "105", "refused_stop": "8", "taken": "26778443656756367583872", "booked": "25854797058528791808000", "laid": "0"}
-on hole60 seconds 2 run back {'intervals': 10, 'exact': 10} counts {"births": "8", "body_clicks": "0", "turns": "570", "refused_lay": "56", "refused_orientation": "126", "refused_twist": "105", "refused_stop": "8", "taken": "26778443656756367583872", "booked": "25854797058528791808000", "laid": "0"}
-compare hole60 base against off EQUAL
-compare hole60 base against on EQUAL

@@ -1,0 +1,6 @@
+seed 0: ring, 2,000 pairs at 130 bits: {'T T = -1': 2000, 'Lagrange': 2000, 'S . S = rho rho': 2000, 'axis(T psi) = (rho, -S)': 2000}
+seed 1: ring, 2,000 pairs at 130 bits: {'T T = -1': 2000, 'Lagrange': 2000, 'S . S = rho rho': 2000, 'axis(T psi) = (rho, -S)': 2000}
+seed 2: ring, 2,000 pairs at 130 bits: {'T T = -1': 2000, 'Lagrange': 2000, 'S . S = rho rho': 2000, 'axis(T psi) = (rho, -S)': 2000}
+seed 0: rate lines on the stage 3 engine, random masks: {'beats': 1405, 'ticks read back right at every beat': '1405 of 1405', 'rate lines, written by the beat': 771, 'rate lines, written by the round (k as fire times k)': 1474, 'rounds': 59}
+seed 1: rate lines on the stage 3 engine, random masks: {'beats': 1377, 'ticks read back right at every beat': '1377 of 1377', 'rate lines, written by the beat': 821, 'rate lines, written by the round (k as fire times k)': 1425, 'rounds': 58}
+seed 2: rate lines on the stage 3 engine, random masks: {'beats': 1428, 'ticks read back right at every beat': '1428 of 1428', 'rate lines, written by the beat': 816, 'rate lines, written by the round (k as fire times k)': 1399, 'rounds': 62}

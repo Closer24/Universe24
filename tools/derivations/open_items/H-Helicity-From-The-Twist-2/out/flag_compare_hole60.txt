@@ -1,2 +1,0 @@
-{"flagged log lines": 31248, "helicity lines (meetings passing the twist)": 9549, "other lines": 21699, "head log lines": 21699, "lines equal event for event": [21699, 21699], "counts equal": true, "run back": [{"intervals": 10, "exact": 10}, {"intervals": 10, "exact": 10}]}
-{"births": 17, "births matched to a helicity line": 17, "helicity sign and axis equal to the reader's (the Node line's twist)": 17, "rest births among them": 0, "helicity lines by sign (+, -)": [4827, 4706], "twist bits max": 38}

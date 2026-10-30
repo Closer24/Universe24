@@ -1,0 +1,3 @@
+the exact take on X at x0 depends on Y at the offsets [-2, 0, 2] along x
+the exact take on X at x0 depends on Z at the offsets [-1, 1] along x
+a coupling row at x0 reads x0 and its six neighbours (offsets -1, 0, +1): the take is no coupling row

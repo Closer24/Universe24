@@ -1,1 +1,0 @@
-[{"file": "event_universe/rows.py", "old": "WIDTH = 128  # the law", "new": "WIDTH = int(__import__(\"os\").environ.get(\"WIDEWORD\") or 128)  # the law"}]

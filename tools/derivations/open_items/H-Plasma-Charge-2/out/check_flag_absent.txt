@@ -1,4 +1,0 @@
-world_node.json bit for bit: True d7f2c713f4d6165c 0 0 [98, 114]
-world_plasma_3.json bit for bit: True d49ac1585d8a311a 135 0 [98, 115]
-world_chiral.json bit for bit: True 4c74421432ce4230 819 17 [98, 115]
-every flag absent is David's path bit for bit: True

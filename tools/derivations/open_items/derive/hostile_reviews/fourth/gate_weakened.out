@@ -1,0 +1,12 @@
+the root may import numpy                                              rc=1 selftest: 720 cases, 2 parted
+the root imports anything (root wall off)                              rc=1 selftest: 720 cases, 13 parted
+a root module extra.py listed                                          rc=1 selftest: 720 cases, 2 parted
+unlisted folders not refused (root modules alone)                      rc=1 selftest: 720 cases, 1 parted
+the floor applied even where the tree lacks it                         rc=1 selftest: 720 cases, 1 parted
+the floor's ancestry read backwards                                    rc=1 selftest: 720 cases, 2 parted
+FLOOR moved to HEAD (the tree's own commit)                            rc=0 selftest: 720 cases, 0 parted
+FLOOR moved to 4b39f234b                                               rc=0 selftest: 720 cases, 0 parted
+merge_base returns the tree itself                                     rc=0 selftest: 720 cases, 0 parted
+restored: 0 changes in the worktree
+as adopted:      merge_base -> ('67b765312', '67b76531266c0e19fff13fd253335f0c38a441b9')
+FLOOR = 'HEAD':  merge_base -> ('67b765312, floored at HEAD', '4b39f234b582a871f5c94162b0399af1964e29cf') (HEAD is 4b39f234b)

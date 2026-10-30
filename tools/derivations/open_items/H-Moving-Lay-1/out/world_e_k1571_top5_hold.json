@@ -1,1 +1,0 @@
-{"universe": "universe_middle.json", "shape": [13, 13, 13], "intervals": 40, "seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 1, "centre": [3, 6, 6], "width": 2, "quanta": 125, "wave": [1571, 0, 0], "top": 5}], "control": {"well": {"at": [0, 0, 0], "levels": 0, "radius": 1, "held": true}}}

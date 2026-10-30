@@ -1,1 +1,0 @@
-complete: counts {'EQUAL': 24, 'CONJUGATE': 0, 'APART': 24} by det {'1': {'EQUAL': 24, 'CONJUGATE': 0, 'APART': 0}, '-1': {'EQUAL': 0, 'CONJUGATE': 0, 'APART': 24}} base births 6 credits 352 turns 230

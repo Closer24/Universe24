@@ -1,2 +1,0 @@
-{'seed': [{'lay': 'sea', 'row': 0}, {'lay': 'hole', 'at': [0, 0, 0]}, {'lay': 'at', 'row': 0, 'centre': [1, 0, 0], 'quanta': 1}], 'cube': 5, 'intervals': 40, 'births': 0, 'refused orientation': 552, 'refused lay': 536, 'refused stop': 8, 'turns': 521}
-{'images holding': 48, 'of': 48, 'senses exchanged (det +1 rotations / -1 reflections)': [0, 0], 'apart': []}

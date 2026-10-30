@@ -1,6 +1,0 @@
-e708e778c world_universe_400 against 2ab32b518: APART rows first apart at index 0 (interval 1) fields orbit table, 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world
-e708e778c world_pair_3_400 against 2ab32b518: APART rows first apart at index 0 (interval 1) fields orbit table, 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world
-e708e778c world_plasma_3_170 against 2ab32b518: APART rows first apart at index 0 (interval 1) fields orbit table, 16 keys: G T counts cube den gamma gapped intervals log nodes planes rows run_back turns universe world
-world_universe_400 EQUAL in ['log', 'nodes', 'counts', 'turns', 'run_back'] | rows' fields apart: ['orbit table']
-world_pair_3_400 EQUAL in ['log', 'nodes', 'counts', 'turns', 'run_back'] | rows' fields apart: ['orbit table']
-world_plasma_3_170 EQUAL in ['log', 'nodes', 'counts', 'turns', 'run_back'] | rows' fields apart: ['orbit table']

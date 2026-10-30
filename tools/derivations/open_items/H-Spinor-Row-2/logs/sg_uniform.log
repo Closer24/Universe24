@@ -1,1 +1,0 @@
-{"world": "sg_uniform.json", "ms": 7636, "credits": {"0": 0, "1": 0, "2": 298, "3": 0}, "crossings": {"2,0": 5, "2,4": 5, "0,0": 0, "1,0": 2}, "births": 29, "spinor births": 0, "run back": {"intervals": 10, "exact": 10}, "integers": 116, "bits": 92, "transient": 84, "taken>=booked": true}

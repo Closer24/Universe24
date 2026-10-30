@@ -1,6 +1,0 @@
-src_fr2/
-out/*.stdout
-out/*.stderr
-out/*.done
-out/*.log
-__pycache__/

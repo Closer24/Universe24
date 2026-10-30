@@ -1,0 +1,5 @@
+300 worlds (W 1..9, s 1..3, D -2..3, grips -3..3, J random, T_d 1..9), 1250 round-ticks, 1177 with a drive quantum
+  the local law 2 de_i = 2 (a+ - b)(s T_k q - (r+ - r)) - SUM 2 Phi, at every row and site: 1250 of 1250
+  the flux antisymmetric across every Mesh, Phi(i -> j) = -Phi(j -> i): 1250 of 1250
+  the densities sum to the wind E of P1: 1250 of 1250
+  mutant, the law with no flux: 62 of 1250

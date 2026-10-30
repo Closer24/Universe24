@@ -1,0 +1,65 @@
+1. The turns: 216 candidate matrices of three Spokes, weight 1 on 24 (det 1).
+   each kind a homomorphism of the 24 under T1's product: {'A1': True, 'A2': True, 'E': True, 'T1': True, 'T2': True}
+   classes (order, size): (1, 1), (2, 3), (2, 6), (3, 8), (4, 6)
+     (1, 1) identity; its image on the three axes (S4 -> S3): identity
+     (2, 3) C2 = C4^2: 180-deg turns about the 3 axes; its image on the three axes (S4 -> S3): identity
+     (2, 6) C2': 180-deg turns about the 6 face diagonals; its image on the three axes (S4 -> S3): transposition
+     (3, 8) C3: 120-deg turns about the 4 body diagonals; its image on the three axes (S4 -> S3): 3-cycle
+     (4, 6) C4: 90-deg turns about the 3 axes; its image on the three axes (S4 -> S3): transposition
+   characters (traces of the kinds' whole matrices) on the classes in that order:
+     A1 [1, 1, 1, 1, 1]
+     A2 [1, 1, -1, 1, -1]
+     E  [2, 2, 0, -1, 0]
+     T1 [3, -1, -1, 0, 1]
+     T2 [3, -1, 1, 0, -1]
+   orthonormal over the 24: True; sum of squared dimensions 24
+
+2. Normal subgroups (unions of classes holding the identity, closed under the product):
+   order  1: identity + nothing
+   order  4: identity + (2, 3)
+   order 12: identity + (2, 3) + (3, 8)
+   order 24: identity + (2, 3) + (2, 6) + (3, 8) + (4, 6)
+   V4 = the 180-deg turns about the axes with the identity: order 4; the kernel of the axes' permutation (S4 -> S3) equals V4: True
+   A4 = the kernel of A2 (the sign of the axes' permutation): order 12; V4 inside A4: True; A4 / V4 is the C3 class's image, the 3-cycles of the axes
+   each kind's kernel order: {'A1': 24, 'A2': 12, 'E': 4, 'T1': 1, 'T2': 1} (A1 the 24, A2 A4, E V4, T1 and T2 faithful)
+
+3. The tables (main.made), C[i, k -> m], against the multiplicities (1/24) SUM chi_i chi_k chi_m:
+   tables not 0: 43 of 125; every multiplicity in [Fraction(0, 1), Fraction(1, 1)]; not 0 exactly where the multiplicity is 1: True
+   A1 x A1 -> A1   (exchange: A1:sym)
+   A1 x A2 -> A2
+   A1 x E -> E
+   A1 x T1 -> T1
+   A1 x T2 -> T2
+   A2 x A2 -> A1   (exchange: A1:sym)
+   A2 x E -> E
+   A2 x T1 -> T2
+   A2 x T2 -> T1
+   E x E -> A1 + A2 + E   (exchange: A1:sym, A2:anti, E:sym)
+   E x T1 -> T1 + T2
+   E x T2 -> T1 + T2
+   T1 x T1 -> A1 + E + T1 + T2   (exchange: A1:sym, E:sym, T1:anti, T2:sym)
+   T1 x T2 -> A2 + E + T1 + T2
+   T2 x T2 -> A1 + E + T1 + T2   (exchange: A1:sym, E:sym, T1:anti, T2:sym)
+   ordered pairs (i, k) landing on each kind: {'A1': 5, 'A2': 5, 'E': 9, 'T1': 12, 'T2': 12} (sum 43)
+
+4. Triple products: the multiplicity of each kind in i x j x k (the composite's channels), ordered triples:
+   triples with some kind three times or more:
+     E x E x E = A1 + A2 + 3 E
+     T1 x T1 x T1 = A1 + A2 + 2 E + 4 T1 + 3 T2
+     T1 x T1 x T2 = A1 + A2 + 2 E + 3 T1 + 4 T2
+     T1 x T2 x T2 = A1 + A2 + 2 E + 4 T1 + 3 T2
+     T2 x T2 x T2 = A1 + A2 + 2 E + 3 T1 + 4 T2
+   (T2 three times in T1^3 and T1 three times in T2^3: the multiplicity of spin 1 in 1 x 1 x 1 under SO(3) is 3, the intermediate spins 0, 1, 2; E three times in E^3: S3's 2 x 2 x 2 = 1 + 1' + 3 x 2)
+
+5. The kinds under the A2 twist (K -> A2 x K): orbits and dimensions:
+   {'A1': 'A2', 'A2': 'A1', 'E': 'E', 'T1': 'T2', 'T2': 'T1'}; orbits [('A1', 'A2'), ('E',), ('T1', 'T2')]: three orbits, of dimensions 1, 2, 3 (the kernels' layers S4/A4, S4/V4, S4)
+
+6. The double cover (twin kinds), floats only to name the irrational character values:
+   2O: 48 unit quaternions, closed: True; 8 classes, sizes [1, 1, 6, 6, 6, 12, 8, 8]
+   E1/2 [2.0, -2.0, 1.41421, -1.41421, 0.0, 0.0, 1.0, -1.0] norm 1.000
+   E5/2 [2.0, -2.0, -1.41421, 1.41421, 0.0, 0.0, 1.0, -1.0] norm 1.000
+   G3/2 [4.0, -4.0, 0.0, 0.0, -0.0, -0.0, -1.0, 1.0] norm 1.000
+   so three twin kinds of dimensions 2, 2, 4 (4 + 4 + 16 = 24); E1/2 and E5/2 take +-sqrt 2 = +-1.41421 on the 90-deg turns' lifts, a value outside Q(i), so neither is a kind of Gaussian twin hands alone; their sum, with 0 there, is rational
+   2T (lifts of A4): 24 elements, 7 classes, sizes [1, 1, 6, 4, 4, 4, 4]
+   check: chi(2') + chi(2'') = chi(G3/2) on all 24 lifts: True; |chi(2')|^2 averaged 1.000000 (irreducible); chi(2') takes [(-2-0j), (-0.5-0.86603j), (-0.5+0.86603j), 0j, (0.5-0.86603j), (0.5+0.86603j), (2+0j)]
+   its natural doublet 2: [2.0, -2.0, 0.0, 1.0, -1.0, 1.0, -1.0]; 2' = 2 x 1' and 2'' = 2 x 1'' take omega and omega^2 times these on the 120-deg lifts: values outside Q(i), so 2' and 2'' come glued as one rational four (the restriction of G3/2), the 1 + 2 pattern again

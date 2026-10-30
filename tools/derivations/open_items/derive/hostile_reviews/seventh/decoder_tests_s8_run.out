@@ -1,0 +1,33 @@
+part A on the head: rc=0 13 passed, 8 deselected in 0.35s
+part B on the head: rc=1 8 failed, 13 deselected in 0.13s
+    fails on the head: test_required_the_wind_is_read_over_every_train_of_the_header[held0]
+    fails on the head: test_required_the_wind_is_read_over_every_train_of_the_header[held1]
+    fails on the head: test_required_the_wind_is_read_over_every_train_of_the_header[held2]
+    fails on the head: test_required_the_books_hold_the_click[broken0]
+    fails on the head: test_required_the_books_hold_the_click[broken1]
+    fails on the head: test_required_the_books_hold_the_click[broken2]
+    fails on the head: test_required_a_k_that_is_no_bit_is_not_read[2]
+    fails on the head: test_required_a_k_that_is_no_bit_is_not_read[-1]
+killed   a label's shape not read (any value fits a str field)  <- test_a_label_holding_no_label_is_not_read
+killed   misfit names the last wrong field  <- test_the_first_misfit_field_is_named
+killed   the order read without the train  <- test_the_order_holds_the_train
+killed   an event's round not checked (site alone)  <- test_an_event_without_its_round_is_not_read
+killed   a click booked again in its laid alone read (G3)  <- test_a_pair_booked_again_in_the_clicks_laid_and_a_click_of_three_ends
+killed   a click with three ends read (G3)  <- test_a_pair_booked_again_in_the_clicks_laid_and_a_click_of_three_ends
+killed   a ledger line's round and train not checked  <- test_a_ledger_line_without_its_round_or_train_is_not_read[round]
+killed   a ledger line's train not checked  <- test_a_ledger_line_without_its_round_or_train_is_not_read[train]
+killed   a holding's lacking windings read (G1)  <- test_a_holding_that_lacks_its_windings_or_a_laid_one_its_kept_reads_not_read[lacking0]
+killed   a laid holding's lacking fields read (G1)  <- test_a_holding_that_lacks_its_windings_or_a_laid_one_its_kept_reads_not_read[lacking1]
+killed   the books read closed where any whole click closes  <- test_one_click_closed_and_one_open_is_not_shown
+killed   a round read whose clicks lines hold more trains than the step's  <- test_a_round_whose_lines_hold_other_trains_or_lack_a_wind_is_not_read
+killed   the clicks lines' wind not checked whole  <- test_a_round_whose_lines_hold_other_trains_or_lack_a_wind_is_not_read
+killed   a JSON value that is no object let through parsed()  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a line that is a list]
+killed   a major that is no whole number read by its value  <- test_a_major_that_is_a_truth_value_is_no_major
+killed   the tool takes four arguments  <- test_the_tool_on_three_arguments_on_a_record_not_read_and_on_ticks_not_read
+killed   the tool reads on past a record not read  <- test_the_tool_on_three_arguments_on_a_record_not_read_and_on_ticks_not_read
+killed   the tool counts a click's unread ticks as read  <- test_the_tool_on_three_arguments_on_a_record_not_read_and_on_ticks_not_read
+18 new-text mutants against the decoder's tests and part A: 0 survived
+
+real	0m19.702s
+user	0m24.807s
+sys	0m2.166s

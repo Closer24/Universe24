@@ -1,1 +1,0 @@
-{"image": 4, "det": -1, "verdict": "APART", "births_base": 20, "births_mirror": 20, "credits_base": 3644, "credits_mirror": 3536, "first_apart_equal": 3, "first_apart_conjugate": 12, "first_state_off_mirror": 5, "table": [1, 1, -1, 1, -1, 1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}

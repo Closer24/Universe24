@@ -1,0 +1,130 @@
+family absorber: [4000, 6000] in 2; 2 files
+    examples/events/clicks/nucleons_box.json
+    examples/events/clicks/nucleons_light.json
+family antineutrino: [6000, 6000] in 3; 3 files
+    examples/events/clicks/nucleons_box.json
+    examples/events/clicks/nucleons_light.json
+    examples/events/neutron_conversion/nucleons.json
+family atom: [1, 1299] in 4; 4 files
+    examples/events/anticoincidence/two_atoms.json
+    examples/events/bell_singlet/born.json
+    examples/events/packet_emission/zeno_atom_content.json
+    examples/events/zeno/zeno_atom.json
+family binding: [2400, 2401] in 11; 11 files
+    examples/events/bell_singlet/born.json
+    examples/events/bell_singlet/spin.json
+    examples/events/charged.json
+    examples/events/clicks/nucleons_box.json
+    examples/events/clicks/nucleons_light.json
+    examples/events/ghz.json
+    examples/events/light.json
+    examples/events/neutron_conversion/nucleons.json
+    examples/events/packet_emission/zeno_atom_content.json
+    examples/events/pair.json
+    examples/events/two_slits/light_x4096.json
+family charge: [6000, 6000] in 13; 13 files
+    examples/events/atom/hydrogen.json
+    examples/events/atom/hydrogen_72M.json
+    examples/events/atom/hydrogen_read3.json
+    examples/events/bell_singlet/born.json
+    examples/events/bell_singlet/spin.json
+    examples/events/charged.json
+    examples/events/conserve/universe_conserve.json
+    examples/events/deuteron.json
+    examples/events/ghz.json
+    examples/events/light.json
+    examples/events/neutron_conversion/nucleons.json
+    examples/events/pair.json
+    examples/events/two_slits/light_x4096.json
+family charged: [3600, 6000] in 1; 1 files
+    examples/events/charged.json
+family dust: [0, 1000] in 3, [0, 6000] in 1; 4 files
+    examples/events/big_bang/universe_big_bang.json
+    examples/events/cycle/universe_cycle.json
+    examples/events/cycle/universe_three_clumps.json
+    examples/events/m20/universe_m19_lay3_g1000.json
+family electron: [3600, 6000] in 2, [4000, 6000] in 6; 8 files
+    examples/events/atom/hydrogen.json
+    examples/events/atom/hydrogen_72M.json
+    examples/events/atom/hydrogen_read3.json
+    examples/events/clicks/nucleons_box.json
+    examples/events/clicks/nucleons_light.json
+    examples/events/conserve/universe_conserve.json
+    examples/events/neutron_conversion/nucleons.json
+    examples/events/pixel/universe_pixel_absorption.json
+family gravity: [6000, 6000] in 13, [999, 1000] in 3; 16 files
+    examples/events/bell_singlet/born.json
+    examples/events/bell_singlet/spin.json
+    examples/events/big_bang/universe_big_bang.json
+    examples/events/charged.json
+    examples/events/clicks/nucleons_box.json
+    examples/events/clicks/nucleons_light.json
+    examples/events/cycle/universe_cycle.json
+    examples/events/cycle/universe_three_clumps.json
+    examples/events/ghz.json
+    examples/events/light.json
+    examples/events/m20/universe_m19_lay3_g1000.json
+    examples/events/neutron_conversion/nucleons.json
+    examples/events/packet_emission/zeno_atom_content.json
+    examples/events/pair.json
+    examples/events/pixel/universe_pixel_absorption.json
+    examples/events/two_slits/light_x4096.json
+family light: [6000, 6000] in 1; 1 files
+    examples/events/big_bang/universe_big_bang.json
+family light_ghz: [6000, 6000] in 1; 1 files
+    examples/events/ghz.json
+family light_pair: [6000, 6000] in 3; 3 files
+    examples/events/bell_singlet/born.json
+    examples/events/bell_singlet/spin.json
+    examples/events/pair.json
+family matter: [4000, 6000] in 8, [666, 1000] in 2; 10 files
+    examples/events/bell_singlet/born.json
+    examples/events/bell_singlet/spin.json
+    examples/events/big_bang/universe_big_bang.json
+    examples/events/charged.json
+    examples/events/cycle/universe_three_clumps.json
+    examples/events/ghz.json
+    examples/events/light.json
+    examples/events/m20/universe_m19_lay3_g1000.json
+    examples/events/pair.json
+    examples/events/two_slits/light_x4096.json
+family neutron: [-4800, 6000] in 3; 3 files
+    examples/events/clicks/nucleons_box.json
+    examples/events/clicks/nucleons_light.json
+    examples/events/neutron_conversion/nucleons.json
+family nuclide: [4004, 6000] in 1; 1 files
+    examples/events/deuteron.json
+family photon: [6000, 6000] in 5; 5 files
+    examples/events/anticoincidence/two_atoms.json
+    examples/events/clicks/nucleons_box.json
+    examples/events/clicks/nucleons_light.json
+    examples/events/conserve/universe_conserve.json
+    examples/events/pixel/universe_pixel_absorption.json
+family proton: [0, 6000] in 7; 7 files
+    examples/events/atom/hydrogen.json
+    examples/events/atom/hydrogen_72M.json
+    examples/events/atom/hydrogen_read3.json
+    examples/events/clicks/nucleons_box.json
+    examples/events/clicks/nucleons_light.json
+    examples/events/conserve/universe_conserve.json
+    examples/events/neutron_conversion/nucleons.json
+family pulse: [6000, 6000] in 2; 2 files
+    examples/events/packet_emission/zeno_atom_content.json
+    examples/events/zeno/zeno_atom.json
+family spin: [6000, 6000] in 2; 2 files
+    examples/events/bell_singlet/born.json
+    examples/events/bell_singlet/spin.json
+train big: 3 in 1; 1 files
+    tools/derivations/open_items/derive/hostile_reviews/ninth/load_raise.py
+train dust: den - den // 97 in 1; 1 files
+    tests/test_the_tensor24_time_gear.py
+train light: 15162856759112389 in 1, DEN in 2; 3 files
+    examples/tensor24/universe.json
+    tools/derivations/open_items/derive/boss/swing_push/act_push.py
+    tools/derivations/open_items/derive/boss/tsym/tsym.py
+train matter: DEN - DEN // 50 in 2; 2 files
+    tools/derivations/open_items/derive/boss/swing_push/act_push.py
+    tools/derivations/open_items/derive/boss/tsym/tsym.py
+train mixed: 2 in 1; 1 files
+    tools/derivations/open_items/derive/hostile_reviews/tenth/load_edges.py
+24 declared names

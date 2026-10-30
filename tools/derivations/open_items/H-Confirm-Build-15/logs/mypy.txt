@@ -1,2 +1,0 @@
-Success: no issues found in 30 source files
-exit 0

@@ -1,0 +1,22 @@
+(1) Fresh uniform draws, every sequence of 5 beats enumerated (room^5 sequences)
+  room 8, sizes (3, 1): go count g = 2, hazard g/room = 1/4 (Born 1/4); first go at t counted (room - g)^(t-1) g room^(5-t) exactly: True; survivors 7776 = (room - g)^5 7776
+  room 8, sizes (2, 1): go count g = 2, hazard g/room = 1/4 (Born 1/3); first go at t counted (room - g)^(t-1) g room^(5-t) exactly: True; survivors 7776 = (room - g)^5 7776
+  room 6, sizes (5, 1): go count g = 1, hazard g/room = 1/6 (Born 1/6); first go at t counted (room - g)^(t-1) g room^(5-t) exactly: True; survivors 3125 = (room - g)^5 3125
+
+(2) The mutant: the dial read at its beats (room = rate, step = -Gamma mod rate), sizes (3, 1)
+  Gamma 1000 rate 377 step 131: hazard of one draw g/room = 94/377 = 0.2493; waiting times over 377 entry phases take 11 values, the longest 11; mean 3.167 (1/h = 4.011); P(wait > 8) = 0.0398 against geometric (1-h)^8 = 0.1008; gaps between goes along the orbit: {3: 312, 8: 44, 11: 19}
+  Gamma 1000 rate 999 step 998: hazard of one draw g/room = 83/333 = 0.2492; waiting times over 999 entry phases take 200 values, the longest 200, never 551; mean 45.420 (1/h = 4.012); P(wait > 8) = 0.7437 against geometric (1-h)^8 = 0.1009; gaps between goes along the orbit: {1: 992, 751: 3}
+  Gamma 1000 rate 401 step 203: hazard of one draw g/room = 100/401 = 0.2494; waiting times over 401 entry phases take 43 values, the longest 43; mean 12.082 (1/h = 4.010); P(wait > 8) = 0.4264 against geometric (1-h)^8 = 0.1008; gaps between goes along the orbit: {2: 380, 41: 8, 43: 11}
+  Gamma 12 rate 12 step 0: hazard of one draw g/room = 1/4 = 0.2500; waiting times over 12 entry phases take 1 values, the longest 1, never 9; mean 1.000 (1/h = 4.000); P(wait > 8) = 0.7500 against geometric (1-h)^8 = 0.1001; gaps between goes along the orbit: {}
+
+(3) The board: a 4 x 4 x 1 board, one gear per site, W 64, the full rate (every tick a beat), sizes (3, 1),
+    so one fresh uniform draw would have the hazard 16/64 = 1/4 exactly; 2,000 seeds of the setting, 60 beats
+  lively: notches up to 1000, D 1, grip 1:
+     first go at beats 1..12, observed/geometric: 508/500 402/375 268/281 224/211 142/158 111/119 69/89 75/67 53/50 32/38 29/28 22/21; after 12: 65/63; never in 60: 0
+     chi-square over 13 bins (12 degrees of freedom; 21.0 is the 5% line) = 12.3; P(go | go the beat before) = 0.254491220934174 against h = 0.25
+  quiet: notches up to 3, D 1, grip 1:
+     first go at beats 1..12, observed/geometric: 490/500 369/375 291/281 227/211 158/158 128/119 101/89 55/67 35/50 33/38 25/28 19/21; after 12: 69/63; never in 60: 0
+     chi-square over 13 bins (12 degrees of freedom; 21.0 is the 5% line) = 12.4; P(go | go the beat before) = 0.24503582395087 against h = 0.25
+  still: no spring, no grip (push 0):
+     first go at beats 1..12, observed/geometric: 502/500 0/375 0/281 0/211 0/158 0/119 0/89 0/67 0/50 0/38 0/28 0/21; after 12: 1498/63; never in 60: 1498
+     chi-square over 13 bins (12 degrees of freedom; 21.0 is the 5% line) = 33924.8; P(go | go the beat before) = 1.0 against h = 0.25

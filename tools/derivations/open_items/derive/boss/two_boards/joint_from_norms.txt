@@ -1,0 +1,6 @@
+settings 00: norms [4, 25, 25, 4] (sum 58), David's [8, 50, 50, 8] over 116: equal True; E = -21/29
+settings 01: norms [4, 25, 25, 4] (sum 58), David's [8, 50, 50, 8] over 116: equal True; E = -21/29
+settings 10: norms [9, 49, 49, 9] (sum 116), David's [9, 49, 49, 9] over 116: equal True; E = -20/29
+settings 11: norms [49, 9, 9, 49] (sum 116), David's [49, 9, 9, 49] over 116: equal True; E = 20/29
+all four equal: True; S = -82/29
+twins with separate hands (a product state), the largest |S| over 36 pairs of hands: 42/29 = 1.4483

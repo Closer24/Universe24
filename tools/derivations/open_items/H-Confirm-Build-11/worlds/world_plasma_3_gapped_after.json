@@ -1,1 +1,0 @@
-{"universe": "universe_gapped_after.json", "shape": [3, 3, 3], "intervals": 400, "seed": [{"lay": "sea", "row": 0}, {"lay": "sea", "row": 4, "quanta": 1, "sense": 1}, {"lay": "sea", "row": 1, "quanta": 1, "sense": -1}]}

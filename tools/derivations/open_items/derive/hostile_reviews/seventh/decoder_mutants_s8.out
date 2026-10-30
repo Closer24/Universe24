@@ -1,0 +1,76 @@
+unmutated: rc=0 46 passed in 0.42s
+killed   the guard jsoned removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a key twice] (7 failing)
+killed   the guard framed removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an empty file] (2 failing)
+killed   the guard headed removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a first line that is no header] (1 failing)
+killed   the guard majored removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an unknown major] (2 failing)
+killed   the guard ended removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[no end] (1 failing)
+killed   the guard kinded removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an unknown kind] (1 failing)
+killed   the guard placed removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[an event without its site] (1 failing)
+killed   the guard shaped removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[NaN where a whole number stands] (5 failing)
+killed   the guard booked removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[a click booked at the click and again at its ends] (2 failing)
+killed   the guard ordered removed from GUARDS  <- test_a_broken_record_is_not_read_with_its_own_cause_and_fails_without_its_guard[the events out of order] (2 failing)
+killed   the guard objects removed from LEDGER_GUARDS  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a blank line] (3 failing)
+killed   the guard standing removed from LEDGER_GUARDS  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a line after neither the step nor the clicks] (2 failing)
+killed   the guard fitted removed from LEDGER_GUARDS  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a wind that is no whole number] (1 failing)
+killed   the guard once removed from LEDGER_GUARDS  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a line at the place of an earlier one] (1 failing)
+SURVIVED a label's shape not read (any value fits a str field)
+    mutant: End's digest 5, the header's engine [1]: read
+    head:   End's digest 5, the header's engine [1]: line 1's engine has not its shape in the schema
+SURVIVED misfit names the last wrong field
+    mutant: a rate line with count 1.5 and k 0.5: line 2's k has not its shape in the schema
+    head:   a rate line with count 1.5 and k 0.5: line 2's count has not its shape in the schema
+SURVIVED the order read without the train
+    mutant: two whole clicks at one round and site, train 1 before train 0: read
+    head:   two whole clicks at one round and site, train 1 before train 0: the events stand out of the schema's order
+SURVIVED an event's round not checked (site alone)
+    mutant: an event without its round: RAISES KeyError: 'round'
+    head:   an event without its round: (None, 'line 2 stands at no whole round and site')
+SURVIVED a click booked again in its laid alone read (G3)
+    mutant: a pair booked at its ends and again in the click's laid: SHOWN
+    head:   a pair booked at its ends and again in the click's laid: line 2's whole click books at the click and again at its ends
+SURVIVED a click with three ends read (G3)
+    mutant: a whole click with three ends: read
+    head:   a whole click with three ends: line 2's whole click's ends number 3, where the schema holds both or none
+SURVIVED a ledger line's round and train not checked
+    mutant: a ledger line without its round: RAISES KeyError: 'round'
+a ledger line without its train: RAISES KeyError: 'train'
+    head:   a ledger line without its round: (None, "the ledger's line 5 stands at no whole round and train, after the step or the clicks")
+a ledger line without its train: (None, "the ledger's line 5 stands at no whole round and train, after the step or the clicks")
+SURVIVED a ledger line's train not checked
+    mutant: a ledger line without its round: (None, "the ledger's line 5 stands at no whole round and train, after the step or the clicks")
+a ledger line without its train: RAISES KeyError: 'train'
+    head:   a ledger line without its round: (None, "the ledger's line 5 stands at no whole round and train, after the step or the clicks")
+a ledger line without its train: (None, "the ledger's line 5 stands at no whole round and train, after the step or the clicks")
+SURVIVED a holding's lacking windings read (G1)
+    mutant: a taken holding without its windings: RAISES KeyError: 'windings'
+    head:   a taken holding without its windings: {'kind': 'NOT READ', 'cause': 'the whole click at round 1, site 0 lacks a field its books are read from', 'first': {'whole clicks': 1, 'read': 0, 'closed': 0}}
+SURVIVED a laid holding's lacking fields read (G1)
+    mutant: a laid holding without its kept: RAISES KeyError: 'kept'
+    head:   a laid holding without its kept: {'kind': 'NOT READ', 'cause': 'the whole click at round 1, site 0 lacks a field its books are read from', 'first': {'whole clicks': 1, 'read': 0, 'closed': 0}}
+SURVIVED the books read closed where any whole click closes
+    mutant: one whole click closed, one open, the ledger agreeing: SHOWN
+    head:   one whole click closed, one open, the ledger agreeing: NOT SHOWN
+SURVIVED a round read whose clicks lines hold more trains than the step's
+    mutant: the step lines hold train 0 alone, the clicks lines trains 0 and 1: {'kind': 'SHOWN', 'cause': 'the books close at every whole click; the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click', 'first': {'whole clicks': 1, 'read': 1, 'closed': 1}, 'second': {'rounds with a click': 1, 'read': 1, 'agree': 1}}
+    head:   the step lines hold train 0 alone, the clicks lines trains 0 and 1: {'kind': 'NOT READ', 'cause': "the books close at every whole click; the ledger's lines are read at 0 of 1 rounds with a click", 'first': {'whole clicks': 1, 'read': 1, 'closed': 1}, 'second': {'rounds with a click': 1, 'read': 0, 'agree': 0}}
+SURVIVED the clicks lines' wind not checked whole
+    mutant: a clicks line without its wind: RAISES TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
+    head:   a clicks line without its wind: {'kind': 'NOT READ', 'cause': "the books close at every whole click; the ledger's lines are read at 0 of 1 rounds with a click", 'first': {'whole clicks': 1, 'read': 1, 'closed': 1}, 'second': {'rounds with a click': 1, 'read': 0, 'agree': 0}}
+killed   a JSON value that is no object let through parsed()  <- test_a_broken_ledger_is_not_read_with_its_own_cause_and_fails_without_its_guard[a line that is a list] (1 failing)
+SURVIVED a major that is no whole number read by its value
+    mutant: a header whose major is true: (None, "line 1's major has not its shape in the schema")
+    head:   a header whose major is true: (None, 'the header holds no major version')
+SURVIVED the tool takes four arguments
+    mutant: the tool on ['r.jsonl', 'l.jsonl', 'extra']: exit 0; stdout 'not read: line 2 is no JSON object with its kind'; stderr tail []
+    head:   the tool on ['r.jsonl', 'l.jsonl', 'extra']: exit 2; stdout ''; stderr tail ['usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]']
+SURVIVED the tool reads on past a record not read
+    mutant: the tool on ['r.jsonl']: exit 1; stdout 'not read: line 2 is no JSON object with its kind'; stderr tail ["AttributeError: 'NoneType' object has no attribute 'of'"]
+    head:   the tool on ['r.jsonl']: exit 0; stdout 'not read: line 2 is no JSON object with its kind'; stderr tail []
+SURVIVED the tool counts a click's unread ticks as read
+    mutant: the tool on ['r.jsonl']: exit 0; stdout "row 15: {'kind': 'NOT READ', 'cause': 'the ledger is absent; the books close at every whole click', 'first': {'whole clicks': 1, 'read': 1, 'closed': 1}}\nthe whole clicks' ticks from the rate lines: 1 read, 0 not read; the last read [0]"; stderr tail []
+    head:   the tool on ['r.jsonl']: exit 0; stdout "row 15: {'kind': 'NOT READ', 'cause': 'the ledger is absent; the books close at every whole click', 'first': {'whole clicks': 1, 'read': 1, 'closed': 1}}\nthe whole clicks' ticks from the rate lines: 0 read, 1 not read, the first not read at round 1, site 0: its Node-clock holds no rate line; the last read []"; stderr tail []
+32 mutants, 17 survived
+
+real	0m29.447s
+user	0m38.096s
+sys	0m3.459s

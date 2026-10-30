@@ -1,0 +1,20 @@
+### src: /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/review_s10/wt/src
+1. a gradient of the A1 at kind 1 of [T1, A1]: named []; the plan equals the naive sum: True
+2. a gradient of the potential's T1 (kind 1): refused True, named ['universe.couplings[0]: a gradient of a train not of A1, whose channel with T1 is unnamed']
+3. a gear laid with the fine tooth 3: a 7, b 8, r 3 (want 7, 8, 3)
+the code right on all three: True
+### src: /dev/shm/tmp/gk_N1/src
+1. a gradient of the A1 at kind 1 of [T1, A1]: named []; the plan equals the naive sum: True
+2. a gradient of the potential's T1 (kind 1): refused True, named ['universe.couplings[0]: a gradient of a train not of A1, whose channel with T1 is unnamed']
+3. a gear laid with the fine tooth 3: a 7, b 8, r 0 (want 7, 8, 3)
+the code right on all three: False
+### src: /dev/shm/tmp/gk_N3/src
+1. a gradient of the A1 at kind 1 of [T1, A1]: named []; the plan equals the naive sum: False
+2. a gradient of the potential's T1 (kind 1): refused True, named ['universe.couplings[0]: a gradient of a train not of A1, whose channel with T1 is unnamed']
+3. a gear laid with the fine tooth 3: a 7, b 8, r 3 (want 7, 8, 3)
+the code right on all three: False
+### src: /dev/shm/tmp/gk_N4/src
+1. a gradient of the A1 at kind 1 of [T1, A1]: named ['universe.couplings[0]: a gradient of a train not of A1, whose channel with T1 is unnamed']; the plan equals the naive sum: False
+2. a gradient of the potential's T1 (kind 1): refused False, named []
+3. a gear laid with the fine tooth 3: a 7, b 8, r 3 (want 7, 8, 3)
+the code right on all three: False

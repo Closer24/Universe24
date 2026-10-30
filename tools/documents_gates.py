@@ -1,4 +1,4 @@
-"""The documents' six gates on the law's text, the engine's document and the repository's words, run by `tools/check.py` among its ratchets on every selection (since 2026-10-24, the tests' audit on the owner's word; to that day the first three by `tests/test_documents.py`, the last by `tests/test_repository_language.py`; the owner's word of 2026-10-04, a perfect algebra; the advisor's proposals, #1793 comment 5974878000): (1) no undated history clause stands in docs/ALGEBRA.md or docs/ENGINE.md beyond the ones `tools/history_allowed.json` lists, and no listed clause has left the text without leaving the list, so the list only shrinks; (2) every number of `tools/numbers.json` stands in one of its canonical forms where the table names it and in none of its forbidden forms in the two documents; (3) every number the table derives by a script of `tools/derivations/` is that script's output to the digits named; (4) every heading of docs/*.md, README.md and CHANGELOG.md is in sentence case and no run of three or more all-caps words stands in their prose or in the docstrings, comments and strings of src/, tools/ and tests/ (the owner's word of 2026-09-30); (5) ENGINE.md's "The engine is N modules" counts the Python files of src/event_universe beside __init__.py; (6) every tracked or new text file holds ASCII letters only (the repository's language is English).
+"""The documents' six gates on the law's text, the architecture document and the repository's words, run by `tools/check.py` among its ratchets on every selection (since 2026-10-24, the tests' audit on the owner's word; to that day the first three by `tests/test_documents.py`, the last by `tests/test_repository_language.py`; the owner's word of 2026-10-04, a perfect algebra; the advisor's proposals, #1793 comment 5974878000): (1) no undated history clause stands in docs/ALGEBRA.md or docs/ARCHITECTURE.md beyond the ones `tools/history_allowed.json` lists, and no listed clause has left the text without leaving the list, so the list only shrinks; (2) every number of `tools/numbers.json` stands in one of its canonical forms where the table names it and in none of its forbidden forms in the two documents; (3) every number the table derives by a script of `tools/derivations/` is that script's output to the digits named; (4) every heading of docs/*.md, README.md and CHANGELOG.md is in sentence case and no run of three or more all-caps words stands in their prose or in the docstrings, comments and strings of src/, tools/ and tests/ (the owner's word of 2026-09-30); (5) ARCHITECTURE.md's "The engine is N modules" counts the Python files of src/tensor24/engine beside __init__.py (ENGINE.md's until the old documents left the tree, the owner's word of 2026-10-30: "there is the architecture file, there is the algebra file"); (6) every tracked or new text file holds ASCII letters only (the repository's language is English).
 
 Usage: `python tools/documents_gates.py` prints every departure; `python tools/documents_gates.py --history` prints the history clauses standing now in the list's own form, to refresh `tools/history_allowed.json` after a fill that dates or strikes some.
 """
@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCUMENTS = ("docs/ALGEBRA.md", "docs/ENGINE.md")
+DOCUMENTS = ("docs/ALGEBRA.md", "docs/ARCHITECTURE.md")
 ALLOWED, NUMBERS = ROOT / "tools" / "history_allowed.json", ROOT / "tools" / "numbers.json"
 ENTRY = ("README.md", "CHANGELOG.md")  # the entry documents, under gate (4) with docs/*.md
 CODE = ("src", "tools", "tests")  # the folders whose docstrings, comments and strings gate (4) reads
@@ -189,17 +189,17 @@ def capitals(root: Path = ROOT) -> list[str]:
 
 
 def module_count(root: Path = ROOT) -> list[str]:
-    """The departure of gate (5): ENGINE.md's "The engine is N modules" against the Python files of src/event_universe beside __init__.py, the folders' modules their own."""
-    text = (root / "docs" / "ENGINE.md").read_text(encoding="utf-8")
+    """The departure of gate (5): ARCHITECTURE.md's "The engine is N modules" against the Python files of src/tensor24/engine beside __init__.py."""
+    text = (root / "docs" / "ARCHITECTURE.md").read_text(encoding="utf-8")
     stated = re.search(r"The engine is ([a-z-]+) modules", text)
     found = sorted(
-        p.name for p in (root / "src" / "event_universe").glob("*.py") if p.name != "__init__.py"
+        p.name for p in (root / "src" / "tensor24" / "engine").glob("*.py") if p.name != "__init__.py"
     )
     if stated is None or stated.group(1) not in WORDS:
-        return ["docs/ENGINE.md: no sentence 'The engine is N modules' with N a counted word"]
+        return ["docs/ARCHITECTURE.md: no sentence 'The engine is N modules' with N a counted word"]
     if WORDS[stated.group(1)] != len(found):
         return [
-            f"docs/ENGINE.md: 'The engine is {stated.group(1)} modules'; the tree holds {len(found)}: {found}"
+            f"docs/ARCHITECTURE.md: 'The engine is {stated.group(1)} modules'; the tree holds {len(found)}: {found}"
         ]
     return []
 

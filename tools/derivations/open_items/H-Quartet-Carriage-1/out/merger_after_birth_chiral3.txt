@@ -1,5 +1,0 @@
-{"record": "/dev/shm/tmp/qe1/chiral3_p3.json", "pairs merged on their own Link later, by children's row: [merged, born, the delays]": {"3": [1, 1, [1]], "4": [0, 3, []], "1": [2, 2, [4, 3]], "2": [0, 1, []], "0": [0, 1, []]}}
-{"record": "/dev/shm/tmp/qe1/chiral3_p2.json", "pairs merged on their own Link later, by children's row: [merged, born, the delays]": {"0": [0, 2, []], "3": [1, 1, [1]], "1": [0, 2, []], "4": [0, 1, []], "2": [0, 1, []]}}
-{"record": "/dev/shm/tmp/qe1/chiral3_m2.json", "pairs merged on their own Link later, by children's row: [merged, born, the delays]": {"2": [1, 1, [1]], "3": [0, 1, []], "0": [0, 2, []], "1": [0, 1, []]}}
-{"record": "/dev/shm/tmp/qe1/chiral3_m1.json", "pairs merged on their own Link later, by children's row: [merged, born, the delays]": {"0": [0, 1, []], "2": [2, 2, [1, 2]], "3": [0, 2, []], "1": [0, 1, []]}}
-{"record": "/dev/shm/tmp/qc1/chiral3_60.json", "pairs merged on their own Link later, by children's row: [merged, born, the delays]": {"1": [0, 3, []], "0": [0, 2, []], "2": [0, 2, []], "3": [1, 1, [1]], "4": [0, 1, []]}}

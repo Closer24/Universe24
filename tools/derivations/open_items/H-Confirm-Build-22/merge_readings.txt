@@ -1,6 +1,0 @@
-hole: regenerated 69 lines; against engine-5.0-test's: APART (69 lines); against toys-5's: APART (59 lines)
-chiral: regenerated 69 lines; against engine-5.0-test's: APART (69 lines); against toys-5's: APART (59 lines)
-bodies: regenerated 69 lines; against engine-5.0-test's: APART (69 lines); against toys-5's: APART (59 lines)
-hole on 3dc12e307 alone: EQUAL to the committed
-chiral on 3dc12e307 alone: EQUAL to the committed
-bodies on 3dc12e307 alone: EQUAL to the committed

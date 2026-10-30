@@ -1,0 +1,4 @@
+W 64: site 0's fine tooth moves a median 10 teeth a beat (of 64);
+   first go at beats 1..12, observed/geometric: 501/500 254/375 308/281 245/211 178/158 150/119 105/89 64/67 50/50 34/38 29/28 10/21; after 12: 72/63; never in 60: 0; chi-square (12 dof, 5% line 21.0) = 68.2
+W 4096: site 0's fine tooth moves a median 73 teeth a beat (of 4096);
+   first go at beats 1..12, observed/geometric: 501/500 6/375 7/281 9/211 15/158 16/119 16/89 25/67 31/50 16/38 20/28 39/21; after 12: 1299/63; never in 60: 196; chi-square (12 dof, 5% line 21.0) = 25265.8

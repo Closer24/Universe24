@@ -1,8 +1,0 @@
-ruff_check exit 0
-ruff_format exit 0
-mypy exit 0
-record_code_shape exit 0
-engine_gates exit 0
-tests_shape exit 0
-documents_gates exit 0
-CHECKS_DONE

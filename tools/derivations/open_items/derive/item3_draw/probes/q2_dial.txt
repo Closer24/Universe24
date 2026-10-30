@@ -1,0 +1,32 @@
+(1) Over the ticks: the dial's phase over one full period Gamma (every tick, beat or not)
+  Gamma   12 rate   5 gcd   1: residues visited   12 of 12, each [1] times; uniform on [0, Gamma) True
+  Gamma   12 rate   7 gcd   1: residues visited   12 of 12, each [1] times; uniform on [0, Gamma) True
+  Gamma   12 rate   4 gcd   4: residues visited    3 of 12, each [4] times; uniform on [0, Gamma) False
+  Gamma   12 rate   6 gcd   6: residues visited    2 of 12, each [6] times; uniform on [0, Gamma) False
+  Gamma 1000 rate 999 gcd   1: residues visited 1000 of 1000, each [1] times; uniform on [0, Gamma) True
+  Gamma 1000 rate 375 gcd 125: residues visited    8 of 1000, each [125] times; uniform on [0, Gamma) False
+
+(2) At the beats (k = 1, the only ticks where a gear steps and a click can happen): the phase after the beat
+    is the beat carry's remainder, ph' = ph + rate - Gamma, so it lies in [0, rate); between beats it moves by
+    -Gamma modulo rate: a rotation on [0, rate)
+  Gamma   12 rate    5:   250 beats, phases in [0, 4], 5 distinct, step -Gamma mod rate True; P(up) on room Gamma 1.0000, on room rate 0.6000
+  Gamma   12 rate    7:   350 beats, phases in [0, 6], 7 distinct, step -Gamma mod rate True; P(up) on room Gamma 0.8571, on room rate 0.5714
+  Gamma 1000 rate  375: 18750 beats, phases in [0, 250], 3 distinct, step -Gamma mod rate True; P(up) on room Gamma 1.0000, on room rate 0.6667
+  Gamma 1000 rate  999: 49950 beats, phases in [0, 998], 999 distinct, step -Gamma mod rate True; P(up) on room Gamma 0.5005, on room rate 0.5005
+  Gamma 1000 rate  600: 30000 beats, phases in [0, 400], 3 distinct, step -Gamma mod rate True; P(up) on room Gamma 1.0000, on room rate 0.6667
+  Gamma   12 rate   12:   600 beats, phases in [0, 0], 1 distinct, step -Gamma mod rate True; P(up) on room Gamma 1.0000, on room rate 1.0000
+
+(3) The rate not coprime to Gamma, read over the ticks with room Gamma: the up odds for equal parts per start
+  Gamma 12 rate 4 (gcd 4): P(up) over a period, by start phase: ['1/3', '2/3']
+  Gamma 12 rate 6 (gcd 6): P(up) over a period, by start phase: ['1/2']
+  Gamma 12 rate 8 (gcd 4): P(up) over a period, by start phase: ['1/3', '2/3']
+  Gamma 12 rate 5 (gcd 1): P(up) over a period, by start phase: ['1/2']
+
+(4) The rate moved by the count (stage 7b: the count moves the rate), three laws of the rate by the beat count n
+  rate 700 - 37 (n mod 5)                   : 1875 beats, every post-beat phase below that beat's rate True, P(up) on room Gamma 0.6464
+  rate falling 999 - n (n < 400)            : 1890 beats, every post-beat phase below that beat's rate True, P(up) on room Gamma 0.7894
+  rate = Gamma (1 - 1/Gamma)^n, by carries  : 950 beats, every post-beat phase below that beat's rate True, P(up) on room Gamma 0.8274
+
+(5) Two successive draws from the dial at the beats: the pair (c_n, c_n+1) over every start phase,
+    Gamma 1000, rate 377 (coprime, gcd 1), room rate: are the two whethers independent?
+  P(up) = 189/377; P(up, then up) = 2/13 against P(up)^2 = 35721/142129; joint support 4 of 4 outcome pairs over 377 starts, (c_n, c_n+1) on 377 of 142129 pairs

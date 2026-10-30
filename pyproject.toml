@@ -24,9 +24,6 @@ where = ["src"]
 package-dir = {"" = "src"}
 
 
-[tool.setuptools.data-files]
-"share/event-universe/examples" = ["examples/events/*.json"]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--import-mode=importlib -ra"
@@ -45,12 +42,12 @@ extend-exclude = ["papers/spacetime_events", "tools/derivations/open_items", "to
 select = ["E4", "E7", "E9", "F", "I", "B", "UP"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["event_universe"]
+known-first-party = ["tensor24"]
 
 [tool.mypy]
 python_version = "3.14"
 strict = true
-files = ["src/event_universe"]
+files = ["src/tensor24"]
 
 [[tool.mypy.overrides]]
 module = ["matplotlib.*", "mpl_toolkits.*", "PIL.*"]

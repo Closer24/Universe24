@@ -1,0 +1,17 @@
+reach of one tick U = Wz Wy Wx (offsets read): 8 [(-1, -1, -1), (-1, -1, 1), (-1, 1, -1), (-1, 1, 1), (1, -1, -1), (1, -1, 1), (1, 1, -1), (1, 1, 1)]
+offsets of the six Spokes read: []
+largest L1 distance read: 3
+Wx reads [(-1, 0, 0), (1, 0, 0)]
+Wy reads [(0, -1, 0), (0, 1, 0)]
+Wz reads [(0, 0, -1), (0, 0, 1)]
+rotations with an exact Gaussian-rational lift found: 24 of 24
+turns under which each sub-act goes exactly to the sub-act of the turned axis: 24 of 24
+order zyx (x first): reads 8 offsets, largest L1 3 | commutes with 4 of 24 turns
+   the turns it commutes with (rows of the signed permutation matrix): [[(1, 0, 0), (0, 1, 0), (0, 0, 1)], [(1, 0, 0), (0, -1, 0), (0, 0, -1)], [(-1, 0, 0), (0, 1, 0), (0, 0, -1)], [(-1, 0, 0), (0, -1, 0), (0, 0, 1)]]
+order yxz (z first): reads 8 offsets, largest L1 3 | commutes with 4 of 24 turns
+order xzy (y first): reads 8 offsets, largest L1 3 | commutes with 4 of 24 turns
+order xyz (z first): reads 8 offsets, largest L1 3 | commutes with 4 of 24 turns
+order zxy (y first): reads 8 offsets, largest L1 3 | commutes with 4 of 24 turns
+order yzx (x first): reads 8 offsets, largest L1 3 | commutes with 4 of 24 turns
+control 1, the star over the six Spokes (a scalar on the components): reads 6 offsets, largest L1 1 | Spokes read 6 | commutes with 24 of 24 turns
+control 2, the SUM of the three sub-acts (not their product): reads 6 offsets, largest L1 1 | Spokes read 6 | commutes with 24 of 24 turns

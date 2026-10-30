@@ -1,0 +1,31 @@
+ring.py as committed: no refusal | notes: []
+nested tuple unpacking       REFUSED ALLOW:assign to Tuple
+a number 2                   REFUSED ALLOW:constant 2, NUMBER:2
+a number -1 (as -1 *)        stands
+a power a ** 2               REFUSED ALLOW:BinOp **, NUMBER:2, OPERATION:**
+a float                      REFUSED ALLOW:constant 1.0, FLOAT:literal 1.0
+a comparison                 REFUSED ALLOW:Compare, COMPARE:ordering
+an if                        REFUSED ALLOW:If, BRANCH:if
+an if expression             REFUSED ALLOW:IfExp, BRANCH:ternary
+a floor division             REFUSED ALLOW:BinOp //, OPERATION://
+abs()                        REFUSED ALLOW:call abs, CLAMP:abs()
+a list display               REFUSED ALLOW:List
+a for loop                   REFUSED ALLOW:For, LOOP:for
+a generator                  REFUSED ALLOW:GeneratorExp, ALLOW:call tuple, LOOP:comprehension
+a starred unpacking          REFUSED ALLOW:assign to Tuple
+an and                       REFUSED ALLOW:BoolOp
+a lambda                     REFUSED ALLOW:Lambda, ALLOW:call f
+an import of numpy           REFUSED ISOLATE:numpy
+importlib in algebra         REFUSED ALLOW:expression statement Call
+a True                       REFUSED ALLOW:constant True
+a walrus                     REFUSED ALLOW:NamedExpr
+an augmented add             REFUSED ALLOW:AugAssign
+a subscript chain            stands
+dynamic imports in tensor24/__init__.py     stand
+dynamic imports in tensor24/main.py         stand
+dynamic imports in tensor24/runner/x.py     stand
+dynamic imports in tensor24/record/x.py     stand
+dynamic imports in tensor24/decoder/x.py    stand
+dynamic imports in tensor24/readings/x.py   ALLOW:expression statement Call, ALLOW:expression statement Call
+dynamic imports in tensor24/engine/x.py     ALLOW:expression statement Call, ALLOW:expression statement Call
+dynamic imports in tensor24/algebra/x.py    ALLOW:expression statement Call, ALLOW:expression statement Call

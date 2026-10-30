@@ -1,1 +1,0 @@
-{"universe": "universe_toy.json", "shape": [4, 4, 4], "intervals": 400, "seed": [{"lay": "sea", "row": 0}, {"lay": "plasma", "row": 2, "quanta": 1, "pattern": "checker", "flip": [[0, 0, 1]]}]}
