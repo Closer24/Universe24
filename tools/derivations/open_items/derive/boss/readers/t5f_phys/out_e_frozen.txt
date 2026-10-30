@@ -1,0 +1,21 @@
+Probe E: hypothesis (e) on the edge form, the example universe on a cube of 3 (12 rows, 27 sites), whole numbers; the 0i slots laid in [-1000, 1000], standing
+grip at rest 15162856759112389000000, rest teeth 90977140554674334000000; the shipped plan's strength 15162856759112389000; a lone term's factor F = 3790714189778097250000
+A. the mirrored round's (sigma_in, sigma_out) against (-sigma_out, -sigma_in) of the forward round, on the matter's gears over 12 rounds with the clock moving (W at site 0 from 90977140554674334111376 to 90977140554674337363762): mismatches 0 of 1296 reads; strides read: 30 max, 1 of 54 at 0
+B. cases, each run 12 rounds from the same lay: rule (b) [1 passes], rule (e) [1 passes], untick(tick s) = s held of 12, first round back departing (0 none), the metric's counts moved (its own motion with no push, the baseline: 16279231)
+   e1  si(r0)^2 alone -> 00: (b) 1, (e) 0, held 0 of 12, departs at round back 1, metric moved 31134026
+   e2  so(r0)^2 alone -> 00: (b) 1, (e) 0, held 0 of 12, departs at round back 1, metric moved 33863177
+   e3  si(r0) so(r1) alone -> 00: (b) 1, (e) 0, held 0 of 12, departs at round back 1, metric moved 15613221
+   e4  si(r0) D_x(r0) alone -> 0x: (b) 1, (e) 0, held 0 of 12, departs at round back 1, metric moved 16601506
+   s1  si(r0)^2 + so(r0)^2 -> 00: (b) 1, (e) 1, held 12 of 12, departs at round back 0, metric moved 50113698
+   s3  si(r0) so(r1) + so(r0) si(r1) -> 00: (b) 1, (e) 1, held 12 of 12, departs at round back 0, metric moved 15069659
+   s4  (si + so)(r0) D_x(r0) -> 0x: (b) 1, (e) 1, held 12 of 12, departs at round back 0, metric moved 16752145
+   s5  si(r0) so(r0) alone -> 00 (its own partner): (b) 1, (e) 1, held 12 of 12, departs at round back 0, metric moved 22861670
+   n1a (si - so)(r0) a(r0) -> 00 (breaks (b), passes (e): the pair is read as itself): (b) 0, (e) 1, held 12 of 12, departs at round back 0, metric moved 32495830
+   n1b (si - so)(r0) a(r0) -> 0x (passes (b), breaks (e)): (b) 1, (e) 0, held 0 of 12, departs at round back 1, metric moved 33878290
+   b1  si(r0) a(r0) -> 00 (breaks (b) and (e)): (b) 0, (e) 0, held 0 of 12, departs at round back 1, metric moved 22447683
+   b2  (si + so)(r0) a(r0) -> 00 (breaks (b) and (e): the pair is read as its negative): (b) 0, (e) 0, held 0 of 12, departs at round back 1, metric moved 14352653
+   n2a a(0x) a(r0) -> 00 (an odd row's count, one odd leg onto an even row): (b) 0, (e) 0, held 0 of 12, departs at round back 1, metric moved 16700970
+   n2b a(0x) a(r0) -> 0x (the same leg onto an odd row): (b) 1, (e) 1, held 12 of 12, departs at round back 0, metric moved 3254821118655203778
+   n2c a(0x) D_x(r0) -> 00 (an odd row's count times a difference onto an even row): (b) 0, (e) 0, held 0 of 12, departs at round back 1, metric moved 17268414
+   d1  si(r0)^2 + so(r0)^2 -> r0 itself (breaks (d): a matter row pushed by its own strides): (b) 1, (e) 1, held 0 of 12, departs at round back 1, metric moved 16279231
+C. the shipped plan's 76 terms at factor not 0 (0 read an odd row): rule (b) 1, rule (e) 1; its run back on this lay: held 12 of 12

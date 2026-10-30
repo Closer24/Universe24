@@ -1,0 +1,39 @@
+Probe W: the Newtonian well on a cube of 5 (12 rows, 125 sites), the lump held at the centre turning a quarter a round with A = 30, the push's strength 1684761862123598777777 (grip / 9), 600 rounds, whole numbers
+the 0i slots over the run: largest count 45 (the 0i source is the neighbours' pull stride, sigma_out = A / 6 = 5, times their gradient D_i a = A: small beside the 00 well); the jk slots' largest count 0
+the push on the 00 slot a round: at the centre 655035411993655204799697600 (round 0), the six neighbours 145563424887478934399932800 in all, elsewhere 0; over four rounds the centre's [655035411993655204799697600, 655035411993655204799697600, 655035411993655204799697600, 655035411993655204799697600] (period 4); the board's push a round in grips: 52799
+the 00 slot's floor-mean at round 600: 12693066 counts (the torus zero mode, u = 0 permille of rest: the linear regime)
+windows: [start, end) | centre well: mean, min, max | far class (2,2,2) well mean | Poisson residual sum|r| / sum|P - mean P| permille | the books: sum_x |grip_rest Delta S_w + S_P - mean S_P - (dM - mean dM)/4| / sum|S_P - mean| permille
+  [0, 50) | 9472, 0, 15978 | -743 | 73 | 0
+  [50, 100) | 9370, 3538, 15829 | -695 | 82 | 0
+  [100, 150) | 9470, 3667, 15954 | -641 | 102 | 0
+  [150, 200) | 9184, 4234, 14800 | -631 | 56 | 0
+  [200, 250) | 9455, 3263, 15699 | -650 | 110 | 0
+  [250, 300) | 9343, 3534, 13935 | -710 | 117 | 0
+  [300, 350) | 9578, 3202, 14542 | -743 | 133 | 0
+  [350, 400) | 9376, 4384, 16145 | -731 | 128 | 0
+  [400, 450) | 9465, 2761, 15329 | -670 | 95 | 0
+  [450, 500) | 9200, 2985, 14080 | -683 | 76 | 0
+  [500, 550) | 9537, 3729, 14788 | -585 | 64 | 0
+  [550, 600) | 9262, 4131, 14270 | -730 | 84 | 0
+  [0, 100) | 9421, 0, 15978 | -719 | 36 | 0
+  [100, 200) | 9327, 3667, 15954 | -636 | 45 | 0
+  [200, 300) | 9399, 3263, 15699 | -680 | 37 | 0
+  [300, 400) | 9477, 3202, 16145 | -737 | 45 | 0
+  [400, 500) | 9333, 2761, 15329 | -677 | 42 | 0
+  [500, 600) | 9400, 3729, 14788 | -657 | 40 | 0
+  [0, 200) | 9374, 0, 15978 | -678 | 11 | 0
+  [200, 400) | 9438, 3202, 16145 | -709 | 20 | 0
+  [400, 600) | 9366, 2761, 15329 | -667 | 28 | 0
+the shape over rounds [200, 600): the window-summed push at the centre 262014164797462081919879040000, at the six neighbours [9704228325831928959995520000, 9704228325831928959995520000, 9704228325831928959995520000, 9704228325831928959995520000, 9704228325831928959995520000, 9704228325831928959995520000], elsewhere 0
+class | sites | measured well mean (counts) | predicted (Green) | measured / predicted permille | well(class) / well(centre): measured permille, Green permille | ii well mean | -12 ii / 00 permille
+  (0, 0, 0) | 1 | 9402 | 9400 | 1000 | 1000, 1000 | -749 | 955
+  (1, 0, 0) | 6 | 2267 | 2270 | 998 | 241, 241 | -154 | 810
+  (1, 1, 0) | 12 | 686 | 689 | 994 | 72, 73 | -46 | 793
+  (1, 1, 1) | 8 | 111 | 113 | 979 | 11, 12 | -7 | 664
+  (2, 0, 0) | 6 | 283 | 286 | 987 | 30, 30 | -18 | 755
+  (2, 1, 0) | 24 | -105 | -104 | 1008 | -12, -12 | 8 | 982
+  (2, 1, 1) | 24 | -320 | -322 | 994 | -34, -35 | 23 | 870
+  (2, 2, 0) | 12 | -427 | -431 | 992 | -46, -46 | 30 | 856
+  (2, 2, 1) | 24 | -541 | -546 | 991 | -58, -59 | 38 | 849
+  (2, 2, 2) | 8 | -688 | -687 | 1001 | -74, -73 | 48 | 843
+Green's function by class (x N, common denominator 9900000): (0, 0, 0): 257520000, (1, 0, 0): 52920000, (1, 1, 0): 15870000, (1, 1, 1): 2370000, (2, 0, 0): 6420000, (2, 1, 0): -2730000, (2, 1, 1): -7830000, (2, 2, 0): -10380000, (2, 2, 1): -13080000, (2, 2, 2): -16380000

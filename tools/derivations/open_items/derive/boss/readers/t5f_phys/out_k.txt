@@ -1,0 +1,19 @@
+Probe K: the lapse push's pattern on a standing wave, built (K + sum G) against the law's (2K), summed over two periods, whole numbers
+  one-axis mode along x (crest at x = 0 and 3, |c| = 1 at x = 1, 2, 4, 5): 31 rounds of the free act, the matter's stride up to 417 counts a round
+    site (x,y,z) | f | K summed | sum G summed | built 00 push K + sum G | law 00 push 2K | built ii pushes (xx, yy, zz) | law ii pushes
+    x=0 (0, 0, 0) | K 63908448 | sum G 0 | built 63908448 | law 127816896
+    x=1 (1, 0, 0) | K 15971964 | sum G 36927652 | built 52899616 | law 31943928
+    x=2 (2, 0, 0) | K 15965748 | sum G 36903254 | built 52869002 | law 31931496
+    x=3 (3, 0, 0) | K 63832812 | sum G 0 | built 63832812 | law 127665624
+    x=4 (4, 0, 0) | K 15965748 | sum G 36903254 | built 52869002 | law 31931496
+    x=5 (5, 0, 0) | K 15971964 | sum G 36927652 | built 52899616 | law 31943928
+    crest / side in permille: built 1208, law 4001  (the law's follows the mode's square 4 : 1 in the mean; the built form's is nearly even)
+  the well world's mode f = c(x) + c(y) + c(z) on a cube of 6 (f = 6 the crest, f = 0 a void): 31 rounds of the free act, the matter's stride up to 1252 counts a round
+    site (x,y,z) | f | K summed | sum G summed | built 00 push K + sum G | law 00 push 2K | built ii pushes (xx, yy, zz) | law ii pushes
+    f=6 at (0, 0, 0) | K 574689252 | sum G 0 | built 574689252 | law 1149378504
+    f=0 at (0, 2, 2) | K 840 | sum G 73804576 | built 73805416 | law 1680
+    f=2 at (0, 1, 2) | K 63861372 | sum G 73789689 | built 137651061 | law 127722744
+    f=-6 at (3, 3, 3) | K 574888116 | sum G 0 | built 574888116 | law 1149776232
+    f=-1 at (1, 2, 4) | K 15957396 | sum G 110719583 | built 126676979 | law 31914792
+    crest / void: built 7786 permille, law 684153871 permille
+reading: on the law's form the clocks slow where the standing wave's gears move (the antinodes) and not where it only stretches; on the built form a one-axis standing wave slows the clocks almost evenly along the ring: the two forms predict different wells for the shipped well world's own lay, and the text measured none of this

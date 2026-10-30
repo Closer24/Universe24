@@ -1,0 +1,9 @@
+Probe R: the ii slot under a rising clock by the act's own recurrence, dust at stride 30 on a cube of 3, 30 rounds; the act's counts against the recurrence's, whole numbers, no logarithm
+    target u | u permille | act's c00 | recurrence's c00 | act's ii | recurrence's ii | equal | -12 ii / c00 permille (act, recurrence) | the physicist's recurrence: ii, -12 ii / c00
+    1/1000 | 1 | 90977140554674334000 | 90977140554674334000 | -7577640189259400424 | -7577640189259400424 | True | 999, 999 | -7577805753529147711, 999
+    1/100 | 10 | 909771405546743340000 | 909771405546743340000 | -75437719384260429960 | -75437719384260429960 | True | 995, 995 | -75454102531665187882, 995
+    1/50 | 20 | 1819542811093486680000 | 1819542811093486680000 | -150132190125455231422 | -150132190125455231422 | True | 990, 990 | -150196967672015708241, 990
+    1/20 | 50 | 4548857027733716700000 | 4548857027733716700000 | -369898981224443614601 | -369898981224443614601 | True | 975, 975 | -370290251113622748080, 976
+    1/10 | 100 | 9097714055467433400000 | 9097714055467433400000 | -722586179050078360492 | -722586179050078360492 | True | 953, 953 | -724067593188660153631, 955
+    1/5 | 200 | 18195428110934866800000 | 18195428110934866800000 | -1382250275444027327010 | -1382250275444027327010 | True | 911, 911 | -1387594699018910789533, 915
+    reading: the recurrence is the act's own for a uniform board and returns its counts bit for bit; the second order is the ii gear's dial, the two slots' teeth rest + c00, against the 00 gear's rest dial; the physicist's recurrence reads the dial at the round's start with the count's increment and lands within 4 permille

@@ -1,0 +1,18 @@
+Probe L: the law's form of the push (00 <- +12 x 2K, ii <- -2 G_i; jk and 0i as built) beside the built form, on the fourth text's own gamma tests, whole numbers
+L1. G1's dust (cube of 3, stride 30, 30 rounds) on both forms: c00, ii, the text's gamma_slot
+    target u | form | c00 | ii | -12 ii / c00 permille | gamma_slot permille | run back held of 12
+    1/1000 | built | 90977140554674334000 | -7577640189259400424 | 999 | 1001 | 12
+    1/1000 | law | 181954281109348668000 | 0 | 0 | 0 (grips unmoved) | 12
+    1/50 | built | 1819542811093486680000 | -150132190125455231422 | 990 | 1030 | 12
+    1/50 | law | 3639085622186973360000 | 0 | 0 | 0 (grips unmoved) | 12
+    1/5 | built | 18195428110934866800000 | -1382250275444027327010 | 911 | 1337 | 12
+    1/5 | law | 36390856221869733600000 | 0 | 0 | 0 (grips unmoved) | 12
+L2. G3's light against the clock on the dust-pushed metric frozen, at u = 1/50: at rest light's 20 periods 305645, the clock's 10 periods 628057 (permille rounds)
+    form | u permille | grip / grip_rest permille | clock's period^2 ratio | light's period^2 ratio | 1 + gamma permille
+    built | 20 | 980 | 1020 | 1041 | 2050
+    law | 40 | 1000 | 1040 | 1040 | 1000
+    on the law's form the gliding hand (p = rho) leaves the grips alone and 1 + gamma reads 1000: GR's h_ii = 0 for a stiff source; the built form's 2050 is the -eta (v.v) term, not gamma
+L3. the tent of M-7 (slope 100 along z, the hand at rest), strength 1, the pushes at a slope site in units of g^2 = 10000
+    built: 00 48, xx 4, yy 4, zz -4; run back held 12 of 12
+    law: 00 0, xx 0, yy 0, zz -8; run back held 12 of 12
+    the law's form pushes no clock at a static gradient (rho + sum p = 0) and lowers the z grip alone; the built form slows the clock by 48 g^2 and raises the x and y grips (light faster across a tension)

@@ -1,0 +1,37 @@
+Probe S: the push's form on the act at strength 1, whole numbers; built = load.pushing's J = 2T - eta T on T = v (x) v; law = the same formula on the matter's rho and p (ALGEBRA.md line 35), which is 2 v (x) v: 00 <- 2K, ii <- 2 G_i
+K = 12 (si^2 + so^2) summed over the matter's two parts, G_i = (D_i a)^2 (centred differences), per site
+(i) the gliding hand of G1: stride 30 counts a round on part 0 at every site, no gradient (the text's 'dust')
+  round 0
+    at site 0: K 21600, G (x,y,z) [0, 0, 0]; 2 rho 21600, 2 p (x,y,z) [21600, 21600, 21600]
+      built: J00 21600, J_ii [21600, 21600, 21600]  (00 slot pushed +12 J00, each ii by -J_ii)
+      law  : J00 43200, J_ii [0, 0, 0]  (2T - eta T on rho and p: 2K on 00, 2 G_i on ii)
+    board sums: K 583200, sum G 0; built J00 583200, sum built J_ii 1749600; law J00 1166400, sum law J_ii 0
+    the slot ratio -12 (ii push) / (00 push) in permille, i.e. gamma_slot as the text reads it at first order: built 1000, law 0  [sum over the three ii of J_ii / 3 against J00]
+    the matter's own stress: 2 p_i = 2 rho (p = rho, a stiff fluid, w = 1), so by the law's rho + 3p the lapse takes 4 rho and each ii slot rho - p = 0; the built form pushes each ii slot by K = 2 rho: the whole of the text's gamma = 1 on dust
+(ii) the tent of M-7 along z, slope 100 a site, the hand at rest: a slope site (stride 0, D_z a = 200)
+  round 0
+    at site 1: K 0, G (x,y,z) [0, 0, 40000]; 2 rho 40000, 2 p (x,y,z) [-40000, -40000, 40000]
+      built: J00 40000, J_ii [-40000, -40000, 40000]  (00 slot pushed +12 J00, each ii by -J_ii)
+      law  : J00 0, J_ii [0, 0, 80000]  (2T - eta T on rho and p: 2K on 00, 2 G_i on ii)
+    board sums: K 235224, sum G 1440000; built J00 1675224, sum built J_ii -734328; law J00 470448, sum law J_ii 2880000
+    the slot ratio -12 (ii push) / (00 push) in permille, i.e. gamma_slot as the text reads it at first order: built -147, law 2040  [sum over the three ii of J_ii / 3 against J00]
+    the matter's own stress at a slope site: 2 rho = G_z, 2 p_z = G_z, 2 p_x = 2 p_y = -G_z: rho + sum p = 0 (a pure tension, Tolman's zero active mass); the law's lapse push is 0 and the built form's is G_z = 48 g^2 / 12 as M-7 measured
+(iii) the ring's whole mode as a standing wave along x (amplitude 1000 counts at the crest, period 15.28 rounds), the free act (push 0) run 31 rounds, the planes and both forms summed over the rounds (two periods)
+    the matter's stride over the run: up to 417 counts a round
+  summed over 31 rounds
+    at site 0: K 63908448, G (x,y,z) [0, 0, 0]; 2 rho 63908448, 2 p (x,y,z) [63908448, 63908448, 63908448]
+      built: J00 63908448, J_ii [63908448, 63908448, 63908448]  (00 slot pushed +12 J00, each ii by -J_ii)
+      law  : J00 127816896, J_ii [0, 0, 0]  (2T - eta T on rho and p: 2K on 00, 2 G_i on ii)
+    board sums: K 1724550156, sum G 1328956308; built J00 3053506464, sum built J_ii 3844694160; law J00 3449100312, sum law J_ii 2657912616
+    the slot ratio -12 (ii push) / (00 push) in permille, i.e. gamma_slot as the text reads it at first order: built 419, law 256  [sum over the three ii of J_ii / 3 against J00]
+    in the time-mean K ~ sum G (the virial of a free massless wave): the two forms meet; the built 00 push is 2 rho and the law's is 2K: equal only where K = sum G
+(iv) the well world's travelling pulse along x (a near-null bump, c = 1 / sqrt 6 of a site a round), the free act run 12 rounds, both forms summed over the rounds
+    the matter's stride over the run: up to 85 counts a round
+  summed over 12 rounds
+    at site 45: K 762576, G (x,y,z) [586262, 0, 0]; 2 rho 1348838, 2 p (x,y,z) [1348838, 176314, 176314]
+      built: J00 1348838, J_ii [1348838, 176314, 176314]  (00 slot pushed +12 J00, each ii by -J_ii)
+      law  : J00 1525152, J_ii [1172524, 0, 0]  (2T - eta T on rho and p: 2K on 00, 2 G_i on ii)
+    board sums: K 58512132, sum G 54977454; built J00 113489586, sum built J_ii 120558942; law J00 117024264, sum law J_ii 109954908
+    the slot ratio -12 (ii push) / (00 push) in permille, i.e. gamma_slot as the text reads it at first order: built 354, law 313  [sum over the three ii of J_ii / 3 against J00]
+    a null pulse has K = sum G site by site (the text's P5); there the two forms are one, up to the strength
+reading: the built J departs from the law's by -eta (v.v) = sum G - K on the 00 slot and K - sum G on each ii slot; it vanishes on null matter and on the virial mean, and it is the whole of the ii push on the gliding hand and the whole of the 00 push on the static tent: the two states the fourth text measures gamma and the active mass on

@@ -1,0 +1,22 @@
+Probe H: the held lump of probe_w (A = 30, strength grip / 9 = 1684761862123598777777, 600 rounds, the matter's rows reset each round), the ii wells against the Green's function of their own pushes, whole numbers
+strides: the 00 slot at the centre over the last round 42372 counts, the ii slots' largest 3028; the matter's 30 (held)
+the pushes summed over one period of 4 rounds: 00 at the centre 2620141647974620819198790400, at the six neighbours in all 582253699549915737599731200, elsewhere 0
+  ii row 0: at the centre -218345137331218401599899200, at the six neighbours [-8086856938193274133329600, -8086856938193274133329600, 4043428469096637066664800, 4043428469096637066664800, 4043428469096637066664800, 4043428469096637066664800], elsewhere (abs) 0; board sum -218345137331218401599899200
+  ii row 1: at the centre -218345137331218401599899200, at the six neighbours [4043428469096637066664800, 4043428469096637066664800, -8086856938193274133329600, -8086856938193274133329600, 4043428469096637066664800, 4043428469096637066664800], elsewhere (abs) 0; board sum -218345137331218401599899200
+  ii row 2: at the centre -218345137331218401599899200, at the six neighbours [4043428469096637066664800, 4043428469096637066664800, 4043428469096637066664800, 4043428469096637066664800, -8086856938193274133329600, -8086856938193274133329600], elsewhere (abs) 0; board sum -218345137331218401599899200
+the monopoles: 00 3202395347524536556798521600, the three ii in all -655035411993655204799697600: -12 (ii / 3) / 00 = 818 permille (the far ratio a monopole would give; the text's estimate 0.81)
+the same held source's planes over the period: K 136800 (at the centre 129600, at the neighbours 7200), G (x, y, z) [7200, 7200, 7200] (all at the neighbours: at the centre [0, 0, 0])
+  under the law's form the monopoles would be 00 3283200, ii in all -43200: -12 (ii / 3) / 00 = 52 permille; under the built form 818: neither is gamma, both are the holder's
+the shape over rounds [200, 600): each well against the Green's function convolved with its own window-summed push (the scale N grip d0 width = 125 x 15162856759112389000000 x 9900000 x 400)
+class | sites | 00 well: measured mean, predicted | ii well (mean of 3 rows): measured, predicted | -12 ii / 00: measured, predicted permille | ii measured / predicted permille
+  (0, 0, 0) | 1 | 9402, 9400 | -749, -750 | 955, 956 | 999
+  (1, 0, 0) | 6 | 2267, 2270 | -154, -154 | 810, 813 | 994
+  (1, 1, 0) | 12 | 686, 689 | -46, -47 | 793, 803 | 982
+  (1, 1, 1) | 8 | 111, 113 | -7, -7 | 664, 726 | 895
+  (2, 0, 0) | 6 | 283, 286 | -18, -19 | 755, 781 | 954
+  (2, 1, 0) | 24 | -105, -104 | 8, 7 | 982, 919 | 1077
+  (2, 1, 1) | 24 | -320, -322 | 23, 22 | 870, 850 | 1017
+  (2, 2, 0) | 12 | -427, -431 | 30, 30 | 856, 842 | 1008
+  (2, 2, 1) | 24 | -541, -546 | 38, 38 | 849, 837 | 1005
+  (2, 2, 2) | 8 | -688, -687 | 48, 47 | 843, 833 | 1013
+reading: the ii wells follow the Green's function of their own pushes as the 00 well does, so the far ratio 0.84-0.87 is the engine's J on a held body, not a fault of the ii rows; the ratio is the holder's: under the built form the centre's K plane pushes the ii slots (J_ii = K there, the -eta (v.v) term), under the law's form only the neighbours' gradients do
