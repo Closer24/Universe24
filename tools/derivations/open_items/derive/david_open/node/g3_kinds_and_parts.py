@@ -97,12 +97,11 @@ SCALE = 10**40
 
 def arctan_inverse(m):
     """arctan(1 / m) times SCALE by its series, whole numbers."""
-    total, power, j = 0, carry(SCALE, m, 0)[0], 0
+    total, power, j, sign = 0, carry(SCALE, m, 0)[0], 0, 1
     while power:
-        term = carry(power, 2 * j + 1, 0)[0]
-        total += -term if j % 2 else term
+        total += sign * carry(power, 2 * j + 1, 0)[0]
         power = carry(power, m * m, 0)[0]
-        j += 1
+        j, sign = j + 1, -sign
     return total
 
 
@@ -111,10 +110,10 @@ PI = 16 * arctan_inverse(5) - 4 * arctan_inverse(239)  # Machin's formula, pi ti
 
 def sine(x):
     """sin(x / SCALE) times SCALE, by its series."""
-    total, term, j = 0, x, 0
+    total, term, j, sign = 0, x, 0, 1
     while term:
-        total += -term if j % 2 else term
-        j += 1
+        total += sign * term
+        j, sign = j + 1, -sign
         term = carry(carry(term * x, SCALE, 0)[0] * x, SCALE * (2 * j) * (2 * j + 1), 0)[0]
     return total
 
