@@ -3,13 +3,13 @@
   "rule": "BRANCH",
   "file": "tensor24/runner/load.py",
   "detail": "if",
-  "count": 10
+  "count": 1
  },
  {
   "rule": "BRANCH",
   "file": "tensor24/runner/load.py",
   "detail": "ternary",
-  "count": 4
+  "count": 1
  },
  {
   "rule": "CLAMP",
@@ -21,24 +21,6 @@
   "rule": "COMPARE",
   "file": "tensor24/runner/load.py",
   "detail": "ordering",
-  "count": 6
- },
- {
-  "rule": "FAMILY",
-  "file": "tensor24/runner/load.py",
-  "detail": "'A1'",
-  "count": 1
- },
- {
-  "rule": "FAMILY",
-  "file": "tensor24/runner/load.py",
-  "detail": "'T1'",
-  "count": 1
- },
- {
-  "rule": "FAMILY",
-  "file": "tensor24/runner/load.py",
-  "detail": "'gradient'",
   "count": 2
  },
  {
@@ -51,13 +33,13 @@
   "rule": "LOOP",
   "file": "tensor24/runner/load.py",
   "detail": "comprehension",
-  "count": 18
+  "count": 4
  },
  {
   "rule": "LOOP",
   "file": "tensor24/runner/load.py",
   "detail": "for",
-  "count": 7
+  "count": 2
  },
  {
   "rule": "LOOP",
@@ -68,19 +50,7 @@
  {
   "rule": "POSITION",
   "file": "tensor24/runner/load.py",
-  "detail": "held[-1]",
-  "count": 2
- },
- {
-  "rule": "POSITION",
-  "file": "tensor24/runner/load.py",
   "detail": "seeds[0]",
-  "count": 1
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/runner/load.py",
-  "detail": "1 + 1",
   "count": 1
  },
  {

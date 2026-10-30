@@ -12,7 +12,7 @@ from tensor24.engine import step
 from tensor24.engine.state import State
 from tensor24.main import layout, made, ran
 from tensor24.runner.files import sites_of
-from tensor24.runner.load import load, mesh_unit, star
+from tensor24.runner.load import load, star
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 from tensor24.runner.run import ledger_of
@@ -34,13 +34,12 @@ def built(gamma=GAMMA, shape=SHAPE):
 
 
 def world(rng, laid, moving=True):
-    """A state on the layout: light's gears across 2**256, the clock's slot a wave of counts in [0, REACH) with its
-    strides, or still at 0; each fine tooth within its teeth."""
+    """A state on the layout: light's gears across 2**256; the 0i and jk slots at rest; the 00 slot and the ii slots the
+    grips read each a wave of counts in [0, REACH) with its strides, or still at 0; each fine tooth within its teeth."""
     rows, n = len(laid.gearing.rest), laid.nb.shape[1]
     a, b = frame.wide(rng, (rows, n)), frame.wide(rng, (rows, n))
     clock = frame.dense(laid.clock, rows, rows)[0].tolist().index(1)
-    a[clock + 1 : clock + 10], b[clock + 1 : clock + 10] = 0, 0  # the 0i and jk slots at rest
-    # the 00 slot, and the ii slots the grips read, each a wave of counts in [0, REACH) with its strides, or still at 0
+    a[clock + 1 : clock + 10], b[clock + 1 : clock + 10] = 0, 0
     for slot in (clock, clock + 4, clock + 5, clock + 6):
         a[slot] = rng.integers(0, REACH, n).astype(object) * moving
         b[slot] = a[slot] - rng.integers(-(1 << 20), 1 << 20, n).astype(object) * moving
@@ -54,16 +53,17 @@ def reached(laid, s, n):
 
 
 def test_every_coefficient_is_the_files_integers_by_one_formula_the_metric_familys_rows_among_them():
-    """T = 6 den Gamma^2 G^2 at rest for every row, s = 1, no spring (no row holds a term of its own), the force's path
-    (T_k = T_d = 1); every row reads its teeth from the 00 slot of the metric family, the train the file writes."""
+    """T = 6 den Gamma^2 at rest for every row, the Mesh unit 1, s = 1, no spring (no row holds a term of its own), the
+    force's path (T_k = T_d = 1); every row reads its teeth from the 00 slot of the metric family the file writes."""
     u, held, laid = built()
     den, gamma = u["integers"]["den"], u["integers"]["full_rate"]
-    g, spokes = mesh_unit(gamma), len(laid.nb)
+    spokes = len(laid.nb)
     rest, s, kick, drive = (
         np.broadcast_to(x, (len(laid.gearing.rest), 1))[:, 0].tolist() for x in laid.gearing
     )
     rows = len(rest)
-    assert rest == [spokes * den * gamma * gamma * g * g] * rows
+    assert rest == [spokes * den * gamma * gamma] * rows
+    assert set(laid.grip.ravel().tolist()) == {den * gamma * gamma}
     assert s == kick == drive == [1] * rows
     (clock,) = [x.first for x in held.trains if x.square]
     read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
