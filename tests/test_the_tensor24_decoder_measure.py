@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from tensor24.decoder import measure, records
+from tests import frame as board
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
 HEAD = {"kind": "header", "record": "tensor24", "major": 1, "minor": 1, "engine": "built in memory"}
@@ -104,15 +105,17 @@ def test_the_cone_check_reads_each_click_against_the_frames_drawn_outside_its_pa
         found = measure.cone_check(built(lines, head))
         assert (found["kind"], cause in found["cause"]) == ("NOT READ", True), found
     sides = [3, 4, 5]  # the site (x 4 + y) 5 + z, z the fastest
-
-    def site(x, y, z):
-        return (x * 4 + y) * 5 + z
-
-    assert measure.meshes(sides, site(0, 0, 0), site(2, 0, 0)) == 1
-    assert measure.meshes(sides, site(0, 0, 0), site(0, 3, 4)) == 1 + 1
-    assert measure.meshes(sides, site(1, 1, 1), site(1, 1, 3)) == 1 + 1
-    assert measure.past(sides, (1, site(0, 0, 0)), (3, site(0, 3, 4)))  # on the cone: inside
-    assert not measure.past(sides, (1, site(0, 0, 0)), (2, site(0, 3, 4)))
+    near = board.board(tuple(sides))  # the board's own six neighbours: the second reading
+    for a in range(near.shape[1]):
+        far, ring, step = {a: 0}, [a], 0
+        while ring:  # the Meshes from a, one ring of neighbours a step
+            step += 1
+            ring = [b for b in {int(b) for s in ring for b in near[:, s]} if b not in far]
+            far.update(dict.fromkeys(ring, step))
+        for b, meshes in far.items():
+            assert measure.meshes(sides, a, b) == meshes
+            for lag in (meshes - 1, meshes):  # one round short of the cone, and on it
+                assert measure.past(sides, (1, a), (1 + lag, b)) == (lag >= meshes)
 
 
 def rate(site, ks):
@@ -192,9 +195,13 @@ def test_a_duration_is_a_clocks_own_count_read_twice_and_the_twins_count_apart()
         found = measure.twins(built(lines))
         assert (found["kind"], named in found["cause"]) == (kind, True), found
     clocked, _ = measure.faces(built(GROUND + HOME + TRIP))
-    assert measure.elapsed(clocked, A, (10, 5), (50, 5)) == 60
+    first, later, start = HOME[0], HOME[1 + 1], TRIP[0]
+    counted = later["tooth"][1] - first["tooth"][1]  # the clock's own teeth between its two clicks
+    here, there = (first["round"], first["site"]), (later["round"], later["site"])
+    assert measure.elapsed(clocked, A, here, there) == counted
+    elsewhere = (TRIP[1 + 1]["round"], start["site"])  # a place B's clock does not stand at that round
     assert (
-        measure.elapsed(clocked, B, (10, 5), (30, 5))
+        measure.elapsed(clocked, B, (start["round"], start["site"]), elsewhere)
         == measure.NO_READING
         == "compares board ticks, no reading"
     )
