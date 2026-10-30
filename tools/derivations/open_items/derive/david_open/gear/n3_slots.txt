@@ -1,7 +1,0 @@
-1. d = 1: 00 slot -5 = (d - 2) rho + d p; each diagonal slot 5 = rho - p; the diagonal in all 5 = d (rho - p)
-1. d = 2: 00 slot 4 = (d - 2) rho + d p; each diagonal slot 5 = rho - p; the diagonal in all 10 = d (rho - p)
-1. d = 3: 00 slot 13 = (d - 2) rho + d p; each diagonal slot 5 = rho - p; the diagonal in all 15 = d (rho - p)
-1. d = 4: 00 slot 22 = (d - 2) rho + d p; each diagonal slot 5 = rho - p; the diagonal in all 20 = d (rho - p)
-1. d = 5: 00 slot 31 = (d - 2) rho + d p; each diagonal slot 5 = rho - p; the diagonal in all 25 = d (rho - p)
-2. one gear (v 3, g [1, -2, 5], V 4): 00 = 4K - 2V = 10; ii = 2 g_i^2 + 2V = [10, 16, 58]; 0i = -2 v g_i = [-6, 12, -30]; ij = 2 g_i g_j = [-4, 10, -20]
-3. the diagonal in all 84 = 3 (rho - p); the 00 slot = rho + 3p = 10
