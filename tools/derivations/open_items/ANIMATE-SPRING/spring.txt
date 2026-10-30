@@ -1,0 +1,31 @@
+The gear's spring as one operation of the act, on the head's gear step; whole numbers only
+
+The head's teeth W = 23290147981996629504000000; the steady count n = 1000000; g = (W div 400) div n = 58225369954991573; kappa = W div 16
+The four-leg bound, lam above g^2 / (2 kappa); the runs take lam at twice it, at half of it, and at 0
+
+1. The beat at a small swing, x laid at 10^5: sign changes of x over 4000 rounds (the mass's beat)
+   four-leg none           : 64 sign changes
+   four-leg half the bound : 64 sign changes
+   four-leg twice the bound: 64 sign changes
+   One spring at W div 400 beats about every 126 rounds: about 63 sign changes in 4000 rounds
+
+2. Larger swings, x laid at 10^7, 2 x 10^7 and 10^8: does the gear stay, or run away past 10^60?
+   laid at  10000000, four-leg none           : x ran away at round 49; the held count's least past -10^60; the largest local spring past 10^60 thousandths of W
+   laid at  10000000, four-leg half the bound : x ran away at round 205; the held count's least past -10^60; the largest local spring past 10^60 thousandths of W
+   laid at  10000000, four-leg twice the bound: x stays over 4000 rounds, largest |x| 10014118; the held count's least -3112715; the largest local spring 12 thousandths of W
+   laid at  20000000, four-leg none           : x ran away at round 29; the held count's least past -10^60; the largest local spring past 10^60 thousandths of W
+   laid at  20000000, four-leg half the bound : x ran away at round 50; the held count's least past -10^60; the largest local spring past 10^60 thousandths of W
+   laid at  20000000, four-leg twice the bound: x stays over 4000 rounds, largest |x| 20102815; the held count's least -8012335; the largest local spring 43 thousandths of W
+   laid at 100000000, four-leg none           : x ran away at round 15; the held count's least past -10^60; the largest local spring past 10^60 thousandths of W
+   laid at 100000000, four-leg half the bound : x ran away at round 25; the held count's least past -10^60; the largest local spring past 10^60 thousandths of W
+   laid at 100000000, four-leg twice the bound: x ran away at round 14; the held count's least past -10^60; the largest local spring past 10^60 thousandths of W
+   (the bound itself, g^2 / (2 kappa), as a quotient: 3390193706395635371639778501014329 / 2911268497749578688000000)
+   At 10^8 the four-leg term's own spring reaches W at the lay, the gear crosses 0 in about a round, and the
+   local spring climbs past 4 W, where the step x+ - 2 x + x- = -(D / W) x beats no more: the board's limit, not the
+   potential's, which is bounded. A clock needs both: lam above the bound, and every spring far below W.
+
+3. The four-leg term's channel, on a T1 family of three gears at twice the bound, laid along an axis and off it,
+   (10^7, 0, 0) and (6 x 10^6, 8 x 10^6, 0), one length: sign changes of the gears' sum over 4000 rounds
+   through A1, (x . x)^2              : along the axis 95, off it 95
+   the sum of x_i^4, through E and T2 : along the axis 95, off it 66
+   Alike in both directions only through A1: the other channel reads the board's axes.
