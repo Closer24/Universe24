@@ -236,3 +236,22 @@ the draw reads v against T8 in the parts' half-open cells
     seed 20261030, along all six Spokes: joint tenths 79.462 on 81; same half 258598 of 517104, z^2 0.016, below 3.841
     seed 4, along +x: joint tenths 100.416 on 81; same half 43015 of 86184, z^2 0.275, below 3.841
     seed 4, along all six Spokes: joint tenths 100.589 on 81; same half 258320 of 517104, z^2 0.416, below 3.841
+(i) one row's square reads its tooth up to a quarter turn and its sign (the mathematician's NB1):
+    T = 16: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 16 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 2, T/8 = 2
+    T = 32: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 32 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 4, T/8 = 4
+    T = 48: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 48 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 4, T/8 = 6
+    T = 64: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 64 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 8, T/8 = 8
+    T = 128: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 128 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 16, T/8 = 16
+    T = 1024: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 1024 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 128, T/8 = 128
+    at W, a tooth moved by multiples of W/6 (W mod 6 = 0): its square takes at most 2 residues of W over 50 teeth (m = 6, m/4 = 1)
+    at W, a tooth moved by multiples of W/16 (W mod 16 = 0): its square takes at most 4 residues of W over 50 teeth (m = 16, m/4 = 4)
+    at W, a tooth moved by multiples of W/48 (W mod 48 = 0): its square takes at most 8 residues of W over 50 teeth (m = 48, m/4 = 12)
+(j) the held count displaced, matter at rest, every row read (the mathematician's case, on this board):
+    laid 1,000 off n alike, light at rest: the held count's tooth moved in 83592 of 90720 Node-clock rounds, 77976 of them off the grip's lattice; v takes 4 values, at most 4 at one Node-clock; the tenths 129891.600 on 9; 1:1 part 0 44280 of 86400 (expected 43200) z^2 54.000; 1:3 part 0 22896 of 86400 (expected 21600) z^2 103.680; 3:7 part 0 44280 of 86400 (expected 25920) z^2 18578.571
+    laid off n by the generator up to 1,000, light at rest: the held count's tooth moved in 88780 of 90720 Node-clock rounds, 79313 of them off the grip's lattice; v takes 12 values, at most 12 at one Node-clock; the tenths 9246.031 on 9; 1:1 part 0 43327 of 86400 (expected 43200) z^2 0.746; 1:3 part 0 21587 of 86400 (expected 21600) z^2 0.010; 3:7 part 0 28826 of 86400 (expected 25920) z^2 465.434
+    the same, light moving as (f)'s vacuum: the held count's tooth moved in 88799 of 90720 Node-clock rounds, 79409 of them off the grip's lattice; v takes 12 values, at most 12 at one Node-clock; the tenths 9582.172 on 9; 1:1 part 0 43108 of 86400 (expected 43200) z^2 0.391; 1:3 part 0 21556 of 86400 (expected 21600) z^2 0.119; 3:7 part 0 28820 of 86400 (expected 25920) z^2 463.514
+(k) the cells where 8 does not divide T_f (the mathematician's NB2, the physicist's D3): T8 as the fourth text read it, T_f div 8, and as the fifth reads it, the ceiling (T_f + 7) div 8:
+    T_f = W + 1: of the top 16 residues, v at or past T_f div 8 at 1, past the ceiling at 0; with the ceiling, a part of size 0 before one of size 1 drawn at 0 of 16
+    T_f = W + 4: of the top 16 residues, v at or past T_f div 8 at 4, past the ceiling at 0; with the ceiling, a part of size 0 before one of size 1 drawn at 0 of 16
+    T_f = W + 7: of the top 16 residues, v at or past T_f div 8 at 7, past the ceiling at 0; with the ceiling, a part of size 0 before one of size 1 drawn at 0 of 16
+    T_f = W - 3: of the top 16 residues, v at or past T_f div 8 at 5, past the ceiling at 0; with the ceiling, a part of size 0 before one of size 1 drawn at 0 of 16

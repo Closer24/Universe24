@@ -1,13 +1,13 @@
 # G5, the split click's draw: two clocks parting a winding, read by the norm of the meeting's fine teeth
 
-David, 2026-10-30 (the fourth text, 18:xx UTC). It answers Sofer's ask (#2187 6518975579, item 3: "the build has held
+David, 2026-10-30 (the fifth text, 22:xx UTC). It answers Sofer's ask (#2187 6518975579, item 3: "the build has held
 no beat count since G1b ... so the draw needs a source for c on the act. Which gear's tooth or sum is c is yours and
 David's to name"). It follows the owner's words:
 - of 11:1x UTC: derive what the Node-clock needs to close, everything to stand with a hostile mathematician and a
   hostile physicist;
 - of 17:3x UTC, through the Boss (6525992153, item 6): read the split click as two clocks parting a winding;
 - of 16:4x UTC: energy and momentum are read in the clicks' spacetime, not on the board;
-- of 16:2x UTC (6527238774): a deriver checks himself (section 9);
+- of 16:2x UTC (6527238774): a deriver checks himself (section 10);
 - of 17:20 UTC (6528925479 item 2; law line 102 as Sofer entered it on scribe-5, 3474bb609): "Sine is forbidden", no
   circular function in any probe, by a call, by a series or by any construction, lays included.
 
@@ -22,15 +22,29 @@ It reads the act as built on main (0df0e8385), in the law's four layers (Postula
 
 Big Pic read both (6528531569, 17:3x UTC): every reader's item stands, and no reader is wrong. He withdrew his cure,
 the held hand turning round, and named a candidate, not derived: the pointer reads the meeting's own fine teeth through
-their norm. This text builds the draw on that candidate and measures it on the board and on the readers' cases. His
-word of 16:5x UTC (6528150081) names the draw's half-open cells. Section 8 lists how each item and both his words are
-folded, and section 9 how the text checked itself.
+their norm. The fourth text built the draw on that candidate and measured it on the board and on the readers' cases.
+His word of 16:5x UTC (6528150081) names the draw's half-open cells. Section 8 lists how the fourth text folded each
+item and both his words.
 
-The probe, derive/david_open/node/g5_norm.py, is new for this text. Its output, g5_norm.txt, sits beside it: whole
-numbers alone, with no root, logarithm or circular function, about 55 to 60 s. Its board, lays, term 6, statistics and
-draw machinery are g5_draw.py's. g5_draw.py, the third text's probe, stays in the tree for its sections (k), (o), (i)
-and (r), which g5_norm does not redo, and as the third text's record; each place this text cites it says where it reads
-the third text's pointer P.
+The fourth text (toys-5 b68049550) went back to its pair. Both reports went to Big Pic first (David's 6531674887).
+- The mathematician found his three items of the third reading mended and two new ones blocking: the norm reads each
+  tooth only up to a quarter turn and its sign, so the Born condition "rows off the grip's lattice" is met by a case
+  where the draw fails (his NB1); and the edge returns where 8 does not divide T_f (NB2). He added three wording items.
+- The physicist PASSED it, with four corrections: Born's condition worded as sufficient (his D1), the 24 claimed on
+  every kind (D2), the edge where 8 does not divide T_f (D3), and the cold packet's counts (D4).
+
+Big Pic's word (6534141348, item 3): both blocking items stand. NB1 is structural: the pointer reads squares so that
+the mirror and the 24 leave it unmoved, and a square modulo T cannot see a quarter turn of a tooth when 4 divides T,
+so the Born condition takes the scope "off every coarse lattice". NB2: T8 = ceiling(T_f / 8), since T_f follows the
+moving 00 slot and a condition that 8 divides it cannot be laid once. This text keeps the draw, with T8 the ceiling of
+T_f / 8, and mends each item. Section 9 lists where, and section 10 how the text checked itself.
+
+The probe, derive/david_open/node/g5_norm.py, came with the fourth text, and this text adds its sections (i) to (k):
+the fourth text's readers' cases, ported onto its own board. Its output, g5_norm.txt, sits beside it: whole numbers
+alone, with no root, logarithm or circular function, about 55 to 62 s. Its board, lays, term 6, statistics and draw
+machinery are g5_draw.py's. g5_draw.py, the third text's probe, stays in the tree for its sections (k), (o), (i) and
+(r), which g5_norm does not redo, and as the third text's record; each place this text cites it says where it reads the
+third text's pointer P. g5_norm's own (i) and (k) are not g5_draw's, so the text names each section with its probe.
 - Under the owner's word of 17:20 UTC every single-rotation lay is rebuilt. G3's quarter lay, the mathematician's
   own-beat lays and the physicist's 64 start angles came from series. One Pythagorean hand (a = 7, b = 1, Big Pic's
   beats, 6528217535 item 3) stands for them all: it turns exactly round at 2 W div 25, and the act itself turns it to
@@ -42,13 +56,18 @@ hand of every clock at the Node-clock and its six neighbours sits between its te
 squared, read as the round takes it in and as it gives it out, summed, and carried once at the teeth.
 - The mirror turns each centred tooth to its negative, and its square stands. So the backward act reads the same
   pointer with no fold, and reads the parts in the same order: 64,800 of 64,800 draws, against a control at chance. The
-  24 turns and the trains' own signed permutations leave it too, 1,080 of 1,080 (DERIVED; CHECKED).
-- It reads every row that moves. The held count's row alone, which froze the third text's pointer, now draws within
-  chance (1:1 z^2 0.011 on the hot board, 0.053 on the cold packet).
+  24 turns and the trains' own signed permutations leave it too, on every kind the 24 turn by signed permutations,
+  all but E: 1,080 of 1,080 on the board's A1 rows (DERIVED; CHECKED).
+- It reads every row, each only up to a quarter turn and its sign, so a row moving on a coarse lattice spreads it over
+  few residues. The held count's row alone, which froze the third text's pointer, now draws within chance, by the
+  tenths (9.814 on the hot board, 11.703 on the cold packet).
 - On the board's lays it is fair within chance: six lays and the hot board. The cold packet sits on the high side (1:1
   z^2 6.355, between the 5 and the 1 per cent points), named.
-- Where only light moves it is not fair. Light's teeth sit on the grip's lattice, and the pointer takes 3 values. So
-  the draw needs rows read off the grip's lattice.
+- Where only light moves it is not fair. Light's teeth sit on the grip's lattice, and the pointer takes 3 values. Nor
+  is it fair where the held count, laid alike off n, swings with matter at rest: its tooth moves off the grip's lattice
+  but on its spring's, W/16, and the pointer takes 4 values. So the draw needs rows read off every coarse lattice: the
+  grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4. The condition is necessary,
+  not sufficient.
 - On a single rotation the norm relaxes the pitch condition and does not remove it. It fails on W's lattices, one count
   off them, and near fractions of small denominator (W/7, 3W/11). At the readers' off-lattice spring over 64 phases it
   passes on the ring, where the third text's pointer failed. The condition on fractions is stated as necessary, not
@@ -56,8 +75,8 @@ squared, read as the round takes it in and as it gives it out, summed, and carri
 - The held hand is withdrawn as the draw's source (Big Pic). The turning vacuum it brought is G3's to weigh.
 - A merge's draw keeps its branch on the hand, a write the run back undoes (g5_draw (k) on the third text's pointer, and
   for the norm by probe (b)). How the coupling reads it is OPEN, and until it does no outcome acts on the board.
-- OPEN: the condition on fractions and which strengths meet it; the draw where only light moves; the cold packet; the
-  coupling's read of the kept branch; the split click on the act.
+- OPEN: the condition on fractions, for every moving row, and which strengths meet it; the draw where only light
+  moves; the cold packet; the coupling's read of the kept branch; the split click on the act.
 
 ## 1. In clocks
 
@@ -78,10 +97,13 @@ squared, read as the round takes it in and as it gives it out, summed, and carri
   - The third text's pointer summed the hands with their signs, so on the run back it turned its sign. It was folded to
     a half turn; read unfolded, it would read the parts in reversed order on the way back (Big Pic, 6528150081, for
     term 12). The norm needs neither the fold nor the reversal.
-- **Every gear the same** (Big Pic). A turn of the board moves the hands among the clocks, and on each train the 48 act
-  by signed permutations of its rows: a hand swapped with another, or turned to its negative. A square stands under
-  both, so the pointer is unmoved by every gear of the act. So it can read every row: the vector trains (T1) and
-  half-speed matter as well as A1, where the third text's pointer read A1 rows alone.
+- **Every gear the same** (Big Pic), on the kinds the turns move by signed permutations. A turn of the board moves the
+  hands among the clocks, and on a train of kind A1 or A2, T1 or T2, or the metric's square, the 24 turns act by
+  signed permutations of its rows: a hand swapped with another, or turned to its negative. A square stands under both,
+  so there the pointer is unmoved by every gear of the act. So it can read the vector trains (T1) as well as A1, where
+  the third text's pointer read A1 rows alone.
+  - On a train of kind E the engine turns the rows by signed permutations in 8 of the 24 turns only, so there the
+    pointer's invariance under the 24 is not shown (the physicist's D2). Half-speed matter has no kind on the act.
 - **The share.** The parting clocks share the dial by their sizes, in their own order. Each part owns a half-open cell,
   from the sizes before it up to the sizes through it, and the part whose cell holds the pointer takes the winding.
   Nothing is ranked (Big Pic: a rank is a sort, which the law refuses).
@@ -89,13 +111,18 @@ squared, read as the round takes it in and as it gives it out, summed, and carri
   falling into half-open cells." In the carry the cells are the dial's, all equal; in the draw they are the parts'
   sizes, in their own order. The half-open rule gives every boundary of both the one side it belongs to, so neither has
   a tie. With parts of equal size, the draw's cell is the carry's quotient.
-- **The draw needs hands that move off a coarse lattice.**
+- **The draw needs hands that move off every coarse lattice.**
   - If no hand the pointer reads moves between two partings, the pointer stands, and the same clock takes every
     winding.
   - A small move is enough once it is squared. The held count at rest moves its fine tooth about 10^16 a round against
     teeth near 9 x 10^22 (the third text). That froze the signed sum; the norm spreads with it.
+  - A square reads its hand only up to a quarter turn and its sign (the mathematician's NB1). A hand moved by a quarter
+    turn leaves its square where it stood, and a hand that moves only by whole steps of a coarse lattice leaves its
+    square on few residues.
   - Where only light moves, its hands move on the grip's lattice. Their squares take 2 residues and the pointer 3
-    values. So the draw needs rows read off the grip's lattice.
+    values. Where the held count, laid alike off n, swings with matter at rest, its hand moves off the grip's lattice
+    but on its spring's, and the pointer takes 4 values. So the draw needs rows read off every coarse lattice: the
+    grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4.
   - A single hand turning round runs a short orbit. Near a fraction of small denominator its teeth stay near a lattice,
     and their squares near the lattice's square: the norm relaxes the third text's pitch condition and keeps it.
 - **No held hand, no medium.** The third text's cure was G3's held hand, one winding turning round at every Node-clock.
@@ -114,32 +141,49 @@ round's carry used at each row (read at s_in's now slot) and T_f the teeth of th
     c(r) = 2 r + 1 - T_row, a fine tooth counted from the middle of its row's turn
     Q = the sum, over x, its six neighbours and every row of every train, of c(r_in)^2 + c(r_out)^2
     u, from carry(Q, T_f, 0): u = Q - T_f (Q div T_f), within [0, T_f)
-    v, from carry(u, 8, 0): v = u div 8, within [0, T8), where T8 = T_f div 8
+    v, from carry(u, 8, 0): v = u div 8, within [0, T8), where T8 = (T_f + 7) div 8, from carry(T_f + 7, 8, 0)
     C_i the sizes of parts 0 to i in their own order, L the total
     part i is drawn when C_(i-1) T8 <= v L < C_i T8
 
 - **The terms:** on the probe's board 70 odd squares, seven Node-clocks by five rows, each read in and out (the probe's
   first lines). On G3's ring the merge reads three Node-clocks by two rows, in and out: 12.
-- **The carry by 8.** c is odd, and every odd square is 1 more than a multiple of 8. So Q is its count of terms more
-  than a multiple of 8, and with T_f a multiple of 8 so is u: 6 more than a multiple of 8 on the board (70 terms), 4
-  more on the ring (12). The probe prints W mod 128 = 0, and u mod 8 = 6 at every draw of its probes (b) and (d) to
-  (f). u's last three bits are fixed, so the draw reads v = u div 8 against T8. One halving would leave a step of 4.
+- **The carry by 8.** Where every row's teeth are even, c is odd, and every odd square is 1 more than a multiple of 8.
+  So Q is its count of terms more than a multiple of 8, and where 8 also divides T_f so is u: 6 more than a multiple
+  of 8 on the board (70 terms), 4 more on the ring (12). The probe prints W mod 128 = 0, and u mod 8 = 6 at every draw
+  of its probes (b) and (d) to (f). There u's last three bits are fixed, so the draw reads v = u div 8 against T8. One
+  halving would leave a step of 4.
   - The raw form, u against T_f, and v can pick different parts only where a cell's boundary C_i T_f / L lies above
     8 v and not above u, a span of 6 counts. At W they pick the same part at 432,000 of 432,000 draws (probe (d) of
     g5_norm).
-- **Cost:** two carries, for u and for v, and one comparison of two products per part. No fold and no sign bit.
+  - Elsewhere u's class is not fixed (the mathematician's NB2, the physicist's D3). At odd teeth every c is even, and
+    its square is 0 or 4 more than a multiple of 8; where 8 does not divide T_f, u = Q - T_f (Q div T_f) moves its
+    class with Q div T_f. The carry by 8 serves there too, with T8 the ceiling (below).
+- **Cost:** two carries, for u and for v, one more for T8 where T_f moves, and one comparison of two products per part.
+  No fold and no sign bit.
 - **What it holds:** one sum, SUM c(r_in)^2 over the seven Node-clocks' rows, taken before their tick and closed with
   SUM c(r_out)^2 after it. The closing read takes the neighbours' r_out after their tick, so it falls after the pass,
   within the round (the mathematician's residue under his item 11). Nothing else is held across rounds: no count, no
   dial, no gcd, no rank.
 - **Every row:** each c^2 stands under its row's sign and under a swap of rows, so Q reads every row of every train
-  (section 1). On the probe's board all three trains are A1, so Q and the third text's P read the same rows there.
-- **No edge, and sizes of 0:** v stands below T8 and the cells cover [0, T8), so every v falls in exactly one cell, and
+  (section 1), each only up to a quarter turn and its sign (below). On the probe's board all three trains are A1, so Q
+  and the third text's P read the same rows there. The 24 turn a train's rows by signed permutations on the kinds A1
+  and A2, T1 and T2, and on the metric's square, and on E in 8 of the 24 only: on an E row the norm's invariance under
+  the 24 is not shown, and half-speed matter has no kind on the act (the physicist's D2; the gears, below).
+- **No edge, and sizes of 0:** T8 is the ceiling of T_f / 8. u stands below T_f, so v stands at or below
+  (T_f - 1) div 8, which is T8 - 1, at every T_f. The cells cover [0, T8), so every v falls in exactly one cell, and
   the third text's edge rule (e = H to the last part of nonzero size) is struck. A part of size 0 owns an empty cell,
   C_(i-1) = C_i, and is never drawn. g5_draw (r) checks this on the third text's rule, which below its edge is the
   same inequality.
-- **T_f:** the teeth of the carry that reads Q. On the probe's board every row carries at one W, so T_f = W, and the
-  probe's teeth reader asserts one W at every row read (the mathematician's residue under his item 1). The mirror's
+  - The fourth text took T8 = T_f div 8. Where 8 does not divide T_f the top residues then reach v = T8, which no cell
+    holds, and the probe's cell() gives part 0, even of size 0 (the mathematician's NB2, by the probe's own cell(); the
+    physicist's D3). Probe (k) of g5_norm: at T_f = W + 1, W + 4, W + 7 and W - 3, of the top 16 residues v reaches
+    T_f div 8 at 1, 4, 7 and 5, and the ceiling at 0; with the ceiling a part of size 0 before one of size 1 is drawn
+    at 0 of 16.
+  - Where 8 does not divide T_f, the last v, T8 - 1, holds fewer than 8 residues: a bias below 8 / T_f.
+- **T_f:** the teeth of the carry that reads Q. T_f follows the 00 slot (term 2), so a moving clock reaches a T_f that
+  8 does not divide. On the probe's board every row carries at one W, so T_f = W, and the probe's teeth reader asserts
+  one W at every row read (the mathematician's residue under his item 1). W is a multiple of 128 and every row's teeth
+  are even, so u keeps Q's class of eight and the ceiling equals T_f div 8: nothing measured moves. The mirror's
   identity holds at any T_f, since Q itself stands. Which T_f spreads u where rows carry at different teeth is not
   measured.
 
@@ -165,13 +209,18 @@ round's carry used at each row (read at s_in's now slot) and T_f the teeth of th
   reflection meets the same part only with the parts read from the other end on the run back (Big Pic, 6528150081, for
   term 12). The norm's residue is the same both ways, so the same order and the same cells serve both.
 
-**The gears** (DERIVED; CHECKED on the board, probe (c) of g5_norm).
+**The gears** (DERIVED on the kinds the 24 turn by signed permutations; CHECKED on the board, probe (c) of g5_norm).
 - A turn of the cube carries each Node-clock's star onto its image's star. On the probe's board every train is A1, so Q
   at the image is Q.
 - A train's own signed permutation turns a row's c to -c, its fine tooth flipped in its teeth, or swaps two rows' c.
   The sum of squares stands.
 - Big Pic's claim: the 48 act on every train by signed permutations, so the sum is unmoved by every gear. The probe
   runs the 24 turns and three of the trains' own signed permutations; it does not run the reflections.
+  - The claim holds on the kinds A1 and A2, T1 and T2, and on the metric's square: the engine's kinds() turns them by
+    signed permutations in 24 of the 24 turns (the physicist's D2, his phys_kinds.py).
+  - On kind E it does so in 8 of the 24 only, and no basis makes them all so: S3, of order 6, is no subgroup of the
+    eight signed 2 x 2 permutations (his). [[1, 0], [1, -1]] sends the odd pair (1, 3) to (1, -2), an even entry no
+    fine tooth carries. So on an E row the norm's invariance under the 24 is not shown.
 - The third text's P is not unmoved: a row turned to its negative changes the sum (section 3).
 
 **The residues** (Big Pic's limit; CHECKED, probe (a) of g5_norm). Big Pic: "one row gives the squares alone, about
@@ -183,6 +232,20 @@ whole range:
   at three);
 - "every residue" needs each c to run over its whole range. A tooth tied to a lattice gives a norm tied to a lattice:
   at W, on the grip's lattice of 6 points, Q takes 3 residues.
+
+**The quarter turn** (DERIVED; CHECKED, probe (i) of g5_norm; the mathematician's NB1). One row's square reads its
+tooth only up to a quarter turn and its sign:
+- moving a tooth by T/4 moves c by T/2, and (c + T/2)^2 = c^2 + c T + T^2/4, which is c^2 mod T when 4 divides T;
+- moving it by T/8 moves c by T/4, and (c + T/4)^2 = c^2 + T/2 mod T when 16 divides T and c is odd;
+- a tooth whose every move is a multiple of W/m, m dividing W, moves c by 2 j W/m, and then
+  c'^2 - c^2 = 4 j c W/m + 4 j^2 W^2/m^2 is a multiple of W/m, and of 4 W/m. So its square takes at most m residues
+  mod W, and at most m/4 when 4 divides m;
+- probe (i): both identities hold at every tooth of the dials 16, 32, 48, 64, 128 and 1,024, and at W at 1,009 of
+  1,009 teeth of a grid (the mathematician's g5v4_algebra). At W a tooth moved by multiples of W/6, W/16 and W/48 puts
+  its square on at most 2, 4 and 8 residues over 50 teeth, against the bounds 6, 4 and 12.
+
+So the fourth text's "it reads every row that moves" was false as worded. Every row is read, each only up to a quarter
+turn and its sign, and a row moving on a coarse lattice spreads Q over few residues.
 
 **The third text's lemma does not carry over.** It bounded the fold of a sum by 4 p / T_f (2 p / T_f at odd T_f / p),
 given the rest, when the lemma's row runs over its progression. A square's residues are not a progression (one row
@@ -200,7 +263,8 @@ Goldstein and Zanghi, J. Stat. Phys. 67, 843 (1992)), and no finite record can s
 
 **The draw's form** (Big Pic's answer through the Boss, 6527540022 item 8: one carry and no sort, not decision 29's
 digits). The norm's draw is that form: one carry of Q at the teeth, one carry by 8, the parts' cells in their own order.
-- c stays struck: the pointer moves with every row that moves, so no dial is needed.
+- c stays struck: the pointer moves with the rows that move, each read up to a quarter turn and its sign, so no dial
+  is needed.
 - The cells set no limit on L: 10^30 : 3 x 10^30 draws as 10^6 : 3 x 10^6 does, 21,709 of 86,400 (probe (d) of
   g5_norm).
 - The record of why decision 29's digits and dial give way, their span and the raw sum's pitch, stands in the third
@@ -225,14 +289,20 @@ digits). The norm's draw is that form: one carry of Q at the teeth, one carry by
   draw over three or more parts that reproduces quantum statistics. For two parts, noncontextual models exist (Bell,
   Rev. Mod. Phys. 38, 447 (1966)), and every split on the probe's board has two parts.
 
-**The motion the draw needs.** The norm reads every row, so a row's moves spread it where the third text's sum froze.
-What it cannot leave is a lattice.
+**The motion the draw needs.** The norm reads every row, each only up to a quarter turn and its sign, so a row's
+moves spread it where the third text's sum froze. What it cannot leave is a lattice.
 - **Light alone** (probe (f) of g5_norm). On this board term 6 holds no light row (the probe's monomials), so light's
   fine teeth move by whole grips. Each light term's c^2 is then 1 or 1 + 2 grips mod W, and with matter and the held
-  count at rest Q takes 3 values. The draw needs rows read off the grip's lattice.
+  count at rest Q takes 3 values. The draw needs rows read off every coarse lattice (below).
 - **The held count alone** (probe (e) of g5_norm). Its fine tooth moves little, and the norm spreads all the same: c^2
-  moves by about 2 c times the tooth's move, and c is of the order of the teeth, so a move far below a turn still
-  carries c^2 round W many times (a rough account, not derived).
+  moves by about 4 c times the tooth's move (c = 2 r + 1 - T, so c moves by twice the tooth), and c is of the order of
+  the teeth, so a move far below a turn still carries c^2 round W many times (a rough account, not derived).
+- **The held count displaced** (probe (j) of g5_norm; the mathematician's NB1). Laid off n at rest, with matter at
+  rest at 0, the held count swings on its own spring, kappa = W div 16. Laid alike, its tooth moves by whole steps of
+  kappa: off the grip's lattice, and on kappa's. So its square moves by quarters of W and takes 4 residues however far
+  it moves. The pointer takes 4 values, and the draw fails. Laid by the generator, up to 1,000 off n, the pointer takes
+  12 values, and 3:7 fails too (section 3). This case meets the fourth text's condition, rows off the grip's lattice,
+  and the draw fails: that condition was not the one the norm needs.
 - **A single rotation** (probe (g) of g5_norm). A hand turning round at spring s moves each fine tooth by -s times its
   count each round, so a tooth sits at r_0 - s X (mod W), X the hand's sweep, the sum of its counts (the mathematician's
   N1). Write s = a W / q + delta, near a fraction a / q of small denominator.
@@ -252,9 +322,13 @@ What it cannot leave is a lattice.
     a W / q, times the hand's sweep X, squared, must exceed about W / q^2, by a margin;
   - below it the norm sits near up to q^2 points and fails, as kappa + 1, W/7 and 3W/11 do;
   - meeting it is not shown to suffice. The 64 phases at two springs are a record, not a proof, and at the readers'
-    spring the board's star puts 8 of 64 phases past the 5 per cent point, against chance's 3.200.
+    spring the board's star puts 8 of 64 phases past the 5 per cent point, against chance's 3.200;
+  - read for every moving row, not only for a single rotation, it is the Born condition: rows off every coarse lattice
+    of the teeth, the grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4 (the
+    mathematician's NB1). A row whose every move is a multiple of W/m puts its square on at most m residues, m/4 when 4
+    divides m (the quarter turn, above). It stays necessary, not sufficient.
 - **Term 5's push of the 00 slot by rho + 3 p** (TENSOR24_NODE.md section 3; light twice, decision 30) is another row
-  a merge reads where light crossed, absent from the probe's board. Whether it moves that row's tooth off a coarse
+  a merge reads where light crossed, absent from the probe's board. Whether it moves that row's tooth off every coarse
   lattice is not measured.
 
 **The click writes nothing on the board; the draw keeps its branch** (Big Pic's ruling; the physicist's item 3).
@@ -360,8 +434,11 @@ merges; probe (h) reads the pointer where such draws would fall.
 - **The held count's row alone** (probe (e) of g5_norm), where the third text's pointer froze (86,400 of 86,400 and
   10,800 of 10,800 draws to part 0, its (j)):
   - the hot board: 86,400 distinct v; the tenths 9.814 on 9; D_N 2,185 ppm; at 1:1 z^2 0.011, at 1:3 0.059;
-  - the cold packet: 10,800 distinct v; the tenths 11.703 on 9; D_N 10,115 ppm; at 1:1 z^2 0.053, at 1:3 0.360.
-  So the norm spreads where a row moves off a coarse lattice, even by a small part of a turn.
+  - the cold packet: 10,800 distinct v; the tenths 11.703 on 9; D_N 10,115 ppm; at 1:1 z^2 0.053, at 1:3 0.360;
+  - the tenths carry the test here (the mathematician's wording item). The splits 1:1 and 1:3 put their boundaries at
+    a half and a quarter, points of a 12-point lattice, so a pointer on that lattice passes them regardless: probe (j)'s
+    12 values give z^2 0.746 and 0.010.
+  So the norm spreads where a row moves off every coarse lattice, even by a small part of a turn.
 - **The partition noise** (probe (e) of g5_norm): the Fano factor of part 0's count over windows of 10 to 400 rounds
   at one Node-clock, 1:1 / 1:3 (1 for independent draws):
   - the old lay, 0.982 to 1.112 / 0.986 to 1.039;
@@ -444,6 +521,23 @@ merges; probe (h) reads the pointer where such draws would fall.
   - v at (x, t) against v at x's neighbour at t + 1: on the old lay, along +x the joint tenths 62.412 on 81 and the
     same half z^2 0.018, along all six Spokes 79.462 and z^2 0.016; on seed 4, 100.416 and 100.589 on 81, under the
     5 per cent point for 81, 103.0 (the chi-square table), the same half z^2 0.275 and 0.416.
+- **The quarter turn** (probe (i) of g5_norm, the mathematician's g5v4_algebra ported):
+  - at the dials 16, 32, 48, 64, 128 and 1,024, a quarter turn keeps c^2 mod T, and an eighth moves it by T/2, at
+    every tooth (0 failures of T at each); one row's distinct squares number 2, 4, 4, 8, 16 and 128;
+  - at W, a tooth moved by multiples of W/6, W/16 and W/48 puts its square on at most 2, 4 and 8 residues over 50
+    teeth, against the bounds 6, 4 and 12 (section 2).
+- **The held count displaced** (probe (j) of g5_norm, the mathematician's g5v4_held_vacuum ported): term 6, matter laid
+  at rest at 0, the held count laid off n at rest, every row read, rounds 21 to 420 at all 216 Node-clocks:
+  - laid 1,000 off n alike, light at rest: its tooth moves in 83,592 of 90,720 Node-clock rounds, 77,976 of them off
+    the grip's lattice; v takes 4 values; the tenths 129,891.600 on 9; part 0 at 1:1 in 44,280 of 86,400 (expected
+    43,200), z^2 54.000; at 1:3 z^2 103.680; at 3:7 in 44,280 (expected 25,920), z^2 18,578.571;
+  - laid off n by the generator, up to 1,000, light at rest: v takes 12 values; the tenths 9,246.031 on 9; at 1:1 z^2
+    0.746 and at 1:3 0.010, both boundaries on the 12-point lattice (the mathematician); at 3:7 z^2 465.434;
+  - the same with light moving as (f)'s vacuum: 12 values; the tenths 9,582.172 on 9; at 3:7 z^2 463.514.
+  So a row moving off the grip's lattice is not enough: the draw fails where it moves on kappa's.
+- **The cells where 8 does not divide T_f** (probe (k) of g5_norm; the mathematician's NB2, the physicist's D3): at
+  T_f = W + 1, W + 4, W + 7 and W - 3, of the top 16 residues v reaches T_f div 8 at 1, 4, 7 and 5, and the ceiling
+  (T_f + 7) div 8 at 0. With the ceiling, a part of size 0 before one of size 1 is drawn at 0 of 16.
 - **Kept from g5_draw**, the third text's probe, each reading P or no pointer, as said:
   - **The click that writes** (g5_draw (k), reading P): 300 rounds out and back, a draw at each of the 216 Node-clocks
     every round, each write made by the act on the state with no list read:
@@ -486,13 +580,20 @@ is built on the act, so what follows is what its records must read; it is owed w
 beside term 11's click tooth). The board's numbers above are the stand-in, not the clicks.
 
 - **Born's rule, half of it, under a condition.**
-  - Over many splits part i takes the quantum with frequency s_i / L within each run's spread, wherever rows off the
-    grip's lattice move between draws at the meeting, and a single rotation's spring meets the condition on fractions.
+  - Over many splits part i takes the quantum with frequency s_i / L within each run's spread only where rows off every
+    coarse lattice move between draws at the meeting (the grip's W/6, the plan's spring kappa's W/16, their joint W/48
+    and the quarter turn W/4), and a single rotation's spring meets the condition on fractions.
+  - These conditions are necessary and not shown sufficient (the physicist's D1). His case meets them and fails
+    mildly: at the readers' off-lattice spring, probe (g)'s star puts 8 of 64 phases past the 5 per cent point, against
+    3.200 by chance.
   - On the probe's board those rows are matter's and the held count's, laid as A1: six lays and the hot board agree,
-    the old lay's five splits at z^2 0.733 to 3.095, to a resolution near 5 x 10^-3 at 86,400 draws.
-  - The norm reads half-speed matter and the vector trains as well (Big Pic), so in nature the motion may be any row's.
-    Which rows move off the grip's lattice at nature's meetings is not shown: no fair pointer in nature is shown, and
-    where only light moves the draw is not fair.
+    the old lay's five splits at z^2 0.733 to 3.095, to a resolution near 5 x 10^-3 at 86,400 draws. The held count
+    displaced off n with matter at rest moves on a coarse lattice, kappa's where it is laid alike, and there the draw
+    fails (probe (j)).
+  - The norm reads the vector trains as well (Big Pic), so in nature the motion may be any such row's. Half-speed
+    matter has no kind on the act, and on an E row the norm's invariance under the 24 is not shown (the physicist's
+    D2). Which rows move off every coarse lattice at nature's meetings is not shown: no fair pointer in nature is shown,
+    and where only light moves the draw is not fair.
   - The other half, that the sizes are the amplitudes squared, is the sizes' item (section 7), with the bound on
     higher-order interference as its test (Sinha and others, Science 329, 418 (2010)).
 - **Independent trials, in scope.** Binomial partition is what nature shows for single quanta entering by one port: the
@@ -515,7 +616,7 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
     spread read P's draws and is not rerun with the norm.
   - For the spin singlet Bob draws - at 30 and at 60 degrees and + at 120.
   - The frozen pointer is a no-signal item as well as a Born item, and a pointer on 3 values, where only light moves,
-    is not spread either.
+    is not spread either, nor one on 4, where the held count swings on kappa's lattice.
 - **The split is nonlocal.** One particle split across two places is nonlocal too (Guerreiro and others, Phys. Lett. A
   376, 2174 (2012); Fuwa and others, Nat. Commun. 6, 6665 (2015)), and contextuality is tested for three or more
   outcomes (Kirchmair and others, Nature 460, 494 (2009); Lapkiewicz and others, Nature 474, 490 (2011)). Every split
@@ -546,9 +647,15 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   needs no held hand. Its energy, its rest frame and its sense are G3's, and G3's seventh text is refused by its own
   physicist on that weight (his item B: the load's source, rho + 3 p, reads it). G5 names it as G3's, not as G5's.
 - **Departures, named:**
-  - the draw unfair where only light moves, light's teeth on the grip's lattice and the pointer on 3 values: at form
-    B's merges where only light crossed (g5_draw (o): 50 of 66 with sparse absorbers, 0 of 399 on a full screen), and
-    on a board with the plan empty (probe (a) of g5_norm);
+  - the draw unfair where the rows it reads move only on a coarse lattice of the teeth, the grip's W/6, kappa's W/16,
+    their joint W/48 or the quarter turn W/4, since a row whose every move is a multiple of W/m puts its square on at
+    most m residues, m/4 when 4 divides m (the mathematician's NB1):
+    - where only light moves, light's teeth on the grip's lattice and the pointer on 3 values: at form B's merges where
+      only light crossed (g5_draw (o): 50 of 66 with sparse absorbers, 0 of 399 on a full screen), and on a board with
+      the plan empty (probe (a) of g5_norm);
+    - where the held count is displaced off n and matter rests (probe (j) of g5_norm): laid 1,000 off n alike, a row on
+      kappa's lattice, v on 4 values and 3:7 at z^2 18,578.571; scattered up to 1,000, 12 values and 3:7 at z^2
+      465.434, and 463.514 with light moving;
   - the draw unfair on a single rotation on W's lattices, one count off them, or near a fraction of small denominator;
   - a frozen board, no row moving between draws, holds Q, so every draw goes to the one part whose cell holds that v:
     the frequencies follow the board's order of the parts, not their shares (the physicist's C1). At the birth every
@@ -557,7 +664,7 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   - the 24 kept in the frequencies, not draw by draw, under the turns that reverse the parts' order, and broken in
     frequency where the pointer is frozen or on a coarse lattice;
   - no outcome acts on the board, so Page and Geilker's masses cannot follow a click;
-  - the cold packet on the high side, 1:1 at z^2 6.355;
+  - the cold packet on the high side, 1:1 at z^2 6.355 (the physicist's 13 packets in section 7);
   - the falling clock, where the engine's promise and the mirror's identity break.
 
 ## 5. Measured (g5_norm.txt; g5_draw.txt for its (k), (o), (i) and (r))
@@ -572,12 +679,15 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
 | (d) Born, the old lay | z^2 1.466, 2.275, 3.095, 0.733, 0.733 at five splits; the state's sizes 0.862 |
 | (d) the raw form and v | the same part at 432,000 of 432,000 draws |
 | (e) the hot board, the cold packet | 1:1 z^2 0.140 and 6.355; D_N 2,961 and 12,538 ppm; lag 1: 80.353, 82.003 on 81 |
-| (e) the held count's row alone | 1:1 z^2 0.011 hot, 0.053 cold, where the third text's pointer froze |
+| (e) the held count's row alone | the tenths 9.814 hot, 11.703 cold, the test there; 1:1 z^2 0.011 and 0.053 |
 | (e) the Fano factor | 0.915 to 1.492 over every lay, split and window; every z^2 below 3.841 |
 | (f) only light moving | 3 values of v, at 0, 333 and 666 thousandths of T8; 1:1 z^2 9,460.510 |
 | (g) single rotations, one phase | Q's tenths: W div 16 16,202.007; kappa + 1 16,204.409; W/7 62.272; 3W/11 24.792 |
 | (g) 64 phases, the readers' spring | Q 4, 0, 0 on the ring, 8, 0, 0 on the star; P 47, 32, 23 and 10, 2, 0 |
 | (h) conditional draw, the step | 14,333 crossings, the tenths 4.622, 1:1 z^2 0.141; 62.412 and 79.462 on 81 |
+| (i) the quarter turn | c^2 kept by T/4 and moved T/2 by T/8 at every tooth of six dials; at W 2, 4 and 8 residues |
+| (j) the held count displaced | alike: 4 values, 3:7 z^2 18,578.571; up to 1,000: 12 values, 3:7 z^2 465.434 |
+| (k) 8 not dividing T_f | v reaches T_f div 8 at 1, 4, 7 and 5 of the top 16 residues, the ceiling at 0 |
 | g5_draw (k), reading P | the record tooth, a whole count into the now slot: 300 of 300 rounds; the law's take: 0 |
 | g5_draw (o) | light-only deciding merges: 50 of 66 with sparse absorbers; 0 of 399 on a full screen |
 | g5_draw (i), the raw sum | exactly 500 of 1,000 at every Node-clock, by arithmetic |
@@ -592,36 +702,51 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   writes nothing on the board; a merge's draw keeps its branch on the hand.
 - **Board:** c(r) = 2 r + 1 - T_row; Q the sum of c(r_in)^2 + c(r_out)^2 over the seven Node-clocks' rows, every
   train's; u = Q mod T_f by one carry and v = u div 8 by another; the part the one whose half-open cell, in the parts'
-  own order, holds v L against T8, with no edge; one sum held in the round.
+  own order, holds v L against T8 = (T_f + 7) div 8, the ceiling, with no edge at any T_f; one sum held in the round.
 - **Algebra:** the mirror turns each c to -c and swaps the round's two reads, so Q stands and the backward act reads
-  the same v in the same order (DERIVED); the 24 turns and the trains' own signed permutations leave Q (DERIVED); one
-  row reaches about half the residues, two rows every residue; D_N for a finite record; a single rotation's condition
-  on fractions, necessary.
-- **Clicks:** Born's frequencies by the sizes within each run's spread where rows off the grip's lattice move between
-  draws; binomial partition for single quanta at one port; no signal as far as the pointer is fair; the 24 in the
-  frequencies.
+  the same v in the same order (DERIVED); the 24 turns and the trains' own signed permutations leave Q on the kinds the
+  24 turn by signed permutations, A1 and A2, T1 and T2, and the metric's square (DERIVED), and on E it is not shown;
+  one row's square reads its tooth up to a quarter turn and its sign, and on a lattice of W/m takes at most m residues,
+  m/4 when 4 divides m (DERIVED); at a prime dial one row reaches about half the residues, two rows every residue; D_N
+  for a finite record; the condition on fractions for every moving row, rows off every coarse lattice, necessary.
+- **Clicks:** Born's frequencies by the sizes within each run's spread only where rows off every coarse lattice move
+  between draws, a condition necessary and not shown sufficient; binomial partition for single quanta at one port; no
+  signal as far as the pointer is fair; the 24 in the frequencies.
 - **Home:** owed in code at G5, beside term 11's click tooth. **Status:** the pointer CHOSEN, Big Pic's candidate, not
-  derived; its mirror and its gears DERIVED, and CHECKED on the act; its fairness CHECKED on one board with term 6 at
-  G3's probe strengths, on six lays and the hot board, the cold packet on the high side; not fair where only light
-  moves, nor on a single rotation near a fraction of small denominator. OPEN: the condition on fractions and which
-  strengths meet it; the draw where only light moves; the cold packet; the coupling's read of the kept branch; the
-  split click on the act.
+  derived; its mirror DERIVED and its gears DERIVED on every kind but E, both CHECKED on the act; its fairness CHECKED
+  on one board with term 6 at G3's probe strengths, on six lays and the hot board, the cold packet on the high side;
+  not fair where only light moves, nor where the held count swings on kappa's lattice, nor on a single rotation near a
+  fraction of small denominator. OPEN: the condition on fractions, for every moving row, and which strengths meet it;
+  the draw where only light moves; the cold packet; the coupling's read of the kept branch; the split click on the act.
 
 ## 7. OPEN
 
 - **The condition on fractions, and which strengths meet it** (the heaviest).
   - A single rotation's spring off every a W / q, for q up to the resolution the shares need, by a delta with
     (delta X)^2 beyond about W / q^2, by a margin: stated as necessary.
+  - Every moving row off every coarse lattice of the teeth, the grip's W/6, kappa's W/16, their joint W/48 and the
+    quarter turn W/4 (the mathematician's NB1): stated as necessary.
   - Which strengths meet it is G3's to derive. What suffices, over every phase and on the board's seven Node-clocks, is
     unshown: at the readers' spring the star's 8 of 64 phases past the 5 per cent point stand against chance's 3.200.
   - With it, the norm's own bound given the rest, which the third text's lemma does not give.
 - **The draw where only light moves.**
   - Light's teeth on the grip's lattice give the pointer 3 values, at form B's merges where only light crossed and on a
-    board with the plan empty. The draw needs rows read off the grip's lattice there.
-  - Which row moves there (term 5's push of the 00 slot, a push on light off the grip) is OPEN with G2 and G3, and
-    whether such a merge's draw is how the act parts a winding is OPEN with form B on the act.
+    board with the plan empty. The draw needs rows read off every coarse lattice there.
+  - Which row moves there (term 5's push of the 00 slot, a push on light off every coarse lattice) is OPEN with G2 and
+    G3, and whether such a merge's draw is how the act parts a winding is OPEN with form B on the act.
 - **The cold packet:** 1:1 at z^2 6.355, its 27 Node-clocks sharing Meshes. Whether it is a fluctuation or a departure
-  of a slow packet, more packets and longer runs would say.
+  of a slow packet, more packets and longer runs would say. The physicist's counts (his D4, phys_cold.py and
+  phys_corr.py):
+  - the text's packet reproduces: part 0 in 5,269 of 10,800, z^2 6.355;
+  - across 13 packets at the same base, part 0 falls short in 10, a one-sided sign test of 0.046;
+  - pooled, part 0 is drawn 69,683 of 140,400 against 70,200, a share gap of -3,683 ppm, inside the text's resolution
+    of about 5 x 10^-3. Over the packets' doubled spread, their mean 1:1 z^2 1.956, the pooled z^2 is 3.893, at the 5
+    per cent point;
+  - longer runs, 1,000 rounds at four seeds, give small z^2 (0.033 to 2.620 at 1:1) but one N D_N^2 of 2.679, just
+    past the 1 per cent point;
+  - neighbouring draws inside the slow packets, one Mesh apart, show no dependence: pooled, the same half at z^2 0.166,
+    and 0.026 one round on.
+  The item stands as worded.
 - **The coupling's read of the kept branch** (term 11 and form B): a merge's draw keeps its branch on the hand. How the
   coupling reads it, so that the outcome acts on the board, is OPEN, and with it the gathering of the losing shares
   (Page and Geilker).
@@ -636,7 +761,7 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
     gives way to "the click writes nothing" on the board, the draw keeping its branch on the hand. The law's wording
     follows his word (Sofer's 6518975579).
 
-## 8. What changed, by the readers' items and Big Pic's two words
+## 8. What the fourth text changed, by the third text's readers' items and Big Pic's two words
 
 **Big Pic's two words:**
 - **6528531569** (17:3x UTC), on the third text. Every reader's item stands, and no reader is wrong. "A pure rotation
@@ -692,30 +817,70 @@ His corrections:
 - C2: "which are not on the act (TENSOR24_NODE.md 4.5)" added where the split stands on the two boards (4).
 - C3: the largest gap within D_N labelled the theorem, in the probe's line and in the text (3).
 
-The earlier readings' items stay folded as the third text had them (toys-5 51536ec7f, its section 8), with this text's
-changes above.
+The earlier readings' items stay folded as the third text had them (toys-5 51536ec7f, its section 8), with the fourth
+text's changes above. Two of the candidate's readings above are scoped by the fourth text's readers (section 9):
+"unmoved by every gear" holds on the kinds the 24 turn by signed permutations (D2), and "moving whenever any row
+moves" holds only up to a quarter turn and its sign (NB1).
 
-## 9. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
+## 9. The fourth text's readers, folded
+
+Both readers reran g5_norm and g5_draw byte for byte, and both reports went to Big Pic first (David's 6531674887).
+The mathematician found his N1 to N3 of the third reading mended. The physicist found his N1, N2 and item 3, and his
+C1 to C3, mended, and PASSED the text.
+
+**The hostile mathematician's two:**
+1. NB1, the norm reading each tooth only up to a quarter turn and its sign, so that the Born condition "rows off the
+   grip's lattice" was met by a case where the draw fails. The quarter-turn and eighth-turn identities and the bound
+   of m residues, m/4 when 4 divides m, are derived and checked (2; probe (i)). "It reads every row that moves" is
+   struck: every row is read, each only up to a quarter turn and its sign, and a row moving on a coarse lattice spreads
+   Q over few residues (the finding; 1, 2). The Born condition reads "rows off every coarse lattice", the grip's W/6,
+   kappa's W/16, their joint W/48 and the quarter turn W/4: the condition on fractions read for every moving row,
+   necessary and not sufficient (the finding; 1, 2, 4, 6, 7). His case, the held count displaced off n with matter at
+   rest, is ported as probe (j) and named a departure (2, 3, 4, 5, 6).
+2. NB2, the edge where 8 does not divide T_f. T8 is now the ceiling, (T_f + 7) div 8, by one carry, so v stands below
+   T8 at every T_f, every v falls in exactly one cell, and a part of size 0 is never drawn (2; probe (k)). Where 8
+   divides T_f and every row's teeth are even, nothing measured moves; elsewhere u's class is not fixed, and the last v
+   holds fewer than 8 residues, a bias below 8 / T_f (2, 6).
+
+His wording items: "the draw cannot read u against W" now "need not" (10); "c^2 moves by about 2 c times the tooth's
+move" now 4 c, since c moves by twice the tooth (2); probe (e)'s held-count splits, 1:1 and 1:3, said to pass on a
+12-point lattice regardless, the tenths carrying the test there (the finding; 3, 5).
+
+**The hostile physicist's four:**
+1. D1, Born's condition worded as sufficient. The frequencies now follow the sizes "only where" the conditions hold,
+   which are necessary and not shown sufficient, and his case is named: probe (g)'s star at the readers' off-lattice
+   spring, 8 of 64 phases past the 5 per cent point against 3.200 by chance (4, 6).
+2. D2, the 24 claimed on every kind. Scoped to the kinds the 24 turn by signed permutations, A1 and A2, T1 and T2, and
+   the metric's square; on E the engine's kinds() gives signed permutations in 8 of the 24 turns, so the norm's
+   invariance there is not shown; half-speed matter is named as having no kind on the act (the finding; 1, 2, 4, 6,
+   10).
+3. D3, the carry by 8 and the cells needing 8 to divide T_f and even teeth: mended with NB2 (2, 6).
+4. D4, the cold packet. His counts are entered under the OPEN item, which stands as worded (4, 7).
+
+## 10. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
 The owner's rule: a deriver checks itself before it reports, as a hostile reader would. It reruns its probes, derives
 each step again, and tries to break its own result by cases built to pass the text's own words; the report names what it
 checked and how.
 
 - **The probes rerun, each by my own run on main's src at 0df0e8385:**
-  - g5_norm.py: 59 s, its 238 lines byte for byte against the g5_norm.txt this text cites.
-  - g5_draw.py, kept for the sections this text still cites from it: 98 s, byte for byte against g5_draw.txt.
+  - g5_norm.py: 62 s. Its first 238 lines equal, byte for byte, the g5_norm.txt the fourth text cited. Its sections
+    (i) to (k) are new, ported from the mathematician's g5v4_algebra.py and g5v4_held_vacuum.py, and his figures come
+    back in them to the unit.
+  - g5_draw.py, kept for the sections this text still cites from it: unchanged since the fourth text, and its output
+    with it. Both readers reran it byte for byte against g5_draw.txt (101 s).
   - Neither holds a float, a division but Rule3's carry, a root, a logarithm, a circular function or a search. The one
     while loop is Euclid's, in gcd. Sofer's gate reads the tree with no refusal and no note.
 - **Each step derived again, by hand:**
-  - Every odd square is 1 more than a multiple of 8: (2 m + 1)^2 = 4 m (m + 1) + 1, and m (m + 1) is even. Each c = 2 r
-    + 1 - T is odd, since T is even. So Q is fixed mod 8 by its count of terms: 70 on the board, 6 more than a multiple
-    of 8, and 12 on the ring, 4 more.
+  - Every odd square is 1 more than a multiple of 8: (2 m + 1)^2 = 4 m (m + 1) + 1, and m (m + 1) is even. Each
+    c = 2 r + 1 - T is odd where T is even, as on the board. So Q is fixed mod 8 by its count of terms: 70 on the
+    board, 6 more than a multiple of 8, and 12 on the ring, 4 more.
   - W is 2^7 times an odd number, so u = Q mod W keeps Q's class mod 8. One carry by 8 frees the draw of it.
   - The mirror sends r to T - 1 - r, so c to -c. Q stands, and the backward act reads the same v, the same part and the
     parts in the same order. The third text's pointer turned its sign and so read the parts from the other end (Big Pic,
     6528150081); this one does not.
-  - The 48 and the trains' own signed permutations move rows among the seven Node-clocks and turn some signs. A sum of
-    squares over all of them stands.
+  - On the kinds the 24 turn by signed permutations, every kind but E, the turns and the trains' own signed
+    permutations move rows among the seven Node-clocks and turn some signs. A sum of squares over all of them stands.
   - The residues of an odd prime p:
     - the squares reach (p + 1) / 2 residues, 49, 51 and 52 at 97, 101 and 103;
     - a sum of two squares reaches every non-zero residue p - 1 times when p is 1 more than a multiple of 4, and p + 1
@@ -724,6 +889,16 @@ checked and how.
     - Probe (a) prints each to the unit.
   - A frozen board: if no row moves, Q stands, and every draw falls in the one cell that holds the frozen v. The same
     part takes every winding, whatever the sizes (C1).
+  - The quarter turn: r + T/4 moves c to c + T/2, or to c - 3 T/2 past the wrap, and (c + T/2)^2 = c^2 + c T + T^2/4
+    and (c - 3 T/2)^2 = c^2 - 3 c T + 9 T^2/4 are both c^2 mod T when 4 divides T.
+  - The eighth turn: r + T/8 moves c to c + T/4, or to c - 7 T/4 past the wrap. (c + T/4)^2 = c^2 + c T/2 + T^2/16;
+    with c odd, c T/2 is T/2 more than a multiple of T, and T^2/16 is a multiple of T when 16 divides T, so c^2 moves
+    by T/2 mod T. Past the wrap 7 c is odd and 49 T^2/16 a multiple of T: the same.
+  - The bound of m residues: r + j W/m moves c to c' = c + 2 j W/m, a wrap changing j by m. Then
+    c'^2 - c^2 = 4 j c W/m + 4 j^2 W^2/m^2 = (4 W/m) (j c + j^2 W/m), a multiple of W/m, so c'^2 takes at most m
+    residues mod W; when 4 divides m, 4 W/m divides W, and at most m/4.
+  - The ceiling: u <= T_f - 1, so v = u div 8 <= (T_f - 1) div 8 = (T_f + 7) div 8 - 1 = T8 - 1 at every T_f. The last
+    v holds T_f - 8 (T8 - 1) residues, 8 only where 8 divides T_f, and there T8 = T_f div 8.
 - **Cases built to pass the text's own words, and what broke** (each a section of g5_norm):
   - the run back's control, the teeth after the tick alone: chance, 32,340 of 64,800;
   - the trains' own signed permutations: the third text's pointer is equal at 0, 1,080 and 0 of 1,080 draws, the norm at
@@ -731,7 +906,12 @@ checked and how.
   - the held count's row alone, where the third text's pointer froze: fair on the hot board and on the cold packet;
   - the vacuum, light alone moving: broken, 3 values (sections 3 and 4);
   - the readers' own single rotations: W/7 and 3W/11 break the draw, and the off-lattice springs over 64 phases pass;
-  - six lays and the hot board pass; the cold packet sits between the 5 and the 1 per cent points.
-- **What the check found, and the rule now carries:** the draw cannot read u against W. u is 6 more than a multiple of 8
-  at every draw, so it lands on one class of eight. One carry by 8 is part of the rule, and at W the raw form and v pick
-  the same part at 432,000 of 432,000 draws.
+  - six lays and the hot board pass; the cold packet sits between the 5 and the 1 per cent points;
+  - the fourth text's readers' cases, built from its words and missed by its own check, now in the probe: the held
+    count displaced off n with matter at rest met "rows off the grip's lattice" and broke the draw, 4 values ((j), its
+    algebra in (i)); a T_f that 8 does not divide gave the fourth text's T8 a part of size 0, and gives the ceiling none
+    ((k)).
+- **What the check found, and the rule now carries:** the draw need not read u against W. u is 6 more than a multiple
+  of 8 at every draw, so it lands on one class of eight, and one carry by 8 frees it; at W the raw form and v pick the
+  same part at 432,000 of 432,000 draws, so the carry by 8 matters on small dials. Its T8 is the ceiling of T_f / 8, so
+  the rule needs no edge at any T_f.

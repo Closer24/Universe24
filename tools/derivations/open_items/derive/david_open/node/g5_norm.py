@@ -27,7 +27,12 @@ over x, its six neighbours and the A1 rows, folded to a half turn, drawn by its 
 (f) the vacuum: term 6, light laid moving at every Node-clock, matter and the held count at rest, 400 rounds;
 (g) the readers' single rotations on G3's ring of 128, the merge at one Node-clock and its two neighbours: every lay
     whole, one Pythagorean hand (a = 7, b = 1), turned by the act itself for its 64 start phases;
-(h) the conditional draw and the backward pass's step, the third text's (p) and (q).
+(h) the conditional draw and the backward pass's step, the third text's (p) and (q);
+(i) one row's square up to a quarter turn and its sign, at small dials and at W on the lattices of W/6, W/16 and
+    W/48 (the fourth text's mathematician's NB1, his g5v4_algebra ported);
+(j) the held count displaced off n, matter at rest, every row read (his g5v4_held_vacuum, ported);
+(k) the cells where 8 does not divide T_f: T8 as T_f div 8 and as the ceiling (T_f + 7) div 8 (his NB2, the
+    physicist's D3).
 
 Usage: python3 -I g5_norm.py <src of main at 0df0e8385>
 """
@@ -1026,3 +1031,90 @@ for seed in (SEED, 4):
         same = sum(int(sides[t][x] == sides[t + 1][y]) for t, x, y in index)
         print(f"    seed {seed}, along {along}: joint tenths {shown(chi)} on {free}; same half {same} of {len(index)},"
               f" {z2_halves(same, len(index))}")
+
+# ---- (i) to (k): the fifth text's sections, the fourth text's readers' cases (the hostile mathematician's g5v4_algebra
+# and g5v4_held_vacuum, the hostile physicist's D3), ported here and rerun on the probe's own board
+print("(i) one row's square reads its tooth up to a quarter turn and its sign (the mathematician's NB1):")
+
+
+def c_at(r, t):
+    return 2 * r + 1 - t
+
+
+def residue(x, t):
+    return carry(x, t, 0)[1]
+
+
+for t in (16, 32, 48, 64, 128, 1024):
+    quarter, eighth, half = carry(t, 4, 0)[0], carry(t, 8, 0)[0], carry(t, 2, 0)[0]
+    q_bad = sum(int(residue(c_at(residue(r + quarter, t), t) ** 2, t) != residue(c_at(r, t) ** 2, t)) for r in range(t))
+    e_bad = sum(int(residue(c_at(residue(r + eighth, t), t) ** 2, t) != residue(c_at(r, t) ** 2 + half, t))
+                for r in range(t))
+    distinct = len({residue(c_at(r, t) ** 2, t) for r in range(t)})
+    print(f"    T = {t}: c(r + T/4)^2 = c(r)^2 mod T failing at {q_bad} of {t} teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing"
+          f" at {e_bad}; one row's distinct squares {distinct}, T/8 = {eighth}")
+grid = [residue(j * carry(W, 1009, 0)[0] + 7 * j, W) for j in range(1009)]
+for m in (6, 16, 48):
+    step_m = carry(W, m, 0)[0]
+    counts = []
+    for r in grid[:50]:
+        moved = {residue(c_at(residue(r + j * step_m, W), W) ** 2 - c_at(r, W) ** 2, W) for j in range(1, m + 1)}
+        counts.append(len(moved))
+    print(f"    at W, a tooth moved by multiples of W/{m} (W mod {m} = {residue(W, m)}): its square takes at most"
+          f" {max(counts)} residues of W over 50 teeth (m = {m}, m/4 = {carry(m, 4, 0)[0]})")
+
+
+def held_lay(held_off, light_moving):
+    pick, (a, b) = generator(11), blank()
+    for i in range(sites):
+        if light_moving:
+            for row in (l_re, l_im):
+                a[row, i] = pick(1000)
+                b[row, i] = a[row, i] - pick(5)
+        a[held, i] = N_HELD + held_off(pick)
+        b[held, i] = a[held, i]
+    return laid(a, b)
+
+
+def held_report(label, s):
+    values, per_site = [], [set() for _ in range(sites)]
+    moves = off_grip = 0
+    for t in range(1, ROUNDS + 1):
+        s_out = step.tick(lay6, s)
+        if t > FROM:
+            for x, (_, _, v) in enumerate(norm_reads(lay6, s, s_out)):
+                values.append(v)
+                per_site[x].add(v)
+        for x in range(sites):
+            d = int(s_out.r[held, x]) - int(s.r[held, x])
+            if d:
+                moves += 1
+                off_grip += int(carry(d, GRIP, 0)[1] != 0)
+        s = s_out
+    n = len(values)
+    cells = []
+    for s1, s2 in ((1, 1), (1, 3), (3, 7)):
+        zero = sum(int(cell(v, T8, [s1, s2]) == 0) for v in values)
+        cells.append(f"{s1}:{s2} part 0 {zero} of {n} (expected {carry(n * s1, s1 + s2, 0)[0]}) z^2"
+                     f" {shown(z2_fixed(zero, n, s1, s2))}")
+    print(f"    {label}: the held count's tooth moved in {moves} of {ROUNDS * sites} Node-clock rounds, {off_grip} of them"
+          f" off the grip's lattice; v takes {len(set(values))} values, at most {max(len(p) for p in per_site)} at one"
+          f" Node-clock; the tenths {shown(chi_tenths(values, T8))} on 9; " + "; ".join(cells))
+
+
+print("(j) the held count displaced, matter at rest, every row read (the mathematician's case, on this board):")
+held_report("laid 1,000 off n alike, light at rest", held_lay(lambda pick: 1000, False))
+held_report("laid off n by the generator up to 1,000, light at rest", held_lay(lambda pick: pick(1000), False))
+held_report("the same, light moving as (f)'s vacuum", held_lay(lambda pick: pick(1000), True))
+
+print("(k) the cells where 8 does not divide T_f (the mathematician's NB2, the physicist's D3): T8 as the fourth text read"
+      " it, T_f div 8, and as the fifth reads it, the ceiling (T_f + 7) div 8:")
+for t_f in (W + 1, W + 4, W + 7, W - 3):
+    floor8, ceil8 = carry(t_f, 8, 0)[0], carry(t_f + 7, 8, 0)[0]
+    top_u = range(t_f - 16, t_f)
+    past_floor = sum(int(carry(u, 8, 0)[0] >= floor8) for u in top_u)
+    past_ceil = sum(int(carry(u, 8, 0)[0] >= ceil8) for u in top_u)
+    drawn_zero = sum(int(cell(carry(u, 8, 0)[0], ceil8, [0, 1]) == 0) for u in top_u)
+    print(f"    T_f = W {'+' if t_f > W else '-'} {abs(t_f - W)}: of the top 16 residues, v at or past T_f div 8 at"
+          f" {past_floor}, past the ceiling at {past_ceil}; with the ceiling, a part of size 0 before one of size 1 drawn"
+          f" at {drawn_zero} of 16")
