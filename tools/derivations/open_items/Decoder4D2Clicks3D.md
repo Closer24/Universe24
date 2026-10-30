@@ -66,11 +66,11 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 | a light path | a quantum's lay and its take. They lie on light's cone only for a long-wave quantum with no mass: the engine's light disperses (at G1b, measured by the physicist: 0.995 of the long-wave speed at wavelength 16, 0.978 at 8 and 0.913 at 4 along an axis; at one wavenumber a face diagonal is 2.7 percent faster than an axis) | owed (light.py) |
 | a distance | an echo: a clock lays a quantum, the far clock lays one back at its take, and the first clock counts its own teeth from its lay to the echo's take; where the far clock holds the quantum a while, the hold lengthens the echo, and only two clocks that tick alike can take it off. Two-way only. The two-way composition at light's speed is the law's theorem on the older engine, for long flashes on an empty board with light at one speed (**The two-way reading**, **The measured speed**); on this engine, whose light disperses, it is owed anew. The two-way speed tests light's constancy; the one-way reading and the twins test the clocks | owed (light.py) |
 | the redshift | a one-way count ratio: one clock lays a quantum at each of its teeth, another counts its own teeth between the takes, each take paired with its own lay's tooth. It is the first-order Doppler and the lapse together | owed (light.py) |
-| time dilation | read for a moving clock: its quanta's ratios at two clocks standing still, one ahead of it and one behind, taken together (Ives and Stilwell's way), or over a closed path (the twins). Between two clocks standing still on a static board the two directions' ratios multiply to one, and a one-way ratio is the lapse's shift alone (the satellites' and the ground's) | owed (light.py) |
+| time dilation | read for a moving clock: its quanta's ratios at two clocks standing still, one ahead of it and one behind, taken together (Ives and Stilwell's way), or over a closed path (the twins). Between two clocks standing still on a static board the two directions' ratios multiply to one, and a one-way ratio is the lapse's shift alone | owed (light.py) |
 | proper time read a second time | the count carried by signals: a clock lays one quantum a tooth; each lay is followed by its birth link to its take, and every lay the home clock did not take is named (taken elsewhere, refused, in flight). The home clock's takes are at most the traveller's own count, and equal to it only if none is missing; a short wave can be slower than the traveller | owed (light.py) |
 | a geodesic, the free path | the twins: two clocks meet twice by two paths, and both counts are read. A clock is free where no click books a push on it between the meetings. The free one counts more only against nearby paths (over an orbit, a clock held still counts more than a free one); on the wrapped board two free clocks can meet again, the one at rest in the board's frame counting more, so each path's winding round the board is reported. Equal counts on paths that are images under a turn, a reflection or a shift are no fault | owed; measure.twins is to be mended, for it names equal counts a fault |
 | true curvature, against a relabelling | a tide: two free clocks start at rest to each other and trade echoes; the echo spans are compared over whole spans by cross products. A change of the span's step is a tide only for clocks free and at rest to each other at the start (a sideways motion changes the step on a flat board too), and whole counts jitter by one | owed (light.py); the jitter's spread open |
-| expansion, gravitational waves | the echoes between many free clocks all growing, or swinging. Growing echoes and a redshift growing with distance are also Milne's flat case, free clocks flying apart, so a lengthening shows apart from motion only by the echoes' step changing alike for every pair, or by a horizon (part 3.5) | owed (light.py); the expansion on a stand-in in part 3.5, the waves on none |
+| expansion, gravitational waves | the echoes between many free clocks all growing, or swinging. Growing echoes and a redshift growing with distance are also Milne's flat case, free clocks flying apart, so a lengthening shows apart from motion only by every pair's echo step changing in proportion to its echo, or by a horizon (part 3.5) | owed (light.py); the expansion on a stand-in in part 3.5, the waves on none |
 | a horizon | no quantum laid inside is taken outside within the run (the record is finite and the board cyclic) | owed (light.py; part 3.5 on a stand-in) |
 | mass | the windings a clock the clicks build books per tick of its own clock (decision 37), counted in its own ticks so that motion leaves it alone. Which clock counts the beat, the composite's own count or its Node-clock's tick, is the schema's G7 field, and only the own count leaves motion out. A composite's mass holds its binding too | owed (mass.py; G6) |
 | a mass's width | the spread of the masses read over many lays of one species, against their mean life in their own ticks. One clock's life gives only the resolution of its own window | owed (mass.py; G6) |
@@ -96,8 +96,8 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
   - in time, many ticks of its own: one click is one round, a click at one round holds every beat (part 2.6), and so
     a mass is read only through many clicks of one clock; the watch is the clock's own life;
   - in place, a binding: under the linear law a wave on one Node-clock holds every motion and spreads at once
-    (laid at 1000 on a board of 8 by 8 by 8, its centre falls from 1000 to about 20 by round 12 and every
-    Node-clock moves: the physicist's run); at sizes 1 and 2 the rounding pins it. A composite's size is its binding
+    (laid at 1000, moving or at rest, it spreads: laid moving on a board of 8 by 8 by 8, its centre reads -23 at
+    round 12, and 505 of the 512 Node-clocks then hold a count; the readers' runs); at sizes 1 and 2 the rounding pins it. A composite's size is its binding
     against that cost of confinement (law, line 987: the uncertainty principle is the hand's and the click's), owed
     at G3 and G6, and the Mesh bounds it from below.
 - **Levels are complexity:** a clock of clocks is one level above its deepest part (the decoder's depth rule in
@@ -174,8 +174,8 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 - The clicks keep the three axes only as light brings them: as echo counts and as signs along frames, each a count
   the 24 leave alone (part 2.3).
 - The clicks hold no preferred common time. Clocks matched by light build a common time in each frame; on a static
-  board, clocks at rest in the board's frame so matched rebuild the rounds' slices, which is the board's frame showing
-  (D4). Time in the clicks is each clock's own count: the one of the "three and one" that
+  board, clocks at rest in the board's frame so matched rebuild the rounds' slices; that alone does not single the
+  board's frame out, which only the lattice's short-wave effects or the wrap do (D4). Time in the clicks is each clock's own count: the one of the "three and one" that
   differs.
 
 ### 2.6 Uncertainty, in the algebra (ANIMATE-UNCERTAINTY, checked in whole numbers)
@@ -242,8 +242,8 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
   their labels the way comoving coordinates do. What lengthens is the Mesh: in the expansion the source pushes the
   count up and the Mesh lengthens (docs/BIG_PICTURE.md 7), the Meshes' weights being the family's ii and jk slots,
   which move from G2 on; the clicks lengthen the expansion (decision 30, the owner's "Clicks lengthen").
-- **So a site's difference is no length,** as a round's difference is no duration: the decoder refuses the first
-  by name (D7), and the refusal of the second is owed (measure.py). A length is read only by light, an echo in a
+- **So a site's difference is no length,** as a round's difference is no duration: the decoder refuses a round's
+  difference by name (D7), and the refusal of a site's difference is owed (measure.py). A length is read only by light, an echo in a
   clock's own count.
 - **Where a clock stands, nothing shows of a uniform lengthening:** on the board a uniform notch is a change of units
   (line 695, the board's law); in nature atoms and rulers keep their size while free clocks draw apart. Either way it
@@ -410,7 +410,7 @@ blocking errors each, fixed in a sentence apiece:
   winding and row 46 as readings of labels and load, not of nature (3.5);
 - the physicist's: under the linear law a wave on one Node-clock spreads at once, the rounding pinning it at sizes 1
   and 2, so a composite's size is its binding's (1.4, and the 2.6 line on it dropped); an expansion is told from
-  Milne's flat case only by the echoes' step changing alike for every pair, or by a horizon (1.3, 3.5).
+  Milne's flat case only by every pair's echo step changing in proportion to its echo, or by a horizon (1.3, 3.5).
 
 Their minor items are folded: "moves" for "falls" in step.py's note (1.3, 1.5); Ives and Stilwell's way for a
 moving clock, and the static pair's ratios multiplying to one (1.3); the far clock's hold in an echo (1.3); the
@@ -419,4 +419,10 @@ owed (3.5); the change of units the board's law (3.5); light's speed in labels u
 bound (3.5); the stand-in's limits, its horizons against the exact law's, and no wave on it (3.5, 1.3); light's cone
 read from the record, a bin NOT READ where the record cannot place it (1.3).
 
-Their verdicts on this text follow below.
+**The third readings: both approve with changes, no blocking error left.** The minor items they named are
+folded: the two refusals named by what they refuse (3.5); the 1000 run's numbers, moving or at rest (1.4); no
+orbiting satellites in the static pair (1.3); an expansion's echo steps changing in proportion to each pair's echo
+(1.3, 3.5); the rounds' slices rebuilt by light single no frame out by themselves (2.5).
+
+**The final readings, on this text: the mathematician, APPROVE; the physicist, APPROVE.** Each re-ran 1.4's 1000 run
+on the engine and found it as the page gives it.
