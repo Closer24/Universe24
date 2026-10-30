@@ -1,0 +1,61 @@
+The floor's pump on a slow hand, and the tooth on the edge (whole numbers; REST 3000, G 210, T_d 1000)
+
+A. One gear at rest (stride 0), one push k, W = 3000: the stride it answers with
+   act as built, tooth 0: strides {-1: 3000, 0: 3000, 1: 1} over k in [-3000, 3000]; a backward notch for k in [-3000, -1], a forward notch for k in [3000, 3000]
+   act as built, tooth born at W div 2 (law (i)): strides {-1: 1500, 0: 3000, 1: 1501} over k in [-3000, 3000]; a backward notch for k in [-3000, -1501], a forward notch for k in [1500, 3000]
+   edge, tooth 0 (the middle): strides {-1: 1500, 0: 3001, 1: 1500} over k in [-3000, 3000]; a backward notch for k in [-3000, -1501], a forward notch for k in [1501, 3000]
+   (the edge: no notch for |k| <= W / 2 = 1500, the tie at |k| = 1500 taken even, 0; one notch beyond, both signs alike)
+
+B. A free gear (no force) carrying a momentum m for 100 rounds: the notches it moves
+   m =     -1 (   0 permille of a notch): the act as built moves  -100 notches, the p-form  -100, the edge     0
+   m =      1 (   0 permille of a notch): the act as built moves     0 notches, the p-form     0, the edge     0
+   m =  -1499 ( 499 permille of a notch): the act as built moves  -100 notches, the p-form  -100, the edge     0
+   m =   1499 ( 499 permille of a notch): the act as built moves     0 notches, the p-form     0, the edge     0
+   m =  -1500 ( 500 permille of a notch): the act as built moves  -100 notches, the p-form  -100, the edge     0
+   m =   1500 ( 500 permille of a notch): the act as built moves     0 notches, the p-form     0, the edge     0
+   m =  -1501 ( 500 permille of a notch): the act as built moves  -100 notches, the p-form  -100, the edge  -100
+   m =   1501 ( 500 permille of a notch): the act as built moves     0 notches, the p-form     0, the edge   100
+   m =  -3000 (1000 permille of a notch): the act as built moves  -100 notches, the p-form  -100, the edge  -100
+   m =   3000 (1000 permille of a notch): the act as built moves   100 notches, the p-form   100, the edge   100
+
+C. The slow hand on its spring (G = 210), the clock standing at W = 3000, no 00 push, 12000 rounds: laid with the
+   momentum m0; the strides summed (a drift if not 0), the floor source SUM 2 W (sb^2 + sa^2) against the exact SUM 2 p^2 / W,
+   the share of the floor source from a -1 stride at -W < p < 0 (the p-form) or from strides below half a notch and below one
+   notch (the edge), and the mean momentum (the hand's rest), in tooth units
+   m0 =     -1: p-form: strides sum       0, floor       18000000, exact       54629625, floor/exact    329 permille, from -1 at -W < p < 0:  500 permille, mean p   1574;
+               edge:   strides sum       0, floor              0, exact              0, floor/exact      0 permille, from below half a notch:    0, below one notch:    0 permille, mean momentum     -1
+   m0 =      1: p-form: strides sum       0, floor              0, exact              0, floor/exact      0 permille, from -1 at -W < p < 0:    0 permille, mean p      1;
+               edge:   strides sum       0, floor              0, exact              0, floor/exact      0 permille, from below half a notch:    0, below one notch:    0 permille, mean momentum      1
+   m0 =   -300: p-form: strides sum      -1, floor       52356000, exact       66214122, floor/exact    790 permille, from -1 at -W < p < 0:  500 permille, mean p   1589;
+               edge:   strides sum       0, floor              0, exact        1440000, floor/exact      0 permille, from below half a notch:    0, below one notch:    0 permille, mean momentum   -300
+   m0 =  -1499: p-form: strides sum      -1, floor      104724000, exact      105803311, floor/exact    989 permille, from -1 at -W < p < 0:  500 permille, mean p   1440;
+               edge:   strides sum       0, floor              0, exact       35952000, floor/exact      0 permille, from below half a notch:    0, below one notch:    0 permille, mean momentum  -1499
+   m0 =  -1500: p-form: strides sum      -1, floor      104724000, exact      105760235, floor/exact    990 permille, from -1 at -W < p < 0:  500 permille, mean p   1439;
+               edge:   strides sum       0, floor              0, exact       36000000, floor/exact      0 permille, from below half a notch:    0, below one notch:    0 permille, mean momentum  -1500
+   m0 =  -3000: p-form: strides sum       1, floor      110772000, exact      171876964, floor/exact    644 permille, from -1 at -W < p < 0:  399 permille, mean p   1200;
+               edge:   strides sum      -1, floor      104724000, exact       72663335, floor/exact   1441 permille, from below half a notch:    0, below one notch:  437 permille, mean momentum    -61
+   m0 =  30000: p-form: strides sum     -30, floor     6036600000, exact     6063481123, floor/exact    995 permille, from -1 at -W < p < 0:    0 permille, mean p   1436;
+               edge:   strides sum     -35, floor     7458390000, exact     7400279500, floor/exact   1007 permille, from below half a notch:    0, below one notch:    0 permille, mean momentum     33
+
+D. The readers' check F: a hand on its spring winding its own 00 slot (term 5 in energy units through T_d = 1000),
+   12,000 rounds, one Node-clock; W at rounds 0, 2000, ..., 12000; the readers' replica (the p-form) beside the edge form
+   The source the strides squared (the floor part), 2 W sigma^2:
+     p0 =     -1 (2E0 =      0): p-form W = [3000, 3000, 4296, 7010, 11010, 15010, 19010]; the 00 push summed 8307416, of it from rounds with a -1 stride at -W < p < 0: 657 permille
+                              edge   W = [3000, 3000, 3000, 3000, 3000, 3000, 3000]; the 00 push summed 0, of it from rounds with the hand below half a notch: 0 permille; the hand's strides summed 0
+     p0 =   -300 (2E0 =     30): p-form W = [3000, 4138, 8138, 13877, 19877, 25877, 31877]; the 00 push summed 9610160, of it from rounds with a -1 stride at -W < p < 0: 654 permille
+                              edge   W = [3000, 3000, 3000, 3000, 3000, 3000, 3000]; the 00 push summed 0, of it from rounds with the hand below half a notch: 0 permille; the hand's strides summed 0
+     p0 =  -3000 (2E0 =   3000): p-form W = [3000, 4943, 16012, 33299, 51299, 69299, 87299]; the 00 push summed 28571338, of it from rounds with a -1 stride at -W < p < 0: 672 permille
+                              edge   W = [3000, 6255, 12796, 20911, 30911, 40911, 50911]; the 00 push summed 14892395, of it from rounds with the hand below half a notch: -135 permille; the hand's strides summed 0
+     p0 =  30000 (2E0 = 300000): p-form W = [3000, 73178, 233239, 441970, 664342, 891051, 1119051]; the 00 push summed 343201154, of it from rounds with a -1 stride at -W < p < 0: 442 permille
+                              edge   W = [3000, 106274, 333238, 600135, 885245, 1177288, 1475288]; the 00 push summed 447087027, of it from rounds with the hand below half a notch: -247 permille; the hand's strides summed -1
+   The source exact, 2 p^2 / W:
+     p0 =     -1 (2E0 =      0): p-form W = [3000, 4965, 17199, 64979, 272650, 920794, 1754036]; the 00 push summed 1330684020, of it from rounds with a -1 stride at -W < p < 0: -1 permille
+                              edge   W = [3000, 3000, 3000, 3000, 3000, 3000, 3000]; the 00 push summed 0, of it from rounds with the hand below half a notch: 0 permille; the hand's strides summed 0
+     p0 =   -300 (2E0 =     30): p-form W = [3000, 4961, 16907, 62985, 241749, 798447, 2699019]; the 00 push summed 4046819835, of it from rounds with a -1 stride at -W < p < 0: -1 permille
+                              edge   W = [3000, 3000, 3000, 3000, 3000, 3000, 3000]; the 00 push summed 1440000, of it from rounds with the hand below half a notch: 1000 permille; the hand's strides summed 0
+     p0 =  -3000 (2E0 =   3000): p-form W = [3000, 8389, 32707, 129946, 452141, 879738, 1357450]; the 00 push summed 744797084, of it from rounds with a -1 stride at -W < p < 0: -1 permille
+                              edge   W = [3000, 4905, 10056, 19525, 37267, 71742, 155094]; the 00 push summed 176144618, of it from rounds with the hand below half a notch: 875 permille; the hand's strides summed 0
+     p0 =  30000 (2E0 = 300000): p-form W = [3000, 94191, 403577, 1929005, 7843424, 18345579, 33170890]; the 00 push summed 25409971895, of it from rounds with a -1 stride at -W < p < 0: -1 permille
+                              edge   W = [3000, 85412, 230340, 474759, 922084, 2009109, 4057136]; the 00 push summed 3508240901, of it from rounds with the hand below half a notch: 909 permille; the hand's strides summed 0
+   (2E0 = p0^2 / W, the hand's energy at the lay, in the probe's doubled units; a push of 2E0 through T_d winds W by about 2E0 / (T_d REST) notches)
+

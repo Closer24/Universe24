@@ -1,5 +1,7 @@
 The double Node-clock's tooth on the edge: the probe, in whole numbers on the engine's own load and act
-(a cube of side 3, five trains, 18 rows x 27 sites = 486 gears; rest teeth 6, rest grip 1; J = 0, T_d = 1)
+(the example world's universe, examples/tensor24, on a cube of side 3: the light train, A1 of two parts, and the metric
+ family, the four-vector's square; den Gamma^2 = 15162856759112389000000, the grip at rest and the Mesh unit; rest teeth 6 grips; J = 0, T_d = 1;
+ the 00 slot's counts and the fine teeth laid in grips, the fine teeth's own pitch at J = 0)
 
 1. The split at the dial 2 D, centred, the edge taken even
    n in [-300, 300], D in [1, 12] (dials 2 D from 2 to 24), 7212 cases:
@@ -8,89 +10,93 @@ The double Node-clock's tooth on the edge: the probe, in whole numbers on the en
    The mutant, the tie taken upward (the plain carry from the half): 934 misses of the negation,
    exactly the ties; the mutant, the plain carry (s in [0, 2D)): 6276 misses.
 
-2. The 24 on moving clocks, 486 gears, 40 rounds (tick^n(turned s) = turned(tick^n s), of the 24 turns)
+2. The 24 on moving clocks, 40 rounds (tick^n(turned s) = turned(tick^n s), of the 24 turns)
    The edge act's turn: rows and sites by the turn, the tooth of a flipped row negated; the act as built's:
    the tooth of a flipped row reflected in the teeth of the round that kept it (the before slot's).
-   Lay standing at W = 9: W from 9 to 9 on the moving rows (the 00 row's own teeth at rest 6), D from 18 to 18, D's parities [0], the counts reach 10 bits, the edge's promise held at every round (broke: None).
+   Lay standing at W = 9 grips: 324 gears (12 rows x 27 sites); W from 9 grips to 9 grips on the rows that read the 00 slot (the 00 row's own teeth at rest, 6 grips), D from 18 grips to 18 grips, D's parities [0] (0 even, 1 odd), the counts reach 78 bits, the edge's promise held at every round (broke: None).
      edge act: 24 at every one of the 40 rounds
      the act as built (the loader's lay): 24 at every one of the 40 rounds
      mutant, the edge act with the tooth moved and not negated: 3 at every one of the 40 rounds
      mutant, the plain carry on the edge's dial (s in [0, 2D)) with the negation: 3 at every one of the 40 rounds
      the same plain carry with the flip 2D - 1 - s in the dial the tooth lives on (2 D_in): 24 at every one of the 40 rounds (the plain carry's flip is its own dial's, 2 D_out, which is not the tooth's where the clock moves)
-     mutant, the tie taken upward: 3 at every one of the 40 rounds; teeth standing on the edge of their dial per round: [10, 7, 13, 4, 10, 14, 3, 9, 9, 12, 6, 7, 11, 11, 10, 5, 9, 5, 3, 10, 9, 3, 5, 6, 5, 12, 10, 10, 8, 5, 5, 6, 7, 8, 5, 7, 6, 11, 12, 6]
-   Lay standing at W = 10: W from 10 to 10 on the moving rows (the 00 row's own teeth at rest 6), D from 20 to 20, D's parities [0], the counts reach 10 bits, the edge's promise held at every round (broke: None).
-     edge act: 24 at every one of the 40 rounds
-   Lay rising by 1 a round from W = 10: W from 10 to 50 on the moving rows (the 00 row's own teeth at rest 6), D from 19 to 99, D's parities [1], the counts reach 8 bits, the edge's promise held at every round (broke: None).
+     mutant, the tie taken upward: 3 at every one of the 40 rounds; teeth standing on the edge of their dial per round: [6, 5, 7, 3, 3, 7, 3, 5, 5, 7, 5, 4, 8, 7, 6, 2, 4, 4, 1, 7, 4, 1, 4, 3, 5, 8, 5, 7, 4, 2, 2, 4, 4, 3, 3, 3, 4, 6, 8, 3]
+   Lay rising by 1 grip a round from W = 10 grips: 324 gears (12 rows x 27 sites); W from 10 grips to 50 grips on the rows that read the 00 slot (the 00 row's own teeth at rest, 6 grips), D from 19 grips to 99 grips, D's parities [0] (0 even, 1 odd), the counts reach 81 bits, the edge's promise held at every round (broke: None).
      edge act: 24 at every one of the 40 rounds
      the act as built (the loader's lay): [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
      mutant, the edge act with the tooth moved and not negated: 3 at every one of the 40 rounds
      mutant, the plain carry on the edge's dial (s in [0, 2D)) with the negation: 3 at every one of the 40 rounds
      the same plain carry with the flip 2D - 1 - s in the dial the tooth lives on (2 D_in): 3 at every one of the 40 rounds (the plain carry's flip is its own dial's, 2 D_out, which is not the tooth's where the clock moves)
-     mutant, the tie taken upward: 3 at every one of the 40 rounds; teeth standing on the edge of their dial per round: [14, 6, 12, 6, 4, 7, 5, 1, 7, 2, 4, 5, 4, 2, 5, 5, 6, 5, 3, 8, 5, 0, 0, 2, 5, 4, 3, 5, 5, 2, 6, 3, 3, 2, 3, 0, 2, 1, 2, 1]
-   Lay rising by 2 a round from W = 10: W from 10 to 90 on the moving rows (the 00 row's own teeth at rest 6), D from 18 to 178, D's parities [0], the counts reach 8 bits, the edge's promise held at every round (broke: None).
+     mutant, the tie taken upward: 3 at every one of the 40 rounds; teeth standing on the edge of their dial per round: [9, 3, 5, 4, 4, 4, 2, 1, 5, 2, 3, 2, 3, 0, 3, 4, 2, 4, 3, 4, 2, 0, 0, 2, 2, 2, 1, 1, 0, 1, 3, 3, 1, 1, 1, 0, 2, 1, 2, 1]
+   Lay rising by 1 grip + 1 a round from W = 10 grips: 324 gears (12 rows x 27 sites); W from 10 grips to 50 grips + 40 on the rows that read the 00 slot (the 00 row's own teeth at rest, 6 grips), D from 19 grips - 1 to 99 grips + 79, D's parities [1] (0 even, 1 odd), the counts reach 81 bits, the edge's promise held at every round (broke: None).
      edge act: 24 at every one of the 40 rounds
-   Lay rising by 3 a round from W = 10: W from 10 to 130 on the moving rows (the 00 row's own teeth at rest 6), D from 17 to 257, D's parities [1], the counts reach 9 bits, the edge's promise held at every round (broke: None).
+   Lay rising by 2 grips a round from W = 10 grips: 324 gears (12 rows x 27 sites); W from 10 grips to 90 grips on the rows that read the 00 slot (the 00 row's own teeth at rest, 6 grips), D from 18 grips to 178 grips, D's parities [0] (0 even, 1 odd), the counts reach 82 bits, the edge's promise held at every round (broke: None).
      edge act: 24 at every one of the 40 rounds
-   Lay falling by 1 a round from W = 46: W from 46 to 6 on the moving rows (the 00 row's own teeth at rest 6), D from 93 to 13, D's parities [1], the counts reach 11 bits, the edge's promise held at every round (broke: None).
+   Lay falling by 1 grip a round from W = 46 grips: 324 gears (12 rows x 27 sites); W from 46 grips to 6 grips on the rows that read the 00 slot (the 00 row's own teeth at rest, 6 grips), D from 93 grips to 13 grips, D's parities [0] (0 even, 1 odd), the counts reach 81 bits, the edge's promise held at every round (broke: None).
      edge act: 24 at every one of the 40 rounds
      the act as built (the loader's lay): 24 at every one of the 1 rounds; its promise breaks before round 2
      mutant, the edge act with the tooth moved and not negated: 3 at every one of the 40 rounds
      mutant, the plain carry on the edge's dial (s in [0, 2D)) with the negation: 3 at every one of the 40 rounds
      the same plain carry with the flip 2D - 1 - s in the dial the tooth lives on (2 D_in): 3 at every one of the 40 rounds (the plain carry's flip is its own dial's, 2 D_out, which is not the tooth's where the clock moves)
-     mutant, the tie taken upward: [6, 6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; teeth standing on the edge of their dial per round: [2, 1, 2, 0, 3, 2, 1, 1, 4, 7, 5, 3, 2, 5, 1, 1, 4, 4, 0, 3, 3, 4, 9, 5, 4, 7, 9, 8, 7, 3, 4, 8, 14, 2, 13, 8, 11, 11, 13, 19]
-   Lay falling by 3 a round from W = 126: W from 126 to 6 on the moving rows (the 00 row's own teeth at rest 6), D from 255 to 15, D's parities [1], the counts reach 12 bits, the edge's promise held at every round (broke: None).
+     mutant, the tie taken upward: [24, 24, 24, 24, 24, 12, 12, 12, 6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; teeth standing on the edge of their dial per round: [0, 0, 1, 0, 2, 1, 1, 0, 3, 4, 2, 0, 1, 2, 0, 0, 4, 1, 0, 3, 1, 3, 6, 2, 2, 5, 6, 3, 3, 2, 1, 4, 7, 1, 7, 4, 5, 9, 9, 12]
+   Lay falling by 1 grip + 1 a round from W = 46 grips: 324 gears (12 rows x 27 sites); W from 46 grips to 6 grips - 40 on the rows that read the 00 slot (the 00 row's own teeth at rest, 6 grips), D from 93 grips + 1 to 13 grips - 79, D's parities [1] (0 even, 1 odd), the counts reach 81 bits, the edge's promise held at every round (broke: None).
+     edge act: 24 at every one of the 40 rounds
+   Lay falling by 3 grips a round from W = 126 grips: 324 gears (12 rows x 27 sites); W from 126 grips to 6 grips on the rows that read the 00 slot (the 00 row's own teeth at rest, 6 grips), D from 255 grips to 15 grips, D's parities [0] (0 even, 1 odd), the counts reach 82 bits, the edge's promise held at every round (broke: None).
      edge act: 24 at every one of the 40 rounds
 
 3. The mirror as its own inverse, and the run back (untick(tick s) = s at every round; the whole rewind)
-   Lay rising by 1 a round from W = 10: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
+   Lay rising by 1 grip a round from W = 10 grips: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
      mutant, the mirror with the tooth kept and not negated: untick(tick s) = s in 0 of 40 rounds.
      mutant, the plain carry on the edge's dial with the flip 2D - 1 - s: untick(tick s) = s in 0 of 40 rounds.
-     the act as built, no promise asked: untick(tick s) = s in 40 of 40 rounds; mirror(mirror s) moves the tooth at 19926 gear-states of 19926 (by W(a) - W(b)); its promise first breaks at round None.
-   Lay rising by 2 a round from W = 10: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
+     the act as built, no promise asked: untick(tick s) = s in 40 of 40 rounds; mirror(mirror s) moves the tooth at 13284 gear-states of 13284 (by W(a) - W(b)); its promise first breaks at round None.
+   Lay rising by 1 grip + 1 a round from W = 10 grips: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
      mutant, the mirror with the tooth kept and not negated: untick(tick s) = s in 0 of 40 rounds.
      mutant, the plain carry on the edge's dial with the flip 2D - 1 - s: untick(tick s) = s in 0 of 40 rounds.
-     the act as built, no promise asked: untick(tick s) = s in 40 of 40 rounds; mirror(mirror s) moves the tooth at 19926 gear-states of 19926 (by W(a) - W(b)); its promise first breaks at round None.
-   Lay falling by 1 a round from W = 46: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
+     the act as built, no promise asked: untick(tick s) = s in 40 of 40 rounds; mirror(mirror s) moves the tooth at 13284 gear-states of 13284 (by W(a) - W(b)); its promise first breaks at round None.
+   Lay falling by 1 grip a round from W = 46 grips: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
      mutant, the mirror with the tooth kept and not negated: untick(tick s) = s in 0 of 40 rounds.
      mutant, the plain carry on the edge's dial with the flip 2D - 1 - s: untick(tick s) = s in 0 of 40 rounds.
-     the act as built, no promise asked: untick(tick s) = s in 1 of 40 rounds; mirror(mirror s) moves the tooth at 19926 gear-states of 19926 (by W(a) - W(b)); its promise first breaks at round 1.
-   Lay falling by 3 a round from W = 126: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
+     the act as built, no promise asked: untick(tick s) = s in 1 of 40 rounds; mirror(mirror s) moves the tooth at 13284 gear-states of 13284 (by W(a) - W(b)); its promise first breaks at round 1.
+   Lay falling by 1 grip + 1 a round from W = 46 grips: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
      mutant, the mirror with the tooth kept and not negated: untick(tick s) = s in 0 of 40 rounds.
      mutant, the plain carry on the edge's dial with the flip 2D - 1 - s: untick(tick s) = s in 0 of 40 rounds.
-     the act as built, no promise asked: untick(tick s) = s in 1 of 40 rounds; mirror(mirror s) moves the tooth at 19926 gear-states of 19926 (by W(a) - W(b)); its promise first breaks at round 1.
-   Lay standing at W = 9: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
+     the act as built, no promise asked: untick(tick s) = s in 1 of 40 rounds; mirror(mirror s) moves the tooth at 13284 gear-states of 13284 (by W(a) - W(b)); its promise first breaks at round 1.
+   Lay falling by 3 grips a round from W = 126 grips: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
+     mutant, the mirror with the tooth kept and not negated: untick(tick s) = s in 0 of 40 rounds.
+     mutant, the plain carry on the edge's dial with the flip 2D - 1 - s: untick(tick s) = s in 0 of 40 rounds.
+     the act as built, no promise asked: untick(tick s) = s in 1 of 40 rounds; mirror(mirror s) moves the tooth at 13284 gear-states of 13284 (by W(a) - W(b)); its promise first breaks at round 1.
+   Lay standing at W = 9 grips: edge act: mirror(mirror s) = s at 41 of 41 states; untick(tick s) = s in 40 of 40 rounds; the 40 rounds rewound to the start bit for bit: True;
      mutant, the mirror with the tooth kept and not negated: untick(tick s) = s in 0 of 40 rounds.
      mutant, the plain carry on the edge's dial with the flip 2D - 1 - s: untick(tick s) = s in 40 of 40 rounds.
-     the act as built, no promise asked: untick(tick s) = s in 40 of 40 rounds; mirror(mirror s) moves the tooth at 0 gear-states of 19926 (by W(a) - W(b)); its promise first breaks at round None.
+     the act as built, no promise asked: untick(tick s) = s in 40 of 40 rounds; mirror(mirror s) moves the tooth at 0 gear-states of 13284 (by W(a) - W(b)); its promise first breaks at round None.
 
 4. The momentum in the edge's teeth: per row P = SUM over the sites of 2 D_in (a - b) + t, in half-teeth
-   Lay rising by 1 a round from W = 10: P_(t+1) - P_t = 4 SUM push: 0 misses over 18 rows x 40 rounds; SUM push = 0 (the Meshes' pull alike from both ends, J = 0): 0 misses;
-     P_40 - P_0 per row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-     S_0 per row (S the sum of a - b): [-172, 82, 240, -306, 325, -75, 111, 153, 27, -78, 5, 82, 0, 0, 0, 86, -86, -124]
-     S_40 per row: [-33, 17, 45, -59, 62, -12, 22, 28, 27, -16, 1, 16, 0, 0, 0, 16, -20, -25]
-     (P kept exactly; S re-split at the dial, D from 19 to 99: S ~ (P - SUM t) / (2 D), the velocities fall as the clock rises and rise as it falls, no drift);
-     the act as built: P = W S + R, P_(t+1) - P_t = dW x S_(t+1): 0 misses; P_40 - P_0 per row: [-7583, 2619, 8903, -12941, 12278, -3671, 3690, 5363, 1080, -3820, -517, 2526, 0, 0, 0, 2744, -4101, -5642]; S_40 - S_0 per row: [-24, -23, -25, -26, -24, -25, -28, -27, 0, -28, -29, -29, 0, 0, 0, -26, -23, -26]
-   Lay falling by 1 a round from W = 46: P_(t+1) - P_t = 4 SUM push: 0 misses over 18 rows x 40 rounds; SUM push = 0 (the Meshes' pull alike from both ends, J = 0): 0 misses;
-     P_40 - P_0 per row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-     S_0 per row (S the sum of a - b): [-172, 82, 240, -306, 325, -75, 111, 153, -27, -78, 5, 82, 0, 0, 0, 86, -86, -124]
-     S_40 per row: [-1230, 586, 1718, -2187, 2325, -538, 794, 1094, -27, -561, 36, 587, 0, 0, 0, 612, -614, -883]
-     (P kept exactly; S re-split at the dial, D from 93 to 13: S ~ (P - SUM t) / (2 D), the velocities fall as the clock rises and rise as it falls, no drift);
-     the act as built: P = W S + R, P_(t+1) - P_t = dW x S_(t+1): 0 misses; P_40 - P_0 per row: [6975, -3184, -9504, 12332, -12904, 3096, -4343, -6012, 1080, 3215, -108, -3180, 0, 0, 0, -3353, 3521, 5049]; S_40 - S_0 per row: [17, 17, 13, 16, 15, 17, 11, 15, 0, 17, 16, 16, 0, 0, 0, 15, 18, 16]
-   Lay standing at W = 9: P_(t+1) - P_t = 4 SUM push: 0 misses over 18 rows x 40 rounds; SUM push = 0 (the Meshes' pull alike from both ends, J = 0): 0 misses;
-     P_40 - P_0 per row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-     S_0 per row (S the sum of a - b): [-172, 82, 240, -306, 325, -75, 111, 153, 0, -78, 5, 82, 0, 0, 0, 86, -86, -124]
-     S_40 per row: [-171, 81, 243, -306, 324, -75, 111, 152, 0, -79, 2, 81, 0, 0, 0, 85, -82, -124]
-     (P kept exactly; S re-split at the dial, D from 18 to 18: S ~ (P - SUM t) / (2 D), the velocities fall as the clock rises and rise as it falls, no drift);
-     the act as built: P = W S + R, P_(t+1) - P_t = dW x S_(t+1): 0 misses; P_40 - P_0 per row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; S_40 - S_0 per row: [-3, -6, -4, -1, -4, -3, -6, -4, 0, -4, -5, -5, 0, 0, 0, -3, -2, -5]
-   Mutant, a spring f = 1 on the a1 row (its push -2 a, summing to -2 SUM a, not 0), rising by 1, 12 rounds, 8 bits: P_(t+1) - P_t = 4 SUM push in every row and round (0 misses), SUM push not 0 in 12 row-rounds: the books close, P moves by exactly 4 x the pushes' sum; run back exact in 12 of 12.
+   Lay rising by 1 grip a round from W = 10 grips: P_(t+1) - P_t = 4 SUM push: 0 misses over 12 rows x 40 rounds; SUM push = 0 (the Meshes' pull alike from both ends, J = 0): 0 misses;
+     P_40 - P_0 per row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+     S_0 per row (S the sum of a - b): [-172, 82, 27 grips, 240, -306, 325, 0, 0, 0, -75, 111, 153]
+     S_40 per row: [-33, 17, 27 grips, 45, -59, 62, 0, 0, 0, -12, 22, 28]
+     (P kept exactly; S re-split at the dial, D from 19 grips to 99 grips: S ~ (P - SUM t) over 2 D, the velocities fall as the clock rises and rise as it falls, no drift);
+     the act as built: P = W S + R, P_(t+1) - P_t = dW x S_(t+1): 0 misses; P_40 - P_0 per row: [-7583 grips, 2619 grips, 1080 grips^2, 8903 grips, -12941 grips, 12278 grips, 0, 0, 0, -3671 grips, 3690 grips, 5363 grips]; S_40 - S_0 per row: [-24, -23, 0, -25, -26, -24, 0, 0, 0, -25, -28, -27]
+   Lay falling by 1 grip a round from W = 46 grips: P_(t+1) - P_t = 4 SUM push: 0 misses over 12 rows x 40 rounds; SUM push = 0 (the Meshes' pull alike from both ends, J = 0): 0 misses;
+     P_40 - P_0 per row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+     S_0 per row (S the sum of a - b): [-172, 82, -27 grips, 240, -306, 325, 0, 0, 0, -75, 111, 153]
+     S_40 per row: [-1230, 586, -27 grips, 1718, -2187, 2325, 0, 0, 0, -538, 794, 1094]
+     (P kept exactly; S re-split at the dial, D from 93 grips to 13 grips: S ~ (P - SUM t) over 2 D, the velocities fall as the clock rises and rise as it falls, no drift);
+     the act as built: P = W S + R, P_(t+1) - P_t = dW x S_(t+1): 0 misses; P_40 - P_0 per row: [6975 grips, -3184 grips, 1080 grips^2, -9504 grips, 12332 grips, -12904 grips, 0, 0, 0, 3096 grips, -4343 grips, -6012 grips]; S_40 - S_0 per row: [17, 17, 0, 13, 16, 15, 0, 0, 0, 17, 11, 15]
+   Lay standing at W = 9 grips: P_(t+1) - P_t = 4 SUM push: 0 misses over 12 rows x 40 rounds; SUM push = 0 (the Meshes' pull alike from both ends, J = 0): 0 misses;
+     P_40 - P_0 per row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+     S_0 per row (S the sum of a - b): [-172, 82, 0, 240, -306, 325, 0, 0, 0, -75, 111, 153]
+     S_40 per row: [-171, 81, 0, 243, -306, 324, 0, 0, 0, -75, 111, 152]
+     (P kept exactly; S re-split at the dial, D from 18 grips to 18 grips: S ~ (P - SUM t) over 2 D, the velocities fall as the clock rises and rise as it falls, no drift);
+     the act as built: P = W S + R, P_(t+1) - P_t = dW x S_(t+1): 0 misses; P_40 - P_0 per row: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; S_40 - S_0 per row: [-3, -6, 0, -4, -1, -4, 0, 0, 0, -3, -6, -4]
+   Mutant, a spring f = 1 on the light train's first row, A1 (its push -2 a, summing to -2 SUM a, not 0), rising by 1 grip, 12 rounds, 80 bits: P_(t+1) - P_t = 4 SUM push in every row and round (0 misses), SUM push not 0 in 12 row-rounds: the books close, P moves by exactly 4 x the pushes' sum; run back exact in 12 of 12.
 
 5. On a still clock, the act as built, state for state (t = 4 r + 2 - D, D = 2 W: the centre of the tooth's cell)
    Both acts on one layout, the clocks' read cut acyclic (the 00 row's own teeth at rest; on this still lay the cut
    changes no count of the act as built, measured below).
-   Standing at W = 9 (D = 18), 40 rounds: the two acts' states correspond at 40 of 40 rounds (a and b equal, t = 4 r + 2 - D), 0 teeth on the dial's edge; (iii)'s flip W - 1 - r maps to the negation of t at 41 of 41 states; the act as built on the loader's lay and on the cut agree in a and b at 41 of 41 states;
-     mutant, the tooth laid at the cell's lower edge, t = 4 r - D: the now slot departs at 22 gears of 486 after one round.
-   Standing at W = 10 (D = 20), 40 rounds: the two acts' states correspond at 40 of 40 rounds (a and b equal, t = 4 r + 2 - D), 0 teeth on the dial's edge; (iii)'s flip W - 1 - r maps to the negation of t at 41 of 41 states; the act as built on the loader's lay and on the cut agree in a and b at 41 of 41 states;
-     mutant, the tooth laid at the cell's lower edge, t = 4 r - D: the now slot departs at 20 gears of 486 after one round.
+   Standing at W = 9 grips (D = 18 grips), 40 rounds: the two acts' states correspond at 40 of 40 rounds (a and b equal, t = 4 r + 2 - D), 0 teeth on the dial's edge; (iii)'s flip W - 1 - r maps to the negation of t at 41 of 41 states; the act as built on the loader's lay and on the cut agree in a and b at 41 of 41 states;
+     mutant, the tooth laid at the cell's lower edge, t = 4 r - D: the now slot departs at 14 gears of 324 after one round.
+   Standing at W = 10 grips (D = 20 grips), 40 rounds: the two acts' states correspond at 40 of 40 rounds (a and b equal, t = 4 r + 2 - D), 0 teeth on the dial's edge; (iii)'s flip W - 1 - r maps to the negation of t at 41 of 41 states; the act as built on the loader's lay and on the cut agree in a and b at 41 of 41 states;
+     mutant, the tooth laid at the cell's lower edge, t = 4 r - D: the now slot departs at 11 gears of 324 after one round.
 
 6. How the split learns W(a+): the 00 slot reading its own teeth
    A dial that depends on its own quotient: for the 00 row reading itself, D_out(q) = 2 W_a + q, and the
@@ -106,10 +112,10 @@ The double Node-clock's tooth on the edge: the probe, in whole numbers on the en
    A dial that does not depend on q (D = 9), q from -30 to 40: under no q: 0; under two: 70, every one a shared
    edge, which the even rule gives to one q (section 1: 0 misses). So the only lawful dial is one the quotient does not move.
    On the act: the edge act on the loader's lay (the 00 row reading itself), the second split reading the first's 00 count:
-     lay rising by 1 a round from W = 10: untick(tick s) = s in 10 of 12 rounds; the 00 slot's count by round: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 13, 13, 13]
-     the acyclic cut (the 00 row's teeth read no row, W_00 = rest = 6): untick(tick s) = s in 12 of 12; the 00 slot's count by round: [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-     lay falling by 1 a round from W = 46: untick(tick s) = s in 12 of 12 rounds; the 00 slot's count by round: [40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28]
-     the acyclic cut (the 00 row's teeth read no row, W_00 = rest = 6): untick(tick s) = s in 12 of 12; the 00 slot's count by round: [40, 39, 38, 37, 36, 35, 34, 33, 32, 31, 30, 29, 28]
+     lay rising by 1 grip a round from W = 10 grips: untick(tick s) = s in 0 of 12 rounds; the 00 slot's count by round: ['4 grips', '5 grips - 95 permille', '6 grips - 262 permille', '7 grips - 486 permille', '7 grips + 242 permille', '8 grips - 67 permille', '9 grips - 411 permille', '9 grips + 216 permille', '10 grips - 181 permille', '10 grips + 398 permille', '11 grips - 41 permille', '11 grips + 499 permille', '12 grips + 24 permille']
+     the acyclic cut (the 00 row's teeth read no row, W_00 = rest = 6 grips): untick(tick s) = s in 12 of 12; the 00 slot's count by round: ['4 grips', '5 grips', '6 grips', '7 grips', '8 grips', '9 grips', '10 grips', '11 grips', '12 grips', '13 grips', '14 grips', '15 grips', '16 grips']
+     lay falling by 1 grip a round from W = 46 grips: untick(tick s) = s in 0 of 12 rounds; the 00 slot's count by round: ['40 grips', '39 grips - 21 permille', '38 grips - 67 permille', '37 grips - 138 permille', '36 grips - 235 permille', '35 grips - 362 permille', '33 grips + 478 permille', '32 grips + 285 permille', '31 grips + 54 permille', '30 grips - 218 permille', '28 grips + 463 permille', '27 grips + 93 permille', '26 grips - 334 permille']
+     the acyclic cut (the 00 row's teeth read no row, W_00 = rest = 6 grips): untick(tick s) = s in 12 of 12; the 00 slot's count by round: ['40 grips', '39 grips', '38 grips', '37 grips', '36 grips', '35 grips', '34 grips', '33 grips', '32 grips', '31 grips', '30 grips', '29 grips', '28 grips']
 
 7. The even-count rule's cost: adding a whole count k to every velocity (a -> a + k, b kept) on a still clock
    k =  1: split(n + 2 D k) = (q + k, s) misses 620 of 4812 (n in [-200, 200], D in [1, 12]); ties among the cases 620: every miss a tie, none else
@@ -117,8 +123,9 @@ The double Node-clock's tooth on the edge: the probe, in whole numbers on the en
    k =  3: split(n + 2 D k) = (q + k, s) misses 620 of 4812 (n in [-200, 200], D in [1, 12]); ties among the cases 620: every miss a tie, none else
    k = -1: split(n + 2 D k) = (q + k, s) misses 620 of 4812 (n in [-200, 200], D in [1, 12]); ties among the cases 620: every miss a tie, none else
    The act as built: q - v = (push + r) div W, so v -> v + k gives q -> q + k at every state: covariant for every k.
-   On the board, standing at W = 9 (D = 18), the t1 x row's a raised by k at every site (its velocity by k, F unchanged),
-   the row's teeth laid (i) as drawn, (ii) so that every one of its 27 carries lands on the dial's edge (a tie):
+   On the board, standing at W = 9 grips (D = 18 grips), the light train's first row (A1) with its a raised by k at every
+   site (its velocity by k, F unchanged), the row's teeth laid (i) as drawn, (ii) so that every one of its 27 carries lands
+   on the dial's edge (a tie):
      k = 1, teeth as drawn: ties in the row's carries 0 of 27; the row's now slot departs from a+ + 2k at 0 gears of 27
      k = 1, teeth every carry of the row a tie: ties in the row's carries 27 of 27; the row's now slot departs from a+ + 2k at 27 gears of 27
      k = 1, the act as built: departs at 0 gears of 27
