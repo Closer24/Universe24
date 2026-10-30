@@ -20,13 +20,15 @@ def drive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
 
 
 def sources(layout: Layout, a: Z) -> tuple[Z, Z]:
-    """Every gear's force, its pull, and its source J: the plan on the value, the differences along each axis, the force."""
+    """Every gear's force, its pull, and its source J: the plan on the value, the differences along each axis, the force, and the unit."""
     nb, spokes, _, _, _, plan, _, _ = layout
     force = pull(layout, a)
     # each axis's + neighbour less its - neighbour: the neighbours summed with their Spokes' directions
     gradient = np.tensordot(spokes, seen(a, nb), axes=(0, 1))
     readings = np.concatenate((np.expand_dims(a, 0), gradient, np.expand_dims(force, 0)))
-    return force, contract(plan, readings.reshape(-1, a.shape[-1]), a)
+    # the unit, the readings' last row, for each reading a term lacks of three
+    flat = np.concatenate((readings.reshape(-1, a.shape[-1]), np.ones_like(a[:1], dtype=object)))
+    return force, contract(plan, flat, a)
 
 
 def driven(gearing: Gearing, force: Z, q: Z) -> Z:
