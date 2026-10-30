@@ -16,6 +16,12 @@ base holds an early Tensor24). For the rules that the stages delete (CEILED) in 
 scribe_scan_ceiling.json: the most that stands per key at a live head, written by Sofer from the live heads, never raised, read from his published
 branch as the allowance is. A hit above it is new; a key the ceiling does not hold stands at 0.
 
+The hidden numbers and the probes (the owner's answers of 2026-10-30, 09:0x UTC). ENUM (a refusal) and LENGTH (a note) read the new engine and its tools for
+a number behind a name: an enumeration, and a count spelt as a length. PROBE (a refusal) and DIVIDE (a note) read the probes under tools/derivations/ that a push
+adds or changes: a float, a true division, a root, a circular call, an import of math, random, fractions, decimal, statistics, scipy or sympy (PROBE); a floor
+division, a remainder or divmod, where the one division is Rule3's carry (DIVIDE). The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
+scribe_scan_probes.json, read from the published branch as the ceiling is. SCRIBE-GATE-1.md, section The hidden numbers and the probes.
+
   python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
   python scribe_scan.py TREE [--base REV]      TREE a directory or a git revision; the base a revision
   python scribe_scan.py --patch FILE           the patch applied on the base in a scratch worktree, then the same check
@@ -65,8 +71,8 @@ TOOLS = re.compile(
 )  # the new engine's tools, directly under tools/: the rules of TOOL_RULES alone
 TOOLS_SPEC = ":(glob)tools/tensor24_*.py"  # the same files as git's pathspec
 TOOL_RULES = frozenset(
-    {"NUMBER", "FLOAT", "TWICE", "ROOT", "TABLE"}
-)  # no number beyond 0 and 1, no float, no two spelt as a sum, no root and no typed table, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x; decision 41, 2026-10-30, 02:1x: no root and no table, now or later, and not outside the logic either)
+    {"NUMBER", "FLOAT", "TWICE", "ROOT", "TABLE", "ENUM", "LENGTH"}
+)  # no number beyond 0 and 1, no float, no two spelt as a sum, no root and no typed table, no enumeration and no count spelt as a length, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x; decision 41, 2026-10-30, 02:1x: no root and no table, now or later, and not outside the logic either; the owner's question of 2026-10-30, 09:0x: no number hidden behind an enum)
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
@@ -77,6 +83,9 @@ CEILING = (
 KEYS_READ = (
     HERE / "scribe_scan_keys.json"
 )  # the keys of the files' format that Sofer has read through the law, 'KEYS|file|path' per line
+PROBES_LIST = (
+    HERE / "scribe_scan_probes.json"
+)  # the probes that stand: per key the most a probe holds at a live head, frozen on the owner's yes of 2026-10-30, 09:0x UTC (the rule PROBE)
 BASES = ("origin/engine-5.0-test", "origin/main")
 FLOOR = "526a5666d"  # the engine head the list that stands was taken at: no base is older (a pull request into main is read against it)
 PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by Sofer alone
@@ -100,6 +109,7 @@ OWN = (
     "tools/derivations/open_items/scribe_scan_allowed.json",
     "tools/derivations/open_items/scribe_scan_ceiling.json",
     "tools/derivations/open_items/scribe_scan_keys.json",
+    "tools/derivations/open_items/scribe_scan_probes.json",
     "tools/derivations/open_items/scribe_scan_baseline.json",
     ".claude/settings.json",
 )
@@ -242,10 +252,39 @@ RULES: dict[str, tuple[str, str]] = {
         "BLOCK",
         "a family's kind or operand named by a string ('A1', 'A2', 'E', 'T1', 'T2', 'gradient') in the new engine's act or its loader: the files name each family and the code reads every role from them (decision 38; the owner's word of 2026-10-29, 15:0x UTC: make sure the code does not know what the families are); the count per file may not rise",
     ),
+    "ENUM": (
+        "BLOCK",
+        "an enumeration in the new engine or its tools (import enum, a class of Enum, IntEnum, StrEnum, Flag or IntFlag, enum.auto()): a number behind a name; numbers stand in the world, universe and setting files (the owner's question of 2026-10-30, 09:0x UTC: no number hidden behind an enum)",
+    ),
+    "LENGTH": (
+        "WARN",
+        "len() of a label tuple, a literal display or an all-capitals constant in the new engine or its tools: a count behind a name, a number spelt as a length (the owner's question of 2026-10-30, 09:0x UTC: no number hidden behind an enum and such); read each note, and derive the count from the star or the files (the count per file may not rise)",
+    ),
+    "PROBE": (
+        "BLOCK",
+        "a probe under tools/derivations/ that a push adds or changes holds a float, a true division, a root or a circular call, round() or float(), a negative power, a float dtype, or an import of math, random, fractions, decimal, statistics, scipy, sympy: whole numbers and Rule3 only, in a probe as in the code (law: No float anywhere in the system; the owner's words of 2026-10-30, 09:0x UTC: 'Yes' to the gate for probes, and a Fraction is two whole numbers while division is allowed only with Rule3); the probes that stand are frozen by scribe_scan_probes.json and the owner's list",
+    ),
+    "DIVIDE": (
+        "WARN",
+        "a floor division, a remainder or divmod in a probe under tools/derivations/ that a push adds or changes: the one division is Rule3's carry with its remainder kept (tensor24.algebra.carry.carry) (the owner's word of 2026-10-30, 09:0x UTC: division is allowed only with Rule3); a note, the count per file may not rise",
+    ),
 }
 
 BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sympy mpmath".split())
 NUMPY_NAMES = frozenset({"np", "numpy"})
+DISPLAY_NODES = (ast.Tuple, ast.List, ast.Set, ast.Dict)  # a label tuple, a list, a set or a dict written out
+ENUM_NAMES = frozenset("Enum IntEnum StrEnum Flag IntFlag ReprEnum auto".split())  # the standard library's enumerations: a number behind a name
+PROBES = "tools/derivations/"  # the probes (the derivations, toys and hands under it): the rules PROBE and DIVIDE read the files a push adds or changes
+PROBE_CALLS = frozenset(
+    "sqrt isqrt cbrt exp expm1 log log1p log2 log10 sin cos tan asin acos atan atan2 arcsin arccos arctan arctan2 sinh cosh tanh "
+    "arcsinh arccosh arctanh hypot round float complex".split()
+)  # a call that makes a real number, a root or a circular function in a probe
+PROBE_DTYPES = frozenset(
+    "float complex float16 float32 float64 float128 float_ double longdouble complex64 complex128 complex256".split()
+)  # a dtype that holds a real number
+PATHISH = (
+    "path", "root", "dir", "here", "repo", "folder", "tmp", "parent", "examples", "output", "work",
+)  # a name that holds a path: its / is a join, the left side of a division in a probe that this spares
 NP_FLOAT = frozenset(
     "sqrt cbrt exp expm1 log log2 log10 log1p mean average median std var linspace logspace fft linalg random e inf nan "
     "float16 float32 float64 float_ double true_divide divide power complex_ complex64 complex128 complex256 csingle cdouble "
@@ -472,6 +511,39 @@ def mask_name(node: ast.AST) -> str:
         name = node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
         if name in MASK_CALLS:
             return name
+    return ""
+
+
+def hidden_length(node: ast.AST, labels: set[str]) -> str:
+    """A count spelt as a length: len() of a display written out, of a string, of a name the module binds to a display, or of an
+    all-capitals constant (the convention for one bound in another module); else nothing."""
+    if not (
+        isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id == "len"
+        and len(node.args) == 1
+    ):
+        return ""
+    arg = node.args[0]
+    if isinstance(arg, DISPLAY_NODES) or (isinstance(arg, ast.Constant) and isinstance(arg.value, str)):
+        return "len of a display"
+    if isinstance(arg, ast.Name) and (arg.id in labels or (len(arg.id) > 1 and arg.id.isupper())):
+        return f"len({arg.id})"
+    return ""
+
+
+def enum_name(node: ast.AST) -> str:
+    """The enumeration a node spells: an import of enum, a class with an enumeration's base, a call of Enum, auto or their kin; else nothing."""
+    if isinstance(node, ast.Import):
+        return "import enum" if any(a.name.split(".")[0] == "enum" for a in node.names) else ""
+    if isinstance(node, ast.ImportFrom):
+        return "import enum" if (node.module or "").split(".")[0] == "enum" else ""
+    if isinstance(node, ast.ClassDef):
+        names = (b.attr if isinstance(b, ast.Attribute) else getattr(b, "id", "") for b in node.bases)
+        return next((f"class of {n}" for n in names if n in ENUM_NAMES), "")
+    if isinstance(node, ast.Call):
+        name = node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
+        return f"call {name}" if name in ENUM_NAMES else ""
     return ""
 
 
@@ -1244,6 +1316,19 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add(
                     "TWICE", node, ast.unparse(node)
                 )  # not spared to the runner or the decoder: the loader's twos are the engine's
+        labels = {
+            statement.targets[0].id
+            for statement in tree.body
+            if isinstance(statement, ast.Assign)
+            and len(statement.targets) == 1
+            and isinstance(statement.targets[0], ast.Name)
+            and isinstance(statement.value, DISPLAY_NODES)
+        }  # the module's names bound to a label tuple, a list, a set or a dict
+        for node in ast.walk(tree):
+            if length := hidden_length(node, labels):
+                add("LENGTH", node, length)
+            if enum := enum_name(node):
+                add("ENUM", node, enum)
     if rel.startswith(ACT) or rel in (LOADER, MAIN):
         for node in ast.walk(tree):
             if word := mask_name(node):
@@ -1736,10 +1821,27 @@ def ceiling(repo: Path = REPO) -> Counter[tuple[str, str, str]] | None:
     return held
 
 
+def frozen(repo: Path = REPO) -> Counter[tuple[str, str, str]]:
+    """The probes that stand: entries {rule, file, detail, count}, read from Sofer's published branch (origin/scribe-5) as the allowance is,
+    the working file where that ref is absent (the rules PROBE and DIVIDE; the owner's yes of 2026-10-30, 09:0x UTC: the standing probes frozen)."""
+    relative = PROBES_LIST.relative_to(REPO).as_posix()
+    shown = git(repo, "show", f"{PUBLISHED}:{relative}")
+    if shown.returncode == 0:
+        text = shown.stdout.decode()
+    elif PROBES_LIST.is_file():
+        text = PROBES_LIST.read_text(encoding="utf-8")
+    else:
+        return Counter()
+    held: Counter[tuple[str, str, str]] = Counter()
+    for entry in json.loads(text):
+        held[(entry["rule"], entry["file"], entry["detail"])] += int(entry.get("count", 1))
+    return held
+
+
 def above(now: Iterable[Hit], stands: Counter[tuple[str, str, str]]) -> list[Hit]:
     """The hits above what stands at their key (the last by line), less what the owner's word allows and the keys Sofer has read; what may
     stand at a key that the ceiling binds is capped at the ceiling, so that what a stage deleted does not come back up to the base's own."""
-    stands = stands + allowance() + readings()
+    stands = stands + allowance() + readings() + frozen()
     bound = ceiling()
     if bound is not None:
         stands = Counter(
@@ -2101,6 +2203,142 @@ def declared_new(
     return above(after, stands)
 
 
+def pathlike(node: ast.AST) -> bool:
+    """A name, an attribute or a call that holds a path: its / joins and divides nothing."""
+    while isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
+        node = node.left
+    if isinstance(node, ast.Call):
+        name = node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
+        return name in {"Path", "resolve", "parent", "expanduser"}
+    if isinstance(node, ast.Attribute):
+        return node.attr in {"parent", "parents"} or any(k in node.attr.lower() for k in PATHISH)
+    return isinstance(node, ast.Name) and any(k in node.id.lower() for k in PATHISH)
+
+
+def float_dtype(node: ast.AST) -> bool:
+    """A dtype argument that holds a real number: float, a numpy float name or the string of one."""
+    if isinstance(node, ast.Name):
+        return node.id in PROBE_DTYPES
+    if isinstance(node, ast.Attribute):
+        return node.attr in PROBE_DTYPES
+    return isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value in PROBE_DTYPES
+
+
+def probe_hits(rel: str, source: str) -> list[Hit]:
+    """The hits of PROBE and DIVIDE in one probe: what makes a real number, a root or a circular function in a derivation (PROBE), and a
+    floor division, a remainder or divmod that is not Rule3's carry (DIVIDE); a file that does not parse holds nothing to run."""
+    try:
+        tree = ast.parse(source)
+    except (SyntaxError, ValueError):
+        return []
+    hits: list[Hit] = []
+
+    def add(rule: str, node: ast.AST, detail: str) -> None:
+        hits.append(Hit(rule, rel, getattr(node, "lineno", 0), detail, "", getattr(node, "col_offset", 0)))
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and isinstance(node.value, float | complex):
+            add("PROBE", node, "float literal")
+        elif isinstance(node, ast.BinOp | ast.AugAssign):
+            left = node.left if isinstance(node, ast.BinOp) else node.target
+            right = node.right if isinstance(node, ast.BinOp) else node.value
+            if isinstance(node.op, ast.Div):
+                if not (path_join(node) or pathlike(left)):
+                    add("PROBE", node, "true division")
+            elif isinstance(node.op, ast.FloorDiv):
+                add("DIVIDE", node, "floor division")
+            elif isinstance(node.op, ast.Mod):
+                if not (isinstance(left, ast.JoinedStr) or (isinstance(left, ast.Constant) and isinstance(left.value, str))):
+                    add("DIVIDE", node, "remainder")
+            elif isinstance(node.op, ast.Pow) and isinstance(right, ast.UnaryOp) and isinstance(right.op, ast.USub):
+                add("PROBE", node, "negative power")
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                if alias.name.split(".")[0] in BAD_IMPORTS:
+                    add("PROBE", node, f"import {alias.name.split('.')[0]}")
+        elif isinstance(node, ast.ImportFrom):
+            if node.module and node.module.split(".")[0] in BAD_IMPORTS:
+                add("PROBE", node, f"import {node.module.split('.')[0]}")
+        elif isinstance(node, ast.Call):
+            name = node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
+            if name in PROBE_CALLS:
+                add("PROBE", node, f"call {name}")
+            elif name == "divmod":
+                add("DIVIDE", node, "divmod")
+            if any(k.arg == "dtype" and float_dtype(k.value) for k in node.keywords) or (
+                name == "astype" and node.args and float_dtype(node.args[0])
+            ):
+                add("PROBE", node, "float dtype")
+        elif (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id in NUMPY_NAMES
+            and (node.attr in NP_FLOAT or node.attr in PROBE_DTYPES or node.attr == "pi")
+            and node.attr not in PROBE_CALLS
+        ):
+            add("PROBE", node, f"np.{node.attr}")
+    return hits
+
+
+def probe_path(path: str) -> bool:
+    """Whether the rules PROBE and DIVIDE read a path: a .py file under tools/derivations/, outside a cache and outside the gate's own files."""
+    return (
+        path.startswith(PROBES)
+        and path.endswith(".py")
+        and "__pycache__" not in path.split("/")
+        and path not in OWN
+    )
+
+
+def changed_probes(
+    repo: Path, *revs: str, cached: bool = False, untracked: bool = False
+) -> list[tuple[str, str, str]]:
+    """Every probe that differs between two revisions, the index and a revision, or a revision and the working tree: (status, old path,
+    new path), a rename read as one and a deleted file left out; `untracked` adds the files git does not track."""
+    flags = ["diff", "-M", "--name-status", *(["--cached"] if cached else [])]
+    found: list[tuple[str, str, str]] = []
+    for line in git(repo, *flags, *revs, "--", PROBES).stdout.decode().splitlines():
+        parts = line.split("\t")
+        if parts[0][0] != "D" and probe_path(parts[-1]):
+            found.append((parts[0][0], parts[1], parts[-1]))
+    if untracked:
+        listing = git(repo, "ls-files", "--others", "--exclude-standard", "--", PROBES).stdout.decode()
+        found += [("A", p, p) for p in listing.splitlines() if probe_path(p)]
+    return found
+
+
+def probed_new(
+    repo: Path, base: str, head: str | None = None, root: Path | None = None, cached: bool = False
+) -> list[Hit]:
+    """The probe hits a push adds over its merge base, in the probes it adds or changes alone: above what the base held in the same file
+    (a rename is no new hit), less what the owner's list and the frozen probes allow. The head is a revision, else the working tree
+    `root` (with the index when `cached`). A probe that is new is read whole: every hit of it is new."""
+    changes = changed_probes(
+        repo, base, *([head] if head else []), cached=cached, untracked=not head and not cached
+    )
+    if not changes:
+        return []
+    olds = blobs_at(repo, base, [old for status, old, _ in changes if status != "A"])
+    if head:
+        news = blobs_at(repo, head, [new for _, _, new in changes])
+    else:
+        assert root is not None
+        news = {
+            new: (root / new).read_text(encoding="utf-8", errors="replace")
+            for _, _, new in changes
+            if (root / new).is_file()
+        }
+    after: list[Hit] = []
+    stands: Counter[tuple[str, str, str]] = Counter()
+    for status, old, new in changes:
+        if new not in news:
+            continue
+        after += probe_hits(new, news[new])
+        if status != "A" and old in olds:
+            stands.update((h.rule, new, h.detail) for h in probe_hits(old, olds[old]))
+    return above(after, stands)
+
+
 def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout) -> int:
     """The tree at `rev` against its merge base: 1 on a refusal."""
     commit = resolve(repo, rev)
@@ -2113,7 +2351,7 @@ def check_revision(repo: Path, rev: str, base: str | None, out: Any = sys.stdout
         .stdout.decode()
         .split()
     )
-    declared = declared_new(repo, mb, commit)
+    declared = declared_new(repo, mb, commit) + probed_new(repo, mb, commit)
     if not touched and not declared:
         return 0
     before: list[Hit] = []
@@ -2158,7 +2396,11 @@ def check_patch(repo: Path, patch: Path, base: str | None) -> int:
         git(tree, "add", "-A")
         before, after = hits_of(sources_at(repo, commit)), hits_of(sources_in(tree))
         stands = stood(before, moved(tree, commit, cached=True))
-        new = above(after, stands) + declared_new(tree, commit, root=tree, cached=True)
+        new = (
+            above(after, stands)
+            + declared_new(tree, commit, root=tree, cached=True)
+            + probed_new(tree, commit, root=tree, cached=True)
+        )
     base_label = name if name == commit[:9] else f"{name} ({commit[:9]})"
     status = (
         report(f"the patch {patch.name}", new, base_label) if new else _clean(patch.name, base_label)
@@ -2382,6 +2624,7 @@ def main(argv: list[str]) -> int:
     moves = moved(repo, mb, rev) if by_rev else moved(repo, mb)
     new = above(found, stood(hits_of(sources_at(repo, mb)), moves))
     new = new + (declared_new(repo, mb, rev) if by_rev else declared_new(repo, mb, root=repo))
+    new = new + (probed_new(repo, mb, rev) if by_rev else probed_new(repo, mb, root=repo))
     return (
         report(label, new, f"its merge base {mb[:9]} with {name}")
         if new
