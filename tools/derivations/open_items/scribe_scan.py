@@ -65,8 +65,8 @@ TOOLS = re.compile(
 )  # the new engine's tools, directly under tools/: the rules of TOOL_RULES alone
 TOOLS_SPEC = ":(glob)tools/tensor24_*.py"  # the same files as git's pathspec
 TOOL_RULES = frozenset(
-    {"NUMBER", "FLOAT", "TWICE"}
-)  # no number beyond 0 and 1, no float and no two spelt as a sum, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x)
+    {"NUMBER", "FLOAT", "TWICE", "ROOT", "TABLE"}
+)  # no number beyond 0 and 1, no float, no two spelt as a sum, no root and no typed table, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x; decision 41, 2026-10-30, 02:1x: no root and no table, now or later, and not outside the logic either)
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
