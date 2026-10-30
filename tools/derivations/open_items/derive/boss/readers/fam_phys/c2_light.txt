@@ -1,0 +1,34 @@
+Light and the pair hand: random against uniform, generic against I-averaged (c2_light.py)
+
+the generic table (keeps no common turn), 168 pushes:
+   no light (J = 0, the free act):
+      the same state: pair hand 10 thousandths (largest at one Node-clock 214) over 228 meetings; (w_I, w_J, w_K) at the lay (12000, 0, 0) and after 10 rounds (12223, -5889, 7929); SUM |h|^2 over the board 240000 -> 40370
+      the partner: pair hand 921 thousandths (largest at one Node-clock 989) over 228 meetings; (w_I, w_J, w_K) at the lay (10500, 0, 0) and after 10 rounds (10430, -4110, -942); SUM |h|^2 over the board 88500 -> 19750
+   light drawn in [-100, 100] at every Node-clock (the text's):
+      the same state: pair hand 144 thousandths (largest at one Node-clock 772) over 228 meetings; (w_I, w_J, w_K) at the lay (12000, 0, 0) and after 10 rounds (28664, 27468, 350412); SUM |h|^2 over the board 240000 -> 172146
+      the partner: pair hand 634 thousandths (largest at one Node-clock 996) over 228 meetings; (w_I, w_J, w_K) at the lay (10500, 0, 0) and after 10 rounds (11461, -16629, -18945); SUM |h|^2 over the board 88500 -> 172012
+   light uniform over the board, (100, -70, 40):
+      the same state: pair hand 6 thousandths (largest at one Node-clock 494) over 228 meetings; (w_I, w_J, w_K) at the lay (12000, 0, 0) and after 10 rounds (75481, 3019320, -205374); SUM |h|^2 over the board 240000 -> 48369655
+      the partner: pair hand 194 thousandths (largest at one Node-clock 979) over 228 meetings; (w_I, w_J, w_K) at the lay (10500, 0, 0) and after 10 rounds (-7462, 235761, 29997); SUM |h|^2 over the board 88500 -> 1943415
+   light uniform over the board, (37, 37, 37):
+      the same state: pair hand 34 thousandths (largest at one Node-clock 387) over 228 meetings; (w_I, w_J, w_K) at the lay (12000, 0, 0) and after 10 rounds (10547, 145116, 473550); SUM |h|^2 over the board 240000 -> 268327
+      the partner: pair hand 643 thousandths (largest at one Node-clock 981) over 228 meetings; (w_I, w_J, w_K) at the lay (10500, 0, 0) and after 10 rounds (1802, -19785, 81213); SUM |h|^2 over the board 88500 -> 91792
+
+the table averaged over I (keeps the I turn), 72 pushes:
+   no light (J = 0, the free act):
+      the same state: pair hand 10 thousandths (largest at one Node-clock 214) over 228 meetings; (w_I, w_J, w_K) at the lay (12000, 0, 0) and after 10 rounds (12223, -5889, 7929); SUM |h|^2 over the board 240000 -> 40370
+      the partner: pair hand 921 thousandths (largest at one Node-clock 989) over 228 meetings; (w_I, w_J, w_K) at the lay (10500, 0, 0) and after 10 rounds (10430, -4110, -942); SUM |h|^2 over the board 88500 -> 19750
+   light drawn in [-100, 100] at every Node-clock (the text's):
+      the same state: pair hand 44 thousandths (largest at one Node-clock 551) over 228 meetings; (w_I, w_J, w_K) at the lay (12000, 0, 0) and after 10 rounds (13003, -17115, 97113); SUM |h|^2 over the board 240000 -> 64671
+      the partner: pair hand 825 thousandths (largest at one Node-clock 986) over 228 meetings; (w_I, w_J, w_K) at the lay (10500, 0, 0) and after 10 rounds (10463, -12342, 13524); SUM |h|^2 over the board 88500 -> 35729
+   light uniform over the board, (100, -70, 40):
+      the same state: pair hand 40 thousandths (largest at one Node-clock 301) over 228 meetings; (w_I, w_J, w_K) at the lay (12000, 0, 0) and after 10 rounds (13072, -202269, 358863); SUM |h|^2 over the board 240000 -> 679795
+      the partner: pair hand 670 thousandths (largest at one Node-clock 985) over 228 meetings; (w_I, w_J, w_K) at the lay (10500, 0, 0) and after 10 rounds (9772, -24828, 105090); SUM |h|^2 over the board 88500 -> 129468
+   light uniform over the board, (37, 37, 37):
+      the same state: pair hand 22 thousandths (largest at one Node-clock 327) over 228 meetings; (w_I, w_J, w_K) at the lay (12000, 0, 0) and after 10 rounds (13298, 73278, 271056); SUM |h|^2 over the board 240000 -> 99243
+      the partner: pair hand 922 thousandths (largest at one Node-clock 994) over 228 meetings; (w_I, w_J, w_K) at the lay (10500, 0, 0) and after 10 rounds (10667, -8139, 69693); SUM |h|^2 over the board 88500 -> 19116
+
+Read: under the free act and under uniform light the one-state pair hand stays at the rounding (I-averaged table),
+while light drawn per Node-clock drives it up: the 'pair' is the two lays' inner states turned differently at
+different places by a white-noise field, not a pair made. The generic table breaks w_I (light makes winding),
+and under it even uniform light moves the pair hand: a vertex that keeps no common turn has no 'one state' to keep.

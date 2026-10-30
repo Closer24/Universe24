@@ -1,0 +1,23 @@
+One board, three readings; N lays stacking; the files and G3/2 (c1b_splits.py)
+1. The board (phi at 0, size 400, k = 20; 50 J phi at 13, size 50, k = 10), laid also as 20 J phi + 30 J phi.
+   windings at the lay: phi (240000, 0, 0), 50 J phi (810000, 0, 0), 20 J phi (129600, 0, 0), 30 J phi (291600, 0, 0)
+   the board against phi + 50 J phi: 1661 gears apart of 2160; against phi + 20 J phi + 30 J phi: 1849, the largest gap 15 on hands up to 1274 notches (rounding)
+   split A (phi | 20 J phi + 30 J phi): 997 thousandths; the text's own split (phi | 50 J phi): 999
+   split B (phi + 20 J phi | 30 J phi): 514 thousandths
+   split C (phi + 30 J phi | 20 J phi): 320 thousandths
+   (without rounding, B and C are A times |L phi|^2 / (|L phi|^2 + |L 20 J phi|^2) and the same with 30: about 0.88 and 0.77)
+   One board, one act, three 'pair hands': the reading is the prober's division of one field, which no gear holds.
+
+2. N lays of one state at one Node-clock (the free act): SUM |h|^2 over the board after ten rounds, and the winding.
+   1 lay(s): SUM |h|^2 = 528753 (1000 thousandths of one lay's: N^2 = 1000), w_I = 239161 (1000 thousandths: N^2 = 1000)
+   2 lay(s): SUM |h|^2 = 2067084 (3909 thousandths of one lay's: N^2 = 4000), w_I = 950519 (3974 thousandths: N^2 = 4000)
+   3 lay(s): SUM |h|^2 = 4641719 (8778 thousandths of one lay's: N^2 = 9000), w_I = 2137067 (8935 thousandths: N^2 = 9000)
+   4 lay(s): SUM |h|^2 = 8253505 (15609 thousandths of one lay's: N^2 = 16000), w_I = 3837611 (16046 thousandths: N^2 = 16000)
+   The gears stack as a classical wave: the size N times, the winding (the engine's quantum count) N^2 times; no cap,
+   no Fermi energy, no shell: the same as probe_act's five kinds.
+
+3. Can the files name G3/2? (runner/files.held_departures on a universe with kinds ['G3/2'].)
+   departures: ["universe.trains[0].kinds[0]: 'G3/2' is none of the 24's kinds ('A1', 'A2', 'E', 'T1', 'T2')"]
+   The engine's kinds are the 24's five; a half-speed kind has no label, no matrices in kinds.py and no table in
+   load.tables: the probes lay the eight gears as A1 at part 8 and apply the 48 from outside. 'files.py accepts
+   G3/2' is a reading of the rule's shape, not a run.

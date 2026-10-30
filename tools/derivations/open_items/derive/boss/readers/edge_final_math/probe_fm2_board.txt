@@ -1,0 +1,37 @@
+The edge act written again by the final mathematician, on the engine's board: controls and hostile lays
+
+A. The text's lays (the promise edge_lib.edge_promise_half), 40 rounds
+   standing at W = 9 grips: 40 rounds (promise broke None); my act = edge_lib's half-open act bit for bit in 40 of 40;
+      the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from 9 grips to 9 grips; the 00 row pulled at 0 of 27 sites at round 0; 78 bits
+   rising by 1 grip from W = 10: 40 rounds (promise broke None); my act = edge_lib's half-open act bit for bit in 40 of 40;
+      the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from 9 grips to 50 grips; the 00 row pulled at 0 of 27 sites at round 0; 81 bits
+   falling by 1 grip + 1 (D odd) from W = 46: 40 rounds (promise broke None); my act = edge_lib's half-open act bit for bit in 40 of 40;
+      the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from 6 grips - 40 to 47 grips + 1; the 00 row pulled at 0 of 27 sites at round 0; 81 bits
+
+B. The 00 slot varying by site (the 00 row pulled by its neighbours, W not whole in grips), the text's promise
+   drawn in [0, 10] grips + counts, velocity within 1 grip: 6 rounds (promise broke 6); my act = edge_lib's half-open act bit for bit in 6 of 6;
+      the 24 24 at every one of 6 rounds; untick(tick s) = s 6 of 6; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from 0 grips + 0 permille to 7 grips + 0 permille; the 00 row pulled at 27 of 27 sites at round 0; 78 bits
+   drawn in [20, 60] grips, velocity within 3 grips: 9 rounds (promise broke 9); my act = edge_lib's half-open act bit for bit in 9 of 9;
+      the 24 24 at every one of 9 rounds; untick(tick s) = s 9 of 9; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from -1 grip + 0 permille to 29 grips + 0 permille; the 00 row pulled at 27 of 27 sites at round 0; 80 bits
+   drawn in [-5, 5] grips, velocity within 2 grips (W near 1 grip): 1 rounds (promise broke 1); my act = edge_lib's half-open act bit for bit in 1 of 1;
+      the 24 24 at every one of 1 rounds; untick(tick s) = s 1 of 1; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from -1 grip + 0 permille to 3 grips + 0 permille; the 00 row pulled at 27 of 27 sites at round 0; 78 bits
+
+C. W <= 0 at one slot with D >= 1 (the algebra's own promise: D_in, D_out >= 1 and the tooth within its dial), 40 rounds
+   (the text's promise on this lay: False)
+   rising by 6 grips from W(b) = -1 grip, W(a) = 5 grips (D_in = 4 grips): 40 rounds (promise broke None); my act = edge_lib's half-open act bit for bit in 40 of 40;
+      the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from -1 grip to 245 grips; the 00 row pulled at 0 of 27 sites at round 0; 83 bits
+   (the text's promise on this lay: False)
+   rising by 3 grips from W(b) = 0, W(a) = 3 grips (D_in = 3 grips): 40 rounds (promise broke None); my act = edge_lib's half-open act bit for bit in 40 of 40;
+      the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from 0 grips to 123 grips; the 00 row pulled at 0 of 27 sites at round 0; 82 bits
+
+D. The promise example of section 5: W(a) = 3 grips, W(b) = 13 grips, v_00 = -10 grips a round
+   D_in = 16 grips, D_out = -4 grips; the text's promise: False; the weak promise: False
+

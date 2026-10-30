@@ -1,0 +1,39 @@
+The final mathematician's rebuild of the half-open edge tooth: algebra and one gear
+
+A. The half-open split, D in [1, 30], n in [-3000, 3000] (183,030 cases)
+   n = 2Dq + s: 0 misses; s in [-D, D-1]: 0 misses; one pair per n: 0 misses;
+   the flip n -> -1 - n gives (-q, -1 - s): 0 misses (the law's (iii) r -> m - 1 - r on m = 2D);
+   the negation n -> -n gives (-q, -s) exactly off the ties n = D mod 2D and never on them: 0 misses; ties 11986;
+   the shift n -> n + 2Dk gives (q + k, s): misses {-3: 0, -2: 0, -1: 0, 1: 0, 2: 0, 3: 0}
+
+B. The half notch at rest: W = 3000, D = 2W = 6000, the push k enters as 4k; q answered
+   D = 2W = 6000: {-1501: -1, -1500: 0, -1499: 0, 0: 0, 1499: 0, 1500: 1, 1501: 1}  (one-sided at k = +W/2 = 1500: +1, at -1500: 0)
+   a push k at rest with tooth 0 lands on the dial's half (4k = D mod 2D) at 80 (W, k) pairs for W in [1, 40], k in [-2W, 2W]:
+   only at even W (k = +-W/2, +-3W/2); at an odd W a push at rest never ties (4k even, D = 2W = 2 mod 4)
+
+C. The cells of a dial moved by its own quotient, D(q) = 2 W_a + q, q from 1 - 2 W_a to 40: integers under no q / under two
+   (the text's 1,560 is the tie-even cells' count [2Dq - D, 2Dq + D]; the half-open cells are [2Dq - D, 2Dq + D - 1])
+   W_a (or L) =   1: tie-even none 1560, twice 2, hull 3406; half-open none 1600, twice 1, hull 3405
+   W_a (or L) =   2: tie-even none 1560, twice 7, hull 3575; half-open none 1600, twice 5, hull 3574
+   W_a (or L) =   3: tie-even none 1560, twice 14, hull 3748; half-open none 1600, twice 11, hull 3747
+   W_a (or L) =   5: tie-even none 1560, twice 34, hull 4106; half-open none 1600, twice 29, hull 4105
+   W_a (or L) =   8: tie-even none 1560, twice 79, hull 4673; half-open none 1600, twice 71, hull 4672
+   W_a (or L) =  13: tie-even none 1560, twice 194, hull 5698; half-open none 1600, twice 181, hull 5697
+   W_a (or L) =  10: tie-even none 1560, twice 119, hull 5071; half-open none 1600, twice 109, hull 5070
+   W_a (or L) = 100: tie-even none 1560, twice 10199, hull 39541; half-open none 1600, twice 10099, hull 39540
+   sums: tie-even SUM_(q=1..39) 2q = 1560; half-open SUM_(q=0..39) (2q + 1) = 1600
+
+D. One gear, the course of W given from outside, a spring push -g a plus a drawn kick; untick(tick s) = s and the books
+   W drawn in [1, 60] (any sign of dW, W >= 1): 20000 rounds run, 0 skipped; untick(tick s) = s misses 0; P' - P = 4 push misses 0; tooth outside its dial 0
+   W drawn in [-20, 40] (W may be <= 0; rounds with D_in or D_out <= 0 skipped): 12935 rounds run, 7065 skipped; untick(tick s) = s misses 0; P' - P = 4 push misses 0; tooth outside its dial 0
+   W drawn in [1, 3] (tiny dials): 20000 rounds run, 0 skipped; untick(tick s) = s misses 0; P' - P = 4 push misses 0; tooth outside its dial 0
+   (the run back needs only D_in >= 1 and D_out >= 1 and the tooth within [-D_in, D_in - 1]: W <= 0 at one slot is no obstacle;
+    the text's promise W >= 1 at both slots asks more than the algebra needs)
+
+E. The still clock, exhaustive: W in [1, 12], r in [0, W), v in [-5, 5], push in [-3W, 3W]: the edge with s = 4r - 2W against the act as built
+   43758 cases: half-open s = 4r - D: q differs 0, s' != 4r' - D 0; tie-even s = 4r + 2 - D: q differs 0, s' differs 0
+   (algebra: N = 4 (Wv + push + r) - 2W = 4Wq + (4r' - 2W), and 4r' - 2W in [-2W, 2W - 4] subset of [-D, D - 1]: exact, no tie)
+
+F. The mirror and the 24's flip on one gear: (a, b, s) -> (-a, -b, -1 - s) with the push negated; tick commutes exactly
+   20,000 drawn rounds: misses 0
+

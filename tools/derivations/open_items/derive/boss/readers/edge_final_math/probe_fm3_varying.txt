@@ -1,0 +1,13 @@
+The 00 slot varying by site, gently: W = rest + a_00 differs by site and is not whole in grips; the 00 row is pulled
+   D odd at 187 of 324 gears at round 0
+   a_00 in [40 grips, 40 grips + 50], velocity within 1 count: 40 rounds (promise broke None); my act = edge_lib's half-open act bit for bit in 40 of 40;
+      the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from 46 grips to 46 grips + 51; the 00 row pulled at 27 of 27 sites at round 0; 81 bits
+   D odd at 121 of 324 gears at round 0
+   a_00 in [60 grips, 60 grips + 50], velocity within 1 grip (rising or falling per site): 40 rounds (promise broke None); my act = edge_lib's half-open act bit for bit in 40 of 40;
+      the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from 26 grips + 0 permille to 67 grips - 0 permille; the 00 row pulled at 27 of 27 sites at round 0; 81 bits
+   D odd at 165 of 324 gears at round 0
+   a_00 in [12 grips, 12 grips + 7], velocity within 3 counts: 40 rounds (promise broke None); my act = edge_lib's half-open act bit for bit in 40 of 40;
+      the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses;
+      W on the rows reading the 00 slot from 18 grips - 2 to 18 grips + 10; the 00 row pulled at 27 of 27 sites at round 0; 79 bits

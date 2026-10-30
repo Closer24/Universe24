@@ -1,0 +1,33 @@
+The 24-gear carrier of spin 1/2 and its company (c3_doublers.py)
+1. The commutant of the 24-gear train: what commutes with the 48 on it.
+   whole matrices commuting with the two generators: rank 24; each commutes with all 48: True
+   (rank 24 = 4 + 4 + 16: H for E1/2, H for E5/2, M_2(H) for the two G3/2: the real endomorphisms of the pieces)
+   the 48 acting on the right of the cosets: 48 distinct signed permutations True, all commuting with the
+   left 48: True; R(h) R(k) = R(k h) (a right action): True; -1 acts as -I: True
+   So the 24-gear 'electron' carries an internal group of 48 turns that no board turn is: the doublers' own symmetry,
+   relabelling the twelve complex components among themselves; a U(1) of charge would be one of its circles, chosen.
+
+2. The whole-number pieces of the 24 gears, by the characters (whole on these pieces).
+   chi(E1/2 + E5/2) on the 48, by (value, count): {-4: 1, -2: 8, 0: 30, 2: 8, 4: 1}
+   chi(G3/2): {-4: 1, -1: 8, 0: 30, 1: 8, 4: 1}
+   Q_E = SUM chi_E M (24 times the projector): Q_E Q_E = 24 Q_E: True; trace 192 = 24 x 8
+   Q_G = SUM chi_G M (12 times the projector): Q_G Q_G = 12 Q_G: True; trace 192 = 12 x 16
+   2 Q_E + 4 Q_G = 48 I: True; Q_E Q_G = 0: True
+   ranks: Q_E 8 (E1/2 + E5/2: one whole kind of 8), Q_G 16 (G3/2 twice: 16)
+   E1/2 alone has the character +-sqrt 2 on the quarter turns' lifts: its piece is no whole-number sub-train; the
+   spin-1/2 doublet is separable from E5/2 in no whole basis of the 24 gears.
+
+3. Light (T1) between the pieces, by characters and on the text's own table.
+   T1 in (E1/2 + E5/2) x G3/2: (2, 0) (2: one for each doublet; the 2O rule E1/2 x G3/2 = E + T1 + T2)
+   T1 in (E1/2 + E5/2) x (E1/2 + E5/2): (2, 0) (2: E1/2 x E1/2 = A1 + T1 and E5/2 x E5/2 = A1 + T1; E1/2 x E5/2 = A2 + T2 has none)
+   T1 in G3/2 x G3/2: (2, 0) (2 x 4 = 8: each pair of quartets gives two)
+   the text's 24-gear table (probe_induced 3): equivariant under 48 of 48, 1560 entries not 0 (the text: 1560)
+   its blocks between the pieces (entries not 0 of Q_E C_x Q_G, Q_E C_x Q_E, Q_G C_x Q_G over x): 1728, 1656, 1656
+   A light field v pushes the 24 gears by J = -f v_x C_x h: with Q_E C Q_G not 0, light turns doublet content into
+   quartet content and back, at no cost (one train: one W, one grip, one spring). Term 11 sums over the train's rows:
+   a click on this train counts a twelve-component quantum and cannot tell which piece it holds.
+
+4. The eight-gear G3/2 alone: its commutant (the text's rank 4), -1 = -I, and no E1/2 in it.
+   SUM chi(E1/2 + E5/2)(g) trace M8(g) over the 48 = 0 (0: the eight gears hold no spin-1/2 doublet, only G3/2 twice)
+   In nature's words G3/2 is the lattice shadow of spin 3/2, and also of the G3/2 parts of spin 5/2, 7/2, 9/2, ...:
+   the cube cannot tell them apart; no elementary particle of nature has spin 3/2 (the Delta and the Omega are composite).

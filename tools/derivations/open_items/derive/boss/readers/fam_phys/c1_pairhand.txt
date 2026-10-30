@@ -1,0 +1,41 @@
+The pair hand against the board, and against light's own kind (c1_pairhand.py)
+1. The board holds the sum, not the parts (the free act, the text's lays, W = 10^5, ten rounds).
+   the lay phi: |a|^2 = 48000, windings (w_I, w_J, w_K) = (2400, 0, 0)
+   the lay 2 phi (the same state): |a|^2 = 192000, windings (w_I, w_J, w_K) = (9600, 0, 0)
+   the lay 5 J phi (the partner): |a|^2 = 40500, windings (w_I, w_J, w_K) = (8100, 0, 0)
+   so in keys of winding the 'two quanta' are 2400 against 9600 (1 : 4) and 2400 against 8100 (1 : 3.375); both turn forward in I.
+   the same state: gears where the board's hand is not phi's plus chi's over the run: 1666 of 2160, the largest gap 10 notch(es) (the carry's rounding); the text's pair hand 10 thousandths over 228 meetings
+   the partner: gears where the board's hand is not phi's plus chi's over the run: 1611 of 2160, the largest gap 8 notch(es) (the carry's rounding); the text's pair hand 921 thousandths over 228 meetings
+
+2. Two splits of ONE board give two pair hands: the pair hand is the bookkeeping's, not the board's.
+   the board of (phi at 0, 5 J phi at 13) against the three runs phi, 2 J phi, 3 J phi summed: gears apart 1721 of 2160 (rounding)
+   split A, quantum 1 = phi's hand, quantum 2 = (2 + 3) J phi's: the pair hand 833 thousandths
+   split B, quantum 1 = phi's + 2 J phi's, quantum 2 = 3 J phi's: 415 thousandths
+   split C, quantum 1 = phi's + 3 J phi's, quantum 2 = 2 J phi's: 270 thousandths
+   One board, three readings: no Node-clock, no click and no observer of the board can tell which split was laid.
+
+3. The same reading on the engine's own light kind: a T1 at part 2 (re, im), the free act, W = 10^5, ten rounds.
+   The antisymmetric pair hand is the complex cross product (re + i im) x (re' + i im'), the engine's own channel
+   T1 x T1 -> T1 (the epsilon table) made bilinear over the part's i, as epsilon is bilinear over G3/2's I.
+   u = [3, -1, 2], v = [1, 1, -1], u . v = 0, |u x v|^2 = 42 = |u|^2 |v|^2 = 42
+   the lay u (size 40, k = 2): |a|^2 = 22400, the winding b . I a = 1120
+   the lay 2 u (the same state): |a|^2 = 89600, the winding b . I a = 4480
+   the lay v (another state, size 60): |a|^2 = 10800, the winding b . I a = 360
+   the same state (2 u): the pair hand |u x v|^2 over |h_u|^2 |h_v|^2, summed where both are present: 39 thousandths over 228 meetings
+   another state (v, u . v = 0): the pair hand |u x v|^2 over |h_u|^2 |h_v|^2, summed where both are present: 944 thousandths over 228 meetings
+   So the reading 'the pair hand is 0 where the two are one state and full for another state' holds for light's own
+   kind, whole-speed, bosonic in nature: it is the antisymmetry of a bilinear form, not an exclusion of anything.
+
+4. I's cycles on the eight gears, and the plane the free act keeps.
+   I as a signed permutation, column -> (row, sign): [(0, 7, 1), (1, 4, -1), (2, 5, -1), (3, 6, 1), (4, 1, 1), (5, 2, 1), (6, 3, -1), (7, 0, -1)]
+   four signed 2-cycles: the eight gears are four planes (re, im) under I, so a half-speed train has term 11's two parts.
+   the hand's part off the plane (phi0, I phi0), |residual|^2 over |phi0|^4 |h|^2 summed over the run: 22 thousandths; the largest residual entry 209 against |phi0|^2 = 30 (a notch or so: the carry's rounding)
+   The free act is one real scalar operator on eight alike rows (same teeth, same grips, J = 0): every lay stays a real
+   combination of its own a and b, so two lays on one I-line have epsilon 0 by the form's antisymmetry alone.
+
+5. The symmetric, T1-valued pair hand of two hands in one state (the text's own table C[G3/2 x G3/2 -> T1]).
+   the table symmetric in its two inputs: True; P_x(h, h') = h . C_x h', x = 1, 2, 3
+   the same state: P not 0 at 228 of 228 meetings; SUM |P|^2 over SUM |h|^2 |h'|^2 = 768078 thousandths
+   the partner: P not 0 at 228 of 228 meetings; SUM |P|^2 over SUM |h|^2 |h'|^2 = 429952 thousandths
+   Two hands in one state have a full pair hand into T1 (the stretched pair, spin 3 in nature's words) and none into A1:
+   the text's 'no pair hand' is 'no scalar pair hand', one channel of the pair's sixteen (Alt^2 = A1 + E + T2, Sym^2 = A2 + 2 T1 + T2).
