@@ -1,0 +1,3 @@
+forward 20,000 rounds: Omega from 11372142569334291750000000000000000 to 11372115956114049836521935508406250, largest drift 438548327812823519292224906250
+the sum of Delta q_re r_im - Delta q_im r_re over the rounds equals Omega's change: True
+run back 20,000 rounds: the whole state returns bit for bit: True; Omega returns: True
