@@ -12,7 +12,7 @@ from tensor24.engine.step import tick, untick
 from tensor24.main import made as joint
 from tensor24.runner.board import board
 from tensor24.runner.files import COUPLING, OPERANDS
-from tensor24.runner.load import geometry, load, promises
+from tensor24.runner.load import geometry, load, promises, star
 from tests.frame import plain
 
 D = 3
@@ -87,7 +87,7 @@ COUPLINGS = [
 @pytest.fixture(scope="module")
 def made():
     """The kinds and tables as main.py, the one joint, makes them for the load."""
-    return joint((SITES, 1, 1))
+    return joint(star(D))
 
 
 def universe(trains=TRAINS, couplings=COUPLINGS):

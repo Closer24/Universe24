@@ -236,7 +236,7 @@ def held_alike():
 @functools.cache
 def cube():
     """The 24's kinds and tables on the cube, and the plan of four trains, A1 and A2, T1 and T2, coupled through them."""
-    ks, c = made(CUBE)
+    ks, c = made(loading.star(len(CUBE)))
     held, found = load(
         {"trains": TRAINS, "couplings": COUPLINGS}, {"gears": []}, int(np.prod(CUBE)), ks, c
     )

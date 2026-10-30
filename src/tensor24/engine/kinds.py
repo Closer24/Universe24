@@ -36,9 +36,8 @@ def inverse(matrix: Z) -> Z:
     return np.einsum("...ij->...ji", matrix)
 
 
-def turns(unit: Z) -> tuple[Z, Z]:
-    """Every matrix whose rows are three Spokes, weighed by Rule3: (det + det det) div an axis's Spokes is 1 at det 1, else 0."""
-    spokes = np.concatenate((unit, -unit))
+def turns(spokes: Z) -> tuple[Z, Z]:
+    """Every matrix whose rows are three of the Node-clock's own Spokes, weighed by Rule3: (det + det det) div an axis's Spokes is 1 at det 1, else 0."""
     n, d = spokes.shape
     first = np.broadcast_to(spokes[:, None, None], (n, n, n, d))
     second = np.broadcast_to(spokes[None, :, None], (n, n, n, d))
@@ -59,6 +58,19 @@ def kinds(matrix: Z) -> Kinds:
     reading = np.stack((e1, e1 + e2))
     e = np.einsum("ij,gjk,kl->gil", reading, permutation, plane)
     return Kinds(0 * sign + 1, sign, e, matrix, sign * matrix)
+
+
+def beside(x: Z, y: Z) -> Z:
+    """Two stacks of matrices set along one diagonal, every entry beside them 0."""
+    gap = 0 * np.einsum("gij,gkl->gil", x, y)
+    upper = np.concatenate((x, gap), axis=-1)
+    return np.concatenate((upper, np.concatenate((np.swapaxes(gap, 1, -1), y), axis=-1)), axis=1)
+
+
+def square(held: Kinds) -> Z:
+    """The four-vector's symmetric square on each turn, the stride fixed and the differences turned, on the index pairs 00, 0i, ii and jk (by the third axis): A1, T1, the axes' permutation and T2, each a signed permutation where the turn is one of the 24."""
+    a1, _, _, t1, t2 = held
+    return beside(beside(a1, t1), beside(t1 * t1, t2))
 
 
 def projector(weight: Z, m: Z, i: Z, k: Z) -> Z:

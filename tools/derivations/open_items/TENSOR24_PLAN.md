@@ -818,6 +818,9 @@ On the owner's word to David: "a generic solution for everything". This is David
       - from outside, a read for debugging and for the record is allowed, read only: the same run with the read and without it gives the same record, byte for byte.
       - Sofer enters it.
     - **For the code, at G1b (i):** main.made derives the kinds from kinds.axes(len(shape)), the board's count of axes from the piece's shape, which is the world's. The derivation reads the Node-clock's own star instead, its Spokes as the layout holds them; running it once for every Node-clock is the same act, every star being the same.
+43. **(aq) The old engine frozen, and the work run with no waiting. APPROVED (the owner's words to the Boss of 2026-10-30, 03:1x UTC, in Hebrew; in translation: "Approved. Run. And answer everyone every few minutes, and tell everyone so, because otherwise they wait.").**
+    - **The old engine:** no more work on it, kept in git's history; its tests run only when its own files change; it is deleted once G6 reproduces its phenomena on Tensor24. It shares no code with Tensor24; one test reads Tensor24's light against it, its phenomena are G5's and G6's list, and Animate's converter reads its records.
+    - **The way of working, for all four:** answer within minutes, and post a short update every few minutes while working; nobody waits on an answer: build what does not depend on it, and if none has come within the hour, the asker decides in one line and the other reads it afterwards; questions to the owner in one batch, each with its recommendation; the hostile reader runs beside the next stage, its findings folded at the next push.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 

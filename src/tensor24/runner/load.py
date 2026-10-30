@@ -234,14 +234,19 @@ def geared(
     return gearing, clock, grip
 
 
-def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
-    """The board's Spokes as the act reads them: each one's direction (the + and the - of every axis in turn, the neighbours' order) and the Mesh it holds, each axis's Meshes after the earlier axes', the + Spoke's the site's own and the - Spoke's its - neighbour's."""
-    _, n = nb.shape
+def star(axes: int) -> Z:
+    """The Node-clock's star as the files lay it at the initialization: each Spoke's direction, the + and the - of every axis in turn, the neighbours' order."""
     unit = np.eye(axes, dtype=object)
+    return np.stack((unit, -unit), axis=1).reshape(-1, axes)
+
+
+def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
+    """The board's Spokes as the act reads them: the star, and the Mesh each Spoke holds, each axis's Meshes after the earlier axes', the + Spoke's the site's own and the - Spoke's its - neighbour's."""
+    _, n = nb.shape
     offsets = np.arange(axes, dtype=np.intp)[:, None] * n
     _, minus = np.moveaxis(nb.reshape(axes, -1, n), 1, 0)
     meshes = np.stack((offsets + np.arange(n, dtype=np.intp), offsets + minus), axis=1).reshape(-1, n)
-    return np.stack((unit, -unit), axis=1).reshape(-1, axes), meshes
+    return star(axes), meshes
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
