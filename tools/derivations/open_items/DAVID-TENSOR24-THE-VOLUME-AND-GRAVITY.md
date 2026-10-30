@@ -57,6 +57,7 @@ Road A is the head's volume form in the uniform mode with the same push (the Bos
 
 - the books;
 - Postulate 6 for the rates: the wells add in the statics, gamma = beta = 1 (light's bending, Shapiro's delay, Mercury);
+  a note of 2026-10-30 (G2's second text, DAVID-TENSOR24-G2-STATIC.md, section 2): on the act the grips act on every row, the 00 row's included, so the wells do not add at second order. The exponential clock gives beta = 1 - gamma, beta = 0 at gamma = 1, refused by Mercury; the slot form gives beta = 2 - gamma;
 - one cone for light and the time gear;
 - the eras' q and light's weight 1;
 - the tensor waves;
