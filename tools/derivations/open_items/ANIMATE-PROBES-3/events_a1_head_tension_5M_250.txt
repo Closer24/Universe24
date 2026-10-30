@@ -1,9 +1,0 @@
-quanta 5000000, ticks 250, bottoms at [0, 46, 93, 140, 187, 234]
-  bang 0: {'lay': 1}
-  bang 1: {'refused:disengaged': 2880, 'refused:lay': 1600, 'refused:orientation': 2944, 'refused:stop': 1344, 'refused:twist': 64}
-  bang 2: {'birth': 64, 'refused:disengaged': 8576, 'refused:lay': 2400, 'refused:orientation': 14528, 'refused:stop': 800, 'refused:twist': 128}
-  bang 3: {'birth': 32, 'refused:disengaged': 8640, 'refused:lay': 2976, 'refused:orientation': 14912, 'refused:stop': 384, 'refused:twist': 128}
-  bang 4: {'refused:disengaged': 11456, 'refused:lay': 3136, 'refused:orientation': 20352, 'refused:stop': 256, 'refused:twist': 128}
-  bang 5: {'refused:disengaged': 8640, 'refused:lay': 3008, 'refused:orientation': 14912, 'refused:stop': 384, 'refused:twist': 128}
-  bang 6: {'refused:disengaged': 3584, 'refused:lay': 1152, 'refused:orientation': 6592, 'refused:stop': 256, 'refused:twist': 128}
-splits in all: 0 births: 96

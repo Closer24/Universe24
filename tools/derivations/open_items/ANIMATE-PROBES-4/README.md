@@ -1,9 +1,5 @@
 # Animate's toys for the clocks' roots (the owner's word of 2026-10-28, 15:2x UTC)
 
-**Record:** these probes run the old engine (src/event_universe) or read its records, which the owner's word of
-2026-10-30, 09:2x UTC, takes out ("only the new engine matters"). They stand for their findings, cited by the
-pages that name them, and are not run on the new engine.
-
 The page is ANIMATE-CLOCK-ROOTS.md. These are toys that check whether a law would work in an engine. Nothing here is engine code, and nothing was pushed to an engine branch. Both run with no engine: `python -I local_tick.py` and `python -I kind_kept.py` (the second reads ANIMATE-PROBES-2/kinds_ladder.py and ANIMATE-PROBES-3/ladder_pauli.py).
 
 ## local_tick.py: law A, a clock's time is the carry of its own dial
@@ -26,12 +22,6 @@ The page is ANIMATE-CLOCK-ROOTS.md. These are toys that check whether a law woul
   - a child is S = (0, 0, 1) under the head's lay and S = 0 under the other two;
   - the light A1 alone stays at A1, and the light T1 alone reaches the 24's five kinds by bang 3;
   - with the twin hands all eight kinds stand at bang 4 (A1 light) or 3 (T1 light).
-
-## twin_flip.py: the choice carried into the next bang
-
-- **Beside many_bangs.py,** on draft C's tree at 33d9ecaa (copied here at its version for this run): the twin calibre, the dial variant read at the step, T = J K.
-- **It prints** which twin holds more at four clocks at every top and bottom.
-- **The output (twin_flip.txt):** up, down, up, down at clock (0, 0, 0) through the 7th to the 10th bangs, the opposite at its neighbours, and the flip overwritten by the new births of the 11th bang.
 
 ## chosen_path.py: the chosen path carried into the next bang
 
