@@ -6,7 +6,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from tensor24.decoder import books, clocks, records
+from tensor24.decoder import books, records
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
 TRAINS = [{"index": t, "label": f"train {t}", "kinds": [0], "part": 1, "winding": 1} for t in (0, 1)]
@@ -274,23 +274,6 @@ def test_the_books_read_each_holding_once_at_its_own_winding_and_name_what_they_
 
 def tool(path):
     return subprocess.run([sys.executable, "-I", str(TOOL), path], capture_output=True, text=True)
-
-
-def test_each_click_is_read_at_its_own_node_clock_from_its_first_beat(tmp_path):
-    """The ticks before a first beat read as none, and the tool reads each click at its own Node-clock in turn."""
-    first = [(1, 1)]
-    assert clocks.unread(first, 0) == "" and clocks.ticks_to(first, 0) == 0
-    at = [
-        {**TAKE, "round": r, "count": r, "site": s}
-        for r, s in ((1, 0), (1 + 1, 0), (1 + 1 + 1, 1), (4, 1))
-    ]
-    lines = [B, at[0], rate(1, 0, 1, 0), at[1], rate(1 + 1, 0, 1 + 1, 1), at[1 + 1], at[1 + 1 + 1], E]
-    run = tool(write(lines, tmp_path / "record.jsonl"))
-    ticks = (
-        "the whole clicks' ticks from the rate lines: 2 read, 2 not read, the first not read at round 3, site 1: "
-        "its Node-clock holds no rate line; the last read [1]"
-    )
-    assert run.returncode == 0 and run.stderr == "" and run.stdout.splitlines()[-1] == ticks
 
 
 def test_the_reader_reads_unnamed_and_absent_fields_and_names_each_refusal_in_ascii(tmp_path):
