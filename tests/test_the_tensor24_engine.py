@@ -236,9 +236,9 @@ def held_alike():
 @functools.cache
 def cube():
     """The 24's kinds and tables on the cube, and the plan of four trains, A1 and A2, T1 and T2, coupled through them."""
-    ks, c = made(loading.star(len(CUBE)))
+    ks, c, square = made(loading.star(len(CUBE)))
     held, found = load(
-        {"trains": TRAINS, "couplings": COUPLINGS}, {"gears": []}, int(np.prod(CUBE)), ks, c
+        {"trains": TRAINS, "couplings": COUPLINGS}, {"gears": []}, int(np.prod(CUBE)), ks, c, square
     )
     assert found == [] and held is not None
     return Plan(*held.plan)
@@ -247,8 +247,8 @@ def cube():
 def sourced_images():
     """The sources turn with the board under the 24: the force and J of the turned state, the turned force and J."""
     nb, plan = frame.board(CUBE), cube()
-    # A1 and A2, T1 and T2, as stored, and the clock's own gear the load lays, A1
-    n, rows = nb.shape[1], 1 + 1 + 3 + 3 + 1
+    # A1 and A2, T1 and T2, as stored: the load lays no row of its own
+    n, rows = nb.shape[1], 1 + 1 + 3 + 3
     ones = np.ones((1, n), dtype=object)
     gearing = Gearing(ones, ones, ones, ones)
     grip = 3 * ones.repeat(3, axis=1)
@@ -258,8 +258,9 @@ def sourced_images():
     xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
     for m in frame.turns():
         site = np.ravel_multi_index(tuple((m @ xyz) % sides), CUBE)
-        turn = np.eye(rows, dtype=int).astype(object)
-        turn[:-1, :-1] = frame.stored(m)[: rows - 1, : rows - 1]  # the clock is A1: no turn moves it
+        turn = frame.stored(m)[:rows, :rows].astype(
+            object
+        )  # the four kinds' rows as stored, each turned by its kind
         there = State(*(np.empty_like(x) for x in s))
         for x, y in zip(there, s, strict=True):
             x[:, site] = y

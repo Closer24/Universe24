@@ -29,7 +29,7 @@ DIMS = {"A1": 1, "A2": 1, "T1": 3, "T2": 3}
 ROWS = sum(
     sum(DIMS[k] for k in t["kinds"]) * t["part"] for t in TRAINS
 )  # every train's rows, counted afresh
-LAID = ROWS + 1  # and the clock's own gear, one A1 row the load lays after the file's trains
+LAID = ROWS  # every row a file's train's: the load lays no row of its own
 
 
 def gears(rows=LAID):
@@ -102,10 +102,6 @@ def naive(u, c, readings, labels):
             for x in range(len(c[(labels.index(label), labels.index("A1"), labels.index(label))])):
                 for p in range(train["part"]):
                     rows[(t, j, x, p)], at = at, at + 1
-    rows[(len(u["trains"]), 0, 0, 0)], at = (
-        at,
-        at + 1,
-    )  # the clock's own gear, after the file's trains
     planes = {"value": [0], "gradient": [1, 2, 3], "pull": [4], "before": [5], "after": [6]}
     j = np.zeros((at, readings.shape[-1]), dtype=object)
     for i, ki, pi, oi, k, kk, pk, ok, m, km, pm, strength in u["couplings"]:
@@ -134,13 +130,13 @@ def naive(u, c, readings, labels):
 
 
 def loaded(made, u, gears=()):
-    ks, c = made
-    return load(u, {"gears": [list(g) for g in gears]}, SITES, ks, c)
+    ks, c, square = made
+    return load(u, {"gears": [list(g) for g in gears]}, SITES, ks, c, square)
 
 
 def test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables(made):
     """At strengths of a few bits and past 64, J is the naive sum, of Python integers whatever gears it is given."""
-    ks, c = made
+    ks, c, square = made
     labels = tuple(name.upper() for name in ks._fields)
     rng = np.random.default_rng(7)
     for shift in (0, 70):
@@ -179,7 +175,13 @@ def edits():
         ),
         "E alone": (
             train(1, kinds=["E"]),
-            "universe.trains[1].kinds[0]: E has no whole basis the 24 permute",
+            "universe.trains[1].kinds: a kind with no whole basis the 24 permute stands only in the four-vector's square",
+        ),
+        "E in the four-vector's square": (
+            lambda u: u["trains"].append(
+                {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1}
+            ),
+            None,
         ),
         "a twin hand": (train(1, part=4), "universe.trains[1].part: 1, one gear, or 2, a hand, not 4"),
         "a part of 3": (train(1, part=3), "universe.trains[1].part: 1, one gear, or 2, a hand, not 3"),
@@ -264,14 +266,14 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
 
 
 def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
-    ks, c = made
+    ks, c, square = made
     u = universe(couplings=[row(target=1)])
     held, found = loaded(made, u)
     assert found == ["universe.couplings[0]: the 24 hold no A1 x A1 -> T1"]
-    from tensor24.runner.load import plan, trains_of
+    from tensor24.runner.load import plan, reads_of, trains_of
 
-    labels = tuple(name.upper() for name in ks._fields)
-    trains, _ = trains_of(u["trains"], labels, tuple(k.shape[-1] for k in ks))
+    labels, dims, reads = reads_of(ks, square)
+    trains, _ = trains_of(u["trains"], labels, dims, reads)
     planned, _ = plan(u["couplings"], trains, c, labels, D)
     readings = np.ones(((len(OPERANDS) + D - 1) * sum(t.rows() for t in trains), SITES), dtype=object)
     assert planned[0].size == 0 and not contract(Plan(*planned), readings, gears()).any()
@@ -320,10 +322,7 @@ def renamed(made, scale=lambda strength, target: strength):
         mapping = np.concatenate(
             [
                 np.arange(base.trains[o].first, base.trains[o].first + base.trains[o].rows())
-                for o in (
-                    *order,
-                    len(TRAINS),
-                )  # the clock's own gear stands after the file's trains in every order
+                for o in order
             ]
         )
         shuffled = readings.reshape(planes, rows, SITES)[:, mapping].reshape(-1, SITES)
@@ -339,17 +338,17 @@ def test_the_rename_law_holds_and_fails_where_a_strength_is_read_by_its_target_t
 
 def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
     """Sofer's fuzz of stage 6: no couplings or no gears key loads as none, and a board past one array is named."""
-    ks, c = made
+    ks, c, square = made
     bare = universe()
     bare.pop("couplings")
-    assert load(bare, {}, SITES, ks, c)[1] == []
-    held, found = load(universe(), {"gears": []}, 1 << 64, ks, c)
+    assert load(bare, {}, SITES, ks, c, square)[1] == []
+    held, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
     assert held is None and len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
 
 
 def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
     """Whichever of the lay's four arrays the machine's memory refuses, the board is named and nothing raises."""
-    ks, c = made
+    ks, c, square = made
     zeros = np.zeros
     for after in range(len("abrd")):  # the gears' four: `after` made
         asked = []
@@ -361,7 +360,7 @@ def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
             return zeros(*args, **kwargs)
 
         monkeypatch.setattr(np, "zeros", refused)
-        held, found = load(universe(), {"gears": []}, SITES, ks, c)
+        held, found = load(universe(), {"gears": []}, SITES, ks, c, square)
         assert len(asked) == after + 1 and held is None
         assert found == [
             f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"

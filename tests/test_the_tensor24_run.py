@@ -36,7 +36,7 @@ def test_the_example_files_run_to_a_record_the_decoder_reads_with_its_run_back_e
     assert main.ran(PATHS, record) == []
     held, cause = records.read(str(record))
     assert cause == "" and held is not None
-    _, piece, setting = (read(path) for path in PATHS)
+    universe, piece, setting = (read(path) for path in PATHS)
     texts = [path.read_text(encoding="utf-8") for path in PATHS]
     assert [(f["name"], f["text"], f["digest"]) for f in held.header["files"]] == [
         (path.name, text, hashlib.sha256(text.encode("utf-8")).hexdigest())
@@ -44,18 +44,13 @@ def test_the_example_files_run_to_a_record_the_decoder_reads_with_its_run_back_e
     ]
     assert held.header["sides"] == piece["shape"] and held.header["runner"] == "synchronous"
     ticks = setting["ticks"]
-    assert held.end == {
-        "kind": "end",
-        "rounds": ticks,
-        "digest": held.end["digest"],
-        "undone": ticks,
-        "exact": 1,
-    }
-    assert (
-        held.events == []
-    )  # no rate line: every Node-clock steps in every round, and light alone never clicks
-    *_, clock = held.header["trains"]  # the clock's own gear winds as every train does, 1 until G3
-    assert clock["label"] == run.CLOCK and all(t["winding"] == 1 for t in held.header["trains"])
+    end = dict(kind="end", rounds=ticks, digest=held.end["digest"], undone=ticks, exact=1)
+    # no rate line: every Node-clock steps in every round, and light alone never clicks
+    assert held.end == end and held.events == []
+    # the file's trains alone, the metric family among them, each winding 1 until G3
+    cards = held.header["trains"]
+    assert [t["label"] for t in cards] == [t["name"] for t in universe["trains"]]
+    assert {t["winding"] for t in cards} == {1}
 
 
 def test_the_end_holds_the_digest_of_the_state_the_rounds_reach_and_reads_0_where_the_run_back_misses(
@@ -78,7 +73,7 @@ def test_the_end_holds_the_digest_of_the_state_the_rounds_reach_and_reads_0_wher
 def test_the_ledger_holds_every_trains_counts_at_every_node_clock_after_every_round(tmp_path):
     """Beside the record, one Count line per round, Node-clock and train, in that order, schema.Count's fields of their
     shapes, and the decoder reads them: the train's now counts there, row by row, as the engine's own rounds reach
-    them; the clock's own gear stands at 0 in every line."""
+    them; the metric family stands at rest in every line."""
     record = tmp_path / "run.jsonl"
     assert main.ran(PATHS, record) == []
     universe, piece, setting = (read(path) for path in PATHS)
@@ -110,7 +105,8 @@ def test_the_ledger_holds_every_trains_counts_at_every_node_clock_after_every_ro
         and all(shaped)
         and records.read_ledger(str(run.ledger_of(record))) == (lines, "")
     )
-    assert {tuple(x["count"]) for x in lines if x["train"] == len(held.trains) - 1} == {(0,)}
+    rest = {x["train"]: x["count"] for x in lines if held.trains[x["train"]].square}
+    assert set(rest) and all(not any(count) for count in rest.values())
 
 
 def test_a_departing_file_or_a_broken_promise_is_named_and_no_record_is_written(tmp_path):
