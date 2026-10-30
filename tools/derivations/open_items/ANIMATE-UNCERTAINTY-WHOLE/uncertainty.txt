@@ -1,33 +1,31 @@
-Uncertainty on Tensor24's board: a place is a Node-clock, a motion a step along a Mesh; exact, whole numbers only, no draw
+Fourier's support bound on Tensor24's board: a place is a Node-clock, a motion a mode of the board; exact, whole numbers only, no draw
 
 Part 1: the board's facts, on the engine at main (examples/tensor24)
-  1. The Meshes: 64 Node-clocks on a board 4 by 4 by 4 that wraps; each reads six neighbours,
-     all different: True; each Mesh read both ways: True; every neighbour one Mesh away, across the wrap too: True
+  1. The Meshes: 64 Node-clocks on a board 4 by 4 by 4 that wraps; each has six neighbours,
+     all different: True; each Spoke's opposite leads back: True; every neighbour one Mesh away, across the wrap too: True
   2. One gear laid on the example board: row 0 at Node-clock 0, its now slot 1 and its before slot 0.
-     round 1 touches Node-clocks [0, 1, 3, 4, 12, 16, 48]: the gear's own and its six neighbours [1, 3, 4, 12, 16, 48];
-     the six neighbours' fine teeth all one value: True (every direction alike)
-     over 60 rounds, no Node-clock touched farther than one Mesh a round: True
-  3. Two moments: every round's before slot is the last round's now slot: True; a motion is their difference
+     round 1: its own now slot moves, and the fine teeth of its six neighbours [1, 3, 4, 12, 16, 48] move, all six alike: True
+     over 60 rounds: rounds where a now or before slot stands off the laid Node-clock: 0; rounds where a neighbour's fine tooth stands off 0: 40; the farthest Node-clock any slot or tooth reaches: 1 Mesh. So nothing travels on this example: the gear stays and its neighbours' teeth never carry. That a round reaches one Mesh at most is the act's own (step.py reads its six Meshes, seen(a, nb)), not this run's
+  3. Two moments: every round's before slot is the last round's now slot: True; a gear's own rate is their difference (not part 2's motion, a mode of the board)
   4. The run back: 60 rounds run back to the laid start, slot for slot: True
-  5. The laid gear's own beat, its now slot round by round: [1, 0, -1, -1, 0, 1], repeating every 6 rounds
-     on the ring of its 6 rounds: rounds held 4, beats held 2;
-     a click at one round: rounds held 1, beats held 6 of 6
+  5. The state at round 6 is the laid start, slot for slot, and again at round 12: True; so the gear's beat repeats every 6 rounds exactly: its now slot [1, 0, -1, -1, 0, 1] (the example's teeth are six grips, so the laid gear, with its neighbours silent, steps a+ = a - b)
+     on the ring of its 6 rounds: rounds held 4, beats held 2; one round alone holds every beat of the ring, 6 of 6 (a one-round wave's transform: an identity)
 
-Part 2: on a ring, every wave of -1, 0 and 1; a motion's turn-sum is 0 or not, exactly
-  ring of  2:     8 waves, the least of nodes times motions 2 (the ring's nodes 2), 8 waves at it
-  ring of  3:    26 waves, the least of nodes times motions 3 (the ring's nodes 3), 8 waves at it
-  ring of  4:    80 waves, the least of nodes times motions 4 (the ring's nodes 4), 20 waves at it
-  ring of  5:   242 waves, the least of nodes times motions 5 (the ring's nodes 5), 12 waves at it
-  ring of  6:   728 waves, the least of nodes times motions 6 (the ring's nodes 6), 32 waves at it
-  ring of  7:  2186 waves, the least of nodes times motions 7 (the ring's nodes 7), 16 waves at it
-  ring of  8:  6560 waves, the least of nodes times motions 8 (the ring's nodes 8), 44 waves at it
-  ring of  9: 19682 waves, the least of nodes times motions 9 (the ring's nodes 9), 26 waves at it
-  ring of 10: 59048 waves, the least of nodes times motions 10 (the ring's nodes 10), 48 waves at it
+Part 2: on a ring, every wave of -1, 0 and 1; a motion's turn-sum is 0 or not, exactly; the waves at the bound against the characterization
+  ring of  2:     8 waves, the least of nodes times motions 2 (the ring's nodes 2); at it 8 waves, the characterization's 8, the same waves: True
+  ring of  3:    26 waves, the least of nodes times motions 3 (the ring's nodes 3); at it 8 waves, the characterization's 8, the same waves: True
+  ring of  4:    80 waves, the least of nodes times motions 4 (the ring's nodes 4); at it 20 waves, the characterization's 20, the same waves: True
+  ring of  5:   242 waves, the least of nodes times motions 5 (the ring's nodes 5); at it 12 waves, the characterization's 12, the same waves: True
+  ring of  6:   728 waves, the least of nodes times motions 6 (the ring's nodes 6); at it 32 waves, the characterization's 32, the same waves: True
+  ring of  7:  2186 waves, the least of nodes times motions 7 (the ring's nodes 7); at it 16 waves, the characterization's 16, the same waves: True
+  ring of  8:  6560 waves, the least of nodes times motions 8 (the ring's nodes 8); at it 44 waves, the characterization's 44, the same waves: True
+  ring of  9: 19682 waves, the least of nodes times motions 9 (the ring's nodes 9); at it 26 waves, the characterization's 26, the same waves: True
+  ring of 10: 59048 waves, the least of nodes times motions 10 (the ring's nodes 10); at it 48 waves, the characterization's 48, the same waves: True
 
 Part 3: whole classes of waves on three boards, the example's among them
-  board (2, 2, 2): every wave on 1 to 8 Node-clocks with values (-1, 1), 6560 waves; the least of nodes times motions 8 (the board's nodes 8), 256 at it
-  board (2, 3, 4): every wave on 1 to 3 Node-clocks with values (-1, 1), 17344 waves; the least of nodes times motions 24 (the board's nodes 24), 208 at it
-  board (4, 4, 4): every wave on 1 to 2 Node-clocks with values (-2, -1, 1, 2), 32512 waves; the least of nodes times motions 64 (the board's nodes 64), 2048 at it
+  board (2, 2, 2): every wave of -1, 0 and 1, 6560 waves; the least of nodes times motions by size {1: 8, 2: 8, 3: 24, 4: 8, 5: 40, 6: 24, 7: 56, 8: 8} (the board's nodes 8); at it 256 waves, the characterization's 256, the same waves: True
+  board (2, 3, 4): every wave of -1 and 1 on 1 to 3 Node-clocks, 17344 waves; the least of nodes times motions by size {1: 24, 2: 24, 3: 24} (the board's nodes 24); at it 208 waves, the characterization's 208, the same waves: True
+  board (4, 4, 4): every wave of -1 and 1 on 1 to 4 Node-clocks, the first Node-clock at 1, 325627 waves; the least of nodes times motions by size {1: 64, 2: 64, 3: 192, 4: 64} (the board's nodes 64); at it 99 waves, the characterization's 99, the same waves: True
   one Node-clock: nodes 1, motions 64, nodes times motions 64 (the board's 64)
   every other Node-clock on one line: nodes 2, motions 32, nodes times motions 64 (the board's 64)
   one line: nodes 4, motions 16, nodes times motions 64 (the board's 64)
