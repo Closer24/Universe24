@@ -65,7 +65,7 @@ sh papers/spacetime_events/build.sh
 
 ## Further research
 
-What is open stands by name in section 5 of [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
+What is open stands by name in section 6 of [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
 
 ## Contributing
 

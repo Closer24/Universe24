@@ -1,7 +1,0 @@
-1. Gamma 1000: the dial walked up equals the loader's table at all 3793 loads: True
-2. past the table's last load, 18965 loads up: Y = 173986597162, 58 bits; nothing stops the walk
-3. Gamma 7: 20,000 ticks at strides -1, 0, +1 above the start; the dial is the chain's at every load: True; run back to the start exactly: True
-3. Gamma 1000: 20,000 ticks at strides -1, 0, +1 above the start; the dial is the chain's at every load: True; run back to the start exactly: True
-4. Gamma 7: from the dial (344, 0) one load down gives (294, 6), its remainder Gamma - 1; a second load down gives (252, 6), and up again gives (295, 0), not (294, 6)
-5. Gamma 1000: two loads in two carries give X 1002003004; in one carry at (Gamma + 2) / Gamma, X 1002000000: off the chain by -3004
-6. the one carry with u and d from the stride equals the three carries in all 3000 cases: True

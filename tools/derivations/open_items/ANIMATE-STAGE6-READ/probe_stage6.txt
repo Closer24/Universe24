@@ -1,9 +1,0 @@
-1. the 24: closure of two quarter turns gives 24; the head's weight picks the same 24 of 216
-2. the five kinds: each a representation on all 576 pairs, characters O's table at the five classes;
-   A1 = 1, A2 = S4's sign on the body diagonals, T1 = the turn, T2 = A2 T1 at all 24
-3. multiplicities from the characters: every one 0 or 1, the channels 43
-4. the head's 125 tables: 0 departures []
-   nonzero at 43, the channels 43
-   the dot is delta: True | the cross is epsilon (u x v): True | A2 x T1 -> T2 is delta: True
-5. the plan contracted equals the naive sum on 300 random universes (2712 terms, strengths and readings
-   past 64 bits, int64 gears given; 235 universes hold a forbidden channel, named by the load)
