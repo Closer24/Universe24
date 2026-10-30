@@ -1,0 +1,13 @@
+NOT_CLOSED 29 on the act: the held hand (k1, k2) under the hat, n = 5^10, hat 1, the tie 3 to a tied train x with its own spring n, teeth 2000 n, four Mesh-less Node-clocks, 400 rounds
+  (A) the hand still at its rest (KEY, 0), the tied train swinging: 1600 windows; |k|^2 - n at most 18526136; rounds in which the hand's counts moved 400 of 400; windows in which |k|^2 at the next count differs from the before 1565
+    the act form: books open in 1600; the held train's passing not 0 in 1600; odd under the window's reversal in 1600 of 1600
+    the middle form: books open in 0; the held train's passing not 0 in 1600; odd under the window's reversal in 1600 of 1600
+    the background form: books open in 0; the held train's passing not 0 in 1565; odd under the window's reversal in 1600 of 1600
+  (B) the hand's size laid off its rest, swinging, the tied train swinging: 1600 windows; |k|^2 - n at most 21538400; rounds in which the hand's counts moved 400 of 400; windows in which |k|^2 at the next count differs from the before 1583
+    the act form: books open in 1600; the held train's passing not 0 in 1600; odd under the window's reversal in 1600 of 1600
+    the middle form: books open in 0; the held train's passing not 0 in 1599; odd under the window's reversal in 1600 of 1600
+    the background form: books open in 0; the held train's passing not 0 in 1582; odd under the window's reversal in 1600 of 1600
+  (C) a stiff hat, 10^4, teeth 10^6 n: the hand at its rest (KEY, 0), the tied train swinging: 1600 windows; |k|^2 - n at most 37464; rounds in which the hand's counts moved 199 of 400; windows in which |k|^2 at the next count differs from the before 365
+    the act form: books open in 1598; the held train's passing not 0 in 1598; odd under the window's reversal in 1600 of 1600
+    the middle form: books open in 0; the held train's passing not 0 in 1598; odd under the window's reversal in 1600 of 1600
+    the background form: books open in 0; the held train's passing not 0 in 365; odd under the window's reversal in 1600 of 1600
