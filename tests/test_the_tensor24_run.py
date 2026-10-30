@@ -84,7 +84,7 @@ def drawn(held, laid, seed):
     (clock,) = [t.first for t in held.trains if t.square]
     a[clock], b[clock] = (rng.integers(0, REACH, n).astype(object) for _ in "ab")
     teeth = step.weight(laid.gearing, laid.clock, a)
-    return state.State(a, b, frame.wide(rng, (rows, n)) % teeth, 0 * a), teeth
+    return state.State(a, b, frame.wide(rng, (rows, n)) % teeth, 0 * a, 0 * a[: len(held.trains)]), teeth
 
 
 def naive(laid, held, s, shape):
@@ -138,11 +138,11 @@ def orders_alike():
         held, laid, s = lay(*bang(order))
         for _ in range(setting["ticks"]):
             s = step.tick(laid, s)
-        place = [held.trains[order.index(t)] for t in range(len(order))]
+        trains = [order.index(t) for t in range(len(order))]  # each file train's place in this order
+        place = [held.trains[n] for n in trains]
         rows = np.concatenate([np.arange(t.first, t.first + t.rows()) for t in place])
-        runs.append(
-            [*(np.broadcast_to(x, s.a.shape)[rows] for x in laid.gearing), *(x[rows] for x in s)]
-        )
+        gears = [np.broadcast_to(x, s.a.shape)[rows] for x in laid.gearing]
+        runs.append([*gears, *(x[rows] for x in s[:-1]), s.k[trains]])
     return all(frame.same(each, runs[0]) for each in runs[1:]) and (runs[0][-len(s)] != 0).any()
 
 
@@ -185,12 +185,13 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert not {"Ruler", "LAID"} & set(dir(state)) and not {"ruled", "reading", "at"} & set(dir(step))
     for seed in range(3):  # a round is the naive round, and departs from it with the grips' read ignored
         s, teeth = drawn(held, laid, seed)
-        (*stepped, _), (*blind, _) = (
+        (*stepped, _, _), (*blind, _, _) = (
             step.tick(laid, s),
             step.tick(laid._replace(stretch=frame.unread()), s),
         )
         model, out = naive(laid, held, s, piece["shape"]), step.tick(laid, s)
         assert frame.same(stepped, model) and not frame.same(blind, model)
+        assert not step.act(laid, s)[1].any() and not out.k.any()  # no vertex: no area, no click
         for m in frame.turns():
             moved = turned(m, laid, held, out, teeth, piece["shape"])
             assert frame.same(step.tick(laid, turned(m, laid, held, s, teeth, piece["shape"])), moved), (
@@ -245,8 +246,7 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     # the teeth there are 1, every row's) is named, and nothing is written, by the run and by its tool
     universe["version"] = 1 + 1
     deep, low = json.loads(json.dumps(setting)), 1 - int(laid.gearing.rest[0, 0])
-    (clock,) = [n for n, t in enumerate(held.trains) if t.square]
-    deep["gears"].append([clock, 0, 0, low, low, 0])
+    deep["gears"].append([[n for n, t in enumerate(held.trains) if t.square][0], 0, 0, low, low, 0])
     setting["gears"][0][-1] = TOOTH
     edits = (
         ("universe", universe, "universe.version: 1, not 2", 1),

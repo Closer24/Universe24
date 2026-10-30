@@ -74,8 +74,8 @@ def varied(
         draw(rng, -3, 4, 4),
         rng.integers(0, 6, 4).astype(np.intp),
     )
-    held = Read(*terms) if stretched else frame.unread()
-    return Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, read, held)
+    held = (Read(*terms) if stretched else frame.unread(), frame.unclicked())
+    return Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, read, *held)
 
 
 def world(rng, layout, rows=ROWS):
@@ -86,22 +86,24 @@ def world(rng, layout, rows=ROWS):
     for x in (a, b):
         x[clocks] = draw(rng, 0, 1 << 20, (len(clocks), size[1]))
     w = step.weight(layout.gearing, layout.clock, a)
-    return State(a, b, draw(rng, 0, 1 << 20, size) % w, draw(rng, 0, 1 << 20, size) % drive)
+    r, rd = draw(rng, 0, 1 << 20, size) % w, draw(rng, 0, 1 << 20, size) % drive
+    return State(a, b, r, rd, 0 * a[:1])  # one train's click tooth, 0 within the key 1
 
 
 def naive(layout, s, shape=SHAPE):
-    """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the carry."""
-    _, _, _, grip, gearing, plan, _, stretch_read = layout
+    """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the carry;
+    the click of no term keeps its tooth."""
+    _, _, _, grip, gearing, plan, _, stretch_read, _ = layout
     rows = len(s.a)
     rest, stretch, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     first, second, third, factor, target = (x.tolist() for x in plan)
-    a, b, r, rd = (x.tolist() for x in s)
+    a, b, r, rd, k = (x.tolist() for x in s)
     w = [row[:] for row in rest]  # every gear's teeth: its rest and the clocks' read, term by term
     for f, m, g in zip(*(x.tolist() for x in layout.clock), strict=True):
         w[g] = [x + m * y for x, y in zip(w[g], a[f], strict=True)]
     grip = np.broadcast_to(grip, (rows, grip.shape[1])).tolist()
     n = len(a[0])
-    new = [[row[:] for row in x] for x in (a, b, r, rd)]
+    new = [[row[:] for row in x] for x in (a, b, r, rd, k)]
     for x in itertools.product(*map(range, shape)):
         i = np.ravel_multi_index(x, shape)
         around = [np.ravel_multi_index(y, shape) for y in frame.near(x, shape)]
@@ -170,9 +172,9 @@ def negated():
         layout = varied(rng, sourced=False)
         s = world(rng, layout)
         w = layout.gearing.rest
-        a1, b1, r1, rd1 = step.tick(layout, s)
-        a2, b2, r2, rd2 = step.tick(layout, s._replace(a=-s.a, b=-s.b, r=flip(s.r, w)))
-        if not frame.same([a2, b2, r2, rd2], [-a1, -b1, flip(r1, w), rd1]):
+        a1, b1, r1, rd1, k1 = step.tick(layout, s)
+        a2, b2, r2, rd2, k2 = step.tick(layout, s._replace(a=-s.a, b=-s.b, r=flip(s.r, w)))
+        if not frame.same([a2, b2, r2, rd2, k2], [-a1, -b1, flip(r1, w), rd1, k1]):
             return False
     return True
 
@@ -300,7 +302,8 @@ def turned(plan):
     ones = np.ones((1, n), dtype=object)
     gearing = Gearing(ones, ones, ones, ones)
     grip = 3 * ones.repeat(3, axis=1)
-    layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, *[frame.unread()] * 2)
+    reads = (frame.unread(), frame.unread(), frame.unclicked())  # no clock, no grips' read, no click
+    layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, *reads)
     s = world(np.random.default_rng(5), layout, rows)
     force, j = step.sources(layout, s.a)
     xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
@@ -337,8 +340,8 @@ def engine():
 
 def mutants():
     """Broken copies, each with the law that must catch it: what it replaces in the step (or the board), and with what."""
-    tick, untick, gear, mirror = step.tick, step.untick, step.gear, step.mirror
-    read, weight, driven, drive, sources = step.read, step.weight, step.driven, step.drive, step.sources
+    tick, untick, gear, mirror, kick = step.tick, step.untick, step.gear, step.mirror, step.kick
+    read, weight, drive, sources = step.read, step.weight, step.drive, step.sources
     gripped = mesh.gripped
     pull, seen, built, laid, calls = (
         mesh.pull,
@@ -375,8 +378,9 @@ def mutants():
     def mirrored_now(
         y, s
     ):  # the mirror's teeth read at its now slot, not the before slot it was kept at
-        a, b, r, rd = s
-        return State(b, a, flip(r, weight(y.gearing, y.clock, a)), flip(rd, y.gearing.drive))
+        a, b, r, rd, k = s
+        kept = flip(rd, y.gearing.drive), flip(k, y.click.key)
+        return State(b, a, flip(r, weight(y.gearing, y.clock, a)), *kept)
 
     def keep_b(y, s):
         return untick(y, s)._replace(b=s.b)
@@ -393,7 +397,7 @@ def mutants():
         return lambda y, a: pull(y._replace(grip=f(y.grip)), a)
 
     def kicked(teeth):
-        return lambda g, f, q: driven(g._replace(kick=teeth(g)), f, q)
+        return lambda g, q: kick(g._replace(kick=teeth(g)), q)
 
     def reread(order):
         return lambda a, nb: seen(a, nb[order])
@@ -452,8 +456,8 @@ def mutants():
         "the -x Spoke holding the site's own Mesh": ("held_alike", "geometry", wrapped_once, loading),
         "the pull two Meshes away, past the cone": ("cone", "pull", lambda y, a: pull(far(y), a)),
         "the run back two Meshes away": ("cone_back", "untick", lambda y, s: untick(far(y), s)),
-        "the kick's teeth ignored": ("formula", "driven", kicked(lambda g: 1)),
-        "the stretch off the kick": ("formula", "driven", lambda g, f, q: g.stretch * f + g.kick * q),
+        "the kick's teeth ignored": ("formula", "kick", kicked(lambda g: 1)),
+        "the stretch off the kick": ("formula", "kick", lambda g, q: g.kick * q),
         "the drive without its fine tooth": ("formula", "drive", lambda j, d, rd: drive(j, d, 0 * rd)),
         "the drive's tooth not carried": ("formula", "drive", lambda *x: (drive(*x)[0], x[2])),
         "the gradient's ends swapped": ("formula", "seen", reread([1, 0, 3, 2, 5, 4])),
@@ -462,7 +466,7 @@ def mutants():
         "the clocks' read off its factor": ("formula", "read", unfactored),
         "the clocks found by their place": ("formula", "read", placed),
         "the teeth without their rest": ("formula", "weight", lambda g, c, a: read(c, a)),
-        "T_k read from T_d": ("formula", "driven", kicked(lambda g: g.drive)),
+        "T_k read from T_d": ("formula", "kick", kicked(lambda g: g.drive)),
         "the run back with T_k and T_d swapped": ("back", "untick", swapped),
         "the gradient one-sided": ("sourced_images", "seen", one_sided),
         "the gradient's axes reordered": ("sourced_images", "seen", reread([2, 3, 4, 5, 0, 1])),

@@ -1,0 +1,47 @@
+Term 11 on the draft's act (step.act), whole numbers: the hostile mathematician's six items and the 24
+the giver's swept area at the lay 5000000000000000000000000000000
+the odd key K 714285714285714285714285714285, its birth (K - 1) div 2 = 357142857142857142857142857142; the even key beside it K + 1 = 714285714285714285714285714286
+
+1. The books, 6000 rounds, the clicks pushing nothing (the gears' run is the same at every key):
+   one giver and one taker at K: rounds where the clicks' sum is not 0: 0 of 6000; where the areas' sum is not 0: 0 of 6000; a click seen in 168 rounds
+   the area read off the act's carry (q key + k+ - k) against the naive cross: 0 rounds differ
+   one giver and two takers, tied at G and G: rounds where the clicks' sum is not 0: 377 of 6000; where the areas' sum is not 0: 0 of 6000; the running total of the three counts from -1 to 1, not 0 in 2988 rounds; a click seen in 377 rounds
+   one giver and two takers, tied at G and G div 2: rounds where the clicks' sum is not 0: 324 of 6000; where the areas' sum is not 0: 0 of 6000; the running total of the three counts from -1 to 1, not 0 in 1124 rounds; a click seen in 351 rounds
+   his arithmetic, the key 7 born at 3, the areas (-8, +4, +4): the clicks [-1, 1, 1], their sum 1
+
+2. The invariant k_giver + k_taker = key - 1, one giver and one taker, 6000 rounds:
+   K (odd), both born at (K - 1) div 2: rounds where the teeth's sum is not K - 1: 0 of 6001
+   K + 1 (even), both born at (K + 1 - 1) div 2 = 357142857142857142857142857142: rounds where the teeth's sum is not K + 1 - 1: 6001 of 6001 (it stands at K + 1 - 2); the books' misses: 0 of 6000
+   K + 1 (even), born at (K + 1) div 2 - 1 and (K + 1) div 2: the teeth's sum not K + 1 - 1: 0 of 6001; the books' misses: 0 of 6000; the mirror takes each birth to the other's: True
+   small keys on the same act, 2000 rounds, the area a round moves far above the key, the vertex at G + 1: at G every area moved is a multiple of 2^14 5^18 (2F's and G's common factor), so an even key's tooth keeps its parity and never lands on key - 1
+   key 7 (odd): born alike at 3: the books' misses 0 of 2000, the teeth's sum not key - 1 in 0 of 2001; born at 2 and 3: the books' misses 454 of 2000, the teeth's sum not key - 1 in 2001 of 2001
+   key 6 (even): born alike at 2: the books' misses 518 of 2000, the teeth's sum not key - 1 in 2001 of 2001; born at 2 and 3: the books' misses 0 of 2000, the teeth's sum not key - 1 in 0 of 2001
+   key 8 (even): born alike at 3: the books' misses 436 of 2000, the teeth's sum not key - 1 in 2001 of 2001; born at 3 and 4: the books' misses 0 of 2000, the teeth's sum not key - 1 in 0 of 2001
+
+3. The beat read against the key (the free giver, no vertex): E the hand's energy, P its period in rounds, Omega its swept area:
+   10 beats take 1257 rounds; 2 W E = 50000000000000000000000000000000000000000000000000; Omega = 5000000000000000000000000000000
+   1000 E P div Omega = 6285: E P = 2 pi Omega within the lattice's rounding, so E = Omega omega with omega the angular beat 2 pi / P;
+   one key of area carries key x omega (E = n key omega): the key is h-bar; E = key / P (h) would read 1000
+
+4. One click per round holds only while |tau| <= key, one giver and one taker, 6000 rounds:
+   key K = 714285714285714285714285714285: the most |tau| in a round is 50 thousandths of the key; rounds with |tau| > key: 0 of 6000; rounds with |q| >= 2: 0 of 6000; rounds with |tau| <= key and |q| >= 2: 0
+   key K div 50 made odd = 14285714285714285714285714285: the most |tau| in a round is 2526 thousandths of the key; rounds with |tau| > key: 4210 of 6000; rounds with |q| >= 2: 3083 of 6000, their |tau| from 1033 to 2526 thousandths of the key, |q| at most 3; rounds with |tau| <= key and |q| >= 2: 0
+
+5. The flip, k to key - 1 - k, as the area's negation about the birth, flip(k) - birth = -(k - birth):
+   K (odd): flip(birth) - birth = 0
+   K + 1 (even): flip(birth) - birth = 1
+   key 7: teeth whose flip is the negation about the birth: 7 of 7; flip(k) - birth + (k - birth) takes the values [0]
+   key 8: teeth whose flip is the negation about the birth: 0 of 8; flip(k) - birth + (k - birth) takes the values [1]
+   on the act at K: rounds where the mirrored taker's tooth is its tooth negated about the birth: 6001 of 6001
+   on the act at K + 1: rounds where the mirrored taker's tooth is its tooth negated about the birth: 0 of 6001
+
+6. The run back by the act alone, the click teeth flipped in the key by the mirror, no log read, 6000 rounds:
+   K: rounds whose gears return: 6000 of 6000; whose click teeth return: 6000 of 6000; whose mirrored quotients are the way out's: 6000 of 6000; at the start the teeth are the births: True
+   K + 1: rounds whose gears return: 6000 of 6000; whose click teeth return: 6000 of 6000; whose mirrored quotients are the way out's: 6000 of 6000; at the start the teeth are the births: True
+   K + 1 born apart: rounds whose gears return: 6000 of 6000; whose click teeth return: 6000 of 6000; whose mirrored quotients are the way out's: 6000 of 6000; at the start the teeth are the births: True
+   the mutant at K, the click teeth not flipped by the mirror: rounds whose teeth return: 0 of 6000
+
+7. The 24 by the act's own turn (kinds.turns on the star, T1 the turn itself, a negated row's fine tooth flipped in its teeth), the click teeth unmoved:
+   one Node-clock, Animate's lay at K, 120 rounds: the turned run equals the run turned, its clicks and click teeth alike in every round, for 24 of the 24 turns; the mutant (the fine teeth not flipped) for 12: the 3 that flip no sign and the 9 whose flips fall on the y and z rows, which this lay keeps at 0; clicks seen: 6
+   one Node-clock, both hands turning on every axis from a recurrence, 120 rounds at K div 50 made odd: for 24 of the 24 turns; the mutant for 3; clicks seen: 188
+   a cube of side 3 with Meshes, the hands turning at every site, 6 rounds at K div 50 made odd: for 24 of the 24 turns; the mutant for 3 (the 3 turns that flip no sign); clicks seen: 252

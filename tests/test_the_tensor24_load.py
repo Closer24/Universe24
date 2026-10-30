@@ -46,7 +46,7 @@ def made():
 
 
 def universe(trains=TRAINS):
-    return {"trains": copy.deepcopy(trains)}
+    return {"trains": copy.deepcopy(trains), "chosen": {"key": 1}}
 
 
 def loaded(made, u, gears=()):
@@ -139,7 +139,7 @@ def test_the_load_lays_every_gear_on_its_trains_rows_or_names_each_refusal_and_r
     last = sum(DIMS[k] for k in TRAINS[-1]["kinds"]) * TRAINS[-1]["part"]  # the last train's rows
     laid = [(0, rows - 1, site, now, before, tooth), (len(TRAINS) - 1, last - 1, site, before, now, 0)]
     held, found = loaded(made, universe(), laid)
-    a, b, r, rd = held.state
+    a, b, r, rd, k = held.state
     assert found == [] and (a[rows - 1, site], b[rows - 1, site], r[rows - 1, site]) == (
         now,
         before,
@@ -151,7 +151,7 @@ def test_the_load_lays_every_gear_on_its_trains_rows_or_names_each_refusal_and_r
     assert not any(
         np.shares_memory(x, y) for x, y in itertools.combinations(held.state, 1 + 1)
     )  # every array its own: no write reaches two
-    assert not rd.any()
+    assert not rd.any() and not k.any() and k.shape == (len(TRAINS), SITES)
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1
     held, found = loaded(made, universe(), [(0, rows, site, now, before, 0)])
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
@@ -177,5 +177,5 @@ def rewound(r, w):
     _, meshes = geometry(nb, D)
     layout = plain(nb, meshes, np.ones(D * SITES, dtype=object), w)
     a = np.arange(SITES, dtype=object)[None, :] + 0
-    s = State(a, a - 1, r, 0 * a)
+    s = State(a, a - 1, r, 0 * a, 0 * a)
     return all((x == y).all() for x, y in zip(untick(layout, tick(layout, s)), s, strict=True))

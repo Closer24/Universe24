@@ -13,7 +13,7 @@ from typing import Any, NamedTuple
 
 import numpy as np
 
-from tensor24.engine.state import Gearing, Layout, Plan, Read
+from tensor24.engine.state import Click, Gearing, Layout, Plan, Read
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,9 +21,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class Engine(NamedTuple):
     """An engine as the properties see it: its step and run back on a board, and its worlds."""
 
-    step: Callable[
-        ..., Any
-    ]  # step(nb, s) -> (s', out), s a tuple of arrays: a row per train, or one row
+    step: Callable[..., Any]  # step(nb, s) -> (s', out), s a tuple of arrays: a row per train, or one
     unstep: Callable[..., Any]  # unstep(nb, s', out) -> s
     world: Callable[..., Any]  # world(rng, shape, trains) -> s
 
@@ -141,9 +139,7 @@ def stored(m):
     return turn
 
 
-STORED = (
-    1 + 1 + 3 + 3 + 3
-)  # one train of each kind as stored: A1 and A2, T1 and T2, and the three tensions (A1 + E)
+STORED = 1 + 1 + 3 + 3 + 3  # a train of each kind as stored: A1 and A2, T1 and T2, the tensions (A1 + E)
 
 
 def bijective(make, shape, rng):
@@ -238,6 +234,12 @@ def unread():
     return Read(none, none.astype(object), none)
 
 
+def unclicked():
+    """The click of no term: one train whose area is 0, its tooth carried at the key 1 from its birth, 0."""
+    none = np.zeros(0, dtype=np.intp)
+    return Click(none, none, none.astype(object), none, np.ones((1, 1), dtype=object))
+
+
 def dense(read, rows, landed):
     """A read as the matrix of its whole factors, per row it lands on and row it reads, the factors summed."""
     m = np.zeros((landed, rows), dtype=object)
@@ -250,9 +252,8 @@ def plain(nb, meshes, grip, w):
     path (T_k = T_d = 1), no term of J."""
     none = np.zeros(0, dtype=np.intp)
     plan = Plan(none, none, none, none.astype(object), none)
-    return Layout(
-        nb, spokes(), meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, unread(), unread()
-    )
+    reads = (unread(), unread(), unclicked())
+    return Layout(nb, spokes(), meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, *reads)
 
 
 def holds(name, make, shape, seed):
