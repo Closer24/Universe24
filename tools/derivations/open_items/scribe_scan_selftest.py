@@ -2973,7 +2973,8 @@ def probe_cases() -> tuple[int, int]:
 
     check("PROBE is a refusal", gate.RULES["PROBE"][0] == "BLOCK")
     check("DIVIDE is a note", gate.RULES["DIVIDE"][0] == "WARN")
-    check("SEARCH is a note", gate.RULES["SEARCH"][0] == "WARN")
+    check("SEARCH is a refusal", gate.RULES["SEARCH"][0] == "BLOCK")
+    check("SEARCHLOG is a note", gate.RULES["SEARCHLOG"][0] == "WARN")
     NPS = "import numpy as np\n"
     probes = (
         ("a float literal", "x = 0.5\n", ["float literal"]),
@@ -3040,8 +3041,10 @@ def probe_cases() -> tuple[int, int]:
             ["series summed by a loop"],
         ),
         ("a series counted up in a while loop", "k = 1\nwhile k < 9:\n    total += term\n    term = term * x // k\n    k += 1\n", ["series summed by a loop"]),
-        ("a logarithm constant", "LN_TWO = 2 * artanh_inverse(3)\n", ["name LN_TWO"]),
+        ("a logarithm constant is no sine (SEARCHLOG reads it)", "LN_TWO = 2 * artanh_inverse(3)\n", []),
         ("an arctangent function", "def arctan_inverse(m):\n    return m\n", ["function arctan_inverse"]),
+        ("a tangent name", "def tangent_of(m):\n    return m\n", ["function tangent_of"]),
+        ("a cosine function", "def cosine(m):\n    return m\n", ["function cosine"]),
         ("a cosine kept under a name", "cos_w = 24\nsin_w = 7\n", ["name cos_w", "name sin_w"]),
         (
             "a bisection",
@@ -3056,11 +3059,23 @@ def probe_cases() -> tuple[int, int]:
         ("a loop that divides by its counter and sums nothing is no series", "for k in range(1, 5):\n    q = n // k\n    last = q\n", []),
         ("half of one number is no bracket", "half = n // 2\n", []),
         ("a log is a record, no logarithm", "log = []\nlog.append(x)\nlogs = 3\n", []),
+        ("the wider words of the rule WORD are no sine", "quaternion_gear = 1\nplanck_key = 3\nangle_count = 2\ncircle_rows = 4\ntheta_n = 5\n", []),
+        ("a name of a root or a sum is no sine", "def isqrt_rows(a):\n    return a\n\ntotal_sum = 3\n", []),
         ("a sum of a name and a number halved is no bracket", "half = (n + 1) // 2\n", []),
         ("a file that does not parse", "def (:\n", []),
     )
     for label, source, want in searches:
         check(f"SEARCH: {label}", found(source, "SEARCH") == sorted(want))
+    logs = (
+        ("a logarithm constant", "LN_TWO = 2 * artanh_inverse(3)\n", ["name LN_TWO"]),
+        ("an artanh function", "def artanh_inverse(m):\n    return m\n", ["function artanh_inverse"]),
+        ("an arcsinh name", "arcsinh_k = 3\n", ["name arcsinh_k"]),
+        ("a sine is no logarithm", "def sine(x):\n    return x\n", []),
+        ("the letters ln inside a word are none", "line = 1\nplane = 2\n", []),
+        ("a log is a record", "log = []\nlogs = 3\n", []),
+    )
+    for label, source, want in logs:
+        check(f"SEARCHLOG: {label}", found(source, "SEARCHLOG") == sorted(want))
     reads = (
         (PROBE, True),
         ("tools/derivations/pair_rides/x.py", True),
@@ -3118,7 +3133,14 @@ def probe_cases() -> tuple[int, int]:
             folder = "tools/derivations/open_items/derive/p/"
             old = folder + "old.py"
             run("init", "-q")
-            base = commit({old: "x = 0.5\n", folder + "clean.py": "y = 1\n", "README.md": "the base\n"})
+            base = commit(
+                {
+                    old: "x = 0.5\n",
+                    folder + "clean.py": "y = 1\n",
+                    folder + "old_sine.py": "def sine(x):\n    return x\n",
+                    "README.md": "the base\n",
+                }
+            )
             status, text = read(branch("new_float", {folder + "new.py": "y = 0.25\n"}))
             check(
                 "a new probe with a float is refused, named",
@@ -3146,6 +3168,31 @@ def probe_cases() -> tuple[int, int]:
             check(
                 "a new probe with a floor division is a note and no refusal",
                 status == 0 and "note    DIVIDE" in text and "REFUSED" not in text,
+            )
+            status, text = read(
+                branch("series", {folder + "s.py": "k = 1\nwhile k < 9:\n    total += term\n    term = term * x // k\n    k += 1\n"})
+            )
+            check(
+                "a new probe with a series is refused, named",
+                status == 1 and "REFUSED SEARCH" in text and "series summed by a loop" in text,
+            )
+            status, text = read(branch("sine_name", {folder + "n.py": "def sine(x):\n    return x\n"}))
+            check("a new probe with a function named sine is refused", status == 1 and "REFUSED SEARCH" in text and "function sine" in text)
+            status, text = read(branch("bisect", {folder + "b.py": "mid = (lo + hi) // 2\n"}))
+            check("a new probe with a bracket halved is refused", status == 1 and "REFUSED SEARCH" in text and "bracket halved" in text)
+            status, text = read(branch("log_name", {folder + "l.py": "LN_TWO = 3\n"}))
+            check(
+                "a new probe with a logarithm name is a note and no refusal",
+                status == 0 and "note    SEARCHLOG" in text and "REFUSED" not in text,
+            )
+            status, text = read(branch("sine_held", {folder + "old_sine.py": "def sine(x):\n    return x + 1\n"}))
+            check("a changed probe that holds its sine is quiet", status == 0 and "SEARCH" not in text)
+            status, text = read(
+                branch("sine_raised", {folder + "old_sine.py": "def sine(x):\n    return x\n\n\ndef cosine(x):\n    return x\n"})
+            )
+            check(
+                "a changed probe that adds a cosine to its sine is refused",
+                status == 1 and "REFUSED SEARCH" in text and "function cosine" in text,
             )
             status, text = read(branch("outside", {"tools/other/p.py": "x = 0.5\n"}))
             check("a probe outside tools/derivations/ is not read", status == 0 and "PROBE" not in text)

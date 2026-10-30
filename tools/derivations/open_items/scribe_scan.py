@@ -19,9 +19,10 @@ branch as the allowance is. A hit above it is new; a key the ceiling does not ho
 The hidden numbers and the probes (the owner's answers of 2026-10-30, 09:0x UTC). ENUM (a refusal) and LENGTH (a note) read the new engine and its tools for
 a number behind a name: an enumeration, and a count spelt as a length. PROBE (a refusal) and DIVIDE (a note) read the probes under tools/derivations/ that a push
 adds or changes: a float, a true division, a root, a circular call, an import of math, random, fractions, decimal, statistics, scipy or sympy (PROBE); a floor
-division, a remainder or divmod, where the one division is Rule3's carry (DIVIDE). SEARCH (a note) reads the three shapes under which a probe makes a circular or
-logarithmic function or a root without a call that names it: a series summed by a loop, a bracket halved by its midpoint, and a function or constant named a sine,
-cosine, tangent, arctangent, artanh or ln (David's finding of 6528139344 item 5). The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
+division, a remainder or divmod, where the one division is Rule3's carry (DIVIDE). SEARCH (a refusal, by the owner's word of 2026-10-30, 17:20 UTC, "Sine is forbidden.", #2187 6528925479) reads the three shapes under which a probe makes a
+circular function or a root without a call that names it: a series summed by a loop, a bracket halved by its midpoint, and a function or constant named a sine,
+cosine, tangent or arctangent (David's finding of 6528139344 item 5); SEARCHLOG (a note) reads a function or constant named artanh or ln, until the owner says
+whether his word reaches the logarithm. The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
 scribe_scan_probes.json, read from the published branch as the ceiling is. SCRIBE-GATE-1.md, section The hidden numbers and the probes.
 
   python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
@@ -271,8 +272,12 @@ RULES: dict[str, tuple[str, str]] = {
         "a floor division, a remainder or divmod in a probe under tools/derivations/ that a push adds or changes: the one division is Rule3's carry with its remainder kept (tensor24.algebra.carry.carry) (the owner's word of 2026-10-30, 09:0x UTC: division is allowed only with Rule3); a note, the count per file may not rise",
     ),
     "SEARCH": (
+        "BLOCK",
+        "a circular function, or a root, made by hand in a probe under tools/derivations/ that a push adds or changes, under a name that is no call of one: a loop that sums a series (a term updated by a division by an expression of the loop's counter, by // or by carry, and added to a total), a bracket halved (the midpoint of two ends, (lo + hi) // 2 with or without a one added, a shift by one or a carry of the sum by 2), and a function or constant named a sine, cosine, tangent or arctangent (sine, cosine, arctan_inverse, cos_w): the owner's word of 2026-10-30, 17:20 UTC, #2187 6528925479, on David's question whether a series used only to lay a state falls under line 102: \"Sine is forbidden.\" (law line 102: the lay of a state holds no circular function either, by a call, by a series or by any construction that finds one; decision 41: no root found by search); the count per file may not rise",
+    ),
+    "SEARCHLOG": (
         "WARN",
-        "a circular or logarithmic function, or a root, made by hand in a probe under tools/derivations/ that a push adds or changes, under a name that is no call of one: a loop that sums a series (a term updated by a division by an expression of the loop's counter, by // or by carry, and added to a total), a bracket halved (the midpoint of two ends, (lo + hi) // 2 with or without a one added, a shift by one or a carry of the sum by 2), and a function or constant named a sine, cosine, tangent, arctangent, artanh or ln (sine, cosine, arctan_inverse, artanh_inverse, LN_TWO): the law has no circular function that makes a phenomenon happen (line 102), no logarithm in a derivation (line 100) and no root found by search (decision 41), and a series or a bisection makes them under another name (David's finding of 2026-10-30, 16:4x UTC, #2187 6528139344 item 5; the writer's take, 6528504490); a note, the count per file may not rise, and a refusal when the owner answers whether a series used only to lay a state falls under line 102",
+        "a function or constant named artanh or ln in a probe under tools/derivations/ that a push adds or changes (artanh_inverse, LN_TWO): a logarithm made by hand; a note, the count per file may not rise, until the owner says whether his word on the sine reaches the logarithm (the series that makes one is refused by SEARCH already)",
     ),
     "DOCLAYER": (
         "BLOCK",
@@ -289,9 +294,10 @@ PROBE_CALLS = frozenset(
     "sqrt isqrt cbrt exp expm1 log log1p log2 log10 sin cos tan asin acos atan atan2 arcsin arccos arctan arctan2 sinh cosh tanh "
     "arcsinh arccosh arctanh hypot round float complex".split()
 )  # a call that makes a real number, a root or a circular function in a probe
-SEARCH_WORDS = frozenset(
-    "sin cos tan sine cosine tangent arctan arcsin arccos atan asin acos artanh atanh arctanh arcsinh ln".split()
-)  # a word of a snake_case name that makes a circular or logarithmic function by hand (the rule SEARCH): log is no word of it, a log being also a record
+SINE_WORDS = frozenset(
+    "sin cos tan sine cosine tangent arctan arcsin arccos atan asin acos".split()
+)  # a word of a snake_case name that makes a circular function by hand (the rule SEARCH); the rule WORD reads the wider CIRCULAR_WORDS below
+LOG_WORDS = frozenset("artanh atanh arctanh arcsinh ln".split())  # a word that makes a logarithm by hand (the rule SEARCHLOG): log is no word of it, a log being also a record
 PROBE_DTYPES = frozenset(
     "float complex float16 float32 float64 float128 float_ double longdouble complex64 complex128 complex256".split()
 )  # a dtype that holds a real number
@@ -2305,9 +2311,14 @@ def midpoint(node: ast.AST) -> bool:
     return len(named) >= 2 and all(isinstance(x, ast.Name | ast.Constant) for x in terms)
 
 
-def made_by_hand(name: str) -> bool:
-    """A name whose snake_case words include a sine, cosine, tangent, arctangent, artanh or ln."""
-    return any(word in SEARCH_WORDS for word in name.lower().split("_"))
+def hand_rule(name: str) -> str | None:
+    """The rule a name falls under by its snake_case words: SEARCH for a sine, cosine, tangent or arctangent, SEARCHLOG for artanh or ln, None for any other."""
+    words = name.lower().split("_")
+    if any(word in SINE_WORDS for word in words):
+        return "SEARCH"
+    if any(word in LOG_WORDS for word in words):
+        return "SEARCHLOG"
+    return None
 
 
 def probe_hits(rel: str, source: str) -> list[Hit]:
@@ -2323,13 +2334,13 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
         hits.append(Hit(rule, rel, getattr(node, "lineno", 0), detail, "", getattr(node, "col_offset", 0)))
 
     for node in ast.walk(tree):
-        if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef) and made_by_hand(node.name):
-            add("SEARCH", node, f"function {node.name}")
+        if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef) and hand_rule(node.name):
+            add(hand_rule(node.name) or "SEARCH", node, f"function {node.name}")
         elif isinstance(node, ast.Assign | ast.AnnAssign):
             for target in node.targets if isinstance(node, ast.Assign) else [node.target]:
                 for name in [n.id for n in ast.walk(target) if isinstance(n, ast.Name)]:
-                    if made_by_hand(name):
-                        add("SEARCH", node, f"name {name}")
+                    if hand_rule(name):
+                        add(hand_rule(name) or "SEARCH", node, f"name {name}")
         elif isinstance(node, ast.For | ast.While) and series_loop(node):
             add("SEARCH", node, "series summed by a loop")
         if midpoint(node):
