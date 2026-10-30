@@ -13,7 +13,7 @@ A script cannot prove that no two sentences of prose disagree: it reads what its
 The known list (scribe_law_check_known.json) holds the old engine's rows that stand until the re-cut (the owner's answer of 2026-10-30, 04:5x UTC); a finding beyond it refuses.
 
 The same PAIRS table reads the live documents with --docs (README.md, llms.txt and the documents of docs/ but the law), each pair against the law's governing line, a hit above the document's ceiling
-(scribe_law_check_docs_known.json) refusing; the table grows with every contradiction a reader finds (the four readers of 2026-10-30, 08:xx UTC, added P14 to P17).
+(scribe_law_check_docs_known.json) refusing; the table grows with every contradiction a reader finds (the four readers of 2026-10-30, 08:3x UTC, added P14 to P17).
 
 Usage: python -I scribe_law_check.py [--law PATH] [--all] [--selftest] [--write-known] [--docs]
 Exit 0: no finding beyond the known list; exit 1: a new finding (printed with its line); the known rows print as counts, and by line with --all."""
