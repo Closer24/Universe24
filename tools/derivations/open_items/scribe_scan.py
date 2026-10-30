@@ -138,6 +138,10 @@ RULES: dict[str, tuple[str, str]] = {
         "BLOCK",
         "the word book in a name, an attribute, a keyword, an import alias or a string of the engine, its loader, its runner or main.py: no store of accounts beside the state; a push is read by the tensor operation from the state of every gear (law: No books in the engine)",
     ),
+    "SPECIAL": (
+        "BLOCK",
+        "a name, an attribute, a keyword, an import alias or a string (a docstring spared) in the act, the loader or main.py that names a link's lengthening or shortening, a decoupling, a horizon, a clock's freezing or restoring, or a link's sending, receiving, emitting or absorbing: no special function, key or branch for any of them; they are the one act's own results (law: No special code and no specific law for a clock or a link, line 90)",
+    ),
     "WORD": (
         "BLOCK",
         "a circular word in a name (cosine, sine, angle, theta, circle, quaternion ...): an angle or circle used as a rule",
@@ -325,6 +329,27 @@ BOOK_SCOPE = (
     RUNNER,
     MAIN,
 )  # no books in the engine, its loader, its runner or main.py (law line 102, the owner's word of 2026-10-30, 04:1x); the record's schema and the decoder keep the ledger's name (his word of 04:3x)
+SPECIAL_SCOPE = (
+    NEW_ENGINE + "/algebra/",
+    NEW_ENGINE + "/engine/",
+    LOADER,
+    MAIN,
+)  # the Node-clock's code, its loader and main.py: no special code for a clock or a link (the owner's words of 2026-10-30, 07:1x UTC); the runner's other modules, the record and the decoder read from outside and may speak of them
+SPECIAL_STEMS = (
+    "lengthen",
+    "shorten",
+    "decoupl",
+    "recoupl",
+    "uncoupl",
+    "horizon",
+    "freez",
+    "froze",
+    "restor",
+    "emit",
+    "absorb",
+    "send",
+    "receiv",
+)  # the words of the old engine's special rules for a link or a clock (BH-S1, The horizon, hold and restore, the sending and receiving of a link): a name that starts with one is refused in SPECIAL_SCOPE
 CARRY_HOME = frozenset(
     {"core/acts.py", "core/rule3.py", NEW_ENGINE + "/algebra/carry.py"}
 )  # where Rule3's division and remainder are written (the architect's design, approved at eaf07f596: algebra/carry.py alone in the new engine)
@@ -450,25 +475,39 @@ def mask_name(node: ast.AST) -> str:
     return ""
 
 
+def node_text(node: ast.AST, docstrings: set[ast.AST]) -> str:
+    """The name, attribute, keyword, alias or string (a docstring spared) a node holds, else nothing."""
+    if isinstance(node, ast.Name):
+        return node.id
+    if isinstance(node, ast.Attribute):
+        return node.attr
+    if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
+        return node.name
+    if isinstance(node, ast.arg):
+        return node.arg
+    if isinstance(node, ast.keyword):
+        return node.arg or ""
+    if isinstance(node, ast.alias):
+        return node.asname or node.name
+    if isinstance(node, ast.Constant) and isinstance(node.value, str) and node not in docstrings:
+        return node.value
+    return ""
+
+
 def book_name(node: ast.AST, docstrings: set[ast.AST]) -> str:
     """The name, attribute, keyword, alias or string (a docstring spared) in a node that holds the word book, else nothing."""
-    if isinstance(node, ast.Name):
-        text = node.id
-    elif isinstance(node, ast.Attribute):
-        text = node.attr
-    elif isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
-        text = node.name
-    elif isinstance(node, ast.arg):
-        text = node.arg
-    elif isinstance(node, ast.keyword):
-        text = node.arg or ""
-    elif isinstance(node, ast.alias):
-        text = node.asname or node.name
-    elif isinstance(node, ast.Constant) and isinstance(node.value, str) and node not in docstrings:
-        text = node.value
-    else:
-        return ""
+    text = node_text(node, docstrings)
     return text if "book" in text.lower() else ""
+
+
+def special_name(node: ast.AST, docstrings: set[ast.AST]) -> str:
+    """The name, attribute, keyword, alias or string (a docstring spared) in a node with a word that starts like one of SPECIAL_STEMS, else nothing;
+    the dataclass option frozen=True is spared."""
+    if isinstance(node, ast.keyword) and node.arg == "frozen" and isinstance(node.value, ast.Constant):
+        return ""
+    text = node_text(node, docstrings)
+    words = re.findall(r"[a-z]+", re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", text).lower())
+    return text if any(word.startswith(SPECIAL_STEMS) for word in words) else ""
 
 
 def spelt_operation(node: ast.AST, numpy: set[str]) -> bool:
@@ -1219,9 +1258,12 @@ def scan(rel: str, source: str) -> list[Hit]:
             and isinstance(body[0].value, ast.Constant)
             and isinstance(body[0].value.value, str)
         }
+        special = rel.startswith(SPECIAL_SCOPE)
         for node in ast.walk(tree):
             if word := book_name(node, docstrings):
                 add("BOOKS", node, word)
+            if special and (word := special_name(node, docstrings)):
+                add("SPECIAL", node, word)
     if rel.startswith(ACT) or rel == LOADER:
         for node in ast.walk(tree):
             if (

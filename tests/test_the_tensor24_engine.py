@@ -43,7 +43,9 @@ def draw(rng, low, high, size):
     return rng.integers(low, high, size=size).astype(object)
 
 
-def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False, stretched=False):
+def varied(
+    rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False, stretched=False, cubed=False
+):
     """A layout parted at every gear and site: grips per row and Mesh, the teeth at rest, s, T_k, T_d, and J or none
     of it, every gear reading its teeth from two drawn rows' counts at drawn factors where clocked; every divisor at least
     `least`, and T_k too where `least` is above 1, so that a swap of T_k and T_d shows as a wrong run back, not a raise."""
@@ -58,12 +60,13 @@ def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False, st
     every = np.arange(rows, dtype=np.intp)
     two = np.repeat(rng.permutation(rows)[: 1 + 1], rows) if clocked else every  # every gear reads both
     read = Read(two, draw(rng, 1, 4, len(two)), np.tile(every, 1 + 1)) if clocked else frame.unread()
-    index = [
-        rng.integers(0, high, size=TERMS).astype(np.intp) for high in (PLANES * rows,) * 2 + (rows,)
-    ]
-    plan = Plan(index[0], index[1], draw(rng, -9, 10, TERMS), index[2])
+    highs = (PLANES * rows,) * 2 + (PLANES * rows + 1, rows)  # the third reading may be the unit
+    index = [rng.integers(0, high, size=TERMS).astype(np.intp) for high in highs]
+    # three readings only where the act is read for one round, since they cube the counts; else the unit
+    index[2] = index[2] if cubed else 0 * index[2] + PLANES * rows
+    plan = Plan(*index[:3], draw(rng, -9, 10, TERMS), index[3])
     none = np.zeros(0, dtype=np.intp)
-    plan = plan if sourced else Plan(none, none, none.astype(object), none)
+    plan = plan if sourced else Plan(none, none, none, none.astype(object), none)
     grip = draw(rng, -3, 4, (rows, 3 * n))
     # the grips' read, rows read at both ends of a Spoke's Mesh: only where the act is read for one round, since the
     # pull then multiplies counts by counts
@@ -92,7 +95,7 @@ def naive(layout, s, shape=SHAPE):
     _, _, _, grip, gearing, plan, _, stretch_read = layout
     rows = len(s.a)
     rest, stretch, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
-    first, second, factor, target = (x.tolist() for x in plan)
+    first, second, third, factor, target = (x.tolist() for x in plan)
     a, b, r, rd = (x.tolist() for x in s)
     w = [row[:] for row in rest]  # every gear's teeth: its rest and the clocks' read, term by term
     for f, m, g in zip(*(x.tolist() for x in layout.clock), strict=True):
@@ -122,9 +125,9 @@ def naive(layout, s, shape=SHAPE):
         readings += [
             seen[g][axis + axis] - seen[g][axis + axis + 1] for axis in range(3) for g in range(rows)
         ]
-        source = [0] * rows
+        source, read = [0] * rows, readings + force + [1]  # the unit, the readings' last row
         for t in range(len(factor)):
-            source[target[t]] += factor[t] * (readings + force)[first[t]] * (readings + force)[second[t]]
+            source[target[t]] += factor[t] * read[first[t]] * read[second[t]] * read[third[t]]
         for g in range(rows):
             q, new[3][g][i] = divmod(source[g] + rd[g][i], drive[g][i])
             push = stretch[g][i] * (force[g] + kick[g][i] * q)
@@ -133,12 +136,12 @@ def naive(layout, s, shape=SHAPE):
     return State(*(np.array(x, dtype=object) for x in new))
 
 
-def formula():
+def formula(cubed=True, stretched=False):
     """At varied layouts, every gear clocked by two rows' counts, the act equals the naive model at every entry, three
-    seeds."""
+    seeds: J's terms of three readings, or the grips reading rows at both ends of each Spoke's Mesh."""
     for seed in range(3):
         rng = np.random.default_rng(seed)
-        layout = varied(rng, clocked=True)
+        layout = varied(rng, clocked=True, cubed=cubed, stretched=stretched)
         s = world(rng, layout)
         if not frame.same(step.tick(layout, s), naive(layout, s)):
             return False
@@ -224,15 +227,8 @@ SHAPES = ((3, 3, 3), (4, 5, 6), (3, 4, 7), (1, 1, 1), (7, 7, 7))
 
 
 def stretched():
-    """At varied layouts whose grips read rows at both ends of each Spoke's Mesh, the act equals the naive model at
-    every entry, three seeds."""
-    for seed in range(3):
-        rng = np.random.default_rng(seed)
-        layout = varied(rng, clocked=True, stretched=True)
-        s = world(rng, layout)
-        if not frame.same(step.tick(layout, s), naive(layout, s)):
-            return False
-    return True
+    """The act equals the naive model where the grips read rows at both ends of each Spoke's Mesh, three seeds."""
+    return formula(cubed=False, stretched=True)
 
 
 def model():
@@ -284,8 +280,9 @@ def cube():
             for x, y, z in np.argwhere(table)
         ]
     one, two, factor, landing = zip(*terms, strict=True)
+    unit = [PLANES * rows] * len(one)  # every term reads two: its third reading the unit
     return Plan(
-        *(np.array(x, dtype=np.intp) for x in (one, two)),
+        *(np.array(x, dtype=np.intp) for x in (one, two, unit)),
         np.array(factor, dtype=object),
         np.array(landing, dtype=np.intp),
     )
@@ -402,6 +399,11 @@ def mutants():
         cut = len(readings) - len(gears)
         return contract.contract(plan, np.concatenate((readings[:cut], 0 * readings[cut:])), gears)
 
+    def thirdless(plan, readings, gears):  # every term's third reading the unit, its own ignored
+        return contract.contract(
+            plan._replace(third=0 * plan.third + len(readings) - 1), readings, gears
+        )
+
     def swapped(y, s):
         g = y.gearing
         return untick(y._replace(gearing=g._replace(kick=g.drive, drive=g.kick)), s)
@@ -452,6 +454,7 @@ def mutants():
         "the drive's tooth not carried": ("formula", "drive", lambda *x: (drive(*x)[0], x[2])),
         "the gradient's ends swapped": ("formula", "seen", reread([1, 0, 3, 2, 5, 4])),
         "J read without the force": ("formula", "contract", forceless),
+        "J's third reading taken as the unit": ("formula", "contract", thirdless),
         "the clocks' read off its factor": ("formula", "read", unfactored),
         "the clocks found by their place": ("formula", "read", placed),
         "the teeth without their rest": ("formula", "weight", lambda g, c, a: read(c, a)),
@@ -537,7 +540,8 @@ def kept(each_end=False, moving=False, sourced=False):
     index = [
         rng.integers(0, high, size=terms[0]).astype(np.intp) for high in (PLANES * 2, PLANES * 2, 2)
     ]
-    plan = Plan(index[0], index[1], draw(rng, -9, 10, terms[1]), index[2])
+    unit = np.repeat(np.intp(PLANES * 2), terms[0])  # J squares the gears: its third reading the unit
+    plan = Plan(index[0], index[1], unit, draw(rng, -9, 10, terms[1]), index[2])
     state = State(
         *(draw(rng, -(1 << 10), 1 << 10, (2, n)) if sourced else frame.wide(rng, (2, n)) for _ in "ab"),
         draw(rng, 0, 1 << 20, (2, n)) % teeth[0],
@@ -578,7 +582,7 @@ def test_the_engines_records_hold_their_fields_in_order():
     assert Gearing._fields == ("rest", "stretch", "kick", "drive")
     assert Layout._fields == ("nb", "spokes", "meshes", "grip", "gearing", "plan", "clock", "stretch")
     assert Read._fields == ("first", "factor", "target")
-    assert Plan._fields == ("first", "second", "factor", "target")
+    assert Plan._fields == ("first", "second", "third", "factor", "target")
 
 
 def test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds():

@@ -118,7 +118,7 @@ class Loaded(NamedTuple):
     """What the load makes of the universe and the setting: the trains' rows, J's plan, the state laid."""
 
     trains: Trains
-    plan: tuple[Z, Z, Z, Z]
+    plan: tuple[Z, Z, Z, Z, Z]  # J's plan: three readings, the factor and the target per term
     state: tuple[Z, ...]
 
 
@@ -130,7 +130,7 @@ def load(
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
     none = np.empty(0, dtype=np.intp)
     state, laid = lay(setting.get("gears", []), trains, sites)
-    return Loaded(trains, (none, none, none.astype(object), none), state), laid
+    return Loaded(trains, (none, none, none, none.astype(object), none), state), laid
 
 
 def geared(

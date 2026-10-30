@@ -15,10 +15,11 @@ class State(NamedTuple):
 
 
 class Plan(NamedTuple):
-    """J's terms over the kinds' tables, laid at load: per term its two readings, its whole factor, its target; none until the coupling family's one plan (G3)."""
+    """J's terms over the kinds' tables, laid at load: per term its three readings, the unit where it reads fewer, its whole factor, its target; none until the coupling family's one plan (G3)."""
 
     first: Z  # (terms,): the row of the readings that enters first
     second: Z  # (terms,): the row that enters second
+    third: Z  # (terms,): the row that enters third: the unit, the readings' last row, where a term reads two or fewer
     factor: (
         Z  # (terms,): the strength times the table's entry, Python integers, so that no product wraps
     )
