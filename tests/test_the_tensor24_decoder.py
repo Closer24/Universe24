@@ -1,12 +1,12 @@
 """Tensor24's decoder: a record and its ledger read under the schema's rules, each broken one not read with its own cause
-and nothing raised; row 15's two readings; each law failing on its own mutant; schema 1.3's click lines read."""
+and nothing raised; row 15's two readings; each law failing on its own mutant; schema 1.3's click lines read, listed and counted."""
 
 import json
 import subprocess
 import sys
 from pathlib import Path
 
-from tensor24.decoder import books, records
+from tensor24.decoder import books, clicks, records
 from tensor24.record import schema
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
@@ -377,8 +377,8 @@ def test_the_books_close_where_they_hold_the_click_and_read_not_shown_or_not_rea
             LACKING[name],
             {**TAKE, "site": 1},
         ]  # beside a click whose books close, the books unnamed
-        for clicks in ([LACKING[name]], beside):
-            verdict = books.row_15(read([H, *clicks, E], tmp_path), GOOD)
+        for some in ([LACKING[name]], beside):
+            verdict = books.row_15(read([H, *some, E], tmp_path), GOOD)
             assert verdict["kind"] == "NOT READ" and verdict["cause"] == cause
     opened = click(1, 1, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
     held = ledger(1, {0: (0, 8), 1: (10, 2)})
@@ -548,3 +548,25 @@ def test_a_record_of_schema_1_3_reads_its_click_lines_and_refuses_a_click_or_a_c
     assert cause_of([{**THIRTEEN, "trains": [halved[1]]}, E], tmp_path) == LINE1.format("trains")
     whole_ = {**GIVE, "kind": "whole"}
     assert cause_of([THIRTEEN, whole_, E], tmp_path) == "line 2 holds the whole click's q -1, below 1"
+
+
+def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdict_and_the_tool_prints_them(
+    tmp_path,
+):
+    """Yes: on the 1.3 record the lines list in the schema's order; per train and per Node-clock the lines, the given,
+    the taken and the net; the places where the sum of q over the trains is not 0 counted; the tool prints the list
+    and the counts after the rows and raises nothing. No: a give with no take at its round counts its place as not 0."""
+    held = clicks.counted(read([THIRTEEN, GIVE, TOOK, E], tmp_path))
+    assert held.lines == [GIVE, TOOK] and held.sites == {0: clicks.Tally(1 + 1, 1, 1, 0)}
+    assert held.trains == {0: clicks.Tally(1, 1, 0, -1), 1: clicks.Tally(1, 0, 1, 1)}
+    assert (held.places, held.nonzero) == (1, 0)
+    more = clicks.counted(read([THIRTEEN, GIVE, TOOK, {**GIVE, "round": 1 + 1}, E], tmp_path))
+    twice = clicks.Tally(1 + 1, 1 + 1, 0, -(1 + 1))
+    assert (more.places, more.nonzero) == (1 + 1, 1) and more.trains[0] == twice
+    run = tool(tmp_path / "record.jsonl")  # the record read last, as read() wrote it
+    assert run.returncode == 0 and run.stderr == "" and run.stdout.startswith("row 15")
+    lines = run.stdout.splitlines()
+    assert "the click lines: 3" in lines and "  round 2, site 0, train 0: q -1, tooth [3, 6]" in lines
+    assert "train 0: 2 lines, given 2, taken 0, net -2" in lines
+    assert "site 0: 3 lines, given 2, taken 1, net -1" in lines
+    assert lines[-1] == "the sum of q over the trains at a round and site: not 0 at 1 of 2 places"
