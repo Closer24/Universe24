@@ -43,7 +43,7 @@ def conj(z):
 
 def board(wall=True):
     n = len(SITES)
-    eps = [1 - 2 * (rng.random() < 0.5) if wall else 1 for _ in range(n)]
+    eps = [1 - 2 * (rng.randrange(2) == 0) if wall else 1 for _ in range(n)]
     A = [rng.randint(-50, 50) for _ in range(n)]
     g = {}
     for k in range(n):

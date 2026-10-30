@@ -27,6 +27,14 @@ from fractions import Fraction
 from itertools import product
 
 
+
+def decimal5(x):
+    """A fraction to five places by long division in whole numbers, rounded half up on its magnitude."""
+    n, d = abs(x.numerator), x.denominator
+    q = (2 * n * 100000 + d) // (2 * d)
+    sign = "-" if x < 0 else ""
+    return f"{sign}{q // 100000}.{q % 100000:05d}"
+
 def nonneg(n: int) -> int:
     """The one whether: 1 where n is at least 0 and 0 below, the quotient of n by n n + 1, plus 1."""
     return n // (n * n + 1) + 1
@@ -150,7 +158,7 @@ def part_two() -> list[str]:
         margin_a = {k: Fraction(v[0] + v[1], sum(v)) for k, v in hits.items()}
         margin_b = {k: Fraction(v[0] + v[2], sum(v)) for k, v in hits.items()}
         out.append(
-            f"  {name} (A clicks at tick {t_a}, B at {t_b}): S = {s_value} = {float(s_value):.5f}"
+            f"  {name} (A clicks at tick {t_a}, B at {t_b}): S = {s_value} = {decimal5(s_value)}"
         )
         out.append(
             "    E(a,b), E(a,b'), E(a',b), E(a',b') = "

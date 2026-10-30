@@ -43,7 +43,7 @@ def cmul(x, y):
 
 def cdiv(x, y):
     n = y[0] * y[0] + y[1] * y[1]
-    return ((x[0] * y[0] + x[1] * y[1]) / n, (x[1] * y[0] - x[0] * y[1]) / n)
+    return (Fraction(x[0] * y[0] + x[1] * y[1], n), Fraction(x[1] * y[0] - x[0] * y[1], n))
 
 
 def c(re, im=0):

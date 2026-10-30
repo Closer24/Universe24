@@ -91,7 +91,7 @@ def conditional(law: dict, who: int, known: dict[int, int]) -> dict[int, Fractio
     total = sum(match.values())
     out = {0: Fraction(0), 1: Fraction(0)}
     for o, p in match.items():
-        out[o[who]] += p / total if total else Fraction(0)
+        out[o[who]] += Fraction(p, total) if total else Fraction(0)
     return out
 
 
