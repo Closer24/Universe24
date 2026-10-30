@@ -1,7 +1,9 @@
 """G3, term 6 on the head's gear for E, for a family of two parts, and the held count's own E potential: whole numbers.
 
 (e) an E family under four pushes, its two modes laid apart, (1, 1) and (1, -1) in the head's oblique basis
-    (e1 - e2, e2 - e3), whose form is G = [[2, -1], [-1, 2]], sign changes over 4,000 rounds at a swing of 10^5:
+    (e1 - e2, e2 - e3), whose form is G = [[2, -1], [-1, 2]], sign changes over 4,000 rounds at a swing of 10^5, against
+    4,000 omega / pi from 4 sin^2 (omega / 2) = spring / W computed in whole numbers (the sine by its series, pi by
+    Machin's formula):
     (i) the square's three diagonal slots s = (a, b - a, -b), c = s . s, push -g k s - lam c s;
     (ii) the oblique rows with the node page's push as written, -g k x - lam c x, c = x^T G x (the square's push
          carried back by s = B x, B^T B = G);
@@ -15,7 +17,10 @@
     cubic f(e) = (G e) . C(e, e) one of them; the lines where f is extreme at a fixed size, read off the Lagrange form
     det[grad f, G e]; at gamma = 0 the five-leg term (e^T G e) f alone, on every whole point of one size, its least on
     a line; and the E part of a T1 family's spring from C[E, T1 -> T1]: two of its three entries alike exactly on the
-    three lines, the sets compared point by point.
+    three lines, the sets compared point by point; at a fixed size the direction enters through f alone, so every term
+    of higher power in f can move the least off the lines: on the 162 whole points of the size 3 x 1729^2,
+    a f + b f^2 (six legs, seven with the A1 part's k_A1 f^2), a f + (e^T G e) f^2 (eight) and a f + f^3 (nine), each
+    with a three-leg term, put the least off the lines.
 
 Usage: python3 -I g3_kinds_and_parts.py <src of tensor24-review at 9751f91c1>
 """
@@ -85,7 +90,50 @@ def run(form, laid, lam, rounds=4000, watch=0):
     return seen, trace, None
 
 
-print("(e) sign changes over 4,000 rounds at a swing of 10^5, lam the least whole bound; spring g n gives 63.7, 3 g n 110.3")
+
+
+SCALE = 10**40
+
+
+def arctan_inverse(m):
+    """arctan(1 / m) times SCALE by its series, whole numbers."""
+    total, power, j = 0, carry(SCALE, m, 0)[0], 0
+    while power:
+        term = carry(power, 2 * j + 1, 0)[0]
+        total += -term if j % 2 else term
+        power = carry(power, m * m, 0)[0]
+        j += 1
+    return total
+
+
+PI = 16 * arctan_inverse(5) - 4 * arctan_inverse(239)  # Machin's formula, pi times SCALE
+
+
+def sine(x):
+    """sin(x / SCALE) times SCALE, by its series."""
+    total, term, j = 0, x, 0
+    while term:
+        total += -term if j % 2 else term
+        j += 1
+        term = carry(carry(term * x, SCALE, 0)[0] * x, SCALE * (2 * j) * (2 * j + 1), 0)[0]
+    return total
+
+
+def beats_expected(spring, rounds=4000):
+    """rounds omega / pi for 4 sin^2 (omega / 2) = spring / W, to one place (hundredths by bisection, then rounded)."""
+    lo, hi = 0, 100 * rounds
+    while hi - lo > 1:
+        mid = carry(lo + hi, 2, 0)[0]
+        s = sine(carry(PI * mid, 200 * rounds, 0)[0])
+        if 4 * W * s * s <= spring * SCALE * SCALE:
+            lo = mid
+        else:
+            hi = mid
+    whole, tenth = carry(carry(lo + 5, 10, 0)[0], 10, 0)
+    return f"{whole}.{tenth}"
+
+print(f"(e) sign changes over 4,000 rounds at a swing of 10^5, lam the least whole bound; spring g n gives"
+      f" {beats_expected(g * n)}, 3 g n {beats_expected(3 * g * n)} (computed)")
 for form, label in (("square", "(i) the square's slots"), ("page", "(ii) the page's push, c through G"),
                     ("gradient", "(iii) -g k G x on unit teeth"), ("three", "(iv) through 3 G^-1")):
     s11, t11, _ = run(form, (10**5, 10**5), least)
@@ -250,3 +298,53 @@ for sign in (1, -1):
     five = min(shell, key=lambda e: sign * 2 * size * f_act(list(e)))
     print(f"    gamma = 0 with the five-leg term {'+' if sign > 0 else '-'}(e^T G e) f alone, on the {len(shell)} whole points"
           f" of one size: its least at {five}, on a line: {(five[0] + five[1]) * (2 * five[0] - five[1]) * (five[0] - 2 * five[1]) == 0}")
+
+
+def root(m):
+    """The largest r with r^2 <= m, by bisection."""
+    lo, hi = 0, m + 1
+    while hi - lo > 1:
+        mid = carry(lo + hi, 2, 0)[0]
+        if mid * mid <= m:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+
+def shell_of(m):
+    """Every whole point with e1^2 - e1 e2 + e2^2 = 3 m^2 (half of e^T G e): e2 = (e1 +- root(12 m^2 - 3 e1^2)) / 2."""
+    size, out = 3 * m * m, set()
+    for p in range(-2 * m - 2, 2 * m + 3):
+        disc = 4 * size - 3 * p * p
+        if disc < 0:
+            continue
+        r = root(disc)
+        if r * r != disc:
+            continue
+        for twice in (p + r, p - r):
+            q, rest = carry(twice, 2, 0)
+            if rest == 0:
+                out.add((p, q))
+    return sorted(out)
+
+
+def line(e):
+    return (e[0] + e[1]) * (2 * e[0] - e[1]) * (e[0] - 2 * e[1]) == 0
+
+
+big = shell_of(1729)
+big_size = 3 * 1729 * 1729
+fmax = max(abs(f_act(list(e))) for e in big)
+cases = (
+    ("f_max f + f^2 (six legs; seven with k_A1 f^2)", lambda v: fmax * v + v * v),
+    ("3 f_max f + 3 (e^T G e) f^2 (eight legs)", lambda v: 3 * fmax * v + 3 * 2 * big_size * v * v),
+    ("-27 f_max^2 f + 16 f^3 (nine legs)", lambda v: -27 * fmax * fmax * v + 16 * v * v * v),
+)
+outs = []
+for label, form in cases:
+    best = min(big, key=lambda e: form(f_act(list(e))))
+    outs.append(f"{label}: least at {best}, f there {carry(1000 * f_act(list(best)), fmax, 0)[0]} thousandths of f_max, on"
+                f" a line: {line(best)}")
+print(f"    a term of higher power in f with a three-leg term, on the {len(big)} whole points of the size 3 x 1729^2"
+      f" (f_max {fmax}): " + "; ".join(outs))

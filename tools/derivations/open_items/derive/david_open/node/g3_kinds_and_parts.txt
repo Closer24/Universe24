@@ -1,4 +1,4 @@
-(e) sign changes over 4,000 rounds at a swing of 10^5, lam the least whole bound; spring g n gives 63.7, 3 g n 110.3
+(e) sign changes over 4,000 rounds at a swing of 10^5, lam the least whole bound; spring g n gives 63.7, 3 g n 110.3 (computed)
     (i) the square's slots: mode (1, 1) 64, mode (1, -1) 64; the slots' largest trace 59
     (ii) the page's push, c through G: mode (1, 1) 64, mode (1, -1) 64
     (iii) -g k G x on unit teeth: mode (1, 1) 64, mode (1, -1) 110
@@ -21,3 +21,4 @@
     on the 168 whole points off 0 with |e| up to 6: three different springs on 144, the points off the three lines 144; the two sets are one: True
     gamma = 0 with the five-leg term +(e^T G e) f alone, on the 18 whole points of one size: its least at (-462, -231), on a line: True
     gamma = 0 with the five-leg term -(e^T G e) f alone, on the 18 whole points of one size: its least at (-231, -462), on a line: True
+    a term of higher power in f with a three-leg term, on the 162 whole points of the size 3 x 1729^2 (f_max 93037382802): f_max f + f^2 (six legs; seven with k_A1 f^2): least at (-3266, -2617), f there -537 thousandths of f_max, on a line: False; 3 f_max f + 3 (e^T G e) f^2 (eight legs): least at (-3059, -2926), f there -116 thousandths of f_max, on a line: False; -27 f_max^2 f + 16 f^3 (nine legs): least at (-2366, -3367), f there 771 thousandths of f_max, on a line: False

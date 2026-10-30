@@ -1,0 +1,13 @@
+(m1) the held boson laid at n + n / 2 at every Node-clock, x laid 10^6 at one; per window of 500 rounds the largest |k - n| and the largest |x|:
+    kappa 25 g n, a ring of 512: 500: 507048, 662866; 1000: 505244, 222246; 1500: 504956, 228612; 2000: 503406, 482575; 2500: 482943, 1243206; 3000: 285644, 1516977; 3500: 493100, 1241571; 4000: 511118, 503351
+      at round 3,000 x changes sign 46 times around the ring; the decay's wave number p* gives 45.9
+    kappa 2 g n, a ring of 512: 500: 509992, 662291; 1000: 504060, 222965; 1500: 503775, 172748; 2000: 503472, 167061; 2500: 503558, 163600; 3000: 503356, 167948; 3500: 503476, 164198; 4000: 503249, 165824
+    kappa 25 g n, one Node-clock: 500: 545850, 1000460; 1000: 545737, 1000466; 1500: 545743, 1000444; 2000: 545835, 1000449; 2500: 545541, 1000432; 3000: 545833, 1000372; 3500: 545698, 1000363; 4000: 545721, 1000319
+(m2) a ring of 128 at 25 g n, every x laid at A (one 1,000 counts more), every k on its valley; per window of 500 rounds the spread of the Node-clocks' largest |x| in per mille of their mean (the least to the most):
+    A = 100000: 500: 3 (100027 to 100414); 1000: 1 (100061 to 100198); 1500: 1 (100057 to 100253); 2000: 1 (100047 to 100242); 2500: 1 (100056 to 100212); 3000: 1 (100057 to 100244); 3500: 2 (100045 to 100265); 4000: 1 (100026 to 100202)
+    A = 20000000: 500: 0 (19949999 to 19950624); 1000: 0 (20002502 to 20002766); 1500: 0 (20001926 to 20003663); 2000: 1 (19988172 to 20012794); 2500: 23 (19883809 to 20360622); 3000: 234 (19393864 to 24319717); 3500: 969 (13262492 to 32499424); 4000: 726 (14395709 to 29164104)
+(m3) the hat, mu = W div 32 and nu = mu div n^2: its spring at the wells 2 mu = 5686071284667145875000 (W div 16 less 0); the least lam 4548858; one Node-clock
+    the clock's state, x laid 10^5: the largest |x| 100037, |k| 1000258; sign changes 64 in 4,000 rounds
+    the mirror well, k laid at -n and x at 10^3: over 20,000 rounds the largest |x| 12905137, |k| 2069655: bounded
+    the mirror condensate k* = -1732050 (1732 thousandths of n), x* = 9306045: laid 10^5 off it, sign changes of x - x* in 4,000 rounds 102 (the largest |x| 9406099, |k| 1751243)
+    two rows on the condensate's circle, (9305508, 100000): sign changes of the first about x* and of the second about 0 in 4,000 rounds [0, 0]; the largest |x| 9305534, |k| 1732066
