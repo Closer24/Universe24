@@ -12,7 +12,7 @@ Four checks, each by a table the script holds:
 A script cannot prove that no two sentences of prose disagree: it reads what its tables name. Each contradiction a reader finds enters a table and is then found at every later run.
 The known list (scribe_law_check_known.json) holds the old engine's rows that stand until the re-cut (the owner's answer of 2026-10-30, 04:5x UTC); a finding beyond it refuses.
 
-The same PAIRS table reads the live documents with --docs (README.md, llms.txt and the documents of docs/ but the law), each pair against the law's governing line, a hit above the document's ceiling
+The same PAIRS table reads the live documents with --docs (README.md, llms.txt and docs/ARCHITECTURE.md), each pair against the law's governing line, a hit above the document's ceiling
 (scribe_law_check_docs_known.json) refusing; the table grows with every contradiction a reader finds (the four readers of 2026-10-30, 08:3x UTC, added P14 to P17).
 
 With --arch ROOT it reads the architecture document against the tree at ROOT (the Boss's head): every path of a part's Home line and every test of its Test line must be there (the older form, a trace table under the heading "The trace table", is read as before).
@@ -34,7 +34,7 @@ KNOWN = HERE / "scribe_law_check_known.json"
 DOCS_KNOWN = HERE / "scribe_law_check_docs_known.json"
 ROOT = HERE.parent.parent.parent
 ARCH = ROOT / "docs" / "ARCHITECTURE.md"
-DOCS = ("README.md", "llms.txt", "docs/ARCHITECTURE.md", "docs/BIG_PICTURE.md", "docs/ENGINE.md", "docs/CLOCK_WORDS.md", "docs/FURTHER_RESEARCH.md", "docs/FOLLOW_UP_PAPERS.md", "docs/UNIVERSE24.md", "docs/HIGHLIGHTS.md")
+DOCS = ("README.md", "llms.txt", "docs/ARCHITECTURE.md")
 EXPECTED_LINES = 1960  # the law's fixed length (the keeper's tamper check: an edit holds its new text in its own line)
 POSTULATES = 7  # the law has Postulates 1 to 7
 CORE = 110  # the law's new core: the preface, the postulates and the decisions of Tensor24 stand in lines 1 to 110

@@ -7,7 +7,7 @@ read from git, so no baseline file is kept: a pull request may lower a count, ne
     request that adds tests offsets them by deletions (the model owner, 2026-09-27); a test
     file above 600 lines holds no more than at the merge base, and a new one stays under.
     A test the Boss gives room by name (ROOM: the test, its lines and the reason, recorded
-    here and in ENGINE.md section 9) adds that room to the base's size while it stands with
+    here) adds that room to the base's size while it stands with
     at most those lines; nothing else grows the budget. A file the Boss gives a budget (ROOM:
     the file alone, its lines and the reason; the owner's word of 2026-10-29, 02:5x UTC) takes
     room as a test does, grows within it with no new entry, and is refused above it.
@@ -53,7 +53,7 @@ TENSOR24_LOAD = "Tensor24's load, stage 6 of the build the owner approved at 16:
 TENSOR24_ENGINE = "Tensor24's engine, stages 2 to 7a of the build the owner approved at 16:0x UTC on 2026-10-28: the node's one act in three tests on the owner's words of 2026-10-30, 09:2x UTC (\"what is generic, test only it, and then the whole\") and 10:2x UTC (\"why so many tests for so simple a system, one act of a generic node\"): J by the vertex law against its potential alone; the act at its coefficients against one naive model with the board and its Meshes, one Mesh's reach, purity, the trains' order and the 24's turns, here and in fresh interpreters; and the run back as the act on the mirrored state, by a fresh engine and in an interpreter that never stepped; every mutant failing its law."
 TENSOR24_DECODER = "Tensor24's decoder, Animate's, on the build the owner approved at 16:0x UTC on 2026-10-28 (\"Approved, build it. You on the engine. Animate on the decoder.\"): every reading of the click record against the plan and the schema, NOT READ with its cause where the record cannot support it, NOT SHOWN where it fails, the tool naming every cause it meets and raising on none, each test failing on its own mutant."
 TENSOR24_DECODER_CASES = "Tensor24's decoder's second test file, Animate's, on the build the owner approved at 16:0x UTC on 2026-10-28, its budget on Animate's word under decision 26 (the Boss's 6487025699 on #2187: a second file for the new tests takes its own budget on your word): the twelfth hostile review's cases, each read as the plan, the schema and the decoder's own comments say and nothing raised (the values read where the line's record names them, the names in ASCII, the board by its sides, the books per train, the verdict's order with the gap named beside the open books, the ticks at count 0, the tool over clicks at two Node-clocks), each failing on the reader's mutant it was written for."
-ROOM = {  # the room given by name: the test or the file, its lines and the reason (ENGINE.md, section 9)
+ROOM = {  # the room given by name: the test or the file, its lines and the reason
     "tests/frame.py": (265, TENSOR24_FRAME),
     "tests/test_the_tensor24_engine.py": (570, TENSOR24_ENGINE),
     "tests/test_the_tensor24_algebra.py": (80, TENSOR24_ALGEBRA),

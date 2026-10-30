@@ -37,14 +37,11 @@ A world is three files (`examples/tensor24/`): the universe (the integers den, f
 
 ## The documents
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): the one document that tells the system and the one the work runs from: the parts, the Node-clock first, each told by the clock, the board and the clicks, with its algebra, home, test and status; who may import whom.
-- [docs/ALGEBRA.md](docs/ALGEBRA.md): the law. [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md): the decisions in force, the owner's words with their dates.
-- [docs/ENGINE.md](docs/ENGINE.md): the engine's document, the description of the system and the tests of one Node-clock. [docs/BIG_PICTURE.md](docs/BIG_PICTURE.md): the build in clocks, algebra and physics.
-- [docs/UNIVERSE24.md](docs/UNIVERSE24.md): what the one run must show, its gates, and the ledger of the derivations. [docs/CLOCK_WORDS.md](docs/CLOCK_WORDS.md): every clock word defined once.
-- [docs/FURTHER_RESEARCH.md](docs/FURTHER_RESEARCH.md): what does not match nature, by name. [docs/FOLLOW_UP_PAPERS.md](docs/FOLLOW_UP_PAPERS.md): the papers proposed next. [CHANGELOG.md](CHANGELOG.md): what changed.
-- `tools/derivations/open_items/`: the Node-clock's terms (`TENSOR24_NODE.md`) and the stages (`TENSOR24_PLAN.md`), the decoder's page (`Decoder4D2Clicks3D.md`), the gate (`SCRIBE-GATE-1.md`) and the derivations, two blind hands per question with their numbers; the law's text is the one place that is current.
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): the one document that tells the system and the one the work runs from: the parts, the Node-clock first, each told by the clock, the board and the clicks, with its algebra, home, test and status; who may import whom; the glossary.
+- [docs/ALGEBRA.md](docs/ALGEBRA.md): the law: the postulates at its head, the decisions in force, one bold line per rule, each clause quoting the owner's words it stands on.
+- [CHANGELOG.md](CHANGELOG.md): what changed since the new engine. `tools/derivations/open_items/`: the gate (`SCRIBE-GATE-1.md`), the keeper's records (`SCRIBE-OWNER-WORDS.md`, `SCRIBE-LAW-AUDIT-2.md`) and the derivations, two blind hands per question with their numbers; the law's text is the one place that is current.
 
-The words the law uses are defined in [docs/CLOCK_WORDS.md](docs/CLOCK_WORDS.md) and in the law, each in its own place.
+The earlier documents (the engine's document, the big picture, the clock words, further research, follow-up papers, the decisions in force and the ledger) left the tree on 2026-10-30, the owner's word: one clean main, the architecture file and the algebra file; they stand in git at scribe-5 3b7fd1bd2.
 
 ## The papers
 
@@ -64,11 +61,11 @@ sh papers/spacetime_events/build.sh
 
 ## The law, the decisions and the derivations
 
-[docs/ALGEBRA.md](docs/ALGEBRA.md) is the law of the lattice; [docs/HIGHLIGHTS.md](docs/HIGHLIGHTS.md) holds the decisions in force, the owner's words verbatim in translation with their dates. [tools/derivations/](tools/derivations/) holds the derivations: the hands' folders under `open_items/` (two blind hands on one question, a comparison by the Boss at each landing, the sentence that enters the law written verbatim from it), the conservation kit under `conservations/`, the toys under `toys/`; the documents' gates of `tools/documents_gates.py`, run by `tools/check.py`, hold the documents to the tree.
+[docs/ALGEBRA.md](docs/ALGEBRA.md) is the law of the lattice and holds the decisions in force, each clause quoting the owner's words it stands on. [tools/derivations/](tools/derivations/) holds the derivations: the hands' folders under `open_items/` (two blind hands on one question, a comparison by the Boss at each landing, the sentence that enters the law written verbatim from it), the conservation kit under `conservations/`, the toys under `toys/`; the documents' gates of `tools/documents_gates.py`, run by `tools/check.py`, hold the documents to the tree.
 
 ## Further research
 
-What does not match nature, and the open items with where to start, stand by name in [docs/FURTHER_RESEARCH.md](docs/FURTHER_RESEARCH.md) and in the ledger of [docs/UNIVERSE24.md](docs/UNIVERSE24.md), section 4. A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
+What is open stands by name in section 5 of [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). A contribution that closes one starts from the law's line, as [CONTRIBUTING.md](CONTRIBUTING.md) says.
 
 ## Contributing
 
