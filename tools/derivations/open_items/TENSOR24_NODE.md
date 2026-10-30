@@ -82,7 +82,7 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
 | 8 | the kick K | the drive's quotient | K = T_k s q_d; s = 1 | BUILT at T_k = 1 |
 | 9 | the volume's notch | the metric family's own slots | the board's swing and its top (Postulate 4), the metric family's own; it pulls no other gear's count, so it gives no species a rest beat | OPEN (G2): see 4.3 |
 | 10 | the shift and shears | the 0i and jk slots | read by the gradient's and the pull's contractions (frame dragging, waves) | OPEN (G4): see 4.4 |
-| 11 | the whole click | the drive's carry of the swept area | q quanta click on the area the coupling moves in a round, the key the teeth, the remainder kept in r_d: the record's how much and when | DERIVED (G5): see 4.5 |
+| 11 | the whole click | the drive's carry of the swept area | q quanta click on the area the coupling moves in a round, summed over the train's rows through the A1 table, the key the teeth, the remainder kept in r_d: the record's how much and when | DERIVED (G5): see 4.5 |
 | 12 | the split click | the parts' sizes sigma | the draw by a rank count over the sizes, after the carry whose quantum it places; a full slot refuses after the draw (decision 40 (b)) | OPEN (G5): see 4.5 |
 | 13 | the frozen clock and the horizon | the teeth and the drive | a clock freezes where its teeth outgrow its drive and the carry never fires: no hold and no restore of its own | OPEN (G2): see 4.6 |
 
@@ -205,8 +205,10 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
 - **A click credits a train's whole winding, never one of its rows** (lines 468 and 1556, and the schema). A click that
   takes one row would be a new rule, the owner's (Sofer's recommendation: no, since it would end confinement). One drive
   for every row (term 7) does not by itself give that winding (Animate's readers, 6518153643): a T1 train has no linear
-  invariant (its 24 matrices sum to 0), so its winding is an A1 contraction of its rows, quadratic for T1, and one carry
-  on it is no term of the act at the head. OPEN at G5: the winding's form on the act.
+  invariant (its 24 matrices sum to 0), so its winding is an A1 contraction of its rows, quadratic for T1. DERIVED in
+  form (David, 6518474832): the area the drive reads is the swept area summed over the train's rows through the A1
+  table, the dot of T1 with T1 as term 6's c, one quadratic invariant; term 11's drive carries it once a round at the
+  key, one carry for the train however many rows it has. Owed in code at G5.
 - **The whole click** (David, 6516852295; CHECKED on the head's gear, toys-5 b107499b9): counted on a two-part hand's
   swept area, Omega = re p_im - im p_re, with p = W (a - b) + r each part's stride and kept tooth, the wind over the
   frequency, the step's own invariant. The drive reads the area the coupling moves in a round, its teeth the key, the
