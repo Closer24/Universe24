@@ -1,0 +1,36 @@
+Uncertainty on Tensor24's board: a place is a Node-clock, a motion a step along a Mesh; exact, whole numbers only, no draw
+
+Part 1: the board's facts, on the engine at main (examples/tensor24)
+  1. The Meshes: 64 Node-clocks on a board 4 by 4 by 4 that wraps; each reads six neighbours,
+     all different: True; each Mesh read both ways: True; every neighbour one Mesh away, across the wrap too: True
+  2. One gear laid on the example board: row 0 at Node-clock 0, its now slot 1 and its before slot 0.
+     round 1 touches Node-clocks [0, 1, 3, 4, 12, 16, 48]: the gear's own and its six neighbours [1, 3, 4, 12, 16, 48];
+     the six neighbours' fine teeth all one value: True (every direction alike)
+     over 60 rounds, no Node-clock touched farther than one Mesh a round: True
+  3. Two moments: every round's before slot is the last round's now slot: True; a motion is their difference
+  4. The run back: 60 rounds run back to the laid start, slot for slot: True
+  5. The laid gear's own beat, its now slot round by round: [1, 0, -1, -1, 0, 1], repeating every 6 rounds
+     on the ring of its 6 rounds: rounds held 4, beats held 2;
+     a click at one round: rounds held 1, beats held 6 of 6
+
+Part 2: on a ring, every wave of -1, 0 and 1; a motion's turn-sum is 0 or not, exactly
+  ring of  2:     8 waves, the least of nodes times motions 2 (the ring's nodes 2), 8 waves at it
+  ring of  3:    26 waves, the least of nodes times motions 3 (the ring's nodes 3), 8 waves at it
+  ring of  4:    80 waves, the least of nodes times motions 4 (the ring's nodes 4), 20 waves at it
+  ring of  5:   242 waves, the least of nodes times motions 5 (the ring's nodes 5), 12 waves at it
+  ring of  6:   728 waves, the least of nodes times motions 6 (the ring's nodes 6), 32 waves at it
+  ring of  7:  2186 waves, the least of nodes times motions 7 (the ring's nodes 7), 16 waves at it
+  ring of  8:  6560 waves, the least of nodes times motions 8 (the ring's nodes 8), 44 waves at it
+  ring of  9: 19682 waves, the least of nodes times motions 9 (the ring's nodes 9), 26 waves at it
+  ring of 10: 59048 waves, the least of nodes times motions 10 (the ring's nodes 10), 48 waves at it
+
+Part 3: whole classes of waves on three boards, the example's among them
+  board (2, 2, 2): every wave on 1 to 8 Node-clocks with values (-1, 1), 6560 waves; the least of nodes times motions 8 (the board's nodes 8), 256 at it
+  board (2, 3, 4): every wave on 1 to 3 Node-clocks with values (-1, 1), 17344 waves; the least of nodes times motions 24 (the board's nodes 24), 208 at it
+  board (4, 4, 4): every wave on 1 to 2 Node-clocks with values (-2, -1, 1, 2), 32512 waves; the least of nodes times motions 64 (the board's nodes 64), 2048 at it
+  one Node-clock: nodes 1, motions 64, nodes times motions 64 (the board's 64)
+  every other Node-clock on one line: nodes 2, motions 32, nodes times motions 64 (the board's 64)
+  one line: nodes 4, motions 16, nodes times motions 64 (the board's 64)
+  one plane: nodes 16, motions 4, nodes times motions 64 (the board's 64)
+  a wave along z, 1 0 -1 0, on the whole board: nodes 32, motions 2, nodes times motions 64 (the board's 64)
+  the whole board alike: nodes 64, motions 1, nodes times motions 64 (the board's 64)
