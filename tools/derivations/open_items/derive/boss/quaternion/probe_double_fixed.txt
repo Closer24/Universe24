@@ -1,0 +1,37 @@
+PROBE DOUBLE: the double Node-clock (now, before) of a two-part hand as one quaternion, on the edge act and the act as built
+a lone Node-clock, rows 12 (light re, im = rows 0, 1; the square rows 2..11), W = 90977140554674334000000 = 6 den Gamma^2 standing, grip 15162856759112389000000
+the hand at the lay: q = (re_now, im_now, re_before, im_before) = (-30, -8, -7, 5); its edge tooth (re, im) = (-75814283795561945000000, 30325713518224778000000) in the dial 2 W = 181954281109348668000000
+
+== k = 2 W: the quarter mode, order 4, on the edge act (edge_tick)
+   the hand (its four gears and its two teeth) returns to the lay after 4 rounds (the square's free rows drift, so the whole state does not); the hand's tooth still: True; q+ == q j (the right multiplication by j) every round: True; the wind v^2 - t v u + u^2 kept: True; N(q) = |now|^2 + |before|^2 kept: True
+   the phase (re, im) -> (-im, re) on both slots is i q: True; it commutes with the edge act (turned run == run turned, the tooth negated on the negated row): 12 of 12 rounds
+   the mirror's swap of the slots is (i q i^-1) j: True; its tooth negated: True; 12 edge unticks return the lay: True
+   q (1 - j) = (-37, -3, 23, 13): its 1, i slots the sum now + before, its j, k slots before - now = (23, 13): the velocity a - b = (-23, -13) negated; the edge's dividend reads D_in (a - b) with D_in = W(b) + W(a) = 181954281109348668000000
+   the act as built on the same lay (teeth drawn in [0, W)): the hand returns after 4 rounds; q+ == q j every round: True
+
+== k = W: order 6, on the edge act (edge_tick)
+   the hand (its four gears and its two teeth) returns to the lay after 6 rounds (the square's free rows drift, so the whole state does not); the hand's tooth still: True; q+ == q j (the right multiplication by j) every round: False; the wind v^2 - t v u + u^2 kept: True; N(q) = |now|^2 + |before|^2 kept: False
+   the phase (re, im) -> (-im, re) on both slots is i q: True; it commutes with the edge act (turned run == run turned, the tooth negated on the negated row): 12 of 12 rounds
+   the mirror's swap of the slots is (i q i^-1) j: True; its tooth negated: True; 12 edge unticks return the lay: True
+   q (1 - j) = (-37, -3, 23, 13): its 1, i slots the sum now + before, its j, k slots before - now = (23, 13): the velocity a - b = (-23, -13) negated; the edge's dividend reads D_in (a - b) with D_in = W(b) + W(a) = 181954281109348668000000
+   the act as built on the same lay (teeth drawn in [0, W)): the hand returns after 6 rounds; q+ == q j every round: False
+
+== k = 3 W: order 3, on the edge act (edge_tick)
+   the hand (its four gears and its two teeth) returns to the lay after 3 rounds (the square's free rows drift, so the whole state does not); the hand's tooth still: True; q+ == q j (the right multiplication by j) every round: False; the wind v^2 - t v u + u^2 kept: True; N(q) = |now|^2 + |before|^2 kept: False
+   the phase (re, im) -> (-im, re) on both slots is i q: True; it commutes with the edge act (turned run == run turned, the tooth negated on the negated row): 12 of 12 rounds
+   the mirror's swap of the slots is (i q i^-1) j: True; its tooth negated: True; 12 edge unticks return the lay: True
+   q (1 - j) = (-37, -3, 23, 13): its 1, i slots the sum now + before, its j, k slots before - now = (23, 13): the velocity a - b = (-23, -13) negated; the edge's dividend reads D_in (a - b) with D_in = W(b) + W(a) = 181954281109348668000000
+   the act as built on the same lay (teeth drawn in [0, W)): the hand returns after 3 rounds; q+ == q j every round: False
+
+== k = 2 W + 2 (W does not divide k) on the edge act: the hand's tooth moves within 6 rounds: True: the step is no turn of any ring; the pair is no quaternion unit's image
+
+== the quarter mode on a cube of side 3 (the Meshes pull): q+ == q j site by site
+   the light hand drawn by site (F pulls): q+ == q j at 0 of 27 Node-clocks
+   the light hand uniform over the board (F = 0): q+ == q j at 27 of 27 Node-clocks
+   so the slot quaternion's unit step is the lone clock's or the uniform hand's: the pull adds its neighbours' difference, as the act says
+
+== the 48 on their 24 pairs +-g with the sign (fam_math's train): the units as gears
+   left and right multiplication by the 48 as 24 x 24 whole matrices: all signed permutations True; L(g) L(h) = L(g h) True; R(g) R(h) = R(h g) True; L and R commute True; -1 is -I: True
+   SUM trace(L)^2 = 1152 (= 48 x (2^2 + 2^2 + 4^2): 2 E1/2 + 2 E5/2 + 4 G3/2, fam_math's constituents); SUM trace(L L) = -384 (fam_math: -384, Kramers)
+   pi(f) = SUM_p f_p g_p: pi(L(g) f) = g pi(f) misses 0 of 1600; pi(R(g) f) = pi(f) g misses 0 of 1600; every basis element of O_48 is one of the 48 units, so pi is onto O_48: True; its kernel has rank 24 - 8 = 16 (the G3/2 part, fam_math)
+   the per-gear carry on the 24 gears, then pi, differs from pi then the carry on the eight coordinates in 100 of 100 draws at W = 7: the quaternion hand is a reading of the 24-gear train, not a carried gear; the train has fixed vectors (orbit sums), which is why the gcd(W, 6) wall does not bind it

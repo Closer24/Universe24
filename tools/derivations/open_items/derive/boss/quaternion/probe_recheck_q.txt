@@ -1,0 +1,12 @@
+PROBE RECHECK Q: the quotient-dependent carry (qa_math item 1) rebuilt: equivariant, odd, its remainder below the divisor's norm, the state map a bijection with the mirror, at W = 5, 6, 9
+
+== W = 5: Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; the largest 4 N(remainder) 80 against 4 N(W) = 100; dividends in [-W, W]^4 with quotient 0: 97 against W^4 = 625 (a cell larger than one dial: the remainder set is no fundamental domain)
+   on the act (lone clock, spring, 6 rounds): turned run == run turned 240 of 240 (24 lifts x 10 starts); the run back by (b, a, -r) returns the lay 10 of 10
+
+== W = 6: Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; the largest 4 N(remainder) 168 against 4 N(W) = 144; dividends in [-W, W]^4 with quotient 0: 145 against W^4 = 1296 (a cell larger than one dial: the remainder set is no fundamental domain)
+   on the act (lone clock, spring, 6 rounds): turned run == run turned 240 of 240 (24 lifts x 10 starts); the run back by (b, a, -r) returns the lay 10 of 10
+
+== W = 9: Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; the largest 4 N(remainder) 252 against 4 N(W) = 324; dividends in [-W, W]^4 with quotient 0: 1057 against W^4 = 6561 (a cell larger than one dial: the remainder set is no fundamental domain)
+   on the act (lone clock, spring, 6 rounds): turned run == run turned 240 of 240 (24 lifts x 10 starts); the run back by (b, a, -r) returns the lay 10 of 10
+
+verdict: the mathematician's item 1 stands. A carry whose remainder depends on the quotient turns with every lift at W = 6 and 9, where no single dial can; it needs a comparison (the least of 24 images), as the reader says.

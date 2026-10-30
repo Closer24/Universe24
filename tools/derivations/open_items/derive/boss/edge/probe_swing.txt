@@ -1,0 +1,51 @@
+The hairspring at W0 = 99856, g = 201: about 140 rounds a beat; the swing's period and size as the physicist's
+
+A. His lay reproduced (the swing from its top): A_end / A_start in permille, 50 swings
+   swing 70 rounds (half the beat), 5 percent: as built 4916; edge 4780; root 1000
+   swing 70 rounds (half the beat), 20 percent: as built 1280481; edge 1418793; root 1000
+   swing 140 rounds (the beat), 5 percent: as built 1000; edge 1000; root 999
+   swing 140 rounds (the beat), 20 percent: as built 965; edge 967; root 1000
+   swing 1400 rounds (ten beats), 5 percent: as built 998; edge 1005; root 1000
+   swing 1400 rounds (ten beats), 20 percent: as built 999; edge 1008; root 999
+
+B. The swing's phase: started 0, 1/4, 1/2 and 3/4 of its period into the cycle (half the beat, 5 percent, 50 swings)
+   phase 0/4: as built 4916; edge 4780; root 1000
+   phase 1/4: as built 6096; edge 164; root 999
+   phase 2/4: as built 4780; edge 4916; root 1000
+   phase 3/4: as built 237; edge 6082; root 1000
+
+B2. The damping phases over longer runs (half the beat, 5 percent): the edge at phase 1/4 and the act as built at 3/4,
+    A over each 50 swings as permille of the first 50 (a parametric instability grows from any phase in the end)
+    edge, phase 1/4: [1000, 141, 560, 4057, 29350]
+    as built, phase 3/4: [1000, 1329, 9624, 69829, 506149]
+    root, phase 1/4, 250 swings: [1000, 1000, 999, 1000, 999]
+
+C. The swing's period detuned off half the beat (5 percent, 50 swings): the resonance curve
+   swing  62 rounds (442 permille of the beat): as built 978; edge 1000; root 1000
+   swing  66 rounds (471 permille of the beat): as built 1120; edge 837; root 1000
+   swing  68 rounds (485 permille of the beat): as built 1100; edge 970; root 999
+   swing  70 rounds (500 permille of the beat): as built 4916; edge 4780; root 1000
+   swing  72 rounds (514 permille of the beat): as built 858; edge 1361; root 1000
+   swing  74 rounds (528 permille of the beat): as built 903; edge 1131; root 1000
+   swing  78 rounds (557 permille of the beat): as built 995; edge 992; root 999
+   swing  46 rounds (328 permille of the beat): as built 997; edge 997; root 1000
+   swing  35 rounds (250 permille of the beat): as built 1000; edge 999; root 999
+
+D. The growth's course, half the beat, 5 percent: the hand's largest |a| over each 10 swings, permille of the first 10
+   as built: [1000, 1376, 2003, 2956, 4371] (on paper exp(e pi / 4) a swing at e = 0.05 is 1480 per 10 swings)
+   edge: [1000, 1360, 1979, 2921, 4322] (on paper exp(e pi / 4) a swing at e = 0.05 is 1480 per 10 swings)
+   root: [1000, 1000, 1000, 1000, 1000] (on paper exp(e pi / 4) a swing at e = 0.05 is 1480 per 10 swings)
+
+E. The root form's variants at half the beat, 20 percent, 50 swings: the remainder kept on a push tooth; rounding half up
+   remainder kept: A_end / A_start 1000
+   remainder kept, 20 percent: 1000
+   rounding half up, 20 percent: 1000
+
+F. A free gear (no spring) at half the beat, 20 percent, 50 swings: v_end / v_start in permille
+   as built: 1000
+   edge: 1000
+   root: 998
+
+G. The fixed point's cells in the owner's half-open convention, D(q) = 2 L + q (the mathematician's minor 1)
+   L = 10: integers of the hull under no q: 1600; under two or more: 109
+   L = 100: integers of the hull under no q: 1600; under two or more: 10099

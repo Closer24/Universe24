@@ -1,0 +1,8 @@
+PROBE RECHECK DOUBLER: the example piece (4 x 4 x 4), light with no spring, the square at 0: the staggered hand and a long wave on the act as built
+   W = 90977140554674334000000 = 6 grip: True; grip 15162856759112389000000
+
+== the staggered hand (-1)^(x+y+z): q+ == q j at every site every round for 12 rounds: True; the teeth still: True; the hand returns after 4 rounds; F / a on the hand's sites: [(-181954281109348668000000, 0)] (in grips: [(-12, 0)])
+
+== the long wave along x: (1, 0, -1, 0) by x: q+ == q j at every site every round for 12 rounds: False; the teeth still: False; the hand returns after None rounds; F / a on the hand's sites: [(-30325713518224778000000, 0)] (in grips: [(-2, 0)])
+
+verdict: the physicist's item 1 stands: the slot quaternion's unit step is the doubler (the staggered mode, F = -12 grip a = -2 W a), the band's top; the long wave is no unit (its teeth move).

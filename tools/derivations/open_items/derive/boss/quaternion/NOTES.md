@@ -192,3 +192,21 @@ r in a set D of coset representatives of L / W L (a fundamental domain; this is 
   the floor root checked by the neighbour square. The answer: YES it fits naturally (the first power of the frame's
   time component, the norm's two factors), and what does not fit is the act as built (ten slots as gears).
 - ONE_ALGEBRA.md: Answer item R, the section "The root dial", Measured 10, a table row, Open (the frame train), Files.
+
+## The two hostile reports (qa_math, qa_phys) and my re-check (RECHECK.md; nothing edited in place)
+- qa_math 1 (BLOCKING) STANDS: the wall is for ONE dial; a quotient-dependent carry (the least of 24 images, centred
+  box, conj(g) back) is equivariant, odd, bijective on valid states with the mirror (b, a, -r), at every W: my own
+  rebuild (probe_recheck_q): 0 misses, 240/240 on the act at W = 5, 6, 9, run back 10/10; its remainder set is no
+  fundamental domain (cell 0 holds 97, 145, 1057 of W^4). The theorem stands for fixed dials with its hypothesis.
+- qa_math 2 STANDS: the twisted train has no fixed vectors (SUM L(g) = 0), det(L(g) - I) = 256 at order 6; the true
+  reason is the carry's lemma (signed permutations).
+- qa_math 3, 4, 5, 6, 7 STAND (scope: wherever the push is -2 W now; the reading vs the act; probe_double broke on
+  edge_lib's new argument, fixed copy probe_double_fixed.py; ranks and Smith forms; wording).
+- qa_phys 1 (BLOCKING) STANDS: the unit step is the doubler (the staggered mode on the example's piece, no spring,
+  F = -12 grip a = -2 W a: probe_recheck_doubler 64/64, period 4; the long wave moves its teeth).
+- qa_phys 2 (BLOCKING) STANDS: L_i and R_j commute, (L_i R_j)^2 = +I: C (+) C, not H in action.
+- qa_phys 3 (BLOCKING) STANDS: the mirror is linear and commutes with the phase (classical T); Kramers' j
+  anticommutes: two operations on one symbol; "the spinors are the same thing" is not shown.
+- qa_phys 4 (BLOCKING) STANDS: the 24-gear carrier's price, 40 doublers per Node-clock, degenerate, pi's kernel.
+- qa_phys 5-8 STAND (Cl(3,1) as the absent one algebra; one map read five ways; the line drawn on the teeth; hygiene).
+- Waiting for Big Pic's word before the second text.
