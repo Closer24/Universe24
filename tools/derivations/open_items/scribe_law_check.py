@@ -16,6 +16,7 @@ The same PAIRS table reads the live documents with --docs (README.md, llms.txt a
 (scribe_law_check_docs_known.json) refusing; the table grows with every contradiction a reader finds (the four readers of 2026-10-30, 08:3x UTC, added P14 to P17).
 
 With --arch ROOT it reads the architecture document against the tree at ROOT (the Boss's head) in both directions: every path of a part's Home line and every test of its Test line must be there (the older form, a trace table under the heading "The trace table", is read as before), every module of src/tensor24, every file of tests/, every script directly under tools/ and every file of examples/tensor24 must be named by some part's Home or Test line (the owner's word of 2026-10-30, 12:1x UTC: the main reflects the architecture document exactly), and every part carries the four layers and its status.
+--arch ROOT also reads the live documents' links: a file that README.md, llms.txt, CONTRIBUTING.md, CHANGELOG.md or the architecture document links or names under docs/, and a file the law links, must stand in the tree (the law's bare citations of a departed document are history and spared).
 Usage: python -I scribe_law_check.py [--law PATH] [--all] [--selftest] [--write-known] [--docs] [--arch ROOT]
 Exit 0: no finding beyond the known list; exit 1: a new finding (printed with its line); the known rows print as counts, and by line with --all."""
 
@@ -485,6 +486,30 @@ def check_layers(text: str) -> list[str]:
     return out
 
 
+LINK_FILES = ("README.md", "llms.txt", "CONTRIBUTING.md", "CHANGELOG.md", "docs/ARCHITECTURE.md", "docs/ALGEBRA.md")
+LINK = re.compile(r"\]\(([^)\s#]+)(?:#[^)\s]*)?\)|\b(docs/[A-Za-z0-9_.-]+\.md)\b")
+
+
+def check_links(root: Path) -> list[str]:
+    """Every file a live document links to (a markdown link, read from the document's own folder) or names under docs/ (read from the root) stands in the tree at ROOT; a link outside the tree, an anchor alone and the law's bare names, which cite departed documents as history, are not read."""
+    out: list[str] = []
+    for name in LINK_FILES:
+        path = root / name
+        if not path.exists():
+            continue
+        for number, line in enumerate(path.read_text(encoding="utf-8").split("\n"), start=1):
+            for m in LINK.finditer(line):
+                target = m.group(1) or m.group(2)
+                if m.group(2) and name == "docs/ALGEBRA.md":
+                    continue
+                if re.match(r"[A-Za-z][A-Za-z0-9+.-]*:", target) or target.startswith("/"):
+                    continue
+                where = path.parent / target if m.group(1) else root / target
+                if not where.exists():
+                    out.append(f"{name}:{number}: {target} is not in the tree")
+    return sorted(set(out))
+
+
 def check_arch(text: str, root: Path) -> list[str]:
     """The three readings of the architecture document: its paths and tests against the tree, the tree against its Home and Test lines, its parts against the four layers."""
     return check_trace(text, root) + check_mirror(text, root) + check_layers(text)
@@ -493,7 +518,7 @@ def check_arch(text: str, root: Path) -> list[str]:
 def arch_main(argv: list[str]) -> int:
     """`--arch ROOT`: the architecture document against the tree at ROOT (the Boss's head) in both directions and against the four layers; exit 1 on a path or a test that is not there, a file of the system no part names, or a part without its layers."""
     root = Path(argv[argv.index("--arch") + 1])
-    found = check_arch(ARCH.read_text(encoding="utf-8"), root)
+    found = check_arch(ARCH.read_text(encoding="utf-8"), root) + check_links(root)
     for line in found:
         print("  " + line)
     print(f"docs/ARCHITECTURE.md against {root}: {len(trace_rows(ARCH.read_text(encoding='utf-8'))) or len(home_rows(ARCH.read_text(encoding='utf-8')))} rows; " + (f"{len(found)} departure(s)" if found else "every path and test stands"))
@@ -702,7 +727,29 @@ def selftest() -> int:
             print(f"PARTED  {name}: wanted {sorted(want)}, got {sorted(got)}")
         else:
             print(f"ok      {name}")
-    print(f"selftest: {len(cases) + len(trace_cases) + len(mirror_cases) + len(layer_cases)} cases, {failed} parted")
+    link_cases = (
+        ("a markdown link to a file that stands", {"README.md": "See [the law](docs/ALGEBRA.md).", "docs/ALGEBRA.md": ""}, set()),
+        ("a markdown link to a file that is gone", {"README.md": "See [it](docs/ENGINE.md#x).", "docs/ALGEBRA.md": ""}, {"README.md:1: docs/ENGINE.md is not in the tree"}),
+        ("an anchor alone and an address outside the tree", {"README.md": "[a](#top) [b](https://example.org/x) [c](mailto:a@b.c)"}, set()),
+        ("a bare name under docs/ that is gone, in llms.txt", {"llms.txt": "named (docs/FURTHER_RESEARCH.md, first)."}, {"llms.txt:1: docs/FURTHER_RESEARCH.md is not in the tree"}),
+        ("a link in the architecture document is read from its own folder", {"docs/ARCHITECTURE.md": "[law](ALGEBRA.md) [door](../README.md)", "docs/ALGEBRA.md": "", "README.md": ""}, set()),
+        ("a link in the architecture document to a file that is gone", {"docs/ARCHITECTURE.md": "[x](GONE.md)"}, {"docs/ARCHITECTURE.md:1: GONE.md is not in the tree"}),
+        ("the law's bare citation of a departed document is history", {"docs/ALGEBRA.md": "built per docs/ENGINE.md, since departed"}, set()),
+        ("the law's markdown link to a departed document is read", {"docs/ALGEBRA.md": "see [the engine](ENGINE.md)"}, {"docs/ALGEBRA.md:1: ENGINE.md is not in the tree"}),
+    )
+    for name, files, want in link_cases:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for rel, body in files.items():
+                (root / rel).parent.mkdir(parents=True, exist_ok=True)
+                (root / rel).write_text(body, encoding="utf-8")
+            got = set(check_links(root))
+        if got != want:
+            failed += 1
+            print(f"PARTED  {name}: wanted {sorted(want)}, got {sorted(got)}")
+        else:
+            print(f"ok      {name}")
+    print(f"selftest: {len(cases) + len(trace_cases) + len(mirror_cases) + len(layer_cases) + len(link_cases)} cases, {failed} parted")
     return 1 if failed else 0
 
 
