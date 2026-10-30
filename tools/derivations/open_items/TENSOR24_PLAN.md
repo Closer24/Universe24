@@ -811,8 +811,13 @@ On the owner's word to David: "a generic solution for everything". This is David
 42. **(ap) The Node-clock is independent and disconnected from the world: only the operations on its neighbours are allowed, and the 24's tables stand as the Node-clock's own design. APPROVED (the owner's words to David of 2026-10-30, 02:2x and 02:3x UTC, relayed in 6513477565 and 6513596552; in translation: "A root in the code is forbidden, and tables are forbidden... in the logic... and not outside it either..."; and, after David's explanation that the 24's multiplication rules are the turns of one Node-clock's own star of six Meshes, the same at every Node-clock: "Only like this. Closed. Pass to the writer the law that the node is independent and disconnected from the world. Only the operations on the neighbours are allowed.").**
     - **The reach:** decision 41's rule holds in every module, the decoder's and the tools' included.
     - **The 24's tables:** they are the Node-clock's own design, made from its six directions alone and the same at every Node-clock; the step reads them as sums over the six Meshes with each kind's signs. They are not a table in decision 41's sense.
-    - **The law:** the Node-clock holds nothing from the world and reads nothing beyond its six neighbours. Sofer enters it.
-    - **Open** (David's (c)): whether each Node-clock must derive its rules itself rather than once at load. Read as the same local rule until the owner says otherwise.
+    - **The law, whole** (his further words to David of 02:4x UTC, relayed in 6513619672 to 6513693658: "Each node derives it by itself, once, right?", answered yes; "Yes. It is in the law from now on: the node is completely independent. It takes nothing from anyone."; "And it has an initialization act, according to what you said..."; "And there is a read option for debugging, isn't there?", answered yes, read only; "Update the Boss too..."):
+      - the Node-clock is completely independent and takes nothing from anyone;
+      - it has one initialization act at the start: it holds what the files lay in it (its integers and its seed), and it derives its rules once from its own six directions;
+      - every tick after, it does the operations on its six neighbours alone, through its own Meshes;
+      - from outside, a read for debugging and for the record is allowed, read only: the same run with the read and without it gives the same record, byte for byte.
+      - Sofer enters it.
+    - **For the code, at G1b (i):** main.made derives the kinds from kinds.axes(len(shape)), the board's count of axes from the piece's shape, which is the world's. The derivation reads the Node-clock's own star instead, its Spokes as the layout holds them; running it once for every Node-clock is the same act, every star being the same.
 
 **For the owner's information:** the head's K on twin hands breaks the 24. It is a bug of the head; in the new engine the turnover is T.
 
