@@ -15,8 +15,9 @@ def numbers():
 
 
 def test_the_carry_turns_the_dial_on_a_whole_turn_and_keeps_the_rest_short_of_one():
-    """Yes: n + r = q d + r' with 0 <= r' < d, on integers and arrays alike, and the tie rule, the flip its own inverse.
-    No: a push one notch short of a turn carries nothing and keeps itself; the whether is 0 at 0 alone."""
+    """Yes: n + r = q d + r' with 0 <= r' < d, on integers and arrays alike, the tie rule, the flip its own inverse,
+    and the whether 1 wherever its number is not 0, past 2**112 too. No: a push one notch short of a turn carries
+    nothing and keeps itself, and the whether is 0 at 0."""
     n, d, r = numbers()
     q, kept = carry(n, d, r)
     # the third review (81521e0f4): a quotient through a float passed at a few teeth; these run past 2**112
@@ -29,4 +30,5 @@ def test_the_carry_turns_the_dial_on_a_whole_turn_and_keeps_the_rest_short_of_on
     assert (flip(flip(tooth, d), d) == tooth).all()
     short, held = carry(d - 1 - tooth, d, tooth)
     assert not short.any() and (held == d - 1).all() and (carry(d - tooth, d, tooth)[0] == 1).all()
-    assert (lit(n) == (n != 0)).all()
+    whether = lit(n)  # n holds 0, 1, -1 and numbers past 2**112 either side of 0
+    assert (whether[n != 0] == 1).all() and (whether[n == 0] == 0).all() and (n == 0).any()
