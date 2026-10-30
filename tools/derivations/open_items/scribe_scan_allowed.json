@@ -1120,14 +1120,6 @@
   "row": "399"
  },
  {
-  "rule": "TWICE",
-  "file": "tools/tensor24_decode.py",
-  "detail": "1 + 1",
-  "count": 2,
-  "word": "the twos spelt as a sum in the tools tools/tensor24_*.py, which the rule TWICE did not read until 14:3x UTC (the owner's \"b. Forbidden\" of 12:5x): named breaches until the tools are mended; a new one, or one more of a spelling in a file, is refused",
-  "row": "399"
- },
- {
   "rule": "FAMILY",
   "file": "tensor24/runner/load.py",
   "detail": "'A1'",
