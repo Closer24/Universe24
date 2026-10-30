@@ -306,7 +306,9 @@ each of its sections names the clock statement it does (the owner's word of 07:1
   different beat of its own, as a clock wound too little stutters (3.8.3).
 - **The ceiling:** the beat is the mass only while the swing moves the anchor little. A larger swing pushes the held
   hand down, toward 0 and past it, and the beat then is not the mass's, even where the stop keeps the swing bounded
-  (3.8.7). Whether one quantum's swing fits between the floor and the ceiling is OPEN (line 332).
+  (3.8.7). The ceiling is not the held hand's sign: it is the smaller of two sizes, the swing whose excess outweighs
+  the spring and the swing that moves the anchor by its own reach (David's G3, 6518768942; 3.8.7). Whether one
+  quantum's swing fits between the floor and the ceiling is OPEN (line 332).
 - **The step's limit:** a spring stiffer than the step can follow breaks the step, so every beat stays below a quarter
   turn a round, and every spring, the stop's included, far below the teeth (3.8.4, 3.8.7).
 - **The wound spring stores energy:** the held hand's potential at its count is a vacuum energy, and it gravitates;
@@ -663,6 +665,19 @@ slot; x a family's gears there, k the coupling family's held count there, of kin
   6's contraction of up to three readings with the unit gives these counts exactly, the runaways at rounds 49 and 29
   and at 205 and 50, and at twice the bound the held count's least -3,112,715 and -8,012,335 with 95 and 206 sign
   changes (the Boss, 6518530511). The test ties no light and no metric family.
+- **The ceiling's two scales** (David's G3 page at toys-5 1ae9a6c29, 6518768942 item 1, after his readers' third
+  reading):
+  - on the valley, V = (g / 2) n C + (2 kappa lam - g^2) C^2 / (8 kappa), which drops the held count's own motion,
+    so the beat leaves the mass at the smaller of two scales: the excess's, C near 4 kappa g n / (2 kappa lam - g^2),
+    and the held count's own, x near kappa / g. At the least lam: 64, 68, 62, 76 and 78 sign changes at 1, 1.4, 2, 3
+    and 4 x 10^7, against the mass's 63.7; at twice it, 95 and 206. So the ceiling is the smaller scale, not the held
+    count's sign, for one family or one summed term;
+  - several families tied to one held count, each with its own four-leg term, need the sum of g_f^2 / (2 kappa lam_f)
+    at most 1, so N alike families need lam of N g^2 / (2 kappa); one summed term with one g keeps the one-family bound,
+    and with the g_f differing it needs the largest g_f^2 / (2 kappa). Two families laid alike at the one-family least,
+    each with its own term, run away (rounds 66 and 43). Which form the plan lays is OPEN;
+  - the least lam is chosen by minimality alone: every lam within about lam / 800 of the bound keeps the beat near
+    the mass at the step's swings.
 - **OPEN** (G3, David derives): the operation for the T2 held count, and the E count's, whose push read through E's
   own form keeps the one spring g n (3.10.4; G3 2.2); which families hang on the held count, light's and the metric
   family's never, or light would beat with the common mass (G3 2.7); g, kappa and n from the law (decision 35;
