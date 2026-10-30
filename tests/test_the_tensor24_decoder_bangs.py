@@ -6,8 +6,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
-
 from tensor24.decoder import bangs, records
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
@@ -91,10 +89,6 @@ SHOWN = {
 }
 
 
-def test_each_later_bang_shows_more_clocks_in_its_clicks_and_in_its_ledger(tmp_path):
-    assert row(tmp_path) == SHOWN
-
-
 def test_the_tool_prints_row_46_from_the_record_and_its_ledger(tmp_path):
     record, held = tmp_path / "record.jsonl", tmp_path / "ledger.jsonl"
     record.write_text("".join(json.dumps(x) + "\n" for x in [H, *CLICKS, E]))
@@ -103,19 +97,6 @@ def test_the_tool_prints_row_46_from_the_record_and_its_ledger(tmp_path):
         [sys.executable, "-I", str(TOOL), str(record), str(held)], capture_output=True, text=True
     )
     assert run.returncode == 0 and run.stderr == "" and f"row 46: {SHOWN}" in run.stdout.splitlines()
-
-
-def test_a_bang_shows_more_by_its_kinds_alone_or_by_its_depth_alone(tmp_path):
-    kinds_alone = [*CLICKS[:5], click(11, 1, [3], site=0), SPLIT]  # bang 3: 3 kinds, its deepest laid 1
-    deeper_alone = [
-        *CLICKS[:3],
-        click(10, 1, [2]),
-        click(11, 3, ends=ends(4)),
-    ]  # bang 3: 2 kinds, laid 2
-    held = PAIR_HELD
-    assert (
-        row(tmp_path, kinds_alone, held)["kind"] == row(tmp_path, deeper_alone, held)["kind"] == "SHOWN"
-    )
 
 
 NO_MORE = (
@@ -132,18 +113,6 @@ SHOWS_LESS = {  # bang 3's clicks, and the cause: the same as bang 2's, fewer ki
         NO_MORE.format(3, 0),
     ),
 }
-
-
-@pytest.mark.parametrize("name", sorted(SHOWS_LESS))
-def test_a_later_bang_that_shows_no_more_reads_not_shown_named(tmp_path, name):
-    lines, cause = SHOWS_LESS[name]
-    assert row(tmp_path, lines, PAIR_HELD)["cause"] == cause
-
-
-def test_the_deepest_clock_held_falling_at_a_bang_s_end_reads_not_shown(tmp_path):
-    verdict = row(tmp_path, held={**HELD, 12: [(2, 1)]})
-    assert verdict["kind"] == "NOT SHOWN"
-    assert verdict["cause"] == "the deepest clock held falls from 1 to 0 at bang 3's end"
 
 
 def parted(train, parts):
@@ -174,12 +143,6 @@ UNREAD = {  # a record or a ledger the row cannot frame or read, and its cause
 }
 
 
-@pytest.mark.parametrize("name", sorted(UNREAD))
-def test_a_record_the_row_cannot_frame_or_read_reads_not_read_named(tmp_path, name):
-    frame, cause = UNREAD[name]
-    assert row(tmp_path, **frame) == {"kind": "NOT READ", "cause": cause}
-
-
 EDGES = {  # a load, and its bottoms' places
     "a bottom held two rounds": ([3, 0, 0, 3], [2]),
     "a top held two rounds": ([0, 3, 3, 0], []),
@@ -188,7 +151,28 @@ EDGES = {  # a load, and its bottoms' places
 }
 
 
-@pytest.mark.parametrize("name", sorted(EDGES))
-def test_the_load_s_bottoms_at_their_edges(name):
-    load, places = EDGES[name]
-    assert bangs.bottoms(load) == places
+def test_each_later_bang_shows_more_or_reads_not_shown_or_not_read_named(tmp_path):
+    """Row 46's one law: each later bang shows more clocks by its kinds or its depth, else not shown, or not read, named."""
+    assert row(tmp_path) == SHOWN
+    kinds_alone = [*CLICKS[:5], click(11, 1, [3], site=0), SPLIT]  # bang 3: 3 kinds, its deepest laid 1
+    deeper_alone = [
+        *CLICKS[:3],
+        click(10, 1, [2]),
+        click(11, 3, ends=ends(4)),
+    ]  # bang 3: 2 kinds, laid 2
+    held = PAIR_HELD
+    assert (
+        row(tmp_path, kinds_alone, held)["kind"] == row(tmp_path, deeper_alone, held)["kind"] == "SHOWN"
+    )
+    for name in sorted(SHOWS_LESS):
+        lines, cause = SHOWS_LESS[name]
+        assert row(tmp_path, lines, PAIR_HELD)["cause"] == cause
+    verdict = row(tmp_path, held={**HELD, 12: [(2, 1)]})
+    assert verdict["kind"] == "NOT SHOWN"
+    assert verdict["cause"] == "the deepest clock held falls from 1 to 0 at bang 3's end"
+    for name in sorted(UNREAD):
+        frame, cause = UNREAD[name]
+        assert row(tmp_path, **frame) == {"kind": "NOT READ", "cause": cause}
+    for name in sorted(EDGES):
+        load, places = EDGES[name]
+        assert bangs.bottoms(load) == places

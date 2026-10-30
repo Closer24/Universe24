@@ -1,8 +1,7 @@
 # The tests every pull request runs, whatever it changes (tools/check.py reads this file).
 # One test per line, sorted; the law's tests, all of them (the owner's word of 2026-09-29): since the old engine left
-# the tree (the owner's word of 2026-10-30), Tensor24's carry, its ring, its act and its 24's tables.
+# the tree (the owner's word of 2026-10-30), Tensor24's algebra (the carry and the ring), its act and its 24's tables.
 # The documents' gates and the ASCII rule run as tools/documents_gates.py among tools/check.py's ratchets (2026-10-24).
 tests/test_the_tensor24_algebra.py
 tests/test_the_tensor24_engine.py
 tests/test_the_tensor24_kinds.py
-tests/test_the_tensor24_ring.py

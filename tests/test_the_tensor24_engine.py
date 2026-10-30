@@ -1,13 +1,12 @@
-"""Tensor24's engine: the Mesh, the board and the one act at its coefficients, every Node-clock in every round, and
-its run back as the act on the mirrored state, each law failing on its mutant."""
+"""Tensor24's engine, each generic part once with its mutants and then the whole node: J by the vertex law, the board
+and its Meshes, the one act at its coefficients against a naive model, the run back as the act on the mirrored state,
+and the whole node local, pure and turned by the 24, here and in fresh interpreters."""
 
 import functools
 import itertools
 import math
-from fractions import Fraction
 
 import numpy as np
-import pytest
 
 from tensor24.algebra.carry import flip
 from tensor24.engine import contract, mesh, step
@@ -477,6 +476,12 @@ def mutants():
 
 OWN = {f.__name__: f for f in (formula, stretched, back, negated, cone, cone_back, model, held_alike)}
 OWN["sourced_images"] = sourced_images
+PARTS = {  # each generic part of the act with the laws that read it, then the whole node
+    "mesh": ("model", "held_alike", "cone", "cone_back"),
+    "act": ("formula", "stretched", "negated"),
+    "back": ("back", "bijectivity"),
+    "whole": ("locality", "purity", "rename", "images", "sourced_images"),
+}
 
 
 def law(name):
@@ -486,114 +491,83 @@ def law(name):
     )
 
 
-# each law on the engine as it stands, read once for the mutants aimed at it
-lawful = functools.cache(law)
+def broken(part, monkeypatch):
+    """Of one part, every law that fails on the engine, and every mutant aimed at its laws that its law lets pass."""
+    laws, found = PARTS[part], [name for name in PARTS[part] if not law(name)]
+    for mutant, (name, attribute, bad, *module) in mutants().items():
+        if name not in laws:
+            continue
+        with monkeypatch.context() as patch:
+            patch.setattr(*module or [step], attribute, bad)
+            found += [mutant] if law(name) else []
+    return found
 
 
-@pytest.mark.parametrize("mutant", list(mutants()))
-def test_each_law_of_the_engine_holds_and_fails_on_its_mutant(mutant, monkeypatch):
-    name, attribute, broken, *module = mutants()[mutant]
-    assert name in [*OWN, *frame.PROPERTIES] and lawful(name)
-    monkeypatch.setattr(*module or [step], attribute, broken)
-    assert not law(name)
-
-
-def test_the_force_s_path_is_the_stage_4_tick_with_j_added():
-    """At T_k = T_d = 1 the kick is s J and every drive's tooth stays 0: the push is s (F + J)."""
-    rng = np.random.default_rng(30)
-    layout = varied(rng)
-    layout = layout._replace(gearing=layout.gearing._replace(kick=1, drive=1))
-    s = world(rng, layout)
-    s = s._replace(rd=0 * s.rd)
-    now = step.tick(layout, s)
-    force, j = step.sources(layout, s.a)
-    w = step.weight(layout.gearing, layout.clock, s.a)
-    a, _, r = step.gear(s.a, s.b, s.r, w, layout.gearing.stretch * (force + j))
-    assert not now.rd.any() and frame.same([a, r], [now.a, now.r])
-
-
-def im(x, y):
-    """Im(conj(x) y) for two hands, each the pair of rows (re, im): x_re y_im - x_im y_re."""
-    return x[0] * y[1] - x[1] * y[0]
-
-
-def home(w):
-    """The fine tooth's middle, W div 2, about which a tooth is read signed."""
-    return w // (1 + 1)
-
-
-def charged(s, w, weight):
-    """The hand's charge Q* = SUM Im(conj(a + b) P) / (2 s), P = W (a - b) + (r - home): David's density, exact."""
-    a, b, r, _ = s
-    density = im(a + b, w * (a - b) + (r - home(w)))
-    return sum(
-        Fraction(int(d), int(2 * v)) for d, v in zip(density.ravel(), weight.ravel(), strict=True)
+def potential(rng, rows=ROWS, sites=7):
+    """A potential of whole monomials on each site's gears, each a factor and four legs among the gears' values and the
+    unit (-1), with a state and a displacement of whole numbers."""
+    legs = tuple(rng.integers(-1, rows, size=TERMS).astype(np.intp) for _ in range(4))
+    return (
+        draw(rng, -9, 10, TERMS),
+        legs,
+        draw(rng, -50, 51, (rows, sites)),
+        draw(rng, -50, 51, (rows, sites)),
     )
 
 
-def kept(each_end=False, moving=False, sourced=False):
-    """Over synchronous rounds a hand's charge Q* moves by Rule3's torques and its kick alone (David's OPEN 13): its rows
-    alike in W, W+, s, D, T_k and T_d, grips one per Mesh, the teeth changing; the kick's term 0 with J off, and with J on
-    read from the drive's carry, T_d q = J + r_d - r_d+, J not 0. A grip per end, or an s that moves, parts it."""
-    rng = np.random.default_rng(50)
-    nb = frame.board(SHAPE)
-    n = nb.shape[1]
-    meshes = np.arange(6 * n).reshape(6, n) if each_end else frame.meshes_of(nb)
-    grip, s = draw(rng, -3, 4, (1, (6 if each_end else 3) * n)), draw(rng, 1, 5, (1, n))
-    teeth = [draw(rng, 2, 20, (1, n)) for _ in range(ROUNDS + 1)]
-    kick, drive = (draw(rng, 2, 6, (1, n)), draw(rng, 2, 9, (1, n))) if sourced else (1, 1)
-    terms = (TERMS if sourced else 0,) * 2
-    index = [
-        rng.integers(0, high, size=terms[0]).astype(np.intp) for high in (PLANES * 2, PLANES * 2, 2)
-    ]
-    unit = np.repeat(np.intp(PLANES * 2), terms[0])  # J squares the gears: its third reading the unit
-    plan = Plan(index[0], index[1], unit, draw(rng, -9, 10, terms[1]), index[2])
-    state = State(
-        *(draw(rng, -(1 << 10), 1 << 10, (2, n)) if sourced else frame.wide(rng, (2, n)) for _ in "ab"),
-        draw(rng, 0, 1 << 20, (2, n)) % teeth[0],
-        draw(rng, 0, 1 << 20, (2, n)) % drive,
-    )
-    for t in range(SQUARING if sourced else ROUNDS):  # J squares the gears each round
-        push = s + t * draw(rng, 0, 3, (1, n)) if moving else s
-        gearing = Gearing(teeth[t], push, kick, drive)  # each round at its own teeth
-        layout = Layout(nb, frame.spokes(), meshes, grip, gearing, plan, *[frame.unread()] * 2)
-        _, j = step.sources(layout, state.a)
-        now = step.tick(layout, state)
-        torques = im(state.a - state.b, state.r - home(teeth[t]))
-        torques = torques + im(now.a - state.a, now.r - home(teeth[t]))
-        moved = charged(now, teeth[t], s) - charged(state, teeth[t], s)
-        kicked = np.broadcast_to(kick * im(state.a, j + state.rd - now.rd), (1, n))
-        ds = np.broadcast_to(drive, (1, n)).ravel()
-        terms = zip(torques.ravel(), s.ravel(), kicked.ravel(), ds, strict=True)
-        expected = sum(Fraction(int(x), int(2 * v)) + Fraction(int(y), int(d)) for x, v, y, d in terms)
-        if (sourced and not np.any(j)) or moved != expected:
+def energy(factor, legs, x):
+    """V at x summed over the sites: each monomial's factor times its four legs' values, the unit 1."""
+    read = np.concatenate((x, np.ones_like(x[:1], dtype=object)))
+    return (factor[:, None] * read[legs[0]] * read[legs[1]] * read[legs[2]] * read[legs[3]]).sum()
+
+
+def vertex(factor, legs, x, plan=lambda p: p, unit=1):
+    """J from the potential by the engine's vertex law and its contraction, the unit read as `unit`."""
+    read = np.concatenate((x, unit * np.ones_like(x[:1], dtype=object)))
+    return contract.contract(plan(contract.pushes(factor, legs)), read, x)
+
+
+def conserves(source):
+    """J is minus V's gradient: its work on a displacement d is minus V's rate along d, read exactly by the five-point
+    stencil a quartic keeps, 12 V'(0) = 8 (V(1) - V(-1)) - (V(2) - V(-2)), at three seeds."""
+    for seed in range(3):
+        factor, legs, x, d = potential(np.random.default_rng(40 + seed))
+        v = [energy(factor, legs, x + t * d) for t in (-2, -1, 1, 2)]
+        if -12 * (source(factor, legs, x) * d).sum() != 8 * (v[2] - v[1]) - (v[3] - v[0]):
             return False
-        state = now
     return True
 
 
-def test_a_hands_charge_moves_by_rules_torques_and_its_kick_alone_and_parts_on_a_grip_per_end_or_a_moving_s(
-    monkeypatch,
-):
-    assert kept() and kept(sourced=True) and not kept(each_end=True) and not kept(moving=True)
-    driven = step.driven
-    monkeypatch.setattr(step, "driven", lambda g, f, q: driven(g._replace(stretch=1), f, q))
-    assert not kept()  # the push off its stretch
-    monkeypatch.setattr(step, "driven", lambda g, f, q: driven(g._replace(kick=1), f, q))
-    assert kept() and not kept(sourced=True)  # the kick off its teeth, which J off cannot see
+def test_j_is_minus_the_gradient_of_its_potential_by_the_vertex_law_and_each_mutant_breaks_it():
+    """The engine's vertex law and contraction, against the potential alone; broken, the unit read as 0, the third reading
+    ignored, or the push without its sign."""
+    mutants = (
+        lambda *v: vertex(*v, unit=0),
+        lambda *v: vertex(*v, plan=lambda p: p._replace(third=0 * p.third - 1)),
+        lambda *v: vertex(*v, plan=lambda p: p._replace(factor=-p.factor)),
+    )
+    assert conserves(vertex) and not any(conserves(m) for m in mutants)
 
 
-def test_the_engines_records_hold_their_fields_in_order():
-    assert State._fields == ("a", "b", "r", "rd")
-    assert Gearing._fields == ("rest", "stretch", "kick", "drive")
-    assert Layout._fields == ("nb", "spokes", "meshes", "grip", "gearing", "plan", "clock", "stretch")
-    assert Read._fields == ("first", "factor", "target")
-    assert Plan._fields == ("first", "second", "third", "factor", "target")
+def test_the_board_and_its_meshes_reach_one_mesh_each_way_and_each_mutant_breaks_its_law(monkeypatch):
+    assert not broken("mesh", monkeypatch)
 
 
-def test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds():
-    assert frame.unseeded(__name__, "engine", FRAME)
+def test_the_act_is_its_naive_model_at_its_coefficients_and_each_mutant_breaks_its_law(monkeypatch):
+    assert not broken("act", monkeypatch)
 
 
-def test_a_world_is_run_back_in_a_fresh_interpreter_that_never_stepped():
-    assert frame.undone_elsewhere(__name__, "engine", FRAME, 0)
+def test_the_run_back_is_the_act_on_the_mirrored_state_and_each_mutant_breaks_its_law(monkeypatch):
+    assert not broken("back", monkeypatch)
+
+
+def test_the_whole_node_is_local_pure_and_turned_by_the_24_here_and_in_fresh_interpreters(monkeypatch):
+    """Every mutant is aimed at a part's law; the whole node's laws hold and break on theirs; a world is answered alike
+    in fresh interpreters at other hash seeds, and run back in one that never stepped."""
+    assert {name for name, *_ in mutants().values()} <= {
+        name for laws in PARTS.values() for name in laws
+    }
+    assert not broken("whole", monkeypatch)
+    assert frame.unseeded(__name__, "engine", FRAME) and frame.undone_elsewhere(
+        __name__, "engine", FRAME, 0
+    )

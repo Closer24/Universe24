@@ -6,8 +6,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-import pytest
-
 from tensor24.decoder import books, clocks, records
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
@@ -162,24 +160,6 @@ REFUSED = {  # each record not read, its own cause named
 }
 
 
-@pytest.mark.parametrize("name", sorted(READS))
-def test_a_record_of_the_schema_reads_with_its_unnamed_fields_and_its_absent_ones(tmp_path, name):
-    assert cause_of(READS[name], tmp_path) == ""
-
-
-@pytest.mark.parametrize("name", sorted(REFUSED))
-def test_a_broken_record_is_not_read_with_its_own_cause_in_ascii(tmp_path, name):
-    lines, cause = REFUSED[name]
-    assert cause_of(lines, tmp_path) == cause
-
-
-def test_a_board_past_the_digits_is_named_by_its_sides_and_nothing_raised(tmp_path):
-    # each side under the interpreter's bound on digits, their product past it
-    sides = [10**4000, 10**4000, 1]
-    cause = cause_of([{**B, "sides": sides}, rate(1, -1, 1, 1), E], tmp_path)
-    assert cause == f"line 2 names site -1, off the board of sides {sides}"
-
-
 TWICE = "the whole click at round 1, site 0 books one train twice in a part"
 BOOKED_TWICE = {  # a part that books a train twice: on one side unchained, or on both sides
     "a taken train listed twice": click(
@@ -199,26 +179,7 @@ BOOKED_TWICE = {  # a part that books a train twice: on one side unchained, or o
 }
 
 
-@pytest.mark.parametrize("name", sorted(BOOKED_TWICE))
-def test_a_part_that_books_a_train_twice_reads_not_read_named(tmp_path, name):
-    twice = BOOKED_TWICE[name]
-    assert not books.closes(twice, WOUND) and books.unread_books(twice, WOUND) == books.TWICE
-    assert row([H, twice, E], ledger(1, {0: (0, 0), 1: (0, 0)}), tmp_path) == ("NOT READ", TWICE)
-
-
-def test_a_train_taken_in_chained_holdings_reads_as_one(tmp_path):
-    chained = click(1, 0, [hold(1, (7, 4), (3, 2)), hold(1, (4, 1), (1 + 1, 0))], [hold(0, (0, 9))], q=6)
-    laid_in_two = click(1, 0, [hold(1, (7, 4))], [hold(0, (0, 1)), hold(0, (1, 1 + 1 + 1))], q=3)
-    moved = ledger(1, {0: (0, 9), 1: (10, 1)})
-    assert books.closes(chained, WOUND) and books.closes(laid_in_two, WOUND)
-    assert row([H, chained, E], moved, tmp_path)[0] == "SHOWN"
-
-
 LACKS = "the whole click at round 1, site 0 lacks a field its books are read from"
-
-
-def test_a_whole_click_without_its_train_reads_not_read_named(tmp_path):
-    assert row([H, without(TAKE, "train"), E], GOOD, tmp_path) == ("NOT READ", LACKS)
 
 
 # three windings taken, four laid: law 8 broken
@@ -253,39 +214,11 @@ GAPS = {  # a gap in the second reading: the header, the ledger, the gap's cause
 }
 
 
-@pytest.mark.parametrize("name", sorted(GAPS))
-def test_open_books_read_not_shown_before_a_gap_and_the_gap_is_named_beside(tmp_path, name):
-    header, held, gap, closed = GAPS[name]
-    assert row([header, OPENED, E], held, tmp_path) == ("NOT SHOWN", f"{OPEN_BOOKS}; {gap}")
-    assert row([header, TAKE, E], held, tmp_path) == ("NOT READ", closed)
-
-
-def test_open_books_beside_a_ledger_read_name_the_wind():
-    record = records.Record(H, [OPENED], E)
-    wind = "the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click"
-    assert books.row_15(record, GOOD)["cause"] == f"{OPEN_BOOKS}; {wind}"
-    first_card = books.row_15(records.Record({**H, "trains": [{}, *TRAINS]}, [TAKE], E), GOOD)
-    assert first_card["cause"] == f"the header's train card 1 holds no index; {CLOSED_BOOKS}"
-
-
 # David's A6 (6488889537, item 2): each train's windings at its winding of notches, the kept in notches; at 4, one
 # winding of train 1 leaves with 3 notches kept back, and two windings of 3 notches are laid as three of 2
 WEIGHED = click(1, 0, [hold(1, (5, 4), (-1, 2))], [hold(0, (0, 1), (1, -2))], q=1)
 MIXED = click(1, 0, [hold(1, (1 + 1, 0))], [hold(0, (0, 3))], q=1 + 1)
 UNWOUND = "the whole click at round 1, site 0 books a train the header gives no winding"
-
-
-def test_the_books_read_each_train_s_windings_at_its_own_winding_and_name_a_train_with_none(tmp_path):
-    fours, mixed = wound(4, 4), wound(1 + 1, 3)
-    shown = [row([fours, WEIGHED, E], GOOD, tmp_path), row([mixed, MIXED, E], GOOD, tmp_path)]
-    opened = [row([H, WEIGHED, E], GOOD, tmp_path), row([fours, MIXED, E], GOOD, tmp_path)]
-    assert all(k == "SHOWN" for k, _ in shown) and all(k == "NOT SHOWN" for k, _ in opened)
-    unwound = {**H, "trains": [TRAINS[0], without(TRAINS[1], "winding")]}
-    elsewhere = click(1, 0, [hold(1, (7, 4), (3, 2))], [hold(1 + 1, (0, 4))])  # laid into train 2
-    lines = [[unwound, TAKE, E], [H, elsewhere, E]]
-    assert all(row(x, GOOD, tmp_path) == ("NOT READ", UNWOUND) for x in lines)
-    no_train = row([{**H, "trains": []}, OPENED, E], GOOD, tmp_path)
-    assert no_train == ("NOT READ", f"the header names no train; {UNWOUND}")
 
 
 OPEN_AT_A_BOUND = {  # a whole click whose books open at one side of a bound, each train booked once
@@ -300,25 +233,53 @@ OPEN_AT_A_BOUND = {  # a whole click whose books open at one side of a bound, ea
 }
 
 
-@pytest.mark.parametrize("name", sorted(OPEN_AT_A_BOUND))
-def test_the_books_open_at_each_side_of_their_bounds(tmp_path, name):
-    both_ends = {**PAIR, "q": 5 + 5}  # a pair's q counts the windings that left at both its ends
-    assert books.closes(both_ends, WOUND) and books.closes({**TAKE, "q": 1 + 1 + 1}, WOUND)
-    assert not books.closes(OPEN_AT_A_BOUND[name], WOUND)
-    assert row([THIRD, OPEN_AT_A_BOUND[name], E], GOOD, tmp_path)[0] == "NOT SHOWN"
-    assert row([H, both_ends, E], PAIRED, tmp_path)[0] == "SHOWN"
-
-
-def test_the_ticks_before_the_first_beat_are_read_as_none():
-    first = [(1, 1)]
-    assert clocks.unread(first, 0) == "" and clocks.ticks_to(first, 0) == 0
+def test_the_books_read_each_holding_once_at_its_own_winding_and_name_what_they_cannot_read(tmp_path):
+    """The books' cases: each holding once at its train's winding, the gaps and bounds named, a lacking train not read."""
+    for name in sorted(BOOKED_TWICE):
+        twice = BOOKED_TWICE[name]
+        assert not books.closes(twice, WOUND) and books.unread_books(twice, WOUND) == books.TWICE
+        assert row([H, twice, E], ledger(1, {0: (0, 0), 1: (0, 0)}), tmp_path) == ("NOT READ", TWICE)
+    chained = click(1, 0, [hold(1, (7, 4), (3, 2)), hold(1, (4, 1), (1 + 1, 0))], [hold(0, (0, 9))], q=6)
+    laid_in_two = click(1, 0, [hold(1, (7, 4))], [hold(0, (0, 1)), hold(0, (1, 1 + 1 + 1))], q=3)
+    moved = ledger(1, {0: (0, 9), 1: (10, 1)})
+    assert books.closes(chained, WOUND) and books.closes(laid_in_two, WOUND)
+    assert row([H, chained, E], moved, tmp_path)[0] == "SHOWN"
+    assert row([H, without(TAKE, "train"), E], GOOD, tmp_path) == ("NOT READ", LACKS)
+    for name in sorted(GAPS):
+        header, held, gap, closed = GAPS[name]
+        assert row([header, OPENED, E], held, tmp_path) == ("NOT SHOWN", f"{OPEN_BOOKS}; {gap}")
+        assert row([header, TAKE, E], held, tmp_path) == ("NOT READ", closed)
+    record = records.Record(H, [OPENED], E)
+    wind = "the wind over every train agrees after the clicks and after the step at 1 of 1 rounds read, of 1 with a click"
+    assert books.row_15(record, GOOD)["cause"] == f"{OPEN_BOOKS}; {wind}"
+    first_card = books.row_15(records.Record({**H, "trains": [{}, *TRAINS]}, [TAKE], E), GOOD)
+    assert first_card["cause"] == f"the header's train card 1 holds no index; {CLOSED_BOOKS}"
+    fours, mixed = wound(4, 4), wound(1 + 1, 3)
+    shown = [row([fours, WEIGHED, E], GOOD, tmp_path), row([mixed, MIXED, E], GOOD, tmp_path)]
+    opened = [row([H, WEIGHED, E], GOOD, tmp_path), row([fours, MIXED, E], GOOD, tmp_path)]
+    assert all(k == "SHOWN" for k, _ in shown) and all(k == "NOT SHOWN" for k, _ in opened)
+    unwound = {**H, "trains": [TRAINS[0], without(TRAINS[1], "winding")]}
+    elsewhere = click(1, 0, [hold(1, (7, 4), (3, 2))], [hold(1 + 1, (0, 4))])  # laid into train 2
+    lines = [[unwound, TAKE, E], [H, elsewhere, E]]
+    assert all(row(x, GOOD, tmp_path) == ("NOT READ", UNWOUND) for x in lines)
+    no_train = row([{**H, "trains": []}, OPENED, E], GOOD, tmp_path)
+    assert no_train == ("NOT READ", f"the header names no train; {UNWOUND}")
+    for name in sorted(OPEN_AT_A_BOUND):
+        both_ends = {**PAIR, "q": 5 + 5}  # a pair's q counts the windings that left at both its ends
+        assert books.closes(both_ends, WOUND) and books.closes({**TAKE, "q": 1 + 1 + 1}, WOUND)
+        assert not books.closes(OPEN_AT_A_BOUND[name], WOUND)
+        assert row([THIRD, OPEN_AT_A_BOUND[name], E], GOOD, tmp_path)[0] == "NOT SHOWN"
+        assert row([H, both_ends, E], PAIRED, tmp_path)[0] == "SHOWN"
 
 
 def tool(path):
     return subprocess.run([sys.executable, "-I", str(TOOL), path], capture_output=True, text=True)
 
 
-def test_the_tool_reads_each_click_at_its_own_node_clock_in_turn(tmp_path):
+def test_each_click_is_read_at_its_own_node_clock_from_its_first_beat(tmp_path):
+    """The ticks before a first beat read as none, and the tool reads each click at its own Node-clock in turn."""
+    first = [(1, 1)]
+    assert clocks.unread(first, 0) == "" and clocks.ticks_to(first, 0) == 0
     at = [
         {**TAKE, "round": r, "count": r, "site": s}
         for r, s in ((1, 0), (1 + 1, 0), (1 + 1 + 1, 1), (4, 1))
@@ -332,7 +293,16 @@ def test_the_tool_reads_each_click_at_its_own_node_clock_in_turn(tmp_path):
     assert run.returncode == 0 and run.stderr == "" and run.stdout.splitlines()[-1] == ticks
 
 
-def test_the_tool_names_every_field_in_one_line_of_ascii(tmp_path):
+def test_the_reader_reads_unnamed_and_absent_fields_and_names_each_refusal_in_ascii(tmp_path):
+    """The reader's cases: unnamed and absent fields read; each refusal, a board past the digits too, named in ASCII."""
+    for name in sorted(READS):
+        assert cause_of(READS[name], tmp_path) == ""
+    for name in sorted(REFUSED):
+        lines, cause = REFUSED[name]
+        assert cause_of(lines, tmp_path) == cause
+    sides = [10**4000, 10**4000, 1]
+    cause = cause_of([{**B, "sides": sides}, rate(1, -1, 1, 1), E], tmp_path)
+    assert cause == f"line 2 names site -1, off the board of sides {sides}"
     named = {
         "\ud800": "not read: line 2's \\ud800 has not its shape in the schema\n",
         "a\nnot read: forged": "not read: line 2's a\\nnot read: forged has not its shape in the schema\n",

@@ -1,5 +1,6 @@
-"""Tensor24's load: each refusal by name with its edge, the gears laid on their rows, the promise, the square found by
-its kinds' character alone, and no term of J, as no file declares a coupling."""
+"""Tensor24's load, the loader's generic parts: each refusal by name with its edge, the gears laid on their rows, the
+square found by its kinds' character alone, the promise the run back's own condition, and no term of J, as no file
+declares a coupling."""
 
 import copy
 import itertools
@@ -87,23 +88,26 @@ def edits():
     }
 
 
-@pytest.mark.parametrize("rule", sorted(edits()))
-def test_each_refusal_of_the_load_names_its_own_broken_file_and_its_edge_loads(rule, made):
-    assert loaded(made, universe())[1] == []
+def refused(made, rule):
+    """The rule's edit loaded: its departure named with nothing loaded, or, at its edge, loaded with none named."""
     edit, named = edits()[rule]
     u = universe()
     edit(u)
     held, found = loaded(made, u)
-    assert (
+    return (
         (any(named in line for line in found) and held is None)
         if named
         else (found == [] and held is not None)
-    ), found
+    )
 
 
-def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
-    """A gear lands on its train's own rows, the first train's with its fine tooth and the last's at its last component,
-    every integer whole past 64 bits; the rest is 0."""
+def test_the_load_lays_every_gear_on_its_trains_rows_or_names_each_refusal_and_raises_none(
+    made, monkeypatch
+):
+    """Each refusal names its broken file and its edge loads; a gear lands on its train's own rows, whole past 64 bits,
+    and off them is named; Sofer's fuzz: no gears key lays none and no term of J, and a board past one array or past
+    the machine's memory is named, nothing raised."""
+    assert loaded(made, universe())[1] == [] and all(refused(made, rule) for rule in edits())
     rows, site, now, before, tooth = (
         2,
         3,
@@ -130,6 +134,20 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1
     held, found = loaded(made, universe(), [(0, rows, site, now, before, 0)])
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
+    ks, c, square = made
+    held, found = load(universe(), {}, SITES, ks, c, square)
+    assert found == [] and not any(len(x) for x in (held.potential[0], *held.potential[1]))
+    _, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
+    assert len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
+
+    def no_room(*args, **kwargs):
+        raise MemoryError("no room")
+
+    monkeypatch.setattr(np, "zeros", no_room)
+    _, found = load(universe(), {"gears": []}, SITES, ks, c, square)
+    assert found == [
+        f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
+    ]
 
 
 def rewound(r, w):
@@ -142,7 +160,10 @@ def rewound(r, w):
     return all((x == y).all() for x, y in zip(untick(layout, tick(layout, s)), s, strict=True))
 
 
-def test_the_promise_is_named_where_it_fails_and_is_the_run_backs_own_condition():
+def test_the_square_is_found_by_its_kinds_character_and_the_promise_is_the_run_backs_own_condition(made):
+    """A train is marked the four-vector's square where its part times its kinds' character is the square's: in every
+    order of the square's five kinds, and not for ten rows of three T1 kinds and one of A1. The promise, every fine
+    tooth within its teeth, is named where it fails, and the run back is exact exactly where it holds."""
     w = 5
     for tooth in (w, w + 1, -1):
         r = np.zeros((1, SITES), dtype=object)
@@ -151,34 +172,6 @@ def test_the_promise_is_named_where_it_fails_and_is_the_run_backs_own_condition(
         assert not rewound(r, w)
     r = np.zeros((1, SITES), dtype=object) + w - 1
     assert promises(r, w) == [] and rewound(r, w)
-
-
-def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
-    """Sofer's fuzz of stage 6: no gears key loads as none and lays no term of J, and a board past one array is named."""
-    ks, c, square = made
-    held, found = load(universe(), {}, SITES, ks, c, square)
-    assert found == [] and not any(len(x) for x in (held.potential[0], *held.potential[1]))
-    _, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
-    assert len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
-
-
-def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
-    """Where the machine's memory refuses the lay's arrays, the board is named and nothing raises."""
-    ks, c, square = made
-
-    def refused(*args, **kwargs):
-        raise MemoryError("no room")
-
-    monkeypatch.setattr(np, "zeros", refused)
-    _, found = load(universe(), {"gears": []}, SITES, ks, c, square)
-    assert found == [
-        f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
-    ]
-
-
-def test_the_square_is_found_by_its_kinds_character_in_every_order_and_by_nothing_else(made):
-    """A train is marked the four-vector's square where its part times its kinds' character is the square's: in every
-    order of the square's five kinds, and not for ten rows of three T1 kinds and one of A1."""
     family, other = ("A1", "T1", "A1", "E", "T2"), ("T1", "T1", "T1", "A1")
     for kinds in [*sorted(set(itertools.permutations(family))), other]:
         u = universe()

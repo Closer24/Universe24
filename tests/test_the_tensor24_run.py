@@ -1,11 +1,13 @@
-"""Tensor24's run (stage 10): the three files to a record and a ledger the decoder reads, every train's counts at
-every Node-clock and round, the run back checked, and a departure named before anything is written."""
+"""Tensor24's whole run: the three files to a record of the schema and a ledger the decoder reads, every train's counts
+at every Node-clock and round, the end's digest the state the rounds reach and its run back checked, and a departure
+or a broken promise named before anything is written, by the run and by its tool."""
 
 import dataclasses
 import hashlib
 import json
 import subprocess
 import sys
+import typing
 from pathlib import Path
 
 from tensor24 import main
@@ -31,7 +33,26 @@ def read(path):
     )
 
 
-def test_the_example_files_run_to_a_record_the_decoder_reads_with_its_run_back_exact(tmp_path):
+def leaves(hint):
+    """The types a field's hint is built of, through rows and the schema's own records; any other form as itself."""
+    if dataclasses.is_dataclass(hint):
+        hints = typing.get_type_hints(hint)
+        return set().union(*(leaves(hints[field.name]) for field in dataclasses.fields(hint)))
+    origin, inner = (
+        typing.get_origin(hint),
+        [arg for arg in typing.get_args(hint) if arg is not Ellipsis],
+    )
+    if origin is not None and origin is not tuple:
+        return {origin}
+    return set().union(*map(leaves, inner)) if inner else {hint}
+
+
+def test_the_example_files_run_to_a_record_and_a_ledger_of_the_schema_the_decoder_reads_the_run_back_exact(
+    tmp_path,
+):
+    """The record holds the files verbatim, every Node-clock in every round, the end's digest the rounds' state, 0 where
+    the run back misses; the ledger every train's counts as the rounds reach them; every field of the schema a whole
+    number or a label, and a float, a truth, an absence or a mapping is seen."""
     record = tmp_path / "run.jsonl"
     assert main.ran(PATHS, record) == []
     held, cause = records.read(str(record))
@@ -51,12 +72,7 @@ def test_the_example_files_run_to_a_record_the_decoder_reads_with_its_run_back_e
     cards = held.header["trains"]
     assert [t["label"] for t in cards] == [t["name"] for t in universe["trains"]]
     assert {t["winding"] for t in cards} == {1}
-
-
-def test_the_end_holds_the_digest_of_the_state_the_rounds_reach_and_reads_0_where_the_run_back_misses(
-    tmp_path,
-):
-    record, missed = tmp_path / "run.jsonl", tmp_path / "missed.jsonl"
+    missed = tmp_path / "missed.jsonl"
     reached = {}
 
     def kept(layout, s):
@@ -64,19 +80,9 @@ def test_the_end_holds_the_digest_of_the_state_the_rounds_reach_and_reads_0_wher
         return s  # a run back that undoes nothing
 
     assert run.run(main.ENGINE._replace(untick=kept), PATHS, missed) == []
-    assert main.ran(PATHS, record) == []
     end = read(record)[-1]
     assert end["exact"] == 1 and end["digest"] == run.digest(run.stated(reached["end"]))
     assert read(missed)[-1]["exact"] == 0 and read(missed)[-1]["digest"] == end["digest"]
-
-
-def test_the_ledger_holds_every_trains_counts_at_every_node_clock_after_every_round(tmp_path):
-    """Beside the record, one Count line per round, Node-clock and train, in that order, schema.Count's fields of their
-    shapes, and the decoder reads them: the train's now counts there, row by row, as the engine's own rounds reach
-    them; the metric family stands at rest in every line."""
-    record = tmp_path / "run.jsonl"
-    assert main.ran(PATHS, record) == []
-    universe, piece, setting = (read(path) for path in PATHS)
     held, _ = load(universe, setting, sites_of(piece["shape"]), *main.made(star(len(piece["shape"]))))
     laid, s, wanted = main.layout(universe, piece["shape"], held), State(*held.state), []
     for at in range(1, setting["ticks"] + 1):
@@ -107,9 +113,17 @@ def test_the_ledger_holds_every_trains_counts_at_every_node_clock_after_every_ro
     )
     rest = {x["train"]: x["count"] for x in lines if held.trains[x["train"]].square}
     assert set(rest) and all(not any(count) for count in rest.values())
+    kinds = [record for record in vars(schema).values() if dataclasses.is_dataclass(record)]
+    assert set().union(*map(leaves, kinds)) == {int, str}
+    broken = [tuple[int, float], bool, int | None, dict[str, int]]
+    assert all(
+        leaves(dataclasses.make_dataclass("Broken", [("x", hint)])) - {int, str} for hint in broken
+    )
 
 
-def test_a_departing_file_or_a_broken_promise_is_named_and_no_record_is_written(tmp_path):
+def test_a_departing_file_or_a_broken_promise_is_named_and_nothing_is_written_by_the_run_or_its_tool(
+    tmp_path,
+):
     universe, piece, setting = (read(path) for path in PATHS)
     universe["version"] = 1 + 1
     setting["gears"][0][-1] = TOOTH
@@ -125,9 +139,6 @@ def test_a_departing_file_or_a_broken_promise_is_named_and_no_record_is_written(
         found = main.ran(paths, record)
         assert len(found) == 1 and found[0].startswith(named), found
         assert not record.exists() and not run.ledger_of(record).exists()
-
-
-def test_the_tool_runs_the_files_and_names_a_departure(tmp_path):
     tool, record = ROOT / "tools" / "tensor24_run.py", tmp_path / "run.jsonl"
     done = subprocess.run(
         [sys.executable, "-I", str(tool), *map(str, PATHS), str(record)], capture_output=True, text=True

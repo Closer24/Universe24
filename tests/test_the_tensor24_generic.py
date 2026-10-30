@@ -1,6 +1,6 @@
-"""Tensor24's generic node, G0 to G1b: every row of every kind and part geared by one formula, every row's teeth read at
-the 00 slot of the train whose kinds are the four-vector's square, found by no name, place or role, the trains' order
-nothing to the layout or the run, no term the load lays, and the loaded act alike under the 24's turns."""
+"""Tensor24's whole node as the files lay it: every row geared by one formula, its teeth read at the square's 00 slot
+found by no name, place or role, one loaded round the naive round reading the square's slots by name, no term laid,
+and the act alike in every order of the trains and under the 24's turns."""
 
 import itertools
 import json
@@ -17,8 +17,8 @@ from tests import frame
 
 UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
 CUBE, SHAPE = (3, 3, 3), (2, 3, 4)  # a board the 24 turn, and a board of three sides
-# the run's ticks, the images' worlds, the clock's counts drawn below it
-TICKS, SEEDS, REACH = 6, range(3), 1 << 40
+# the run's ticks, the images' worlds, the clock's counts drawn below it, and a small full rate
+TICKS, SEEDS, REACH, GAMMA = 6, range(3), 1 << 40, 50
 # the four-vector's square, A1 + T1 + A1 + E + T2: its first row the clock
 SQUARE = (("A1", "T1", "A1", "E", "T2"), 1)
 # the kinds, the tables and the square, derived once from the star of three axes
@@ -46,9 +46,63 @@ def clock_of(held):
     return first
 
 
-def test_every_row_of_every_kind_and_part_is_geared_by_one_formula_and_the_load_lays_no_term():
+def naive(laid, held, s):
+    """One round site by site with loops: W the rest and every square's 00 slot, and each Spoke's grip its rest and every
+    square's ii slot of its axis at both ends of its Mesh, each slot read by its name in the square's basis."""
+    a, b, r = (x.tolist() for x in s[:3])
+    squares, d = [x.first for x in held.trains if x.square], len(CUBE)
+    rest, grip = int(laid.gearing.rest[0, 0]), int(laid.grip[0, 0])
+    out = [np.zeros_like(s.a) for _ in "abr"]
+    for i, x in enumerate(itertools.product(*map(range, CUBE))):
+        around = [np.ravel_multi_index(y, CUBE) for y in frame.near(x, CUBE)]  # +x, -x, +y, -y, +z, -z
+        w = rest + sum(a[f][i] for f in squares)
+        grips = [
+            grip + sum(a[f + 1 + d + k // 2][i] + a[f + 1 + d + k // 2][j] for f in squares)
+            for k, j in enumerate(around)
+        ]
+        for g in range(len(a)):
+            push = sum(k * (a[g][j] - a[g][i]) for k, j in zip(grips, around, strict=True))
+            q, kept = divmod(w * (a[g][i] - b[g][i]) + push + r[g][i], w)
+            out[0][g, i], out[1][g, i], out[2][g, i] = a[g][i] + q, a[g][i], kept
+    return out
+
+
+def rounds_alike():
+    """The example at a small full rate, its family's kinds in another order, the family first and a one-row train last,
+    two families, and none: one loaded round equals the naive round, and departs from it with the grips' read ignored
+    wherever a family stands."""
+    u = json.loads(UNIVERSE.read_text(encoding="utf-8"))
+    u["integers"]["full_rate"] = GAMMA
+    light, family = u["trains"]
+    one, again = dict(light, part=1), dict(family, name="again", kinds=["A1", "E", "T2", "T1", "A1"])
+    worlds = (
+        [light, family],
+        [light, dict(again, name="metric")],
+        [family, one],
+        [family, light, again],
+        [light],
+    )
+    for seed, trains in enumerate(worlds):
+        v = dict(u, trains=trains)
+        held, laid, _ = loaded(v, CUBE)
+        rng, (rows, n) = np.random.default_rng(seed), (len(laid.gearing.rest), laid.nb.shape[1])
+        a, b = frame.wide(rng, (rows, n)), frame.wide(rng, (rows, n))
+        clocks = [x.first for x in held.trains if x.square]
+        a[clocks] = rng.integers(0, REACH, (len(clocks), n)).astype(object)
+        s = state.State(
+            a, b, frame.wide(rng, (rows, n)) % step.weight(laid.gearing, laid.clock, a), 0 * a
+        )
+        (*read, _), (*blind, _) = step.tick(laid, s), step.tick(laid._replace(stretch=frame.unread()), s)
+        model = naive(laid, held, s)
+        if not frame.same(read, model) or frame.same(blind, model) is bool(clocks):
+            return False
+    return True
+
+
+def test_every_row_is_geared_by_one_formula_and_one_loaded_round_is_the_naive_round_reading_the_squares_slots():
     """Every train a seed, the square among them, so the one formula gives every row the same coefficients, grips and
-    read of the clock, the square's 00 slot; the load lays no term of J; no record or function holds a row apart."""
+    read of the clock, the square's 00 slot; the load lays no term of J; no record or function holds a row apart; and
+    one loaded round is the naive round that reads each square's 00 and ii slots by name."""
     shapes = [((k,), p) for k in ("A1", "A2", "T1", "T2") for p in (1, 1 + 1)]
     held, laid, _ = loaded(seeded(*shapes, SQUARE), CUBE)
     rows = len(laid.gearing.rest)
@@ -58,6 +112,7 @@ def test_every_row_of_every_kind_and_part_is_geared_by_one_formula_and_the_load_
     read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
     assert (read == np.outer(ones, np.eye(rows, dtype=int)[clock_of(held)])).all()
     assert not {"Ruler", "LAID"} & set(dir(state)) and not {"ruled", "reading", "at"} & set(dir(step))
+    assert rounds_alike()
 
 
 def orders_alike():
@@ -86,9 +141,8 @@ def orders_alike():
     return alike and (runs[0][len(state.Gearing._fields)] != 0).any()
 
 
-def test_every_order_of_the_trains_runs_alike_and_a_clock_found_by_place_does_not(monkeypatch):
-    """The orders run alike; with the clock read at the last train's first row, its place, they do not (the B2 mutant)."""
-    assert orders_alike()
+def by_place(monkeypatch):
+    """The B2 mutant: the clock read at the last train's first row, its place."""
     geared = loading.geared
 
     def by_place(universe, trains, spokes):
@@ -96,7 +150,6 @@ def test_every_order_of_the_trains_runs_alike_and_a_clock_found_by_place_does_no
         return gearing, (0 * first + trains[-1].first, factor, target), stretch, grip
 
     monkeypatch.setattr(loading, "geared", by_place)
-    assert not orders_alike()
 
 
 def turned(m, laid, held, s, teeth):
@@ -123,9 +176,10 @@ def turned(m, laid, held, s, teeth):
     return there, site
 
 
-def test_the_loaded_act_is_alike_under_the_24s_turns_of_its_sites_and_components():
-    """Seeds of the kinds A1 and A2, T1 and T2, and the square with its 00 slot moving, on a board the 24 turn: every turn of
-    the state, its components by their kinds' matrices and the square's rows by the square, turns the act alike."""
+def test_the_loaded_act_runs_alike_in_every_order_of_its_trains_and_under_the_24s_turns(monkeypatch):
+    """The 24 orders of four trains run alike, and not with the clock found by its place. Seeds of the kinds A1 and A2,
+    T1 and T2, and the square with its 00 slot moving, on a board the 24 turn: every turn of the state, its components by
+    their kinds' matrices and the square's rows by the square, turns the act alike."""
     held, laid, _ = loaded(seeded(*(((k,), 1) for k in ("A1", "A2", "T1", "T2")), SQUARE), CUBE)
     rows, n = len(laid.gearing.rest), laid.nb.shape[1]
     assert np.array_equal(laid.nb, frame.board(CUBE))
@@ -141,3 +195,6 @@ def test_the_loaded_act_is_alike_under_the_24s_turns_of_its_sites_and_components
             there, _ = turned(m, laid, held, s, teeth)
             moved, _ = turned(m, laid, held, out, teeth)
             assert frame.same(step.tick(laid, there), moved), m.tolist()
+    assert orders_alike()
+    by_place(monkeypatch)
+    assert not orders_alike()

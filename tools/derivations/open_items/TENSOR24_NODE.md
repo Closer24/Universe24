@@ -50,9 +50,9 @@ copies of it joined by Meshes.
 - **Nothing declared:** no particle, mass, coupling or strength in a file (decision 35). The files lay families (kinds,
   parts, pairs), the board and the start.
 - **The run back is exact** in its stated domain, by the act on the mirrored state (G1b (ii)).
-- **By the clock, then by the algebra** (the owner's law (10), ALGEBRA.md line 35): each term is told by the clock or
-  gear that makes it and by its algebra, in either direction; the physics, counted in the clicks, comes last forward or
-  first backward.
+- **Start from the simplest and close all three** (the owner's law (10), ALGEBRA.md line 35, in its form of 2026-10-30,
+  09:1x UTC): each term is told by the clock or gear that makes it, by its algebra and by its physics, starting from
+  the layer simplest for its question; the physics is always what the clicks read, never the board's numbers.
 
 ## 2. The state
 
@@ -173,13 +173,16 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
       factor times four legs, the unit (-1) for each it lacks, and every leg that is a gear's is pushed by minus the
       factor times the other three, so each vertex pushes all its legs and keeps one energy. The loader lays the
       potential, empty until G3 (no strength typed or laid), and main.py makes it the plan.
-    - The tests choose g, lam, kappa and n (tests/test_the_tensor24_spring.py) and hold the properties: the gear on its
-      own spring within a round of the exact recurrence, the vertex's gear at a small swing within a round of it, the
-      runaway below the bound and the swing held at twice it, the 24's turn exact, the beat alike along an axis and off
-      it, the run back bit for bit. A probe of the act gives Animate's numbers exactly (the runaway at rounds 49 and 29
-      with no four-leg term, 205 and 50 at half the bound). The formula law reads three readings, any of them the
-      unit, against the naive model, and its mutant (the third reading taken as the unit) fails it; the sources turn
-      under the 24 with a third reading on the cube.
+    - The tests read the vertex law as a generic part (tests/test_the_tensor24_engine.py, on the owner's word of
+      2026-10-30, 09:2x UTC: "what is generic, test only it, and then the whole"): J is minus the gradient of its
+      potential on any monomials, its work on a displacement the potential's rate read exactly by the five-point
+      stencil, and the unit read as 0, the third reading ignored or the push without its sign each break it. The
+      formula law reads three readings, any of them the unit, against the naive model; the sources turn under the 24
+      with a third reading on the cube; the run back holds through them. The spring's phenomena at chosen g, lam, kappa
+      and n (the beat within a round of the exact recurrence, the runaway below the bound and the swing held at twice
+      it, the 24's turn, the beat alike along an axis and off it) left the suite with tests/test_the_tensor24_spring.py
+      at the test cut; they stand in git's history at 2c87a07ed, and a probe of the act gives Animate's numbers exactly
+      (the runaway at rounds 49 and 29 with no four-leg term, 205 and 50 at half the bound).
 - **The strength:** in the vertex law, read through the ruler, no file holding it (decision 35); no single integer serves
   all tables (David, 6501657960, item 5). OPEN.
 - **The tables:** read in the square's basis where E stands, so E's ten oblique tables are never read (David,

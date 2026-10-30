@@ -1,9 +1,9 @@
-"""Tensor24's frame: its property tests on a trivial engine, each one failing on every mutant it must catch."""
+"""Tensor24's frame, the generic properties any engine is read by: on a trivial engine each holds and fails on every
+mutant it must catch, here and in fresh interpreters."""
 
 import itertools
 
 import numpy as np
-import pytest
 
 from tests.frame import STORED, Engine, digest, holds, near, turned, undone_elsewhere, unseeded, wide
 
@@ -209,37 +209,27 @@ def mutants():
     }
 
 
-@pytest.mark.parametrize("mutant", list(mutants()))
-def test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_must_catch(mutant):
-    name, make = mutants()[mutant]
+def test_each_property_holds_on_the_trivial_engine_and_fails_on_every_mutant_it_must_catch():
+    """At three seeds; the images fail on a board the 24 do not keep; a mixing the 24 keep passes the kinds' images,
+    and the mixing mutants pass the images of the sites alone on every stored kind."""
+    caught = {name for name, _ in mutants().values()}
     for seed in range(3):
-        assert holds(name, broken(trivial), SHAPE, seed)
-        assert not holds(name, make, SHAPE, seed)
-
-
-def test_the_images_fail_on_a_board_the_24_do_not_keep():
-    assert not holds("images", broken(trivial), ASKEW, 0)
-    assert not holds("kinds", broken(trivial), ASKEW, 0)
-
-
-def test_a_mixing_the_24_keep_passes_the_kinds_images():
-    for seed in range(3):
+        assert all(holds(name, broken(trivial), SHAPE, seed) for name in caught)
+        assert not [m for m, (name, make) in mutants().items() if holds(name, make, SHAPE, seed)]
         assert holds("kinds", broken(graded), SHAPE, seed)
-
-
-def test_the_mixing_mutants_pass_the_images_of_the_sites_alone_on_every_stored_kind():
+    assert not holds("images", broken(trivial), ASKEW, 0) and not holds(
+        "kinds", broken(trivial), ASKEW, 0
+    )
     for name in ("A2 fed into A1", "T1's second component fed into its first", "a tension fed by T1"):
         assert turned(mutants()[name][1], SHAPE, np.random.default_rng(0), STORED)
 
 
-@pytest.mark.parametrize("factory, pure", [("engine", True), ("cached", False), ("salted", False)])
-def test_a_world_is_answered_alike_in_fresh_interpreters_at_other_hash_seeds(factory, pure):
-    assert unseeded(__name__, factory, SHAPE) == pure
-
-
-@pytest.mark.parametrize("factory, honest", [("engine", True), ("fifo", False), ("memo", False)])
-def test_a_world_is_run_back_in_a_fresh_interpreter_that_never_stepped(factory, honest):
-    HELD.clear()
-    for seed in range(3):
-        assert holds("bijectivity", globals()[factory], SHAPE, seed)
-    assert undone_elsewhere(__name__, factory, SHAPE, 0) == honest
+def test_fresh_interpreters_answer_a_world_alike_and_run_back_only_what_an_honest_engine_stepped():
+    """A pure engine answers alike at other hash seeds, a cached or salted one does not; an honest engine is run back in
+    an interpreter that never stepped, one that queued or kept its worlds in the module is not."""
+    assert [unseeded(__name__, f, SHAPE) for f in ("engine", "cached", "salted")] == [True, False, False]
+    for factory, honest in (("engine", True), ("fifo", False), ("memo", False)):
+        HELD.clear()
+        for seed in range(3):
+            assert holds("bijectivity", globals()[factory], SHAPE, seed)
+        assert undone_elsewhere(__name__, factory, SHAPE, 0) == honest
