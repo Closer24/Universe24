@@ -1,4 +1,5 @@
-"""Tensor24's load: the coupling rows' plan against a naive sum, each refusal by name with its edge, and the rename law."""
+"""Tensor24's load: each refusal by name with its edge, the gears laid on their rows, the promise, the square found by
+its kinds' character alone, and no term of J, as no file declares a coupling."""
 
 import copy
 import itertools
@@ -6,13 +7,12 @@ import itertools
 import numpy as np
 import pytest
 
-from tensor24.engine.contract import contract
-from tensor24.engine.state import Plan, State
+from tensor24.engine.state import State
 from tensor24.engine.step import tick, untick
 from tensor24.main import made as joint
 from tensor24.runner.board import board
-from tensor24.runner.files import COUPLING, OPERANDS
-from tensor24.runner.load import geometry, load, promises, star
+from tensor24.runner.files import held_departures, promises, vocabulary
+from tensor24.runner.load import geometry, load, star
 from tests.frame import plain
 
 D = 3
@@ -37,126 +37,23 @@ def gears(rows=LAID):
     return np.zeros((rows, SITES), dtype=object)
 
 
-def row(**fields):
-    """A coupling row of the files' twelve fields, every one 0 but those named and a strength of 1."""
-    return list((dict(zip(COUPLING, [0] * (len(COUPLING) - 1) + [1], strict=True)) | fields).values())
-
-
-def op(name):
-    return OPERANDS.index(name)
-
-
-COUPLINGS = [
-    row(
-        train=1, with_train=1, target=4, strength=3
-    ),  # the dot of the spin with itself, into the potential's A1
-    row(
-        train=1, with_train=4, with_kind=1, with_part=1, target=1, strength=-2
-    ),  # the cross with the potential's T1
-    row(train=2, with_train=1, target=3, strength=5),  # A2 times T1 into T2
-    row(
-        train=4,
-        operand=op("gradient"),
-        with_train=0,
-        with_part=1,
-        target=4,
-        target_kind=1,
-        target_part=1,
-        strength=7,
-    ),
-    row(
-        train=0,
-        part=1,
-        with_train=4,
-        with_kind=1,
-        with_part=1,
-        operand=op("pull"),
-        target=1,
-        strength=11,
-    ),
-    row(train=0, with_train=0, with_part=1, target=0, target_part=1, strength=13),
-    row(
-        train=0, part=1, operand=op("gradient"), with_train=1, target=4, strength=17
-    ),  # a hand's second part's
-    row(
-        train=5, kind=1, operand=op("gradient"), with_train=1, target=4, strength=19
-    ),  # an A1 at its train's second kind
-]
-
-
 @pytest.fixture(scope="module")
 def made():
     """The kinds and tables as main.py, the one joint, makes them for the load."""
     return joint(star(D))
 
 
-def universe(trains=TRAINS, couplings=COUPLINGS):
-    return {"trains": copy.deepcopy(trains), "couplings": copy.deepcopy(couplings)}
-
-
-def naive(u, c, readings, labels):
-    """J by loops over the coupling rows and the tables, each train's rows counted afresh in its kinds' order."""
-    rows, at = {}, 0
-    for t, train in enumerate(u["trains"]):
-        for j, label in enumerate(train["kinds"]):
-            for x in range(len(c[(labels.index(label), labels.index("A1"), labels.index(label))])):
-                for p in range(train["part"]):
-                    rows[(t, j, x, p)], at = at, at + 1
-    planes = {"value": [0], "gradient": [1, 2, 3], "pull": [4], "before": [5], "after": [6]}
-    j = np.zeros((at, readings.shape[-1]), dtype=object)
-    for i, ki, pi, oi, k, kk, pk, ok, m, km, pm, strength in u["couplings"]:
-
-        def reading(t, kind, part, o, component):
-            if OPERANDS[o] == "gradient":
-                return readings[planes["gradient"][component] * at + rows[(t, kind, 0, part)]]
-            return readings[planes[OPERANDS[o]][0] * at + rows[(t, kind, component, part)]]
-
-        a = (
-            labels.index("T1")
-            if OPERANDS[oi] == "gradient"
-            else labels.index(u["trains"][i]["kinds"][ki])
-        )
-        b = (
-            labels.index("T1")
-            if OPERANDS[ok] == "gradient"
-            else labels.index(u["trains"][k]["kinds"][kk])
-        )
-        table = c[(a, b, labels.index(u["trains"][m]["kinds"][km]))]
-        for x, y, z in itertools.product(*map(range, table.shape)):
-            j[rows[(m, km, x, pm)]] += (
-                strength * table[x, y, z] * reading(i, ki, pi, oi, y) * reading(k, kk, pk, ok, z)
-            )
-    return j
+def universe(trains=TRAINS):
+    return {"trains": copy.deepcopy(trains)}
 
 
 def loaded(made, u, gears=()):
+    """The files held against the engine's kinds, then loaded, as the run does: the departures, or the loaded and none."""
     ks, c, square = made
-    return load(u, {"gears": [list(g) for g in gears]}, SITES, ks, c, square)
-
-
-def test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_the_tables(made):
-    """At strengths of a few bits and past 64, J is the naive sum, of Python integers whatever gears it is given."""
-    ks, c, square = made
-    labels = tuple(name.upper() for name in ks._fields)
-    rng = np.random.default_rng(7)
-    for shift in (0, 70):
-        u = universe(couplings=[[*x[:-1], x[-1] << shift] for x in COUPLINGS])
-        held, found = loaded(made, u)
-        assert found == [] and held is not None
-        readings = (
-            rng.integers(-1 << 40, 1 << 40, (len(OPERANDS) + D - 1, LAID, SITES)).astype(object) << 70
-        )
-        flat, given = (
-            readings.reshape(-1, SITES),
-            rng.integers(1, 1 << 30, (LAID, SITES)).astype(object) << 80,
-        )
-        kept, j = given.copy(), naive(u, c, flat, labels)
-        assert (contract(Plan(*held.plan), flat, given) == j).all() and (given == kept).all()
-        fixed = contract(Plan(*held.plan), flat, np.zeros((LAID, SITES), dtype=np.int64))
-        assert fixed.dtype == object and (fixed == j).all()
-
-
-AT = f"universe.couplings[{len(COUPLINGS)}]"  # where an edit's coupling row stands, after the universe's own
+    setting = {"gears": [list(g) for g in gears]}
+    found = held_departures(u, setting, vocabulary(ks, square))
+    held, found = (None, found) if found else load(u, setting, SITES, ks, c, square)
+    return (None if found else held), found
 
 
 def edits():
@@ -165,8 +62,9 @@ def edits():
     def train(at, **fields):
         return lambda u: u["trains"][at].update(fields)
 
-    def coupling(**fields):
-        return lambda u: u["couplings"].append(row(**fields))
+    def square(part=1):  # the four-vector's square appended
+        family = {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": part}
+        return lambda u: u["trains"].append(family)
 
     return {
         "a kind none of the 24's": (
@@ -175,48 +73,16 @@ def edits():
         ),
         "E alone": (
             train(1, kinds=["E"]),
-            "universe.trains[1].kinds: a kind with no whole basis the 24 permute stands only in the four-vector's square",
+            "universe.trains[1].kinds[0]: 'E' has no whole basis the 24 permute",
         ),
-        "E in the four-vector's square": (
-            lambda u: u["trains"].append(
-                {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1}
-            ),
-            None,
+        "E in the four-vector's square": (square(), None),
+        "the square's kinds at part 2, its character twice the square's": (
+            square(part=1 + 1),
+            f"universe.trains[{len(TRAINS)}].kinds[3]: 'E' has no whole basis the 24 permute",
         ),
-        "a twin hand": (train(1, part=4), "universe.trains[1].part: 1, one gear, or 2, a hand, not 4"),
-        "a part of 3": (train(1, part=3), "universe.trains[1].part: 1, one gear, or 2, a hand, not 3"),
+        "a twin hand, the act generic in the part": (train(1, part=4), None),
+        "a part of 3": (train(1, part=3), None),
         "a hand of T1": (train(1, part=2), None),
-        "a channel the 24 forbid": (
-            coupling(target=1),
-            f"{AT}: the 24 hold no A1 x A1 -> T1",
-        ),
-        "the scalar product": (coupling(target=0), None),
-        "a gradient of a T1 train": (
-            coupling(train=1, operand=op("gradient"), target=4),
-            f"{AT}: a gradient of a train not of A1",
-        ),
-        "a gradient of the potential's T1, its second kind": (
-            coupling(train=4, kind=1, operand=op("gradient"), target=1),
-            f"{AT}: a gradient of a train not of A1",
-        ),
-        "a gradient of the field's A1, its second kind": (
-            coupling(train=5, kind=1, operand=op("gradient"), with_train=1, target=0),
-            None,
-        ),
-        "a gradient of a T1 train on the second side": (
-            coupling(with_train=1, with_operand=op("gradient"), target=4),
-            f"{AT}: a gradient of a train not of A1",
-        ),
-        "a gradient of an A1 train": (coupling(operand=op("gradient"), with_train=1, target=0), None),
-        "the before stride": (
-            coupling(operand=op("before")),
-            f"{AT}: before and after enter at stage 7c",
-        ),
-        "the after stride": (
-            coupling(with_operand=op("after")),
-            f"{AT}: before and after enter at stage 7c",
-        ),
-        "the pull": (coupling(operand=op("pull"), with_operand=op("pull")), None),
     }
 
 
@@ -265,20 +131,6 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
 
 
-def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
-    ks, c, square = made
-    u = universe(couplings=[row(target=1)])
-    held, found = loaded(made, u)
-    assert found == ["universe.couplings[0]: the 24 hold no A1 x A1 -> T1"]
-    from tensor24.runner.load import plan, reads_of, trains_of
-
-    labels, dims, reads = reads_of(ks, square)
-    trains, _ = trains_of(u["trains"], labels, dims, reads)
-    planned, _ = plan(u["couplings"], trains, c, labels, D)
-    readings = np.ones(((len(OPERANDS) + D - 1) * sum(t.rows() for t in trains), SITES), dtype=object)
-    assert planned[0].size == 0 and not contract(Plan(*planned), readings, gears()).any()
-
-
 def rewound(r, w):
     """One round of every gear on a ring of sites and its run back: the start back exactly, or not."""
     nb = board((SITES, 1, 1))
@@ -300,68 +152,35 @@ def test_the_promise_is_named_where_it_fails_and_is_the_run_backs_own_condition(
     assert promises(r, w) == [] and rewound(r, w)
 
 
-def renamed(made, scale=lambda strength, target: strength):
-    """The trains in other orders give one plan: J moves with its trains' rows; the scale is how the load reads a strength."""
-
-    def scaled(couplings):
-        return [[*x[:-1], scale(x[-1], x[8])] for x in couplings]
-
-    base, _ = loaded(made, universe(couplings=scaled(COUPLINGS)))
-    rows = sum(t.rows() for t in base.trains)
-    planes = len(OPERANDS) + D - 1
-    readings = (
-        np.random.default_rng(3).integers(-1 << 30, 1 << 30, (planes * rows, SITES)).astype(object)
-    )
-    j = contract(Plan(*base.plan), readings, gears(rows))
-    for order in [(5, 4, 3, 2, 1, 0), (1, 0, 5, 4, 2, 3)]:
-        place = {old: new for new, old in enumerate(order)}
-        couplings = [
-            [place[x[0]], *x[1:4], place[x[4]], *x[5:8], place[x[8]], *x[9:]] for x in COUPLINGS
-        ]
-        moved, found = loaded(made, universe([TRAINS[o] for o in order], scaled(couplings)))
-        mapping = np.concatenate(
-            [
-                np.arange(base.trains[o].first, base.trains[o].first + base.trains[o].rows())
-                for o in order
-            ]
-        )
-        shuffled = readings.reshape(planes, rows, SITES)[:, mapping].reshape(-1, SITES)
-        if found or not (contract(Plan(*moved.plan), shuffled, gears(rows)) == j[mapping]).all():
-            return False
-    return True
-
-
-def test_the_rename_law_holds_and_fails_where_a_strength_is_read_by_its_target_trains_place(made):
-    assert renamed(made)
-    assert not renamed(made, lambda strength, target: strength * (target + 1))
-
-
 def test_the_files_the_checker_holds_load_or_are_named_and_none_raises(made):
-    """Sofer's fuzz of stage 6: no couplings or no gears key loads as none, and a board past one array is named."""
+    """Sofer's fuzz of stage 6: no gears key loads as none and lays no term of J, and a board past one array is named."""
     ks, c, square = made
-    bare = universe()
-    bare.pop("couplings")
-    assert load(bare, {}, SITES, ks, c, square)[1] == []
-    held, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
-    assert held is None and len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
+    held, found = load(universe(), {}, SITES, ks, c, square)
+    assert found == [] and not any(len(x) for x in held.plan)
+    _, found = load(universe(), {"gears": []}, 1 << 64, ks, c, square)
+    assert len(found) == 1 and found[0].startswith(f"piece.shape: {LAID} rows at")
 
 
 def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
-    """Whichever of the lay's four arrays the machine's memory refuses, the board is named and nothing raises."""
+    """Where the machine's memory refuses the lay's arrays, the board is named and nothing raises."""
     ks, c, square = made
-    zeros = np.zeros
-    for after in range(len("abrd")):  # the gears' four: `after` made
-        asked = []
 
-        def refused(*args, after=after, asked=asked, **kwargs):
-            asked.append(args)
-            if len(asked) > after:
-                raise MemoryError("no room")
-            return zeros(*args, **kwargs)
+    def refused(*args, **kwargs):
+        raise MemoryError("no room")
 
-        monkeypatch.setattr(np, "zeros", refused)
-        held, found = load(universe(), {"gears": []}, SITES, ks, c, square)
-        assert len(asked) == after + 1 and held is None
-        assert found == [
-            f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
-        ]
+    monkeypatch.setattr(np, "zeros", refused)
+    _, found = load(universe(), {"gears": []}, SITES, ks, c, square)
+    assert found == [
+        f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
+    ]
+
+
+def test_the_square_is_found_by_its_kinds_character_in_every_order_and_by_nothing_else(made):
+    """A train is marked the four-vector's square where its part times its kinds' character is the square's: in every
+    order of the square's five kinds, and not for ten rows of three T1 kinds and one of A1."""
+    family, other = ("A1", "T1", "A1", "E", "T2"), ("T1", "T1", "T1", "A1")
+    for kinds in [*sorted(set(itertools.permutations(family))), other]:
+        u = universe()
+        u["trains"].append({"name": "metric", "kinds": list(kinds), "part": 1})
+        held, found = loaded(made, u)
+        assert found == [] and held.trains.square.tolist() == [0] * len(TRAINS) + [int(kinds != other)]

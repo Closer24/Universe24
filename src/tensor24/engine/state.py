@@ -15,7 +15,7 @@ class State(NamedTuple):
 
 
 class Plan(NamedTuple):
-    """The coupling rows expanded at load over the kinds' tables: per term its two readings, its whole factor, its target."""
+    """J's terms over the kinds' tables, laid at load: per term its two readings, its whole factor, its target; none until the coupling family's one plan (G3)."""
 
     first: Z  # (terms,): the row of the readings that enters first
     second: Z  # (terms,): the row that enters second
@@ -43,7 +43,7 @@ class Gearing(NamedTuple):
 
 
 class Layout(NamedTuple):
-    """The board read once: the neighbours, the Spokes' directions, each Spoke's Mesh, the grips, the gearing, J's plan and the clocks."""
+    """The board read once: the neighbours, the Spokes' directions, each Spoke's Mesh, the grips, the gearing, J's plan, the clocks and the grips' read."""
 
     nb: Z  # (6, N): +x, -x, +y, -y, +z, -z, each the other's opposite (the load makes the relation symmetric)
     spokes: Z  # (6, d): each Spoke's direction on the board's axes, a unit vector or its opposite, in nb's order
@@ -52,3 +52,4 @@ class Layout(NamedTuple):
     gearing: Gearing
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, and the force
     clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
+    stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh

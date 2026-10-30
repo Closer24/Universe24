@@ -65,8 +65,8 @@ TOOLS = re.compile(
 )  # the new engine's tools, directly under tools/: the rules of TOOL_RULES alone
 TOOLS_SPEC = ":(glob)tools/tensor24_*.py"  # the same files as git's pathspec
 TOOL_RULES = frozenset(
-    {"NUMBER", "FLOAT", "TWICE"}
-)  # no number beyond 0 and 1, no float and no two spelt as a sum, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x)
+    {"NUMBER", "FLOAT", "TWICE", "ROOT", "TABLE"}
+)  # no number beyond 0 and 1, no float, no two spelt as a sum, no root and no typed table, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x; decision 41, 2026-10-30, 02:1x: no root and no table, now or later, and not outside the logic either)
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
 BASELINE = HERE / "scribe_scan_baseline.json"
@@ -129,6 +129,14 @@ RULES: dict[str, tuple[str, str]] = {
     "ROOT": (
         "BLOCK",
         "a call of an integer root, the integer sine by search: no new call (law: No circularity that makes a phenomenon happen)",
+    ),
+    "MASK": (
+        "BLOCK",
+        "a selection by a condition in the act, the loader or main.py: an array indexed by a comparison or a boolean expression, or np.flatnonzero, nonzero, argwhere, compress, extract: a mask is an if spelt as an index; where the weights are 0 or 1 a product does the work (Postulate 5: no mask; no train is told from another by a condition)",
+    ),
+    "BOOKS": (
+        "BLOCK",
+        "the word book in a name, an attribute, a keyword, an import alias or a string of the engine, its loader, its runner or main.py: no store of accounts beside the state; a push is read by the tensor operation from the state of every gear (law: No books in the engine)",
     ),
     "WORD": (
         "BLOCK",
@@ -308,6 +316,15 @@ DECODER_KEEPS = frozenset(
 # main.py: about 15 lines that pass the engine's functions into the runner, the one place that imports both; it is spared no rule
 # (the architect's table, eaf07f596: refused, every rule but the imports), so it holds no loop, branch, comparison or number
 MAIN = NEW_ENGINE + "/main.py"
+MASK_CALLS = frozenset(
+    "flatnonzero nonzero argwhere compress extract".split()
+)  # numpy's selections by a condition
+BOOK_SCOPE = (
+    NEW_ENGINE + "/algebra/",
+    NEW_ENGINE + "/engine/",
+    RUNNER,
+    MAIN,
+)  # no books in the engine, its loader, its runner or main.py (law line 102, the owner's word of 2026-10-30, 04:1x); the record's schema and the decoder keep the ledger's name (his word of 04:3x)
 CARRY_HOME = frozenset(
     {"core/acts.py", "core/rule3.py", NEW_ENGINE + "/algebra/carry.py"}
 )  # where Rule3's division and remainder are written (the architect's design, approved at eaf07f596: algebra/carry.py alone in the new engine)
@@ -417,6 +434,41 @@ def exempt(rel: str, rule: str) -> bool:
             return False  # the loader is spared no rule: it builds the engine's coefficients (the files' format, the driver, the rewind check and the rounds stay spared)
         return rule != "LOGREAD" or rel == REWIND  # the undo log is read by the rewind check alone
     return False
+
+
+def mask_name(node: ast.AST) -> str:
+    """The selection by a condition in a node: an index that is a comparison, a boolean operation or a negation, or a call of a numpy selection; else nothing."""
+    if isinstance(node, ast.Subscript) and isinstance(
+        node.slice, ast.Compare | ast.BoolOp | ast.UnaryOp
+    ):
+        if not isinstance(node.slice, ast.UnaryOp) or isinstance(node.slice.op, ast.Not | ast.Invert):
+            return "index by a condition"
+    if isinstance(node, ast.Call):
+        name = node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
+        if name in MASK_CALLS:
+            return name
+    return ""
+
+
+def book_name(node: ast.AST, docstrings: set[ast.AST]) -> str:
+    """The name, attribute, keyword, alias or string (a docstring spared) in a node that holds the word book, else nothing."""
+    if isinstance(node, ast.Name):
+        text = node.id
+    elif isinstance(node, ast.Attribute):
+        text = node.attr
+    elif isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
+        text = node.name
+    elif isinstance(node, ast.arg):
+        text = node.arg
+    elif isinstance(node, ast.keyword):
+        text = node.arg or ""
+    elif isinstance(node, ast.alias):
+        text = node.asname or node.name
+    elif isinstance(node, ast.Constant) and isinstance(node.value, str) and node not in docstrings:
+        text = node.value
+    else:
+        return ""
+    return text if "book" in text.lower() else ""
 
 
 def spelt_operation(node: ast.AST, numpy: set[str]) -> bool:
@@ -1153,6 +1205,23 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add(
                     "TWICE", node, ast.unparse(node)
                 )  # not spared to the runner or the decoder: the loader's twos are the engine's
+    if rel.startswith(ACT) or rel in (LOADER, MAIN):
+        for node in ast.walk(tree):
+            if word := mask_name(node):
+                add("MASK", node, word)
+    if rel.startswith(BOOK_SCOPE):
+        docstrings = {
+            body[0].value
+            for node in ast.walk(tree)
+            if isinstance(node, ast.Module | ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef)
+            and (body := node.body)
+            and isinstance(body[0], ast.Expr)
+            and isinstance(body[0].value, ast.Constant)
+            and isinstance(body[0].value.value, str)
+        }
+        for node in ast.walk(tree):
+            if word := book_name(node, docstrings):
+                add("BOOKS", node, word)
     if rel.startswith(ACT) or rel == LOADER:
         for node in ast.walk(tree):
             if (

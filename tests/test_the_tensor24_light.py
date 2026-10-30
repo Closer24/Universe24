@@ -16,7 +16,7 @@ from event_universe.trains import REGULATOR
 from tensor24.engine import mesh, step
 from tensor24.engine.state import Layout
 from tensor24.runner.board import board
-from tests.frame import same
+from tests.frame import same, unread
 from tests.laws import world_of
 
 
@@ -100,7 +100,7 @@ def alike(m, heads):
         meshes = np.arange(6 * nb.shape[1]).reshape(6, -1)
         for act in seen:
             grip = np.concatenate([np.asarray(g, dtype=object).reshape(-1) for g in act["grip"]])
-            layout = Layout(nb, None, meshes, grip.reshape(1, -1), None, None, None)
+            layout = Layout(nb, None, meshes, grip.reshape(1, -1), None, None, None, unread())
             w, wp = (np.asarray(act[key], dtype=object).reshape(1, -1) for key in ("w", "wp"))
             held = w == wp
             for (a, b, r), done, end in zip(act["start"], act["act"], act["end"], strict=True):

@@ -1844,6 +1844,84 @@ CASES += [
     ("a tool: round()", TOOL_FILES, "def f(a):\n    return round(a)\n", {"FLOAT": 1}),
     ("a tool: pow()", TOOL_FILES, "def f(a, b):\n    return pow(a, b)\n", {"FLOAT": 1}),
     (
+        "a tool: a root call is refused",
+        TOOL_FILES,
+        "def f(a, isqrt):\n    return isqrt(a)\n",
+        {"ROOT": 1},
+    ),
+    (
+        "a tool: a typed table of integers is refused",
+        TOOL_DECODE,
+        "TABLE = ((0, 1), (-1, 0))\n",
+        {"TABLE": 1},
+    ),
+    ("a tool: a pair of integers is no table", TOOL_DECODE, "PAIR = (0, 1)\n", {}),
+    (
+        "the engine: a name with books is refused",
+        NEW_STEP,
+        "def f(books):\n    return books\n",
+        {"BOOKS": 2},
+    ),
+    (
+        "the engine: an attribute with books is refused",
+        NEW_STEP,
+        "def f(a):\n    return a.books\n",
+        {"BOOKS": 1},
+    ),
+    ("the engine: a string with books is refused", NEW_STEP, 'KIND = "Books"\n', {"BOOKS": 1}),
+    (
+        "the engine: a docstring that says books is spared",
+        NEW_STEP,
+        'def f(a):\n    """No books here."""\n    return a\n',
+        {},
+    ),
+    (
+        "the loader: a keyword with books is refused",
+        NEW_LOADER,
+        "def f(g):\n    return g(books=0)\n",
+        {"BOOKS": 1},
+    ),
+    ("main: an import alias with books is refused", NEW_MAIN, "import json as books\n", {"BOOKS": 1}),
+    ("the decoder keeps the ledger's name", NEW_DECODER, "def f(books):\n    return books\n", {}),
+    (
+        "the record's schema keeps the ledger's name",
+        "tensor24/record/schema.py",
+        "class Books:\n    pass\n",
+        {},
+    ),
+    ("a tool may name books", TOOL_FILES, "def f(books):\n    return books\n", {}),
+    (
+        "the main: an index by an equality is a mask",
+        NEW_MAIN,
+        "def f(x, w):\n    return x[w == 1]\n",
+        {"MASK": 1},
+    ),
+    (
+        "the loader: np.flatnonzero is a mask",
+        NEW_LOADER,
+        "import numpy as np\n\n\ndef f(x):\n    return np.flatnonzero(x)\n",
+        {"MASK": 1},
+    ),
+    (
+        "the loader: an index by a negation is a mask",
+        NEW_LOADER,
+        "def f(x, m):\n    return x[~m]\n",
+        {"MASK": 1},
+    ),
+    (
+        "the loader: an index by an integer array is a gather, no mask",
+        NEW_LOADER,
+        "def f(x, idx):\n    return x[idx]\n",
+        {},
+    ),
+    (
+        "the loader: a negative constant index is no mask",
+        NEW_LOADER,
+        "def f(x):\n    return x[-1]\n",
+        {"POSITION": 1},
+    ),
+    ("the decoder is spared the mask rule", NEW_DECODER, "def f(x, w):\n    return x[w == 1]\n", {}),
+    (
         "a tool: a path joined by pathlib's slash with strings",
         TOOL_FILES,
         'from pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1] / "examples" / "tensor24"\n',
@@ -1873,7 +1951,12 @@ CASES += [
         "import math\n\n\ndef sine(a, b):\n    for x in a:\n        if x < b:\n            raise ValueError(x)\n    return min(a, b) ** b, a % b\n",
         {},
     ),
-    ("a tool: a table of 0 and 1 is no table here", TOOL_DECODE, "X = (1, 0, 1)\n", {}),
+    (
+        "a tool: a table of 0 and 1 is a table, as in the code",
+        TOOL_DECODE,
+        "X = (1, 0, 1)\n",
+        {"TABLE": 1},
+    ),
 ]
 
 

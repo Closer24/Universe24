@@ -4,6 +4,5 @@
   "trains": [
     {"name": "light", "kinds": ["A1"], "part": 2, "pinion": 15162856759112389},
     {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1, "pinion": 15162856759112389}
-  ],
-  "couplings": []
+  ]
 }

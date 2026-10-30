@@ -321,11 +321,12 @@ def test_each_law_of_the_kinds_fails_on_its_mutant(mutant, good):
 
 
 def test_the_joint_makes_the_kinds_and_the_tables_the_load_reads(good):
-    """main.made, the one joint, gives these kinds on the 24 and the tables from the star, its inverses the turns' own, and the square."""
+    """main.made, the one joint, gives these kinds on the 24 and 0 off them, the tables from the star, its inverses the
+    turns' own, and the square on the 24; the square's first row, 00, the one row every turn fixes."""
     held, c, square = joint(star(3))
-    at = good.weight == 1
-    assert all((x == y[at]).all() for x, y in zip(held, good.kinds, strict=True))
-    assert (square == kinds.square(good.kinds)[at]).all()
+    w, fixed = good.weight[:, None, None], (np.einsum("gii->i", square) == good.weight.sum()).tolist()
+    assert all((x == w * y).all() for x, y in zip(held, good.kinds, strict=True))
+    assert (square == w * kinds.square(good.kinds)).all() and fixed.index(True) == 0 and sum(fixed) == 1
     assert c.keys() == good.c.keys() and all((c[key] == good.c[key]).all() for key in c)
 
 

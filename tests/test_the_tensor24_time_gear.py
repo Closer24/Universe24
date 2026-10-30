@@ -2,6 +2,7 @@
 slot's count at the now slot, a still clock the act at fixed teeth, and the run back exact while every kept tooth stands
 below the next round's teeth, departing where a falling clock breaks that, which the metric's stage owes."""
 
+import itertools
 import json
 from pathlib import Path
 
@@ -9,11 +10,12 @@ import numpy as np
 
 from tensor24.engine import step
 from tensor24.engine.state import State
-from tensor24.main import layout, made
+from tensor24.main import layout, made, ran
 from tensor24.runner.files import sites_of
 from tensor24.runner.load import load, mesh_unit, star
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
+from tensor24.runner.run import ledger_of
 from tests import frame
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
@@ -36,7 +38,11 @@ def world(rng, laid, moving=True):
     strides, or still at 0; each fine tooth within its teeth."""
     rows, n = len(laid.gearing.rest), laid.nb.shape[1]
     a, b = frame.wide(rng, (rows, n)), frame.wide(rng, (rows, n))
-    clock = laid.clock.first[0]
+    clock = frame.dense(laid.clock, rows, rows)[0].tolist().index(1)
+    a[clock + 1 : clock + 10], b[clock + 1 : clock + 10] = (
+        0,
+        0,
+    )  # the family past its 00 slot at rest, the flat metric
     a[clock] = rng.integers(0, REACH, n).astype(object) * moving
     b[clock] = a[clock] - rng.integers(-(1 << 20), 1 << 20, n).astype(object) * moving
     teeth = frame.wide(rng, (rows, n)) % step.weight(laid.gearing, laid.clock, a)
@@ -48,7 +54,7 @@ def reached(laid, s, n):
     return list(rounds(step.tick, laid, s, n))
 
 
-def test_every_coefficient_is_the_files_integers_by_one_formula_the_clocks_own_gear_among_them():
+def test_every_coefficient_is_the_files_integers_by_one_formula_the_metric_familys_rows_among_them():
     """T = 6 den Gamma^2 G^2 at rest for every row, s = 1, no spring (no row holds a term of its own), the force's path
     (T_k = T_d = 1); every row reads its teeth from the 00 slot of the metric family, the train the file writes."""
     u, held, laid = built()
@@ -60,12 +66,9 @@ def test_every_coefficient_is_the_files_integers_by_one_formula_the_clocks_own_g
     rows = len(rest)
     assert rest == [spokes * den * gamma * gamma * g * g] * rows
     assert s == kick == drive == [1] * rows
-    first, factor, target = (x.tolist() for x in laid.clock)
-    assert (
-        first == [x.first for x in held.trains if x.square] * rows
-        and factor == [1] * rows
-        and target == list(range(rows))
-    )
+    (clock,) = [x.first for x in held.trains if x.square]
+    read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
+    assert (read == np.outer(ones, np.eye(rows, dtype=int)[clock])).all()
 
 
 def test_every_gears_teeth_are_its_rest_and_the_clocks_count_at_the_now_slot_and_not_the_before_slot():
@@ -144,3 +147,50 @@ def test_the_run_back_is_exact_while_the_clock_rises_and_departs_at_the_second_r
         past = (ends[0].r >= step.weight(laid.gearing, laid.clock, ends[0].a)).any()
         want = [True, True, True] if stride > 0 else [True, False, False]
         assert exact == want and past == (stride < 0)
+
+
+def test_every_order_of_the_familys_kinds_lays_and_runs_alike():
+    """The metric family's rows are the square's basis in whatever order the file writes its kinds: every order lays
+    the same reads of the clock and the grips, and runs the same rounds from one state, its 00 slot moving."""
+    u, held, laid = built()
+    (at,) = np.flatnonzero(held.trains.square)
+    rules, s, ends = made(star(len(SHAPE))), world(np.random.default_rng(6), laid), []
+    for kinds in sorted(set(itertools.permutations(u["trains"][at]["kinds"]))):
+        u["trains"][at]["kinds"] = list(kinds)
+        again, found = load(u, {"gears": []}, sites_of(list(SHAPE)), *rules)
+        there = layout(u, list(SHAPE), again)
+        reads = zip(there.clock + there.stretch, laid.clock + laid.stretch, strict=True)
+        assert found == [] and all(np.array_equal(x, y) for x, y in reads)
+        ends.append(reached(there, s, 1 + 1)[-1])
+    assert all(frame.same(x, ends[0]) for x in ends)
+
+
+def test_a_setting_breaking_the_promise_is_named_at_its_round_and_leaves_no_file(tmp_path):
+    """The 00 slot laid at minus the rest, W 0, is named before the first round; laid falling by a stride under a tooth
+    at the rest less 1, it is named at the second round; neither raises, nor leaves a record or a ledger."""
+    u, held, laid = built()
+    at, rest = int(np.flatnonzero(held.trains.square)[0]), int(laid.gearing.rest[0, 0])
+    for gears, named in (
+        ([[at, 0, 0, -rest, -rest, 0]], "row"),
+        ([[at, 0, 0, 0, STRIDE, 0], [0, 0, 0, 0, 0, rest - 1]], "round 2: row"),
+    ):
+        setting = {"version": 1, "ticks": ROUNDS, "gears": gears}
+        files = {"universe": u, "piece": {"version": 1, "shape": list(SHAPE)}, "setting": setting}
+        for name, body in files.items():
+            (tmp_path / f"{name}.json").write_text(json.dumps(body), encoding="utf-8")
+        record = tmp_path / "record.json"
+        found = ran([tmp_path / f"{name}.json" for name in files], record)
+        assert found and found[0].startswith(named), found
+        assert not record.exists() and not ledger_of(record).exists()
+
+
+def test_two_families_the_files_choice_are_both_read_each_by_its_00_slot():
+    """Two trains of the square's kinds, the files' choice: every row's teeth read both 00 slots, each at the factor 1."""
+    u, held, _ = built()
+    u["trains"].append(dict(u["trains"][int(np.flatnonzero(held.trains.square)[0])], name="again"))
+    two, found = load(u, {"gears": []}, sites_of(list(SHAPE)), *made(star(len(SHAPE))))
+    laid, clocks = layout(u, list(SHAPE), two), [x.first for x in two.trains if x.square]
+    rows = len(laid.gearing.rest)
+    read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
+    assert found == [] and len(clocks) == 1 + 1
+    assert (read == np.outer(ones, np.eye(rows, dtype=int)[clocks].sum(axis=0))).all()

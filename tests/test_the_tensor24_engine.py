@@ -15,7 +15,6 @@ from tensor24.engine.state import Gearing, Layout, Plan, Read, State
 from tensor24.main import made
 from tensor24.runner import board as boards
 from tensor24.runner import load as loading
-from tensor24.runner.load import load
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 from tests import frame
@@ -29,16 +28,14 @@ SHAPE, ROUNDS, SQUARING = (
 ROWS, TERMS, PLANES = 4, 30, 1 + 3 + 1
 CUBE, FRAME = (3, 3, 3), (5, 5, 5)  # the board the 24 turn, and the frame's properties' board
 SIDE, REACH = 7, 60  # the cone's side and its rounds
-TRAINS = [
-    {"name": n, "kinds": [k], "part": 1} for n, k in zip("spva", ("A1", "A2", "T1", "T2"), strict=True)
-]
-# (train, kind, part, operand) twice, then (target, kind, part) and the strength; the operands 0 value, 1 gradient, 2 pull
+KINDS = ("A1", "A2", "T1", "T2")  # four trains, one kind each, at part 1
+# (train, reading) twice, then the target train and the strength; the readings' planes 0 value, 1 gradient, 4 pull
 COUPLINGS = [
-    [0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 3],  # the scalar's gradient with the vector, into the scalar
-    [2, 0, 0, 2, 2, 0, 0, 0, 2, 0, 0, 5],  # the vector's force crossed with the vector, into the vector
-    [1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 7],  # the pseudoscalar times the vector, into the axial
-    [0, 0, 0, 1, 1, 0, 0, 0, 3, 0, 0, 2],  # the scalar's gradient times the pseudoscalar, into the axial
-    [3, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 1],  # the axial with the vector, into the vector
+    (0, 1, 2, 0, 0, 3),  # the scalar's gradient with the vector, into the scalar
+    (2, 4, 2, 0, 2, 5),  # the vector's force crossed with the vector, into the vector
+    (1, 0, 2, 0, 3, 7),  # the pseudoscalar times the vector, into the axial
+    (0, 1, 1, 0, 3, 2),  # the scalar's gradient times the pseudoscalar, into the axial
+    (3, 0, 2, 0, 2, 1),  # the axial with the vector, into the vector
 ]
 
 
@@ -46,7 +43,7 @@ def draw(rng, low, high, size):
     return rng.integers(low, high, size=size).astype(object)
 
 
-def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False):
+def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False, stretched=False):
     """A layout parted at every gear and site: grips per row and Mesh, the teeth at rest, s, T_k, T_d, and J or none
     of it, every gear reading its teeth from two drawn rows' counts at drawn factors where clocked; every divisor at least
     `least`, and T_k too where `least` is above 1, so that a swap of T_k and T_d shows as a wrong run back, not a raise."""
@@ -68,7 +65,15 @@ def varied(rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False):
     none = np.zeros(0, dtype=np.intp)
     plan = plan if sourced else Plan(none, none, none.astype(object), none)
     grip = draw(rng, -3, 4, (rows, 3 * n))
-    return Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, read)
+    # the grips' read, rows read at both ends of a Spoke's Mesh: only where the act is read for one round, since the
+    # pull then multiplies counts by counts
+    terms = (
+        rng.integers(0, rows, 4).astype(np.intp),
+        draw(rng, -3, 4, 4),
+        rng.integers(0, 6, 4).astype(np.intp),
+    )
+    held = Read(*terms) if stretched else frame.unread()
+    return Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, read, held)
 
 
 def world(rng, layout, rows=ROWS):
@@ -84,7 +89,7 @@ def world(rng, layout, rows=ROWS):
 
 def naive(layout, s, shape=SHAPE):
     """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the carry."""
-    _, _, _, grip, gearing, plan, _ = layout
+    _, _, _, grip, gearing, plan, _, stretch_read = layout
     rows = len(s.a)
     rest, stretch, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     first, second, factor, target = (x.tolist() for x in plan)
@@ -100,8 +105,17 @@ def naive(layout, s, shape=SHAPE):
         around = [np.ravel_multi_index(y, shape) for y in frame.near(x, shape)]
         spokes = [axis * n + j for axis in range(3) for j in (i, around[axis + axis + 1])]
         seen = [[a[g][j] for j in around] for g in range(rows)]
+        held = zip(*(x.tolist() for x in stretch_read), strict=True)
+        lift = [0] * len(
+            around
+        )  # each Spoke's grip as the grips' read lands it: the read row at the Mesh's two ends
+        for f, m, t in held:
+            lift[t] += m * (a[f][i] + a[f][around[t]])
         force = [
-            sum(grip[g][m] * (v - a[g][i]) for m, v in zip(spokes, seen[g], strict=True))
+            sum(
+                (grip[g][m] + lift[s]) * (v - a[g][i])
+                for s, (m, v) in enumerate(zip(spokes, seen[g], strict=True))
+            )
             for g in range(rows)
         ]
         readings = [a[g][i] for g in range(rows)]
@@ -209,6 +223,18 @@ def cone_back():
 SHAPES = ((3, 3, 3), (4, 5, 6), (3, 4, 7), (1, 1, 1), (7, 7, 7))
 
 
+def stretched():
+    """At varied layouts whose grips read rows at both ends of each Spoke's Mesh, the act equals the naive model at
+    every entry, three seeds."""
+    for seed in range(3):
+        rng = np.random.default_rng(seed)
+        layout = varied(rng, clocked=True, stretched=True)
+        s = world(rng, layout)
+        if not frame.same(step.tick(layout, s), naive(layout, s)):
+            return False
+    return True
+
+
 def model():
     """The board's neighbours, and the load's Spokes and Meshes on them, equal the frame's (numpy's own wrap) at every
     shape."""
@@ -235,13 +261,34 @@ def held_alike():
 
 @functools.cache
 def cube():
-    """The 24's kinds and tables on the cube, and the plan of four trains, A1 and A2, T1 and T2, coupled through them."""
-    ks, c, square = made(loading.star(len(CUBE)))
-    held, found = load(
-        {"trains": TRAINS, "couplings": COUPLINGS}, {"gears": []}, int(np.prod(CUBE)), ks, c, square
+    """J's terms of four trains, A1 and A2, T1 and T2, coupled through the 24's tables on the cube, entry by entry."""
+    ks, c, _ = made(loading.star(len(CUBE)))
+    labels = [name.upper() for name in ks._fields]
+    kinds = [labels.index(k) for k in KINDS]
+    dims = [ks[k].shape[-1] for k in kinds]
+    first, rows = np.cumsum([0, *dims])[:-1], sum(dims)
+
+    def side(
+        t, plane
+    ):  # the kind a reading enters as, and its rows: a gradient is the T1 reading of an A1 train
+        if plane == 1:
+            return labels.index("T1"), [(plane + axis) * rows + first[t] for axis in range(len(CUBE))]
+        return kinds[t], [plane * rows + first[t] + x for x in range(dims[t])]
+
+    terms = []
+    for t, o, u, p, target, strength in COUPLINGS:
+        (a, ones), (b, twos) = side(t, o), side(u, p)
+        table = c[(a, b, kinds[target])]
+        terms += [
+            (ones[y], twos[z], strength * table[x, y, z], first[target] + x)
+            for x, y, z in np.argwhere(table)
+        ]
+    one, two, factor, landing = zip(*terms, strict=True)
+    return Plan(
+        *(np.array(x, dtype=np.intp) for x in (one, two)),
+        np.array(factor, dtype=object),
+        np.array(landing, dtype=np.intp),
     )
-    assert found == [] and held is not None
-    return Plan(*held.plan)
 
 
 def sourced_images():
@@ -252,7 +299,7 @@ def sourced_images():
     ones = np.ones((1, n), dtype=object)
     gearing = Gearing(ones, ones, ones, ones)
     grip = 3 * ones.repeat(3, axis=1)
-    layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, frame.unread())
+    layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, *[frame.unread()] * 2)
     s = world(np.random.default_rng(5), layout, rows)
     force, j = step.sources(layout, s.a)
     xyz, sides = np.indices(CUBE).reshape(3, -1), np.array(CUBE)[:, None]
@@ -292,6 +339,7 @@ def mutants():
     """Broken copies, each with the law that must catch it: what it replaces in the step (or the board), and with what."""
     tick, untick, gear, mirror = step.tick, step.untick, step.gear, step.mirror
     read, weight, driven, drive, sources = step.read, step.weight, step.driven, step.drive, step.sources
+    gripped = mesh.gripped
     pull, seen, built, laid, calls = (
         mesh.pull,
         mesh.seen,
@@ -302,6 +350,12 @@ def mutants():
 
     def far(y):
         return y._replace(nb=y.nb[:, y.nb[0]])
+
+    def one_end(y, a):  # the grips' read at the Spoke's own end alone
+        first, factor, target = y.stretch
+        landed = np.zeros(y.nb.shape, dtype=object)
+        np.add.at(landed, target, factor[:, None] * a[first])
+        return landed
 
     def doubled(*x):
         a, b, r = gear(*x)
@@ -407,10 +461,12 @@ def mutants():
         "the gradient's axes reordered": ("sourced_images", "seen", reread([2, 3, 4, 5, 0, 1])),
         "the sources at a far site": ("sourced_images", "sources", far_sources),
         "every neighbour site 0": ("formula", "seen", lambda a, nb: seen(a, 0 * nb)),
+        "the grips' read at one end alone": ("stretched", "gripped", one_end, mesh),
+        "the grips' read ignored": ("stretched", "gripped", lambda y, a: 0 * gripped(y, a), mesh),
     }
 
 
-OWN = {f.__name__: f for f in (formula, back, negated, cone, cone_back, model, held_alike)}
+OWN = {f.__name__: f for f in (formula, stretched, back, negated, cone, cone_back, model, held_alike)}
 OWN["sourced_images"] = sourced_images
 
 
@@ -490,7 +546,7 @@ def kept(each_end=False, moving=False, sourced=False):
     for t in range(SQUARING if sourced else ROUNDS):  # J squares the gears each round
         push = s + t * draw(rng, 0, 3, (1, n)) if moving else s
         gearing = Gearing(teeth[t], push, kick, drive)  # each round at its own teeth
-        layout = Layout(nb, frame.spokes(), meshes, grip, gearing, plan, frame.unread())
+        layout = Layout(nb, frame.spokes(), meshes, grip, gearing, plan, *[frame.unread()] * 2)
         _, j = step.sources(layout, state.a)
         now = step.tick(layout, state)
         torques = im(state.a - state.b, state.r - home(teeth[t]))
@@ -520,7 +576,7 @@ def test_a_hands_charge_moves_by_rules_torques_and_its_kick_alone_and_parts_on_a
 def test_the_engines_records_hold_their_fields_in_order():
     assert State._fields == ("a", "b", "r", "rd")
     assert Gearing._fields == ("rest", "stretch", "kick", "drive")
-    assert Layout._fields == ("nb", "spokes", "meshes", "grip", "gearing", "plan", "clock")
+    assert Layout._fields == ("nb", "spokes", "meshes", "grip", "gearing", "plan", "clock", "stretch")
     assert Read._fields == ("first", "factor", "target")
     assert Plan._fields == ("first", "second", "factor", "target")
 
