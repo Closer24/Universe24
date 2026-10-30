@@ -7,7 +7,7 @@ from typing import Any, NamedTuple
 
 import numpy as np
 
-from tensor24.algebra.carry import Z, carry
+from tensor24.algebra.carry import Z, carry, lit
 from tensor24.runner.board import board
 from tensor24.runner.files import GEAR, entries, vocabulary
 
@@ -49,27 +49,15 @@ class Trains:
         return Train(int(self.first[t]), kinds, dims, int(self.part[t]), int(self.square[t]))
 
 
-def lit(x: Z) -> Z:
-    """1 where an entry is not 0 and 0 where it is, by one carry: x^4 + 1 <= x^2 + x^4 < 2 (x^4 + 1) wherever x is not 0."""
-    square = x * x
-    found, _ = carry(square + square * square, square * square + 1, 0)
-    return found
-
-
 def first(x: Z) -> Z:
-    """1 at the first 1 along the last axis of an array of 0s and 1s, 0 elsewhere: each entry times the zero test of the
-    count of 1s before it."""
+    """1 at the first 1 along the last axis of an array of 0s and 1s, 0 elsewhere: each entry times the zero test of the count of 1s before it."""
     before = np.cumsum(x, axis=-1) - x
     alone, _ = carry(1, before * before + 1, 0)
     return x * alone
 
 
 def tables(held: Z, inverse: Z, weight: Z) -> Z:
-    """C[i, k -> m] for every three kinds at once, each in the axes' cube, with no seed chosen and no channel searched.
-
-    The group sum S of rho_m(g) Psi_m x rho_i(g^-1)^T Phi_i x rho_k(g^-1)^T Phi_k, Psi and Phi the two forms each kind's
-    matrices keep, is c u u^T on a channel and 0 off one: c is its diagonal's entry that divides every other, u its row
-    there over c, times the sign of its first entry not 0, by Rule3's sign test."""
+    """C[i, k -> m] for every three kinds at once in the axes' cube, no seed chosen and no channel searched: the group sum S of rho_m(g) Psi_m x rho_i(g^-1)^T Phi_i x rho_k(g^-1)^T Phi_k, Psi and Phi the two forms each kind's matrices keep, is c u u^T on a channel and 0 off one; c is its diagonal's entry that divides every other, u its row there over c, times the sign of its first entry not 0 by Rule3's sign test."""
     kinds, side = len(held), held.shape[-1]
     cube = (kinds, kinds, kinds, -1)
     # each kind's two kept forms: Psi the sum of rho rho^T, the output's; Phi the sum of rho^T rho, an input's
@@ -127,22 +115,24 @@ def lay(gears: list[list[int]], trains: Trains, sites: int) -> tuple[tuple[Z, ..
 
 
 class Loaded(NamedTuple):
-    """What the load makes of the universe and the setting: the trains' rows, J's plan, the state laid."""
+    """What the load makes of the universe and the setting: the trains' rows, J's potential, the state laid."""
 
     trains: Trains
-    plan: tuple[Z, Z, Z, Z, Z]  # J's plan: three readings, the factor and the target per term
+    potential: tuple[
+        Z, tuple[Z, Z, Z, Z]
+    ]  # J's potential: per monomial its factor and its four legs, the unit (-1) for a leg it lacks
     state: tuple[Z, ...]
 
 
 def load(
     universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: Z, square: Z
 ) -> tuple[Loaded, list[str]]:
-    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's plan holds no term, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3)."""
+    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds no monomial, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3)."""
     labels, dims, reads = vocabulary(kinds, square)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
     none = np.empty(0, dtype=np.intp)
     state, laid = lay(setting.get("gears", []), trains, sites)
-    return Loaded(trains, (none, none, none, none.astype(object), none), state), laid
+    return Loaded(trains, (none.astype(object), (none, none, none, none)), state), laid
 
 
 def geared(
@@ -195,10 +185,10 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's eight parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's plan, every gear's clock and the grips' read; main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's eight parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's potential, every gear's clock and the grips' read; main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
     nb = board((sx, sy, sz))
     spokes, meshes = geometry(nb, len(shape))
     gearing, clock, stretch, grip = geared(universe, loaded.trains, spokes)
     grips = np.full((1, len(shape) * nb.shape[1]), grip, dtype=object)
-    return nb, spokes, meshes, grips, gearing, loaded.plan, clock, stretch
+    return nb, spokes, meshes, grips, gearing, loaded.potential, clock, stretch

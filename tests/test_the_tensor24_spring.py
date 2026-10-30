@@ -1,6 +1,6 @@
 """Tensor24's spring, the node's term 6 (Animate's ANIMATE-SPRING), on the act itself. In clocks: each gear's hairspring,
-its stiffness the held count's, and a spring that stiffens as it winds and bounds the swing. In algebra: J's terms of one,
-two and three readings from one potential through the 24's own table; the strengths the test's, OPEN at G3 (decision 35)."""
+its stiffness the held count's, and a spring that stiffens as it winds and bounds the swing. In algebra: J's terms of zero
+to three readings from one potential through the 24's own table, by the engine's vertex law; the strengths OPEN at G3."""
 
 import functools
 
@@ -8,13 +8,16 @@ import numpy as np
 import pytest
 
 from tensor24.engine import contract, step
-from tensor24.engine.state import Plan, State
+from tensor24.engine.state import State
 from tensor24.main import made
 from tensor24.runner import load as loading
 from tests import frame
 
-PLANES, ROWS = 1 + 3 + 1, 3 + 1  # the readings' planes; a T1 family's three gears and an A1 held count
-X, K, UNIT = 0, 3, PLANES * ROWS  # the family's first gear, the held count, the unit (the last row)
+X, K, UNIT = (
+    0,
+    3,
+    -1,
+)  # a T1 family's first gear, then an A1 held count; the unit, the readings' last row
 N = 10**6  # the held count's steady count, as in David's m3 and Animate's probe
 GAMMA = 200 * N  # the vertex's strength: the spring at the steady count, 2 GAMMA N, is W / 400
 W = 800 * GAMMA * N  # the teeth at rest: the spring 2 GAMMA N beats about every 126 rounds
@@ -27,17 +30,14 @@ OFF = (6 * LARGE // 10, 8 * LARGE // 10, 0)  # the large swing's length, off eve
 
 
 def plan(monomials):
-    """J's terms from one potential: each monomial, a whole factor times its legs' counts, pushes every leg by minus the
-    factor times its other legs, the unit standing for each leg it lacks of three."""
-    terms = []
-    for factor, legs in monomials:
-        for p, leg in enumerate(legs):
-            terms.append(((*legs[:p], *legs[p + 1 :], UNIT, UNIT, UNIT)[:3], -factor, leg))
-    readings, factor, target = zip(*terms, strict=True)
-    return Plan(
-        *(np.array(x, dtype=np.intp) for x in zip(*readings, strict=True)),
-        np.array(factor, dtype=object),
-        np.array(target, dtype=np.intp),
+    """J's terms by the engine's vertex law from one potential's monomials, (factor, legs), each leg a gear's value row,
+    the unit for each of the four a monomial lacks; a monomial of more legs than four is refused by the unpacking."""
+    legs = [
+        (*legs, *(UNIT,) * (4 - len(legs))) for _, legs in monomials
+    ]  # the vertex law reads four legs
+    factor = np.array([factor for factor, _ in monomials], dtype=object)
+    return contract.pushes(
+        factor, tuple(np.array(leg, dtype=np.intp) for leg in zip(*legs, strict=True))
     )
 
 
@@ -115,8 +115,8 @@ def test_the_vertex_at_the_held_counts_steady_count_beats_as_the_gears_own_sprin
 
 def test_the_four_leg_term_bounds_the_swing_that_runs_away_below_the_bound():
     """Below the bound V has no floor: laid at 10^7 or 2 10^7 the gear runs away with no four-leg term and at half the
-    bound. At twice it V's floor is GAMMA N c + BOUND c c: no round reaches past the lay's own V, and every spring the gear
-    feels, the vertex's and the four legs', stays below the held count's own, 2 NU = W / 16."""
+    bound. At twice it V's floor (V at the held count's least), GAMMA N c + BOUND c c, never passes the lay's own V, and the
+    push's coefficient per count, the vertex's and the four legs', stays below the held count's own, 2 NU = W / 16."""
     for lay in (LARGE, LARGE + LARGE):
         assert all(len(run(potential(mu), (lay, 0, 0), ROUNDS)) < ROUNDS for mu in (NONE, HALF))
         held = run(potential(TWICE), (lay, 0, 0), ROUNDS)
