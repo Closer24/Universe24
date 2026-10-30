@@ -963,7 +963,7 @@
   "rule": "BRANCH",
   "file": "tensor24/runner/load.py",
   "detail": "ternary",
-  "count": 5,
+  "count": 4,
   "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
   "row": "399"
  },
@@ -1123,14 +1123,6 @@
   "rule": "FAMILY",
   "file": "tensor24/runner/load.py",
   "detail": "'A1'",
-  "count": 2,
-  "word": "the selections by a bit, the floors, the families found by a constant index and the family strings that the new engine's act and loader hold at tensor24-review 058512b2b (David's audit of 15:10 UTC, F8 of docs/BIG_PICTURE.md 13.2; the owner's word of 2026-10-29, 15:0x, to David: no floors or bounds, no if; the code does not know what the families are): named breaches until G1 (decision 38); a new one, or one more of a kind in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "FAMILY",
-  "file": "tensor24/runner/load.py",
-  "detail": "'E'",
   "count": 1,
   "word": "the selections by a bit, the floors, the families found by a constant index and the family strings that the new engine's act and loader hold at tensor24-review 058512b2b (David's audit of 15:10 UTC, F8 of docs/BIG_PICTURE.md 13.2; the owner's word of 2026-10-29, 15:0x, to David: no floors or bounds, no if; the code does not know what the families are): named breaches until G1 (decision 38); a new one, or one more of a kind in a file, is refused",
   "row": "399"
@@ -1155,7 +1147,7 @@
   "rule": "POSITION",
   "file": "tensor24/runner/load.py",
   "detail": "held[-1]",
-  "count": 4,
+  "count": 2,
   "word": "the selections by a bit, the floors, the families found by a constant index and the family strings that the new engine's act and loader hold at tensor24-review 058512b2b (David's audit of 15:10 UTC, F8 of docs/BIG_PICTURE.md 13.2; the owner's word of 2026-10-29, 15:0x, to David: no floors or bounds, no if; the code does not know what the families are): named breaches until G1 (decision 38); a new one, or one more of a kind in a file, is refused",
   "row": "399"
  },
@@ -1163,14 +1155,6 @@
   "rule": "POSITION",
   "file": "tensor24/runner/load.py",
   "detail": "seeds[0]",
-  "count": 1,
-  "word": "the selections by a bit, the floors, the families found by a constant index and the family strings that the new engine's act and loader hold at tensor24-review 058512b2b (David's audit of 15:10 UTC, F8 of docs/BIG_PICTURE.md 13.2; the owner's word of 2026-10-29, 15:0x, to David: no floors or bounds, no if; the code does not know what the families are): named breaches until G1 (decision 38); a new one, or one more of a kind in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "POSITION",
-  "file": "tensor24/runner/load.py",
-  "detail": "trains[-1]",
   "count": 1,
   "word": "the selections by a bit, the floors, the families found by a constant index and the family strings that the new engine's act and loader hold at tensor24-review 058512b2b (David's audit of 15:10 UTC, F8 of docs/BIG_PICTURE.md 13.2; the owner's word of 2026-10-29, 15:0x, to David: no floors or bounds, no if; the code does not know what the families are): named breaches until G1 (decision 38); a new one, or one more of a kind in a file, is refused",
   "row": "399"
