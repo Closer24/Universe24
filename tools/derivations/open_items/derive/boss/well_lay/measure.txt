@@ -1,0 +1,6 @@
+the well world [18, 6, 6] at push 1 and notch 120000, 128 rounds; the clock's read k0 = 12, the rest teeth 6000000; time's means over rounds 65..128:
+1. the 00 slot: 143 at the 6 crests, 85 at the 72 sites of the void, the board's mean 95; W = rest + k0 c00, N^2 = rest / W 999714 ppm at the crests and 999830 in the void (10^6 at the loader's rest); along x through (y, z) = (0, 0): [143, 126, 99, 88, 99, 126]
+2. the ii slots (crests, void): {'xx': (-31, -32), 'yy': (-18, -20), 'zz': (-18, -20)}; the x Meshes' grips g + c_xx + c_xx' through (y, z) = (0, 0) at the last round 999923 to 999946 of 1000000
+3. the second cone: at the last round every other row's dial reads 6000852 to 6001812 where the 00 row's reads [6000000], W / rest 1000142 to 1000302 ppm
+4. the largest stride a round over the run, by train: {'light': 5010, 'the metric': 21, 'the pulse': 97} (the 00 push resolves none below half a count a round)
+5. the pulse's centroid along x over the 127 rounds from the first, in hundredths of a Mesh: 5127 at push 1 against 5136 at push 0 with the metric at 0, a lag of 9; the bend between its rows through the crests and through the void at the last round, less the same at push 0, 1 hundredths

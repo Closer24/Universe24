@@ -68,14 +68,16 @@ def leaves(hint):
 
 
 def geared_alike(held, laid):
-    """Every row's coefficients, grips and read of the clock alike (the parity apart), the read the square's 00 slot
-    into every other row (the 00 row reads none); no term of J laid."""
-    rows = len(laid.gearing.rest)
-    alike = all(len(set(np.broadcast_to(x, (rows, 1))[:, 0].tolist())) == 1 for x in laid.gearing[:-1])
-    unit = np.eye(rows, dtype=int)[[t.first for t in held.trains if t.square][0]]  # the 00 slot's row
+    """Every row's rest, stretch, kick and grips alike, the drive's teeth senses on the square's 00 and ii rows and 1 elsewhere, the
+    clock's read the square's 00 slot at k0 = Spokes x senses into every other row (the 00 row reads none); no term of J laid."""
+    rows, (zero,) = len(laid.gearing.rest), [t.first for t in held.trains if t.square]
+    alike = all(len(set(np.broadcast_to(x, (rows, 1))[:, 0].tolist())) == 1 for x in laid.gearing[:3])
+    senses, unit = len(laid.spokes) // len(laid.spokes[0]), np.eye(rows, dtype=int)[zero]  # the 00 row's
+    dial = [senses if r in (zero, *range(zero + 4, zero + 7)) else 1 for r in range(rows)]  # 00 and ii
     read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
     grips, plan = len(set(laid.grip.ravel().tolist())) == 1, not laid.plan.factor.any()  # no notch
-    return alike and grips and plan and (read == np.outer(ones - unit, unit)).all()
+    clock = (read == senses * len(laid.spokes) * np.outer(ones - unit, unit)).all()
+    return alike and grips and plan and clock and laid.gearing.drive[:, 0].tolist() == dial
 
 
 def drawn(held, laid, seed):
@@ -90,26 +92,23 @@ def drawn(held, laid, seed):
 
 
 def naive(laid, held, s, shape):
-    """One round site by site with loops: W the rest and the square's 00 slot at both slots (the 00 row's own at rest),
-    each grip its rest and the square's ii slot of its axis at both ends of its Mesh, by name; the split on the edge."""
+    """One round site by site with loops: W the rest and the square's 00 slot at k0 = Spokes x senses at both slots (the 00 row's own
+    at rest), each grip its rest and the square's ii slot of its axis at both ends of its Mesh, by name; the split on the edge."""
     a, b, r = (x.tolist() for x in s[:3])
-    squares, d, rows = [x.first for x in held.trains if x.square], len(shape), len(s.a)
-    rest, grip = int(laid.gearing.rest[0, 0]), int(laid.grip[0, 0])
+    (zero,), d, rows = [x.first for x in held.trains if x.square], len(shape), len(s.a)
+    rest, grip, k0 = int(laid.gearing.rest[0, 0]), int(laid.grip[0, 0]), 2 * d * 2  # k0, Spokes x senses
     out = [np.zeros_like(s.a) for _ in "abr"]
     for i, x in enumerate(itertools.product(*map(range, shape))):
         around = [np.ravel_multi_index(y, shape) for y in frame.near(x, shape)]  # +x, -x, +y, -y, +z, -z
-        wa, wb = ([rest + sum(c[f][i] for f in squares if f != g) for g in range(rows)] for c in (a, b))
-        grips = [
-            grip + sum(a[f + 1 + d + k // 2][i] + a[f + 1 + d + k // 2][j] for f in squares)
-            for k, j in enumerate(around)
-        ]
+        wa, wb = ([rest + k0 * c[zero][i] * (g != zero) for g in range(rows)] for c in (a, b))
+        grips = [grip + sum(a[zero + 1 + d + k // 2][y] for y in (i, j)) for k, j in enumerate(around)]
         moment, first = [0] * rows, [0] * rows
         for g in range(rows):
             push = sum(k * (a[g][j] - a[g][i]) for k, j in zip(grips, around, strict=True))
             moment[g] = 2 * ((wa[g] + wb[g]) * (a[g][i] - b[g][i]) + 2 * push) + r[g][i]
             first[g] = frame.split(moment[g], wa[g] + wb[g])[0]  # the count at the edge's own dial
         for g in range(rows):
-            wa1 = rest + sum(a[f][i] + first[f] for f in squares if f != g)  # the teeth at the next slot
+            wa1 = rest + k0 * (a[zero][i] + first[zero]) * (g != zero)  # the teeth at the next slot
             q, kept = frame.split(moment[g], wa[g] + wa1)
             out[0][g, i], out[1][g, i], out[2][g, i] = a[g][i] + q, a[g][i], kept
     return out
@@ -206,18 +205,12 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     ticks = setting["ticks"]
     end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1)
     assert got.end == end and got.events == []  # no rate line, and light alone never clicks
-    cards = got.header[
-        "trains"
-    ]  # the file's trains alone, each winding 1 until G3, its key and square flag
-    card = {
-        k: [t[k] for t in cards] for k in ("label", "winding", "key", "square")
-    }  # the cards' columns
-    assert card["label"] == [t["name"] for t in universe["trains"]] and set(card["winding"]) == {1}
+    card = {k: [t[k] for t in got.header["trains"]] for k in ("label", "winding", "key", "square")}
+    assert card["label"] == [t["name"] for t in universe["trains"]] and card["square"] == [0, 1]
+    assert card["winding"] == [1, len(laid.spokes) // len(piece["shape"])]  # the 00 row's dial, senses
     assert set(card["key"]) == {universe["chosen"]["key"]} and card["square"] == list(held.trains.square)
-    traced = [k["characters"] for k in got.header["kinds"]]  # each kind's character on the 24 turns
-    assert {len(c) for c in traced} == {len(list(frame.turns()))} and len(
-        set(map(tuple, traced))
-    ) == len(traced)
+    traced, turns = [k["characters"] for k in got.header["kinds"]], len(list(frame.turns()))
+    assert {len(c) for c in traced} == {turns} and len(set(map(tuple, traced))) == len(traced)
 
     def kept(layout, s):
         reached.setdefault("end", s)  # the first state the run back reads is the rounds' last
@@ -243,9 +236,10 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
         leaves(dataclasses.make_dataclass("Broken", [("x", hint)])) - {int, str} for hint in broken
     )
     # a departing file, a broken promise or a lay outside the wave's window (the 00 slot at site 0 laid so deep that
-    # the teeth there are 1, every row's but the 00 row's own) is named, and nothing is written, by the run and its tool
-    universe["version"] = 1 + 1
-    deep, low = json.loads(json.dumps(setting)), 1 - int(laid.gearing.rest[0, 0])
+    # the teeth there, the rest and k0 times it, are within 1 and k0, every row's but the 00 row's own) is named, and
+    # nothing is written, by the run and its tool
+    universe["version"], k0 = 1 + 1, int(laid.clock.factor.max())  # the clock's read factor
+    deep, low = json.loads(json.dumps(setting)), (k0 - int(laid.gearing.rest[0, 0])) // k0
     deep["gears"].append([[n for n, t in enumerate(held.trains) if t.square][0], 0, 0, low, low, 0])
     setting["gears"][0][-1] = TOOTH
     edits = (

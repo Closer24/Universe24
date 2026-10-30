@@ -42,32 +42,50 @@ is an eigenvector of the board's pull and stands, with no net drive on the E par
 state a quarter beat later, 4 rounds, the count at which the crest's count has crossed 0 (12000, 10000, 6333,
 1611, -3379): its counts a and b and its edge tooth (the format lays a tooth within the edge's dial, the run's
 promise): the parts' squares, momenta squared and gradients squared, summed, then stand nearly still in time, (most -
-least) / (most + least) of the parts' squares summed at a crest within 70 and 85 permille by windows of 16 rounds (one
+least) / (most + least) of the parts' squares summed at a crest within 72 and 74 permille by windows of 16 rounds (one
 standing part alone beats at twice its frequency and twice its wavevector and rings the metric; the pair does not;
-the period-4 mode's quarter beat, 1.5 rounds, is no count of rounds). The metric family is pushed by term 5 at the
-CHOSEN push 30 and held by term 9's notch at the CHOSEN h 60000 (the board's mean swings about its rest with a beat of
-about 31 rounds); its 00, xx, yy and zz slots are laid at the mean (Rule3's carry) of a first run from 0 over its
-rounds 65 to 128 by the same generator, so that the well stands rather than swinging between 0 and twice its depth
-(the Node-clock has no damping). The third train, `pulse`, is a small pulse along x, alike at every y and z, 500 (16 -
-u^2)^2 div 256 at the distance u from its centre (95, 281, 439, 500, 439, 281, 95), its before slot one round back at
-about 20 / 49 Meshes a round, (29 now + 20 next) div 49, so that it travels toward +x across the lump's rows and the
-void's. Run it as the one bang:
+the period-4 mode's quarter beat, 1.5 rounds, is no count of rounds). The metric family is pushed by term 5 in the
+books' form at push 1, the books closed (push 0 is no gravity, and any other value opens the books by that factor):
+each slot read by a gear is pushed by minus the act's own energy's derivative by it, taken at fixed momentum, the
+momentum being what a clock keeps as its teeth move (dH / dW = -v^2 / 2 there, so the 00 slot is pushed by + k0 v^2 /
+2, a deeper and slower clock where the matter moves; at fixed velocity the derivative would read + v^2 / 2 and push
+the wrong way). The 00 slot is pushed by k0 = Spokes x senses = 12, the factor the clock reads it at, times the
+momenta in and out of every row the push does not land on, and each ii slot by minus its axis's two Meshes'
+stretches squared, both halved by the drive's dial 2 on the 00 and ii rows with the remainder kept in the fine
+tooth; the 0i and jk slots are read by nothing and pushed by nothing. The push reads the momenta in whole turns of
+the rest dial, a count a round at the rest teeth by the centred split, so a row gliding below half a count a round
+pushes the 00 slot by nothing: here the light's strides reach 5010 counts a round, the pulse's 97 and the metric's
+own 21 (`measure.py` and `measure.txt` beside `lay.py`). The form's price as built: the 00 push leaves out the
+square's own 00 and ii rows, whose momentum out the act reads before the push's own kick (a pushed row's stride, which
+no plan may read for the mirror to swap every stride it reads), so the metric's own kinetic share of the books, its
+self-stress (OPEN in G2), is not paid into the 00 slot: over the run the ii rows' momenta in and out sum to 350206
+against the matter's 317317525959, 1 part per million (`lay.txt`). The metric is held by term 9's notch at the
+CHOSEN h 120000, twice the 60000 it was at the dial 1, as the notch's monomials on the 00 and ii rows ride the same
+dial (the board's mean swings about its rest with a beat of about 31 rounds); its 00, xx, yy and zz slots are laid
+at the mean (Rule3's carry) of a first run from 0 over its rounds 65 to 128 by the same generator, so that the well
+stands rather than swinging between 0 and twice its depth (the Node-clock has no damping). The third train, `pulse`,
+is a small pulse along x, alike at every y and z, 500 (16 - u^2)^2 div 256 at the distance u from its centre (95,
+281, 439, 500, 439, 281, 95), its before slot one round back at about 20 / 49 Meshes a round, (29 now + 20 next)
+div 49, so that it travels toward +x across the lump's rows and the void's. Run it as the one bang:
 `python -I tools/tensor24_run.py examples/tensor24-well/universe.json examples/tensor24-well/piece.json
-examples/tensor24-well/setting.json <record .jsonl>` (128 rounds out and back in about a minute and a half; the
-ledger is about 22 MB, three lines a Node-clock a round; the run back returns the lay bit for bit). In the ledger,
-train 0's two counts are the lump's parts; train 1's first count is the 00 slot (W = rest + c00: in time's mean over
-rounds 65 to 128, 350866 at the mode's crests, x, y and z all multiples of 6 or all 3 more, and 258119 where the mode
-is absent, f = 0, the board's mean 275614, so N^2 = rest / W is 944 permille at the crests and 958 in the void, 1000 at
-the loader's rest; along x through (y, z) = (0, 0) the mean runs 350920, 324760, 277427, 255985, 277383, 324704 and
-again, the mode's period of 6), its fifth to seventh the xx, yy and zz slots (below 0 where the lump is: yy and zz
--10955 at the crests and -2719 in the void in time's mean, xx -19007 and -10790, the pulse's own stress along x
-drawing xx down through the run, as the E part has no restoring force on the torus, so the x Meshes' grips g + c_xx +
-c_xx' through (0, 0) are 952290 to 965416 of 10^6 at the last round); and train 2's one count is the pulse, slowed by
-the well: over the 127 rounds from the first its centroid along x moves 49.21 Meshes against 50.79 for the same files
-at push 0 (the metric standing at 0), a lag of 1.59 Meshes, and the bend between the rows through the crests and the
-rows of the void is 0.010 Mesh, below the lattice's resolution (the well's period, 6 Meshes, is near the pulse's own
-width, and a bend needs a well wider than the wavelength). OPEN here, by name (the edge text's section 4,
-derive/boss/edge/EDGE2.md on the Boss's derivation branch): the 00 row's own law. The 00 row's teeth stand at rest, the
-acyclic cut, so its own waves run on the rest cone while light and every other slot run on the well's, c^2 = grip / W:
-at this lay every other row's dial reads 6237474 to 6334127 where the 00 row's reads 6000000, a second cone 1039 to
-1055 permille of the first.
+examples/tensor24-well/setting.json <record .jsonl>` (128 rounds out and back in about two minutes and a quarter;
+the ledger is about 20 MB, three lines a Node-clock a round; the run back returns the lay bit for bit). In the
+ledger, train 0's two counts are the lump's parts; train 1's first count is the 00 slot (W = rest + 12 c00: in
+time's mean over rounds 65 to 128, 143 at the mode's crests, x, y and z all multiples of 6 or all 3 more, and 85
+where the mode is absent, f = 0, the board's mean 95, so N^2 = rest / W is 999714 parts per million at the crests
+and 999830 in the void, 10^6 at the loader's rest: the clock deepens where the matter moves; along x through (y, z)
+= (0, 0) the mean runs 143, 126, 99, 88, 99, 126 and again, the mode's period of 6; from 0 the 00 slot rises first
+at the crests, 22 there against 0 in the void after one round and 141 against 29 after five, before its own waves
+spread it, `derive/boss/term5_books/probe.txt`), its fifth to seventh the xx, yy and zz slots (below 0 over the
+whole board and a shade deeper in the void than at the crests, as the ii push reads the lump's stretches, which
+stand between its crests, and not its momenta: yy and zz -18 at the crests and -20 in the void in time's mean, xx -31
+and -32, the pulse's own stretches along x drawing xx down, as the E part has no restoring force on the torus, so the
+x Meshes' grips g + c_xx + c_xx' through (0, 0) are 999923 to 999946 of 10^6 at the last round); and train 2's one
+count is the pulse, slowed by the well by less than a tenth of a Mesh: over the 127 rounds from the first its
+centroid along x (weighted by its counts squared) moves 51.27 Meshes against 51.36 for the same files at push 0 (the
+metric standing at 0), a lag of 0.09 Mesh, and the bend between the rows through the crests and the rows of the void
+is 0.01 Mesh, below the lattice's resolution (the well is 3 parts in 10^4 of W at its deepest). OPEN here, by name
+(the edge text's section 4, derive/boss/edge/EDGE2.md on the Boss's derivation branch): the 00 row's own law. The 00
+row's teeth stand at rest, the acyclic cut, so its own waves run on the rest cone while light and every other slot
+run on the well's, c^2 = grip / W: at the last round every other row's dial reads 6000852 to 6001812 where the 00
+row's reads 6000000, a second cone 1000142 to 1000302 parts per million of the first.

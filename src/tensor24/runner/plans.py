@@ -1,5 +1,5 @@
-"""Clock: the plans every Node-clock reads, laid once at the load from the kinds' tables and the universe file's CHOSEN strengths: the metric's push, the volume's notch, the held hand's spring and tie, the hands' tie and each train's passing.
-Algebra: every plan is whole factors on rows of the readings: term 5's blocks of the matter's stress through K x K -> A1 onto the square's slots, the monomials of J's potential (term 9's notch, term 6's own spring (rest; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), and term 11's pairs of each train's rows through its own form onto A1, the table's entry the factor.
+"""Clock: the plans every Node-clock reads, laid once at the load from the star, the kinds' tables and the universe file's CHOSEN strengths: the metric's push (the books' form, no strength: push 1 or 0), the volume's notch, the held hand's spring and tie, the hands' tie and each train's passing.
+Algebra: every plan is whole factors on rows of the readings: term 5's push in the books' form, the momenta in and out of every row the push does not land on onto the 00 slot and every row's six stretches squared onto the ii slots of their axes, the monomials of J's potential (term 9's notch, term 6's own spring (rest; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), and term 11's pairs of each train's rows through its own form onto A1, the table's entry the factor.
 Board: one plan for every Node-clock alike; a train that lacks a term takes it at the factor 0, its places wrapped, so no plan names a train: which train is held, tied or light is read off its character by the load.
 Clicks: the tied hand's beat, 2 hold f |k|^2 / W at the Node-clock, is what the clicks read as its mass, one beat per tied train (the frame's price, FRAMES 6); a plan reaches the clicks only through the act.
 """
@@ -57,7 +57,7 @@ def rows_of(trains: Z) -> tuple[Z, Z, Z, Z, Z]:
 
 
 def holding(trains: Z, c: Z, traces: Z, rest: Z, hold: Z, gamma: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
-    """Term 6's frame, the held hand's monomials of J's potential: every held row's own spring (rest; rho, rho, 1, 1), which pushes the row by -2 rest rho as the leg stands twice, the theorem of the turn (K = 2 W turns the hand (re, im) -> (-im, re) a round with its square still), and every tied train's tie to the held hand's square, (hold x f x C_yz; x_y, x_z, k_rho, k_rho) for each pair of the train's rows through its form onto A1 (pairs_of's entry) and each held row, f = rest div Gamma the clock's one notch (CHOSEN with its reason, G3 2.4), so that a tied hand beats at 2 hold f |k|^2 / W in the dispersion's measure; hold the strength CHOSEN in the universe file, 1 the unit; a row that is not held and a train that is not tied take the factor 0."""
+    """Term 6's frame, the held hand's monomials of J's potential: every held row's own spring (rest; rho, rho, 1, 1), which pushes the row by -2 rest rho as the leg stands twice, the theorem of the turn (K = 2 W turns the hand (re, im) -> (-im, re) a round with its square still), and every tied train's tie to the held hand's square, (hold x f x C_yz; x_y, x_z, k_rho, k_rho) for each pair of the train's rows through its form onto A1 (pairs_of's entry) and each held row, f = rest div Gamma the clock's one notch (CHOSEN with its reason, G3 2.4), so that a tied hand beats at 2 hold f |k|^2 / W in the dispersion's measure; hold the strength CHOSEN in the universe file, 1 the unit; a row that is not held and a train that is not tied take the factor 0. The tie is a monomial of four value legs: it enters no train's passing only while the held hand's quarter turn is exact (now orthogonal to before, the norm exact: the room); past the room the held train clicks alone and the books open (NOT_CLOSED 29)."""
     f, _ = carry(rest, gamma, 0)
     row, of, _, _, _ = rows_of(trains)
     held = trains.held[of]  # 1 at the held hand's rows
@@ -123,64 +123,33 @@ def spread(*parts: Z) -> Z:
     return np.stack(np.broadcast_arrays(*parts)).reshape(len(parts), -1)
 
 
-def pushing(trains: Z, c: Z, traces: Z, spokes: Z, strength: Z) -> tuple[Z, Z, Z, Z, Z]:
-    """Term 5, the metric's push, as a plan on the readings with the momenta in and out added before the unit: for every pair of a train not the square (the matter) and every square train, J = 2T - eta T from T00 = S (sigma_in sigma_in + sigma_out sigma_out), T_ij = D_i a D_j a and T_0i = (sigma_in + sigma_out) D_i a, S = Spokes x senses the slots' own ratio (c^2 = grip / rest at the loader's lay, two strides against two gradients); the 00 slot pushed by +S J00 (its unit the teeth), each ii, jk and 0i slot by -J (its unit the grips, at both ends of a Mesh), so gamma = 1 and the grips are lowered where matter is; the strength CHOSEN in the universe file; a train that is no square takes every term at the factor 0."""
-    one, two, entry, train = pairs_of(trains, c, traces)
+def pushing(trains: Z, spokes: Z, push: Z) -> tuple[Z, Z, Z, Z, Z]:
+    """Term 5, the metric's push in the books' form, as a plan on the push's readings (step.stress: the six stretches per row, Spoke s and row r at the plane s rows + r in the star's order, the momenta in and out in whole turns of the rest dial at the planes Spokes rows + r and (Spokes + 1) rows + r, the unit last): the act's energy is H = W v_in v_out / 2 + SUM over the Meshes of grip Delta^2 / 2 with the reads W = rest + k0 c00 into every row but the 00 and grip = grip_rest + ii at both ends, and the books close iff each slot is pushed by -dH / d slot, the derivative taken at fixed momentum, which a clock keeps as its teeth move (dH / dW = -v^2 / 2 there, so the 00 slot is pushed by +k0 v^2 / 2; at fixed velocity it would read +v^2 / 2 and push the wrong way); so for every square train one term (sigma_in, sigma_out, unit) at the factor k0 x push on the 00 slot for every row the push does not land on, the rows on the force's path at T_d = 1 (the matter and the square's 0i and jk rows; its 00 and ii rows left out, as a pushed row's stride as the stress reads it is fictitious, read before the push's own kick and at the dial's remainder, so no plan reads it and the mirror swaps every stride a plan reads, the mirror theorem's hypothesis (d); the price: the metric's own kinetic share of the books, its self-stress, OPEN in G2, is not paid into the 00 slot), k0 the clock read's factor Spokes x senses from the star (the chain rule carries the read's factor into the push, so one number serves both; GR's gamma = 1 for light needs it), and for every row and every Spoke one term (the stretch, the stretch, unit) at the factor -push on the ii slot of the Spoke's axis (the two Meshes' stretches squared, not the centred difference squared, which misses the Meshes at a crest or a foot), both halved by the drive's dial senses on those rows with the remainder kept (load.geared); no term on the jk and 0i slots, which nothing reads, so a push there would be energy from nothing; the momenta are read in whole turns of the rest dial by the centred split, a count a round at the rest teeth, so a row gliding below half a count a round pushes the 00 slot by nothing; push is 1 where the books close (gravity on) and 0 where there is none, and a value other than 1 opens the books by that factor; a train that is no square takes every term at the factor 0, its places wrapped."""
     n, d = spokes.shape
     senses, _ = carry(n, d, 0)
-    scale, rows, trained = n * senses, trains.size.sum(), len(trains)
-    unit = (
-        d + senses * senses
-    ) * rows  # the planes: the value, the d differences, the force, the momenta in and out
-    sigma_in, sigma_out = d + senses, d + senses + 1
+    scale, rows = n * senses, trains.size.sum()
+    unit = (n + senses) * rows  # the planes: the six stretches, the momenta in and out, then the unit
+    row = np.arange(rows, dtype=np.intp)
+    first = trains.first.astype(np.intp)
     axis = np.arange(d, dtype=np.intp)
-    _, after = carry(axis + 1, d, 0)  # the other two axes of a shear slot, named by its third axis
-    _, before = carry(axis + senses, d, 0)
-    # every matter pair against every train: the factor carries the pair's entry, the strength, the matter's flag and
-    # the target's square flag; the target's slot rows wrap at the rows, harmless at the factor 0
-    f = np.outer(entry * trains.matter[train] * strength, trains.square).reshape(-1)
-    o, w = np.repeat(one, trained), np.repeat(two, trained)
-    q00 = np.tile(trains.first, len(one))
-    _, q0i = carry(q00[:, None] + 1 + axis[None, :], rows, 0)
-    _, qii = carry(q00[:, None] + 1 + d + axis[None, :], rows, 0)
-    _, qjk = carry(q00[:, None] + 1 + senses * d + axis[None, :], rows, 0)
-    # the readings each term enters: the momenta's planes at the pair's rows, and the differences' along each axis
-    so, sw = sigma_in * rows + o, sigma_in * rows + w
-    to, tw = sigma_out * rows + o, sigma_out * rows + w
-    grad = 1 + axis[None, :]  # the difference along each axis, a plane per axis
-    go, gw = grad * rows + o[:, None], grad * rows + w[:, None]
-    ao, aw = (1 + after) * rows + o[:, None], (1 + after) * rows + w[:, None]
-    bo, bw = (1 + before) * rows + o[:, None], (1 + before) * rows + w[:, None]
-    goo, gww = grad[:, None, :] * rows + o[:, None, None], grad[:, None, :] * rows + w[:, None, None]
-    # the factors: S S f on the 00 slot's momenta, S f on its differences, -S f and -f on the ii slots, f on the
-    # other axes' differences there, -f on the shears and the 0i slots
-    whole, half, less, back = scale * scale * f, scale * f[:, None], -scale * f[:, None], -f[:, None]
-    other = f[:, None, None] * lit(
-        axis[None, :, None] - axis[None, None, :]
-    )  # 1 where the two axes differ
-    blocks = np.concatenate(
-        (
-            spread(so, sw, whole, q00),
-            spread(to, tw, whole, q00),
-            spread(go, gw, half, q00[:, None]),
-            spread(so[:, None], sw[:, None], less, qii),
-            spread(to[:, None], tw[:, None], less, qii),
-            spread(go, gw, back, qii),
-            spread(goo, gww, other, qii[:, :, None]),
-            spread(ao, bw, back, qjk),
-            spread(bo, aw, back, qjk),
-            spread(so[:, None], gw, back, q0i),
-            spread(go, sw[:, None], back, q0i),
-            spread(to[:, None], gw, back, q0i),
-            spread(go, tw[:, None], back, q0i),
-        ),
-        axis=1,
-    )
-    first, second, factor, target = blocks
-    third = unit + 0 * first
+    along = (spokes * spokes) @ axis  # each Spoke's axis, as the grips' read has it
+    # the rows the push lands on, each square's 00 slot and the ii slot of each Spoke's axis; a train that is no square
+    # wraps at the factor 0
+    _, slot = carry(first[:, None] + 1 + d + along[None, :], rows, 0)
+    landed = np.concatenate((first[:, None], slot), axis=1)
+    # the kinetic term on every square's 00 slot from every row it does not land on, the read's factor carried
+    path = np.prod(lit((row[None, None, :] - landed[:, :, None]).astype(object)), axis=1)
+    clock = scale * push * trains.square[:, None] * path
+    kinetic = spread(n * rows + row[None, :], (n + 1) * rows + row[None, :], clock, first[:, None])
+    # each Spoke's stretch squared on the ii slot of its axis, from every row
+    stretch = np.arange(n, dtype=np.intp)[None, :, None] * rows + row[None, None, :]
+    grip = -push * trains.square[:, None, None] + 0 * stretch
+    strain = spread(stretch, stretch, grip, slot[:, :, None])
+    one, two, factor, target = np.concatenate((kinetic, strain), axis=1)
+    third = unit + 0 * one
     return (
-        first.astype(np.intp),
-        second.astype(np.intp),
+        one.astype(np.intp),
+        two.astype(np.intp),
         third.astype(np.intp),
         factor,
         target.astype(np.intp),

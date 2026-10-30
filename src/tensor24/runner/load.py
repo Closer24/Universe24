@@ -1,6 +1,6 @@
 """Clock: every Node-clock made alike: the 24's tables, each train's rows, every gear's teeth and every Mesh's grip, the held hand's spring and the ties of the coupling family, each train's click tooth at its birth, and the setting's gears laid.
-Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s, T_k and T_d at 1; the key the universe file's CHOSEN integer, the click tooth born at (key - 1) div 2, the Spokes along one axis the divisor.
-Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth, its own at rest (the acyclic cut), its ii slots into each axis's grips, its 0i slots odd under the mirror; the held hand found by its character, the one-dimensional kinds together, its rows' grips 0 (a site-local oscillator), the tied trains by their character kept under the sign kind's twist; the plans (runner/plans.py) laid from the kinds' tables at the universe file's CHOSEN strengths: the matter's stress onto the square's slots (the metric's push), the monomials of the notch, the held hand's spring and tie and the hands' tie, and each train's passing through its own form onto A1, the kind found by its character.
+Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s and T_k at 1, T_d senses on the square's 00 and ii rows and 1 elsewhere, the clock's read at Spokes x senses; the key the universe file's CHOSEN integer, the click tooth born at (key - 1) div 2, the Spokes along one axis the divisor.
+Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth at k0 = Spokes x senses, its own at rest (the acyclic cut), its ii slots into each axis's grips, its 0i slots odd under the mirror, its 00 and ii rows driven at the dial senses; the held hand found by its character, the one-dimensional kinds together, its rows' grips 0 (a site-local oscillator), the tied trains by their character kept under the sign kind's twist; the plans (runner/plans.py) laid from the kinds' tables at the universe file's CHOSEN strengths: the momenta of every row on the force's path onto the square's 00 slot and every row's stretches onto its ii slots (the metric's push in the books' form), the monomials of the notch, the held hand's spring and tie and the hands' tie, and each train's passing through its own form onto A1, the kind found by its character.
 Clicks: n/a: no number of the load reaches the clicks except through the act.
 """
 
@@ -178,7 +178,7 @@ def load(
         holding(trains, c, traces, rest, chosen["hold"], universe["integers"]["full_rate"]),
         tying(trains, c, traces, chosen["tie"]),
     )
-    push = pushing(trains, c, traces, star(side), chosen["push"])
+    push = pushing(trains, star(side), chosen["push"])
     return Loaded(trains, potential, state, passing(trains, c, traces, key), push), laid
 
 
@@ -192,34 +192,46 @@ def teeth(universe: dict[str, Any], spokes: Z) -> tuple[Z, Z]:
 def geared(
     universe: dict[str, Any], trains: Trains, spokes: Z
 ) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], tuple[Z, Z, Z], Z]:
-    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2, the 6 the board's Spokes; every row but the slot's own reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself, the 00 row's teeth at rest; every Spoke's grip reading each square's ii slot of its axis at both ends of its Mesh; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 per Mesh, one notch of a slot moving a grip by one count, so the Mesh unit is 1."""
+    """Every gear's coefficients by one formula of the files' integers and the star's counts (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2, the 6 the board's Spokes; every row but the slot's own reading the 00 slot of every train whose kinds are the four-vector's square at the factor k0 = Spokes x senses (one unit for all ten slots), the slot itself, the 00 row's teeth at rest; every Spoke's grip reading each square's ii slot of its axis at both ends of its Mesh at the factor 1; s = 1; the kick 1 and the drive 1, the force's path, on every row but the square's 00 and ii rows, whose dial is senses, term 5's push in the books' form halved with the remainder kept in the fine tooth; every grip den Gamma^2 per Mesh, one notch of a slot moving a grip by one count, so the Mesh unit is 1."""
     first, rows = trains.first, trains.size.sum()
     grip, rest = teeth(universe, spokes)
     ones = np.ones((rows, 1), dtype=object)
     # the square's 0i slots, the rows after its 00 slot, are odd under time's reversal (one time index): their parity
     # is 0, every other row's 1; a lone train's places wrap harmlessly at the factor 0
     n, d = spokes.shape
+    senses, _ = carry(n, d, 0)
     axis = np.arange(d, dtype=np.intp)
     _, at = carry((first[:, None] + 1 + axis[None, :]).reshape(-1), rows, 0)
     even = np.ones((rows, 1), dtype=object)
     np.add.at(
         even, (at.astype(np.intp), 0 * at.astype(np.intp)), -np.repeat(trains.square, d).astype(object)
     )
+    # the drive's dial on the square's pushed rows, its 00 and ii rows, is senses: term 5's push in the books' form is
+    # the derivative of the act's energy halved by the two slots of an edge, and the carry keeps the half as the fine
+    # tooth (the notch's monomials on those rows ride the same dial); every other row's dial is 1, the force's path
+    scale = n * senses
+    _, ii = carry((first[:, None] + 1 + d + axis[None, :]).reshape(-1), rows, 0)
+    pushed = np.zeros((rows, 1), dtype=object)
+    np.add.at(pushed, (first.astype(np.intp), 0 * first.astype(np.intp)), trains.square.astype(object))
+    np.add.at(
+        pushed, (ii.astype(np.intp), 0 * ii.astype(np.intp)), np.repeat(trains.square, d).astype(object)
+    )
     gearing = (
         rest * ones,
         ones,
         ones.copy(),
-        ones.copy(),
+        ones + pushed * (senses - 1),
         even,
     )  # main.py makes them the engine's records
-    # every row reads every train's first row at the factor of its square flag, a square's 00 slot at 1 and the rest
-    # at 0, less its own row: the zero test of the rows' difference cuts the 00 row's read of itself, so its teeth stand
-    # at rest and the clocks' read is acyclic (a dial is never moved by its own quotient)
+    # every row reads every train's first row at the factor of its square flag times Spokes x senses, a square's 00
+    # slot at k0 = 12 (one unit, the half grip, for all ten slots: GR's gamma = 1 for light needs it, the Boss's frame,
+    # NOT_CLOSED 26) and the rest at 0, less its own row: the zero test of the rows' difference cuts the 00 row's read
+    # of itself, so its teeth stand at rest and the clocks' read is acyclic (a dial is never moved by its own quotient)
     trained, every = len(trains), np.arange(rows, dtype=np.intp)
     read, landed = np.repeat(first.astype(np.intp), rows), np.tile(every, trained)
     clock = (
         read,
-        np.repeat(trains.square, rows).astype(object) * lit((read - landed).astype(object)),
+        np.repeat(trains.square * scale, rows).astype(object) * lit((read - landed).astype(object)),
         landed,
     )
     # every Spoke's grip reads a square's diagonal slot for its axis, after the 00 slot and the 0i slots, at the factor 1;

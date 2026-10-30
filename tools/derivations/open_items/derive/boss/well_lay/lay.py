@@ -85,6 +85,15 @@ def bump(x, sx):
     return inside * q
 
 
+def sigma(layout, s):
+    """Every gear's momentum in whole turns of the rest dial, as the stress reads sigma_in: the centred split of
+    M = 2 (W(a) + W(b)) (a - b) + s at the dial 4 rest (step.split at 2 rest and the senses)."""
+    wa, wb = step.dials(layout, s)
+    senses = step.halves(layout)
+    q, _ = step.split(senses * (wa + wb) * (s.a - s.b) + s.r, senses * layout.gearing.rest, senses)
+    return q
+
+
 def world(universe, shape, gears):
     """The loaded files on the engine: the held trains, the layout and the state; no departure of the lay."""
     sites = sites_of(shape)
@@ -164,8 +173,10 @@ def lay():
     held, layout, s = world(universe, shape, rest + partner + moving)
     base = int(held.trains[square].first)
     sums = {c: [0] * sites for c in SLOTS}
+    board_sum = []  # the board's 00 sum by round: the notch's beat
     for r in range(1, TICKS + 1):
         s = step.tick(layout, s)
+        board_sum.append(int(s.a[base].sum()))
         if r > TICKS - WINDOW:
             for c in SLOTS:
                 row = s.a[base + c]
@@ -174,10 +185,13 @@ def lay():
     well = [
         [square, c, x, means[c][x], means[c][x], 0] for c in SLOTS for x in range(sites) if means[c][x]
     ]
+    turns = [r + 1 for r in range(1, TICKS - 1) if (board_sum[r] - board_sum[r - 1]) * (board_sum[r + 1] - board_sum[r]) < 0]
     say(
         f"4. the first run from 0, {TICKS} rounds at push {universe['chosen']['push']} and notch {universe['chosen']['notch']}:"
         f" the metric's components {SLOTS} at the mean of rounds {TICKS - WINDOW + 1}..{TICKS} (Rule3's carry),"
-        f" the 00 slot's mean {means[0][crest]} at the crest and {min(means[0])}..{max(means[0])} over the board; {len(well)} Node-clocks"
+        f" the 00 slot's mean {means[0][crest]} at the crest and {min(means[0])}..{max(means[0])} over the board; {len(well)} Node-clocks;"
+        f" the board's 00 sum turning at rounds {turns} (the notch's beat: the 00 row's own spring 4 h c00 halved by its dial senses,"
+        f" so h is twice the dial 1's for the same beat)"
     )
     gears = rest + partner + moving + well
     WORLD.joinpath("setting.json").write_text(
@@ -191,8 +205,16 @@ def lay():
     # 5. the account: the source's steadiness in the laid world, the parts' squares summed at the crest by windows
     held, layout, s = world(universe, shape, gears)
     squares, windows = [], []
+    # the price of the 00 push's reads: sigma_in sigma_out of the ii rows, which the 00 push does not read, against the matter's
+    ii = [base + 1 + len(shape) + i for i in range(len(shape))]
+    matter = [r for r in range(int(held.trains.size.sum())) if not base <= r < base + held.trains[square].rows()]
+    kinetic, si = {"matter": 0, "ii": 0}, sigma(layout, s)
     for _ in range(TICKS):
         s = step.tick(layout, s)
+        so = sigma(layout, s)
+        kinetic["matter"] += int((si[matter] * so[matter]).sum())
+        kinetic["ii"] += int((si[ii] * so[ii]).sum())
+        si = so
         squares.append(int(s.a[first, crest]) ** 2 + int(s.a[first + 1, crest]) ** 2)
         if len(squares) == 16:
             windows.append((min(squares), max(squares)))
@@ -201,6 +223,14 @@ def lay():
     say(
         f"5. the laid world, {TICKS} rounds: the parts' squares summed at the crest, least and most by windows of 16 rounds:"
         f" {windows}; (most - least) / (most + least) in permille: {ratio}"
+    )
+    share, _ = carry(10**6 * kinetic["ii"], kinetic["matter"], 0)
+    say(
+        f"6. the price of the books' form as built (plans.pushing): the 00 push reads the momenta of every row the push does not"
+        f" land on, the matter and the square's 0i and jk rows, and leaves out the square's 00 and ii rows, whose stride the stress"
+        f" reads before the push's own kick; so the metric's own kinetic share of the books, its self-stress (OPEN, G2), is not"
+        f" paid into the 00 slot: over the laid world's {TICKS} rounds sigma_in sigma_out summed over the board, the ii rows' {kinetic['ii']}"
+        f" against the matter's {kinetic['matter']}, {share} ppm"
     )
     say(f"the setting written: {len(gears)} gears, ticks {TICKS}")
     Path(__file__).with_name("lay.txt").write_text("\n".join(out) + "\n", encoding="utf-8")
