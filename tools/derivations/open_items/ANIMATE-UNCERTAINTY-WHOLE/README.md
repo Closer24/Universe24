@@ -105,7 +105,7 @@ Run: `python3 tools/derivations/open_items/ANIMATE-UNCERTAINTY-WHOLE/uncertainty
   makes, the other half of Heisenberg's argument, is not on this engine.
 - **The click and its draw** (G5, terms 11 and 12) **and the slit** (bodies, G6). The slit is where the count would be
   read on clicks: the narrower the slit, the wider the clicks on a far screen.
-- **Planck's constant.** The count has none, because it is Fourier's and not yet a momentum's. hbar enters where a
+- **Planck's constant.** The count has none, because it is Fourier's and no momentum's. hbar enters where a
   motion becomes a momentum, term 11's key (ANIMATE-UNIT).
 - **Kennard's and Robertson's forms with spreads:** no exact form on a finite board (section 4).
 
