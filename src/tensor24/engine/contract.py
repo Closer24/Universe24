@@ -25,7 +25,8 @@ def pushes(factor: Z, legs: tuple[Z, Z, Z, Z]) -> Plan:
 def contract(plan: Plan, readings: Z, gears: Z) -> Z:
     """Every gear's source J in the gears' shape, Python integers on any gears: a gather, a product of three readings, a scattered sum; a spring reads one, a three-leg vertex two, a four-leg term three."""
     first, second, third, factor, target = plan
-    source = np.concatenate((0 * gears, 0 * gears[:1]))  # the gears' rows and the unit's, last
+    zero = np.zeros_like(gears, dtype=object)  # Python integers whatever the gears hold
+    source = np.concatenate((zero, zero[:1]))  # the gears' rows and the unit's, last
     np.add.at(source, target, factor[:, None] * readings[first] * readings[second] * readings[third])
     return source[:-1]
 

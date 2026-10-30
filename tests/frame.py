@@ -13,7 +13,7 @@ from typing import Any, NamedTuple
 
 import numpy as np
 
-from tensor24.engine.state import Gearing, Layout, Plan, Read
+from tensor24.engine.state import Read
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -48,6 +48,7 @@ def flat(result):
 
 def wide(rng, size):
     """Whole numbers whose every bit is drawn, across 2**256 either side of 0, as Python integers."""
+    # the second review (227cde2fe): a cut to 128 bits and a far read through a carry passed narrower worlds
     limbs = [rng.integers(0, 1 << 62, size).astype(object) << (62 * k) for k in range(5)]
     return sum(limbs) - (1 << 309)
 
@@ -129,23 +130,6 @@ def turned(make, shape, rng, trains=2):
     return True
 
 
-def stored(m):
-    """A turn on the kinds as stored, from the turn alone: A1 1, A2 the axes' sign, T1 the turn, T2 the two, the tensions |m|."""
-    sign = round(np.linalg.det(np.abs(m)))
-    blocks = [np.eye(1, dtype=int), sign * np.eye(1, dtype=int), m, sign * m, np.abs(m)]
-    turn = np.zeros((STORED, STORED), dtype=object)
-    at = 0
-    for block in blocks:
-        turn[at : at + len(block), at : at + len(block)] = block.tolist()
-        at += len(block)
-    return turn
-
-
-STORED = (
-    1 + 1 + 3 + 3 + 3
-)  # one train of each kind as stored: A1 and A2, T1 and T2, and the three tensions (A1 + E)
-
-
 def bijective(make, shape, rng):
     """A fresh engine runs back another's steps of two worlds, in their order; a step with no out undoes its run back."""
     nb, (s, t) = board(shape), [make().world(rng, shape, 2) for _ in range(2)]
@@ -153,6 +137,7 @@ def bijective(make, shape, rng):
     (s1, o1), (t1, p1) = e.step(nb, s), e.step(nb, t)
     back = make().unstep
     undone = same(back(nb, s1, o1), s) and same(back(nb, t1, p1), t)
+    # the third review (81521e0f4): a now slot doubled and halved back passed the rewind alone, and fails forth
     forth = bool(o1) or same(flat(make().step(nb, make().unstep(nb, s, o1))), [*s])
     return undone and forth
 
@@ -243,21 +228,3 @@ def dense(read, rows, landed):
     m = np.zeros((landed, rows), dtype=object)
     np.add.at(m, (read.target, read.first), read.factor)
     return m
-
-
-def plain(nb, meshes, grip, w):
-    """A layout of stage 4 in the generic records: the teeth W at rest and no clock read, s = 1, the force's
-    path (T_k = T_d = 1), no term of J."""
-    none = np.zeros(0, dtype=np.intp)
-    plan = Plan(none, none, none, none.astype(object), none)
-    return Layout(
-        nb, spokes(), meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, unread(), unread()
-    )
-
-
-def holds(name, make, shape, seed):
-    """Whether the property holds on the engine at one seed; an engine that overflows a fixed width does not."""
-    try:
-        return PROPERTIES[name](make, shape, np.random.default_rng(seed))
-    except OverflowError:
-        return False
