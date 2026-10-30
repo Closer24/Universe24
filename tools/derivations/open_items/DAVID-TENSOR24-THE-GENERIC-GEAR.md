@@ -8,7 +8,7 @@ David, 2026-10-29, 15:4x UTC, under decision 40 (the owner's words to the Boss o
 The Boss's asks of 15:22 (comment 6500777188) are answered here: N1, N3, the form of (a)'s toy and the exact read of (e).
 
 Probes, each with its output beside it:
-- derive/david_open/gear/: e1_ruler_read.py on integers; n1_slicing.py exact, with one float check named; n3_slots.py exact.
+- derive/david_open/gear/: e1_ruler_read.py on integers; n1_slicing.py and n3_slots.py exact, with no root (the owner's word to David of 2026-10-30, 02:2x UTC: "A root in the code is forbidden, and tables are forbidden... in the logic... and not outside it either...").
 - derive/david_open/couplings/: norms.py on integers; virial.py in floats.
 
 Only the Boss writes engine code (decision 40). This page is a specification and its checks, nothing more.
@@ -89,7 +89,7 @@ Only the Boss writes engine code (decision 40). This page is a specification and
 - **Both lines check** (n1, exact at every w = k/12):
   - the course gives f = w / (1 - w);
   - the static field gives gamma = w / (3w - 1).
-  - The float row, the divergence of (-g)^w g^ij about a point mass taken from the metric itself, is 0 at the line's gamma to the differences' size. At gamma = 1 it is of order 1 unless w = 1/2.
+  - The static row again from the metric itself, the coefficient of grad U in the divergence of (-g)^w g^ij at first order, is w (6 gamma - 2) - 2 gamma, exactly: 0 at the line's gamma, and 4w - 2 at gamma = 1, so 0 there only at w = 1/2. Each factor's first-order term comes from its polynomial and its series, so no root and no fractional power enters.
 - **The free count's weight is 1/2.** Each board count as a free clock obeys Box_g x = (-g)^(-1/2) d_mu ((-g)^(1/2) g^(mu nu)) = 0. That is the measure's own weight, the four-volume sqrt(-g) = N a^3 = (Y / Gamma)^2.
   - Any other w is a typed weight.
   - f = 1/3 needs w = 1/4, which gives gamma = -1. Cassini holds gamma - 1 = (2.1 +- 2.3) x 10^-5 (Bertotti, Iess and Tortora, 2003).

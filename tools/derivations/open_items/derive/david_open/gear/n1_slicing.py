@@ -8,11 +8,13 @@ delta^ij (1 + (w (6 gamma - 2) - 2 gamma) U), and the space rows of the law ask 
 gamma = w / (3w - 1).
 
 The free count: each board count x^nu a free clock, its wave law Box_g x^nu = (-g)^(-1/2) d_mu ((-g)^(1/2) g^(mu nu)) = 0,
-is the weight 1/2: the measure's own, the four-volume sqrt(-g) = N a^3.
+is the weight 1/2: the measure's own, the four-volume N a^3.
 
-Checks: the two lines exactly with fractions at every w = k/12; the static line again from the metric itself in
-floats (the divergence of (-g)^w g^ij by central differences about a point mass, at U = 1e-6, over U), which is 0 at
-the line's gamma to the differences' size and of order 1 at gamma = 1 unless w = 1/2; the free count's weight.
+Checks, all exact with fractions and no root (the owner's word to David of 2026-10-30, 02:2x UTC): the two lines at
+every w = k/12; the static row again from the metric itself, as the first-order coefficient of grad U in the divergence
+of (-g)^w g^ij, each factor's first-order term taken from its polynomial (-g = (1 - 2U)(1 + 2 gamma U)^3) and its
+series ((1 + x)^w = 1 + w x, (1 + x)^-1 = 1 - x), which is 0 at the line's gamma and 4w - 2 at gamma = 1, so 0 there
+only at w = 1/2; the free count's weight.
 
 Usage: python3 -I n1_slicing.py
 """
@@ -32,28 +34,33 @@ def static_gamma(w):
     return gamma
 
 
-def static_float(w, gamma, eps=1e-6, h=1e-3):
-    """The x row of d_j ((-g)^w g^jx) at the point (1, 0, 0) about a point mass, U = eps / r, over eps."""
-    def flux(x, y, z, j):
-        rr = (x * x + y * y + z * z) ** 0.5
-        u = eps / rr
-        minus_g = (1 - 2 * u) * (1 + 2 * gamma * u) ** 3
-        gxx = 1 / (1 + 2 * gamma * u)
-        return minus_g ** w * gxx if j == 0 else 0.0
-    div = (flux(1 + h, 0, 0, 0) - flux(1 - h, 0, 0, 0)) / (2 * h)
-    return div / eps
+def first_order(poly_a, poly_b):
+    """The constant and the U term of a product of two polynomials in U, each given as (constant, U term)."""
+    return poly_a[0] * poly_b[0], poly_a[0] * poly_b[1] + poly_a[1] * poly_b[0]
+
+
+def static_row(w, gamma):
+    """The coefficient of grad U in d_j ((-g)^w g^jx) at first order, from the metric itself."""
+    minus_g = (F(1), F(-2))
+    for _ in range(3):
+        minus_g = first_order(minus_g, (F(1), 2 * gamma))
+    assert minus_g[0] == 1
+    power = (F(1), w * minus_g[1])
+    inverse = (F(1), -2 * gamma)
+    return first_order(power, inverse)[1]
 
 
 def main():
-    print("w      f = w/(1-w)   gamma = w/(3w-1)   the static row in floats: at that gamma, at gamma = 1")
+    print("w      f = w/(1-w)   gamma = w/(3w-1)   the static row from the metric: at that gamma, at gamma = 1")
     for k in range(1, 12):
         w = F(k, 12)
         f = course_f(w)
         gamma = static_gamma(w) if 3 * w != 1 else None
-        row = static_float(float(w), float(gamma)) if gamma is not None else float("nan")
-        einstein = static_float(float(w), 1.0)
+        row = static_row(w, gamma) if gamma is not None else None
+        einstein = static_row(w, F(1))
+        assert einstein == 4 * w - 2
         print(f"{str(w):6} {str(f):13} {str(gamma) if gamma is not None else 'none (w = 1/3)':18} "
-              f"{row:+.2e}  {einstein:+.3f}")
+              f"{str(row) if row is not None else '-':>4}  {str(einstein):>5}")
     print("w = 1/2 (the free count, Box_g x = 0):", f"f = {course_f(F(1, 2))}, gamma = {static_gamma(F(1, 2))}")
     print("f = 1/3 (the square cell):", f"w = {F(1, 3) / (1 + F(1, 3))}, gamma = {static_gamma(F(1, 4))}")
 
