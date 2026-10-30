@@ -8,7 +8,7 @@ import numpy as np
 
 from tensor24.algebra.carry import Z, carry, flip
 from tensor24.engine.contract import contract, read
-from tensor24.engine.mesh import pull, seen
+from tensor24.engine.mesh import held, pull, seen
 from tensor24.engine.state import Gearing, Layout, Read, State
 
 
@@ -58,6 +58,12 @@ def teeth(layout: Layout, s: State) -> Z:
     _, _, _, _, gearing, _, clock, _ = layout
     a, _, _, _ = s
     return weight(gearing, clock, a)
+
+
+def grips(layout: Layout, s: State) -> Z:
+    """Every Spoke's grip at every gear and site at the state's now slot, as its round reads them: the window's measure, read from outside."""
+    a, _, _, _ = s
+    return held(layout, a)
 
 
 def tick(layout: Layout, s: State) -> State:

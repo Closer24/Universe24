@@ -25,7 +25,13 @@ def gripped(layout: Layout, a: Z) -> Z:
     return landed
 
 
+def held(layout: Layout, a: Z) -> Z:
+    """Every Spoke's grip at every gear and site: its train's grip on the Spoke's Mesh at rest, and what the grips' read lands on it at the now slot."""
+    _, _, meshes, grip, _, _, _, _ = layout
+    return grip[:, meshes] + gripped(layout, a)
+
+
 def pull(layout: Layout, a: Z) -> Z:
-    """The Meshes' pull on every gear: its train's grip on each Spoke's Mesh, at rest and as the grips' read lands it, times the neighbour less its own now."""
-    nb, _, meshes, grip, _, _, _, _ = layout
-    return ((seen(a, nb) - a[:, None, :]) * (grip[:, meshes] + gripped(layout, a))).sum(axis=1)
+    """The Meshes' pull on every gear: its grip on each Spoke's Mesh times the neighbour less its own now, summed over the Spokes."""
+    nb, _, _, _, _, _, _, _ = layout
+    return ((seen(a, nb) - a[:, None, :]) * held(layout, a)).sum(axis=1)

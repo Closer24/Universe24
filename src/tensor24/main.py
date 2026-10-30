@@ -32,7 +32,7 @@ def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> s
     return state.Layout(nb, spokes, meshes, grip, *typed)
 
 
-ENGINE = run.Engine(made, layout, step.tick, step.untick, state.State, step.teeth)
+ENGINE = run.Engine(made, layout, step.tick, step.untick, state.State, step.teeth, step.grips)
 
 
 def ran(paths: list[Path], record: Path) -> list[str]:

@@ -241,19 +241,24 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert all(
         leaves(dataclasses.make_dataclass("Broken", [("x", hint)])) - {int, str} for hint in broken
     )
-    # a departing file or a broken promise is named, and nothing is written, by the run and by its tool
+    # a departing file, a broken promise or a lay outside the wave's window (the 00 slot at site 0 laid so deep that
+    # the teeth there are 1, every row's) is named, and nothing is written, by the run and by its tool
     universe["version"] = 1 + 1
+    deep, low = json.loads(json.dumps(setting)), 1 - int(laid.gearing.rest[0, 0])
+    (clock,) = [n for n, t in enumerate(held.trains) if t.square]
+    deep["gears"].append([clock, 0, 0, low, low, 0])
     setting["gears"][0][-1] = TOOTH
     edits = (
-        ("universe", universe, "universe.version: 1, not 2"),
-        ("setting", setting, "round 1: row 0, site 0: the fine tooth"),
+        ("universe", universe, "universe.version: 1, not 2", 1),
+        ("setting", setting, "round 1: row 0, site 0: the fine tooth", 1),
+        ("setting", deep, "round 1: row 0, site 0: the Spokes' grips", len(laid.gearing.rest)),
     )
-    for name, held_, named in edits:
+    for name, held_, named, lines in edits:
         paths = list(PATHS)
         paths[NAMES.index(name)] = tmp_path / f"{name}.json"
         paths[NAMES.index(name)].write_text(json.dumps(held_), encoding="utf-8")
         found = main.ran(paths, tmp_path / f"{name}.jsonl")
-        assert len(found) == 1 and found[0].startswith(named), found
+        assert len(found) == lines and found[0].startswith(named), found
         assert (
             not (tmp_path / f"{name}.jsonl").exists()
             and not run.ledger_of(tmp_path / f"{name}.jsonl").exists()
