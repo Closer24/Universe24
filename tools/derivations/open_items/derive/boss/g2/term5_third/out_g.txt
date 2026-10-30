@@ -1,0 +1,41 @@
+Probe G: the sign and gamma on pushed slots, whole numbers; grip at rest 15162856759112389000000, rest teeth 90977140554674334000000
+G1. dust on a cube of 3, stride 30 alike everywhere, 30 rounds under the push, then the slots read
+    target u | strength | c00 (uniform: spread) | u permille | ii | -12 ii / c00 permille | 6 (grip_rest - grip) / c00 permille | gamma_slot permille | (1+u)/(1-u) permille
+    1/1000 | 68671512872568775596650876131218936 | 90977140554674334000 (0) | 1 | -7577640189259400424 | 999 | 999 | 1001 | 1002
+    1/100 | 686715128725687755966508761312189366 | 909771405546743340000 (0) | 10 | -75437719384260429960 | 995 | 995 | 1015 | 1020
+    1/50 | 1373430257451375511933017522624378733 | 1819542811093486680000 (0) | 20 | -150132190125455231422 | 990 | 990 | 1030 | 1040
+    1/20 | 3433575643628438779832543806560946833 | 4548857027733716700000 (0) | 50 | -369898981224443614601 | 975 | 975 | 1077 | 1105
+    1/10 | 6867151287256877559665087613121893667 | 9097714055467433400000 (0) | 100 | -722586179050078360492 | 953 | 953 | 1158 | 1222
+    1/5 | 13734302574513755119330175226243787335 | 18195428110934866800000 (0) | 200 | -1382250275444027327010 | 911 | 911 | 1337 | 1500
+G2. a free lump on a cube of 5: the hand's first part at 300 on the centre site at rest (both slots alike), released by its own pull; the slots it pushes read each round at the centre and the mean of its six neighbours
+    gamma_slot in permille (- where undefined: the slot not moved); u at the centre in permille of rest
+    strength 30411669986423314907088245143825529:
+      r1: u 0, centre 555 (c00 4332244788317825429, sum ii -1083035410522062975), neighbours 749 (c00 mean 481360532035313937)
+      r2: u 0, centre 534 (c00 12154455306926612059, sum ii -2918110602198176403), neighbours 1072 (c00 mean 1323724272018425455)
+      r3: u 0, centre 599 (c00 12275551837190334496, sum ii -2828241853432274928), neighbours 728 (c00 mean 3580579884825001468)
+      r4: u 0, centre 815 (c00 6173732919385168397, sum ii -1279221237160411275), neighbours 606 (c00 mean 5467739007460662717)
+      r5: u 0, centre 1111 (c00 2331621372614562497, sum ii -361017609494167200), neighbours 687 (c00 mean 4503240515985219963)
+      r6: u 0, centre 882 (c00 1491799140124448026, sum ii -232126919211499851), neighbours 905 (c00 mean 2483703354956159323)
+      the hand after 6 rounds: at the centre a = 67, |a| summed over the six neighbours 216, over the far sites 1714
+    strength 608233399728466298141764902876510582:
+      r1: u 0, centre 556 (c00 86644895766356508571, sum ii -21650913982549817706), neighbours 749 (c00 mean 9627210640706278730)
+      r2: u 2, centre 536 (c00 243127801104170736188, sum ii -58309974420685356090), neighbours 1072 (c00 mean 26467955632673620312)
+      r3: u 2, centre 601 (c00 245836961944503991164, sum ii -56658817606543737390), neighbours 729 (c00 mean 71564232877973051899)
+      r4: u 1, centre 817 (c00 123982669704293078887, sum ii -25820501326710676119), neighbours 607 (c00 mean 109373697667189195460)
+      r5: u 0, centre 1110 (c00 47067419813103742435, sum ii -7353663904920014487), neighbours 688 (c00 mean 90232675434788227713)
+      r6: u 0, centre 880 (c00 29997786061912039543, sum ii -4597179306736031784), neighbours 905 (c00 mean 49892182933362325343)
+      the hand after 6 rounds: at the centre a = 69, |a| summed over the six neighbours 210, over the far sites 1714
+    strength 3041166998642331490708824514382552910:
+      r1: u 4, centre 558 (c00 433224478831782542857, sum ii -108048860516240301663), neighbours 748 (c00 mean 48136053203531393651)
+      r2: u 13, centre 542 (c00 1218863507303830501538, sum ii -291051346176414741963), neighbours 1073 (c00 mean 132203000995692041778)
+      r3: u 13, centre 610 (c00 1238592372610569634514, sum ii -285858990106991338272), neighbours 735 (c00 mean 356056298182576191766)
+      r4: u 6, centre 830 (c00 623578350595557518912, sum ii -132453824595443747898), neighbours 611 (c00 mean 546496060944681407386)
+      r5: u 2, centre 1141 (c00 232096523214468161640, sum ii -36889729501198401414), neighbours 692 (c00 mean 453077157498540131796)
+      r6: u 1, centre 881 (c00 147600055450664848082, sum ii -20967246898001959440), neighbours 913 (c00 mean 249404585200751261354)
+      the hand after 6 rounds: at the centre a = 73, |a| summed over the six neighbours 198, over the far sites 1714
+G3. light's period on the metric the dust's push made, frozen: a board of 6 x 3 x 3, the dust pushed 30 rounds, then the push's strength 0 and the matter replaced by a standing wave 500 x (2 cos(pi x / 3)) along x; 41 zero crossings of the mode's amplitude, interpolated in permille rounds
+    at rest: 20 periods in 305645 permille rounds (period 15282 permille rounds)
+    u target | u permille | clock's period^2 ratio W/rest permille | grip/grip_rest permille | light's 20 periods | light's period^2 ratio permille | 1 + gamma permille | 2/(1-u) permille
+    1/50 | 20 | 1020 | 980 | 311878 | 1041 | 2050 | 2040
+    1/20 | 50 | 1050 | 951 | 321349 | 1105 | 2100 | 2105
+    1/5 | 200 | 1200 | 817 | 371107 | 1474 | 2370 | 2500

@@ -74,3 +74,46 @@
   third; on the act: whole-speed copies bunch (J_+), half-speed copies alike with J_- = 0 while their windings climb
   (the books break); the partner pair keeps its hand 600 of 600 with the flipped teeth.
 - probe_kinds 7: the winding even under all 48, the helicity (re x im) . p odd under the 24 reflections.
+
+## The square (Big Pic 6527540022 item 5.2; the coordinator after the first report)
+Paper first (step 1, does it follow): v(psi) = (psi1^2 - psi2^2, i (psi1^2 + psi2^2), -2 psi1 psi2) is Cartan's square:
+v . v = 0 (re . im = 0, |re| = |im|), |re|^2 = |psi|^4, re x im = |psi|^2 s(psi) with s = (2 Re conj(psi1) psi2,
+2 Im conj(psi1) psi2, |psi1|^2 - |psi2|^2); Sym^2 E1/2 = T1, so the 48 turn v by the 24's T1 signed permutations;
+v(-psi) = v(psi); v(psi) . v(chi) = -2 det(psi, chi)^2; v(T psi) = (-re, im) (the partner: the spin reversed).
+The act is linear and the same real operator on all six gears, so V(t) = SUM_y L(t) V(y, 0) + L'(t) V'(y, 0) and
+V . V stays 0 at every site for all t iff every pair of the lay's complex vectors (now and before, every site) is
+null-orthogonal: all roots parallel (one spin direction) with any complex amplitudes. Two roots in one lay break
+the square where they meet: (v + v') . (v + v') = -4 det^2. A square taker fed by a parallel root stays a square and
+grows (one root, bigger); fed by another root it leaves the squares (a pair, det not 0). The sign of psi is lost by
+the square; det^2 is kept, det's sign is not; a full turn is +1 on the square (T1). A null hand is also circular
+light's: the gears cannot tell a square-carried root from a circularly polarized whole-speed hand; the kind must.
+Questions on the act: 1 nullness kept, for which lays (one root; mutants: two roots, a line, linear polarization,
+a giver of the same root against one of another); 2 the pair reading v . v' at one Node-clock (two copies alike: 0
+for ever while the size climbs; the partner pair: -2 |re|^2); 3 the helicity H = SUM (re x im) . (re D im - im D re)
+on a line of Meshes, its sign under the x reflection with the g lift, the 48 holding (J = 0).
+
+## After the hostile mathematician (fam_math/REPORT.md, NOT PASSED): the second text FAMILIES2.md
+- probe_induced: G3/2 by cosets of C6 with the sign: 48 signed permutations of 8 gears, -1 = -I, FS -96, 1 + 3
+  pairings, the commutant of rank 4 with T T = -I a signed permutation; the 24-gear train (pairs +-g with the sign)
+  2 E1/2 + 2 E5/2 + 4 G3/2, FS -384; tables C[K x K -> T1] by the group sum, equivariant 48/48; on the act with J
+  through them: true 48/48, random 0/48, mutant 4/48 (G3/2) and 2/48 (24 gears) at W = 9, 10, 1.
+- probe_pauli2: the kind's I-bilinear epsilon and Hermitian pairings; two quanta laid apart: free act, one state 10
+  thousandths of a pair (rounding), partner 921; generic table 144 / 634, w_I 12000 -> 28664; I-averaged table
+  44 / 825, w_I kept within 13003; the gears add as waves; the books of keys undefined for v . C(h, h); the
+  pair-creation vertex (light at charge 2) named Open.
+- The square lead stays on paper (above), unprobed, behind this on the coordinator's word.
+
+## The third round (fam_math/REPORT2 N1-N5; fam_phys/REPORT 1-11; qa_phys 4; qa_math 1; the owner's words of 17:2x and 17:3x)
+- probe_pauli3: the whole wedge D = |phi|^2|chi|^2 - <phi,chi>_I^2, 0 iff rank(phi, I phi, chi, I chi) = 2; the reader's chi:
+  epsilon 0, D 622 thousandths, rank 4; of 292 chi with epsilon = 0 none has D = 0. G3/2 two lays (W 10^6, light 1000,
+  30 rounds): free 21 / 974 / 644 (one state / partner / reader's chi); generic table 537 / 838 / 839; I-averaged 395 /
+  771 / 701. Spin 1/2 inside the 24-gear train: the right 48 signed permutations, I = right i, T = right j, the whole
+  projector rank 8; free act 0 / 999 / 443 with leak 0; the train's table 613 / 875 / 124 with the leak out of spin 1/2
+  998 / 737 / 898 (the doublers mixed by light: qa_phys 4, fam_phys 2 confirmed).
+- probe_quaternion: the eight kinds from the 48 units (A2 = sigma(g)/g on 48/48, T2 = sigma(g) v conj(g) 48/48, |T1| =
+  1 + chi_E 48/48); per kind on the act with a kind-specific vertex: A1 48/16/16, A2 48/24/16, T1 48/0/16, T2 48/0/16,
+  A1+E 48/8/16; the norm vertex a1 (k . k) is kept by every signed permutation (random 48/48): the anchor's tie tells no
+  kind; the two tables one product (dot = -Re, eps = the vector part, 20/20); N(conj(b) a) = N(b) N(a) 20/20.
+- probe_click (the owner's word: Pauli in the click, the board stacks): TERM11's world, G3/2 taker fed on its own line:
+  term 11's count 0..7 (stacks), the pair's size S_- at every later key 0 thousandths, books taken 2 / returned 7; light
+  (A1 part 2): count 0..7, S_+ 2000 at every key, all taken. No sine or cosine anywhere in the folder.

@@ -14,8 +14,9 @@ built pump a hand parametrically and the root dial does not. On paper: a = u / s
 d_t (W d_t a) = -g a into u'' + [g / W - W'' / 2W + (W' / 2W)^2] u = 0, a Hill equation whose parameter swings with
 the clock; the act as built is a'' + (g / W) a = 0; a swing of relative size e at twice the hand's frequency, half its
 period, pumps as Mathieu's equation does, by about exp(e pi / 4) a swing. The root form in the clock's own time,
-d tau = dt / L, is u'' + g u = 0 with nothing moving: no pump at any rate or phase, which is nature's for a uniform
-lapse. Measured on the physicist's lay (probe_swing; one gear, the course given from outside, W0 = 316^2, g = 201, a
+d tau = dt / L, is a'' + g a = 0 in a itself, with nothing moving (the substitution a = u / W^(1/4) in coordinate time
+gives a Hill equation that is a pure reparametrization of it, hence bounded): no pump at any rate or phase, which is
+nature's for a uniform lapse. Measured on the physicist's lay (probe_swing; one gear, the course given from outside, W0 = 316^2, g = 201, a
 beat of 140 rounds, the swing an integer oscillator, 50 swings, the owner's half-open convention):
 
 | the clock's swing | as built | edge | root |
@@ -36,8 +37,10 @@ gauge; a swing that varies over the board is a wave, not pure gauge, and whether
 question, not this one gear's. Term 9's swing has a period of about 140 ticks by the law and a size that is OPEN, so
 this regime is the engine's own; in the physicist's reading under Postulate 7 the pump would make quanta from a
 uniform notch, or take them. So the CHOSEN form's consequence that the clicks read is this: at term 9's swing a
-hairspring under d_t (W d_t a) = F (as under the act as built) is pumped by the clock's own notch, and under the root
-dial it is not. The owner's choice of form is to be weighed on this, not on the breathing.
+hairspring whose beat is twice the swing's, and on a board the light modes at that wavelength (about 2 c T_s, about
+115 Meshes at Gamma 1,000, always there to take it), are pumped by the clock's own notch under d_t (W d_t a) = F (as
+under the act as built), within a tongue a few percent wide at e = 5 percent and wider as e grows; under the root dial
+they are not. The owner's choice of form is to be weighed on this, not on the breathing.
 
 ## The final mathematician's nine minors
 

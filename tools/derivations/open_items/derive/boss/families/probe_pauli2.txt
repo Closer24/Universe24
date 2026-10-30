@@ -1,0 +1,57 @@
+Two quanta of a half-speed family laid apart, on the act (probe_pauli2.py)
+1. The pairings of two half-speed hands, in whole numbers (G3/2 on eight gears; the triple I, J, K of probe_induced 2).
+   epsilon antisymmetric on 20 pairs: True; <chi, phi> = conj <phi, chi>: True; epsilon I-bilinear (I = i on either hand): True; both kept by all 48: True
+   one state, chi = (a + b I) phi, |a|, |b| <= 2: epsilon(phi, chi) = 0 on 20 of 20 hands: True
+   the partner J phi: epsilon(phi, J phi) = (-54 |phi|^2, 0) and <phi, J phi> = 0 (Kramers) on 20 of 20: True
+   the partner's windings: (w_I, w_J, w_K) -> 54 (-w_I, w_J, -w_K) on 20 of 20 pairs: True: it turns the other way in I.
+   (These are identities of the kind's algebra, antisymmetry and the commutant; the act decides what the hands do.)
+
+   phi = [1, 1, 1, 3, 1, 2, -2, -3] at Node-clock 0 and a second hand at 13, each turning in I, the size 40 (the partner 5 J phi,
+   |J phi|^2 = 54 |phi|^2, so 25 x 54 against 1600 of |phi|^2); W = 100000, the grip
+   near W / 6 from the square's ii slots; 10 rounds. Three lays of the second hand: the same state (2 phi), the partner (J phi).
+
+2. The free act (J = 0): the two quanta spread through the Meshes and meet.
+   the same state:
+      Node-clocks and rounds where both quanta are present: 228; the pair's hand there, |epsilon|^2 over lam |h_phi|^2 |h_chi|^2: 10 thousandths summed over them (1,000 is a full pair, 0 none); at its largest at one Node-clock 214 (a few notches against the carry's rounding where a quantum just arrives)
+      the gears where the whole departs from the sum of the parts over the run: 1666 (the carry's rounding and, with J, the vertex's push on light)
+      where both are present, |h_both|^2 above |h_phi|^2 + |h_chi|^2 in 125 of 228 cases (the cross term, at the last round's first such site: -73 against 556)
+      the three windings summed over the board, (w_I, w_J, w_K): at the lay (12000, 0, 0); after each round [(12480, -1800, -360), (12398, -1827, -2403), (12475, -4026, -612), (12477, -1320, 3042), (12251, -2841, -51), (12046, -3426, 930), (11894, -3627, 5517), (11724, -4371, 6207), (11758, -7038, 7020), (12223, -5889, 7929)]
+   the partner:
+      Node-clocks and rounds where both quanta are present: 228; the pair's hand there, |epsilon|^2 over lam |h_phi|^2 |h_chi|^2: 921 thousandths summed over them (1,000 is a full pair, 0 none); at its largest at one Node-clock 989 (a few notches against the carry's rounding where a quantum just arrives)
+      the gears where the whole departs from the sum of the parts over the run: 1611 (the carry's rounding and, with J, the vertex's push on light)
+      where both are present, |h_both|^2 above |h_phi|^2 + |h_chi|^2 in 95 of 228 cases (the cross term, at the last round's first such site: -101 against 363)
+      the three windings summed over the board, (w_I, w_J, w_K): at the lay (10500, 0, 0); after each round [(10570, -870, -1470), (10338, -1494, -2688), (10428, -2598, 462), (10535, -2637, 831), (10463, -5379, 2211), (10535, -5586, 2826), (10589, -3225, 3117), (10590, -4863, 1845), (10411, -6174, 1980), (10430, -4110, -942)]
+
+3. J through the kind's own table (primitive: the group sum over its entries' common divisor 2, entries within 25).
+   The generic table keeps no common turn (probe_induced 3); averaged over I it does: equivariant under 48 of 48,
+   kept by I: True, 72 entries not 0. Light drawn in [-100, 100] at every Node-clock; the gearing s = T_k = T_d = 1.
+   the generic table, 168 pushes:
+   the same state:
+      Node-clocks and rounds where both quanta are present: 228; the pair's hand there, |epsilon|^2 over lam |h_phi|^2 |h_chi|^2: 144 thousandths summed over them (1,000 is a full pair, 0 none); at its largest at one Node-clock 772 (a few notches against the carry's rounding where a quantum just arrives)
+      the gears where the whole departs from the sum of the parts over the run: 1669 (the carry's rounding and, with J, the vertex's push on light)
+      where both are present, |h_both|^2 above |h_phi|^2 + |h_chi|^2 in 112 of 228 cases (the cross term, at the last round's first such site: -6042 against 12874)
+      the three windings summed over the board, (w_I, w_J, w_K): at the lay (12000, 0, 0); after each round [(15120, -31800, -29640), (15077, -31272, -30378), (15405, -14889, 36279), (15248, 6699, 72513), (15870, 7356, 90762), (15489, 10038, 107754), (15868, 15432, 138012), (16683, 19290, 162132), (20031, 21534, 225714), (28664, 27468, 350412)]
+   the partner:
+      Node-clocks and rounds where both quanta are present: 228; the pair's hand there, |epsilon|^2 over lam |h_phi|^2 |h_chi|^2: 634 thousandths summed over them (1,000 is a full pair, 0 none); at its largest at one Node-clock 996 (a few notches against the carry's rounding where a quantum just arrives)
+      the gears where the whole departs from the sum of the parts over the run: 1634 (the carry's rounding and, with J, the vertex's push on light)
+      where both are present, |h_both|^2 above |h_phi|^2 + |h_chi|^2 in 199 of 228 cases (the cross term, at the last round's first such site: 1253 against 7047)
+      the three windings summed over the board, (w_I, w_J, w_K): at the lay (10500, 0, 0); after each round [(16240, -5190, 6270), (16123, -5874, 6576), (14114, -8172, 4866), (11442, -6633, 5877), (11216, -5142, 3126), (11611, -4617, 7911), (11463, -4281, 11073), (11704, -3219, 11949), (12769, -7383, -1545), (11461, -16629, -18945)]
+   the table averaged over I (charge 0), 72 pushes:
+   the same state:
+      Node-clocks and rounds where both quanta are present: 228; the pair's hand there, |epsilon|^2 over lam |h_phi|^2 |h_chi|^2: 44 thousandths summed over them (1,000 is a full pair, 0 none); at its largest at one Node-clock 551 (a few notches against the carry's rounding where a quantum just arrives)
+      the gears where the whole departs from the sum of the parts over the run: 1735 (the carry's rounding and, with J, the vertex's push on light)
+      where both are present, |h_both|^2 above |h_phi|^2 + |h_chi|^2 in 124 of 228 cases (the cross term, at the last round's first such site: 373 against 2386)
+      the three windings summed over the board, (w_I, w_J, w_K): at the lay (12000, 0, 0); after each round [(12760, -32400, -41280), (12737, -31587, -43737), (12943, -13485, -441), (12928, -3966, 22620), (13014, -5037, 32589), (12884, -5958, 38364), (12885, -6933, 50481), (12577, -7968, 53712), (12591, -11064, 68214), (13003, -17115, 97113)]
+   the partner:
+      Node-clocks and rounds where both quanta are present: 228; the pair's hand there, |epsilon|^2 over lam |h_phi|^2 |h_chi|^2: 825 thousandths summed over them (1,000 is a full pair, 0 none); at its largest at one Node-clock 986 (a few notches against the carry's rounding where a quantum just arrives)
+      the gears where the whole departs from the sum of the parts over the run: 1639 (the carry's rounding and, with J, the vertex's push on light)
+      where both are present, |h_both|^2 above |h_phi|^2 + |h_chi|^2 in 139 of 228 cases (the cross term, at the last round's first such site: -164 against 945)
+      the three windings summed over the board, (w_I, w_J, w_K): at the lay (10500, 0, 0); after each round [(10600, -2190, -12510), (10542, -2763, -13023), (10546, -3570, -3912), (10568, -5118, 1704), (10524, -6066, 4932), (10540, -5088, 4692), (10792, -4314, 6972), (10668, -3306, 7746), (10787, -6423, 9069), (10463, -12342, 13524)]
+
+4. Read: the two orders cancel exactly where the two quanta are one state under the free act (the pair's hand 0 up
+   to the carry's rounding), and the partner pair is a full pair; under light the two quanta's inner states drift
+   apart and the pair appears even for one state laid, unless the table keeps the hand's phase; in every case the
+   gears where the two meet stack (no cap). The three windings are the family's charges: kept by the free act and
+   by the phase-keeping table within the carry's remainders, moved by the generic one. The books of keys with light
+   need a giver with a winding and a vertex of one common turn: light's hand at charge 2 against the pair's 1 + 1,
+   a pair made or unmade at a Node-clock, which is not laid here (Open).

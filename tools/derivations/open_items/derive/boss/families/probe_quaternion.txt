@@ -1,0 +1,29 @@
+The families from the quaternion (probe_quaternion.py)
+1. The eight kinds from the ring's 48 units, each checked against the engine's kinds on the turn it covers.
+   T1, the sandwich, is the engine's turn on 48 of 48 units (two to a turn); A1 the real part, kept by every sandwich;
+   A2 = sigma(g) / g is +-1 on 48 of 48, equal to the engine's A2 on 48 of 48: -1 exactly on the 24 units whose
+   coordinates carry sqrt 2 (the odd turns' lifts); T2 = sigma(g) v conj(g) is the engine's T2 on 48 of 48;
+   |T1| on the three axes has the character 1 + chi_E on 48 of 48: E rides with A1 there (the square's ii slots).
+   E1/2 = g psi, the left turn of Lambda (probe_spinor 1, eight gears, -1 = -I); E5/2 = sigma(g) psi, the same matrices
+   in another order, one whole kind with E1/2 (the quarter turns' traces sqrt 2 and -sqrt 2 summing to 0);
+   G3/2 = E1/2 x E (probe_spinor 5, sixteen gears, two copies of the eight-gear least form of probe_induced 1).
+
+2. Each whole-speed kind's train on the act, J through a term pairing it with another train by the engine's own
+   tables, W = 9, 4 rounds (the norm alone, a1 (k . k), holds under every signed permutation of the gears, 48 of 48 for
+   the random control too: the anchor's tie tells no kind; the kinds are told by the tables that are not the norm).
+   A1, the real part, in k (t1 . t1): 1 gear, -1 acts as +I; 3 pushes; the 48 lifts hold 48 of 48; random signed permutations in the kind's place 16 of 48; the table with one entry raised 16 of 48
+   A2, the field's second sign, in k (t1 . t2): 1 gear, -1 acts as +I; 3 pushes; the 48 lifts hold 48 of 48; random signed permutations in the kind's place 24 of 48; the table with one entry raised 16 of 48
+   T1, the sandwich, in a1 (k . t1): 3 gears, -1 acts as +I; 3 pushes; the 48 lifts hold 48 of 48; random signed permutations in the kind's place 0 of 48; the table with one entry raised 16 of 48
+   T2, the sign times the sandwich, in a2 (t1 . k): 3 gears, -1 acts as +I; 3 pushes; the 48 lifts hold 48 of 48; random signed permutations in the kind's place 0 of 48; the table with one entry raised 16 of 48
+   A1 + E, the axes permuted, in a1 times its own table: 3 gears, -1 acts as +I; 9 pushes; the 48 lifts hold 48 of 48; random signed permutations in the kind's place 8 of 48; the table with one entry raised 16 of 48
+   (the half-speed kinds, G3/2 on eight gears and spin 1/2 on twenty-four, with their T1 tables: probe_induced 4.)
+
+3. The vertex's two tables as one product: (0, v)(0, w) = (-v . w, v x w) against the engine's tables.
+   the A1 table is +(v . w) = - the product's real part on 20 of 20 pairs; the epsilon table is +(v x w), its vector part, on 20 of 20:
+   one quaternion product of two vector hands gives the dot and the cross, the two tables the plan lays (SYM24 plan.txt).
+
+4. A hand's before times its now on the ring: conj(b) a read at once as the dot and three windings; the norm's four squares.
+   N(conj(b) a) = N(b) N(a) on 20 of 20 pairs of hands of Lambda (the Gaussian basis): the norm multiplies;
+   conj(b) a = (the dot, the i winding) + j (the determinant's two parts) on 20 of 20: one product reads the hand's
+   in-step overlap (its energy's and anchor's part, the norm when b = a) and its three windings (the charges).
+   The anchor's tie, the own spring f (h . h), is f times the real part of N(h): one tie for every kind.

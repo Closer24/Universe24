@@ -1,0 +1,15 @@
+The click's part: term 11's keys against the pair click's books, on TERM11's world (probe_click.py)
+1. A half-speed taker (G3/2, eight gears, e = -1) fed by a giver of its own line through the dot (g = f / 10).
+   the giver on the taker's own line: the key 21428571428571428571428571428571 (odd); term 11's count on the taker climbs to 7 (the gears stack), the giver's to -7;
+      at each arriving key beyond the first, the pair's size S_e over |standing|^2 |arriving|^2 in thousandths: [0, 0, 0, 0, 0, 0, None, 0]
+      the pair click's books (returned where S_e is below a thousandth of the room, the rounding's reading): keys taken 2, returned to the giver 7
+   (the taker, laid at 0, fills on the giver's line: the second key and every later one arrive on the line the
+   first key laid, and the whole wedge between the standing hand and the arriving hand is 0: the key returns.)
+2. Light (A1 at part 2, two gears, e = +1) fed alike: its scalar pairing is symmetric and never 0 on a hand.
+   light, the giver on its own line: the key 714285714285714285714285714285 (odd); term 11's count on the taker climbs to 7 (the gears stack), the giver's to -7;
+      at each arriving key beyond the first, the pair's size S_e over |standing|^2 |arriving|^2 in thousandths: [2000, 2000, 2000, 2000, 2000, 2000, None, 2000]
+      the pair click's books (returned where S_e is below a thousandth of the room, the rounding's reading): keys taken 9, returned to the giver 0
+3. Against nature, read off the two runs: light takes every key (crowds, the pair's size at least the room);
+   the half-speed taker takes one and returns the rest on one line: two per orbital needs the partner's line, laid
+   by a partner's giver, S_-(phi, T phi) = |phi|^4 (probe_pauli3 3); a third on a two-dimensional kind has no line
+   (the rank); Fermi pressure is not given (the gears stack); antibunching is a count over many clicks, not shown.
