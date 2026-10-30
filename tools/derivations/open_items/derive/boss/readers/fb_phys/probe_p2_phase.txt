@@ -1,0 +1,51 @@
+P2. The half-step phase: releases n against tau_now = SUM L_0 / L(now) (the proper time at the now slot's count); t24b
+   the paper (notes_01 s.4): n - tau_now = S = SUM (L_n - L_(n-1)) / (2 L_n), about (1/2) ln(L_end / L_start)
+
+== rising: the 00 gear free at +1 a proper step from c = 0 (L x2 in 30000 rounds; (1/2) ln 2 = 347 milli-steps)
+   t 7500: L 26458, releases 6458, n + tau/D - tau_now 517 milli-steps (paper S 139)
+   t 15000: L 31623, releases 11623, n + tau/D - tau_now 544 milli-steps (paper S 229)
+   t 22500: L 36056, releases 16056, n + tau/D - tau_now 570 milli-steps (paper S 294)
+   t 30000: L 40000, releases 20000, n + tau/D - tau_now 595 milli-steps (paper S 346)
+   largest |n + tau/D - tau_now| 595 milli-steps at round 30000
+== falling: free at -1 a proper step from c = 20000 (L / 2 in 30000 rounds)
+   t 7500: L 36056, releases 3944, n + tau/D - tau_now 474 milli-steps (paper S -52)
+   t 15000: L 31623, releases 8377, n + tau/D - tau_now 448 milli-steps (paper S -118)
+   t 22500: L 26458, releases 13542, n + tau/D - tau_now 420 milli-steps (paper S -207)
+   t 29999: L 20001, releases 19999, n + tau/D - tau_now 400 milli-steps (paper S -347)
+   largest |n + tau/D - tau_now| 499 milli-steps at round 2
+== long rise: free at +1 from c = 0 for 10^6 rounds (L x10.05; (1/2) ln 10 = 1151 milli-steps)
+   t 10000: L 28284, releases 8284, n + tau/D - tau_now 526 milli-steps (paper S 173)
+   t 100000: L 66333, releases 46333, n + tau/D - tau_now 748 milli-steps (paper S 599)
+   t 300000: L 111356, releases 91356, n + tau/D - tau_now 946 milli-steps (paper S 858)
+   t 1000000: L 200998, releases 180998, n + tau/D - tau_now 1201 milli-steps (paper S 1153)
+   largest |n + tau/D - tau_now| 1201 milli-steps at round 1000000
+== swinging: the 00 gear on its hairspring g00 = 3 about c = 10000, laid at +8000 (L 22000 .. 38000; a swing of 363 proper steps), 600000 rounds
+   t 100000: L 33339, releases 66681, n + tau/D - tau_now -45 milli-steps (paper S -254)
+   t 200000: L 22866, releases 133340, n + tau/D - tau_now -589 milli-steps (paper S -630)
+   t 300000: L 27870, releases 199985, n + tau/D - tau_now -1041 milli-steps (paper S -719)
+   t 400000: L 36742, releases 266659, n + tau/D - tau_now -1486 milli-steps (paper S -769)
+   t 500000: L 36782, releases 333342, n + tau/D - tau_now -1928 milli-steps (paper S -957)
+   t 600000: L 27823, releases 400015, n + tau/D - tau_now -2488 milli-steps (paper S -1284)
+   largest |n + tau/D - tau_now| -2510 milli-steps at round 599378
+== swinging, half the amplitude: g00 = 3, laid at +4000 (L 26000 .. 34000), 600000 rounds
+   t 100000: L 30980, releases 66674, n + tau/D - tau_now 795 milli-steps (paper S -92)
+   t 200000: L 26125, releases 133335, n + tau/D - tau_now 1076 milli-steps (paper S -222)
+   t 300000: L 29637, releases 199992, n + tau/D - tau_now 1326 milli-steps (paper S -204)
+   t 400000: L 33845, releases 266665, n + tau/D - tau_now 1661 milli-steps (paper S -183)
+   t 500000: L 32057, releases 333340, n + tau/D - tau_now 1968 milli-steps (paper S -255)
+   t 600000: L 26718, releases 400004, n + tau/D - tau_now 2279 milli-steps (paper S -391)
+   largest |n + tau/D - tau_now| 2322 milli-steps at round 599683
+== swinging at the beat of fb1's lay: g00 = 30 about c = 10000, laid at +8000 (a swing of 115 proper steps), 300000 rounds
+   t 50000: L 25232, releases 33337, n + tau/D - tau_now 1860 milli-steps (paper S -1152)
+   t 100000: L 33033, releases 66662, n + tau/D - tau_now 3375 milli-steps (paper S -1964)
+   t 150000: L 35748, releases 100004, n + tau/D - tau_now 4788 milli-steps (paper S -2872)
+   t 200000: L 22630, releases 133331, n + tau/D - tau_now 6076 milli-steps (paper S -4047)
+   t 250000: L 37626, releases 166665, n + tau/D - tau_now 7518 milli-steps (paper S -4738)
+   t 300000: L 28646, releases 200005, n + tau/D - tau_now 8845 milli-steps (paper S -5821)
+   largest |n + tau/D - tau_now| 8897 milli-steps at round 299884
+== fast swing: g00 = 2000 about c = 10000, laid at +8000 (a swing of a few proper steps), 100000 rounds
+   t 25000: L 24862, releases 16666, n + tau/D - tau_now 10280 milli-steps (paper S -33263)
+   t 50000: L 33635, releases 33334, n + tau/D - tau_now 20885 milli-steps (paper S -66164)
+   t 75000: L 35037, releases 50000, n + tau/D - tau_now 31326 milli-steps (paper S -99186)
+   t 100000: L 22030, releases 66667, n + tau/D - tau_now 40781 milli-steps (paper S -132470)
+   largest |n + tau/D - tau_now| 41466 milli-steps at round 99783

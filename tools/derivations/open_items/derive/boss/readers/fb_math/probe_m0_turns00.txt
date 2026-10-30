@@ -1,0 +1,1 @@
+rows 12, the 00 row 2; turns 24; turns whose row block fixes the 00 row with sign +1: 24

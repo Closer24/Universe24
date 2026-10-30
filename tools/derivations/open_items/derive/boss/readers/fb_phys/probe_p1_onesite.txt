@@ -1,0 +1,42 @@
+P1. One Node-clock (fb_lib.tick_site): rest 10000, L_0 20000; t24b engine (9067de20d)
+
+A. The release-sampled states of the test gear against the standing act run for as many steps (0 misses = the
+   clock enters nowhere but WHEN), 30000 rounds per course, at the count level:
+   rising   L 20000 .. 40000; free, v_p = 1 count a proper step: 20000 proper steps, misses 0; end state (20001, 20000, 5000)
+   rising   L 20000 .. 40000; free, v_p = 0 with the momentum rest - 1 (sub-notch): 20000 proper steps, misses 0; end state (0, 0, 9999)
+   rising   L 20000 .. 40000; hairspring g = 1, a0 = 3 counts (v_max 0.03 a step): 20000 proper steps, misses 0; end state (3, 3, 5102)
+   rising   L 20000 .. 40000; hairspring g = 100, a0 = 10 counts (v_max 1 a step): 20000 proper steps, misses 0; end state (-5, -4, 5500)
+   rising   L 20000 .. 40000; constant push 1 a proper step from rest: 20000 proper steps, misses 0; end state (20002, 20000, 5000)
+   falling  L 20000 .. 40000; free, v_p = 1 count a proper step: 20000 proper steps, misses 0; end state (20001, 20000, 5000)
+   falling  L 20000 .. 40000; free, v_p = 0 with the momentum rest - 1 (sub-notch): 20000 proper steps, misses 0; end state (0, 0, 9999)
+   falling  L 20000 .. 40000; hairspring g = 1, a0 = 3 counts (v_max 0.03 a step): 20000 proper steps, misses 0; end state (3, 3, 5102)
+   falling  L 20000 .. 40000; hairspring g = 100, a0 = 10 counts (v_max 1 a step): 20000 proper steps, misses 0; end state (-5, -4, 5500)
+   falling  L 20000 .. 40000; constant push 1 a proper step from rest: 20000 proper steps, misses 0; end state (20002, 20000, 5000)
+   swinging L 21991 .. 38009; free, v_p = 1 count a proper step: 19990 proper steps, misses 0; end state (19991, 19990, 5000)
+   swinging L 21991 .. 38009; free, v_p = 0 with the momentum rest - 1 (sub-notch): 19990 proper steps, misses 0; end state (0, 0, 9999)
+   swinging L 21991 .. 38009; hairspring g = 1, a0 = 3 counts (v_max 0.03 a step): 19990 proper steps, misses 0; end state (3, 3, 5132)
+   swinging L 21991 .. 38009; hairspring g = 100, a0 = 10 counts (v_max 1 a step): 19990 proper steps, misses 0; end state (5, 6, 6000)
+   swinging L 21991 .. 38009; constant push 1 a proper step from rest: 19990 proper steps, misses 0; end state (19982, 19980, 4990)
+
+B. The free gear at v_p = 1 on the rising course, read in rounds: the window velocity (counts per 1000 rounds,
+   windows of 1000 rounds) and L v_coord / L_0 (nature's sqrt(W) v kept: 1000 at every window)
+   t 0: 976 counts per 1000 rounds at L 20494, L v / L_0 1000 permille; t 7500: 745 counts per 1000 rounds at L 26833, L v / L_0 999 permille; t 15000: 626 counts per 1000 rounds at L 31938, L v / L_0 999 permille; t 22500: 550 counts per 1000 rounds at L 36332, L v / L_0 999 permille; t 29000: 503 counts per 1000 rounds at L 39749, L v / L_0 999 permille
+   (the coordinate velocity passes below one count a round continuously: no lock at one count a round)
+
+C. The 00 gear's own course (the lapse's equation), free from u = 1 a proper step, L_0 20000, 10^6 rounds:
+   the measured L against each coefficient's free course (W^k v kept; root-free powers):
+   k = 1/2 (the escapement's, sqrt(W) v): L^2 = L_0^2 + 2 L_0 t;  k = 0 (as built): L = L_0 + t;
+   k = 1/4 (the covariant scalar action): L^3 = L_0^3 + 3 L_0^2 t + (9/4) L_0 t^2;  k = 1 (the edge): L^3 = L_0^3 + 3 L_0^2 t
+   t 1000: L 20976; L^2 / k=1/2 999; L / k=0 998; L^3 / k=1/4 998; L^3 / k=1 1003 permille; L^2 - L_0^2 - 2 L_0 t = -7424
+   t 10000: L 28284; L^2 / k=1/2 999; L / k=0 942; L^3 / k=1/4 923; L^3 / k=1 1131 permille; L^2 - L_0^2 - 2 L_0 t = -15344
+   t 100000: L 66333; L^2 / k=1/2 1000; L / k=0 552; L^3 / k=1/4 504; L^3 / k=1 2280 permille; L^2 - L_0^2 - 2 L_0 t = 66889
+   t 300000: L 111356; L^2 / k=1/2 1000; L / k=0 347; L^3 / k=1/4 312; L^3 / k=1 3752 permille; L^2 - L_0^2 - 2 L_0 t = 158736
+   t 1000000: L 200998; L^2 / k=1/2 1000; L / k=0 197; L^3 / k=1/4 175; L^3 / k=1 6722 permille; L^2 - L_0^2 - 2 L_0 t = 196004
+   a sub-notch proper momentum of the 00 gear (its tooth at rest - 1, the half being zero: u = 1/2 - 1/rest), 10^5 rounds:
+   L at the end 20000 (frozen: the standing act's sub-notch freeze); the k = 1/2 course for u = 1/2: L^2 = L_0^2 + L_0 t = 2400000000 against the measured 400000000
+
+D. Two clocks at one site: hairsprings g = 100 and g = 400 (a0 = 10^7) on one escapement, each course 30000 rounds;
+   periods counted in PROPER steps (releases) between upward crossings, and in rounds over the same window
+   rising  : proper-step periods g=100 62..63, g=400 31..32 (as on a standing clock); A first/last g=100 10008265/10011902, g=400 10046616/10030344; in rounds over [47, 29911]: 317 beats of g=100 against 634 of g=400
+   falling : proper-step periods g=100 62..63, g=400 31..32 (as on a standing clock); A first/last g=100 10008265/10011902, g=400 10046616/10030344; in rounds over [93, 29956]: 317 beats of g=100 against 634 of g=400
+   swinging: proper-step periods g=100 62..63, g=400 31..32 (as on a standing clock); A first/last g=100 10008265/10011902, g=400 10046616/10030344; in rounds over [87, 29935]: 317 beats of g=100 against 634 of g=400

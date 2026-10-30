@@ -1,0 +1,15 @@
+P5c. The text's own act, fb_lib.tick_board (t24b engine), example universe, 1 x 1 x 16
+
+A. The clock uniform and standing at 12 grips (L = 2 L_0); the escapement's teeth alike, or staggered; 20000 rounds,
+   the light row by windows of 2000 rounds (osc = largest |a - mean| in bits, H = proper energy without the mean, bits)
+   alike (the text's lay: tau = D div 2 at every site): the promise at the lay True; tau 363908562218697336000000 on sites 0..7, 363908562218697336000000 on 8..15
+      laid: osc 6 bits, H 91 bits; 2000: osc 7 H 91; 4000: osc 8 H 91; 6000: osc 7 H 91; 8000: osc 7 H 91; 10000: osc 7 H 91; 12000: osc 8 H 91; 14000: osc 7 H 91; 16000: osc 7 H 91; 18000: osc 7 H 92; 20000: osc 8 H 92
+      the clock at the end 24 grips .. 24 grips; the promise True
+   staggered (tau = 0 on sites 8..15, a lawful tooth): the promise at the lay True; tau 363908562218697336000000 on sites 0..7, 0 on 8..15
+      laid: osc 6 bits, H 91 bits; 2000: osc 35 H 145; 4000: osc 65 H 204; 6000: osc 95 H 263; 8000: osc 125 H 323; 10000: osc 154 H 383; 12000: osc 184 H 443; 14000: osc 215 H 504; 16000: osc 245 H 565; 18000: osc 276 H 626; 20000: osc 306 H 687
+      the clock at the end 24 grips .. 24 grips; the promise True
+
+B. The non-uniform lay of P5 A (00 at 24 + [-1, 1] grips, standing): the 00 row's own SUM P (from its start) and the
+   mean clock, every 400 rounds; the rounds in which that SUM fell (paper: never)
+   400: SUM P_00 +211 grip^2, mean L 77 grips - 258 permille; 800: SUM P_00 +8866 grip^2, mean L 656 grips - 367 permille; 1200: SUM P_00 +21575 grip^2, mean L 1486 grips + 330 permille; 1600: SUM P_00 +34801 grip^2, mean L 2349 grips - 151 permille; 2000: SUM P_00 +48738 grip^2, mean L 3259 grips + 199 permille; 2400: SUM P_00 +62568 grip^2, mean L 4162 grips - 37 permille; 2800: SUM P_00 +75247 grip^2, mean L 4990 grips + 77 permille; 3200: SUM P_00 +89528 grip^2, mean L 5923 grips - 339 permille; 3600: SUM P_00 +103119 grip^2, mean L 6809 grips + 37 permille; 4000: SUM P_00 +117461 grip^2, mean L 7747 grips - 148 permille
+   rounds in which SUM P_00 fell: 39 of 4000

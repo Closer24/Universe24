@@ -1,0 +1,28 @@
+P5b. The text's case H on fb_lib.tick_board (t24b engine); the light row laid 1000 / -1000 on a line of 2
+== H as the text lays it: the 00 slot at 0 and at 12 grips (L_0 and 2 L_0)
+   t 50: light max|a| 10916, SUM P -18258 grips, L 77 grips + 434 permille / 83 grips + 435 permille, releases 16 / 16
+   t 100: light max|a| 26915, SUM P -47792 grips, L 179 grips + 361 permille / 166 grips - 17 permille, releases 22 / 21
+   t 150: light max|a| 44711, SUM P -80698 grips, L 286 grips + 80 permille / 265 grips - 364 permille, releases 25 / 24
+   t 200: light max|a| 63026, SUM P -114080 grips, L 396 grips - 94 permille / 365 grips - 282 permille, releases 27 / 26
+   t 250: light max|a| 81495, SUM P -148110 grips, L 467 grips - 249 permille / 507 grips - 353 permille, releases 28 / 28
+   t 300: light max|a| 96825, SUM P -176176 grips, L 551 grips - 105 permille / 599 grips - 425 permille, releases 29 / 29
+   t 350: light max|a| 115066, SUM P -209542 grips, L 651 grips - 68 permille / 708 grips - 45 permille, releases 30 / 30
+   t 400: light max|a| 136755, SUM P -249248 grips, L 770 grips - 23 permille / 838 grips + 8 permille, releases 31 / 31
+== control: both clocks at 0
+   t 50: light max|a| 84, SUM P 0 grips, L 12 grips / 12 grips, releases 50 / 50
+   t 100: light max|a| 1083, SUM P 0 grips, L 12 grips / 12 grips, releases 100 / 100
+   t 150: light max|a| 717, SUM P 0 grips, L 12 grips / 12 grips, releases 150 / 150
+   t 200: light max|a| 648, SUM P 0 grips, L 12 grips / 12 grips, releases 200 / 200
+   t 250: light max|a| 1160, SUM P 0 grips, L 12 grips / 12 grips, releases 250 / 250
+   t 300: light max|a| 274, SUM P 0 grips, L 12 grips / 12 grips, releases 300 / 300
+   t 350: light max|a| 1071, SUM P 0 grips, L 12 grips / 12 grips, releases 350 / 350
+   t 400: light max|a| 976, SUM P 0 grips, L 12 grips / 12 grips, releases 400 / 400
+== control: both clocks at 12 grips
+   t 50: light max|a| 945, SUM P 0 grips, L 24 grips / 24 grips, releases 25 / 25
+   t 100: light max|a| 84, SUM P 0 grips, L 24 grips / 24 grips, releases 50 / 50
+   t 150: light max|a| 885, SUM P 0 grips, L 24 grips / 24 grips, releases 75 / 75
+   t 200: light max|a| 1083, SUM P 0 grips, L 24 grips / 24 grips, releases 100 / 100
+   t 250: light max|a| 377, SUM P 0 grips, L 24 grips / 24 grips, releases 125 / 125
+   t 300: light max|a| 717, SUM P 0 grips, L 24 grips / 24 grips, releases 150 / 150
+   t 350: light max|a| 1154, SUM P 0 grips, L 24 grips / 24 grips, releases 175 / 175
+   t 400: light max|a| 648, SUM P 0 grips, L 24 grips / 24 grips, releases 200 / 200

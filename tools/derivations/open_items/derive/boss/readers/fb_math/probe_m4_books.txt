@@ -1,0 +1,37 @@
+The books of the escapement's board where Node-clocks release on different rounds
+
+A. probe_fb5 H's lay (a line of 2 Node-clocks, c00 = 0 at site 0 and 12 grips at site 1, light's row 1000 / -1000), 400 rounds
+   L at site 0 over the run: 12 grips .. 770 grips - 23 permille; at site 1: 16 grips - 246 permille .. 838 grips + 8 permille (L_0 12 grips)
+      round   0: L 12 grips | 24 grips
+      round   1: L 16 grips | 20 grips
+      round   2: L 21 grips + 333 permille | 20 grips
+      round   3: L 21 grips + 333 permille | 16 grips + 444 permille
+      round   4: L 25 grips + 37 permille | 16 grips + 444 permille
+      round   5: L 25 grips + 37 permille | 16 grips - 246 permille
+      round  10: L 23 grips + 348 permille | 28 grips + 190 permille
+      round  20: L 41 grips - 65 permille | 40 grips - 389 permille
+      round  50: L 77 grips + 434 permille | 83 grips + 435 permille
+      round 100: L 179 grips + 361 permille | 166 grips - 17 permille
+      round 200: L 396 grips - 94 permille | 365 grips - 282 permille
+      round 399: L 770 grips - 23 permille | 838 grips + 8 permille
+   the promise first breaks at round None; proper steps (q = 1) site 0 31, site 1 31 of 400
+   the exact book dSUM_sites P = SUM_sites q_tau push, every row, every round: misses 0 of 400
+   light's SUM P (P = rest v + r) at rounds 0, 100, 200, 300, 399: ['0', '-47792 grips', '-114080 grips', '-176176 grips', '-249248 grips']
+
+B. The uniform lays of probe_fb2: the rows' SUM P at EVERY round of 40 (largest departure from round 0, over all rows and rounds)
+   standing at 6 grips: largest |SUM P(n) - SUM P(0)| over rows and rounds 0
+   rising by 1 grip a step from 6 grips: largest |SUM P(n) - SUM P(0)| over rows and rounds 0
+   falling by 3 grips + 1 from 120 grips: largest |SUM P(n) - SUM P(0)| over rows and rounds 0
+
+C. A ring of 8 Node-clocks standing at different depths (the model: fb_lib's one-site act at each site, the 00
+   gears free at velocity 0 so they stand; the test row pulled by s (a_left + a_right - 2 a), rest 10000), a gentle
+   contrast (L_0 x (1, 1.01, 1.02, 1.03, 1.04, 1.03, 1.02, 1.01)) and coupling (s = 39, c^2 = 1/256 a proper step^2), so
+   that probe_m5's growth stays small over the run: which momentum moves less, SUM P (nature's charge) or SUM L P
+   (the averaged escapement law's)? The row laid as a mode of amplitude 10^6 with a uniform proper velocity 5000.
+   standing at different depths (by windows of 4000 rounds, permille of the start value):
+      SUM P   - SUM P(0)  : [0, 2260, -175549, 291505, 774916, 1156074, 635688, -2213255, -5838189, 9463231, 2505105]
+      SUM L P - SUM L P(0): [0, 2620, -174258, 293062, 774645, 1157708, 616193, -2187035, -5831703, 9768879, 1602998]
+   uniform at the mean depth 1.02 L_0 (the control) (by windows of 4000 rounds, permille of the start value):
+      SUM P   - SUM P(0)  : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      SUM L P - SUM L P(0): [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+

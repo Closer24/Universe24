@@ -1,0 +1,23 @@
+One gear, a hairspring g = 100 laid at 10000000, rest 10000; 300 states along a run; the time-reversed motion against the rewind
+
+The act as built at standing teeth W (its mirror flips r at W(before) = W(now)):
+   W = 10000: untick(tick s) = s 300 of 300; mirror twice = identity 300 of 300;
+      mirror tick^n mirror (s) = tick^-n (s) for n = 1..8: [300, 300, 300, 300, 300, 300, 300, 300] of 300
+   W = 20000: untick(tick s) = s 300 of 300; mirror twice = identity 300 of 300;
+      mirror tick^n mirror (s) = tick^-n (s) for n = 1..8: [300, 300, 300, 300, 300, 300, 300, 300] of 300
+   W = 30000: untick(tick s) = s 300 of 300; mirror twice = identity 300 of 300;
+      mirror tick^n mirror (s) = tick^-n (s) for n = 1..8: [300, 300, 300, 300, 300, 300, 300, 300] of 300
+
+The escapement (the 00 gear standing at c00, L = L_0 + c00; W_eff = rest (L / L_0)^2):
+   c00 = 0 (L / L_0 = 20000/20000): untick(tick s) = s 300 of 300; mirror twice = identity 300 of 300;
+      mirror tick^n mirror (s) = tick^-n (s) for n = 1..8: [300, 300, 300, 300, 300, 300, 300, 300] of 300
+   c00 = 10000 (L / L_0 = 30000/20000): untick(tick s) = s 300 of 300; mirror twice = identity 100 of 300;
+      mirror tick^n mirror (s) = tick^-n (s) for n = 1..8: [300, 100, 100, 200, 100, 100, 200, 100] of 300
+   c00 = 20000 (L / L_0 = 40000/20000): untick(tick s) = s 300 of 300; mirror twice = identity 0 of 300;
+      mirror tick^n mirror (s) = tick^-n (s) for n = 1..8: [300, 0, 150, 0, 150, 0, 150, 0] of 300
+   c00 = 60000 (L / L_0 = 80000/20000): untick(tick s) = s 300 of 300; mirror twice = identity 150 of 300;
+      mirror tick^n mirror (s) = tick^-n (s) for n = 1..8: [300, 150, 75, 0, 75, 0, 0, 0] of 300
+
+Reading: where the mirror is an involution the mirrored state is a state whose forward motion is the past; the
+escapement's is that only at c = 0; on a standing deep clock the past is reached only by n unticks (a mirror at
+every round), as the act as built needs only on a MOVING clock (step.untick's docstring).

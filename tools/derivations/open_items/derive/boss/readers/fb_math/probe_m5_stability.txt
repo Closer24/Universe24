@@ -1,0 +1,24 @@
+Stability of the escapement's board where clocks differ (rest 10000, L_0 20000); the row laid at 10^6 (20 bits)
+
+C. Controls: every site at one clock (all release together)
+   uniform c00 = 0, s = 625 (c^2 = 1/16 a proper step^2): widest |a| in bits by windows of 2000 rounds [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
+   uniform c00 = 10000, s = 625 (c^2 = 1/16 a proper step^2): widest |a| in bits by windows of 2000 rounds [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
+   uniform c00 = 20000, s = 625 (c^2 = 1/16 a proper step^2): widest |a| in bits by windows of 2000 rounds [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
+
+A. A ring of 8 Node-clocks standing at different depths, the profile (0, 1, 2, 3, 4, 3, 2, 1) x the step dc:
+   dc = L_0 / 4, s = 625: widest |a| in bits by windows of 2000 rounds [57, 96, 135, 174, 213, 252, 290, 329, 368, 407]
+   dc = L_0 / 4, s = 156: widest |a| in bits by windows of 2000 rounds [28, 38, 47, 57, 66, 76, 86, 95, 105, 115, 124, 134, 143, 153, 163, 172, 182, 192, 201, 211]
+   dc = L_0 / 4, s = 39: widest |a| in bits by windows of 2000 rounds [22, 23, 26, 28, 30, 33, 35, 38, 40, 42, 45, 47, 50, 52, 54, 57, 59, 62, 64, 66]
+   dc = L_0 / 10, s = 625: widest |a| in bits by windows of 2000 rounds [42, 66, 90, 114, 138, 162, 186, 210, 234, 258, 282, 306, 330, 354, 378, 402]
+   dc = L_0 / 10, s = 156: widest |a| in bits by windows of 2000 rounds [24, 30, 36, 43, 49, 55, 61, 67, 73, 80, 86, 92, 98, 104, 111, 117, 123, 129, 135, 141]
+   dc = L_0 / 10, s = 39: widest |a| in bits by windows of 2000 rounds [21, 22, 23, 25, 26, 28, 29, 31, 32, 34, 35, 37, 39, 40, 42, 43, 45, 46, 48, 49]
+   dc = L_0 / 100, s = 625: widest |a| in bits by windows of 2000 rounds [28, 29, 30, 31, 31, 32, 32, 31, 33, 34, 34, 35, 35, 35, 34, 35, 37, 38, 38, 39]
+   dc = L_0 / 100, s = 156: widest |a| in bits by windows of 2000 rounds [22, 22, 22, 22, 22, 23, 23, 23, 24, 24, 25, 25, 25, 26, 26, 27, 27, 27, 27, 27]
+   dc = L_0 / 100, s = 39: widest |a| in bits by windows of 2000 rounds [21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23]
+
+B. Two Node-clocks on one Mesh (a ring of 2: each the other's two neighbours), L = L_0 and L = 2 L_0 (every round / every other round):
+   s = 625: widest |a| in bits by windows of 2000 rounds [57, 94, 131, 169, 206, 244, 281, 319, 356, 393, 431]
+   s = 156: widest |a| in bits by windows of 2000 rounds [28, 37, 46, 55, 65, 74, 83, 92, 101, 110, 119, 128, 137, 146, 155, 164, 174, 183, 192, 201]
+   s = 39: widest |a| in bits by windows of 2000 rounds [22, 24, 26, 28, 30, 33, 35, 37, 39, 42, 44, 46, 48, 51, 53, 55, 57, 60, 62, 64]
+   and the same two clocks with the deep one a hair off 2 L_0 (L = 2 L_0 + 1, the release pattern drifting):
+   s = 625: widest |a| in bits by windows of 2000 rounds [56, 93, 131, 168, 206, 243, 281, 318, 355, 393, 430]

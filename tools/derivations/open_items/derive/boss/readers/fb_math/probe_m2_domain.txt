@@ -1,0 +1,20 @@
+The escapement's domain at its edge (rest 10000, L_0 20000 for the one-site cases)
+
+A. One Node-clock standing k counts faster than rest (c00 = -k at both slots, D = 2 L_0 - 2 k), a hairspring g = 100:
+   the first round whose turn is 2 (derived: tau climbs by 2 k a round from D div 2 and turns 2 at tau >= 2 D - 2 L_0,
+   round (L_0 - 3 k) / (2 k) rounded up); what that round does; untick at that round and at the round before it
+   k     1: the turn is 2 at round 9999 (derived 9999); every round before it released; untick at the round before True, at it False;
+            that round: a 2284042 -> 313940 (one step would give 1298991), b -> 1321831 (one step: 2284042), r -> -2200 (one step: 2000, rest 10000)
+   k     2: the turn is 2 at round 4999 (derived 4999); every round before it released; untick at the round before True, at it False;
+            that round: a -7999123 -> -6716235 (one step would give -7357679), b -> -7437670 (one step: -7999123), r -> 5900 (one step: 3600, rest 10000)
+   k    10: the turn is 2 at round 999 (derived 999); every round before it released; untick at the round before True, at it False;
+            that round: a 8591579 -> 9532689 (one step would give 9062134), b -> 9148050 (one step: 8591579), r -> 5700 (one step: 3600, rest 10000)
+   k  1000: the turn is 2 at round 9 (derived 9); every round before it released; untick at the round before True, at it False;
+            that round: a 5820888 -> 4135388 (one step would give 4978138), b -> 5036346 (one step: 5820888), r -> -7900 (one step: 900, rest 10000)
+
+B. The engine's board near rest (grip 15162856759112389000000, rest 6 grips, L_0 12 grips): the first round the promise (L >= L_0 at both slots) breaks
+   the 00 mode at rest (c0 = 0), A = grip / 1000: the promise first breaks at round 0 (the lowest c00 then -30325713518224778000 counts)
+   the 00 mode in the well (c0 = 6 grips, as probe_fb3), A = grip / 1000: the promise first breaks at round None
+   a uniform rest clock (c0 = 0) with one site raised by 1 grip, the cube of 3: the promise first breaks at round 2 (the lowest c00 then -12635713965926990833334 counts)
+   a uniform rest clock with one site raised by 1 count, the cube of 3: the promise first breaks at round 2 (the lowest c00 then -1 counts)
+

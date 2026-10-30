@@ -1,0 +1,17 @@
+One Node-clock, rest 3, L_0 6; the test gear on push -2 a + 1, the 00 gear on push -(a00 - 2); every state of the box
+
+== the text's domain: c >= 0 at both slots (a00, b00 in [0, 4])
+   states 176400; forward-map collisions among them 0; q_tau = 2 or more at 0
+   states whose round has D_in >= 2 L_0 and D_out >= 2 L_0: 155232; of them q_tau a bit 155232, tau+ within D_out 155232,
+   the mirror's q equal to the round's 155232, untick(tick s) = s 155232 (misses 0)
+   mirror o mirror = identity on 88480 of 176400; = swap^(q_last + q_next) on 176400 of 176400; the inverse (q_next) undoes the mirror on 176400 of 176400
+
+== the weaker domain: one slot below 0, c(now) + c(before) >= 0 (D_in >= 2 L_0)
+   states 114660; forward-map collisions among them 0; q_tau = 2 or more at 0
+   states whose round has D_in >= 2 L_0 and D_out >= 2 L_0: 61740; of them q_tau a bit 61740, tau+ within D_out 61740,
+   the mirror's q equal to the round's 61740, untick(tick s) = s 61740 (misses 0)
+   mirror o mirror = identity on 97020 of 114660; = swap^(q_last + q_next) on 114660 of 114660; the inverse (q_next) undoes the mirror on 114660 of 114660
+
+== outside: c(now) + c(before) < 0 (a00, b00 in [-4, 0])
+   states with D_in < 2 L_0: 82908; q_tau >= 2 at 40572; a fine tooth left [0, rest) at 28266;
+   the dial after the round 0 or below (the mirror's carry undefined) at 19404; untick(tick s) = s at 34692

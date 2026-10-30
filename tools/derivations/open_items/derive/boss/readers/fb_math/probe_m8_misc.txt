@@ -1,0 +1,17 @@
+Smaller checks of FWDBACK.md
+
+(a) The escapement's phase against nature's proper time, the 00 gear free at +-1 count a proper step (probe_fb1's courses):
+   rising from c00 = 0 (L x 2 over 20000 steps): step 5000: round 5625, the escapement ahead of nature by 0 permille of a step; step 10000: round 12500, the escapement ahead of nature by 0 permille of a step; step 20000: round 29999, the escapement ahead of nature by 500 permille of a step
+   falling from c00 = 20000 (L / 2 over 20000 steps): step 4999: round 9373, the escapement ahead of nature by 142 permille of a step; step 9999: round 17498, the escapement ahead of nature by 333 permille of a step; step 19999: round 29999, the escapement ahead of nature by -1 permille of a step
+   (the text's bound (1/2) ln(L_end / L_start): 347 permille of a step for L x 2)
+
+(b) turn(mirror s) = mirror(turn s) on probe_fb2's non-uniform lay, every 10th state of 200 rounds, the 24 turns: 504 of 504
+(c) the 24 at every round of 200 on the same lay (it runs away: L at round 200 736 grips + 29 permille .. 1210 grips + 435 permille): rounds with 24 of 24: 200 of 200; fewest 24
+
+(d) The probes' own lays at round 0: L(before) against L_0 (the text's promise) and D against 2 L_0 (what the proof needs)
+   probe_fb1 rising (c00 0, velocity +1): c00 before = -1; promise L >= L_0 at both slots False; D = 39999 >= 2 L_0 = 40000: False
+   probe_fb1 falling (c00 20000, velocity -1): c00 before = 20001; promise L >= L_0 at both slots True; D = 80001 >= 2 L_0 = 40000: True
+   probe_fb5 D doubling (c00 L_0, velocity 2 L_0): c00 before = -20000; promise L >= L_0 at both slots False; D = 40000 >= 2 L_0 = 40000: True
+   probe_fb5 D to the edge (c00 3 L_0, velocity -3 L_0): c00 before = 120000; promise L >= L_0 at both slots True; D = 220000 >= 2 L_0 = 40000: True
+   probe_fb5 F tau = 0, c00 6 L_0 rising L_0: c00 before = 100000; promise L >= L_0 at both slots True; D = 260000 >= 2 L_0 = 40000: True
+

@@ -1,0 +1,54 @@
+The escapement on the engine's board, run long (grip 15162856759112389000000)
+
+== A0. ring of 8, the clock uniform at c00 = 24 grips (L = 36 grips), light's mode A = 3 grip / 1000 (the control)
+   the promise first breaks at round None; untick(tick s) = s at 40 of 40 sampled rounds
+   rounds to   200: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to   400: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to   600: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to   800: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to  1000: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to  1200: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to  1400: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to  1600: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to  1800: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+   rounds to  2000: light row widest |a|   66 bits, every row but 00   66 bits; L 36 grips .. 36 grips (L_0 12 grips)
+
+== A1. ring of 8, c00 = 24 + (0, 1, 2, 3, 4, 3, 2, 1) grips, light's mode A = 3 grip / 1000
+   the promise first breaks at round None; untick(tick s) = s at 40 of 40 sampled rounds
+   rounds to   200: light row widest |a|   69 bits, every row but 00   69 bits; L 36 grips .. 55 grips - 257 permille (L_0 12 grips)
+   rounds to   400: light row widest |a|   72 bits, every row but 00   72 bits; L 50 grips + 366 permille .. 216 grips + 439 permille (L_0 12 grips)
+   rounds to   600: light row widest |a|   74 bits, every row but 00   74 bits; L 197 grips + 196 permille .. 612 grips + 33 permille (L_0 12 grips)
+   rounds to   800: light row widest |a|   75 bits, every row but 00   75 bits; L 550 grips + 298 permille .. 1077 grips - 291 permille (L_0 12 grips)
+   rounds to  1000: light row widest |a|   75 bits, every row but 00   75 bits; L 892 grips - 262 permille .. 1503 grips + 65 permille (L_0 12 grips)
+   rounds to  1200: light row widest |a|   76 bits, every row but 00   76 bits; L 1339 grips - 449 permille .. 1916 grips - 150 permille (L_0 12 grips)
+   rounds to  1400: light row widest |a|   76 bits, every row but 00   76 bits; L 1711 grips + 445 permille .. 2466 grips - 310 permille (L_0 12 grips)
+   rounds to  1600: light row widest |a|   76 bits, every row but 00   76 bits; L 2220 grips + 141 permille .. 2909 grips - 336 permille (L_0 12 grips)
+   rounds to  1800: light row widest |a|   77 bits, every row but 00   77 bits; L 2637 grips - 221 permille .. 3425 grips - 0 permille (L_0 12 grips)
+   rounds to  2000: light row widest |a|   77 bits, every row but 00   77 bits; L 2909 grips - 336 permille .. 3732 grips + 275 permille (L_0 12 grips)
+
+== B. probe_fb2's 'varying in space, standing' lay (cube of 3, c00 per site in [40, 60] grips), 400 rounds
+   the promise first breaks at round None; untick(tick s) = s at 20 of 20 sampled rounds
+   rounds to    40: light row widest |a|    7 bits, every row but 00    8 bits; L 52 grips .. 96 grips - 280 permille (L_0 12 grips)
+   rounds to    80: light row widest |a|    9 bits, every row but 00    9 bits; L 80 grips - 263 permille .. 202 grips + 40 permille (L_0 12 grips)
+   rounds to   120: light row widest |a|   10 bits, every row but 00   11 bits; L 160 grips + 209 permille .. 483 grips - 363 permille (L_0 12 grips)
+   rounds to   160: light row widest |a|   11 bits, every row but 00   12 bits; L 317 grips - 334 permille .. 851 grips - 324 permille (L_0 12 grips)
+   rounds to   200: light row widest |a|   11 bits, every row but 00   12 bits; L 485 grips - 349 permille .. 1210 grips + 435 permille (L_0 12 grips)
+   rounds to   240: light row widest |a|   12 bits, every row but 00   13 bits; L 736 grips + 29 permille .. 1719 grips + 321 permille (L_0 12 grips)
+   rounds to   280: light row widest |a|   12 bits, every row but 00   13 bits; L 995 grips + 496 permille .. 2089 grips + 420 permille (L_0 12 grips)
+   rounds to   320: light row widest |a|   12 bits, every row but 00   13 bits; L 1215 grips + 458 permille .. 2560 grips + 230 permille (L_0 12 grips)
+   rounds to   360: light row widest |a|   13 bits, every row but 00   13 bits; L 1500 grips - 212 permille .. 2991 grips + 186 permille (L_0 12 grips)
+   rounds to   400: light row widest |a|   13 bits, every row but 00   14 bits; L 1743 grips - 223 permille .. 3395 grips + 236 permille (L_0 12 grips)
+
+== C. probe_fb5 H's two sites (c00 = 0 and 12 grips, light 1000 / -1000), 2000 rounds
+   the promise first breaks at round None; untick(tick s) = s at 40 of 40 sampled rounds
+   rounds to   200: light row widest |a|   16 bits, every row but 00   16 bits; L 16 grips - 246 permille .. 396 grips - 94 permille (L_0 12 grips)
+   rounds to   400: light row widest |a|   18 bits, every row but 00   18 bits; L 365 grips - 282 permille .. 838 grips + 8 permille (L_0 12 grips)
+   rounds to   600: light row widest |a|   18 bits, every row but 00   18 bits; L 770 grips - 23 permille .. 1281 grips + 129 permille (L_0 12 grips)
+   rounds to   800: light row widest |a|   19 bits, every row but 00   19 bits; L 1177 grips - 499 permille .. 1804 grips - 107 permille (L_0 12 grips)
+   rounds to  1000: light row widest |a|   19 bits, every row but 00   19 bits; L 1656 grips - 447 permille .. 2334 grips - 157 permille (L_0 12 grips)
+   rounds to  1200: light row widest |a|   19 bits, every row but 00   19 bits; L 2142 grips - 315 permille .. 2772 grips + 281 permille (L_0 12 grips)
+   rounds to  1400: light row widest |a|   20 bits, every row but 00   20 bits; L 2544 grips - 470 permille .. 3294 grips - 165 permille (L_0 12 grips)
+   rounds to  1600: light row widest |a|   20 bits, every row but 00   20 bits; L 3022 grips - 374 permille .. 3590 grips + 457 permille (L_0 12 grips)
+   rounds to  1800: light row widest |a|   20 bits, every row but 00   20 bits; L 3294 grips - 165 permille .. 4267 grips + 223 permille (L_0 12 grips)
+   rounds to  2000: light row widest |a|   20 bits, every row but 00   20 bits; L 3914 grips + 261 permille .. 4652 grips + 342 permille (L_0 12 grips)
+

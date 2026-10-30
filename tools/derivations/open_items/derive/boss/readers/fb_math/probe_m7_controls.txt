@@ -1,0 +1,23 @@
+Controls for the escapement's board where Node-clocks differ
+
+A. The model ring of probe_m5 under the act as built (every site every round, W_x = rest (L_x / L_0)^2), the row at 10^6 (20 bits):
+   dc = L_0 / 4, s = 625: widest |a| in bits by windows of 2000 rounds [21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21]
+   dc = L_0 / 4, s = 156: widest |a| in bits by windows of 2000 rounds [21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21]
+   dc = L_0 / 10, s = 625: widest |a| in bits by windows of 2000 rounds [21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21]
+   dc = L_0 / 10, s = 156: widest |a| in bits by windows of 2000 rounds [21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21]
+
+B. The engine's board, probe_m6 A1's lay (ring of 8, c00 = 24 + (0, 1, 2, 3, 4, 3, 2, 1) grips, light's mode), 1000 rounds:
+   the escapement: the 00 slot (min .. max) and the 00 row's SUM P (P = rest v + r) by windows:
+      round  200: c00 38 grips + 366 permille .. 43 grips - 257 permille; SUM P_00 620584865851259697557616 grips
+      round  400: c00 174 grips - 170 permille .. 204 grips + 439 permille; SUM P_00 16059597201950000587066186 grips
+      round  600: c00 538 grips + 298 permille .. 600 grips + 33 permille; SUM P_00 60333260283641567336058776 grips
+      round  800: c00 880 grips - 262 permille .. 1065 grips - 291 permille; SUM P_00 108483484041093477175558570 grips
+      round 1000: c00 1327 grips - 449 permille .. 1491 grips + 65 permille; SUM P_00 156828571025812044966166990 grips
+   C. the 00 row's SUM P over 1000 rounds: raised by 157374615232285798788398056 grips in sum, lowered by 546044206473753822231066 grips (a one-way pump if the first dominates)
+   the act as built (step.tick) on the same lay: its promise (every fine tooth within its teeth) first breaks at round 4:
+      round  200: c00 34 grips - 244 permille .. 37 grips - 232 permille; SUM (W v + r)_00 427541753901011430387928 grips + 335 permille (round 0: 0)
+      round  400: c00 56 grips + 66 permille .. 60 grips - 2 permille; SUM (W v + r)_00 1052207264593848145352231 grips - 496 permille (round 0: 0)
+      round  600: c00 87 grips + 280 permille .. 89 grips - 118 permille; SUM (W v + r)_00 1852775307840901880970196 grips + 344 permille (round 0: 0)
+      round  800: c00 120 grips + 58 permille .. 124 grips + 211 permille; SUM (W v + r)_00 2751976364281714975332111 grips - 342 permille (round 0: 0)
+      round 1000: c00 157 grips - 202 permille .. 161 grips - 328 permille; SUM (W v + r)_00 3742965874714619417614903 grips - 203 permille (round 0: 0)
+

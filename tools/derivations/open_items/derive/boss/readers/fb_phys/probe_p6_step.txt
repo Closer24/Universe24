@@ -1,0 +1,18 @@
+P6. Reflection at a sharp step of the clock; t24b engine (9067de20d); rest 90977140554674334000000, grip 15162856759112389000000
+   continuum, both lapse-only acts: N 1 -> 4/5: R = -1/9 (-111 permille), T = 8/9 (889); N 1 -> 1/2: R = -1/3, T = 2/3; nature R = 0, T = 1
+== N 1 -> 4/5 (L = 5/4 L_0): ring 1000, pulse width 40 from z = 250, the step at z = 500 (and at 0), read at round 1225
+   escapement: reflected -90 permille (at z = 249); transmitted 901 permille
+   as built  : reflected -112 permille (at z = 249); transmitted 879 permille
+   nature    : reflected -1 permille (at z = 240); transmitted 989 permille
+== N 1 -> 4/5 (L = 5/4 L_0): ring 2000, pulse width 80 from z = 500, the step at z = 1000 (and at 0), read at round 2450
+   escapement: reflected -90 permille (at z = 499); transmitted 901 permille
+   as built  : reflected -112 permille (at z = 499); transmitted 879 permille
+   nature    : reflected -1 permille (at z = 474); transmitted 989 permille
+== N 1 -> 1/2 (L = 2 L_0): ring 1000, pulse width 40 from z = 250, the step at z = 500 (and at 0), read at round 1225
+   escapement: reflected -284 permille (at z = 249); transmitted 710 permille
+   as built  : reflected -335 permille (at z = 249); transmitted 659 permille
+   nature    : reflected -4 permille (at z = 236); transmitted 989 permille
+== N 1 -> 1/2 (L = 2 L_0): ring 2000, pulse width 80 from z = 500, the step at z = 1000 (and at 0), read at round 2450
+   escapement: reflected -283 permille (at z = 499); transmitted 710 permille
+   as built  : reflected -334 permille (at z = 499); transmitted 659 permille
+   nature    : reflected -3 permille (at z = 470); transmitted 990 permille

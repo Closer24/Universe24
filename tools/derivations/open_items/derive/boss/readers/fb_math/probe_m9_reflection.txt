@@ -1,0 +1,4 @@
+A wave packet at a lapse step: ring of 320, L = L_0 on sites 0..159, 2 L_0 on 160..319; peak 1000000 at site 60 moving right; 1000 rounds
+   derived (d_t pi = N Lap a): reflected -333 permille (inverted), transmitted 667; flux reflected 111 permille; nature's div(N grad a): 0
+   the escapement: reflected peak -317834 at site 9 (-318 permille), transmitted peak 684398 at site 234 (684 permille); flux reflected R^2 101 permille
+   the act as built at W_x = rest (L_x / L_0)^2 (the control): reflected peak -348556 at site 9 (-349 permille), transmitted peak 653153 at site 234 (653 permille); flux reflected R^2 121 permille

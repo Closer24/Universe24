@@ -1,0 +1,31 @@
+P5. Neighbours releasing on different rounds: the growth; t24b engine (9067de20d); rest 90977140554674334000000, grip 15162856759112389000000
+
+A. The text's own act (fb_lib.tick_board) on the example universe, 1 x 1 x 16, 12 rows, no cut; every gear as
+   edge_lib draws it (counts in [-40, 40]) but the 00 row: laid standing at 24 grips (L = 3 L_0) plus a per-site whole
+   number of grips; the light row's largest |a| (bits) and the clocks' span (grips), every 2000 rounds, 20000 rounds
+   uniform 00 (the control): 2000: light 11 bits, L 36 grips..36 grips; 4000: light 12 bits, L 36 grips..36 grips; 6000: light 13 bits, L 36 grips..36 grips; 8000: light 13 bits, L 36 grips..36 grips; 10000: light 14 bits, L 36 grips..36 grips; 12000: light 14 bits, L 36 grips..36 grips; 14000: light 14 bits, L 36 grips..36 grips; 16000: light 14 bits, L 36 grips..36 grips; 18000: light 15 bits, L 36 grips..36 grips; 20000: light 15 bits, L 36 grips..36 grips
+      releases per site over the run 6667 .. 6667; the promise holds at the end True
+   00 laid per site in 24 + [-3, 3] grips: 2000: light 15 bits, L 3597 grips + 236 permille..4432 grips + 466 permille; 4000: light 16 bits, L 7833 grips - 384 permille..8793 grips + 16 permille; 6000: light 17 bits, L 12138 grips - 410 permille..13475 grips - 416 permille; 8000: light 17 bits, L 15998 grips + 415 permille..18975 grips - 458 permille; 10000: light 18 bits, L 20519 grips + 287 permille..22560 grips - 456 permille; 12000: light 18 bits, L 24416 grips + 21 permille..29173 grips - 398 permille; 14000: light 18 bits, L 29057 grips + 239 permille..31828 grips - 429 permille; 16000: light 18 bits, L 34585 grips - 355 permille..37865 grips - 479 permille; 18000: light 18 bits, L 37725 grips + 85 permille..41314 grips + 389 permille; 20000: light 18 bits, L 41165 grips + 222 permille..45058 grips - 433 permille
+      releases per site over the run 78 .. 81; the promise holds at the end True
+   00 laid per site in 24 + [-1, 1] grips: 2000: light 17 bits, L 2989 grips + 153 permille..3540 grips + 5 permille; 4000: light 18 bits, L 7088 grips + 153 permille..8418 grips - 198 permille; 6000: light 19 bits, L 11246 grips - 25 permille..13131 grips - 183 permille; 8000: light 19 bits, L 15290 grips + 312 permille..18136 grips - 285 permille; 10000: light 20 bits, L 19645 grips + 443 permille..23211 grips + 129 permille; 12000: light 20 bits, L 23781 grips - 142 permille..27745 grips + 165 permille; 14000: light 20 bits, L 27745 grips + 165 permille..32827 grips - 349 permille; 16000: light 21 bits, L 32353 grips + 90 permille..38096 grips - 428 permille; 18000: light 21 bits, L 36230 grips + 181 permille..42342 grips - 274 permille; 20000: light 21 bits, L 40758 grips + 144 permille..47716 grips + 229 permille
+      releases per site over the run 156 .. 159; the promise holds at the end True
+
+B. The ring model, 64 sites, the deep half at L_0 (1 + e) (sharp steps at z = 0 and 32), tau born at the half dial;
+   the energy H in permille of its start, or x2^k once past x4096, by windows (stride named)
+   e = 1/1, 20000 rounds, every 2000: 26951, 1490174, x2^16, x2^22, x2^28, x2^35, x2^41, x2^47, x2^53, x2^59
+   e = 1/2, 20000 rounds, every 2000: 7635, 106093, 1737424, x2^15, x2^19, x2^24, x2^28, x2^33, x2^37, x2^42
+   e = 1/10, 40000 rounds, every 4000: 2123, 7625, 41888, 263132, 1926786, x2^14, x2^17, x2^20, x2^23, x2^26
+   e = 1/100, 200000 rounds, every 20000: 1304, 2022, 3448, 7557, 18711, 49910, 148423, 384178, 1183475, x2^12
+   e = 1/1000, 400000 rounds, every 40000: 1085, 1101, 1104, 1153, 1307, 1300, 1444, 1580, 1639, 1858
+   a smooth parabolic well, L_0 at z = 0 to (11/10) L_0 at z = 32, 40000 rounds, every 4000: x2^33, x2^81, x2^119, x2^153, x2^199, x2^240, x2^280, x2^321, x2^351, x2^389
+
+C. Equal clocks, staggered rounds: every site at L = 2 L_0 (one release in two rounds), tau born at the half dial on
+   sites 0..31 and at 0 on sites 32..63 (the two halves release on alternate rounds); and every site alike (the control)
+   staggered, 20000 rounds, every 2000: x2^12, x2^27, x2^41, x2^56, x2^71, x2^86, x2^101, x2^116, x2^131, x2^146
+   alike, 20000 rounds, every 2000: 1076, 1002, 1024, 1081, 1010, 991, 1071, 1048, 978, 1057
+
+D. The controls on B's sharpest lay (the deep half at 2 L_0), 20000 rounds: the act as built (teeth rest, 4 rest) and
+   nature's divergence form (teeth 4 rest, 8 rest; link grips 4, 2, 3 grips): the largest |a| (bits) every 4000 rounds
+   as built: 19, 19, 19, 19, 19 bits (laid 19)
+   nature: 19, 19, 19, 19, 19 bits (laid 19)
+
