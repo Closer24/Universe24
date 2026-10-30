@@ -321,9 +321,11 @@ def test_each_law_of_the_kinds_fails_on_its_mutant(mutant, good):
 
 
 def test_the_joint_makes_the_kinds_and_the_tables_the_load_reads(good):
-    """main.made, the one joint, gives these kinds and tables from the star: its inverses the turns' own, so every table is kept."""
-    held, c = joint(star(3))
-    assert all((x == y).all() for x, y in zip(held, good.kinds, strict=True))
+    """main.made, the one joint, gives these kinds on the 24 and the tables from the star, its inverses the turns' own, and the square."""
+    held, c, square = joint(star(3))
+    at = good.weight == 1
+    assert all((x == y[at]).all() for x, y in zip(held, good.kinds, strict=True))
+    assert (square == kinds.square(good.kinds)[at]).all()
     assert c.keys() == good.c.keys() and all((c[key] == good.c[key]).all() for key in c)
 
 

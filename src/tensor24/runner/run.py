@@ -14,7 +14,6 @@ from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 
 ORDER = "z fastest: the site (x sy + y) sz + z"  # runner/board.py's
-CLOCK = "the clock"  # the clock's own train, after the file's trains: every gear's teeth read its count
 STEP = "step"  # a count line's place in its round: after the step
 
 
@@ -70,7 +69,7 @@ def header(
     layout: Any,
 ) -> dict[str, Any]:
     """The record's first line: the files verbatim with their digests, the board, the kinds, the trains with their windings."""
-    labels = [*(train["name"] for train in universe["trains"]), CLOCK]
+    labels = [train["name"] for train in universe["trains"]]
     return {
         "kind": "header",
         "record": record.name,
@@ -109,8 +108,8 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     files = [(path, path.read_text(encoding="utf-8")) for path in paths]
     universe, piece, setting = (json.loads(text) for _, text in files)
     shape = piece["shape"]
-    kinds, tables = engine.made(star(len(shape)))
-    loaded, found = load(universe, setting, sites_of(shape), kinds, tables)
+    kinds, tables, square = engine.made(star(len(shape)))
+    loaded, found = load(universe, setting, sites_of(shape), kinds, tables, square)
     if loaded is None:
         return found
     layout = engine.layout(universe, shape, loaded)

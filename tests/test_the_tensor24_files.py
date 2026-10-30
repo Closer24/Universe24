@@ -221,11 +221,11 @@ def edits():
             lambda u: u["integers"].update(key=1),
             "universe.integers: the key 'key' is not in the format",
         ),
-        "a coupling to no train": coupling("a train off the trains' rows", with_train=1),
-        "a coupling on the clock's own gear": coupling("a train off the trains' rows", train=1),
+        "a coupling to no train": coupling("a train off the trains' rows", with_train=2),
+        "a coupling on a train past the file's": coupling("a train off the trains' rows", train=2),
         "a coupling's first train below 0": coupling("a train off the trains' rows", train=-1),
         "a coupling's second train below 0": coupling("a train off the trains' rows", with_train=-1),
-        "a coupling's target beyond": coupling("a train off the trains' rows", target=1),
+        "a coupling's target beyond": coupling("a train off the trains' rows", target=2),
         "a coupling's target below 0": coupling("a train off the trains' rows", target=-1),
         "a coupling's strength that is a float": coupling(
             "a row of whole numbers, one per field", strength=0.5
@@ -280,7 +280,7 @@ def edits():
         "a gear off the board": gear([0, 0, 64, 1, 0, 0], "train 0 or site 64 off the files"),
         "a gear at the last site": gear([0, 0, 63, 1, 0, 0], None),
         "a gear's site below 0": gear([0, 0, -1, 1, 0, 0], "train 0 or site -1 off the files"),
-        "a gear on the clock's own gear": gear([1, 0, 0, 1, 0, 0], "train 1 or site 0 off the files"),
+        "a gear on a train past the file's": gear([2, 0, 0, 1, 0, 0], "train 2 or site 0 off the files"),
         "a gear's train below 0": gear([-1, 0, 1, 1, 0, 0], "train -1 or site 1 off the files"),
         "a gear's notch that is a float": gear(
             [0, 0, 1, 0.5, 0, 0], "a row of whole numbers, one per field"

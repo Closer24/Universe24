@@ -1,4 +1,4 @@
-"""The load: the 24's tables, the trains' rows with the clock's own gear, the coupling rows' plan, the gears laid, and the layout: the board, and every coefficient by one formula of the files' integers."""
+"""The load: the 24's tables, the trains' rows and the metric family found by its kinds, the coupling rows' plan, the gears laid, and the layout: the board, and every coefficient by one formula of the files' integers."""
 
 # The engine's kinds come in as arguments, as main.py passes them: the runner imports no engine module.
 
@@ -14,12 +14,13 @@ from tensor24.runner.files import OPERANDS
 
 
 class Train(NamedTuple):
-    """One train's rows: its first row, its kinds' indices and dimensions, and its part, which runs fastest."""
+    """One train's rows: its first row, its kinds' indices and dimensions, its part, which runs fastest, and whether its kinds are the four-vector's square."""
 
     first: int
     kinds: tuple[int, ...]
     dims: tuple[int, ...]
     part: int
+    square: int  # 1 where its kinds' character is the four-vector's square's: its rows that square's basis, its first 00
 
     def rows(self) -> int:
         """Its rows: every component of every kind, times its part."""
@@ -66,9 +67,10 @@ def tables(
 
 
 def trains_of(
-    trains: list[dict[str, Any]], labels: tuple[str, ...], dims: tuple[int, ...]
+    trains: list[dict[str, Any]], labels: tuple[str, ...], dims: tuple[int, ...], reads: tuple[Z, Z, Z]
 ) -> tuple[list[Train], list[str]]:
-    """Each train's rows from its kinds and part; a kind or a part that the 24's five kinds and the hands cannot hold, named."""
+    """Each train's rows from its kinds and part, and whether its kinds' character is the four-vector's square's; a kind or a part the 24's kinds and the hands cannot hold, and a kind with no whole basis outside the square, named."""
+    traces, wholes, squared = reads
     held: list[Train] = []
     found = []
     for at, train in enumerate(trains):
@@ -78,21 +80,18 @@ def trains_of(
                 found.append(
                     f"{where}.kinds[{j}]: {label!r} is none of the 24's kinds {labels} (twin kinds wait on OPEN 3)"
                 )
-            elif label == "E":
-                found.append(
-                    f"{where}.kinds[{j}]: E has no whole basis the 24 permute; it stands beside A1 in the tensions (stage 7c)"
-                )
         if train["part"] not in (1, 1 + 1):
             found.append(
                 f"{where}.part: 1, one gear, or 2, a hand, not {train['part']} (twin hands wait on OPEN 3)"
             )
         kinds = tuple(labels.index(label) for label in train["kinds"] if label in labels)
+        square = int((train["part"] * traces[list(kinds)].sum(axis=0) == squared).all())
+        if not square + wholes[list(kinds)].prod():
+            found.append(
+                f"{where}.kinds: a kind with no whole basis the 24 permute stands only in the four-vector's square, whose basis is whole"
+            )
         first = held[-1].first + held[-1].rows() if held else 0
-        held.append(Train(first, kinds, tuple(dims[k] for k in kinds), train["part"]))
-    # the clock's own gear, one A1 gear after the file's trains, laid at every Node-clock and named by no file: its count is
-    # the tick's weight, which every gear's teeth read at the now slot
-    scalar = labels.index("A1")
-    held.append(Train(held[-1].first + held[-1].rows() if held else 0, (scalar,), (dims[scalar],), 1))
+        held.append(Train(first, kinds, tuple(dims[k] for k in kinds), train["part"], square))
     return held, found
 
 
@@ -196,12 +195,25 @@ class Loaded(NamedTuple):
     state: tuple[Z, ...]
 
 
+def reads_of(kinds: Any, square: Z) -> tuple[tuple[str, ...], tuple[int, ...], tuple[Z, Z, Z]]:
+    """The kinds' labels and dimensions, and what the trains are read by: each kind's character on the 24, 1 where its basis is whole (each row one Spoke's sign), and the square's character."""
+    labels = tuple(name.upper() for name in kinds._fields)
+    dims, traces, wholes = zip(
+        *(
+            (k.shape[-1], np.einsum("gii->g", k), int((np.einsum("gij,gij->gi", k, k) == 1).all()))
+            for k in kinds
+        ),
+        strict=True,
+    )
+    return labels, dims, (np.stack(traces), np.array(wholes, dtype=object), np.einsum("gii->g", square))
+
+
 def load(
-    universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: dict[Any, Z]
+    universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: dict[Any, Z], square: Z
 ) -> tuple[Loaded | None, list[str]]:
-    """The checked files loaded on the engine's kinds and their tables, every departure named; nothing loads past one."""
-    labels, dims = tuple(name.upper() for name in kinds._fields), tuple(k.shape[-1] for k in kinds)
-    trains, found = trains_of(universe["trains"], labels, dims)
+    """The checked files loaded on the engine's kinds on the 24, their tables and the four-vector's square, every departure named; nothing loads past one."""
+    labels, dims, reads = reads_of(kinds, square)
+    trains, found = trains_of(universe["trains"], labels, dims, reads)
     if found:
         return None, found
     planned, refused = plan(universe.get("couplings", []), trains, c, labels, kinds.t1.shape[-1])
@@ -217,8 +229,10 @@ def mesh_unit(gamma: int) -> int:
 def geared(
     universe: dict[str, Any], trains: list[Train], spokes: int
 ) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], Z]:
-    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes; every row, the clock's own gear (the train after the file's) among them, reading the clock's count at the factor 1, a placeholder until the exact read is derived; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 G^2 per Mesh."""
-    integers, rows = universe["integers"], sum(t.rows() for t in trains)
+    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes; every row reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 G^2 per Mesh."""
+    integers = universe["integers"]
+    first, size, square = np.array([(t.first, t.rows(), t.square) for t in trains], dtype=object).T
+    rows = size.sum()
     den, gamma = integers["den"], integers["full_rate"]
     g = mesh_unit(gamma)
     grip = den * gamma * gamma * g * g
@@ -229,8 +243,13 @@ def geared(
         ones.copy(),
         ones.copy(),
     )  # main.py makes them the engine's records
-    every = np.arange(rows, dtype=np.intp)  # every row reads the clock's own gear, one term each
-    clock = (0 * every + trains[-1].first, np.ones(rows, dtype=object), every)
+    # every row reads each square's 00 slot, its first row, one term each
+    squares, every = np.flatnonzero(square), np.arange(rows, dtype=np.intp)
+    clock = (
+        np.repeat(first[squares].astype(np.intp), rows),
+        np.ones(len(squares) * rows, dtype=object),
+        np.tile(every, len(squares)),
+    )
     return gearing, clock, grip
 
 

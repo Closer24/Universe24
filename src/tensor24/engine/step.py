@@ -38,7 +38,7 @@ def driven(gearing: Gearing, force: Z, q: Z) -> Z:
 # W = W+ holds a round's teeth fixed, so a round runs back exactly wherever W is at least 1 and every fine tooth stands
 # within [0, W), and a run while every kept tooth stands below the teeth of the round that reads it: only a falling
 # clock can break that. Wherever a clock moves, rising or falling, W = W+ drops the term (d_t W)(d_t a) of
-# d_t (W d_t a) = F. Every run the files make keeps the clock's own gear at 0 as laid, no source moving it; the
+# d_t (W d_t a) = F. Every run the files make keeps the metric family at rest as laid, no source moving it; the
 # metric's stage (G2) owes both by design, with no promise in the round.
 def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
     """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and with no bound on the read."""
