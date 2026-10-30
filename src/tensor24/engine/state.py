@@ -1,4 +1,4 @@
-"""Clock: what a Node-clock holds: each gear's count now and before, its fine tooth, its drive's fine tooth, and each train's click tooth.
+"""Clock: what a Node-clock holds: each gear's count now and before, the tooth of the edge between them, its drive's fine tooth, and each train's click tooth.
 Algebra: whole-number arrays a, b, r, r_d and k, and the layout's coefficients and plans, read once at load.
 Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan, the clocks' read and the click's cross with its key.
 Clicks: n/a: these hold the board, not its shadow.
@@ -10,11 +10,11 @@ from tensor24.algebra.carry import Z
 
 
 class State(NamedTuple):
-    """Per gear its now and before slots, its fine tooth and its drive's fine tooth; per train its click tooth."""
+    """Per gear its now and before slots, the tooth of the edge between them and its drive's fine tooth; per train its click tooth."""
 
     a: Z
     b: Z
-    r: Z  # the fine tooth, within [0, W): the remainder the gear's carry keeps
+    r: Z  # the tooth of the edge between the two slots, within [-D, D], D = W(b) + W(a): what the momentum's split leaves
     rd: Z  # the drive's fine tooth, within [0, T_d): the remainder its carry keeps, as r is the gear's
     k: Z  # (trains, sites): the click tooth, within [0, key): the remainder the train's click keeps, born at (key - 1) div 2
 

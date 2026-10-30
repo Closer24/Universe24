@@ -1,20 +1,30 @@
-"""Clock: every round every gear moves once: its neighbours pull it, the coupling pushes it, it turns by what its teeth carry and keeps the rest; the drive carries the coupling's push the same way, and each train's click tooth carries the area the kick moves into the train.
-Algebra: q, r+ = carry(W (a - b) + s F + K, W, r); a+ = a + q; b+ = a; q_d, r_d+ = carry(J, T_d, r_d); K = s T_k q_d; q_c, k+ = carry(tau, key, k), tau the cross of a train's two parts with the kick through the A1 table; the run back is the tick on the mirrored state, mirrored.
-Board: one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot; W is the rest plus the metric family's 00 slots here; the click pushes nothing into a, b, r or r_d.
-Clicks: a whole click is the click tooth's quotient, one quantum taken (+1) or given back (-1), left for the record from G5; a deeper 00 slot is a slower clock, read in the clicks as proper time.
+"""Clock: every round every gear moves once: its neighbours pull it, the coupling pushes it, and its momentum, the velocity's whole count with the tooth kept on the edge between its two slots, is carried to the next edge and split there in one dial of both slots' teeth; the drive carries the coupling's push the same way, and each train's click tooth carries the area the kick moves into the train.
+Algebra: D_in = W(b) + W(a); N = 2 (D_in (a - b) + 2 (s F + K)) + s; q, s+ = split(N, 2 D_out), D_out = W(a) + W(a+), n = q 2D + s with |s| <= D and the edge |s| = D taken at an even q; a+ = a + q; b+ = a; q_d, r_d+ = carry(J, T_d, r_d); K = s T_k q_d; q_c, k+ = carry(tau, key, k); the mirror is (b, a, -s), and the run back is the tick on the mirrored state, mirrored.
+Board: one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot; W is the rest plus the metric family's 00 slot here, the 00 row's own teeth at rest, so W(a+) is the 00 row's own carry, given first; the 2 is the two senses of an axis, read from the star; the click pushes nothing into a, b, s or r_d.
+Clicks: a whole click is the click tooth's quotient, one quantum taken (+1) or given back (-1), left for the record from G5; a deeper 00 slot is a slower clock, read in the clicks as proper time, and the momentum W (a - b), not the velocity, is what a clock keeps as its teeth move.
 """
 
 import numpy as np
 
-from tensor24.algebra.carry import Z, carry, flip
+from tensor24.algebra.carry import Z, carry, flip, lit
 from tensor24.engine.contract import contract, read
 from tensor24.engine.mesh import held, pull, seen
 from tensor24.engine.state import Click, Gearing, Layout, Read, State
 
 
-def gear(a: Z, b: Z, r: Z, w: Z, push: Z) -> tuple[Z, Z, Z]:
-    """A gear's tick at its teeth W: (q, r+) the carry of W (a - b) + push with its fine tooth r, and a+ = a + q."""
-    q, kept = carry(w * (a - b) + push, w, r)
+def split(n: Z, d: Z, senses: Z) -> tuple[Z, Z]:
+    """The centred split of n at the edge's dial, both slots' teeth D in half-teeth: n = q (senses D) + s with the tooth s within [-D, D], counted from the dial's middle, and where s lands on the dial's edge the count q is taken even; two carries and the zero test, no if."""
+    dial = senses * d
+    q, r = carry(n + d, dial, 0)
+    _, odd = carry(q, senses, 0)
+    moved = (1 - lit(r)) * odd
+    return q - moved, r - d + moved * dial
+
+
+def gear(a: Z, b: Z, s: Z, d_in: Z, d_out: Z, push: Z, senses: Z) -> tuple[Z, Z, Z]:
+    """A gear's tick on the edge: its momentum N = 2 (D_in (a - b) + 2 push) + s, carried from the edge it was kept on to the next edge and split at its dial 2 D_out, (q, s+); a+ = a + q, b+ = a."""
+    n = senses * (d_in * (a - b) + senses * push) + s
+    q, kept = split(n, d_out, senses)
     return a + q, a, kept
 
 
@@ -55,23 +65,27 @@ def area(click: Click, a: Z, kicks: Z, k: Z) -> Z:
     return moved
 
 
-# W = W+ holds a round's teeth fixed, so a round runs back exactly wherever W is at least 1 and every fine tooth stands
-# within [0, W), and a run while every kept tooth stands below the teeth of the round that reads it: only a falling
-# clock can break that. Wherever a clock moves, rising or falling, W = W+ drops the term (d_t W)(d_t a) of
-# d_t (W d_t a) = F. No source moves the metric family before G2, but a setting may lay it moving: the runner reads
-# the promise from outside before every round and names the round where it breaks; the metric's stage (G2) owes both
-# by design.
+# The tooth lives on the edge between the two slots and is read on the edge it was kept on, so a change of the teeth
+# moves no tooth: a round runs back exactly wherever both slots' teeth are at least 1, the clock rising or falling,
+# and d_t (W d_t a) = F holds with W on the edge, the momentum kept and the velocity re-split as the teeth move.
 def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
     """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and with no bound on the read."""
     rest, _, _, _ = gearing
     return rest + read(clock, a)
 
 
-def teeth(layout: Layout, s: State) -> Z:
-    """Every gear's teeth at the state's now slot, as its round reads them: the promise's measure, read from outside."""
+def halves(layout: Layout) -> Z:
+    """The two halves of a tooth, the edge's half-teeth: the senses of an axis, its + and its -, read from the star."""
+    _, spokes, _, _, _, _, _, _, _ = layout
+    senses, _ = carry(spokes.shape[0], spokes.shape[1], 0)
+    return senses
+
+
+def dials(layout: Layout, s: State) -> tuple[Z, Z]:
+    """Every gear's teeth at the state's two slots, W(a) and W(b), as its round reads them: the edge's dial is their sum, the promise's measure, read from outside."""
     _, _, _, _, gearing, _, clock, _, _ = layout
-    a, _, _, _, _ = s
-    return weight(gearing, clock, a)
+    a, b, _, _, _ = s
+    return weight(gearing, clock, a), weight(gearing, clock, b)
 
 
 def grips(layout: Layout, s: State) -> Z:
@@ -81,17 +95,21 @@ def grips(layout: Layout, s: State) -> Z:
 
 
 def act(layout: Layout, s: State) -> tuple[State, Z]:
-    """One round and its clicks, in one pass: every gear steps on its sources at the teeth it reads at the now slot, and every train's click tooth carries the area the kick moves into the train at the key; the clicks are that carry's quotients, (the state reached, the clicks)."""
+    """One round and its clicks, in one pass: every gear carries its momentum from the edge it reads to the next edge, whose dial reads the 00 slot's next count, the 00 row's own carry at its standing teeth, through the clocks' read; every train's click tooth carries the area the kick moves into the train at the key; the clicks are that carry's quotients, (the state reached, the clicks)."""
     _, _, _, _, gearing, _, clock, _, click = layout
-    a, b, r, rd, k = s
+    a, b, tooth, rd, k = s
     force, j = sources(layout, a)
     _, _, _, teeth = gearing
     _, _, _, _, key = click
     q, kept = drive(j, teeth, rd)
     kicks = kick(gearing, q)
-    a1, b1, r1 = gear(a, b, r, weight(gearing, clock, a), driven(gearing, force, kicks))
+    senses, push = halves(layout), driven(gearing, force, kicks)
+    wa, wb = dials(layout, s)
+    # the count the split gives at the edge's own dial: the 00 row's, whose teeth read no row, so its dial is its own
+    first, _, _ = gear(a, b, tooth, wa + wb, wa + wb, push, senses)
+    a1, b1, s1 = gear(a, b, tooth, wa + wb, wa + weight(gearing, clock, first), push, senses)
     clicks, k1 = carry(area(click, a, kicks, k), key, k)
-    return State(a1, b1, r1, kept, k1), clicks
+    return State(a1, b1, s1, kept, k1), clicks
 
 
 def tick(layout: Layout, s: State) -> State:
@@ -101,14 +119,14 @@ def tick(layout: Layout, s: State) -> State:
 
 
 def mirror(layout: Layout, s: State) -> State:
-    """The state mirrored, time's reversal at fixed teeth: the slots swapped, each fine tooth flipped in the teeth it was kept at, the before slot's, the drive's in its teeth and the click tooth in its key; mirrored twice, r moves by W(a) - W(b), so the mirror is its own inverse only where the clock stands still."""
-    _, _, _, _, gearing, _, clock, _, click = layout
-    a, b, r, rd, k = s
+    """The state mirrored, time's reversal: the slots swapped and the edge's tooth negated, read in no teeth, the drive's tooth flipped in its teeth and the click tooth in its key; its own inverse on any clock, standing or moving."""
+    _, _, _, _, gearing, _, _, _, click = layout
+    a, b, tooth, rd, k = s
     _, _, _, teeth = gearing
     _, _, _, _, key = click
-    return State(b, a, flip(r, weight(gearing, clock, b)), flip(rd, teeth), flip(k, key))
+    return State(b, a, -tooth, flip(rd, teeth), flip(k, key))
 
 
 def untick(layout: Layout, s: State) -> State:
-    """The round run back, the tick on the mirrored state mirrored: tick's inverse from the states whose fine teeth stand within the now slot's teeth, of at least 1, onto those whose fine teeth stand within the before slot's; n rounds run back by n unticks, not by one mirror about n ticks, which departs from the second round where the clock moves."""
+    """The round run back, the tick on the mirrored state mirrored: tick's inverse wherever both slots' teeth are at least 1 and every tooth stands within its edge's dial, the clock standing or moving; n rounds run back by n unticks, or by one mirror about n ticks, the two alike since the mirror is its own inverse."""
     return mirror(layout, tick(layout, mirror(layout, s)))

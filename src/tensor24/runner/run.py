@@ -1,5 +1,5 @@
 """Clock: the run from the three files to the record: every Node-clock steps every round, then all the rounds run back.
-Algebra: the act iterated; before each round the promise, every fine tooth within its teeth, and the wave's window, the Spokes' grips within the teeth per sense, are read; the start returns bit for bit.
+Algebra: the act iterated; before each round the promise, every tooth within its edge's dial of both slots' teeth, and the wave's window, the Spokes' grips within the teeth per sense, are read; the start returns bit for bit.
 Board: the files checked and loaded, the rounds run, the rewind checked, the record and its ledger written.
 Clicks: it writes what the act gives: the record's header and end and the ledger beside them; click lines from G5.
 """
@@ -25,23 +25,27 @@ STEP = "step"  # a count line's place in its round: after the step
 
 
 class Engine(NamedTuple):
-    """The engine's functions as main.py passes them: the kinds and their tables, the layout, the round, its run back, the state, every gear's teeth and every Spoke's grip at a state's now slot."""
+    """The engine's functions as main.py passes them: the kinds and their tables, the layout, the round, its run back, the state, every gear's teeth at a state's two slots and every Spoke's grip at its now slot."""
 
     made: Callable[..., Any]
     layout: Callable[..., Any]
     tick: Callable[..., Any]
     untick: Callable[..., Any]
     state: Callable[..., Any]
-    teeth: Callable[..., Any]
+    dials: Callable[..., Any]
     grips: Callable[..., Any]
 
 
-def promises(r: Any, w: Any) -> list[str]:
-    """The round's promise on the state it reads, read from outside, each departure named where it stands: every fine tooth within [0, w), its teeth."""
-    w = np.broadcast_to(w, r.shape)
+def promises(s: Any, wa: Any, wb: Any, spokes: Any) -> list[str]:
+    """The round's promise on the state it reads, read from outside, each departure named where it stands: both slots' teeth at least 1, and every tooth within its edge's dial, |s| <= D = W(b) + W(a), on the dial's edge only at an even velocity."""
+    senses, _ = carry(spokes.shape[0], spokes.shape[1], 0)
+    a, b, tooth, _, _ = s
+    wa, wb = np.broadcast_to(wa, tooth.shape), np.broadcast_to(wb, tooth.shape)
+    d, odd = wa + wb, (a - b) - senses * ((a - b) // senses)
+    off = (wa < 1) | (wb < 1) | (abs(tooth) > d) | ((abs(tooth) == d) & (odd != 0))
     return [
-        f"row {g}, site {x}: the fine tooth {r[g, x]} not within [0, {w[g, x]})"
-        for g, x in np.argwhere((r < 0) | (r >= w))
+        f"row {g}, site {x}: the tooth {tooth[g, x]} not within the edge's dial [-{d[g, x]}, {d[g, x]}] of the teeth {wb[g, x]} and {wa[g, x]}"
+        for g, x in np.argwhere(off)
     ]
 
 
@@ -56,9 +60,9 @@ def window(held: Any, w: Any, spokes: Any) -> list[str]:
 
 
 def promised(engine: Engine, layout: Any, s: Any) -> list[str]:
-    """Both promises of the round that reads a state, read from outside: every fine tooth within its teeth, and the wave's window."""
-    w = engine.teeth(layout, s)
-    return promises(s.r, w) + window(engine.grips(layout, s), w, layout.spokes)
+    """Both promises of the round that reads a state, read from outside: every tooth within its edge's dial, and the wave's window at the now slot's teeth."""
+    wa, wb = engine.dials(layout, s)
+    return promises(s, wa, wb, layout.spokes) + window(engine.grips(layout, s), wa, layout.spokes)
 
 
 def digest(text: str) -> str:

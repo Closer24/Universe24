@@ -24,7 +24,8 @@ from tests import frame
 
 ROOT = Path(__file__).resolve().parents[1]
 PATHS = [ROOT / "examples" / "tensor24" / f"{name}.json" for name in NAMES]
-TOOTH = 1 << 127  # a fine tooth within the files' width and past light's teeth, 2 T
+TOOTH = 1 << 127  # a tooth within the files' width and past light's dial
+FIELDS = ("round", "at", "site", "train", "count")  # a Count line's fields, schema.Count's
 REACH = 1 << 40  # the clock's counts are drawn below it
 
 
@@ -68,49 +69,55 @@ def leaves(hint):
 
 
 def geared_alike(held, laid):
-    """Every row's coefficients, grips and read of the clock alike, the read the square's 00 slot; no term of J laid."""
+    """Every row's coefficients, grips and read of the clock alike, the read the square's 00 slot into every other row
+    (the 00 row reads none); no term of J laid."""
     rows = len(laid.gearing.rest)
     alike = all(len(set(np.broadcast_to(x, (rows, 1))[:, 0].tolist())) == 1 for x in laid.gearing)
-    (clock,) = [t.first for t in held.trains if t.square]
+    unit = np.eye(rows, dtype=int)[[t.first for t in held.trains if t.square][0]]  # the 00 slot's row
     read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
     grips, plan = len(set(laid.grip.ravel().tolist())) == 1, all(len(x) == 0 for x in laid.plan)
-    return alike and grips and plan and (read == np.outer(ones, np.eye(rows, dtype=int)[clock])).all()
+    return alike and grips and plan and (read == np.outer(ones - unit, unit)).all()
 
 
 def drawn(held, laid, seed):
-    """A state on the layout: every gear across 2**256, the square's 00 slot moving below REACH, each tooth in its teeth."""
+    """A state on the layout: every gear across 2**256, the square's 00 slot moving below REACH, each tooth in its dial."""
     rng, (rows, n) = np.random.default_rng(seed), (len(laid.gearing.rest), laid.nb.shape[1])
     a, b = frame.wide(rng, (rows, n)), frame.wide(rng, (rows, n))
     (clock,) = [t.first for t in held.trains if t.square]
     a[clock], b[clock] = (rng.integers(0, REACH, n).astype(object) for _ in "ab")
-    teeth = step.weight(laid.gearing, laid.clock, a)
-    return state.State(a, b, frame.wide(rng, (rows, n)) % teeth, 0 * a, 0 * a[: len(held.trains)]), teeth
+    d = step.weight(laid.gearing, laid.clock, a) + step.weight(laid.gearing, laid.clock, b)
+    r = frame.wide(rng, (rows, n)) % (d + d - 1) - (d - 1)
+    return state.State(a, b, r, 0 * a, 0 * a[: len(held.trains)])
 
 
 def naive(laid, held, s, shape):
-    """One round site by site with loops: W the rest and every square's 00 slot, and each Spoke's grip its rest and every
-    square's ii slot of its axis at both ends of its Mesh, each slot read by its name in the square's basis."""
+    """One round site by site with loops: W the rest and the square's 00 slot at both slots (the 00 row's own at rest),
+    each grip its rest and the square's ii slot of its axis at both ends of its Mesh, by name; the split on the edge."""
     a, b, r = (x.tolist() for x in s[:3])
-    squares, d = [x.first for x in held.trains if x.square], len(shape)
+    squares, d, rows = [x.first for x in held.trains if x.square], len(shape), len(s.a)
     rest, grip = int(laid.gearing.rest[0, 0]), int(laid.grip[0, 0])
     out = [np.zeros_like(s.a) for _ in "abr"]
     for i, x in enumerate(itertools.product(*map(range, shape))):
         around = [np.ravel_multi_index(y, shape) for y in frame.near(x, shape)]  # +x, -x, +y, -y, +z, -z
-        w = rest + sum(a[f][i] for f in squares)
+        wa, wb = ([rest + sum(c[f][i] for f in squares if f != g) for g in range(rows)] for c in (a, b))
         grips = [
             grip + sum(a[f + 1 + d + k // 2][i] + a[f + 1 + d + k // 2][j] for f in squares)
             for k, j in enumerate(around)
         ]
-        for g in range(len(a)):
+        moment, first = [0] * rows, [0] * rows
+        for g in range(rows):
             push = sum(k * (a[g][j] - a[g][i]) for k, j in zip(grips, around, strict=True))
-            q, kept = divmod(w * (a[g][i] - b[g][i]) + push + r[g][i], w)
+            moment[g] = 2 * ((wa[g] + wb[g]) * (a[g][i] - b[g][i]) + 2 * push) + r[g][i]
+            first[g] = frame.split(moment[g], wa[g] + wb[g])[0]  # the count at the edge's own dial
+        for g in range(rows):
+            wa1 = rest + sum(a[f][i] + first[f] for f in squares if f != g)  # the teeth at the next slot
+            q, kept = frame.split(moment[g], wa[g] + wa1)
             out[0][g, i], out[1][g, i], out[2][g, i] = a[g][i] + q, a[g][i], kept
     return out
 
 
-def turned(m, laid, held, s, teeth, shape):
-    """The state turned by m: sites moved, each train's components by its kind's matrix, a negated component's tooth
-    flipped at the teeth it was carried at."""
+def turned(m, laid, held, s, shape):
+    """The state turned by m: sites moved, each train's rows by its kind's matrix, a negated row's tooth negated."""
     xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
     site = np.ravel_multi_index(tuple((m @ xyz) % sides), shape)
     acting = kinds.kinds(m[None, :, :])
@@ -120,14 +127,10 @@ def turned(m, laid, held, s, teeth, shape):
         at = train.first + np.arange(len(matrix)) * train.part
         for part in range(train.part):
             turn[np.ix_(at + part, at + part)] = matrix
-    sign = turn.sum(axis=1)[:, None]  # each row's one entry: its source row's sign
     there = state.State(*(np.empty_like(x) for x in s))
     for x, y in zip(there, s, strict=True):
         x[:, site] = y
-    there.a[:, site], there.b[:, site] = turn @ s.a, turn @ s.b
-    flips = (1 - sign) // (1 + 1)  # 1 where the component is negated
-    r = np.abs(turn) @ s.r
-    there.r[:, site] = flips * (teeth - 1 - r) + (1 - flips) * r
+    there.a[:, site], there.b[:, site], there.r[:, site] = turn @ s.a, turn @ s.b, turn @ s.r
     return there
 
 
@@ -163,13 +166,13 @@ def ledger(held, laid, s, setting, sites):
     for at in range(1, setting["ticks"] + 1):
         s = step.tick(laid, s)
         wanted += [
-            {
-                "round": at,
-                "at": "step",
-                "site": x,
-                "train": n,
-                "count": s.a[t.first : t.first + t.rows(), x].tolist(),
-            }
+            dict(
+                zip(
+                    FIELDS,
+                    (at, "step", x, n, s.a[t.first : t.first + t.rows(), x].tolist()),
+                    strict=True,
+                )
+            )
             for x in range(sites)
             for n, t in enumerate(held.trains)
         ]
@@ -184,17 +187,15 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert geared_alike(held, laid)
     assert not {"Ruler", "LAID"} & set(dir(state)) and not {"ruled", "reading", "at"} & set(dir(step))
     for seed in range(3):  # a round is the naive round, and departs from it with the grips' read ignored
-        s, teeth = drawn(held, laid, seed)
-        (*stepped, _, _), (*blind, _, _) = (
-            step.tick(laid, s),
-            step.tick(laid._replace(stretch=frame.unread()), s),
-        )
+        s = drawn(held, laid, seed)
+        unread = laid._replace(stretch=frame.unread())
+        (*stepped, _, _), (*blind, _, _) = step.tick(laid, s), step.tick(unread, s)
         model, out = naive(laid, held, s, piece["shape"]), step.tick(laid, s)
         assert frame.same(stepped, model) and not frame.same(blind, model)
         assert not step.act(laid, s)[1].any() and not out.k.any()  # no vertex: no area, no click
         for m in frame.turns():
-            moved = turned(m, laid, held, out, teeth, piece["shape"])
-            assert frame.same(step.tick(laid, turned(m, laid, held, s, teeth, piece["shape"])), moved), (
+            moved = turned(m, laid, held, out, piece["shape"])
+            assert frame.same(step.tick(laid, turned(m, laid, held, s, piece["shape"])), moved), (
                 m.tolist()
             )
     # the run: the files verbatim with their digests, every Node-clock in every round, the end's digest the rounds'
@@ -243,26 +244,23 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
         leaves(dataclasses.make_dataclass("Broken", [("x", hint)])) - {int, str} for hint in broken
     )
     # a departing file, a broken promise or a lay outside the wave's window (the 00 slot at site 0 laid so deep that
-    # the teeth there are 1, every row's) is named, and nothing is written, by the run and by its tool
+    # the teeth there are 1, every row's but the 00 row's own) is named, and nothing is written, by the run and its tool
     universe["version"] = 1 + 1
     deep, low = json.loads(json.dumps(setting)), 1 - int(laid.gearing.rest[0, 0])
     deep["gears"].append([[n for n, t in enumerate(held.trains) if t.square][0], 0, 0, low, low, 0])
     setting["gears"][0][-1] = TOOTH
     edits = (
         ("universe", universe, "universe.version: 1, not 2", 1),
-        ("setting", setting, "round 1: row 0, site 0: the fine tooth", 1),
-        ("setting", deep, "round 1: row 0, site 0: the Spokes' grips", len(laid.gearing.rest)),
+        ("setting", setting, "round 1: row 0, site 0: the tooth", 1),
+        ("setting", deep, "round 1: row 0, site 0: the Spokes' grips", len(laid.gearing.rest) - 1),
     )
     for name, held_, named, lines in edits:
         paths = list(PATHS)
         paths[NAMES.index(name)] = tmp_path / f"{name}.json"
         paths[NAMES.index(name)].write_text(json.dumps(held_), encoding="utf-8")
-        found = main.ran(paths, tmp_path / f"{name}.jsonl")
+        out, found = tmp_path / f"{name}.jsonl", main.ran(paths, tmp_path / f"{name}.jsonl")
         assert len(found) == lines and found[0].startswith(named), found
-        assert (
-            not (tmp_path / f"{name}.jsonl").exists()
-            and not run.ledger_of(tmp_path / f"{name}.jsonl").exists()
-        )
+        assert not out.exists() and not run.ledger_of(out).exists()
     tool, written = ROOT / "tools" / "tensor24_run.py", tmp_path / "tool.jsonl"
     done = subprocess.run(
         [sys.executable, "-I", str(tool), *map(str, PATHS), str(written)], capture_output=True, text=True

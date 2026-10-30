@@ -40,8 +40,7 @@ def near(x, shape):
 
 def flat(result):
     """A step's new state and its out as one row of arrays."""
-    state, out = result
-    return [*state, *out]
+    return [*result[0], *result[1]]
 
 
 def wide(rng, size):
@@ -179,14 +178,8 @@ def fresh(code, args, hash_seed=0, given=""):
     """What a fresh interpreter prints, the tests and src on its path, at a hash seed."""
     paths = os.pathsep.join([str(ROOT), str(ROOT / "src")])
     env = {**os.environ, "PYTHONHASHSEED": str(hash_seed), "PYTHONPATH": paths}
-    run = subprocess.run(
-        [sys.executable, "-c", code, *args],
-        cwd=ROOT,
-        env=env,
-        input=given,
-        capture_output=True,
-        text=True,
-    )
+    how = {"cwd": ROOT, "env": env, "input": given, "capture_output": True, "text": True}
+    run = subprocess.run([sys.executable, "-c", code, *args], **how)
     return run.stdout.strip() or run.stderr
 
 
@@ -226,6 +219,13 @@ def meshes_of(nb):
 def spokes(axes=3):
     """Each Spoke's direction in the board's order, +axis then -axis for every axis: the steps board() takes."""
     return np.array([sign * axis for axis in np.eye(axes, dtype=int) for sign in (1, -1)], dtype=object)
+
+
+def split(n, d):
+    """The centred split of n at the dial 2 d with plain integers: n = q 2d + s, |s| <= d, a tie taken at an even q."""
+    q, r = divmod(n + d, d + d)
+    tie = int(r == 0 and q % 2 == 1)
+    return q - tie, r - d + tie * (d + d)
 
 
 def unread():

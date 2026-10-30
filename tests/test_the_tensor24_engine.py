@@ -8,7 +8,6 @@ import math
 
 import numpy as np
 
-from tensor24.algebra.carry import flip
 from tensor24.engine import contract, mesh, step
 from tensor24.engine.state import Gearing, Layout, Plan, Read, State
 from tensor24.main import made
@@ -18,11 +17,7 @@ from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 from tests import frame
 
-SHAPE, ROUNDS, SQUARING = (
-    (3, 4, 5),
-    12,
-    4,
-)  # the board, the rounds of a run back, and of one where J squares the gears
+SHAPE, ROUNDS, SQUARING = (3, 4, 5), 12, 4  # the board, a run back's rounds, and a squaring run's
 # the gears per site, J's terms, and the readings: the value, the three differences and the force
 ROWS, TERMS, PLANES = 4, 30, 1 + 3 + 1
 CUBE, FRAME = (3, 3, 3), (5, 5, 5)  # the board the 24 turn, and the frame's properties' board
@@ -46,8 +41,8 @@ def varied(
     rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False, stretched=False, cubed=False
 ):
     """A layout parted at every gear and site: grips per row and Mesh, the teeth at rest, s, T_k, T_d, and J or none
-    of it, every gear reading its teeth from two drawn rows' counts at drawn factors where clocked; every divisor at least
-    `least`, and T_k too where `least` is above 1, so that a swap of T_k and T_d shows as a wrong run back, not a raise."""
+    of it, every other gear reading its teeth from two drawn rows' counts at drawn factors where clocked, the two reading
+    none; every divisor at least `least`, and T_k too where `least` is above 1, so a swap of T_k and T_d shows."""
     nb = frame.board(shape)
     n = nb.shape[1]
     w = draw(rng, least, 20, (rows, n))
@@ -57,8 +52,14 @@ def varied(
     )
     gearing = Gearing(w, *coefficients, draw(rng, least, 9, (rows, 1)))
     every = np.arange(rows, dtype=np.intp)
-    two = np.repeat(rng.permutation(rows)[: 1 + 1], rows) if clocked else every  # every gear reads both
-    read = Read(two, draw(rng, 1, 4, len(two)), np.tile(every, 1 + 1)) if clocked else frame.unread()
+    two = rng.permutation(rows)[
+        : 1 + 1
+    ]  # the rows the other gears read their teeth from; the two read none
+    others = np.setdiff1d(every, two)
+    read = Read(
+        np.repeat(two, len(others)), draw(rng, 1, 4, len(two) * len(others)), np.tile(others, len(two))
+    )
+    read = read if clocked else frame.unread()
     highs = (PLANES * rows + 1,) * 3 + (rows,)  # any reading may be the unit, the readings' last row
     index = [rng.integers(0, high, size=TERMS).astype(np.intp) for high in highs]
     # three readings only where the act is read for one round, since they cube the counts; else the unit
@@ -79,28 +80,32 @@ def varied(
 
 
 def world(rng, layout, rows=ROWS):
-    """A state the act may meet: gears across 2**256, the clocks' rows in [0, 2**20), each tooth within its W and T_d."""
+    """A state the act may meet: gears across 2**256, the clocks' rows in [0, 2**20), each tooth within its dial and T_d."""
     size, drive = (rows, layout.nb.shape[1]), layout.gearing.drive
     a, b = frame.wide(rng, size), frame.wide(rng, size)
     clocks = np.unique(layout.clock.first)
     for x in (a, b):
         x[clocks] = draw(rng, 0, 1 << 20, (len(clocks), size[1]))
-    w = step.weight(layout.gearing, layout.clock, a)
-    r, rd = draw(rng, 0, 1 << 20, size) % w, draw(rng, 0, 1 << 20, size) % drive
+    d = step.weight(layout.gearing, layout.clock, a) + step.weight(layout.gearing, layout.clock, b)
+    r, rd = draw(rng, 0, 1 << 20, size) % (d + d - 1) - (d - 1), draw(rng, 0, 1 << 20, size) % drive
     return State(a, b, r, rd, 0 * a[:1])  # one train's click tooth, 0 within the key 1
 
 
 def naive(layout, s, shape=SHAPE):
-    """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the carry;
-    the click of no term keeps its tooth."""
+    """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the split
+    on the edge, the 00 count first; the click of no term keeps its tooth."""
     _, _, _, grip, gearing, plan, _, stretch_read, _ = layout
     rows = len(s.a)
     rest, stretch, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     first, second, third, factor, target = (x.tolist() for x in plan)
     a, b, r, rd, k = (x.tolist() for x in s)
-    w = [row[:] for row in rest]  # every gear's teeth: its rest and the clocks' read, term by term
-    for f, m, g in zip(*(x.tolist() for x in layout.clock), strict=True):
+    w, wb = (
+        [row[:] for row in rest] for _ in "ab"
+    )  # every gear's teeth at both slots: its rest and the clocks' read
+    terms = list(zip(*(x.tolist() for x in layout.clock), strict=True))
+    for f, m, g in terms:
         w[g] = [x + m * y for x, y in zip(w[g], a[f], strict=True)]
+        wb[g] = [x + m * y for x, y in zip(wb[g], b[f], strict=True)]
     grip = np.broadcast_to(grip, (rows, grip.shape[1])).tolist()
     n = len(a[0])
     new = [[row[:] for row in x] for x in (a, b, r, rd, k)]
@@ -110,9 +115,7 @@ def naive(layout, s, shape=SHAPE):
         spokes = [axis * n + j for axis in range(3) for j in (i, around[axis + axis + 1])]
         seen = [[a[g][j] for j in around] for g in range(rows)]
         held = zip(*(x.tolist() for x in stretch_read), strict=True)
-        lift = [0] * len(
-            around
-        )  # each Spoke's grip as the grips' read lands it: the read row at the Mesh's two ends
+        lift = [0] * len(around)  # each Spoke's grip as the grips' read lands it, at the Mesh's two ends
         for f, m, t in held:
             lift[t] += m * (a[f][i] + a[f][around[t]])
         force = [
@@ -129,10 +132,15 @@ def naive(layout, s, shape=SHAPE):
         source, read = [0] * rows, readings + force + [1]  # the unit, the readings' last row
         for t in range(len(factor)):
             source[target[t]] += factor[t] * read[first[t]] * read[second[t]] * read[third[t]]
+        moment, count = [0] * rows, [0] * rows
         for g in range(rows):
             q, new[3][g][i] = divmod(source[g] + rd[g][i], drive[g][i])
             push = stretch[g][i] * (force[g] + kick[g][i] * q)
-            v, new[2][g][i] = divmod(w[g][i] * (a[g][i] - b[g][i]) + r[g][i] + push, w[g][i])
+            moment[g] = 2 * ((w[g][i] + wb[g][i]) * (a[g][i] - b[g][i]) + 2 * push) + r[g][i]
+            count[g] = frame.split(moment[g], w[g][i] + wb[g][i])[0]  # the count at the edge's own dial
+        for g in range(rows):
+            wa1 = rest[g][i] + sum(m * (a[f][i] + count[f]) for f, m, t in terms if t == g)
+            v, new[2][g][i] = frame.split(moment[g], w[g][i] + wa1)
             new[0][g][i], new[1][g][i] = a[g][i] + v, a[g][i]
     return State(*(np.array(x, dtype=object) for x in new))
 
@@ -165,16 +173,15 @@ def back():
 
 
 def negated():
-    """The tie rule on the act with no term of J: every gear negated, its tooth flipped in its teeth, ticks to the
-    negation, its tooth flipped; the drive's tooth alike."""
+    """The tie rule on the act with no term of J: every gear negated, its tooth negated, ticks to the negation, its
+    tooth negated, whatever its teeth; the drive's tooth alike."""
     for seed in range(3):
         rng = np.random.default_rng(20 + seed)
         layout = varied(rng, sourced=False)
         s = world(rng, layout)
-        w = layout.gearing.rest
         a1, b1, r1, rd1, k1 = step.tick(layout, s)
-        a2, b2, r2, rd2, k2 = step.tick(layout, s._replace(a=-s.a, b=-s.b, r=flip(s.r, w)))
-        if not frame.same([a2, b2, r2, rd2, k2], [-a1, -b1, flip(r1, w), rd1, k1]):
+        a2, b2, r2, rd2, k2 = step.tick(layout, s._replace(a=-s.a, b=-s.b, r=-s.r))
+        if not frame.same([a2, b2, r2, rd2, k2], [-a1, -b1, -r1, rd1, k1]):
             return False
     return True
 
@@ -341,7 +348,7 @@ def engine():
 def mutants():
     """Broken copies, each with the law that must catch it: what it replaces in the step (or the board), and with what."""
     tick, untick, gear, mirror, kick = step.tick, step.untick, step.gear, step.mirror, step.kick
-    read, weight, drive, sources = step.read, step.weight, step.drive, step.sources
+    read, drive, sources = step.read, step.drive, step.sources
     gripped = mesh.gripped
     pull, seen, built, laid, calls = (
         mesh.pull,
@@ -364,23 +371,16 @@ def mutants():
         a, b, r = gear(*x)
         return a + a, b, r
 
-    def floated(a, b, r, w, push):
-        n = w * (a - b) + r + push
-        q = np.vectorize(lambda x, y: math.floor(x / y), otypes=[object])(n, w + 0 * n)
-        return a + q, a, n - q * w
+    def floated(a, b, r, d_in, d_out, push, senses):
+        n = senses * (d_in * (a - b) + senses * push) + r
+        q = np.vectorize(lambda x, y: math.floor((x + y) / (y + y)), otypes=[object])(n, d_out + 0 * n)
+        return a + q, a, n - q * (d_out + d_out)
 
     def unfactored(c, x):
         return read(c._replace(factor=c.first), x)
 
     def placed(c, x):  # every clock found at the last row, by its place
         return read(c._replace(first=0 * c.first + len(x) - 1), x)
-
-    def mirrored_now(
-        y, s
-    ):  # the mirror's teeth read at its now slot, not the before slot it was kept at
-        a, b, r, rd, k = s
-        kept = flip(rd, y.gearing.drive), flip(k, y.click.key)
-        return State(b, a, flip(r, weight(y.gearing, y.clock, a)), *kept)
 
     def keep_b(y, s):
         return untick(y, s)._replace(b=s.b)
@@ -433,7 +433,7 @@ def mutants():
     first = lambda a: (np.arange(len(a)) == 0).astype(object)[:, None]  # noqa: E731
     return {  # the Mesh, the board, and the act at its coefficients
         "the run back with no mirror": ("back", "untick", lambda y, s: tick(y, s)),
-        "the mirror's teeth read at its now slot": ("back", "mirror", mirrored_now),
+        "the mirror's tooth not negated": ("back", "mirror", lambda y, s: mirror(y, s)._replace(r=s.r)),
         "the drive's tooth not mirrored": (
             "back",
             "mirror",
@@ -465,7 +465,7 @@ def mutants():
         "J's third reading taken as the unit": ("formula", "contract", thirdless),
         "the clocks' read off its factor": ("formula", "read", unfactored),
         "the clocks found by their place": ("formula", "read", placed),
-        "the teeth without their rest": ("formula", "weight", lambda g, c, a: read(c, a)),
+        "the teeth without their rest": ("formula", "weight", lambda g, c, a: read(c, a) + 1),
         "T_k read from T_d": ("formula", "kick", kicked(lambda g: g.drive)),
         "the run back with T_k and T_d swapped": ("back", "untick", swapped),
         "the gradient one-sided": ("sourced_images", "seen", one_sided),

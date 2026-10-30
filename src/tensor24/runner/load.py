@@ -1,6 +1,6 @@
 """Clock: every Node-clock made alike: the 24's tables, each train's rows, every gear's teeth and every Mesh's grip, each train's click tooth at its birth, and the setting's gears laid.
 Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s, T_k and T_d at 1; the key the universe file's CHOSEN integer, the click tooth born at (key - 1) div 2, the Spokes along one axis the divisor.
-Board: the metric family found by its kinds' character: its 00 slot read into every row's teeth, its ii slots into each axis's grips; each train's area the cross of its two parts through its kinds' tables onto A1, the kind found by its character.
+Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth, its own at rest (the acyclic cut), its ii slots into each axis's grips; each train's area the cross of its two parts through its kinds' tables onto A1, the kind found by its character.
 Clicks: n/a: no number of the load reaches the clicks except through the act.
 """
 
@@ -183,7 +183,7 @@ def load(
 def geared(
     universe: dict[str, Any], trains: Trains, spokes: Z
 ) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], tuple[Z, Z, Z], Z]:
-    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2, the 6 the board's Spokes; every row reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself; every Spoke's grip reading each square's ii slot of its axis at both ends of its Mesh; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 per Mesh, one notch of a slot moving a grip by one count, so the Mesh unit is 1."""
+    """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2, the 6 the board's Spokes; every row but the slot's own reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself, the 00 row's teeth at rest; every Spoke's grip reading each square's ii slot of its axis at both ends of its Mesh; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 per Mesh, one notch of a slot moving a grip by one count, so the Mesh unit is 1."""
     integers, first, rows = universe["integers"], trains.first, trains.size.sum()
     den, gamma = integers["den"], integers["full_rate"]
     grip = den * gamma * gamma
@@ -194,12 +194,15 @@ def geared(
         ones.copy(),
         ones.copy(),
     )  # main.py makes them the engine's records
-    # every row reads every train's first row at the factor of its square flag: a square's 00 slot at 1, the rest at 0
+    # every row reads every train's first row at the factor of its square flag, a square's 00 slot at 1 and the rest
+    # at 0, less its own row: the zero test of the rows' difference cuts the 00 row's read of itself, so its teeth stand
+    # at rest and the clocks' read is acyclic (a dial is never moved by its own quotient)
     trained, every = len(trains), np.arange(rows, dtype=np.intp)
+    read, landed = np.repeat(first.astype(np.intp), rows), np.tile(every, trained)
     clock = (
-        np.repeat(first.astype(np.intp), rows),
-        np.repeat(trains.square, rows).astype(object),
-        np.tile(every, trained),
+        read,
+        np.repeat(trains.square, rows).astype(object) * lit((read - landed).astype(object)),
+        landed,
     )
     # every Spoke's grip reads a square's diagonal slot for its axis, after the 00 slot and the 0i slots, at the factor 1;
     # a train not the square reads its first row at the factor 0
