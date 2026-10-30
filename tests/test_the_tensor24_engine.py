@@ -40,9 +40,8 @@ def draw(rng, low, high, size):
 def varied(
     rng, least=1, sourced=True, rows=ROWS, shape=SHAPE, clocked=False, stretched=False, cubed=False
 ):
-    """A layout parted at every gear and site: grips per row and Mesh, the teeth at rest, s, T_k, T_d, and J or none
-    of it, every other gear reading its teeth from two drawn rows' counts at drawn factors where clocked, the two reading
-    none; every divisor at least `least`, and T_k too where `least` is above 1, so a swap of T_k and T_d shows."""
+    """A layout parted at every gear and site: grips, the teeth at rest, s, T_k, T_d, J or none of it, every other gear
+    clocked by two drawn rows (which read none) where clocked; every divisor at least `least`, T_k too above 1."""
     nb = frame.board(shape)
     n = nb.shape[1]
     w = draw(rng, least, 20, (rows, n))
@@ -66,7 +65,8 @@ def varied(
     index[2] = index[2] if cubed else 0 * index[2] + PLANES * rows
     plan = Plan(*index[:3], draw(rng, -9, 10, TERMS), index[3])
     none = np.zeros(0, dtype=np.intp)
-    plan = plan if sourced else Plan(none, none, none, none.astype(object), none)
+    empty = Plan(none, none, none, none.astype(object), none)  # no term: J unsourced, no push
+    plan = plan if sourced else empty
     grip = draw(rng, -3, 4, (rows, 3 * n))
     # the grips' read, rows read at both ends of a Spoke's Mesh: only where the act is read for one round, since the
     # pull then multiplies counts by counts
@@ -75,7 +75,7 @@ def varied(
         draw(rng, -3, 4, 4),
         rng.integers(0, 6, 4).astype(np.intp),
     )
-    held = (Read(*terms) if stretched else frame.unread(), frame.unclicked())
+    held = (Read(*terms) if stretched else frame.unread(), frame.unclicked(), empty)
     return Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, read, *held)
 
 
@@ -94,9 +94,9 @@ def world(rng, layout, rows=ROWS):
 def naive(layout, s, shape=SHAPE):
     """The act site by site with loops and plain integers: the readings, J term by term, the drive, the push, the split
     on the edge, the 00 count first; the click of no term keeps its tooth."""
-    _, _, _, grip, gearing, plan, _, stretch_read, _ = layout
+    _, _, _, grip, gearing, plan, _, stretch_read, _, _ = layout
     rows = len(s.a)
-    rest, stretch, kick, drive = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
+    rest, stretch, kick, drive, _ = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     first, second, third, factor, target = (x.tolist() for x in plan)
     a, b, r, rd, k = (x.tolist() for x in s)
     w, wb = (
@@ -173,8 +173,7 @@ def back():
 
 
 def negated():
-    """The tie rule on the act with no term of J: every gear negated, its tooth negated, ticks to the negation, its
-    tooth negated, whatever its teeth; the drive's tooth alike."""
+    """The tie rule, no term of J: every gear and tooth negated ticks to the negation; the drive's tooth alike."""
     for seed in range(3):
         rng = np.random.default_rng(20 + seed)
         layout = varied(rng, sourced=False)
@@ -240,8 +239,7 @@ def stretched():
 
 
 def model():
-    """The board's neighbours, and the load's Spokes and Meshes on them, equal the frame's (numpy's own wrap) at every
-    shape."""
+    """The board's neighbours, Spokes and Meshes equal the frame's (numpy's own wrap) at every shape."""
     built = [
         (boards.board(shape), *loading.geometry(boards.board(shape), len(shape))) for shape in SHAPES
     ]
@@ -309,7 +307,8 @@ def turned(plan):
     ones = np.ones((1, n), dtype=object)
     gearing = Gearing(ones, ones, ones, ones)
     grip = 3 * ones.repeat(3, axis=1)
-    reads = (frame.unread(), frame.unread(), frame.unclicked())  # no clock, no grips' read, no click
+    empty = Plan(*(x[:0] for x in plan))
+    reads = (frame.unread(), frame.unread(), frame.unclicked(), empty)  # no read, no click, no push
     layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, *reads)
     s = world(np.random.default_rng(5), layout, rows)
     force, j = step.sources(layout, s.a)
@@ -403,9 +402,10 @@ def mutants():
         return lambda a, nb: seen(a, nb[order])
 
     def forceless(plan, readings, gears):  # the force's rows read as 0, the unit kept
-        cut, unit = len(readings) - len(gears) - 1, readings[-1:]
-        kept = np.concatenate((readings[:cut], 0 * readings[cut:-1], unit))
-        return contract.contract(plan, kept, gears)
+        cut = len(readings) - len(gears) - 1
+        return contract.contract(
+            plan, np.concatenate((readings[:cut], 0 * readings[cut:-1], readings[-1:])), gears
+        )
 
     def thirdless(plan, readings, gears):  # every term's third reading the unit, its own ignored
         return contract.contract(

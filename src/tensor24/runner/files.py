@@ -66,9 +66,8 @@ TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, "pinion": None}
 UNIVERSE = {
     "version": VERSIONED,
     "integers": {"den": ONE, "full_rate": ONE, "width": ONE},
-    "chosen": {
-        "key": ONE
-    },  # the free strengths, each CHOSEN by name: the whole click's key (G5; its value G3's)
+    # the free strengths, each CHOSEN by name: the whole click's key (G5; its value G3's) and the metric's push (G2)
+    "chosen": {"key": ONE, "push": NONE_BELOW},
     "trains": [TRAIN],
 }
 PIECE = {"version": VERSIONED, "shape": SIDES}

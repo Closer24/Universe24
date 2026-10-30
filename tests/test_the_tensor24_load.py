@@ -46,7 +46,7 @@ def made():
 
 
 def universe(trains=TRAINS):
-    return {"trains": copy.deepcopy(trains), "chosen": {"key": 1}}
+    return {"trains": copy.deepcopy(trains), "chosen": {"key": 1, "push": 0}}
 
 
 def loaded(made, u, gears=()):

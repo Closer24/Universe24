@@ -16,8 +16,7 @@ def edits():
     """One edited file per rule: the file, its one change (or its text), the departure named, or None at a rule's edge."""
     train = "universe.trains[0]"
 
-    def light(**fields):
-        return lambda u: u["trains"][0].update(fields)
+    light = lambda **fields: lambda u: u["trains"][0].update(fields)  # noqa: E731
 
     def gear(row, named):
         return "setting", lambda s: s["gears"].append(row), named and f"setting.gears[1]: {named}"
@@ -39,6 +38,7 @@ def edits():
         ("universe", "trains"): "universe.trains: a list of one train or more",
         ("universe", "chosen"): "universe.chosen: a mapping, not NoneType",
         ("universe", "chosen", "key"): f"universe.chosen.key: {whole}",
+        ("universe", "chosen", "push"): "universe.chosen.push: a whole number of at least 0, not None",
         **{("universe", "integers", k): f"universe.integers.{k}: {whole}" for k in ("den", "full_rate")},
         ("universe", "trains", 0, "name"): f"{train}.name: a label, not None",
         ("universe", "trains", 0, "kinds"): f"{train}.kinds: a list of the kinds' labels, not None",
@@ -57,9 +57,9 @@ def edits():
         ("setting", "version"): "setting.version: 1, not None",
         ("setting", "ticks"): "setting.ticks: a whole number of at least 0, not None",
     }
-    nulls = {  # a key a file may leave out is not left out by a null
-        ("setting", "gears"): "setting.gears: a list of rows, not NoneType",
-    }
+    nulls = {
+        ("setting", "gears"): "setting.gears: a list of rows, not NoneType"
+    }  # a key left out, not null
     return {
         **{f"no {'.'.join(map(str, path))}": (*at(*path), named) for path, named in gone.items()},
         **{

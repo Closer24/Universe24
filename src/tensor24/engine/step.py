@@ -1,7 +1,7 @@
 """Clock: every round every gear moves once: its neighbours pull it, the coupling pushes it, and its momentum, the velocity's whole count with the tooth kept on the edge between its two slots, is carried to the next edge and split there in one dial of both slots' teeth; the drive carries the coupling's push the same way, and each train's click tooth carries the area the kick moves into the train.
-Algebra: D_in = W(b) + W(a); N = 2 (D_in (a - b) + 2 (s F + K)) + s; q, s+ = split(N, 2 D_out), D_out = W(a) + W(a+), n = q 2D + s with |s| <= D and the edge |s| = D taken at an even q; a+ = a + q; b+ = a; q_d, r_d+ = carry(J, T_d, r_d); K = s T_k q_d; q_c, k+ = carry(tau, key, k); the mirror is (b, a, -s), and the run back is the tick on the mirrored state, mirrored.
+Algebra: D_in = W(b) + W(a); N = 2 (D_in (a - b) + 2 (s F + K)) + s; q, s+ = split(N, 2 D_out), D_out = W(a) + W(a+), n = q 2D + s with |s| <= D and the edge |s| = D taken at an even q; a+ = a + q; b+ = a; J = J1 + J5, J1 the plan on the now slot's readings and J5 the metric's push on them with the momenta M_in = 2 D_in (a - b) + s and M_out = M_in + 4 (s F + K1) read in whole turns of the rest dial; q_d, r_d+ = carry(J, T_d, r_d); K = s T_k q_d; q_c, k+ = carry(tau, key, k); the mirror is (tau b, tau a, -tau s) with tau the row's parity, and the run back is the tick on the mirrored state, mirrored.
 Board: one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot; W is the rest plus the metric family's 00 slot here, the 00 row's own teeth at rest, so W(a+) is the 00 row's own carry, given first; the 2 is the two senses of an axis, read from the star; the click pushes nothing into a, b, s or r_d.
-Clicks: a whole click is the click tooth's quotient, one quantum taken (+1) or given back (-1), left for the record from G5; a deeper 00 slot is a slower clock, read in the clicks as proper time, and the momentum W (a - b), not the velocity, is what a clock keeps as its teeth move.
+Clicks: a whole click is the click tooth's quotient, one quantum taken (+1) or given back (-1), left for the record from G5; a deeper 00 slot is a slower clock, read in the clicks as proper time, the matter's momentum deepens it and slackens the grips about it (gravity, gamma = 1 by the slots' own units), and the momentum W (a - b), not the velocity, is what a clock keeps as its teeth move.
 """
 
 import numpy as np
@@ -33,27 +33,48 @@ def drive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
     return carry(j, teeth, rd)
 
 
-def sources(layout: Layout, a: Z) -> tuple[Z, Z]:
-    """Every gear's force, its pull, and its source J: the plan on the value, the differences along each axis, the force, and the unit."""
-    nb, spokes, _, _, _, plan, _, _, _ = layout
+def readings(layout: Layout, a: Z) -> tuple[Z, Z]:
+    """Every gear's force, its pull, and the readings flat: the value, the differences along each axis, the force, and the unit last."""
+    nb, spokes, _, _, _, _, _, _, _, _ = layout
     force = pull(layout, a)
     # each axis's + neighbour less its - neighbour: the neighbours summed with their Spokes' directions
     gradient = np.tensordot(spokes, seen(a, nb), axes=(0, 1))
-    readings = np.concatenate((np.expand_dims(a, 0), gradient, np.expand_dims(force, 0)))
+    read = np.concatenate((np.expand_dims(a, 0), gradient, np.expand_dims(force, 0)))
     # the unit, the readings' last row, for each reading a term lacks of three
-    flat = np.concatenate((readings.reshape(-1, a.shape[-1]), np.ones_like(a[:1], dtype=object)))
+    return force, np.concatenate((read.reshape(-1, a.shape[-1]), np.ones_like(a[:1], dtype=object)))
+
+
+def sources(layout: Layout, a: Z) -> tuple[Z, Z]:
+    """Every gear's force, its pull, and its source J1: the plan on the readings at the now slot."""
+    _, _, _, _, _, plan, _, _, _, _ = layout
+    force, flat = readings(layout, a)
     return force, contract(plan, flat, a)
+
+
+def stress(layout: Layout, s: State, push: Z) -> Z:
+    """The metric's push J5 (term 5): the push's plan on the readings with the momenta added before the unit, M_in = 2 D_in (a - b) + s and M_out = M_in + 4 push, each read in whole turns of the rest dial 4 rest by the centred split, so a hand at rest sources nothing and the mirror swaps and negates the two."""
+    _, _, _, _, gearing, _, _, _, _, plan = layout
+    rest, _, _, _, _ = gearing
+    a, b, tooth, _, _ = s
+    senses = halves(layout)
+    wa, wb = dials(layout, s)
+    m_in = senses * (wa + wb) * (a - b) + tooth
+    m_out = m_in + senses * senses * push
+    sigma_in, _ = split(m_in, senses * rest, senses)
+    sigma_out, _ = split(m_out, senses * rest, senses)
+    _, flat = readings(layout, a)
+    return contract(plan, np.concatenate((flat[:-1], sigma_in, sigma_out, flat[-1:])), a)
 
 
 def kick(gearing: Gearing, q: Z) -> Z:
     """The kick on every gear, K = T_k s q_d: the drive's whole turns at the kick's teeth, stretched."""
-    _, stretch, teeth, _ = gearing
+    _, stretch, teeth, _, _ = gearing
     return stretch * teeth * q
 
 
 def driven(gearing: Gearing, force: Z, kicks: Z) -> Z:
     """The push on every gear, s F + K: the force stretched, and the kick the gear takes."""
-    _, stretch, _, _ = gearing
+    _, stretch, _, _, _ = gearing
     return stretch * force + kicks
 
 
@@ -70,20 +91,20 @@ def area(click: Click, a: Z, kicks: Z, k: Z) -> Z:
 # and d_t (W d_t a) = F holds with W on the edge, the momentum kept and the velocity re-split as the teeth move.
 def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
     """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and with no bound on the read."""
-    rest, _, _, _ = gearing
+    rest, _, _, _, _ = gearing
     return rest + read(clock, a)
 
 
 def halves(layout: Layout) -> Z:
     """The two halves of a tooth, the edge's half-teeth: the senses of an axis, its + and its -, read from the star."""
-    _, spokes, _, _, _, _, _, _, _ = layout
+    _, spokes, _, _, _, _, _, _, _, _ = layout
     senses, _ = carry(spokes.shape[0], spokes.shape[1], 0)
     return senses
 
 
 def dials(layout: Layout, s: State) -> tuple[Z, Z]:
     """Every gear's teeth at the state's two slots, W(a) and W(b), as its round reads them: the edge's dial is their sum, the promise's measure, read from outside."""
-    _, _, _, _, gearing, _, clock, _, _ = layout
+    _, _, _, _, gearing, _, clock, _, _, _ = layout
     a, b, _, _, _ = s
     return weight(gearing, clock, a), weight(gearing, clock, b)
 
@@ -95,12 +116,14 @@ def grips(layout: Layout, s: State) -> Z:
 
 
 def act(layout: Layout, s: State) -> tuple[State, Z]:
-    """One round and its clicks, in one pass: every gear carries its momentum from the edge it reads to the next edge, whose dial reads the 00 slot's next count, the 00 row's own carry at its standing teeth, through the clocks' read; every train's click tooth carries the area the kick moves into the train at the key; the clicks are that carry's quotients, (the state reached, the clicks)."""
-    _, _, _, _, gearing, _, clock, _, click = layout
+    """One round and its clicks, in one pass: the sources J1 at the now slot give every gear its first push, whose momenta source the metric's push J5; the drive carries J = J1 + J5; every gear carries its momentum from the edge it reads to the next edge, whose dial reads the 00 slot's next count, the 00 row's own carry at its standing teeth, through the clocks' read; every train's click tooth carries the area the kick moves into the train at the key; the clicks are that carry's quotients, (the state reached, the clicks)."""
+    _, _, _, _, gearing, _, clock, _, click, _ = layout
     a, b, tooth, rd, k = s
-    force, j = sources(layout, a)
-    _, _, _, teeth = gearing
+    force, j1 = sources(layout, a)
+    _, _, _, teeth, _ = gearing
     _, _, _, _, key = click
+    first, _ = drive(j1, teeth, rd)
+    j = j1 + stress(layout, s, driven(gearing, force, kick(gearing, first)))
     q, kept = drive(j, teeth, rd)
     kicks = kick(gearing, q)
     senses, push = halves(layout), driven(gearing, force, kicks)
@@ -119,12 +142,12 @@ def tick(layout: Layout, s: State) -> State:
 
 
 def mirror(layout: Layout, s: State) -> State:
-    """The state mirrored, time's reversal: the slots swapped and the edge's tooth negated, read in no teeth, the drive's tooth flipped in its teeth and the click tooth in its key; its own inverse on any clock, standing or moving."""
-    _, _, _, _, gearing, _, _, _, click = layout
+    """The state mirrored, time's reversal: the slots swapped and the edge's tooth negated, read in no teeth, each by the row's parity (an odd row's counts negated and its tooth kept), the drive's tooth flipped in its teeth and the click tooth in its key; its own inverse on any clock, standing or moving."""
+    _, _, _, _, gearing, _, _, _, click, _ = layout
     a, b, tooth, rd, k = s
-    _, _, _, teeth = gearing
+    _, _, _, teeth, tau = gearing
     _, _, _, _, key = click
-    return State(b, a, -tooth, flip(rd, teeth), flip(k, key))
+    return State(tau * b, tau * a, -tau * tooth, flip(rd, teeth), flip(k, key))
 
 
 def untick(layout: Layout, s: State) -> State:

@@ -252,7 +252,7 @@ def plain(nb, meshes, grip, w):
     path (T_k = T_d = 1), no term of J."""
     none = np.zeros(0, dtype=np.intp)
     plan = Plan(none, none, none, none.astype(object), none)
-    reads = (unread(), unread(), unclicked())
+    reads = (unread(), unread(), unclicked(), plan)  # no clock, no grips' read, no click, no push
     return Layout(nb, spokes(), meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, *reads)
 
 

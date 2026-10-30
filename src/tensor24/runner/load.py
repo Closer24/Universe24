@@ -32,12 +32,13 @@ class Train(NamedTuple):
 
 @dataclass(frozen=True, eq=False)
 class Trains:
-    """Every train's rows as arrays: per train its first row, its rows, its part, 1 where it is the four-vector's square, its first kind's entry and its kinds' count; per kind of a train, in the file's order, its index and dimension."""
+    """Every train's rows as arrays: per train its first row, its rows, its part, 1 where it is the four-vector's square and 1 where it is not (the matter), its first kind's entry and its kinds' count; per kind of a train, in the file's order, its index and dimension."""
 
     first: Z
     size: Z
     part: Z
     square: Z
+    matter: Z  # 1 where the train's kinds' character is not the square's: the matter, which sources the metric's push
     start: Z
     count: Z
     kind: Z
@@ -98,8 +99,11 @@ def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z,
     size, count = part * (dim @ member), member.sum(axis=0)
     # Rule3's quotient of 1 by one more than the characters' squared gap: 1 where the gap is 0 on every turn, else 0
     gap = part[:, None] * (member.T @ traces[kind]) - squared
-    square, _ = carry(1, (gap * gap).sum(axis=-1) + 1, 0)
-    return Trains(np.cumsum(size) - size, size, part, square, np.cumsum(count) - count, count, kind, dim)
+    away = (gap * gap).sum(axis=-1)
+    square, _ = carry(1, away + 1, 0)
+    return Trains(
+        np.cumsum(size) - size, size, part, square, lit(away), np.cumsum(count) - count, count, kind, dim
+    )
 
 
 def lay(gears: list[list[int]], trains: Trains, sites: int, birth: Z) -> tuple[tuple[Z, ...], list[str]]:
@@ -150,8 +154,100 @@ def clicking(trains: Trains, c: Z, traces: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
     )
 
 
+def pairs_of(trains: Trains, c: Z, traces: Z) -> tuple[Z, Z, Z, Z]:
+    """Every pair of rows of each train through its kinds' table with itself onto A1, the kind whose character is its own square on every turn, one pair per entry of the table and part: (the first row, the second row, the entry, the train), the parts running fastest within a component as the load lays them."""
+    gap = traces * traces - traces
+    trivial = 1 - lit((gap * gap).sum(axis=-1))
+    form = np.einsum("m,jjmyxi->jxi", trivial, c)
+    kind, dim, part = trains.kind, trains.dim.astype(np.intp), trains.part.astype(np.intp)
+    of = np.repeat(np.arange(len(trains), dtype=np.intp), trains.count.astype(np.intp))
+    before = np.cumsum(dim) - dim
+    within = before - before[trains.start.astype(np.intp)][of]
+    squares = dim * dim
+    entry = np.repeat(np.arange(len(dim), dtype=np.intp), squares)
+    place = np.arange(squares.sum(), dtype=np.intp) - np.repeat(np.cumsum(squares) - squares, squares)
+    x, i = carry(place, np.repeat(dim, squares), 0)
+    train = of[entry]
+    # each entry once per part of its train, the part's offset counted within the entry's run
+    parts = part[train]
+    each = np.repeat(np.arange(len(entry), dtype=np.intp), parts)
+    offset = np.arange(parts.sum(), dtype=np.intp) - np.repeat(np.cumsum(parts) - parts, parts)
+    first = (trains.first[train] + within[entry] * part[train])[each]
+    one, two = first + x[each] * parts[each] + offset, first + i[each] * parts[each] + offset
+    return one.astype(np.intp), two.astype(np.intp), form[kind[entry], x, i][each], train[each]
+
+
+def spread(*parts: Z) -> Z:
+    """Arrays broadcast together and flattened, one row each: a block of terms over the pairs and an axis or two."""
+    return np.stack(np.broadcast_arrays(*parts)).reshape(len(parts), -1)
+
+
+def pushing(trains: Trains, c: Z, traces: Z, spokes: Z, strength: Z) -> tuple[Z, Z, Z, Z, Z]:
+    """Term 5, the metric's push, as a plan on the readings with the momenta in and out added before the unit: for every pair of a train not the square (the matter) and every square train, J = 2T - eta T from T00 = S (sigma_in sigma_in + sigma_out sigma_out), T_ij = D_i a D_j a and T_0i = (sigma_in + sigma_out) D_i a, S = Spokes x senses the slots' own ratio (c^2 = grip / rest at the loader's lay, two strides against two gradients); the 00 slot pushed by +S J00 (its unit the teeth), each ii, jk and 0i slot by -J (its unit the grips, at both ends of a Mesh), so gamma = 1 and the grips are lowered where matter is; the strength CHOSEN in the universe file; a train that is no square takes every term at the factor 0."""
+    one, two, entry, train = pairs_of(trains, c, traces)
+    n, d = spokes.shape
+    senses, _ = carry(n, d, 0)
+    scale, rows, trained = n * senses, trains.size.sum(), len(trains)
+    unit = (
+        d + senses * senses
+    ) * rows  # the planes: the value, the d differences, the force, the momenta in and out
+    sigma_in, sigma_out = d + senses, d + senses + 1
+    axis = np.arange(d, dtype=np.intp)
+    _, after = carry(axis + 1, d, 0)  # the other two axes of a shear slot, named by its third axis
+    _, before = carry(axis + senses, d, 0)
+    # every matter pair against every train: the factor carries the pair's entry, the strength, the matter's flag and
+    # the target's square flag; the target's slot rows wrap at the rows, harmless at the factor 0
+    f = np.outer(entry * trains.matter[train] * strength, trains.square).reshape(-1)
+    o, w = np.repeat(one, trained), np.repeat(two, trained)
+    q00 = np.tile(trains.first, len(one))
+    _, q0i = carry(q00[:, None] + 1 + axis[None, :], rows, 0)
+    _, qii = carry(q00[:, None] + 1 + d + axis[None, :], rows, 0)
+    _, qjk = carry(q00[:, None] + 1 + senses * d + axis[None, :], rows, 0)
+    # the readings each term enters: the momenta's planes at the pair's rows, and the differences' along each axis
+    so, sw = sigma_in * rows + o, sigma_in * rows + w
+    to, tw = sigma_out * rows + o, sigma_out * rows + w
+    grad = 1 + axis[None, :]  # the difference along each axis, a plane per axis
+    go, gw = grad * rows + o[:, None], grad * rows + w[:, None]
+    ao, aw = (1 + after) * rows + o[:, None], (1 + after) * rows + w[:, None]
+    bo, bw = (1 + before) * rows + o[:, None], (1 + before) * rows + w[:, None]
+    goo, gww = grad[:, None, :] * rows + o[:, None, None], grad[:, None, :] * rows + w[:, None, None]
+    # the factors: S S f on the 00 slot's momenta, S f on its differences, -S f and -f on the ii slots, f on the
+    # other axes' differences there, -f on the shears and the 0i slots
+    whole, half, less, back = scale * scale * f, scale * f[:, None], -scale * f[:, None], -f[:, None]
+    other = f[:, None, None] * lit(
+        axis[None, :, None] - axis[None, None, :]
+    )  # 1 where the two axes differ
+    blocks = np.concatenate(
+        (
+            spread(so, sw, whole, q00),
+            spread(to, tw, whole, q00),
+            spread(go, gw, half, q00[:, None]),
+            spread(so[:, None], sw[:, None], less, qii),
+            spread(to[:, None], tw[:, None], less, qii),
+            spread(go, gw, back, qii),
+            spread(goo, gww, other, qii[:, :, None]),
+            spread(ao, bw, back, qjk),
+            spread(bo, aw, back, qjk),
+            spread(so[:, None], gw, back, q0i),
+            spread(go, sw[:, None], back, q0i),
+            spread(to[:, None], gw, back, q0i),
+            spread(go, tw[:, None], back, q0i),
+        ),
+        axis=1,
+    )
+    first, second, factor, target = blocks
+    third = unit + 0 * first
+    return (
+        first.astype(np.intp),
+        second.astype(np.intp),
+        third.astype(np.intp),
+        factor,
+        target.astype(np.intp),
+    )
+
+
 class Loaded(NamedTuple):
-    """What the load makes of the universe and the setting: the trains' rows, J's potential, the state laid, the click's cross with its key."""
+    """What the load makes of the universe and the setting: the trains' rows, J's potential, the state laid, the click's cross with its key, the metric's push."""
 
     trains: Trains
     potential: tuple[
@@ -161,12 +257,15 @@ class Loaded(NamedTuple):
     click: tuple[
         Z, Z, Z, Z, Z
     ]  # the whole click's cross: per term the row read, the row whose kick it crosses, its factor, its train; the keys
+    push: tuple[
+        Z, Z, Z, Z, Z
+    ]  # term 5's plan: per term its three readings (the unit for a leg it lacks), its factor and the slot row it lands on
 
 
 def load(
     universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: Z, square: Z
 ) -> tuple[Loaded, list[str]]:
-    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds no monomial, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3); every train's key the universe file's one CHOSEN integer (its unit the train card's, G3), its click tooth born at (key - 1) div 2."""
+    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds no monomial, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3); every train's key the universe file's one CHOSEN integer (its unit the train card's, G3), its click tooth born at (key - 1) div 2; the metric's push laid at the file's CHOSEN strength."""
     labels, dims, reads = vocabulary(kinds, square)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
     none = np.empty(0, dtype=np.intp)
@@ -177,7 +276,8 @@ def load(
     birth, _ = carry(key - 1, senses, 0)  # the one tooth the mirror leaves in place
     state, laid = lay(setting.get("gears", []), trains, sites, birth)
     potential = (none.astype(object), (none, none, none, none))
-    return Loaded(trains, potential, state, clicking(trains, c, traces, key)), laid
+    push = pushing(trains, c, traces, star(side), universe["chosen"]["push"])
+    return Loaded(trains, potential, state, clicking(trains, c, traces, key), push), laid
 
 
 def geared(
@@ -188,11 +288,22 @@ def geared(
     den, gamma = integers["den"], integers["full_rate"]
     grip = den * gamma * gamma
     ones = np.ones((rows, 1), dtype=object)
+    # the square's 0i slots, the rows after its 00 slot, are odd under time's reversal (one time index): their parity
+    # is 1 less the two senses of an axis, every other row's 1; a lone train's places wrap harmlessly at the factor 0
+    n, d = spokes.shape
+    senses, _ = carry(n, d, 0)
+    axis = np.arange(d, dtype=np.intp)
+    _, at = carry((first[:, None] + 1 + axis[None, :]).reshape(-1), rows, 0)
+    odd = np.zeros((rows, 1), dtype=object)
+    np.add.at(
+        odd, (at.astype(np.intp), 0 * at.astype(np.intp)), np.repeat(trains.square, d).astype(object)
+    )
     gearing = (
         len(spokes) * grip * ones,
         ones,
         ones.copy(),
         ones.copy(),
+        1 - senses * odd,
     )  # main.py makes them the engine's records
     # every row reads every train's first row at the factor of its square flag, a square's 00 slot at 1 and the rest
     # at 0, less its own row: the zero test of the rows' difference cuts the 00 row's read of itself, so its teeth stand
@@ -206,9 +317,8 @@ def geared(
     )
     # every Spoke's grip reads a square's diagonal slot for its axis, after the 00 slot and the 0i slots, at the factor 1;
     # a train not the square reads its first row at the factor 0
-    n, d = spokes.shape
-    axis = (spokes * spokes) @ np.arange(d, dtype=np.intp)
-    diagonal = first[:, None] + trains.square[:, None] * (1 + d + axis[None, :])
+    along = (spokes * spokes) @ axis
+    diagonal = first[:, None] + trains.square[:, None] * (1 + d + along[None, :])
     stretch = (
         diagonal.reshape(-1).astype(np.intp),
         np.repeat(trains.square, n).astype(object),
@@ -233,10 +343,21 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's nine parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's potential, every gear's clock and the grips' read, the click's cross with its key; main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's ten parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's potential, every gear's clock and the grips' read, the click's cross with its key, the metric's push; main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
     nb = board((sx, sy, sz))
     spokes, meshes = geometry(nb, len(shape))
     gearing, clock, stretch, grip = geared(universe, loaded.trains, spokes)
     grips = np.full((1, len(shape) * nb.shape[1]), grip, dtype=object)
-    return nb, spokes, meshes, grips, gearing, loaded.potential, clock, stretch, loaded.click
+    return (
+        nb,
+        spokes,
+        meshes,
+        grips,
+        gearing,
+        loaded.potential,
+        clock,
+        stretch,
+        loaded.click,
+        loaded.push,
+    )

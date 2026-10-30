@@ -1,6 +1,6 @@
 """Clock: what a Node-clock holds: each gear's count now and before, the tooth of the edge between them, its drive's fine tooth, and each train's click tooth.
 Algebra: whole-number arrays a, b, r, r_d and k, and the layout's coefficients and plans, read once at load.
-Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan, the clocks' read and the click's cross with its key.
+Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan, the clocks' read, the click's cross with its key, and the metric's push, term 5's plan on the readings and the momenta.
 Clicks: n/a: these hold the board, not its shadow.
 """
 
@@ -56,6 +56,7 @@ class Gearing(NamedTuple):
     stretch: Z  # s, the impulse's factor on the force and the kick
     kick: Z  # T_k, the kick's teeth: 1 on the force's path
     drive: Z  # T_d, the drive's teeth, at least 1: 1 on the force's path, where the drive's fine tooth stays 0
+    parity: Z = 1  # tau, the row's parity under time's reversal: 1 for a count the reversal pivots on, -1 for the metric's 0i slots, whose index pair holds one time index
 
 
 class Layout(NamedTuple):
@@ -70,3 +71,4 @@ class Layout(NamedTuple):
     clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
     stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh
     click: Click  # every train's swept area as the cross of its parts with the kick through the A1 table, and its key
+    push: Plan  # term 5, the metric's push: the matter's four-vector squared through the A1 table onto the square's slots, 2T - eta T, as terms on the readings with the momenta in and out added, the unit last
