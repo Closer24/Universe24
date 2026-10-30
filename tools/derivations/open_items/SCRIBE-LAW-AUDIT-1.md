@@ -10,7 +10,7 @@ No law line was changed by the audit. The law's preface says the re-cut proceeds
 
 ## B. Old-engine rows against the new core (stale, unmarked)
 
-The old engine (src/event_universe) is frozen (the owner's yes, 03:0x UTC). Rows written for it still stand as law and contradict decisions 35 and 39 to 42 and lines 92, 100 and 102. The owner's answer (04:4x): the old engine is frozen and not interesting, so no sentence is entered and the rows stand until the re-cut removes them.
+The old engine (src/event_universe) is frozen (the owner's yes, 03:0x UTC). Rows written for it still stand as law and contradict decisions 35 and 39 to 42 and lines 92, 100 and 102. The owner's answer (04:5x): the old engine is frozen and not interesting, so no sentence is entered and the rows stand until the re-cut removes them.
 
 1. **Roots as code primitives.** (V) Line 100: "largest_below(9 T^2 (den^2 - num^2))" and "in the code each is one primitive named by its clause" against line 102 (no root). largest_below stands in 35 lines, only 1535 marked; 745 "the one integer root"; 1417 bisection.
 2. **Pairs, masses and couplings in files.** (V) Line 35 "no particle, no mass and no coupling is declared in any file" against 90 "the integers of the universe file (the pair, the couplings)", (V) 322 "the gears' pairs [num, den] stand in the calibre as constants", 1722, 1911.
@@ -26,7 +26,7 @@ The old engine (src/event_universe) is frozen (the owner's yes, 03:0x UTC). Rows
 12. **No horizon.** 693, 699, 743, 921, 1165, 1263, 1288, 1328, 1757 and 1864 say a collapse ends in a frozen clock against line 35 (40 (a)) "horizons included".
 13. **Books.** About 170 lines use book, booked or books for the old click layer; the sums that close are identities and stand; a store of accounts is the old engine's (line 102).
 
-## C. Wording fixes (the owner's yes, 04:4x: entered in lines 35 and 8)
+## C. Wording fixes (the owner's yes, 04:5x: entered in lines 35 and 8)
 
 - Line 35, decision 34: "with the forward log's fire as its mask where counts are staggered" against Postulate 5 (no mask) and line 102: read "the forward carry's bit".
 - "Declared": survives for scale and seed only (BIG_PICTURE 13.1).
