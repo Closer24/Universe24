@@ -596,6 +596,31 @@ The owner's word to the Boss of 11:30 (comment 6495446181; in Hebrew; in transla
 
 **The keeper's references:** the Boss cited the law by line numbers that do not match scribe-5: "The great clock's tick is no observable" stands at line 695 (line 98 is "The tick is one function of the Node-clock"), and "Einstein lives in the clicks of bound bobs" at line 1507 (line 697 is "The great clock is a torus"); the picture cites the headings and these lines. **Status:** D1 to D4 and D6 derived, with the cares above (D4's frame open as to the shadow; D6's twin test a run owed); D7 derived at long waves, the lattice's k^4 named, its elliptic-law numbers the Boss's and uncommitted; D8's principle is the law's own and its fix, the slot rule, is decided (decision 40 (b)) and built in the scheduler (Animate, reader-5 c70aa49cf); the decoder's four rules (item 12) are built in src on records built in memory (measure.py, reader-5 59c09051f and ebeb8c1e6, 17:08 and 17:26; the keeper's reading at 17:3x: yes) and the act's own records are owed at G5, with the schema's part 6; D5 and items 6 and 7 open; the law is crossed by none.
 
+### The two spacetimes in one page: the events' and the clicks' dimensions (8.2)
+
+The owner's ask of 2026-10-30, 03:3x UTC, directly to Sofer (in Hebrew; in translation): "Explain what the dimensions are of our spacetime of events and what the dimensions of the clicks' model are. Everyone is supposed to agree on this, so a page set in order is better." The page is the keeper's, checked against the law (lines 35, 695 and 1507), 8.1 (D1 to D4 and D6; items 13 and 14 of its lists) and the code at tensor24-review 2a6203a4a; the Boss, David and Animate are asked to confirm or correct it in the thread, and the owner's copy is the English page "The Two Spacetimes".
+
+**In one line: both are 3 + 1, and what differs is which 1** (David's text, 8.1 item 13).
+
+| | The events' spacetime (the board, the block) | The clicks' model (what the clicks record) |
+| --- | --- | --- |
+| Dimensions | 3 + 1 = 4 | 3 + 1 = 4 |
+| The 3, place | the lattice's three axes; a Node-clock meshes through six Meshes, the + and the - of each axis (its six Spokes) | the same three axes: a click is an event at one Node-clock; place reaches a click only as light brings it, a distance being an echo's count |
+| The 1, time | the tick: the great clock's count of rounds, one count for the whole board, the block's fourth axis | a clock's own count, its proper time: each clock has its own and no common one exists; the tick never |
+| Who reads it | no one: no act reads the tick (law line 695) and no click sees it | the clicks, and the decoder that reads them (no formula: the clicks convert) |
+| Held in the machine as | the Node-clock's state alone; the block is a reading of the history and no array the engine holds (D1) | the record: the clicks with their clocks' counts |
+| The metric | ten gears per Node-clock, the symmetric square of the four-vector: 1 (00, the tick's weight) + 3 (0i, the lean) + 6 (ij, lengths and shears) | none held: read from the counts of clocks, quanta and echoes |
+| Relativity | none exactly: the board is the lattice's one frame, Lorentz symmetry holding at long wavelengths and breaking at the Mesh's own scale (root II) | built in the clicks: Lorentz composition at light's c (law line 1507); proper time is a clock's own count |
+| The doubled board | forward and backward add no dimension: one board, the same axes, the same tick (decision 31) | the click is where the forward and the backward meet, its weight their product; the tick cancels in it, so the click keeps the place and the counts and loses the tick (David; derived in toys, owed on the act at G5, not ruled as law) |
+
+**Not dimensions:** the great clock's load (the swing, the time of the scale) and the record's order (the arrow) are two more faces of time (D3) and add no axis. **The keeper's reading of the owner's two words:** his "the clicks see three" (11:30 on 2026-10-29) and David's "3 + 1 there too" are one picture: the clicks see three axes of place, as light brings them, and time only as each clock's own count, never as an axis of the board.
+
+**How the machine gets its dimensions with nothing typed** (checked on tensor24-review 2a6203a4a; the Boss's kinds.turns and kinds.square, run by the keeper): the star, the Node-clock's six Spokes, laid by the files at the initialization; the 24 turns, every matrix whose rows are three of the Spokes with determinant 1 (the cube's rotations; 48 with their mirror images); the kinds A1, A2, E, T1 and T2, of dimensions 1, 1, 2, 3 and 3 (ten in all), found by their characters; the four-vector A1 + T1, of 1 + 3 = 4; its symmetric square, ten slots, A1 twice, E, T1 and T2: the 00 slot (A1), the 0i slots (T1), the diagonal ii slots (A1 + E) and the jk slots (T2). No act knows an axis, no number is in the code but 0 and 1, and the gate reads no root, table, number beyond 0 and 1, or float in src/tensor24 (64 named breaches stand in the loader and leave at G1b (i) part 2, G2 and G3).
+
+**How the clicks get time and length with no tick** (8.1 item 14, Animate's answer, "no formulas"): proper time is a clock's own count between two of its clicks; a null path is a quantum's lay and its take; a distance is an echo's count; the board's round and site only order the clicks and name each click's clock and place, never a duration or a length (a difference of rounds is refused by name).
+
+**Status:** the owner's words of 11:30 to 11:37 on 2026-10-29 (the clicks are a shadow; no one measures the board) and David's four against three, with his correction, stand as the law and the picture hold them; open, as before: the click as the forward-and-backward shadow on the act (G5), the board's frame in the shadow (D4: measured on a thinned board, not on the record) and the decoder's readings on the engine's records (owed). Confirmation asked of the Boss, David and Animate at 03:3x UTC; with none in an hour the keeper holds the page as agreed and says so in one line (decision 43's way of working). No line of the law changes by it.
+
 ## 9. Does the whole universe reverse time together? No
 
 - **What turns is the scale, not the arrow.** The gears go on forward, and the record grows through every top.
