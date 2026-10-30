@@ -45,12 +45,29 @@ by the loader, so the owner plays with the files in the morning, not the code.
 
 ## The order (dependencies first), with each commit's change, test and probe
 
-State at 20:4x UTC (the architect who took over): pushed on origin/node-live f72067cdf, in order: 0 (f5e6486c8), C1
+State at 21:2x UTC (the architect who took over): pushed on origin/node-live e88150989, in order: 0 (f5e6486c8), C1
 (b10d7d008), C2 (6b77872dc), B1 (c967980d0), A1 (d6ec46ff0), C3 (ac3085db4, the hand-per-quantum probe), A1b
-(939fa65a7), B2 (c853dee00), B4 (a9f8a440a), A2 (f72067cdf); a first hostile code reader reads origin/main..f72067cdf
-now. In work: B2b (writer B), then B3, then B5; C the hostile reader's checklist and the five worlds' runs. The load
-test's ceiling is 155 from 20:4x UTC, raised by the Boss for B2b's and B5's tests alone. No B2c: David's hat does not
-replace the own spring tonight (B2c below; FRAMES.md 6).
+(939fa65a7), B2 (c853dee00), B4 (a9f8a440a), A2 (f72067cdf), B2b (df4fa644c), then A's docstring commit (e88150989:
+term 5 in the books' form in the engine's docstrings, no behaviour change). The load test's ceiling is 155 from 20:4x
+UTC, raised by the Boss for B2b's and B5's tests alone. No B2c: David's hat does not replace the own spring tonight
+(B2c below; FRAMES.md 6). Next: B3, then B5 (writer B); writer C the hostile reader's checklist and the five worlds'
+runs.
+
+The first hostile code reader read origin/main..f72067cdf (scratchpad/hcr1/REPORT.md: one BLOCKING, thirteen MINOR);
+its items go to their writers as folds, each with its test in the file's room:
+- A: B1's engine test, the run back under the push on pushed() with the K1 read as its no, and the mirror theorem's
+  hypothesis (d) (no plan reads a pushed row's momenta) in the docstrings of step.stress, act and untick
+  (FRAMES.md 3; NOT_CLOSED 30); M2, the one-line no of the flipped click tooth restored and A1's note corrected
+  (FRAMES.md 4); M12, J5 in no train's passing named in the act's docstring (FRAMES.md 5; NOT_CLOSED 31).
+- B: M1, the square's pairs at the factor 0 by its square flag in plans.passing, as pushing has them (FRAMES.md 4);
+  M3, the run test's pair world laid inside the room for its whole run (the taker at rest) or its window stated (its
+  world bends at round 57: NOT_CLOSED 29; at its key 76801 a taker at rest clicks nowhere over 2,000 rounds, the
+  architect's check, so the taker at rest goes with a smaller odd key or the test shows no click); M4, the run test's pins spelt as sums (read the 2 from the structure, or
+  let the PIN notes show); M5, "mesh" refused by name above 0 until B5 lays the Mesh plan; M6, an even key refused by
+  name; M7, the docstrings and the README that claim gamma = 1, a resting hand sourcing nothing, the old push
+  readings, the window as SUM grip / W <= 1, and the dial printed below 0.
+- C: M10, the decoder refusing by name a click line of a train with no card, of q 0, doubled (round, site, train),
+  with a tooth past the key or below 0; M11, MINOR = len(ADDED) at 3 named; M4, the decoder test's pins spelt as sums.
 
 ### Commit 0 (A, first, the critical path; ~1 h): the merge of origin/main 2bcf315b6 into node-live
 
@@ -160,6 +177,15 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
 
 ### Commit B2b (B; after B1 and A1b, before B3; the one commit that replaces the earlier B2b and B6): term 5 in the
 ### books' form at dial 2 (the deriver's derivation from the act's own energy, the Boss's frame of 19:2x UTC)
+
+DONE at 21:00 UTC: pushed as df4fa644c, with one change from the text below by the Boss's ruling of 20:4x UTC: the
+00 push reads the momenta of the rows on the force's path alone (T_d = 1: the matter and the square's 0i and jk
+rows), not every row but the 00, so that no plan reads a pushed row's momenta (the mirror theorem's hypothesis (d);
+the first hostile code reader's B1): the well world runs back 128 of 128; the price, the metric's self-stress not paid
+into the 00 slot, 1 ppm of the matter's on the well world (NOT_CLOSED 30; FRAMES.md 3, with the two-plan road as its
+alternative). Measured by its probe on the built loader at k0 = 12: dust 999999 ppm, the held tent and bump 1000000,
+the free tent 1063599 and bump 1019889, the run back 12 of 12 with r_d moving, light's h_xx / h_00 1043 permille,
+the clock deeper where the matter is.
 
 - The derivation, in one line: the act's energy is H = (1/2) W v_in v_out + (1/2) SUM_Mesh grip Delta^2 with the
   reads W = rest + k0 c00 into every row but the 00 and grip = grip_rest + ii at both ends; the books close iff each
@@ -288,11 +314,13 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
   contraction in the drive, locality (the passing reads the Node-clock's own produced counts and its six Meshes'
   before and now slots and nothing else: frame.local with three trains), purity, rename, the 24's images. One line
   per law, within the ROOM the Boss set.
-- frame.turned carries the twisted action (term 5's final mathematician, item 8; the coupling family's mathematician,
-  item 6; the Boss's reading of law line 94): a turn that negates a row carries its teeth with it, the edge tooth
-  s -> -1 - s and the drive tooth r_d -> T_d - 1 - r_d, the click tooth kept; today the helper permutes sites only
-  and the test then holds the identity alone. The yes: the turned run equals the run turned 24 of 24 under the push
-  with the clock moving and T_d above 1 on the square's rows; the no: with the teeth kept 21 of 24 fail at round 1.
+- The twisted action (term 5's final mathematician, item 8; the coupling family's mathematician, item 6; the Boss's
+  reading of law line 94): a turn that negates a row carries its teeth with it, the edge tooth s -> -1 - s and the
+  drive tooth r_d -> T_d - 1 - r_d, the click tooth kept. DONE at f72067cdf in the engine test's own twisted(), not in
+  tests/frame.turned, which still permutes sites only (the first hostile code reader's M9: this text had said
+  frame.turned). The yes: the turned run equals the run turned 24 of 24 under the push with the clock moving and T_d
+  above 1 on the square's rows; the no: with the teeth kept, the three turns that negate no row hold alone and the
+  other 21 fail at round 1.
 
 ### Commit B5 (B; after A1 and B3): the gradient vertex and the mesh world (the Mesh-leg frame)
 
@@ -343,6 +371,11 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
   the writer reads the sha for faking and posts the approval; main moves, no force.
 - The full check: `CHECK_BASE=origin/main python tools/check.py --full` exit 0 at the head; the hook's gate 0
   refusals and the KEYS notes (key, push, notch, hold, tie, mesh) for Sofer.
+- For the owner's word before main (the first hostile code reader's M8): tests_shape's ROOM rises against main,
+  frame 230 -> 237, engine 202 -> 299, load 113 -> 147 (its ceiling 155), run 285 -> 291, and the decoder lowered
+  600 -> 572. ARCHITECTURE section 4 says a ROOM is not raised with a code change; these stand under the Boss's
+  ceilings of the night, named and read by Sofer, not hidden, and main takes them only on the owner's word (or the
+  writer's and Sofer's, as section 4 names them). The Boss lists them with the candidate's sha.
 - The hostile reader needs: the diff against the laws and section 4; the five worlds' records; the probes'
   outputs (term11_pass, g3_frame, term5_edge, term9_edge, drive_mirror, well_lay, click_lay, mesh_lay); FRAMES.md
   and NOT_CLOSED.md beside the candidate, so that every CHOSEN strength and every price is read as named, not hidden.

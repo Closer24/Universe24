@@ -14,8 +14,10 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   s -> -1 - s and the drive tooth r_d -> T_d - 1 - r_d, the click tooth kept (term 5's final mathematician, item 8:
   24 of 24 commute under the push with it at T_d 1 and 7, the clock moving; 21 of 24 fail without; the coupling
   family's mathematician, item 6, the same on the full act). The Boss reads law line 94 as this action, consistent
-  with the mirror (a turn then the odd mirror is the even mirror). tests/frame.turned permutes sites only today; A2
-  carries the flip.
+  with the mirror (a turn then the odd mirror is the even mirror). A2 (f72067cdf) carries the flip in the engine
+  test's own twisted() (24 of 24 under the push with the clock moving; with the teeth kept the three turns that negate
+  no row hold alone); tests/frame.turned still permutes sites only (the first hostile code reader's M9: the plan's
+  text had said frame.turned).
 - Question: the equation of motion is CHOSEN, not nature's (EDGE2 sec. 3: the edge keeps W v, nature keeps sqrt(W) v);
   at term 9's swing the edge pumps a hand whose beat is twice the swing's (EDGE3 item 1, x4.78 at 5 percent, half the
   beat), the root dial does not and is refused (a root).
@@ -43,32 +45,49 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   passed, and the cut's price is measured and named; alternatives: the carried dial (a register per gear, resonant),
   the twin (two half-gears per 00 row), the root (refused).
 
-## 3. Term 5, the metric's push: the books' form at dial 2 [FRAME, the Boss's of 19:2x UTC; the fourth text NOT PASSED by the final physicist, PASSED by the final mathematician; the fifth text (TERM5_FIFTH.md) PASSED by the final physicist on his two items at k0 = Spokes x senses = 12 (boss-derive 9fd820527, readers/t5f_phys/REPORT2.md; at k0 = 1 not gravity); B2b in work, with its price, NOT_CLOSED 30]
+## 3. Term 5, the metric's push: the books' form at dial 2 [FRAME, the Boss's of 19:2x UTC; the fourth text NOT PASSED by the final physicist, PASSED by the final mathematician; the fifth text (TERM5_FIFTH.md) PASSED by the final physicist on his two items at k0 = Spokes x senses = 12 (boss-derive 9fd820527, readers/t5f_phys/REPORT2.md; at k0 = 1 not gravity); BUILT/live as B2b df4fa644c (node-live e88150989), with its price, NOT_CLOSED 30]
 
 - Form (the deriver's derivation from the act's own energy, TERM5_FIFTH.md to follow): H = (1/2) W v_in v_out +
   (1/2) SUM_Mesh grip Delta^2 with W = rest + k0 c00 read into every row but the 00 and grip = grip_rest + ii at
   both ends; the books close iff every slot is pushed by -dH/d slot: the 00 slot by k0 times the sum over every row
-  but the 00 of sigma_in x sigma_out (the momenta in and out in rest-dial turns, swap-symmetric), each ii slot by
+  but the 00 of sigma_in x sigma_out (the momenta in and out in rest-dial turns, swap-symmetric; as built, over the
+  rows on the force's path alone, the price below), each ii slot by
   minus the sum over every row of its two Meshes' stretches squared at the now slot, (a(x + e_i) - a(x))^2 +
   (a(x) - a(x - e_i))^2, each halved by the drive's dial 2 on the pushed rows with the remainder kept in r_d; the jk
   and 0i slots pushed by nothing (nothing reads them). No strength: the factor is 1; the universe's "push" is 1
   (gravity) or 0 (none). The read's factor k0 is 1 as built (the S^2 the fourth text put in the push belongs to the
   00 slot's read); GR's gamma = 1 for light needs k0 = Spokes x senses = 12 (light's h_ii / h_00 144 at 1, 1 at 12,
-  measured 132 and 0.92): built tonight as a frame on the Boss's yes of 19:2x UTC, the owner to confirm, Big Pic's look standing (PLAN B2b, NOT_CLOSED 26).
+  measured 132 and 0.92): BUILT as a frame in B2b (df4fa644c) on the Boss's yes of 19:2x UTC, the owner to confirm,
+  Big Pic's look standing (NOT_CLOSED 26).
 - Why this form: the final physicist's two blocking items (the built form adds -eta (v.v); the books open by 588 f
   at every integer strength, 1152 f on the 2K-plan) are both answered by the one derivation from the act's energy,
   with no strength to choose; line 35's "the books fix it" is met. Measured by the deriver on the live act (probe_f):
   dust 1000 permille against 588000 and 1151999; a held tent and bump 1000 to eight digits; the run back 12 of 12.
 - Prices and limits, named: the jk and 0i slots are pushed by nothing (against line 35's "ten slots each pushed": the
-  owner's, NOT_CLOSED 6); free fast matter closes the books to 1133 (tent) and 1041 (bump) permille, the discrete
-  pairing now x next being not local in one Mesh (OPEN, NOT_CLOSED 27); the sign is to be read on the well world (the
-  clock deepens where matter is, or the finding goes to the owner); gamma on slow matter waits on term 6's spring; the
-  0i block's unit stays OPEN; the second order in u and the 00 wave in a well as before (frame 2). B2b's price (the
-  Boss's decision of 20:4x UTC, NOT_CLOSED 30): the 00 push reads the momenta of the rows on the force's path alone
-  (T_d = 1: the matter and the square's 0i and jk rows), the square's 00 and ii rows left out, since their momenta
-  out read before J5's kick are a pushed row's fictitious stride (the final mathematician's minor 4) and the well
-  world did not run back; this keeps the mirror theorem's hypothesis (d), and the metric's own kinetic share is not
-  paid into the 00 slot (its self-stress, OPEN in G2; its size measured in B2b's probe).
+  owner's, NOT_CLOSED 6); free fast matter closes the books to 1133 (tent) and 1041 (bump) permille at k0 = 1 and to
+  1064 and 1020 at k0 = 12 on the built loader (B2b's probe), the discrete pairing now x next being not local in one
+  Mesh (OPEN, NOT_CLOSED 27); the sign read on the well world by B2b's probe: the clock deepens where the matter is
+  (the 00 slot 22 at the crests against 0 in the void after one round, 141 against 29 after five); light's h_xx /
+  h_00 1043 permille at k0 = 12 on the built loader; gamma on slow matter waits on term 6's spring; the 0i block's unit
+  stays OPEN; the second order in u and the 00 wave in a well as before (frame 2); J5 enters no train's passing, so
+  the matter's exchange with the metric is booked by no click (frame 5; NOT_CLOSED 31).
+- The run back under the push, and B2b's price (the first hostile code reader's B1; the Boss's decision of 20:4x UTC;
+  NOT_CLOSED 30): the run back under term 5's push holds only while no plan reads a pushed row's momenta (the mirror
+  theorem's hypothesis (d)). step.stress reads M_out at the drive's quotient on J1 alone (K1, its remainder dropped),
+  while the round's true momentum is taken at J1 + J5; where the push lands on a row the two differ, the backward
+  round reads its sigma_in from the true momentum, and the round does not return (the reader: on the engine test's
+  pushed() layout the one-round run back exact at 0 of 6 states, 6 of 6 with the push emptied; the well world under
+  the plan as first stated 0 of 19 rounds, off at 2,520 gears, all on the 00 and ii rows). B2b (df4fa644c) lays the
+  00 push on the rows on the force's path alone (T_d = 1: the matter and the square's 0i and jk rows), the square's 00
+  and ii rows left out, so no plan reads a pushed row's momenta: the well world runs back 128 of 128, and A's engine
+  test gains the run back under the push (B1's test, A's fold). The price: the metric's own kinetic share, its
+  self-stress (OPEN in G2), is not paid into the 00 slot; measured on the well world at 1 part per million of the
+  matter's (the ii rows' sigma_in sigma_out 350,206 against 317,317,525,959 over its 128 rounds). The alternative,
+  the reader's other road, not built tonight: the push laid as two plans, the stretch terms first and then the
+  momentum terms landing on the 00 row alone (a row whose momentum no term reads), so that the act reads every row's
+  momentum out after its own kick and the ii rows' momenta enter the 00 push: it would pay the metric's self-stress
+  into the 00 slot (the reader's probe of it: pushed() 6 of 6 at T_d 7 and 1, the well world 12 of 12 rounds), at the
+  cost of a second contraction in the act and a second plan in the loader.
 - The final mathematician PASSED the fourth text with eight minors (t5f_math/HANDBACK_text.txt), folded: the loader
   refuses a second square train by name (item 1; B2), the 24 under the push hold only with the twisted action (item 8;
   frame 1, A2), an odd row's strides swapped and kept under the mirror and a pushed row's strides reading J1's kick
@@ -77,14 +96,15 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 - Test: the tent pushes the zz slot alone, by minus its two Meshes' stretches squared, and the 00 slot by 0; the
   gliding hand pushes the 00 slot by k0 SUM sigma_in sigma_out and the ii slots by 0; the drive's teeth senses on the
   pushed rows; the books on dust, the held tent and bump 1000 permille by windows at dial 2 (B2b's probe); the run
-  back with r_d moving; the well world re-laid and its clock deeper where the lump is.
-- Replaced by: the fifth text passing the final physicist (his two items) and its mathematician; then DERIVED, the
-  same code.
+  back with r_d moving; the well world re-laid and its clock deeper where the lump is; the run back under the push in
+  the engine test (B1's test, A's fold), the K1 read as its no.
+- Replaced by: the fifth text, PASSED by the final physicist, passing its mathematician; then DERIVED, the same code;
+  the two-plan road if the owner takes the metric's self-stress into the books (NOT_CLOSED 30).
 - Choice: the books' form at dial 2, because it is derived from the act's own energy with nothing chosen and closes
   the books where the readers measured them open; the alternatives: the law's form at an integer strength (books open
   by 1152 f), the built form (588 f, the wrong stress), both refused by the readers and by line 35.
 
-## 4. Term 11, the whole click: the passing S with the kept tooth [DERIVED for the pair; to build A1]
+## 4. Term 11, the whole click: the passing S with the kept tooth [DERIVED for the pair; BUILT/live as A1 d6ec46ff0 and B1 c967980d0, written to the record by B4]
 
 - Form: X_h = SUM over the train's pairs (one, two) through K x K -> A1 of entry x (a_one J_two(b) - b_one J_two(a)),
   J the plan's contraction (the value-leg plan: the springs, the held hand's tie, the hands' tie); S = X(a, b) +
@@ -98,27 +118,42 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   at T_d > 1.
 - Test: the pair at one Node-clock: q_L + q_M = 0 in every round, k_L + k_M = key - 1 kept, the run back 6,000 of
   6,000 with -q (A1's test and probe); on the click world the record's lines with the books 0 at every round and
-  site (B3's measure); the no: the tooth flipped breaks the run back at round back 1.
+  site (B3's measure); the no: the tooth flipped breaks the run back at round back 1 (struck in A1 on an identity
+  that holds in 288 of 1,148 small cases, while the kept tooth's law holds in 1,148 of 1,148; the first hostile code
+  reader's M2: a flipping mirror returns the teeth in 2 of 40 rounds of pair(), the kept tooth 40 of 40; restored as
+  one line in A's fold).
+- Limits, named: the books are exact for monomials of two value legs; the held hand's tie, of four, is invisible to
+  the passing only within the room (frame 6; NOT_CLOSED 29); the square train's passing form, taken by pairs_of in its
+  slot basis (xx as A1, (yy, zz) as E), is kept by 8 of 24 turns (the code reader's M1, latent: the isotropic notch
+  gives the square X = 0), so the square's pairs take the factor 0 by its square flag, as pushing has them (B's fold;
+  the form laid from the square's own representation is the alternative, not tonight): the metric clicks nowhere, and
+  its exchange with matter is J5's, booked by no click (frame 5); the key's oddness, which the shared birth needs, is
+  refused by name when even (the code reader's M6, B's fold: an even key misses the pair's books in 8 of 400 rounds at
+  2^17 and 90 of 400 at 2^12).
 - Replaced by: the owner's word on the key (odd, or exactly 2 K) and on the form at depth; the Mesh-leg count when
-  derived (frame 5).
+  derived (frame 5); a passing for monomials of four value legs (NOT_CLOSED 29).
 - Choice: S, because it counts each hand's two-round energy change exactly at the same cost as G (0 misses of 71,976)
   and the Boss named it first; the alternatives: G (board-exact, not per hand), the area form (the drafted node-live
   code: Planck at every depth for single-sense hands, nothing for a line hand).
 
 ## 5. Term 11's reach: which terms the click counts (the value legs; the Mesh leg's wind uncounted) [FRAME; NOT CLOSED]
 
-- Form: X reads the plan whose legs are value rows (J1: the own springs, the held hand's tie, the hands' tie); the
-  Mesh plan (the gradient vertex) pushes the gears through J but enters no train's X, so its wind, the Mesh flux
-  Phi (COUNT4, the Mesh flux), is booked by no click tonight.
+- Form: X reads the plan whose legs are value rows (layout.plan, J1's value legs: the own springs, the held hand's
+  tie, the hands' tie, the notch); the Mesh plan (the gradient vertex) pushes the gears through J but enters no
+  train's X, so its wind, the Mesh flux Phi (COUNT4, the Mesh flux), is booked by no click tonight; and term 5's push
+  plan, J5, enters no train's X either (the first hostile code reader's M12), so the matter's exchange with the metric
+  is booked by no click: the books' form closes it in energy (frame 3) and no click line counts it (NOT_CLOSED 31).
 - Question: X(a+, a) needs J(a+); for a Mesh leg J(a+) reads the neighbours' next counts, which one pass does not
   have (COUNT5 M1: "for a Mesh leg it is OPEN with the Mesh flux"); and who books the flux is a declaration (N5).
-  Reading the neighbours' produced counts in the act would break locality and is not done.
+  Reading the neighbours' produced counts in the act would break locality and is not done. J5 meets the same wall:
+  its terms read the six stretches (the neighbours' counts) and the momenta in and out, so J5(a+) would need the
+  next round's stretches and momenta, which one pass does not have.
 - Test: on the mesh world, light's squares summed stand (the ground state) and no click line is written by the Mesh
   leg; on the click world the lines appear and the books close.
 - Replaced by: a lawful one-pass form of the two-round passing for a Mesh leg, or the flux booked at the Mesh by a
-  rule the pair passes (Big Pic asked; NOT_CLOSED 4).
+  rule the pair passes (Big Pic asked; NOT_CLOSED 4); the same for J5's terms (NOT_CLOSED 31).
 - Choice: the value legs, because it is exactly what COUNT5 derived and nothing is faked; the alternative (J(a+) over
-  the whole plan) reads a neighbour's next count: forbidden.
+  the whole plan, the Mesh plan and J5 included) reads a neighbour's next count: forbidden.
 
 ## 6. Term 6, the coupling family (G3's whole-speed part): generic by character, the held train with no Mesh [FRAME; BUILT/live as B2 c853dee00; both of G3's hostile readers NOT PASSED, g3_phys/REPORT.md and g3_math/REPORT.md; David's hat (G3's eighth text) judged by the architect at 20:3x UTC: NOT TONIGHT, the named next direction, below]
 
