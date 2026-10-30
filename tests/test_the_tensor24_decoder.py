@@ -75,8 +75,7 @@ TWICE = "line 2's whole click books at the click and again at its ends"
 ENDS = "line 2's whole click's ends number {}, where the schema holds both or none"
 KEYED = '{"kind": "rate", "round": 1, "round": 1, "site": 0}'
 NAN = '{"kind": "rate", "round": 1, "site": 0, "count": 1, "k": NaN}'
-# ten million deep, past any stack: 3.14.9 on CI reads a hundred thousand, 3.14.6 about forty thousand
-DEEP, NESTS = "[" * 10**7 + "]" * 10**7, "line 2 nests past the interpreter's depth"
+DEEP, NESTS = "[" * 100_000 + "]" * 100_000, "line 2 nests past the interpreter's depth"
 OFF_ROUND, OFF_SITE = (
     "line 2 stands at round 7, off the record's rounds 1 to 6",
     "line 2 names site 2, off the board of sides [2, 1, 1]",
