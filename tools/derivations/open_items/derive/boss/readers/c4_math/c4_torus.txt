@@ -1,0 +1,9 @@
+c4 probe 3: the Mesh flux on two axes with the engine's gradient reading, and a force-leg cross vertex
+A. The derivative vertex on a torus 12 x 8, both gradients: g SUM M (dL/dx + dL/dy) with its reaction, c^2 = 1/6 on light
+   X_L + X_M != 0 at 19192 of 19200 site-rounds; = div_x Phi_x + div_y Phi_y at 19200 of 19200; with the x flux alone 64; summed over the torus != 0 in 0 of 200 rounds
+   both fluxes odd under the mirror in 200 of 200 rounds
+   key W x top light wind div 70: unbooked light 0 lines, bobs 0, site-rounds off 0; booked to light 0, 0, off 0
+   key W x top light wind div 700: unbooked light 648 lines, bobs 618, site-rounds off 1182; booked to light 618, 618, off 0
+
+B. A force-leg cross vertex g SUM M F_L on the ring of 48 (both rows with grips G and beats, both travelling), its reaction -g F_M laid by hand
+   X_L + X_M != 0 at 14337 of 14400 site-rounds; = div Xi (the force leg's cross flux) at 14400 of 14400

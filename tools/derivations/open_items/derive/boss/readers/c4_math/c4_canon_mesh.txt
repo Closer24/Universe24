@@ -1,0 +1,12 @@
+c4 probe 1: the canonical identity off Animate's world (with Meshes; on a moving clock)
+A. The sea of bobs (light row 0 with Meshes, the bobs row 1 without; value vertex g L M, c^2 = 1/6, 400 rounds)
+   the text's 2 dE_i = X_i + v-(r- - r+): misses on light's row 18694 of 19152, on the bobs' row 0 of 19152
+   the gap on light's row is exactly v- (F(a) + F(b)), the pull's work: misses 0 of 19152 (bobs 0)
+   with the pull in the energy (2 E' = W v+ v- - a (J + F)) and its Wronskian a F(b) - b F(a) beside X: misses light 0, bobs 0 of 19152
+   the pull's Wronskian a F(b) - b F(a) sums to 0 over the ring in 400 of 400 rounds (a flux: travel)
+   on light's row per site-round: |X_light| up to 431186853700000, |a F(b) - b F(a)| up to 58097364944000000: the pull's flux is 134 times the exchange
+
+B. Animate's world with a clock: one extra row rising by one count a round, read into every gear's teeth (W_t = rest + t)
+   the rebuilt plan's push equals the world's on its twelve gears: True; the clock row's push 0
+   the clock row rose by exactly 1 in 2999 of 2999 rounds (W_t = W + t); the gears' teeth read it
+   the text's identity with E read at each round's own teeth: misses 11996 of 35988 gear-rounds; with the term (W_t - W_t-1) v-^2 added: misses 0 of 35988

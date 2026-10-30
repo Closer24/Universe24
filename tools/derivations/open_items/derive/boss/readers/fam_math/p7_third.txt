@@ -1,0 +1,41 @@
+The third text against N1: the Hermitian Gram determinant D as the whole wedge (p7_third.py)
+1. D on G3/2's eight gears.
+   phi = [1, 0, 0, 0, 0, 0, 0, 0]: chi in [-2, 2]^8 (390624): D < 0 on 0; D = 0 on 24; rank <= 2 on 24; (D = 0) <=> (rank <= 2) on 390624 of 390624
+   phi = [1, 1, 0, 0, 0, 0, 0, 0]: chi in [-2, 2]^8 (390624): D < 0 on 0; D = 0 on 24; rank <= 2 on 24; (D = 0) <=> (rank <= 2) on 390624 of 390624
+   phi = [1, 0, -1, 0, 2, 0, 0, 0]: chi in [-2, 2]^8 (390624): D < 0 on 0; D = 0 on 8; rank <= 2 on 8; (D = 0) <=> (rank <= 2) on 390624 of 390624
+   kept by all 48 lifts on 20 pairs: True; kept by I on either hand: True; symmetric in the two hands: True
+   the reader's chi: D = 56 of 90 = 622 thousandths; epsilon = (0, 0)
+   chi in [-2, 2]^8 with epsilon = 0: 292; with D = 0 among them: 0: D reads all 292 as pairs. N1's criterion is met for G3/2.
+
+2. D = |real wedge|^2 - omega^2: the Lagrange identity, so D is the complex wedge's squared norm.
+   |phi|^2 |chi|^2 - (phi . chi)^2 = SUM_(j<k) (phi_j chi_k - phi_k chi_j)^2 and D = that - (phi . I chi)^2 on 20 of 20 pairs.
+
+3. Spin 1/2 on Lambda's eight gears (the first text's Gaussian basis): the ring's determinant against D.
+   I = right multiplication by i (probe_pair's mult_i): I I = -1 True, a signed permutation True
+   the hands 1 = [1, 0, 0, 0, 0, 0, 0, 0] and zeta = [0, 1, 0, 0, 0, 0, 0, 0] (the hand advanced by one eighth of the first text's own phase):
+      the ring's det(1, zeta) = ((0, 0), (0, 0)) (0: one state over Z[zeta_8]); D(1, zeta) = 1 of 1: a FULL pair by D; <1, zeta>_I = (0, 0)
+   twelve random phi against phi zeta: (det = 0 over the ring, D in thousandths of the room, rank of (phi, I phi, chi, I chi)): [(True, 884, 4), (True, 980, 4), (True, 983, 4), (True, 980, 4), (True, 844, 4), (True, 994, 4), (True, 518, 4), (True, 998, 4), (True, 604, 4), (True, 253, 4), (True, 934, 4), (True, 977, 4)]
+   the rank of (phi, phi i, phi zeta, phi zeta i) for a random phi: 4 (the ring's line is four real dimensions; the I-line two).
+   So 'one state' over the ring's scalars Z[zeta_8] (probe_pair 2, FAMILIES.md line 102: the hand's own phase is right
+   multiplication by zeta^k) and 'one state' over the phase I alone (D) are different relations: the text's 'D reads it
+   whole either way' (FAMILIES3 line 89) is false. zeta acts as +zeta on the E1/2 half and -zeta on the E5/2 half.
+
+4. Which right units of the 24-gear train keep D (I = right i): the normalizer of I, not the right 48.
+   right units keeping D on 3 pairs of spin-1/2 hands: 16 of 48; right units commuting or anticommuting with I: 16 of 48; the left 48 (the board's turns) keeping D: 48 of 48
+   D, and 'one state', depend on which right unit is named the phase: a declaration (the table's U(1), the text says); for
+   G3/2's eight gears the choice is forced (+-I the only units of the commutant), for spin 1/2 it is not.
+
+5. Alt^2 over C of E1/2 + E5/2 by characters (the complex wedge of the 8-gear hand over I).
+   Alt^2 (E1/2 + E5/2) = 2 A1 + 1 A2 + 1 T2 (six complex dimensions: the two ring
+   determinants, one per Galois half, and the cross terms A2 + T2; D is one invariant number of the six, their norm).
+
+6. The DRAFTED click (probe_click) with a taker already standing: a giver on the partner's line, and one on the same line.
+   the giver on the PARTNER line (J phi / 7): the key 23612302918285714285714285714285 (odd); term 11's count on the taker climbs to 1 (the gears stack), the giver's to -1;
+      at each arriving key beyond the first, the pair's size S_e over |standing|^2 |arriving|^2 in thousandths: []
+      the pair click's books (returned where S_e is below a thousandth of the room, the rounding's reading): keys taken 1, returned to the giver 0
+   the giver on the SAME line (phi): the key 21428571428571428571428571428571 (odd); term 11's count on the taker climbs to 0 (the gears stack), the giver's to 0;
+      at each arriving key beyond the first, the pair's size S_e over |standing|^2 |arriving|^2 in thousandths: []
+      the pair click's books (returned where S_e is below a thousandth of the room, the rounding's reading): keys taken 0, returned to the giver 0
+   Read: with a quantum already standing, 'the gain since the last key' holds the taker's own turning on its line as
+   well as the arriving key, so S_- between standing and gain is neither the algebra's |phi|^4 for the partner nor a
+   clean 0 for the same line; the DRAFTED rule reads cleanly only on a taker that was empty (probe_click's lay).

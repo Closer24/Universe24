@@ -1,0 +1,15 @@
+c4 probe 6: the click tooth's run back by THE SAME ACT on the mirrored state, three placements of the carry
+
+  act B: the tooth carried on the state the round reads, X(S):
+     forward: click rounds 34, the taker 0..7, the books miss in 0 of 6000, k_L + k_M != key - 1 at 0 of 6001
+     the run back by the same act on the mirrored state, the tooth kept: the gears return in 6000 of 6000 rounds, the teeth in 0, the quotients negated in 5960
+
+  act I: the tooth carried on the state the round produces, X(S+) (the text's probes' forward pairing):
+     forward: click rounds 34, the taker 0..7, the books miss in 0 of 6000, k_L + k_M != key - 1 at 0 of 6001
+     the run back by the same act on the mirrored state, the tooth kept: the gears return in 6000 of 6000 rounds, the teeth in 0, the quotients negated in 5960
+
+  act S: the tooth carried on both, X(S) + X(S+), at the doubled key (even), births key/2 - 1 and key/2:
+     forward: click rounds 34, the taker 0..7, the books miss in 0 of 6000, k_L + k_M != key - 1 at 0 of 6001
+     the run back by the same act on the mirrored state, the tooth kept: the gears return in 6000 of 6000 rounds, the teeth in 6000, the quotients negated in 6000
+
+  so the one-state passing X has no act that is its own inverse under the mirror: the text's probes carry forward on the produced state and backward on the read state, two acts; the two-round passing X(S) + X(S+) is one act both ways.

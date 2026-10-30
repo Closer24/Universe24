@@ -1,0 +1,33 @@
+c4 probe 5: the drive's teeth above 1: X on J against X on the kick (Animate's world, 6,000 rounds)
+
+  gearing s = 1, T_k = 1, T_d = 1: the key a seventh of the giver's wind 71428571400000000000000000001
+     last round's kick recovered from the state by the drive's run back: misses 0 at round 2 (a check)
+     2 dE = X^kick + v-(r- - r+) per gear: misses 0 of 71988; the same with X^J: misses 0 of 71988
+     |X^kick_L + X^kick_M| up to 0 (the floor's remainder, against the key: 0 trillionths of a key)
+     over the run: SUM X^J_M = 441551299715062500000000000000, SUM X^kick_M = 441551299715062500000000000000, W dD_M = 441572806300000000000000000000; X^J over X^kick = 1000 thousandths (T_d / (s T_k) = 1000)
+     the pair's books on X^J: totals [-6, 6], the taker 0..7, misses 0 of 5999
+     the pair's books on X^kick: totals [-6, 6], the taker 0..7, misses 0 of 5999
+
+  gearing s = 1, T_k = 1, T_d = 5: the key a seventh of the giver's wind 42857142800000000000000000001
+     last round's kick recovered from the state by the drive's run back: misses 0 at round 2 (a check)
+     2 dE = X^kick + v-(r- - r+) per gear: misses 0 of 71988; the same with X^J: misses 23996 of 71988
+     |X^kick_L + X^kick_M| up to 0 (the floor's remainder, against the key: 0 trillionths of a key)
+     over the run: SUM X^J_M = 67147069460725000000000000000, SUM X^kick_M = 13429413892145000000000000000, W dD_M = 13437034500000000000000000000; X^J over X^kick = 5000 thousandths (T_d / (s T_k) = 5000)
+     the pair's books on X^J: totals [-2, 2], the taker 0..35, misses 0 of 5999
+     the pair's books on X^kick: totals [0, 0], the taker 0..7, misses 0 of 5999
+
+  gearing s = 1, T_k = 1, T_d = 7: the key a seventh of the giver's wind 40828571400000000000000000001
+     last round's kick recovered from the state by the drive's run back: misses 0 at round 2 (a check)
+     2 dE = X^kick + v-(r- - r+) per gear: misses 0 of 71988; the same with X^J: misses 23996 of 71988
+     |X^kick_L + X^kick_M| up to 4672419 (the floor's remainder, against the key: 0 trillionths of a key)
+     over the run: SUM X^J_M = 181289524731300000000000000000, SUM X^kick_M = 25898503533042857142856558181, W dD_M = 25962177700000000000000000000; X^J over X^kick = 7000 thousandths (T_d / (s T_k) = 7000)
+     the pair's books on X^J: totals [-4, 4], the taker 0..49, misses 0 of 5999
+     the pair's books on X^kick: totals [-1, 1], the taker 0..7, misses 0 of 5999
+
+  gearing s = 3, T_k = 2, T_d = 7: the key a seventh of the giver's wind 66328571400000000000000000001
+     last round's kick recovered from the state by the drive's run back: misses 0 at round 2 (a check)
+     2 dE = X^kick + v-(r- - r+) per gear: misses 0 of 71988; the same with X^J: misses 23996 of 71988
+     |X^kick_L + X^kick_M| up to 14530020 (the floor's remainder, against the key: 0 trillionths of a key)
+     over the run: SUM X^J_M = 206113684104650000000000000000, SUM X^kick_M = 176668872089699999999998882200, W dD_M = 176710289700000000000000000000; X^J over X^kick = 1166 thousandths (T_d / (s T_k) = 1166)
+     the pair's books on X^J: totals [-3, 3], the taker 0..8, misses 0 of 5999
+     the pair's books on X^kick: totals [-3, 3], the taker 0..7, misses 0 of 5999

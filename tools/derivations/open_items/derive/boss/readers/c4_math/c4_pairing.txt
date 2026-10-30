@@ -1,0 +1,6 @@
+c4 probe 2: the tooth's pairing with the state, and the run back (Animate's world, the taker's tooth)
+  pairing I: the tooth with S+ absorbed X(S+), the passing of the state the round produces:
+     forward click rounds 34; the run back by the act alone returns the tooth in 6000 of 6000 rounds and the quotient negated in 6000
+  pairing II: the tooth with S+ absorbed X(S), the passing of the state the round reads:
+     forward click rounds 34; the run back by the act alone returns the tooth in 0 of 6000 rounds and the quotient negated in 6000
+  so the lemma holds for the state whose passing the tooth absorbed; the round's click is X of the state it produces, a+ J(a) - a J(a+), and J(a+) is the next round's contraction (or last round's J is kept as a state).

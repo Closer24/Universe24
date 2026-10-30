@@ -1,0 +1,25 @@
+c4 probe 4: the pair's invariant and the key's parity
+a. Every pair of teeth and every increment on the keys 2..13: the sums C = k_L + k_M for which q_L + q_M = 0 always
+   key  2: closing sums [1] (key - 1 = 1)
+   key  3: closing sums [2] (key - 1 = 2)
+   key  4: closing sums [3] (key - 1 = 3)
+   key  5: closing sums [4] (key - 1 = 4)
+   key  6: closing sums [5] (key - 1 = 5)
+   key  7: closing sums [6] (key - 1 = 6)
+   key  8: closing sums [7] (key - 1 = 7)
+   key  9: closing sums [8] (key - 1 = 8)
+   key 10: closing sums [9] (key - 1 = 9)
+   key 11: closing sums [10] (key - 1 = 10)
+   key 12: closing sums [11] (key - 1 = 11)
+   key 13: closing sums [12] (key - 1 = 12)
+
+b. Animate's world's increments (g = f div 10, 6,000 rounds) at an EVEN key, the pair's books
+   odd key, one shared birth (key - 1) div 2: misses 0 of 6000, k_L + k_M = key - 1 at 6000 of 6000, the taker 0..7
+   even key, one shared birth key div 2: misses 0 of 6000, k_L + k_M = key - 1 at 0 of 6000, the taker 0..7
+   even key, one shared birth key div 2 - 1: misses 0 of 6000, k_L + k_M = key - 1 at 0 of 6000, the taker 0..7
+   even key, the two births key div 2 - 1 and key div 2: misses 0 of 6000, k_L + k_M = key - 1 at 6000 of 6000, the taker 0..7
+   even key, the two births the other way round: misses 0 of 6000, k_L + k_M = key - 1 at 6000 of 6000, the taker 0..7
+
+c. Three hands born alike at (key - 1) div 2: the shared count's bound from the teeth's sum
+   the shared count within [-1, 1]; 3 k0 - (shared) key = the teeth's sum at every round: misses 0 of 6000
+   (the teeth's sum lies in [0, 3 key - 3], so the shared count lies in [-1, 1] at every odd key >= 3: a bound by the births, not a closing)
