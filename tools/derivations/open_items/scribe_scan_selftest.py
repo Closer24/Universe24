@@ -1919,7 +1919,12 @@ CASES += [
         'def f(a):\n    """A link may shorten here."""\n    return a\n',
         {},
     ),
-    ("the engine: stretch and pull are no special function", NEW_STEP, "def pull(stretch):\n    return stretch\n", {}),
+    (
+        "the engine: stretch and pull are no special function",
+        NEW_STEP,
+        "def pull(stretch):\n    return stretch\n",
+        {},
+    ),
     (
         "the loader: a name with decoupled is refused",
         NEW_LOADER,
@@ -1932,7 +1937,12 @@ CASES += [
         "from dataclasses import dataclass\n\n\n@dataclass(frozen=True)\nclass A:\n    pass\n",
         {},
     ),
-    ("main: an import alias with absorbed is refused", NEW_MAIN, "import json as absorbed\n", {"SPECIAL": 1}),
+    (
+        "main: an import alias with absorbed is refused",
+        NEW_MAIN,
+        "import json as absorbed\n",
+        {"SPECIAL": 1},
+    ),
     (
         "the algebra: a name with sender is refused",
         NEW_CARRY,
@@ -1941,7 +1951,12 @@ CASES += [
     ),
     ("the decoder may speak of horizons", NEW_DECODER, "def f(horizon):\n    return horizon\n", {}),
     ("the runner's other modules may restore", NEW_RUNNER, "def f(restore):\n    return restore\n", {}),
-    ("the record's schema may name what is emitted", "tensor24/record/schema.py", "class Emitted:\n    pass\n", {}),
+    (
+        "the record's schema may name what is emitted",
+        "tensor24/record/schema.py",
+        "class Emitted:\n    pass\n",
+        {},
+    ),
     ("a tool may name them", TOOL_FILES, "def f(lengthen):\n    return lengthen\n", {}),
     ("the decoder keeps the ledger's name", NEW_DECODER, "def f(books):\n    return books\n", {}),
     (
