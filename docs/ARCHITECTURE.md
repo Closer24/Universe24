@@ -72,8 +72,8 @@ The engine is five modules (engine/): step.py, mesh.py, contract.py, kinds.py an
 | 9 | The volume's notch | the board's mean count swings and returns | the metric family's own swing and its top | the universe's swing (Postulate 4), with gravity's polarizations massless | owed in the slot form | OPEN (G2) |
 | 10 | The shift and the shears | the now leans toward a neighbour, and stretches by direction | the 0i and jk slots, read by the gradient's and the pull's contractions | frame dragging and waves | owed after G2 | OPEN (G4) |
 | 11 | The whole click | when a train's swept area completes a whole key, the train's own click tooth carries it once | the area summed over the train's rows through the A1 table, carried at the key by the train's own tooth k at each Node-clock, born at half the key; the click pushes nothing into a, b, r or r_d | one quantum per mode, E = n h nu; a negative wind is a negative quotient, with no if | q_c, k+ = carry(tau, key, k) | OPEN (G5): the Boss's derivation (derive/boss/term11) is with David's two readers: the area read at the now slot; the click tooth flipped in its key by the mirror, the run back exact with no log read; the birth (key - 1) div 2, the flip's fixed point, so that a give and a take are opposite clicks for an odd key; the key's value OPEN (G3) |
-| 12 | The split click | when parts share a winding, the draw, a Node-clock's own from its fine teeth and its six neighbours' (decision 29), says which part takes it | a rank count over the parts' sizes after the carry; a full slot refuses after the draw, and the quantum returns to its giver | Born's rule; both clicks can fall in one round, on different trains | the draw | OPEN (G5): its fairness and the draw's c |
-| 13 | The frozen clock | a clock whose teeth outgrow its drive never fires | where that holds is the horizon, with no hold and no restore | a horizon | derived on the slot form | OPEN (G2), on the act |
+| 12 | The split click | when parts share a winding, the draw, a Node-clock's own from its fine teeth and its six neighbours' (decision 29), says which part takes it | a rank count over the parts' sizes after the carry; a full slot refuses after the draw, and the quantum returns to its giver | Born's rule; both clicks can fall in one round, on different trains | the draw | OPEN (G5): David's draft (DAVID-TENSOR24-G5-DRAW.md, main 84a97ee76) strikes c and folds the fine teeth at the Node-clock's own teeth, with its two readers |
+| 13 | The frozen clock | a clock's beat goes as the root of its spring over its teeth, so a clock stops only where its teeth grow without bound | where that holds is the horizon, with no hold and no restore | a horizon | N^2 = rest / W; where W has no bound on the slot form is OPEN: where the grips vanish light stops, and with the ii slots on the same pull and no self-push the 00 slot stays finite there (David's G2, section 4) | OPEN (G2), on the act |
 
 **The mass** (term 6; David's, with G3's results)
 
@@ -88,7 +88,7 @@ The engine is five modules (engine/): step.py, mesh.py, contract.py, kinds.py an
 - **Clock:** a family of kind T1 is a clock with three hands, one per axis. The cube's 24 turns swap them as they swap the axes, and the act drives all three alike: the same teeth, the same grip, the same wave. A held count beside them is a hairspring. Of kind A1 it ties all three alike, so one beat; of kind A2 it ties none, and only couples a T1 family to a T2 one. Three beats need a held count that points along the cube: E off its three lines, or T2 off the body diagonals, with an A1 part large enough that no hand runs away.
 - **Board:** at every Node-clock the three rows step alike; with a held E or T2 count each row beats at its own rate. That count must not show the cube's axes to light: the kinds that split a triplet are the metric's own (E, T2), so a vertex pairing them with the metric's slots makes light's speed depend on direction, which cavities bound at parts in 10^18. An E count's own potential sits on its lines, where two beats meet, wherever its term in f to the first power is not 0 (a three-leg or five-leg term, or a cross term with the count's A1 part); only f^2, at six legs, moves it off.
 - **Clicks:** a click takes the whole train and never a row, so unsplit the three hands are one species' gears: the law's confinement (line 1556), the colours as the three axes. Split, they are a candidate for three species alike but for mass, told apart only by a take resonant with one beat; then the rows are the generations and the colours stand elsewhere, since rows cannot be both. In nature the electron, the muon and the tau are one clock design at three beats: one charge and one spin, told apart by the beat (the mass), the life (the width) and the neutrino each pairs with, each heavier one decaying into lighter ones, all three taken alone. The quarks' generations are gears, read only through their hadrons, and the top through its own decay.
-- **Algebra:** the 24's kinds have 1, 1, 2, 3 and 3 rows, and T1 x T1 -> A1 is the dot product. Three beats need held counts that cut the 24 to a group under which T1 has only one-dimensional pieces (D2 or the Klein group fix the basis; a half turn or nothing lets the counts set it). A1 + E (n0; e1, e2) gives n0 + e1, n0 - e1 + e2 and n0 - e2; T2 gives lambda^3 - |t|^2 lambda - 2 t1 t2 t3. Any three beats fit a + B cos (phi + 2 pi k / 3), so that form predicts nothing alone. Koide's 2/3 is a test, Animate's own, that David's readers have not read: never met on the diagonal A1 + E spring with whole counts (the Eisenstein norm's power of 2), met often with a T2 part. At most three alike, the board's axes, under four assumptions: a natural three, not a derived one.
+- **Algebra:** the 24's kinds have 1, 1, 2, 3 and 3 rows, and T1 x T1 -> A1 is the dot product. Three beats need held counts that cut the 24 to a group under which T1 has only one-dimensional pieces (D2 or the Klein group fix the basis; a half turn or nothing lets the counts set it). A1 + E (n0; e1, e2) gives n0 + e1, n0 - e1 + e2 and n0 - e2; T2 gives lambda^3 - |t|^2 lambda - 2 t1 t2 t3. Any three beats fit a + B cos (phi + 2 pi k / 3), so that form predicts nothing alone. Koide's 2/3 is a test, Animate's own (DERIVED; CHECKED by her probe m2 and narrowed to the diagonal spring by board2mass's two hostile readers; David's readers have not read it): never met on the diagonal A1 + E spring with whole counts (the Eisenstein norm's power of 2), met often with a T2 part. At most three alike, the board's axes, under four assumptions: a natural three, not a derived one.
 - **Home:** none of its own: term 6's spring, and G5's take. **Status:** A1 or A2 held counts give one mass (DERIVED, CHECKED), which nature refuses as the generations' law. OPEN at G3: which held counts the one plan lays, against the metric's slots. OPEN at G5: the resonant take. OPEN: what keeps each row's count apart through a click (mu -> e gamma below 1.5 x 10^-13), what tells the electron's, the quarks' and the neutrinos' families apart, mixing, CP, and the neutrinos' masses.
 
 ### The world: the three files
@@ -136,7 +136,7 @@ The engine is five modules (engine/): step.py, mesh.py, contract.py, kinds.py an
 | # | Reading | Clock | Board | Clicks | Status |
 |---|---|---|---|---|---|
 | 1 | Row 15, the books | a click moves whole turns from a giver's dial to a taker's, and each remainder stays at its dial | the trains' counts before and after the click, at its Node-clocks | conservation: what one clock gives another takes, both ways of time | built in memory; at G5 |
-| 2 | Row 46, each later bang shows more | the clocks' rate gears wind up and run down together, and each turn of the whole builds clocks of more parts | the clock family's 00 slot summed over the board, round by round; its bottoms part the bangs | ever more complex clocks, bang by bang: more kinds of click, deeper clocks laid | the load first, on the count lines; the rest at G5 |
+| 2 | Row 46, each later bang shows more | the clocks' rate gears wind up and run down together, and each turn of the whole builds clocks of more parts | the clock family's 00 slot summed over the board, round by round; its bottoms part the bangs | ever more complex clocks, bang by bang: more kinds of click, deeper clocks laid | owed: the code reads the load at a time gear the header names, which the new record does not write; the load on the count lines and the clock family first; the rest at G5 |
 | 3 | D6, proper time | a clock counts its own ticks between two of its clicks, and no Node-clock's rate line is read | the count it summed along its path | proper time, a clock's own age | built in memory; at G5, and from G2 where a clock moves |
 | 4 | D7, no duration from rounds | the runner's pass is no tick of any clock | a round is an index from outside | a difference of rounds is refused by name | built |
 | 5 | D8, the cone | a click's past is what could reach it, one Mesh a round | the board's cone round each click | no signal: no click's share shows a setting outside its cone | built on the board's cone; light's cone owed |
@@ -177,7 +177,41 @@ The engine is five modules (engine/): step.py, mesh.py, contract.py, kinds.py an
 - **Algebra:** the gate (tools/derivations/open_items/scribe_scan.py) is the algebra's law in a script: it refuses a push that raises a count of a number beyond 0 and 1, a float, a root, a loop, a branch, a comparison, a clamp, a mask, an enumeration, a probe with a float, or a module whose docstring lacks these four layers, and it keeps the table below.
 - **Home:** docs/ALGEBRA.md; tools/check.py (runs the gates and the tests together, in CI on every pull request and on every push to main), tools/merge_base.py, tools/record_code_shape.py, tools/tests_shape.py, tools/documents_gates.py, tools/derivations/open_items/scribe_scan.py (the gate; its self-test beside it, scribe_scan_selftest.py, runs with it), tools/derivations/open_items/scribe_law_check.py (the law's own check and this document's mirror of the tree, `--arch`). **Status:** BUILT; the law check, the mirror and their self-test join tools/check.py's ratchets (the Boss's yes, 12:4x UTC); the tests are cut to that shape: the engine's by the Boss's code writer, the decoder's to five by Animate (the owner's word of 12:4x UTC).
 
-## 4. Who may import whom
+## 4. How to write code
+
+The code writer reads this section first at every task, as its standing instruction. Each line is a law that refuses code, with its line of docs/ALGEBRA.md; the gate's rules and what holds each stand in tools/derivations/open_items/SCRIBE-GATE-1.md.
+
+**Who writes, and how a change goes in**
+
+- The Boss's code writer, one subagent, alone writes the system's code and tests, the decoder's included; Animate and David check and derive under tools/derivations; the writer keeps these documents and the gate (the owner's words of 2026-10-30, 12:3x to 12:5x UTC).
+- A change is written in its own worktree, the full check against main exits 0, a hostile reader reads the diff, the Boss reviews it and pushes the candidate to tensor24-review, the writer reads that sha for faking and posts the approval, and only then main moves, a fast-forward with no force (12:4x).
+- Locally anything may be built and checked; main takes a change only when its derivation stands in this document as DERIVED and its candidate is approved; no work starts on what is OPEN (12:5x).
+- The hard pieces (the metric's push, the clicks, any change an exact run back hangs on) run on Fable 5.1, the rest on Opus 5.5 (12:5x).
+- No old code, no old test, no old world returns; the old engine stands in git at the tag v4.0.0 (11:0x).
+- Nothing weakens the gate: no change of tools/derivations/open_items/scribe_*, of tools/check.py's ratchets, of tools/documents_gates.py or of the workflows travels with a code change; they are the writer's.
+
+**The laws in code**
+
+- Whole numbers, no float anywhere (line 100): no float, true division, round or float call, no math, random or fractions import; every integer within 128 bits (line 50).
+- No number beyond 0 and 1 in the code, none behind a name, an enumeration, a table or a length (lines 96, 100): the numbers stand in the three world files.
+- No circularity that makes a phenomenon happen, no root, no cosine (line 102).
+- Rule3's carry is the one division, with its remainder kept: no other floor division, remainder, power or shift (line 46).
+- The Node-clock has no if (lines 35, 96): no branch, comparison, clamp, mask, choose or floor; a whether is the carry's quotient.
+- No loop in the act: the machine is one tensor operation (line 35).
+- Locality is never broken (line 92): a Node-clock reads itself and its six Meshes and nothing else; no global, no cache, no log read in the act; state lives in the Node-clock alone.
+- No books, no special function or key for a link, a horizon, a sending or a receiving (lines 102, 90).
+- Nothing is declared (lines 35, 106): the files name every family, train and coupling, and the code reads each role from them, never by a name or a place.
+- The cube's 24 turns hold (line 94), and information does not vanish: every act is undone bit for bit (lines 31, 35).
+- A probe under tools/derivations is whole numbers too (line 100).
+- Each part imports only what section 5 allows.
+
+**The four layers of a docstring** (line 35): every module's docstring has lines that start Clock:, Algebra:, Board: and Clicks:, each with text, and n/a where a layer does not apply; a module stays under 400 lines.
+
+**The tests** (line 106): one small test per generic part and the whole once on our bang, the standard of the world and no more: no matrix of cases, no table of mutants, no test of a particular, none for a part with no code yet; a test is named in its part's Test line.
+
+**The document and the tree mirror each other:** a module, a test or a tool that no part of section 3 names is refused (`scribe_law_check.py --arch .`), and a change of a part's code changes its Home, Test and Status lines in the same push.
+
+## 5. Who may import whom
 
 The architect's table; the gate's ISOLATE rule reads it. The standard library is allowed everywhere, numpy in the engine and the runner alone.
 
@@ -191,19 +225,19 @@ The architect's table; the gate's ISOLATE rule reads it. The standard library is
 | decoder | algebra, decoder, readings, record |
 | main.py | engine, runner |
 
-## 5. What is open
+## 6. What is open
 
 **When the system is closed.** The owner's word of 2026-10-30, 12:4x UTC: once the Node-clock works well, that is it, the system is closed: its thirteen terms derived with both readers agreeing and the one whole run on our bang; every other part is simple, with one small test of itself and no more.
 
 **G2:** the first-order form of term 5 (N2, in David's reading) and the notch and the frozen clock (terms 9 and 13), and the exponential clock beside the slot form (Postulate 6), both kept written until the test. **G3:** the strengths per channel and the plan, the tables' unit, which families tie to k, the held count's own potential, n's unit. **G4:** the shift and the shears (term 10). **G5:** the clicks (term 11 first, the Boss's derivation), the split's draw and its c (David's draft strikes the c), the visualizer. Beside them: the counts hidden in label tuples (len(GEAR), len(ADDED), WAYS, ENDS), to be read from the star, the piece and the schema with schema 1.3; the spring of line 35, which waits on the owner's rule for the head's notch.
 
-## 6. The documents
+## 7. The documents
 
 Two documents tell the system: this one and the law ([docs/ALGEBRA.md](ALGEBRA.md)). [README.md](../README.md) is the front door (`llms.txt` its machine copy), [CONTRIBUTING.md](../CONTRIBUTING.md) the way in, [CHANGELOG.md](../CHANGELOG.md) what changed, and `LICENSE`, `CITATION.cff` and `pyproject.toml` the project's files. papers/ holds the two publications, their text and PDF (their scripts stand in git). The records of the work stand under tools/derivations (the derivations, the gate's `SCRIBE-GATE-1.md`, the keeper's `SCRIBE-LAW-AUDIT-2.md`, `SCRIBE-OWNER-WORDS.md` and `SCRIBE-ROUTINE.md`), and no part depends on them. The earlier documents (ENGINE, BIG_PICTURE, CLOCK_WORDS, FURTHER_RESEARCH, FOLLOW_UP_PAPERS, HIGHLIGHTS and UNIVERSE24) left the tree on 2026-10-30, the owner's word: one clean main, the architecture file and the algebra file; what of them is live stands here or in the law, and the rest in git at scribe-5 3b7fd1bd2. The decisions in force are the law's (line 35). The old engine and its worlds stand in git's history alone.
 
 **Who keeps what.** The Boss keeps the status lines of the world, the loader, the Node-clock, the runner and the record true at each push; the code of the engine, the loader, the runner, the record and of his tools and tests is written by one code-writer subagent of his alone (the owner's word of 2026-10-30, 12:3x UTC: the Boss is free to manage everything, only the subagent writes code), briefed from this document, its work read by a hostile reader and reviewed and pushed by the Boss; Animate keeps those of the decoder and the visualizer, the decoder being hers; David derives, each derivation telling its part in these questions and going into its row or section of this document the moment both its readers agree (the owner's word of 12:3x UTC: "The moment the drafts are ready, they put them in."), the writer folding it in the document's form; the writer keeps the form and the law and reads every push against both; the owner decides, and no part changes its place or its wall without his word.
 
-## 7. The glossary
+## 8. The glossary
 
 - **Node-clock:** a site of the board: a set of gears, one for each row of each train, and one act per turn. **Gear:** a dial with its count now and before (the state's two slots) and its fine tooth, a remainder. **Train:** a tensor of gears across the board, the dials of one kind of thing (light, matter, the metric family).
 - **Spoke, Mesh:** a Spoke is one of a Node-clock's six directions; a Mesh is the link through a Spoke between two neighbouring Node-clocks, read once from both ends.
@@ -212,4 +246,5 @@ Two documents tell the system: this one and the law ([docs/ALGEBRA.md](ALGEBRA.m
 - **Mirrored state:** time's reversal at fixed teeth: now and before swapped and each fine tooth r flipped to W - 1 - r in its teeth W; the run back is the tick on the mirrored state, mirrored.
 - **Metric family, 00 slot, ii slots:** the clock's own train: its 00 slot is every gear's teeth here (the clock's rate), its three ii slots are each axis's Mesh grip.
 - **The 24, the kinds:** the cube's turns that leave a Node-clock's star the same, and the five kinds that tie a train's gears. **Board:** the event board, taken in our event space, which has no time. **Bang:** the one run from the seed.
+- **Code writer:** the Boss's one subagent that writes the system's code and tests (the owner's words of 2026-10-30, 12:3x UTC). **Approval:** the writer's reading of a candidate sha for faking, posted before main moves (12:4x). **DERIVED, OPEN:** a term whose two hostile readers agree and whose entry stands here is DERIVED; until then its status says OPEN and no code starts on it.
 - **G2 to G5:** the stages that close what the Node-clock lacks (the Boss's plan): G2 the metric's push, the notch and the frozen clock; G3 the strengths and the plan; G4 the shift and the shears; G5 the clicks. **Postulate 6:** the time gear's law, slowdowns composing by their product.
