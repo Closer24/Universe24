@@ -1,0 +1,238 @@
+W = 90977140554674334000000, the grip 15162856759112389000000, H = W div 2 = 45488570277337167000000, T8 = W div 8 = 11372142569334291750000
+term 6 at G3's probe strengths, as g5_draw.py lays it: g = 227442851386684, kappa = 5686071284667145875000, lam = 4 f2 = 4548860, n = 1000000
+the norm pointer: Q over x, its six neighbours and all 5 rows, 70 odd squares; W mod 128 = 0, so u = Q mod W is 6 more than a multiple of 8 at every draw; one halving
+leaves u div 2 on a step of 4; one carry by 8, v = u div 8 within [0, T8), can reach every residue there, and
+the draw reads v against T8 in the parts' half-open cells
+(a) the residue check: Q mod T over one, two and three rows, one c per row, each over its whole range
+    c = 2 r + 1 - T for r = 0 to T - 1:
+    the prime 97: one row: 49 of 97 residues, each nonzero one reached 2 to 2 times, 0 1 times; two rows: 97 of 97 residues, each nonzero one reached 96 to 96 times, 0 193 times; three rows: 97 of 97 residues, each nonzero one reached 9312 to 9506 times, 0 9409 times
+    the prime 101: one row: 51 of 101 residues, each nonzero one reached 2 to 2 times, 0 1 times; two rows: 101 of 101 residues, each nonzero one reached 100 to 100 times, 0 201 times; three rows: 101 of 101 residues, each nonzero one reached 10100 to 10302 times, 0 10201 times
+    the prime 103: one row: 52 of 103 residues, each nonzero one reached 2 to 2 times, 0 1 times; two rows: 103 of 103 residues, each nonzero one reached 104 to 104 times, 0 1 times; three rows: 103 of 103 residues, each nonzero one reached 10506 to 10712 times, 0 10609 times
+    small even dials: c is odd, every c^2 is 1 more than a multiple of 8, so Q is its count of rows more than a
+    multiple of gcd(T, 8); u div gcd(T, 8) read against T div gcd(T, 8), the halved form:
+    T = 6: 1: u 2 of 6, classes mod 2 [1], u div 2 2 of 3 (2 to 4 times); 2: u 3 of 6, classes mod 2 [0], u div 2 3 of 3 (4 to 16 times); 3: u 3 of 6, classes mod 2 [1], u div 2 3 of 3 (48 to 96 times)
+    T = 16: 1: u 2 of 16, classes mod 8 [1], u div 8 2 of 2 (8 to 8 times); 2: u 2 of 16, classes mod 8 [2], u div 8 2 of 2 (128 to 128 times); 3: u 2 of 16, classes mod 8 [3], u div 8 2 of 2 (2048 to 2048 times)
+    T = 48: 1: u 4 of 48, classes mod 8 [1], u div 8 4 of 6 (8 to 16 times); 2: u 6 of 48, classes mod 8 [2], u div 8 6 of 6 (128 to 512 times); 3: u 6 of 48, classes mod 8 [3], u div 8 6 of 6 (12288 to 24576 times)
+    T = 96: 1: u 8 of 96, classes mod 8 [1], u div 8 8 of 12 (8 to 16 times); 2: u 12 of 96, classes mod 8 [2], u div 8 12 of 12 (256 to 1024 times); 3: u 12 of 96, classes mod 8 [3], u div 8 12 of 12 (49152 to 98304 times)
+    T = 384: 1: u 32 of 384, classes mod 8 [1], u div 8 32 of 48 (8 to 16 times); 2: u 48 of 384, classes mod 8 [2], u div 8 48 of 48 (1024 to 4096 times); 3: u 48 of 384, classes mod 8 [3], u div 8 48 of 48 (786432 to 1572864 times)
+    at W, each row's tooth on one of the probe's lattices of q points, r = H + j (W div q), j = 0 to q - 1:
+    q = 6 is the grip's (light on every lay; every row with the plan empty), 16 the plan's kappa = W div 16,
+    25 the Pythagorean kappa = 2 W div 25 of (g), 48 the joint lattice of kappa and the grip:
+    q = 6: 1: 2 residues of u, 2 of v, on a lattice of W over 3; 2: 3 residues of u, 3 of v, on a lattice of W over 3; 3: 3 residues of u, 3 of v, on a lattice of W over 3
+    q = 16: 1: 4 residues of u, 4 of v, on a lattice of W over 4; 2: 4 residues of u, 4 of v, on a lattice of W over 4; 3: 4 residues of u, 4 of v, on a lattice of W over 4
+    q = 25: 1: 25 residues of u, 25 of v, on a lattice of W over 25; 2: 25 residues of u, 25 of v, on a lattice of W over 25; 3: 25 residues of u, 25 of v, on a lattice of W over 25
+    q = 48: 1: 8 residues of u, 8 of v, on a lattice of W over 12; 2: 12 residues of u, 12 of v, on a lattice of W over 12; 3: 12 residues of u, 12 of v, on a lattice of W over 12
+(b) the run back inside the act, term 6, 300 rounds from the old lay:
+    forward: s_t = tick(s_(t-1)) for t = 1 to 300; the norm pointer and the draw at every Node-clock from
+    (s_(t-1), s_t), at 1:1 and at the sizes in s_(t-1)'s now slot; backward: for t = 300 down to 1,
+    m = mirror(s_t), m_out = tick(m), the same reading from (m, m_out); s_(t-1) recovered as mirror(m_out)
+    u mod 8 over the forward draws: [6]
+    Q itself, unfolded, equal at 64800 of 64800 draws: the mirror leaves it unchanged, no fold needed
+    the part equal at 64800 of 64800 (1:1) and at 64800 of 64800 (the state's sizes)
+    control, the norm of the teeth after the tick alone, c(r_out)^2 summed, read the same way on (m, m_out):
+      the part at 1:1 equal at 32340 of 64800, z^2 0.222, below 3.841
+    what cannot fail, named so: s_(t-1) recovered at 300 of 300 rounds and the lay returned (True): the engine's own bijection, since the draw writes nothing
+(c) the 24: 24 turns; rounds 1 to 5 from the old lay, each input state turned and ticked;
+    at x the split between its +x and -x neighbours, sizes m_re^2 + 1 at those two in s_in's now slot, + side
+    first; covariant where the turned board's draw at x's image is the image of the original's;
+    1080 draws a turn, each count listed once:
+    12 turns taking +x to a + direction:
+      the act turned with the board in [5] of 5 rounds; Q equal at the image at [1080]
+      the draw, the parts in their own order: covariant at [1080]; at sizes 1 and 1: [1080]
+    12 turns taking +x to a - direction:
+      the act turned with the board in [5] of 5 rounds; Q equal at the image at [1080]
+      the draw, the parts in their own order: covariant at [677]; at sizes 1 and 1: [0]
+    the trains' own signed permutations (Big Pic's claim 1), the same rounds, every Node-clock in place:
+      light's re row negated: the act commutes in 5 of 5 rounds; Q equal at 1080 of 1080; the third text's e equal at 0
+      matter's re and im rows swapped: the act commutes in 5 of 5 rounds; Q equal at 1080 of 1080; the third text's e equal at 1080
+      matter's two rows negated and light's two rows swapped: the act commutes in 5 of 5 rounds; Q equal at 1080 of 1080; the third text's e equal at 0
+(d) the third text's battery, term 6, rounds 21 to 420 at all 216 Node-clocks, the norm pointer v against T8,
+    the parts' half-open cells in their own order; the old lay in full, then the six lays (the old lay first):
+    the old lay: 86400 distinct v of 86400; u mod 8 [6]; the tenths 8.994 on 9
+      the same half two rounds running 43054 of 86184, z^2 0.067, below 3.841; one Mesh apart 43334 of 86400, z^2 0.831, below 3.841
+      D_N 3080 ppm; N times D_N squared 819 thousandths (the Kolmogorov law's mean 822, its 5 per cent point 1,844)
+      Born at 1 : 1: part 0 in 43378 of 86400 (expected 43200), z^2 1.466, below 3.841
+      Born at 1 : 2: part 0 in 29009 of 86400 (expected 28800), z^2 2.275, below 3.841
+      Born at 3 : 7: part 0 in 26157 of 86400 (expected 25920), z^2 3.095, below 3.841
+      Born at 10^6 : 3 x 10^6: part 0 in 21709 of 86400 (expected 21600), z^2 0.733, below 3.841
+      Born at 10^30 : 3 x 10^30: part 0 in 21709 of 86400 (expected 21600), z^2 0.733, below 3.841
+      at the state's sizes, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 in s_in's now slot: part 0 in 42705 of 86400 (expected 42802), z^2 0.862, below 3.841
+      the largest |freq - share| over the five splits 2743 ppm, within 2 D_N by the theorem
+      the cell rule drawn part by part equal to the first cell's count at the five splits: True;
+      the raw form, u against W, and the halved form, v against T8, part at 0 of 432000 draws
+    seed 20261030: 86400 distinct v of 86400; u mod 8 [6]; the tenths 8.994 on 9
+      the same half two rounds running 43054 of 86184, z^2 0.067, below 3.841; one Mesh apart 43334 of 86400, z^2 0.831, below 3.841
+      D_N 3080 ppm; N times D_N squared 819 thousandths (the Kolmogorov law's mean 822, its 5 per cent point 1,844)
+      Born, z^2 at the five splits: 1 : 1 1.466; 1 : 2 2.275; 3 : 7 3.095; 10^6 : 3 x 10^6 0.733; 10^30 : 3 x 10^30 0.733
+      at the state's sizes, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 in s_in's now slot: part 0 in 42705 of 86400 (expected 42802), z^2 0.862, below 3.841
+      the largest |freq - share| over the five splits 2743 ppm, within 2 D_N by the theorem
+    seed 1: 86400 distinct v of 86400; u mod 8 [6]; the tenths 7.266 on 9
+      the same half two rounds running 42857 of 86184, z^2 2.563, below 3.841; one Mesh apart 43244 of 86400, z^2 0.089, below 3.841
+      D_N 4259 ppm; N times D_N squared 1567 thousandths (the Kolmogorov law's mean 822, its 5 per cent point 1,844)
+      Born, z^2 at the five splits: 1 : 1 2.940; 1 : 2 1.251; 3 : 7 0.875; 10^6 : 3 x 10^6 0.545; 10^30 : 3 x 10^30 0.545
+      at the state's sizes, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 in s_in's now slot: part 0 in 43340 of 86400 (expected 43446), z^2 1.049, below 3.841
+      the largest |freq - share| over the five splits 2916 ppm, within 2 D_N by the theorem
+    seed 2: 86400 distinct v of 86400; u mod 8 [6]; the tenths 5.823 on 9
+      the same half two rounds running 43211 of 86184, z^2 0.657, below 3.841; one Mesh apart 43214 of 86400, z^2 0.009, below 3.841
+      D_N 2813 ppm; N times D_N squared 684 thousandths (the Kolmogorov law's mean 822, its 5 per cent point 1,844)
+      Born, z^2 at the five splits: 1 : 1 1.550; 1 : 2 0.607; 3 : 7 0.540; 10^6 : 3 x 10^6 0.027; 10^30 : 3 x 10^30 0.027
+      at the state's sizes, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 in s_in's now slot: part 0 in 44363 of 86400 (expected 44258), z^2 1.003, below 3.841
+      the largest |freq - share| over the five splits 2118 ppm, within 2 D_N by the theorem
+    seed 3: 86400 distinct v of 86400; u mod 8 [6]; the tenths 13.807 on 9
+      the same half two rounds running 42923 of 86184, z^2 1.325, below 3.841; one Mesh apart 43176 of 86400, z^2 0.026, below 3.841
+      D_N 3668 ppm; N times D_N squared 1162 thousandths (the Kolmogorov law's mean 822, its 5 per cent point 1,844)
+      Born, z^2 at the five splits: 1 : 1 2.778; 1 : 2 1.505; 3 : 7 1.004; 10^6 : 3 x 10^6 2.748; 10^30 : 3 x 10^30 2.748
+      at the state's sizes, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 in s_in's now slot: part 0 in 44410 of 86400 (expected 44527), z^2 1.284, below 3.841
+      the largest |freq - share| over the five splits 2835 ppm, within 2 D_N by the theorem
+    seed 4: 86400 distinct v of 86400; u mod 8 [6]; the tenths 7.842 on 9
+      the same half two rounds running 43065 of 86184, z^2 0.033, below 3.841; one Mesh apart 43256 of 86400, z^2 0.145, below 3.841
+      D_N 2690 ppm; N times D_N squared 625 thousandths (the Kolmogorov law's mean 822, its 5 per cent point 1,844)
+      Born, z^2 at the five splits: 1 : 1 0.246; 1 : 2 1.300; 3 : 7 1.886; 10^6 : 3 x 10^6 0.125; 10^30 : 3 x 10^30 0.125
+      at the state's sizes, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 in s_in's now slot: part 0 in 43155 of 86400 (expected 43138), z^2 0.024, below 3.841
+      the largest |freq - share| over the five splits 2141 ppm, within 2 D_N by the theorem
+    seed 5: 86400 distinct v of 86400; u mod 8 [6]; the tenths 9.487 on 9
+      the same half two rounds running 42985 of 86184, z^2 0.531, below 3.841; one Mesh apart 43170 of 86400, z^2 0.041, below 3.841
+      D_N 2249 ppm; N times D_N squared 437 thousandths (the Kolmogorov law's mean 822, its 5 per cent point 1,844)
+      Born, z^2 at the five splits: 1 : 1 0.038; 1 : 2 0.011; 3 : 7 0.092; 10^6 : 3 x 10^6 0.293; 10^30 : 3 x 10^30 0.293
+      at the state's sizes, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 in s_in's now slot: part 0 in 42719 of 86400 (expected 42631), z^2 0.716, below 3.841
+      the largest |freq - share| over the five splits 798 ppm, within 2 D_N by the theorem
+    mean tenths chi-square 8.869 over the six; the null: mean 9, variance 18 for one lay, 3 for the mean of six; the mean's z^2 0.005
+    the six z^2 at 1:1: 1.466, 2.940, 1.550, 2.778, 0.246, 0.038; the six tenths: 8.994, 7.266, 5.823, 13.807, 7.842, 9.487; past the 5 per cent point 16.919: 0 of 6
+(e) the two hardest lays of the old probe, term 6, the held count laid at n, rounds 21 to 420;
+    the lags pool one Node-clock's pairs over the Node-clocks read; then the held count's row alone in Q, where
+    the third text's pointer froze (its (j): 86,400 of 86,400 and 10,800 of 10,800 draws to part 0):
+    a hot board, matter laid to 10 counts, all 216 Node-clocks: 86400 distinct v of 86400; u mod 8 [6]
+      the tenths 11.675 on 9; joint tenths at t and t + 1: 80.353 on 81; at t and t + 2: 86.050 on 81
+      at 1:1 part 0 in 43255 of 86400 (expected 43200), z^2 0.140, below 3.841; at 1:3 part 0 in 21622 of 86400 (expected 21600), z^2 0.029, below 3.841
+      D_N 2961 ppm, N times D_N squared 757 thousandths; the largest |freq - share| over the five splits 1516 ppm
+      the held count's row alone: 86400 distinct v; u mod 8 [6]; the tenths 9.814 on 9; D_N 2185 ppm, N times D_N squared 412
+        at 1:1 part 0 in 43184 of 86400 (expected 43200), z^2 0.011, below 3.841; at 1:3 part 0 in 21631 of 86400 (expected 21600), z^2 0.059, below 3.841
+    a cold board, one packet near 100 counts, its 27 Node-clocks: 10800 distinct v of 10800; u mod 8 [6]
+      the tenths 14.016 on 9; joint tenths at t and t + 1: 82.003 on 81; at t and t + 2: 86.561 on 81
+      at 1:1 part 0 in 5269 of 10800 (expected 5400), z^2 6.355, 3.841 to 6.635; at 1:3 part 0 in 2688 of 10800 (expected 2700), z^2 0.071, below 3.841
+      D_N 12538 ppm, N times D_N squared 1697 thousandths; the largest |freq - share| over the five splits 12129 ppm
+      the held count's row alone: 10800 distinct v; u mod 8 [6]; the tenths 11.703 on 9; D_N 10115 ppm, N times D_N squared 1105
+        at 1:1 part 0 in 5412 of 10800 (expected 5400), z^2 0.053, below 3.841; at 1:3 part 0 in 2727 of 10800 (expected 2700), z^2 0.360, below 3.841
+    the Fano factor of part 0's count in windows of M rounds at one Node-clock, pooled over the Node-clocks
+    read: its squared gap from the binomial mean over the binomial variance (1 for independent draws), and its
+    z^2 on 1 against its own binomial spread; the norm pointer, the parts' half-open cells:
+    the old lay, all 216 Node-clocks:
+      M = 10, 8640 windows: 0.987 at 1:1 (z^2 0.706, below 3.841), 1.002 at 1:3 (z^2 0.022, below 3.841)
+      M = 40, 2160 windows: 0.986 at 1:1 (z^2 0.202, below 3.841), 0.986 at 1:3 (z^2 0.191, below 3.841)
+      M = 100, 864 windows: 0.982 at 1:1 (z^2 0.130, below 3.841), 1.003 at 1:3 (z^2 0.005, below 3.841)
+      M = 200, 432 windows: 1.050 at 1:1 (z^2 0.554, below 3.841), 0.994 at 1:3 (z^2 0.007, below 3.841)
+      M = 400, 216 windows: 1.112 at 1:1 (z^2 1.363, below 3.841), 1.039 at 1:3 (z^2 0.171, below 3.841)
+    a hot board, matter laid to 10 counts, all 216 Node-clocks:
+      M = 10, 8640 windows: 0.977 at 1:1 (z^2 2.380, below 3.841), 0.997 at 1:3 (z^2 0.027, below 3.841)
+      M = 40, 2160 windows: 1.006 at 1:1 (z^2 0.047, below 3.841), 0.996 at 1:3 (z^2 0.014, below 3.841)
+      M = 100, 864 windows: 0.997 at 1:1 (z^2 0.003, below 3.841), 1.063 at 1:3 (z^2 1.752, below 3.841)
+      M = 200, 432 windows: 1.015 at 1:1 (z^2 0.054, below 3.841), 1.062 at 1:3 (z^2 0.847, below 3.841)
+      M = 400, 216 windows: 1.033 at 1:1 (z^2 0.124, below 3.841), 1.088 at 1:3 (z^2 0.839, below 3.841)
+    a cold board, one packet near 100 counts, its 27 Node-clocks:
+      M = 10, 1080 windows: 1.009 at 1:1 (z^2 0.051, below 3.841), 0.998 at 1:3 (z^2 0.001, below 3.841)
+      M = 40, 270 windows: 1.058 at 1:1 (z^2 0.480, below 3.841), 0.915 at 1:3 (z^2 0.970, below 3.841)
+      M = 100, 108 windows: 1.006 at 1:1 (z^2 0.002, below 3.841), 1.006 at 1:3 (z^2 0.002, below 3.841)
+      M = 200, 54 windows: 1.184 at 1:1 (z^2 0.919, below 3.841), 0.931 at 1:3 (z^2 0.127, below 3.841)
+      M = 400, 27 windows: 1.492 at 1:1 (z^2 3.288, below 3.841), 1.031 at 1:3 (z^2 0.013, below 3.841)
+(f) the vacuum: term 6; light laid moving at every Node-clock (seed 7, as the hostile reader's g5_vacuum.py);
+    matter laid at rest at 0 and the held count at rest at n; 400 rounds, every round read; Q over every
+    row, light's included, as Big Pic reads it (the third text's pointer, light outside, froze at e = 42 here):
+    matter and the held count still at rest after 400 rounds: True; the rows whose fine teeth moved: [0, 1] (light's are rows 0 and 1)
+    each light term's c^2 - 1, by one carry by the grip: quotients mod 6 and rests [(0, 0), (2, 0)]: light's teeth on the grip's lattice
+    v: at most 3 distinct values at a Node-clock, 3 over the board, at 0, 333, 666 thousandths of T8
+    the vacuum's battery, as (d)'s: 3 distinct v of 86400; u mod 8 [6]; the tenths 201608.254 on 9
+      the same half two rounds running 47656 of 86184, z^2 966.773, above 6.635; one Mesh apart 48026 of 86400, z^2 1078.253, above 6.635
+      D_N 334641 ppm; N times D_N squared 9675481 thousandths (the Kolmogorov law's mean 822, its 5 per cent point 1,844)
+      Born at 1 : 1: part 0 in 57495 of 86400 (expected 43200), z^2 9460.510, above 6.635
+      Born at 1 : 2: part 0 in 28913 of 86400 (expected 28800), z^2 0.665, below 3.841
+      Born at 3 : 7: part 0 in 28913 of 86400 (expected 25920), z^2 493.719, above 6.635
+      Born at 10^6 : 3 x 10^6: part 0 in 28913 of 86400 (expected 21600), z^2 3301.232, above 6.635
+      Born at 10^30 : 3 x 10^30: part 0 in 28913 of 86400 (expected 21600), z^2 3301.232, above 6.635
+      at the state's sizes, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 in s_in's now slot: part 0 in 57495 of 86400 (expected 43200), z^2 9460.510, above 6.635
+      the largest |freq - share| over the five splits 165451 ppm, within 2 D_N by the theorem
+      the cell rule drawn part by part equal to the first cell's count at the five splits: True;
+      the raw form, u against W, and the halved form, v against T8, part at 0 of 432000 draws
+    light's two rows alone in Q on the old lay of (d): 3 distinct v of 86400, at 0, 333, 666 thousandths of T8
+(g) the readers' single rotations: G3's held hand on G3's ring of 128, the merge at Node-clock 0 and its
+    two neighbours, re and im read, every fine tooth born at H, 10800 rounds. Laid alike at every
+    Node-clock, the Meshes pull nothing, so the merge reads 3 times one Node-clock's sum, and the board's star
+    of seven 7 times. Every lay is whole: G3's quarter lay, the readers' own-beat lays and their 64 start
+    phases came from series, so one Pythagorean hand stands for them all (Big Pic's construction), and the act
+    turns it:
+    a = 7, b = 1: re laid at 1000000 and 960000 (now, before), im at 0 and -280000; the beat's two whole
+    ratios 48 over 50 and 14 over 50; (48)^2 + (14)^2 = 50^2: True; re^2 + im^2 the same at both slots: True
+    the hand's own spring 4 b^2 W over (a^2 + b^2) = 2 W div 25 = 7278171244373946720000; at another spring the same lay
+    turns on an ellipse; the norm pointer v at the merge drawn by the half-open cells, the third text's e
+    beside it by its own rule, the control:
+    the whole ring's merge against 3 times one Node-clock, at kappa + W div (16 n) + 1, rounds 1 to 1000: equal at 1000 of 1000
+    W mod 7 = 2, W mod 11 = 4; gcd(W, W div 7 rounded) = 2, gcd(W, 3 W div 11 rounded) = 1
+    the plan's kappa = W div 16, on its lattice of 16 points: the spring 5686071284667145875000; re's fine-tooth move over W, median 312 thousandths of a turn
+      the ring's merge, Q: 4 distinct; the tenths 16202.007 on 9; D_N 250185 ppm, N times D_N squared 676000; lag-1 joint tenths 8.655 on 9; z^2 at 1:1, 1:3, 3:7: 0.480, 0.284, 1989.142
+      the ring's merge, P: 8 distinct; the tenths 9420.896 on 9; D_N 129907 ppm, N times D_N squared 182260; lag-1 joint tenths 27.066 on 25; z^2 at 1:1, 1:3, 3:7: 0.853, 5.760, 260.063
+      the board's star, Q: 4 distinct; the tenths 16202.007 on 9; D_N 250185 ppm, N times D_N squared 676000; lag-1 joint tenths 8.655 on 9; z^2 at 1:1, 1:3, 3:7: 0.480, 0.284, 1989.142
+      the board's star, P: 8 distinct; the tenths 9420.896 on 9; D_N 132222 ppm, N times D_N squared 188813; lag-1 joint tenths 27.066 on 25; z^2 at 1:1, 1:3, 3:7: 2.613, 0.000, 236.253
+    kappa + 1, one count off that lattice: the spring 5686071284667145875001; re's fine-tooth move over W, median 312 thousandths of a turn
+      the ring's merge, Q: 10800 distinct; the tenths 16204.409 on 9; D_N 251481 ppm, N times D_N squared 683023; lag-1 joint tenths 9.492 on 9; z^2 at 1:1, 1:3, 3:7: 0.003, 1.090, 2051.432
+      the ring's merge, P: 10791 distinct; the tenths 9541.648 on 9; D_N 136388 ppm, N times D_N squared 200900; lag-1 joint tenths 14.980 on 25; z^2 at 1:1, 1:3, 3:7: 3.853, 1.090, 368.340
+      the board's star, Q: 10800 distinct; the tenths 16204.409 on 9; D_N 251481 ppm, N times D_N squared 683023; lag-1 joint tenths 9.492 on 9; z^2 at 1:1, 1:3, 3:7: 0.003, 1.090, 2051.432
+      the board's star, P: 10791 distinct; the tenths 9541.648 on 9; D_N 134444 ppm, N times D_N squared 195213; lag-1 joint tenths 14.980 on 25; z^2 at 1:1, 1:3, 3:7: 4.005, 5.975, 221.015
+    kappa + W div (16 n) + 1, the readers' off-lattice spring, at the lay's own phase: the spring 5686076970738430542146; re's fine-tooth move over W, median 288 thousandths of a turn
+      the ring's merge, Q: 10800 distinct; the tenths 8.148 on 9; D_N 7435 ppm, N times D_N squared 597; lag-1 joint tenths 71.551 on 81; z^2 at 1:1, 1:3, 3:7: 0.163, 0.444, 0.099
+      the ring's merge, P: 10794 distinct; the tenths 22.709 on 9; D_N 11232 ppm, N times D_N squared 1362; lag-1 joint tenths 131.988 on 81; z^2 at 1:1, 1:3, 3:7: 0.453, 4.840, 0.932
+      the board's star, Q: 10800 distinct; the tenths 5.127 on 9; D_N 8927 ppm, N times D_N squared 860; lag-1 joint tenths 76.398 on 81; z^2 at 1:1, 1:3, 3:7: 2.253, 3.004, 2.160
+      the board's star, P: 10794 distinct; the tenths 5.614 on 9; D_N 4768 ppm, N times D_N squared 245; lag-1 joint tenths 59.480 on 81; z^2 at 1:1, 1:3, 3:7: 0.355, 0.217, 0.423
+    the hand's own beat, 2 W div 25, on its lattice of 25 points: the spring 7278171244373946720000; re's fine-tooth move over W, median 280 thousandths of a turn
+      the ring's merge, Q: 25 distinct; the tenths 428.629 on 9; D_N 47685 ppm, N times D_N squared 24557; lag-1 joint tenths 90.423 on 81; z^2 at 1:1, 1:3, 3:7: 19.763, 73.578, 28.895
+      the ring's merge, P: 25 distinct; the tenths 420.294 on 9; D_N 43703 ppm, N times D_N squared 20628; lag-1 joint tenths 83.394 on 81; z^2 at 1:1, 1:3, 3:7: 18.253, 54.431, 19.075
+      the board's star, Q: 25 distinct; the tenths 443.294 on 9; D_N 43888 ppm, N times D_N squared 20803; lag-1 joint tenths 90.283 on 81; z^2 at 1:1, 1:3, 3:7: 17.440, 53.127, 23.731
+      the board's star, P: 25 distinct; the tenths 421.705 on 9; D_N 44444 ppm, N times D_N squared 21333; lag-1 joint tenths 76.996 on 81; z^2 at 1:1, 1:3, 3:7: 16.023, 68.337, 12.444
+    2 W div 25 + W div (25 n) + 1, off that lattice by a step at the swing: the spring 7278174883459568906974; re's fine-tooth move over W, median 287 thousandths of a turn
+      the ring's merge, Q: 10800 distinct; the tenths 11.272 on 9; D_N 8317 ppm, N times D_N squared 747; lag-1 joint tenths 55.662 on 81; z^2 at 1:1, 1:3, 3:7: 2.195, 0.126, 0.074
+      the ring's merge, P: 10797 distinct; the tenths 12.862 on 9; D_N 10804 ppm, N times D_N squared 1260; lag-1 joint tenths 85.293 on 81; z^2 at 1:1, 1:3, 3:7: 2.028, 1.284, 1.333
+      the board's star, Q: 10800 distinct; the tenths 7.366 on 9; D_N 9576 ppm, N times D_N squared 990; lag-1 joint tenths 75.780 on 81; z^2 at 1:1, 1:3, 3:7: 0.750, 0.676, 0.063
+      the board's star, P: 10797 distinct; the tenths 6.331 on 9; D_N 6868 ppm, N times D_N squared 509; lag-1 joint tenths 79.681 on 81; z^2 at 1:1, 1:3, 3:7: 0.148, 0.261, 0.253
+    W div 7 rounded, the mathematician's: the spring 12996734364953476285714; re's fine-tooth move over W, median 285 thousandths of a turn
+      the ring's merge, Q: 10800 distinct; the tenths 62.272 on 9; D_N 28743 ppm, N times D_N squared 8922; lag-1 joint tenths 96.152 on 81; z^2 at 1:1, 1:3, 3:7: 10.703, 16.901, 7.111
+      the ring's merge, P: 10795 distinct; the tenths 17987.435 on 9; D_N 147817 ppm, N times D_N squared 235980; lag-1 joint tenths 3.198 on 9; z^2 at 1:1, 1:3, 3:7: 252.083, 714.671, 785.813
+      the board's star, Q: 10800 distinct; the tenths 4675.418 on 9; D_N 161494 ppm, N times D_N squared 281669; lag-1 joint tenths 85.523 on 36; z^2 at 1:1, 1:3, 3:7: 253.920, 170.157, 1006.667
+      the board's star, P: 10795 distinct; the tenths 97200.000 on 9; D_N 999999 ppm, N times D_N squared 10799999; lag-1 joint tenths 0.000 on 0; z^2 at 1:1, 1:3, 3:7: 10800.000, 32400.000, 25200.000
+    3 W div 11 rounded, the mathematician's: the spring 24811947424002091090909; re's fine-tooth move over W, median 272 thousandths of a turn
+      the ring's merge, Q: 10800 distinct; the tenths 24.792 on 9; D_N 13401 ppm, N times D_N squared 1939; lag-1 joint tenths 99.284 on 81; z^2 at 1:1, 1:3, 3:7: 1.001, 2.351, 1.102
+      the ring's merge, P: 10793 distinct; the tenths 7940.051 on 9; D_N 94031 ppm, N times D_N squared 95493; lag-1 joint tenths 19.319 on 25; z^2 at 1:1, 1:3, 3:7: 91.117, 34.417, 33.587
+      the board's star, Q: 10800 distinct; the tenths 11.166 on 9; D_N 10947 ppm, N times D_N squared 1294; lag-1 joint tenths 89.598 on 81; z^2 at 1:1, 1:3, 3:7: 0.044, 3.652, 1.102
+      the board's star, P: 10793 distinct; the tenths 7940.051 on 9; D_N 92803 ppm, N times D_N squared 93013; lag-1 joint tenths 19.319 on 25; z^2 at 1:1, 1:3, 3:7: 90.018, 25.000, 43.750
+    the off-lattice springs at 64 start phases: the hand laid as above, then turned by the act itself, d
+    rounds between starts at the spring, every fine tooth born again at H for each start's read; d, written
+    here, takes the starts once round (their octants, counterclockwise from re's + axis, listed); per start,
+    the tenths on 9, N times D_N squared and the largest z^2 of 1:1, 1:3 and 3:7:
+    kappa + W div (16 n) + 1, the readers' spring, d = 602: the 64 starts by octant [8, 9, 8, 7, 8, 9, 8, 7]
+      chance for independent uniform draws: the tenths past their three points in 3.200, 0.640 and 0.064 lays; N times D_N squared past 1.844 in 3.200; the largest of three z^2 past 6.635 in about 1.900
+      the ring's merge, Q: the tenths past 16.919, 21.666 and 27.877 in 4, 0 and 0 of 64; N times D_N squared past 1.844 in 6; a split's z^2 past 6.635 in 1; the largest tenths 20.220 at start 38
+        the 64 tenths, in start order: 8.148, 18.248, 18.198, 7.961, 6.522, 9.083, 9.414, 5.601, 5.211, 3.477, 9.887, 8.227, 5.962, 10.679, 5.959, 9.362, 9.075, 11.111, 7.407, 5.205, 8.431, 16.859, 14.516, 13.998, 12.777, 15.877, 13.255, 2.850, 11.533, 5.750, 6.038, 4.153, 10.477, 2.807, 6.231, 12.696, 6.677, 6.888, 20.220, 10.187, 2.920, 5.966, 2.650, 12.440, 7.614, 11.579, 17.331, 8.177, 3.650, 3.685, 4.612, 6.062, 5.437, 6.342, 7.738, 11.246, 3.157, 3.109, 13.435, 7.870, 13.253, 9.531, 8.603, 11.898
+      the ring's merge, P: the tenths past 16.919, 21.666 and 27.877 in 47, 32 and 23 of 64; N times D_N squared past 1.844 in 8; a split's z^2 past 6.635 in 1; the largest tenths 58.498 at start 30
+        the 64 tenths, in start order: 22.709, 35.970, 9.348, 22.781, 19.957, 34.720, 12.259, 21.201, 17.185, 13.922, 19.459, 47.516, 29.827, 29.370, 30.272, 9.174, 28.474, 12.888, 39.298, 45.651, 29.375, 18.033, 21.037, 18.344, 18.305, 22.968, 10.522, 27.762, 20.672, 10.250, 58.498, 39.261, 24.422, 19.335, 50.090, 19.600, 29.637, 13.968, 41.100, 22.046, 24.087, 38.090, 29.642, 6.198, 2.412, 16.805, 6.609, 21.572, 29.338, 34.124, 11.274, 27.216, 17.592, 34.888, 33.422, 4.931, 7.198, 10.711, 17.372, 31.312, 25.959, 3.446, 45.327, 21.177
+      the board's star, Q: the tenths past 16.919, 21.666 and 27.877 in 8, 0 and 0 of 64; N times D_N squared past 1.844 in 4; a split's z^2 past 6.635 in 3; the largest tenths 19.062 at start 9
+        the 64 tenths, in start order: 5.127, 8.887, 10.244, 9.742, 6.609, 8.266, 15.514, 8.738, 13.588, 19.062, 18.303, 4.770, 4.683, 8.737, 4.640, 18.748, 17.755, 7.555, 5.850, 9.227, 10.925, 3.225, 7.448, 16.020, 8.466, 9.016, 6.938, 4.194, 7.805, 11.674, 10.500, 7.422, 9.492, 6.777, 6.727, 7.805, 7.837, 8.570, 11.664, 8.981, 6.292, 5.066, 9.540, 8.529, 10.883, 17.161, 6.359, 3.722, 10.151, 12.850, 7.190, 10.437, 7.998, 18.074, 5.740, 5.585, 4.429, 18.548, 15.272, 7.222, 8.192, 16.942, 9.566, 9.850
+      the board's star, P: the tenths past 16.919, 21.666 and 27.877 in 10, 2 and 0 of 64; N times D_N squared past 1.844 in 3; a split's z^2 past 6.635 in 0; the largest tenths 26.892 at start 27
+        the 64 tenths, in start order: 5.614, 9.585, 7.094, 7.912, 16.781, 6.798, 7.538, 9.461, 10.387, 10.546, 9.268, 13.368, 19.200, 1.751, 15.940, 10.159, 10.477, 10.757, 14.129, 14.759, 10.464, 7.898, 18.277, 6.307, 6.566, 14.357, 6.692, 26.892, 11.031, 10.927, 8.698, 2.433, 8.109, 6.266, 6.353, 8.374, 10.807, 7.546, 11.453, 12.516, 26.094, 8.770, 9.731, 4.040, 6.572, 5.088, 10.811, 4.266, 14.474, 4.729, 9.103, 6.864, 5.644, 17.314, 19.320, 10.755, 8.842, 17.920, 18.040, 19.777, 2.903, 19.561, 9.472, 7.824
+    2 W div 25 + W div (25 n) + 1, the hand on its own beat, d = 421: the 64 starts by octant [9, 8, 8, 8, 8, 8, 8, 7]
+      chance for independent uniform draws: the tenths past their three points in 3.200, 0.640 and 0.064 lays; N times D_N squared past 1.844 in 3.200; the largest of three z^2 past 6.635 in about 1.900
+      the ring's merge, Q: the tenths past 16.919, 21.666 and 27.877 in 3, 1 and 0 of 64; N times D_N squared past 1.844 in 1; a split's z^2 past 6.635 in 0; the largest tenths 25.498 at start 23
+        the 64 tenths, in start order: 11.272, 15.990, 4.403, 12.257, 10.175, 4.638, 10.138, 7.264, 11.377, 18.731, 4.618, 9.161, 6.418, 6.272, 3.262, 11.066, 5.231, 6.555, 5.483, 7.237, 11.251, 8.614, 16.548, 25.498, 6.509, 5.848, 9.329, 8.837, 11.809, 10.483, 8.514, 11.624, 6.259, 7.907, 9.500, 9.862, 4.711, 4.346, 16.979, 6.292, 10.083, 5.401, 14.081, 8.640, 9.320, 12.351, 5.005, 6.788, 9.038, 10.250, 9.368, 5.274, 10.312, 5.414, 15.372, 4.120, 7.218, 6.320, 5.175, 13.657, 10.266, 6.635, 10.611, 6.598
+      the ring's merge, P: the tenths past 16.919, 21.666 and 27.877 in 3, 0 and 0 of 64; N times D_N squared past 1.844 in 2; a split's z^2 past 6.635 in 1; the largest tenths 19.979 at start 57
+        the 64 tenths, in start order: 12.862, 9.672, 10.170, 9.770, 11.177, 18.707, 10.414, 7.511, 11.266, 10.051, 12.362, 13.687, 8.351, 10.298, 13.968, 3.348, 9.394, 4.612, 9.877, 8.933, 10.003, 6.522, 9.744, 11.351, 11.370, 9.324, 8.729, 8.724, 7.951, 7.477, 5.111, 6.831, 8.116, 10.070, 7.781, 2.914, 10.274, 10.674, 11.333, 13.587, 8.920, 9.983, 5.888, 4.801, 12.075, 6.531, 17.742, 7.944, 10.025, 4.437, 13.503, 3.261, 7.851, 4.277, 10.090, 10.518, 6.209, 19.979, 9.883, 9.925, 11.050, 4.116, 7.079, 3.890
+      the board's star, Q: the tenths past 16.919, 21.666 and 27.877 in 3, 0 and 0 of 64; N times D_N squared past 1.844 in 2; a split's z^2 past 6.635 in 1; the largest tenths 21.033 at start 57
+        the 64 tenths, in start order: 7.366, 7.083, 8.914, 9.696, 14.190, 7.694, 8.094, 6.979, 7.564, 4.096, 7.016, 15.485, 2.750, 4.768, 6.903, 9.229, 9.211, 3.527, 13.551, 18.246, 9.305, 17.057, 14.114, 11.451, 8.922, 7.474, 8.292, 11.577, 14.800, 8.220, 9.250, 11.674, 13.488, 4.468, 2.046, 6.822, 8.135, 15.940, 9.059, 5.761, 15.892, 8.840, 8.161, 6.112, 7.368, 14.772, 7.012, 6.048, 5.500, 8.220, 8.418, 4.214, 15.112, 6.716, 7.503, 6.950, 5.081, 21.033, 10.572, 11.916, 8.366, 8.716, 5.014, 10.337
+      the board's star, P: the tenths past 16.919, 21.666 and 27.877 in 4, 0 and 0 of 64; N times D_N squared past 1.844 in 3; a split's z^2 past 6.635 in 4; the largest tenths 19.064 at start 51
+        the 64 tenths, in start order: 6.331, 5.007, 13.207, 7.035, 10.279, 6.344, 18.868, 12.624, 7.881, 13.464, 18.898, 6.251, 5.425, 2.231, 9.351, 2.461, 5.822, 2.405, 2.620, 3.766, 10.918, 16.959, 11.279, 8.546, 0.768, 11.774, 5.687, 3.503, 5.414, 9.385, 11.281, 7.520, 4.498, 8.735, 4.996, 3.553, 11.596, 7.044, 14.033, 13.198, 12.361, 6.483, 7.524, 10.094, 13.088, 4.574, 10.522, 4.970, 14.959, 5.737, 5.090, 19.064, 11.624, 11.796, 16.098, 4.033, 2.303, 12.609, 10.585, 8.161, 13.953, 6.072, 5.742, 10.844
+(h) the third text's (p): the norm pointer only at the rounds where a Node-clock's swept area
+    m_re p_im - m_im p_re crosses a multiple of the key 10^10 W, p = W (a - b) + r, from s_in to s_out, on the
+    old lay's run of (d):
+    14333 crossings; the tenths 4.622 on 9; D_N 4574 ppm, N times D_N squared 299 thousandths; the largest |freq - share| over the five splits 2877 ppm
+    at 1:1 part 0 in 7189 of 14333 (expected 7166), z^2 0.141, below 3.841; at the state's sizes part 0 in 7145 of 14333 (expected 7192), z^2 1.204, below 3.841
+    the third text's (q), the backward pass's step: v at (x, t) against v at x's neighbour at t + 1, along +x
+    and along all six Spokes; joint tenths on 81, and the same half with its odds:
+    seed 20261030, along +x: joint tenths 62.412 on 81; same half 43112 of 86184, z^2 0.018, below 3.841
+    seed 20261030, along all six Spokes: joint tenths 79.462 on 81; same half 258598 of 517104, z^2 0.016, below 3.841
+    seed 4, along +x: joint tenths 100.416 on 81; same half 43015 of 86184, z^2 0.275, below 3.841
+    seed 4, along all six Spokes: joint tenths 100.589 on 81; same half 258320 of 517104, z^2 0.416, below 3.841
