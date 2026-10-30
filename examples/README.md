@@ -83,7 +83,7 @@ stand between its crests, and not its momenta: yy and zz -18 at the crests and -
 and -32, the pulse's own stretches along x drawing xx down, as the E part has no restoring force on the torus, so the
 x Meshes' grips g + c_xx + c_xx' through (0, 0) are 999923 to 999946 of 10^6 at the last round); and train 2's one
 count is the pulse, slowed by the well by less than a tenth of a Mesh: over the 127 rounds from the first its
-centroid along x (weighted by its counts squared) moves 51.27 Meshes against 51.36 for the same files at push 0 (the
+centroid along x (weighted by its counts squared) moves 50.79 Meshes against 50.88 for the same files at push 0 (the
 metric standing at 0), a lag of 0.09 Mesh, and the bend between the rows through the crests and the rows of the void
 is 0.01 Mesh, below the lattice's resolution (the well is 3 parts in 10^4 of W at its deepest). OPEN here, by name
 (the edge text's section 4, derive/boss/edge/EDGE2.md on the Boss's derivation branch): the 00 row's own law. The 00

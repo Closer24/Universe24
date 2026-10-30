@@ -33,9 +33,9 @@ def pairs_of(trains: Z, c: Z, traces: Z) -> tuple[Z, Z, Z, Z]:
 
 
 def passing(trains: Z, c: Z, traces: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
-    """Term 11, every train's passing as the act reads it, with its key: each pair of the train's rows through its kinds' table with itself onto A1 (pairs_of), the entry the factor, so that the train's form over a J(b) - b J(a), the dot product for a vector hand and 1 for a scalar, is summed into the train; the key the universe file's one CHOSEN odd whole, the same for every train."""
+    """Term 11, every train's passing as the act reads it, with its key: each pair of the train's rows through its kinds' table with itself onto A1 (pairs_of), the entry the factor, so that the train's form over a J(b) - b J(a), the dot product for a vector hand and 1 for a scalar, is summed into the train; the key the universe file's one CHOSEN odd whole, the same for every train (an even key the files' format refuses by name); the square takes the factor 0 by its flag, as the push does, since its rows are the slots' basis and no kind's own, so pairs_of's blocks would give it a form the 24 keep at 8 turns of 24 (the first hostile code reader's M1)."""
     one, two, entry, train = pairs_of(trains, c, traces)
-    return one, two, entry, train, key
+    return one, two, entry * trains.matter[train], train, key
 
 
 def rows_of(trains: Z) -> tuple[Z, Z, Z, Z, Z]:

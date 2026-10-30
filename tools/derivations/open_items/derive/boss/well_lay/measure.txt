@@ -3,4 +3,4 @@ the well world [18, 6, 6] at push 1 and notch 120000, 128 rounds; the clock's re
 2. the ii slots (crests, void): {'xx': (-31, -32), 'yy': (-18, -20), 'zz': (-18, -20)}; the x Meshes' grips g + c_xx + c_xx' through (y, z) = (0, 0) at the last round 999923 to 999946 of 1000000
 3. the second cone: at the last round every other row's dial reads 6000852 to 6001812 where the 00 row's reads [6000000], W / rest 1000142 to 1000302 ppm
 4. the largest stride a round over the run, by train: {'light': 5010, 'the metric': 21, 'the pulse': 97} (the 00 push resolves none below half a count a round)
-5. the pulse's centroid along x over the 127 rounds from the first, in hundredths of a Mesh: 5127 at push 1 against 5136 at push 0 with the metric at 0, a lag of 9; the bend between its rows through the crests and through the void at the last round, less the same at push 0, 1 hundredths
+5. the pulse's centroid along x over the 127 rounds from the first, in hundredths of a Mesh: 5079 at push 1 against 5088 at push 0 with the metric at 0, a lag of 9; the bend between its rows through the crests and through the void at the last round, less the same at push 0, 1 hundredths

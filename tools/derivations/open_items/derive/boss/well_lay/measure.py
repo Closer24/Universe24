@@ -6,7 +6,8 @@ shapes (lay.py's helpers), no train declared here.
 Clock: the 00 slot's well and the ii slots' grips where the lump is, and the pulse slowed by the well.
 Algebra: time's means over the second half of the rounds by Rule3's carry; W = rest + k0 c00, N^2 = rest / W in parts per
 million; the pulse's centroid along x weighted by its counts squared, each site taken at its image nearest the last
-round's centroid on the ring, in hundredths of a Mesh, and its bend in thousandths.
+round's centroid on the ring (the first seeded at the pulse's laid centre, so the lump is not split at the ring's seam),
+in hundredths of a Mesh, and its bend in thousandths.
 Board: the crests where the mode f = c(x) + c(y) + c(z) is 6 in magnitude (x, y and z all multiples of 6 or all 3
 more), the void where f = 0; the pulse's rows through the crests where |c(y) + c(z)| = 4 and through the void where
 c(y) + c(z) = 0.
@@ -56,7 +57,7 @@ def course(universe, shape, gears, rows_of, ticks):
     held, layout, s = lay.world(universe, shape, gears)
     light, square, pulse = lay.trains_of(held)
     at = int(held.trains[pulse].first)
-    last = {name: centroid(s.a[at], rows, shape, 0) for name, rows in rows_of.items()}
+    last = {name: centroid(s.a[at], rows, shape, 100 * lay.CENTRE) for name, rows in rows_of.items()}  # the pulse's laid centre
     tracks = {name: [] for name in rows_of}
     states = []
     for _ in range(ticks):

@@ -12,6 +12,8 @@ from typing import Any, NamedTuple, TypeGuard
 
 import numpy as np
 
+from tensor24.algebra.carry import carry
+
 # A kind among the 24's, a kind's whole basis and a gear's component within its train's rows are read against the
 # engine's kinds once they are made (held_departures). The fine tooth within its teeth is the round's promise, read by
 # the runner from outside before every round (run.promises). No file declares a coupling: the coupling family's one
@@ -51,6 +53,21 @@ class Rule(NamedTuple):
 WHOLE = Rule(whole, "a whole number")
 ONE = Rule(lambda v: whole(v) and v >= 1, "a whole number of at least 1")
 NONE_BELOW = Rule(lambda v: whole(v) and v >= 0, "a whole number of at least 0")
+
+
+def star(axes: int) -> Any:
+    """The Node-clock's star as the files lay it at the initialization: each Spoke's direction, the + and the - of every axis in turn, the neighbours' order."""
+    unit = np.eye(axes, dtype=object)
+    return np.stack((unit, -unit), axis=1).reshape(-1, axes)
+
+
+SENSES = len(star(1))  # the Spokes along one axis, its + and its -: the star of one axis
+# the key odd: the click tooth born at (key - 1) div senses is the one the mirror leaves in place only then (the first
+# hostile code reader's M6: with an even key the pair's books miss)
+ODD = Rule(
+    lambda v: whole(v) and v >= 1 and carry(v, SENSES, 0)[1] == 1,
+    f"an odd whole number, the click tooth born at (key - 1) div {SENSES} the one the mirror keeps",
+)
 LABEL = Rule(lambda v: isinstance(v, str) and v != "", "a label")
 KINDS = Rule(
     lambda v: isinstance(v, list) and v != [] and all(map(LABEL.test, v)), "a list of the kinds' labels"
@@ -69,7 +86,7 @@ UNIVERSE = {
     # the free strengths, each CHOSEN by name: the whole click's key (G5; its value G3's), the metric's push and the
     # volume's notch (G2), the held hand's tie, the hands' tie and the gradient vertex through the Mesh (G3's frame)
     "chosen": {
-        "key": ONE,
+        "key": ODD,
         "push": NONE_BELOW,
         "notch": NONE_BELOW,
         "hold": NONE_BELOW,

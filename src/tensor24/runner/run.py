@@ -15,8 +15,8 @@ import numpy as np
 
 from tensor24.algebra.carry import carry
 from tensor24.record import schema
-from tensor24.runner.files import OPERANDS, departures, held_departures, sites_of, vocabulary
-from tensor24.runner.load import load, star
+from tensor24.runner.files import OPERANDS, departures, held_departures, sites_of, star, vocabulary
+from tensor24.runner.load import load
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 
@@ -37,24 +37,28 @@ class Engine(NamedTuple):
 
 
 def promises(s: Any, wa: Any, wb: Any) -> list[str]:
-    """The round's promise on the state it reads, read from outside, each departure named where it stands: both slots' teeth at least 1, and every tooth within its edge's dial, -D <= s < D, D = W(b) + W(a)."""
+    """The round's promise on the state it reads, read from outside, each departure named where it stands: both slots' teeth at least 1, named as teeth where they are not, and every tooth within its edge's dial, -D <= s < D, D = W(b) + W(a), where they are."""
     _, _, tooth, _, _ = s
     wa, wb = np.broadcast_to(wa, tooth.shape), np.broadcast_to(wb, tooth.shape)
-    d = wa + wb
-    off = (wa < 1) | (wb < 1) | (tooth < -d) | (tooth >= d)
-    return [
+    d, low = wa + wb, (wa < 1) | (wb < 1)
+    off = ~low & ((tooth < -d) | (tooth >= d))
+    teeth = [
+        f"row {g}, site {x}: the teeth {wb[g, x]} and {wa[g, x]}, not both at least 1"
+        for g, x in np.argwhere(low)
+    ]
+    return teeth + [
         f"row {g}, site {x}: the tooth {tooth[g, x]} not within the edge's dial [-{d[g, x]}, {d[g, x]}) of the teeth {wb[g, x]} and {wa[g, x]}"
         for g, x in np.argwhere(off)
     ]
 
 
 def window(held: Any, w: Any, spokes: Any) -> list[str]:
-    """The wave's window on the state the round reads, read from outside, each departure named where it stands: the Spokes' grips summed within [0, W] per sense, the senses along one axis counted from the star, so that the pull's sharpest mode, every neighbour opposite, stays a wave and does not grow unseen."""
+    """The wave's window on the state the round reads, read from outside, each departure named where it stands: the Spokes' grips summed within [0, W] per sense where the teeth are at least 1 (below, the promise names the teeth), the senses along one axis counted from the star, so that the pull's sharpest mode, every neighbour opposite, stays a wave and does not grow unseen."""
     senses, _ = carry(spokes.shape[0], spokes.shape[1], 0)
     total, reach = np.broadcast_to(held.sum(axis=1), w.shape), senses * w
     return [
         f"row {g}, site {x}: the Spokes' grips {total[g, x]} not within [0, {reach[g, x]}], the wave's window"
-        for g, x in np.argwhere((total < 0) | (total > reach))
+        for g, x in np.argwhere((w >= 1) & ((total < 0) | (total > reach)))
     ]
 
 
@@ -130,7 +134,7 @@ def header(
     loaded: Any,
     layout: Any,
 ) -> dict[str, Any]:
-    """The record's first line: the files verbatim with their digests, the board, the kinds with their characters, the trains with their windings, keys and square flags."""
+    """The record's first line: the files verbatim with their digests, the board, the kinds with their characters, the trains with their windings (a train's winding the drive's dial at its first row, so the square's card reads its 00 row's, senses, while its 0i and jk rows run at 1), keys and square flags."""
     labels = [train["name"] for train in universe["trains"]]
     traits = zip(kinds._fields, kinds, characters(kinds), strict=True)
     return {

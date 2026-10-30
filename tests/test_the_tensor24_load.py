@@ -96,7 +96,7 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
 
 
 def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_coupling_familys_frame():
-    """Yes: the passing's pairs are each train's rows, kind by kind and part by part, through its kinds' table with itself onto A1 at the table's entry, the target the train, each pair once, the key the universe's; on the click world's shape the held hand and the tied hands are found by character, the held rows' own spring is rest and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, light in no monomial;
+    """Yes: the passing's pairs are each train's rows, kind by kind and part by part, through its kinds' table with itself onto A1 at the table's entry (the square's at 0 by its flag), the target the train, each pair once, the key the universe's; on the click world's shape the held hand and the tied hands are found by character, the held rows' own spring is rest and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, light in no monomial;
     term 5's push in the books' form: every row gliding a count a round alike pushes the 00 slot by k0 = Spokes x senses (the clock's read, from the star) times the momenta in and out of every row the push does not land on, a tent along z pushes the zz slot by minus its two z Meshes' stretches squared, nothing lands elsewhere, the drive's teeth senses on the 00 and ii rows and 1 elsewhere, in either order of the trains.
     No: no pair crosses two trains or two parts; the tie off the diagonal and the hands' tie the other way are 0; the two tied hands swapped in the file lay the same plan and grips; the pushed rows' own momenta push nothing, and push 0 pushes nothing."""
     held, found = loaded(trains := [*TRAINS, METRIC])
@@ -105,9 +105,9 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_cou
     wanted, a1 = {}, [name.upper() for name in MADE[0]._fields].index("A1")
     for n, t in enumerate(held.trains[n] for n in range(len(trains))):
         for j, (k, d) in enumerate(zip(t.kinds, t.dims, strict=True)):
-            at = t.first + sum(t.dims[:j]) * t.part
+            at, m = t.first + sum(t.dims[:j]) * t.part, 1 - t.square  # the square's at 0
             for p, x, y in itertools.product(range(t.part), range(d), range(d)):
-                wanted[at + x * t.part + p, at + y * t.part + p, n] = MADE[1][k, k, a1][0][x, y]
+                wanted[at + x * t.part + p, at + y * t.part + p, n] = m * MADE[1][k, k, a1][0][x, y]
     assert found == [] and len(got) == len(one) and got == wanted and key == [[1]] * len(trains)
     # term 6's frame on light, the square, the held hand (A1, A2) and two tied (T1, T2) hands, at hold 1 and tie 1
     chosen = {**CHOSEN, "hold": 1, "tie": 1}

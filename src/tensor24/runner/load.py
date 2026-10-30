@@ -13,7 +13,7 @@ import numpy as np
 
 from tensor24.algebra.carry import Z, carry, lit
 from tensor24.runner.board import board
-from tensor24.runner.files import GEAR, entries, vocabulary
+from tensor24.runner.files import GEAR, entries, star, vocabulary
 from tensor24.runner.plans import holding, joined, notching, passing, pushing, tying
 
 
@@ -244,12 +244,6 @@ def geared(
         np.tile(np.arange(n, dtype=np.intp), trained),
     )
     return gearing, clock, stretch, grip
-
-
-def star(axes: int) -> Z:
-    """The Node-clock's star as the files lay it at the initialization: each Spoke's direction, the + and the - of every axis in turn, the neighbours' order."""
-    unit = np.eye(axes, dtype=object)
-    return np.stack((unit, -unit), axis=1).reshape(-1, axes)
 
 
 def geometry(nb: Z, axes: int) -> tuple[Z, Z]:

@@ -235,15 +235,17 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert all(
         leaves(dataclasses.make_dataclass("Broken", [("x", hint)])) - {int, str} for hint in broken
     )
-    # a departing file, a broken promise or a lay outside the wave's window (the 00 slot at site 0 laid so deep that
-    # the teeth there, the rest and k0 times it, are within 1 and k0, every row's but the 00 row's own) is named, and
-    # nothing is written, by the run and its tool
+    # a departing file, an even key, a broken promise or a lay outside the wave's window (the 00 slot at site 0 laid so
+    # deep that the teeth there, the rest and k0 times it, are within 1 and k0, every row's but the 00 row's own) is
+    # named, and nothing is written, by the run and its tool
+    even = {**universe, "chosen": {**universe["chosen"], "key": universe["chosen"]["key"] + 1}}
     universe["version"], k0 = 1 + 1, int(laid.clock.factor.max())  # the clock's read factor
     deep, low = json.loads(json.dumps(setting)), (k0 - int(laid.gearing.rest[0, 0])) // k0
     deep["gears"].append([[n for n, t in enumerate(held.trains) if t.square][0], 0, 0, low, low, 0])
     setting["gears"][0][-1] = TOOTH
     edits = (
         ("universe", universe, "universe.version: 1, not 2", 1),
+        ("universe", even, "universe.chosen.key: an odd whole number", 1),
         ("setting", setting, "round 1: row 0, site 0: the tooth", 1),
         ("setting", deep, "round 1: row 0, site 0: the Spokes' grips", len(laid.gearing.rest) - 1),
     )
@@ -266,26 +268,28 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert orders_alike()
     by_place(monkeypatch)
     assert not orders_alike()
-    # the click lines on a pair world of one Node-clock within the room (hold (x.x) below Gamma div 4): the held hand (1, 0) with its tooth at
-    # the dial's middle (s = 0), the giver at rest at 32, the taker gliding a count a round, the hands' tie 1200, the key 76801 odd: every round the
-    # giver takes one key and the taker gives one, the pair's books 0 at every round and site, the held hand clicks nowhere, the run back exact
+    # the click lines on a pair world of one Node-clock inside the room for ten beats (the first hostile code reader's M3): the held hand (1, 0) with
+    # its tooth at the dial's middle (s = 0), the giver at its turning point at 14 and the taker at rest, at Gamma 1000 (the tied spring 2 hold f
+    # 12000, a lone tied hand's beat 126 rounds on the act), the hands' tie 9600 (800 permille of the tied spring; at a tenth the taker's push stays
+    # in its tooth and no click falls), the key 614401 odd (the seventh of the giver's swing of S over its first beat): over the 1260 rounds hold
+    # (|x_giver|^2 + |x_taker|^2) stays at most 196 of Gamma div 4 = 250 and the held hand's |k|^2 at 1, so keys pass with the pair's books 0 at
+    # every round and site and the held hand clicks nowhere, the run back exact
     den = 1  # every pinion den, the seed's
     hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
     pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
     trains = [hand, {"name": "giver", **pair}, {"name": "taker", **pair}]
-    chosen = {"key": 76801, "push": 0, "notch": 0, "hold": 1, "tie": 1200, "mesh": 0}
-    integers = {"den": den, "full_rate": 10000, "width": 128}
+    chosen = {"key": 614401, "push": 0, "notch": 0, "hold": 1, "tie": 9600, "mesh": 0}
+    integers = {"den": den, "full_rate": 1000, "width": 128}
     world = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
-    gears = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 0, -1, 0], [1, 0, 0, 32, 32, 0], [2, 0, 0, 0, -1, 0]]
-    laid_ = {"version": 1, "ticks": 30, "gears": gears}
+    gears = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 0, -1, 0], [1, 0, 0, 14, 14, 0]]
+    laid_ = {"version": 1, "ticks": 1260, "gears": gears}
     files = {"universe": world, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": laid_}
     for name, held_ in files.items():
         (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")
     assert main.ran([tmp_path / f"{name}.json" for name in NAMES], tmp_path / "pair.jsonl") == []
     got, cause = records.read(str(tmp_path / "pair.jsonl"))
-    lines, counted, ticks = got.of("click"), clicks.counted(got), laid_["ticks"]
-    assert cause == "" and got.end["exact"] == 1 and len(lines) == (1 + 1) * ticks
-    assert all(whole(x["q"]) and len(x["tooth"]) == 1 + 1 and all(map(whole, x["tooth"])) for x in lines)
-    assert counted.nonzero == 0 and counted.places == ticks and sorted(counted.trains) == [1, 1 + 1]
-    give, take = counted.trains[1], counted.trains[1 + 1]
-    assert give.given == take.taken == 0 and give.taken == take.given == ticks
+    lines, counted, tied = got.of("click"), clicks.counted(got), list(range(1, len(trains)))
+    assert cause == "" and got.end["exact"] == 1 and lines and counted.nonzero == 0
+    assert all(whole(x["q"]) and all(map(whole, (k, k1))) for x in lines for k, k1 in [x["tooth"]])
+    give, take = (counted.trains[n] for n in tied)  # the held hand's train has no line
+    assert sorted(counted.trains) == tied and give.given == take.taken and give.taken == take.given
