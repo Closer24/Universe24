@@ -63,7 +63,7 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 | proper time | a clock's own count between two of its clicks: the clock summed its path by ticking, and the decoder reads the sum on its face. That the count is the metric's measure of the path holds where the engine is right: with the metric at rest; from G2, where a clock moves, rising or falling, the step drops a term and promises no exact run back (engine/step.py) | built (D6's first reading); on the engine owed from G2 |
 | no duration from rounds | a difference of rounds read as a duration is refused by name ("compares board ticks, no reading"); rounds still order the clicks and bound the cone | built (D7) |
 | no length from labels | a difference of sites read as a length is refused by name, as rounds are (part 3.5) | owed (measure.py) |
-| a light path | a quantum's lay and its take. They lie on light's cone only for a long-wave quantum with no mass: the engine's light disperses (at G1b, measured by the physicist: 0.995 of the long-wave speed at wavelength 16, 0.978 at 8 and 0.913 at 4 along an axis; at one wavenumber a face diagonal is 2.7 percent faster than an axis) | owed (light.py) |
+| a light path | a quantum's lay and its take. They lie on light's cone only for a long-wave quantum with no mass: the engine's light disperses (at G1b, measured by the physicist: 995 thousandths of the long-wave speed at wavelength 16, 978 at 8 and 913 at 4 along an axis; at one wavenumber a face diagonal is 27 thousandths faster than an axis) | owed (light.py) |
 | a distance | an echo: a clock lays a quantum, the far clock lays one back at its take, and the first clock counts its own teeth from its lay to the echo's take; where the far clock holds the quantum a while, the hold lengthens the echo, and only two clocks that tick alike can take it off. Two-way only. The two-way composition at light's speed is the law's theorem on the older engine, for long flashes on an empty board with light at one speed (**The two-way reading**, **The measured speed**); on this engine, whose light disperses, it is owed anew. The two-way speed tests light's constancy; the one-way reading and the twins test the clocks | owed (light.py) |
 | the redshift | a one-way count ratio: one clock lays a quantum at each of its teeth, another counts its own teeth between the takes, each take paired with its own lay's tooth. It is the first-order Doppler and the lapse together | owed (light.py) |
 | time dilation | read for a moving clock: its quanta's ratios at two clocks standing still, one ahead of it and one behind, taken together (Ives and Stilwell's way), or over a closed path (the twins). Between two clocks standing still on a static board the two directions' ratios multiply to one, and a one-way ratio is the lapse's shift alone | owed (light.py) |
@@ -75,9 +75,9 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 | mass | the windings a clock the clicks build books per tick of its own clock (decision 37), counted in its own ticks so that motion leaves it alone. Which clock counts the beat, the composite's own count or its Node-clock's tick, is the schema's G7 field, and only the own count leaves motion out. A composite's mass holds its binding too | owed (mass.py; G6) |
 | a mass's width | the spread of the masses read over many lays of one species, against their mean life in their own ticks. One clock's life gives only the resolution of its own window | owed (mass.py; G6) |
 | a probability | the shares of clicks over many lays alike, the draw by the sizes forward and back (decision 29). On finite records the shares carry the draws' spread: a spread is owed, any tolerance an integer of the files | built in the scheduler model; owed on the engine (G5) |
-| no signal | the cone check: each click binned by the settings outside its past cone, the shares compared. Its cone is the board's, one Mesh a round, the act's bound: about 2.45 times light's long-wave speed along an axis. So it guards locality. No signal inside light's cone needs light's cone read from the record: a setting stands outside a click's light cone only where light laid at the setting reaches the click's place after the click (the earliest long-wave take there comes later); otherwise the bin reads NOT READ. And the spread above | built (D8, the board's cone); light's cone and the spread owed |
+| no signal | the cone check: each click binned by the settings outside its past cone, the shares compared. Its cone is the board's, one Mesh a round, the act's bound: about 245 hundredths of light's long-wave speed along an axis. So it guards locality. No signal inside light's cone needs light's cone read from the record: a setting stands outside a click's light cone only where light laid at the setting reaches the click's place after the click (the earliest long-wave take there comes later); otherwise the bin reads NOT READ. And the spread above | built (D8, the board's cone); light's cone and the spread owed |
 | a correlation at a distance | Bell's reading needs the joint outcomes of one birth's two clicks, by the two settings' frames; no signal alone is not Bell | owed (G5) |
-| uncertainty | the slit: the narrower the opening, the wider the clicks on a far screen, read only beyond the far field (a screen farther than the opening's square over the wavelength), and on the wrapped board a slit is a grating. Part 2.6's count is of supports, not of widths. In time, the width above | owed (G6) |
+| uncertainty | the slit: the narrower the opening, the wider the clicks on a far screen, read only beyond the far field (a screen far enough for the opening and the wavelength, the physicist's condition), and on the wrapped board a slit is a grating. Part 2.6's count is of supports, not of widths. In time, the width above | owed (G6) |
 | the arrow of time | where the arrow shows in the clicks is owed: the books read conservation at each click, which holds both ways of time, and the law's rewind undoes every click (Postulate 4) | owed (G5) |
 
 ### 1.4 The least a clock needs
@@ -251,7 +251,7 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 - **The cone check stays sound:** one Mesh a round is the act's bound in labels, whatever a Mesh's length, and the
   check counts in labels, so it never reads a setting inside the act's reach as outside it. Light's own speed in
   labels changes as the Meshes and the lapse move (under the form in force, road (II), it rises; docs/BIG_PICTURE.md
-  7), and the act's stencil stays stable only while light's speed in labels stays below about 1.41 times its present
+  7), and the act's stencil stays stable only while light's speed in labels stays below about 141 hundredths of its present
   value (the physicist's bound, owed at G2).
 - **The two directions of time:** the record is written by the run forward alone; the run back writes nothing and
   shows only in the split clicks' shares. So the decoder reads the lengthening along the record's order, whichever
@@ -394,7 +394,7 @@ changed for the findings:
    closed path.
 5. The free path: up to a conjugate point only; the winding on the wrapped board reported; "free" read by clicks;
    equal counts no fault.
-6. The cone check: its cone is the board's, about 2.45 times light's along an axis, so it guards locality; light's cone
+6. The cone check: its cone is the board's, about 245 hundredths of light's along an axis, so it guards locality; light's cone
    to be read from the record; a spread; no signal is not Bell.
 7. The future (1.5): the run back brings the settings' frames to the source; what no Node-clock holds is an outcome
    before its draw.
