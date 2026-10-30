@@ -45,7 +45,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-
 from event_universe.core.rule3 import coefficients
 from event_universe.loader.derived import count_wall
 from event_universe.loader.world import World

@@ -158,23 +158,6 @@ def characters(m):
     )
 
 
-def orthonormal(m):
-    """The five characters are orthonormal over the 24: the sum of a product is the order on one kind, 0 between two."""
-    x, order = chi(m), len(the24(m)[0])
-    return all(
-        int((x[a] * x[b]).sum()) == order * (a == b) for a, b in itertools.product(LABELS, repeat=2)
-    )
-
-
-def spokes(m):
-    """The six Spokes' permutation character is A1 + E + T1, and the three axes' is A1 + E."""
-    keep, _ = the24(m)
-    x = chi(m)
-    fixed = [sum(int((m.matrix[g] @ s == s).all()) for s in np.concatenate([EYE, -EYE])) for g in keep]
-    axes = [int(np.trace(m.matrix[g] * m.matrix[g])) for g in keep]
-    return fixed == list(x["A1"] + x["E"] + x["T1"]) and axes == list(x["A1"] + x["E"])
-
-
 def channels(m):
     """C is 0 exactly where the characters' product holds no channel, as David lists them; each C not 0 primitive, its first entry positive."""
     x, order = chi(m), len(the24(m)[0])
@@ -218,8 +201,6 @@ LAWS = {
         forms,
         representations,
         characters,
-        orthonormal,
-        spokes,
         channels,
         equivariant,
         classical,
@@ -284,8 +265,8 @@ def mutants():
             "characters",
             lambda m: kind(m, "T2", lambda m, x: np.array(m.kinds[LABELS.index("T1")])),
         ),
-        "A2's sign dropped": ("orthonormal", lambda m: kind(m, "A2", lambda m, x: 0 * x + 1)),
-        "E as A1 beside A2": ("spokes", lambda m: kind(m, "E", beside)),
+        "A2's sign dropped": ("characters", lambda m: kind(m, "A2", lambda m, x: 0 * x + 1)),
+        "E as A1 beside A2": ("characters", lambda m: kind(m, "E", beside)),
         "C from one fixed seed of ones": ("channels", lambda m: seeded(m, lambda s: s.sum(axis=0))),
         "the cross doubled, not primitive": (
             "channels",
@@ -306,18 +287,7 @@ def good():
     return made()
 
 
-def test_every_law_holds_on_the_kinds_as_made(good):
-    assert all(law(good) for law in LAWS.values())
-
-
-@pytest.mark.parametrize("mutant", list(mutants()))
-def test_each_law_of_the_kinds_fails_on_its_mutant(mutant, good):
-    name, broken = mutants()[mutant]
-    assert LAWS[name](good)
-    assert not LAWS[name](broken(good))
-
-
-def test_the_joint_makes_the_kinds_and_the_tables_the_load_reads(good):
+def jointly(good):
     """main.made, the one joint, gives these kinds on the 24 and 0 off them, the tables from the star, its inverses the
     turns' own, and the square on the 24; the square's first row, 00, the one row every turn fixes."""
     held, c, square = joint(star(3))
@@ -327,7 +297,7 @@ def test_the_joint_makes_the_kinds_and_the_tables_the_load_reads(good):
     assert (c == good.c).all()
 
 
-def test_the_four_vectors_square_is_its_symmetric_square_a_signed_permutation_on_every_turn(good):
+def squared(good):
     """kinds.square on the 24 is the four-vector's symmetric square (the stride fixed, the differences turned) on the pairs
     00, 0i, ii and jk by the third axis: a signed permutation keeping the group law, its characters A1 twice, T1, E and
     T2; with T1 where T2 stands it is not the square."""
@@ -345,3 +315,11 @@ def test_the_four_vectors_square_is_its_symmetric_square_a_signed_permutation_on
     mutant = kinds.beside(kinds.beside(a1, t1), kinds.beside(t1 * t1, t1))[at]
     assert (square == image).all() and one and law
     assert (mutant != image).any() and (chi == one1 + three1 + one1 + e + three2).all()
+
+
+def test_the_24_its_kinds_their_square_and_tables_keep_their_laws_and_each_mutant_breaks_its_own(good):
+    """The node's initialization from its star alone, made once by the joint the load reads."""
+    assert all(law(good) for law in LAWS.values())
+    assert not [name for name, (law, broken) in mutants().items() if LAWS[law](broken(good))]
+    jointly(good)
+    squared(good)

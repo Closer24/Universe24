@@ -1,0 +1,12 @@
+DAVID-THE-ORDER-FREE-STRIKE_CHECKS.txt: the checks of DAVID-THE-ORDER-FREE-STRIKE.md, on 97e5b3fd6 (scratchpad worktree of the head), each a harness in scratchpad/field; no src touched.
+
+1. The strike's reads, by line (97e5b3fd6):
+   start board: striking.py:372 every hand's wind read once at the tick's start (hand_starts); striking.py:133 the jam's lay check on those winds; striking.py:139 the crowd counted over every kept fitting.
+   live board: striking.py:184 the fittings' unwinds in the clocks' sorted order; striking.py:203 a sprung end's winds re-read after each fitting; unspring.py:62 the light's take reads its window on the live gears (fall_of); unspring.py:161 the due reads the live slack; unspring.py:133 a sprung end's winds read whole when the cache is empty; unspring.py:187 the unspringing's push read on the live gears (its cross term the live push less the start's); striking.py:260 the lay's cross term read after the lay; bobs.py:47 the chimes in the index order, bobs.py:49 a fitted clock does not chime.
+
+2. How often an unwind's end reads a window an earlier unwind of the same striking wrote (live_reads.py: every read_ends call logged in the striking's order; an end whose window, its clock and six neighbours, holds a clock an earlier passing unwind wrote):
+   world_bang.json  100 ticks: {'reads': 17156, 'reads on a window an earlier unwind wrote': 5319, 'stops': 6853, 'stops on a window an earlier unwind wrote': 1012}
+   world_nature.json 5 30 ticks: {'reads': 4236, 'stops': 2049, 'reads on a window an earlier unwind wrote': 269, 'stops on a window an earlier unwind wrote': 52}
+   world_hole.json  60 ticks: {'reads': 9704, 'stops': 4476, 'reads on a window an earlier unwind wrote': 1224, 'stops on a window an earlier unwind wrote': 267}
+
+3. The rewind and the phenomenon: the letter is spelled, not built; the strike as built runs back exactly (DAVID-THE-BINDING-WINDOW_CHECKS.txt item 2, 20 of 20 at every seed), and the order's reach is item 2's count. The Boss's build on T4 carries the letter's tests (the 24 through 60 ticks on nature and the hole, the bang's translation, the rewind, the books, the bang's returns).

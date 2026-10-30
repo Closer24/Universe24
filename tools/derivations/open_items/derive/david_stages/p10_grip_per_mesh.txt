@@ -1,0 +1,5 @@
+n =    64: largest error, the head's 5.45e-01, per Mesh at its own rate 2.54e-02, per Mesh at the full rate 5.28e-01
+n =   128: largest error, the head's 5.45e-01, per Mesh at its own rate 6.37e-03, per Mesh at the full rate 5.40e-01
+n =   256: largest error, the head's 5.44e-01, per Mesh at its own rate 1.59e-03, per Mesh at the full rate 5.43e-01
+n =   512: largest error, the head's 5.44e-01, per Mesh at its own rate 3.98e-04, per Mesh at the full rate 5.44e-01
+n =  1024: largest error, the head's 5.44e-01, per Mesh at its own rate 9.95e-05, per Mesh at the full rate 5.44e-01

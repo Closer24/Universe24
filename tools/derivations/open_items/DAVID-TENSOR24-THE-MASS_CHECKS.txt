@@ -1,0 +1,2580 @@
+DAVID-TENSOR24-THE-MASS_CHECKS.txt: the checks of DAVID-TENSOR24-THE-MASS.md (one mass in the clicks).
+A helper's four probes (t24lib.py the exact library; head.py puts the repo's src on the path, read-only, no bytecode written),
+rerun by David on toys-5 with its own src, each output identical to the helper's apart from its run-time line. Exact integers
+and fractions; floats only where a ratio is set against an arccos, an arcsin or a continuum formula, and each such line says so.
+Every check carries mutants that must fail, printed beside it. Then the helper's draft with its proofs in full (its text's sign
+in the per-mode identity is e^(+i eps w_k), as the page says), and the sources.
+At the end, the second hand: independent exact probes written from the claims alone (rerun by David, identical): every
+claim holds, every mutant fails, and the per-mode identity's sign is e^(+i eps w) (1,572 of 1,572).
+
+== venv314/bin/python -I -B probes/m1_dispersion.py ==
+C1  the vacuum gearing, the head's integers (readings.gearing at the load 0)
+    true                        : 14 trains (4 universes), failures 0
+    universal grips R/w = 1/3   : 14 trains (4 universes), failures 10
+    spring without its 2        : 14 trains (4 universes), failures 10
+    hold = spring               : 14 trains (4 universes), failures 10
+C2  the dispersion on the 64 exact Gaussian plane waves i^(n.x) of the 4^3 torus (the head's Spoke read)
+    true                        : 896 (train, k) pairs, failures 0
+    light-like cos w = c(k)     : 896 (train, k) pairs, failures 440
+    rest cosine only            : 896 (train, k) pairs, failures 882
+C3  the rest turn as the Gaussian unit g / rim, g = pinion + i s (exact)
+    true                        : 63 checks (characteristic equation + 20 rational ticks, 3 sprung trains), failures 0
+    g = pinion + i (s + 1)      : 63 checks (characteristic equation + 20 rational ticks, 3 sprung trains), failures 60
+C4  the three readings of one Gaussian integer g (floats only for the continuum comparison)
+    hand 0: sin w0 = s/rim 0.0005366726  beat w0 0.0005366726  m2 = 3 s/pinion 0.001610  1/curvature (float) 0.001611  m2 R/w == s/rim exactly: True
+    hand 1: sin w0 = s/rim 0.9867709663  beat w0 1.4079571122  m2 = 3 s/pinion 18.259953  1/curvature (float) 18.259956  m2 R/w == s/rim exactly: True
+    hand 2: sin w0 = s/rim 0.9854132901  beat w0 1.3997857394  m2 = 3 s/pinion 17.371429  1/curvature (float) 17.371431  m2 R/w == s/rim exactly: True
+    hand 1 over hand 0: sines 1838.68  beats 2623.49  inertias 11341
+    hand 2 over hand 0: sines 1836.15  beats 2608.27  inertias 10790
+C5  the variational mass: rim E >= 4 w s |sigma| for every state (E = SUM (2 own - shared), exact)
+    true (s)                        : 225 states (4 trains), failures 0, equalities 18
+    mutant s + 1                    : 225 states (4 trains), failures 63, equalities 0
+    mutant beat r w0                : 225 states (4 trains), failures 63, equalities 0
+    mutant inertia r s / p          : 225 states (4 trains), failures 69, equalities 0
+    mutant light at its rim (s = r) : 225 states (4 trains), failures 2, equalities 18
+C6  the 24: the head's wind and sweep invariant; the rational step commutes with every rotation
+    wind and sweep invariant            : 144 (state, rotation) pairs, failures 0
+    step commutes                       : 144 (state, rotation) pairs, failures 0
+    mutant: anisotropic grips commute   : 144 (state, rotation) pairs, failures 96
+C7  a fourth reading, the head's masses source (tick.impulse: D |a|^2 div w per clock, the held field's and the
+    law's well) per quantum of sweep on the head's own sea, against key (rim - pinion) / s = key tan(w0 / 2)
+    hand 0: well per quantum 10.000000, key (rim - pinion)/s = 9.660107 (ratio 1.035185, the notches' rounding)
+    hand 1: well per quantum 30613.037752, key (rim - pinion)/s = 30568.047337 (ratio 1.001472, the notches' rounding)
+    hand 2: well per quantum 30318.700615, key (rim - pinion)/s = 30315.789474 (ratio 1.000096, the notches' rounding)
+    the wells' ratios over hand 0: hand 1: 3164, hand 2: 3138 (against the sines' 1838.68 and 1836.15)
+C8  one light speed for every train (the grips R = c_u^2 w for all): m2 c_u^2 = sin w0 exactly, and the corner
+    mode k = (pi, pi, pi) of the 4^3 torus grows where 12 c_u^2 + D / w > 4 (exact rational iteration, 12 ticks)
+    hand 0, c_u^2 = light's full-rate 1/3 = 0.3333: m2 c_u^2 == sin w0: True; the corner's 2 cos w = -2.0000; largest |amplitude| in 12 ticks 25
+    hand 0, c_u^2 = the bound (1 + pinion_min/rim)/6 = 0.1937: m2 c_u^2 == sin w0: True; the corner's 2 cos w = -0.3242; largest |amplitude| in 12 ticks 1.54
+    hand 1, c_u^2 = light's full-rate 1/3 = 0.3333: m2 c_u^2 == sin w0: True; the corner's 2 cos w = -3.6758; largest |amplitude| in 12 ticks 3.16e+06
+    hand 1, c_u^2 = the bound (1 + pinion_min/rim)/6 = 0.1937: m2 c_u^2 == sin w0: True; the corner's 2 cos w = -2.0000; largest |amplitude| in 12 ticks 25
+    hand 2, c_u^2 = light's full-rate 1/3 = 0.3333: m2 c_u^2 == sin w0: True; the corner's 2 cos w = -3.6596; largest |amplitude| in 12 ticks 2.97e+06
+    hand 2, c_u^2 = the bound (1 + pinion_min/rim)/6 = 0.1937: m2 c_u^2 == sin w0: True; the corner's 2 cos w = -1.9839; largest |amplitude| in 12 ticks 15.8
+C9  the composite as the product of the parts' pairs g1 g2 (David's composite draft, untracked at 13:17 UTC):
+    its beat is the sum of the parts' beats; its winding over the parts' windings is (p1 s2 + s1 p2) / (rim (s1 + s2)),
+    and rim (s1 + s2) - (p1 s2 + s1 p2) = s1 (rim - p2) + s2 (rim - p1) >= 0 exactly
+    hands 0 + 0: the composite books 0.9999999 of its parts' windings
+    hands 0 + 1: the composite books 0.9995444 of its parts' windings
+    hands 0 + 2: the composite books 0.9995482 of its parts' windings
+    hands 1 + 1: the composite books 0.1621205 of its parts' windings
+    hands 1 + 2: the composite books 0.1661522 of its parts' windings
+    hands 2 + 2: the composite books 0.1701783 of its parts' windings
+    true                        : 9 ordered pairs, failures 0
+    mutant: the windings add    : 9 ordered pairs, failures 9
+
+== venv314/bin/python -I -B probes/m2_clicks.py ==
+Part A  the one formula at the flat clock, the head's lay of a standing sea on one Node-clock
+    A1 the head's first tick reproduced     : 6 ticks or cases, failures 0
+    A2 the exact identity                   : 33000 ticks or cases, failures 0
+    A2 mutant s + 1                         : 33000 ticks or cases, failures 33000
+    A2 mutant pinion + 1                    : 33000 ticks or cases, failures 33000
+    A5 q >= N                               : 33000 ticks or cases, failures 0
+    A3 the sign changes of the bob's integer dot (a run of zeros one passage) against those of Re(g^n): the first
+       tick where they differ, and the ticks where their counts so far differ by more than 1; the head's rule's
+       touches of zero (CK-S1 counts a passage through exactly 0 twice); A4 the mean half period (floats):
+      world_node.json row 1, 1 quanta: 2 sign changes, the head's rule 4 crossings (4 touches of 0); true: first differing tick 2927, counts off at 0 of 12000; mutant E = hbar w (angle sin w0): first differing tick 2927, counts off at 0 of 12000; mutant 1 % heavier (angle 1.01 w0): first differing tick 2898, counts off at 0 of 12000
+        half period from the sign changes 5890.0000 ticks (the head's mean beat 1963.6667); pi / arcsin(winding / hbar_L) = 5853.8345; mutant E = hbar w: 5853.8347
+      world_node.json row 1, 100 quanta: 2 sign changes, the head's rule 4 crossings (4 touches of 0); true: first differing tick 2927, counts off at 0 of 12000; mutant E = hbar w (angle sin w0): first differing tick 2927, counts off at 0 of 12000; mutant 1 % heavier (angle 1.01 w0): first differing tick 2898, counts off at 0 of 12000
+        half period from the sign changes 5854.0000 ticks (the head's mean beat 1951.6667); pi / arcsin(winding / hbar_L) = 5853.8345; mutant E = hbar w: 5853.8347
+      world_node.json row 2, 1 quanta: 897 sign changes, the head's rule 897 crossings (0 touches of 0); true: first differing tick 164, counts off at 0 of 2000; mutant E = hbar w (angle sin w0): first differing tick 4, counts off at 1989 of 2000; mutant 1 % heavier (angle 1.01 w0): first differing tick 10, counts off at 1658 of 2000
+        half period from the sign changes 2.2299 ticks (the head's mean beat 2.2299); pi / arcsin(winding / hbar_L) = 2.2313; mutant E = hbar w: 3.1837
+      world_node.json row 3, 1 quanta: 891 sign changes, the head's rule 891 crossings (0 touches of 0); true: first differing tick 46, counts off at 0 of 2000; mutant E = hbar w (angle sin w0): first differing tick 4, counts off at 1989 of 2000; mutant 1 % heavier (angle 1.01 w0): first differing tick 10, counts off at 1664 of 2000
+        half period from the sign changes 2.2438 ticks (the head's mean beat 2.2438); pi / arcsin(winding / hbar_L) = 2.2443; mutant E = hbar w: 3.1881
+      world_emission.json row 1, 1 quanta: 6 sign changes, the head's rule 6 crossings (0 touches of 0); true: first differing tick 269, counts off at 0 of 3000; mutant E = hbar w (angle sin w0): first differing tick 808, counts off at 0 of 3000; mutant 1 % heavier (angle 1.01 w0): first differing tick 267, counts off at 0 of 3000
+        half period from the sign changes 539.6000 ticks (the head's mean beat 539.6000); pi / arcsin(winding / hbar_L) = 537.9993; mutant E = hbar w: 538.0023
+      world_emission.json row 2, 1 quanta: 802 sign changes, the head's rule 802 crossings (0 touches of 0); true: first differing tick 91, counts off at 0 of 2000; mutant E = hbar w (angle sin w0): first differing tick 4, counts off at 1985 of 2000; mutant 1 % heavier (angle 1.01 w0): first differing tick 21, counts off at 1621 of 2000
+        half period from the sign changes 2.4931 ticks (the head's mean beat 2.4931); pi / arcsin(winding / hbar_L) = 2.4932; mutant E = hbar w: 3.2996
+Part B  the head's full engine, the record's own chimes (300 ticks)
+    world_plasma.json, hand 1: 1250 chimes (0 at a turnover, not read); B1 owed != 3 key s: 0; B2 |cos turn - cos w0(load)| >= 4/|z|: 0 (largest 0.0179); mutant no dilation: 875; mutant E = hbar w: 1250; B3 |beat - pi/turn| >= 1: 0
+    world_universe.json, hand 1: 1000 chimes (0 at a turnover, not read); B1 owed != 3 key s: 0; B2 |cos turn - cos w0(load)| >= 4/|z|: 0 (largest 0.0140); mutant no dilation: 750; mutant E = hbar w: 1000; B3 |beat - pi/turn| >= 1: 0
+    world_universe.json, hand 2: 1250 chimes (0 at a turnover, not read); B1 owed != 3 key s: 0; B2 |cos turn - cos w0(load)| >= 4/|z|: 0 (largest 0.0201); mutant no dilation: 875; mutant E = hbar w: 1250; B3 |beat - pi/turn| >= 1: 0
+Part C  why Part A runs the flat clock by hand: the head's full engine at the full rate (the regulator at Gamma)
+    world_node.json seed none on 3^3: 162 turnovers in 6 ticks over 27 clocks; the time gear at [1000]; the standing hand's notches now None -> None; the trigger (X0, X1, X2 after the drive) (1000, 1000, 998)
+    world_emission.json seed [{'lay': 'sea', 'row': 1, 'quanta': 1, 'sense': 1}] on 1^3: 6 turnovers in 6 ticks over 1 clocks; the time gear at [1000]; the standing hand's notches now [1800, 0] -> [1800, 0]; the trigger (X0, X1, X2 after the drive) (1000, 1000, 998)
+    world_node.json seed [{'lay': 'sea', 'row': 1, 'quanta': 1, 'sense': 1}] on 3^3: 162 turnovers in 6 ticks over 27 clocks; the time gear at [1000]; the standing hand's notches now [6000, 0] -> [6000, 0]; the trigger (X0, X1, X2 after the drive) (1000, 1000, 998)
+(run time 27.1 s)
+
+== venv314/bin/python -I -B probes/m3_fitting.py ==
+F1  the head's fitted hand (balanced notches A B = key/2) at the setting: fitted_windings_of against the formula
+    world_nature.json hand 0: fitted wind 1654009903854256729287 = 1010027 millionths of a light winding; its own winding 536 millionths
+    world_nature.json hand 1: fitted wind 1654009903854256729287 = 1010027 millionths of a light winding; its own winding 986770 millionths
+    world_nature.json hand 2: fitted wind 1654009903854256729287 = 1010027 millionths of a light winding; its own winding 985413 millionths
+    world_nature.json hand 3: fitted wind 1654009903854256729287 = 1010027 millionths of a light winding; its own winding 1000000 millionths
+    true                                        : 24 ends, failures 0
+    mutant 2 m c^2 (twice the train's winding)  : 24 ends, failures 24
+    mutant pinion for rim                       : 24 ends, failures 18
+F2  any hand alone on one Node-clock (its six neighbours empty), every train, at the vacuum and at loaded clocks:
+    (a) the head's hands.wind == the per-clock floors of (2 own - shared) X / (4 Gamma^3 G^2), read clock by clock;
+    (b) unfloored, the window's sum is (2 w (n^2 + b^2) - 2 S n b) X_x / D4 + n b (SUM_y R_(y->x) X_y - SUM_j R_j X_x) / D4,
+        at the vacuum (S = 0, every grip and stretch alike) 3 rim (|z|^2 + |z-|^2) X / Gamma for EVERY train;
+    (c) the head's floors lose less than 14 against (b)
+F3  the bound (exact form): a quantum alone on one Node-clock holds at least one light winding: E >= 6 rim |sigma| X / Gamma
+    F2 (a) head == per-clock floors                      : 480 (train, clock, shape), failures 0
+    F2 (b) vacuum: 3 rim (|z|^2+|z-|^2), train-free      : 240 (train, clock, shape), failures 0
+    F2 (c) floors lose < 14                              : 480 (train, clock, shape), failures 0
+    F2 mutant (a): one floor for the window              : 480 (train, clock, shape), failures 367
+    F2 mutant (b): the spring D in place of the hold S   : 240 (train, clock, shape), failures 168
+    F2 mutant (b): the grips counted at x alone          : 240 (train, clock, shape), failures 225
+    F3 true: E >= one light winding per quantum    : 232 shapes, failures 0, equalities 5
+    F3 mutant: two light windings per quantum      : 232 shapes, failures 134, equalities 0
+    F3 mutant: the bound 1.02 light windings       : 232 shapes, failures 12, equalities 0
+F4  the derived shape: the train's own rest turn alone on one Node-clock (hands.rest, least A with |sigma| >= key/2)
+F5  the train's own rest wave (the head's sea, set_even, quanta 1): wind per quantum
+    hand 0: one Node-clock, A = 6000: wind 1999.6669 light windings = 3726046.3 of its own windings for 1.0000 quanta (1/sin w0 = 1863.3335);  the sea: 1.0025060 of its winding per quantum
+    hand 1: one Node-clock, A = 136: wind 1.0260 light windings = 1.0 of its own windings for 1.0124 quanta (1/sin w0 = 1.0134);  the sea: 1.0000012 of its winding per quantum
+    hand 2: one Node-clock, A = 136: wind 1.0272 light windings = 1.0 of its own windings for 1.0124 quanta (1/sin w0 = 1.0148);  the sea: 1.0000006 of its winding per quantum
+    the one-site costs' ratio hand 1 / hand 0: 0.000513; the windings' ratio (E = m c^2): 1838.68
+F6  the head's rest packets on a 9^3 board (the `at` lay, sense 1): wind per quantum of sweep, in the train's windings
+    hand 0 (Compton length 1075.80 Meshes, float): h=1: 3490114.2433, h=2: 1151433.7032, h=3: 567323.7062
+    hand 1 (Compton length 0.41 Meshes, float): h=1: 1.0270, h=2: 1.0090, h=3: 1.0045
+    hand 2 (Compton length 0.41 Meshes, float): h=1: 1.0298, h=2: 1.0099, h=3: 1.0050
+F7  the head's records: every light fitting's booked due against the one-site formula at its ends' stretch
+    births read (one fitting at its Node-clock), by the fitted hand: {0: 5, 1: 11, 2: 9}
+    true                                            : 25 births, failures 0
+    mutant E = 2 m c^2 (the fitted train's windings): 25 births, failures 25
+    mutant pinion-weighted                          : 25 births, failures 25
+(run time 25.4 s)
+
+== venv314/bin/python -I -B probes/m4_quantum.py ==
+Q1  per mode on the 4^3 torus: E >= 4 w sin w(k) |sigma| for every state of the mode, equal iff circular
+    true                                          : 448 (train, k, state), failures 0
+    mutant: sin w(k) (1 + 1/1000)                 : 448 (train, k, state), failures 60
+    mutant: sin = 1 (the quarter turn's quantum)  : 448 (train, k, state), failures 73
+    the rest sine for every mode (the variational bound): 448 (train, k, state), failures 0
+    the head's click count per quantum of a near-circular state, q/N, against sin w(k)/sin w0 (floats, the ratio only):
+      hand 0 k = pi/2 (0, 0, 0): q/N = 1.0000, sin w(k)/sin w0 = 1.0000
+      hand 0 k = pi/2 (1, 0, 0): q/N = 1388.8469, sin w(k)/sin w0 = 1388.8469
+      hand 0 k = pi/2 (2, 2, 2): q/N = 1.0000, sin w(k)/sin w0 = 1.0000
+      hand 1 k = pi/2 (0, 0, 0): q/N = 1.0000, sin w(k)/sin w0 = 1.0000
+      hand 1 k = pi/2 (1, 0, 0): q/N = 1.0075, sin w(k)/sin w0 = 1.0075
+      hand 1 k = pi/2 (2, 2, 2): q/N = 1.0000, sin w(k)/sin w0 = 1.0000
+      hand 2 k = pi/2 (0, 0, 0): q/N = 1.0000, sin w(k)/sin w0 = 1.0000
+      hand 2 k = pi/2 (1, 0, 0): q/N = 1.0083, sin w(k)/sin w0 = 1.0083
+      hand 2 k = pi/2 (2, 2, 2): q/N = 1.0000, sin w(k)/sin w0 = 1.0000
+Q2  the physicist's figure, the continuum dispersion's ratio at k = 0.05 along an axis (floats):
+    electron, k = 0.0500: sin w(k) / sin w0 = 53.79
+    electron, k = 0.3000: sin w(k) / sin w0 = 320.33
+    electron, k = 1.5708: sin w(k) / sin w0 = 1388.85
+Q3  the action Q = SUM Im(conj(a) P), P = W (a - a-), under a uniform clock varying at every tick (exact rationals)
+    Q kept                              : 4 runs of 12 varying ticks, failures 0
+    mutant: the plain sweep kept        : 4 runs of 12 varying ticks, failures 4
+    mutant: Q kept with uneven grips    : 4 runs of 12 varying ticks, failures 4
+    hand 1, spring falling: tick 0: wind / wind_0 1.000000, Q / Q_0 1.000000, sin w0(t) / sin w0 1.000000  (so q = E div w_c reads 1.0000 of the quanta Q keeps)
+    hand 1, spring falling: tick 1000: wind / wind_0 0.976657, Q / Q_0 1.000000, sin w0(t) / sin w0 0.976657  (so q = E div w_c reads 0.9767 of the quanta Q keeps)
+    hand 1, spring falling: tick 2000: wind / wind_0 0.940843, Q / Q_0 1.000000, sin w0(t) / sin w0 0.940843  (so q = E div w_c reads 0.9408 of the quanta Q keeps)
+    hand 1, spring falling: tick 3000: wind / wind_0 0.891057, Q / Q_0 1.000000, sin w0(t) / sin w0 0.891057  (so q = E div w_c reads 0.8911 of the quanta Q keeps)
+    hand 1, spring falling: tick 4000: wind / wind_0 0.824771, Q / Q_0 1.000000, sin w0(t) / sin w0 0.824771  (so q = E div w_c reads 0.8248 of the quanta Q keeps)
+Q4  a swing at rest (both senses): its two circular parts over 2 s, exact; their winds add, their sweeps subtract
+    true                                        : 150 swings (3 sprung trains), failures 0
+    mutant: the parts' winds with a cross term  : 150 swings (3 sprung trains), failures 150
+Q5  the head's world_plasma, the full engine: the click count q against the action count N_Q at one Node-clock
+    t=  0 X=1000 | hand 0: q = 1 (wind 1.0025 windings), sweep -1.0000, N_Q = Q/Q0 1.0000 | hand 1: q = 1 (wind 1.0124 windings), sweep +1.0124, N_Q = Q/Q0 1.0000
+    t=  1 X=1006 | hand 0: q = 1 (wind 1.0025 windings), sweep -1.0000, N_Q = Q/Q0 1.0000 | hand 1: q = 1 (wind 1.0124 windings), sweep +1.0124, N_Q = Q/Q0 0.9984
+    t=  2 X=1018 | hand 0: q = 1 (wind 1.0074 windings), sweep -1.0000, N_Q = Q/Q0 1.0000 | hand 1: q = 1 (wind 1.0050 windings), sweep +0.9992, N_Q = Q/Q0 0.9989
+    t=  5 X=1089 | hand 0: q = 1 (wind 1.0468 windings), sweep -1.0000, N_Q = Q/Q0 1.0000 | hand 1: q = 0 (wind 0.9941 windings), sweep +0.9417, N_Q = Q/Q0 0.9971
+    t= 10 X=1311 | hand 0: q = 1 (wind 1.1889 windings), sweep -1.0000, N_Q = Q/Q0 1.0000 | hand 1: q = 0 (wind 0.9709 windings), sweep +0.7868, N_Q = Q/Q0 0.9924
+    t= 20 X=2036 | hand 0: q = 1 (wind 1.1551 windings), sweep -0.6667, N_Q = Q/Q0 1.0000 | hand 1: q = 0 (wind 0.9233 windings), sweep +0.5091, N_Q = Q/Q0 1.0020
+    t= 40 X=3900 | hand 0: q = 1 (wind 1.2446 windings), sweep -0.3333, N_Q = Q/Q0 1.0001 | hand 1: q = 0 (wind 0.8330 windings), sweep +0.2627, N_Q = Q/Q0 0.9988
+    t= 60 X=5466 | hand 0: q = 1 (wind 1.5283 windings), sweep -0.3333, N_Q = Q/Q0 1.0003 | hand 1: q = 0 (wind 0.8014 windings), sweep +0.1903, N_Q = Q/Q0 1.0161
+    t= 80 X=6202 | hand 0: q = 1 (wind 1.6601 windings), sweep -0.3333, N_Q = Q/Q0 1.0005 | hand 1: q = 0 (wind 0.7785 windings), sweep +0.1656, N_Q = Q/Q0 1.0225
+    t=100 X=5877 | hand 0: q = 1 (wind 1.6157 windings), sweep -0.3333, N_Q = Q/Q0 1.0003 | hand 1: q = 0 (wind 0.7813 windings), sweep +0.1723, N_Q = Q/Q0 1.0055
+Q6  the light: the drift holds no action; the bang's quarter-turn lay holds one light winding per quantum
+    world_plasma's light sea at every clock: sweep {0}, wind / light winding [0.99225]
+    world_bang's light at its 64 clocks: wind 5000000.0000..5000000.0000 light windings, |sweep| 5000000.0000..5000000.0000 quanta; largest |wind per quantum / winding - 1| = 0.00e+00
+(run time 85.6 s)
+
+== the draft (DERIVATION.md) ==
+# Draft M: what a mass is in the clicks (Tensor24, for David)
+
+The owner's word (11:2x UTC, through Animate, 6467743683; quoted in ALGEBRA.md line 440 on scribe-5): "From the tensor of the 24's rules, the complex numbers and the clock, it must get exactly what a mass is in the clicks." It answers section 30's masses rows (TENSOR24.md lines 1396 and 1433 on engine-5.0-test 33d9ecaa3): the sines give 1,838.68 and 1,836.15, the rest beats 2,623 and 2,608, the inertia about 11,000.
+
+- Base: the head's src (toys-5 b56643b0e, identical in src to engine-5.0-test 33d9ecaa3), imported read-only (`python -I -B`, the repo's src on sys.path, no bytecode written). The law read at scribe-5 f32b67cc3.
+- Probes: `probes/m1_dispersion.py`, `m2_clicks.py`, `m3_fitting.py`, `m4_quantum.py` (with `t24lib.py`, `head.py`); outputs in `out/`. Every probe uses exact integers and Fractions; floats appear only where a ratio is set against an arccos, an arcsin or a continuum formula, and each such line says so. Every check carries mutants that must fail, printed beside it.
+- Units: the vacuum is the load 0 at the full rate (p_0 = p_i = Gamma, Q_j = G^2). There w = 6 rim Gamma^2 G^2 (the teeth), R = 2 pinion Gamma^2 G^2 (each of the six grips), D = 12 (rim - pinion) Gamma^2 G^2 (the spring), S = 2 w - D - SUM_j R_j (the hold). One quantum is the sweep key / 2 (the setting's count, DAVID-AMPLITUDES section 7). hbar_L = 3 key rim, the light's winding. g = pinion + i s, the train's pair as one Gaussian integer, N(g) = rim^2 (den's circle, MS-S2).
+
+## 0. The answer in five lines
+
+1. **One mass, one Gaussian integer.** A train's mass is its pair g = pinion + i s on den's circle. Its three readings are its three shadows: the sine Im g / rim (the wind one quantum holds at rest), the beat arg g (the hand's turn per tick), the inertia 3 Im g / Re g (the dispersion's curvature). PROVED.
+2. **The one exact reading is the sine.** The winding w_c = 3 key s is the least wind a quantum of the train can hold in any state, reached only at rest (a theorem of the one formula). Per mode the wind per quantum is hbar_L sin w(k), the lattice's Planck relation with one hbar_L for every train. So the beat is the mass misread through E = hbar w, and the inertia is the mass misread through light's c^2 where the train's own c_T^2 = c^2 cos w0 holds: E0 = m2 c_T^2 exactly. PROVED and CHECKED.
+3. **The second reading from the clicks** is the chimes. A standing hand's bob crosses its reference at the sign changes of Re(g^n), and the chime's face shows the rest turn at the clock's rate, cos w0(load) = 1 - (1 - pinion/rim)(p0/Gamma)^2. The click count of a standing hand exceeds the sweep count by exactly the teeth times the squared miss of the turn against g. CHECKED on the head's lay and on world_plasma and world_universe.
+4. **No E = 2 m c^2 at the fitting.** A child alone on one Node-clock holds at least one light winding per quantum, for every train, because the hold is 0 at the vacuum. The train's own pair as the shape makes it worse: 1/sin w0 light windings, which falls as the mass rises. E = 2 m c^2 holds only as the least cost of a pair, reached by rest waves wider than the Compton length, which no one-Mesh write lays. PROVED, and CHECKED on the head's records, 25 of 25 births.
+5. **The quantum per mode is the action.** The click should count the action of the hand's own turn, Q = SUM Im(conj(a) P): the hand's Noether charge, kept exactly by the rational step under any change of a uniform clock. A fixed winding overcounts mode k by sin w(k) / sin w0 (the physicist's 54) and loses a standing quantum when the clock's rate falls (the nucleon on world_plasma from tick 5). PROVED and CHECKED; the integer carry that keeps Q exactly is OPEN.
+
+## 1. The one mass of a train in the clock's words
+
+### 1.1 The dispersion (PROVED; CHECKED C1, C2)
+
+**The formula, in the three operations.** Drop the fine teeth: the one formula's rational form at a Node-clock is
+
+    w (a+ - 2 a + a-) = SUM_j R_j (a_j - a) - D a        (core/rule3.py line 1, the flux form)
+
+A plane wave a = A e^(i (k.x - w t)) of a hand (both gears as one Gaussian field) solves it exactly when
+
+    w (2 - 2 cos w) = R SUM_j (2 - 2 cos k_j) + D            (D1)
+    equivalently  2 w cos w = S + 2 R SUM_j cos k_j.
+
+At the vacuum S = 0, so
+
+    rim cos w(k) = pinion (cos k_x + cos k_y + cos k_z) / 3     (D2)
+
+**In the clock's words.** The rim's shadow of the beat equals the pinion's shadow of the mean turn per Mesh. The spring sets the rest beat, the grips the band, and the teeth divide both.
+
+**Proof.** Substitute the plane wave. The second difference in time multiplies it by 2 cos w - 2; each Spoke's difference multiplies it by e^(+-i k_j) - 1. Summing a Spoke with its opposite gives 2 cos k_j - 2. At the vacuum, D + 6 R = 2 w (12 (rim - pinion) + 12 pinion = 12 rim, in units of Gamma^2 G^2), which is S = 0.
+
+**CHECKED.**
+- C1, the head's own gearing (readings.gearing at the load 0) for all 14 trains of the four universe files: S = 0, D rim = 2 (rim - pinion) w, and 3 rim R = pinion w. Failures: 0 of 14. Mutants, each failing 10 of 14: grips R/w = 1/3, the spring without its 2, the hold equal to the spring.
+- C2: on the 64 exact Gaussian plane waves i^(n.x) of the 4^3 torus, the head's Spoke read (spokes.across) gives pull = lambda phi with lambda = R (2 SUM cos k_j - 6) - D, and 3 rim (2 w + lambda) = 2 w pinion SUM cos k_j. Failures: 0 of 896 (train, k) pairs. Mutants: light-like cos w = c(k) fails 440; the rest cosine for every k fails 882.
+
+### 1.2 The rest turn is a Gaussian unit (PROVED; CHECKED C3)
+
+At k = 0, cos w0 = pinion/rim. On den's circle, sin w0 = s/rim. The rest step a+ + a- = 2 (pinion/rim) a has the solutions z (g/rim)^t and z (conj g / rim)^t, because g + conj g = 2 pinion and g conj g = rim^2, so g^2 - 2 pinion g + rim^2 = 0.
+
+At rest, then, the hand turns by the Gaussian unit g/rim at every tick. In integers, Re(g^t) obeys c_(t+1) = 2 pinion c_t - rim^2 c_(t-1).
+
+In the clock's words: every tick, the hand's three-o'clock shadow becomes pinion over rim of itself, less s over rim of its twelve-o'clock shadow. The hand is a small clock whose pair is its gear ratio.
+
+CHECKED C3: g^2 - 2 pinion g + rim^2 = 0 holds, and the rational step on one Node-clock carries z_0 = rim B, z_-1 = B conj g to z_t = B g^t / rim^(t-1) exactly for 20 ticks. Failures: 0 of 63 (3 sprung trains). The mutant g = pinion + i (s + 1) fails 60 of 63.
+
+### 1.3 The one exact reading: the least wind a quantum can hold (PROVED; CHECKED C5, Q1)
+
+**The two conserved forms** of the one formula, both the head's own:
+- The wind (hands.wind before its carry): E = SUM_x [ w (|z|^2 + |z-|^2) - Re(conj(z) M z-) ], with M = S + SUM_j R_j shift_j. The head's "shared" term sums to 0 over the torus.
+- The sweep (hands.sweep, the hand's Wronskian): sigma = SUM_x Im(conj(z) z-).
+
+Both forms are translation-invariant, so both are diagonal in the plane waves: E = SUM_k E_k and sigma = SUM_k sigma_k. For one mode, with alpha the amplitude now and beta the amplitude before:
+
+    E_k = w (|alpha|^2 + |beta|^2) - 2 w cos w_k Re(conj(alpha) beta),   sigma_k = Im(conj(alpha) beta)
+    E_k - 2 w sin w_k |sigma_k| = w |beta - alpha e^(-i eps w_k)|^2 >= 0,   eps = sgn(sigma_k)     (P1)
+
+**Consequences.**
+- **(i) The lattice's Planck relation.** For each mode, the wind per unit of sweep is at least 2 w sin w_k. Equality holds exactly when the hand turns as one circular wave. Per quantum, in the head's units (the wind over 2 Gamma^2 G^2, a quantum the sweep key/2):
+
+      epsilon(k) = hbar_L sin w(k),    hbar_L = 3 key rim, one constant for every train and every mode.
+
+- **(ii) The variational mass.** |cos w_k| = (pinion/rim) |c(k)| <= pinion/rim, so sin w_k >= sin w0. Hence, for every state of a train at the vacuum,
+
+      E >= 2 w sin w0 SUM_k |sigma_k| >= 2 w sin w0 |sigma|,   in integers  rim E_raw >= 4 w s |sigma|  (E_raw = 2 E)
+
+  Per quantum, the wind is at least 3 key s. **The click's winding w_c = 3 key s (law 5, TENSOR24.md line 729; rule3.winding_of) is exactly the least wind a quantum of the train can hold.** Only the rest wave (k = 0) and its doubler at the corner k = (pi, pi, pi) reach it. The light has s = 0 and no floor: it is massless.
+
+**In the clock's words.** A mass is the wind a hand must hold for each quantum it sweeps. The least such wind is held by the hand standing at rest and turning by its own pair, and it is the twelve-o'clock shadow of the pair, in the key's units.
+
+**CHECKED.**
+- C5, 225 states on the 4^3 torus (random up to 10^6, rest modes and corner modes of three sizes, rest modes perturbed, the light's near-circular modes), 4 trains: 0 failures, with 18 equalities (exactly the rest and corner modes). Mutants: s + 1 fails 63; the beat (rim w0) fails 63; the inertia (rim s / pinion) fails 69; the light at its rim fails 2, its two near-circular states.
+- Q1, per mode, on 448 (train, k, state) cases: 9 rim^2 E^2 >= 16 w^2 (9 rim^2 - pinion^2 (SUM cos k)^2) sigma^2 holds with 0 failures. Mutants: sin w(k) (1 + 1/1000) fails 60; sin = 1 fails 73.
+
+### 1.4 The three readings are one Gaussian integer's three shadows (PROVED; CHECKED C4)
+
+| reading | the exact form | electron | heavier nucleon | lighter nucleon | ratios to the electron |
+| --- | --- | --- | --- | --- | --- |
+| the sine, the winding over hbar_L | Im g / rim | 5.366726e-4 | 0.98677 | 0.98541 | 1,838.68 and 1,836.15 |
+| the beat, the turn per tick | arg g | 5.366726e-4 | 1.40796 | 1.39979 | 2,623.49 and 2,608.27 |
+| the inertia, 1 / (d^2 w / dk^2) at 0 (hbar 1, tick and Mesh units) | w sin w0 / R = 3 Im g / Re g | 1.6102e-3 | 18.2600 | 17.3714 | 11,341 and 10,790 |
+
+(The hands are the head's 0, 1 and 2 of universe_toy and universe_bang; rows 1, 2 and 3 of the file. Floats are used for the table's decimals alone.)
+
+**The exact law relating them** (PROVED). Differentiate (D1) twice along an axis at k = 0: 2 w sin w0 w'' = 2 R. Hence
+
+    m2 (R / w) = sin w0,   i.e.  E0 = m2 c_T^2  with  E0 = sin w0 (the wind per quantum over hbar_L),  c_T^2 = R / w
+
+This holds for any grips (with tensions, axis by axis: m2_a R_a / w = sin w0). At the vacuum, c_T^2 = pinion / (3 rim), so (3 s / pinion)(pinion / (3 rim)) = s / rim, exact in integers. It is the lattice's exact E = m c^2: E is the wind per quantum, and c is the train's own grip over its teeth. CHECKED C4: exact for 3 of 3 trains, and the float curvature agrees with m2 to 1e-6.
+
+**The naming.**
+- **Exact: the sine (the winding 3 key Im g).**
+  - The books are kept in wind, and the click of a whole reads the wind against the winding.
+  - The winding is the least wind per quantum (1.3), reached at rest.
+  - It is an integer of den's circle, where the beat is no ratio of integers.
+  - The law's own booking reads a sine (ALGEBRA.md line 440: "the present booking reads D / (2 W) = sin(Omega - theta_x) at every Node-clock").
+  - So the calibre's fitted 1,838.68 and 1,836.15 are the click's mass ratios.
+- **The beat: the approximation, misread as an energy.**
+  - sin w0 = w0 (1 - w0^2/6 + ...), which agrees to 5e-8 for the electron and is off by 1.427 and 1.420 for the nucleons.
+  - It is misread wherever the beat is taken for the energy (E = hbar w0, the continuum's relation, TENSOR24.md lines 1242 and 1279). The tick's own relation is epsilon = hbar_L sin w.
+  - The physicist's "effective quantum 0.70" is sin w0 / w0. Planck's constant is universal on the lattice once the frequency is read as the sine of the beat.
+  - The beat stays the clock's exact reading of the same g, its angle; it is the second reading (section 2).
+- **The inertia: the approximation, misread with light's c.**
+  - m2 c^2 = tan w0 with c^2 = 1/3, and tan w0 = sin w0 (1 + w0^2/2 + ...): off by rim/pinion, 6.17 and 5.88 for the nucleons.
+  - The grips carry the pinion, so each train has its own c_T^2 = c^2 cos w0.
+  - 11,341 = 1,838.68 x pinion_e / pinion_n exactly.
+  - The mathematician's "off by tan w0 / w0, about 4.3" is the beat set against the inertia with light's c. Both are the sine's shadows: E0 = hbar_L sin w0 = m2 c_T^2.
+
+### 1.5 A fourth reading: the well (PROVED; CHECKED C7; OPEN for the source)
+
+The head's masses source (tick.impulse: `mass = D |a|^2 div w`, the held field's source) is the law's well (ALGEBRA.md line 440: "a bob sources gravity with its well, the sum over its Node-clocks of D_i div T"). For a rest hand, |a|^2 sin w0 = sigma, so the well per quantum is
+
+    key (D/w) / (2 sin w0) = key tan(w0/2) = key (rim - pinion) / s
+
+That is (key/2) sin w0 x 2 / (1 + cos w0), one with the sine's half only where cos w0 -> 1.
+
+CHECKED C7 on the head's own sea: the well matches within the notches' rounding (1.035, 1.0015 and 1.0001 of the formula; the electron's twelve gear is 3 notches). The wells' ratios are 3,164 and 3,138.
+
+So the law's three masses of a bob (the well, the count's inertia, the tail's weight) part at the cutoff by exact factors. For one mass in gravity, inertia and the click, gravity's source must be the wind (the time-time stress, the sine), not the spring's density. OPEN for David (the held field's source, tick.py:229).
+
+### 1.6 One light speed for every train: the option and its cost (PROVED; CHECKED C8; the choice OPEN)
+
+If every train's grips were R = c_u^2 w, with one c_u for all, then m2 c_u^2 = sin w0 exactly, and the sine and the inertia would be one reading.
+
+The cost is in the hold and the corner:
+- The hold becomes S = w (2 - 6 c_u^2 - D/w), no longer 0.
+- The corner mode's 2 cos w = 2 - 12 c_u^2 - D/w must stay at or above -2, so c_u^2 <= (1 + pinion_min/rim) / 6.
+- For the calibre that bound is 0.1937, light at 0.440 Mesh a tick against 0.577 now.
+
+CHECKED C8: with c_u^2 = 1/3 the nucleons' corner mode grows about x3.4 a tick (3.2e6 in 12 ticks), and at the bound it sits at the edge.
+
+The head's pinion grips keep every train at its stability edge with S = 0, and they give the exact doubler (section 18 item 16). One c_u would lift both. The choice is OPEN: David's, then the owner's.
+
+### 1.7 The one mass under the 24 (PROVED; CHECKED C6)
+
+- (D1) depends on k only through SUM cos k_j, which is invariant under all 48 signed permutations.
+- The inertia tensor d^2 w / dk_a dk_b at 0 is delta_ab / m2. The six grips are one at the vacuum, and by Schur, Sym^2 T1 = A1 + E + T2 holds a single A1.
+- The winding is a function of g alone, an A1 scalar.
+- On the twin hands the spring acts as the identity on the two hands, so both spin states share one mass.
+- Beyond the inertia the motion is the cube's: c(k) = 1 - k^2/6 + SUM k_j^4 / 72 - ..., and the k^4 term is cubic, not isotropic (section 18 item 3). The mass is the 24's; the band is the cube's.
+
+CHECKED C6: under the 24 rotations, the head's wind and sweep are invariant and the rational step commutes, 144 of 144 (state, rotation) pairs each. The mutant with anisotropic grips fails 96 of 144.
+
+### 1.8 The composite: a cross-check with David's composite draft (PROVED; CHECKED C9; OPEN)
+
+David's DAVID-TENSOR24-THE-COMPOSITE.md (untracked on toys-5, read at 13:2x UTC) lays the composite's pair as the product g1 g2 of the parts' pairs, on den^2's circle, so the beats add.
+
+Read with the one mass of 1.4 (the sine), the product does not add the windings. The composite books (p1 s2 + s1 p2) / (rim (s1 + s2)) of its parts' windings, short of them by exactly s1 (rim - p2) + s2 (rim - p1) >= 0, in integers. CHECKED C9, 9 of 9 ordered pairs; the mutant "the windings add" fails 9 of 9.
+
+| the parts | the composite's share of its parts' windings |
+| --- | --- |
+| two electrons | 0.9999999 |
+| an electron and a nucleon | 0.99954 |
+| two nucleons | 0.162 to 0.170 |
+
+For two nucleons the composite's beat, 2.8 rad, lies past the quarter turn, and its pinion p1 p2 - s1 s2 is below 0. So at the cutoff the composite's books do not close with the product of pairs, unless its mass is read as the beat. It is the same choice as 1.4, and the plan's "independent reading is the composite's" (TENSOR24.md line 768) inherits it. OPEN for David.
+
+### 1.9 What it replaces, and what stays
+
+**It replaces:**
+- Section 19's mass reading (TENSOR24.md line 768) and its row (line 829);
+- section 28's pair row ("the mass, by the rest beat omega_0, E = h-bar omega_0 = m c^2", line 1242) and line 1279 ("a mass ratio is a ratio of two rest beats");
+- section 30's masses rows (lines 1396, 1433).
+
+**A sentence for Sofer to weigh:** "A train's mass is its pair's Gaussian integer g = pinion + i s on den's circle. In the clicks it is the winding 3 key Im g, the least wind a quantum of the train can hold, held only at rest. Its rest beat is arg g, read by the chimes through E = hbar_L sin(beat). Its inertia is 3 Im g / Re g, read through the train's own grip over its teeth."
+
+**What stays a contradiction with nature** (OPEN, the lattice's):
+- The nucleons sit at the cutoff (w0 = 1.41 rad, a beat of 2.23 ticks). There the inertia ratio is 11,341 and the well's 3,164.
+- Nature one to one needs w0 << 1 for every train. With the electron at 5.4e-4, the ratio 1,838 forces the nucleons to the cutoff.
+- The electron's Compton length is 1,076 Meshes, 270 boards of side 4.
+
+## 2. Its second reading, from the clicks
+
+### 2.1 The formula
+
+The click record shows g twice.
+
+- **(i) The wind one whole click takes per quantum.** Every chime's owed winding (owed + remainder_was) is 3 key Im g. This is the calibre's integer copied into the record, the first reading.
+- **(ii) The chimes, the clock's reading.**
+  - A standing hand's bob crosses its reference at the sign changes of Re(g^n), n ticks after the reference. These are integers by the recurrence of 1.2, and the mean half period is pi / arcsin(w_c / hbar_L).
+  - The chime's face holds three notches of the hand: start before, start now, now. Their turn is the rest turn at the clock's rate:
+
+        cos w0(load) = 1 - (1 - pinion/rim) (p0(load) / Gamma)^2
+
+    PROVED: a uniform hand at a steady loaded clock steps W+ (a+ - a) - W (a - a-) = X (- D(p0) a) with W = W+ = teeth X, and D(p0) = 12 (rim - pinion) p0^2 G^2 (the spring's rate is read at the held load, which is the load where no held field stands, as on the toy calibre's worlds).
+  - So the record shows the mass at the clock's rate, its dilated beat. The vacuum's pinion/rim is recovered from the record's own load ("content").
+- **(iii) The clicks per tick of a standing hand.** The click count q = E div w_c stands against the sweep count N = |sigma| div (key/2). On one Node-clock (the uniform state), (P1) at k = 0 gives the exact integer identity
+
+      rim^2 E_raw - 4 w rim s |sigma| = 2 w |rim z- - z (pinion + i sgn(sigma) s)|^2
+
+  The wind exceeds the mass's count of the sweep by the teeth times the squared miss of the hand's turn against g. So q >= N, with equality at rest up to that miss.
+
+### 2.2 The probe (m2_clicks.py, out/m2_clicks.txt)
+
+**Part A: the one formula at the flat clock, on the head's own lay** (the sea, 1 quantum, on one Node-clock), for the toy's three sprung trains and the middle universe's two:
+- **A1.** The step's integer form P = W (a - a-) + r - mid W, P+ = P - X D a, a+ = a + (P+ + mid W+) div W+ reproduces the head's own first tick bit for bit, read before the head's turnover: 6 of 6.
+- **A2.** The exact identity holds at 33,000 of 33,000 ticks. The mutants s + 1 and pinion + 1 each fail 33,000 of 33,000.
+- **A3.** The sign changes of the bob's integer dot (a run of zeros read as one passage) against those of Re(g^n). The counts never part by more than 1: 0 of 33,000 ticks over the five trains (the electron at 1 and at 100 quanta).
+  - Mutants, on the heavy trains: the beat read as E = hbar w (angle sin w0) fails at 1,989, 1,989 and 1,985 of 2,000 ticks; a train 1% heavier fails at 1,658, 1,664 and 1,621 of 2,000.
+  - On the light trains the mutants pass too, as they must: there the readings agree to 1e-8.
+- **A4 (floats).** The mean half period against pi / arcsin(w_c / hbar_L):
+
+  | train | quanta | measured | predicted | agreement |
+  | --- | --- | --- | --- | --- |
+  | heavier nucleon | 1 | 2.2299 | 2.2313 | 0.06% |
+  | lighter nucleon | 1 | 2.2438 | 2.2443 | 0.02% |
+  | the middle's heavy train | 1 | 2.4931 | 2.4932 | |
+  | electron | 1 | 5,890 | 5,853.8 | 0.62% |
+  | electron | 100 | 5,854.0 | 5,853.8 | 0.003% |
+  | the middle's light train | 1 | 539.6 | 538.0 | 0.3% |
+
+  The electron's departure at one quantum is the notches' resolution: its twelve gear turns 3 notches a tick. The mutant E = hbar w predicts 3.18 for the heavier nucleon.
+- **A5.** q >= N holds at 33,000 of 33,000 ticks.
+
+**Part B: the head's full engine, the record's own chimes** (world_plasma and world_universe, 300 ticks each):
+- **B1.** The owed winding is 3 key s at 3,500 of 3,500 chimes.
+- **B2 (floats).** The face's turn agrees with cos w0(load) within 4/|z| at 3,500 of 3,500 chimes; the largest deviation is 0.020. Mutants: no dilation fails 2,500 of 3,500; E = hbar w fails 3,500.
+- **B3.** The record's beats lie within one tick of the face's half period pi/turn: 0 failures. This is a weak test, since the beats are integers 2 or 3.
+
+### 2.3 Findings on the head (CHECKED; OPEN for Sofer and David)
+
+- **(a) The crossing rule CK-S1 counts a passage through exactly 0 twice:** once entering 0, once leaving. A standing hand whose lay is symmetric (z_0 real) passes through 0 exactly. The electron's sea gives 4 crossings for 2 sign changes in 12,000 ticks, at 1 and at 100 quanta, so the bob reads a beat of 1 tick: the head's mean beat is 1,964 against the half period 5,890. A run of zeros should be read as one passage.
+- **(b) The head's full engine turns a flat clock over at every tick.** Its regulator's drive lowers the time gear below the full rate, a weak top: X0 = X1 = 1,000 and X2 = 998 after the drive. Part C: 162 turnovers in 6 ticks over 27 clocks on the empty 3^3 board, and the same with an electron sea; the time gear stays at 1,000 and the standing hand never advances. Law 4's text says the rest at the full rate "does not turn" (Sofer; TENSOR24.md line 728). This is why Part A steps the flat clock by the head's own integer form.
+- **(c) A fixed winding loses standing quanta on loaded clocks.** On world_plasma the wind per quantum dilates with the load, while the winding stays. The heavier nucleon's click count q falls to 0 from tick 5, and its action count stays 0.99 to 1.02 (section 4, Q5).
+- **(d) The recoil of a fitted pair reads no mass on the head.** Every train is fitted as the same one-site child (section 3). A recoil would read m2, which is one with the sine only through c_T. OPEN: it waits on a fitting that lays rest waves.
+
+### 2.4 What it replaces
+
+Section 19's "Its independent reading is the composite's" (line 768): the composite stays a third reading, and the chimes' two readings stand now. The law's line 440 ("nature's E = h nu being the hand's click rate") holds on the lattice only as E = hbar_L sin(pi / beat). The click rate reads the angle and the books read its sine.
+
+## 3. The fitting's threshold
+
+### 3.1 The formula
+
+At the vacuum, a hand alone on one Node-clock (its six neighbours empty) holds the wind
+
+    E_1 = 3 rim (|z|^2 + |z-|^2) X / Gamma     (unfloored; the head floors per clock and loses less than 14)
+    E_1 >= 6 rim |sigma| X / Gamma = one light winding per quantum,
+    equality iff |z| = |z-| and z- = +- i z  (z = 120 + 60 i, z- = i z: exactly one light winding, every train)
+
+### 3.2 The proof (PROVED)
+
+The spring enters a hand's wind only through the hold S = 2 w - D - SUM R_j (the own part w (n^2 + b^2) - S n b) and through the neighbours' notches (the grip and shared parts).
+
+At the vacuum S = 0 for every train. With empty neighbours, the shared parts, +(SUM R_j) n b at the clock and -R n b at each neighbour, cancel unfloored. So E_1 = 2 w (|z|^2 + |z-|^2) X / (4 Gamma^3 G^2), and the teeth w = 6 rim Gamma^2 G^2 are one for every train.
+
+The bound is AM-GM: |z|^2 + |z-|^2 >= 2 |z| |z-| >= 2 |sigma|. At a loaded clock the head's balanced child (n b = 0 per gear) stays train-free exactly; other shapes feel S(load) weakly.
+
+### 3.3 The derived shape: no (PROVED; CHECKED F4)
+
+Take the train's own pair: z- = z conj(g) / rim, and one quantum |z|^2 = key rim / (2 s). Then E_1 = 3 key rim^2 / s = (one light winding) / sin w0 per quantum:
+
+| train | exact | with the notches |
+| --- | --- | --- |
+| electron | 1,863 light windings | 2,000 light windings (3.7 million of its own windings) |
+| heavier nucleon | 1.013 | 1.026 |
+| lighter nucleon | 1.015 | 1.027 |
+
+The one-site costs' ratio, nucleon over electron, is 0.000513, against the windings' 1,838.68. The cost falls as the mass rises: the inverse of E = m c^2.
+
+### 3.4 E = 2 m c^2 on the lattice: the least cost, not the fitting's (PROVED; CHECKED F5, F6)
+
+By (P1) and the circular split of each mode (4.2 (c), the same algebra with u = e^(i w_k)), every state of a train holds wind >= hbar_L sin w0 (N+ + N-), N+- the quanta of its two circular parts. So a pair, one quantum of each sense, costs at least 2 w_c = 2 m c^2. Only rest waves, or their doubler, reach it.
+
+- F5: the head's sea reaches it: 1.0000012 and 1.0000006 of the winding per quantum for the nucleons, 1.0025 for the electron.
+- F6: the head's rest packets approach it only when wider than the train's Compton length.
+  - The nucleons (Compton length 0.41 Mesh): 1.027, 1.009 and 1.0045 at half-widths 1, 2 and 3 (the heavier; the lighter 1.030, 1.010, 1.005).
+  - The electron (1,076 Meshes): 3.5e6, 1.15e6 and 5.7e5 of its windings.
+
+### 3.5 Why it stays the same for every train (PROVED)
+
+A fitting writes one Node-clock per child, inside the stencil of seven. A quantum confined to one Node-clock holds every wave number of the board, and its wind sees only the teeth: the hold is 0, and the neighbours are empty.
+
+The least one-site cost is the quarter turn's quantum, hbar_L sin(pi/2), which is the light's winding: the cutoff's quantum, not the mass's. Draft A's 1,010,027 millionths is (A^2 + B^2) / (2 A B) = 36,361 / 36,000 for the balanced notches (125, 144), not a property of those notches alone.
+
+### 3.6 The probe (m3_fitting.py, out/m3_fitting.txt)
+
+- **F1.** fitted_windings_of at the setting of world_nature, world_hole and world_bang equals floor(3 rim A^2 X / Gamma) + floor(3 rim B^2 X / Gamma) at 24 of 24 ends. Mutants: E = 2 m c^2 fails 24; the pinion for the rim fails 18.
+- **F2.** On 480 (train, clock, shape) cases, at the vacuum and at clocks loaded by 6 ticks of world_hole:
+  - (a) the head's wind equals the per-clock floors, 480 of 480;
+  - (b) unfloored at the vacuum it is 3 rim (|z|^2 + |z-|^2), train-free, 240 of 240;
+  - (c) the floors lose less than 14, 480 of 480.
+  - Mutants: one floor for the window fails 367; the spring in place of the hold fails 168; the grips at the clock alone fail 225.
+- **F3.** The bound holds for 232 of 232 shapes, with 5 equalities (including 120 + 60 i for the 4 trains). Mutants: 2 light windings fails 134; 1.02 light windings fails 12.
+- **F7, the head's records.** On world_hole and world_nature, 60 ticks each, every single light fitting's booked due equals the train-free one-site formula at its ends' stretch, for every fitted train (electron 5, nucleons 11 and 9): 25 of 25. Mutants: E = 2 m c^2 fails 25; pinion-weighted fails 25.
+
+### 3.7 What it replaces
+
+- Draft A's p9 finding now has its proof: the train-independence is structural.
+- Plan section 27 (line 1186): "A pair is set where the wind reaches the pair's winding at both ends (E = mc^2)" is false for a one-Node-clock child. There the threshold is two light windings per pair for every train.
+
+OPEN:
+- A fitting with E = 2 m c^2 must lay rest waves (beyond one Mesh) or be a different click.
+- The law's pair threshold (ALGEBRA.md line 1218, "the sum line is the law's pair threshold, a parametric growth": the beats add, w_L = w_i + w_j) and the books (the winds add) part by cos w0 at the cutoff, since sin 2 w0 = 2 sin w0 cos w0.
+
+## 4. The quantum per mode
+
+### 4.1 The formula
+
+The action of the hand's own turn is the area its hand sweeps in a tick, times its teeth:
+
+    Q = SUM_x Im(conj(a) P) = SUM_x (three P_twelve - twelve P_three),   P = W (a - a-) + (r - mid W)
+
+P is the step's exact momentum, with the fine tooth. The click of a whole counts the action:
+
+    q = |Q| div (W_0 key / 2),  W_0 = teeth Gamma (the vacuum's mean teeth)
+
+Equivalently, the winding follows the mode and the clock: w_c(k, load) = hbar_L sin w(k, load).
+
+### 4.2 The proofs
+
+- **(a) A fixed winding overcounts every moving mode** by sin w(k) / sin w0 (P1). This is the physicist's 54: 53.79 at k = 0.05 for the electron (float). PROVED. CHECKED Q1: on the 4^3 board's lowest moving mode the head's click count per quantum is 1,388.8469 for the electron, the formula's value exactly; it is 1.0075 and 1.0083 for the nucleons.
+- **(b) Q is kept exactly by the rational step under any uniform change of the clock** (the teeth W_t, the stretch s_t, the spring D_t and the grips R_t at every tick). The kick adds s SUM Im(conj(a) F), which is 0 because the grips are one per Mesh and the spring is real. The drift adds Im(conj(P/W) P) = 0. The action is the hand's Noether charge (the multiplication by i commutes with the step), kept exactly, not only adiabatically. PROVED. Where a pawl wall stands, the neighbour's hand is read conjugated, which does not commute with i; there the action is weighed by the pawl's sign and the mesh rate, as draft A's verifier's Q* has it.
+  - CHECKED Q3: kept in 4 of 4 runs of 12 varying ticks. Mutants: the plain sweep fails 4 of 4; uneven grips at a Mesh's two ends fail 4 of 4.
+  - A standing hand under a spring falling by half over 4,000 ticks: wind/wind_0 = sin w0(t) / sin w0 to 6 digits while Q stays exact, so q = E div w_c reads 0.8248 of the quanta.
+- **(c) At rest the wind counts both senses.** A swing splits exactly into its circular parts A = (g z - rim z-) / (2 i s) and B = z - A. Their winds add, because the cross term is 2 w Re(conj A B (1 + u^2 - 2 cos w0 u)) = 0 with u = g/rim; their sweeps subtract. So at rest the head's click counts N+ + N-, and the action counts N+ - N-. PROVED. CHECKED Q4: 150 of 150 swings; the mutant with a cross term fails 150 of 150.
+- **(d) On the head, the integer carries leak the action** by Im(conj(v) rho+) a tick at each clock (draft A's verifier's identity, A_verify/v1_charge_step, 60 of 60 ticks). CHECKED Q5, world_plasma, 100 ticks:
+  - The electron's action count stays within 5e-4, and the heavier nucleon's within 2.3%.
+  - Meanwhile the head's click count of the nucleon's standing sea falls to 0 from tick 5, as the wind per quantum dilates with the load (0.78 windings at tick 80).
+- **(e) The light.** The head's drift (the sea) holds no action: sweep 0 at every clock, with 0.99225 light windings of wind. It is a zero-frequency mode, not photons. The bang's quarter-turn lay holds exactly one light winding per quantum at every clock, 5,000,000 of 5,000,000 (Q6). So the head's light winding 3 key rim is the quantum of the quarter turn alone, as the physicist found.
+
+### 4.3 What it changes
+
+1. Moving hands click as their quanta: one electron, not 1,389.
+2. A clock whose rate moves (the expansion, a well) keeps its standing hands' quanta.
+3. Light quanta exist only as turning hands, and the drift has none. The head's light seas need a turning lay; the bang's light is unchanged.
+4. At rest at the full rate nothing changes (q = N).
+5. The draw's modulus M = the winding x the hands' count (law 9) changes. OPEN.
+6. The photoelectric threshold and Planck's spectrum need the chime's rule: which light quanta a bob takes, each carrying hbar_L sin w_light. OPEN.
+7. A moving swing's count needs the mode's frequency, read from three slots. OPEN.
+8. An integer carry that keeps Q exactly (the conserved current owed in section 19) is OPEN.
+
+### 4.4 What it replaces
+
+- Law 5's fixed winding w_c = 3 key s (TENSOR24.md line 729).
+- Section 30's quantum row (line 1393): "a derivation owed (David): a quantum per mode, from an adiabatic invariant".
+- The mathematician's "the light's winding is 0" (line 1432): with the action no winding is divided by, and the light's quanta are its sweep's.
+
+## 5. The claims, by status
+
+| claim | status | where |
+| --- | --- | --- |
+| (D1), (D2): the dispersion; S = 0 at the vacuum for every train | PROVED; CHECKED 14 + 896, mutants fail | 1.1, C1, C2 |
+| the rest turn is the Gaussian unit g / rim; Re(g^t) by the integer recurrence | PROVED; CHECKED 63, mutant fails 60 | 1.2, C3 |
+| (P1) per mode; the lattice's Planck relation epsilon = hbar_L sin w(k), one hbar_L | PROVED; CHECKED 448 | 1.3, Q1 |
+| the variational mass: the least wind per quantum is w_c = 3 key s, reached only at rest or the corner | PROVED; CHECKED 225, 18 equalities, mutants fail | 1.3, C5 |
+| m2 (R/w) = sin w0 for any grips; the three readings are Im g / rim, arg g, 3 Im g / Re g | PROVED; CHECKED 3 of 3 exact | 1.4, C4 |
+| the sine exact; the beat and the inertia its misread shadows | PROVED (by 1.3 and 1.4) | 1.4 |
+| the well per quantum is key tan(w0/2), a fourth reading (3,164) | PROVED; CHECKED on the head's sea | 1.5, C7 |
+| one light speed makes the inertia the sine, at c_u^2 <= (1 + pinion_min/rim)/6 | PROVED; CHECKED; the choice OPEN | 1.6, C8 |
+| the one mass is the 24's; the band's k^4 is the cube's | PROVED; CHECKED 144 + 144, mutant fails 96 | 1.7, C6 |
+| the composite as the product of pairs adds the beats, not the windings (defect s1 (rim - p2) + s2 (rim - p1)) | PROVED; CHECKED 9; OPEN for David | 1.8, C9 |
+| the nucleons at the cutoff; the inertia 11,341 against nature | OPEN, the lattice's | 1.9 |
+| the click count's excess identity at one Node-clock | PROVED; CHECKED 33,000, mutants fail all | 2.1, A2 |
+| the bob's sign changes follow Re(g^n) within one count | CHECKED 33,000 ticks, mutants fail on heavy trains | 2.2, A3 |
+| the chime's face shows the dilated rest turn at the record's load | PROVED; CHECKED 3,500 chimes (floats), mutants fail | 2.1, B2 |
+| CK-S1 double counts a touch of 0; the head's flat clock turns over every tick | CHECKED; OPEN for Sofer and David | 2.3 |
+| the recoil reading | OPEN | 2.3 (d) |
+| a one-Node-clock child holds >= one light winding per quantum, train-free at the vacuum | PROVED; CHECKED 24 + 480 + 232 + 25 births | 3 |
+| the derived shape costs 1/sin w0 light windings | PROVED; CHECKED | 3.3, F4 |
+| E = 2 m c^2 as the least cost of a pair, reached by rest waves | PROVED; CHECKED F5, F6 | 3.4 |
+| a fitting with the 2 m c^2 threshold; the law's pair threshold against the books | OPEN | 3.7 |
+| the fixed winding overcounts mode k by sin w(k)/sin w0 (the 54) | PROVED; CHECKED Q1, Q2 | 4.2 (a) |
+| the action Q kept exactly under any uniform change of the clock | PROVED; CHECKED Q3, mutants fail | 4.2 (b) |
+| a swing at rest splits exactly; winds add | PROVED; CHECKED 150, mutant fails | 4.2 (c) |
+| on the head the action leaks by the carries; the fixed winding loses a standing quantum | CHECKED Q5 | 4.2 (d) |
+| the light's drift holds no action; the bang's light is counted right | CHECKED Q6 | 4.2 (e) |
+| the integer carry that keeps Q; the chime's rule; Planck's spectrum; the draw's modulus | OPEN | 4.3 |
+
+## 6. The probes and how to run them
+
+Each probe runs in under 2 minutes; none writes outside out/.
+
+    PY="/home/user/Universe24/venv314/bin/python -I -B"
+    $PY probes/m1_dispersion.py   # about 2 s
+    $PY probes/m2_clicks.py       # about 30 s
+    $PY probes/m3_fitting.py      # about 25 s
+    $PY probes/m4_quantum.py      # about 90 s
+
+## 7. For David: what goes to the verifier
+
+The protocol's step 5 asks a second hand to:
+- re-derive (P1) and the variational bound;
+- attack 1.4's naming (the beat as the energy, a Floquet quasi-energy, against the books' wind);
+- rerun F7 on more worlds;
+- check that Part A's flat clock is the head's form: it holds bit for bit at the first tick, 6 of 6.
+
+Sofer's law check should weigh the proposed sentence of 1.9, the correction to line 440's "E = h nu being the hand's click rate", and the two findings of 2.3 (CK-S1; the flat clock's turnover against law 4's sentence).
+
+== t24lib.py ==
+"""Shared helpers for the mass probes: the head's engine read-only, exact integers only.
+
+Every state is a hand on a cube torus: two integer arrays (three, twelve) per time slot, now and before.
+The one formula at a clock (the head's flux form, core/rule3.py line 1):
+    w (a+ - 2 a + a-) + r' - r = SUM_j R_j (a_j - a) - D a
+The rational form drops the fine teeth; the wind form is hands.wind's own (2 own - shared), exact.
+"""
+import itertools
+import random
+import sys
+
+sys.dont_write_bytecode = True
+sys.path.append("/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass/probes")
+import head  # noqa: E402,F401  (puts the repo's src on sys.path)
+
+import numpy as np  # noqa: E402
+
+from event_universe import hands, readings  # noqa: E402
+from event_universe.core.rates import sine_rim  # noqa: E402
+from event_universe.core.rule3 import wind_weight  # noqa: E402
+from event_universe.core.spokes import SPOKES, across  # noqa: E402
+from event_universe.meshes import factors  # noqa: E402
+from event_universe.trains import Gear, zeros  # noqa: E402
+
+OUT = "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass/out/"
+
+
+def obj(a):
+    return np.array(a, dtype=object)
+
+
+def hand_trains(clock):
+    """(index in clock.hands(), train, pinion, s, rim) for every hand train, light included."""
+    found = []
+    for k, h in enumerate(clock.hands()):
+        p, r = h.ratio
+        found.append((k, h, p, sine_rim(p, r), r))
+    return found
+
+
+def vacuum_gearing(clock, train):
+    """The head's own gearing of the train at the clock's load (the vacuum at the setting), as scalars:
+    every clock of the board must hold the same integers (checked), the value at the first clock kept."""
+    g = readings.gearing(clock, train.ratio, readings.load(clock), factors(clock))
+
+    def one(v):
+        a = np.asarray(v, dtype=object)
+        if a.ndim == 0:
+            return int(a)
+        first = a.flat[0]
+        assert all(x == first for x in a.flat), "the gearing differs between clocks"
+        return int(first)
+
+    return g._replace(grips=tuple(one(x) for x in g.grips), hold=one(g.hold), teeth=one(g.teeth), spring=one(g.spring))
+
+
+def board_gearing(clock, train):
+    """The head's own gearing as the head holds it (arrays over the board where the rates vary)."""
+    return readings.gearing(clock, train.ratio, readings.load(clock), factors(clock))
+
+
+def gears_of(now3, now12, bef3, bef12):
+    return [Gear(obj(now3), obj(bef3), None, None), Gear(obj(now12), obj(bef12), None, None)]
+
+
+def head_wind_total(clock, gears, gearing):
+    """The head's hands.wind summed over the board (each gear's carry floored as the head floors it)."""
+    return sum(int(v) for v in hands.wind(clock, gears, gearing).flat)
+
+
+def exact_parts(clock, gears, gearing):
+    """Per gear, the exact integer (2 own - shared) summed over the board (hands.wind before its carry)."""
+    nows = [g.now for g in gears]
+    befs = [g.before for g in gears]
+    parts = []
+    for n, b in zip(nows, befs):
+        gripped = 0 * n
+        shared = 0 * n
+        for spoke, grip in enumerate(gearing.grips):
+            bj, nj = across(b, spoke), across(n, spoke)
+            gripped = gripped + grip * bj
+            shared = shared + grip * (b - bj) * (n + nj)
+        own = gearing.teeth * (n * n + b * b) - gearing.hold * n * b - n * gripped
+        parts.append(own + own - shared)
+    return parts
+
+
+def wind_divisor(clock):
+    """The wind's divisor 4 Gamma^3 G^2 (hands.wind: wind_weight doubled)."""
+    return wind_weight(clock.full_rate, clock.G) * 2
+
+
+def exact_raw_total(clock, gears, gearing):
+    """SUM over the board and the two gears of (2 own - shared): the leapfrog's conserved form, doubled."""
+    return sum(int(v) for part in exact_parts(clock, gears, gearing) for v in part.flat)
+
+
+def sweep_total(gears):
+    return sum(int(v) for v in hands.sweep(gears).flat)
+
+
+def rational_step(clock, gears, gearing, steps=1):
+    """The one formula without the fine teeth, in exact rationals (Python Fractions via object arrays):
+    a+ = 2 a - a- + (SUM_j R_j (a_j - a) - D a) / w, at fixed rates (the flat clock)."""
+    from fractions import Fraction
+    w, D, R = gearing.teeth, gearing.spring, gearing.grips
+    now = [g.now * Fraction(1) for g in gears]
+    bef = [g.before * Fraction(1) for g in gears]
+    for _ in range(steps):
+        nxt = []
+        for n, b in zip(now, bef):
+            pull = 0 * n
+            for spoke, grip in enumerate(R):
+                pull = pull + grip * (across(n, spoke) - n)
+            nxt.append(n + n - b + (pull - D * n) / w)
+        now, bef = nxt, now
+    return [Gear(n, b, None, None) for n, b in zip(now, bef)]
+
+
+def rotations24():
+    """The cube's 24 rotations as (permutation, signs) with determinant 1, from the three axes alone."""
+    found = []
+    for perm in itertools.permutations(range(3)):
+        parity = sum(1 for i in range(3) for j in range(i + 1, 3) if perm[i] > perm[j]) % 2
+        for signs in itertools.product((1, -1), repeat=3):
+            det = (1 if parity == 0 else -1) * signs[0] * signs[1] * signs[2]
+            if det == 1:
+                found.append((perm, signs))
+    assert len(found) == 24
+    return found
+
+
+def rotate_array(a, perm, signs):
+    """The scalar field a moved by the rotation about the site (0, 0, 0): a'(R x) = a(x) on the torus."""
+    L = a.shape[0]
+    out = np.empty_like(a)
+    for x in itertools.product(range(L), repeat=3):
+        y = [0, 0, 0]
+        for i in range(3):
+            y[perm[i]] = (signs[i] * x[i]) % L
+        out[tuple(y)] = a[x]
+    return out
+
+
+def random_gaussian_board(L, amp, rnd):
+    return obj([[[rnd.randint(-amp, amp) for _ in range(L)] for _ in range(L)] for _ in range(L)])
+
+
+def report(path, lines):
+    with open(path, "w") as f:
+        f.write("\n".join(lines) + "\n")
+    print("\n".join(lines))
+
+
+rng = random.Random
+
+== head.py ==
+"""The head's engine, imported read-only: the repo's src on sys.path, no bytecode written into the repo."""
+import sys
+sys.dont_write_bytecode = True
+REPO = "/home/user/Universe24"
+if REPO + "/src" not in sys.path:
+    sys.path.insert(0, REPO + "/src")
+WORLDS = REPO + "/tests/worlds/"
+
+from event_universe.assembly.piece import read_piece  # noqa: E402
+from event_universe.clock import Clock  # noqa: E402
+
+
+def clock_of(world, **changes):
+    calibre, piece = read_piece(WORLDS + world)
+    return Clock(calibre, {**piece, **changes})
+
+== m1_dispersion.py ==
+"""M1: the one mass of a train in the clock's words (item 1).
+
+Reads the head's own gearing (core/rule3.gearing through readings.gearing) at the vacuum of four universe
+files, and checks with exact integers:
+  C1  the vacuum gearing: hold S = 0, D / w = 2 (rim - pinion) / rim, R / w = pinion / (3 rim);
+  C2  the dispersion on the exact Gaussian plane waves i^(n.x) of a 4^3 torus, the head's own Spoke read:
+      pull(phi) = lambda phi and 3 rim (2 w + lambda) = 2 w pinion SUM_j cos k_j  (rim cos w(k) = pinion c(k));
+  C3  the rest turn: g = pinion + i s solves g^2 - 2 pinion g + rim^2 = 0, and the rational step on one
+      Node-clock carries z_0 = rim B, z_-1 = B conj(g) to z_t = B g^t / rim^(t-1) exactly;
+  C4  the three readings (floats only for the continuum comparison, said so): sin w0 = s / rim,
+      w0 = arg g, m2 = 3 tan w0 = 3 s / pinion, and the exact law m2 (R / w) = s / rim;
+  C5  the variational mass: rim E >= 4 w s |sigma| for every state (E the wind form doubled, sigma the
+      sweep), equal on the rest mode and the corner mode;
+  C6  the 24: the head's wind and sweep invariant, the rational step commuting, under the 24 rotations.
+Each check carries mutants that must fail.
+argv: none.  Output: out/m1_dispersion.txt
+"""
+import math
+import sys
+from fractions import Fraction
+
+sys.path.append("/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass/probes")
+import t24lib as L  # noqa: E402
+from event_universe.core.spokes import across  # noqa: E402
+
+lines = []
+say = lines.append
+WORLDS = [("universe_toy", "world_node.json"), ("universe_bang", "world_bang.json"),
+          ("universe_middle", "world_emission.json"), ("universe_ga2", "world_ga2.json")]
+
+
+def gaussian_mul(a, b):
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+
+# ---------------------------------------------------------------- C1
+say("C1  the vacuum gearing, the head's integers (readings.gearing at the load 0)")
+c1 = {"true": [0, 0], "universal grips R/w = 1/3": [0, 0], "spring without its 2": [0, 0], "hold = spring": [0, 0]}
+clocks = {}
+for uni, world in WORLDS:
+    clock = L.head.clock_of(world, seed=[], shape=[4, 4, 4])
+    clocks[uni] = clock
+    for k, h, p, s, r in L.hand_trains(clock):
+        g = L.vacuum_gearing(clock, h)
+        w, D, S, R = g.teeth, g.spring, g.hold, g.grips
+        claims = {
+            "true": [S == 0, D * r == 2 * (r - p) * w, all(Rj * 3 * r == p * w for Rj in R)],
+            "universal grips R/w = 1/3": [S == 0, D * r == 2 * (r - p) * w, all(Rj * 3 == w for Rj in R)],
+            "spring without its 2": [S == 0, D * r == (r - p) * w, all(Rj * 3 * r == p * w for Rj in R)],
+            "hold = spring": [S == D, D * r == 2 * (r - p) * w, all(Rj * 3 * r == p * w for Rj in R)],
+        }
+        for name, ok in claims.items():
+            c1[name][0] += 1
+            c1[name][1] += 0 if all(ok) else 1
+for name, (n, bad) in c1.items():
+    say(f"    {name:28s}: {n} trains (4 universes), failures {bad}")
+
+# ---------------------------------------------------------------- C2
+say("C2  the dispersion on the 64 exact Gaussian plane waves i^(n.x) of the 4^3 torus (the head's Spoke read)")
+COS = {0: 1, 1: 0, 2: -1, 3: 0}
+IPOW = {0: (1, 0), 1: (0, 1), 2: (-1, 0), 3: (0, -1)}
+c2 = {"true": [0, 0], "light-like cos w = c(k)": [0, 0], "rest cosine only": [0, 0]}
+for uni, clock in clocks.items():
+    for k, h, p, s, r in L.hand_trains(clock):
+        g = L.vacuum_gearing(clock, h)
+        w, D, R = g.teeth, g.spring, g.grips[0]
+        for n in __import__("itertools").product(range(4), repeat=3):
+            re = L.obj([[[IPOW[(n[0] * x + n[1] * y + n[2] * z) % 4][0] for z in range(4)] for y in range(4)] for x in range(4)])
+            im = L.obj([[[IPOW[(n[0] * x + n[1] * y + n[2] * z) % 4][1] for z in range(4)] for y in range(4)] for x in range(4)])
+            sumcos = sum(COS[j] for j in n)
+            lam = R * (2 * sumcos - 6) - D
+            ok_mode = True
+            for part in (re, im):
+                pull = 0 * part
+                for spoke, grip in enumerate(g.grips):
+                    pull = pull + grip * (across(part, spoke) - part)
+                pull = pull - D * part
+                ok_mode = ok_mode and all(int(a) == lam * int(b) for a, b in zip(pull.flat, part.flat))
+            claims = {
+                "true": 3 * r * (2 * w + lam) == 2 * w * p * sumcos,
+                "light-like cos w = c(k)": 3 * (2 * w + lam) == 2 * w * sumcos,
+                "rest cosine only": r * (2 * w + lam) == 2 * w * p,
+            }
+            for name, ok in claims.items():
+                c2[name][0] += 1
+                c2[name][1] += 0 if (ok and ok_mode) else 1
+for name, (n, bad) in c2.items():
+    say(f"    {name:28s}: {n} (train, k) pairs, failures {bad}")
+
+# ---------------------------------------------------------------- C3
+say("C3  the rest turn as the Gaussian unit g / rim, g = pinion + i s (exact)")
+c3 = {"true": [0, 0], "g = pinion + i (s + 1)": [0, 0]}
+clock1 = L.head.clock_of("world_node.json", seed=[], shape=[1, 1, 1])
+for k, h, p, s, r in L.hand_trains(clock1):
+    if s == 0:
+        continue
+    g0 = L.vacuum_gearing(clock1, h)
+    for name, ss in (("true", s), ("g = pinion + i (s + 1)", s + 1)):
+        gg = (p, ss)
+        g2 = gaussian_mul(gg, gg)
+        char = (g2[0] - 2 * p * gg[0] + r * r, g2[1] - 2 * p * gg[1])
+        B = 7
+        z0 = (r * B, 0)
+        zm = (B * p, -B * ss)
+        gears = L.gears_of([[[z0[0]]]], [[[z0[1]]]], [[[zm[0]]]], [[[zm[1]]]])
+        bad = 0 if char == (0, 0) else 1
+        power = (1, 0)
+        for t in range(1, 21):
+            gears = L.rational_step(clock1, gears, g0)
+            power = gaussian_mul(power, gg)
+            want = (Fraction(B * power[0], r ** (t - 1)), Fraction(B * power[1], r ** (t - 1)))
+            got = (gears[0].now.flat[0], gears[1].now.flat[0])
+            bad += 0 if got == want else 1
+        c3[name][0] += 21
+        c3[name][1] += bad
+for name, (n, bad) in c3.items():
+    say(f"    {name:28s}: {n} checks (characteristic equation + 20 rational ticks, 3 sprung trains), failures {bad}")
+
+# ---------------------------------------------------------------- C4
+say("C4  the three readings of one Gaussian integer g (floats only for the continuum comparison)")
+clock = clocks["universe_toy"]
+rows = {}
+for k, h, p, s, r in L.hand_trains(clock):
+    if s == 0:
+        continue
+    g = L.vacuum_gearing(clock, h)
+    exact = Fraction(3 * s, p) * Fraction(g.grips[0], g.teeth) == Fraction(s, r)
+    w0 = math.atan2(s, p)
+    # the curvature of the float dispersion along an axis, by a centred difference at k = 1e-4
+    kk = 1e-3 * w0
+    wk = math.acos(p / r * (2 + math.cos(kk)) / 3)
+    curv = 2 * (wk - w0) / kk ** 2
+    rows[k] = (s / r, w0, 3 * s / p, 1 / curv, exact)
+    say(f"    hand {k}: sin w0 = s/rim {s / r:.10f}  beat w0 {w0:.10f}  m2 = 3 s/pinion {3 * s / p:.6f}  "
+        f"1/curvature (float) {1 / curv:.6f}  m2 R/w == s/rim exactly: {exact}")
+e = min(rows, key=lambda k: rows[k][0])
+for k in rows:
+    if k != e:
+        say(f"    hand {k} over hand {e}: sines {rows[k][0] / rows[e][0]:.2f}  beats {rows[k][1] / rows[e][1]:.2f}  "
+            f"inertias {rows[k][2] / rows[e][2]:.0f}")
+
+# ---------------------------------------------------------------- C5
+say("C5  the variational mass: rim E >= 4 w s |sigma| for every state (E = SUM (2 own - shared), exact)")
+rnd = L.rng(5)
+clock3 = L.head.clock_of("world_node.json", seed=[], shape=[4, 4, 4])
+N4 = 4
+variants = {
+    "true (s)": lambda p, s, r: s,
+    "mutant s + 1": lambda p, s, r: s + 1,
+    "mutant beat r w0": lambda p, s, r: int(r * math.atan2(s, p)) + 1,
+    "mutant inertia r s / p": lambda p, s, r: (r * s) // p + 1,
+    "mutant light at its rim (s = r)": lambda p, s, r: r if s == 0 else s,
+}
+c5 = {name: [0, 0, 0] for name in variants}
+for k, h, p, s, r in L.hand_trains(clock3):
+    g = L.vacuum_gearing(clock3, h)
+    w = g.teeth
+    states = []
+    for _ in range(40):
+        amp = rnd.choice([3, 100, 10 ** 6])
+        states.append(L.gears_of(*(L.random_gaussian_board(N4, amp, rnd) for _ in range(4))))
+    ones = L.obj([[[1] * N4] * N4] * N4)
+    sign = L.obj([[[(-1) ** (x + y + z) for z in range(N4)] for y in range(N4)] for x in range(N4)])
+    if s:
+        for B in (1, 3, 1000):
+            states.append(L.gears_of(r * B * ones, 0 * ones, B * p * ones, -B * s * ones))
+            states.append(L.gears_of(r * B * sign, 0 * ones, -B * p * sign, B * s * sign))
+            for _ in range(5):
+                pert = [L.random_gaussian_board(N4, 5, rnd) for _ in range(4)]
+                states.append(L.gears_of(r * B * ones + pert[0], pert[1], B * p * ones + pert[2], -B * s * ones + pert[3]))
+    else:
+        # the light's mode k = (pi/2, 0, 0): cos w = 2/3, sin w = sqrt(5)/3; its circular state with the turn
+        # rounded to a Gaussian integer over B (re 2B/3, im sqrt(5)B/3): the wind per sweep sits near sin w < 1
+        for B in (300, 30000):
+            cre = L.obj([[[[(1, 0), (0, 1), (-1, 0), (0, -1)][x % 4][0] for z in range(N4)] for y in range(N4)] for x in range(N4)])
+            cim = L.obj([[[[(1, 0), (0, 1), (-1, 0), (0, -1)][x % 4][1] for z in range(N4)] for y in range(N4)] for x in range(N4)])
+            ur, ui = (2 * B) // 3, math.isqrt(5 * B * B) // 3
+            # before = now * (ur - i ui) / B scaled: now = B phi, before = (ur - i ui) phi
+            states.append(L.gears_of(B * cre, B * cim, ur * cre + ui * cim, ur * cim - ui * cre))
+    for st in states:
+        E = L.exact_raw_total(clock3, st, g)
+        sig = L.sweep_total(st)
+        for name, f in variants.items():
+            sv = f(p, s, r)
+            ok = r * E >= 4 * w * sv * abs(sig)
+            c5[name][0] += 1
+            c5[name][1] += 0 if ok else 1
+            c5[name][2] += 1 if r * E == 4 * w * sv * abs(sig) and sig != 0 else 0
+for name, (n, bad, eq) in c5.items():
+    say(f"    {name:32s}: {n} states (4 trains), failures {bad}, equalities {eq}")
+
+# ---------------------------------------------------------------- C6
+say("C6  the 24: the head's wind and sweep invariant; the rational step commutes with every rotation")
+rots = L.rotations24()
+clock4 = clocks["universe_toy"]
+c6 = {"wind and sweep invariant": [0, 0], "step commutes": [0, 0], "mutant: anisotropic grips commute": [0, 0]}
+for k, h, p, s, r in L.hand_trains(clock4)[:2]:
+    g = L.vacuum_gearing(clock4, h)
+    aniso = g._replace(grips=tuple(gr + (j // 2 == 2) for j, gr in enumerate(g.grips)))
+    for _ in range(3):
+        st = L.gears_of(*(L.random_gaussian_board(4, 50, rnd) for _ in range(4)))
+        E0, s0 = L.head_wind_total(clock4, st, g), L.sweep_total(st)
+        after = L.rational_step(clock4, st, g)
+        after_a = L.rational_step(clock4, st, aniso)
+        for perm, signs in rots:
+            rs = [L.Gear(L.rotate_array(x.now, perm, signs), L.rotate_array(x.before, perm, signs), None, None) for x in st]
+            c6["wind and sweep invariant"][0] += 1
+            c6["wind and sweep invariant"][1] += 0 if (L.head_wind_total(clock4, rs, g), L.sweep_total(rs)) == (E0, s0) else 1
+            ra = L.rational_step(clock4, rs, g)
+            same = all((ra[i].now == L.rotate_array(after[i].now, perm, signs)).all() for i in range(2))
+            c6["step commutes"][0] += 1
+            c6["step commutes"][1] += 0 if same else 1
+            raa = L.rational_step(clock4, rs, aniso)
+            same_a = all((raa[i].now == L.rotate_array(after_a[i].now, perm, signs)).all() for i in range(2))
+            c6["mutant: anisotropic grips commute"][0] += 1
+            c6["mutant: anisotropic grips commute"][1] += 0 if same_a else 1
+for name, (n, bad) in c6.items():
+    say(f"    {name:36s}: {n} (state, rotation) pairs, failures {bad}")
+
+# ---------------------------------------------------------------- C7
+say("C7  a fourth reading, the head's masses source (tick.impulse: D |a|^2 div w per clock, the held field's and the")
+say("    law's well) per quantum of sweep on the head's own sea, against key (rim - pinion) / s = key tan(w0 / 2)")
+from event_universe.core.rule3 import carries as head_carries
+from event_universe import hands as head_hands
+c7 = {}
+for row in (1, 2, 3):
+    sea = L.head.clock_of("world_node.json", seed=[{"lay": "sea", "row": row, "quanta": 1, "sense": 1}], shape=[3, 3, 3])
+    tr = sea.by_index[row]
+    k = sea.hands().index(tr)
+    p, r = tr.ratio
+    s = math.isqrt(r * r - p * p)
+    g = L.vacuum_gearing(sea, tr)
+    starts = [gear.now for gear in tr.gears]
+    well = int(head_carries(g.spring * head_hands.dot(starts, starts), g.teeth).flat[0])
+    sig = abs(int(head_hands.sweep(tr.gears).flat[0]))
+    per_q = Fraction(well * (sea.key // 2), sig)
+    want = Fraction(sea.key * (r - p), s)
+    c7[k] = (per_q, want)
+    say(f"    hand {k}: well per quantum {float(per_q):.6f}, key (rim - pinion)/s = {float(want):.6f} (ratio {float(per_q / want):.6f}, the notches' rounding)")
+ks = sorted(c7)
+say(f"    the wells' ratios over hand {ks[0]}: " + ", ".join(f"hand {k}: {float(c7[k][1] / c7[ks[0]][1]):.0f}" for k in ks[1:]) +
+    " (against the sines' 1838.68 and 1836.15)")
+
+# ---------------------------------------------------------------- C8
+say("C8  one light speed for every train (the grips R = c_u^2 w for all): m2 c_u^2 = sin w0 exactly, and the corner")
+say("    mode k = (pi, pi, pi) of the 4^3 torus grows where 12 c_u^2 + D / w > 4 (exact rational iteration, 12 ticks)")
+clock = clocks["universe_toy"]
+pins = [p for k, h, p, s, r in L.hand_trains(clock)]
+rim = clock.rim
+cu_edge = Fraction(rim + min(pins), 6 * rim)
+for k, h, p, s, r in L.hand_trains(clock):
+    if s == 0:
+        continue
+    g = L.vacuum_gearing(clock, h)
+    for name, cu2 in (("light's full-rate 1/3", Fraction(1, 3)), ("the bound (1 + pinion_min/rim)/6", cu_edge)):
+        m2 = Fraction(g.teeth) * Fraction(s, r) / (cu2 * g.teeth)
+        exact = m2 * cu2 == Fraction(s, r)
+        # the corner mode's amplitude: a+ + a- = (2 - 12 cu2 - D/w) a
+        lam = 2 - 12 * cu2 - Fraction(g.spring, g.teeth)
+        a, am = Fraction(1), Fraction(1)
+        big = 0
+        for _ in range(12):
+            a, am = lam * a - am, a
+            big = max(big, abs(a))
+        say(f"    hand {k}, c_u^2 = {name} = {float(cu2):.4f}: m2 c_u^2 == sin w0: {exact}; the corner's 2 cos w = {float(lam):.4f}; "
+            f"largest |amplitude| in 12 ticks {float(big):.3g}")
+
+# ---------------------------------------------------------------- C9
+say("C9  the composite as the product of the parts' pairs g1 g2 (David's composite draft, untracked at 13:17 UTC):")
+say("    its beat is the sum of the parts' beats; its winding over the parts' windings is (p1 s2 + s1 p2) / (rim (s1 + s2)),")
+say("    and rim (s1 + s2) - (p1 s2 + s1 p2) = s1 (rim - p2) + s2 (rim - p1) >= 0 exactly")
+c9 = {"true": [0, 0], "mutant: the windings add": [0, 0]}
+sprung = [(k, p, s, r) for k, h, p, s, r in L.hand_trains(clocks["universe_toy"]) if s]
+for k1, p1, s1, r in sprung:
+    for k2, p2, s2, _ in sprung:
+        im = p1 * s2 + s1 * p2
+        defect = r * (s1 + s2) - im
+        ok = defect == s1 * (r - p2) + s2 * (r - p1) and defect >= 0
+        c9["true"][0] += 1
+        c9["true"][1] += 0 if ok else 1
+        c9["mutant: the windings add"][0] += 1
+        c9["mutant: the windings add"][1] += 0 if im == r * (s1 + s2) else 1
+        if k1 <= k2:
+            say(f"    hands {k1} + {k2}: the composite books {float(Fraction(im, r * (s1 + s2))):.7f} of its parts' windings")
+for name, (n, bad) in c9.items():
+    say(f"    {name:28s}: {n} ordered pairs, failures {bad}")
+
+L.report(L.OUT + "m1_dispersion.txt", lines)
+
+== m2_clicks.py ==
+"""M2: the mass's second reading, from the clicks (item 2).
+
+The one mass of a train is its Gaussian integer g = pinion + i s on den's circle. The clicks show it twice:
+  (i)  as the wind one whole click takes per quantum: the winding 3 key Im g (the chime's owed winding);
+  (ii) as a standing hand's own turn: its bob crosses its reference at the sign changes of Re(g^n),
+       n ticks after the reference, so the beat reads arg g, and E = hbar_L sin(arg g), hbar_L = 3 key rim.
+Part A, the one formula at the flat clock, on the head's own lay of a standing sea on one Node-clock
+  (the law's integer step with the fine tooth, P = W (a - a-) + r - mid W, P+ = P - X D a, a+ = a + (P+ + mid) div W):
+  A1 the step's form reproduces the head's own first tick bit for bit (the state before the head's turnover);
+  A2 every tick, exactly: rim^2 E - 4 w rim s |sigma| = 2 w |rim z- - z (pinion + i sgn(sigma) s)|^2 (E = SUM
+     (2 own - shared), the head's wind before its carry): the wind exceeds the mass's count of the sweep by the
+     teeth times the squared miss of the hand's turn against g; mutants s + 1, pinion + 1 must fail;
+  A3 every tick: the bob's crossing (the head's rule) against the sign changes of Re(g^n) in Gaussian integers;
+     mutants: the beat read as E = hbar w (angle sin w0) and a train 1 % heavier (floats for the mutants);
+  A4 the mean beat against pi / arcsin(winding / hbar_L) (floats, said so);
+  A5 every tick: the click's count q = wind div winding is at least N = |sweep| div (key / 2).
+Part B, the head's full engine on world_plasma and world_universe (300 ticks), the record's own chimes:
+  B1 the owed winding (owed + remainder_was) == 3 key s at every chime;
+  B2 the face's turn of the chime's tick (start now -> now) against the pair at the chime's load,
+     cos w0(load) = 1 - (1 - pinion/rim) (p0(load) / Gamma)^2 (floats); mutants: no dilation, E = hbar w;
+  B3 the record's beat against the face's half period pi / turn (the bob's reference reset where the wind
+     hovers at the fixed winding).
+argv: none.  Output: out/m2_clicks.txt
+"""
+import cmath
+import math
+import sys
+import time
+
+sys.path.append("/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass/probes")
+import t24lib as L  # noqa: E402
+from event_universe import hands  # noqa: E402
+from event_universe.core.acts import mid  # noqa: E402
+from event_universe.core.rates import rate  # noqa: E402
+from event_universe.trains import Gear  # noqa: E402
+
+lines = []
+say = lines.append
+T0 = time.time()
+
+
+def sgn(x):
+    return (x > 0) - (x < 0)
+
+
+say("Part A  the one formula at the flat clock, the head's lay of a standing sea on one Node-clock")
+cases = [("world_node.json", 1, 12000, 1), ("world_node.json", 1, 12000, 100), ("world_node.json", 2, 2000, 1),
+         ("world_node.json", 3, 2000, 1), ("world_emission.json", 1, 3000, 1), ("world_emission.json", 2, 2000, 1)]
+A = {"A1 the head's first tick reproduced": [0, 0], "A2 the exact identity": [0, 0],
+     "A2 mutant s + 1": [0, 0], "A2 mutant pinion + 1": [0, 0], "A5 q >= N": [0, 0]}
+per_train = []
+for world, row, T, quanta in cases:
+    clock = L.head.clock_of(world, seed=[{"lay": "sea", "row": row, "quanta": quanta, "sense": 1}], shape=[1, 1, 1])
+    train = clock.by_index[row]
+    k = clock.hands().index(train)
+    p, r = train.ratio
+    s = math.isqrt(r * r - p * p)
+    g = L.board_gearing(clock, train)
+    w = int(g.teeth)
+    D = int(g.spring.flat[0]) if hasattr(g.spring, "shape") else int(g.spring)
+    X = int(clock.start_stretch.flat[0])
+    gears = clock.hands()[k].gears
+    W = int(gears[0].teeth.flat[0]) if hasattr(gears[0].teeth, "shape") else int(gears[0].teeth)
+    state = [[int(x.now.flat[0]), int(x.before.flat[0]), int(x.fine.flat[0])] for x in gears]
+
+    def step(st, Wn=W):
+        out = []
+        for a, am, rr in st:
+            P = W * (a - am) + rr - mid(W)
+            v, fine = divmod(P - X * D * a + mid(Wn), Wn)
+            out.append([a + v, a, fine])
+        return out
+
+    clock.tick()
+    bt = clock.before_turnover[k]
+    Wend = int(bt[0].teeth.flat[0]) if hasattr(bt[0].teeth, "shape") else int(bt[0].teeth)
+    head_first = [[int(x.now.flat[0]), int(x.before.flat[0]), int(x.fine.flat[0])] for x in bt]
+    A["A1 the head's first tick reproduced"][0] += 1
+    A["A1 the head's first tick reproduced"][1] += 0 if head_first == step(state, Wend) else 1
+    wc, hbar = clock.windings[k], 3 * clock.key * r
+    st, ref = state, (state[0][0], state[1][0])
+    w0 = math.atan2(s, p)
+    preds = {"true": None, "mutant E = hbar w (angle sin w0)": math.sin(w0), "mutant 1 % heavier (angle 1.01 w0)": 1.01 * w0}
+    agree = {name: 0 for name in preds}
+    count = {name: 0 for name in preds}
+    first_off = {name: None for name in preds}
+    prev = {name: 1 for name in preds}
+    power = (1, 0)
+    crossings, beats, last = 0, [], None
+    changes, last_nonzero, touches, change_ticks = 0, sgn(ref[0] * ref[0] + ref[1] * ref[1]), 0, []
+    for t in range(1, T + 1):
+        nxt = step(st)
+        n3, n12 = nxt[0][0], nxt[1][0]
+        was = ref[0] * st[0][0] + ref[1] * st[1][0]
+        read = ref[0] * n3 + ref[1] * n12
+        crossing = (was * read < 0) or ((was == 0) != (read == 0))
+        touches += 1 if (was == 0) != (read == 0) else 0
+        # the sign changes of the integer dot, a run of zeros read as one passage
+        change = sgn(read) != 0 and sgn(read) != last_nonzero
+        if sgn(read) != 0:
+            last_nonzero = sgn(read)
+        changes += 1 if change else 0
+        if change:
+            change_ticks.append(t)
+        power = (power[0] * p - power[1] * s, power[0] * s + power[1] * p)
+        for name, ang in preds.items():
+            sg = sgn(power[0]) if ang is None else sgn(math.cos(ang * t))
+            pred = prev[name] * sg < 0
+            prev[name] = sg
+            count[name] += 1 if pred else 0
+            if first_off[name] is None and pred != change:
+                first_off[name] = t
+            agree[name] += 1 if abs(count[name] - changes) <= 1 else 0
+        if crossing:
+            crossings += 1
+            if last is not None:
+                beats.append(t - last)
+            last = t
+        st = nxt
+        z, zm = (st[0][0], st[1][0]), (st[0][1], st[1][1])
+        gs = [Gear(L.obj([[[a]]]), L.obj([[[am]]]), None, None) for a, am, _ in st]
+        E = L.exact_raw_total(clock, gs, g)
+        sig = L.sweep_total(gs)
+        for name, (pp, ss) in (("A2 the exact identity", (p, s)), ("A2 mutant s + 1", (p, s + 1)), ("A2 mutant pinion + 1", (p + 1, s))):
+            cz = (pp * z[0] - sgn(sig) * ss * z[1], pp * z[1] + sgn(sig) * ss * z[0])
+            miss = (r * zm[0] - cz[0], r * zm[1] - cz[1])
+            ok = r * r * E - 4 * w * r * ss * abs(sig) == 2 * w * (miss[0] ** 2 + miss[1] ** 2)
+            A[name][0] += 1
+            A[name][1] += 0 if ok else 1
+        Eh = int(hands.wind(clock, gs, g).flat[0])
+        A["A5 q >= N"][0] += 1
+        A["A5 q >= N"][1] += 0 if Eh // wc >= abs(sig) // (clock.key // 2) else 1
+    mean_beat = sum(beats) / len(beats) if beats else float("nan")
+    true_beat = (change_ticks[-1] - change_ticks[0]) / (len(change_ticks) - 1) if len(change_ticks) > 1 else float("nan")
+    per_train.append((world, row, quanta, k, T, crossings, agree, first_off, mean_beat, math.pi / math.asin(wc / hbar), math.pi * hbar / wc, changes, touches, true_beat))
+for name, (n, bad) in A.items():
+    say(f"    {name:40s}: {n} ticks or cases, failures {bad}")
+say("    A3 the sign changes of the bob's integer dot (a run of zeros one passage) against those of Re(g^n): the first")
+say("       tick where they differ, and the ticks where their counts so far differ by more than 1; the head's rule's")
+say("       touches of zero (CK-S1 counts a passage through exactly 0 twice); A4 the mean half period (floats):")
+for world, row, quanta, k, T, crossings, agree, first_off, mb, pred, mut, changes, touches, tb in per_train:
+    a = "; ".join(f"{name}: first differing tick {first_off[name]}, counts off at {T - v} of {T}" for name, v in agree.items())
+    say(f"      {world} row {row}, {quanta} quanta: {changes} sign changes, the head's rule {crossings} crossings ({touches} touches of 0); {a}")
+    say(f"        half period from the sign changes {tb:.4f} ticks (the head's mean beat {mb:.4f}); pi / arcsin(winding / hbar_L) = {pred:.4f}; mutant E = hbar w: {mut:.4f}")
+
+say("Part B  the head's full engine, the record's own chimes (300 ticks)")
+for world, T in (("world_plasma.json", 300), ("world_universe.json", 300)):
+    clock = L.head.clock_of(world)
+    for _ in range(T):
+        clock.tick()
+    G = clock.full_rate
+    chimes = [e for e in clock.log if e["event"] == "credit"]
+    by = {}
+    for e in chimes:
+        k = e["line"]
+        p, r = clock.hands()[k].ratio
+        s = math.isqrt(r * r - p * p)
+        f = e["frame"]
+        zs = complex(f["re_start_now"], f["im_start_now"])
+        zn = complex(f["re_now"], f["im_now"])
+        d = by.setdefault(k, {"n": 0, "owed": 0, "load": 0, "vac": 0, "hw": 0, "beat": 0, "turned": 0, "dev": 0.0})
+        d["n"] += 1
+        d["owed"] += 0 if e["owed"] + e["remainder_was"] == 3 * clock.key * s else 1
+        if e["turned"] or zs == 0 or zn == 0:
+            d["turned"] += 1
+            continue
+        turn = abs(cmath.phase(zn / zs))
+        p0 = rate(G, max(0, int(e["content"])))
+        cos_load = 1 - (1 - p / r) * (p0 / G) ** 2
+        tol = 4 / min(abs(zs), abs(zn))
+        d["dev"] = max(d["dev"], abs(math.cos(turn) - cos_load))
+        d["load"] += 0 if abs(math.cos(turn) - cos_load) < tol else 1
+        d["vac"] += 0 if abs(math.cos(turn) - p / r) < tol else 1
+        d["hw"] += 0 if abs(math.cos(turn) - math.cos(math.sin(math.atan2(s, p)))) < tol else 1
+        d["beat"] += 0 if abs(e["beat"] - math.pi / turn) < 1 else 1
+    for k, d in sorted(by.items()):
+        say(f"    {world}, hand {k}: {d['n']} chimes ({d['turned']} at a turnover, not read); B1 owed != 3 key s: {d['owed']}; "
+            f"B2 |cos turn - cos w0(load)| >= 4/|z|: {d['load']} (largest {d['dev']:.4f}); mutant no dilation: {d['vac']}; "
+            f"mutant E = hbar w: {d['hw']}; B3 |beat - pi/turn| >= 1: {d['beat']}")
+say("Part C  why Part A runs the flat clock by hand: the head's full engine at the full rate (the regulator at Gamma)")
+from event_universe.trains import REGULATOR
+for world, seed, shape, T in (("world_node.json", [], 3, 6), ("world_emission.json", [{"lay": "sea", "row": 1, "quanta": 1, "sense": 1}], 1, 6),
+                              ("world_node.json", [{"lay": "sea", "row": 1, "quanta": 1, "sense": 1}], 3, 6)):
+    clock = L.head.clock_of(world, seed=seed, shape=[shape] * 3)
+    turned, moved, xs = 0, 0, set()
+    rec = clock.hands().index(clock.by_index[1]) if seed else None
+    first = None if rec is None else [int(g.now.flat[0]) for g in clock.hands()[rec].gears]
+    for _ in range(T):
+        clock.tick()
+        turned += int(clock.turned_over.sum())
+        xs.add(int(clock.train(REGULATOR).gears[0].now.flat[0]))
+    after = None if rec is None else [int(g.now.flat[0]) for g in clock.hands()[rec].gears]
+    # the trigger's three notches, read by wrapping the head's own turnover in this process (no file changed)
+    seen = []
+    orig = type(clock).turnover
+
+    def spy(self, held, going=1, top=None, seen=seen, orig=orig):
+        if going == 1:
+            k = self.trains_.index(self.train(REGULATOR))
+            seen.append((int(held[k][0].before.flat[0]), int(held[k][0].now.flat[0]), int(self.train(REGULATOR).gears[0].now.flat[0])))
+        return orig(self, held, going, top)
+
+    type(clock).turnover = spy
+    clock.tick()
+    type(clock).turnover = orig
+    say(f"    {world} seed {seed if seed else 'none'} on {shape}^3: {turned} turnovers in {T} ticks over {shape ** 3} clocks; "
+        f"the time gear at {sorted(xs)}; the standing hand's notches now {first} -> {after}; the trigger (X0, X1, X2 after the drive) {seen[0]}")
+say(f"(run time {time.time() - T0:.1f} s)")
+L.report(L.OUT + "m2_clicks.txt", lines)
+
+== m3_fitting.py ==
+"""M3: the fitting's threshold (item 3), on the head's own acts and on the head's worlds.
+
+F1  draft A's figure: the head's fitted_windings_of at the setting of world_nature, world_hole and world_bang,
+    bit for bit equal to the one-site formula floor(3 rim A^2 X / Gamma) + floor(3 rim B^2 X / Gamma).
+F2  the one-site wind of ANY hand alone on its Node-clock (neighbours empty), every train, at the vacuum and at
+    loaded clocks: the head's hands.wind over the window equals SUM_gears floor(3 rim X (n^2 + b^2) / Gamma)
+    - floor-free part of the hold term - ... exactly as derived: (2 own - shared) = 2 w (n^2 + b^2) - 2 S n b.
+F3  the bound: a quantum alone on one Node-clock holds at least one light winding,
+    3 rim (|z|^2 + |z-|^2) >= 6 rim |sigma|, equal at z = 120 + 60 i, z- = i z (|z|^2 = key / 2).
+F4  the derived shape, the train's own rest turn on one Node-clock (hands.rest at the least A with
+    |sigma| >= key / 2): its wind in light windings and in the train's own windings.
+F5  the train's own rest wave (the head's sea, set_even): wind per quantum against the winding.
+F6  the head's rest packets (the `at` lay, half-widths 1, 2, 3, one sense) on a 9^3 board: wind per quantum.
+F7  the head's record of world_hole (60 ticks) and world_nature (60 ticks): every light fitting's booked due
+    against the one-site formula at the ends' stretch, by the fitted train; mutants E = 2 m c^2 and a
+    pinion-weighted cost must fail.
+argv: none.  Output: out/m3_fitting.txt
+"""
+import math
+import sys
+import time
+
+sys.path.append("/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass/probes")
+import t24lib as L  # noqa: E402
+from event_universe import hands  # noqa: E402
+from event_universe.trains import REGULATOR, Gear, zeros  # noqa: E402
+from event_universe.unspring import fitted_notches, fitted_windings_of  # noqa: E402
+from event_universe.unwind import advance, window_clocks  # noqa: E402
+
+lines = []
+say = lines.append
+T0 = time.time()
+
+
+def one_site_wind(clock, k, where, notches, gearing):
+    """The head's own act: the hand k's gears put to zero, the notches advanced at one Node-clock by the head's
+    advance, the head's hands.wind summed over the window (as unspring.fitted_windings_of reads it)."""
+    hand = clock.hands()[k]
+    held = hand.gears
+    hand.gears = [Gear(zeros(clock.size), zeros(clock.size), g.fine, g.teeth) for g in held]
+    advance(clock, k, where, notches)
+    window = sorted(set(window_clocks(clock, where)))
+    found = sum(int(v) for v in hands.wind(clock, hand.gears, gearing, window))
+    hand.gears = held
+    return found
+
+
+def formula(clock, where, notches, X):
+    """floor(3 rim X n^2 / Gamma) per gear and slot, summed: the one-site wind with the hold term
+    2 S n b kept separately (returned as the n.b part per gear)."""
+    n3, b3, n12, b12 = notches
+    r, G = clock.rim, clock.full_rate
+    return [(n3 * n3 + b3 * b3, n3 * b3), (n12 * n12 + b12 * b12, n12 * b12)]
+
+
+# ---------------------------------------------------------------- F1
+say("F1  the head's fitted hand (balanced notches A B = key/2) at the setting: fitted_windings_of against the formula")
+f1 = {"true": [0, 0], "mutant 2 m c^2 (twice the train's winding)": [0, 0], "mutant pinion for rim": [0, 0]}
+for world in ("world_nature.json", "world_hole.json", "world_bang.json"):
+    clock = L.head.clock_of(world)
+    X = int(clock.start_stretch[(1, 1, 1)])
+    light = clock.hands().index(clock.unsprung())
+    for k, h, p, s, r in L.hand_trains(clock):
+        g = L.board_gearing(clock, h)
+        own = {}
+        wm, wp = fitted_windings_of(clock, k, (1, 1, 1), (2, 1, 1), g, own)
+        A, B = clock.A, clock.B
+        want = (3 * r * A * A * X) // clock.full_rate + (3 * r * B * B * X) // clock.full_rate
+        mut = {"true": want, "mutant 2 m c^2 (twice the train's winding)": clock.windings[k],
+               "mutant pinion for rim": (3 * p * A * A * X) // clock.full_rate + (3 * p * B * B * X) // clock.full_rate}
+        for name, v in mut.items():
+            f1[name][0] += 2
+            f1[name][1] += (wm != v) + (wp != v)
+        if world == "world_nature.json":
+            say(f"    {world} hand {k}: fitted wind {wm} = {wm * 10 ** 6 // clock.windings[light]} millionths of a light winding; "
+                f"its own winding {clock.windings[k] * 10 ** 6 // clock.windings[light]} millionths")
+for name, (n, bad) in f1.items():
+    say(f"    {name:44s}: {n} ends, failures {bad}")
+
+# ---------------------------------------------------------------- F2, F3
+say("F2  any hand alone on one Node-clock (its six neighbours empty), every train, at the vacuum and at loaded clocks:")
+say("    (a) the head's hands.wind == the per-clock floors of (2 own - shared) X / (4 Gamma^3 G^2), read clock by clock;")
+say("    (b) unfloored, the window's sum is (2 w (n^2 + b^2) - 2 S n b) X_x / D4 + n b (SUM_y R_(y->x) X_y - SUM_j R_j X_x) / D4,")
+say("        at the vacuum (S = 0, every grip and stretch alike) 3 rim (|z|^2 + |z-|^2) X / Gamma for EVERY train;")
+say("    (c) the head's floors lose less than 14 against (b)")
+say("F3  the bound (exact form): a quantum alone on one Node-clock holds at least one light winding: E >= 6 rim |sigma| X / Gamma")
+from fractions import Fraction
+from event_universe.core.spokes import SPOKE_SIDES, SPOKES, spoke_of
+rnd = L.rng(3)
+f2 = {"(a) head == per-clock floors": [0, 0], "(b) vacuum: 3 rim (|z|^2+|z-|^2), train-free": [0, 0], "(c) floors lose < 14": [0, 0],
+      "mutant (a): one floor for the window": [0, 0], "mutant (b): the spring D in place of the hold S": [0, 0],
+      "mutant (b): the grips counted at x alone": [0, 0]}
+f3 = {"true: E >= one light winding per quantum": [0, 0, 0], "mutant: two light windings per quantum": [0, 0, 0],
+      "mutant: the bound 1.02 light windings": [0, 0, 0]}
+
+
+def val(a, where):
+    return int(a[where]) if hasattr(a, "shape") else int(a)
+
+
+for world, loaded in (("world_node.json", False), ("world_hole.json", True)):
+    clock = L.head.clock_of(world, shape=[5, 5, 5]) if loaded else L.head.clock_of(world, seed=[], shape=[5, 5, 5])
+    if loaded:
+        for _ in range(6):
+            clock.tick()
+    D4 = L.wind_divisor(clock)
+    Xa = clock.start_stretch
+    for k, h, p, s, r in L.hand_trains(clock):
+        g = L.board_gearing(clock, h)
+        w = int(g.teeth)
+        for trial in range(60):
+            where = tuple(rnd.randrange(5) for _ in range(3))
+            if trial == 0:
+                z, zm = (120, 60), (-60, 120)  # z- = i z, |z|^2 = key / 2
+            elif trial == 1:
+                z, zm = (125, 0), (0, 144)  # the head's balanced notches
+            else:
+                amp = rnd.choice([3, 200, 10 ** 5])
+                z = (rnd.randint(-amp, amp), rnd.randint(-amp, amp))
+                zm = (rnd.randint(-amp, amp), rnd.randint(-amp, amp))
+            notches = (z[0], zm[0], z[1], zm[1])
+            got = one_site_wind(clock, k, where, notches, g)
+            X = val(Xa, where)
+            S = val(g.hold, where)
+            Dsp = val(g.spring, where)
+            Rx = [val(gr, where) for gr in g.grips]
+            nbrs = []
+            for j, (axis, side) in enumerate(SPOKE_SIDES):
+                y = list(where)
+                y[axis] = (y[axis] + side) % 5
+                y = tuple(y)
+                back = spoke_of(axis, 1 if side == 1 else 0)
+                nbrs.append((val(g.grips[back], y), val(Xa, y)))
+            parts = [(z[0] ** 2 + zm[0] ** 2, z[0] * zm[0]), (z[1] ** 2 + zm[1] ** 2, z[1] * zm[1])]
+            floors = sum(((2 * w * a - 2 * S * b - sum(Rx) * b) * X) // D4 + sum((Ry * b * Xy) // D4 for Ry, Xy in nbrs) for a, b in parts)
+            one_floor = sum(((2 * w * a - 2 * S * b - sum(Rx) * b) * X + sum(Ry * b * Xy for Ry, Xy in nbrs)) // D4 for a, b in parts)
+            exact = sum(Fraction((2 * w * a - 2 * S * b) * X, D4) + Fraction(b * (sum(Ry * Xy for Ry, Xy in nbrs) - sum(Rx) * X), D4) for a, b in parts)
+            exact_D = sum(Fraction((2 * w * a - 2 * Dsp * b) * X, D4) + Fraction(b * (sum(Ry * Xy for Ry, Xy in nbrs) - sum(Rx) * X), D4) for a, b in parts)
+            exact_x = sum(Fraction((2 * w * a - 2 * S * b) * X, D4) for a, b in parts) - sum(Fraction(sum(Rx) * b * X, D4) for a, b in parts)
+            vac = Fraction(3 * r * (sum(a for a, _ in parts)) * X, clock.full_rate)
+            f2["(a) head == per-clock floors"][0] += 1
+            f2["(a) head == per-clock floors"][1] += 0 if got == floors else 1
+            f2["mutant (a): one floor for the window"][0] += 1
+            f2["mutant (a): one floor for the window"][1] += 0 if got == one_floor else 1
+            f2["(c) floors lose < 14"][0] += 1
+            f2["(c) floors lose < 14"][1] += 0 if 0 <= exact - got < 14 else 1
+            if not loaded:
+                f2["(b) vacuum: 3 rim (|z|^2+|z-|^2), train-free"][0] += 1
+                f2["(b) vacuum: 3 rim (|z|^2+|z-|^2), train-free"][1] += 0 if exact == vac else 1
+                f2["mutant (b): the spring D in place of the hold S"][0] += 1
+                f2["mutant (b): the spring D in place of the hold S"][1] += 0 if exact_D == vac else 1
+                f2["mutant (b): the grips counted at x alone"][0] += 1
+                f2["mutant (b): the grips counted at x alone"][1] += 0 if exact_x == vac else 1
+                sig = abs(z[0] * zm[1] - z[1] * zm[0])
+                if sig:
+                    for name, factor in (("true: E >= one light winding per quantum", Fraction(1)),
+                                         ("mutant: two light windings per quantum", Fraction(2)),
+                                         ("mutant: the bound 1.02 light windings", Fraction(102, 100))):
+                        bnd = factor * 6 * r * sig * X / clock.full_rate
+                        f3[name][0] += 1
+                        f3[name][1] += 0 if exact >= bnd else 1
+                        f3[name][2] += 1 if exact == bnd else 0
+for name, (n, bad) in f2.items():
+    say(f"    F2 {name:50s}: {n} (train, clock, shape), failures {bad}")
+for name, (n, bad, eq) in f3.items():
+    say(f"    F3 {name:44s}: {n} shapes, failures {bad}, equalities {eq}")
+
+# ---------------------------------------------------------------- F4, F5
+say("F4  the derived shape: the train's own rest turn alone on one Node-clock (hands.rest, least A with |sigma| >= key/2)")
+say("F5  the train's own rest wave (the head's sea, set_even, quanta 1): wind per quantum")
+clock = L.head.clock_of("world_node.json", seed=[], shape=[5, 5, 5])
+light = clock.hands().index(clock.unsprung())
+LW = clock.windings[light]
+f45 = []
+for k, h, p, s, r in L.hand_trains(clock):
+    if s == 0:
+        continue
+    g = L.board_gearing(clock, h)
+    A = 1
+    while A * ((A * s) // r) < clock.key // 2:
+        A += 1 if A < 64 else max(1, A // 64)
+    while (A - 1) * (((A - 1) * s) // r) >= clock.key // 2:
+        A -= 1
+    rest = hands.rest(A, p, r, s, 1)
+    notches = (int(rest[0].now), int(rest[0].before), int(rest[1].now), int(rest[1].before))
+    E = one_site_wind(clock, k, (2, 2, 2), notches, g)
+    sig = abs(notches[0] * notches[3] - notches[2] * notches[1])
+    q = sig / (clock.key // 2)
+    sea = L.head.clock_of("world_node.json", seed=[{"lay": "sea", "row": clock.by_index.index(h), "quanta": 1, "sense": 1}], shape=[5, 5, 5])
+    gs = L.board_gearing(sea, sea.hands()[k])
+    Es = int(hands.wind(sea, sea.hands()[k].gears, gs).flat[0])
+    ss = abs(int(hands.sweep(sea.hands()[k].gears).flat[0])) / (sea.key // 2)
+    f45.append((k, E, q, Es, ss))
+    say(f"    hand {k}: one Node-clock, A = {A}: wind {E / LW:.4f} light windings = {E / clock.windings[k]:.1f} of its own windings "
+        f"for {q:.4f} quanta (1/sin w0 = {r / s:.4f});  the sea: {Es / clock.windings[k] / ss:.7f} of its winding per quantum")
+ratio_site = f45[1][1] / f45[0][1] if len(f45) > 1 else 0
+ratio_mass = clock.windings[f45[1][0]] / clock.windings[f45[0][0]]
+say(f"    the one-site costs' ratio hand {f45[1][0]} / hand {f45[0][0]}: {ratio_site:.6f}; the windings' ratio (E = m c^2): {ratio_mass:.2f}")
+
+# ---------------------------------------------------------------- F6
+say("F6  the head's rest packets on a 9^3 board (the `at` lay, sense 1): wind per quantum of sweep, in the train's windings")
+for k, h, p, s, r in L.hand_trains(clock):
+    if s == 0:
+        continue
+    row = clock.by_index.index(h)
+    out = []
+    for width in (1, 2, 3):
+        try:
+            pk = L.head.clock_of("world_node.json", seed=[{"lay": "at", "row": row, "centre": [4, 4, 4], "width": width, "quanta": 400, "sense": 1}], shape=[9, 9, 9])
+        except ValueError as err:
+            out.append(f"h={width}: refused ({err})")
+            continue
+        hk = pk.hands()[k]
+        gk = L.board_gearing(pk, hk)
+        E = L.head_wind_total(pk, hk.gears, gk)
+        sg = abs(L.sweep_total(hk.gears)) / (pk.key // 2)
+        out.append(f"h={width}: {E / pk.windings[k] / sg:.4f}")
+    say(f"    hand {k} (Compton length {1 / math.sqrt(3) / math.atan2(s, p):.2f} Meshes, float): " + ", ".join(out))
+
+# ---------------------------------------------------------------- F7
+say("F7  the head's records: every light fitting's booked due against the one-site formula at its ends' stretch")
+f7 = {"true": [0, 0], "mutant E = 2 m c^2 (the fitted train's windings)": [0, 0], "mutant pinion-weighted": [0, 0]}
+by_train = {}
+for world, ticks in (("world_hole.json", 60), ("world_nature.json", 60)):
+    clock = L.head.clock_of(world)
+    A, B, r, G = clock.A, clock.B, clock.rim, clock.full_rate
+    for _ in range(ticks):
+        Xs = clock.train(REGULATOR).gears[0].now.copy()
+        start = len(clock.log)
+        clock.tick()
+        for e in clock.log[start:]:
+            if e["event"] != "birth" or "takes" in e or e.get("taken_row") != clock.hands().index(clock.unsprung()):
+                continue
+            k = e["line_pair"]
+            p = clock.hands()[k].ratio[0]
+            ends = [tuple(e["minus"]), tuple(e["plus"])]
+            n_fits = e.get("children_at_node", 1)
+            want = sum((3 * r * A * A * int(Xs[x])) // G + (3 * r * B * B * int(Xs[x])) // G for x in ends)
+            mut = {"true": want, "mutant E = 2 m c^2 (the fitted train's windings)": 2 * clock.windings[k],
+                   "mutant pinion-weighted": sum((3 * p * A * A * int(Xs[x])) // G + (3 * p * B * B * int(Xs[x])) // G for x in ends)}
+            if n_fits != 1:
+                continue
+            by_train[k] = by_train.get(k, 0) + 1
+            for name, v in mut.items():
+                f7[name][0] += 1
+                f7[name][1] += 0 if e["booked"] == v else 1
+say(f"    births read (one fitting at its Node-clock), by the fitted hand: {dict(sorted(by_train.items()))}")
+for name, (n, bad) in f7.items():
+    say(f"    {name:48s}: {n} births, failures {bad}")
+say(f"(run time {time.time() - T0:.1f} s)")
+L.report(L.OUT + "m3_fitting.txt", lines)
+
+== m4_quantum.py ==
+"""M4: the quantum per mode (item 4).
+
+Q1  per mode, exact: on the 4^3 torus's Gaussian plane waves phi_k = i^(n.x), for every state of the mode
+    (z = alpha phi, z- = beta phi), the head's exact wind form E (SUM (2 own - shared)) and the sweep sigma obey
+    9 rim^2 E^2 >= 16 w^2 (9 rim^2 - pinion^2 (SUM cos k)^2) sigma^2   (E >= 4 w sin w(k) |sigma|),
+    equal for the circular state alone; and the head's click count of a near-circular state of N quanta
+    is N sin w(k) / sin w0 (floats only for that ratio).
+Q2  the physicist's 54 (the continuum formula at k = 0.05, floats, said so).
+Q3  the action is kept exactly by the rational step under ANY time variation of a uniform clock (the
+    teeth W_t, the stretch s_t, the spring and the grips per tick): Q = SUM Im(conj(a) P), P = W (a - a-);
+    the wind is not, and the click with a fixed winding drifts; mutants (the plain sweep without W, grips that
+    differ between a Mesh's two ends) must fail.
+Q4  at rest the wind counts both senses: a swing (the conjugate pair) splits exactly into its two circular
+    parts over 2 s, whose winds add (no cross term) and whose sweeps subtract.
+Q5  the head's world_plasma (the full engine, 100 ticks): per tick, the click's count q = wind div winding
+    of each standing sea against its action count N_Q = Q_t / Q_0 (P with the fine tooth, at the mean teeth).
+Q6  the light: the head's drift (the sea) holds no action; the bang's quarter-turn lay (world_bang) holds
+    wind per quantum = the light's winding at every clock.
+argv: none.  Output: out/m4_quantum.txt
+"""
+import itertools
+import math
+import sys
+import time
+from fractions import Fraction
+
+sys.path.append("/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass/probes")
+import t24lib as L  # noqa: E402
+from event_universe import hands  # noqa: E402
+from event_universe.core.acts import mid  # noqa: E402
+from event_universe.core.spokes import across  # noqa: E402
+from event_universe import readings  # noqa: E402
+from event_universe.trains import REGULATOR  # noqa: E402
+
+lines = []
+say = lines.append
+T0 = time.time()
+rnd = L.rng(11)
+
+# ---------------------------------------------------------------- Q1
+say("Q1  per mode on the 4^3 torus: E >= 4 w sin w(k) |sigma| for every state of the mode, equal iff circular")
+COS = {0: 1, 1: 0, 2: -1, 3: 0}
+IP = {0: (1, 0), 1: (0, 1), 2: (-1, 0), 3: (0, -1)}
+clock = L.head.clock_of("world_node.json", seed=[], shape=[4, 4, 4])
+q1 = {"true": [0, 0, 0], "mutant: sin w(k) (1 + 1/1000)": [0, 0, 0], "mutant: sin = 1 (the quarter turn's quantum)": [0, 0, 0],
+      "the rest sine for every mode (the variational bound)": [0, 0, 0]}
+ratios = []
+classes = [(0, 0, 0), (1, 0, 0), (1, 1, 0), (1, 1, 1), (2, 0, 0), (2, 1, 0), (2, 2, 0), (2, 2, 2)]
+for k, h, p, s, r in L.hand_trains(clock):
+    g = L.vacuum_gearing(clock, h)
+    w = g.teeth
+    for n in classes:
+        sc = sum(COS[j] for j in n)
+        re = L.obj([[[IP[(n[0] * x + n[1] * y + n[2] * z) % 4][0] for z in range(4)] for y in range(4)] for x in range(4)])
+        im = L.obj([[[IP[(n[0] * x + n[1] * y + n[2] * z) % 4][1] for z in range(4)] for y in range(4)] for x in range(4)])
+        sin2_num = 9 * r * r - p * p * sc * sc  # 9 rim^2 sin^2 w(k)
+        states = []
+        for _ in range(12):
+            a = (rnd.randint(-10 ** 4, 10 ** 4), rnd.randint(-10 ** 4, 10 ** 4))
+            b = (rnd.randint(-10 ** 4, 10 ** 4), rnd.randint(-10 ** 4, 10 ** 4))
+            states.append((a, b, False))
+        # near-circular: beta = alpha e^{i w} rounded, alpha = (B, 0)
+        cw = Fraction(p * sc, 3 * r)
+        swf = math.sqrt(max(0.0, 1 - float(cw) ** 2))
+        for B in (10 ** 6, 10 ** 9):
+            states.append(((B, 0), (round(B * float(cw)), round(B * swf)), B))
+        for a, b, circ in states:
+            n3 = a[0] * re - a[1] * im
+            n12 = a[0] * im + a[1] * re
+            b3 = b[0] * re - b[1] * im
+            b12 = b[0] * im + b[1] * re
+            st = L.gears_of(n3, n12, b3, b12)
+            E = L.exact_raw_total(clock, st, g)
+            sig = L.sweep_total(st)
+            for name, s2, f2 in (("true", sin2_num, 1), ("mutant: sin w(k) (1 + 1/1000)", sin2_num, Fraction(1001, 1000) ** 2),
+                                 ("mutant: sin = 1 (the quarter turn's quantum)", 9 * r * r, 1),
+                                 ("the rest sine for every mode (the variational bound)", 9 * s * s, 1)):
+                ok = 9 * r * r * E * E >= 16 * w * w * s2 * f2 * sig * sig
+                q1[name][0] += 1
+                q1[name][1] += 0 if ok else 1
+            if circ == 10 ** 9 and s and sig:
+                Eh = L.head_wind_total(clock, st, g)
+                qN = (Eh / clock.windings[k]) / (abs(sig) / (clock.key // 2))
+                ratios.append((k, n, qN, swf / (s / r)))
+for name, (n, bad, _) in q1.items():
+    say(f"    {name:46s}: {n} (train, k, state), failures {bad}")
+say("    the head's click count per quantum of a near-circular state, q/N, against sin w(k)/sin w0 (floats, the ratio only):")
+for k, n, qN, pred in ratios:
+    if n in ((0, 0, 0), (1, 0, 0), (2, 2, 2)):
+        say(f"      hand {k} k = pi/2 {n}: q/N = {qN:.4f}, sin w(k)/sin w0 = {pred:.4f}")
+
+# ---------------------------------------------------------------- Q2
+say("Q2  the physicist's figure, the continuum dispersion's ratio at k = 0.05 along an axis (floats):")
+p, r = 15162854575528411, 15162856759112389
+s = math.isqrt(r * r - p * p)
+for kx in (0.05, 0.3, math.pi / 2):
+    wk = math.acos(p / r * (2 + math.cos(kx)) / 3)
+    say(f"    electron, k = {kx:.4f}: sin w(k) / sin w0 = {math.sin(wk) / (s / r):.2f}")
+
+# ---------------------------------------------------------------- Q3
+say("Q3  the action Q = SUM Im(conj(a) P), P = W (a - a-), under a uniform clock varying at every tick (exact rationals)")
+q3 = {"Q kept": [0, 0], "wind kept": [0, 0], "mutant: the plain sweep kept": [0, 0], "mutant: Q kept with uneven grips": [0, 0]}
+drift = []
+for trial in range(8):
+    Lb = 3
+    st = [L.random_gaussian_board(Lb, 50, rnd) for _ in range(4)]
+    a = [st[0] * Fraction(1), st[1] * Fraction(1)]
+    am = [st[2] * Fraction(1), st[3] * Fraction(1)]
+    uneven = trial % 2 == 1
+    W = Fraction(rnd.randint(500, 1500))
+    P = [W * (x - y) for x, y in zip(a, am)]
+
+    def charge(a, P):
+        return sum(x * y for x, y in zip(a[0].flat, P[1].flat)) - sum(x * y for x, y in zip(a[1].flat, P[0].flat))
+
+    def sweep(a, am):
+        return sum(x * y for x, y in zip(a[0].flat, am[1].flat)) - sum(x * y for x, y in zip(a[1].flat, am[0].flat))
+
+    Q0, S0 = charge(a, P), sweep(a, am)
+    okQ = okS = okU = True
+    for t in range(12):
+        s_t = Fraction(rnd.randint(1, 9), rnd.randint(1, 9))
+        D_t = Fraction(rnd.randint(0, 50))
+        R_t = Fraction(rnd.randint(1, 30))
+        Wn = Fraction(rnd.randint(500, 1500))
+        F = []
+        for x in a:
+            pull = 0 * x
+            for spoke in range(6):
+                grip = R_t + (spoke == 0) * 7 if uneven else R_t
+                pull = pull + grip * (across(x, spoke) - x)
+            F.append(pull - D_t * x)
+        Pn = [pp + s_t * f for pp, f in zip(P, F)]
+        an = [x + pp / Wn for x, pp in zip(a, Pn)]
+        am, a, P, W = a, an, Pn, Wn
+        Qt = charge(a, P)
+        if uneven:
+            okU = okU and Qt == Q0
+        else:
+            okQ = okQ and Qt == Q0
+            okS = okS and sweep(a, am) == S0
+    if uneven:
+        q3["mutant: Q kept with uneven grips"][0] += 1
+        q3["mutant: Q kept with uneven grips"][1] += 0 if okU else 1
+    else:
+        q3["Q kept"][0] += 1
+        q3["Q kept"][1] += 0 if okQ else 1
+        q3["mutant: the plain sweep kept"][0] += 1
+        q3["mutant: the plain sweep kept"][1] += 0 if okS else 1
+for name, (n, bad) in q3.items():
+    if name != "wind kept":
+        say(f"    {name:36s}: {n} runs of 12 varying ticks, failures {bad}")
+# a standing rest hand on one Node-clock while the clock's spring falls slowly (an adiabatic change):
+# Q kept exactly, the wind per quantum follows sin w0(t), the fixed winding's count drifts
+clock1 = L.head.clock_of("world_node.json", seed=[], shape=[1, 1, 1])
+for k, h, p, s, r in L.hand_trains(clock1):
+    if s == 0 or k != 1:
+        continue
+    g = L.vacuum_gearing(clock1, h)
+    w, D0 = g.teeth, g.spring
+    B = 10 ** 6
+    a = [Fraction(r * B), Fraction(0)]
+    am = [Fraction(B * p), Fraction(-B * s)]
+    W = Fraction(w)
+    P = [W * (x - y) for x, y in zip(a, am)]
+    Q0 = a[0] * P[1] - a[1] * P[0]
+    E0 = None
+    rows = []
+    for t in range(4001):
+        D_t = Fraction(D0) * (1 - Fraction(t, 8000))  # the spring falls by half over 4000 ticks
+        if t % 1000 == 0:
+            cos_t = 1 - D_t / (2 * w)
+            E = w * (a[0] ** 2 + a[1] ** 2 + am[0] ** 2 + am[1] ** 2) - (2 * w - D_t) * (a[0] * am[0] + a[1] * am[1])
+            Qt = a[0] * P[1] - a[1] * P[0]
+            E0 = E if E0 is None else E0
+            rows.append((t, float(E / E0), float(Qt / Q0), math.sqrt(1 - float(cos_t) ** 2) / (s / r)))
+        F = [-D_t * x for x in a]
+        Pn = [pp + f for pp, f in zip(P, F)]
+        an = [x + pp / W for x, pp in zip(a, Pn)]
+        am, a, P = a, an, Pn
+    for t, e, qq, sw in rows:
+        say(f"    hand {k}, spring falling: tick {t}: wind / wind_0 {e:.6f}, Q / Q_0 {qq:.6f}, sin w0(t) / sin w0 {sw:.6f}"
+            f"  (so q = E div w_c reads {e:.4f} of the quanta Q keeps)")
+
+# ---------------------------------------------------------------- Q4
+say("Q4  a swing at rest (both senses): its two circular parts over 2 s, exact; their winds add, their sweeps subtract")
+q4 = {"true": [0, 0], "mutant: the parts' winds with a cross term": [0, 0]}
+for k, h, p, s, r in L.hand_trains(clock1):
+    if s == 0:
+        continue
+    g = L.vacuum_gearing(clock1, h)
+    w = g.teeth
+    for _ in range(50):
+        z = (rnd.randint(-10 ** 6, 10 ** 6), rnd.randint(-10 ** 6, 10 ** 6))
+        zm = (rnd.randint(-10 ** 6, 10 ** 6), rnd.randint(-10 ** 6, 10 ** 6))
+        # A = (g z - r z-) / (2 i s), B = z - A   (g = p + i s; the rest turn u = g / r)
+        gz = (p * z[0] - s * z[1], p * z[1] + s * z[0])
+        num = (gz[0] - r * zm[0], gz[1] - r * zm[1])
+        A = (Fraction(num[1], 2 * s), Fraction(-num[0], 2 * s))  # num / (2 i s) = -i num / (2 s)
+        Bp = (z[0] - A[0], z[1] - A[1])
+        # their before slots: A conj(u), B u
+        Am = ((A[0] * p + A[1] * s) / r, (A[1] * p - A[0] * s) / r)
+        Bm = ((Bp[0] * p - Bp[1] * s) / r, (Bp[1] * p + Bp[0] * s) / r)
+        recon = (Am[0] + Bm[0] == zm[0]) and (Am[1] + Bm[1] == zm[1])
+
+        def form(n, b):
+            return w * (n[0] ** 2 + n[1] ** 2 + b[0] ** 2 + b[1] ** 2) - 2 * w * Fraction(p, r) * (n[0] * b[0] + n[1] * b[1])
+
+        def swp(n, b):
+            return n[0] * b[1] - n[1] * b[0]
+
+        Ez, EA, EB = form(z, zm), form(A, Am), form(Bp, Bm)
+        cross = 2 * w * (A[0] * Bp[0] + A[1] * Bp[1])
+        ok = recon and Ez == EA + EB and swp(z, zm) == swp(A, Am) + swp(Bp, Bm)
+        ok_m = recon and Ez == EA + EB + cross
+        q4["true"][0] += 1
+        q4["true"][1] += 0 if ok else 1
+        q4["mutant: the parts' winds with a cross term"][0] += 1
+        q4["mutant: the parts' winds with a cross term"][1] += 0 if ok_m else 1
+for name, (n, bad) in q4.items():
+    say(f"    {name:44s}: {n} swings (3 sprung trains), failures {bad}")
+
+# ---------------------------------------------------------------- Q5
+say("Q5  the head's world_plasma, the full engine: the click count q against the action count N_Q at one Node-clock")
+c = L.head.clock_of("world_plasma.json")
+at = (0, 0, 0)
+recs = [k for k, h, p, s, r in L.hand_trains(c) if s and abs(L.sweep_total(h.gears)) > 0]
+
+
+def action(clk, k):
+    reg = clk.train(REGULATOR).gears[0]
+    W = readings.mean_teeth(clk, reg)
+    W = int(W[at]) if hasattr(W, "shape") else int(W)
+    g3, g12 = clk.hands()[k].gears
+    P3 = W * (int(g3.now[at]) - int(g3.before[at])) + int(g3.fine[at]) - mid(W)
+    P12 = W * (int(g12.now[at]) - int(g12.before[at])) + int(g12.fine[at]) - mid(W)
+    return int(g3.now[at]) * P12 - int(g12.now[at]) * P3
+
+
+Q0 = {k: action(c, k) for k in recs}
+q5rows = []
+for t in range(101):
+    if t in (0, 1, 2, 5, 10, 20, 40, 60, 80, 100):
+        row = [f"t={t:3d} X={int(c.train(REGULATOR).gears[0].now[at])}"]
+        for k in recs:
+            h = c.hands()[k]
+            g = L.board_gearing(c, h)
+            E = int(hands.wind(c, h.gears, g)[at])
+            row.append(f"hand {k}: q = {E // c.windings[k]} (wind {E / c.windings[k]:.4f} windings), "
+                       f"sweep {int(hands.sweep(h.gears)[at]) / (c.key // 2):+.4f}, N_Q = Q/Q0 {action(c, k) / Q0[k]:.4f}")
+        q5rows.append("    " + " | ".join(row))
+    if t < 100:
+        c.tick()
+lines.extend(q5rows)
+
+# ---------------------------------------------------------------- Q6
+say("Q6  the light: the drift holds no action; the bang's quarter-turn lay holds one light winding per quantum")
+c = L.head.clock_of("world_plasma.json")
+lt = c.hands().index(c.unsprung())
+say(f"    world_plasma's light sea at every clock: sweep {set(int(v) for v in hands.sweep(c.hands()[lt].gears).flat)}, "
+    f"wind / light winding {sorted(set(int(v) / c.windings[lt] for v in hands.wind(c, c.hands()[lt].gears, L.board_gearing(c, c.hands()[lt])).flat))}")
+c = L.head.clock_of("world_bang.json")
+lt = c.hands().index(c.unsprung())
+h = c.hands()[lt]
+E = hands.wind(c, h.gears, L.board_gearing(c, h))
+S = hands.sweep(h.gears)
+pairs = [(int(e) / c.windings[lt], abs(int(sw)) / (c.key // 2)) for e, sw in zip(E.flat, S.flat)]
+dev = max(abs(a / b - 1) for a, b in pairs if b)
+say(f"    world_bang's light at its 64 clocks: wind {min(a for a, _ in pairs):.4f}..{max(a for a, _ in pairs):.4f} light windings, "
+    f"|sweep| {min(b for _, b in pairs):.4f}..{max(b for _, b in pairs):.4f} quanta; largest |wind per quantum / winding - 1| = {dev:.2e}")
+say(f"(run time {time.time() - T0:.1f} s)")
+L.report(L.OUT + "m4_quantum.txt", lines)
+
+== the second hand: venv314/bin/python -I -B p12.py (rerun by David, identical) ==
+Gamma 1000 G 16
+C1a gearing at vacuum == stated (w, R x6, D, S=0): 15 ok, 0 bad of 15 trains
+    trains with pinion^2 + s^2 == rim^2 (s = rates.sine_rim): 14 of 15
+C1b claim: 960 hold, 0 fail of 960 plane waves
+C1b m_grip_no_pinion: 15 hold, 945 fail of 960 plane waves
+C1b m_cos_plus: 0 hold, 960 fail of 960 plane waves
+C1b ctrl_general_disp_mutant_grips: 960 hold, 0 fail of 960 plane waves
+C1b m_sign: 300 hold, 660 fail of 960 plane waves
+C2 identity: 14 hold, 1 fail
+C2 recurrence: 406 hold, 29 fail
+C2 lattice_rest: 84 hold, 6 fail
+C2 m_s1_identity: 0 hold, 15 fail
+C2 m_s1_recurrence: 0 hold, 435 fail
+run 0.8 s
+
+== the second hand: venv314/bin/python -I -B p34.py (rerun by David, identical) ==
+Pythagorean trains used: 10
+C3 cases (sigma != 0): 1572 at 524 rational angles
+C3 e^(+i eps w): 1572 hold, 0 fail;  mutant e^(-i eps w): 0 hold, 1572 fail
+C4 states 200
+C4 bound_fail 0
+C4 equal 50
+C4 equal_kinds {'rest+': 10, 'rest-': 10, 'corner+': 10, 'corner-': 10, 'rest+ & corner+': 10}
+C4 parseval_bad 0
+C4 mode_bound_fail 0
+C4 mode_cases 12800
+C4 m_s1_fail 60
+C4 m_beat_fail 67
+C4 eq_support_bad 0
+C4 mode_eq 82
+run 0.7 s
+
+== the second hand: venv314/bin/python -I -B p56.py (rerun by David, identical) ==
+C5 over 10 trains (counts of holds):
+    k2_coeff_zero_at_a=p/(6s) 10
+    m2*R/w==s/rim 10
+    cT2==cos/3 10
+    float_curv_ok 8
+    m_inertia_no_rim/pinion 0
+    m_beat_for_sine(FLOAT) 0
+    literal 'sine*rim/pinion'==m2 0
+    m2 / (sine * rim/pinion) = {Fraction(3, 1)}
+    toy row 1 / row 0: sine 1838.68  beat(FLOAT) 2623.49  inertia 11341;  beat/sine 1.4268 (row 1), 1.0000000480 (row 0); (inertia ratio)/(sine ratio) 6.168
+    toy row 2 / row 0: sine 1836.15  beat(FLOAT) 2608.27  inertia 10790;  beat/sine 1.4205 (row 2), 1.0000000480 (row 0); (inertia ratio)/(sine ratio) 5.876
+C6: {'unitary': 40, 'hermitian': 40, 'commutes': 40, 'eig_sin': 40, 'm_sign_eig': 0, 'cases': 40, 'ring_cases': 80, 'ring_unitary': 80, 'ring_commutes': 80, 'ring_H2=sin2': 80, 'ring_float_eig_sin': 80, 'ring_m_sign_float': 0, 'ring_m_angle_float': 0}
+run 0.1 s
+
+== the second hand: venv314/bin/python -I -B p79.py (rerun by David, identical) ==
+    pair-shape windings a quantum, toy row 0: 1863.3335
+    pair-shape windings a quantum, toy row 1: 1.0134
+    pair-shape windings a quantum, toy row 2: 1.0148
+C7: {'cases': 560, 'E1==3rim(|z|^2+|z-|^2)': 560, 'bound_fail': 0, 'equal': 88, 'equal_iff_ok': 560, 'pair_cases': 60, 'pair==1/sin': 60, 'm_pair_s+1': 0, 'm_beat(FLOAT)': 0, 'm_no_i_equal': 0}
+C9: {'pairs': 16, 'N==rim^4': 16, 'composite s == sine_rim(Re, rim^2)': 16, 'short_identity': 16, 'books_full_sum': 0, 'beats_add(FLOAT)': 16, 'm_s+1_on_circle': 0, 'm_s+1_sine': 0}
+    universe_bang 14962266816278236 x 14962266816278236: books 0.1621205 of the parts' windings
+    universe_bang 14962266816278236 x 14941680566515936: books 0.1661522 of the parts' windings
+    universe_bang 14962266816278236 x 8137489624680: books 0.9995444 of the parts' windings
+    universe_bang 14941680566515936 x 14941680566515936: books 0.1701783 of the parts' windings
+    universe_bang 14941680566515936 x 8137489624680: books 0.9995482 of the parts' windings
+    universe_bang 8137489624680 x 8137489624680: books 0.9999999 of the parts' windings
+    universe_ga2 15162414850065661 x 15162414850065661: books 0.0076346 of the parts' windings
+    universe_middle 1576609440 x 1576609440: books 0.3057523 of the parts' windings
+    universe_middle 1576609440 x 9669460: books 0.9957511 of the parts' windings
+    universe_middle 9669460 x 9669460: books 0.9999830 of the parts' windings
+    universe_toy 14962266816278236 x 14962266816278236: books 0.1621205 of the parts' windings
+    universe_toy 14962266816278236 x 14941680566515936: books 0.1661522 of the parts' windings
+    universe_toy 14962266816278236 x 8137489624680: books 0.9995444 of the parts' windings
+    universe_toy 14941680566515936 x 14941680566515936: books 0.1701783 of the parts' windings
+    universe_toy 14941680566515936 x 8137489624680: books 0.9995482 of the parts' windings
+    universe_toy 8137489624680 x 8137489624680: books 0.9999999 of the parts' windings
+run 0.1 s
+
+== the second hand: venv314/bin/python -I -B p8.py (rerun by David, identical) ==
+C8 form=flux      teeth vary=True  aniso grips=False: Q kept 4/4 runs; plain sweep kept 0/4 runs (12 ticks each)
+C8 form=flux      teeth vary=False aniso grips=False: Q kept 4/4 runs; plain sweep kept 4/4 runs (12 ticks each)
+C8 form=one-teeth teeth vary=True  aniso grips=False: Q kept 0/4 runs; plain sweep kept 4/4 runs (12 ticks each)
+C8 form=flux      teeth vary=True  aniso grips=True : Q kept 0/4 runs; plain sweep kept 0/4 runs (12 ticks each)
+run 2.3 s
+
+== the second hand: venv314/bin/python -I -B poff.py (rerun by David, identical) ==
+universe_bang 3 states 40 fails 0 equalities with integer s 0 rim^2-p^2-s^2 = 2625219173950632
+
+== common.py (the second hand) ==
+"""Shared helpers for the second hand's probes (exact arithmetic)."""
+import json
+import sys
+from fractions import Fraction as F
+
+SRC = "/home/user/Universe24/src"
+if SRC not in sys.path:
+    sys.path.insert(0, SRC)
+from event_universe.core import rule3, rates  # noqa: E402
+
+WORLDS = "/home/user/Universe24/tests/worlds/"
+FILES = ["universe_bang", "universe_ga2", "universe_middle", "universe_toy"]
+
+
+def trains(with_light=False):
+    """(file, index, pinion, rim, s, key) for every row of the four universe files."""
+    out = []
+    for f in FILES:
+        d = json.load(open(WORLDS + f + ".json"))
+        den = d["integers"]["den"]
+        key = d["integers"]["quantum_action"]
+        for i, r in enumerate(d["rows"]):
+            p, rim = r["pair"]
+            assert rim == den
+            s = rates.sine_rim(p, rim)
+            out.append((f, i, p, rim, s, key))
+        if with_light:
+            out.append((f, "light", den, den, 0, key))
+    return out
+
+
+# Gaussian numbers as pairs (re, im) of int/Fraction
+def gm(a, b):
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+
+def ga(a, b):
+    return (a[0] + b[0], a[1] + b[1])
+
+
+def gs(a, b):
+    return (a[0] - b[0], a[1] - b[1])
+
+
+def gk(k, a):
+    return (k * a[0], k * a[1])
+
+
+def gc(a):
+    return (a[0], -a[1])
+
+
+def n2(a):
+    return a[0] * a[0] + a[1] * a[1]
+
+
+IPOW = [(1, 0), (0, 1), (-1, 0), (0, -1)]
+COS4 = [1, 0, -1, 0]
+
+L = 4
+SITES = [(x, y, z) for x in range(L) for y in range(L) for z in range(L)]
+NB = []
+for (x, y, z) in SITES:
+    NB.append([((x + 1) % L, y, z), ((x - 1) % L, y, z), (x, (y + 1) % L, z),
+               (x, (y - 1) % L, z), (x, y, (z + 1) % L), (x, y, (z - 1) % L)])
+IDX = {s: i for i, s in enumerate(SITES)}
+NBI = [[IDX[t] for t in nb] for nb in NB]
+
+
+def wind_norm(a, am, p, rim, S=0):
+    """E' = E / (2 Gamma^2 G^2): 3 rim SUM(|a|^2+|a-|^2) - p Re SUM_x SUM_j conj(a_x) a-_(x+j)
+    (the engine's hands.wind at the vacuum, globally; S = 0 at the vacuum)."""
+    e = 0
+    cross = 0
+    for i in range(len(a)):
+        e += n2(a[i]) + n2(am[i])
+        for j in NBI[i]:
+            c = gm(gc(a[i]), am[j])
+            cross += c[0]
+    return 3 * rim * e - p * cross
+
+
+def sweep(a, am):
+    return sum(gm(gc(a[i]), am[i])[1] for i in range(len(a)))
+
+
+def dft(a):
+    """alpha_n = SUM_x conj(i^(n.x)) a_x, exact Gaussian integers; n in SITES order."""
+    out = []
+    for n in SITES:
+        acc = (0, 0)
+        for xi, x in enumerate(SITES):
+            ph = IPOW[(-(n[0] * x[0] + n[1] * x[1] + n[2] * x[2])) % 4]
+            acc = ga(acc, gm(ph, a[xi]))
+        out.append(acc)
+    return out
+
+
+def pyth(limit):
+    """Primitive Pythagorean triples (a, b, h) with h <= limit."""
+    out = []
+    m = 2
+    while m * m + 1 <= limit:
+        for n in range(1, m):
+            if (m - n) % 2 == 1:
+                from math import gcd
+                if gcd(m, n) == 1:
+                    h = m * m + n * n
+                    if h <= limit:
+                        out.append((m * m - n * n, 2 * m * n, h))
+        m += 1
+    return out
+
+== p12.py (the second hand, written from the claims alone) ==
+"""Claims 1 and 2: the vacuum dispersion on the 4^3 torus, and the rest turn g/rim. Exact integers."""
+import random
+import sys
+import time
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import (trains, rule3, SITES, NBI, IPOW, COS4, gm, ga, gs, gk)  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(20261028)
+GAMMA = 1000
+G = rule3.mesh_unit_of(GAMMA)
+print("Gamma", GAMMA, "G", G)
+TR = trains(with_light=True)
+
+# --- C1a: the engine's gearing at the vacuum against the stated coefficients
+ok = bad = 0
+for (f, i, p, rim, s, key) in TR:
+    gr = rule3.gearing(p, rim, GAMMA, GAMMA, GAMMA, None, G)
+    w = 6 * rim * GAMMA**2 * G**2
+    R = 2 * p * GAMMA**2 * G**2
+    D = 12 * (rim - p) * GAMMA**2 * G**2
+    good = (gr.teeth == w and all(x == R for x in gr.grips) and len(gr.grips) == 6
+            and gr.spring == D and gr.hold == 2 * w - D - 6 * R == 0)
+    ok += good
+    bad += not good
+print(f"C1a gearing at vacuum == stated (w, R x6, D, S=0): {ok} ok, {bad} bad of {len(TR)} trains")
+pyth_ok = sum(1 for (f, i, p, rim, s, key) in TR if p * p + s * s == rim * rim)
+print(f"    trains with pinion^2 + s^2 == rim^2 (s = rates.sine_rim): {pyth_ok} of {len(TR)}")
+
+
+def lattice_check(w, R, D, num, den, n, Am, A):
+    """a(x,t) = A_t i^(n.x); A_(t+1) = (num/den) A_t - A_(t-1), all scaled by den. Exact check at 64 sites."""
+    Ap = gs(gk(num, A), gk(den, Am))           # den * A_(t+1)
+    A_s, Am_s = gk(den, A), gk(den, Am)       # den * A_t, den * A_(t-1)
+    for xi, x in enumerate(SITES):
+        ph = IPOW[(n[0] * x[0] + n[1] * x[1] + n[2] * x[2]) % 4]
+        ap, a, am = gm(Ap, ph), gm(A_s, ph), gm(Am_s, ph)
+        lhs = gk(w, ga(gs(ap, gk(2, a)), am))
+        rhs = gk(-D, a)
+        for j in NBI[xi]:
+            y = SITES[j]
+            phy = IPOW[(n[0] * y[0] + n[1] * y[1] + n[2] * y[2]) % 4]
+            rhs = ga(rhs, gk(R, gs(gm(A_s, phy), a)))
+        if lhs != rhs:
+            return False
+    return True
+
+
+# --- C1b: plane waves i^(n.x), rim cos w = pinion (SUM cos k_j)/3, i.e. 2 cos w = 2 p SUM / (3 rim)
+res = {"claim": [0, 0], "m_grip_no_pinion": [0, 0], "m_cos_plus": [0, 0], "ctrl_general_disp_mutant_grips": [0, 0],
+       "m_sign": [0, 0]}
+for (f, i, p, rim, s, key) in TR:
+    w = 6 * rim * GAMMA**2 * G**2
+    R = 2 * p * GAMMA**2 * G**2
+    D = 12 * (rim - p) * GAMMA**2 * G**2
+    Rm = 2 * GAMMA**2 * G**2  # mutant grips without the pinion
+    for n in SITES:
+        Sig = sum(COS4[c] for c in n)
+        Am = (rng.randint(-10**6, 10**6), rng.randint(-10**6, 10**6))
+        A = (rng.randint(-10**6, 10**6), rng.randint(-10**6, 10**6))
+        # claim: 2 cos w = 2 p Sig / (3 rim)
+        r = lattice_check(w, R, D, 2 * p * Sig, 3 * rim, n, Am, A)
+        res["claim"][0 if r else 1] += 1
+        r = lattice_check(w, Rm, D, 2 * p * Sig, 3 * rim, n, Am, A)
+        res["m_grip_no_pinion"][0 if r else 1] += 1
+        r = lattice_check(w, R, D, 2 * p * Sig + 2, 3 * rim, n, Am, A)   # cos w + 1/(3 rim)
+        res["m_cos_plus"][0 if r else 1] += 1
+        r = lattice_check(w, R, D, -2 * p * Sig, 3 * rim, n, Am, A)      # rim cos w = -p SUM/3
+        res["m_sign"][0 if r else 1] += 1
+        # control: the general formula w (2 - 2 cos w) = Rm SUM(2 - 2cos k) + D with the mutant grips
+        # 2 cos w = 2 - (Rm SUM(2-2cos) + D)/w  -> num/den = (2w - Rm(6 - 2 Sig) - D)/w
+        r = lattice_check(w, Rm, D, 2 * w - Rm * (6 - 2 * Sig) - D, w, n, Am, A)
+        res["ctrl_general_disp_mutant_grips"][0 if r else 1] += 1
+for k, (a, b) in res.items():
+    print(f"C1b {k}: {a} hold, {b} fail of {a + b} plane waves")
+
+# --- C2: g^2 - 2 p g + rim^2 = 0, Re(g^t) recurrence, and the rest hand on the lattice
+T = 30
+c2 = {"identity": [0, 0], "recurrence": [0, 0], "lattice_rest": [0, 0],
+      "m_s1_identity": [0, 0], "m_s1_recurrence": [0, 0]}
+for (f, i, p, rim, s, key) in TR:
+    for (sv, tag) in ((s, ""), (s + 1, "m_s1_")):
+        g = (p, sv)
+        q = ga(gs(gm(g, g), gk(2 * p, g)), (rim * rim, 0))
+        c2[tag + "identity"][0 if q == (0, 0) else 1] += 1
+        powers = [(1, 0)]
+        for t in range(T + 1):
+            powers.append(gm(powers[-1], g))
+        for t in range(1, T):
+            r = powers[t + 1][0] == 2 * p * powers[t][0] - rim * rim * powers[t - 1][0]
+            c2[tag + "recurrence"][0 if r else 1] += 1
+    # the rest hand on the lattice: a_t = z g^t rim^(T-t) at every site (scaled by rim^T), t = 0..T
+    w = 6 * rim * GAMMA**2 * G**2
+    R = 2 * p * GAMMA**2 * G**2
+    D = 12 * (rim - p) * GAMMA**2 * G**2
+    g = (p, s)
+    z = (rng.randint(1, 99), rng.randint(-99, 99))
+    seq = []
+    gp = (1, 0)
+    for t in range(8):
+        seq.append(gk(rim ** (7 - t), gm(z, gp)))
+        gp = gm(gp, g)
+    for t in range(1, 7):
+        a, ap, am = seq[t], seq[t + 1], seq[t - 1]
+        lhs = gk(w, ga(gs(ap, gk(2, a)), am))
+        rhs = gk(-D, a)  # neighbours equal: SUM R (a_j - a) = 0
+        c2["lattice_rest"][0 if lhs == rhs else 1] += 1
+for k, (a, b) in c2.items():
+    print(f"C2 {k}: {a} hold, {b} fail")
+print(f"run {time.time() - t0:.1f} s")
+
+== p34.py (the second hand, written from the claims alone) ==
+"""Claims 3 and 4: the per-mode identity (which exponent sign), the bound on the 4^3 torus. Exact integers;
+floats only on the lines marked FLOAT (the beat w0 = arccos(p/rim) set against the sine)."""
+import math
+import random
+import sys
+import time
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import (trains, SITES, COS4, gm, ga, gs, gk, gc, n2, wind_norm, sweep, dft, pyth)  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(4242)
+TR = [t for t in trains(with_light=False) if t[2] ** 2 + t[4] ** 2 == t[3] ** 2]
+print("Pythagorean trains used:", len(TR))
+
+# ---------------- C3: the identity, both exponent signs
+angles = []
+for (a, b, h) in pyth(400):
+    for (ca, sb) in ((a, b), (b, a)):
+        for sc in (1, -1):
+            for ss in (1, -1):
+                angles.append((sc * ca, ss * sb, h))
+for (f, i, p, rim, s, key) in TR:
+    angles.append((p, s, rim))
+    angles.append((-p, s, rim))
+cnt = {"plus": [0, 0], "minus": [0, 0]}
+cases = 0
+for (ca, sb, h) in angles:
+    w = rng.randint(1, 10**6)
+    for _ in range(3):
+        al = (rng.randint(-999, 999), rng.randint(-999, 999))
+        be = (rng.randint(-999, 999), rng.randint(-999, 999))
+        z = gm(gc(al), be)
+        X, Y = z
+        if Y == 0:
+            continue
+        cases += 1
+        eps = 1 if Y > 0 else -1
+        hE = w * h * (n2(al) + n2(be)) - 2 * w * ca * X          # h * E_k
+        lhs = h * (hE - 2 * w * sb * abs(Y))                       # h^2 (E - 2 w sin |sigma|)
+        for tag, sign in (("plus", 1), ("minus", -1)):
+            rot = (ca, sign * eps * sb)                            # h e^(+-i eps w)
+            rhs = w * n2(gs(gk(h, be), gm(al, rot)))               # h^2 w |beta - alpha e^(...)|^2
+            cnt[tag][0 if lhs == rhs else 1] += 1
+print(f"C3 cases (sigma != 0): {cases} at {len(angles)} rational angles")
+print(f"C3 e^(+i eps w): {cnt['plus'][0]} hold, {cnt['plus'][1]} fail;  "
+      f"mutant e^(-i eps w): {cnt['minus'][0]} hold, {cnt['minus'][1]} fail")
+
+# ---------------- C4: states on the 4^3 torus
+PAR = [(-1) ** (x + y + z) for (x, y, z) in SITES]
+SIG = [sum(COS4[c] for c in n) for n in SITES]
+stats = {"states": 0, "bound_fail": 0, "equal": 0, "equal_kinds": {}, "parseval_bad": 0,
+         "mode_bound_fail": 0, "mode_cases": 0, "m_s1_fail": 0, "m_beat_fail": 0, "eq_support_bad": 0,
+         "mode_eq": 0}
+for (f, i, p, rim, s, key) in TR:
+    g = (p, s)
+    cg = gc(g)
+    states = []
+    for _ in range(12):
+        R = rng.choice([3, 50, 10**4])
+        a = [(rng.randint(-R, R), rng.randint(-R, R)) for _ in SITES]
+        am = [(rng.randint(-R, R), rng.randint(-R, R)) for _ in SITES]
+        states.append(("random", a, am))
+    z = (rng.randint(1, 50), rng.randint(-50, 50))
+    u = (rng.randint(1, 50), rng.randint(-50, 50))
+    rest_p = ([gk(rim, z)] * 64, [gm(z, g)] * 64)          # beta = alpha g/rim  (eps +1)
+    rest_m = ([gk(rim, z)] * 64, [gm(z, cg)] * 64)         # beta = alpha conj(g)/rim (eps -1)
+    cor_p = ([gk(rim * PAR[k], u) for k in range(64)], [gk(-PAR[k], gm(u, cg)) for k in range(64)])  # e^{i w_c} = -conj g / rim
+    cor_m = ([gk(rim * PAR[k], u) for k in range(64)], [gk(-PAR[k], gm(u, g)) for k in range(64)])
+    states += [("rest+", *rest_p), ("rest-", *rest_m), ("corner+", *cor_p), ("corner-", *cor_m)]
+    # mixtures
+    def add(A, B):
+        return ([ga(x, y) for x, y in zip(A[0], B[0])], [ga(x, y) for x, y in zip(A[1], B[1])])
+    # the sweep's sign: sigma = Im(conj(alpha) beta); for rest+ beta = alpha g/rim -> sigma = |alpha|^2 s/rim > 0
+    # corner+: beta = alpha (-conj g)/rim -> Im = |alpha|^2 s / rim > 0
+    states.append(("rest+ & corner+", *add(rest_p, cor_p)))
+    states.append(("rest+ & corner-", *add(rest_p, cor_m)))
+    pert = (list(rest_p[0]), list(rest_p[1]))
+    pert[0][5] = ga(pert[0][5], (1, 0))
+    states.append(("rest+ perturbed", *pert))
+    states.append(("rest+ with +i (not the pair)", [gk(rim, z)] * 64, [gm(gk(rim, z), (0, 1))] * 64))
+    for kind, a, am in states:
+        stats["states"] += 1
+        E = wind_norm(a, am, p, rim)
+        sg = sweep(a, am)
+        d = E - 6 * s * abs(sg)
+        if d < 0:
+            stats["bound_fail"] += 1
+        if d == 0:
+            stats["equal"] += 1
+            stats["equal_kinds"][kind] = stats["equal_kinds"].get(kind, 0) + 1
+        # mutant s + 1
+        if E - 6 * (s + 1) * abs(sg) < 0:
+            stats["m_s1_fail"] += 1
+        # mutant: the beat for the sine. FLOAT: w0 = arccos(p/rim) set against the integer bound
+        w0 = math.acos(p / rim)
+        if E - 6 * rim * w0 * abs(sg) < -1e-9 * E:
+            stats["m_beat_fail"] += 1
+        # per mode, exact
+        al, be = dft(a), dft(am)
+        Es, ss = 0, 0
+        support = []
+        for k in range(64):
+            zz = gm(gc(al[k]), be[k])
+            Ek = 3 * rim * (n2(al[k]) + n2(be[k])) - 2 * p * SIG[k] * zz[0]
+            Es += Ek
+            ss += zz[1]
+            stats["mode_cases"] += 1
+            # E_k >= 6 rim sin w_k |sigma_k| <=> E_k >= 0 and E_k^2 >= 4 (9 rim^2 - p^2 SIG^2) sigma_k^2
+            rhs2 = 4 * (9 * rim * rim - p * p * SIG[k] ** 2) * zz[1] ** 2
+            if Ek < 0 or Ek * Ek < rhs2:
+                stats["mode_bound_fail"] += 1
+            if Ek * Ek == rhs2 and Ek > 0:
+                stats["mode_eq"] += 1
+            if n2(al[k]) + n2(be[k]):
+                support.append(SITES[k])
+        if Es != 64 * E or ss != 64 * sg:
+            stats["parseval_bad"] += 1
+        if d == 0 and not set(support) <= {(0, 0, 0), (2, 2, 2)}:
+            stats["eq_support_bad"] += 1
+for k, v in stats.items():
+    print("C4", k, v)
+print(f"run {time.time() - t0:.1f} s")
+
+== p56.py (the second hand, written from the claims alone) ==
+"""Claims 5 and 6: the inertia from the dispersion's curvature; the sine form of a unitary turn.
+Exact Fractions; FLOAT only where marked (arccos / arcsin / eigen-angles)."""
+import cmath
+import math
+import random
+import sys
+import time
+from fractions import Fraction as F
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import trains, rule3, pyth  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(77)
+GAMMA, G = 1000, rule3.mesh_unit_of(1000)
+TR = [t for t in trains() if t[2] ** 2 + t[4] ** 2 == t[3] ** 2]
+
+# ---------------- C5
+c5 = {"k2_coeff_zero_at_a=p/(6s)": 0, "m2*R/w==s/rim": 0, "cT2==cos/3": 0, "float_curv_ok": 0,
+      "m_inertia_no_rim/pinion": 0, "m_beat_for_sine(FLOAT)": 0, "literal 'sine*rim/pinion'==m2": 0}
+readings = {}
+for (f, i, p, rim, s, key) in TR:
+    gr = rule3.gearing(p, rim, GAMMA, GAMMA, GAMMA, None, G)
+    Rw = F(gr.grips[0], gr.teeth)
+    a = F(p, 6 * s)
+    # k^2 coefficient of rim cos(w0 + a k^2) - p (cos k + 2)/3  =  -rim sin w0 a + p/6 = -s a + p/6
+    c5["k2_coeff_zero_at_a=p/(6s)"] += (-s * a + F(p, 6) == 0)
+    m2 = 1 / (2 * a)                                   # 1 / w''(0)
+    assert m2 == F(3 * s, p)
+    c5["m2*R/w==s/rim"] += (m2 * Rw == F(s, rim))
+    c5["cT2==cos/3"] += (Rw == F(1, 3) * F(p, rim))
+    # FLOAT: central second difference of w(k) = arccos(p (cos k + 2) / (3 rim)) at k = 0
+    w0 = math.acos(p / rim)
+    h = 0.01 * w0 / math.sqrt(p / (3 * rim))   # c_T h = w0 / 100
+    wk = math.acos(p * (math.cos(h) + 2) / (3 * rim))
+    curv = 2 * (wk - w0) / (h * h)
+    c5["float_curv_ok"] += abs(curv * float(m2) - 1) < 1e-3
+    c5["m_inertia_no_rim/pinion"] += (F(3 * s, rim) * Rw == F(s, rim))     # counts holds (should be 0)
+    c5["m_beat_for_sine(FLOAT)"] += abs(float(m2 * Rw) - w0) < 1e-9 * w0   # counts holds
+    c5["literal 'sine*rim/pinion'==m2"] += (F(s, rim) * F(rim, p) == m2)  # counts holds
+    readings[(f, i)] = (s / rim, math.atan2(s, p), 3 * s / p, curv * float(m2))
+print("C5 over", len(TR), "trains (counts of holds):")
+for k, v in c5.items():
+    print("   ", k, v)
+print("    m2 / (sine * rim/pinion) =", {F(3 * s, p) / (F(s, rim) * F(rim, p)) for (f, i, p, rim, s, key) in TR})
+e = readings[("universe_toy", 0)]
+for j in (1, 2):
+    n = readings[("universe_toy", j)]
+    print(f"    toy row {j} / row 0: sine {n[0] / e[0]:.2f}  beat(FLOAT) {n[1] / e[1]:.2f}  inertia {n[2] / e[2]:.0f};"
+          f"  beat/sine {n[1] / n[0]:.4f} (row {j}), {e[1] / e[0]:.10f} (row 0); (inertia ratio)/(sine ratio) {(n[2] / e[2]) / (n[0] / e[0]):.3f}")
+
+
+# ---------------- C6: 2x2 matrices of Gaussian Fractions
+def mm(A, B):
+    return [[_add(_mul(A[r][0], B[0][c]), _mul(A[r][1], B[1][c])) for c in range(2)] for r in range(2)]
+
+
+def _mul(a, b):
+    return (a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0])
+
+
+def _add(a, b):
+    return (a[0] + b[0], a[1] + b[1])
+
+
+def dag(A):
+    return [[(A[c][r][0], -A[c][r][1]) for c in range(2)] for r in range(2)]
+
+
+def sub(A, B):
+    return [[(A[r][c][0] - B[r][c][0], A[r][c][1] - B[r][c][1]) for c in range(2)] for r in range(2)]
+
+
+def over2i(A):  # A / (2i) = -i A / 2
+    return [[(F(A[r][c][1], 2), F(-A[r][c][0], 2)) for c in range(2)] for r in range(2)]
+
+
+I2 = [[(1, 0), (0, 0)], [(0, 0), (1, 0)]]
+
+
+def mv(A, v):
+    return [_add(_mul(A[r][0], v[0]), _mul(A[r][1], v[1])) for r in range(2)]
+
+
+def sc(k, v):
+    return [_mul(k, x) for x in v]
+
+
+c6 = {"unitary": 0, "hermitian": 0, "commutes": 0, "eig_sin": 0, "m_sign_eig": 0, "cases": 0,
+      "ring_cases": 0, "ring_unitary": 0, "ring_commutes": 0, "ring_H2=sin2": 0, "ring_float_eig_sin": 0,
+      "ring_m_sign_float": 0, "ring_m_angle_float": 0}
+P = pyth(120)
+# (a) constructed U = V diag(l1, l2) V^dagger with rational eigen-units, V a Gaussian-rational unitary
+for _ in range(40):
+    (a1, b1, h1), (a2, b2, h2), (a3, b3, h3) = rng.choice(P), rng.choice(P), rng.choice(P)
+    l1 = (F(a1, h1) * rng.choice((1, -1)), F(-b1, h1) * rng.choice((1, -1)))   # e^{-i w1}: sin w1 = -Im
+    l2 = (F(a2, h2) * rng.choice((1, -1)), F(-b2, h2) * rng.choice((1, -1)))
+    ph = (F(a3, h3), F(b3, h3))
+    c, sn = F(b2 * 3 + 1, 1), F(0)  # dummy to vary
+    (a4, b4, h4) = rng.choice(P)
+    u, v = (F(a4, h4), F(0)), (F(b4, h4), F(0))
+    u = _mul(u, ph)  # complex entry
+    V = [[u, (-v[0], v[1])], [v, (u[0], -u[1])]]   # [[u, -conj v],[v, conj u]]
+    Dg = [[l1, (0, 0)], [(0, 0), l2]]
+    U = mm(mm(V, Dg), dag(V))
+    H = over2i(sub(dag(U), U))
+    c6["cases"] += 1
+    c6["unitary"] += mm(dag(U), U) == [[(F(1), F(0)), (F(0), F(0))], [(F(0), F(0)), (F(1), F(0))]]
+    c6["hermitian"] += dag(H) == H
+    c6["commutes"] += mm(H, U) == mm(U, H)
+    ok = mok = True
+    for j, lam in ((0, l1), (1, l2)):
+        vec = [V[0][j], V[1][j]]
+        assert mv(U, vec) == sc(lam, vec)
+        sinw = -lam[1]                                     # lam = e^{-iw}  ->  sin w = -Im lam
+        ok &= mv(H, vec) == sc((sinw, 0), vec)
+        Hm = over2i(sub(U, dag(U)))                        # mutant: (U - U^dagger)/(2i)
+        mok &= mv(Hm, vec) == sc((sinw, 0), vec)
+    c6["eig_sin"] += ok
+    c6["m_sign_eig"] += mok
+# (b) the ring step U(k) = M diag(e^{-ik}, e^{ik}) at Pythagorean k, M the train's coin
+for (f, i, p, rim, s, key) in TR:
+    for coin in ("rot", "i"):
+        if coin == "rot":
+            M = [[(F(p, rim), F(0)), (F(-s, rim), F(0))], [(F(s, rim), F(0)), (F(p, rim), F(0))]]
+        else:
+            M = [[(F(p, rim), F(0)), (F(0), F(s, rim))], [(F(0), F(s, rim)), (F(p, rim), F(0))]]
+        for (a, b, h) in rng.sample(P, 4):
+            ek = (F(a, h), F(b, h))
+            Dk = [[(ek[0], -ek[1]), (0, 0)], [(0, 0), ek]]
+            U = mm(M, Dk)
+            H = over2i(sub(dag(U), U))
+            c6["ring_cases"] += 1
+            c6["ring_unitary"] += mm(dag(U), U) == [[(1, 0), (0, 0)], [(0, 0), (1, 0)]]
+            c6["ring_commutes"] += mm(H, U) == mm(U, H)
+            tr = _add(U[0][0], U[1][1])
+            det = _add(_mul(U[0][0], U[1][1]), _mul((-U[0][1][0], -U[0][1][1]), U[1][0]))
+            # det U = 1 for both coins here; then H^2 = (1 - (tr U / 2)^2) I  (tr U real)
+            if det == (1, 0) and tr[1] == 0:
+                s2 = 1 - (tr[0] / 2) ** 2
+                c6["ring_H2=sin2"] += mm(H, H) == [[(s2, 0), (0, 0)], [(0, 0), (s2, 0)]]
+            # FLOAT: eigenvectors of U, H read on them against sin of the eigen-angle (asin/phase)
+            Uf = [[complex(float(x[0]), float(x[1])) for x in row] for row in U]
+            Hf = [[complex(float(x[0]), float(x[1])) for x in row] for row in H]
+            t_, d_ = Uf[0][0] + Uf[1][1], Uf[0][0] * Uf[1][1] - Uf[0][1] * Uf[1][0]
+            disc = cmath.sqrt(t_ * t_ - 4 * d_)
+            good = mgood = agood = True
+            for lam in ((t_ + disc) / 2, (t_ - disc) / 2):
+                vec = [Uf[0][1], lam - Uf[0][0]] if abs(Uf[0][1]) > 1e-12 else [lam - Uf[1][1], Uf[1][0]]
+                if abs(vec[0]) + abs(vec[1]) < 1e-12:
+                    vec = [1, 0]
+                wang = -cmath.phase(lam)                       # lam = e^{-i w}
+                Hv = [Hf[0][0] * vec[0] + Hf[0][1] * vec[1], Hf[1][0] * vec[0] + Hf[1][1] * vec[1]]
+                good &= all(abs(Hv[r] - math.sin(wang) * vec[r]) < 1e-9 * (abs(vec[0]) + abs(vec[1])) for r in range(2))
+                mgood &= all(abs(Hv[r] + math.sin(wang) * vec[r]) < 1e-9 * (abs(vec[0]) + abs(vec[1])) for r in range(2))
+                agood &= all(abs(Hv[r] - wang * vec[r]) < 1e-9 * (abs(vec[0]) + abs(vec[1])) for r in range(2))
+            c6["ring_float_eig_sin"] += good
+            c6["ring_m_sign_float"] += mgood and abs(math.sin(wang)) > 1e-6
+            c6["ring_m_angle_float"] += agood and abs(wang) > 1e-3
+print("C6:", c6)
+print(f"run {time.time() - t0:.1f} s")
+
+== p79.py (the second hand, written from the claims alone) ==
+"""Claims 7 and 9: the one-site child; the composite g1 g2. Exact; FLOAT only where marked."""
+import cmath
+import math
+import random
+import sys
+import time
+from fractions import Fraction as F
+from itertools import combinations_with_replacement
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import trains, rates, gm, gk, gc, n2, wind_norm, sweep  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(9)
+TR = [t for t in trains() if t[2] ** 2 + t[4] ** 2 == t[3] ** 2]
+
+# ---------------- C7
+c7 = {"cases": 0, "E1==3rim(|z|^2+|z-|^2)": 0, "bound_fail": 0, "equal": 0, "equal_iff_ok": 0,
+      "pair_cases": 0, "pair==1/sin": 0, "m_pair_s+1": 0, "m_beat(FLOAT)": 0, "m_no_i_equal": 0}
+site = 21
+for (f, i, p, rim, s, key) in TR:
+    g, cg = (p, s), (p, -s)
+    shapes = []
+    for _ in range(40):
+        R = rng.choice([2, 30, 10**5])
+        z = (rng.randint(-R, R), rng.randint(-R, R))
+        zm = (rng.randint(-R, R), rng.randint(-R, R))
+        shapes.append(("random", z, zm))
+    for _ in range(4):
+        z = (rng.randint(-99, 99), rng.randint(-99, 99)) or (1, 0)
+        shapes.append(("+i z", z, gm(z, (0, 1))))
+        shapes.append(("-i z", z, gm(z, (0, -1))))
+        shapes.append(("+z", z, z))                           # mutant shape: no i
+        shapes.append(("|z|=|z-| other", z, gm(z, (3, 4)) if False else (z[1], z[0])))  # |zm| = |z|, generic phase
+    for kind, z, zm in shapes:
+        if z == (0, 0) and zm == (0, 0):
+            continue
+        a = [(0, 0)] * 64
+        am = [(0, 0)] * 64
+        a[site], am[site] = z, zm
+        E = wind_norm(a, am, p, rim)
+        sg = sweep(a, am)
+        c7["cases"] += 1
+        c7["E1==3rim(|z|^2+|z-|^2)"] += E == 3 * rim * (n2(z) + n2(zm))
+        d = E - 6 * rim * abs(sg)
+        c7["bound_fail"] += d < 0
+        eq = d == 0
+        c7["equal"] += eq
+        cond = n2(z) == n2(zm) and (zm == gm(z, (0, 1)) or zm == gm(z, (0, -1)))
+        c7["equal_iff_ok"] += eq == cond
+        if kind == "+z":
+            c7["m_no_i_equal"] += eq
+    # the pair's own shape z- = z conj(g)/rim: z = rim u, z- = u conj(g)
+    for _ in range(6):
+        u = (rng.randint(1, 999), rng.randint(-999, 999))
+        for sv, tag in ((s, "pair"), (s + 1, "m")):
+            z, zm = gk(rim, u), gm(u, (p, -sv))
+            a = [(0, 0)] * 64
+            am = [(0, 0)] * 64
+            a[site], am[site] = z, zm
+            E = wind_norm(a, am, p, rim)
+            sg = sweep(a, am)
+            per_quantum = F(E * key, 2 * abs(sg))              # wind per quantum, quantum = key/2 of sweep
+            hbar = 3 * key * rim
+            target = F(hbar * rim, s)                           # hbar_L / sin w0
+            if tag == "pair":
+                c7["pair_cases"] += 1
+                c7["pair==1/sin"] += per_quantum == target
+                # FLOAT: the beat read for the sine, 1/w0 windings
+                c7["m_beat(FLOAT)"] += abs(float(per_quantum / hbar) - 1 / math.acos(p / rim)) < 1e-9 * float(per_quantum / hbar)
+            else:
+                c7["m_pair_s+1"] += per_quantum == target
+for (f, i, p, rim, s, key) in TR:
+    if f == "universe_toy":
+        print(f"    pair-shape windings a quantum, toy row {i}: {rim / s:.4f}")
+print("C7:", c7)
+
+# ---------------- C9: the composite of two trains of one universe (common rim)
+c9 = {"pairs": 0, "N==rim^4": 0, "composite s == sine_rim(Re, rim^2)": 0, "short_identity": 0,
+      "books_full_sum": 0, "beats_add(FLOAT)": 0, "m_s+1_on_circle": 0, "m_s+1_sine": 0}
+fracs = []
+by_file = {}
+for t in TR:
+    by_file.setdefault(t[0], []).append(t)
+for f, ts in by_file.items():
+    uniq = sorted({(t[2], t[4]) for t in ts})
+    for (p1, s1), (p2, s2) in combinations_with_replacement(uniq, 2):
+        rim = ts[0][3]
+        g = gm((p1, s1), (p2, s2))
+        c9["pairs"] += 1
+        c9["N==rim^4"] += n2(g) == rim ** 4
+        c9["composite s == sine_rim(Re, rim^2)"] += rates.sine_rim(g[0], rim * rim) == g[1]
+        booked = F(g[1], rim)                                   # composite winding in units of 3 key
+        parts = s1 + s2
+        ratio = booked / parts
+        c9["short_identity"] += (parts * rim - g[1] == s1 * (rim - p2) + s2 * (rim - p1)) and ratio == F(p1 * s2 + s1 * p2, rim * (s1 + s2))
+        c9["books_full_sum"] += ratio == 1
+        # FLOAT: the beats add
+        c9["beats_add(FLOAT)"] += abs(cmath.phase(complex(g[0], g[1])) - (math.atan2(s1, p1) + math.atan2(s2, p2))) < 1e-12
+        gm1 = gm((p1, s1 + 1), (p2, s2))
+        c9["m_s+1_on_circle"] += n2(gm1) == rim ** 4
+        c9["m_s+1_sine"] += rates.sine_rim(gm1[0], rim * rim) == gm1[1]
+        fracs.append((f, (p1, s1), (p2, s2), float(ratio)))
+print("C9:", c9)
+for f, a, b, r in fracs:
+    print(f"    {f} {a[1]} x {b[1]}: books {r:.7f} of the parts' windings")
+print(f"run {time.time() - t0:.1f} s")
+
+== p8.py (the second hand, written from the claims alone) ==
+"""Claim 8: the action Q = SUM Im(conj(a) P), P = W (a - a-), under the rational step with the teeth, the
+spring and the grips changed uniformly from tick to tick (fine tooth dropped). Exact Fractions."""
+import random
+import sys
+import time
+from fractions import Fraction as F
+
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import trains, rule3, NBI  # noqa: E402
+
+t0 = time.time()
+rng = random.Random(8)
+GAMMA = 1000
+G = rule3.mesh_unit_of(GAMMA)
+TR = [t for t in trains() if t[2] ** 2 + t[4] ** 2 == t[3] ** 2]
+TICKS = 12
+
+
+def coeffs(p, rim, vary_teeth, aniso=False):
+    rate = rng.randint(GAMMA // 2, GAMMA)
+    mesh = (rate * rate + GAMMA // 2) // GAMMA
+    gr = rule3.gearing(p, rim, GAMMA, rate, mesh, None, G)
+    W = gr.teeth * (F(rng.randint(GAMMA, 2 * GAMMA), GAMMA) if vary_teeth else 1)   # the stretch X / Gamma
+    grips = list(gr.grips)
+    if aniso:  # mutant: the mesh read differently from its two ends (+X grip != -X grip)
+        grips[0] = grips[0] * 2
+    return W, grips, gr.spring
+
+
+def run(train, form, vary_teeth, aniso=False):
+    f, i, p, rim, s, key = train
+    am = [(F(rng.randint(-50, 50)), F(rng.randint(-50, 50))) for _ in range(64)]
+    a = [(F(rng.randint(-50, 50)), F(rng.randint(-50, 50))) for _ in range(64)]
+    W_prev, _, _ = coeffs(p, rim, vary_teeth)
+    Qs, sig = [], []
+    for t in range(TICKS):
+        W, grips, D = coeffs(p, rim, vary_teeth, aniso)
+        # Q_t with P_t = W_prev (a_t - a_(t-1)), the momentum of the half tick before
+        Q = sum(x[0] * (W_prev * (x[1] - y[1])) - x[1] * (W_prev * (x[0] - y[0])) for x, y in zip(a, am))
+        Qs.append(Q)
+        sig.append(sum(x[0] * y[1] - x[1] * y[0] for x, y in zip(a, am)))   # plain sweep Im(conj a a-)
+        new = []
+        for k in range(64):
+            pull = [0, 0]
+            for sp, j in enumerate(NBI[k]):
+                for c in (0, 1):
+                    pull[c] += grips[sp] * (a[j][c] - a[k][c])
+            nk = []
+            for c in (0, 1):
+                tot = pull[c] - D * a[k][c]
+                if form == "flux":          # W_t (a+ - a) - W_(t-1) (a - a-) = pull - D a
+                    nk.append(a[k][c] + (W_prev * (a[k][c] - am[k][c]) + tot) / W)
+                else:                       # W_t (a+ - 2 a + a-) = pull - D a   (one teeth on both differences)
+                    nk.append(2 * a[k][c] - am[k][c] + tot / W)
+            new.append(tuple(nk))
+        am, a, W_prev = a, new, W
+    keptQ = all(q == Qs[0] for q in Qs)
+    keptS = all(x == sig[0] for x in sig)
+    return keptQ, keptS
+
+
+out = {}
+for scen in [("flux", True, False), ("flux", False, False), ("one-teeth", True, False), ("flux", True, True)]:
+    kq = ks = 0
+    for n in range(4):
+        q, sgm = run(TR[(3 * n + 1) % len(TR)], *scen)
+        kq += q
+        ks += sgm
+    out[scen] = (kq, ks)
+    print(f"C8 form={scen[0]:9s} teeth vary={scen[1]!s:5s} aniso grips={scen[2]!s:5s}: Q kept {kq}/4 runs; plain sweep kept {ks}/4 runs ({TICKS} ticks each)")
+print(f"run {time.time() - t0:.1f} s")
+
+== poff.py (the second hand, written from the claims alone) ==
+"""The off-circle row (universe_bang row 3): claim 4's bound with the integer sine (a floor), exact."""
+import random, sys
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/mass2")
+from common import trains, SITES, gm, gk, gc, n2, wind_norm, sweep
+rng = random.Random(3)
+off = [t for t in trains() if t[2] ** 2 + t[4] ** 2 != t[3] ** 2]
+for (f, i, p, rim, s, key) in off:
+    fails = eq = 0; n = 0; minslack = None
+    for k in range(40):
+        if k < 20:
+            a = [(rng.randint(-99, 99), rng.randint(-99, 99)) for _ in SITES]; am = [(rng.randint(-99, 99), rng.randint(-99, 99)) for _ in SITES]
+        else:  # the nearest integer rest wave: a = z rim, a- = z g with g = p + i s (not a unit)
+            z = (rng.randint(1, 99), rng.randint(-99, 99)); a = [gk(rim, z)] * 64; am = [gm(z, (p, s))] * 64
+        E = wind_norm(a, am, p, rim); sg = sweep(a, am); d = E - 6 * s * abs(sg); n += 1
+        fails += d < 0; eq += d == 0
+        # exact sine bound: E >= 6 sqrt(rim^2 - p^2) |sigma|  <=>  E^2 >= 36 (rim^2 - p^2) sigma^2
+        fails += E * E < 36 * (rim * rim - p * p) * sg * sg
+    print(f, i, "states", n, "fails", fails, "equalities with integer s", eq, "rim^2-p^2-s^2 =", rim * rim - p * p - s * s)

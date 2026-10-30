@@ -1,11 +1,10 @@
-"""Tensor24's three files: the examples hold, each rule of the checker refuses its own broken file by name, its edge holds."""
+"""Tensor24's three files and their one generic checker: the examples hold, each rule refuses its own broken file by
+name, its edge holds, and the tool."""
 
 import json
 import subprocess
 import sys
 from pathlib import Path
-
-import pytest
 
 from tensor24.runner.files import NAMES, departures
 
@@ -271,37 +270,34 @@ def edits():
     }
 
 
-@pytest.mark.parametrize("rule", sorted(edits()))
-def test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds(
-    rule, tmp_path
-):
-    paths = [EXAMPLES / f"{name}.json" for name in NAMES]
-    assert departures(*paths) == []
-    name, edit, named = edits()[rule]
+def found(tmp_path, name, edit):
+    """The departures of the three examples with one file edited, or its text given whole."""
+    paths = [EXAMPLES / f"{n}.json" for n in NAMES]
     held = json.loads(paths[NAMES.index(name)].read_text(encoding="utf-8"))
     text = edit(held)
+    tmp_path.mkdir(parents=True)
     paths[NAMES.index(name)] = tmp_path / f"{name}.json"
     paths[NAMES.index(name)].write_text(
         text if isinstance(text, str) else json.dumps(held), encoding="utf-8"
     )
-    found = departures(*paths)
-    assert any(named in line for line in found) if named else found == [], found
+    return departures(*paths)
 
 
-def test_two_departures_of_one_file_are_each_named_once(tmp_path):
-    paths = [EXAMPLES / f"{name}.json" for name in NAMES]
-    held = json.loads(paths[0].read_text(encoding="utf-8"))
-    held["version"], held["integers"]["full_rate"] = 1 + 1, 0
-    paths[0] = tmp_path / "universe.json"
-    paths[0].write_text(json.dumps(held), encoding="utf-8")
-    assert sorted(departures(*paths)) == [
+def test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds(tmp_path):
+    """Every rule of the one checker's format, two departures of one file each named once, and the tool: the examples
+    hold and load, exit 0; given one file, argparse's usage error, exit 2."""
+    assert departures(*(EXAMPLES / f"{name}.json" for name in NAMES)) == []
+    for i, (rule, (name, edit, named)) in enumerate(sorted(edits().items())):
+        lines = found(tmp_path / str(i), name, edit)
+        assert any(named in line for line in lines) if named else lines == [], (rule, lines)
+
+    def two(held):
+        held["version"], held["integers"]["full_rate"] = 1 + 1, 0
+
+    assert sorted(found(tmp_path / "two", "universe", two)) == [
         "universe.integers.full_rate: a whole number of at least 1, not 0",
         "universe.version: 1, not 2",
     ]
-
-
-def test_the_tool_holds_the_examples_and_leaves_a_count_of_files_not_three_to_argparse():
-    """The tool on the examples prints that they hold and load, exit 0; given one file, argparse's usage error, exit 2."""
     tool = Path(__file__).resolve().parents[1] / "tools" / "tensor24_files.py"
     held, one = (
         subprocess.run([sys.executable, "-I", str(tool), *argv], capture_output=True, text=True)

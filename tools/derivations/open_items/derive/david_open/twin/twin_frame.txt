@@ -1,0 +1,32 @@
+the 24 as signed permutation matrices of determinant 1: 24
+  half turn (axis) :  3 turns, lift norm 1, e.g. u = (0, -1, 0, 0)
+  identity         :  1 turns, lift norm 1, e.g. u = (-1, 0, 0, 0)
+  half turn (edge) :  6 turns, lift norm 2, e.g. u = (0, 0, -1, -1)
+  quarter turn     :  6 turns, lift norm 2, e.g. u = (-1, 1, 0, 0)
+  third turn       :  8 turns, lift norm 4, e.g. u = (-1, 1, 1, 1)
+the lifts' product u_g u_h = (content) (+-1) u_gh at all 576 pairs: +1 at 208, -1 at 368 (the double cover's sign)
+
+the images test: 12 worlds of 27 Node-clocks, 6 rounds, every turn with both lifts (48):
+  identity         : 24 of 24 equal bit for bit; signs e seen [-1, 1]; the drive's factor L seen [1]
+  half turn (axis) : 72 of 72 equal bit for bit; signs e seen [-1, 1]; the drive's factor L seen [1]
+  quarter turn     : 144 of 144 equal bit for bit; signs e seen [-1, 1]; the drive's factor L seen [2]
+  half turn (edge) : 144 of 144 equal bit for bit; signs e seen [-1, 1]; the drive's factor L seen [2]
+  third turn       : 192 of 192 equal bit for bit; signs e seen [-1, 1]; the drive's factor L seen [4]
+the run back: 12 of 12 worlds return bit for bit after 6 rounds
+the axis on the board, M(q) S / N(q), turns by g and the density stays: 15552 of 15552
+T on the twin rows (right product by j): T T = -1 at 324 of 324 hands; it commutes with every image, the image being a sign
+the full turn on the frame (1, 0, 0, 0): after 4 quarter turns about z the frame is (4, 0, 0, 0) = 4 q and the rows' sign is -1; after 8, (16, 0, 0, 0) with the sign 1
+the full turn on the frame (2, 1, 0, 1): after 4 quarter turns about z the frame is (8, 4, 0, 4) = 4 q and the rows' sign is -1; after 8, (32, 16, 0, 16) with the sign 1
+the full turn on the frame (3, -1, 2, 1): after 4 quarter turns about z the frame is (12, -4, 8, 4) = 4 q and the rows' sign is -1; after 8, (48, -16, 32, 16) with the sign 1
+the full turn on the frame (1, 1, 1, 1): after 4 quarter turns about z the frame is (4, 4, 4, 4) = 4 q and the rows' sign is -1; after 8, (16, 16, 16, 16) with the sign 1
+
+mutants:
+  the field turned and the frame left unturned: parts at identity 0 of 8, half turn (axis) 24 of 24, quarter turn 48 of 48, half turn (edge) 48 of 48, third turn 64 of 64
+  the drive's teeth not scaled by the frame's norm: parts at identity 0 of 8, half turn (axis) 0 of 24, quarter turn 48 of 48, half turn (edge) 48 of 48, third turn 64 of 64
+  the frame put in its sign and the sign not handed to the rows (a symmetry, not a mutant: the act is odd): parts at identity 0 of 8, half turn (axis) 0 of 24, quarter turn 0 of 48, half turn (edge) 0 of 48, third turn 0 of 64
+  the departure (the rows turned by the lift, the frame kept): the lift's left product on the 4 rows is
+    half turn (axis) : a signed permutation, so the carries keep it
+    identity         : a signed permutation, so the carries keep it
+    half turn (edge) : no signed permutation (each column of norm 2), so the rows scale by the root of 2 and no carry keeps it
+    quarter turn     : no signed permutation (each column of norm 2), so the rows scale by the root of 2 and no carry keeps it
+    third turn       : no signed permutation (each column of norm 4), so the rows scale by the root of 4 and no carry keeps it

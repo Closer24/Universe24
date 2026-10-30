@@ -1,0 +1,13 @@
+against the operator on the head's metric, N A = 1:
+  the head's, a grip per end N_i^4 (p_i^2 with the mesh rate): largest error 3.67e-02 at n = 64, 2.29e-03 at 256, 1.43e-04 at 1,024
+  p10's per Mesh at the clock's own rate, N_i N_ij: largest error 4.69e+00 at n = 64, 4.67e+00 at 256, 4.66e+00 at 1,024
+  per Mesh at the full rate, N_ij^4: largest error 3.03e+00 at n = 64, 3.07e+00 at 256, 3.07e+00 at 1,024
+against the operator on a flat space, A = 1:
+  the head's, a grip per end N_i^4 (p_i^2 with the mesh rate): largest error 4.63e+00 at n = 64, 4.66e+00 at 256, 4.66e+00 at 1,024
+  p10's per Mesh at the clock's own rate, N_i N_ij: largest error 2.54e-02 at n = 64, 1.59e-03 at 256, 9.95e-05 at 1,024
+  per Mesh at the full rate, N_ij^4: largest error 4.60e+00 at n = 64, 4.66e+00 at 256, 4.66e+00 at 1,024
+the coordinate speed of light in a uniform N (the long-wave limit of each form), against N^2 on the head's metric:
+  N = 0.9: the head's 0.8100; p10's per Mesh at the own rate 0.9000; N^2 = 0.8100
+  N = 0.99: the head's 0.9801; p10's per Mesh at the own rate 0.9900; N^2 = 0.9801
+so in a weak well N = 1 + Phi light's coordinate speed is 1 + 2 Phi under the head's form and 1 + Phi under p10's:
+the bending of light by the head's form is general relativity's, and by p10's form half of it

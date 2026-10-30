@@ -1,0 +1,79 @@
+diff --git a/src/event_universe/close.py b/src/event_universe/close.py
+index 32174ed0a..9738dd6ce 100644
+--- a/src/event_universe/close.py
++++ b/src/event_universe/close.py
+@@ -86,12 +86,16 @@ def meet(
+ 
+ 
+ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
+-    """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both and read their bound on their own quantum at the take, the light's unit at the end as MG-S1's share reads it, the light a sea the merger pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
++    """The measurement's refusal: PAULI_MODE both (a symmetric family skips the standing and the crowding refusals), standing (it skips the standing one alone), crowding (the crowding one alone), head (the head's rule)."""
++    import os
++    mode = os.environ.get("PAULI_MODE", "both")
+     records = node.records()
+-    inverse = [k for k in born if records[k.line_pair] is node.emitter() is not records[k.rec]]
++    head_inverse = [k for k in born if records[k.line_pair] is node.emitter() is not records[k.rec]]
++    inverse = [k for k in born if records[k.line_pair].exchange > 0] if mode == "both" else head_inverse
+     kept = []
+     for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
+-        if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
++        skip = mode == "standing" and records[s].exchange > 0
++        if not skip and (int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0):
+             refused(node, at, "lay", standing=int(owns[s][minus]), unit=node.units[s], row=rec)
+             continue
+         kept.append(Birth(at, s, minus, plus, room, rec))
+@@ -100,7 +104,10 @@ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
+         landing[(s, minus)] = landing.get((s, minus), 0) + 1
+         landing[(s, plus)] = landing.get((s, plus), 0) + 1
+     crowded = [
+-        k for k in kept if landing[(k.line_pair, k.minus)] > 1 or landing[(k.line_pair, k.plus)] > 1
++        k
++        for k in kept
++        if (landing[(k.line_pair, k.minus)] > 1 or landing[(k.line_pair, k.plus)] > 1)
++        and not (mode == "crowding" and records[k.line_pair].exchange > 0)
+     ]
+     for at, s, minus, plus, _room, rec in crowded:
+         refused(
+diff --git a/src/event_universe/loader/world.py b/src/event_universe/loader/world.py
+index 3c4975624..90cd2d9ea 100644
+--- a/src/event_universe/loader/world.py
++++ b/src/event_universe/loader/world.py
+@@ -11,7 +11,7 @@ UNIVERSE_KEYS = frozenset({"integers", "rows"})
+ INTEGERS = frozenset(
+     {"den", "node_clock", "quantum_action", "trace", "amplitude"}
+ )  # the Link unit G is derived from Gamma (K-S1), no key; the trace the held write's weight (ALGEBRA.md, the held write); the amplitude the phase line's scale declared from outside, carried above the floor derived from Gamma (phase.carried; the owner's words of 2026-10-27, 04:0x and 04:4x UTC)
+-ROW_KEYS = frozenset({"shape", "pair", "wall"})
++ROW_KEYS = frozenset({"shape", "pair", "wall", "exchange"})
+ 
+ 
+ def refused_keys(found: dict[str, Any], allowed: frozenset[str], name: str) -> None:
+diff --git a/src/event_universe/rows.py b/src/event_universe/rows.py
+index 2818abf76..67bb05d5a 100644
+--- a/src/event_universe/rows.py
++++ b/src/event_universe/rows.py
+@@ -25,12 +25,13 @@ def zeros(shape: tuple[int, ...]) -> Any:
+ class Row:
+     """One row of the Node as the universe file names it: a shape (its count of lines), a pair (num, den) for Rule3's rule, or a wall of its own for a row with no Links (the phase row); its lines."""
+ 
+-    __slots__ = ("shape", "pair", "wall", "lines")
++    __slots__ = ("shape", "pair", "wall", "lines", "exchange")
+ 
+     def __init__(
+         self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Line]
+     ) -> None:
+         self.shape, self.pair, self.wall, self.lines = shape, pair, wall, lines
++        self.exchange = -1
+ 
+     @property
+     def gap(self) -> int | None:
+@@ -112,7 +113,9 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
+             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
+         walls = write_walls(shape, pair, den, gamma, action, trace)
+         lines = lines_of(board, shape, pair, wall, w, walls)
+-        by_index.append(Row(shape, pair, wall, lines))
++        row = Row(shape, pair, wall, lines)
++        row.exchange = int(r.get("exchange", -1))
++        by_index.append(row)
+     rows = sorted(by_index, key=order_key)
+     walled = [r for r in rows if r.wall is not None]
+     planes = [r for r in rows if r.shape == PLANE]

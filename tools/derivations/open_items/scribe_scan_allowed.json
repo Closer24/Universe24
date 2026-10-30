@@ -888,70 +888,6 @@
   "row": "399"
  },
  {
-  "rule": "BRANCH",
-  "file": "tensor24/runner/load.py",
-  "detail": "if",
-  "count": 1,
-  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
-  "row": "399"
- },
- {
-  "rule": "BRANCH",
-  "file": "tensor24/runner/load.py",
-  "detail": "ternary",
-  "count": 1,
-  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
-  "row": "399"
- },
- {
-  "rule": "CLAMP",
-  "file": "tensor24/runner/load.py",
-  "detail": "abs()",
-  "count": 1,
-  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
-  "row": "399"
- },
- {
-  "rule": "COMPARE",
-  "file": "tensor24/runner/load.py",
-  "detail": "ordering",
-  "count": 1,
-  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
-  "row": "399"
- },
- {
-  "rule": "LOOP",
-  "file": "tensor24/runner/load.py",
-  "detail": "call",
-  "count": 1,
-  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
-  "row": "399"
- },
- {
-  "rule": "LOOP",
-  "file": "tensor24/runner/load.py",
-  "detail": "comprehension",
-  "count": 3,
-  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
-  "row": "399"
- },
- {
-  "rule": "LOOP",
-  "file": "tensor24/runner/load.py",
-  "detail": "for",
-  "count": 2,
-  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
-  "row": "399"
- },
- {
-  "rule": "LOOP",
-  "file": "tensor24/runner/load.py",
-  "detail": "while",
-  "count": 1,
-  "word": "the owner's \"5 approved for handling and checking\" of 2026-10-29, 13:2x UTC, directly to Sofer, read as his word that the loader's exemption from the code rules ends (the keeper's recommendation of 13:1x): the loader's hits that stand at that hour are named breaches until the engine is closed to the final picture (stage G1, the Boss's); a new one, or one more of the same text, is refused",
-  "row": "399"
- },
- {
   "rule": "DECLARE",
   "file": "tests/test_the_tensor24_files.py",
   "detail": "train call light -1",
@@ -981,22 +917,6 @@
   "detail": "coupling call row strength 3",
   "count": 1,
   "word": "the trains and coupling strengths a test or a probe lays through a helper's keywords (a pinion or a strength written as a value, the keeper's gate gap three, found by the second hostile reader at 14:2x UTC): named breaches until G1 and the replacement of the tests (decision 37; the owner's word of 12:5x: no test or probe lays a train, in code it is a fake); a new one, or one more of a kind in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "TWICE",
-  "file": "tools/tensor24_convert.py",
-  "detail": "1 + 1",
-  "count": 2,
-  "word": "the twos spelt as a sum in the tools tools/tensor24_*.py, which the rule TWICE did not read until 14:3x UTC (the owner's \"b. Forbidden\" of 12:5x): named breaches until the tools are mended; a new one, or one more of a spelling in a file, is refused",
-  "row": "399"
- },
- {
-  "rule": "POSITION",
-  "file": "tensor24/runner/load.py",
-  "detail": "seeds[0]",
-  "count": 1,
-  "word": "the selections by a bit, the floors, the families found by a constant index and the family strings that the new engine's act and loader hold at tensor24-review 058512b2b (David's audit of 15:10 UTC, F8 of docs/BIG_PICTURE.md 13.2; the owner's word of 2026-10-29, 15:0x, to David: no floors or bounds, no if; the code does not know what the families are): named breaches until G1 (decision 38); a new one, or one more of a kind in a file, is refused",
   "row": "399"
  }
 ]

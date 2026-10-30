@@ -1,0 +1,616 @@
+DAVID-TENSOR24-THE-ONE-FORMULA_CHECKS.txt: the checks of DAVID-TENSOR24-THE-ONE-FORMULA.md.
+Run on toys-5 with its own src on the path (the step's code is engine 526a5666d's). Two probes recompute every gear from the
+letter with their own primitives (a floor carry, the half-away rounding, a torus shift) and compare bit for bit with the engine.
+
+The phenomenon: the one formula is the engine's step, exactly. The rewind: the step run forward and back returns exactly.
+
+== The matter's half (probe_step.py, probe_stopped.py, probe_back.py): every driven gear's now, before, fine tooth, teeth and drive fine tooth ==
+  venv314/bin/python probe_step.py twins 12   (a toy calibre with twin hands and a held field: every term exercised)
+    tick 1: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 10, click-touched 27, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 27, 'release_q': 0, 'fallbackW': 0}
+    tick 2: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 6, click-touched 27, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 2, 'release_q': 0, 'fallbackW': 0}
+    tick 3: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 0, click-touched 27, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 26, 'release_q': 0, 'fallbackW': 0}
+    tick 4: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 14, click-touched 15, stopped 0, {'turned_neighbour': 74, 'pauli_q': 0, 'offset_q': 0, 'field_q': 12, 'release_q': 0, 'fallbackW': 0}
+    tick 5: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 4, click-touched 23, stopped 0, {'turned_neighbour': 106, 'pauli_q': 0, 'offset_q': 0, 'field_q': 22, 'release_q': 0, 'fallbackW': 0}
+    tick 6: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 13, click-touched 21, stopped 0, {'turned_neighbour': 514, 'pauli_q': 0, 'offset_q': 32, 'field_q': 19, 'release_q': 18, 'fallbackW': 2}
+    tick 7: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 5, click-touched 27, stopped 0, {'turned_neighbour': 608, 'pauli_q': 42, 'offset_q': 56, 'field_q': 20, 'release_q': 18, 'fallbackW': 0}
+    tick 8: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 9, click-touched 27, stopped 0, {'turned_neighbour': 892, 'pauli_q': 76, 'offset_q': 88, 'field_q': 12, 'release_q': 24, 'fallbackW': 0}
+    tick 9: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 13, click-touched 27, stopped 0, {'turned_neighbour': 992, 'pauli_q': 76, 'offset_q': 94, 'field_q': 17, 'release_q': 26, 'fallbackW': 4}
+    tick 10: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 13, click-touched 27, stopped 0, {'turned_neighbour': 1011, 'pauli_q': 80, 'offset_q': 94, 'field_q': 6, 'release_q': 26, 'fallbackW': 0}
+    tick 11: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 7, click-touched 27, stopped 0, {'turned_neighbour': 1006, 'pauli_q': 76, 'offset_q': 94, 'field_q': 16, 'release_q': 26, 'fallbackW': 0}
+    tick 12: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 5, click-touched 27, stopped 0, {'turned_neighbour': 1037, 'pauli_q': 81, 'offset_q': 94, 'field_q': 7, 'release_q': 26, 'fallbackW': 0}
+  venv314/bin/python probe_step.py bang 4
+    tick 1: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 0, click-touched 64, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 0, 'release_q': 0, 'fallbackW': 0}
+    tick 2: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 0, click-touched 64, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 0, 'release_q': 0, 'fallbackW': 0}
+    tick 3: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 64, click-touched 64, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 0, 'release_q': 0, 'fallbackW': 0}
+    tick 4: mismatches at the carry's end 0, against the final state (masked) 0, gear teeth == W True, turned over 0, click-touched 64, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 0, 'release_q': 0, 'fallbackW': 0}
+  venv314/bin/python probe_stopped.py node 4   (one clock fed to the stopped load)
+    tick 1: carry-end mismatches 0, final masked 0, teeth==W True, turned 3, touched 0, stopped 1, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 0, 'release_q': 0, 'fallbackW': 0}
+    tick 2: carry-end mismatches 0, final masked 0, teeth==W True, turned 6, touched 4, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 0, 'release_q': 0, 'fallbackW': 0}
+    tick 3: carry-end mismatches 0, final masked 0, teeth==W True, turned 3, touched 1, stopped 1, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 0, 'release_q': 0, 'fallbackW': 0}
+    tick 4: carry-end mismatches 0, final masked 0, teeth==W True, turned 0, touched 9, stopped 0, {'turned_neighbour': 0, 'pauli_q': 0, 'offset_q': 0, 'field_q': 0, 'release_q': 0, 'fallbackW': 0}
+  venv314/bin/python probe_back.py   (the twins' world, 12 ticks forward and back)
+    returned exactly 12 of 12
+
+== The metric's half (probe_regulator.py): the sources, the numerators, the act and the tick's end, bit for bit ==
+  world_node.json 20 ticks:
+    tick  20 sources True numerators True act True end(free, recoils 0) True restored(stopped) True clamped 0 turned 0 stopped 0
+    mismatching ticks: 0
+  world_bang.json 10 ticks:
+    tick  10 sources True numerators True act True end(free, recoils 0) True restored(stopped) True clamped 64 turned 0 stopped 0
+    mismatching ticks: 0
+  world_nature.json 20 ticks:
+    tick  20 sources True numerators True act True end(free, recoils 54) True restored(stopped) True clamped 0 turned 15 stopped 0
+    mismatching ticks: 0
+  world_ga2.json 10 ticks:
+    tick  10 sources True numerators True act True end(free, recoils 0) True restored(stopped) True clamped 0 turned 0 stopped 0
+    mismatching ticks: 0
+  (On the bang the clamp of the time gear's drive fires at all 64 node-clocks at every tick: "clamped 64".)
+
+== probe_step.py ==
+"""Probe: recompute every driven gear's next state from the derived letter, bit for bit.
+
+Independent primitives (floor carry, half-away rounding, torus shift by np.roll); from the engine it uses
+only the tables (load_of, rate_of, mesh_rate_of, standard_angle, rest_rate_of) and, for W+, the regulator's
+own act output (the regulator is not a driven train).
+"""
+
+from __future__ import annotations
+
+import copy
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+
+from event_universe.clock import Clock
+from event_universe.assembly.piece import check_piece
+from event_universe.core import rates
+from event_universe.features import stretch
+from event_universe.readings import standard_angle
+from event_universe.regulation import rest_rate_of
+from event_universe.tick import Tick
+from event_universe.trains import HAND, OFFSET, REGULATOR
+
+SIDE = [(0, 1), (0, -1), (1, 1), (1, -1), (2, 1), (2, -1)]  # spoke order +X -X +Y -Y +Z -Z
+
+
+def sh(a, j):
+    """value at the clock beyond spoke j: out[i] = a[i + e_j] (torus)."""
+    axis, side = SIDE[j]
+    return np.roll(np.asarray(a, dtype=object), -side, axis=axis)
+
+
+def carry(total, teeth, fine):
+    u = total + fine
+    q = u // teeth
+    return q, u - teeth * q
+
+
+def rnd(n, t):
+    """sign(n) floor((2|n| + t) / 2t): half away from zero (rates.rounded)."""
+    n = np.asarray(n, dtype=object)
+    s = np.where(n < 0, -1, 1).astype(object)
+    return s * ((2 * s * n + t) // (2 * t))
+
+
+def grad(x, axis):
+    return sh(x, 2 * axis) - sh(x, 2 * axis + 1)
+
+
+STATS = {}
+
+
+def predict(c: Clock, x_next):
+    """c: deep copy at the tick's start (forward); x_next: regulator time gear's notch after its act."""
+    G, Gam, T, key, Xstd = c.G, c.full_rate, c.teeth, c.key, c.standard_length
+    reg, off = c.train(REGULATOR), c.train(OFFSET)
+    rat = next(r for r in c.trains_ if r.teeth is not None)
+    X, Xm = reg.gears[0].now, reg.gears[0].before
+    load = np.asarray(stretch.load_of(Gam, X), dtype=object)
+    p0 = np.asarray(rates.rate_of(Gam, np.maximum(load, 0)), dtype=object)
+    pi = np.asarray(rates.mesh_rate_of(Gam, np.maximum(load, 0)), dtype=object)
+    stopped = pi == 0
+    fields = [r for r in c.trains_ if r.weight is not None]
+    hload = load + sum((r.weight * r.gears[0].now for r in fields), start=0)
+    ps = np.asarray(rates.rate_of(Gam, np.maximum(hload, 0)), dtype=object)
+    Q = []
+    for j, (ax, _s) in enumerate(SIDE):
+        tau = reg.gears[1 + ax].now
+        t = np.minimum(np.maximum((tau + sh(tau, j) + 1) // 2, 0), Gam)
+        q = (G * G * (Gam - t) ** 2 + (Gam * Gam) // 2) // (Gam * Gam)
+        Q.append(np.where(stopped | sh(stopped, j), 0, q).astype(object))
+    bits = rat.gears[0].fine
+    pawl = [(1 - 2 * ((bits + sh(bits, j)) % 2)).astype(object) for j in range(6)]
+    K = 2 * (rat.gears[0].now - rat.gears[0].before) + rnd(off.gears[0].now * p0, Gam)
+    A = [off.gears[1 + a].now for a in range(3)]
+    V = [reg.gears[4 + a].now for a in range(3)]
+    angle = np.vectorize(lambda m: standard_angle(c, m), otypes=[object, object])
+    hands_ = [r for r in c.trains_ if r.size == HAND]
+    driven = [r for r in c.trains_ if r.teeth is None and r is not reg]
+    W = (T // 2) * (Xm + X)
+    Wp = (T // 2) * (X + x_next)
+    Wp = np.where(Wp > 0, Wp, W)
+    pull, cpl_of = {}, {}
+    global STATS
+    STATS = {"turned_neighbour": 0, "pauli_q": 0, "offset_q": 0, "field_q": 0, "release_q": 0, "fallbackW": int((((T // 2) * (X + x_next)) <= 0).sum())}
+    for r in driven:
+        pin, rim = r.ratio
+        g = [(pi * pi + pi * pi) * Q[j] * pin for j in range(6)]
+        D = 12 * (rim - pin) * ps * ps * G * G
+        a = [gear.now for gear in r.gears]
+        m = [[sh(x, j) for x in a] for j in range(6)]  # raw neighbours (offset, held field)
+        if r.size == HAND:
+            cp = min(rim - pin, 1)
+            cpl_of[id(r)] = cp
+            Kr = cp * rest_rate_of(c, r.ratio)
+            for j, (ax, sd) in enumerate(SIDE):
+                n = K * cp - pawl[j] ** cp * sh(K * cp, j)
+                cs, sn = angle(n)
+                t3, t12 = sh(a[0], j), pawl[j] ** cp * sh(a[1], j)  # hands.seen
+                u3, u12 = rnd(cs * t3 - sn * t12, Xstd), rnd(sn * t3 + cs * t12, Xstd)
+                nodd = sd * (cp * A[ax] + sh(cp * A[ax], j))
+                mskew = 3 * Kr * sd * (V[ax] + sh(V[ax], j))
+                g3 = 4 * Gam * Gam * Gam - nodd * mskew
+                g12 = 4 * Gam * mskew + nodd * Gam * Gam
+                AA, BB, CC = g3 * g3 - g12 * g12, 2 * g3 * g12, g3 * g3 + g12 * g12
+                m[j] = [rnd(AA * u3 - BB * u12, CC), rnd(BB * u3 + AA * u12, CC)]
+                STATS["turned_neighbour"] += int(sum(((m[j][i] != sh(a[i], j)).sum()) for i in range(2)))
+        pull[id(r)] = [sum(g[j] * (m[j][i] - a[i]) for j in range(6)) - D * a[i] for i in range(len(a))]
+    # the twins' Pauli pull, carried at the twin gear's drive teeth (12 Gamma) with its drive fine tooth
+    dfine = {id(g): g.dfine for r in driven for g in r.gears}
+    phi = [grad(A[(a - 1) % 3], (a + 1) % 3) - grad(A[(a + 1) % 3], (a - 1) % 3) for a in range(3)]
+    for r in hands_:
+        if r.twin is None or hands_.index(r) > hands_.index(r.twin):
+            continue
+        up, dn = [g.now for g in r.gears], [g.now for g in r.twin.gears]
+        pin, rim = r.ratio
+        gs = sum((pi * pi + pi * pi) * Q[j] * pin for j in range(6))
+        nums = {
+            id(r): [gs * (phi[0] * dn[0] + phi[1] * dn[1] + phi[2] * up[0]),
+                    gs * (phi[0] * dn[1] - phi[1] * dn[0] + phi[2] * up[1])],
+            id(r.twin): [gs * (phi[0] * up[0] - phi[1] * up[1] - phi[2] * dn[0]),
+                         gs * (phi[0] * up[1] + phi[1] * up[0] - phi[2] * dn[1])],
+        }
+        for h in (r, r.twin):
+            for i, gear in enumerate(h.gears):
+                q, dfine[id(gear)] = carry(nums[id(h)][i], gear.dteeth, gear.dfine)
+                STATS["pauli_q"] += int((q != 0).sum())
+                pull[id(h)][i] = pull[id(h)][i] + q
+    # the hands' lead (pawl-reflected neighbours), each at its coupling
+    lead = [0, 0, 0]
+    for r in hands_:
+        a3, a12 = r.gears[0].now, r.gears[1].now
+        cp = cpl_of[id(r)]
+        for ax in range(3):
+            jp, jm = 2 * ax, 2 * ax + 1
+            d3 = sh(a3, jp) - sh(a3, jm)
+            d12 = pawl[jp] * sh(a12, jp) - pawl[jm] * sh(a12, jm)
+            lead[ax] = lead[ax] + cp * (a3 * d12 - a12 * d3)
+    out, sweep, masses, release = {}, 0, 0, 0
+    d = 2 * T * X
+    for r in driven:
+        pin, rim = r.ratio
+        a = [gear.now for gear in r.gears]
+        P = [W * (g.now - g.before) + g.fine - W // 2 for g in r.gears]
+        Pp = [p + X * f for p, f in zip(P, pull[id(r)])]
+        if r is off:
+            for i, (gear, n) in enumerate(zip(r.gears, [sweep, *lead])):
+                q, dfine[id(gear)] = carry(n, gear.dteeth, gear.dfine)
+                Pp[i] = Pp[i] + T * X * q  # clock.teeth * stretch_now * q
+                STATS["offset_q"] += int((np.asarray(q) != 0).sum())
+        if r.weight is not None:
+            gear = r.gears[0]
+            q, dfine[id(gear)] = carry(r.weight * masses, gear.dteeth, gear.dfine)
+            Pp[0] = Pp[0] + T * X * q
+            STATS["field_q"] += int((np.asarray(q) != 0).sum())
+        if r.size == HAND:
+            u_in, u_out = [rnd(2 * p + 1, d) for p in P], [rnd(2 * p + 1, d) for p in Pp]
+            v = [x + y for x, y in zip(u_in, u_out)]
+            sweep = sweep + cpl_of[id(r)] * (v[0] * a[1] - v[1] * a[0])
+            release = release + cpl_of[id(r)] * X * (a[0] * pull[id(r)][1] - a[1] * pull[id(r)][0])
+        D = 12 * (rim - pin) * ps * ps * G * G
+        masses = masses + (D * sum(x * x for x in a)) // (6 * rim * Gam * Gam * G * G)
+        new = []
+        for gear, ai, p in zip(r.gears, a, Pp):
+            v, fine = carry(p, Wp, Wp // 2)
+            new.append([ai + v, ai, fine, Wp, dfine[id(gear)]])
+        out[id(r)] = new
+    # the light's release advance on its three gear, after the carry (tick.advances)
+    light = next(r for r in hands_ if r.ratio[0] == r.ratio[1])
+    gear0 = light.gears[0]
+    q, f = carry(rnd(release, Wp), gear0.dteeth, out[id(light)][0][4])
+    out[id(light)][0][0] = out[id(light)][0][0] + q
+    STATS["release_q"] += int((np.asarray(q) != 0).sum())
+    out[id(light)][0][4] = f
+    # the stopped clocks' restore (BH-S1)
+    for r in driven:
+        for k, gear in enumerate(r.gears):
+            o = out[id(r)][k]
+            held = [gear.now, gear.before, gear.fine, gear.teeth, gear.dfine]
+            out[id(r)][k] = [np.where(stopped, h, x) if x is not None else None for x, h in zip(o, held)]
+    return out, stopped, W
+
+
+def compare(pred, c_after_carry, before, mask=None):
+    bad = 0
+    names = ["now", "before", "fine", "teeth", "dfine"]
+    for rb, ra in zip(before.trains_, c_after_carry.trains_):
+        if id(rb) not in pred:
+            continue
+        for k, ga in enumerate(ra.gears):
+            got = [ga.now, ga.before, ga.fine, ga.teeth, ga.dfine]
+            for name, x, y in zip(names, pred[id(rb)][k], got):
+                if x is None and y is None:
+                    continue
+                eq = np.asarray(np.asarray(x, dtype=object) == np.asarray(y, dtype=object), dtype=bool)
+                if mask is not None:
+                    eq = eq | ~mask
+                if not eq.all():
+                    bad += int((~eq).sum())
+                    print("  MISMATCH", rb.size, rb.ratio, k, name, int((~eq).sum()))
+    return bad
+
+
+def one_tick(clock: Clock):
+    before = copy.deepcopy(clock)
+    # W (start) equals every driven gear's own teeth (the fine tooth lives at W)
+    reg = clock.train(REGULATOR).gears[0]
+    W0 = (clock.teeth // 2) * (reg.before + reg.now)
+    teeth_ok = all(
+        np.all(np.asarray(g.teeth, dtype=object) == W0)
+        for r in clock.trains_ if r.teeth is None and r.size != REGULATOR for g in r.gears
+    )
+    log_from = len(clock.log)
+    t = Tick(clock, 1)
+    t.readings(); t.impulse(); t.carry()  # tick.run's first three acts
+    snap = copy.deepcopy(clock)  # the state at the carry's end (advances and stopped restore included)
+    t.turnover(); t.click()  # tick.run's last two acts
+    x_next = snap.train(REGULATOR).gears[0].now
+    # x_next at a stopped clock is the restored X; the regulator's act output there is masked anyway
+    pred, stopped, W = predict(before, x_next)
+    # map pred keyed by before's trains onto the snapshot's trains by position
+    bad = compare(pred, snap, before)
+    # against the final state: not turned over, not touched by the click
+    touched = np.zeros(clock.size, dtype=bool)
+    for e in clock.log[log_from:]:
+        for key in ("node", "minus", "plus"):
+            if e.get(key) is not None:
+                touched[tuple(e[key])] = True
+        for tk in e.get("takes", []):
+            touched[tuple(tk["node"])] = True
+    mask = ~clock.turned_over & ~touched
+    bad_final = compare(pred, clock, before, mask)
+    return bad, bad_final, teeth_ok, int(clock.turned_over.sum()), int(touched.sum()), int(stopped.sum())
+
+
+def clock_from(universe: dict, piece: dict) -> Clock:
+    calibre, piece = check_piece(piece, universe)
+    return Clock(calibre, piece)
+
+
+if __name__ == "__main__":
+    root = Path("/home/user/Universe24/tests/worlds")
+    which = sys.argv[1] if len(sys.argv) > 1 else "node"
+    ticks = int(sys.argv[2]) if len(sys.argv) > 2 else 6
+    if which == "twins":
+        uni = json.loads((root / "universe_toy.json").read_text())
+        den = uni["integers"]["den"]
+        uni["rows"].append({"shape": 4, "pair": [2458210083751875, den]})
+        uni["rows"].append({"shape": 1, "pair": [15011228191521265, den], "weight": 2})
+        piece = {"universe": "x", "shape": [3, 3, 3], "intervals": 10, "seed": [
+            {"lay": "sea", "row": 0},
+            {"lay": "sea", "row": 2, "quanta": 1, "sense": 0},
+            {"lay": "sea", "row": 4, "hand": 0, "quanta": 1, "sense": 0},
+            {"lay": "at", "row": 4, "hand": 1, "centre": [1, 1, 1], "width": 1, "quanta": 125},
+            {"lay": "at", "row": 1, "centre": [0, 2, 1], "width": 1, "quanta": 125},
+        ]}
+        clock = clock_from(uni, piece)
+    else:
+        pf = json.loads((root / f"world_{which}.json").read_text())
+        uni = json.loads((root / pf["universe"]).read_text())
+        clock = clock_from(uni, pf)
+    print("trains in the acts' order:", [(r.size, r.ratio and r.ratio[0], r.weight, r.twin is not None) for r in clock.trains_])
+    for k in range(ticks):
+        res = one_tick(clock)
+        print(f"tick {k + 1}: mismatches at the carry's end {res[0]}, against the final state (masked) {res[1]}, "
+              f"gear teeth == W {res[2]}, turned over {res[3]}, click-touched {res[4]}, stopped {res[5]}, {STATS}")
+
+== probe_stopped.py ==
+import json, sys
+from pathlib import Path
+import numpy as np
+sys.path.insert(0, str(Path(__file__).parent))
+import probe_step as P
+from event_universe.core import rates
+from event_universe.features import stretch
+from event_universe.trains import REGULATOR
+
+root = Path("/home/user/Universe24/tests/worlds")
+which = sys.argv[1]
+pf = json.loads((root / f"world_{which}.json").read_text())
+uni = json.loads((root / pf["universe"]).read_text())
+clock = P.clock_from(uni, pf)
+if which == "node":  # one clock fed to the stopped load at the centre, as tests/test_the_node.py does
+    c = (1, 1, 1)
+    reg = clock.train(REGULATOR).gears[0]
+    x = int(np.asarray(stretch.stretch_of(clock.full_rate, np.array([rates.stopped_load(clock.full_rate)], dtype=object))).reshape(-1)[0])
+    reg.now[c] = x
+    reg.before[c] = x - 1   # X_- < X: the stopped clock is also released by the turnover's own trigger
+    clock.driven_teeth()
+for k in range(int(sys.argv[2])):
+    res = P.one_tick(clock)
+    print(f"tick {k+1}: carry-end mismatches {res[0]}, final masked {res[1]}, teeth==W {res[2]}, turned {res[3]}, touched {res[4]}, stopped {res[5]}, {P.STATS}")
+
+== probe_back.py ==
+import json, sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent))
+import probe_step as P
+from event_universe import run as record
+root = Path("/home/user/Universe24/tests/worlds")
+uni = json.loads((root / "universe_toy.json").read_text()); den = uni["integers"]["den"]
+uni["rows"].append({"shape": 4, "pair": [2458210083751875, den]})
+uni["rows"].append({"shape": 1, "pair": [15011228191521265, den], "weight": 2})
+piece = {"universe": "x", "shape": [3, 3, 3], "intervals": 10, "seed": [
+    {"lay": "sea", "row": 0}, {"lay": "sea", "row": 2, "quanta": 1, "sense": 0},
+    {"lay": "sea", "row": 4, "hand": 0, "quanta": 1, "sense": 0},
+    {"lay": "at", "row": 4, "hand": 1, "centre": [1, 1, 1], "width": 1, "quanta": 125},
+    {"lay": "at", "row": 1, "centre": [0, 2, 1], "width": 1, "quanta": 125}]}
+clock = P.clock_from(uni, piece)
+n = 12
+kept = []
+for _ in range(n):
+    kept.append(record.state_text(clock) + f" {clock.ticks}")
+    clock.tick()
+back = 0
+for k in range(n):
+    clock.tick(-1)
+    back += (record.state_text(clock) + f" {clock.ticks}") == kept[n - 1 - k]
+print(f"returned exactly {back} of {n}")
+
+== probe_regulator.py ==
+"""Probe: recompute the regulator's step from the derived integer formula and compare bit for bit.
+
+Run: venv314/bin/python probe_regulator.py <world.json under tests/worlds> <ticks>
+Read-only: wraps Tick.impulse / Tick.carry / Clock.act to snapshot, never changes engine state.
+"""
+
+from __future__ import annotations
+
+import sys
+
+sys.path.insert(0, "/home/user/Universe24/src")
+sys.path.insert(0, "/home/user/Universe24/tests")
+
+import numpy as np  # noqa: E402
+
+from event_universe import clock as clock_mod  # noqa: E402
+from event_universe import tick as tick_mod  # noqa: E402
+from event_universe.trains import REGULATOR  # noqa: E402
+from laws import node_of  # noqa: E402
+
+AX = 3
+
+
+def shift(a, axis, s):
+    """a(i + s e_axis) on the torus (the engine's across/pull), by np.roll."""
+    if a.shape[axis] == 1:
+        return a
+    return np.roll(a, -s, axis=axis)
+
+
+def grad(a, axis):
+    return shift(a, axis, 1) - shift(a, axis, -1)
+
+
+def fdiv(n, t):
+    """floor division on object arrays (Python ints)."""
+    return n // t
+
+
+def rnd(num, t):
+    """rates.rounded: half up on the magnitude, sign after: (2 num + t - [num<0]) // (2t)."""
+    neg = np.vectorize(lambda x: 1 if x < 0 else 0, otypes=[object])(num)
+    return (num + num + t - neg) // (t + t)
+
+
+SNAP: dict = {}
+ROWS: list = []
+
+
+def wrap_impulse(orig):
+    def impulse(self):
+        # the start gears (with their drive fine teeth) before the impulse mutates any dfine
+        SNAP["pre_impulse"] = {id(r): [g.copy() for g in self.trains[self.where[id(r)]]] for r in self.driven}
+        orig(self)
+
+    return impulse
+
+
+def wrap_carry(orig):
+    def carry(self):
+        SNAP["tick"] = self
+        SNAP["forms"] = self.forms.copy()
+        SNAP["stress"] = [s.copy() for s in self.stress]
+        orig(self)
+
+    return carry
+
+
+def wrap_act(orig):
+    def act(self, gears, r, meshes, numerators, going, flow=None, top=None, kept=None):
+        pre = [g.copy() for g in gears] if len(gears) == REGULATOR else None
+        nums = None if pre is None else [np.asarray(n, dtype=object).copy() for n in numerators]
+        res = orig(self, gears, r, meshes, numerators, going, flow, top, kept)
+        if pre is not None:
+            SNAP["act"] = dict(pre=pre, gearing=r, numerators=nums, post=[g.copy() for g in res[1]])
+        return res
+
+    return act
+
+
+from event_universe import bobs as bobs_mod, click as click_mod, unspring as unspring_mod, unwind as unwind_mod  # noqa: E402
+
+RECOILS: list = []
+
+
+def logged_recoil(clock, where, push, rate, going):
+    RECOILS.append((tuple(where), list(push), int(rate), going))
+    return unwind_mod.recoil(clock, where, push, rate, going)
+
+
+for _m in (tick_mod, click_mod, unspring_mod, bobs_mod):
+    _m.recoil = logged_recoil
+
+tick_mod.Tick.impulse = wrap_impulse(tick_mod.Tick.impulse)
+tick_mod.Tick.carry = wrap_carry(tick_mod.Tick.carry)
+clock_mod.Clock.act = wrap_act(clock_mod.Clock.act)
+
+
+def sources_from_scratch(clk, tk, pre_imp):
+    """forms, stress (6 parts) recomputed from the driven trains' start gears, their pulls F and kicks."""
+    w = clk.teeth  # 6 rim Gamma^2 G^2, every train's gearing teeth (ratio[1] = rim)
+    X = tk.stretch_now
+    reg0 = tk.held[tk.where[id(tk.regulator)]][0]
+    W = (w // 2) * (reg0.before + reg0.now)  # mean teeth at the start
+    d = 2 * w * X
+    forms = np.zeros(clk.size, dtype=object)
+    stress = [np.zeros(clk.size, dtype=object) for _ in range(2 * AX)]
+    sweep = np.zeros(clk.size, dtype=object)
+    masses = np.zeros(clk.size, dtype=object)
+    for r in tk.driven:
+        k = tk.where[id(r)]
+        gears = pre_imp[id(r)]
+        a = [g.now for g in gears]
+        F = tk.pull[k]
+        p_in = [W * (g.now - g.before) + g.fine - W // 2 for g in gears]
+        p_out = [p + X * f for p, f in zip(p_in, F)]
+        if r is tk.offset:
+            for i, (g, n) in enumerate(zip(gears, [sweep, *tk.lead])):
+                q = fdiv(n + g.dfine, g.dteeth)
+                p_out[i] = p_out[i] + w * X * q
+        if r.weight is not None:
+            g = gears[0]
+            q = fdiv(r.weight * masses + g.dfine, g.dteeth)
+            p_out[0] = p_out[0] + w * X * q
+        u_in = [rnd(2 * p + 1, d) for p in p_in]
+        u_out = [rnd(2 * p + 1, d) for p in p_out]
+        if r in tk.hands:
+            v = [x + y for x, y in zip(u_in, u_out)]
+            cpl = min(r.spring, 1)
+            sweep = sweep + cpl * (v[0] * a[1] - v[1] * a[0])
+            pin = r.ratio[0]
+            for ax in range(AX):
+                g_ = [grad(x, ax) for x in a]
+                stress[ax] = stress[ax] + pin * sum(x * x for x in g_)
+                stress[AX + ax] = stress[AX + ax] + pin * sum(vv * x for vv, x in zip(v, g_))
+        spring_k = 12 * (r.ratio[1] - r.ratio[0]) * SNAP["ps"] ** 2 * clk.G**2
+        assert np.array_equal(np.broadcast_to(np.asarray(spring_k, dtype=object), clk.size), np.broadcast_to(np.asarray(tk.train_spring[k], dtype=object), clk.size))
+        masses = masses + fdiv(spring_k * sum(x * x for x in a), w)
+        for ui, uo, ag, fg in zip(u_in, u_out, a, F):
+            forms = forms + ui * uo + fdiv(-(ag * fg), w)
+    return forms, stress
+
+
+def regulator_step(clk, tk, pre, forms, stress):
+    """The regulator's next gears by the derived formula (forward)."""
+    rim, G, Gam, T, K = clk.rim, clk.G, clk.full_rate, clk.key, clk.trace
+    w = 6 * rim * Gam**2 * G**2
+    p0 = np.asarray(tk.rate, dtype=object)  # rate at the start load (hill read at 0)
+    # spring rate at the held load (= load without held fields)
+    ps = SNAP["ps"]  # the spring rate, read at the held load (load + SUM weight * field notch)
+    p_i = np.asarray(tk.mesh_rate, dtype=object)
+    X = tk.stretch_now
+    # mesh factors from the tension gears at the start
+    Q = []
+    for ax in range(AX):
+        for s in (1, -1):
+            t = (pre[1 + ax].now + shift(pre[1 + ax].now, ax, s) + 1) // 2
+            t = np.minimum(np.maximum(t, 0), Gam)
+            q = (G * G * (Gam - t) ** 2 + (Gam * Gam) // 2) // (Gam * Gam)
+            stop = tk.stopped | shift(tk.stopped, ax, s)
+            Q.append(np.where(stop, 0, q))
+    pin = rim - rim // Gam
+    R = [2 * p_i * p_i * q * pin for q in Q]
+    D = 12 * (rim - pin) * ps * ps * G * G
+    # numerators
+    tr = stress[0] + stress[1] + stress[2]
+    N0 = 4 * X * (forms * K * rim * Gam**2 - tr * p0 * p0) * p0
+    T0 = K * rim * Gam**4 * T
+    Ta = K * rim * Gam**2 * T
+    hold = X * T0
+    N = [np.minimum(np.maximum(N0, -hold), hold)]
+    N += [(3 * stress[ax] - tr) * p0 * p0 for ax in range(AX)]
+    N += [stress[AX + ax] * p0 * p0 for ax in range(AX)]
+    teeth_d = [T0] + [Ta] * 6
+    out = []
+    spokes = [(ax, s) for ax in range(AX) for s in (1, -1)]
+    for g, n, td in zip(pre, N, teeth_d):
+        a, b, r, dl = g.now, g.before, g.fine, g.dfine
+        lap = sum(Rj * (shift(a, ax, s) - a) for Rj, (ax, s) in zip(R, spokes))
+        total = w * (2 * a - b) - D * a + lap + r  # = S a - w b + sum R_j a_j + r
+        n1, r1 = total // w, total % w
+        q, dl1 = (n + dl) // td, (n + dl) % td
+        out.append((n1 + q, a, r1, dl1))
+    SNAP['raw_clamped']=int((np.abs(N0) > hold).sum())
+    return N, out
+
+
+def main(world, ticks, feed=False):
+    clk = node_of(world)
+    reg = clk.train(REGULATOR)
+    if feed:  # the 3-cube centre fed to the stopped load (tests/test_the_node.py BH-S1 setting)
+        from event_universe.core import rates
+        from laws import level_at
+        centre = (1, 1, 1)
+        reg.gears[0].now[centre] = level_at(clk, rates.stopped_load(clk.full_rate))
+        reg.gears[0].before[centre] = reg.gears[0].now[centre]
+        clk.driven_teeth()
+    worst = 0
+    for t in range(ticks):
+        clk.tick()
+        tk, act = SNAP["tick"], SNAP["act"]
+        from event_universe import readings
+        SNAP["ps"] = np.asarray(readings.rates_of(clk, tk.held_load)[0], dtype=object)
+        forms, stress = sources_from_scratch(clk, tk, SNAP["pre_impulse"])
+        ok_src = all(np.array_equal(x, y) for x, y in zip([forms, *stress], [SNAP["forms"], *SNAP["stress"]]))
+        N, out = regulator_step(clk, tk, act["pre"], forms, stress)
+        ok_num = all(np.array_equal(x, y) for x, y in zip(N, act["numerators"]))
+        ok_act = all(
+            np.array_equal(o[0], g.now) and np.array_equal(o[1], g.before) and np.array_equal(o[2], g.fine)
+            and np.array_equal(o[3], g.dfine)
+            for o, g in zip(out, act["post"])
+        )
+        # after the whole tick: equal where the clock is neither stopped nor turned over (flow gears may
+        # also take a recoil where the light's gear advanced or a click laid/unwound)
+        free = ~(tk.stopped | tk.top)
+        rest = tk.stopped & ~tk.top
+        k_reg = tk.where[id(tk.regulator)]
+        ok_rest = all(
+            np.array_equal(np.where(rest, g.now, 0), np.where(rest, h.now, 0))
+            and np.array_equal(np.where(rest, g.before, 0), np.where(rest, h.before, 0))
+            and np.array_equal(np.where(rest, g.fine, 0), np.where(rest, h.fine, 0))
+            and np.array_equal(np.where(rest, g.dfine, 0), np.where(rest, h.dfine, 0))
+            for g, h in zip(reg.gears, tk.held[k_reg]))
+        # the recoils after the act (tick.advances, then the click), each one more carry on a flow gear
+        out = [list(o) for o in out]
+        for where, push, rate, going in RECOILS:
+            assert going == 1
+            for ax in range(AX):
+                o = out[1 + AX + ax]
+                td = act["pre"][1 + AX + ax].dteeth
+                n = -push[ax] * rate * rate
+                q, dl = (n + int(o[3][where])) // td, (n + int(o[3][where])) % td
+                o[0] = o[0].copy(); o[3] = o[3].copy()
+                o[0][where] += q; o[3][where] = dl
+        nrec = len(RECOILS); RECOILS.clear()
+        ok_end = all(bool(np.array_equal(np.where(free, o[0], 0), np.where(free, g.now, 0))) and bool(np.array_equal(np.where(free, o[3], 0), np.where(free, g.dfine, 0))) and bool(np.array_equal(np.where(free, o[2], 0), np.where(free, g.fine, 0))) for o, g in zip(out, reg.gears))
+        clamp = SNAP['raw_clamped']
+        worst += not (ok_src and ok_num and ok_act and ok_end and ok_rest)
+        print(f"tick {t+1:3d} sources {ok_src} numerators {ok_num} act {ok_act} end(free, recoils {nrec}) {ok_end} restored(stopped) {ok_rest} clamped {clamp} turned {int(tk.top.sum())} stopped {int(tk.stopped.sum())}")
+    print("mismatching ticks:", worst)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1], int(sys.argv[2]), len(sys.argv) > 3 and sys.argv[3] == "feed")

@@ -1,1 +1,0 @@
-"""The assembly: the piece's files read into the great clock's piece, every key checked and every other key refused by name; no default, no number of the calibre and no train's name; beside it what is built once from the two files and read by the clock (R5 of the readings' map, 2026-10-26): the setting's settings and envelopes (setting) and the light's cycle setting (cycle)."""

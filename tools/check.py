@@ -38,7 +38,6 @@ LINT = [["ruff", "check", "."], ["ruff", "format", "--check", "."], ["mypy"]]
 # in the lint shard; the documents' gates among them since 2026-10-24 (tests/test_documents.py
 # and tests/test_repository_language.py folded into tools/documents_gates.py by the tests' audit)
 RATCHETS = [
-    ["tools/engine_gates.py"],
     ["tools/record_code_shape.py"],
     ["tools/tests_shape.py"],
     ["tools/documents_gates.py"],
@@ -231,11 +230,7 @@ def dependency_graph(sources):
             result = resolve(*exports[key], seen)
             # Retain the re-export file as an interface dependency, without
             # pulling unrelated exports into the consumer's dependency closure.
-            return result | (
-                {modules[target]}
-                if target in modules and not target.endswith("event_universe")
-                else set()
-            )
+            return result | ({modules[target]} if target in modules else set())
         return {modules[target]} if target in modules else set()
 
     for path, tree in trees.items():
@@ -276,9 +271,6 @@ def select(changed, sources):
     tests = {p for p in impacted if p.startswith("tests/test_") and p.endswith(".py")}
     # Non-import dependencies: configuration, assets, repository scanners and fixtures.
     for path in changed:
-        if path.startswith("src/") and path.endswith(".py"):
-            # The algebra gate reads the physical modules by their path.
-            tests.add("tests/test_integer_algebra.py")
         # A world, an asset or a tool is a runtime dependency of the tests
         # that name its file (a tool is loaded by its path, never imported).
         if path.startswith(("examples/", "tools/")):
@@ -290,12 +282,6 @@ def select(changed, sources):
         if path in ("tests/conftest.py", "pyproject.toml", ".python-version"):
             # Shared fixtures, interpreter and package configuration affect all consumers.
             tests.update(p for p in sources if p.startswith("tests/test_"))
-        if path == "src/event_universe/__init__.py":
-            tests.update(
-                p
-                for p, text in sources.items()
-                if p.startswith("tests/test_") and "event_universe" in text
-            )
     if changed:
         # the gates every pull request runs, whatever it changes: one per line in one data file
         tests.update(every_pull_request())

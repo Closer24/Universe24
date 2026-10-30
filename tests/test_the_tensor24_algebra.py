@@ -1,9 +1,8 @@
-"""Tensor24's algebra: Rule3's carry and the fine tooth's flip, each law failing on its own mutant."""
+"""Tensor24's algebra: Rule3's carry and the fine tooth's flip, each law holding and failing on its own mutant."""
 
 from types import SimpleNamespace
 
 import numpy as np
-import pytest
 
 from tensor24.algebra import carry as algebra
 
@@ -49,7 +48,7 @@ def involution(m):
     return inside and (m.flip(once, d) == tooth).all()
 
 
-def mutants():
+def carry_mutants():
     """One broken copy of the algebra per law, each changing one thing the law must see."""
     return {
         "exact": {
@@ -63,8 +62,14 @@ def mutants():
     }
 
 
-@pytest.mark.parametrize("name", ["exact", "odd", "involution"])
-def test_each_law_of_the_carry_holds_and_fails_on_its_mutant(name):
-    law = {"exact": exact, "odd": odd, "involution": involution}
-    assert law[name](algebra)
-    assert not law[name](SimpleNamespace(**{**vars(algebra), **mutants()[name]}))
+CARRY = {"exact": exact, "odd": odd, "involution": involution}
+
+
+def holds(laws, module, mutants):
+    """Every law holds on the module and fails on its own mutant, the module's other parts kept."""
+    broken = {name: SimpleNamespace(**{**vars(module), **mutants[name]}) for name in laws}
+    return all(law(module) and not law(broken[name]) for name, law in laws.items())
+
+
+def test_the_carry_keeps_its_laws_and_each_mutant_breaks_its_own():
+    assert holds(CARRY, algebra, carry_mutants())

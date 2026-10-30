@@ -1,1 +1,0 @@
-{"universe": "universe_sr2.json", "shape": [7, 7, 7], "intervals": 30, "seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 6, "centre": [3, 3, 3], "width": 2, "quanta": 40, "spin": [1, 0, 0, 0, 0, 0, 0, 0], "sense": 1}, {"lay": "at", "row": 6, "centre": [3, 3, 3], "width": 2, "quanta": 40, "spin": [1, 0, 0, 0, 0, 0, 0, 0], "sense": 1}]}

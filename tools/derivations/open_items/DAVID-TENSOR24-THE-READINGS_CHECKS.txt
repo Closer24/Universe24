@@ -1,0 +1,1248 @@
+DAVID-TENSOR24-THE-READINGS_CHECKS.txt: the checks of DAVID-TENSOR24-THE-READINGS.md.
+A helper's four probes, rerun by David on toys-5 with its own src (engine-5.0-test 987cacf4f's src is 8b657aa57's), each
+output identical to the helper's. Integers only. kinds48.py: the 48 on the readings (random fields on a 5^3 torus, the
+images about the centre node-clock) and the momentum and angular momentum identities. spin2o.py: 2O on the twins and the two
+spin bilinears. current.py: the current against the continuity's flux and the pawls' frame. clicks_vs_state.py: the head's
+worlds (nature 20 ticks, hole 23, polarization 12), the state captured just before and after every click, against the log.
+
+== venv314/bin/python -I kinds48.py ==
+== the 48 on the readings (L = 5, the images about the centre node-clock) ==
+  K-diag                                                                   runs   48 failures 0
+  K-trace                                                                  runs   48 failures 0
+  K-traceless                                                              runs   48 failures 0
+  K-flows                                                                  runs   48 failures 0
+  K-shears                                                                 runs   48 failures 0
+  K-lead                                                                   runs   48 failures 0
+  K-lead0                                                                  runs   48 failures 0
+  K-bond                                                                   runs   48 failures 0
+  K-twist                                                                  runs   48 failures 0
+  K-meshlead                                                               runs   48 failures 0
+  K-P total = R P                                                          runs   48 failures 0
+  K-L total = det(R) R L (about the centre)                                runs   48 failures 0
+  K-twist summed = det(R) twist summed                                     runs   48 failures 0
+  M1 SUM_x Re conj(a - a-) d_a a = -P(a, a-) / (2 pinion)                  runs  120 failures 0
+  M1' SUM_x Re conj(a+ - a) d_a a = -P(a+, a) / (2 pinion)                 runs  120 failures 0
+  M1'' pinion SUM_x T_0a (velocity a+ - a-) = -(P(a, a-) + P(a+, a)) / 2   runs  120 failures 0
+  M2 push_of = P(after) - P(before), every axis                            runs  300 failures 0
+  A1 L(after) - L(before) = moment(arm, push)                              runs  300 failures 0
+  A2 L of the field translated by e_x = L + (2 e_x) x P (fails at the wrap) runs   40 failures 40
+  A2' the same off the wrap (the field at x in {1, 2} alone): holds        runs   40 failures 0
+
+== the kinds by O's characters (g/u: kept or reversed by the inversion) ==
+  trace of the stress (time gear's source)                       A1, g (kept by the inversion)
+  stress diagonal T_aa (3)                                       A1 + E, g (kept by the inversion)
+  stress traceless 3 T_aa - tr (tension gears)                   E, g (kept by the inversion)
+  shears T_ab, a < b (struck on the head)                        T2, g (kept by the inversion)
+  momentum / stress flows T_0a, push P, lead J (polar)           T1, u (reversed by the inversion)
+  angular momentum L, spin S with 2O acting (axial)              T1, g (kept by the inversion)
+  helicity S . P, the twist summed                               A1, u (reversed by the inversion)
+  the twist per axis (meshes.train_twists)                       A1 + E, u (reversed by the inversion)
+
+== venv314/bin/python -I spin2o.py ==
+== 2O on the twins: the least lam = |c|^2 of a Gaussian M(R) per class of the 24 ==
+  E    lam [1]
+  C2   lam [1]
+  C4   lam [1, 2]
+  C2'  lam [1, 2]
+  C3   lam [2]
+  rotations acting by a Gaussian monomial (lam 1, exact on the gears up to a global phase): 8
+    E[[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+    C2[[1, 0, 0], [0, -1, 0], [0, 0, -1]]
+    C2[[-1, 0, 0], [0, 1, 0], [0, 0, -1]]
+    C2[[-1, 0, 0], [0, -1, 0], [0, 0, 1]]
+    C2'[[0, 1, 0], [1, 0, 0], [0, 0, -1]]
+    C4[[0, -1, 0], [1, 0, 0], [0, 0, 1]]
+    C4[[0, 1, 0], [-1, 0, 0], [0, 0, 1]]
+    C2'[[0, -1, 0], [-1, 0, 0], [0, 0, -1]]
+
+== the checks ==
+  1 S . S = rho rho (one slot)                                                                     runs  4000 failures 0
+  1' Sw . Sw = W W on a random pair (expected to fail)                                             runs  4000 failures 4000
+  1'' Sw . Sw = W W on a pair turning rigidly (now = g before)                                     runs  4000 failures 0
+  1''' David's S = (Sw_x, -Sw_y, Sw_z), his W = this W                                             runs  4000 failures 0
+  1'''' the head's split reads sweep_up = (W + Sw_z) / 4, sweep_down = (W - Sw_z) / 4              runs  4000 failures 0
+  2 site map alone (rotations): S, Sw, rho, W unchanged, each component a scalar                   runs    24 failures 0
+  2' site map alone (rotations): S . P unchanged (expected to fail but at the identity)            runs    24 failures 23
+  3 with M(R) on the twins (rotations): S, Sw -> lam det(R) R S, rho, W -> lam                     runs    24 failures 0
+  3' with M(R) on the twins (rotations): S . P -> lam^2 det(R) S . P                               runs    24 failures 0
+  2 site map alone (mirrors): S, Sw, rho, W unchanged, each component a scalar                     runs    24 failures 0
+  2' site map alone (mirrors): S . P unchanged (expected to fail but at the identity)              runs    24 failures 24
+  3 with M(R) on the twins (mirrors): S, Sw -> lam det(R) R S, rho, W -> lam                       runs    24 failures 0
+  3' with M(R) on the twins (mirrors): S . P -> lam^2 det(R) S . P                                 runs    24 failures 0
+  4 twin_pulls' (sx, sy, sz) = (sigma_x psi, sigma_y psi, sigma_z psi), standard sigma             runs  1500 failures 0
+
+== venv314/bin/python -I current.py ==
+  (i)  J_a(x) = B_a(x) + B_a(x - e_a)                                                              runs  600 failures 0
+  (ii) Im(conj z SUM_j z_j) = SUM_a [B_a(x) - B_a(x - e_a)]                                        runs  200 failures 0
+  (iii) SUM_a [J_a(x + e_a) - J_a(x - e_a)] = 2 SUM_a [B_a(x) - B_a(x - e_a)] (expected to fail)   runs  200 failures 200
+  (iv) hands.lead with the pawls = (-1)^b(x) lead of z~ (covariant)                                runs  200 failures 0
+  (iv') stress_of's diagonal on z = on z~ (the frame; expected to fail)                            runs  200 failures 200
+  (iv'') stress_of's flows on z = (-1)^0 flows on z~ (the frame; expected to fail)                 runs  200 failures 200
+
+== venv314/bin/python -I clicks_vs_state.py ==
+== world_nature.json, 20 ticks: 20 clicks; log events {'credit': 395, 'birth': 3, 'split': 0, 'unspringing': 0}; release advances 0 (their pushes summed [0, 0, 0], in no log entry) ==
+  pushes computed by the click: {'live': 6, 'start': 0, 'start1': 398, 'own': 0}; start-board pushes differing from the live board's: 89
+  Q charge across the click = the log's W_children - sweep(stood) - sweep(taken_levels)                runs    20 failures 0
+  h1 the log's node is the end the lead flows into (sign of train_lead)                                runs     3 failures 0
+  h2 the log's plus == node exactly where the twist is right-handed (h > 0)                            runs     3 failures 0
+  P0 accounting: dP_state = SUM of the live pushes (the probe's P is the push's P)                     runs    14 failures 0
+  P1 accounting: dP_log = SUM live + SUM (start - live) + cross                                        runs    14 failures 0
+  P  momentum across the click = SUM of the log's pushes                                               runs    14 failures 13
+  L  angular momentum across the click = SUM of moment(arm, dP) of the log's pushes                    runs    14 failures 13
+  Q' the same on the clicks with a birth                                                               runs     3 failures 0
+  Q'' clicks with a birth whose charge changed (residue or take)                                       runs     0 failures 0
+  S1 velocity u_in = a - a- at every clock (per hand and tick)                                         runs    80 failures 49
+  S1' velocity u_out = a+ - a at every clock (per hand and tick)                                       runs    80 failures 50
+  S2 pinion SUM_x T_0a = -(P(a, a-) + P(a+, a)) / 2 (per hand, axis, tick)                             runs   240 failures 144
+  S2' the same where both velocities are exact (the stretch held through the tick)                     runs    90 failures 0
+  C1 the step's continuity, exact at every clock (per hand and tick)                                   runs    80 failures 0
+  S3 stress_of's diagonal = the diagonal read through the pawl's frame (sites differing counted)       runs    80 failures 23
+  S3' sites where the two frames' diagonals differ                                                     runs     0 failures 1553
+  S0 tick.stress = SUM_h pinion_h stress_of(h) (bit for bit)                                           runs    20 failures 0
+  J0 tick.lead = SUM_h coupling_h hands.lead(h) (bit for bit)                                          runs    20 failures 0
+  pawl -1 spokes over the ticks                                                                        runs     0 failures 6616
+  the head's row 71: SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 1212 of 1212 axis bookings, 1 laying a
+  the head's row 72: SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 404 of 404 bookings, the records' own moment changing
+
+== world_hole.json, 23 ticks: 23 clicks; log events {'credit': 15, 'birth': 18, 'split': 0, 'unspringing': 4}; release advances 1 (their pushes summed [-205335406231899971838, 87520009213596709308, -549501928950232977360], in no log entry) ==
+  pushes computed by the click: {'live': 36, 'start': 8, 'start1': 29, 'own': 8}; start-board pushes differing from the live board's: 30
+  Q charge across the click = the log's W_children - sweep(stood) - sweep(taken_levels)                runs    23 failures 0
+  h1 the log's node is the end the lead flows into (sign of train_lead)                                runs    14 failures 0
+  h2 the log's plus == node exactly where the twist is right-handed (h > 0)                            runs    14 failures 0
+  P0 accounting: dP_state = SUM of the live pushes (the probe's P is the push's P)                     runs    10 failures 0
+  P1 accounting: dP_log = SUM live + SUM (start - live) + cross                                        runs    10 failures 0
+  P  momentum across the click = SUM of the log's pushes                                               runs    10 failures 10
+  L  angular momentum across the click = SUM of moment(arm, dP) of the log's pushes                    runs    10 failures 10
+  Q' the same on the clicks with a birth                                                               runs     8 failures 0
+  Q'' clicks with a birth whose charge changed (residue or take)                                       runs     0 failures 3
+  S1 velocity u_in = a - a- at every clock (per hand and tick)                                         runs    92 failures 49
+  S1' velocity u_out = a+ - a at every clock (per hand and tick)                                       runs    92 failures 50
+  S2 pinion SUM_x T_0a = -(P(a, a-) + P(a+, a)) / 2 (per hand, axis, tick)                             runs   276 failures 150
+  S2' the same where both velocities are exact (the stretch held through the tick)                     runs   126 failures 0
+  C1 the step's continuity, exact at every clock (per hand and tick)                                   runs    92 failures 0
+  S3 stress_of's diagonal = the diagonal read through the pawl's frame (sites differing counted)       runs    92 failures 18
+  S3' sites where the two frames' diagonals differ                                                     runs     0 failures 203
+  S0 tick.stress = SUM_h pinion_h stress_of(h) (bit for bit)                                           runs    23 failures 0
+  J0 tick.lead = SUM_h coupling_h hands.lead(h) (bit for bit)                                          runs    23 failures 0
+  pawl -1 spokes over the ticks                                                                        runs     0 failures 6964
+  the head's row 71: SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 231 of 231 axis bookings, 36 laying a 
+  the head's row 72: SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 77 of 77 bookings, the records' own moment changing a
+
+== world_polarization.json, 12 ticks: 12 clicks; log events {'credit': 22, 'birth': 2, 'split': 0, 'unspringing': 2}; release advances 32 (their pushes summed [566320926222, 0, 2338143707092], in no log entry) ==
+  pushes computed by the click: {'live': 4, 'start': 4, 'start1': 22, 'own': 4}; start-board pushes differing from the live board's: 22
+  Q charge across the click = the log's W_children - sweep(stood) - sweep(taken_levels)                runs    12 failures 0
+  P0 accounting: dP_state = SUM of the live pushes (the probe's P is the push's P)                     runs    10 failures 0
+  P1 accounting: dP_log = SUM live + SUM (start - live) + cross                                        runs    10 failures 0
+  P  momentum across the click = SUM of the log's pushes                                               runs    10 failures 8
+  L  angular momentum across the click = SUM of moment(arm, dP) of the log's pushes                    runs    10 failures 8
+  Q' the same on the clicks with a birth                                                               runs     1 failures 0
+  Q'' clicks with a birth whose charge changed (residue or take)                                       runs     0 failures 1
+  S1 velocity u_in = a - a- at every clock (per hand and tick)                                         runs    36 failures 22
+  S1' velocity u_out = a+ - a at every clock (per hand and tick)                                       runs    36 failures 24
+  S2 pinion SUM_x T_0a = -(P(a, a-) + P(a+, a)) / 2 (per hand, axis, tick)                             runs   108 failures 45
+  S2' the same where both velocities are exact (the stretch held through the tick)                     runs    36 failures 0
+  C1 the step's continuity, exact at every clock (per hand and tick)                                   runs    36 failures 0
+  S3 stress_of's diagonal = the diagonal read through the pawl's frame (sites differing counted)       runs    36 failures 10
+  S3' sites where the two frames' diagonals differ                                                     runs     0 failures 619
+  S0 tick.stress = SUM_h pinion_h stress_of(h) (bit for bit)                                           runs    12 failures 0
+  J0 tick.lead = SUM_h coupling_h hands.lead(h) (bit for bit)                                          runs    12 failures 0
+  pawl -1 spokes over the ticks                                                                        runs     0 failures 1248
+  the head's row 71: SHOWN exact: -dP p_0^2 + the carry before - the carry after = the levels laid times the write wall on 96 of 96 axis bookings, 10 laying a le
+  the head's row 72: SHOWN exact: the move's moment and the moment written on the Link's record sum to 0 at 32 of 32 bookings, the records' own moment changing a
+
+
+== kinds48.py ==
+"""Probe A: the kinds of the six readings under the 48 (the cube's 24 rotations and 24 mirrors).
+
+Integers only (Python ints in numpy object arrays; no float decides anything). Every reading is computed
+with the head's own functions where the head has one (regulation.stress_of, regulation.tensor_parts,
+hands.lead, meshes.pawls, meshes.gradient, meshes.cross, hands.dot, hands.sweep, unwind.push_of,
+symmetries.moment, meshes.train_twists), on random integer fields on an L x L x L torus, and on each of
+the field's 48 images (the signed permutation matrices about a node-clock).  For every reading the probe
+checks that the image's reading is D(R) applied to the reading, D(R) the claimed representation, at every
+site; it then names the kind from D's characters (O's table; g/u by the inversion).
+
+Run: venv314/bin/python -I kinds48.py
+"""
+
+from __future__ import annotations
+
+import itertools
+import random
+import sys
+
+sys.path.insert(0, "/home/user/Universe24/src")
+
+import numpy as np  # noqa: E402
+
+from event_universe import hands, meshes, regulation, symmetries  # noqa: E402
+from event_universe.core.spokes import AXES, SPOKES, across, spoke_of  # noqa: E402
+from event_universe.trains import Gear  # noqa: E402
+from event_universe.unwind import push_of  # noqa: E402
+
+L = 5  # odd, so the centre C is a node-clock and the arm 2 (x - C) is the head's 2 x - (cube - 1)
+C = (L - 1) // 2
+rng = random.Random(20261028)
+COUNTS: dict[str, list[int]] = {}
+
+
+def tally(name: str, ok: bool) -> None:
+    runs, fails = COUNTS.setdefault(name, [0, 0])
+    COUNTS[name] = [runs + 1, fails + (not ok)]
+
+
+def field(k: int = 60) -> np.ndarray:
+    return np.array(
+        [[[rng.randint(-k, k) for _ in range(L)] for _ in range(L)] for _ in range(L)], dtype=object
+    )
+
+
+def bits() -> np.ndarray:
+    return np.array([[[rng.randint(0, 1) for _ in range(L)] for _ in range(L)] for _ in range(L)], dtype=object)
+
+
+# ---- the 48: R e_a = s_a e_{pi(a)} ----
+def det3(m: list[list[int]]) -> int:
+    return (
+        m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1])
+        - m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0])
+        + m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0])
+    )
+
+
+GROUP = []
+for perm in itertools.permutations(range(3)):
+    for signs in itertools.product((1, -1), repeat=3):
+        R = [[0] * 3 for _ in range(3)]
+        for a in range(3):
+            R[perm[a]][a] = signs[a]
+        GROUP.append((perm, signs, R, det3(R)))
+assert len(GROUP) == 48 and sum(d == 1 for *_, d in GROUP) == 24
+
+
+def matmul(m: list[list[int]], v: list[int]) -> list[int]:
+    return [sum(m[b][a] * v[a] for a in range(3)) for b in range(3)]
+
+
+def rclass(R: list[list[int]]) -> str:
+    """The class of a rotation of O by its trace and shape (E, 8C3, 3C2, 6C4, 6C2')."""
+    tr = R[0][0] + R[1][1] + R[2][2]
+    if tr == 3:
+        return "E"
+    if tr == 0:
+        return "C3"
+    if tr == 1:
+        return "C4"
+    diagonal = all(R[b][a] == 0 for a in range(3) for b in range(3) if a != b)
+    return "C2" if diagonal else "C2'"
+
+
+def site(R: list[list[int]], x: tuple[int, ...], centre: int) -> tuple[int, ...]:
+    return tuple((centre + v) % L for v in matmul(R, [xi - centre for xi in x]))
+
+
+def image(f: np.ndarray, R: list[list[int]], centre: int = C) -> np.ndarray:
+    """The field's image: f'(R x) = f(x) about the node-clock `centre`."""
+    out = np.empty_like(f)
+    for x in np.ndindex(f.shape):
+        out[site(R, x, centre)] = f[x]
+    return out
+
+
+def step(y: tuple[int, ...], b: int, d: int) -> tuple[int, ...]:
+    return tuple((v + (d if k == b else 0)) % L for k, v in enumerate(y))
+
+
+# ---- O's character table, the kinds ----
+CLASSES = ("E", "C3", "C2", "C4", "C2'")
+SIZES = {"E": 1, "C3": 8, "C2": 3, "C4": 6, "C2'": 6}
+TABLE = {
+    "A1": (1, 1, 1, 1, 1),
+    "A2": (1, 1, 1, -1, -1),
+    "E": (2, -1, 2, 0, 0),
+    "T1": (3, 0, -1, 1, -1),
+    "T2": (3, 0, -1, -1, 1),
+}
+
+
+def kind(rep) -> str:
+    """The decomposition of a representation D (a function of R and det R giving a matrix) into O_h's kinds."""
+    chi_rot = {c: None for c in CLASSES}
+    parity_of_class: dict[str, set[int]] = {c: set() for c in CLASSES}
+    for _perm, _signs, R, d in GROUP:
+        if d != 1:
+            continue
+        D = rep(R, 1)
+        chi = sum(D[i][i] for i in range(len(D)))
+        c = rclass(R)
+        assert chi_rot[c] in (None, chi)
+        chi_rot[c] = chi
+        minus = [[-v for v in row] for row in R]  # the mirror -R, the inversion times R
+        Dm = rep(minus, -1)
+        chi_m = sum(Dm[i][i] for i in range(len(Dm)))
+        parity_of_class[c].add(0 if chi == 0 and chi_m == 0 else (1 if chi_m == chi else -1 if chi_m == -chi else 99))
+    parts = []
+    for name, row in TABLE.items():
+        n24 = sum(SIZES[c] * chi_rot[c] * row[k] for k, c in enumerate(CLASSES))
+        assert n24 % 24 == 0
+        if n24:
+            parts.append(f"{n24 // 24 if n24 // 24 > 1 else ''}{name}")
+    pars = set().union(*parity_of_class.values()) - {0}
+    g_u = "g (kept by the inversion)" if pars == {1} else "u (reversed by the inversion)" if pars == {-1} else f"mixed {pars}"
+    return " + ".join(parts) + f", {g_u}"
+
+
+def eye_rep(R, d):
+    return [[1]]
+
+
+def vec_rep(R, d):
+    return R
+
+
+def axial_rep(R, d):
+    return [[d * v for v in row] for row in R]
+
+
+def pseudo_rep(R, d):
+    return [[d]]
+
+
+def perm_rep(R, d):
+    return [[abs(v) for v in row] for row in R]
+
+
+def pseudo_perm_rep(R, d):
+    return [[d * abs(v) for v in row] for row in R]
+
+
+def traceless_rep(R, d):
+    """The permutation representation on the traceless diagonals, in the basis (e_0 - e_2, e_1 - e_2)."""
+    P = perm_rep(R, d)
+
+    def act(v):
+        return [sum(P[b][a] * v[a] for a in range(3)) for b in range(3)]
+
+    basis = ([1, 0, -1], [0, 1, -1])
+    cols = []
+    for v in basis:
+        w = act(v)  # w = alpha (1, 0, -1) + beta (0, 1, -1): alpha = w_0, beta = w_1
+        cols.append([w[0], w[1]])
+    return [[cols[j][i] for j in range(2)] for i in range(2)]
+
+
+PAIRS = ((1, 2), (2, 0), (0, 1))  # yz, zx, xy
+
+
+def shear_rep(R, d):
+    D = [[0] * 3 for _ in range(3)]
+    for k, (a, b) in enumerate(PAIRS):
+        ia, sa = next((i, R[i][a]) for i in range(3) if R[i][a])
+        ib, sb = next((i, R[i][b]) for i in range(3) if R[i][b])
+        j = next(j for j, (p, q) in enumerate(PAIRS) if {p, q} == {ia, ib})
+        D[j][k] = sa * sb
+    return D
+
+
+# ---- the readings ----
+def bond_momentum(nows: list[np.ndarray], befores: list[np.ndarray], pinion: int) -> list[np.ndarray]:
+    """The push's momentum on the bond (x, x + e_a) (unwind.push_of's docstring):
+    p_a(x) = 2 pinion SUM_gears [now(x + a) before(x) - now(x) before(x + a)] = 2 pinion [Re conj(z_now(x+a)) z_before(x) - Re conj(z_now(x)) z_before(x+a)]."""
+    found = []
+    for a in range(AXES):
+        up = spoke_of(a, 0)
+        terms = [across(n, up) * b - n * across(b, up) for n, b in zip(nows, befores, strict=True)]
+        found.append((pinion + pinion) * sum(terms[1:], start=terms[0]))
+    return found
+
+
+def total(arrs: list[np.ndarray]) -> list[int]:
+    return [int(sum(a.reshape(-1))) for a in arrs]
+
+
+def moment_total(bond: list[np.ndarray]) -> list[int]:
+    """L = SUM over bonds of arm(x) x (p_a(x) e_a), arm = 2 (x - C) doubled from the centre node-clock
+    (symmetries.angular_momentum's arm 2 x - (cube - 1)); only the arm's transverse parts enter, the same at both ends."""
+    found = [0, 0, 0]
+    for x in np.ndindex(L, L, L):
+        arm = [2 * (xi - C) for xi in x]
+        for a in range(AXES):
+            push = [0, 0, 0]
+            push[a] = int(bond[a][x])
+            found = [f + m for f, m in zip(found, symmetries.moment(arm, push), strict=True)]
+    return found
+
+
+class Stub:
+    cube = L
+
+
+def main() -> None:
+    pin = 7  # a pinion; any integer
+    # --- one random hand (three, twelve), now and before, and a random velocity, pawl bits
+    n3, n12, b3, b12, v3, v12 = (field() for _ in range(6))
+    bit = bits()
+
+    # the reference readings
+    T = regulation.stress_of([n3, n12], [v3, v12])  # [T_11, T_22, T_33, T_01, T_02, T_03]
+    trace, traceless = regulation.tensor_parts(T[:AXES])
+    d = [[meshes.gradient(x, a) for x in (n3, n12)] for a in range(AXES)]
+    shears = [hands.dot(d[a], d[b]) for a, b in PAIRS]  # struck on the head; read here for the kind
+    J = hands.lead([n3, n12], meshes.pawls(bit))
+    J0 = hands.lead([n3, n12], [1] * SPOKES)
+    P = bond_momentum([n3, n12], [b3, b12], pin)
+    Ptot, Ltot = total(P), moment_total(P)
+    gears = [Gear(n3, b3, None, None), Gear(n12, b12, None, None)]
+    tw = meshes.train_twists(gears)
+    lead_mesh = [meshes.train_lead(gears, spoke_of(a, 0)) for a in range(AXES)]
+
+    for perm, signs, R, det in GROUP:
+        i3, i12, j3, j12, w3, w12 = (image(f, R) for f in (n3, n12, b3, b12, v3, v12))
+        ibit = image(bit, R)
+        T2 = regulation.stress_of([i3, i12], [w3, w12])
+        tr2, tl2 = regulation.tensor_parts(T2[:AXES])
+        d2 = [[meshes.gradient(x, a) for x in (i3, i12)] for a in range(AXES)]
+        sh2 = [hands.dot(d2[a], d2[b]) for a, b in PAIRS]
+        J2 = hands.lead([i3, i12], meshes.pawls(ibit))
+        J20 = hands.lead([i3, i12], [1] * SPOKES)
+        P2 = bond_momentum([i3, i12], [j3, j12], pin)
+        g2 = [Gear(i3, j3, None, None), Gear(i12, j12, None, None)]
+        tw2 = meshes.train_twists(g2)
+        lm2 = [meshes.train_lead(g2, spoke_of(a, 0)) for a in range(AXES)]
+        ok = {k: True for k in ("diag", "trace", "traceless", "flows", "shears", "lead", "lead0", "bond", "twist", "meshlead")}
+        for x in np.ndindex(L, L, L):
+            y = site(R, x, C)
+            for a in range(AXES):
+                b, s = perm[a], signs[a]
+                ok["diag"] &= T2[b][y] == T[a][x]
+                ok["traceless"] &= tl2[b][y] == traceless[a][x]
+                ok["flows"] &= T2[AXES + b][y] == s * T[AXES + a][x]
+                ok["lead"] &= J2[b][y] == s * J[a][x]
+                ok["lead0"] &= J20[b][y] == s * J0[a][x]
+                # a bond (x, x + e_a) maps to (y, y + s e_b): reversed where s = -1, its + end y - e_b
+                yb = y if s == 1 else step(y, b, -1)
+                ok["bond"] &= P2[b][yb] == s * P[a][x]
+                ok["twist"] &= tw2[b][yb] == det * tw[a][x]
+                ok["meshlead"] &= lm2[b][yb] == s * lead_mesh[a][x]
+            ok["trace"] &= tr2[y] == trace[x]
+            for k, (a, bb) in enumerate(PAIRS):
+                pa, pb = perm[a], perm[bb]
+                j = next(j for j, (p, q) in enumerate(PAIRS) if {p, q} == {pa, pb})
+                ok["shears"] &= sh2[j][y] == signs[a] * signs[bb] * shears[k][x]
+        for key, val in ok.items():
+            tally(f"K-{key}", bool(val))
+        tally("K-P total = R P", total(P2) == matmul(R, Ptot))
+        tally("K-L total = det(R) R L (about the centre)", moment_total(P2) == [det * v for v in matmul(R, Ltot)])
+        tally("K-twist summed = det(R) twist summed", sum(total(tw2)) == det * sum(total(tw)))
+
+    # --- the momentum identities: the stress's flows summed against the push's P (PROVED below, CHECKED here)
+    for trial in range(40):
+        n3, n12, b3, b12, m3, m12 = (field(400) for _ in range(6))  # m: the notch after the step, a+
+        P_nb = total(bond_momentum([n3, n12], [b3, b12], pin))
+        P_mn = total(bond_momentum([m3, m12], [n3, n12], pin))
+        for a in range(AXES):
+            s_in = int(sum(hands.dot([n3 - b3, n12 - b12], [meshes.gradient(n3, a), meshes.gradient(n12, a)]).reshape(-1)))
+            s_out = int(sum(hands.dot([m3 - n3, m12 - n12], [meshes.gradient(n3, a), meshes.gradient(n12, a)]).reshape(-1)))
+            tally("M1 SUM_x Re conj(a - a-) d_a a = -P(a, a-) / (2 pinion)", (pin + pin) * s_in == -P_nb[a])
+            tally("M1' SUM_x Re conj(a+ - a) d_a a = -P(a+, a) / (2 pinion)", (pin + pin) * s_out == -P_mn[a])
+            flows = regulation.stress_of([n3, n12], [m3 - b3, m12 - b12])[AXES + a]
+            tally(
+                "M1'' pinion SUM_x T_0a (velocity a+ - a-) = -(P(a, a-) + P(a+, a)) / 2",
+                (pin + pin) * pin * int(sum(flows.reshape(-1))) == -pin * (P_nb[a] + P_mn[a]),
+            )
+    # --- push_of is the exact change of P, and the moment of a one-site advance is arm x push (the one-clock theorem)
+    for trial in range(300):
+        n3, n12, b3, b12 = (field(300) for _ in range(4))
+        gears = [Gear(n3.copy(), b3.copy(), None, None), Gear(n12.copy(), b12.copy(), None, None)]
+        at = tuple(rng.randrange(L) for _ in range(3))
+        notches = tuple(rng.randint(-50, 50) for _ in range(4))  # now, before per gear: (dn3, db3, dn12, db12)
+        P0 = total(bond_momentum([g.now for g in gears], [g.before for g in gears], pin))
+        L0 = moment_total(bond_momentum([g.now for g in gears], [g.before for g in gears], pin))
+        push = push_of(Stub(), gears, at, notches, pin)
+        for g, dn, db in zip(gears, notches[0::2], notches[1::2], strict=True):
+            g.now[at] += dn
+            g.before[at] += db
+        bond1 = bond_momentum([g.now for g in gears], [g.before for g in gears], pin)
+        P1, L1 = total(bond1), moment_total(bond1)
+        arm = [2 * (v - C) for v in at]
+        tally("M2 push_of = P(after) - P(before), every axis", [p1 - p0 for p1, p0 in zip(P1, P0)] == list(push))
+        tally("A1 L(after) - L(before) = moment(arm, push)", [l1 - l0 for l1, l0 in zip(L1, L0)] == symmetries.moment(arm, push))
+    # --- the moment's origin and the wrap: L about another node and L of a translated field
+    moved = 0
+    for trial in range(40):
+        n3, n12, b3, b12 = (field(100) for _ in range(4))
+        bond = bond_momentum([n3, n12], [b3, b12], pin)
+        Lc, Pt = moment_total(bond), total(bond)
+        shifted = [np.roll(arr, 1, axis=0) for arr in (n3, n12, b3, b12)]
+        Ls = moment_total(bond_momentum(shifted[:2], shifted[2:], pin))
+        # a translation by e_x would move L by (2 e_x) x P on an open lattice; on the torus the wrap breaks it
+        want = [Lc[k] + v for k, v in enumerate(symmetries.moment([2, 0, 0], Pt))]
+        moved += Ls != want
+        tally("A2 L of the field translated by e_x = L + (2 e_x) x P (fails at the wrap)", Ls == want)
+        # the control: a field held off the wrap on the x axis (x in {1, 2}) translates as on an open lattice
+        held = [arr.copy() for arr in (n3, n12, b3, b12)]
+        for arr in held:
+            arr[0], arr[3], arr[4] = 0, 0, 0
+        bond = bond_momentum(held[:2], held[2:], pin)
+        Lc, Pt = moment_total(bond), total(bond)
+        shifted = [np.roll(arr, 1, axis=0) for arr in held]
+        Ls = moment_total(bond_momentum(shifted[:2], shifted[2:], pin))
+        want = [Lc[k] + v for k, v in enumerate(symmetries.moment([2, 0, 0], Pt))]
+        tally("A2' the same off the wrap (the field at x in {1, 2} alone): holds", Ls == want)
+
+    # --- the kinds by the characters
+    print("== the 48 on the readings (L = 5, the images about the centre node-clock) ==")
+    for name, (runs, fails) in COUNTS.items():
+        print(f"  {name:72s} runs {runs:4d} failures {fails}")
+    print()
+    print("== the kinds by O's characters (g/u: kept or reversed by the inversion) ==")
+    for name, rep in (
+        ("trace of the stress (time gear's source)", eye_rep),
+        ("stress diagonal T_aa (3)", perm_rep),
+        ("stress traceless 3 T_aa - tr (tension gears)", traceless_rep),
+        ("shears T_ab, a < b (struck on the head)", shear_rep),
+        ("momentum / stress flows T_0a, push P, lead J (polar)", vec_rep),
+        ("angular momentum L, spin S with 2O acting (axial)", axial_rep),
+        ("helicity S . P, the twist summed", pseudo_rep),
+        ("the twist per axis (meshes.train_twists)", pseudo_perm_rep),
+    ):
+        print(f"  {name:62s} {kind(rep)}")
+
+
+if __name__ == "__main__":
+    main()
+
+== spin2o.py ==
+"""Probe S: the spin and the helicity of twin hands under the 48, Gaussian integers only (no complex floats).
+
+A twin pair at a node-clock is two hands psi = (u, d), each a Gaussian integer three + i twelve, now and before.
+Two bilinears:
+  the draft's (TENSOR24.md 19): one slot, S = (2 Re(conj u d), 2 Im(conj u d), N(u) - N(d)), rho = N(u) + N(d);
+  the sweep's (the head's split reads its z part; David's DAVID-TENSOR24-THE-CLICK.md reading up to the sign of y):
+      W = 2 Im(n^dag b), Sw_k = 2 Im(n^dag sigma_k b), n the now slots, b the before slots.
+The probe: (1) S . S = rho rho everywhere, Sw . Sw = W W only on a pair turning rigidly; (2) the head's own images
+(the site map alone, no act on the twins) leave every component a scalar; (3) the double cover 2O acting on the twins
+by Gaussian matrices M(R) (searched, M^dag sigma_k M = lam SUM_l R_kl sigma_l, M^dag M = lam 1) turns S and Sw as
+lam R (axial: the inversion acts on the twins by 1), so S . P is lam^2 det(R) (S . P); (4) the Pauli gearing of
+tick.twin_pulls is sigma in the standard convention (sigma_y psi = (-i d, i u)).
+
+Run: venv314/bin/python -I spin2o.py
+"""
+
+from __future__ import annotations
+
+import itertools
+import random
+import sys
+
+sys.path.insert(0, "/home/user/Universe24/src")
+
+import numpy as np  # noqa: E402
+
+from event_universe import regulation  # noqa: E402
+from event_universe.core.spokes import AXES  # noqa: E402
+
+rng = random.Random(28102026)
+L = 3
+COUNTS: dict[str, list[int]] = {}
+
+
+def tally(name: str, ok: bool) -> None:
+    runs, fails = COUNTS.setdefault(name, [0, 0])
+    COUNTS[name] = [runs + 1, fails + (not ok)]
+
+
+# ---- Gaussian integers as pairs (re, im) ----
+def gmul(p, q):
+    return (p[0] * q[0] - p[1] * q[1], p[0] * q[1] + p[1] * q[0])
+
+
+def gadd(p, q):
+    return (p[0] + q[0], p[1] + q[1])
+
+
+def gconj(p):
+    return (p[0], -p[1])
+
+
+ZERO, ONE, I = (0, 0), (1, 0), (0, 1)
+SIGMA = {
+    "x": ((ZERO, ONE), (ONE, ZERO)),
+    "y": ((ZERO, (0, -1)), (I, ZERO)),
+    "z": ((ONE, ZERO), (ZERO, (-1, 0))),
+}
+KEYS = ("x", "y", "z")
+
+
+def mmul(A, B):
+    return tuple(tuple(gadd(gmul(A[i][0], B[0][j]), gmul(A[i][1], B[1][j])) for j in range(2)) for i in range(2))
+
+
+def dag(A):
+    return tuple(tuple(gconj(A[j][i]) for j in range(2)) for i in range(2))
+
+
+def scal(k, A):
+    return tuple(tuple((k * A[i][j][0], k * A[i][j][1]) for j in range(2)) for i in range(2))
+
+
+def madd(A, B):
+    return tuple(tuple(gadd(A[i][j], B[i][j]) for j in range(2)) for i in range(2))
+
+
+def mvec(A, v):
+    return (gadd(gmul(A[0][0], v[0]), gmul(A[0][1], v[1])), gadd(gmul(A[1][0], v[0]), gmul(A[1][1], v[1])))
+
+
+def rotations():
+    found = []
+    for perm in itertools.permutations(range(3)):
+        for signs in itertools.product((1, -1), repeat=3):
+            R = [[0] * 3 for _ in range(3)]
+            for a in range(3):
+                R[perm[a]][a] = signs[a]
+            d = (
+                R[0][0] * (R[1][1] * R[2][2] - R[1][2] * R[2][1])
+                - R[0][1] * (R[1][0] * R[2][2] - R[1][2] * R[2][0])
+                + R[0][2] * (R[1][0] * R[2][1] - R[1][1] * R[2][0])
+            )
+            found.append((perm, signs, R, d))
+    return found
+
+
+def rclass(R):
+    tr = R[0][0] + R[1][1] + R[2][2]
+    if tr == 3:
+        return "E"
+    if tr == 0:
+        return "C3"
+    if tr == 1:
+        return "C4"
+    return "C2" if all(R[b][a] == 0 for a in range(3) for b in range(3) if a != b) else "C2'"
+
+
+ENTRIES = [(a, b) for a in (-1, 0, 1) for b in (-1, 0, 1)]
+
+
+def spinor_of(R):
+    """The Gaussian 2 x 2 matrix M of least lam with M^dag sigma_k M = lam SUM_l R_kl sigma_l and M^dag M = lam 1."""
+    best = None
+    for e in itertools.product(ENTRIES, repeat=4):
+        M = ((e[0], e[1]), (e[2], e[3]))
+        g = mmul(dag(M), M)
+        lam = g[0][0][0]
+        if lam <= 0 or g != ((
+            (lam, 0), (0, 0)), ((0, 0), (lam, 0))):
+            continue
+        if best is not None and lam >= best[1]:
+            continue
+        ok = True
+        for k, key in enumerate(KEYS):
+            want = ((ZERO, ZERO), (ZERO, ZERO))
+            for l, kl in enumerate(KEYS):
+                want = madd(want, scal(lam * R[k][l], SIGMA[kl]))
+            ok &= mmul(mmul(dag(M), SIGMA[key]), M) == want
+        if ok:
+            best = (M, lam)
+    return best
+
+
+# ---- the bilinears at one node-clock ----
+def one_slot(u, d):
+    """The draft's S and rho from the slot: S = (2 Re conj(u) d, 2 Im conj(u) d, N(u) - N(d))."""
+    w = gmul(gconj(u), d)
+    nu, nd = gmul(gconj(u), u)[0], gmul(gconj(d), d)[0]
+    return (2 * w[0], 2 * w[1], nu - nd), nu + nd
+
+
+def sweep_reading(n, b):
+    """W = 2 Im(n^dag b), Sw_k = 2 Im(n^dag sigma_k b) (n, b the twins' now and before)."""
+
+    def im_form(A):
+        Ab = mvec(A, b)
+        return 2 * gadd(gmul(gconj(n[0]), Ab[0]), gmul(gconj(n[1]), Ab[1]))[1]
+
+    return tuple(im_form(SIGMA[k]) for k in KEYS), im_form(((ONE, ZERO), (ZERO, ONE)))
+
+
+def rand_g(k=30):
+    return (rng.randint(-k, k), rng.randint(-k, k))
+
+
+def main() -> None:
+    group = rotations()
+    table = {}
+    for perm, signs, R, d in group:
+        if d == 1:
+            table[tuple(map(tuple, R))] = spinor_of(R)
+    lams = {}
+    for perm, signs, R, d in group:
+        if d == 1:
+            M, lam = table[tuple(map(tuple, R))]
+            lams.setdefault(rclass(R), set()).add(lam)
+    print("== 2O on the twins: the least lam = |c|^2 of a Gaussian M(R) per class of the 24 ==")
+    for c in ("E", "C2", "C4", "C2'", "C3"):
+        print(f"  {c:4s} lam {sorted(lams[c])}")
+    exact = [rclass(R) + str(R) for _p, _s, R, d in group if d == 1 and table[tuple(map(tuple, R))][1] == 1]
+    print(f"  rotations acting by a Gaussian monomial (lam 1, exact on the gears up to a global phase): {len(exact)}")
+    for e in exact:
+        print("   ", e)
+
+    # (1) the lengths
+    for _ in range(4000):
+        u, dd = rand_g(), rand_g()
+        S, rho = one_slot(u, dd)
+        tally("1 S . S = rho rho (one slot)", sum(v * v for v in S) == rho * rho)
+        n, b = (rand_g(), rand_g()), (rand_g(), rand_g())
+        Sw, W = sweep_reading(n, b)
+        tally("1' Sw . Sw = W W on a random pair (expected to fail)", sum(v * v for v in Sw) == W * W)
+        g = rand_g(5)
+        nr = (gmul(g, b[0]), gmul(g, b[1]))
+        Swr, Wr = sweep_reading(nr, b)
+        tally("1'' Sw . Sw = W W on a pair turning rigidly (now = g before)", sum(v * v for v in Swr) == Wr * Wr)
+        # David's reading: S_D = (Sw_x, -Sw_y, Sw_z)
+        D = [[None, None], [None, None]]
+        for a in range(2):
+            for c in range(2):
+                # D_ac = i (conj(b_a) n_c - conj(n_a) b_c)
+                t = gadd(gmul(gconj(b[a]), n[c]), gmul((-1, 0), gmul(gconj(n[a]), b[c])))
+                D[a][c] = gmul(I, t)
+        SD = (2 * D[0][1][0], -2 * D[0][1][1], D[0][0][0] - D[1][1][0])
+        tally("1''' David's S = (Sw_x, -Sw_y, Sw_z), his W = this W", SD == (Sw[0], -Sw[1], Sw[2]) and D[0][0][0] + D[1][1][0] == W)
+        sweeps = [n[k][0] * b[k][1] - n[k][1] * b[k][0] for k in range(2)]  # hands.sweep: three_now twelve_before - twelve_now three_before
+        tally("1'''' the head's split reads sweep_up = (W + Sw_z) / 4, sweep_down = (W - Sw_z) / 4", 4 * sweeps[0] == W + Sw[2] and 4 * sweeps[1] == W - Sw[2])
+
+    # (2), (3): fields on a 3 x 3 x 3 torus, the 48 with and without the act on the twins
+    def gfield():
+        return [[[rand_g() for _ in range(L)] for _ in range(L)] for _ in range(L)]
+
+    un, ub, dn, db, uv, dv = (gfield() for _ in range(6))  # now, before and a velocity per twin
+
+    def readings(un, ub, dn, db, uv, dv):
+        out = {}
+        arrays = {}
+        for name, f in (("un", un), ("dn", dn), ("uv", uv), ("dv", dv)):
+            arrays[name] = [np.array([[[f[x][y][z][p] for z in range(L)] for y in range(L)] for x in range(L)], dtype=object) for p in (0, 1)]
+        flows_u = regulation.stress_of(arrays["un"], arrays["uv"])[AXES:]
+        flows_d = regulation.stress_of(arrays["dn"], arrays["dv"])[AXES:]
+        for x in itertools.product(range(L), repeat=3):
+            S, rho = one_slot(un[x[0]][x[1]][x[2]], dn[x[0]][x[1]][x[2]])
+            Sw, W = sweep_reading((un[x[0]][x[1]][x[2]], dn[x[0]][x[1]][x[2]]), (ub[x[0]][x[1]][x[2]], db[x[0]][x[1]][x[2]]))
+            P = [int(flows_u[a][x] + flows_d[a][x]) for a in range(AXES)]
+            out[x] = (S, rho, Sw, W, P, sum(s * p for s, p in zip(S, P)))
+        return out
+
+    base = readings(un, ub, dn, db, uv, dv)
+
+    for perm, signs, R, d in group:
+        rot = R if d == 1 else [[-v for v in row] for row in R]
+        M, lam = table[tuple(map(tuple, rot))]
+        for acting in (False, True):
+            img = {name: [[[None] * L for _ in range(L)] for _ in range(L)] for name in ("un", "ub", "dn", "db", "uv", "dv")}
+            for x in itertools.product(range(L), repeat=3):
+                y = tuple(sum(R[bb][a] * x[a] for a in range(3)) % L for bb in range(3))
+                pairs = {"n": (un, dn), "b": (ub, db), "v": (uv, dv)}
+                for slot, (fu, fd) in pairs.items():
+                    psi = (fu[x[0]][x[1]][x[2]], fd[x[0]][x[1]][x[2]])
+                    if acting:
+                        psi = mvec(M, psi)
+                    img["u" + slot][y[0]][y[1]][y[2]] = psi[0]
+                    img["d" + slot][y[0]][y[1]][y[2]] = psi[1]
+            got = readings(img["un"], img["ub"], img["dn"], img["db"], img["uv"], img["dv"])
+            ok_scalar = ok_vec = ok_hel = ok_hel_scalar = True
+            for x in itertools.product(range(L), repeat=3):
+                y = tuple(sum(R[bb][a] * x[a] for a in range(3)) % L for bb in range(3))
+                S, rho, Sw, W, P, h = base[x]
+                S2, rho2, Sw2, W2, P2, h2 = got[y]
+                RS = [sum(R[k][l] * S[l] for l in range(3)) for k in range(3)]
+                RSw = [sum(R[k][l] * Sw[l] for l in range(3)) for k in range(3)]
+                if not acting:
+                    ok_scalar &= tuple(S2) == tuple(S) and tuple(Sw2) == tuple(Sw) and rho2 == rho and W2 == W
+                    ok_hel_scalar &= h2 == h
+                else:
+                    ok_vec &= list(S2) == [lam * d * v for v in RS] and list(Sw2) == [lam * d * v for v in RSw]
+                    ok_vec &= rho2 == lam * rho and W2 == lam * W
+                    ok_hel &= h2 == lam * lam * d * h
+            kindname = "rotation" if d == 1 else "mirror"
+            if not acting:
+                tally(f"2 site map alone ({kindname}s): S, Sw, rho, W unchanged, each component a scalar", ok_scalar)
+                tally(f"2' site map alone ({kindname}s): S . P unchanged (expected to fail but at the identity)", ok_hel_scalar)
+            else:
+                tally(f"3 with M(R) on the twins ({kindname}s): S, Sw -> lam det(R) R S, rho, W -> lam", ok_vec)
+                tally(f"3' with M(R) on the twins ({kindname}s): S . P -> lam^2 det(R) S . P", ok_hel)
+
+    # (4) the Pauli gearing of tick.twin_pulls (tick.py:193-196): up (dn, (dn[1], -dn[0]), up), down (up, (-up[1], up[0]), -dn)
+    for _ in range(500):
+        up, dw = rand_g(), rand_g()
+        code_up = (dw, (dw[1], -dw[0]), up)
+        code_dn = (up, (-up[1], up[0]), ((-dw[0]), (-dw[1])))
+        for k, key in enumerate(KEYS):
+            s_psi = mvec(SIGMA[key], (up, dw))
+            tally("4 twin_pulls' (sx, sy, sz) = (sigma_x psi, sigma_y psi, sigma_z psi), standard sigma", code_up[k] == s_psi[0] and code_dn[k] == s_psi[1])
+
+    print()
+    print("== the checks ==")
+    for name, (runs, fails) in COUNTS.items():
+        print(f"  {name:96s} runs {runs:5d} failures {fails}")
+
+
+if __name__ == "__main__":
+    main()
+
+== current.py ==
+"""Probe J: the lead (hands.lead) against the flux that closes the continuity of charge, integers only.
+
+With the bond flux B_a(x) = Im(conj z(x) z(x + e_a)) on the bond x -> x + e_a (pawls 1, no turn):
+  (i)   hands.lead's J_a(x) = Im(conj z (z_up - z_down)) = B_a(x) + B_a(x - e_a): the two +a bonds at x summed;
+  (ii)  the step's flux at uniform grips, Im(conj z SUM_j z_j) = SUM_a [B_a(x) - B_a(x - e_a)]: the bonds' divergence;
+  (iii) so the divergence of J is not that flux: the centred one, SUM_a [J_a(x + e_a) - J_a(x - e_a)], is counted
+        against twice the bond divergence (they differ but on special fields);
+  (iv)  with random pawl bits b(x) (the pawl f = (-1)^(b(x) + b(y)) on every bond, meshes.pawls), the lead is the
+        lead of the hand read in one frame, J(x) = (-1)^b(x) J~(x), z~ = conj^b(x) z: covariant; stress_of's
+        diagonal and the push's P are not (counted).
+Run: venv314/bin/python -I current.py
+"""
+
+from __future__ import annotations
+
+import random
+import sys
+
+sys.path.insert(0, "/home/user/Universe24/src")
+
+import numpy as np  # noqa: E402
+
+from event_universe import hands, meshes, regulation  # noqa: E402
+from event_universe.core.spokes import AXES, SPOKES, across, spoke_of  # noqa: E402
+
+L = 5
+rng = random.Random(1028)
+COUNTS: dict[str, list[int]] = {}
+
+
+def tally(name, ok):
+    runs, fails = COUNTS.setdefault(name, [0, 0])
+    COUNTS[name] = [runs + 1, fails + (not ok)]
+
+
+def field(k=40):
+    return np.array([[[rng.randint(-k, k) for _ in range(L)] for _ in range(L)] for _ in range(L)], dtype=object)
+
+
+def main():
+    for _ in range(200):
+        z3, z12 = field(), field()
+        B = []
+        for a in range(AXES):
+            u3, u12 = across(z3, spoke_of(a, 0)), across(z12, spoke_of(a, 0))
+            B.append(z3 * u12 - z12 * u3)  # Im(conj z(x) z(x + a))
+        J = hands.lead([z3, z12], [1] * SPOKES)
+        for a in range(AXES):
+            tally("(i)  J_a(x) = B_a(x) + B_a(x - e_a)", bool(np.all(J[a] == B[a] + across(B[a], spoke_of(a, 1)))))
+        s3 = sum(across(z3, s) for s in range(SPOKES))
+        s12 = sum(across(z12, s) for s in range(SPOKES))
+        flux = z3 * s12 - z12 * s3  # Im(conj z SUM_j z_j)
+        div_b = sum(B[a] - across(B[a], spoke_of(a, 1)) for a in range(AXES))
+        tally("(ii) Im(conj z SUM_j z_j) = SUM_a [B_a(x) - B_a(x - e_a)]", bool(np.all(flux == div_b)))
+        div_j = sum(across(J[a], spoke_of(a, 0)) - across(J[a], spoke_of(a, 1)) for a in range(AXES))
+        tally("(iii) SUM_a [J_a(x + e_a) - J_a(x - e_a)] = 2 SUM_a [B_a(x) - B_a(x - e_a)] (expected to fail)", bool(np.all(div_j == div_b + div_b)))
+        # (iv) the pawl's gauge: z~ = conj^b z, pawls from b
+        bits = np.array([[[rng.randint(0, 1) for _ in range(L)] for _ in range(L)] for _ in range(L)], dtype=object)
+        sign = 1 - bits - bits
+        w3, w12 = z3, sign * z12  # z~ (conjugate where b = 1)
+        J_framed = hands.lead([z3, z12], meshes.pawls(bits))
+        J_tilde = hands.lead([w3, w12], [1] * SPOKES)
+        tally("(iv) hands.lead with the pawls = (-1)^b(x) lead of z~ (covariant)", all(bool(np.all(J_framed[a] == sign * J_tilde[a])) for a in range(AXES)))
+        v3, v12 = field(), field()
+        T_raw = regulation.stress_of([z3, z12], [v3, v12])
+        T_til = regulation.stress_of([w3, w12], [v3, sign * v12])
+        tally("(iv') stress_of's diagonal on z = on z~ (the frame; expected to fail)", all(bool(np.all(T_raw[a] == T_til[a])) for a in range(AXES)))
+        tally("(iv'') stress_of's flows on z = (-1)^0 flows on z~ (the frame; expected to fail)", all(bool(np.all(T_raw[AXES + a] == T_til[AXES + a])) for a in range(AXES)))
+    for name, (runs, fails) in COUNTS.items():
+        print(f"  {name:96s} runs {runs:4d} failures {fails}")
+
+
+if __name__ == "__main__":
+    main()
+
+== clicks_vs_state.py ==
+"""Probe B: each reading over the state against its second reading from the click record, on the head's own runs.
+
+The head's src is read only: every wrapper below is set on the imported modules in this process (nothing is written
+under the repository).  Integers only.  For every tick of a run the probe keeps the hands' gears just before and
+just after the click (Clock.click), the click's log entries, and every push the click computes (unspring.push_of),
+with the push the same advance makes on the board the click actually writes (the live board); and from the tick
+the readings it computes (regulation.stress_of's arguments, the pulls, the strides, the carried gears).
+
+Readings compared, per click (the state's change across the click against what the click's log entries book):
+  P   momentum: P_a = SUM_h 2 pinion_h SUM_x [Re conj(z_now(x+a)) z_before(x) - Re conj(z_now(x)) z_before(x+a)]
+      (unwind.push_of's P) against SUM of the log's dP_take (credits; births, a shared take once), dP_lay, cross.dP;
+  L   angular momentum: SUM over bonds of arm(x) x p_a(x) e_a, arm = 2 x - (cube - 1) (symmetries.angular_momentum's
+      arm) against SUM of moment(arm(node), dP) over the same log pushes (row 72's walk);
+  Q   charge: SUM_h coupling_h SUM_x sweep_h(x) against the births' W_children less the sweep of `stood`, less the
+      sweep of an unspringing's taken_levels;
+  h   the twist's sign: the log's (node, minus, plus) against meshes.train_twists and train_lead on the start board.
+Per tick (the step's own identities): the stress as tick.py sums it, the flows against the push's P at the two half
+steps, the exact continuity of the sweep with the step's own flux, the stress's frames at the pawls.
+
+Run: venv314/bin/python -I clicks_vs_state.py [world ticks]...
+"""
+
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+sys.path.insert(0, "/home/user/Universe24/src")
+sys.set_int_max_str_digits(0)
+
+import numpy as np  # noqa: E402
+
+from event_universe import clock as clockmod  # noqa: E402
+from event_universe import hands, meshes, readings, regulation, symmetries, unspring  # noqa: E402
+from event_universe import run as writer  # noqa: E402
+from event_universe import tick as tickmod  # noqa: E402
+from event_universe.assembly.piece import read_piece  # noqa: E402
+from event_universe.core.acts import mid  # noqa: E402
+from event_universe.core.rates import rounded  # noqa: E402
+from event_universe.core.spokes import AXES, SPOKES, across, spoke_of  # noqa: E402
+from event_universe.meshes import coupling_of  # noqa: E402
+from event_universe.reckoner import Chart  # noqa: E402
+from event_universe.unwind import neighbour  # noqa: E402
+
+WORLDS = Path("/home/user/Universe24/tests/worlds")
+ORIG_CLICK, ORIG_PUSH = clockmod.Clock.click, unspring.push_of
+ORIG_IMPULSE, ORIG_ADVANCES = tickmod.Tick.impulse, tickmod.Tick.advances
+ORIG_STRESS, ORIG_TICK_PUSH = tickmod.stress_of, tickmod.push_of
+REC: dict = {}
+
+
+def fresh() -> None:
+    REC.clear()
+    REC.update(clicks=[], calls=[], ticks=[], stress_calls=[], release=[])
+
+
+# ---------------- the wrappers ----------------
+def classify(clock, gears):
+    for hand in clock.hands():
+        if gears is hand.gears:
+            return "live", None
+    for r, start in enumerate(clock.start_gears):
+        if gears is start:
+            return "start", clock.hands()[r].gears
+        if len(gears) == 1:
+            for k, g in enumerate(start):
+                if gears[0] is g:
+                    return "start1", [clock.hands()[r].gears[k]]
+    return "own", None
+
+
+def push_wrapped(clock, gears, at, notches, pinion, sign=1):
+    got = ORIG_PUSH(clock, gears, at, notches, pinion, sign)
+    kind, live_gears = classify(clock, gears)
+    live = list(got) if kind == "live" else None if live_gears is None else list(ORIG_PUSH(clock, live_gears, at, notches, pinion, sign))
+    REC["calls"].append({"kind": kind, "at": tuple(at), "push": list(got), "live": live})
+    return got
+
+
+def click_wrapped(self, starts, held, going=1, note=None):
+    if going != 1:
+        return ORIG_CLICK(self, starts, held, going, note)
+    REC["calls"] = []
+    before, log_from = board(self), len(self.log)
+    start = [[(g.now.copy(), g.before.copy()) for g in hs] for hs in starts]
+    ORIG_CLICK(self, starts, held, going, note)
+    REC["clicks"].append(
+        {"tick": self.ticks, "before": before, "after": board(self), "entries": self.log[log_from:], "calls": REC["calls"], "start": start}
+    )
+    REC["calls"] = []
+
+
+def stress_wrapped(notches, velocity):
+    REC["stress_calls"].append(([n.copy() for n in notches], [v.copy() for v in velocity]))
+    return ORIG_STRESS(notches, velocity)
+
+
+def impulse_wrapped(self):
+    if self.going != 1:
+        return ORIG_IMPULSE(self)
+    clock = self.clock
+    REC["stress_calls"] = []
+    w_side = readings.mean_teeth(clock, self.regulator.gears[0])
+    info = {"tick": clock.ticks, "X": self.stretch_now, "w_side": w_side, "pawls": self.pawls, "hands": []}
+    for r in clock.hands():
+        k = self.where[id(r)]
+        info["hands"].append(
+            {
+                "k": k,
+                "pinion": r.ratio[0],
+                "coupling": coupling_of(r),
+                "a": [x.copy() for x in self.starts[k]],
+                "a_before": [g.before.copy() for g in self.trains[k]],
+                "fine": [g.fine.copy() for g in self.trains[k]],
+                "F": [f.copy() if hasattr(f, "copy") else f for f in self.pull[k]],
+            }
+        )
+    ORIG_IMPULSE(self)
+    info["stress"] = [s.copy() for s in self.stress]
+    info["lead"] = [x.copy() for x in self.lead]
+    info["stress_calls"] = REC["stress_calls"]
+    REC["ticks"].append(info)
+
+
+def advances_wrapped(self):
+    if self.going == 1:
+        info = REC["ticks"][-1]
+        for h in info["hands"]:
+            gears = self.clock.trains_[h["k"]].gears
+            h["a_plus"] = [g.now.copy() for g in gears]
+            h["fine_plus"] = [g.fine.copy() for g in gears]
+            h["w_div"] = gears[0].teeth
+    return ORIG_ADVANCES(self)
+
+
+def tick_push_wrapped(clock, gears, at, notches, pinion, sign=1):
+    got = ORIG_TICK_PUSH(clock, gears, at, notches, pinion, sign)
+    REC["release"].append((clock.ticks, tuple(at), list(got)))
+    return got
+
+
+def install() -> None:
+    clockmod.Clock.click = click_wrapped
+    unspring.push_of = push_wrapped
+    tickmod.Tick.impulse = impulse_wrapped
+    tickmod.Tick.advances = advances_wrapped
+    tickmod.stress_of = stress_wrapped
+    tickmod.push_of = tick_push_wrapped
+
+
+# ---------------- the readings over the state ----------------
+def board(clock):
+    return [[(g.now.copy(), g.before.copy()) for g in h.gears] for h in clock.hands()]
+
+
+def bond_p(nows, befores, pinion):
+    found = []
+    for a in range(AXES):
+        up = spoke_of(a, 0)
+        terms = [across(n, up) * b - n * across(b, up) for n, b in zip(nows, befores, strict=True)]
+        found.append((pinion + pinion) * sum(terms[1:], start=terms[0]))
+    return found
+
+
+def readings_of(clock, state):
+    """(P, L, Q) of a board: the push's momentum, its moment about the great clock's centre (doubled arm), the charge."""
+    P, Lm, Q = [0, 0, 0], [0, 0, 0], 0
+    for h, gears in zip(clock.hands(), state, strict=True):
+        nows, befores = [g[0] for g in gears], [g[1] for g in gears]
+        bond = bond_p(nows, befores, h.ratio[0])
+        P = [p + int(sum(b.reshape(-1))) for p, b in zip(P, bond, strict=True)]
+        for x in np.ndindex(clock.size):
+            arm = [2 * v - clock.cube + 1 for v in x]
+            for a in range(AXES):
+                if int(bond[a][x]):
+                    push = [0, 0, 0]
+                    push[a] = int(bond[a][x])
+                    Lm = [m + d for m, d in zip(Lm, symmetries.moment(arm, push), strict=True)]
+        sw = nows[0] * befores[1] - nows[1] * befores[0]
+        Q += coupling_of(h) * int(sum(sw.reshape(-1)))
+    return P, Lm, Q
+
+
+def sweep4(n):
+    return int(n[0]) * int(n[3]) - int(n[2]) * int(n[1])
+
+
+def vsum(vs):
+    found = [0, 0, 0]
+    for v in vs:
+        found = [f + int(x) for f, x in zip(found, v, strict=True)]
+    return found
+
+
+# ---------------- the run ----------------
+def run(name: str, ticks: int) -> None:
+    fresh()
+    calibre, piece = read_piece(WORLDS / name)
+    piece = dict(piece, intervals=ticks)
+    chart = writer.chart(calibre, piece, 0, lambda line: None)
+    clock = clockmod.Clock(calibre, piece)  # the hands' order and ratios only
+    cube = clock.cube
+    C: dict[str, list[int]] = {}
+
+    def tally(key, ok, by=1):
+        runs, fails = C.setdefault(key, [0, 0])
+        C[key] = [runs + by, fails + (0 if ok else by)]
+
+    kinds_of_calls = {"live": 0, "start": 0, "start1": 0, "own": 0}
+    differ_calls = 0
+    events = {"credit": 0, "birth": 0, "split": 0, "unspringing": 0}
+    p_off = l_off = 0
+    for ck in REC["clicks"]:
+        entries = ck["entries"]
+        P0, L0, Q0 = readings_of(clock, ck["before"])
+        P1, L1, Q1 = readings_of(clock, ck["after"])
+        dP_state = [b - a for a, b in zip(P0, P1, strict=True)]
+        dL_state = [b - a for a, b in zip(L0, L1, strict=True)]
+        logged, moments, seen_takes, dQ_log = [], [], set(), 0
+        pushes_any = False
+        for e in entries:
+            if e["event"] in ("credit", "birth", "split"):
+                events[e["event"]] += 1
+            if e["event"] == "credit":
+                logged.append(e["dP_take"])
+                moments.append((tuple(e["node"]), e["dP_take"]))
+            if e["event"] == "birth":
+                hs = clock.hands()
+                s = e["line_pair"]
+                twins = (s, e.get("plus_hand", s))
+                for k in range(2):
+                    dQ_log += coupling_of(hs[twins[k]]) * (int(e["W_children"][k]) - sweep4(e["stood"][k]))
+                if "takes" in e:
+                    events["unspringing"] += 1
+                    for t in e["takes"]:
+                        logged.append(t["dP_take"])
+                        moments.append((tuple(t["node"]), t["dP_take"]))
+                        dQ_log -= coupling_of(hs[t.get("hand", e["taken_row"])]) * sweep4(t["taken_levels"])
+                    if "cross" in e:
+                        logged.append(e["cross"]["dP"])
+                        moments.append((tuple(e["cross"]["node"]), e["cross"]["dP"]))
+                else:
+                    key = (e["i"], tuple(e["node"]), e["taken_row"])
+                    if key not in seen_takes:
+                        seen_takes.add(key)
+                        logged.append(e["dP_take"])
+                        moments.append((tuple(e["node"]), e["dP_take"]))
+                for where, push in zip((e["minus"], e["plus"]), e["dP_lay_ends"], strict=True):
+                    logged.append(push)
+                    moments.append((tuple(where), push))
+                # the twist's sign and the lead's sign, from the log alone, against the start board
+                if "takes" not in e:
+                    minus, plus, node = tuple(e["minus"]), tuple(e["plus"]), tuple(e["node"])
+                    for a in range(AXES):
+                        if neighbour(clock, minus, spoke_of(a, 0)) == plus:
+                            at, j = minus, plus
+                        elif neighbour(clock, plus, spoke_of(a, 0)) == minus:
+                            at, j = plus, minus
+                        else:
+                            continue
+                        rec = e["taken_row"]
+                        gears = [type("G", (), {"now": n, "before": b})() for n, b in ck["start"][rec]]
+                        twists = meshes.train_twists(gears)
+                        lead = clock.rim * meshes.train_lead(gears, spoke_of(a, 0))
+                        if hs[rec].twin is not None:  # engage adds the twin's own (click.engage, other)
+                            q = hs.index(hs[rec].twin)
+                            g2 = [type("G", (), {"now": n, "before": b})() for n, b in ck["start"][q]]
+                            twists = [t + u for t, u in zip(twists, meshes.train_twists(g2), strict=True)]
+                            lead = lead + clock.rim * meshes.train_lead(g2, spoke_of(a, 0))
+                        h, ld = int(twists[a][at]), int(lead[at])
+                        into = j if ld > 0 else at
+                        tally("h1 the log's node is the end the lead flows into (sign of train_lead)", node == into)
+                        tally("h2 the log's plus == node exactly where the twist is right-handed (h > 0)", (plus == node) == (h > 0))
+        for c in ck["calls"]:
+            kinds_of_calls[c["kind"]] += 1
+            if c["kind"] in ("start", "start1"):
+                differ_calls += c["live"] != c["push"]
+        if not logged and not any(c["kind"] != "own" for c in ck["calls"]):
+            tally("Q charge across the click = the log's W_children - sweep(stood) - sweep(taken_levels)", Q1 - Q0 == dQ_log)
+            continue
+        pushes_any = True
+        dP_log = vsum(logged)
+        dL_log = vsum(symmetries.moment([2 * v - cube + 1 for v in where], push) for where, push in moments)
+        live = vsum(c["live"] for c in ck["calls"] if c["kind"] != "own")
+        start_minus_live = vsum([s - l for s, l in zip(c["push"], c["live"], strict=True)] for c in ck["calls"] if c["kind"] in ("start", "start1"))
+        crosses = vsum(e["cross"]["dP"] for e in entries if e["event"] == "birth" and "cross" in e)
+        tally("P0 accounting: dP_state = SUM of the live pushes (the probe's P is the push's P)", dP_state == live)
+        tally("P1 accounting: dP_log = SUM live + SUM (start - live) + cross", dP_log == [l + s + x for l, s, x in zip(live, start_minus_live, crosses, strict=True)])
+        okP, okL = dP_state == dP_log, dL_state == dL_log
+        p_off += not okP
+        l_off += not okL
+        tally("P  momentum across the click = SUM of the log's pushes", okP)
+        tally("L  angular momentum across the click = SUM of moment(arm, dP) of the log's pushes", okL)
+        tally("Q charge across the click = the log's W_children - sweep(stood) - sweep(taken_levels)", Q1 - Q0 == dQ_log)
+        if any(e["event"] == "birth" for e in entries):
+            tally("Q' the same on the clicks with a birth", Q1 - Q0 == dQ_log)
+            C.setdefault("Q'' clicks with a birth whose charge changed (residue or take)", [0, 0])
+            C["Q'' clicks with a birth whose charge changed (residue or take)"][1] += Q1 != Q0
+        del pushes_any
+
+    # the head's own rows on the same chart: identities of the carry
+    rows = Chart(chart)
+    r71 = symmetries.momentum_booked(rows)["71 the momentum booked on the Link"]["verdict"]
+    r72 = symmetries.angular_momentum(rows)["72 the angular momentum booked on the Link"]["verdict"]
+
+    # ---- per tick: the stress as tick.py sums it, the flows against P, the continuity, the frames ----
+    for info in REC["ticks"]:
+        hs = info["hands"]
+        calls = info["stress_calls"]
+        assert len(calls) == len(hs)
+        total = [0] * (2 * AXES)
+        for h, (notches, velocity) in zip(hs, calls, strict=True):
+            found = regulation.stress_of(notches, velocity)
+            total = [t + h["pinion"] * f for t, f in zip(total, found, strict=True)]
+            a, am, ap = h["a"], h["a_before"], h["a_plus"]
+            # the velocity's two halves: u_in = a - a-, u_out = a+ - a at a stretch held through the tick
+            X, w_side, w_div = info["X"], info["w_side"], h["w_div"]
+            d = (clock.teeth + clock.teeth) * X
+            p_side = [w_side * (n - b) + f - mid(w_side) for n, b, f in zip(a, am, h["fine"], strict=True)]
+            u_in = [rounded(p + p + 1, d) for p in p_side]
+            u_out = [v - u for v, u in zip(velocity, u_in, strict=True)]
+            exact_in = all(bool(np.all(u == n - b)) for u, n, b in zip(u_in, a, am, strict=True))
+            exact_out = all(bool(np.all(u == p - n)) for u, p, n in zip(u_out, ap, a, strict=True))
+            tally("S1 velocity u_in = a - a- at every clock (per hand and tick)", exact_in)
+            tally("S1' velocity u_out = a+ - a at every clock (per hand and tick)", exact_out)
+            Pin = bond_p(a, am, h["pinion"])
+            Pout = bond_p(ap, a, h["pinion"])
+            for ax in range(AXES):
+                lhs = (h["pinion"] + h["pinion"]) * h["pinion"] * int(sum(found[AXES + ax].reshape(-1)))
+                rhs = -h["pinion"] * (int(sum(Pin[ax].reshape(-1))) + int(sum(Pout[ax].reshape(-1))))
+                tally("S2 pinion SUM_x T_0a = -(P(a, a-) + P(a+, a)) / 2 (per hand, axis, tick)", lhs == rhs)
+                if exact_in and exact_out:
+                    tally("S2' the same where both velocities are exact (the stretch held through the tick)", lhs == rhs)
+            # the continuity, exact: w_div sweep(a+, a) - w_side sweep(a, a-) = -X Im(conj a F) - Im(conj(r+ - mid) a) + Im(conj(r - mid') a)
+            F, r, rp = h["F"], h["fine"], h["fine_plus"]
+            lhs = w_div * (ap[0] * a[1] - ap[1] * a[0]) - w_side * (a[0] * am[1] - a[1] * am[0])
+            m_div, m_side = mid(w_div), mid(w_side)
+            rhs = -X * (a[0] * F[1] - a[1] * F[0])
+            rhs = rhs - ((rp[0] - m_div) * a[1] - (rp[1] - m_div) * a[0]) + ((r[0] - m_side) * a[1] - (r[1] - m_side) * a[0])
+            tally("C1 the step's continuity, exact at every clock (per hand and tick)", bool(np.all(lhs == rhs)))
+            # the lead's frame: hands.lead reads the neighbour through the pawl, stress_of does not
+            pawls = [f ** h["coupling"] for f in info["pawls"]]  # the pull's own read: pawl ** coupling (tick.py:142)
+            mixed = 0
+            for ax in range(AXES):
+                up = hands.seen([across(n, spoke_of(ax, 0)) for n in notches], pawls[spoke_of(ax, 0)])
+                dn = hands.seen([across(n, spoke_of(ax, 1)) for n in notches], pawls[spoke_of(ax, 1)])
+                framed = hands.dot([u - v for u, v in zip(up, dn, strict=True)], [u - v for u, v in zip(up, dn, strict=True)])
+                mixed += int(np.sum(framed != found[ax]))
+            tally("S3 stress_of's diagonal = the diagonal read through the pawl's frame (sites differing counted)", mixed == 0, 1)
+            C.setdefault("S3' sites where the two frames' diagonals differ", [0, 0])
+            C["S3' sites where the two frames' diagonals differ"][1] += mixed
+        tally("S0 tick.stress = SUM_h pinion_h stress_of(h) (bit for bit)", all(bool(np.all(t == s)) for t, s in zip(total, info["stress"], strict=True)))
+        lead = [0, 0, 0]
+        for h in hs:
+            J = hands.lead(h["a"], info["pawls"])
+            lead = [x + h["coupling"] * j for x, j in zip(lead, J, strict=True)]
+        tally("J0 tick.lead = SUM_h coupling_h hands.lead(h) (bit for bit)", all(bool(np.all(x == y)) for x, y in zip(lead, info["lead"], strict=True)))
+        turned = sum(int(np.sum(p == -1)) for p in info["pawls"])
+        C.setdefault("pawl -1 spokes over the ticks", [0, 0])
+        C["pawl -1 spokes over the ticks"][1] += turned
+
+    rel = vsum(p for _t, _at, p in REC["release"])
+    print(f"== {name}, {ticks} ticks: {len(REC['clicks'])} clicks; log events {events}; release advances {len(REC['release'])} (their pushes summed {rel}, in no log entry) ==")
+    print(f"  pushes computed by the click: {kinds_of_calls}; start-board pushes differing from the live board's: {differ_calls}")
+    for key, (runs, fails) in C.items():
+        print(f"  {key:100s} runs {runs:5d} failures {fails}")
+    print(f"  the head's row 71: {r71[:140]}")
+    print(f"  the head's row 72: {r72[:140]}")
+    print()
+
+
+def main(argv: list[str]) -> None:
+    install()
+    pairs = argv[1:] or ["world_nature.json", "20", "world_hole.json", "23", "world_polarization.json", "12"]
+    for name, ticks in zip(pairs[0::2], pairs[1::2], strict=True):
+        run(name, int(ticks))
+
+
+if __name__ == "__main__":
+    main(sys.argv)

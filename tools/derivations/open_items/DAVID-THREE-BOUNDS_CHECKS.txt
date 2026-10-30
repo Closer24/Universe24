@@ -1,0 +1,23 @@
+DAVID-THREE-BOUNDS checks, 2026-10-27, 20:4x UTC, on the head 9e1f1a8be (no src touched).
+Harness: CLAMP=5 the Boss's bounds 1 and 2 (the tension in [0, Gamma]; rates_of at most Gamma, a hill at the vacuum's rates);
+CLAMP=4 the cone Q_ij <= Gamma^2 G^2 div max(p_i, p_j)^2 with the hills at Gamma; DRIVE=1 the Boss's bound 3 (the time gear's
+drive numerator read in [-stretch_now dteeth, +stretch_now dteeth], drive_bound.py); LEAD=1 the lead at the kick; START=1 R14.
+bang_clamp.py BACK=10; chart_w.py the rewind of 10. Acts 7 and 12 are not in the harness.
+
+1. The bang, 5,000,000 quanta, 1,000 ticks; 1,500,000 and 1,600,000 (X bits; returns = ticks with the board's largest X at 10 bits):
+   CLAMP=4 LEAD=1 DRIVE=0: 1000 ticks, X bits at most by the hundreds [48, 48, 49, 50, 51, 51, 52, 52, 52, 53], stopped at most 64, train clock-ticks past the edge 0, returns 1 (first [4]) | CLAMP=4: fittings 103, chimes 31883, the rewind {'intervals': 10, 'exact': 10}
+   CLAMP=5 LEAD=1 DRIVE=0: 1000 ticks, X bits at most by the hundreds [37, 38, 38, 38, 38, 38, 38, 38, 38, 38], stopped at most 8, train clock-ticks past the edge 0, returns 5 (first [2, 3, 5, 6, 8]) | CLAMP=5: fittings 155, chimes 6783, the rewind {'intervals': 10, 'exact': 10}
+   CLAMP=5 LEAD=1 DRIVE=1: 1000 ticks, X bits at most by the hundreds [13, 13, 13, 13, 13, 13, 13, 13, 13, 13], stopped at most 0, train clock-ticks past the edge 0, returns 400 (first [4, 5, 9, 10, 14, 15]) | CLAMP=5: fittings 96, chimes 0, the rewind {'intervals': 10, 'exact': 10}
+   CLAMP=5 LEAD=0 DRIVE=1: 1000 ticks, X bits at most by the hundreds [13, 13, 13, 13, 13, 13, 13, 13, 13, 13], stopped at most 0, train clock-ticks past the edge 0, returns 400 (first [4, 5, 9, 10, 14, 15]) | CLAMP=5: fittings 96, chimes 0, the rewind {'intervals': 10, 'exact': 10}
+   1.5M CLAMP=5 LEAD=1 DRIVE=0: 600 ticks, X bits at most by the hundreds [34, 38, 39, 39, 37, 37], stopped at most 7, train clock-ticks past the edge 0, returns 3 (first [2, 3, 5]) | CLAMP=5: fittings 151, chimes 8134, the rewind {'intervals': 10, 'exact': 10}
+   1.6M CLAMP=5 LEAD=1 DRIVE=0: 200 ticks, X bits at most by the hundreds [34, 34], stopped at most 2, train clock-ticks past the edge 0, returns 3 (first [2, 3, 5]) | CLAMP=5: fittings 41, chimes 494, the rewind {'intervals': 10, 'exact': 10}
+   1.6M CLAMP=5 LEAD=0 DRIVE=0: 200 ticks, X bits at most by the hundreds [34, 33], stopped at most 2, train clock-ticks past the edge 0, returns 3 (first [2, 3, 5]) | CLAMP=5: fittings 34, chimes 0, the rewind {'intervals': 10, 'exact': 10}
+
+2. world_nature.json (chart_w.py, CLAMP=5 LEAD=1 START=1 DRIVE=1, the light's sea laid k times), and the head:
+   world_nature.json 20 ticks, the light's sea x1, CLAMP=0 LEAD=0 START=0 DRIVE=0: fittings 5, chimes 453, rows SHOWN 30, the rewind {'intervals': 10, 'exact': 10} | ticks past the edge 12
+   world_nature.json 20 ticks, the light's sea x1, CLAMP=5 LEAD=1 START=1 DRIVE=1: fittings 2, chimes 275, rows SHOWN 28, the rewind {'intervals': 10, 'exact': 10} | ticks past the edge 0
+   world_nature.json 20 ticks, the light's sea x2, CLAMP=5 LEAD=1 START=1 DRIVE=1: fittings 6, chimes 450, rows SHOWN 30, the rewind {'intervals': 10, 'exact': 10} | ticks past the edge 0
+   world_nature.json 20 ticks, the light's sea x3, CLAMP=5 LEAD=1 START=1 DRIVE=1: fittings 4, chimes 11, rows SHOWN 30, the rewind {'intervals': 10, 'exact': 10} | ticks past the edge 0
+   world_nature.json 20 ticks, the light's sea x4, CLAMP=5 LEAD=1 START=1 DRIVE=1: fittings 7, chimes 266, rows SHOWN 34, the rewind {'intervals': 10, 'exact': 10} | ticks past the edge 0
+   world_nature.json 60 ticks, the light's sea x1, CLAMP=5 LEAD=1 START=1 DRIVE=1: fittings 2, chimes 2849, rows SHOWN 32, the rewind {'intervals': 10, 'exact': 10} | ticks past the edge 0
+   world_nature.json 60 ticks, the light's sea x2, CLAMP=5 LEAD=1 START=1 DRIVE=1: fittings 6, chimes 2435, rows SHOWN 32, the rewind {'intervals': 10, 'exact': 10} | ticks past the edge 0

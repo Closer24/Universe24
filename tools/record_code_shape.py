@@ -1,20 +1,14 @@
 """The shape of the code, gated against the merge base (the model owner's decisions of 2026-09-26
 through the Boss, records 2239 and 2241; #1198, gate 7: no recorded baseline file).
 
-For every Python file under `src/` the counts: total lines, docstring lines, comment lines,
-references to records or decisions ("record 2234", "decision 3"), sites of Rule3's arithmetic
-outside its one function, sites that shift an array across Nodes and sites that write a level onto
-the lattice (an item of, or the attribute, `now`, `before` or `remainder`
-assigned or augmented: the write's gate, the model owner's word of 2026-09-28: every level written
-is one act of the write, features/write, or Rule3's own step, applied by the loop at its sites at
-the merge base and nowhere new); for every Python file of
-`src/`, `tools/` and `tests/`, the names imported from the loop's module beyond its public entry.
-A file within the limits (every docstring one line, no record reference, under 400 lines, none of
-the sites) passes whatever its counts. A file beyond them holds each count at or below the same
-file's at the merge base (CHECK_BASE, else origin/main), read from git; a new file beyond them
-fails. Two functions of `src/` with one abstracted body fail beyond the merge base's groups; an
-internal of the loop is imported by no more files than at the merge base. The import contracts
-hold outright: a feature folder imports `core/` alone; `core/` imports nothing outside itself.
+For every Python file under `src/` the counts: total lines, docstring lines, comment lines and
+references to records or decisions ("record 2234", "decision 3"). A file within the limits (every
+docstring one line, no record reference, under 400 lines) passes whatever its counts. A file
+beyond them holds each count at or below the same file's at the merge base (CHECK_BASE, else
+origin/main), read from git; a new file beyond them fails. Two functions of `src/` with one
+abstracted body fail beyond the merge base's groups. The old engine's rules (Rule3's arithmetic
+in one home, the shifts across Nodes, the writes of a level, the loop's internals and the import
+contracts of its folders) left with src/event_universe on the owner's word of 2026-10-30.
 
 Usage: `python tools/record_code_shape.py` prints every departure from the merge base.
 """
@@ -35,36 +29,15 @@ sys.path.insert(0, str(ROOT / "tools"))
 
 from merge_base import base_ref, carried, tree_at  # noqa: E402
 
-PACKAGE = Path("src/event_universe")
-LOOP = PACKAGE / "clock.py"
-LOOP_MODULE = "event_universe.clock"
-LOOP_PUBLIC = frozenset({"Clock"})
 NEW_FILE_LINES = 400
 DUPLICATE_MIN_STATEMENTS = 2
 RECORD_REFERENCE = re.compile(r"\b(?:record|records|decision|decisions)\s+\d+", re.IGNORECASE)
-# Rule3's own lines, the flux line's and the arrivals form's (tests/test_rule3.py names the same)
-RULE_ARITHMETIC = (
-    r"mass \* now\b",
-    r"wall \* \(now \+ now - other\)",
-    r"self_coefficient \* (now|before)\b",
-    r"wall \* before\b",
-    r"wall \* now \+ remainder",
-    r"now \* now \+ before \* before",
-)
-RULE_HOME = PACKAGE / "core" / "rule3.py"
-LEVEL_SHIFT = re.compile(r"np\.roll\(|self\._shift\(|\.take\(")
-SHIFT_HOME = PACKAGE / "core" / "spokes.py"
-LEVELS = frozenset({"now", "before", "remainder"})
 COUNTS = (
     "lines",
     "docstring_lines",
     "comment_lines",
     "record_references",
-    "rule_arithmetic_sites",
-    "level_shift_sites",
-    "level_write_sites",
 )
-SCOPES = ("src", "tools", "tests")
 
 
 def python_files(root: Path, folder: str) -> list[Path]:
@@ -84,29 +57,7 @@ def docstring_of(node: ast.AST) -> ast.Expr | None:
     return None
 
 
-def written_object(target: ast.expr) -> ast.expr:
-    """The object a subscript writes into, through a call around it (`cast(np.ndarray, record.now)[mask]`)."""
-    while isinstance(target, ast.Call) and target.args:
-        target = target.args[-1]
-    return target
-
-
-def level_write_sites(tree: ast.AST) -> int:
-    """The assignments and augmented assignments whose target is an item of, or the attribute, a level of any object (`now`, `before`, `remainder`): the loop's applications of the write's act and of Rule3's step, and nothing new."""
-    found = 0
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Assign | ast.AugAssign | ast.AnnAssign):
-            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
-            for target in targets:
-                for element in target.elts if isinstance(target, ast.Tuple) else [target]:
-                    held = (
-                        written_object(element.value) if isinstance(element, ast.Subscript) else element
-                    )
-                    found += isinstance(held, ast.Attribute) and held.attr in LEVELS
-    return found
-
-
-def shape_of(root: Path, path: Path) -> dict[str, int]:
+def shape_of(path: Path) -> dict[str, int]:
     """The counts of one file of `src/`."""
     text = path.read_text(encoding="utf-8")
     tree = ast.parse(text)
@@ -124,19 +75,11 @@ def shape_of(root: Path, path: Path) -> dict[str, int]:
         for token in tokenize.generate_tokens(io.StringIO(text).readline)
         if token.type == tokenize.COMMENT
     }
-    arithmetic = 0
-    if path.resolve() != (root / RULE_HOME).resolve():
-        arithmetic = sum(len(re.findall(pattern, text)) for pattern in RULE_ARITHMETIC)
     return {
         "lines": len(text.splitlines()),
         "docstring_lines": len(docstring_lines),
         "comment_lines": len(comment_lines),
         "record_references": len(RECORD_REFERENCE.findall(text)),
-        "rule_arithmetic_sites": arithmetic,
-        "level_shift_sites": (
-            0 if path.resolve() == (root / SHIFT_HOME).resolve() else len(LEVEL_SHIFT.findall(text))
-        ),
-        "level_write_sites": level_write_sites(tree),
         "multi_line_docstrings": multi_line,
     }
 
@@ -206,98 +149,23 @@ def duplicates(root: Path) -> dict[str, list[str]]:
     return {digest: sorted(names) for digest, names in sorted(groups.items()) if len(names) > 1}
 
 
-def imports_of(path: Path, module_name: str) -> list[tuple[str, list[str]]]:
-    """Every import of the file as (module, names), relative imports resolved; a bare `import
-    a.b` is ("a.b", ["*"])."""
-    found: list[tuple[str, list[str]]] = []
-    package = module_name.rsplit(".", 1)[0] if module_name.count(".") else ""
-    for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
-        if isinstance(node, ast.Import):
-            found.extend((alias.name, ["*"]) for alias in node.names)
-        elif isinstance(node, ast.ImportFrom):
-            module = node.module or ""
-            if node.level:
-                parts = package.split(".") if package else []
-                parts = parts[: len(parts) - node.level + 1] if node.level > 1 else parts
-                module = ".".join(part for part in [*parts, module] if part)
-            found.append((module, [alias.name for alias in node.names]))
-    return found
-
-
-def module_name_of(root: Path, path: Path) -> str:
-    rel = path.relative_to(root / "src") if path.is_relative_to(root / "src") else path.relative_to(root)
-    parts = list(rel.with_suffix("").parts)
-    if parts[-1] == "__init__":
-        parts = parts[:-1]
-    return ".".join(parts)
-
-
-def loop_internal_imports(root: Path) -> dict[str, list[str]]:
-    """Per file of `src/`, `tools/` and `tests/` outside `core/` and the loop's own module, the
-    names it imports from the loop's module beyond its public entry ("*" a bare module import)."""
-    found: dict[str, list[str]] = {}
-    for scope in SCOPES:
-        for path in python_files(root, scope):
-            rel = relative(root, path)
-            if rel == LOOP.as_posix() or rel.startswith((PACKAGE / "core").as_posix() + "/"):
-                continue
-            names = sorted(
-                {
-                    name
-                    for module, imported in imports_of(path, module_name_of(root, path))
-                    if module == LOOP_MODULE
-                    for name in imported
-                    if name not in LOOP_PUBLIC
-                }
-            )
-            if names:
-                found[rel] = names
-    return found
-
-
-def contract_violations(root: Path) -> list[str]:
-    """The import contracts of record 2241 (b), no baseline: a feature folder imports `core/`
-    alone and never another feature; `core/` imports nothing of the package outside itself."""
-    package = PACKAGE.name
-    core = f"{package}.core"
-    violations: list[str] = []
-    for path in python_files(root, "src"):
-        rel = relative(root, path)
-        module = module_name_of(root, path)
-        parts = module.split(".")
-        if len(parts) < 2 or parts[0] != package:
-            continue
-        for imported, _names in imports_of(path, module):
-            if not (imported == package or imported.startswith(package + ".")):
-                continue
-            if parts[1] == "features":
-                own = ".".join(parts[:3])
-                if not (imported == core or imported.startswith(core + ".") or imported == own):
-                    violations.append(f"{rel} imports {imported}: a feature imports core/ alone")
-            elif parts[1] == "core":
-                if not (imported == core or imported.startswith(core + ".")):
-                    violations.append(f"{rel} imports {imported}: core/ imports nothing outside core/")
-    return violations
-
-
 def record(root: Path) -> dict[str, Any]:
-    """The record of a tree: the counts of the files beyond the limits alone (a file within them needs none), the duplicate groups and the imports of the loop's internals."""
+    """The record of a tree: the counts of the files beyond the limits alone (a file within them needs none) and the duplicate groups."""
     files = {}
     for path in python_files(root, "src"):
         rel = relative(root, path)
-        shape = shape_of(root, path)
+        shape = shape_of(path)
         if beyond_the_limits(rel, shape):
             files[rel] = {key: shape[key] for key in COUNTS}
     return {
         "format": "code-shape-baseline",
         "files": dict(sorted(files.items())),
         "duplicates": duplicates(root),
-        "loop_internal_imports": dict(sorted(loop_internal_imports(root).items())),
     }
 
 
 def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
-    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line, a record reference, 400 lines, a site of Rule3's arithmetic, of a shift across Nodes or of a write of a level onto the lattice."""
+    """Every way one file is beyond the limits every file is held to from its first commit: a docstring beyond one line, a record reference or 400 lines."""
     found: list[str] = []
     if shape["multi_line_docstrings"]:
         found.append(f"{rel} has {shape['multi_line_docstrings']} docstring(s) beyond one line")
@@ -305,16 +173,13 @@ def beyond_the_limits(rel: str, shape: dict[str, int]) -> list[str]:
         found.append(f"{rel} refers to {shape['record_references']} record(s) or decision(s)")
     if shape["lines"] >= NEW_FILE_LINES:
         found.append(f"{rel} has {shape['lines']} lines (the limit {NEW_FILE_LINES})")
-    for key in ("rule_arithmetic_sites", "level_shift_sites", "level_write_sites"):
-        if shape[key]:
-            found.append(f"{rel} has {shape[key]} {key.replace('_', ' ')}")
     return found
 
 
 def record_at(root: Path, ref: str | None = None) -> dict[str, Any]:
     """The same record of the merge base's tree (CHECK_BASE, else origin/main), read from git: no file holds it."""
     ref = ref or base_ref()
-    with tree_at(root, ref, SCOPES) as base_root:
+    with tree_at(root, ref, ("src",)) as base_root:
         base = record(base_root)
     return {**base, "files": carried(base["files"], root, ref)}
 
@@ -324,7 +189,7 @@ def violations(root: Path, base: dict[str, Any]) -> list[str]:
     found: list[str] = []
     for path in python_files(root, "src"):
         rel = relative(root, path)
-        shape = shape_of(root, path)
+        shape = shape_of(path)
         beyond = beyond_the_limits(rel, shape)
         if not beyond:
             continue
@@ -338,23 +203,6 @@ def violations(root: Path, base: dict[str, Any]) -> list[str]:
     for digest, names in duplicates(root).items():
         if len(names) > len(base["duplicates"].get(digest, [])):
             found.append(f"duplicate functions: {', '.join(names)} share one body")
-
-    # per name, the number of files importing it: a helper moved between files keeps the count
-    def importers(table: dict[str, list[str]]) -> dict[str, int]:
-        counts: dict[str, int] = {}
-        for names in table.values():
-            for name in names:
-                counts[name] = counts.get(name, 0) + 1
-        return counts
-
-    was_imported = importers(base["loop_internal_imports"])
-    for name, count in sorted(importers(loop_internal_imports(root)).items()):
-        if count > was_imported.get(name, 0):
-            found.append(
-                f"the loop's internal {name} is imported by {count} files, above the merge base's "
-                f"{was_imported.get(name, 0)}: nothing outside core/ imports it"
-            )
-    found.extend(contract_violations(root))
     return found
 
 

@@ -1,1 +1,0 @@
-{"shape": [33, 33, 33], "boundary": {"x": "open", "y": "open", "z": "open"}, "face_depth": 1, "intervals": 224, "universe": "examples/events/atom/hydrogen_72M.json", "bodies": [{"family": "proton", "nodes": [{"node": [16, 16, 16], "count": 1}]}, {"family": "electron", "nodes": [{"node": [17, 16, 16], "count": 1}]}], "node_detectors": []}

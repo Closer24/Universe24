@@ -1,0 +1,52 @@
+kinds ('A1', 'A2', 'E', 'T1', 'T2') dims (1, 1, 2, 3, 3) turns weighed 1: 24
+  A1: orthogonal on the 24 in the act's basis: True
+  A2: orthogonal on the 24 in the act's basis: True
+  E: orthogonal on the 24 in the act's basis: False
+  T1: orthogonal on the 24 in the act's basis: True
+  T2: orthogonal on the 24 in the act's basis: True
+  E's basis (e1 - e2, e2 - e3), its Gram matrix: [[2, -1], [-1, 2]]
+  C[A1; A1, A1]: C C^T = 1 I
+  C[A2; A1, A2]: C C^T = 1 I
+  C[E; A1, E]: C C^T = 1 I
+  C[T1; A1, T1]: C C^T = 1 I
+  C[T2; A1, T2]: C C^T = 1 I
+  C[A2; A2, A1]: C C^T = 1 I
+  C[A1; A2, A2]: C C^T = 1 I
+  C[E; A2, E]: C C^T not scalar: [[5, 4], [4, 5]]
+  C[T2; A2, T1]: C C^T = 1 I
+  C[T1; A2, T2]: C C^T = 1 I
+  C[E; E, A1]: C C^T = 1 I
+  C[E; E, A2]: C C^T not scalar: [[5, 4], [4, 5]]
+  C[A1; E, E]: C C^T = 10 I
+  C[A2; E, E]: C C^T = 2 I
+  C[E; E, E]: C C^T not scalar: [[7, 2], [2, 7]]
+  C[T1; E, T1]: C C^T not scalar: [[1, 0, 0], [0, 2, 0], [0, 0, 1]]
+  C[T2; E, T1]: C C^T not scalar: [[5, 0, 0], [0, 2, 0], [0, 0, 5]]
+  C[T1; E, T2]: C C^T not scalar: [[5, 0, 0], [0, 2, 0], [0, 0, 5]]
+  C[T2; E, T2]: C C^T not scalar: [[1, 0, 0], [0, 2, 0], [0, 0, 1]]
+  C[T1; T1, A1]: C C^T = 1 I
+  C[T2; T1, A2]: C C^T = 1 I
+  C[T1; T1, E]: C C^T not scalar: [[1, 0, 0], [0, 2, 0], [0, 0, 1]]
+  C[T2; T1, E]: C C^T not scalar: [[5, 0, 0], [0, 2, 0], [0, 0, 5]]
+  C[A1; T1, T1]: C C^T = 3 I
+  C[E; T1, T1]: C C^T not scalar: [[6, 3], [3, 6]]
+  C[T1; T1, T1]: C C^T = 2 I
+  C[T2; T1, T1]: C C^T = 2 I
+  C[A2; T1, T2]: C C^T = 3 I
+  C[E; T1, T2]: C C^T not scalar: [[2, 1], [1, 2]]
+  C[T1; T1, T2]: C C^T = 2 I
+  C[T2; T1, T2]: C C^T = 2 I
+  C[T2; T2, A1]: C C^T = 1 I
+  C[T1; T2, A2]: C C^T = 1 I
+  C[T1; T2, E]: C C^T not scalar: [[5, 0, 0], [0, 2, 0], [0, 0, 5]]
+  C[T2; T2, E]: C C^T not scalar: [[1, 0, 0], [0, 2, 0], [0, 0, 1]]
+  C[A2; T2, T1]: C C^T = 3 I
+  C[E; T2, T1]: C C^T not scalar: [[2, 1], [1, 2]]
+  C[T1; T2, T1]: C C^T = 2 I
+  C[T2; T2, T1]: C C^T = 2 I
+  C[A1; T2, T2]: C C^T = 3 I
+  C[E; T2, T2]: C C^T not scalar: [[6, 3], [3, 6]]
+  C[T1; T2, T2]: C C^T = 2 I
+  C[T2; T2, T2]: C C^T = 2 I
+tables not 0: 43 ; the scalar norms: [1, 2, 3, 10]
+integer k_1, k_2 with k_1^2 * 1 = k_2^2 * 2, for k up to 199: none

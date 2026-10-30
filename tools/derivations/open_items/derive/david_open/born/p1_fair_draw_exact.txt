@@ -1,0 +1,20 @@
+(1, 2) the rank count over a full turn: 2880 of 2880 cases drew each part exactly sigma_i times (L from 1 to 120, 1 to 6 parts, parts of size 0 included, the dial's turn and one digit's turn)
+(3) the twins: Fierz sigma_up = (rho rho_d + S . m) / 2 exact in 400 of 400; the carry's side drew up exactly sigma_up times over the full turn in 400 of 400; the largest |ups / L - cos^2(theta / 2)| = 0
+(4) the head's draw (the digits sorted, then composed by Horner modulo M; up where 2 c < room), over every combination of its digits, on equal parts where a fair draw gives 1/2:
+    2 digits of base 2, M 64: P(up) = 3/4 = 0.7500
+    3 digits of base 2, M 64: P(up) = 7/8 = 0.8750
+    4 digits of base 2, M 64: P(up) = 15/16 = 0.9375
+    3 digits of base 3, M 64: P(up) = 20/27 = 0.7407
+    3 digits of base 4, M 64: P(up) = 7/8 = 0.8750
+    4 digits of base 3, M 81: P(up) = 22/27 = 0.8148
+    3 digits of base 6, M 1000: P(up) = 7/8 = 0.8750
+    7 digits of base 2, M 1000: P(up) = 127/128 = 0.9922
+    beside it, the sum modulo L over the same combinations, up where 2 d < L:
+    3 digits of base 2, L 2: P(up) = 1/2
+    4 digits of base 2, L 2: P(up) = 1/2
+    3 digits of base 4, L 2: P(up) = 1/2
+    3 digits of base 4, L 4: P(up) = 1/2
+    3 digits of base 6, L 6: P(up) = 1/2
+    7 digits of base 2, L 2: P(up) = 1/2
+      (exact wherever the base is a multiple of L: one digit's full turn then covers each residue alike; the dial c supplies that turn for every L)
+(4') the head's own digit framed o + |r - o| on the whole base 17: 16 of 17 values in the upper half (a fair digit puts 8 or 9 there)

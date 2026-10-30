@@ -1,0 +1,376 @@
+diff --git a/src/event_universe/close.py b/src/event_universe/close.py
+index 32174ed0a..f25ba9a43 100644
+--- a/src/event_universe/close.py
++++ b/src/event_universe/close.py
+@@ -36,9 +36,13 @@ class Birth(NamedTuple):
+ def list_of(node: Node, rec: int, number: int) -> int:
+     """The children's record of a meeting of the record `rec` by the pairs: where the taken row is the emitter the draw's pick among the planes (the number over the unit, modulo their count); where it is another record, the row whose pair is the product (den, den), the emitter (SL-S1: two gapped quanta meeting give light)."""
+     records = node.records()
+-    if records[rec] is not node.emitter():
++    if (
++        records[rec].exchange < 0
++    ):  # an antisymmetric meeting gives the symmetric family (the merger into light)
+         return records.index(node.emitter())
+-    planes = [k for k, r in enumerate(records) if r.shape == PLANE]
++    planes = [
++        k for k, r in enumerate(records) if r.shape == PLANE and r.exchange < 0
++    ]  # a symmetric meeting draws an antisymmetric pair
+     return planes[int(remainder(quotient(number, node.units[rec]), len(planes)))]
+ 
+ 
+@@ -88,7 +92,9 @@ def meet(
+ def refuse(node: Node, born: list[Birth], owns: list[Any]) -> list[Birth]:
+     """The lay refused by name: where any of the child's plane already stands at its Node, and where two children of one plane would land at one Node in one close (the charge made at a crowded lay); a merger's light children (the taken record with a gap, the children the gap-0 row) pass both and read their bound on their own quantum at the take, the light's unit at the end as MG-S1's share reads it, the light a sea the merger pays into (the Boss's word of 2026-10-26, 11:33 UTC, 6414995372; the standing-light bound of 4ad484eb9, which ended every merger of the record, kept by name; the birth read at -1, MG-S1). Returns the births kept."""
+     records = node.records()
+-    inverse = [k for k in born if records[k.line_pair] is node.emitter() is not records[k.rec]]
++    inverse = [
++        k for k in born if records[k.line_pair].exchange > 0
++    ]  # a symmetric family shares one state: no refusal
+     kept = []
+     for at, s, minus, plus, room, rec in [k for k in born if k not in inverse]:
+         if int(owns[s][minus]) > 0 or int(owns[s][plus]) > 0:
+@@ -129,7 +135,7 @@ def births(
+     for at, rec in sorted(by_node):
+         kids = by_node[(at, rec)]
+         row, rule = records[rec], rules[rec]
+-        if row is not node.emitter():
++        if row.exchange < 0:  # an antisymmetric family is taken whole at each end (MG-S1)
+             for kid in kids:
+                 ends = list(zip((kid.minus, kid.plus), walls[kid], strict=True))
+                 drawn: list[Any] = []
+@@ -153,7 +159,7 @@ def births(
+         taken.append((at, rec, kids, summed(got)))
+     touched: set[tuple[int, ...]] = set()
+     for at, rec, kids, take in taken:
+-        touched |= children(node, at, kids, take, rec, c, factors)
++        touched |= children(node, at, kids, take, rec, c, factors, walls)
+         node.counts["taken"] += take["taken"]
+         node.counts["booked"] += take["booked"]
+     return touched
+@@ -167,6 +173,7 @@ def children(
+     rec: int,
+     c: Any,
+     factors: tuple[Any, ...],
++    walls_of_kid: dict[Any, tuple[int, int]] | None = None,
+ ) -> set[tuple[int, ...]]:
+     """One take's children laid by the one lay act (merger.children_laid: the charged children at the charge T div 2, a merger's light children as the exact take at -1, merger.light_levels, MG-S1, each end's wall found by its Node and not by its place in the take's list, so the lay is order-free under the ends' naming, the comparison's bug of close.py:166-169, CL-S2), each birth logged with its numbers, its take's own momentum among them (the Boss's 6399718139: every take's dP on its line, not the close's last), a merger's two ends' takes under `takes` and its lays under `exact_lay`. Returns the Nodes touched."""
+     touched = {at}
+@@ -182,6 +189,12 @@ def children(
+                 if t["node"] == list(where)
+             }
+             levels_of = light_levels(node, s, walls, readings.rule(node, row.pair, c, factors), exact)
++        elif (
++            row.exchange > 0 and walls_of_kid is not None
++        ):  # a symmetric family joins its standing mode: the exact take at -1
++            pair_walls = walls_of_kid[Birth(_at, s, minus, plus, room, _rec)]
++            walls = {-1: pair_walls[0], 1: pair_walls[1]}
++            levels_of = light_levels(node, s, walls, readings.rule(node, row.pair, c, factors), exact)
+         else:
+ 
+             def levels_of(_where: tuple[int, ...], sense: int, row: Row = row) -> tuple[int, ...]:
+@@ -229,7 +242,12 @@ def click(
+                     if laid is None:
+                         lay(node, s, tuple(where), child_levels(node.records()[s], sense, a, b), -1)
+                     else:
+-                        move(node, s, laid[0], tuple(where), -laid[1])
++                        line_k, count, *account = (
++                            laid  # the account lay's (rise, was, now) after the move
++                        )
++                        move(node, s, line_k, tuple(where), -count)
++                        for _rise, was, now in [account] if account else []:
++                            node.take_rem[tuple(where)] -= now - was
+                 if "cross" in entry:
+                     cross = entry["cross"]
+                     recoil(node, tuple(cross["node"]), cross["dP"], cross["clock"], -1)
+@@ -237,9 +255,12 @@ def click(
+                 row = entry.get("taken_row", rec0)
+                 for take in entry.get("takes", [entry]):
+                     where = tuple(take["node"])
+-                    if entry["event"] == "credit" or (where, row, at) not in unbooked:
++                    first = entry["event"] == "credit" or (where, row, at) not in unbooked
++                    if first:
+                         unbooked.add((where, row, at))
+                         recoil(node, where, take["dP_take"], take["clock"], -1)
++                    if not first and "takes" not in entry:
++                        continue  # one take shared by several children is undone once
+                     if "taken_levels" in take:
+                         lay(node, row, where, tuple(take["taken_levels"]))
+                         node.closes[where] += 1
+@@ -247,7 +268,10 @@ def click(
+                     toward = 1 if take["taker"][1] > take["taker"][0] else -1
+                     count = 0 if "laid_back" in take else toward * take["levels"]
+                     move(node, row, take["taken_line"], where, -count)
+-                    node.take_rem[where] = take["remainder_was"]
++                    if "remainder" in take:
++                        node.take_rem[where] -= take["remainder"] - take["remainder_was"]
++                    else:
++                        node.take_rem[where] = take["remainder_was"]
+                 node.closes[at] -= 1
+         del node.log[frame["log_from"] :]
+         node.standing, node.crossed, node.beats = frame["counters"]
+diff --git a/src/event_universe/draw.py b/src/event_universe/draw.py
+index e8810eac3..c08b65d0a 100644
+--- a/src/event_universe/draw.py
++++ b/src/event_universe/draw.py
+@@ -18,7 +18,7 @@ def read_number(
+     node: Node, at: tuple[int, ...], rules: list[tuple[Line, rule3.Rule]], unit: int
+ ) -> tuple[int, int] | None:
+     """The one-Link read: every line's remainder at the Node on the Node's own lattice F_i = gcd(w, D_i, R_i1..R_i6) and at each neighbour on the Link's lattice gcd(w, R_ji), the digit r div F, the base w div F + 1, sorted by value, composed modulo M = the taken row's unit times the planes' count, the shape-2 records the draw names (the carry); refused by name at the origin (every remainder at the half) and where every lattice is coarse (A48-S1's read in the laid frame, a48b's form, built at 05cca50 and reverted: the 48 on the clicks held to the interval 10 and parted at 11 on every reflection at the tie of the sign row's time line's write remainder, and the cycle seed's draws fell on the origin; it returns with its mend)."""
+-    modulus = unit * sum(1 for r in node.records() if r.shape == PLANE)
++    modulus = unit * sum(1 for r in node.records() if r.shape == PLANE and r.exchange < 0)
+     nodes, digits, origin, coarse, w_half = frame_nodes(node, at), [], True, True, acts.born(node.w)
+     for line, r in rules:
+         for k, n in enumerate(nodes):
+diff --git a/src/event_universe/loader/world.py b/src/event_universe/loader/world.py
+index 3c4975624..90cd2d9ea 100644
+--- a/src/event_universe/loader/world.py
++++ b/src/event_universe/loader/world.py
+@@ -11,7 +11,7 @@ UNIVERSE_KEYS = frozenset({"integers", "rows"})
+ INTEGERS = frozenset(
+     {"den", "node_clock", "quantum_action", "trace", "amplitude"}
+ )  # the Link unit G is derived from Gamma (K-S1), no key; the trace the held write's weight (ALGEBRA.md, the held write); the amplitude the phase line's scale declared from outside, carried above the floor derived from Gamma (phase.carried; the owner's words of 2026-10-27, 04:0x and 04:4x UTC)
+-ROW_KEYS = frozenset({"shape", "pair", "wall"})
++ROW_KEYS = frozenset({"shape", "pair", "wall", "exchange"})
+ 
+ 
+ def refused_keys(found: dict[str, Any], allowed: frozenset[str], name: str) -> None:
+diff --git a/src/event_universe/merger.py b/src/event_universe/merger.py
+index f8602a98c..6c6ca9576 100644
+--- a/src/event_universe/merger.py
++++ b/src/event_universe/merger.py
+@@ -47,11 +47,17 @@ def light_levels(
+     row = node.records()[s]
+ 
+     def levels_of(where: tuple[int, ...], sense: int) -> tuple[int, ...]:
+-        count, rise, k = take.fall_of(node, where, walls[sense], rule, row, -1)
++        was = int(
++            node.take_rem[where]
++        )  # the family's account at the Node: energy out of its levels, booked to no quantum
++        count, rise, k = take.fall_of(node, where, walls[sense] + was, rule, row, -1)
+         assert count is not None
+         z = row.lines[k]
+         d = count * (1 if int(z.now[where]) > int(z.before[where]) else -1)
+-        exact.append([k, d, rise])
++        node.take_rem[where] = (
++            walls[sense] + was - rise
++        )  # in [0, one level's rise): N quanta laid hold N quanta
++        exact.append([k, d, rise, was, int(node.take_rem[where])])
+         return tuple(d if j == PLANE * k else 0 for j in range(PLANE * len(row.lines)))
+ 
+     return levels_of
+diff --git a/src/event_universe/node.py b/src/event_universe/node.py
+index 85f17e9f9..c4f75c129 100644
+--- a/src/event_universe/node.py
++++ b/src/event_universe/node.py
+@@ -86,7 +86,7 @@ class Node:
+         self.take_rem = zeros(shape)
+         self.carry0 = zeros(shape) + acts.born(self.gamma * self.gamma)
+         self.carry1 = zeros(shape) + acts.born(self.gamma)
+-        self.paces_now = None
++        self.paces_now: tuple[Any, Any] | None = None
+         self.log: list[dict[str, Any]] = []
+         self.turns: list[tuple[int, int]] = []
+         self.stack: list[dict[str, Any]] = []
+diff --git a/src/event_universe/readings.py b/src/event_universe/readings.py
+index dd05dbcd2..cf42f7e0e 100644
+--- a/src/event_universe/readings.py
++++ b/src/event_universe/readings.py
+@@ -18,15 +18,15 @@ if TYPE_CHECKING:
+ 
+ def paces_of(node: Node, content: Any) -> tuple[Any, Any]:
+     """The Node's two paces from its content, the clock p_0 and the Link's pace p_i (X2: paces(content)), one reading; the carried pair of the interval where one stands (the blind build)."""
+-    found = getattr(node, "paces_now", None)
+-    if found is not None:
+-        return found
++    if node.paces_now is not None:
++        return node.paces_now
+     return paces.clock_of(node.gamma, content), paces.link_pace_of(node.gamma, content)
+ 
+ 
+ def carried_paces(node: Node, content: Any, direction: int) -> tuple[Any, Any]:
+     """The blind build of the toy's carried paces: the clock N(c) = q_0 Gamma^2 + r_0 and the Link pace p_0^2 = q Gamma + r, each one carried division of the Node with its remainder kept per Node across intervals, advanced once per interval forward and inverted once backward (acts.divide at -1 with the same numerator)."""
+     from event_universe.core import acts
++
+     g = node.gamma
+     numerator = np.asarray(paces.numerator_of(g, content), dtype=object)
+     p0, node.carry0 = acts.divide(numerator, g * g, node.carry0, direction)
+diff --git a/src/event_universe/rows.py b/src/event_universe/rows.py
+index 2818abf76..d717401e3 100644
+--- a/src/event_universe/rows.py
++++ b/src/event_universe/rows.py
+@@ -23,14 +23,14 @@ def zeros(shape: tuple[int, ...]) -> Any:
+ 
+ 
+ class Row:
+-    """One row of the Node as the universe file names it: a shape (its count of lines), a pair (num, den) for Rule3's rule, or a wall of its own for a row with no Links (the phase row); its lines."""
++    """One row of the Node as the universe file names it: a shape (its count of lines), a pair (num, den) for Rule3's rule, or a wall of its own for a row with no Links (the phase row); its lines; its exchange from the file, +1 a symmetric family, -1 an antisymmetric one, 0 a row that is no family (the owner's words of 2026-10-27, 06:0x UTC)."""
+ 
+-    __slots__ = ("shape", "pair", "wall", "lines")
++    __slots__ = ("shape", "pair", "wall", "lines", "exchange")
+ 
+     def __init__(
+-        self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Line]
++        self, shape: int, pair: tuple[int, int] | None, wall: int | None, lines: list[Line], sym: int
+     ) -> None:
+-        self.shape, self.pair, self.wall, self.lines = shape, pair, wall, lines
++        self.shape, self.pair, self.wall, self.lines, self.exchange = shape, pair, wall, lines, sym
+ 
+     @property
+     def gap(self) -> int | None:
+@@ -112,7 +112,7 @@ def rows_of(universe: dict[str, Any], board: tuple[int, ...], w: int) -> tuple[l
+             raise ValueError("a shape-1 row with a pair: the gap-0 row is the plane at (den, den)")
+         walls = write_walls(shape, pair, den, gamma, action, trace)
+         lines = lines_of(board, shape, pair, wall, w, walls)
+-        by_index.append(Row(shape, pair, wall, lines))
++        by_index.append(Row(shape, pair, wall, lines, int(r.get("exchange", 0))))
+     rows = sorted(by_index, key=order_key)
+     walled = [r for r in rows if r.wall is not None]
+     planes = [r for r in rows if r.shape == PLANE]
+diff --git a/src/event_universe/run.py b/src/event_universe/run.py
+index c27cfc76f..0c2048604 100644
+--- a/src/event_universe/run.py
++++ b/src/event_universe/run.py
+@@ -90,7 +90,8 @@ def birth(
+             for key in ("remainder_was", "remainder", "owed", "clock", "recoil", "carry_was", "carry")
+             if key in take
+         },
+-        **({"takes": take["takes"], "exact_lay": exact} if "takes" in take else {}),
++        **({"takes": take["takes"]} if "takes" in take else {}),
++        **({"exact_lay": exact} if exact else {}),
+         **({"cross": take["cross"]} if "cross" in take else {}),
+     )
+ 
+diff --git a/src/event_universe/take.py b/src/event_universe/take.py
+index 0f950e8dc..3d90c7e1e 100644
+--- a/src/event_universe/take.py
++++ b/src/event_universe/take.py
+@@ -35,15 +35,13 @@ def at_node(x: Any, at: tuple[int, ...]) -> int:
+ def fall_of(
+     node: Node, at: tuple[int, ...], walls: int, r: rule3.Rule, row: Row, direction: int = 1
+ ) -> tuple[int | None, int, int]:
+-    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) = s (price - X w s) over the share's weight 2 Gamma^3 G^2, the price X times Rule3's own numerator with the slots exchanged, -t (2 w now + pull); the count one carried division of the walls owed by the price, rounded up as the floor's mirror, and where the moved levels' own square leaves the fall short, the same division of the shortfall by the next level's price, price - 2 X w s, iterated from below to its fixed count (TC-S1, the owner's word of 2026-10-26, 08:3x UTC, "approved", both hands' one finding, H-Take-Count-As-Rule3-Division-1: the count Rule3's own kind of act, no root; the former least root by largest_below, least_root, kept by name); (None, the full fall) where no count within the full move pays, the division's fixed count passing the move or the next level's price falling to 0 before it; at -1 the exact take reversed, the merger's light (MG-S1; the former merger.rise_of kept by name, folded 2026-10-26 on the Boss's 6413888338): the line's now moved away from its before (the tie resolved as away at -1, cc1) by the least count at which the share rises by the walls, the rise the same quadratic with the direction's sign on the square term, s (price + X w s), convex, so the same division is iterated from above, the first quotient paying and each step the excess divided by the next level's price, to its fixed count, never refused (the former refusal read the fall at the full move alone, the parabola's far side, and refused a take a lesser count paid: the bug struck 2026-10-26 under the owner's priority, the Boss's 6411031946)."""
++    """The exact take at the Node in the carrier's unit (PM-S1) on the line the fall's sign chooses (CS4-S2, the owner's word of 2026-10-25 through the Boss: the taken record's line whose level now stands farthest from its before, the largest now^2 - before^2, the first line where equal, so the take is covariant under the record's quarter turn; the former first line kept by name): the taken line's now moved toward its before by the least count of levels at which the Node's share falls by the walls (0 where nothing is owed, EX-S1); the fall f(s) = s (price - X w s) over the share's weight 2 Gamma^3 G^2, the price X times Rule3's own numerator with the slots exchanged, -t (2 w now + pull); the count one carried division of the walls owed by the price, rounded up as the floor's mirror, and where the moved levels' own square leaves the fall short, the same division of the shortfall by the next level's price, price - 2 X w s, iterated from below to its fixed count (TC-S1, the owner's word of 2026-10-26, 08:3x UTC, "approved", both hands' one finding, H-Take-Count-As-Rule3-Division-1: the count Rule3's own kind of act, no root; the former least root by largest_below, least_root, kept by name); (None, the full fall) where no count within the full move pays, the division's fixed count passing the move or the next level's price falling to 0 before it; at -1 the exact take reversed, the merger's light (MG-S1; the former merger.rise_of kept by name, folded 2026-10-26 on the Boss's 6413888338): the line's now moved away from its before (the tie resolved as away at -1, cc1) by the greatest count at which the share rises by no more than the walls (the symmetric family's lay, the rest carried in its account at the Node, merger.light_levels; the owner's words of 2026-10-27, 06:0x and 07:4x UTC: N identical quanta hold N quanta; the former least count at which the share rises by the walls kept by name), the rise the same quadratic with the direction's sign on the square term, s (price + X w s), convex, so the same division is iterated from above, the first quotient paying and each step the excess divided by the next level's price, to its fixed count, never refused (the former refusal read the fall at the full move alone, the parabola's far side, and refused a take a lesser count paid: the bug struck 2026-10-26 under the owner's priority, the Boss's 6411031946)."""
+     gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in row.lines)]
+     k = gaps.index(max(gaps))
+     line = row.lines[k]
+     now, before = int(line.now[at]), int(line.before[at])
+-    if walls <= 0 and direction == 1:
+-        return 0, 0, k
+-    if now == before and direction == 1:
+-        return None, 0, k
++    if direction == 1 and (walls <= 0 or now == before):
++        return (0 if walls <= 0 else None), 0, k
+     t = (1 if before > now else -1) if direction == 1 else (1 if now > before else -1)
+     own, w, reached = int(np.asarray(r.self_coefficient)[at]), int(r.wall), 0
+     for port, reach in enumerate(r.reaches):
+@@ -64,6 +62,7 @@ def fall_of(
+         )
+         while s > 1 and fall(s - 1) >= walls:
+             s -= max(1, quotient(s * (price + x * w * s) - walls * weight, price + x * w * (s + s)))
++        s -= int(s > 0 and fall(s) > walls)
+         return s, fall(s), k
+     s = -quotient(-walls * weight, price) if price > 0 else dist + 1
+     while s <= dist and fall(s) < walls:
+diff --git a/tests/test_the_symmetric_lay.py b/tests/test_the_symmetric_lay.py
+new file mode 100644
+index 000000000..5b3e91c2e
+--- /dev/null
++++ b/tests/test_the_symmetric_lay.py
+@@ -0,0 +1,56 @@
++"""The symmetric family's lay (the owner's words of 2026-10-27, 06:0x and 07:4x UTC, through David): N identical quanta of a symmetric family laid at one Node hold N quanta and not N^2, the amplitude growing as the square root of N, the remainder carried in the family's account at the Node, and the inverse exact in any order."""
++
++import copy
++import random
++
++from event_universe import gram, readings
++from event_universe.links import factors
++from event_universe.merger import child_levels, light_levels, walls_of
++from event_universe.node import Node
++from event_universe.take import frame_nodes, lay, move
++from tests.laws import world_of
++
++COUNT = 25  # quanta laid at the one Node
++
++
++def test_n_identical_quanta_of_a_symmetric_family_hold_n_quanta_and_return_in_any_order():
++    """On the empty board and on a standing sea of light, COUNT light quanta laid at the centre by the account lay (merger.light_levels: the greatest count whose rise stays within the quantum and the account, the rest carried at the Node): the window's energy is n q less the account at every n, the account below one quantum; on the empty board the level squared is n times the first's at every square n; the quarter-turn lay makes n^2 q there; the inverse, in reverse and in a shuffled order, returns the light's lines and the account bit for bit."""
++    universe, world = world_of("world_hole.json")
++    for seed in ([], [{"lay": "sea", "row": 0}]):
++        node = Node(universe, {**world, "seed": seed})
++        s = node.records().index(node.emitter())
++        row = node.records()[s]
++        rule = readings.rule(node, row.pair, readings.content(node), factors(node))
++        centre = tuple(x // 2 for x in node.shape)
++        window = sorted(set(frame_nodes(node, centre)))
++
++        def energy(nd: Node, s: int = s, rule: object = rule, window: list = window) -> int:
++            return sum(int(v) for v in gram.share(nd, nd.records()[s].lines, rule, window))
++
++        q = walls_of(node, s, centre, (centre[0] + 1, *centre[1:]), rule, {})[0]
++        base, start, exact = copy.deepcopy(node), energy(node), []
++        levels_of = light_levels(node, s, {-1: q, 1: q}, rule, exact)
++        first = None
++        for n in range(1, COUNT + 1):
++            lay(node, s, centre, levels_of(centre, 1))
++            k, d, _rise, _was, account = exact[-1]
++            assert energy(node) - start == n * q - account and 0 <= account < q
++            level = int(row.lines[k].now[centre]) - int(base.records()[s].lines[k].now[centre])
++            first = first or level
++            if not seed and n in (1, 4, 9, 16, 25):
++                assert level * level // (first * first) == n
++        for order in (exact[::-1], random.Random(COUNT).sample(exact, len(exact))):
++            back = copy.deepcopy(node)
++            for k, d, _rise, was, account in order:
++                move(back, s, k, centre, -d)
++                back.take_rem[centre] -= account - was
++            assert (back.take_rem == base.take_rem).all()
++            assert all(
++                (a.now == b.now).all() and (a.before == b.before).all() and (a.rem == b.rem).all()
++                for a, b in zip(back.records()[s].lines, base.records()[s].lines, strict=True)
++            )
++        if not seed:
++            old = copy.deepcopy(base)
++            for n in (1, 2, 3, 4):
++                lay(old, s, centre, child_levels(old.records()[s], 1, old.A, old.B))
++                assert energy(old) - start == n * n * q
+diff --git a/tests/worlds/universe_ga2.json b/tests/worlds/universe_ga2.json
+index 9545b98b6..d53a16eae 100644
+--- a/tests/worlds/universe_ga2.json
++++ b/tests/worlds/universe_ga2.json
+@@ -1 +1 @@
+-{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389]}, {"shape": 2, "pair": [115762739551980, 15162856759112389]}, {"shape": 2, "pair": [115762739551980, 15162856759112389]}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
+\ No newline at end of file
++{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389], "exchange": 1}, {"shape": 2, "pair": [115762739551980, 15162856759112389], "exchange": -1}, {"shape": 2, "pair": [115762739551980, 15162856759112389], "exchange": -1}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
+\ No newline at end of file
+diff --git a/tests/worlds/universe_middle.json b/tests/worlds/universe_middle.json
+index e400da74d..8747c1e89 100644
+--- a/tests/worlds/universe_middle.json
++++ b/tests/worlds/universe_middle.json
+@@ -1 +1 @@
+-{"integers": {"den": 1655909141, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [1655909141, 1655909141]}, {"shape": 2, "pair": [1655880909, 1655909141]}, {"shape": 2, "pair": [506298091, 1655909141]}, {"shape": 10, "pair": [1654253232, 1655909141]}, {"shape": 4, "pair": [1655909141, 1655909141]}, {"shape": 1, "wall": 2}]}
++{"integers": {"den": 1655909141, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [1655909141, 1655909141], "exchange": 1}, {"shape": 2, "pair": [1655880909, 1655909141], "exchange": -1}, {"shape": 2, "pair": [506298091, 1655909141], "exchange": -1}, {"shape": 10, "pair": [1654253232, 1655909141]}, {"shape": 4, "pair": [1655909141, 1655909141]}, {"shape": 1, "wall": 2}]}
+diff --git a/tests/worlds/universe_quartet.json b/tests/worlds/universe_quartet.json
+index b3014c5f5..058207910 100644
+--- a/tests/worlds/universe_quartet.json
++++ b/tests/worlds/universe_quartet.json
+@@ -1 +1 @@
+-{"integers": {"den": 1655909141, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [1655909141, 1655909141]}, {"shape": 2, "pair": [1655880909, 1655909141]}, {"shape": 2, "pair": [506298091, 1655909141]}, {"shape": 10, "pair": [1654253232, 1655909141]}, {"shape": 4, "pair": [1655909141, 1655909141]}, {"shape": 1, "wall": 2}, {"shape": 8, "pair": [506298091, 1655909141]}]}
+\ No newline at end of file
++{"integers": {"den": 1655909141, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [1655909141, 1655909141], "exchange": 1}, {"shape": 2, "pair": [1655880909, 1655909141], "exchange": -1}, {"shape": 2, "pair": [506298091, 1655909141], "exchange": -1}, {"shape": 10, "pair": [1654253232, 1655909141]}, {"shape": 4, "pair": [1655909141, 1655909141]}, {"shape": 1, "wall": 2}, {"shape": 8, "pair": [506298091, 1655909141], "exchange": -1}]}
+\ No newline at end of file
+diff --git a/tests/worlds/universe_toy.json b/tests/worlds/universe_toy.json
+index ec207013a..a15747e1f 100644
+--- a/tests/worlds/universe_toy.json
++++ b/tests/worlds/universe_toy.json
+@@ -1 +1 @@
+-{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389]}, {"shape": 2, "pair": [15162854575528411, 15162856759112389]}, {"shape": 2, "pair": [2458210083751875, 15162856759112389]}, {"shape": 2, "pair": [2580388913625285, 15162856759112389]}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
++{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389], "exchange": 1}, {"shape": 2, "pair": [15162854575528411, 15162856759112389], "exchange": -1}, {"shape": 2, "pair": [2458210083751875, 15162856759112389], "exchange": -1}, {"shape": 2, "pair": [2580388913625285, 15162856759112389], "exchange": -1}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
+diff --git a/tools/derivations/open_items/The-One-Record-Of-Nature/worlds/universe_ga2.json b/tools/derivations/open_items/The-One-Record-Of-Nature/worlds/universe_ga2.json
+index 9545b98b6..d53a16eae 100644
+--- a/tools/derivations/open_items/The-One-Record-Of-Nature/worlds/universe_ga2.json
++++ b/tools/derivations/open_items/The-One-Record-Of-Nature/worlds/universe_ga2.json
+@@ -1 +1 @@
+-{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389]}, {"shape": 2, "pair": [115762739551980, 15162856759112389]}, {"shape": 2, "pair": [115762739551980, 15162856759112389]}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
+\ No newline at end of file
++{"integers": {"den": 15162856759112389, "node_clock": 1000, "quantum_action": 36000, "trace": 6, "amplitude": 288230376000}, "rows": [{"shape": 2, "pair": [15162856759112389, 15162856759112389], "exchange": 1}, {"shape": 2, "pair": [115762739551980, 15162856759112389], "exchange": -1}, {"shape": 2, "pair": [115762739551980, 15162856759112389], "exchange": -1}, {"shape": 10, "pair": [15147693902353277, 15162856759112389]}, {"shape": 4, "pair": [15162856759112389, 15162856759112389]}, {"shape": 1, "wall": 2}]}
+\ No newline at end of file

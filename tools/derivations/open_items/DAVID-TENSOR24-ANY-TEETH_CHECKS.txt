@@ -1,0 +1,2312 @@
+DAVID-TENSOR24-ANY-TEETH_CHECKS.txt: the checks of DAVID-TENSOR24-ANY-TEETH.md.
+A helper's six probes and their shared forms (forms.py), rerun by David on toys-5 with its own src, each output identical to
+the helper's; then the helper's draft with its proofs in full (Lemmas 1 and 2, Theorems A to D, Proposition E). Integers only.
+
+== venv314/bin/python -I tst_retrace.py ==
+failures (counted over w = 2..40, two kicks; for M: images hit twice of images)
+  form                                   parity             inv             neg            rest           still             tst             ret            retW               M           agree           range
+  HEAD                                   even        0 of 41160    1960 of 41160       0 of 40          0 of 80       3472 of 41160    3472 of 41160   10065 of 164248    521 of 345727      0 of 123480      0 of 82320 
+  HEAD                                   odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102    4743 of 156408      0 of 305102      0 of 117306      0 of 78204 
+  FLIP                                   even        0 of 41160   41160 of 41160      40 of 40          0 of 80          0 of 41160       0 of 41160   82124 of 164248      0 of 346248      0 of 123480      0 of 82320 
+  FLIP                                   odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102  117306 of 156408      0 of 305102      0 of 117306      0 of 78204 
+  CBEF                                   even     1960 of 41160       0 of 41160       0 of 40          0 of 80          0 of 41160    1960 of 41160    7644 of 164248    811 of 345437      0 of 123480      0 of 82320 
+  CBEF                                   odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102       0 of 156408      0 of 305102      0 of 117306      0 of 78204 
+  CNOW                                   even     1960 of 41160       0 of 41160       0 of 40          0 of 80       3696 of 41160    1960 of 41160    2639 of 164248    625 of 345623      0 of 123480      0 of 82320 
+  CNOW                                   odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102    4743 of 156408      0 of 305102      0 of 117306      0 of 78204 
+  TDROP                                  even        0 of 41160    1960 of 41160       0 of 40          0 of 80       1838 of 41160    1838 of 41160    5009 of 164248  15757 of 330491   1467 of 123480      0 of 82320 
+  TDROP                                  odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102    2359 of 156408      0 of 305102   1355 of 117306      0 of 78204 
+  TKEEP                                  even     1000 of 41200    1000 of 41200       0 of 40          0 of 80       1878 of 41200    1830 of 41200    5163 of 164404   2022 of 344266   1467 of 123480    954 of 82400 
+  TKEEP                                  odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102    2359 of 156408      0 of 305102   1355 of 117306      0 of 78204 
+  CLOSED                                 even        0 of 41200       0 of 41200       0 of 40          0 of 80          0 of 41200       0 of 41200       0 of 164404      0 of 346288   1467 of 123480   1954 of 82400 
+  CLOSED                                 odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102       0 of 156408      0 of 305102   1355 of 117306      0 of 78204 
+  CTIE                                   even        0 of 41160       0 of 41160       0 of 40          0 of 80          0 of 41160       0 of 41160       0 of 164248    185 of 346063   1467 of 123480      0 of 82320 
+  CTIE                                   odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102       0 of 156408      0 of 305102   1355 of 117306      0 of 78204 
+  FRAME                                  even        0 of 82320       0 of 82320       0 of 40          0 of 80          0 of 82320       0 of 82320       0 of 328496      0 of 692496      0 of 123480      0 of 164640
+  FRAME                                  odd         0 of 78204       0 of 78204       0 of 38          0 of 76          0 of 78204       0 of 78204       0 of 312816      0 of 610204      0 of 117306      0 of 156408
+  DOUBLED                                even        0 of 82320       0 of 82320       0 of 40          0 of 80          0 of 82320       0 of 82320       0 of 328496      0 of 692496      0 of 123480      0 of 164640
+  DOUBLED                                odd         0 of 78204       0 of 78204       0 of 38          0 of 76          0 of 78204       0 of 78204       0 of 312816      0 of 610204      0 of 117306      0 of 156408
+mutants of the proposed forms (each must fail somewhere)
+  form                                   parity             inv             neg            rest           still             tst             ret            retW               M           agree           range
+  FRAME-mut: no toggle                   even        0 of 82320   82320 of 82320      40 of 40          0 of 80          0 of 82320       0 of 82320  164248 of 328496      0 of 692496      0 of 123480      0 of 164640
+  FRAME-mut: no toggle                   odd         0 of 78204       0 of 78204       0 of 38          0 of 76          0 of 78204       0 of 78204  234612 of 312816      0 of 610204      0 of 117306      0 of 156408
+  FRAME-mut: m1 = W - mid                even        0 of 82320   82320 of 82320      40 of 40          0 of 80          0 of 82320       0 of 82320       0 of 328496      0 of 692496      0 of 123480      0 of 164640
+  FRAME-mut: m1 = W - mid                odd         0 of 78204   78204 of 78204      38 of 38          0 of 76          0 of 78204       0 of 78204       0 of 312816      0 of 610204      0 of 117306      0 of 156408
+  FRAME-mut: one mirror for the flip     even        0 of 82320   82320 of 82320      40 of 40          0 of 80       6944 of 82320    6944 of 82320  176734 of 328496   1042 of 691454      0 of 123480      0 of 164640
+  FRAME-mut: one mirror for the flip     odd         0 of 78204       0 of 78204       0 of 38          0 of 76          0 of 78204       0 of 78204  234612 of 312816      0 of 610204      0 of 117306      0 of 156408
+  DOUBLED-mut: offset W - 1              even        0 of 82320       0 of 82320       0 of 40         80 of 80          0 of 82320       0 of 82320       0 of 328496      0 of 692496 123480 of 123480      0 of 164640
+  DOUBLED-mut: offset W - 1              odd         0 of 78204       0 of 78204       0 of 38         76 of 76          0 of 78204       0 of 78204       0 of 312816      0 of 610204 117306 of 117306      0 of 156408
+  DOUBLED-mut: read P2 div 2             even        0 of 82320   82320 of 82320      40 of 40          0 of 80          0 of 82320       0 of 82320       0 of 328496      0 of 692496      0 of 123480      0 of 164640
+  DOUBLED-mut: read P2 div 2             odd         0 of 78204   78204 of 78204      38 of 38          0 of 76          0 of 78204       0 of 78204       0 of 312816      0 of 610204      0 of 117306      0 of 156408
+  DOUBLED-mut: mirror 2W - r2 mod 2W     even        0 of 82320   43120 of 82320       0 of 40          0 of 80       3472 of 82320    3472 of 82320   13915 of 328496    521 of 691975      0 of 123480      0 of 164640
+  DOUBLED-mut: mirror 2W - r2 mod 2W     odd         0 of 78204   39102 of 78204       0 of 38          0 of 76       3276 of 78204    3276 of 78204   13707 of 312816    479 of 609725      0 of 117306      0 of 156408
+  CLOSED-mut: mirror taken mod W         even     1000 of 41200    1000 of 41200       0 of 40          0 of 80       1878 of 41200    1830 of 41200    5163 of 164404   2022 of 344266   1467 of 123480    954 of 82400 
+  CLOSED-mut: mirror taken mod W         odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102    2359 of 156408      0 of 305102   1355 of 117306      0 of 78204 
+  CLOSED-mut: tie sent up (the floor)    even        0 of 41160       0 of 41160       0 of 40          0 of 80          0 of 41160    1960 of 41160    7644 of 164248      0 of 346248      0 of 123480   1960 of 82320 
+  CLOSED-mut: tie sent up (the floor)    odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102       0 of 156408      0 of 305102      0 of 117306      0 of 78204 
+variants of (i) + (ii) with another odd tie rule (must hold as CLOSED does)
+  form                                   parity             inv             neg            rest           still             tst             ret            retW               M           agree           range
+  CLOSED, tie to the odd quotient        even        0 of 41120       0 of 41120       0 of 40          0 of 80          0 of 41120       0 of 41120       0 of 164092      0 of 346208   1474 of 123480   1966 of 82240 
+  CLOSED, tie to the odd quotient        odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102       0 of 156408      0 of 305102   1351 of 117306      0 of 78204 
+  CLOSED, tie away from zero             even        0 of 40880       0 of 40880       0 of 40          0 of 80          0 of 40880       0 of 40880       0 of 163156      0 of 345272   1457 of 123480   1781 of 81760 
+  CLOSED, tie away from zero             odd         0 of 39102       0 of 39102       0 of 38          0 of 76          0 of 39102       0 of 39102       0 of 156408      0 of 305102   1333 of 117306      0 of 78204 
+DOUBLED = FRAME through the encoding, both frames, w 2..40 (step, turnover, reading): fails 0 of 321048
+
+retrace exactly at every count 2..40 (inv, tst, ret, retW, M all 0): CLOSED, FRAME, DOUBLED
+  and read the stride reversed exactly, the rest kept (neg, rest, still 0): CLOSED, FRAME, DOUBLED
+  and keep the head's step bit for bit (agree 0): FRAME, DOUBLED
+  and write every fine tooth in Rule3's range (range 0): FRAME, DOUBLED
+the step retraces but the toy's trigger, read on the before slot, does not (M > 0): CTIE
+HEAD: ret fails at the even counts [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40] and at the odd counts [] ; retW (a change of count) fails at the odd counts [3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39]
+the change of count, by the parities of (W, W+): failures of S T S = T
+  HEAD     ee:   6243 of 82124    eo:   3822 of 82124    oe:   4743 of 117306   oo:      0 of 39102 
+  FLIP     ee:      0 of 82124    eo:  82124 of 82124    oe: 117306 of 117306   oo:      0 of 39102 
+  CBEF     ee:   3822 of 82124    eo:   3822 of 82124    oe:      0 of 117306   oo:      0 of 39102 
+  CNOW     ee:   2639 of 82124    eo:      0 of 82124    oe:   4743 of 117306   oo:      0 of 39102 
+  TDROP    ee:   3137 of 82124    eo:   1872 of 82124    oe:   2359 of 117306   oo:      0 of 39102 
+  TKEEP    ee:   3213 of 82202    eo:   1950 of 82202    oe:   2359 of 117306   oo:      0 of 39102 
+  CLOSED   ee:      0 of 82202    eo:      0 of 82202    oe:      0 of 117306   oo:      0 of 39102 
+  CTIE     ee:      0 of 82124    eo:      0 of 82124    oe:      0 of 117306   oo:      0 of 39102 
+  FRAME    ee:      0 of 164248   eo:      0 of 164248   oe:      0 of 234612   oo:      0 of 78204 
+  DOUBLED  ee:      0 of 164248   eo:      0 of 164248   oe:      0 of 234612   oo:      0 of 78204 
+the mathematician's toy as he ran it (D = 3, no load, notches -25..25): images hit twice
+  HEAD     w 10: 25, w 11: 0
+  FLIP     w 10: 0, w 11: 0
+  CLOSED   w 10: 0, w 11: 0
+  FRAME    w 10: 0, w 11: 0
+  DOUBLED  w 10: 0, w 11: 0
+mutants caught: 8 of 8
+the other odd tie rules retrace exactly as CLOSED does: True
+RESULT: as claimed
+
+== venv314/bin/python -I tst_run.py ==
+runs of 120 ticks forward and 120 back, 5 gears, 40 runs at each w = 1..16 (W = w (X- + X)); failures: the run back missing the turned start
+  HEAD                                   even w: 298 of 320   odd w: 166 of 320   (turnovers forward: 7927)
+  FLIP                                   even w:   0 of 320   odd w: 216 of 320   (turnovers forward: 7271)
+  CBEF                                   even w: 274 of 320   odd w: 159 of 320   (turnovers forward: 8592)
+  CNOW                                   even w: 310 of 320   odd w: 181 of 320   (turnovers forward: 9594)
+  TDROP                                  even w: 211 of 320   odd w: 118 of 320   (turnovers forward: 7828)
+  TKEEP                                  even w: 190 of 320   odd w: 108 of 320   (turnovers forward: 8156)
+  CLOSED                                 even w:   0 of 320   odd w:   0 of 320   (turnovers forward: 8108)
+  CTIE                                   even w:   0 of 320   odd w:   0 of 320   (turnovers forward: 7534)
+  FRAME                                  even w:   0 of 320   odd w:   0 of 320   (turnovers forward: 8192)
+  DOUBLED                                even w:   0 of 320   odd w:   0 of 320   (turnovers forward: 8026)
+  FRAME-mut: no toggle                   even w:   0 of 320   odd w: 233 of 320   (turnovers forward: 7312)
+  FRAME-mut: m1 = W - mid                even w:   0 of 320   odd w:   0 of 320   (turnovers forward: 7699)
+  FRAME-mut: one mirror for the flip     even w: 301 of 320   odd w: 212 of 320   (turnovers forward: 8814)
+  DOUBLED-mut: offset W - 1              even w:   0 of 320   odd w:   0 of 320   (turnovers forward: 7787)
+  DOUBLED-mut: read P2 div 2             even w:   0 of 320   odd w:   0 of 320   (turnovers forward: 6991)
+  DOUBLED-mut: mirror 2W - r2 mod 2W     even w: 306 of 320   odd w: 164 of 320   (turnovers forward: 8144)
+  CLOSED-mut: mirror taken mod W         even w: 205 of 320   odd w:  94 of 320   (turnovers forward: 7633)
+  CLOSED-mut: tie sent up (the floor)    even w: 269 of 320   odd w: 162 of 320   (turnovers forward: 8976)
+exact at every count: CLOSED, CTIE, FRAME, DOUBLED, FRAME-mut: m1 = W - mid, DOUBLED-mut: offset W - 1, DOUBLED-mut: read P2 div 2
+mutants that fail the run: 5 of 8: FRAME-mut: no toggle; FRAME-mut: one mirror for the flip; DOUBLED-mut: mirror 2W - r2 mod 2W; CLOSED-mut: mirror taken mod W; CLOSED-mut: tie sent up (the floor)
+(the three mutants that run back exactly change only the reading or add a constant time-even kick; probe 1 catches them by neg, rest, still and agree)
+RESULT: as claimed
+
+== venv314/bin/python -I tst_head.py ==
+Probe 3, the head's own act functions (acts.carry, acts.mid, acts.mirror, acts.flip, acts.reverse,
+rule3.rule3, rule3.mean_teeth_of, trains.Gear); teeth counts 2..40; failures of cases
+  H1 rewind                                    even:      0 of 123480  odd:      0 of 117306
+  H2 head retrace                              even:   3472 of 41160   odd:      0 of 39102
+  H3 frame retrace                             even:      0 of 246960  odd:      0 of 234612
+  H3 doubled retrace                           even:      0 of 246960  odd:      0 of 234612
+  H2-mut flip, no frame (change of count)      even:  41160 of 123480  odd:  78204 of 117306
+  H3-mut frame, mirror for flip                even:  94964 of 246960  odd: 156408 of 234612
+  of the head's failures (H2), 3472 of 3472 have the fine tooth 0 before or after the step
+    H2 at even counts, the fine tooth 0 at both        of the two states: fails      0 of 224
+    H2 at even counts, the fine tooth 0 at exactly one of the two states: fails   3472 of 3472
+    H2 at even counts, the fine tooth 0 at neither     of the two states: fails      0 of 37464
+    H2 at odd  counts, the fine tooth 0 at both        of the two states: fails      0 of 224
+    H2 at odd  counts, the fine tooth 0 at exactly one of the two states: fails      0 of 3276
+    H2 at odd  counts, the fine tooth 0 at neither     of the two states: fails      0 of 35602
+  H4 circle, DOUBLED  at (T div 2) even: the run back misses the turned start   0 of 152
+  H4 circle, DOUBLED  at (T div 2) odd : the run back misses the turned start   0 of 160
+  H4 circle, FRAME    at (T div 2) even: the run back misses the turned start   0 of 152
+  H4 circle, FRAME    at (T div 2) odd : the run back misses the turned start   0 of 160
+  H4 circle, HEAD     at (T div 2) even: the run back misses the turned start 141 of 152
+  H4 circle, HEAD     at (T div 2) odd : the run back misses the turned start  79 of 160
+  H5 the regulator's turnover by acts.flip: 0 of 120393; mutant acts.mirror there: 5460 of 120393
+  H6 the drive fine tooth by acts.mirror: even drive counts  12642 of 144060  odd      0 of 136857
+  H6 the drive fine tooth by acts.flip  : even drive counts      0 of 144060  odd      0 of 136857
+RESULT: as claimed
+
+== venv314/bin/python -I tst_24.py ==
+the 48 on a 3^3 torus, a vector train and a scalar train; failures of S(g x) = g S(x), cases = states x 48
+  HEAD (acts.mirror)                 constant even W (8, 10, 12)                the 48: 1680 of 1920  the 24 alone:  420 of 480
+  HEAD (acts.mirror)                 constant odd W (9, 11, 13)                 the 48:    0 of 1920  the 24 alone:    0 of 480
+  HEAD (acts.mirror)                 W = w (X- + X) at odd w, changing parity   the 48: 1050 of 1920  the 24 alone:  258 of 480
+  FLIP (the complement, line 618)    constant even W (8, 10, 12)                the 48:    0 of 1920  the 24 alone:    0 of 480
+  FLIP (the complement, line 618)    constant odd W (9, 11, 13)                 the 48:    0 of 1920  the 24 alone:    0 of 480
+  FLIP (the complement, line 618)    W = w (X- + X) at odd w, changing parity   the 48: 1176 of 1920  the 24 alone:  168 of 480
+  FRAME                              constant even W (8, 10, 12)                the 48:    0 of 1920  the 24 alone:    0 of 480
+  FRAME                              constant odd W (9, 11, 13)                 the 48:    0 of 1920  the 24 alone:    0 of 480
+  FRAME                              W = w (X- + X) at odd w, changing parity   the 48:    0 of 1920  the 24 alone:    0 of 480
+  DOUBLED                            constant even W (8, 10, 12)                the 48:    0 of 1920  the 24 alone:    0 of 480
+  DOUBLED                            constant odd W (9, 11, 13)                 the 48:    0 of 1920  the 24 alone:    0 of 480
+  DOUBLED                            W = w (X- + X) at odd w, changing parity   the 48:    0 of 1920  the 24 alone:    0 of 480
+the odd count's gearing: w = 3 rim Gamma^2 G^2 = 135, grip 27, spring 108, 6 grip + spring = 2 w
+  HEAD (acts.mirror)                 the regulator's count w (odd, constant)    the 48:    0 of 1440
+  HEAD (acts.mirror)                 the riders' w (X- + X) (changing parity)   the 48:  588 of 1440
+  FLIP (the complement, line 618)    the regulator's count w (odd, constant)    the 48:    0 of 1440
+  FLIP (the complement, line 618)    the riders' w (X- + X) (changing parity)   the 48:  420 of 1440
+  FRAME                              the regulator's count w (odd, constant)    the 48:    0 of 1440
+  FRAME                              the riders' w (X- + X) (changing parity)   the 48:    0 of 1440
+  DOUBLED                            the regulator's count w (odd, constant)    the 48:    0 of 1440
+  DOUBLED                            the riders' w (X- + X) (changing parity)   the 48:    0 of 1440
+RESULT: as claimed
+
+== venv314/bin/python -I tst_balance.py ==
+B1 the balance at the vacuum, every pair (rim 1..30, pinion 0..rim, Gamma 1..7, G 1..3): 10395 cases
+   the head's gearing (6, 2, 12): hold != 0 in 0; the odd count's (3, 1, 6): hold != 0 in 0
+   the head's gearing = the odd count's doubled (teeth, grips, spring): fails 0
+   the odd count's w = 3 rim Gamma^2 G^2: odd in 1920, even in 8475
+   mutant grip factor 2 with w factor 3: the balance fails at 78 of 90 pairs
+   mutant spring factor 12 with w factor 3: the balance fails at 78 of 90 pairs
+   mutant w factor 6 with (1, 6): the balance fails at 90 of 90 pairs
+B2 factor triples (alpha, beta, delta) <= (12, 12, 30) that balance every pair (rim 1..8): [(3, 1, 6), (6, 2, 12), (9, 3, 18), (12, 4, 24)]
+   of these with an odd alpha (an odd w possible): [(3, 1, 6), (9, 3, 18)]; the least: alpha = 3 = AXES = 3
+B3 the regulator's own gearing balances at the vacuum: head's factors fail 0 of 640, odd factors 0 of 640
+B4 the doubled form W2 = w (X0 + X1), kick 2 s F: the exact rational letter, mismatches 0 of 15600
+   at even w, against the head's step (mean_teeth_of, acts.carry at mid): mismatches 0 of 3937
+   at odd w, the head's mean_teeth_of(w, X0, X1) != (w / 2)(X0 + X1): 7600 of 7600
+   mutant, the kick not doubled: mismatches with the rational letter 7977 of 15600
+B5 the shear's term (3 w / 2)(X_ahead - X_behind) = (W+ - W) / 2 for W = 3 w (X_now + X_behind): fails 0 of 9947
+   the one formula's mid(W+) - mid(W) against it: both even counts differ 0 of 6167; both odd counts differ 0 of 1260; mixed counts differ 2520 of 2520 (at mixed parity the term is no integer)
+   the doubled form's 3 w (X_ahead - X_behind) = W+ - W, an integer at every parity: fails 0 of 9947
+C1 a gear born at its frame's mid tooth reads 0 and stays: fails 0 of 546; mutant (the flipped born tooth read at mid): reads != 0 at 140 of 273 (every even count)
+C2 the count of quanta of a Wronskian W at the key T (W = T / 2 per quantum), W 0..600, T 2..40: 23439 cases
+   |W| div (T div 2), the key's half taken as exact: misreads 8963; the doubled count (2 |W|) div T: 0
+   A B = T / 2 has no integer solution at 19 of the 19 odd keys
+C3 the fold min(r, w - 1 - r) under the flip: changes 0 of 819; under the head's mirror: even counts 380, odd counts 0
+RESULT: as claimed
+
+== venv314/bin/python -I tst_engine.py ==
+== world_node.json, after 3 ticks
+the head (acts.mirror): no seed: driven gears missing T x 0, regulator slots 14, turned 5
+   seeded ties at 19 Node-clocks (teeth parity [0]): three gears missing T x 19 of 19, twelve gears 0 of 19, other driven gears 0; regulator slots 14
+the flip in its place: no seed: driven gears missing T x 0, regulator slots 14, turned 5
+   seeded ties at 19 Node-clocks (teeth parity [0]): three gears missing T x 0 of 19, twelve gears 0 of 19, other driven gears 0; regulator slots 14
+== world_nature.json, after 3 ticks
+the head (acts.mirror): no seed: driven gears missing T x 0, regulator slots 38, turned 50
+   seeded ties at 13 Node-clocks (teeth parity [0]): three gears missing T x 13 of 13, twelve gears 0 of 13, other driven gears 0; regulator slots 38
+the flip in its place: no seed: driven gears missing T x 0, regulator slots 38, turned 50
+   seeded ties at 13 Node-clocks (teeth parity [0]): three gears missing T x 0 of 13, twelve gears 0 of 13, other driven gears 0; regulator slots 38
+== world_hole.json, after 3 ticks
+the head (acts.mirror): no seed: driven gears missing T x 0, regulator slots 86, turned 54
+   seeded ties at 12 Node-clocks (teeth parity [0]): three gears missing T x 12 of 12, twelve gears 0 of 12, other driven gears 0; regulator slots 86
+the flip in its place: no seed: driven gears missing T x 0, regulator slots 86, turned 54
+   seeded ties at 12 Node-clocks (teeth parity [0]): three gears missing T x 0 of 12, twelve gears 0 of 12, other driven gears 0; regulator slots 86
+RESULT: as claimed
+
+== the draft (DERIVATION.md) ==
+# Every act at any teeth count: T S T = S^-1, the balance at an odd count, and the lines that leaned on parity
+
+A helper's draft for David, 2026-10-28, 13:xx UTC, under Tensor24's derivation protocol (TENSOR24.md section 19,
+steps 1 to 4; steps 5 and 6, the second hand and Sofer's law check, are owed). It answers the owed item of section 19,
+"every act at any teeth count (the owner's ruling of 11:0x UTC), with T S T = S^-1 and the gearing's balance at rest,
+from Animate's two candidates", and the items the law owes David under **The teeth count has no parity condition**
+(docs/ALGEBRA.md line 100 on scribe-5).
+
+Read, nothing written in the repo: src on toys-5 b56643b0e; the law, docs/ALGEBRA.md on scribe-5 f32b67cc3 (the line
+numbers below are that file's); the plan on engine-5.0-test 08ec59132; the mathematician's derive/mathematician/ on
+engine-5.0-test; Animate's ANIMATE-PROBES-1/parity.py and parity.txt on reader-5 2997f67ef (read through GitHub: the
+local ref predates them); Sofer's SOFER-ODD-TEETH-1.md with its probe and output on scribe-5. No src is touched.
+
+Every claim is marked PROVED (its proof here), CHECKED (its probe's count; the probes and outputs beside this file) or
+OPEN. Every probe is exact integers (Python ints, fractions.Fraction) and carries mutants that fail.
+
+## 0. The findings in short
+
+1. **Rule3's carry has one reflection, the flip u -> W - 1 - u** (PROVED, Lemma 1). Read at the mid tooth it sends the
+   stride P to -P at an odd count and to -P - 1 at an even one. **No carry with its remainder in [0, W) rounds oddly at
+   an even count** (PROVED, Lemma 2): one more bit than (a-, a, r) is needed there, a frame.
+2. **The form that retraces at every count, constant or changing, both parities:** the turnover's mirror is the flip
+   r -> W - 1 - r, and the stride is read and carried at the mid tooth of the gear's frame,
+   m_f(W) = mid(W) + f (W - 1 - mid(W) - mid(W)), f the gear's reversals mod 2, toggled by each turnover (FRAME). Its
+   frame-free spelling: the fine tooth at the doubled count 2 W, whose mid tooth W is exact, the flip there, and the
+   stride read (P2 + 1) div 2 (DOUBLED). PROVED (Theorems A and B) and CHECKED at every w from 2 to 40: 0 failures of
+   S T S = T in 641,312 changes of count, 0 images hit twice in 1,302,700, 0 failed runs of the circle in 640; the
+   same on the head's own acts (0 of 481,572). FRAME in frame 0 is the head's step, bit for bit.
+3. **What the head fails at an even w:** acts.mirror drops the carry of mid + mid - r, so at the fine tooth 0 the turned
+   stride reads -P - W; and the carry rounds a tie up in both directions. The retrace S T S = T fails exactly at the
+   states where exactly one of the two fine teeth (before and after the step) is 0: 3,472 of 3,472 such states fail,
+   none of the 37,688 others, none at an odd count. On the head's whole Tick, 44 of 44 seeded ties miss the turned
+   start (0 of 44 with the flip in the mirror's place).
+4. **Animate's (i) and (ii):** neither alone is enough; together, in their closed letter, they are enough, but their
+   remainder reaches w (outside Rule3's range), they change the head's rounding at the ties, and "even" is not what
+   works (any odd tie rule does). Neither is needed: FRAME/DOUBLED keep Rule3's floor and need no carried mirror.
+5. **The balance at an odd count:** 2 w = SUM_j R_j + D at the vacuum forces the factors (3 k, k, 6 k); the least, with
+   no number but the piece's counts, is w = AXES rim Gamma^2 G^2, R_j = pinion p_i^2 Q_j, D = SPOKES (rim - pinion)
+   p_0^2 G^2, of either parity; the head's (6, 2, 12) is its double. The riders' (w / 2)(X0 + X1) becomes the doubled
+   form w (X0 + X1) with the kick doubled: the exact letter at every parity, and the head's step integer for integer.
+   The 24 hold at the odd count with FRAME/DOUBLED (0 of 2,880). The riders still meet even counts at every calibre
+   (X0 + X1 is even at rest), so the even-count retrace is needed whatever the calibre's parity.
+
+## 1. The gear, the step and the turnover (the definitions)
+
+- **The state** of a driven gear: (a-, a, r), the notch before, the notch now, the fine tooth, at its teeth count W >= 1,
+  with 0 <= r < W. mid(n) = n div 2, Rule3's carry on the Spoke's two sides (acts.mid).
+- **The stride** read at a mid tooth m: P = W (a - a-) + (r - m(W)). By Rule3's uniqueness the pair (a - a-, r) and P
+  determine each other at fixed W: a - a- = (P + m) div W and r = (P + m) mod W. So the state is (a, P).
+- **The step S** (the matter's half of the one formula, cut 0's letter, DAVID-TENSOR24-THE-ONE-FORMULA.md):
+  W+ (a+ - a) + (r+ - m(W+)) = W (a - a-) + (r - m(W)) + k, with the kick
+  k = s [SUM_j g_j (m_j - a) - D a + q_P] + T s q_K read at the now notch and time-even. One carry:
+  a+ - a = (P + k + m(W+)) div W+, r+ the remainder. With q_V(p) = (p + m(V)) div V:
+  S(a, P) = (a + q_W+(P + k(a)), P + k(a)).
+- **The turnover T** (law 4; ALGEBRA.md line 1602: "it ends the tick at the state it started from with every gear's two
+  notches exchanged and every fine tooth mirrored about its mid tooth, the one mirror of **The cube's symmetry** ...,
+  the step's output discarded"). A turnover that exchanges the slots is T(a, P) = (a - q_W(P), phi(P)): its new now is
+  the old before. The head's mirror (acts.mirror) is r -> (mid + mid - r) mod W.
+- **The retrace.** Law 10's circle runs forward to the top, turns, and runs back by the same act. One step of the run
+  back is S T S = T: one step, the turnover, one step land on the turned start. Where T T = 1 this is T S T = S^-1,
+  the mathematician's condition. **T S T = S^-1 alone is not enough** (CHECKED): Animate's carried mirror with the
+  carry in the before slot satisfies it at every state (0 of 41,160) and still misses the run back at 1,960 (its
+  T T moves both notches by one at the tooth 0). The law to state is S T S = T with T T = 1.
+
+## 2. The formula in the three operations (protocol step 1)
+
+**FRAME**, for every driven gear, the frame f in {0, 1}:
+
+    m_f(W) = mid(W) + f (W - 1 - mid(W) - mid(W))                   the frame's mid tooth
+    P      = W (a - a-) + (r - m_f(W))                               the stride, read in the frame
+    P+     = P + k                                                   the kick, as the one formula has it
+    a+ - a, r+  = Rule3 of P+ + m_f(W+) at the teeth W+               one carry, 0 <= r+ < W+
+    turnover:  a <-> a-,  r -> W - 1 - r,  f -> 1 - f               the flip, the frame toggled
+
+- Clock words: the frame is the gear's count of reversals mod 2, time's and the sign's alike: acts.flip's own letter,
+  "flipped to teeth - 1 - r once for every reversal of its gear (time's reverse, the sign's negation), two reversals
+  leaving it". At a turnover the gears K leaves turn once (f toggles); the gears K negates (a hand's twelve gear) turn
+  twice (r and f unchanged). For the turnover alone the frame of the gears K leaves is the Node-clock's ratchet
+  remainder (line 1602: "complemented at the swap like every remainder, so that the remainder is the hand's frame, 1 at
+  a hand time-reversed an odd number of times"), and 0 on the gears K negates: no new state.
+- At an odd W, W - 1 - mid(W) - mid(W) = 0: m_1 = m_0 = mid, the frame is not read, and the flip is the one mirror.
+  At an even W, m_1(W) = mid(W) - 1: the reversed frame rounds a tie down where the forward frame rounds it up.
+- Numbers: 0, 1 and the Spoke's two sides (in mid). No branch, no parity test: f multiplies the count's own
+  W - 1 - mid(W) - mid(W). Every remainder stays in Rule3's range.
+
+**DOUBLED**, FRAME's frame-free spelling, for every driven gear:
+
+    P2     = (W + W)(a - a-) + r2 - W,   0 <= r2 < W + W              the fine tooth at the doubled count
+    P2+    = P2 + k + k
+    a+ - a, r2+ = Rule3 of P2+ + W+ at the teeth W+ + W+              mid(2 W) = W, exact at every W
+    turnover:  a <-> a-,  r2 -> W + W - 1 - r2                       the flip at the doubled count
+    the stride read:  P = (P2 + 1) div 2                             Rule3 on the two sides
+
+- The frame rides in P2's parity (f = P2 mod 2), per gear. The head's state is r2 = 2 r + (W - mid(W) - mid(W)).
+- The regulator (its own constant teeth) and every drive (its constant drive count) keep their one carry; their
+  turnover is the flip (Proposition E).
+
+## 3. The proofs (protocol step 2)
+
+**Lemma 1 (Rule3's one reflection). PROVED.** For every integer u and W >= 1, if u = q W + r with 0 <= r < W, then
+W - 1 - u = (-q) W + (W - 1 - r) with 0 <= W - 1 - r < W; by the uniqueness of Rule3's pair, carry(W - 1 - u) =
+(-q, W - 1 - r). (It is acts.carry at -1's own letter.) Hence, at a fixed mid tooth m, q_W(c - p) = -q_W(p) for every
+p if and only if c = W - 1 - 2 m: the carry's reflection centre is the stride (W - 1 - 2 m) / 2, which is the integer
+0 at m = mid(W) only at an odd W, and -1/2 at an even W.
+
+**Lemma 2 (no odd rounding in Rule3's range at an even count). PROVED.** Let p -> (q(p), e(p)) be any bijection of the
+integers onto Z x [0, W) (every carry with its remainder in [0, W) is one: each quotient has exactly W strides). If q
+were odd, q(-p) = -q(p), then q(0) = 0 and the fibre q^-1(0) would be symmetric under p -> -p and contain 0, so its size
+would be odd; but it has W elements. So at an even W no such q is odd: the exact reversal P -> -P cannot be a
+symmetry of any carry in Rule3's range, and an exact form must carry one more bit (the frame).
+
+**Theorem A (the retrace and its one solution). PROVED.** Let a turnover exchange the two slots and send the stride P,
+read in the frame f, to phi(P), read in the frame f'. Then S T S = T holds for every time-even kick and every pair of
+counts W, W+ of either parity if and only if phi(P) = c - P for one constant c and m_f(V) + m_f'(V) = V - 1 - c at every
+count V.
+*Proof.* From x = (a, P): S x = (a+, P+), P+ = P + k(a), a+ = a + q^f_W+(P+). The turnover: T S x =
+(a+ - q^f_W+(P+), phi(P+)) = (a, phi(P+)) in the frame f'. The step: S T S x = (a + q^f'_W(phi(P+) + k(a)),
+phi(P+) + k(a)). And T x = (a - q^f_W(P), phi(P)). Equal for all P and k:
+(1) phi(P + k) + k = phi(P) for all P, k, so phi(P) + P is a constant c;
+(2) q^f'_W(c - P) = -q^f_W(P) for all P, which by Lemma 1 (u = P + m_f(W)) holds if and only if
+c + m_f'(W) = W - 1 - m_f(W). Substituting back shows both are sufficient. QED
+- **The solution.** With c = 0 (the stride reversed exactly, a gear at rest kept at rest): m_f'(V) = V - 1 - m_f(V). With
+  m_0 = mid (the head's) this is FRAME with f' = 1 - f; the remainder's map is then r -> W - 1 - r (the flip):
+  W (a- - a) + r' - m_1 = -P gives r' = m_0 + m_1 - r = W - 1 - r, always in [0, W).
+- **One mid tooth for both directions cannot serve both parities.** f' = f and m_f = m require V - 1 - 2 m(V) = c at
+  every V; its left side has the parity of V - 1, so no c serves both parities. At one parity it can: c = -1 at every
+  even count (the flip with the head's mid, which then reads -P - 1), c = 0 at every odd count (the one mirror).
+- **The head's one mirror** is no reflection: it reads -P where r > 0 and -P - W where r = 0 at an even W, so phi is not
+  of the form c - P and (1) fails there.
+
+**Corollaries. PROVED.** (a) FRAME's turnover is an involution: T T (a, P) = (a - q^f(P) - q^(1-f)(-P), P) = (a, P),
+since q^(1-f)(-P) = -q^f(P) by (2). (b) The stride is read reversed exactly, P -> -P, and a gear born at its frame's
+mid tooth reads 0 and stays at rest. (c) In the frame 0 FRAME is the head's step, bit for bit. (d) With the weak top
+symmetric in the time gear's two outer notches (law 4), the act M (the turnover at a top, else the step) satisfies
+M T M = T, so M^n (T z_n) = T z_0: the whole run back returns the turned start through every turnover between. (For a
+state z not at a top, T S z is not at a top, its triple being z's reversed; at a top, M T M z = M T T z = M z = T z.)
+
+**Theorem B (DOUBLED is FRAME). PROVED.** The map (a-, a, r, f) -> (a-, a, r2) with r2 = 2 r + c for f = 0 and
+r2 = 2 r + 1 - c for f = 1, c = W - mid(W) - mid(W), is a bijection onto [0, 2 W) (the two frames are r2's two parity
+classes). It gives P2 = 2 P_0 in the frame 0 and P2 = 2 P_1 - 1 in the frame 1, so (P2 + 1) div 2 = P_f. The carry:
+in the frame 0, (2 P + W+) div 2 W+ = (P + mid(W+)) div W+ at both parities of W+ (at an odd W+, 2 P + W+ is odd and
+adding a half never crosses a multiple); in the frame 1, (2 P - 1 + W+) div 2 W+ = (P + m_1(W+)) div W+ alike. The flip
+at 2 W sends P2 to -P2 - 1: 2 P_0 goes to 2 (-P_0) - 1, the frame 1's code of -P_0, and 2 P_1 - 1 to 2 (-P_1), the frame
+0's code of -P_1. That is FRAME's turnover. QED
+
+**Theorem C (Animate's (i) and (ii) together). PROVED.** Let the remainder take the values [0, 2 mid(W)] (the tooth w
+kept at an even W, DAVID-THE-ONE-MIRROR.md's letter: "the tooth w stands only as the mirror's image of 0"), the
+rounding send an exact tie to the even quotient, and the turnover be r -> 2 mid(W) - r with no mod. The rounding is
+then odd at every count, the turnover reads phi(P) = -P, and Theorem A's argument with one decoding (q odd) gives
+S T S = T and T T = 1 at every count. Any odd tie rule serves (to the odd quotient, away from zero): "even" is not
+singled out. But at an even W the remainder reaches W, outside Rule3's 0 <= r' < d, and the step's rounding departs
+from the head's at the ties. Written back in Rule3's range (the mirror's carry kept in the slot the even quotient
+names), the step retraces but the before slot stands one notch off the notch before at those ties.
+
+**Theorem D (the 24 and the 48). PROVED.** A turn g carries a vector gear to sigma times a gear at g x, with a kick odd
+under the sign (the kick is linear in the notches and covariant). A negated gear keeps its slots: N(a, P) =
+(-a, phi(P)). S N = N S for every such kick at every W -> W+ gives, as in Theorem A, phi(P) = c - P and
+m_f + m_f' = V - 1 - c: the negation is the flip with the frame toggled, per gear. At one parity the law's complement
+w - 1 - r with a fixed mid (line 618's theorem) commutes, reading -P - 1 at an even count. The head's mirror does not.
+DOUBLED carries each gear's frame in its own tooth, so it holds the 48 with no shared bit; FRAME needs a frame per
+gear wherever a turn negates some gears of a Node-clock and not others.
+
+**Proposition E (the gears that need no frame). PROVED.**
+(E1) The twelve gear, which K negates at the turnover: (a-, a, r) -> (-a, -a-, r) sends P to +P with no rounding read,
+so for a kick odd under the sign the run back lands on (-a, -a-, r) at every count.
+(E2) The regulator at its own constant teeth (Rule3's flux form T a+ + r' = 2 T a - T a- + F(a) + r): the flip is exact
+at every T by Lemma 1, at constant teeth.
+(E3) A drive fine tooth d at its constant drive count D (q, d' = Rule3 of N + d at D, the carries kicked into the gear):
+where the run back reads the same numerator (time-even), N + (D - 1 - d') = q D + (D - 1 - d), so the flip returns
+(q, D - 1 - d); where it reads -N (time-odd), -N + d' = -q D + d, so the drive fine tooth is kept. The head mirrors
+every drive fine tooth once.
+
+## 4. The probes (protocol step 3)
+
+All runs: /home/user/Universe24/venv314/bin/python -I <probe>.py in this folder (each under 50 s). Forms: HEAD (the
+head), FLIP (the flip, the head's mid), CBEF and CNOW (Animate's (i), the carry in the before or the now slot), TDROP
+and TKEEP (Animate's (ii) alone, the remainder taken mod W or kept in [0, W]), CLOSED ((i) + (ii), closed letter),
+CTIE ((i) + (ii) in Rule3's range), FRAME, DOUBLED.
+
+**Probe 1, tst_retrace.py (one gear, exhaustive on the notches -3..3 and every fine tooth, every w 2..40, two kicks).
+CHECKED.** Failures, even counts | odd counts (cases in tst_retrace.txt):
+
+| form | T T = 1 | P(T x) = -P | S T S = T | across W -> W+ | toy, images twice | head's step | in [0, W) |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| HEAD | 0 / 0 | 1,960 / 0 | 3,472 / 0 | 10,065 / 4,743 | 521 / 0 | 0 / 0 | 0 / 0 |
+| FLIP | 0 / 0 | 41,160 / 0 | 0 / 0 | 82,124 / 117,306 | 0 / 0 | 0 / 0 | 0 / 0 |
+| CBEF | 1,960 / 0 | 0 / 0 | 1,960 / 0 | 7,644 / 0 | 811 / 0 | 0 / 0 | 0 / 0 |
+| CNOW | 1,960 / 0 | 0 / 0 | 1,960 / 0 | 2,639 / 4,743 | 625 / 0 | 0 / 0 | 0 / 0 |
+| TDROP | 0 / 0 | 1,960 / 0 | 1,838 / 0 | 5,009 / 2,359 | 15,757 / 0 | 1,467 / 1,355 | 0 / 0 |
+| TKEEP | 1,000 / 0 | 1,000 / 0 | 1,830 / 0 | 5,163 / 2,359 | 2,022 / 0 | 1,467 / 1,355 | 954 / 0 |
+| CLOSED | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 1,467 / 1,355 | 1,954 / 0 |
+| CTIE | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 185 / 0 | 1,467 / 1,355 | 0 / 0 |
+| FRAME | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| DOUBLED | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+
+- Cases for FRAME and DOUBLED: 160,524 states, 641,312 changes of count, 1,302,700 images of the toy, 240,786 steps
+  against the head's. By the parities of (W, W+), S T S = T fails for HEAD 6,243 (ee), 3,822 (eo), 4,743 (oe), 0 (oo);
+  for FLIP 0, 82,124 of 82,124, 117,306 of 117,306, 0: the flip alone is exact while the parity holds and nowhere else.
+- The mathematician's toy as he ran it (D = 3, notches -25..25): HEAD 25 images hit twice at w = 10 and none at w = 11,
+  reproduced; FLIP, CLOSED, FRAME, DOUBLED none at either.
+- DOUBLED = FRAME through the encoding, both frames, step, turnover and reading: 0 failures of 321,048.
+- The other odd tie rules in CLOSED's place (to the odd quotient, away from zero): 0 failures of the retrace.
+- Mutants, 8 of 8 caught: FRAME with no toggle (P misread at every even state; 398,860 failures across counts); FRAME
+  with m_1 = W - mid (P misread at every state); FRAME with the head's mirror for the flip (6,944 retrace failures);
+  DOUBLED with the carry's offset W - 1 (still 156 of 156, the head's step 240,786 of 240,786: a constant kick, which
+  retraces); DOUBLED read P2 div 2 (P misread at every state); DOUBLED with the mirror mod 2 W (6,748); CLOSED with its
+  mirror mod W (1,830); CLOSED with the tie sent up, David's letter alone (1,960).
+
+**Probe 2, tst_run.py (the circle of law 10).** A time gear at its own fixed teeth Tx = 9..16 tops by the weak maximum;
+a ring of five gears rides at W = w (X- + X), w = 1..16, so at an odd w the count changes parity tick by tick. 120 ticks
+forward through every turnover, the turnover, 120 ticks: the run back must end on the turned start. CHECKED: failed
+runs, even w | odd w, of 320 | 320 (about 8,000 turnovers forward per form): HEAD 298 | 166; FLIP 0 | 216; CBEF 274 | 159;
+CNOW 310 | 181; TDROP 211 | 118; TKEEP 190 | 108; CLOSED, CTIE, FRAME, DOUBLED 0 | 0. Mutants: 5 of 8 fail the run; the
+three that run back exactly only misread the stride or add a constant time-even kick and are caught by probe 1.
+
+**Probe 3, tst_head.py (the head's own act functions: acts.carry, acts.mid, acts.mirror, acts.flip, acts.reverse,
+rule3.rule3, rule3.mean_teeth_of, trains.Gear; the driven step is tick.py's two lines). CHECKED.**
+- H1, the head's rewind (from its stack: the before slot, the impulse off, the same driven carry): 0 of 240,786.
+- H2, the head's retrace with no log: 3,472 of 41,160 at the even counts, 0 of 39,102 at the odd. Of the even counts:
+  fine tooth 0 at exactly one of the two states 3,472 of 3,472 fail; at both 0 of 224; at neither 0 of 37,464.
+- H3, FRAME and DOUBLED on the same acts, every (W, W+): 0 of 481,572 each. Mutants: the flip with the head's mid
+  across a change of count 119,364 of 240,786; FRAME with acts.mirror for acts.flip 251,372 of 481,572.
+- H4, the circle with the head's time gear (rule3.rule3), its weak maximum and mean_teeth_of: the head misses the
+  turned start in 141 of 152 runs ((T div 2) even) and 79 of 160 ((T div 2) odd); FRAME and DOUBLED in 0 of 312.
+- H5, the regulator's turnover by acts.flip: 0 of 120,393; acts.mirror there: 5,460.
+- H6, a drive with a time-even numerator: acts.mirror on its fine tooth fails 12,642 of 144,060 at the even drive
+  counts and 0 of 136,857 at the odd; acts.flip 0 at both.
+
+**Probe 6, tst_engine.py (the head's whole Tick on tests/worlds, nothing patched on disk). CHECKED.** One tick, the
+turnover at every Node-clock (clock.reverse), one tick, against the turned start. Every W there is even (Gamma 1,000)
+and near 10^25, so ties are seeded (fine tooth 0, a valid state) on the hands. With acts.mirror: the seeded three gears
+miss T x at 19 of 19 (world_node), 13 of 13 (nature), 12 of 12 (hole); the seeded twelve gears 0 of 44; no other driven
+gear. With acts.flip put in acts.mirror's place in memory: 0 of 44. The regulator's three flow gears miss T x in every
+case, seeded or not (14, 38, 86 slots), also with the flows negated at the turnover (explore/flows.py): not parity
+(OPEN, section 10).
+
+**Probe 4, tst_24.py (the 48 on a 3 x 3 x 3 torus, a vector and a scalar train, centred gradients and the grad-div
+coupling, ties seeded). CHECKED.** Failures of S(g x) = g S(x), all 48 | the 24 alone:
+- HEAD: constant even W 1,680 of 1,920 | 420 of 480; constant odd W 0 | 0; W = w (X- + X) at odd w 1,050 | 258.
+- FLIP (line 618's complement): 0 | 0 at constant even and odd W; 1,176 | 168 when the count changes parity.
+- FRAME, DOUBLED: 0 of 5,760 | 0 of 1,440.
+
+## 5. What the head fails at an even w, and why (CHECKED and PROVED)
+
+- **The mirror.** acts.mirror returns carry(mid + mid - fine, teeth, 0)[1], the remainder alone. At an even W and the
+  fine tooth 0 it writes 0 where mid + mid - 0 = W carries one notch, so the turned stride reads -P - W (probe 1:
+  1,960 of 41,160, every state with r = 0 at the even counts, 0 at the odd). Its docstring's "P ... turns to -P exactly"
+  holds everywhere else. David's letter kept the tooth w (DAVID-THE-ONE-MIRROR.md point 1); the code drops it.
+- **The rounding.** (P + mid) div W rounds every tie P = W / 2 mod W up, so q(-P) = -q(P) + 1 there: the run back rounds
+  the tie the other way. The ties are exactly the states the carry leaves at the fine tooth 0.
+- **Together:** S T S = T fails exactly where exactly one of the fine teeth before and after the step is 0 (probe 3, H2:
+  3,472 of 3,472), never at an odd count; it fails across every change of count that meets an even count (eo, oe,
+  ee); the mathematician's 25 at w = 10 is this. On the whole Tick: 44 of 44 seeded ties.
+- **Why** (Lemmas 1 and 2, Theorem A): Rule3's only reflection at a fixed mid tooth is the flip, centred at the stride
+  -1/2 at an even count. The one mirror is no symmetry of the carry there, and no remainder in [0, W) makes P -> -P
+  exact; the head stays exact backward only by its stack (H1). The head's rewind tests (20 of 20) read the stack, so
+  they cannot see it; in a run the ties are 1 in W of the states, never met at W near 10^25.
+- **Two more, beside it:** the head mirrors every drive fine tooth once (clock.reverse), which fails at an even drive
+  count (H6); and rule3.mean_teeth_of reads (T div 2)(X- + X), which is (T / 2)(X- + X) only at an even T (probe 5, B4:
+  7,600 of 7,600 differ at odd T).
+
+## 6. Animate's two candidates: needed? enough? (CHECKED and PROVED)
+
+| candidate | the run back (S T S = T, T T = 1, across counts) | in Rule3's range | the head's step kept |
+| --- | --- | --- | --- |
+| (i) alone: the carry kept in the stride (CBEF, CNOW), or David's letter keeping the tooth w | fails: T T moves both notches by one at the tooth 0 (1,960), the ties round up again (1,960) | yes (CBEF, CNOW); no (the tooth w) | yes |
+| (ii) alone: the tie to the even quotient (TDROP, TKEEP) | fails (1,838; 1,830); TDROP also loses the stride in the step (15,757 images twice) | TDROP yes, TKEEP no | no |
+| (i) and (ii), closed letter (CLOSED) | exact at every count | no: the remainder reaches w (1,954) | no: the ties (1,467 + 1,355) |
+| (i) and (ii) in Rule3's range (CTIE) | the step exact, but the before slot is one notch off at the ties: the toy's trigger collides (185) | yes | no |
+| FRAME / DOUBLED (no tie rule, no carried mirror) | exact at every count | yes | yes, bit for bit |
+
+**So:** (i) and (ii) are each insufficient alone, sufficient together (as CLOSED), and not necessary. What any exact
+form in Rule3's range needs at an even count is one more bit (Lemma 2), the frame; the parity of the tie's quotient is
+not it (any odd tie rule works in CLOSED). FRAME/DOUBLED keep Rule3's floor, which is half up in the frame 0 and half
+down in the frame 1 at an even count, and the flip, the carry's own reflection.
+
+## 7. The balance at an odd count (part b)
+
+**7.1 The factors. PROVED; CHECKED (probe 5, tst_balance.py).** Write w = alpha rim Gamma^2 G^2, R_j = beta pinion
+p_i^2 Q_j, D = delta (rim - pinion) p_0^2 G^2. At the vacuum (p_0 = p_i = Gamma, Q_j = G^2) the balance 2 w = SUM_j R_j + D
+(ALGEBRA.md line 807: "an identity of the coefficients, SUM over the six Spokes of R_ij + S_i = 2 w - D_i") reads
+2 alpha rim = 6 beta pinion + delta (rim - pinion) for every 0 <= pinion <= rim. At pinion = 0: delta = 2 alpha; at
+pinion = rim: 6 beta = 2 alpha. So beta = alpha / 3 and delta = 2 alpha: alpha = 3 k, (3 k, k, 6 k). The ratios R_j / w
+and D / w, all the step reads, are the same for every k.
+- **The odd count's formula:** k = 1, the least: w = AXES rim Gamma^2 G^2, R_j = pinion p_i^2 Q_j, D = SPOKES (rim - pinion)
+  p_0^2 G^2; the regulator's own R_j = p_i^2 Q_j (rim - rim div Gamma), D = SPOKES (rim div Gamma) p_s^2 G^2. Its w is odd
+  at odd rim, Gamma, G and even otherwise: its parity is the calibre's, no condition. The head's (6, 2, 12) is k = 2, the
+  odd count's double: rule3.gearing gives teeth, grips and spring exactly twice the odd form's.
+- CHECKED: 10,395 pairs (rim 1..30, pinion 0..rim, Gamma 1..7, G 1..3): the hold 0 at both factorizations, the head's
+  gearing the odd one doubled in all; the odd w odd in 1,920 of them. The only triples up to (12, 12, 30) that balance
+  every pair: (3, 1, 6), (6, 2, 12), (9, 3, 18), (12, 4, 24); with an odd alpha (3, 1, 6) and (9, 3, 18). The regulator's
+  gearing balances at both: 0 of 640 each. Mutants (one factor changed): the balance fails at 78, 78 and 90 of 90 pairs.
+
+**7.2 The riders' mean teeth: the doubled form. PROVED; CHECKED.** (w / 2)(X0 + X1) is a half where w and X0 + X1 are
+odd. Write the step at twice the count, W2 = w (X0 + X1), with the kick doubled (the equation times the Spoke's two
+sides): W2+ (a+ - a) + (r+ - mid(W2+)) = W2 (a - a-) + (r - mid(W2)) + k + k.
+- It is an integer at every parity, and it is the exact letter at the teeth W2 / 2: a+ = a + floor(P+ / W+ + 1/2) with
+  P = P2 / 2 (at an odd W2+ no tie exists, 2 P2+ + W2+ being odd). CHECKED: 0 mismatches against Fractions in 15,600
+  states, w 2..40; mutant, the kick not doubled, 7,977 mismatches.
+- At an even w it is the head's step bit for bit, r2 = 2 r + (W mod 2): 0 of 3,937 against mean_teeth_of and acts.carry.
+- At the odd count's w = AXES rim Gamma^2 G^2 it is the head's step integer for integer: W2 = w (X0 + X1) is the head's
+  (T div 2)(X0 + X1) with T = 2 w, and k + k with the odd gearing is the head's kick with its doubled gearing. **The
+  head's formula is already the doubled form of the odd count's**; only rule3.mean_teeth_of's T div 2 is wrong at an odd
+  T (7,600 of 7,600).
+- The balance at rest holds in the doubled form: at X0 = X1 = X = s, W2 (a+ - 2 a + a-) = 2 s F reads
+  w (a+ - 2 a + a-) = F, the same hold 2 w - D - SUM_j R_j.
+
+**7.3 The shear's term. PROVED; CHECKED.** The tension gear's teeth are W = 3 w (X_now + X_behind) and W+ = 3 w (X_now +
+X_ahead), so (3 w / 2)(X_ahead - X_behind) = (W+ - W) / 2 is the mid tooth's move, the one formula's own (r - mid(W)) and
+(r+ - mid(W+)) (0 failures of 9,947). Replace it by mid(W+) - mid(W), exact at every parity: equal to the term where the
+two counts share a parity (0 of 6,167 both even, 0 of 1,260 both odd) and half a tooth from it at mixed parity, where the
+term is no integer (2,520 of 2,520). In the doubled form the move is 3 w (X_ahead - X_behind) exactly (0 of 9,947).
+
+**7.4 The 24 at the odd count. PROVED; CHECKED (probe 4).** The factors are scalars and the balance holds at every
+Node-clock alike, so the gearing is invariant under the 24 at every count. The step with the odd gearing (w = 135 =
+3 x 5 x 3^2, grip 27, spring 108) commutes with the 48 under FRAME and DOUBLED at the regulator's constant odd count and
+at the riders' changing count: 0 of 1,440 each (0 of 2,880 for each form). Under the head's mirror only at the constant
+odd count (0 of 1,440), not when the riders' count changes parity (588 of 1,440); line 618's complement likewise
+(0; 420 of 1,440).
+
+**7.5 Why an odd calibre does not remove the even counts. PROVED; CHECKED.** The riders' W2 = w (X0 + X1) is even wherever
+X0 + X1 is even, at rest always (X0 = X1). So the driven gears meet even counts at every calibre, and the even-count
+retrace is needed whatever the calibre's parity (probe 2: the head misses 166 of 320 runs at odd w). The
+mathematician's fix, "odd teeth counts", is not available to the riders, and with FRAME/DOUBLED not needed.
+
+## 8. Every other line that leans on parity (part c, Sofer's list), one line each
+
+**w div 2 taken as exact**
+- line 100, w = 6 den Gamma^2 G^2 "even at every den by its factor 6 and so with w div 2 exact there": mid(n) = n div 2 is
+  read of each count as it is; a product's half is the half of the product, mid(w (X0 + X1)), never mid(w)(X0 + X1); w is
+  the odd count's AXES den Gamma^2 G^2 or its double (7.1).
+- line 110 (K-S2), "Gamma odd (no tie in the odd rounding; the half teeth counts' div 2 is exact at the calibre's even
+  w)": strike "Gamma odd": the ties are taken by the frame (Theorem A), not by Gamma's parity, and the halves by the
+  doubled form.
+- line 130, the riders' mean teeth (w / 2)(X0 + X1) and the born gears' origin (w / 2) X_before: the doubled form
+  w (X0 + X1) with the kick doubled (7.2); the born tooth the mid tooth of the gear's own count.
+- line 1600, the shear's (3 w / 2)(X_ahead - X_behind): mid(W+) - mid(W), or 3 w (X_ahead - X_behind) doubled (7.3).
+- line 436, David's measure of the riders' (w div 2)(X_before + X_now): a record; it stands, reread in the doubled form.
+- line 559, "with the slots exchanged T sends P to -P - 1 at an even w and to -P at an odd w, and C to -P": read in the
+  frame, the flip sends P to -P at every w, and T and C (the negation) are one map, the flip with the frame toggled.
+
+**The setting at the half teeth count**
+- line 1411, "the vacuum is (0, 0, w div 2) at every Node-clock": stands at both parities as the frame 0's born gear; in the
+  frame 1 the born tooth is m_1(W) = W - 1 - mid(W) (probe 5, C1: the born gear reads 0 and stays, 0 of 546; mutant, the
+  flipped born tooth read at mid, misreads at every even count, 140 of 273).
+- line 344, "the setting's origin at the half teeth count of an even teeth count": the setting's origin at the frame's
+  mid tooth m_f(W), at every count.
+- line 622, a signed gear's image "at the complement teeth count - 1 - teeth count div 2, one below teeth count div 2 for an
+  even teeth count": stands; it is the frame 1's born tooth m_1(W), no exception.
+- line 352, the pair {w / 2 - 1, w / 2} and "the swap's bare ~x ... moves an odd gear off its setting's gauge": that gauge
+  is the frame; under FRAME/DOUBLED the run and its mirror no longer part (probe 4: 0 of 5,760).
+- line 618, the cube's symmetry with "each signed component's remainder carried as its complement w - 1 - r": stands as the
+  one mirror at every count, with the frame; the two's complement (the head's mirror at an even w) is struck as a mirror.
+- line 122 (v), the fold min(r, w - 1 - r) over (w + 1) div 2 classes: stands at both parities. It is the flip's invariant
+  at every count (0 of 819) and the head's mirror's only at the odd counts (380 changes at the even): with the flip as the
+  mirror the fold and the mirror agree. The head's vernier reads |r - mid(w)|; under FRAME it reads |r - m_f(w)|.
+
+**The count of quanta**
+- line 110 (K-S2), "T even, the unit of the symplectic area (W = T div 2 per quantum)", and line 142's "A x B = T div 2 ...
+  its Wronskian +-T div 2" (T there the key, quantum_action; clock.py:95, assembly/setting.py:93 and 255): count a
+  Wronskian's quanta in the doubled form, q = (|W| + |W|) div T with its remainder kept, exact at every key (C2: 0 of
+  23,439; |W| div (T div 2) misreads 8,963). A lone quantum's setting A B = T / 2 has no integer pair at an odd key (19 of
+  19): OPEN, the owner's (the setting books the half as its remainder, or the key's evenness stands by name as a
+  condition of the calibre, the ruling naming teeth counts).
+- law 5's count q = E div w_c (the wind at the winding 3 key s) does not lean on parity.
+
+## 9. What it replaces and what it changes (protocol step 4)
+
+- **Struck:** section 16's restriction "teeth counts even (w = 6 den Gamma^2 G^2); Gamma odd, no tie in the odd rounding":
+  T holds at every integer, and its condition comes out of the symmetry T itself as the frame (the owner's word of
+  11:1x UTC: "The conditions must come out of the 24 rotations, the tensor and the other symmetries by themselves").
+- **Replaced:** the one mirror's code, acts.mirror (the carry dropped), by acts.flip with the frame's mid tooth at the
+  driven gears and their drives; the regulator and the ratchet already turn by acts.flip. The law's "every fine tooth
+  mirrored about its mid tooth" (line 1602) reads: mirrored about the frame's mid tooth, which is the flip.
+- **Answered:** the mathematician's finding (section 30, time's reversal; derive/mathematician/turnover.txt): T S T = S^-1
+  at every count with no read of the log, as S T S = T with T T = 1. The plan's section 30 item 5 for the step and the
+  turnover. Sofer's OPEN 1 (7.1), 2 (sections 3 to 6), 3 (7.2, 7.3), 4 in part (7.4; 8; the lone quantum OPEN).
+- **Rows moved:** none (no src). **Contradictions with nature added:** none. **What the build must change** beside the
+  mirror: every reader of a driven stride with the head's mid (section 10, item 2), mean_teeth_of at an odd count, the
+  drive fine teeth's turn.
+
+## 10. OPEN
+
+1. Which spelling the build takes: FRAME (a frame per gear wherever a turn of the 48 negates some gears of a Node-clock
+   and not others; for the turnover alone the ratchet's remainder and K suffice) or DOUBLED (no new state; one more bit in
+   every driven fine tooth). Both PROVED exact; the choice is the Boss's and David's.
+2. The readers of a driven stride with the head's fixed mid (tick.impulse's u_in u_out and the forms, the sweep, the
+   stress, the winds, run.py:294's odd gears, draw.py's fold origin) must read it in the frame, or as (P2 + 1) div 2. Not
+   probed here.
+3. The drive fine teeth: which numerators are time-even under K, train by train (E3: the flip for those, the identity
+   for the time-odd).
+4. The regulator's three flow gears miss T x on the whole Tick with no tie (14, 38, 86 slots after 3 ticks on node, nature,
+   hole), with the mirror or the flip and with the flows negated: not a matter of parity; its cause is not read here.
+5. A lone quantum's setting at an odd key (8, the count of quanta).
+6. The clicks and the draw at an odd count (the split's rewind is many to one in any case, section 30): not covered.
+7. Protocol steps 5 and 6: a second hand and Sofer's law check, then David's sign-off.
+
+## 11. Files (this folder)
+
+- forms.py: the ten forms, the two odd-tie variants and the eight mutants, integers only.
+- tst_retrace.py / tst_retrace.txt: probe 1, one gear, exhaustive, w 2..40.
+- tst_run.py / tst_run.txt: probe 2, the circle with a time gear and a ring of five gears.
+- tst_head.py / tst_head.txt: probe 3, the head's own acts.
+- tst_24.py / tst_24.txt: probe 4, the 48 on a 3^3 torus, and the odd count's gearing.
+- tst_balance.py / tst_balance.txt: probe 5, the balance, the doubled form, the shear, the setting, the quanta, the fold.
+- tst_engine.py / tst_engine.txt: probe 6, the head's whole Tick with seeded ties, three worlds.
+- explore/: the exploration that led to probe 6 (engine_tst.py, engine_tie.py, flows.py); ref/: the law and the plan as read.
+
+== forms.py ==
+"""The forms of the turnover's mirror and of the step's rounding on one driven gear. Exact integers only.
+
+A driven gear's state is (b, a, r): the notch before, the notch now, the fine tooth, held at the teeth count W.
+The matter's half of the one formula (cut 0's letter, DAVID-TENSOR24-THE-ONE-FORMULA.md on toys-5):
+
+    W+ (a+ - a) + (r+ - m(W+)) = W (a - a-) + (r - m(W)) + k,     k = s F(a) + K (the kick, time-even)
+
+that is P = W (a - b) + r - m(W), P+ = P + k, and one carry a+ = a + (P+ + m(W+)) div W+, r+ = (P+ + m(W+)) mod W+.
+The turnover T exchanges the two slots and mirrors the fine tooth. Only +, *, and Rule3's carry (divmod) are used;
+mid(n) = n div 2 is Rule3's carry on the Spoke's two sides.
+
+Each form has: name, step(st, W, Wp, k), T(st, W), P(st, W) (the stride as the form reads it), states(W, R)
+(its whole state space on the notches -R..R), born(W) (the gear born at rest), and an `encode` from the head's state.
+The forms:
+  HEAD      the head: the one mirror r -> (mid + mid - r) mod W, its carry dropped; the rounding (P + mid) div W
+  FLIP      the flip r -> W - 1 - r (Rule3's own reflection, acts.carry at -1); the rounding of the head
+  CBEF      Animate's (i): the mirror's carry c = (mid + mid - r) div W kept in the stride, in the before slot
+  CNOW      Animate's (i): the same, the carry in the now slot
+  TDROP     Animate's (ii) alone in the head's encoding: the tie sent to the even quotient, the remainder taken mod W
+  TKEEP     Animate's (ii) alone with its remainder kept in [0, W]; the head's mirror (mod W) at the turnover
+  CLOSED    (i) and (ii) together in their closed letter: the remainder in [0, 2 mid], the mirror r -> 2 mid - r
+            with no mod (DAVID-THE-ONE-MIRROR.md's letter: "the tooth w stands only as the mirror's image of 0"),
+            the tie sent to the even quotient
+  CTIE      (i) and (ii) together in Rule3's range [0, W): the carry kept in the slot the even quotient names
+  FRAME     proposed: the flip, and the mid tooth of the gear's frame f (its reversals mod 2):
+            m_0(W) = mid(W), m_1(W) = W - 1 - mid(W); the turnover toggles f
+  DOUBLED   proposed, FRAME's frame-free encoding: the fine tooth at the doubled count 2 W (mid tooth W, exact at
+            every W), the flip at 2 W, the stride read as P = (P2 + 1) div 2
+"""
+
+from __future__ import annotations
+
+SIDES = 2  # the two sides of a Spoke: the one count the halving reads
+
+
+def mid(n: int) -> int:
+    """The mid tooth, Rule3's carry on the two sides."""
+    return divmod(n, SIDES)[0]
+
+
+def carry(u: int, w: int) -> tuple[int, int]:
+    """Rule3: u = q w + r', 0 <= r' < w."""
+    return divmod(u, w)
+
+
+def tie_even(u: int, w: int) -> tuple[int, int]:
+    """Animate's (ii): the carry of u = P + mid(w), an exact tie (2 P = (2 k + 1) w) sent to the even quotient.
+    Written in the three operations: q, s = carry(u, w); the tie is (2 u - 2 mid(w) + w) mod 2 w == 0, which no odd
+    w meets; the indicator [n == 0] for 0 <= n < d is 1 - (n + d - 1) div d. The remainder reaches w at a tie whose
+    floor quotient is odd: it leaves Rule3's range [0, w)."""
+    q, s = carry(u, w)
+    p = u - mid(w)
+    n = (p + p + w) % (w + w)
+    tie = 1 - (n + w + w - 1) // (w + w)
+    odd = q % SIDES
+    return q - tie * odd, s + w * tie * odd
+
+
+def tie_up(u: int, w: int) -> tuple[int, int]:
+    return carry(u, w)
+
+
+def _tie(u: int, w: int) -> int:
+    p = u - mid(w)
+    n = (p + p + w) % (w + w)
+    return 1 - (n + w + w - 1) // (w + w)
+
+
+def tie_odd(u: int, w: int) -> tuple[int, int]:
+    """A tie sent to the odd quotient (another odd rounding)."""
+    q, s = carry(u, w)
+    t = _tie(u, w) * (1 - q % SIDES)
+    return q - t, s + w * t
+
+
+def tie_away(u: int, w: int) -> tuple[int, int]:
+    """A tie sent away from zero (another odd rounding): down where the stride is negative."""
+    q, s = carry(u, w)
+    p = u - mid(w)
+    neg = -(p // (p * p + 1))  # [p < 0] in the three operations (the mathematician's sign test)
+    t = _tie(u, w) * neg
+    return q - t, s + w * t
+
+
+class Form:
+    name = ""
+    frame = False
+
+    def born(self, W: int) -> int:
+        return mid(W)
+
+    def states(self, W: int, R: int):
+        for b in range(-R, R + 1):
+            for a in range(-R, R + 1):
+                for r in range(W):
+                    yield (b, a, r)
+
+    def encode(self, st, W):
+        """From the head's state (b, a, r), r in [0, W)."""
+        return st
+
+    def P(self, st, W):
+        b, a, r = st[:3]
+        return W * (a - b) + r - mid(W)
+
+
+class Head(Form):
+    name = "HEAD"
+
+    def step(self, st, W, Wp, k):
+        b, a, r = st
+        q, rp = carry(W * (a - b) + r - mid(W) + k + mid(Wp), Wp)
+        return (a, a + q, rp)
+
+    def T(self, st, W):
+        b, a, r = st
+        return (a, b, carry(mid(W) + mid(W) - r, W)[1])
+
+
+class Flip(Head):
+    name = "FLIP"
+
+    def T(self, st, W):
+        b, a, r = st
+        return (a, b, W - 1 - r)
+
+
+class CarryBefore(Head):
+    name = "CBEF"
+
+    def T(self, st, W):
+        b, a, r = st
+        c, r2 = carry(mid(W) + mid(W) - r, W)
+        return (a - c, b, r2)
+
+
+class CarryNow(Head):
+    name = "CNOW"
+
+    def T(self, st, W):
+        b, a, r = st
+        c, r2 = carry(mid(W) + mid(W) - r, W)
+        return (a, b + c, r2)
+
+
+class TieDrop(Head):
+    name = "TDROP"
+
+    def step(self, st, W, Wp, k):
+        b, a, r = st
+        q, rp = tie_even(W * (a - b) + r - mid(W) + k + mid(Wp), Wp)
+        return (a, a + q, rp % Wp)
+
+
+class TieKeep(Head):
+    name = "TKEEP"
+
+    def states(self, W, R):
+        for b in range(-R, R + 1):
+            for a in range(-R, R + 1):
+                for r in range(2 * mid(W) + 1):
+                    st = (b, a, r)
+                    if self.canonical(st, W):
+                        yield st
+
+    tie = staticmethod(tie_even)
+
+    def canonical(self, st, W):
+        b, a, r = st
+        return self.tie(W * (a - b) + r, W) == (a - b, r)
+
+    def step(self, st, W, Wp, k):
+        b, a, r = st
+        q, rp = self.tie(W * (a - b) + r - mid(W) + k + mid(Wp), Wp)
+        return (a, a + q, rp)
+
+    def encode(self, st, W):
+        b, a, r = st
+        q, rr = self.tie(W * (a - b) + r, W)
+        return (a - q, a, rr)
+
+
+class Closed(TieKeep):
+    name = "CLOSED"
+
+    def T(self, st, W):
+        b, a, r = st
+        return (a, b, mid(W) + mid(W) - r)
+
+
+class ClosedOdd(Closed):
+    name = "CLOSED, tie to the odd quotient"
+    tie = staticmethod(tie_odd)
+
+
+class ClosedAway(Closed):
+    name = "CLOSED, tie away from zero"
+    tie = staticmethod(tie_away)
+
+
+class CarryTie(Head):
+    """(i) and (ii) in Rule3's range: the state is the head's (r in [0, W)), read by the plain decoding; the
+    position is the now slot; the step moves it by the even-tie quotient; the turnover puts the mirror's carry in
+    the slot that the even quotient names."""
+
+    name = "CTIE"
+
+    def step(self, st, W, Wp, k):
+        b, a, r = st
+        p = W * (a - b) + r - mid(W) + k
+        q, _ = tie_even(p + mid(Wp), Wp)
+        a1 = a + q
+        qf, rp = carry(p + mid(Wp), Wp)
+        return (a1 - qf, a1, rp)
+
+    def T(self, st, W):
+        b, a, r = st
+        p = W * (a - b) + r - mid(W)
+        q, _ = tie_even(p + mid(W), W)
+        now = a - q
+        qf, r2 = carry(-p + mid(W), W)
+        return (now - qf, now, r2)
+
+
+class Frame(Form):
+    name = "FRAME"
+    frame = True
+
+    @staticmethod
+    def m(W, f):
+        return mid(W) + f * (W - 1 - mid(W) - mid(W))
+
+    def states(self, W, R):
+        for f in (0, 1):
+            for st in super().states(W, R):
+                yield (*st, f)
+
+    def encode(self, st, W):
+        return (*st, 0)
+
+    def P(self, st, W):
+        b, a, r, f = st
+        return W * (a - b) + r - self.m(W, f)
+
+    def born(self, W):
+        return mid(W)
+
+    def step(self, st, W, Wp, k):
+        b, a, r, f = st
+        q, rp = carry(W * (a - b) + r - self.m(W, f) + k + self.m(Wp, f), Wp)
+        return (a, a + q, rp, f)
+
+    def T(self, st, W):
+        b, a, r, f = st
+        return (a, b, W - 1 - r, 1 - f)
+
+
+class Doubled(Form):
+    name = "DOUBLED"
+
+    def states(self, W, R):
+        for b in range(-R, R + 1):
+            for a in range(-R, R + 1):
+                for r2 in range(W + W):
+                    yield (b, a, r2)
+
+    def encode(self, st, W):
+        b, a, r = st
+        return (b, a, r + r + (W - mid(W) - mid(W)))
+
+    def P(self, st, W):
+        b, a, r2 = st
+        return carry((W + W) * (a - b) + r2 - W + 1, SIDES)[0]
+
+    def born(self, W):
+        return W  # the doubled count's mid tooth: the head's mid(W) encoded, 2 mid(W) + (W mod 2)
+
+    def step(self, st, W, Wp, k):
+        b, a, r2 = st
+        q, rp = carry((W + W) * (a - b) + r2 - W + k + k + Wp, Wp + Wp)
+        return (a, a + q, rp)
+
+    def T(self, st, W):
+        b, a, r2 = st
+        return (a, b, W + W - 1 - r2)
+
+
+FORMS = [Head(), Flip(), CarryBefore(), CarryNow(), TieDrop(), TieKeep(), Closed(), CarryTie(), Frame(), Doubled()]
+
+
+# ---- mutants of the two proposed forms (each one term changed; each must fail somewhere) ----
+
+
+class FrameNoToggle(Frame):
+    name = "FRAME-mut: no toggle"
+
+    def T(self, st, W):
+        b, a, r, f = st
+        return (a, b, W - 1 - r, f)
+
+
+class FrameTwos(Frame):
+    name = "FRAME-mut: m1 = W - mid"
+
+    @staticmethod
+    def m(W, f):
+        return mid(W) + f * (W - mid(W) - mid(W))
+
+
+class FrameMirror(Frame):
+    name = "FRAME-mut: one mirror for the flip"
+
+    def T(self, st, W):
+        b, a, r, f = st
+        return (a, b, carry(mid(W) + mid(W) - r, W)[1], 1 - f)
+
+
+class DoubledOff(Doubled):
+    name = "DOUBLED-mut: offset W - 1"
+
+    def step(self, st, W, Wp, k):
+        b, a, r2 = st
+        q, rp = carry((W + W) * (a - b) + r2 - W + k + k + Wp - 1, Wp + Wp)
+        return (a, a + q, rp)
+
+
+class DoubledRead(Doubled):
+    name = "DOUBLED-mut: read P2 div 2"
+
+    def P(self, st, W):
+        b, a, r2 = st
+        return carry((W + W) * (a - b) + r2 - W, SIDES)[0]
+
+
+class DoubledMirror(Doubled):
+    name = "DOUBLED-mut: mirror 2W - r2 mod 2W"
+
+    def T(self, st, W):
+        b, a, r2 = st
+        return (a, b, carry(W + W - r2, W + W)[1])
+
+
+class ClosedMod(Closed):
+    name = "CLOSED-mut: mirror taken mod W"
+
+    def T(self, st, W):
+        b, a, r = st
+        return (a, b, carry(mid(W) + mid(W) - r, W)[1])
+
+
+class ClosedUp(Closed):
+    name = "CLOSED-mut: tie sent up (the floor)"
+
+    def states(self, W, R):
+        return Head().states(W, R)
+
+    def canonical(self, st, W):
+        return 0 <= st[2] < W
+
+    def step(self, st, W, Wp, k):
+        return Head().step(st, W, Wp, k)
+
+    def encode(self, st, W):
+        return st
+
+
+VARIANTS = [ClosedOdd(), ClosedAway()]
+
+MUTANTS = [FrameNoToggle(), FrameTwos(), FrameMirror(), DoubledOff(), DoubledRead(), DoubledMirror(), ClosedMod(),
+           ClosedUp()]
+
+== tst_retrace.py ==
+"""Probe 1: T S T = S^-1 and the retrace on one driven gear, every teeth count from 2 to 40, every form.
+
+  python3 -I tst_retrace.py
+
+Exact integers. One gear, the kick k(a) = c - D a (s = 1; time-even). For each form (forms.py) and each w, over the
+form's whole state space on the notches -R..R (exhaustive), the claims counted:
+  inv     T T = 1                                   (the turnover an involution)
+  neg     P(T x) = -P(x) at every state             (the stride's reading reversed exactly; the gear at rest stays)
+  tst     (S T)(S T) = 1, i.e. T S T = S^-1          (the mathematician's condition)
+  ret     S T S = T, i.e. T^-1 S T = S^-1            (the run back retraces: one step, the turnover, one step,
+                                                       lands on the reversal of the start)
+  retW    the same across a change of the teeth count, S(W -> W+) then T then S(W+ -> W), W+ in w - 1 .. w + 2 and 2 w
+          (both parities mixed)
+  M       the mathematician's toy: the gear's own weak top turns it, else it steps; images hit twice
+Mutants of the proposed forms are run the same way and must fail.
+"""
+
+from __future__ import annotations
+
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from forms import FORMS, MUTANTS, VARIANTS, Doubled, Frame, Head, mid  # noqa: E402
+
+HEAD = Head()
+
+R = 3
+COUNTS = range(2, 41)
+KICKS = ((3, 0), (5, 2))  # (D, c)
+
+
+def kick(a, D, c):
+    return c - D * a
+
+
+def claims(form, W, D, c):
+    out = {}
+    n_inv = f_inv = n_neg = f_neg = n_tst = f_tst = n_ret = f_ret = 0
+    for x in form.states(W, R):
+        tx = form.T(x, W)
+        n_inv += 1
+        f_inv += form.T(tx, W) != x
+        n_neg += 1
+        f_neg += form.P(tx, W) != -form.P(x, W)
+        sx = form.step(x, W, W, kick(x[1], D, c))
+        # T S T = S^-1  <=>  S T S T = 1
+        y = form.step(tx, W, W, kick(tx[1], D, c))
+        ty = form.T(y, W)
+        z = form.step(ty, W, W, kick(ty[1], D, c))
+        n_tst += 1
+        f_tst += z != x
+        # S T S = T: the run back after one step retraces
+        tsx = form.T(sx, W)
+        back = form.step(tsx, W, W, kick(tsx[1], D, c))
+        n_ret += 1
+        f_ret += back != tx
+    out["inv"] = (n_inv, f_inv)
+    out["neg"] = (n_neg, f_neg)
+    out["tst"] = (n_tst, f_tst)
+    out["ret"] = (n_ret, f_ret)
+    n = f = 0
+    for Wp in sorted({W - 1, W + 1, W + 2, W + W} - {0, 1}):
+        cls = "retW" + ("e" if W % 2 == 0 else "o") + ("e" if Wp % 2 == 0 else "o")
+        nn = ff = 0
+        for x in form.states(W, R):
+            sx = form.step(x, W, Wp, kick(x[1], D, c))
+            tsx = form.T(sx, Wp)
+            back = form.step(tsx, Wp, W, kick(tsx[1], D, c))
+            nn += 1
+            ff += back != form.T(x, W)
+        n += nn
+        f += ff
+        prev = out.get(cls, (0, 0))
+        out[cls] = (prev[0] + nn, prev[1] + ff)
+    out["retW"] = (n, f)
+    for cls in ("retWee", "retWeo", "retWoe", "retWoo"):
+        out.setdefault(cls, (0, 0))
+    # still: a gear born at rest, and its turned image, stay at rest under the step with no kick
+    born = (0, 0, form.born(W), 0) if form.frame else (0, 0, form.born(W))
+    n = f = 0
+    for y in (born, form.T(born, W)):
+        n += 1
+        f += form.step(y, W, W, 0) != y
+    out["still"] = (n, f)
+    # agree: the form's step on the head's states is the head's step, bit for bit (notches; fine tooth by encoding)
+    n = f = 0
+    for Wp in sorted({W, W + 1, W + W}):
+        for x in HEAD.states(W, R):
+            n += 1
+            f += form.step(form.encode(x, W), W, Wp, kick(x[1], D, c)) != form.encode(HEAD.step(x, W, Wp, kick(x[1], D, c)), Wp)
+    out["agree"] = (n, f)
+    # range: every fine tooth the step and the turnover write stays in Rule3's range [0, teeth)
+    teeth = (W + W) if form.name.startswith("DOUBLED") else W
+    n = f = 0
+    for x in form.states(W, R):
+        for y in (form.step(x, W, W, kick(x[1], D, c)), form.T(x, W)):
+            n += 1
+            f += not (0 <= y[2] < teeth)
+    out["range"] = (n, f)
+    # the mathematician's toy, his box -25..25 (the gear's own triple the trigger)
+    images = {}
+    for x in form.states(W, 25 if W <= 12 else 6):
+        b, a = x[0], x[1]
+        sx = form.step(x, W, W, kick(a, D, c))
+        ap = sx[1]
+        top = b <= a and ap <= a and (b < a or ap < a)
+        img = form.T(x, W) if top else sx
+        images[img] = images.get(img, 0) + 1
+    out["M"] = (len(images), sum(1 for v in images.values() if v > 1))
+    out["rest"] = (1, int(form.P(form.T(born, W), W) != 0 or form.P(born, W) != 0))
+    return out
+
+
+KEYS = ("inv", "neg", "rest", "still", "tst", "ret", "retW", "M", "agree", "range")
+ALL = KEYS + ("retWee", "retWeo", "retWoe", "retWoo")
+
+
+def run(forms, title):
+    print(title)
+    print(f"  {'form':38s} {'parity':6s} " + " ".join(f"{k:>15s}" for k in KEYS))
+    summary = {}
+    for form in forms:
+        tot = {p: {k: [0, 0] for k in ALL} for p in ("even", "odd")}
+        bad_w = {p: {k: set() for k in ALL} for p in ("even", "odd")}
+        for W in COUNTS:
+            p = "even" if W % 2 == 0 else "odd"
+            for D, c in KICKS:
+                res = claims(form, W, D, c)
+                for k in ALL:
+                    tot[p][k][0] += res[k][0]
+                    tot[p][k][1] += res[k][1]
+                    if res[k][1]:
+                        bad_w[p][k].add(W)
+        for p in ("even", "odd"):
+            cells = []
+            for k in KEYS:
+                n, f = tot[p][k]
+                cells.append(f"{f:>6d} of {n:<6d}")
+            print(f"  {form.name:38s} {p:6s} " + " ".join(cells))
+        summary[form.name] = (tot, bad_w)
+    return summary
+
+
+def main():
+    s1 = run(FORMS, "failures (counted over w = 2..40, two kicks; for M: images hit twice of images)")
+    s2 = run(MUTANTS, "mutants of the proposed forms (each must fail somewhere)")
+    s3 = run(VARIANTS, "variants of (i) + (ii) with another odd tie rule (must hold as CLOSED does)")
+    # DOUBLED and FRAME are one machine: the encoding (b, a, r, f) -> (b, a, 2 r + (W mod 2) for f = 0,
+    # 2 r + 1 - (W mod 2) for f = 1) carries FRAME's step, turnover and reading to DOUBLED's, both frames
+    fr, db = Frame(), Doubled()
+    n_iso = f_iso = 0
+    for W in COUNTS:
+        for st in fr.states(W, R):
+            e = (st[0], st[1], st[2] + st[2] + ((W - mid(W) - mid(W)) if st[3] == 0 else 1 - (W - mid(W) - mid(W))))
+            for Wp in (W, W + 1, W + W):
+                cp = Wp - mid(Wp) - mid(Wp)
+                sf = fr.step(st, W, Wp, 7 - 3 * st[1])
+                ef = (sf[0], sf[1], sf[2] + sf[2] + (cp if sf[3] == 0 else 1 - cp))
+                n_iso += 1
+                f_iso += db.step(e, W, Wp, 7 - 3 * st[1]) != ef
+            tf = fr.T(st, W)
+            et = (tf[0], tf[1], tf[2] + tf[2] + ((W - mid(W) - mid(W)) if tf[3] == 0 else 1 - (W - mid(W) - mid(W))))
+            n_iso += 1
+            f_iso += db.T(e, W) != et or db.P(e, W) != fr.P(st, W)
+    print(f"DOUBLED = FRAME through the encoding, both frames, w 2..40 (step, turnover, reading): fails {f_iso} of {n_iso}")
+    print()
+    # verdicts
+    def zero(name, keys):
+        tot = s1[name][0]
+        return all(tot[p][k][1] == 0 for p in ("even", "odd") for k in keys)
+
+    names = list(s1)
+    retr = [f for f in names if zero(f, ("inv", "tst", "ret", "retW", "M"))]
+    read = [f for f in retr if zero(f, ("neg", "rest", "still"))]
+    head = [f for f in read if zero(f, ("agree",))]
+    rule3 = [f for f in head if zero(f, ("range",))]
+    print("retrace exactly at every count 2..40 (inv, tst, ret, retW, M all 0):", ", ".join(retr))
+    print("  and read the stride reversed exactly, the rest kept (neg, rest, still 0):", ", ".join(read))
+    print("  and keep the head's step bit for bit (agree 0):", ", ".join(head))
+    print("  and write every fine tooth in Rule3's range (range 0):", ", ".join(rule3))
+    step_only = [f for f in names if zero(f, ("inv", "tst", "ret", "retW", "neg")) and f not in retr]
+    print("the step retraces but the toy's trigger, read on the before slot, does not (M > 0):", ", ".join(step_only))
+    head_bad = s1["HEAD"][1]
+    print("HEAD: ret fails at the even counts", sorted(head_bad["even"]["ret"]), "and at the odd counts",
+          sorted(head_bad["odd"]["ret"]), "; retW (a change of count) fails at the odd counts",
+          sorted(head_bad["odd"]["retW"]))
+    print("the change of count, by the parities of (W, W+): failures of S T S = T")
+    for name in names:
+        tot = s1[name][0]
+        cells = []
+        for cls in ("retWee", "retWeo", "retWoe", "retWoo"):
+            n = tot["even"][cls][0] + tot["odd"][cls][0]
+            f = tot["even"][cls][1] + tot["odd"][cls][1]
+            cells.append(f"{cls[4:]}: {f:6d} of {n:<6d}")
+        print(f"  {name:8s} " + "   ".join(cells))
+    print("the mathematician's toy as he ran it (D = 3, no load, notches -25..25): images hit twice")
+    for name in ("HEAD", "FLIP", "CLOSED", "FRAME", "DOUBLED"):
+        form = next(f for f in FORMS if f.name == name)
+        row = []
+        for W in (10, 11):
+            row.append(f"w {W}: {claims(form, W, 3, 0)['M'][1]}")
+        print(f"  {name:8s} " + ", ".join(row))
+    caught = [m for m, (tot, _) in s2.items() if any(tot[p][k][1] for p in ("even", "odd") for k in KEYS)]
+    print(f"mutants caught: {len(caught)} of {len(s2)}")
+    var_ok = all(s3[v][0][p][k][1] == 0 for v in s3 for p in ("even", "odd")
+                 for k in ("inv", "tst", "ret", "retW", "M", "neg", "rest", "still"))
+    print("the other odd tie rules retrace exactly as CLOSED does:", var_ok)
+    ok = (retr == ["CLOSED", "FRAME", "DOUBLED"] and read == retr and head == ["FRAME", "DOUBLED"]
+          and rule3 == ["FRAME", "DOUBLED"] and step_only == ["CTIE"] and len(caught) == len(s2)
+          and var_ok and f_iso == 0)
+    print("RESULT:", "as claimed" if ok else "NOT as claimed")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+== tst_run.py ==
+"""Probe 2: the circle of law 10 on a toy Node-clock, with no log: forward, turnovers at the time gear's weak top,
+then from the turned end the same act runs back to the turned start. Exact integers.
+
+  python3 -I tst_run.py
+
+The toy: a time gear (X-, X, rx) at its own fixed teeth Tx (Rule3's flux form, Tx X+ + rx' = 2 Tx X - Tx X- +
+Dx (Xc - X) + rx; its turnover the exchange with the flip, rx -> Tx - 1 - rx, which is exact at a fixed count), and a
+ring of N driven gears by the one formula with the teeth W = w (X- + X) (the doubled form: an integer at every
+parity of w) and the kick k_i = X (g (a_(i-1) + a_(i+1) - 2 a_i) - D a_i + c). The act M: the time gear steps; where
+X- <= X >= X+ with one strict (the weak top, symmetric in X- and X+) the Node-clock ends the tick at its start
+turned (law 4: every gear's slots exchanged and fine tooth mirrored, the step's output discarded); else every gear
+steps. The claim: M^n (T z_n) = T z_0 for z_n = M^n z_0 (the run back ends on the turned start, through every
+turnover in between). Runs at w = 1 .. 16 (W of both parities, changing parity tick by tick at odd w) and
+Tx = 9 .. 16 (both parities).
+"""
+
+from __future__ import annotations
+
+import os
+import random
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from forms import FORMS, MUTANTS  # noqa: E402
+
+N = 5
+TICKS = 120
+RUNS = 40
+
+
+def time_step(t, Tx, Dx, Xc):
+    xb, x, rx = t
+    q, r = divmod(Tx * (x + x - xb) + Dx * (Xc - x) + rx, Tx)
+    return (x, q, r)
+
+
+def time_T(t, Tx):
+    xb, x, rx = t
+    return (x, xb, Tx - 1 - rx)
+
+
+def act(form, z, w, Tx, Dx, Xc, g, D, c):
+    t, gears = z
+    t2 = time_step(t, Tx, Dx, Xc)
+    x0, x1, x2 = t[0], t[1], t2[1]
+    W = w * (x0 + x1)
+    if x0 <= x1 and x2 <= x1 and (x0 < x1 or x2 < x1):
+        return (time_T(t, Tx), tuple(form.T(st, W) for st in gears)), True
+    Wp = w * (x1 + x2)
+    nows = [st[1] for st in gears]
+    out = []
+    for i, st in enumerate(gears):
+        k = x1 * (g * (nows[i - 1] + nows[(i + 1) % N] - nows[i] - nows[i]) - D * nows[i] + c)
+        out.append(form.step(st, W, Wp, k))
+    return (t2, tuple(out)), False
+
+
+def turned(form, z, w, Tx):
+    t, gears = z
+    W = w * (t[0] + t[1])
+    return (time_T(t, Tx), tuple(form.T(st, W) for st in gears))
+
+
+def trial(form, rng, w):
+    Tx = rng.randint(9, 16)
+    Dx = rng.randint(1, 3)
+    Xc = 60
+    xb = rng.randint(45, 75)
+    x = xb + rng.randint(-4, 4)
+    t = (xb, x, rng.randrange(Tx))
+    W = w * (xb + x)
+    gears = []
+    for _ in range(N):
+        a = rng.randint(-6, 6)
+        b = a + rng.randint(-2, 2)
+        r = rng.choice([0, 0, W // 2, rng.randrange(W)])  # ties seeded on purpose
+        gears.append(form.encode((b, a, r), W))
+    z0 = (t, tuple(gears))
+    g, D, c = 1, rng.randint(0, 2), rng.randint(-1, 1)
+    z = z0
+    tops = 0
+    for _ in range(TICKS):
+        z, top = act(form, z, w, Tx, Dx, Xc, g, D, c)
+        tops += top
+    y = turned(form, z, w, Tx)
+    for _ in range(TICKS):
+        y, _ = act(form, y, w, Tx, Dx, Xc, g, D, c)
+    return y == turned(form, z0, w, Tx), tops
+
+
+def main():
+    rng = random.Random(20261028)
+    print(f"runs of {TICKS} ticks forward and {TICKS} back, {N} gears, {RUNS} runs at each w = 1..16 "
+          "(W = w (X- + X)); failures: the run back missing the turned start")
+    results = {}
+    for form in FORMS + MUTANTS:
+        fails = {"even w": [0, 0], "odd w": [0, 0]}
+        tops = 0
+        for w in range(1, 17):
+            cls = "even w" if w % 2 == 0 else "odd w"
+            for _ in range(RUNS):
+                ok, nt = trial(form, rng, w)
+                fails[cls][0] += 1
+                fails[cls][1] += not ok
+                tops += nt
+        results[form.name] = fails
+        print(f"  {form.name:38s} even w: {fails['even w'][1]:3d} of {fails['even w'][0]}   "
+              f"odd w: {fails['odd w'][1]:3d} of {fails['odd w'][0]}   (turnovers forward: {tops})")
+    good = [n for n, f in results.items() if f["even w"][1] == 0 and f["odd w"][1] == 0]
+    print("exact at every count:", ", ".join(good))
+    mutants_caught = [m.name for m in MUTANTS if m.name not in good]
+    print(f"mutants that fail the run: {len(mutants_caught)} of {len(MUTANTS)}:", "; ".join(mutants_caught))
+    expected = {"CLOSED", "CTIE", "FRAME", "DOUBLED", "FRAME-mut: m1 = W - mid", "DOUBLED-mut: offset W - 1",
+                "DOUBLED-mut: read P2 div 2"}
+    ok = set(good) == expected
+    print("(the three mutants that run back exactly change only the reading or add a constant time-even kick;",
+          "probe 1 catches them by neg, rest, still and agree)")
+    print("RESULT:", "as claimed" if ok else "NOT as claimed")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+== tst_head.py ==
+"""Probe 3: the same claims on the head's own act functions (toys-5 src, read only).
+
+  /home/user/Universe24/venv314/bin/python -I tst_head.py
+
+Every act is the head's: acts.carry, acts.mid, acts.mirror, acts.flip, acts.reverse (the turnover's exchange and
+mirror), rule3.rule3 (the regulator's own turn), rule3.mean_teeth_of (the riders' mean teeth (T div 2)(X- + X)) and
+trains.Gear. The driven step is tick.py's two lines, quoted:
+    impulse: p_side = w_side * (gear.now - gear.before) + gear.fine - mid(w_side);  p_other = p + going * s * f
+    carry:   v, fine = carry(p, w_div, mid(w_div));  now, before = (a + going * v, a)[:: going]
+the turnover clock.reverse's: acts.reverse(held, signs) for a driven train (the one mirror once), acts.flip for a
+train with its own teeth (the regulator), acts.mirror once for every drive fine tooth.
+The proposed form is written with the same acts: acts.flip for every turned fine tooth and the frame's mid tooth
+m_f(W) = mid(W) + f (W - 1 - mid(W) - mid(W)), f the gear's turns mod 2 (FRAME), or the fine tooth at the doubled
+count 2 W with mid(2 W) = W and acts.flip there (DOUBLED).
+Claims, counted at every teeth count 2..40 (driven gears; the regulator; a drive), each with its mutant:
+  H1  the head's rewind (acts.carry at -1 from its own stack) is exact at every count
+  H2  the head's retrace with no log, S T S = T (one step, the turnover, one step), fails exactly at the even counts,
+      at the states whose fine tooth or whose stepped fine tooth is 0
+  H3  the proposed form's retrace is exact at every count, constant and changing (both parities mixed)
+  H4  the circle: a time gear (rule3.rule3 at its own teeth Tx) tops by clock.turnover's weak maximum; the riders'
+      teeth are mean_teeth_of(T, X-, X); forward, turnover, back: the head misses the turned start, the proposed
+      form returns it
+  H5  the regulator's turnover (acts.flip at its own teeth) retraces exactly at every count
+  H6  a drive (acts.carry at the drive teeth, a time-even numerator, its carries kicked into the gear): the head's
+      acts.mirror on the drive fine tooth fails at the even drive counts; acts.flip there is exact
+"""
+
+from __future__ import annotations
+
+import random
+import sys
+
+sys.path.insert(0, "/home/user/Universe24/src")
+
+from event_universe.core import acts  # noqa: E402
+from event_universe.core.rule3 import half, mean_teeth_of, rule3  # noqa: E402
+from event_universe.trains import Gear  # noqa: E402
+
+COUNTS = range(2, 41)
+R = 3
+TIES: dict = {}
+
+
+# ---------------- the head's step and turnover, its own acts ----------------
+def head_step(g: Gear, w_side, w_div, s, f, going=1) -> Gear:
+    p = w_side * (g.now - g.before) + g.fine - acts.mid(w_side)
+    p = p + going * s * f
+    v, fine = acts.carry(p, w_div, acts.mid(w_div))
+    a = g.now
+    now, before = (a + going * v, a)[::going]
+    return Gear(now, before, fine, w_div)
+
+
+def head_back(g: Gear, w_side, w_div, s, f_of) -> Gear:
+    """The head's rewind of one driven gear (tick.py at going -1 on the post-state: the start notch is the before
+    slot (Tick.at), the stride read at the post-state's teeth, the impulse taken off, and the driven carry the same
+    line, carry(p, w_div, mid(w_div)), with (a + going v, a)[:: going])."""
+    going = -1
+    a = g.before
+    p = w_side * (g.now - g.before) + g.fine - acts.mid(w_side)
+    p = p + going * s * f_of(a)
+    v, fine = acts.carry(p, w_div, acts.mid(w_div))
+    now, before = (a + going * v, a)[::going]
+    return Gear(now, before, fine, w_div)
+
+
+def head_T(g: Gear) -> Gear:
+    nows, befores, fines = acts.reverse([g], [1])
+    return Gear(nows[0], befores[0], fines[0], g.teeth)
+
+
+# ---------------- the proposed form with the same acts ----------------
+def m_frame(W, f):
+    return acts.mid(W) + f * (W - 1 - acts.mid(W) - acts.mid(W))
+
+
+def frame_step(g, f, w_side, w_div, s, force):
+    p = w_side * (g.now - g.before) + g.fine - m_frame(w_side, f) + s * force
+    v, fine = acts.carry(p, w_div, m_frame(w_div, f))
+    return Gear(g.now + v, g.now, fine, w_div), f
+
+
+def frame_T(g, f):
+    return Gear(g.before, g.now, acts.flip(g.fine, g.teeth, 1), g.teeth), 1 - f
+
+
+def doubled_step(g, w_side, w_div, s, force):
+    p = (w_side + w_side) * (g.now - g.before) + g.fine - w_side + s * force + s * force
+    v, fine = acts.carry(p, w_div + w_div, w_div)
+    return Gear(g.now + v, g.now, fine, w_div + w_div)
+
+
+def doubled_T(g):
+    return Gear(g.before, g.now, acts.flip(g.fine, g.teeth, 1), g.teeth)
+
+
+def key(g):
+    return (g.before, g.now, g.fine)
+
+
+def states(W, teeth=None):
+    t = W if teeth is None else teeth
+    for b in range(-R, R + 1):
+        for a in range(-R, R + 1):
+            for r in range(t):
+                yield Gear(a, b, r, t)
+
+
+def force_of(D, c):
+    return lambda a: c - D * a
+
+
+def claim_H1_H2_H3():
+    rows = {"H1 rewind": {}, "H2 head retrace": {}, "H3 frame retrace": {}, "H3 doubled retrace": {},
+            "H2-mut flip, no frame (change of count)": {}, "H3-mut frame, mirror for flip": {}}
+    tie_only = [0, 0]
+    for W in COUNTS:
+        par = "even" if W % 2 == 0 else "odd"
+        for D, c in ((3, 0), (5, 2)):
+            F = force_of(D, c)
+            for Wp in sorted({W, W + 1, W + W} - {1}):
+                for g in states(W):
+                    s = 1
+                    # H1: the head's rewind returns the start (its stack's inverse, acts.carry at -1)
+                    sg = head_step(g, W, Wp, s, F(g.now))
+                    bk = head_back(sg, Wp, W, s, F)
+                    rows["H1 rewind"].setdefault(par, [0, 0])
+                    rows["H1 rewind"][par][0] += 1
+                    rows["H1 rewind"][par][1] += key(bk) != key(g)
+                    # H2: S T S = T with the head's turnover, constant count only (its own claim)
+                    if Wp == W:
+                        t = head_T(sg)
+                        back = head_step(t, W, W, s, F(t.now))
+                        bad = key(back) != key(head_T(g))
+                        rows["H2 head retrace"].setdefault(par, [0, 0])
+                        rows["H2 head retrace"][par][0] += 1
+                        rows["H2 head retrace"][par][1] += bad
+                        tie = g.fine == 0 or sg.fine == 0
+                        if bad:
+                            tie_only[0] += 1
+                            tie_only[1] += tie
+                        zeros = (g.fine == 0) + (sg.fine == 0)
+                        cls = ("neither", "exactly one", "both")[zeros]
+                        TIES.setdefault((par, cls), [0, 0])
+                        TIES[(par, cls)][0] += 1
+                        TIES[(par, cls)][1] += bad
+                    # H3: FRAME and DOUBLED, every (W, W+), both frames
+                    for f0 in (0, 1):
+                        sg2, f1 = frame_step(g, f0, W, Wp, s, F(g.now))
+                        t2, f2 = frame_T(sg2, f1)
+                        back2, f3 = frame_step(t2, f2, Wp, W, s, F(t2.now))
+                        want, fw = frame_T(g, f0)
+                        rows["H3 frame retrace"].setdefault(par, [0, 0])
+                        rows["H3 frame retrace"][par][0] += 1
+                        rows["H3 frame retrace"][par][1] += (key(back2), f3) != (key(want), fw)
+                        # mutant: the head's mirror in place of the flip
+                        t3 = Gear(sg2.before, sg2.now, acts.mirror(sg2.fine, sg2.teeth, 1), sg2.teeth)
+                        back3, _ = frame_step(t3, 1 - f1, Wp, W, s, F(t3.now))
+                        want3 = Gear(g.before, g.now, acts.mirror(g.fine, g.teeth, 1), g.teeth)
+                        rows["H3-mut frame, mirror for flip"].setdefault(par, [0, 0])
+                        rows["H3-mut frame, mirror for flip"][par][0] += 1
+                        rows["H3-mut frame, mirror for flip"][par][1] += key(back3) != key(want3)
+                    # mutant: the flip with the head's fixed mid tooth (no frame), across the change of count
+                    sgm = head_step(g, W, Wp, s, F(g.now))
+                    tm = Gear(sgm.before, sgm.now, acts.flip(sgm.fine, sgm.teeth, 1), sgm.teeth)
+                    backm = head_step(tm, Wp, W, s, F(tm.now))
+                    wantm = Gear(g.before, g.now, acts.flip(g.fine, g.teeth, 1), g.teeth)
+                    rows["H2-mut flip, no frame (change of count)"].setdefault(par, [0, 0])
+                    rows["H2-mut flip, no frame (change of count)"][par][0] += 1
+                    rows["H2-mut flip, no frame (change of count)"][par][1] += key(backm) != key(wantm)
+            # DOUBLED on its own states (the fine tooth at 2 W)
+            for Wp in sorted({W, W + 1, W + W} - {1}):
+                for g in states(W, W + W):
+                    sg = doubled_step(g, W, Wp, 1, F(g.now))
+                    t = doubled_T(sg)
+                    back = doubled_step(t, Wp, W, 1, F(t.now))
+                    rows["H3 doubled retrace"].setdefault(par, [0, 0])
+                    rows["H3 doubled retrace"][par][0] += 1
+                    rows["H3 doubled retrace"][par][1] += key(back) != key(doubled_T(g))
+    return rows, tie_only
+
+
+# ---------------- H4: the circle with the head's time gear, trigger and mean teeth ----------------
+N = 5
+
+
+def time_turn(t, Tx, Dx, Xc):
+    xb, x, rx = t
+    nxt, r = rule3(Dx * Xc, Dx, Tx, x, xb, rx)
+    return (x, nxt, r)
+
+
+def time_T(t, Tx):
+    xb, x, rx = t
+    return (x, xb, acts.flip(rx, Tx, 1))
+
+
+def circle(form, rng, T):
+    Tx = rng.randint(9, 16)
+    Dx, Xc = rng.randint(1, 3), 60
+    xb = rng.randint(45, 75)
+    x = xb + rng.randint(-4, 4)
+    t0 = (xb, x, rng.randrange(Tx))
+    W0 = mean_teeth_of(T, xb, x)
+    gears = []
+    for _ in range(N):
+        a = rng.randint(-6, 6)
+        b = a + rng.randint(-2, 2)
+        r = rng.choice([0, 0, acts.mid(W0), rng.randrange(W0)])
+        if form == "DOUBLED":
+            gears.append((Gear(a, b, r + r + (W0 - acts.mid(W0) - acts.mid(W0)), W0 + W0), 0))
+        else:
+            gears.append((Gear(a, b, r, W0), 0))
+    g_, D, c = 1, rng.randint(0, 2), rng.randint(-1, 1)
+
+    def turn_all(t, gs):
+        out = []
+        for g, f in gs:
+            if form == "HEAD":
+                out.append((head_T(g), f))
+            elif form == "FRAME":
+                out.append(frame_T(g, f))
+            else:
+                out.append((doubled_T(g), f))
+        return time_T(t, Tx), tuple(out)
+
+    def act(z):
+        t, gs = z
+        t2 = time_turn(t, Tx, Dx, Xc)
+        x0, x1, x2 = t[0], t[1], t2[1]
+        if (x0 <= x1) and (x2 <= x1) and ((x0 < x1) or (x2 < x1)):  # clock.turnover's weak maximum
+            return turn_all(t, gs), 1
+        W, Wp = mean_teeth_of(T, x0, x1), mean_teeth_of(T, x1, x2)
+        nows = [g.now for g, _ in gs]
+        out = []
+        for i, (g, f) in enumerate(gs):
+            force = g_ * (nows[i - 1] + nows[(i + 1) % N] - nows[i] - nows[i]) - D * nows[i] + c
+            if form == "HEAD":
+                out.append((head_step(g, W, Wp, x1, force), f))
+            elif form == "FRAME":
+                out.append(frame_step(g, f, W, Wp, x1, force))
+            else:
+                out.append((doubled_step(g, W, Wp, x1, force), f))
+        return (t2, tuple(out)), 0
+
+    def canon(z):
+        t, gs = z
+        return (t, tuple((key(g), f) for g, f in gs))
+
+    z0 = (t0, tuple(gears))
+    z, tops = z0, 0
+    for _ in range(120):
+        z, top = act(z)
+        tops += top
+    y = turn_all(*z)
+    for _ in range(120):
+        y, _ = act(y)
+    return canon(y) == canon(turn_all(*z0)), tops
+
+
+def claim_H4():
+    rng = random.Random(28)
+    out = {}
+    for form in ("HEAD", "FRAME", "DOUBLED"):
+        for T in range(2, 41):
+            par = "even" if half(T) % 2 == 0 else "odd"
+            for _ in range(8):
+                ok, _ = circle(form, rng, T)
+                out.setdefault((form, par), [0, 0])
+                out[(form, par)][0] += 1
+                out[(form, par)][1] += not ok
+    return out
+
+
+# ---------------- H5: the regulator's own turn and its flip ----------------
+def claim_H5():
+    n = f = nm = fm = 0
+    for Tx in COUNTS:
+        for Dx, pull in ((1, 0), (2, 7), (3, -5)):
+            for xb in range(-R, R + 1):
+                for x in range(-R, R + 1):
+                    for rx in range(Tx):
+                        x1, r1 = rule3(pull, Dx, Tx, x, xb, rx)
+                        # turned: (now, before) = (x, x1) reversed, flipped; one more turn
+                        x2, r2 = rule3(pull, Dx, Tx, x, x1, acts.flip(r1, Tx, 1))
+                        n += 1
+                        f += (x2, r2) != (xb, acts.flip(rx, Tx, 1))
+                        # mutant: the mirror at the regulator
+                        x3, r3 = rule3(pull, Dx, Tx, x, x1, acts.mirror(r1, Tx, 1))
+                        nm += 1
+                        fm += (x3, r3) != (xb, acts.mirror(rx, Tx, 1))
+    return (n, f), (nm, fm)
+
+
+# ---------------- H6: a drive's fine tooth under the turnover ----------------
+def claim_H6():
+    """A driven gear kicked by a drive: q, d' = carry(N(a), Td, d), the kick T s q into its stride (tick.impulse's
+    offset and held-field lines), N(a) a time-even numerator of the position. The turnover turns the gear by the
+    proposed FRAME form (exact by H3) and the drive fine tooth by the head's acts.mirror or by acts.flip."""
+    res = {"mirror": {}, "flip": {}}
+    for Td in COUNTS:
+        par = "even" if Td % 2 == 0 else "odd"
+        W = 7
+        for a in range(-R, R + 1):
+            for b in range(-R, R + 1):
+                for r in range(W):
+                    for d in range(Td):
+                        for name, turn in (("mirror", acts.mirror), ("flip", acts.flip)):
+                            num = 5 * a + 3
+                            q, d1 = acts.carry(num, Td, d)
+                            g1, f1 = frame_step(Gear(a, b, r, W), 0, W, W, 1, -2 * a + 4 * q)
+                            # turned: gear by FRAME, drive fine tooth by `turn`
+                            gt, ft = frame_T(g1, f1)
+                            dt = turn(d1, Td, 1)
+                            q2, d2 = acts.carry(5 * gt.now + 3, Td, dt)
+                            g2, f2 = frame_step(gt, ft, W, W, 1, -2 * gt.now + 4 * q2)
+                            want_g, want_f = frame_T(Gear(a, b, r, W), 0)
+                            ok = key(g2) == key(want_g) and f2 == want_f and d2 == turn(d, Td, 1)
+                            res[name].setdefault(par, [0, 0])
+                            res[name][par][0] += 1
+                            res[name][par][1] += not ok
+    return res
+
+
+def main():
+    print("Probe 3, the head's own act functions (acts.carry, acts.mid, acts.mirror, acts.flip, acts.reverse,")
+    print("rule3.rule3, rule3.mean_teeth_of, trains.Gear); teeth counts 2..40; failures of cases")
+    rows, tie_only = claim_H1_H2_H3()
+    for name, d in rows.items():
+        print(f"  {name:44s} even: {d['even'][1]:6d} of {d['even'][0]:<7d} odd: {d['odd'][1]:6d} of {d['odd'][0]}")
+    print(f"  of the head's failures (H2), {tie_only[1]} of {tie_only[0]} have the fine tooth 0 before or after the step")
+    for (par, cls), (n, f) in sorted(TIES.items()):
+        print(f"    H2 at {par:4s} counts, the fine tooth 0 at {cls:11s} of the two states: fails {f:6d} of {n}")
+    h4 = claim_H4()
+    for (form, par), (n, f) in sorted(h4.items()):
+        print(f"  H4 circle, {form:8s} at (T div 2) {par:4s}: the run back misses the turned start {f:3d} of {n}")
+    (n5, f5), (nm, fm) = claim_H5()
+    print(f"  H5 the regulator's turnover by acts.flip: {f5} of {n5}; mutant acts.mirror there: {fm} of {nm}")
+    h6 = claim_H6()
+    for name in ("mirror", "flip"):
+        d = h6[name]
+        print(f"  H6 the drive fine tooth by acts.{name:6s}: even drive counts {d['even'][1]:6d} of {d['even'][0]:<7d}"
+              f" odd {d['odd'][1]:6d} of {d['odd'][0]}")
+    ok = (
+        rows["H1 rewind"]["even"][1] == 0 and rows["H1 rewind"]["odd"][1] == 0
+        and rows["H2 head retrace"]["even"][1] > 0 and rows["H2 head retrace"]["odd"][1] == 0
+        and tie_only[0] == tie_only[1]
+        and all(rows[k][p][1] == 0 for k in ("H3 frame retrace", "H3 doubled retrace") for p in ("even", "odd"))
+        and rows["H2-mut flip, no frame (change of count)"]["odd"][1] > 0
+        and rows["H3-mut frame, mirror for flip"]["even"][1] > 0
+        and h4[("HEAD", "even")][1] > 0 and h4[("HEAD", "odd")][1] > 0
+        and all(h4[(f, p)][1] == 0 for f in ("FRAME", "DOUBLED") for p in ("even", "odd"))
+        and f5 == 0 and fm > 0
+        and h6["mirror"]["even"][1] > 0 and h6["mirror"]["odd"][1] == 0
+        and h6["flip"]["even"][1] == 0 and h6["flip"]["odd"][1] == 0
+    )
+    print("RESULT:", "as claimed" if ok else "NOT as claimed")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+== tst_24.py ==
+"""Probe 4: the cube's 24 (and the 48) at every parity: the step commutes with a turn of the board that negates gears.
+
+  python3 -I tst_24.py
+
+A 3 x 3 x 3 torus; a vector train A_c (three gears per Node-clock, c = x, y, z) and a scalar train phi, each gear
+by the one formula, the kick of a vector gear k_c = s (g lap A_c - D A_c + h grad_c div A + e grad_c phi) and of the
+scalar k = s (g lap phi - D phi + e div A), the centred differences through the two Spokes of an axis. The 48 act as
+signed permutations of the axes about the centre: Node-clock x -> g x, A_i(x) -> sigma_i A_pi(i)(g x), phi(x) ->
+phi(g x). A negated gear (sigma = -1) is carried by the form's negation of a gear: its two notches negated and its
+fine tooth by HEAD's acts.mirror (r -> (2 mid - r) mod W), FLIP's complement (r -> W - 1 - r, the law's theorem
+line 618), FRAME's flip with the gear's frame toggled, or DOUBLED's flip at 2 W. The claim: S(g x) = g S(x) for all
+48, on random states with fine teeth 0 and mid seeded, at constant W (even, odd) and across a change of W (both
+parities mixed: the riders' W = w (X- + X) on a uniform time gear). The second part runs the vector train with the
+odd count's gearing of tst_balance.py (w = 3 rim Gamma^2 G^2 odd, g = pinion p^2 Q, D = 6 (rim - pinion) p^2 G^2).
+"""
+
+from __future__ import annotations
+
+import itertools
+import os
+import random
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from forms import SIDES, carry, mid  # noqa: E402
+
+L = 3
+SITES = list(itertools.product(range(L), repeat=3))
+INDEX = {x: i for i, x in enumerate(SITES)}
+
+
+def shift(x, axis, d):
+    y = list(x)
+    y[axis] = (y[axis] + d) % L
+    return INDEX[tuple(y)]
+
+
+NB = [[(shift(x, a, 1), shift(x, a, -1)) for a in range(3)] for x in SITES]
+
+
+def group48():
+    out = []
+    for perm in itertools.permutations(range(3)):
+        for signs in itertools.product((1, -1), repeat=3):
+            # matrix M with M[perm[i]][i] = signs[i]: e_i -> signs[i] e_perm[i]
+            sgn_perm = 1
+            p = list(perm)
+            for i in range(3):
+                for j in range(i + 1, 3):
+                    if p[i] > p[j]:
+                        sgn_perm = -sgn_perm
+            det = sgn_perm * signs[0] * signs[1] * signs[2]
+            out.append((perm, signs, det))
+    return out
+
+
+G48 = group48()
+
+
+def act_site(g, x):
+    perm, signs, _ = g
+    y = [0, 0, 0]
+    for i in range(3):
+        c = x[i] if x[i] <= L // 2 else x[i] - L  # centred coordinates about the Node-clock 0
+        y[perm[i]] = (signs[i] * c) % L
+    return INDEX[tuple(y)]
+
+
+# ---- forms of the gear (b, a, r[, f]) and its negation ----
+class Form:
+    def __init__(self, name):
+        self.name = name
+
+    def m(self, W, f):
+        return mid(W)
+
+    def P(self, st, W):
+        return W * (st[1] - st[0]) + st[2] - self.m(W, st[3] if len(st) > 3 else 0)
+
+    def step(self, st, W, Wp, k):
+        b, a, r = st[:3]
+        f = st[3] if len(st) > 3 else 0
+        q, rp = carry(W * (a - b) + r - self.m(W, f) + k + self.m(Wp, f), Wp)
+        return (a, a + q, rp) + st[3:]
+
+    def neg(self, st, W):
+        raise NotImplementedError
+
+    def make(self, b, a, r, W):
+        return (b, a, r)
+
+
+class Head(Form):
+    def neg(self, st, W):
+        b, a, r = st
+        return (-b, -a, carry(mid(W) + mid(W) - r, W)[1])
+
+
+class Flip(Form):
+    def neg(self, st, W):
+        b, a, r = st
+        return (-b, -a, W - 1 - r)
+
+
+class Frame(Form):
+    def m(self, W, f):
+        return mid(W) + f * (W - 1 - mid(W) - mid(W))
+
+    def neg(self, st, W):
+        b, a, r, f = st
+        return (-b, -a, W - 1 - r, 1 - f)
+
+    def make(self, b, a, r, W):
+        return (b, a, r, 0)
+
+
+class Doubled(Form):
+    def step(self, st, W, Wp, k):
+        b, a, r2 = st
+        q, rp = carry((W + W) * (a - b) + r2 - W + k + k + Wp, Wp + Wp)
+        return (a, a + q, rp)
+
+    def neg(self, st, W):
+        b, a, r2 = st
+        return (-b, -a, W + W - 1 - r2)
+
+    def make(self, b, a, r, W):
+        return (b, a, r + r + (W - mid(W) - mid(W)))
+
+
+FORMS = [Head("HEAD (acts.mirror)"), Flip("FLIP (the complement, line 618)"), Frame("FRAME"), Doubled("DOUBLED")]
+
+
+def board_step(form, A, phi, W, Wp, s, co):
+    g, D, h, e = co
+    nowA = [[A[c][i][1] for i in range(len(SITES))] for c in range(3)]
+    nowp = [phi[i][1] for i in range(len(SITES))]
+    newA = [[None] * len(SITES) for _ in range(3)]
+    newp = [None] * len(SITES)
+    for i in range(len(SITES)):
+        div = sum(nowA[d][NB[i][d][0]] - nowA[d][NB[i][d][1]] for d in range(3))
+        for c in range(3):
+            lap = sum(nowA[c][NB[i][d][0]] + nowA[c][NB[i][d][1]] - nowA[c][i] - nowA[c][i] for d in range(3))
+            p1, m1 = NB[i][c]
+            gdiv = 0
+            for d in range(3):
+                gdiv += (nowA[d][NB[p1][d][0]] - nowA[d][NB[p1][d][1]]) - (nowA[d][NB[m1][d][0]] - nowA[d][NB[m1][d][1]])
+            gphi = nowp[p1] - nowp[m1]
+            k = s * (g * lap - D * nowA[c][i] + h * gdiv + e * gphi)
+            newA[c][i] = form.step(A[c][i], W, Wp, k)
+        lapp = sum(nowp[NB[i][d][0]] + nowp[NB[i][d][1]] - nowp[i] - nowp[i] for d in range(3))
+        k = s * (g * lapp - D * nowp[i] + e * div)
+        newp[i] = form.step(phi[i], W, Wp, k)
+    return newA, newp
+
+
+def board_image(form, gg, A, phi, W):
+    perm, signs, _ = gg
+    n = len(SITES)
+    newA = [[None] * n for _ in range(3)]
+    newp = [None] * n
+    for i, x in enumerate(SITES):
+        j = act_site(gg, x)
+        newp[j] = phi[i]
+        for c in range(3):
+            st = A[c][i]
+            newA[perm[c]][j] = st if signs[c] == 1 else form.neg(st, W)
+    return newA, newp
+
+
+def random_board(form, rng, W):
+    def gear():
+        a = rng.randint(-5, 5)
+        b = a + rng.randint(-2, 2)
+        r = rng.choice([0, mid(W), W - 1, rng.randrange(W)])
+        return form.make(b, a, r, W)
+
+    A = [[gear() for _ in SITES] for _ in range(3)]
+    phi = [gear() for _ in SITES]
+    return A, phi
+
+
+def check(form, rng, schedule, co, n_states, group):
+    cases = fails = 0
+    for _ in range(n_states):
+        W, Wp, s = schedule(rng)
+        A, phi = random_board(form, rng, W)
+        SA, Sp = board_step(form, A, phi, W, Wp, 1 if s is None else s, co)
+        for gg in group:
+            IA, Ip = board_image(form, gg, A, phi, W)
+            SIA, SIp = board_step(form, IA, Ip, W, Wp, 1 if s is None else s, co)
+            ISA, ISp = board_image(form, gg, SA, Sp, Wp)
+            cases += 1
+            fails += (SIA != ISA) or (SIp != ISp)
+    return cases, fails
+
+
+def main():
+    rng = random.Random(48)
+    co = (1, 1, 1, 1)
+    def constant(choices):
+        return lambda r: (lambda w: (w, w, None))(r.choice(choices))
+
+    def riders(choices):
+        def sch(r):
+            w = r.choice(choices)
+            x0 = r.randint(4, 7)
+            x1 = x0 + r.choice([0, 1])
+            x2 = x1 + r.choice([-1, 0, 1])
+            return w * (x0 + x1), w * (x1 + x2), x1
+        return sch
+
+    schedules = {
+        "constant even W (8, 10, 12)": constant([8, 10, 12]),
+        "constant odd W (9, 11, 13)": constant([9, 11, 13]),
+        "W = w (X- + X) at odd w, changing parity": riders([3, 5]),
+    }
+    rotations = [gg for gg in G48 if gg[2] == 1]
+    print(f"the 48 on a {L}^3 torus, a vector train and a scalar train; failures of S(g x) = g S(x), cases = states x 48")
+    res = {}
+    for form in FORMS:
+        for sname, sch in schedules.items():
+            n, f = check(form, rng, sch, co, 40, G48)
+            nr, fr = check(form, rng, sch, co, 20, rotations)
+            res[(form.name, sname)] = (f, fr)
+            print(f"  {form.name:34s} {sname:42s} the 48: {f:4d} of {n:<5d} the 24 alone: {fr:4d} of {nr}")
+    # the odd count's gearing (tst_balance.py): rim 5, pinion 3, Gamma 3, G 1 -> w = 3 * 5 * 9 = 135 (odd)
+    rim, pin, Gam, G = 5, 3, 3, 1
+    w = 3 * rim * Gam * Gam * G * G
+    p = Gam  # the vacuum's rates
+    gj = pin * p * p * G * G
+    Dk = 6 * (rim - pin) * p * p * G * G
+    assert 6 * gj + Dk == 2 * w
+    co1 = (gj, Dk, 1, 1)
+    print(f"the odd count's gearing: w = 3 rim Gamma^2 G^2 = {w}, grip {gj}, spring {Dk}, 6 grip + spring = 2 w")
+    sch1 = {"the regulator's count w (odd, constant)": constant([w]),
+            "the riders' w (X- + X) (changing parity)": riders([w])}
+    for form in FORMS:
+        for sname, sch in sch1.items():
+            n, f = check(form, rng, sch, co1, 30, G48)
+            res[(form.name, "odd gearing " + sname)] = (f, 0)
+            print(f"  {form.name:34s} {sname:42s} the 48: {f:4d} of {n}")
+    ok = (
+        res[("HEAD (acts.mirror)", "constant even W (8, 10, 12)")][0] > 0
+        and res[("HEAD (acts.mirror)", "constant odd W (9, 11, 13)")][0] == 0
+        and res[("FLIP (the complement, line 618)", "constant even W (8, 10, 12)")][0] == 0
+        and res[("FLIP (the complement, line 618)", "W = w (X- + X) at odd w, changing parity")][0] > 0
+        and all(res[(f, s)][0] == 0 and res[(f, s)][1] == 0 for f in ("FRAME", "DOUBLED") for s in schedules)
+        and all(res[(f, "odd gearing " + s)][0] == 0 for f in ("FRAME", "DOUBLED") for s in sch1)
+        and res[("HEAD (acts.mirror)", "odd gearing the regulator's count w (odd, constant)")][0] == 0
+        and res[("HEAD (acts.mirror)", "odd gearing the riders' w (X- + X) (changing parity)")][0] > 0
+    )
+    print("RESULT:", "as claimed" if ok else "NOT as claimed")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+== tst_balance.py ==
+"""Probe 5: the gearing's balance at an odd count, the doubled form, and the law's other lines that lean on parity.
+
+  /home/user/Universe24/venv314/bin/python -I tst_balance.py
+
+Exact integers and Fractions. The head's own gearing (core/rule3.gearing, teeth_of, spring, mean_teeth_of, half) is
+read from toys-5 src. Claims:
+  B1  the balance 2 w - D - SUM_j R_j = 0 at the vacuum (p_0 = p_i = Gamma, Q_j = G^2) holds for every pair with the
+      head's factors (6, 2, 12) and with the odd count's (3, 1, 6); the head's gearing is the odd one doubled
+  B2  the balance for every pair forces R/w = pinion / (3 rim) and D/w = 2 (rim - pinion) / rim: among all factor
+      triples (alpha, beta, delta) <= (12, 12, 30) only (3k, k, 6k) hold; so an odd w = alpha rim Gamma^2 G^2 needs
+      an odd alpha, the least 3 = the axes' count, and odd rim, Gamma, G
+  B3  the regulator's own gearing (R = 2 p^2 Q (rim - rim div Gamma), D = 12 (rim div Gamma) p^2 G^2) balances at
+      both factorizations
+  B4  the riders' doubled form W2 = w (X0 + X1) with the kick doubled (2 s F): at an even w it is the head's step bit for
+      bit (the notches equal, the fine tooth r2 = 2 r + (W mod 2)); at every w it is the exact rational letter at the
+      teeth (w / 2)(X0 + X1) (Fractions: a+ = a + floor(P+/W+ + 1/2)); the head's (w div 2)(X0 + X1) is not, at an odd w
+  B5  the shear's term (3 w / 2)(X_ahead - X_behind) is the mid tooth's move (W+ - W) / 2 of the tension gear's teeth
+      W = 3 w (X_now + X_behind); the one formula's mid(W+) - mid(W) equals it exactly where both counts are even; the
+      doubled form's 3 w (X_ahead - X_behind) is an integer at every parity
+  C1  the setting at the half teeth count: a gear born at its frame's mid tooth reads P = 0 and stays at rest; the
+      image of a born signed gear under the flip is the frame-1 born gear (line 622's complement w - 1 - mid is m_1)
+  C2  the count of quanta at the key's half (W = T div 2 per quantum): q = |W| div (T div 2) misreads at an odd key;
+      the doubled count (2 |W|) div T is the exact floor of |W| / (T / 2) at every key; A B = T / 2 has no integer
+      solution at an odd key
+  C3  the fold's digit min(r, w - 1 - r) is invariant under the flip at every count and under the head's mirror only
+      at the odd counts
+Each claim carries mutants that must fail.
+"""
+
+from __future__ import annotations
+
+import itertools
+import random
+import sys
+from fractions import Fraction
+
+sys.path.insert(0, "/home/user/Universe24/src")
+
+from event_universe.core import acts  # noqa: E402
+from event_universe.core.rule3 import gearing, half, mean_teeth_of, spring, teeth_of  # noqa: E402
+from event_universe.core.spokes import AXES, SIDES, SPOKES  # noqa: E402
+
+LINES = []
+
+
+def say(s):
+    LINES.append(s)
+    print(s)
+
+
+def odd_gearing(pinion, rim, full_rate, rate, mesh_rate, factors=None, mesh_unit=1):
+    """The odd count's gearing: w = AXES rim Gamma^2 G^2, R_j = pinion p_i^2 Q_j, D = SPOKES (rim - pinion) p_0^2 G^2."""
+    square = mesh_unit * mesh_unit
+    meshes = (square,) * SPOKES if factors is None else factors
+    grips = tuple(mesh_rate * mesh_rate * q * pinion for q in meshes)
+    w = AXES * rim * full_rate * full_rate * square
+    D = SPOKES * (rim - pinion) * rate * rate * square
+    return grips, w + w - D - sum(grips), w, D
+
+
+def B1():
+    n = f_head = f_odd = f_double = 0
+    parities = {0: 0, 1: 0}
+    for rim in range(1, 31):
+        for pinion in range(0, rim + 1):
+            for Gam in range(1, 8):
+                for G in range(1, 4):
+                    n += 1
+                    g = gearing(pinion, rim, Gam, Gam, Gam, None, G)
+                    f_head += g.hold != 0
+                    og = odd_gearing(pinion, rim, Gam, Gam, Gam, None, G)
+                    f_odd += og[1] != 0
+                    parities[og[2] % 2] += 1
+                    f_double += not (g.teeth == og[2] + og[2] and g.spring == og[3] + og[3]
+                                     and all(a == b + b for a, b in zip(g.grips, og[0])))
+                    assert g.teeth == teeth_of(rim, Gam, G) and g.spring == spring(pinion, rim, Gam, G)
+    say(f"B1 the balance at the vacuum, every pair (rim 1..30, pinion 0..rim, Gamma 1..7, G 1..3): {n} cases")
+    say(f"   the head's gearing (6, 2, 12): hold != 0 in {f_head}; the odd count's (3, 1, 6): hold != 0 in {f_odd}")
+    say(f"   the head's gearing = the odd count's doubled (teeth, grips, spring): fails {f_double}")
+    say(f"   the odd count's w = 3 rim Gamma^2 G^2: odd in {parities[1]}, even in {parities[0]}")
+    # mutants: one factor changed
+    muts = {"grip factor 2 with w factor 3": (3, 2, 6), "spring factor 12 with w factor 3": (3, 1, 12),
+            "w factor 6 with (1, 6)": (6, 1, 6)}
+    caught = 0
+    for name, (al, be, de) in muts.items():
+        bad = sum(1 for rim in range(1, 13) for pin in range(rim + 1)
+                  if 2 * al * rim != SPOKES * be * pin + de * (rim - pin))
+        caught += bad > 0
+        say(f"   mutant {name}: the balance fails at {bad} of {sum(r + 1 for r in range(1, 13))} pairs")
+    return f_head == 0 and f_odd == 0 and f_double == 0 and parities[1] > 0 and caught == len(muts)
+
+
+def B2():
+    sols = []
+    for al in range(1, 13):
+        for be in range(0, 13):
+            for de in range(0, 31):
+                if all(2 * al * rim == SPOKES * be * pin + de * (rim - pin)
+                       for rim in range(1, 9) for pin in range(rim + 1)):
+                    sols.append((al, be, de))
+    say(f"B2 factor triples (alpha, beta, delta) <= (12, 12, 30) that balance every pair (rim 1..8): {sols}")
+    ok = sols == [(3 * k, k, 6 * k) for k in range(1, 5)]
+    odd = [s for s in sols if s[0] % 2 == 1]
+    say(f"   of these with an odd alpha (an odd w possible): {odd}; the least: alpha = {odd[0][0]} = AXES = {AXES}")
+    return ok and odd[0] == (AXES, 1, SPOKES)
+
+
+def B3():
+    n = f6 = f3 = 0
+    for rim in range(1, 41):
+        for Gam in range(1, 9):
+            for G in range(1, 3):
+                n += 1
+                sq = G * G
+                R6 = [2 * Gam * Gam * sq * (rim - rim // Gam)] * SPOKES
+                D6 = 12 * (rim // Gam) * Gam * Gam * sq
+                f6 += sum(R6) + D6 != 2 * (6 * rim * Gam * Gam * sq)
+                R3 = [Gam * Gam * sq * (rim - rim // Gam)] * SPOKES
+                D3 = 6 * (rim // Gam) * Gam * Gam * sq
+                f3 += sum(R3) + D3 != 2 * (3 * rim * Gam * Gam * sq)
+    say(f"B3 the regulator's own gearing balances at the vacuum: head's factors fail {f6} of {n}, odd factors {f3} of {n}")
+    return f6 == 0 and f3 == 0
+
+
+def B4():
+    rng = random.Random(4)
+    n_even = f_even = n_rat = f_rat = n_headodd = f_headodd = 0
+    mut_n = mut_f = 0
+    for w in range(2, 41):
+        for _ in range(400):
+            x0, x1, x2 = rng.randint(1, 9), rng.randint(1, 9), rng.randint(1, 9)
+            b, a = rng.randint(-5, 5), rng.randint(-5, 5)
+            s = x1
+            F = rng.randint(-40, 40)
+            W2, W2p = w * (x0 + x1), w * (x1 + x2)
+            r2 = rng.randrange(W2)
+            # the doubled form's step
+            u = W2 * (a - b) + r2 - acts.mid(W2) + s * F + s * F + acts.mid(W2p)
+            q2, r2p = divmod(u, W2p)
+            # the exact rational letter at W = W2 / 2: P = P2 / 2, a+ = a + floor(P+/W+ + 1/2)
+            P = Fraction(W2 * (a - b) + r2 - acts.mid(W2), 2)
+            Pp = P + s * F
+            Wp = Fraction(W2p, 2)
+            q_rat = (Pp / Wp + Fraction(1, 2)).__floor__()
+            n_rat += 1
+            f_rat += q_rat != q2
+            # mutant: the doubled form with the kick not doubled
+            um = W2 * (a - b) + r2 - acts.mid(W2) + s * F + acts.mid(W2p)
+            mut_n += 1
+            mut_f += divmod(um, W2p)[0] != q_rat
+            if w % 2 == 0:
+                # the head's step at W = (w div 2)(X0 + X1), from the state the doubled one encodes (r2 = 2 r + c)
+                W, Wph = mean_teeth_of(w, x0, x1), mean_teeth_of(w, x1, x2)
+                if (r2 - W % 2) % 2 == 0:
+                    r = (r2 - W % 2) // 2
+                    p = W * (a - b) + r - acts.mid(W) + s * F
+                    v, rh = acts.carry(p, Wph, acts.mid(Wph))
+                    n_even += 1
+                    f_even += (v, rh + rh + Wph % 2) != (q2, r2p)
+            else:
+                # the head's (w div 2)(X0 + X1) read as the riders' teeth at an odd w
+                W, Wph = mean_teeth_of(w, x0, x1), mean_teeth_of(w, x1, x2)
+                n_headodd += 1
+                f_headodd += Fraction(W) != Fraction(W2, 2) or Fraction(Wph) != Fraction(W2p, 2)
+    say(f"B4 the doubled form W2 = w (X0 + X1), kick 2 s F: the exact rational letter, mismatches {f_rat} of {n_rat}")
+    say(f"   at even w, against the head's step (mean_teeth_of, acts.carry at mid): mismatches {f_even} of {n_even}")
+    say(f"   at odd w, the head's mean_teeth_of(w, X0, X1) != (w / 2)(X0 + X1): {f_headodd} of {n_headodd}")
+    say(f"   mutant, the kick not doubled: mismatches with the rational letter {mut_f} of {mut_n}")
+    return f_rat == 0 and f_even == 0 and f_headodd > 0 and mut_f > 0
+
+
+def B5():
+    n = f_rat = f_dbl = 0
+    cls = {"both even": [0, 0], "both odd": [0, 0], "mixed": [0, 0]}
+    for w in range(1, 30):
+        for xb, xn, xa in itertools.product(range(1, 8), repeat=3):
+            W, Wp = 3 * w * (xn + xb), 3 * w * (xn + xa)
+            term = Fraction(3 * w, 2) * (xa - xb)
+            n += 1
+            f_rat += term != Fraction(Wp - W, 2)
+            m = acts.mid(Wp) - acts.mid(W)
+            key = "both even" if W % 2 == 0 and Wp % 2 == 0 else "both odd" if W % 2 and Wp % 2 else "mixed"
+            cls[key][0] += 1
+            cls[key][1] += Fraction(m) != term
+            f_dbl += (3 * w * (xa - xb)) != (Wp - W)
+    say(f"B5 the shear's term (3 w / 2)(X_ahead - X_behind) = (W+ - W) / 2 for W = 3 w (X_now + X_behind): fails {f_rat} of {n}")
+    say("   the one formula's mid(W+) - mid(W) against it: " + "; ".join(
+        f"{k} counts differ {v[1]} of {v[0]}" for k, v in cls.items()) + " (at mixed parity the term is no integer)")
+    say(f"   the doubled form's 3 w (X_ahead - X_behind) = W+ - W, an integer at every parity: fails {f_dbl} of {n}")
+    return (f_rat == 0 and f_dbl == 0 and cls["both even"][1] == 0 and cls["both odd"][1] == 0
+            and cls["mixed"][1] == cls["mixed"][0] > 0)
+
+
+def C1():
+    n = f = fm = 0
+    for W in range(2, 41):
+        m0 = acts.mid(W)
+        m1 = m0 + (W - 1 - m0 - m0)
+        for a in range(-3, 4):
+            # born in frame 0 at mid, and its signed image under the flip, born in frame 1
+            for (r, m) in ((m0, m0), (acts.flip(m0, W, 1), m1)):
+                n += 1
+                P = W * 0 + r - m
+                q, rp = divmod(P + m, W)
+                f += P != 0 or (q, rp) != (0, r)
+            # mutant: the signed image read at the head's mid
+            fm += acts.flip(m0, W, 1) - m0 != 0
+    say(f"C1 a gear born at its frame's mid tooth reads 0 and stays: fails {f} of {n};"
+        f" mutant (the flipped born tooth read at mid): reads != 0 at {fm} of {39 * 7} (every even count)")
+    return f == 0 and fm > 0
+
+
+def C2():
+    n = f_head = f_dbl = 0
+    no_pair = 0
+    for T in range(2, 41):
+        for W in range(0, 601):
+            exact = (Fraction(W) / Fraction(T, 2)).__floor__()
+            n += 1
+            f_head += W // half(T) != exact
+            f_dbl += (W + W) // T != exact
+        if T % 2 == 1:
+            no_pair += all(A * B != Fraction(T, 2) for A in range(T + 1) for B in range(T + 1))
+    odd_T = sum(1 for T in range(2, 41) if T % 2)
+    say(f"C2 the count of quanta of a Wronskian W at the key T (W = T / 2 per quantum), W 0..600, T 2..40: {n} cases")
+    say(f"   |W| div (T div 2), the key's half taken as exact: misreads {f_head}; the doubled count (2 |W|) div T: {f_dbl}")
+    say(f"   A B = T / 2 has no integer solution at {no_pair} of the {odd_T} odd keys")
+    return f_dbl == 0 and f_head > 0 and no_pair == odd_T
+
+
+def C3():
+    n = f_flip = f_mirror_even = f_mirror_odd = 0
+    for W in range(2, 41):
+        for r in range(W):
+            n += 1
+            fold = min(r, W - 1 - r)
+            rf = acts.flip(r, W, 1)
+            f_flip += min(rf, W - 1 - rf) != fold
+            rm = acts.mirror(r, W, 1)
+            bad = min(rm, W - 1 - rm) != fold
+            if W % 2 == 0:
+                f_mirror_even += bad
+            else:
+                f_mirror_odd += bad
+    say(f"C3 the fold min(r, w - 1 - r) under the flip: changes {f_flip} of {n};"
+        f" under the head's mirror: even counts {f_mirror_even}, odd counts {f_mirror_odd}")
+    return f_flip == 0 and f_mirror_even > 0 and f_mirror_odd == 0
+
+
+def main():
+    results = [B1(), B2(), B3(), B4(), B5(), C1(), C2(), C3()]
+    say("RESULT: " + ("as claimed" if all(results) else f"NOT as claimed {results}"))
+    return 0 if all(results) else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+== tst_engine.py ==
+"""Probe 6: the head's whole Tick (toys-5 src, read only, nothing patched on disk): one tick, the turnover at every
+Node-clock (clock.reverse), one tick, against the turnover of the start (S T S = T), on tests/worlds/world_node.json, world_nature.json and world_hole.json.
+
+  /home/user/Universe24/venv314/bin/python -I tst_engine.py
+
+Every driven gear of this world has an even teeth count (W = (T div 2)(X- + X), Gamma 1,000), about 10^25, so no
+fine tooth 0 arises by itself; ties are seeded (fine tooth 0, a valid state) on the hands' three gears (K leaves them)
+and twelve gears (K negates them). Counted: the seeded gears that then miss T x. Then the same with acts.mirror
+replaced in memory by the flip (r -> w - 1 - r, acts.flip), which is exact at a constant parity (probe 1, retW ee).
+The regulator's flow gears part from T x with no seed (their sources are not read here; a separate item).
+"""
+import copy
+import sys
+
+sys.path.insert(0, "/home/user/Universe24/src")
+sys.path.insert(0, "/home/user/Universe24")
+import numpy as np  # noqa: E402
+
+from event_universe.clock import Clock  # noqa: E402
+from event_universe.core import acts  # noqa: E402
+from event_universe.trains import REGULATOR  # noqa: E402
+from tests.laws import world_of  # noqa: E402
+
+HEAD_MIRROR = acts.mirror
+
+
+def flip_mirror(fine, teeth, reversals):
+    return acts.flip(fine, teeth, reversals)
+
+
+def turn_all(c):
+    held = [[g.copy() for g in t] for t in c.trains()]
+    c.reverse(np.ones(c.size, dtype=bool), held)
+
+
+def run(x):
+    y = copy.deepcopy(x)
+    y.tick()
+    turned = y.turned_over.copy()
+    turn_all(y)
+    y.tick()
+    z = copy.deepcopy(x)
+    turn_all(z)
+    driven, regulator = {}, 0
+    for k, (ry, rz) in enumerate(zip(y.trains_, z.trains_)):
+        for i, (gy, gz) in enumerate(zip(ry.gears, rz.gears)):
+            bad = np.asarray(gy.now != gz.now) | np.asarray(gy.before != gz.before) | np.asarray(gy.fine != gz.fine)
+            if ry.size == REGULATOR:
+                regulator += int(bad.sum())
+                continue
+            for at in map(tuple, np.argwhere(bad)):
+                driven[(k, i, at)] = True
+    return driven, regulator, turned
+
+
+def world(name):
+    calibre, piece = world_of(name)
+    clock = Clock(calibre, piece)
+    for _ in range(3):
+        clock.tick()
+    print(f"== {name}, after 3 ticks")
+    rows = []
+    for label, mirror in (("the head (acts.mirror)", HEAD_MIRROR), ("the flip in its place", flip_mirror)):
+        acts.mirror = mirror
+        base, reg, turned = run(clock)
+        x = copy.deepcopy(clock)
+        hands = [k for k, r in enumerate(x.trains_) if r.size == 2]
+        seeds = set()
+        rng = np.random.default_rng(7)
+        for k in hands:
+            for _ in range(6):
+                at = tuple(int(v) for v in rng.integers(0, x.cube, size=3))
+                if not turned[at]:
+                    seeds.add((k, at))
+        parity = set()
+        for k, at in seeds:
+            for i in (0, 1):
+                g = x.trains_[k].gears[i]
+                g.fine[at] = 0
+                parity.add(int(g.teeth[at]) % 2)
+        diff, reg2, _ = run(x)
+        n = len(seeds)
+        miss3 = sum(1 for k, at in seeds if (k, 0, at) in diff)
+        miss12 = sum(1 for k, at in seeds if (k, 1, at) in diff)
+        other = sum(1 for key in diff if (key[0], key[2]) not in seeds)
+        print(f"{label}: no seed: driven gears missing T x {len(base)}, regulator slots {reg}, turned {int(turned.sum())}")
+        print(f"   seeded ties at {n} Node-clocks (teeth parity {sorted(parity)}): three gears missing T x {miss3} of {n},"
+              f" twelve gears {miss12} of {n}, other driven gears {other}; regulator slots {reg2}")
+        rows.append((len(base), miss3, miss12, other, n))
+    acts.mirror = HEAD_MIRROR
+    (b0, m3, m12, o0, n0), (b1, f3, f12, o1, n1) = rows
+    return b0 == 0 and m3 == n0 > 0 and m12 == 0 and o0 == 0 and b1 == 0 and f3 == 0 and f12 == 0 and o1 == 0
+
+
+def main():
+    oks = [world(n) for n in ("world_node.json", "world_nature.json", "world_hole.json")]
+    ok = all(oks)
+    print("RESULT:", "as claimed" if ok else f"NOT as claimed {oks}")
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

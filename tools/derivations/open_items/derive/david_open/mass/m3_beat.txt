@@ -1,0 +1,38 @@
+(a) the head's teeth W 23290147981996629504000000 and grip 3881691330332771584000000 ; 6 grip = W: True
+    the lone gear, 60 rounds: [1, 0, -1, -1, 0, 1, 1, 0, -1, -1, 0, 1] ...; period 6: True ; neighbours that ever moved: 0
+    the uniform wave laid at rest: [1, 1, 1, 1, 1, 1] ... stands at 1 for 60 rounds: True
+    the uniform wave laid moving: [2, 3, 4, 5, 6, 7] ... drifts, no beat: True
+
+(b) D = 1 W: the uniform wave's period 6 rounds; the top mode after 24 rounds stays within its start (1 times its start)
+(b) D = 2 W: the uniform wave's period 4 rounds; the top mode after 24 rounds grows by two starts a round, the edge (49 times its start)
+(b) D = 3 W: the uniform wave's period 3 rounds; the top mode after 24 rounds runs away (17393796001 times its start)
+    D = W div 64: 796 sign changes in 20000 rounds; times k: 6368
+    D = W div 256: 398 sign changes in 20000 rounds; times k: 6368
+    D = W div 1024: 199 sign changes in 20000 rounds; times k: 6368
+    D = W div 4096: 99 sign changes in 20000 rounds; times k: 6336
+    D = W div 16384: 50 sign changes in 20000 rounds; times k: 6400
+
+(c) the held count with no law of its own: K at rounds 250, 500, 1000, 2000 (as far as it ran): [800187, 142793]; below 0 first at round 537; X ran past 10^60 at round 686; least K past -10^60, most 999987
+(c) the held count with a spring of its own, W div 16: K at rounds 250, 500, 1000, 2000 (as far as it ran): [999999, 999999, 999981, 999914]; below 0 first at round None; X stays; least K 999559, most 1000243
+    (laid K = 10^6, X = 10^5 at rest; g = (W div 400) div K, so g K is W div 400 less 760000 )
+
+(d) a spring off the diagonal alone, D = W div 400: X = Y laid, X after 400 rounds 38325 ; X = -Y laid, X after 400 rounds 24812700041447
+(e) the T1 count's antisymmetric push on a real gear, D = W div 400: X after 100, 200, 400 rounds [-1602744, 41579439, -1481206931]
+
+(f) the lone gear laid at 1: first rounds [1, 0, -1, -1, 0, 1]; period 6 kept: True; neighbours moved: 0, the first at round None
+(f) the lone gear laid at 2: first rounds [2, 0, -2, -2, 0, 2]; period 6 kept: True; neighbours moved: 0, the first at round None
+(f) the lone gear laid at 3: first rounds [3, 0, -2, -1, 0, -1]; period 6 kept: False; neighbours moved: 63, the first at round 2
+(f) the lone gear laid at 1000000: first rounds [1000000, 166666, -500001, -425927, 37036, 289094]; period 6 kept: False; neighbours moved: 63, the first at round 1
+(g) the T1 count along z on a hand, laid on the mode (1, -i, 0) at 10^5, v = W div 400: x after 400 rounds 24812700041447 with no A1 part; 38332 with the A1 part 2 v
+
+(h) the uniform wave at D = W div 400 laid at 1: 20 sign changes in 8000 rounds, a period of about 800 rounds and 0/20; the state returns exactly at round 804; 2 W / (A D) + 4 A = 804
+(h) the uniform wave at D = W div 400 laid at 2: 40 sign changes in 8000 rounds, a period of about 400 rounds and 0/40; the state returns exactly at round 408; 2 W / (A D) + 4 A = 408
+(h) the uniform wave at D = W div 400 laid at 5: 89 sign changes in 8000 rounds, a period of about 179 rounds and 69/89; the state returns exactly at round 180; 2 W / (A D) + 4 A = 180
+(h) the uniform wave at D = W div 400 laid at 10: 134 sign changes in 8000 rounds, a period of about 119 rounds and 54/134; the state returns exactly at round 120; 2 W / (A D) + 4 A = 120
+(h) the uniform wave at D = W div 400 laid at 30: 127 sign changes in 8000 rounds, a period of about 125 rounds and 125/127; the state returns exactly at round 126; 2 W / (A D) + 4 A = 146 and 20/30
+(h) the uniform wave at D = W div 400 laid at 1000: 127 sign changes in 8000 rounds, a period of about 125 rounds and 125/127; the state returns exactly at round 3141; 2 W / (A D) + 4 A = 4000 and 800/1000
+
+(i) the held count with its spring W div 16, X laid at 100000: the push's shift at the swing's top, g X^2 div 2 kappa, 199 against n = 1000000; least K 999551, X stays over 4000 rounds
+(i) the held count with its spring W div 16, X laid at 5000000: the push's shift at the swing's top, g X^2 div 2 kappa, 499999 against n = 1000000; least K -3786, X stays over 4000 rounds
+(i) the held count with its spring W div 16, X laid at 10000000: the push's shift at the swing's top, g X^2 div 2 kappa, 1999999 against n = 1000000; K below 0 first at round 4, X ran past 10^60 at round 49
+(i) the held count with its spring W div 16, X laid at 20000000: the push's shift at the swing's top, g X^2 div 2 kappa, 7999999 against n = 1000000; K below 0 first at round 2, X ran past 10^60 at round 29

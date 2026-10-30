@@ -24,7 +24,6 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import fields  # noqa: E402
-
 from event_universe import meeting_back  # noqa: E402
 from event_universe.loader.draw import ports_of  # noqa: E402
 

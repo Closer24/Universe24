@@ -291,7 +291,7 @@ def checks(m):
     """m: the set of mutants switched on (each must make its check fail)."""
     out = []
     nn = (lambda n: ONE + carry(n + ONE, n * n + ONE)[0]) if "nonneg" in m else nonneg
-    out.append(run("nonneg, the one whether", 4000, lambda: (lambda n: v(nn(zi(n))) == (1 if n >= 0 else 0))(rnd(-10**6, 10**6) if R.random() < 0.9 else rnd(-3, 3))))
+    out.append(run("nonneg, the one whether", 4000, lambda: (lambda n: v(nn(zi(n))) == (1 if n >= 0 else 0))(rnd(-10**6, 10**6) if R.randrange(10) < 9 else rnd(-3, 3))))
     mn = (lambda a, b: a - nonneg(b - a) * (a - b)) if "min" in m else minimum
     out.append(run("min, max and equality", 4000, lambda: (lambda a, b: v(mn(zi(a), zi(b))) == min(a, b) and v(maximum(zi(a), zi(b))) == max(a, b) and v(equal(zi(a), zi(b))) == (a == b))(rnd(-99, 99), rnd(-99, 99))))
     gm = (lambda z, w: (z[0] * w[0] + z[1] * w[1], z[0] * w[1] + z[1] * w[0])) if "gmul" in m else gmul
@@ -384,7 +384,7 @@ def checks(m):
     def turn_over():
         psi = (gz(), gz())
         teeth = zi(rnd(1, 50))
-        top = zi(rnd(0, teeth.v - 1)) if R.random() < 0.5 else teeth
+        top = zi(rnd(0, teeth.v - 1)) if R.randrange(2) == 0 else teeth
         got = turnover(psi, top, teeth, reverse if "turnover" not in m else (lambda p: p))
         want = v(reverse(psi)) if top.v == teeth.v else v(psi)
         return v(got) == want

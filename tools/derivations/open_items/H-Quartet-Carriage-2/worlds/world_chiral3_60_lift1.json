@@ -1,1 +1,0 @@
-{"universe": "universe_lift1.json", "shape": [3, 3, 3], "intervals": 60, "seed": [{"lay": "sea", "row": 0}, {"lay": "hole", "at": [0, 0, 0]}, {"lay": "at", "row": 0, "centre": [1, 0, 0], "quanta": 1}, {"lay": "at", "row": 0, "centre": [0, 2, 1], "quanta": 1}, {"lay": "at", "row": 0, "centre": [2, 1, 0], "quanta": 1}]}

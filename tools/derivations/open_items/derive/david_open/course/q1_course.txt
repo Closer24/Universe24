@@ -1,0 +1,25 @@
+(1) the board's mean count under a held density, Gamma 1,000, W = 500, D = 1, the source 900 (rest c* = 900):
+  31 tops in 4300 ticks; the first at tick 70 reading 1,801 (2 c* = 1,800)
+  the tops read 1,795 to 1,804; the bottoms -4 to 4
+  the periods top to top: 140 to 141 ticks, mean 140.500; 2 pi sqrt(W / D) = 140.496
+  the discrete energy p^2 + W D (a - c*)(a- - c*): start 404,910,000, range 400,298,125 to 409,048,100 (2.16% of the start); its mean over the first swing 405,703,904 and over the last 401,461,858 (-1.0456%); over 214 swings see q1b_energy.txt
+  the run back through 4300 ticks: exact True
+(4) the Mesh's proper length h = Y(c) / Gamma against the proper time, from the bang (c = 0 at rest):
+  the strong swing (c* = 900): d2h / dtau2 by tick to the top at 71 (the stride's sign turn): [(1, '+'), (55, '-')]; a quarter period is 35.1, and the count passes c* at tick 35
+  the weak swing (c* = 9): the top at 73 reading 18; d2h / dtau2 by tick: [(1, '+'), (37, '-')]
+  the source raised from 900 to 2,025 at tick 62, inside the decelerating phase, the count then 1,747 (above its old rest): the top at 114; d2h / dtau2 by tick: [(1, '+'), (55, '-'), (62, '+'), (92, '-')]
+(2) a seed on an 8^3 board, Gamma 1,200, W = 600, D = 1, the grip 100 per Mesh, held sources 160,000, 90,000 and 40,000 a tick at three Node-clocks:
+  the board's summed impulse moves by SUM K - D SUM a at every tick of 470: True
+  the summed count's tops at [76, 230, 384] and lows at [153, 307, 461] (2 pi sqrt(Gamma / 2) = 153.9); the top reads 580,064 against 2 SUM S / D = 580,000
+  each Node-clock's own top in the first swing (its largest count to tick 154): ticks 63 to 87, median 75, against the summed count's 76; local tops per Node-clock in that swing: 3 to 22, median 9
+  the Node-clock (1, 1, 1): its own top at 87 reading 1,580; its first local tops at [3, 8, 19, 33, 39]
+  the Node-clock (5, 2, 6): its own top at 79 reading 1,375; its first local tops at [3, 8, 33, 39, 51]
+  the Node-clock (3, 6, 3): its own top at 78 reading 1,244; its first local tops at [3, 8, 51, 56, 63]
+  the Node-clock (5, 5, 5): its own top at 63 reading 1,228; its first local tops at [11, 21, 27, 33, 38]
+  the run back through 470 ticks: exact True
+(3) T S T S = 1 on random states of the 6^3 board (the count and a matter gear, J_0 = m m): 20 of 20
+  run A, the forward swing: the summed count's first top at 79 reading 12,442, its low at 154 reading 310 (2 pi sqrt(Gamma / 2) = 153.9)
+  run B, T on every gear at the first top (tick 79), then 79 ticks: the gears equal T of the bang's: True
+  at tick 158: the matter's centroid and m m sum in run A ((3.36, 2.98, 2.98), 7578), in run B ((1.6, 2.0, 2.0), 8840), at the bang ((2.0, 2.0, 2.0), 8878)
+  the summed count at tick 158: run A 442, run B 0
+  the matter's two slots against T of the bang's, summed |difference|: run A 3,199, run B 0

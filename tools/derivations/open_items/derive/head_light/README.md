@@ -40,7 +40,8 @@ own Meshes beside it; (e) the probe and this README committed here.
 - the head cannot run the light alone: a calibre with no matter row is refused, and the regulator is always built
   and always acts. David's M1 for stage 4 (W+ = W, every grip W/3, no regulator) parts from the head at tick 1.
 
-**In code:** tests/test_the_tensor24_light.py runs the six worlds and compares Tensor24's pull and gear at the head's
+**In code** (until the old engine left the tree at 4cb5359ce, on the owner's word of 2026-10-30; in git's history):
+tests/test_the_tensor24_light.py ran the six worlds and compared Tensor24's pull and gear at the head's
 inputs at every site and tick, the end of tick where no turnover hit, with six mutants each parting it; the head's
 per-end grips enter through a table of the test alone, and tests/test_the_tensor24_engine.py holds the board's own
 Meshes, one grip per Mesh.
