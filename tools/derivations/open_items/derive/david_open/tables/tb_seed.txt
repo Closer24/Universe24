@@ -1,0 +1,4 @@
+(1) candidates 216, weighing 1: 24; the identity among them: True; closed under the product: True; weights other than 0 and 1: []
+(2) channels 43; trace 24 and P P = 24 P, one invariant line, on 43
+(3) elementary seeds with a group sum not 0: 172, each proportional to the head's table: 172; x = B^(index) through P P^T, B = 2 to 7: [43, 43, 43, 43, 43, 43] of 43
+(4) B = the Spokes count, 6, read from the star: 43 of 43
