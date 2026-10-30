@@ -2973,6 +2973,7 @@ def probe_cases() -> tuple[int, int]:
 
     check("PROBE is a refusal", gate.RULES["PROBE"][0] == "BLOCK")
     check("DIVIDE is a note", gate.RULES["DIVIDE"][0] == "WARN")
+    check("SEARCH is a note", gate.RULES["SEARCH"][0] == "WARN")
     NPS = "import numpy as np\n"
     probes = (
         ("a float literal", "x = 0.5\n", ["float literal"]),
@@ -3025,6 +3026,41 @@ def probe_cases() -> tuple[int, int]:
     )
     for label, source, want in divides:
         check(f"DIVIDE: {label}", found(source, "DIVIDE") == want)
+    searches = (
+        (
+            "a sine by its series",
+            "def sine(x):\n    total, term = 0, x\n    for k in range(1, 20):\n        total += term\n"
+            "        term = -term * x * x // ((2 * k) * (2 * k + 1))\n    return total\n",
+            ["function sine", "series summed by a loop"],
+        ),
+        (
+            "a series with Rule3's carry",
+            "from tensor24.algebra.carry import carry\n\ntotal, term = 0, 1\nfor k in range(1, 9):\n    total += term\n"
+            "    term, _ = carry(term * x, k * k, 0)\n",
+            ["series summed by a loop"],
+        ),
+        ("a series counted up in a while loop", "k = 1\nwhile k < 9:\n    total += term\n    term = term * x // k\n    k += 1\n", ["series summed by a loop"]),
+        ("a logarithm constant", "LN_TWO = 2 * artanh_inverse(3)\n", ["name LN_TWO"]),
+        ("an arctangent function", "def arctan_inverse(m):\n    return m\n", ["function arctan_inverse"]),
+        ("a cosine kept under a name", "cos_w = 24\nsin_w = 7\n", ["name cos_w", "name sin_w"]),
+        (
+            "a bisection",
+            "lo, hi = 0, m\nwhile lo < hi:\n    mid = (lo + hi + 1) // 2\n    if mid * mid <= m:\n        lo = mid\n"
+            "    else:\n        hi = mid - 1\n",
+            ["bracket halved"],
+        ),
+        ("a midpoint by a shift", "mid = (lo + hi) >> 1\n", ["bracket halved"]),
+        ("a midpoint by Rule3's carry", "from tensor24.algebra.carry import carry\n\nmid, _ = carry(lo + hi, 2, 0)\n", ["bracket halved"]),
+        ("a sum of squares is no series", "total = sum(k * k for k in range(10))\n", []),
+        ("a loop that only adds is no series", "for i in range(3):\n    total += i\n", []),
+        ("a loop that divides by its counter and sums nothing is no series", "for k in range(1, 5):\n    q = n // k\n    last = q\n", []),
+        ("half of one number is no bracket", "half = n // 2\n", []),
+        ("a log is a record, no logarithm", "log = []\nlog.append(x)\nlogs = 3\n", []),
+        ("a sum of a name and a number halved is no bracket", "half = (n + 1) // 2\n", []),
+        ("a file that does not parse", "def (:\n", []),
+    )
+    for label, source, want in searches:
+        check(f"SEARCH: {label}", found(source, "SEARCH") == sorted(want))
     reads = (
         (PROBE, True),
         ("tools/derivations/pair_rides/x.py", True),

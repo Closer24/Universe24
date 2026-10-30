@@ -19,7 +19,9 @@ branch as the allowance is. A hit above it is new; a key the ceiling does not ho
 The hidden numbers and the probes (the owner's answers of 2026-10-30, 09:0x UTC). ENUM (a refusal) and LENGTH (a note) read the new engine and its tools for
 a number behind a name: an enumeration, and a count spelt as a length. PROBE (a refusal) and DIVIDE (a note) read the probes under tools/derivations/ that a push
 adds or changes: a float, a true division, a root, a circular call, an import of math, random, fractions, decimal, statistics, scipy or sympy (PROBE); a floor
-division, a remainder or divmod, where the one division is Rule3's carry (DIVIDE). The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
+division, a remainder or divmod, where the one division is Rule3's carry (DIVIDE). SEARCH (a note) reads the three shapes under which a probe makes a circular or
+logarithmic function or a root without a call that names it: a series summed by a loop, a bracket halved by its midpoint, and a function or constant named a sine,
+cosine, tangent, arctangent, artanh or ln (David's finding of 6528139344 item 5). The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
 scribe_scan_probes.json, read from the published branch as the ceiling is. SCRIBE-GATE-1.md, section The hidden numbers and the probes.
 
   python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
@@ -268,6 +270,10 @@ RULES: dict[str, tuple[str, str]] = {
         "WARN",
         "a floor division, a remainder or divmod in a probe under tools/derivations/ that a push adds or changes: the one division is Rule3's carry with its remainder kept (tensor24.algebra.carry.carry) (the owner's word of 2026-10-30, 09:0x UTC: division is allowed only with Rule3); a note, the count per file may not rise",
     ),
+    "SEARCH": (
+        "WARN",
+        "a circular or logarithmic function, or a root, made by hand in a probe under tools/derivations/ that a push adds or changes, under a name that is no call of one: a loop that sums a series (a term updated by a division by an expression of the loop's counter, by // or by carry, and added to a total), a bracket halved (the midpoint of two ends, (lo + hi) // 2 with or without a one added, a shift by one or a carry of the sum by 2), and a function or constant named a sine, cosine, tangent, arctangent, artanh or ln (sine, cosine, arctan_inverse, artanh_inverse, LN_TWO): the law has no circular function that makes a phenomenon happen (line 102), no logarithm in a derivation (line 100) and no root found by search (decision 41), and a series or a bisection makes them under another name (David's finding of 2026-10-30, 16:4x UTC, #2187 6528139344 item 5; the writer's take, 6528504490); a note, the count per file may not rise, and a refusal when the owner answers whether a series used only to lay a state falls under line 102",
+    ),
     "DOCLAYER": (
         "BLOCK",
         "a module of the new engine whose docstring lacks the four layers, Clock:, Algebra:, Board: and Clicks:, each at the start of a line and carrying a text or the one general flag n/a: a part is told in the clock, the algebra, the event board and the physics behind the clicks (law: item (10) (e) of the principle, line 35; the owner's word of 2026-10-30, 11:0x UTC); the standing modules convert and the count only falls",
@@ -283,6 +289,9 @@ PROBE_CALLS = frozenset(
     "sqrt isqrt cbrt exp expm1 log log1p log2 log10 sin cos tan asin acos atan atan2 arcsin arccos arctan arctan2 sinh cosh tanh "
     "arcsinh arccosh arctanh hypot round float complex".split()
 )  # a call that makes a real number, a root or a circular function in a probe
+SEARCH_WORDS = frozenset(
+    "sin cos tan sine cosine tangent arctan arcsin arccos atan asin acos artanh atanh arctanh arcsinh ln".split()
+)  # a word of a snake_case name that makes a circular or logarithmic function by hand (the rule SEARCH): log is no word of it, a log being also a record
 PROBE_DTYPES = frozenset(
     "float complex float16 float32 float64 float128 float_ double longdouble complex64 complex128 complex256".split()
 )  # a dtype that holds a real number
@@ -2236,6 +2245,71 @@ def float_dtype(node: ast.AST) -> bool:
     return isinstance(node, ast.Constant) and isinstance(node.value, str) and node.value in PROBE_DTYPES
 
 
+def names_in(node: ast.AST) -> set[str]:
+    """Every name an expression reads."""
+    return {n.id for n in ast.walk(node) if isinstance(n, ast.Name)}
+
+
+def divisor_of(node: ast.AST) -> ast.AST | None:
+    """The divisor of a floor division or of Rule3's carry (its second argument), else None."""
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.FloorDiv):
+        return node.right
+    if isinstance(node, ast.Call):
+        name = node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
+        if name == "carry" and len(node.args) > 1:
+            return node.args[1]
+    return None
+
+
+def series_loop(loop: ast.For | ast.While) -> bool:
+    """A loop that sums a series: a statement that divides by an expression of the loop's counter (the for's target, or a name the loop counts up by a constant) and a total that a name is added to or taken from."""
+    counters: set[str] = set()
+    if isinstance(loop, ast.For):
+        counters |= names_in(loop.target)
+    body = [n for stmt in loop.body for n in ast.walk(stmt)]
+    for n in body:
+        if isinstance(n, ast.AugAssign) and isinstance(n.op, ast.Add) and isinstance(n.value, ast.Constant):
+            counters |= names_in(n.target)
+    divides = any(
+        (d := divisor_of(n)) is not None and counters & names_in(d) for n in body if isinstance(n, ast.BinOp | ast.Call)
+    )
+    adds = any(
+        isinstance(n, ast.AugAssign) and isinstance(n.op, ast.Add | ast.Sub) and isinstance(n.value, ast.Name)
+        for n in body
+    )
+    return divides and adds
+
+
+def midpoint(node: ast.AST) -> bool:
+    """The midpoint of two ends, which a bisection takes: (lo + hi) // 2, with a one added or not, as a floor division, a shift by one or a carry by 2."""
+    whole: ast.AST | None = None
+    if isinstance(node, ast.BinOp) and isinstance(node.op, ast.FloorDiv | ast.RShift):
+        half = node.right
+        if isinstance(half, ast.Constant) and half.value == (2 if isinstance(node.op, ast.FloorDiv) else 1):
+            whole = node.left
+    elif isinstance(node, ast.Call) and divisor_of(node) is not None:
+        half = divisor_of(node)
+        if isinstance(half, ast.Constant) and half.value == 2 and node.args:
+            whole = node.args[0]
+    if not isinstance(whole, ast.BinOp) or not isinstance(whole.op, ast.Add):
+        return False
+    terms: list[ast.AST] = []
+    stack: list[ast.AST] = [whole]
+    while stack:
+        part = stack.pop()
+        if isinstance(part, ast.BinOp) and isinstance(part.op, ast.Add):
+            stack += [part.left, part.right]
+        else:
+            terms.append(part)
+    named = [x for x in terms if isinstance(x, ast.Name)]
+    return len(named) >= 2 and all(isinstance(x, ast.Name | ast.Constant) for x in terms)
+
+
+def made_by_hand(name: str) -> bool:
+    """A name whose snake_case words include a sine, cosine, tangent, arctangent, artanh or ln."""
+    return any(word in SEARCH_WORDS for word in name.lower().split("_"))
+
+
 def probe_hits(rel: str, source: str) -> list[Hit]:
     """The hits of PROBE and DIVIDE in one probe: what makes a real number, a root or a circular function in a derivation (PROBE), and a
     floor division, a remainder or divmod that is not Rule3's carry (DIVIDE); a file that does not parse holds nothing to run."""
@@ -2249,6 +2323,17 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
         hits.append(Hit(rule, rel, getattr(node, "lineno", 0), detail, "", getattr(node, "col_offset", 0)))
 
     for node in ast.walk(tree):
+        if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef) and made_by_hand(node.name):
+            add("SEARCH", node, f"function {node.name}")
+        elif isinstance(node, ast.Assign | ast.AnnAssign):
+            for target in node.targets if isinstance(node, ast.Assign) else [node.target]:
+                for name in [n.id for n in ast.walk(target) if isinstance(n, ast.Name)]:
+                    if made_by_hand(name):
+                        add("SEARCH", node, f"name {name}")
+        elif isinstance(node, ast.For | ast.While) and series_loop(node):
+            add("SEARCH", node, "series summed by a loop")
+        if midpoint(node):
+            add("SEARCH", node, "bracket halved")
         if isinstance(node, ast.Constant) and isinstance(node.value, float | complex):
             add("PROBE", node, "float literal")
         elif isinstance(node, ast.BinOp | ast.AugAssign):
