@@ -1,21 +1,26 @@
 """Clock: the boundary between the board and the clicks: only the readers read it.
-Algebra: schema 1.2: JSON Lines of whole numbers of any width and labels, each line's kind its record's name in lower case.
-Board: the header (the files and their digests, the sides, each train's kinds, part and winding), the Whole lines the run writes (a click's round, site, train and q, the windings that left the train, its other fields absent until G3 and G5), the end (the rounds, the digest, the run back exact or not) and the ledger's Count lines beside them.
-Clicks: its click lines, from G5, name a train, a Node-clock and a round; nothing is computed in it.
+Algebra: schema 1.3: JSON Lines of whole numbers of any width and labels, each line's kind its record's name in lower case.
+Board: the header (the files and their digests, the sides, each kind's characters on the 24, each train's kinds, part, winding, key and square flag), the click lines the run writes (a round, a Node-clock, a train, its q and its click tooth before and after), the end (the rounds, the digest, the run back exact or not) and the ledger's Count lines beside them.
+Clicks: its click lines name a train, a Node-clock and a round and carry q, the click tooth's carry signed, a give below 0 and a take above it; nothing is computed in it.
 """
 
 from dataclasses import dataclass
 
-# The record's lines, in the order (round, kind, site, train): Header first; then Whole, Split, Rate and Books; End last.
-# No run writes a Rate line since G1b, every Node-clock stepping in every round; its record stays for the records read
-# before. The ledger's own file holds Ledger and Count lines, a Count line told by its site, which a Ledger line lacks.
-# The other records stand inside lines. A digest is SHA-256 in hex.
+# The record's lines, in the order (round, kind, site, train): Header first; then Whole, Click, Split, Rate and Books;
+# End last. The run writes Click lines; no run writes a Whole, Split, Rate or Books line, every Node-clock stepping in
+# every round and the clicks standing in the Click line, and their records stay for the records read before. The
+# ledger's own file holds Ledger and Count lines, a Count line told by its site, which a Ledger line lacks. The other
+# records stand inside lines. A digest is SHA-256 in hex.
 MAJOR = 1  # a breaking change; the decoder upcasts an older major and refuses an unknown one
 # each minor version's change in order: an added field or line that no reader needs, or a line no run writes retired
 ADDED = (
     "the operands named, the coupling row's twelve fields",
     "the ledger's count per Node-clock (Animate's G1), read by her 1.2 reader, which keys a ledger line by round, at,"
     " site and train (the 1.1 reader's guard refused them); the turnover and the rate lines retired, no run writing either",
+    "the click line, one per round, Node-clock and train whose click tooth carried, its q the carry's quotient signed"
+    " (a give below 0, a take above it) and its tooth before and after; the train card's key and square flag and the"
+    " kind card's characters, its trace on each of the 24 turns; the couplings, the classes, the draw and the kind"
+    " card's T T retired, no run writing them",
 )
 MINOR = len(ADDED)
 
@@ -31,24 +36,25 @@ class File:
 
 @dataclass(frozen=True)
 class Kind:
-    """One kind as the engine built it: index, label, dimension, its character on each class as a + b sqrt 2, T T."""
+    """One kind as the engine built it: index, label, dimension, and its characters, its trace on each of the 24 turns in the turns' order."""
 
     index: int
     label: str
     dimension: int
-    characters: tuple[tuple[int, int], ...]
-    tt: int
+    characters: tuple[int, ...]
 
 
 @dataclass(frozen=True)
 class Train:
-    """One train: its index, its label, its kinds, its part and its winding."""
+    """One train: its index, its label, its kinds, its part, its winding, its key (the click tooth's) and its square flag, 1 on the four-vector's square."""
 
     index: int
     label: str
     kinds: tuple[int, ...]
     part: int
     winding: int
+    key: int
+    square: int
 
 
 @dataclass(frozen=True)
@@ -63,15 +69,21 @@ class Header:
     files: tuple[File, ...]
     sides: tuple[int, ...]
     order: str
-    classes: tuple[int, ...]
     kinds: tuple[Kind, ...]
     trains: tuple[Train, ...]
-    couplings: tuple[
-        tuple[int, int, int, int, int, int, int, int, int, int, int, int], ...
-    ]  # as the universe gives them
-    operands: tuple[str, ...]  # the readings a coupling row's operand indexes, in order
-    draw: int
+    operands: tuple[str, ...]  # the readings, in order, as the loader names them
     width: int
+
+
+@dataclass(frozen=True)
+class Click:
+    """A click line: at a round and a Node-clock, a train's click tooth carried q whole keys, a give below 0 and a take above it, its tooth before and after."""
+
+    round: int
+    site: int
+    train: int
+    q: int
+    tooth: tuple[int, int]
 
 
 @dataclass(frozen=True)

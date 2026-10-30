@@ -1,5 +1,5 @@
 """Tensor24's decoder: a record and its ledger read under the schema's rules, each broken one not read with its own cause
-and nothing raised; row 15's two readings; each law failing on its own mutant."""
+and nothing raised; row 15's two readings; each law failing on its own mutant; schema 1.3's click lines read."""
 
 import json
 import subprocess
@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from tensor24.decoder import books, records
+from tensor24.record import schema
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
 DIGITS = (
@@ -508,3 +509,42 @@ def test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits(tmp_path):
     assert "'kind': 'SHOWN'" in shown.stdout
     assert "the ledger's file is absent" in absent.stdout and lifted.stdout.startswith("row 15")
     assert unread_run.stdout == f"not read: {NO_JSON}\n"
+
+
+KIND = {"index": 0, "label": "A1", "dimension": 1, "characters": [1] * 24}  # its trace on each of the 24
+CARD = {**TRAINS[0], "key": 7, "square": 0}  # a 1.3 train card: its key and its square flag
+THIRTEEN = {
+    **B,
+    "minor": schema.MINOR,
+    "kinds": [KIND],
+    "trains": [CARD, {**TRAINS[1], "key": 7, "square": 0}],
+}
+
+
+def clicked(round_, site, train, q, tooth):
+    """A click line: at a round and a Node-clock, a train's q, the click tooth's carry signed, and its tooth before and after."""
+    return {"kind": "click", "round": round_, "site": site, "train": train, "q": q, "tooth": list(tooth)}
+
+
+# a pair at the key 7, both teeth born at 3: the giver's tooth carried down one key, the taker's up one
+GIVE, TOOK = clicked(1, 0, 0, -1, (3, 6)), clicked(1, 0, 1, 1, (3, 0))
+
+
+def test_a_record_of_schema_1_3_reads_its_click_lines_and_refuses_a_click_or_a_card_off_the_schema_or_the_board(
+    tmp_path,
+):
+    """Yes: a 1.3 record with two click lines, a give below 0 and a take, reads, its lines in the schema's order.
+    No: a click with a tooth of three entries or at a site off the board, a kind card's characters or a train card's
+    key off their shape, and the lines out of order, are refused by name, and a whole line's q below 1 still is."""
+    record = read([THIRTEEN, GIVE, TOOK, E], tmp_path)
+    assert record is not None and record.of("click") == [GIVE, TOOK] and record.of("whole") == []
+    assert cause_of([THIRTEEN, TOOK, GIVE, E], tmp_path) == ORDER
+    assert cause_of([THIRTEEN, {**GIVE, "tooth": [*GIVE["tooth"], 0]}, E], tmp_path) == SHAPE.format(
+        "tooth"
+    )
+    assert cause_of([THIRTEEN, {**GIVE, "site": 1 + 1}, E], tmp_path) == OFF_SITE
+    halved = {**KIND, "characters": [1, 0.5]}, {**CARD, "key": 0.5}
+    assert cause_of([{**THIRTEEN, "kinds": [halved[0]]}, E], tmp_path) == LINE1.format("kinds")
+    assert cause_of([{**THIRTEEN, "trains": [halved[1]]}, E], tmp_path) == LINE1.format("trains")
+    whole_ = {**GIVE, "kind": "whole"}
+    assert cause_of([THIRTEEN, whole_, E], tmp_path) == "line 2 holds the whole click's q -1, below 1"
