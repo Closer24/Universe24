@@ -11,50 +11,78 @@
     e at 0 in 0 draws and at H in 0
     chi-square of the tenths of H on 9: 8.096
     in one half, two rounds running 497, one Mesh apart 498 per mille (500 for independent draws)
+      two rounds running 42858 of 86184, z^2 2.541, below 3.84; one Mesh apart 43072 of 86400, z^2 0.758, below 3.84
     the star discrepancy D_N of e over H: 3521 ppm; the bound 2 D_N: 7042 ppm
-    the root of N times D_N: 1.035 (for independent uniform draws, mean 0.869, above 1.358 one time in 20)
-    the largest |freq(part) - share| over (c)'s five Born tests by e: 2418 ppm; each within 2 D_N: True
+    N times D_N squared: 1071 thousandths, against pi^2 over 12, 822 thousandths, and the 5 per cent point 1,844 thousandths
+      (the Kolmogorov law's mean of the square and the point it passes one time in 20, for independent uniform draws; the square of the mean 0.869 is 755 thousandths)
+    the largest |freq(part) - share| over (c)'s five Born tests by e: 902 ppm; each within 2 D_N: True
+    the theory's pointer, light outside it, P over matter and the held count alone:
+      86400 distinct values; every e even: True; the gcd of all differences of e 4, every e 2 more than a multiple of it
+      e at 0 in 0 draws and at H in 0; chi-square of the tenths of H on 9: 11.764
+      in one half, two rounds running 43164 of 86184, z^2 0.240, below 3.84; one Mesh apart 43048 of 86400, z^2 1.069, below 3.84
+      D_N 2345 ppm; N times D_N squared 475 thousandths; the largest |freq(part) - share| over (c)'s five Born tests by e: 1527 ppm
 (c) Born, part 0 of sizes S1 and S2, term 6, the draws of (b); t the round, s_t = tick(s_(t-1)), 21 to 420;
     V the raw sum of the fine teeth over x and its six neighbours in s_t; D the sum there of their digits,
     r div the row's pitch at load from (a): light the grip, matter 4, the held count 2;
     (ii) to (iv) draw part 0 where d < S1:
     sizes 1 : 1, part 0 expected in 43200 of 86400:
-      (i) the new rule on e, ranked by size, ties 86400: part 0 in 43122 of 86400 (expected 43200), z^2 0.281
+      (i) the new rule on e, in the parts' own order, ties 86400: part 0 in 43122 of 86400 (expected 43200), z^2 0.281
       (ii) the raw sum mod L, c struck: part 0 in 86400 of 86400 (expected 43200), z^2 86400.000
       (iii) decision 29's digits, c struck: part 0 in 43371 of 86400 (expected 43200), z^2 1.353
       (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 43103 of 86400 (expected 43200), z^2 0.435
     sizes 1 : 2, part 0 expected in 28800 of 86400:
-      (i) the new rule on e, ranked by size, ties 0: part 0 in 28925 of 86400 (expected 28800), z^2 0.813
+      (i) the new rule on e, in the parts' own order, ties 0: part 0 in 28829 of 86400 (expected 28800), z^2 0.043
       (ii) the raw sum mod L, c struck: part 0 in 28657 of 86400 (expected 28800), z^2 1.065
       (iii) decision 29's digits, c struck: part 0 in 28983 of 86400 (expected 28800), z^2 1.744
       (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 28791 of 86400 (expected 28800), z^2 0.004
     sizes 3 : 7, part 0 expected in 25920 of 86400:
-      (i) the new rule on e, ranked by size, ties 0: part 0 in 26021 of 86400 (expected 25920), z^2 0.562
+      (i) the new rule on e, in the parts' own order, ties 0: part 0 in 25951 of 86400 (expected 25920), z^2 0.052
       (ii) the raw sum mod L, c struck: part 0 in 34391 of 86400 (expected 25920), z^2 3954.907
       (iii) decision 29's digits, c struck: part 0 in 25932 of 86400 (expected 25920), z^2 0.007
       (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 26035 of 86400 (expected 25920), z^2 0.728
     sizes 10^6 : 3 x 10^6, part 0 expected in 21600 of 86400:
-      (i) the new rule on e, ranked by size, ties 0: part 0 in 21809 of 86400 (expected 21600), z^2 2.696
+      (i) the new rule on e, in the parts' own order, ties 0: part 0 in 21559 of 86400 (expected 21600), z^2 0.103
       (ii) the raw sum mod L, c struck: part 0 in 21611 of 86400 (expected 21600), z^2 0.007
       (iii) decision 29's digits, c struck: part 0 in 21767 of 86400 (expected 21600), z^2 1.721
       (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 21770 of 86400 (expected 21600), z^2 1.783
     sizes 10^30 : 3 x 10^30, part 0 expected in 21600 of 86400:
-      (i) the new rule on e, ranked by size, ties 0: part 0 in 21809 of 86400 (expected 21600), z^2 2.696
+      (i) the new rule on e, in the parts' own order, ties 0: part 0 in 21559 of 86400 (expected 21600), z^2 0.103
       (ii) the raw sum mod L, c struck: part 0 in 86400 of 86400 (expected 21600), z^2 259200.000
       (iii) decision 29's digits, c struck: part 0 in 86400 of 86400 (expected 21600), z^2 259200.000
       (iv) decision 29's digits with its dial, d = (t + D) mod L: part 0 in 86400 of 86400 (expected 21600), z^2 259200.000
-    sizes read from the state, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 at x in s_in's now slot, by e ranked by size:
-      part 0 in 42774 of 86400 (expected 42802), z^2 0.073, ties 4
+    sizes read from the state, S1 = m_re^2 + 1 and S2 = m_im^2 + 1 at x in s_in's now slot, by e in the parts' own order:
+      part 0 in 42744 of 86400 (expected 42802), z^2 0.309, ties 4
+    the theory's pointer, light outside it, by e in the parts' own order:
+      sizes 1 : 1: part 0 in 43332 of 86400 (expected 43200), z^2 0.806, below 3.84
+      sizes 1 : 2: part 0 in 28894 of 86400 (expected 28800), z^2 0.460, below 3.84
+      sizes 3 : 7: part 0 in 25972 of 86400 (expected 25920), z^2 0.149, below 3.84
+      sizes 10^6 : 3 x 10^6: part 0 in 21582 of 86400 (expected 21600), z^2 0.020, below 3.84
+      sizes 10^30 : 3 x 10^30: part 0 in 21582 of 86400 (expected 21600), z^2 0.020, below 3.84
+      sizes read from the state: part 0 in 42860 of 86400 (expected 42802), z^2 0.301, ties 4
 (d) six lays, the old lay's generator at six seeds, term 6, rounds 21 to 420, 86400 draws each:
     seed 20261030: chi-square of e's tenths on 9 8.096; at 1:1 part 0 in 43122 of 86400 (expected 43200), z^2 0.281
+      the 1:1 z^2 below 3.84; D_N 3521 ppm; the largest |freq - share| over (c)'s five splits 902 ppm
+      light outside: chi-square of the tenths on 9 11.764; D_N 2345 ppm; at 1:1 part 0 in 43332 of 86400 (expected 43200), z^2 0.806, below 3.84; the largest |freq - share| 1527 ppm
     seed 1: chi-square of e's tenths on 9 12.572; at 1:1 part 0 in 43081 of 86400 (expected 43200), z^2 0.655
+      the 1:1 z^2 below 3.84; D_N 3698 ppm; the largest |freq - share| over (c)'s five splits 2627 ppm
+      light outside: chi-square of the tenths on 9 11.747; D_N 4193 ppm; at 1:1 part 0 in 42902 of 86400 (expected 43200), z^2 4.111, 3.84 to 6.63; the largest |freq - share| 3449 ppm
     seed 2: chi-square of e's tenths on 9 6.304; at 1:1 part 0 in 43179 of 86400 (expected 43200), z^2 0.020
+      the 1:1 z^2 below 3.84; D_N 2493 ppm; the largest |freq - share| over (c)'s five splits 1307 ppm
+      light outside: chi-square of the tenths on 9 4.694; D_N 2774 ppm; at 1:1 part 0 in 43417 of 86400 (expected 43200), z^2 2.180, below 3.84; the largest |freq - share| 2511 ppm
     seed 3: chi-square of e's tenths on 9 5.974; at 1:1 part 0 in 43282 of 86400 (expected 43200), z^2 0.311
+      the 1:1 z^2 below 3.84; D_N 2496 ppm; the largest |freq - share| over (c)'s five splits 949 ppm
+      light outside: chi-square of the tenths on 9 6.751; D_N 2627 ppm; at 1:1 part 0 in 43169 of 86400 (expected 43200), z^2 0.044, below 3.84; the largest |freq - share| 601 ppm
     seed 4: chi-square of e's tenths on 9 16.203; at 1:1 part 0 in 42820 of 86400 (expected 43200), z^2 6.685
+      the 1:1 z^2 above 6.63; D_N 4779 ppm; the largest |freq - share| over (c)'s five splits 4398 ppm
+      light outside: chi-square of the tenths on 9 14.532; D_N 2622 ppm; at 1:1 part 0 in 43200 of 86400 (expected 43200), z^2 0.000, below 3.84; the largest |freq - share| 2037 ppm
     seed 5: chi-square of e's tenths on 9 4.112; at 1:1 part 0 in 43252 of 86400 (expected 43200), z^2 0.125
-    mean chi-square 8.876 over the six; the null: mean 9, sd 4.242 for one lay, 1.732 for the mean of six;
+      the 1:1 z^2 below 3.84; D_N 1969 ppm; the largest |freq - share| over (c)'s five splits 1145 ppm
+      light outside: chi-square of the tenths on 9 4.354; D_N 2660 ppm; at 1:1 part 0 in 43127 of 86400 (expected 43200), z^2 0.246, below 3.84; the largest |freq - share| 1273 ppm
+    mean chi-square 8.876 over the six; the null: mean 9, variance 18 for one lay, 3 for the mean of six;
     the mean's z^2 0.005
     the six z^2 at 1:1: 0.281, 0.655, 0.020, 0.311, 6.685, 0.125
+    seed 4's tenths chi-square 16.203: its halves component 6.685 on 1, the 1:1 z^2, and the remainder 9.518 on 8
+    light outside: mean chi-square 8.973 over the six, the mean's z^2 0.000; the six z^2 at 1:1: 0.806, 4.111, 2.180, 0.044, 0.000, 0.246
 (e) the run back inside the act, term 6, 300 rounds from the old lay:
     forward: s_t = tick(s_(t-1)) for t = 1 to 300; a draw at every Node-clock from (s_(t-1), s_t),
     at 1:1 and at the sizes in s_(t-1)'s now slot, each adding 1 to books[x][part]
@@ -67,20 +95,21 @@
     the lay returns bit for bit: True
     control, the old rule d = V mod W on the raw teeth of the state after the tick, read the same way on (m, m_out):
       the part at 1:1 equal at 32358 of 64800; its books end with 424 of 432 entries not 0
+      the control's agreement against half of the draws: z^2 0.108, below 3.84
 (f) the 24: 24 turns; rounds 1 to 5 from the old lay, each input state turned and ticked;
     at x the split between its +x and -x neighbours, sizes m_re^2 + 1 at those two in s_in's now slot;
     covariant where the turned board's draw at x's image is the image of the original's;
     1080 draws a turn, each count listed once:
     12 turns taking +x to a + direction:
       the act turned with the board in [5] of 5 rounds; e equal at the image at [1080]
-      ranked by size: covariant at [1080], ties [0]
-      the parts in their given order, + side first, not ranked: covariant at [1080]
-      sizes 1 and 1, all ties, broken in the given order: covariant at [1080]
+      the rule, the parts in their own order, + side first: covariant at [1080]
+      the rule at sizes 1 and 1: covariant at [1080]
+      ranked by size (refused, a sort): covariant at [1080], ties [0]
     12 turns taking +x to a - direction:
       the act turned with the board in [5] of 5 rounds; e equal at the image at [1080]
-      ranked by size: covariant at [1080], ties [0]
-      the parts in their given order, + side first, not ranked: covariant at [658]
-      sizes 1 and 1, all ties, broken in the given order: covariant at [0]
+      the rule, the parts in their own order, + side first: covariant at [658]
+      the rule at sizes 1 and 1: covariant at [0]
+      ranked by size (refused, a sort): covariant at [1080], ties [0]
 (g) the vacuum: term 6; light laid moving at every Node-clock (seed 7, as the hostile reader's g5_vacuum.py); matter
     laid at rest at 0 and the held count at rest at n; 400 rounds. Light taken as T1, as in the theory, so P runs
     over matter and the held count; light passed every Node-clock and nothing else moved
@@ -95,11 +124,173 @@
     a hot board, matter laid to 10 counts, all 216 Node-clocks: 86400 distinct e of 86400
       chi-square of e's tenths on 9: 12.523; joint tenths at t and t + 1: 81.334 on 81; at t and t + 2: 74.049 on 81
       at 1:1 part 0 in 43299 of 86400 (expected 43200), z^2 0.453
+      D_N 3285 ppm; the largest |freq - share| over (c)'s five splits 1909 ppm
     a cold board, one packet near 100 counts, its 27 Node-clocks: 10800 distinct e of 10800
       chi-square of e's tenths on 9: 14.979; joint tenths at t and t + 1: 96.609 on 81; at t and t + 2: 88.443 on 81
       at 1:1 part 0 in 5309 of 10800 (expected 5400), z^2 3.067
+      D_N 8724 ppm; the largest |freq - share| over (c)'s five splits 8425 ppm
 (i) decision 29's dial with the plan empty, the old lay, 1000 rounds; L = 1000, sizes 500 and 500;
     V the raw sum of the fine teeth over x and its six neighbours in s_t:
     V mod 1000 takes [0] at every Node-clock in every round; frozen: True
     the dial, d = (t + V) mod 1000, t the round: part 0 exactly 500 times at each of the 216 Node-clocks: True
     c struck, d = V mod 1000: part 0 in 216000 of 216000 draws
+(j) the rows the pointer reads, term 6, rounds 21 to 420: (b)'s statistics with the pointer on
+    (j1) the held count alone and (j2) matter and the held count, light left out; parts in their own order:
+    the old lay, all 216 Node-clocks, (j1) the held count alone:
+      86400 distinct e of 86400; chi-square of the tenths on 9 11.070; D_N 2202 ppm
+      at 1:1 part 0 in 43138 of 86400 (expected 43200), z^2 0.177
+      at 1:3 part 0 in 21505 of 86400 (expected 21600), z^2 0.557
+      joint tenths one round apart: 103.296 on 81
+    the old lay, all 216 Node-clocks, (j2) matter and the held count, light left out:
+      86400 distinct e of 86400; chi-square of the tenths on 9 11.764; D_N 2345 ppm
+      at 1:1 part 0 in 43332 of 86400 (expected 43200), z^2 0.806
+      at 1:3 part 0 in 21582 of 86400 (expected 21600), z^2 0.020
+      joint tenths one round apart: 60.872 on 81
+    the hot board, matter laid to 10 counts, all 216 Node-clocks, (j1) the held count alone:
+      78887 distinct e of 86400; chi-square of the tenths on 9 777600.000; D_N 996866 ppm
+      at 1:1 part 0 in 86400 of 86400 (expected 43200), z^2 86400.000
+      at 1:3 part 0 in 86400 of 86400 (expected 21600), z^2 259200.000
+      joint tenths one round apart: 0.000 on 0
+    the hot board, matter laid to 10 counts, all 216 Node-clocks, (j2) matter and the held count, light left out:
+      86400 distinct e of 86400; chi-square of the tenths on 9 10.619; D_N 3567 ppm
+      at 1:1 part 0 in 43017 of 86400 (expected 43200), z^2 1.550
+      at 1:3 part 0 in 21491 of 86400 (expected 21600), z^2 0.733
+      joint tenths one round apart: 93.140 on 81
+    the cold packet, one packet near 100 counts, its 27 Node-clocks, (j1) the held count alone:
+      10795 distinct e of 10800; chi-square of the tenths on 9 87626.674; D_N 872212 ppm
+      at 1:1 part 0 in 10800 of 10800 (expected 5400), z^2 10800.000
+      at 1:3 part 0 in 10800 of 10800 (expected 2700), z^2 32400.000
+      joint tenths one round apart: 10615.544 on 1
+    the cold packet, one packet near 100 counts, its 27 Node-clocks, (j2) matter and the held count, light left out:
+      10800 distinct e of 10800; chi-square of the tenths on 9 14.979; D_N 8724 ppm
+      at 1:1 part 0 in 5309 of 10800 (expected 5400), z^2 3.067
+      at 1:3 part 0 in 2662 of 10800 (expected 2700), z^2 0.713
+      joint tenths one round apart: 96.609 on 81
+(k) the run back with a click that writes, term 6, 300 rounds out from the old lay and 300 back:
+    the draw at every Node-clock between its matter re and im rows, sizes m_re^2 + 1 and m_im^2 + 1 in s's now
+    slot, in the parts' own order, then the write; forward, s_t is the act on s_(t-1); back, s_(t-1) is the
+    same act on mirror(s_t), mirrored, with no list read; the pointer on all five rows unless said; 64800 draws each way:
+    a record tooth on the hand, one per Node-clock and part, flipped by the mirror:
+      the pointer equal at 64800 of 64800; the part equal at 64800; s_(t-1) recovered at 300 of 300 rounds
+      the lay and the hand return: True; 432 of 432 record teeth moved on the way out
+    a whole count into the winner's now slot, matter's row:
+      the pointer equal at 64800 of 64800; the part equal at 64800; s_(t-1) recovered at 300 of 300 rounds
+      the lay and the hand return: True
+    a whole count into the winner's now slot, light's row, the pointer without light:
+      the pointer equal at 64800 of 64800; the part equal at 64800; s_(t-1) recovered at 300 of 300 rounds
+      the lay and the hand return: True
+    both slots of light's row, the law's take, the pointer without light:
+      the pointer equal at 64800 of 64800; the part equal at 64800; s_(t-1) recovered at 0 of 300 rounds
+      the lay and the hand return: False
+    both slots of matter's row:
+      the pointer equal at 0 of 64800; the part equal at 48274; s_(t-1) recovered at 0 of 300 rounds
+      the lay and the hand return: False
+    a fine tooth moved by a grip, its quotient into the now slot, matter's row:
+      the pointer equal at 39 of 64800; the part equal at 48282; s_(t-1) recovered at 0 of 300 rounds
+      the lay and the hand return: False
+(l) decision 29's dial on its own digits: D the sum over x and its six neighbours of r div the row's pitch at
+    load (from (a)), in s_t; L = 1000, sizes 500 and 500; the dial d = (t + D) mod 1000, t the round;
+    c struck, d = D mod 1000:
+    the plan empty, the old lay, 1000 rounds, all five rows, light the grip, matter the grip, the held count the grip:
+      D mod 1000 takes 86 values over the board, from 44 to 130; at most 64 at one Node-clock;
+      frozen at every Node-clock: False
+      the dial: part 0 from 490 to 512 times of 1000 over the Node-clocks; exactly 500 at each: False
+      c struck: part 0 in 216000 of 216000
+    the vacuum of (g), term 6, matter and the held count, matter 4, the held count 2:
+      D mod 1000 takes [0] over the board; frozen at every Node-clock: True
+      over the first 400 rounds, the dial: part 0 from 400 to 400 times of 400 over the Node-clocks;
+        c struck: part 0 in 86400 of 86400
+      over the first 1000 rounds, the dial: part 0 from 500 to 500 times of 1000 over the Node-clocks;
+        c struck: part 0 in 216000 of 216000
+(m) the Fano factor of part 0's count in windows of M rounds at one Node-clock, pooled over the Node-clocks
+    read: its squared gap from the binomial mean over the binomial variance, 1.000 for independent
+    draws, and its z^2 against its own binomial spread, one degree; term 6, the pointer on all five rows,
+    rounds 21 to 420, in the parts' own order:
+    the old lay, all 216 Node-clocks:
+      M = 10, 8640 windows: 0.999 at 1:1 (z^2 0.003, below 3.84), 0.995 at 1:3 (z^2 0.093, below 3.84)
+      M = 40, 2160 windows: 1.013 at 1:1 (z^2 0.194, below 3.84), 0.955 at 1:3 (z^2 2.181, below 3.84)
+      M = 100, 864 windows: 1.034 at 1:1 (z^2 0.509, below 3.84), 1.000 at 1:3 (z^2 0.000, below 3.84)
+      M = 200, 432 windows: 1.080 at 1:1 (z^2 1.421, below 3.84), 1.019 at 1:3 (z^2 0.082, below 3.84)
+      M = 400, 216 windows: 1.031 at 1:1 (z^2 0.104, below 3.84), 0.897 at 1:3 (z^2 1.128, below 3.84)
+    the hot board, matter laid to 10 counts, all 216 Node-clocks:
+      M = 10, 8640 windows: 1.008 at 1:1 (z^2 0.307, below 3.84), 0.999 at 1:3 (z^2 0.001, below 3.84)
+      M = 40, 2160 windows: 1.014 at 1:1 (z^2 0.244, below 3.84), 0.979 at 1:3 (z^2 0.441, below 3.84)
+      M = 100, 864 windows: 1.012 at 1:1 (z^2 0.067, below 3.84), 0.918 at 1:3 (z^2 2.860, below 3.84)
+      M = 200, 432 windows: 1.086 at 1:1 (z^2 1.621, below 3.84), 0.941 at 1:3 (z^2 0.740, below 3.84)
+      M = 400, 216 windows: 1.022 at 1:1 (z^2 0.056, below 3.84), 0.969 at 1:3 (z^2 0.103, below 3.84)
+    the cold packet, one packet near 100 counts, its 27 Node-clocks:
+      M = 10, 1080 windows: 0.969 at 1:1 (z^2 0.566, below 3.84), 0.951 at 1:3 (z^2 1.335, below 3.84)
+      M = 40, 270 windows: 0.941 at 1:1 (z^2 0.480, below 3.84), 1.050 at 1:3 (z^2 0.352, below 3.84)
+      M = 100, 108 windows: 0.969 at 1:1 (z^2 0.051, below 3.84), 0.875 at 1:3 (z^2 0.845, below 3.84)
+      M = 200, 54 windows: 0.854 at 1:1 (z^2 0.574, below 3.84), 0.795 at 1:3 (z^2 1.135, below 3.84)
+      M = 400, 27 windows: 1.094 at 1:1 (z^2 0.120, below 3.84), 0.709 at 1:3 (z^2 1.143, below 3.84)
+(n) no signal with a frozen pointer: the four joint outcomes in the order ++, +-, -+, -- (Alice's sign, then Bob's),
+    sized by their quantum chances in whole numbers and drawn by the page's rule in that order, with no rank;
+    Bob's analyser fixed and Alice's at an angle from it, the angle the only setting the sizes read:
+    the polarization singlet, chances (1 - cos^2) over 2 for ++ and --, cos^2 over 2 for +- and -+:
+      at 30 degrees, cos^2 = 3 over 4: sizes 1, 3, 3, 1
+      at 60 degrees, cos^2 = 1 over 4: sizes 3, 1, 1, 3
+      e fixed at 3 tenths of H, at 30, 60 degrees: the joint outcome +-, ++; Bob draws -, +
+      e spread evenly, 6240 pointers: Bob + in 3120, 3120 of 6240
+      e as the act spreads it, (b)'s 86400 draws: Bob + in 43063 (z^2 0.868), 43126 (z^2 0.253) of 86400
+    the spin singlet, chances (1 - cos) over 4 for ++ and --, (1 + cos) over 4 for +- and -+,
+      cos 30 degrees taken as 1351 over 1560, where 1351^2 - 3 x 780^2 = 1:
+      at 30 degrees, cos = 1351 over 1560: sizes 209, 2911, 2911, 209
+      at 60 degrees, cos = 1 over 2: sizes 1, 3, 3, 1
+      at 120 degrees, cos = -1 over 2: sizes 3, 1, 1, 3
+      e fixed at 3 tenths of H, at 30, 60, 120 degrees: the joint outcome +-, +-, ++; Bob draws -, -, +
+      e spread evenly, 6240 pointers: Bob + in 3120, 3120, 3120 of 6240
+      e as the act spreads it, (b)'s 86400 draws: Bob + in 43296 (z^2 0.426), 43063 (z^2 0.868), 43126 (z^2 0.253) of 86400
+(o) the frozen merges' weight: form B's deciding merges, CLICKS-CLOSED section 13's backward pass on
+    spread_quantum.py's tree, rebuilt in whole numbers (its probe left the tree at 1b6ca0bf9); a Node-clock's
+    parent its first neighbour, +x -x +y -y +z -z, one Mesh nearer the source; a merge decides where two or
+    more of its inputs are not 0; its pointer is frozen where none of its seven Node-clocks holds an absorber
+    or the source, so only light crossed there:
+    spread_quantum.py's board, side 7, the source at the centre, its absorbers' takes sigma_f sigma_b,
+    the full one, taking 0, left out:
+      7 absorbers; 3 deciding merges, 1 at an absorber, 2 with an absorber or the source among the seven, 1 where only light crossed
+        the merge at (3, 3, 0): an absorber False; an absorber or the source among its seven False
+        the merge at (3, 3, 3): an absorber False; an absorber or the source among its seven True
+        the merge at (3, 3, 5): an absorber True; an absorber or the source among its seven True
+    two detectors at +10 x and -10 x, side 21:
+      2 absorbers; 1 deciding merges, 0 at an absorber, 1 with an absorber or the source among the seven, 0 where only light crossed
+    two detectors at +10 x and +10 y, side 21:
+      2 absorbers; 1 deciding merges, 0 at an absorber, 1 with an absorber or the source among the seven, 0 where only light crossed
+    two detectors at +10 z and +6 x +4 z, side 21:
+      2 absorbers; 1 deciding merges, 0 at an absorber, 0 with an absorber or the source among the seven, 1 where only light crossed
+    a full screen, the face z = 20 of side 21, the source at (10, 10, 0):
+      441 absorbers; 399 deciding merges, 399 at an absorber, 399 with an absorber or the source among the seven, 0 where only light crossed
+    sparse absorbers, about one Node-clock in 100 by the old lay's generator, side 21, the source at the
+    centre:
+      93 absorbers; 66 deciding merges, 6 at an absorber, 16 with an absorber or the source among the seven, 50 where only light crossed
+    one pixel in four of the face z = 20, the source at (10, 10, 0):
+      111 absorbers; 85 deciding merges, 69 at an absorber, 79 with an absorber or the source among the seven, 6 where only light crossed
+(p) the draw only at the rounds where a Node-clock's swept area Omega = m_re p_im - m_im p_re crosses a
+    multiple of the key 10^10 W, p = W (a - b) + r, from s_in to s_out (the first text's test), on (b)'s run:
+    light counted: 14333 crossings; chi-square of e's tenths on 9 5.580; D_N 8029 ppm
+      at 1:1 part 0 in 7249 of 14333 (expected 7166), z^2 1.899, below 3.84; the largest |freq - share| over (c)'s five splits 5755 ppm
+      the state's sizes there: part 0 in 7229 of 14333 (expected 7192), z^2 0.728, below 3.84
+    light outside: 14333 crossings; chi-square of e's tenths on 9 8.031; D_N 6869 ppm
+      at 1:1 part 0 in 7137 of 14333 (expected 7166), z^2 0.242, below 3.84; the largest |freq - share| over (c)'s five splits 6017 ppm
+      the state's sizes there: part 0 in 7178 of 14333 (expected 7192), z^2 0.109, below 3.84
+(q) the dependence one Mesh and one round apart, the backward pass's step: e at (x, t) against e at x's
+    neighbour at t + 1, along +x and along all six Spokes; joint tenths on 81, and the same half with its odds:
+    seed 20261030, light counted, along +x: joint tenths 74.281 on 81; same half 42900 of 86184, z^2 1.710, below 3.84
+    seed 20261030, light counted, along all six Spokes: joint tenths 93.450 on 81; same half 258710 of 517104, z^2 0.193, below 3.84
+    seed 20261030, light outside, along +x: joint tenths 61.012 on 81; same half 43204 of 86184, z^2 0.582, below 3.84
+    seed 20261030, light outside, along all six Spokes: joint tenths 87.319 on 81; same half 258884 of 517104, z^2 0.852, below 3.84
+    seed 4, light counted, along +x: joint tenths 87.964 on 81; same half 42784 of 86184, z^2 4.402, 3.84 to 6.63
+    seed 4, light counted, along all six Spokes: joint tenths 89.084 on 81; same half 257680 of 517104, z^2 5.881, 3.84 to 6.63
+    seed 4, light outside, along +x: joint tenths 98.779 on 81; same half 42796 of 86184, z^2 4.066, 3.84 to 6.63
+    seed 4, light outside, along all six Spokes: joint tenths 74.212 on 81; same half 258268 of 517104, z^2 0.623, below 3.84
+(r) the rule's own checks: the edge, e = H to the last part of nonzero size in the parts' own order, on size
+    lists with zeros; each list drawn on an evenly spread grid of pointers, twelve times its total, and at
+    e = 0 and at e = H:
+    sizes [1, 0]: 12 pointers drawn [12, 0], each part its share exactly: True; at e = 0 part 0; at e = H part 0, size 1 (the last part in that order: part 1, size 0)
+    sizes [0, 1]: 12 pointers drawn [0, 12], each part its share exactly: True; at e = 0 part 1; at e = H part 1, size 1 (the last part in that order: part 1, size 1)
+    sizes [3, 2, 0]: 60 pointers drawn [36, 24, 0], each part its share exactly: True; at e = 0 part 0; at e = H part 1, size 2 (the last part in that order: part 2, size 0)
+    sizes [0, 5]: 60 pointers drawn [0, 60], each part its share exactly: True; at e = 0 part 1; at e = H part 1, size 5 (the last part in that order: part 1, size 5)
+    sizes [0, 0, 3]: 36 pointers drawn [0, 0, 36], each part its share exactly: True; at e = 0 part 2; at e = H part 2, size 3 (the last part in that order: part 2, size 3)
+    sizes [2, 0, 2]: 48 pointers drawn [24, 0, 24], each part its share exactly: True; at e = 0 part 0; at e = H part 2, size 2 (the last part in that order: part 2, size 2)
+    sizes [1, 1, 0, 0]: 24 pointers drawn [12, 12, 0, 0], each part its share exactly: True; at e = 0 part 0; at e = H part 1, size 1 (the last part in that order: part 3, size 0)
+    for the record, (b)'s 86400 draws where the refused rank and the parts' own order pick different parts: 1:2 at 57754; 3:7 at 51972; 1:3 at 43368
