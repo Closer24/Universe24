@@ -2,6 +2,8 @@
 
 On the owner's word to David of 2026-10-29, 04:1x UTC (in Hebrew; in translation): "Close every open step. Let it enter the engine if corrections are needed, through the Boss." The ten steps are listed in #2187 comment 6488233005. Each page stands in tools/derivations/open_items/, and its probes stand here, each with its output beside it. Every probe reads stage 7a's act at tensor24-review 298bec5d8, given on the command line as that commit's src; the head's src, where a probe reads it, is engine-5.0's. Nothing here writes into an engine.
 
+The probes of the first rows (steps 1 to 10, the two boards, the course's q4 and q5, the virial, the gear's e1, n1 and n3, board2mass's m1 and m2, born, click and twin) left the tree on the owner's word (main 9067de20d); each stays in git at 6f31d41bb, and its row names it as the record of its page.
+
 | step | page | probes | usage | what it shows |
 | --- | --- | --- | --- | --- |
 | 1, the pressure's sign | DAVID-TENSOR24-THE-PRESSURE.md | ../david_stages/p20_the_pressure.py | `python3 -I p20_the_pressure.py <src>` | the load's source is rho + 3p: the books' own source of the load, -dL/dPhi = 2 v^2 - mu phi^2 = rho + T_ii exactly; light over wide dust 1.987 on 7a's integer act by the force form, 0 by the head's trace |
