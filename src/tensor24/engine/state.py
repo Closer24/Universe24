@@ -1,6 +1,6 @@
 """Clock: what a Node-clock holds: each gear's count now and before, the tooth of the edge between them, its drive's fine tooth, and each train's click tooth.
 Algebra: whole-number arrays a, b, r, r_d and k, and the layout's coefficients and plans, read once at load.
-Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan on the value legs, the clocks' read, the click's passing with its key, the metric's push, term 5's plan on the readings and the momenta, and the plan's terms with a Mesh leg, the gradient vertex, none until the loader lays them.
+Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan on the value legs, the clocks' read, the click's passing with its key, the metric's push, term 5's plan on the stretches and the momenta, and the plan's terms with a Mesh leg, the gradient vertex, none until the loader lays them.
 Clicks: n/a: these hold the board, not its shadow.
 """
 
@@ -71,5 +71,5 @@ class Layout(NamedTuple):
     clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
     stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh
     click: Click  # every train's passing as its pairs' form over a J(b) - b J(a), and its key
-    push: Plan  # term 5, the metric's push: the matter's four-vector squared through the A1 table onto the square's slots, 2T - eta T, as terms on the readings with the momenta in and out added, the unit last
+    push: Plan  # term 5, the metric's push in the books' form, every slot pushed by -dH / d slot of the act's energy H = W v_in v_out / 2 + SUM_Mesh grip Delta^2 / 2 with W = rest + k0 c00: terms on the push's readings (the six stretches per row, the momenta in and out, the unit last), k0 sigma_in sigma_out of every row on the force's path (the matter and the square's 0i and jk rows) onto the 00 slot, every row's two Meshes' stretches squared at -1 onto the ii slot of their axis, nothing onto the jk and 0i slots, no strength; the drive's dial senses on the square's 00 and ii rows takes the half
     mesh: Plan  # the plan's terms with a Mesh leg, the gradient vertex, on the same readings as the plan: the loader lays them (none until the gradient vertex), and the drive alone reads them, the passing never
