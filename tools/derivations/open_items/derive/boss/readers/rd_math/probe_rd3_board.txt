@@ -1,0 +1,45 @@
+RD3. The root dial on the derivers' board (frozen edge_lib / probe_root_generic; den 6, Gamma 1, L_rest 6)
+A. The one-carry rounding (half up) against the odd rounding on standing lays, the 24 per round, 12 rounds
+   standing L = 9 (odd; 4 | L: False): half up: 24 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 10 (even; 4 | L: False): half up: 24 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 11 (odd; 4 | L: False): half up: 24 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 12 (even; 4 | L: True): half up: 3 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 8 (even; 4 | L: True): half up: 3 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 14 (even; 4 | L: False): half up: 24 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 16 (even; 4 | L: True): half up: 3 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 18 (even; 4 | L: False): half up: 24 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 20 (even; 4 | L: True): half up: 3 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   standing L = 24 (even; 4 | L: True): half up: 3 at every one of 12 rounds; odd: 24 at every one of 12 rounds
+   DERIVED D3: one carry is odd under F -> -F iff L is odd; at an even L it fails where a tie F = L/2 mod L occurs.
+   On this board (the pull alone, every grip 6, J = 0) the push is 6 m, and 12 m = L mod 2L has a solution iff 4 | L:
+   so the ties, and the 3 of 24, appear at L = 8, 12, 16, 20, 24 and not at L = 10, 14, 18; with the kick (T_k q_d) or
+   moving grips the push's residues are general and every even L has its tie.
+
+B. The row's total momentum SUM_sites P: the edge (half-open, W dial) against the root dial (odd rounding)
+   standing L = 9: SUM push per row at round 0 all 0? True; rows 12, sites 27
+      the edge (W dial, half-open): SUM over rounds and rows of |SUM_sites P+ - SUM_sites P| = 0 over 40 rounds (exact)
+      the root dial: rounds with a drift 40 of 40; rows that drift 8 of 12; per-row total drift over the run (in teeth of P): [-12, -60, 0, 4, -24, 12, 0, 0, 0, 44, 8, -12]
+      largest one-round row drift 16, the push's own quantum 4 q_F per gear
+   rising from L = 10: SUM push per row at round 0 all 0? True; rows 12, sites 27
+      the edge (W dial, half-open): SUM over rounds and rows of |SUM_sites P+ - SUM_sites P| = 0 over 40 rounds (exact)
+      the root dial: rounds with a drift 40 of 40; rows that drift 8 of 12; per-row total drift over the run (in teeth of P): [60, 12, 0, 40, 60, 4, 0, 0, 0, 76, -28, 8]
+      largest one-round row drift 16, the push's own quantum 4 q_F per gear
+   varying [60, 70], v in [-1, 1]: SUM push per row at round 0 all 0? True; rows 12, sites 27
+      the edge (W dial, half-open): SUM over rounds and rows of |SUM_sites P+ - SUM_sites P| = 0 over 24 rounds (exact)
+      the root dial: rounds with a drift 24 of 24; rows that drift 8 of 12; per-row total drift over the run (in teeth of P): [24, -36, 0, -128, 12, -60, 0, 0, 0, 144, -48, 64]
+      largest one-round row drift 432, the push's own quantum 4 q_F per gear
+   DERIVED D4: SUM_sites P is exact under the built act and the edge (SUM F = 0 enters unrounded) and under the root dial
+   moves by 4 SUM_sites odd(F_i / L_i), the rounding's sum, not 0: an exact book of the board is lost.
+
+C. The provisional quotient (split at 2 D_in) against the final (at 2 D_out): gears where they differ, per round
+   rising from L = 10: gears with q1 != q per round [184, 172, 150, 155, 158, 150, 143, 127, 112, 104, 85, 91, 83, 75, 81, 81, 59, 53, 43, 48, 46, 39, 38, 29]; on the 00 row itself 0 (its dial stands: the cut)
+   falling from L = 46: gears with q1 != q per round [119, 120, 112, 119, 112, 112, 98, 85, 86, 65, 76, 91, 111, 127, 149, 153, 169, 157, 169, 166, 167, 166, 172, 175]; on the 00 row itself 0 (its dial stands: the cut)
+   varying [60, 70]: gears with q1 != q per round [72, 114, 67, 101, 81, 85, 81, 73, 96, 57, 82, 55, 56, 57, 46, 60, 48, 47, 51, 53, 64, 48, 75, 52]; on the 00 row itself 0 (its dial stands: the cut)
+   D2: the run back needs L(a + q1') = L(b), i.e. the 00 row's provisional step to be its actual one; the cut gives it.
+
+D. The clock reaching L = 0: falling by 1 a round from L = 46, 50 rounds asked
+   with a promise that checks L >= 1 first (compares, outside the act): ran 46 rounds, broke at round 46; L on the read rows at the end 0
+   the derivers' own promise_root raises ZeroDivisionError there: it divides the push at L(now) before checking L >= 1
+   without the promise: the act raises ZeroDivisionError (division by zero) at L = 0: the push's carry at the dial 2 L(now) = 0
+   a standing L = -2 (W = 4 > 0, a negative lapse): the act runs 5 rounds, rewound False; the dial 2 D = -8 is negative: Rule3's contract 0 <= r' < d has no meaning there
+

@@ -1,0 +1,6 @@
+RD6. Two definitions of the push's quotient in the two frozen texts
+   L in [1, 40], F in [-200, 200]: ties 720; quotients differ 370 (all at ties); tie-even fails F -> -F 0 times
+   examples (F, L, tie-even, odd): [(-197, 2, -98, -99), (-193, 2, -96, -97), (-189, 2, -94, -95), (-185, 2, -92, -93)]
+   Both are odd under negation, so both hold the 24; they differ at half the ties (F/L = k + 1/2 with k odd). The law's
+   (iv) is 'half away from zero': ROOT.md's. EDGE2 section 3's one-gear numbers (1000 to 1008 permille, 0 misses of 30000)
+   were measured with tie-even and the mirror -s (tie-even convention); probe_rd2 redoes them with (iv) and -1 - s.

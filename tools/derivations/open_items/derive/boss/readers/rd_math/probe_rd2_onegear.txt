@@ -1,0 +1,21 @@
+RD2. The root dial on one gear, re-derived: the run back, the books, L near 0, nature's test
+A. The run back (the hairspring push -100 a, a laid at 10^7, the tooth drawn in the dial), 2000 rounds each
+   standing L = 10: untick(tick s) = s misses 0 of 2000; P+ - P = 4 q_F misses 0 (an identity, D4)
+   rising by 1 a round from 10: untick(tick s) = s misses 0 of 2000; P+ - P = 4 q_F misses 0 (an identity, D4)
+   falling by 1 a round from 2010: untick(tick s) = s misses 0 of 2000; P+ - P = 4 q_F misses 0 (an identity, D4)
+   varying: L drawn in [5, 200] per round (jumps of either sign): untick(tick s) = s misses 0 of 2000; P+ - P = 4 q_F misses 0 (an identity, D4)
+   jumping: L alternating 1 and 1000: untick(tick s) = s misses 0 of 2000; P+ - P = 4 q_F misses 0 (an identity, D4)
+   L = 1 throughout (the dial 2 at both slots): untick(tick s) = s misses 0 of 2000; P+ - P = 4 q_F misses 0 (an identity, D4)
+   with a push that is a drawn function of the now count (f(a) = a * (a mod 7) - 1000):
+      varying L in [2, 50]: untick(tick s) = s misses 0 of 2000; P+ - P = 4 q_F misses 0 (an identity, D4)
+B. L at and below 0: D_in = L(b) + L(a)
+   L(b) = 5, L(a) = -5: D_in = 0: ZeroDivisionError in the act (Rule3 has no carry at a dial 0; no if stops it)
+   L(b) = 5, L(a) = -7: D_in = -2: the act runs, tooth 4 in [-D_out, D_out - 1] = [4, -5]? False; run back exact
+   L = -5 at every slot (W = 25 > 0): D = -10: the act runs, tooth 0 in [-D_out, D_out - 1] = [10, -11]? False; run back exact
+   The W dial at the same slots has W = 25, 49, 25 > 0 and runs; the root dial's domain is c00 > -L_rest,
+   the W dial's c > -rest: the 00 slot's unit has changed (02_derivations.md D7).
+C. Nature's test, redone: the free gear v0 = 10^6, L from 100 to 200 by 1 every 300 rounds; v^2 L^2 against the start, permille
+   round 0: L 100, v 1000000, v^2 W 1000; round 7500: L 125, v 800000, v^2 W 1000; round 15000: L 150, v 666667, v^2 W 1000; round 22500: L 175, v 571429, v^2 W 1000; round 29999: L 200, v 501253, v^2 W 1005
+   (the derivers: 1000, 1008, 1006, 1005, 1000; sqrt(W) v kept within 8 permille: MEASURED, agrees)
+D. Injectivity within a round at L(b) = 7, L(a) = 5, L(a+) = 4 (D_in = 12, D_out = 9): every valid (v, s) with |v| <= 30
+   1464 valid states, collisions 0 (the map (v, s) -> (q, s1) is injective; its inverse is D2's)

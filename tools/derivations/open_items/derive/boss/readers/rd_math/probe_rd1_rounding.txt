@@ -1,0 +1,20 @@
+RD1. The push's rounding at the root L(now)
+A. half_up(-F) = -half_up(F)? L in [1, 12], F in [-60, 60] (ROOT.md's 1452 cases), misses by L's parity
+   1452 cases: misses at even L 148, at odd L 0 (ROOT.md: 148, all ties)
+   L in [1, 60], F in [-3L, 3L]: L with misses: even 30 of 30 ([2, 4, 6, 8, 10, 12]...), odd 0 of 30
+   DERIVED (02_derivations.md D3): one carry is odd iff L is odd; L = 6 k Gamma + c00 has c00's parity.
+B. ROOT.md's 5-carry odd rounding against the 3-carry form, L in [1, 40], F in [-200, 200]
+   differ 0; the 3-carry form fails oddness 0 (of 16040 cases)
+   Both need the sign of F, a state quantity, in the Node-clock every round: today src uses lit() and the
+   sign test at the load alone (load.tables, load.first); the act (step.py) has one carry per gear.
+C. The kick T_k q_d divided at L with the force: the kick alone (force 0), T_k = 2, q_d in [-5, 5]
+   L = 1: kicks wholly dropped 0 of 10 (q_d = 0 left out)
+   L = 2: kicks wholly dropped 0 of 10 (q_d = 0 left out)
+   L = 9: kicks wholly dropped 4 of 10 (q_d = 0 left out)
+   L = 73: kicks wholly dropped 10 of 10 (q_d = 0 left out)
+   L = 301656000000: kicks wholly dropped 10 of 10 (q_d = 0 left out)
+   At L_rest = 6 k Gamma with 6 k^2 near the example's den (k = 50276000, Gamma = 1000): every kick below
+   L/2 ~ 1.5 x 10^11 moves nothing; the drive's whole quanta reach the gear only if T_k is of L's order.
+D. The dropped remainder's size: |F - L q| at most L div 2 per gear-round, against the push's effect on P, 4 q
+   L = 9: the largest drop 4 = L div 2 = 4
+   L = 73: the largest drop 36 = L div 2 = 36

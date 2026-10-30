@@ -1,0 +1,32 @@
+Hostile mathematician, term 5's third text (scratchpad/g2_t5/TERM5_THIRD.md, section 3), item 1 = hypothesis (e).
+Checks: probe_e_math.py -> probe_e_math.txt (node-live's edge form, scratchpad/live, head 39ebc276b, the live venv);
+repro_t5/ holds probe_e.py rerun: out_e.txt equal bit for bit (E_SAME).
+
+VERDICT on term 5, item 1: CLOSED.
+- (e) stated: the push's plan invariant under (sigma_in, sigma_out) -> (-sigma_out, -sigma_in) up to the target's sign.
+- The swap identity on the matter's gears: 0 mismatches of 1,296 (reproduced), and 0 of 1,296 on my lay with the 00 slot
+  rising rest/10 a round (W of the matter rows 1.09e23 -> 2.18e23, 2000 permille over 12 rounds).
+- Cases passing (b), breaking (e): e1 (si^2 alone), e4 (si D_x alone) depart at round back 1 at W doubling; s1, s4
+  and the shipped plan hold 12 of 12 there. The text's four e-cases and four s-cases reproduce.
+- The predicate (e) as coded is the exact condition P(-so, -si, x) = (-1)^t P for plans reading even rows: necessary
+  and sufficient, with (b) a monomial-wise special case.
+
+New, MINOR (none reopens item 1):
+N1. (b) is not load-bearing beside (e): the text's "breaks (b)" cases b1, b2 break (e) too; the plan
+    (si - so)(r0) a(r0) -> 00 breaks (b) (one stride leg, even target), passes the coded (e), and runs back 12 of 12
+    (the metric moved 3.2e7 above its 1.6e7 baseline, the push live); onto 0x it passes (b), breaks (e), departs at 1.
+    Fix: one hypothesis, (e) with its sign, (b) its monomial case; drop "each load-bearing" for (b), or say (e) carries it.
+N2. The coded predicates ignore an odd row's count as a leg; the statement's parenthesis "a count ... even" is wrong
+    for a 0i row's count (the second text had "a 0i row's reading is odd"). With the 0i slots laid non-zero:
+    a(0x) a(r0) -> 00 and a(0x) D_x(r0) -> 00 pass both coded rules and depart at round back 1; a(0x) a(r0) -> 0x
+    holds 12 of 12. The shipped plan reads matter rows only (trains.matter), so it is unaffected. Fix: "a reading of an
+    odd row is odd", and the predicate counts it.
+N3. Statement (a) allows any T_d with r_d in [0, T_d), but the live mirror flips r_d on every row; on an odd row the
+    carry's sign law needs J negated with the tooth KEPT (second text's mirror). Measured, T_d = 7 on the metric's rows
+    (J not a multiple of 7 at 73 of 81 odd gears, so the tooth moves): the even slots alone hold 12 of 12, the odd 0i
+    slots alone depart at round back 1, all ten depart at 1. The drive alone (J = 8, T_d = 5): tooth flipped gives -q at
+    1 of 5 teeth and r_d back at 0 of 5; tooth kept gives 5 of 5 and 5 of 5. Exact as built (T_d = 1, no tooth);
+    false as stated for T_d > 1 on a pushed odd row, which G3's drive (term 13's probe used T_d = 1000) would trigger.
+    Fix: state T_d = 1 for the pushed odd rows, or keep an odd row's r_d in the mirror.
+Fairness note: the text's probe moves the clock by 3e7 counts of 9e22 teeth (3e-16); my lay doubles W over 12 rounds
+and the verdicts are the same.

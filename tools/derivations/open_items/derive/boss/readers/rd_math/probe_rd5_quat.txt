@@ -1,0 +1,12 @@
+RD5. Condition 3: the frame quaternion and the root dial
+A. Re(Phi conj e_mu) is the component mu itself: 300 of 300 (the Hamilton product only reads off a 4-vector's entries);
+   N(Phi) = L^2 holds for 0 of 300 drawn frames (300 have a space leg): the quaternion's own scalar is the trace,
+   the root dial's L is the real part; 'W = the norm' is the pure-time frame alone, as the derivers say.
+B. The derivers' identity M_mu,nu = c_mu c_nu is the symmetric square v v^T of any 4-vector: rank one, every 2 x 2 minor 0.
+   The proposal's lay on the derivers' board: 00 = L^2 with L = L_rest + c00 (L = 9), the ii slots linear (grips 6 at rest, c_ii = 0),
+   0i and jk at 0: the ten slots as a symmetric 4 x 4:
+   diag(81, 6, 6, 6): 2 x 2 minors not 0: 6 of 36: not a frame's square (rank 4).
+   For a frame's square the ii slots would be l_k^2 and the grips squares too: the frame train (ONE_ALGEBRA, OPEN).
+C. The ten slots as the law's W and grips read them: W = rest + c, grips = den Gamma^2 + c_ii, both LINEAR in the slots;
+   the root dial makes 00 alone quadratic: c = 2 L_rest c00 + c00^2 (D7). One count of c00 at L_rest = 6 is 13 teeth;
+   at the calibre (k = 50276000, Gamma = 1000) one count of c00 is 2 L_rest + 1 = 603312000001 teeth, while one count of c_ii stays one grip-count.

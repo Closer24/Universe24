@@ -1,0 +1,21 @@
+Probe E (the mathematician's): hypothesis (e) on the edge form, the clock moving fast, the hypotheses' independence
+1. W of the matter's row 0 at site 0 over 12 rounds under the shipped plan: 109172568665609200800000 -> 218345137331218404545174 (2000 permille): the clock moves
+   the swap identity (sigma_in'', sigma_out'') = (-sigma_out, -sigma_in) on the matter's gears: mismatches 0 of 1296
+   e1  si(r0)^2 alone -> 00: (b) 1, (e) 0, held 0 of 12, departs at round back 1
+   e4  si(r0) D_x(r0) alone -> 0x: (b) 1, (e) 0, held 0 of 12, departs at round back 1
+   s1  si(r0)^2 + so(r0)^2 -> 00: (b) 1, (e) 1, held 12 of 12, departs at round back 0
+   s4  (si + so)(r0) D_x(r0) -> 0x: (b) 1, (e) 1, held 12 of 12, departs at round back 0
+   the shipped plan: held 12 of 12, departs at round back 0
+2. (b) beside (e): a plan that breaks (b) and passes the coded (e), and the coded rules' blind spot (an odd row's count as a leg)
+   (the 0i slots laid in [-1000, 1000], standing; the metric's own motion over 12 rounds with no push, the baseline 'moved': 16279231)
+   (si - so)(r0) a(r0) -> 00: breaks (b) (one stride leg onto an even row), passes (e) (antisymmetric pair): (b) 0, (e) 1, held 12 of 12, departs at round back 0, metric moved 32495830
+   (si - so)(r0) a(r0) -> 0x: passes (b), breaks (e): (b) 1, (e) 0, held 0 of 12, departs at round back 1, metric moved 33878290
+   a(0x) a(r0) -> 00: an odd row's count as a leg onto an even row (both coded rules pass): (b) 1, (e) 1, held 0 of 12, departs at round back 1, metric moved 16700970
+   a(0x) a(r0) -> 0x: the same leg onto an odd row (control): (b) 0, (e) 0, held 12 of 12, departs at round back 0, metric moved 3254821118655203778
+   a(0x) D_x(r0) -> 00: an odd row's count times a difference onto an even row (both coded rules pass): (b) 1, (e) 1, held 0 of 12, departs at round back 1, metric moved 17268414
+3. the statement allows any T_d with r_d within [0, T_d); the live mirror flips r_d on every row. T_d = 7 on the metric's rows, r_d drawn within [0, 7):
+   T_d = 7 on the even slots alone (00, ii, jk): J not a multiple of T_d at 158 of 189 gears in the first round (the tooth moves); held 12 of 12, departs at round back 0
+   T_d = 7 on the odd 0i slots alone: J not a multiple of T_d at 73 of 81 gears in the first round (the tooth moves); held 0 of 12, departs at round back 1
+   T_d = 7 on all ten slots: J not a multiple of T_d at 231 of 270 gears in the first round (the tooth moves); held 0 of 12, departs at round back 1
+   (the second text's mirror kept an odd row's r_d and negated J, which the carry's sign law needs; the live mirror flips every r_d, exact at T_d = 1 as built, where no tooth exists)
+   the drive alone, J = 8, T_d = 5, r_d = 0..4: carry(-J, T_d, T_d - 1 - r_d+) gives the quotient -q at 1 of 5 teeth, and r_d back at 0 of 5; with the tooth kept, carry(-J, T_d, r_d+): the quotient -q at 5 of 5 and r_d back at 5 of 5

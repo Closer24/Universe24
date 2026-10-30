@@ -1,0 +1,18 @@
+RD4. The rest a square: den = 6 k^2
+A. Is 6 den a square? (a witness modulus where 6 den is no square residue)
+   the example universe's den = 15162856759112389: den odd, den mod 3 = 1, 6 den mod 4 = 2, mod 9 = 6: no square (witness mod 4)
+   the den of the hand (law line 110) = 3311818282: den even, den mod 3 = 1, 6 den mod 4 = 0, mod 9 = 6: no square (witness mod 9)
+   the cheap den (law line 110) = 697786: den even, den mod 3 = 1, 6 den mod 4 = 0, mod 9 = 6: no square (witness mod 9)
+   a den = 6 k^2, k = 5 = 150: den even, den mod 3 = 0, 6 den mod 4 = 0, mod 9 = 0: no witness: may be a square
+   a den = 6 k^2, k = 13 = 1014: den even, den mod 3 = 0, 6 den mod 4 = 0, mod 9 = 0: no witness: may be a square
+   So none of the law's three dens runs the root dial; 6 den a square forces 2 | den and 3 | den (6 is squarefree),
+   i.e. den = 6 k^2: a condition typed on den (line 100 forbids one not from a symmetry), and 3 = 3 mod 4 against
+   K-S3's 'den is chosen by its structure, the primes 1 mod 4 and their powers' (line 110).
+B. The lifts of den = 6 k^2: every pair on den's circle is 6 times a pair on k^2's circle (2 and 3 force it)
+   k in [1, 30]: lifts per k: [(1, 0), (2, 0), (3, 0), (4, 0), (5, 2), (6, 0), (7, 0), (8, 0), (9, 0), (10, 2), (11, 0), (12, 0), (13, 2), (14, 0), (15, 2), (16, 0), (17, 2), (18, 0), (19, 0), (20, 2), (21, 0), (22, 0), (23, 0), (24, 0), (25, 4), (26, 2), (27, 0), (28, 0), (29, 2), (30, 2)]
+   every lift divisible by 6 at every k: True; k with no lift at all: [1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 14, 16, 18, 19, 21, 22, 23, 24, 27, 28] (no prime 1 mod 4 in k)
+   K-S3 asks two lifts at least: k needs a prime 1 mod 4 (k = 5: 2 lifts, (90, 120) and (42, 144), both 6 x a lift of 25);
+   the gears' pairs [num, den] then all share the factor 6: the rates' group law runs at den' = k^2 with a dead factor 6.
+C. At the calibre: 6 den near the example's 9.1 x 10^16 needs k near 5 x 10^7; L_rest = 6 k Gamma
+   k = 50276000: den = 15166057056000000 (54 bits), L_rest = 6 k Gamma = 301656000000 at Gamma 1000, W_rest = 90996342336000000000000
+   k's prime factors: [2, 2, 2, 2, 2, 5, 5, 5, 12569]; those 1 mod 4: [5, 5, 5, 12569] (a lift needs one)
