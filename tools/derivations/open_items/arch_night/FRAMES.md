@@ -43,7 +43,7 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   passed, and the cut's price is measured and named; alternatives: the carried dial (a register per gear, resonant),
   the twin (two half-gears per 00 row), the root (refused).
 
-## 3. Term 5, the metric's push: the books' form at dial 2 [FRAME, the Boss's of 19:2x UTC; the fourth text NOT PASSED by the final physicist, PASSED by the final mathematician; the fifth text in writing]
+## 3. Term 5, the metric's push: the books' form at dial 2 [FRAME, the Boss's of 19:2x UTC; the fourth text NOT PASSED by the final physicist, PASSED by the final mathematician; the fifth text (TERM5_FIFTH.md) PASSED by the final physicist on his two items at k0 = Spokes x senses = 12 (boss-derive 9fd820527, readers/t5f_phys/REPORT2.md; at k0 = 1 not gravity); B2b in work, with its price, NOT_CLOSED 30]
 
 - Form (the deriver's derivation from the act's own energy, TERM5_FIFTH.md to follow): H = (1/2) W v_in v_out +
   (1/2) SUM_Mesh grip Delta^2 with W = rest + k0 c00 read into every row but the 00 and grip = grip_rest + ii at
@@ -54,7 +54,7 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   and 0i slots pushed by nothing (nothing reads them). No strength: the factor is 1; the universe's "push" is 1
   (gravity) or 0 (none). The read's factor k0 is 1 as built (the S^2 the fourth text put in the push belongs to the
   00 slot's read); GR's gamma = 1 for light needs k0 = Spokes x senses = 12 (light's h_ii / h_00 144 at 1, 1 at 12,
-  measured 132 and 0.92): Big Pic's and the owner's, built tonight only on the Boss's yes (PLAN B2b).
+  measured 132 and 0.92): built tonight as a frame on the Boss's yes of 19:2x UTC, the owner to confirm, Big Pic's look standing (PLAN B2b, NOT_CLOSED 26).
 - Why this form: the final physicist's two blocking items (the built form adds -eta (v.v); the books open by 588 f
   at every integer strength, 1152 f on the 2K-plan) are both answered by the one derivation from the act's energy,
   with no strength to choose; line 35's "the books fix it" is met. Measured by the deriver on the live act (probe_f):
@@ -63,7 +63,12 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   owner's, NOT_CLOSED 6); free fast matter closes the books to 1133 (tent) and 1041 (bump) permille, the discrete
   pairing now x next being not local in one Mesh (OPEN, NOT_CLOSED 27); the sign is to be read on the well world (the
   clock deepens where matter is, or the finding goes to the owner); gamma on slow matter waits on term 6's spring; the
-  0i block's unit stays OPEN; the second order in u and the 00 wave in a well as before (frame 2).
+  0i block's unit stays OPEN; the second order in u and the 00 wave in a well as before (frame 2). B2b's price (the
+  Boss's decision of 20:4x UTC, NOT_CLOSED 30): the 00 push reads the momenta of the rows on the force's path alone
+  (T_d = 1: the matter and the square's 0i and jk rows), the square's 00 and ii rows left out, since their momenta
+  out read before J5's kick are a pushed row's fictitious stride (the final mathematician's minor 4) and the well
+  world did not run back; this keeps the mirror theorem's hypothesis (d), and the metric's own kinetic share is not
+  paid into the 00 slot (its self-stress, OPEN in G2; its size measured in B2b's probe).
 - The final mathematician PASSED the fourth text with eight minors (t5f_math/HANDBACK_text.txt), folded: the loader
   refuses a second square train by name (item 1; B2), the 24 under the push hold only with the twisted action (item 8;
   frame 1, A2), an odd row's strides swapped and kept under the mirror and a pushed row's strides reading J1's kick
@@ -115,7 +120,7 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 - Choice: the value legs, because it is exactly what COUNT5 derived and nothing is faked; the alternative (J(a+) over
   the whole plan) reads a neighbour's next count: forbidden.
 
-## 6. Term 6, the coupling family (G3's whole-speed part): generic by character, the held train with no Mesh [FRAME; B2; G3's hostile physicist NOT PASSED, g3_phys/03_report.md]
+## 6. Term 6, the coupling family (G3's whole-speed part): generic by character, the held train with no Mesh [FRAME; BUILT/live as B2 c853dee00; both of G3's hostile readers NOT PASSED, g3_phys/REPORT.md and g3_math/REPORT.md; David's hat (G3's eighth text) judged by the architect at 20:3x UTC: NOT TONIGHT, the named next direction, below]
 
 - Form: the held train, found by its character chi_A1 + chi_A2 at part 1, carries its own spring 2 rest as the
   monomial (rest; rho, rho, 1, 1) on each row (the theorem of the turn: K = 2 W turns the hand with its Gaussian
@@ -148,6 +153,17 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   held rows' summed grips within the window or the runner refuses it by name; the click world has push 0. The
   generic rule that would close that ("a row with no grip at rest reads no slot into its Spokes", lit of the rest
   grip in mesh.held) is named, not built tonight.
+- The click books, named (the architect's check, 20:3x UTC, arch_night/hat_check/books.py and books.txt, on node-live
+  f72067cdf's loader and act): the tie (hold f C_yz; x_y, x_z, k_rho, k_rho) is a monomial of FOUR value legs, and
+  term 11's passing, the form over a J(b) - b J(a), sums to 0 over the trains only for monomials of two value legs
+  (COUNT5 M1: a spring gives 0, a vertex between two trains gives each the other's negative). The tie enters no
+  train's passing only because the turning hand's now and before are orthogonal (a . b = 0 under the quarter turn,
+  which kills the held train's part) and its norm exact (which kills the tied train's part, 2 hold f (x_a . x_b)
+  (|k_a|^2 - |k_b|^2)): the room again. Inside it the books are exact (the run test's pair world, B4's: 0 of 30 rounds
+  open; a still taker: 0 of 2,000); past it they open (the same world run past its 30 ticks, the taker swinging out of
+  the room: 149 of 300 rounds open, the held train clicking in 102, |k|^2 in [0, 2]). So the click world's lay stays
+  inside the room for its whole run and its measure counts the held train's clicks, 0 there (PLAN B3; NOT_CLOSED 29);
+  plans.holding's docstring names the limit at writer B's next fold (a docstring line, no code).
 - Test: on the click world, the held hand's quarter turn exact and |k|^2 = 1 at every site over ten tied beats
   (5,000 rounds), the largest count read from outside at 10^9 (no runaway); the tied hand's period by zero crossings
   against 2 hold f / W; a checkerboard seed on a TIED hand at small amplitude bounded past ten beats (its own spring
@@ -168,12 +184,64 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   <= c00 < rest / 2, so worlds with the held hand keep push 0 (and the own factor is the loader's rest, not W: a
   deeper clock's turn lives on the floor's slack); (12) one mass for everything tied (NOT_CLOSED 21); (13) at T_d =
   1 the drive is the identity, q_d = J and r_d = 0 always, so term 7's DERIVED rests on a no-op until B6's dial.
-- Replaced by: G3's next text answering both readers (the physicist's six items, the mathematician's four); the
-  half-speed gear for the spinor tie; the owner's word on items 2 and 3 of each.
+- **David's hat, judged at 20:3x UTC: NOT TONIGHT; the named next direction** (G3's eighth text, toys-5 7791470d1,
+  its probe node/g3_hat.py and g3_hat.txt; #2187 6532279905), against both readers, the night and the laws.
+  - Its form: plans.holding lays V = hat (|k|^2 - R^2)^2 on the held rows in place of the own spring, (hat; a, a, a,
+    a), (2 hat; a, a, b, b) for a < b and (-2 hat R^2; a, a, unit, unit); the push -4 hat (|k|^2 - R^2) k_a, 0 at
+    every whole rest; the hand laid still at (R, 0), now and before alike, the tooth 0; the tie as built at f = rest
+    div (Gamma R^2); "hat" and "held" (R) CHOSEN; the window 2 SUM_6 g_held + 8 hat R^2 < 4 W.
+  - What it would answer, fairly: a minimum in the law (the physicist's item 2; NOT_CLOSED 19), its count R the
+    file's, so decision 40 (g)'s "not from a file" stays the owner's; a still hand weighing 0 exactly, a constant
+    field with no rest frame that term 5's books' form reads nothing from (item 3; NOT_CLOSED 20; probe (d)); no own
+    spring of 2 W, so the held rows could keep their Meshes within the window (item 1; NOT_CLOSED 22); the
+    mathematician's item 2 (the hand answers the tied wave, 1,836 of 2,000 rounds off the unit spring), item 3 (no
+    quadrature, phase, sense or turning tooth left to seed, no tooth at the dial's middle needed) and item 4 (a push
+    across k turns the hand and leaves the tied beat, probe (g)). It leaves the mathematician's item 1 and the
+    physicist's items 4 and 5 as built (the flags by character; one tie per pair, the tied spring 2 hold f R^2 about
+    2 hold rest / Gamma, R cancelling but for the carry's floor).
+  - Why not tonight, three reasons, the first decisive:
+    1. It opens term 11's books. With the hand still, k_a . k_b = R^2, and the tie's four legs give the held train
+       the passing 2 hold f (k_a . k_b)(|x_a|^2 - |x_b|^2), the tied spring's energy change booked on the held train
+       alone (the tied train's part is 0 while |k|^2 stands); the hat's own quartic adds 4 hat (k_a . k_b)(|k_a|^2 -
+       |k_b|^2) wherever the size moves. Measured (books.txt): B4's landed pair world with the hat swapped in (R 100
+       so f = 6 is whole; hat 1, 100 and 10^4): 29 of 30 rounds with the books open, the held train clicking in 29
+       (2,719 |q|) with its |k|^2 exactly 10^4 throughout, where the frame has 0 of 30; a still taker over 2,000
+       rounds: 517, 714 and 1,686 open against the frame's 0; at fine integers (den 100, R 1,000, f 6), the size never
+       moving: 293 of 1,000 open, the held train clicking alone (28,875 |q|), against 0; every run back exact. B4's
+       landed test (the books 0 at every round and site, the held hand clicking nowhere) and B3's central measure
+       would fail; the passing is DERIVED for monomials of two value legs and no lawful form for four is (NOT_CLOSED
+       29). David's probe lays no click (its Click holds no pair), so it could not see this.
+    2. Its integers are not the click world's. f = rest div (Gamma R^2) = 6 den Gamma div R^2 is 0 once R^2 > 6 den
+       Gamma: R at most 244 at the click world's den 1 and Gamma 10^4; the probe's R = 3,125 at its W = 2,000 R^2 is
+       Gamma about 57,000 at den 1, where the loader's f is 0. A fine R needs den raised (den 100 and R 1,000: f = 6
+       whole, the size's answer 0.15 per cent of R at A = 32) and 8 hat R^2 well below W, or the whole hand rings: at
+       R 100 and hat 10^4 (8 hat R^2 = 1.33 W) |k|^2 swung 9,025 to 11,025 though the answer is 0.0015 count. The
+       click world, B4's test world and the probe would all be re-laid: a re-plan, not a commit.
+    3. The night: an unread draft (DRAFTED; its pair not yet read) in place of a frame built and measured, with B2b
+       in work and B3 resting on the exact books; the change would reach a landed test before it could be judged.
+  - It passes the laws on its own: whole factors from the file, the Node-clock's own held rows at the now slot, A1
+    under the 24 and even under the mirror, the run back and the twisted A2 flip measured (probes (h), (i)), nothing
+    in the act. Laid as the ordered outer product of the squares of the held rows and the unit's, (hat w_s w_t; s, s,
+    t, t) over every ordered pair with w = 1 on a held row and -R^2 on the unit, no 2 is typed. What is not closed is
+    its meeting with term 11, not the law.
+  - When it lands (the next build; the form kept here so that nothing is re-derived): plans.holding's own-spring
+    block leaves for that outer product (the constant hat R^4 lands on the unit alone, which no gear reads); f =
+    carry(rest, gamma x held x held, 0); files.UNIVERSE["chosen"] gains "hat" (NONE_BELOW, 0 on the shipped worlds)
+    and "held" (ONE, 1 on the shipped worlds, the unit rest as the key's 1); the seed lays (held, 0) on the held rows,
+    now and before alike, the tooth 0; the grips Mesh-less as built unless the owner chooses the Meshes within the
+    window; its first test the pair world's books under the passing NOT_CLOSED 29 derives.
+  - What closes it, and who: a lawful one-pass passing for monomials of four value legs, so that a visible held hand
+    books its exchange with the tied trains both ways (the click's deriver, COUNT5's, with David); the lay's integers,
+    f whole and R fine together with the size's beat well below the teeth (David); G3's eighth text passing its pair;
+    the owner's word on a potential in the law (NOT_CLOSED 19).
+- Replaced by: G3's next text answering both readers (the physicist's six items, the mathematician's four); the hat,
+  once NOT_CLOSED 29 is derived and the eighth text passes its pair; the half-speed gear for the spinor tie; the
+  owner's word on items 2 and 3 of each.
 - Choice: the Mesh-less held train, because the physicist's mechanism cannot arise without Meshes and the form is
   exact at every site by G3's own theorem, measured SOUND; the character test, because it names no train and reads
-  the kinds; alternatives: K = W (an untested modulation), the tie laid by name in a file (forbidden), (A1) x 2 as
-  the held shape (not told from light by character).
+  the kinds; the own spring over the hat tonight, because the hat opens term 11's books (measured above) where the
+  frame's are exact within the room; alternatives: K = W (an untested modulation), the tie laid by name in a file
+  (forbidden), (A1) x 2 as the held shape (not told from light by character), the hat (next, above).
 
 ## 7. The gradient vertex, light on matter through the Mesh [FRAME; B5]
 

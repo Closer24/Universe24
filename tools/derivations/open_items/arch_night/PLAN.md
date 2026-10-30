@@ -45,10 +45,18 @@ by the loader, so the owner plays with the files in the morning, not the code.
 
 ## The order (dependencies first), with each commit's change, test and probe
 
+State at 20:4x UTC (the architect who took over): pushed on origin/node-live f72067cdf, in order: 0 (f5e6486c8), C1
+(b10d7d008), C2 (6b77872dc), B1 (c967980d0), A1 (d6ec46ff0), C3 (ac3085db4, the hand-per-quantum probe), A1b
+(939fa65a7), B2 (c853dee00), B4 (a9f8a440a), A2 (f72067cdf); a first hostile code reader reads origin/main..f72067cdf
+now. In work: B2b (writer B), then B3, then B5; C the hostile reader's checklist and the five worlds' runs. The load
+test's ceiling is 155 from 20:4x UTC, raised by the Boss for B2b's and B5's tests alone. No B2c: David's hat does not
+replace the own spring tonight (B2c below; FRAMES.md 6).
+
 ### Commit 0 (A, first, the critical path; ~1 h): the merge of origin/main 2bcf315b6 into node-live
 
 DONE at 19:1x UTC: pushed as f5e6486c8 (frame 237, engine 251, load 137). The Boss's decisions: the night's ROOM
-ceilings stand (frame 240, engine 300, load 140, run 300, files 310, decoder 600), each file's room set to its lines
+ceilings stand (frame 240, engine 300, load 140, run 300, files 310, decoder 600; load raised to 155 at 20:4x UTC for
+B2b's and B5's tests alone), each file's room set to its lines
 with no slack at every commit, Sofer reading them before main; the held hand (A1, A2) at part 1 approved; B6 at 01:00
 without the fifth text's dial takes the model's 1152 as the named price; no clicks from the Mesh leg tonight.
 
@@ -189,11 +197,22 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
 - The well world re-laid under the books' form (lay.py rerun with push 1 at dial 2, the notch h re-chosen so that
   the board's mean is held, written with its window, the metric at the first run's mean), the README's numbers
   moved; the live and the example worlds unchanged (push 0).
-- On the Boss's yes only: the clock's read at k0 = Spokes x senses from the star (load.geared's clock factor),
+- The Boss's yes (19:2x UTC), built in this commit as a frame, the owner to confirm: the clock's read at k0 = Spokes x
+  senses from the star (load.geared's clock factor),
   which GR's gamma = 1 for light needs (the deriver: light's h_ii / h_00 is 144 at k0 = 1, measured 132, and 1 at
   k0 = 12, measured 0.92; the dial 2 stands either way). It moves load.geared's one factor, the load test's pin of
-  that factor, and the well world's lay and README (regenerated anyway); nothing in the act. Otherwise k0 stays 1
-  and the read factor is NOT_CLOSED 26.
+  that factor, and the well world's lay and README (regenerated anyway); nothing in the act (NOT_CLOSED 26). The
+  load test pins the clock's factor at Spokes x senses, from the star.
+
+### B2c (the hat in place of the own spring): judged at 20:3x UTC, NOT TONIGHT; writer B goes from B2b to B3
+
+- David's hat (G3's eighth text, toys-5 7791470d1) stays the named next direction (FRAMES.md 6). Not tonight because,
+  with the hand still, the tie's four legs open term 11's books: on B4's own pair world with the hat swapped in, 29 of
+  30 rounds open and the held train clicks in 29 where the frame has 0 (the architect's check,
+  arch_night/hat_check/books.txt; NOT_CLOSED 29), so B4's landed test and B3's books would fail; and f = rest div
+  (Gamma R^2) is 0 once R^2 > 6 den Gamma, so the click world's integers would be re-laid. Nothing changes in B2's
+  code tonight; the one fold for writer B is a docstring line in plans.holding (NOT_CLOSED 29: the tie is a monomial
+  of four value legs, invisible to the passing only while the turn is exact), at his next fold.
 
 ### Commit C1 (C; from node-live's head): schema 1.3
 
@@ -248,9 +267,16 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
   odd whole to twice the one-round key the probe measures (the giver's two-round energy change per round over its
   first beat, divided so that about seven keys pass in a beat: a chosen unit of wind below the quantum, Planck's key
   being NOT_CLOSED 3), written in lay.txt with its window.
+- The books hold only inside the room (NOT_CLOSED 29: the tie is a monomial of four value legs, invisible to the
+  passing only while the held hand's quarter turn is exact; past the room the held train clicks alone and the books
+  open, 149 of 300 rounds on B4's world run past its ticks): so A, the tie and the ticks are chosen so that both tied
+  hands' squares summed at the held hand stay inside the room for the WHOLE run, the energy that moves from the giver
+  to the taker included, and lay.txt writes that bound with its numbers.
 - Measured on the runner's record and ledger (B's scratch measure, the runaway read from outside): the largest count
   over the run (no runaway); the click lines appear; at every round and site the sum of q over the trains is 0 (the
-  pair's books); the taker's course in keys; the held hand's |k|^2 = 1 at every site and round; the tied hands'
+  pair's books); the held train's click lines counted with the others, 0 in every round (a round where it clicks is
+  named with its |k|^2: the room's edge reached); the taker's course in keys; the held hand's |k|^2 = 1 at every site
+  and round; the tied hands'
   envelope constant (inside the room); the run back exact; the 24 (the turned files run alike). examples/README.md
   gains the section with how each number is made and the frame's prices (FRAMES.md 6).
 - Test: the files test loads the fourth folder (the examples' loop already walks examples/*).
