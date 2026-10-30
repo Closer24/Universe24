@@ -159,9 +159,9 @@ The engine is five modules (engine/): step.py, mesh.py, contract.py, kinds.py an
 
 ### The world: the three files
 
-- **Clock:** before the first round, the files say which trains every Node-clock carries (each a name, its kinds among the 24's five, its part and its pinion, which the loader checks equal to den and no act reads), the universe's three integers (den, full_rate and width, from which every tooth and every grip is laid), how many Node-clocks stand on each axis, which gears are set where, and how many rounds the run makes (the setting's key ticks).
-- **Algebra:** whole numbers only; every side, part and integer is at least 1; no fourth file is a world.
-- **Board:** at round 0 every gear stands at 0 except the ones the setting lays. Nothing else is laid: no coupling, strength, particle or mass (decision 35).
+- **Clock:** before the first round, the files say which trains every Node-clock carries (each a name, its kinds among the 24's five, its part and its pinion, which the loader checks equal to den and no act reads), the universe's three integers (den, full_rate and width, from which every tooth and every grip is laid) and, on node-live, the free strengths CHOSEN by name, whole numbers (key, push, notch, hold, tie and mesh), how many Node-clocks stand on each axis, which gears are set where, and how many rounds the run makes (the setting's key ticks).
+- **Algebra:** whole numbers only; every side, part and integer is at least 1, a strength at least 0 and the key odd; no fourth file is a world.
+- **Board:** at round 0 every gear stands at 0 except the ones the setting lays. Nothing else is laid: no coupling, particle or mass is declared (decision 35), and the only strengths are the universe file's own CHOSEN integers, each named by what it is and given its window, so that they can be played with by the files (the night's scope, section 6).
 - **Clicks:** none come from the files; everything the clicks show comes out of the act (a mass is measured only there, decision 37).
 - **Home:** examples/tensor24/ (universe.json, piece.json, setting.json), the one bang; on node-live four more folders of the same three files, tensor24-live, tensor24-well, tensor24-click and tensor24-mesh, each laid by a generator kept in the repo (derive/boss/), with examples/README.md. **Test:** test_the_tensor24_files.py (on node-live its yes walks every example folder). **Status:** BUILT; on node-live the universe's chosen key must be odd, the format refusing an even key by name (484fb8d72).
 
