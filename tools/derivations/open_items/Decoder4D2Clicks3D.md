@@ -474,9 +474,24 @@ and where (1.2), and a click takes a whole train, never one row of it (1.6; 1.11
     and the swept area's walk under the carries is held in the clock's kept teeth (David's c1 and c2). Beside it
     stands Sofer's hold: the final form keeps CK-S1 and The light no bob (line 148), or it is a new rule, the
     owner's;
+  - **what the whole click pushes back into the gears: nothing** (G5; ANIMATE-CLICK, measured on the node's act). In
+    clocks, two trains in mesh push each other every round, and the click is the counter on the taker's side: it
+    counts the whole teeth that have passed through the mesh and keeps the part of a tooth, so a counter that also
+    pushed would move each tooth twice. In algebra, term 6's vertex moves swept area between the two hands it
+    couples and nowhere else, and the click carries exactly that area at the key, its kept tooth born at the half key
+    (the one rule of the remainder, (i)), writing nothing into a, b or r. On a giver and a taker, two-part T1 hands at
+    one Node-clock, key x the clicks + the kept tooth less its birth equals the area moved in every one of 6,000
+    rounds; the clicks run +7, -7, +7, -7, +6 as the area goes over and back; a quantum carries the key times the
+    taker's beat (0.0500 against 0.0500); the run back and all 24 turns hold state for state; with no vertex nothing
+    clicks (The light no bob kept). The mutants fail: a write at the click takes each quantum twice; a tooth born at
+    0 writes a click and its return wherever the area dips below 0; a gear's own click falls in other rounds;
   - **the split click:** the draw over the parts' sizes by a rank count, the run forward's size times the run back's,
     the forward's alone where the back's are alike (decisions 29 and 40 (b)); a full slot refuses after the draw, and
-    the quantum goes back to its giver (term 12; OPEN at G5: the draw's fairness and the doubled node's form).
+    the quantum goes back to its giver (term 12; OPEN at G5: the draw's fairness, the doubled node's form, and what
+    the split click pushes back, the gathering of the twins' areas into the drawn twin, with three candidates named
+    in ANIMATE-CLICK and none derived). The draw's number owes the node a dial: the node holds no round, so it has
+    no beat count c, and on the act the seven Node-clocks' fine teeth span only 11 to 62 in pitch units, so for a
+    sizes' total L of 70 or more only 51 values of d are reached (ANIMATE-CLICK, draw.py).
 
 - **Counts the 24 leave alone (A1):** windings, teeth, a clock's count, the number of quanta laid and taken. A
   turn of the board changes none of them.
@@ -1036,7 +1051,8 @@ engine's own records as the stages bring them.
 - What makes three generations: the split rows a candidate, decided at G5 (the resonant take) and G3 (a held E or T2
   count), with what keeps each row's count apart through a click and where the colours then stand; unsplit, a
   train's three rows are one species' gears (1.6; 3.10 and 3.11.3).
-- The split click's fairness and the doubled node's form (3.3; term 12); the E or T2 held count's operation, the
+- The split click's fairness, the doubled node's form, and the gathering, what a split click pushes back into the
+  twins (3.3; term 12; ANIMATE-CLICK's three candidates); the whole click pushes nothing back (3.3, measured); the E or T2 held count's operation, the
   strengths and the steady count, and which families hang on the held count (3.8.7); the top's own mass and spin against line 326
   (1.6); what carries the proton's momentum beyond the law's three fractions (1.6).
 
