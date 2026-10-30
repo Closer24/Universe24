@@ -1,0 +1,12 @@
+1. The right 48 on Lambda's eight gears against I = right i.
+   right units of the 48 that keep the Gaussian lattice (1, j) Z[zeta_8]: 16 of 48 (the binary dihedral <zeta, j>); the other 32 send it off itself (as the left 32 do, probe_spinor 4)
+   of those 16: signed permutations 16; commuting with I: 8 (the powers of zeta); in the real span of 1 and I (a phase on both Galois halves alike): 4 (+-1, +-i); keeping D: 16 (the normalizer)
+   So the lattice points of U(1)_I among the hand's own turns are +-1, +-i; zeta^odd commutes with I but is not a phase.
+   The fourth text's choice (U(1)_I, 'one state' the I-line, zeta the twist) is consistent with the numbers.
+
+3. The theorem's H2 ('a click through carries with no comparison'): a cap is one carry, the law's own lit.
+   areas [0, 10, 22, 35, 48, 60, 75, 90, 105, 126, 150]; term 11's count, the carry at the key 21: [0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7]
+   the count capped at one quantum, lit(count) = 1 - carry(1, count^2 ... ) (one carry, no compare): [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1]; the keys refused: [0, 0, 0, 0, 1, 1, 2, 3, 4, 5, 6]
+   So a refusal of the second quantum on one hand is written with the carry alone; H2 as written admits it. What forbids
+   it is the declared count (the cap's 1), the owner's line 35 and the declared refusal of probe_act 4: the theorem's
+   dichotomy should read 'a second hand or a declared cap', not 'a second hand or a compare'.

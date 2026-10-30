@@ -1,0 +1,17 @@
+The escape's local pair hand against the modes' overlap (c6_modes.py); G3/2 on eight gears, the free act, W = 10^5, ten rounds.
+1. One spin, two orthogonal spatial modes: the occupant even about the centre (phi at 13), the arriving hand odd (phi at 4, -phi at 22), both on phi's I-line.
+   same internal line, orthogonal modes (nature: allowed, the triplet, the Fermi sea):
+      the local pair hand D over the room, summed where both stand (233 Node-clock-rounds): 23 thousandths (0: the escape's draw has no wind anywhere; the arriving quantum is refused)
+      the modes' overlap over the board, |SUM_x <h_f, h_b>|^2 over SUM |h_f|^2 SUM |h_b|^2, per round: [6, 0, 0, 1, 2, 4, 6, 10, 6, 315] (0: orthogonal modes, which nature fills with two fermions of one spin; 1000: one mode)
+2. One spin, one mode: the arriving hand 2 phi at the same Node-clock (nature: refused).
+   same line, same mode:
+      the local pair hand D over the room, summed where both stand (242 Node-clock-rounds): 1 thousandths (0: the escape's draw has no wind anywhere; the arriving quantum is refused)
+      the modes' overlap over the board, |SUM_x <h_f, h_b>|^2 over SUM |h_f|^2 SUM |h_b|^2, per round: [999, 998, 997, 995, 993, 989, 982, 984, 987, 935] (0: orthogonal modes, which nature fills with two fermions of one spin; 1000: one mode)
+3. The partner's line, one mode: J phi at the same Node-clock (nature: allowed, one up and one down).
+   the partner's line, same mode:
+      the local pair hand D over the room, summed where both stand (242 Node-clock-rounds): 990 thousandths (0: the escape's draw has no wind anywhere; the arriving quantum is refused)
+      the modes' overlap over the board, |SUM_x <h_f, h_b>|^2 over SUM |h_f|^2 SUM |h_b|^2, per round: [1, 0, 0, 1, 3, 4, 8, 10, 5, 160] (0: orthogonal modes, which nature fills with two fermions of one spin; 1000: one mode)
+
+Read: the local D is 0 whenever the two hands share an internal line, whatever their spatial modes; nature's exclusion
+is the overlap of the whole one-particle modes (two same-spin fermions in orthogonal modes stand, overlapping at every
+site: a metal's Fermi sea); so a draw by the local pair hand refuses what nature allows in case 1 and agrees in 2 and 3.
