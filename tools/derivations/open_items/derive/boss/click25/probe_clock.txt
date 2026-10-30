@@ -1,0 +1,43 @@
+<frozen site>:101: RuntimeWarning: Unexpected value in sys.prefix, expected /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/t24b/.venv, got /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/click25/../t24b/.venv
+<frozen site>:101: RuntimeWarning: Unexpected value in sys.exec_prefix, expected /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/t24b/.venv, got /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/click25/../t24b/.venv
+Probe 1: the 24 on a moving clock, the act as built against the half-tooth act (the clock's click)
+
+  Lay: the 00 slot standing at W = 10; rounds compared 8 (built) and 8 (half-tooth); the counts reach 8 and 8 bits
+    the act as built, of the 24 per round:          [24, 24, 24, 24, 24, 24, 24, 24]
+    the half-tooth act, of the 24 per round:        [24, 24, 24, 24, 24, 24, 24, 24]
+    mutant, no shift (the kept tooth read unmoved)      : [24, 24, 24, 24, 24, 24, 24, 24]
+    mutant, the whole change (teeth added on one side)  : [24, 24, 24, 24, 24, 24, 24, 24]
+    a and b alike in both acts at every round: True; u div 2 = r at every round: True
+    half-tooth: mirror twice is the state: True; 8 unticks return the start: True; one mirror about 8 ticks returns the start: True
+    as built:   mirror twice is the state: True; 8 unticks return the start: True; one mirror about 8 ticks returns the start: True
+    mutant mirror (flipped in the before slot's teeth alone) twice is the state: True
+
+  Lay: the 00 slot rising by 1 from W = 10 (an odd change); rounds compared 8 (built) and 8 (half-tooth); the counts reach 9 and 9 bits
+    the act as built, of the 24 per round:          [24, 3, 3, 3, 3, 3, 3, 3]
+    the half-tooth act, of the 24 per round:        [24, 24, 24, 24, 24, 24, 24, 24]
+    mutant, no shift (the kept tooth read unmoved)      : [3, 3, 3, 3, 3, 3, 3, 3]
+    mutant, the whole change (teeth added on one side)  : [3, 3, 3, 3, 3, 3, 3, 3]
+    a and b alike in both acts at every round: False; u div 2 = r at every round: False
+    half-tooth: mirror twice is the state: True; 8 unticks return the start: True; one mirror about 8 ticks returns the start: True
+    as built:   mirror twice is the state: False; 8 unticks return the start: True; one mirror about 8 ticks returns the start: False
+    mutant mirror (flipped in the before slot's teeth alone) twice is the state: False
+
+  Lay: the 00 slot rising by 2 from W = 10; rounds compared 8 (built) and 8 (half-tooth); the counts reach 8 and 8 bits
+    the act as built, of the 24 per round:          [24, 3, 3, 3, 3, 3, 3, 3]
+    the half-tooth act, of the 24 per round:        [24, 24, 24, 24, 24, 24, 24, 24]
+    mutant, no shift (the kept tooth read unmoved)      : [3, 3, 3, 3, 3, 3, 3, 3]
+    mutant, the whole change (teeth added on one side)  : [3, 3, 3, 3, 3, 3, 3, 3]
+    a and b alike in both acts at every round: False; u div 2 = r at every round: False
+    half-tooth: mirror twice is the state: True; 8 unticks return the start: True; one mirror about 8 ticks returns the start: True
+    as built:   mirror twice is the state: False; 8 unticks return the start: True; one mirror about 8 ticks returns the start: False
+    mutant mirror (flipped in the before slot's teeth alone) twice is the state: False
+
+  Lay: the 00 slot rising by 3 from W = 10; rounds compared 8 (built) and 8 (half-tooth); the counts reach 8 and 8 bits
+    the act as built, of the 24 per round:          [24, 3, 3, 3, 3, 3, 3, 3]
+    the half-tooth act, of the 24 per round:        [24, 24, 24, 24, 24, 24, 24, 24]
+    mutant, no shift (the kept tooth read unmoved)      : [3, 3, 3, 3, 3, 3, 3, 3]
+    mutant, the whole change (teeth added on one side)  : [3, 3, 3, 3, 3, 3, 3, 3]
+    a and b alike in both acts at every round: False; u div 2 = r at every round: False
+    half-tooth: mirror twice is the state: True; 8 unticks return the start: True; one mirror about 8 ticks returns the start: True
+    as built:   mirror twice is the state: False; 8 unticks return the start: True; one mirror about 8 ticks returns the start: False
+    mutant mirror (flipped in the before slot's teeth alone) twice is the state: False

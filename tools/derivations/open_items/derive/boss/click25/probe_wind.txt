@@ -1,0 +1,16 @@
+Probe 4: two clocks connecting: the wind against the area, on Animate's world (term 11's probe2 helpers)
+  the giver's wind at the lay D_L = 5000250000 counts^2; W D_L + W D_M moves off its start by at most 264 millionths over 6000 rounds (Rule3's turn; the vertex's wind held once in each hand, Euler)
+  the works' books, tau_D,L + tau_D,M = -(S(t, t+1) - S(t-1, t)) with S the meshing's own wind: 0 misses of 6000 (an identity: a check of the code)
+  the areas' books, tau_L + tau_M = 0: 0 misses of 6000
+  the wind's key, a seventh of W D_L at the lay made odd: 71432142857142857142857142857; |W dD_M - tau_D,M| at most 2696 millionths of a key in a round (Rule3's turn)
+
+  The wind's click (key 71432142857142857142857142857): the giver's count -6, the taker's 6; the pair's books miss in 46 rounds of 6000; the taker's count ranges 0..7
+    with the meshing's wind booked: key x (giver + taker) + d teeth = -dS; -dS at the end = -2 thousandths of a key
+  The area's click (key 714285714285714285714285714285): the giver's count -6, the taker's 6; the pair's books miss in 0 rounds of 6000; the taker's count ranges 0..7
+    wind: the taker holds a winding in 4924 rounds of 6000; the clocks connect (0 -> not 0) 3 times
+    area: the taker holds a winding in 4916 rounds of 6000; the clocks connect (0 -> not 0) 3 times
+
+  The wind on hands the area cannot count:
+    the giver on a line, the taker at rest: the wind's click takes 7 windings at most (count 6, misses 68); the area moved is not 0 in 0 rounds, the taker's area click count 0
+
+  the run back of the wind's click tooth, one round: the mirrored carry returns the birth True and the quotient True (the lemma; a check of the code)

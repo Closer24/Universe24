@@ -1,0 +1,29 @@
+Probe 2: the drift of the forward world on a rising clock, the act as built against the half-tooth act
+
+  the act as built, rising by 1 from W = 10: the change of S since the lay, every 10 rounds, the 14 moving rows summed, and t1's three rows:
+    round   0: the 14 together     +0   t1 [0, 0, 0]   0i [0, 0, 0]   |S - S0| at most 0
+    round  10: the 14 together   -189   t1 [-14, -13, -12]   0i [-14, -10, -13]   |S - S0| at most 15
+    round  20: the 14 together   -273   t1 [-20, -19, -17]   0i [-18, -19, -19]   |S - S0| at most 23
+    round  30: the 14 together   -336   t1 [-26, -23, -22]   0i [-23, -23, -24]   |S - S0| at most 27
+    round  40: the 14 together   -371   t1 [-28, -24, -26]   0i [-29, -26, -27]   |S - S0| at most 29
+
+  the half-tooth act, rising by 1 from W = 10: the change of S since the lay, every 10 rounds, the 14 moving rows summed, and t1's three rows:
+    round   0: the 14 together     +0   t1 [0, 0, 0]   0i [0, 0, 0]   |S - S0| at most 0
+    round  10: the 14 together    -62   t1 [-6, -4, -4]   0i [-4, -5, -5]   |S - S0| at most 7
+    round  20: the 14 together    -63   t1 [-5, -3, -5]   0i [-6, -6, -3]   |S - S0| at most 6
+    round  30: the 14 together    -56   t1 [-9, -4, -2]   0i [-4, -3, -3]   |S - S0| at most 9
+    round  40: the 14 together    -62   t1 [-5, -5, -3]   0i [-5, -4, -4]   |S - S0| at most 6
+
+  the act as built, standing at W = 10 (the control): the change of S since the lay, every 10 rounds, the 14 moving rows summed, and t1's three rows:
+    round   0: the 14 together     +0   t1 [0, 0, 0]   0i [0, 0, 0]   |S - S0| at most 0
+    round  10: the 14 together    -77   t1 [-6, -6, -5]   0i [-6, -4, -4]   |S - S0| at most 8
+    round  20: the 14 together    -76   t1 [-9, -4, -4]   0i [-5, -7, -5]   |S - S0| at most 9
+    round  30: the 14 together    -80   t1 [-10, -4, -2]   0i [-5, -4, -9]   |S - S0| at most 11
+    round  40: the 14 together    -81   t1 [-8, -6, -6]   0i [-5, -5, -4]   |S - S0| at most 8
+
+  the row-sum books under the half-tooth act, W_t dS = R_read - R_next, over 18 rows x 40 rounds: 0 misses; the clock's clicks summed over all gears and rounds: 9720 (the clock rose 40 teeth at 486 gears: 19440 half-teeth, 9720 whole)
+
+  The falling clock: the first round whose promise breaks (None: it held through the run)
+    falling by 1 from W = 40: as built breaks before round 1; half-tooth breaks before round 0; at the lay the carried tooth falls below 0 at 178 gears and at or past 2 W at 0
+    falling by 2 from W = 40: as built breaks before round 1; half-tooth breaks before round 0; at the lay the carried tooth falls below 0 at 178 gears and at or past 2 W at 0
+    falling by 1 from W = 40, teeth drawn up to 30: as built breaks before round 1; half-tooth breaks before round 0; at the lay the carried tooth falls below 0 at 118 gears and at or past 2 W at 0

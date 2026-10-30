@@ -1,0 +1,7 @@
+The example world (examples/tensor24): the act as built through the runner, and the edge act beside it
+   The runner's record: rounds 10, exact 1, digest cb361775385e0f2a5c652ebf56447a76d730ebd738cef0c616be436fc90c6cef; ledger lines 1280.
+   The act as built, stepped here 10 rounds: digest cb361775385e0f2a5c652ebf56447a76d730ebd738cef0c616be436fc90c6cef (the same).
+   The teeth at rest: 90977140554674334000000 (77 bits); the metric family's counts all 0: True.
+   The edge act, t = 4 r + 2 - D, the built lay's tooth 0 read on the edge: digest cf711d503b9aeafd52e44f2a813c80c5c348c988b1bd682acab56e4fd4229c6f; the ledger's 1280 count lines equal the runner's in 1280; a and b at the end equal the act as built's: True; the run back exact: 1; the counts reach 78 bits (the law's 128).
+   The edge act, t = 0, the edge's own birth at the middle: digest 59148d539ee70711ed01c02798ae8ac7b263b0bdddf2347928faf13a829d493a; the ledger's 1280 count lines equal the runner's in 1280; a and b at the end equal the act as built's: True; the run back exact: 1; the counts reach 77 bits (the law's 128).
+   The record writes no tooth: the end's digest alone changes with the tooth's form; the count lines read a.

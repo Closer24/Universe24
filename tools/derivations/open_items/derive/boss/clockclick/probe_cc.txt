@@ -1,0 +1,160 @@
+The clock click: the owner's idea measured on the engine's act, in whole numbers (a cube of side 3, five trains,
+18 rows x 27 sites = 486 gears; rest teeth 6, rest grip 1; J = 0, T_d = 1; the teeth drawn in [0, 5], the edge's
+in [-5, 5]; the act as built's turn flips a tooth in the teeth that kept it, the centred and edge forms negate it)
+
+6. Small whole-number facts the forms rest on
+   Form 2, W(b) = 10 to W(a) = 11: f(W(b) - 1 - r) = W(a) - 1 - f(r) misses at 10 of 10 teeth (f(r) = r W(a) div W(b))
+   Form 3 at the 00 row (rest 6, a = 10, b in [-5, 15]): 27 sums U = W(b)(a - b) + r reached from two or more (b, r); U = 15 from [(-5, 0), (9, 0), (10, 15)]
+   Form 1 is the act: carry(n, W, r) = carry(n, W, r mod W) + (r div W, 0): 0 misses over W in [1, 14], r in [0, 59], n in [-40, 40]
+1. The 24 on moving clocks: tick^n(turned s) = turned(tick^n s), of the 24 turns, rounds 1..16; and over the
+   21 sign-flipping turns the most gears whose now slot differs and the largest |delta a| at rounds 2, 8, 16
+
+   Lay standing at W = 10: W at round 0 from 10 to 10
+     built  the act as built: 24 at every one of the 16 rounds; 9 bits
+     form1  Form 1, the literal click (the act, the promise dropped, the shed notches booked): 24 at every one of the 16 rounds; 9 bits
+     form2  Form 2, the fraction carried (the residue booked): 24 at every one of the 16 rounds; 9 bits
+     form3  Form 3, the momentum U = W(b) v + r re-split at W(a): 24 at every one of the 16 rounds; 9 bits
+     edge   the edge (the 00 row's self-read cut): 24 at every one of the 16 rounds; 9 bits
+     first  the order: the 00 slot's click first on its own dial, the others on the edge with W(a+): 24 at every one of the 16 rounds; 9 bits
+     firstb the order, other reading: the 00 row by the act as built, the others on the edge with W(a+): 24 at every one of the 16 rounds; 9 bits
+
+   Lay rising by 1 a round from W = 10: W at round 0 from 10 to 10
+     built  the act as built: [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 9 bits; departing: round 2: 28 gears, |delta a| <= 1, round 8: 215 gears, |delta a| <= 4, round 16: 216 gears, |delta a| <= 12
+     form1  Form 1, the literal click (the act, the promise dropped, the shed notches booked): [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 9 bits; departing: round 2: 28 gears, |delta a| <= 1, round 8: 215 gears, |delta a| <= 4, round 16: 216 gears, |delta a| <= 12
+     form2  Form 2, the fraction carried (the residue booked): 3 at every one of the 16 rounds; 9 bits; departing: round 2: 28 gears, |delta a| <= 1, round 8: 215 gears, |delta a| <= 4, round 16: 216 gears, |delta a| <= 12; lines booked at 5650 gear-rounds
+     form3  Form 3, the momentum U = W(b) v + r re-split at W(a): 24 at every one of the 16 rounds; 9 bits
+     edge   the edge (the 00 row's self-read cut): 24 at every one of the 16 rounds; 8 bits
+     first  the order: the 00 slot's click first on its own dial, the others on the edge with W(a+): 24 at every one of the 16 rounds; 8 bits
+     firstb the order, other reading: the 00 row by the act as built, the others on the edge with W(a+): 24 at every one of the 16 rounds; 8 bits
+
+   Lay rising by 2 a round from W = 11 (W odd, Form 4's lay): W at round 0 from 11 to 11
+     built  the act as built: [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 9 bits; departing: round 2: 34 gears, |delta a| <= 1, round 8: 216 gears, |delta a| <= 6, round 16: 216 gears, |delta a| <= 16
+     form1  Form 1, the literal click (the act, the promise dropped, the shed notches booked): [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 9 bits; departing: round 2: 34 gears, |delta a| <= 1, round 8: 216 gears, |delta a| <= 6, round 16: 216 gears, |delta a| <= 16
+     form2  Form 2, the fraction carried (the residue booked): 3 at every one of the 16 rounds; 9 bits; departing: round 2: 19 gears, |delta a| <= 1, round 8: 211 gears, |delta a| <= 4, round 16: 216 gears, |delta a| <= 10; lines booked at 5801 gear-rounds
+     form3  Form 3, the momentum U = W(b) v + r re-split at W(a): [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 8 bits; departing: round 2: 24 gears, |delta a| <= 1, round 8: 212 gears, |delta a| <= 4, round 16: 216 gears, |delta a| <= 8
+     form4  Form 4 (withdrawn), the centred odd tooth with the click booked: 24 at every one of the 16 rounds; 9 bits
+     edge   the edge (the 00 row's self-read cut): 24 at every one of the 16 rounds; 8 bits
+     first  the order: the 00 slot's click first on its own dial, the others on the edge with W(a+): 24 at every one of the 16 rounds; 8 bits
+     firstb the order, other reading: the 00 row by the act as built, the others on the edge with W(a+): 24 at every one of the 16 rounds; 8 bits
+
+   Lay per site: the 00 slot in [20, 24], its velocity in [-1, 1] (W rising at some sites, falling at others): W at round 0 from 26 to 30
+     built  the act as built: 24 at every one of the 1 rounds; its promise breaks before round 2; 7 bits
+     form1  Form 1, the literal click (the act, the promise dropped, the shed notches booked): [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 9 bits; departing: round 2: 7 gears, |delta a| <= 1, round 8: 87 gears, |delta a| <= 2, round 16: 176 gears, |delta a| <= 4; lines booked at 85 gear-rounds
+     form2  Form 2, the fraction carried (the residue booked): 3 at every one of the 16 rounds; 9 bits; departing: round 2: 5 gears, |delta a| <= 1, round 8: 112 gears, |delta a| <= 2, round 16: 209 gears, |delta a| <= 5; lines booked at 3351 gear-rounds
+     form3  Form 3, the momentum U = W(b) v + r re-split at W(a): [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 9 bits; departing: round 2: 8 gears, |delta a| <= 1, round 8: 122 gears, |delta a| <= 3, round 16: 202 gears, |delta a| <= 6
+     edge   the edge (the 00 row's self-read cut): 24 at every one of the 16 rounds; 9 bits
+     first  the order: the 00 slot's click first on its own dial, the others on the edge with W(a+): 24 at every one of the 16 rounds; 9 bits; lines booked at 4 gear-rounds
+     firstb the order, other reading: the 00 row by the act as built, the others on the edge with W(a+): 24 at every one of the 3 rounds; its promise breaks before round 4; 8 bits
+
+   Lay falling by 1 a round from W = 46: W at round 0 from 46 to 46
+     built  the act as built: 24 at every one of the 1 rounds; its promise breaks before round 2; 7 bits
+     form1  Form 1, the literal click (the act, the promise dropped, the shed notches booked): [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 9 bits; departing: round 2: 5 gears, |delta a| <= 1, round 8: 137 gears, |delta a| <= 2, round 16: 216 gears, |delta a| <= 5; lines booked at 136 gear-rounds
+     form2  Form 2, the fraction carried (the residue booked): 3 at every one of the 16 rounds; 9 bits; departing: round 2: 5 gears, |delta a| <= 1, round 8: 134 gears, |delta a| <= 2, round 16: 213 gears, |delta a| <= 5; lines booked at 5867 gear-rounds
+     form3  Form 3, the momentum U = W(b) v + r re-split at W(a): [24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]; 10 bits; departing: round 2: 16 gears, |delta a| <= 1, round 8: 208 gears, |delta a| <= 3, round 16: 216 gears, |delta a| <= 15
+     edge   the edge (the 00 row's self-read cut): 24 at every one of the 16 rounds; 10 bits
+     first  the order: the 00 slot's click first on its own dial, the others on the edge with W(a+): 24 at every one of the 16 rounds; 10 bits
+     firstb the order, other reading: the 00 row by the act as built, the others on the edge with W(a+): 24 at every one of the 16 rounds; 10 bits
+
+2. The forward drift over 40 rounds: the 14 free rows' S = SUM over the sites of (a - b), S_40 - S_0: their sum,
+   how many fell and rose, the largest |S_t - S_0| over rows and rounds; and each form's momentum books (misses)
+
+   Lay rising by 1 a round from W = 10:
+     built : sum  -371, 14 fell and 0 rose, largest |S_t - S_0| 29; 10 bits; books W_t dS = R_t - R_t+1 + SUM push: 0 misses; rows [-29, -25, -28, -24, -26, -28, -26, -24, -29, -26, -27, -26, -26, -27]
+     form1 : sum  -371, 14 fell and 0 rose, largest |S_t - S_0| 29; 10 bits; books W_t dS = R_t - R_t+1 + SUM push: 0 misses
+     form2 : sum  -371, 14 fell and 0 rose, largest |S_t - S_0| 29; 10 bits; books none closed (the residue leaves the state): 0 misses
+     form3 : sum   -67, 8 fell and 6 rose, largest |S_t - S_0| 51; 10 bits; books U_t+1 - U_t = SUM push: 0 misses; rows [4, -5, -6, -47, 5, -5, 8, -1, 6, 11, -9, -15, 23, -36]
+     edge  : sum   +88, 5 fell and 9 rose, largest |S_t - S_0| 338; 9 bits; books P_t+1 - P_t = 4 SUM push: 0 misses; rows [61, -14, 12, -334, 86, 21, 86, 25, 99, 138, -45, -44, 232, -235]
+     first : sum   +88, 5 fell and 9 rose, largest |S_t - S_0| 338; 9 bits; books P_t+1 - P_t = 4 SUM push on the 17 edge rows; the 00 row's P grows by 4 dW SUM v: 0 misses; rows [61, -14, 12, -334, 86, 21, 86, 25, 99, 138, -45, -44, 232, -235]
+     firstb: sum   +88, 5 fell and 9 rose, largest |S_t - S_0| 338; 9 bits; books as first: 0 misses
+
+   Lay standing at W = 10:
+     built : sum   -81, 14 fell and 0 rose, largest |S_t - S_0| 11; 10 bits; books W_t dS = R_t - R_t+1 + SUM push: 0 misses; rows [-7, -6, -8, -6, -6, -7, -4, -5, -5, -5, -4, -7, -6, -5]
+     form1 : sum   -81, 14 fell and 0 rose, largest |S_t - S_0| 11; 10 bits; books W_t dS = R_t - R_t+1 + SUM push: 0 misses
+     form2 : sum   -81, 14 fell and 0 rose, largest |S_t - S_0| 11; 10 bits; books none closed (the residue leaves the state): 0 misses
+     form3 : sum   -81, 14 fell and 0 rose, largest |S_t - S_0| 11; 10 bits; books U_t+1 - U_t = SUM push: 0 misses; rows [-7, -6, -8, -6, -6, -7, -4, -5, -5, -5, -4, -7, -6, -5]
+     edge  : sum    -5, 6 fell and 5 rose, largest |S_t - S_0| 5; 10 bits; books P_t+1 - P_t = 4 SUM push: 0 misses; rows [-1, -3, 1, 1, 1, 2, -2, -2, 0, 2, -1, -3, 0, 0]
+     first : sum    -5, 6 fell and 5 rose, largest |S_t - S_0| 5; 10 bits; books P_t+1 - P_t = 4 SUM push on the 17 edge rows; the 00 row's P grows by 4 dW SUM v: 0 misses; rows [-1, -3, 1, 1, 1, 2, -2, -2, 0, 2, -1, -3, 0, 0]
+     firstb: sum    -5, 6 fell and 5 rose, largest |S_t - S_0| 5; 10 bits; books as first: 0 misses
+
+   Lay rising by 2 a round from W = 11 (W odd, Form 4's lay):
+     built : sum  -470, 14 fell and 0 rose, largest |S_t - S_0| 37; 10 bits; books W_t dS = R_t - R_t+1 + SUM push: 0 misses; rows [-33, -35, -34, -32, -31, -34, -34, -33, -32, -35, -36, -37, -32, -32]
+     form1 : sum  -470, 14 fell and 0 rose, largest |S_t - S_0| 37; 10 bits; books W_t dS = R_t - R_t+1 + SUM push: 0 misses
+     form2 : sum  -288, 14 fell and 0 rose, largest |S_t - S_0| 24; 10 bits; books none closed (the residue leaves the state): 0 misses
+     form3 : sum   -78, 6 fell and 8 rose, largest |S_t - S_0| 232; 9 bits; books U_t+1 - U_t = SUM push: 0 misses; rows [26, -16, -2, -229, 48, 1, 48, 6, 54, 85, -40, -37, 141, -163]
+     form4 : sum   +17, 2 fell and 11 rose, largest |S_t - S_0| 7; 10 bits; books W_t dS = C_t - C_t+1 + SUM push: 0 misses
+     edge  : sum   +83, 5 fell and 9 rose, largest |S_t - S_0| 374; 8 bits; books P_t+1 - P_t = 4 SUM push: 0 misses; rows [63, -14, 14, -374, 94, 21, 93, 25, 106, 157, -50, -51, 255, -256]
+     first : sum   +83, 5 fell and 9 rose, largest |S_t - S_0| 374; 8 bits; books P_t+1 - P_t = 4 SUM push on the 17 edge rows; the 00 row's P grows by 4 dW SUM v: 0 misses; rows [63, -14, 14, -374, 94, 21, 93, 25, 106, 157, -50, -51, 255, -256]
+     firstb: sum   +83, 5 fell and 9 rose, largest |S_t - S_0| 374; 8 bits; books as first: 0 misses
+
+   Lay standing at W = 11 (Form 4's control):
+     built : sum   -89, 14 fell and 0 rose, largest |S_t - S_0| 11; 10 bits; books W_t dS = R_t - R_t+1 + SUM push: 0 misses; rows [-8, -3, -9, -7, -4, -10, -5, -6, -4, -8, -5, -7, -6, -7]
+     form1 : sum   -89, 14 fell and 0 rose, largest |S_t - S_0| 11; 10 bits; books W_t dS = R_t - R_t+1 + SUM push: 0 misses
+     form2 : sum   -89, 14 fell and 0 rose, largest |S_t - S_0| 11; 10 bits; books none closed (the residue leaves the state): 0 misses
+     form3 : sum   -89, 14 fell and 0 rose, largest |S_t - S_0| 11; 10 bits; books U_t+1 - U_t = SUM push: 0 misses; rows [-8, -3, -9, -7, -4, -10, -5, -6, -4, -8, -5, -7, -6, -7]
+     form4 : sum   +17, 2 fell and 10 rose, largest |S_t - S_0| 5; 10 bits; books W_t dS = C_t - C_t+1 + SUM push: 0 misses
+     edge  : sum    +4, 3 fell and 9 rose, largest |S_t - S_0| 4; 10 bits; books P_t+1 - P_t = 4 SUM push: 0 misses; rows [1, -3, 0, 1, 2, -3, 1, 2, 0, -1, 1, 1, 1, 1]
+     first : sum    +4, 3 fell and 9 rose, largest |S_t - S_0| 4; 10 bits; books P_t+1 - P_t = 4 SUM push on the 17 edge rows; the 00 row's P grows by 4 dW SUM v: 0 misses; rows [1, -3, 0, 1, 2, -3, 1, 2, 0, -1, 1, 1, 1, 1]
+     firstb: sum    +4, 3 fell and 9 rose, largest |S_t - S_0| 4; 10 bits; books as first: 0 misses
+
+3. The mirror twice and the run back over 40 rounds: gear-states where mirror(mirror s) differs from s;
+   untick(tick s) = s per round with the form's line and without it; the whole rewind to the start; the lines
+
+   Lay rising by 1 a round from W = 10:
+     built : 40 rounds; mirror twice differs at 19926 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     form1 : 40 rounds; mirror twice differs at 19926 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     form2 : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 0 without; rewound to the start: True; lines at 14509 gear-rounds, |counts| summing to 214309
+     form3 : 40 rounds; mirror twice differs at 486 of 19926; untick(tick s) = s in 39 of 40 with the line, 39 without; rewound to the start: False; lines at 0 gear-rounds, |counts| summing to 0
+     edge  : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     first : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     firstb: 40 rounds; mirror twice differs at 1107 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+
+   Lay falling by 1 a round from W = 46:
+     built : 1 rounds (promise); mirror twice differs at 972 of 972; untick(tick s) = s in 1 of 1 with the line, 1 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     form1 : 40 rounds; mirror twice differs at 19926 of 19926; untick(tick s) = s in 40 of 40 with the line, 1 without; rewound to the start: True; lines at 690 gear-rounds, |counts| summing to 690
+     form2 : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 0 without; rewound to the start: True; lines at 14344 gear-rounds, |counts| summing to 192428
+     form3 : 40 rounds; mirror twice differs at 19926 of 19926; untick(tick s) = s in 0 of 40 with the line, 0 without; rewound to the start: False; lines at 0 gear-rounds, |counts| summing to 0
+     edge  : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     first : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     firstb: 40 rounds; mirror twice differs at 1107 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+
+   Lay per site: the 00 slot in [20, 24], its velocity in [-1, 1] (W rising at some sites, falling at others):
+     built : 1 rounds (promise); mirror twice differs at 540 of 972; untick(tick s) = s in 1 of 1 with the line, 1 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     form1 : 40 rounds; mirror twice differs at 9036 of 19926; untick(tick s) = s in 40 of 40 with the line, 3 without; rewound to the start: True; lines at 144 gear-rounds, |counts| summing to 144
+     form2 : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 0 without; rewound to the start: True; lines at 8460 gear-rounds, |counts| summing to 98392
+     form3 : 40 rounds; mirror twice differs at 11610 of 19926; untick(tick s) = s in 0 of 40 with the line, 0 without; rewound to the start: False; lines at 0 gear-rounds, |counts| summing to 0
+     edge  : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 40 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+     first : 40 rounds; mirror twice differs at 0 of 19926; untick(tick s) = s in 40 of 40 with the line, 33 without; rewound to the start: True; lines at 7 gear-rounds, |counts| summing to 7
+     firstb: 3 rounds (promise); mirror twice differs at 55 of 1944; untick(tick s) = s in 3 of 3 with the line, 3 without; rewound to the start: True; lines at 0 gear-rounds, |counts| summing to 0
+
+   Lay rising by 2 a round from W = 11, Form 4 (withdrawn): 12 rounds; mirror twice differs at 0; untick(tick s) = s in 12 of 12 with the line, 12 without; rewound: True; clicks per round [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+   Lay falling by 2 a round from W = 41, Form 4 (withdrawn): 12 rounds; mirror twice differs at 0; untick(tick s) = s in 12 of 12 with the line, 1 without; rewound: True; clicks per round [0, 23, 26, 23, 19, 27, 25, 27, 35, 33, 31, 33]
+
+4. The order of the round, the 00 slot's click first: a lay where the 00 slot falls past its own tooth
+   (the 00 slot per site in [8, 11], its velocity in [-1, 0], its tooth drawn in [-24, 24] on the edge forms)
+     edge   the edge (the 00 row's self-read cut):
+            10 rounds, W_00's least by round [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6], 9 bits
+            the 24: 24 at every one of the 10 rounds; mirror twice differs at 0; untick(tick s) = s in 10 of 10 with the line, 10 without; rewound: True
+            the 00 slot's clicks per round (gears, sum |count|): [(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]
+     first  the order: the 00 slot's click first on its own dial, the others on the edge with W(a+):
+            10 rounds, W_00's least by round [14, 14, 13, 12, 12, 11, 10, 10, 9, 9, 9], 9 bits
+            the 24: 24 at every one of the 10 rounds; mirror twice differs at 0; untick(tick s) = s in 10 of 10 with the line, 5 without; rewound: True
+            the 00 slot's clicks per round (gears, sum |count|): [(0, 0), (2, 2), (4, 4), (0, 0), (0, 0), (0, 0), (1, 1), (0, 0), (2, 2), (2, 2)]
+            round 2: at sites [1, 19] the 00 slot's tooth sheds [1, 1] whole counts
+     firstb the order, other reading: the 00 row by the act as built, the others on the edge with W(a+):
+            1 rounds (its promise breaks there), W_00's least by round [14, 13], 7 bits
+            the 24: 24 at every one of the 1 rounds; mirror twice differs at 37; untick(tick s) = s in 1 of 1 with the line, 1 without; rewound: True
+            the 00 slot's clicks per round (gears, sum |count|): [(0, 0)]
+
+5. What leaves on the edge: the velocity's whole counts re-split at the growing dial (the redshift) with P kept;
+   rising by 1 from W = 10, 40 rounds, the t1 x row and the a1 row: S_t at rounds 0, 10, 20, 30, 40, D_t, and
+   2 D_t S_t + T_t (= P_t, kept up to 4 SUM push = 0)
+     edge:
+       t1 x: round 0: S -15, D 19, P -607; round 10: S -10, D 39, P -607; round 20: S -4, D 59, P -607; round 30: S -5, D 79, P -607; round 40: S -3, D 99, P -607
+       a1: round 0: S -72, D 19, P -2743; round 10: S -35, D 39, P -2743; round 20: S -23, D 59, P -2743; round 30: S -18, D 79, P -2743; round 40: S -11, D 99, P -2743
+     first:
+       t1 x: round 0: S -15, D 19, P -607; round 10: S -10, D 39, P -607; round 20: S -4, D 59, P -607; round 30: S -5, D 79, P -607; round 40: S -3, D 99, P -607
+       a1: round 0: S -72, D 19, P -2743; round 10: S -35, D 39, P -2743; round 20: S -23, D 59, P -2743; round 30: S -18, D 79, P -2743; round 40: S -11, D 99, P -2743
+     the act as built, P = W S + R:
+       t1 x: round 0: S -15, W 10, P -101; round 10: S -29, W 20, P -365; round 20: S -35, W 30, P -704; round 30: S -41, W 40, P -1091; round 40: S -43, W 50, P -1509
+       a1: round 0: S -72, W 10, P -656; round 10: S -87, W 20, P -1480; round 20: S -92, W 30, P -2374; round 30: S -96, W 40, P -3314; round 40: S -101, W 50, P -4286

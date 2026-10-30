@@ -1,0 +1,12 @@
+Probe 3: the 48 on a moving clock, the click's evenness, and a laid plan on a moving clock
+  J = 0, the 00 slot rising by 1 from W = 10, 6 rounds, the half-tooth act: the 24 reflections hold under the g lift 24 of 24 and under the u lift 24 of 24 (the 24 turns: 24 of 24, probe 1)
+  the act as built on that lay: the 24 reflections hold under the g lift 0 of 24 over 6 rounds
+  the clock's click is not odd: q_c(beta) + q_c(1 - beta) = dW over dW in [-9, 9] and beta in (0, 1): 0 misses (an odd operation would give q_c(1 - beta) = -q_c(beta))
+  plan 1 (phi v.v, phi v.0i, chi v.t, chi eps(v, 0i).jk), s = 3, T_k = 2, T_d = 5, the 00 slot standing at W = 9:
+    the act as built, of the 24 per round:   [24, 24, 24, 24] (promise broke before round None)
+    the half-tooth act, of the 24 per round: [24, 24, 24, 24] (promise broke before round None); the counts reach 96 bits
+    the mutant (one entry of the epsilon table raised by 1), half-tooth: [4, 4, 4, 4]
+  plan 1 (phi v.v, phi v.0i, chi v.t, chi eps(v, 0i).jk), s = 3, T_k = 2, T_d = 5, the 00 slot rising by 1 from W = 9:
+    the act as built, of the 24 per round:   [24, 3, 3, 3] (promise broke before round None)
+    the half-tooth act, of the 24 per round: [24, 24, 24, 24] (promise broke before round None); the counts reach 93 bits
+    the mutant (one entry of the epsilon table raised by 1), half-tooth: [4, 4, 4, 4]
