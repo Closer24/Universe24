@@ -46,7 +46,7 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
 | 2 | the teeth W | every square's 00 slot here | W = the rest + the 00 slots' now counts, linear (decision 41's slot form, line 35) | BUILT |
 | 3 | the grips | every square's ii slot at both ends of each Mesh | each Spoke's grip = the rest grip + its axis's ii slots here and at the neighbour | BUILT (part 4) |
 | 4 | the pull F | the neighbours' now counts, the grips | F = sum over the six Spokes of grip (neighbour - own) | BUILT |
-| 5 | the metric's push | every gear's four-vector here: its stride (a - b) and its gradient | the stress tensor T, each family's four-vector contracted with itself through the 24's tables onto the square's ten slots; each slot pushed by its component of 2T - eta T (N3: the 00 slot by rho + 3p, the diagonal three by 3 (rho - p)); the metric's own gears in T (decision 40 (a)) | OPEN (G2): see 4.1 |
+| 5 | the metric's push | every gear's four-vector here: its stride (a - b) and its gradient; the spring's part V here | each slot pushed by its component of 2T + 2 eta V: T each family's four-vector times itself through the 24's tables onto the square's ten slots, V the spring's part (term 6's potential); the full stress's trace reversal, whole, with no trace term and no half (N3: the 00 slot by rho + 3p, each diagonal slot by rho - p); the metric's own gears in T (decision 40 (a)) | OPEN (G2): see 4.1 |
 | 6 | the coupling vertex, and the gear's spring | the coupling family's gears and every other family's, here | the one plan: each vertex a contraction of its legs through the 24's tables, pushing every leg; a held hand at its count pulls a gear back toward 0 inside its own Node-clock, D = g C n, the gear's own beat and its mass (decision 37) | OPEN (G3): see 4.2 |
 | 7 | the drive | J, the sources of 5 and 6 | q_d, r_d+ = carry(J, T_d, r_d): one drive for every row (decision 40 (d)) | DERIVED (G3) |
 | 8 | the kick K | the drive's quotient | K = T_k s q_d; s = 1 | BUILT at T_k = 1 |
@@ -63,7 +63,12 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
 - **The tensor:** for a family of kind K, each component x has its four-vector v_x = (the stride a_x - b_x, the
   gradient of a_x along each axis). T = sum over the families of C[K x K -> A1]_(x, y) v_x (x) v_y, symmetrised onto the
   square's ten slots: the same construction as kinds.square, read on the state (David, 6514906323, item 3).
-- **The push:** each slot of the square gets its component of 2T - eta T (N3), at one strength per slot from the law.
+- **The push:** each slot of the square gets its component of 2T + 2 eta V, T the outer product above and V the spring's
+  part at the Node-clock (term 6's potential), at one strength per slot from the law. It is the trace reversal of the
+  full stress S = T - eta (tr T / 2 + V): 2S - eta tr S = 2T + 2 eta V, whole (David, 6516715545, checked on 2,000
+  four-vectors and springs). N3's numbers stand: a uniform swing with no spring, stride 7, gives the 00 slot 98 (rho +
+  3p, rho = p) and each diagonal slot 0 (rho - p). "2T - eta T" with T the outer product, as this page first wrote it,
+  gave 49 and 49, and is struck.
 - **Postulate 6:** two sources' strides add bit for bit, and the rates compose by their product. The cross term
   c1 c2 / W0 comes from the metric's own gears in T (David, 6515406887); the test's mutant is the same act with the
   self-push off. OPEN: the self-push's exact form, and the order at which the cross term shows.
@@ -73,8 +78,8 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
 - **The slicing (N1):** the free count d_mu ((-g)^w g^(mu nu)) = 0 at w = 1/2, so the course and the static field agree
   with Cassini. w = 1/2 is the densitized slot form itself (decision 41): a conservation the act keeps and a test shows,
   not a term it adds (Sofer, 6516548251). OPEN: the test on the act.
-- **The numbers** (2T - eta T, the 3 of 3 (rho - p), w = 1/2): each comes out of the star or the pair, never typed and
-  never from a file.
+- **The numbers** (the 2 of 2T + 2 eta V, w = 1/2): each comes out of the star or the pair, never typed and never from
+  a file.
 
 ### 4.2 The coupling vertex (term 6), G3: David derives, the Boss builds
 
@@ -105,6 +110,10 @@ Every gear of every Node-clock steps once a round, in one pass, at the now slot 
   - CHECKED: the beat at 10^5 (a period of about 126 rounds); the runaway with no four-leg term and at half the bound,
     held at twice it over 4,000 rounds; and the board's limit, every spring far below W, since at 10^8 the local spring
     passes 4 W and the step beats no more. A clock needs both: lam above g^2 / (2 kappa), and every spring below W.
+  - Read against the law (Sofer, 6516740454): no breach. The 2 and the 4 come from the table's symmetric double count,
+    each leg pushed by the product of the others, never typed; the condition lam above g^2 / (2 kappa) is an inequality
+    between the law's strengths, derived, never checked by a bound in the act (line 106); "every spring below W" is the
+    integer step's domain, read by the runner from outside as a promise (line 92), never a bound in the act.
   - OPEN (G3, David): g, lam, kappa and n from the law (decision 35; decision 40 (g)); a hat of the held family itself,
     -(mu / 2) k k + (nu / 4) k^4, giving n and kappa from its two strengths; which families the one plan ties to k.
 - **The strength:** in the vertex law, read through the ruler, no file holding it (decision 35); no single integer serves
