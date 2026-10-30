@@ -209,7 +209,7 @@ Read at 2026-10-30, 12:3x UTC against the Boss's gathered head (reader-5 50b9715
 
 **Every push.** The ratchets run on every pull request and on every push to main. A branch with no pull request (the readers' and the toys' branches) has no workflow run, so Sofer reads each push of the Boss, David and Animate within ten minutes: the full check, the gate, an independent scan with its own parser, a census of the code and the law check, and tells the Boss and, if a law is crossed, the owner the hour it is found.
 
-**What the keeper found while reading.** 57 lines of the law still name the old engine's code or its five functions as the built form (11 of them in the core: 33, 35, 39, 88, 90, 92, 96, 98, 102, 104, 110); 24 of the 57 already say it left the tree. The other 33 are conformed by exact text when the Boss replaces main, the owner's words and names kept (his word: everything touching the old worlds out); no law is dropped by it.
+**What the keeper found while reading.** 57 lines of the law name the old engine's code or its five functions. The spans that said it is the built form or holds something now, 16 spans in 14 lines (88, 90, 92, 102, 104, 128, 132, 142, 486, 504, 715, 1017, 1592, 1602) and the preface (line 19), are conformed by exact text at scribe-5 after 7c7504fe4, the owner's words and names kept: the five functions became the one act of line 90, built in Tensor24, by his own decision of 2026-10-28, 06:0x UTC. The other mentions are provenance (a commit landed on engine-5.0-test, a pointer into src/event_universe) and stand under one sentence of the preface (line 19), which says they name the old engine as it is held in git. No law is dropped by it.
 
 ## What it cannot do
 
