@@ -433,12 +433,43 @@ def part_five() -> None:
         )
 
 
+def part_six() -> None:
+    print(
+        "\n6. A quantum carries the key times its beat (E = n hbar omega, the key as hbar), on the click world with no stop."
+    )
+    g = carry(click.F, 10, 0)[0]
+    base = lay_click(click.A)
+    key = carry(click.swept(click.LRE, click.LIM, base.a[:, 0], click.stride(base)), 7, 0)[0]
+    found, states = clicks_of(click_node(click.potential(g)), base, key, click.ROUNDS)
+
+    def doubled(s: State) -> int:
+        """2 W times the taker's energy: its strides squared, and its spring F a^2 on each of its six gears times 2 W."""
+        p = click.stride(s)
+        taker = range(click.MRE, click.MRE + 6)
+        return sum(p[x] * p[x] for x in taker) + 2 * click.W * click.F * sum(
+            s.a[x, 0] ** 2 for x in taker
+        )
+
+    def taken(s: State) -> int:
+        return click.swept(click.MRE, click.MIM, s.a[:, 0], click.stride(s))
+
+    ratios = []
+    for t, _ in found[:7]:
+        x, om = doubled(states[t + 1]) - doubled(base), taken(states[t + 1]) - taken(base)
+        ratios.append(carry(x * x * 10**9, 8 * click.F * click.W * om * om, 0)[0])
+    print(
+        "   the square of the taker's energy gained over its area gained, over its beat squared 2 F / W, at its first "
+        f"seven clicks, in billionths: {ratios}"
+    )
+
+
 def main() -> None:
     part_one()
     _, t_states, _ = part_two()
     part_three(t_states)
     part_four()
     part_five()
+    part_six()
 
 
 if __name__ == "__main__":

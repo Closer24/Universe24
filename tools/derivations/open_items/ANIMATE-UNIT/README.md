@@ -5,7 +5,8 @@ count sweeps no area, so term 11's quantum, counted on the swept area, does not 
 (derive/boss/term11/TERM11.md: "the key's value: one number for every train and every mode ... OPEN"), on the owner's
 words to Animate (in Hebrew; in translation): "Check with David which pieces you can complete, perhaps the coupling
 family?" and "Remember everything from the clocks to the algebra to the physics in the clicks; think of the 24
-operations." The Boss gave the piece to Animate if David agrees (#2187 6523515918).
+operations." The Boss gave the piece to Animate if David agrees (#2187 6523515918), and David agreed (6523872509),
+naming the key hbar, not h, as his reader of term 11 found: one key carries the key times the beat.
 
 The probe is unit.py, its output unit.txt beside it, on the Node-clock's own act (engine/step.py, main 6f31d41bb), in
 whole numbers alone: Rule3's carry for every division, no float, no root, no circular call, no random draw, no fraction.
@@ -35,7 +36,7 @@ the algebra, then the physics. Status words as the protocol's: DERIVED and CHECK
 ## 1. In clocks
 
 - **A click counts a turn.** Two hands in mesh trade turns, and the click is the counter on the taker's side: one notch
-  per key of area turned into it (term 11; ANIMATE-CLICK). A turn is how far a hand stands from its centre times how
+  per key of area turned into it (term 11; the world of ANIMATE-CLICK/click.py, the Boss's TERM11.md). A turn is how far a hand stands from its centre times how
   fast it moves across: an area.
 - **A held count is a winding that stands.** The held hand of G3 stands wound at n, its own spring holding it there. A
   hand that stands turns nothing, so the counter never moves for it. Laid off n it swings along one line (it has one
@@ -48,7 +49,8 @@ the algebra, then the physics. Status words as the protocol's: DERIVED and CHECK
   mirror does.
 - **A beat stands between a count and its quanta.** A hand of radius n turning at its beat sweeps n^2 times the teeth
   times the beat's sine. A hand that stands holds its winding as energy, and counts it in quanta as the clicks count
-  every quantum: the energy over the key times its own beat (E = n h nu, the click's measure).
+  every quantum: the energy over the key times its own beat in radians per round (E = n hbar omega, the key as
+  hbar; unit.txt 6).
 - **So the law's sentence can stand in the clocks in two ways.** (a) The coupling family turns: an ordinary family of
   two parts whose hand turns at one key of area per Node-clock; the books count one quantum there, nothing moves its
   area, and the tied families take the one spring from the square of its radius. (b) The held hand stands, and the
@@ -166,6 +168,11 @@ the algebra, then the physics. Status words as the protocol's: DERIVED and CHECK
 5. The 24 on a steady count, every count with entries from -2 to 2: A1, 24 for all 4; A2, 12 for all 4; E, 8 for 8
    and 4 for 16; T1, 4 for 12, 3 for 16, 2 for 24 and 1 for 72; T2, 6 for 16, 4 for 12, 2 for 72 and 1 for 24; the
    same for 2, 3 and -1 times every count.
+6. A quantum carries the key times its beat: on the click world with no stop, the square of the taker's energy gained
+   over its area gained, over its beat squared 2 F / W, is 1,032,317,608, 1,003,505,813, 1,002,984,505, 1,002,502,426,
+   1,002,240,055, 1,002,169,758 and 1,000,245,221 billionths at its first seven clicks: the energy per key of area is
+   the beat, within a few thousandths after the first click (whole numbers; the measure of ANIMATE-CLICK that left the
+   tree, re-read).
 
 ## 5. What stands, and what is owed
 

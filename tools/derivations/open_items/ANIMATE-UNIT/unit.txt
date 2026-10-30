@@ -29,3 +29,6 @@
    E: the turns that keep it (counts with that many): 8: 8, 4: 16; the same for 2, 3 and -1 times every count: True
    T1: the turns that keep it (counts with that many): 4: 12, 3: 16, 2: 24, 1: 72; the same for 2, 3 and -1 times every count: True
    T2: the turns that keep it (counts with that many): 6: 16, 4: 12, 2: 72, 1: 24; the same for 2, 3 and -1 times every count: True
+
+6. A quantum carries the key times its beat (E = n hbar omega, the key as hbar), on the click world with no stop.
+   the square of the taker's energy gained over its area gained, over its beat squared 2 F / W, at its first seven clicks, in billionths: [1032317608, 1003505813, 1002984505, 1002502426, 1002240055, 1002169758, 1000245221]
