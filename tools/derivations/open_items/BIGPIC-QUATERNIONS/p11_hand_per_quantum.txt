@@ -1,0 +1,10 @@
+PASS 1. two like half-speed quanta in one mode, each with its own hand: every pair weight is 0, on the lay and after 300 rounds of the act (the exclusion)
+PASS 2. with one hand per family the two quanta are the sum 2 psi, and the product weight read from it at two places is not 0: one hand cannot exclude: product weight 116999354757376000000000000000000000000
+PASS 3. two like quanta of one spin in two orthogonal modes (even and odd about one centre, overlap 0 exactly): the pair weight is 0 at one place (the exchange hole) and not 0 in all, so the triplet and the Fermi sea fill; the same after 300 rounds: overlap 0; total pair weight 8035669969600000000000000000000000000 on the lay, 3152535380864223229872448316002537164 after
+PASS 4. one mode with up and down: the pair weight is not 0, and not 0 at one place over the two spin parts (two to an orbital, the pair together): total 14624919344672000000000000000000000000, at one place 3281302643528000000000000000000000000
+PASS 5. a third like quantum in one orbital (up, down, and up plus i down): the 3 x 3 determinant is 0 over every triple of places and spin parts (two to an orbital); the control, three quanta of one spin in three modes, is not 0
+PASS 6. the control: at one place the permanent (a whole-speed family) weighs twice what two told-apart quanta weigh (bunching), and the determinant weighs 0 (antibunching), at every place
+PASS 7. the family's one hand moved by the act equals the sum of its quanta's hands moved by the act, to the teeth: after 300 rounds the largest difference is 18 counts against a largest part of 729829905
+   so a hand per quantum changes nothing on the board, whose family hand is their sum; it lets the record
+   weigh a pair of clicks by the difference between the two quanta's hands, at the two clicked places
+ALL PASS

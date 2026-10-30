@@ -12,7 +12,7 @@ and his families reader.
 - Test cases come from a whole-number stream (`qlib.Stream`, a linear congruential map).
 
 Run one: `python3 tools/derivations/open_items/BIGPIC-QUATERNIONS/p1_ring.py`. Each output is the `.txt` beside it. All
-ten run in about half a minute.
+eleven run in about half a minute.
 
 ## The probes
 
@@ -29,6 +29,7 @@ ten run in about half a minute.
 | `p8_euclid.py` | Hurwitz's division, N(r) <= N(b)/2, with one compare. The covering radii on the grid of eighths: part by part 64/64 (the four-fold tie), with the halves 32/64, half-D4 16/64. The octahedral order: its double deep holes sit at exactly 1/2, and no nearby point met exceeds it. | 6526805415; 6527540022 item 4.1 |
 | `p9_act.py` | Free two-part and four-part hands on the act with the carry, window means of 12,000 rounds over 240,000. The two-part turn holds to under one grain, its wind wanders up to 10, and the four-part turns wander up to 27. | 6527540022 item 3.2 |
 | `p10_cells.py` | The half-open carry's mirror. The draw's run back: the mirrored pointer against the parts read from the other end picks the same part (8,790 cases). An odd increment's tooth is kept on the run back, not flipped. A beat with a whole sine: W = a^2 + b^2 and k = 4 b^2. | 6528150081; 6528217535 |
+| `p11_hand_per_quantum.py` | The owner's word (18:4x UTC): "Try a hand per quantum." Each quantum has its own hand, moved by the one act, and the record weighs a pair of clicks by the determinant (half-speed) or the permanent (whole-speed) of the two hands at the two clicked places. One mode twice: every pair weight 0, on the lay and after 300 rounds (the exclusion). One hand per family cannot exclude: the sum 2 psi gives a weight that is not 0. Two orthogonal modes of one spin: 0 at one place (the exchange hole), not 0 in all (the triplet and the Fermi sea fill). Up and down in one mode: not 0, together at one place. A third quantum in one orbital: 0, with a control that is not. The permanent at one place is twice the told-apart weight (bunching) where the determinant is 0. The family's one hand moved equals the sum of its quanta's hands moved, to the teeth (18 counts in 729,829,905). | the owner's word of 18:4x UTC |
 
 ## Numbers that differ from the posts by the stream
 
