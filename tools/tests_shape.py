@@ -64,7 +64,7 @@ ROOM = {  # the room given by name: the test or the file, its lines and the reas
     "tests/test_the_tensor24_files.py": (310, TENSOR24_FILES),
     "tests/test_the_tensor24_run.py": (285, TENSOR24_RUN),
     "tests/test_the_tensor24_kinds.py": (80, TENSOR24_KINDS),
-    "tests/test_the_tensor24_load.py": (137, TENSOR24_LOAD),
+    "tests/test_the_tensor24_load.py": (134, TENSOR24_LOAD),
 }
 CALLERS = ("src/", "tools/", "examples/")
 

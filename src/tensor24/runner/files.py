@@ -227,9 +227,9 @@ def vocabulary(kinds: Any, square: Any) -> tuple[tuple[str, ...], tuple[int, ...
 def held_departures(
     universe: Any, setting: Any, read: tuple[tuple[str, ...], tuple[int, ...], Any]
 ) -> list[str]:
-    """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the 24's, a kind with no whole basis outside the four-vector's square, a gear's component off its train's rows."""
+    """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the 24's, a kind with no whole basis outside the four-vector's square, the square in two trains or more (every row's teeth read every square's 00 slot but its own, so two squares would read each other and no dial would be its own), a gear's component off its train's rows."""
     labels, dims, (traces, wholes, squared) = read
-    found, sizes = [], []
+    found, sizes, squares = [], [], []
     for at, train in enumerate(universe["trains"]):
         where = f"universe.trains[{at}]"
         found += [
@@ -239,12 +239,18 @@ def held_departures(
         ]
         kinds = [labels.index(label) for label in train["kinds"] if label in labels]
         square = bool((train["part"] * traces[kinds].sum(axis=0) == squared).all())
+        squares += [repr(train["name"])] if square else []
         found += [
             f"{where}.kinds[{j}]: {label!r} has no whole basis the 24 permute, so it stands only in the four-vector's square, whose basis is whole"
             for j, label in enumerate(train["kinds"])
             if label in labels and not (square or wholes[labels.index(label)])
         ]
         sizes.append(train["part"] * sum(dims[k] for k in kinds))
+    if len(squares) > 1:
+        found.append(
+            f"universe.trains: two trains of the four-vector's square's character, one metric family: {', '.join(squares)}"
+            " (every row's teeth read every square's 00 slot but its own, so two squares would read each other)"
+        )
     for at, (train, component, *_) in enumerate(setting.get("gears", [])):
         if component >= sizes[train]:
             found.append(
