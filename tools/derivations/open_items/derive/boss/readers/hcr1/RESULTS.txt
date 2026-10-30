@@ -1,0 +1,16 @@
+hcr1 probe results at f72067cdf (all whole numbers; probes in probes/):
+p1 run back on the engine test's pushed(): 0 of 6 drawn states at T_d 7, 2, 1; 6 of 6 with the push plan emptied
+p2 small counts: run back off at 768/865/874 of 875 gears; backward momenta off at 500; sigma(M_out@K1) != sigma(N@K) at 500
+p3 well head: round 1 run back off (b 7072, r 7092), promise broken round 2 (5148 places)
+p3 well old stress (ac3085db4): 128 rounds, promises held, 128/128 one-round exact, rewound True
+p3 well books form (B2b as planned): 0 of 19 one-round exact; window breaks round 20
+p4 well books round 1: sigma mismatch 2520 gears on rows 2,6,7,8; backward momenta off at the same 2520; run back off 710/8424 (814 at T_d 1)
+p12 two-stage push (fix direction): pushed() 6/6 at T_d 7 and 1; well books 12/12
+p5/p6 run test pair world: q (0,1,-1) to round 56; room passed at round 39; round 57 |k|^2=2, q (-177,1601,4986); 300 rounds: 149 of 294 places nonzero
+p7 A1 identity 288 of 1148; kept law 1148/1148; flipped click tooth returns 2 of 40 rounds, kept 40 of 40
+p8 24 on B2 frame via loader: 24/24 with clicks; run back 6 rounds exact
+p9 decoder reads: train off cards, q 0, same place twice, tooth past key, negative tooth
+p10 square passing form kept by 8 of 24 turns; (T1,T2) 24 of 24
+p11 locality with push and click: 14 of 14 sites
+p13 even key on pair(): books miss 8/400 (2^17), 90/400 (2^12); teeth sum off 400/400; odd keys 0/0
+gate: 0 refusals, 5 notes; full check exit 0, 27 passed; worlds: tensor24 exact 1, live exact 1, well exit 1 at round 2
