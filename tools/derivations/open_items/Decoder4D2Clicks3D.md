@@ -1005,6 +1005,9 @@ decoder receives (1.1):
 - **The ledger,** its own file beside the record: one Count line per round, Node-clock and train, after the step,
   holding that train's counts there row by row.
 
+Schema 1.3, the Boss's next push (6520580216), writes into the header each kind's characters and each train's
+square flag as whole numbers, and drops the couplings, the classes and the draw (5.4, items 5, 7 and 8).
+
 On the example world (examples/tensor24: a board of 4 by 4 by 4, the light train and the metric train, 10 rounds)
 that is one header, one end and 1,280 Count lines. The decoder as built reads the record and the ledger whole, and
 then every row reads NOT READ: no click names a clock (G5), and row 46 still asks the header for a time gear, which
@@ -1027,8 +1030,8 @@ the new engine does not write (5.3).
 
 - **The board and the trains,** from the header: the sides and the order of the sites; each train's index, kinds,
   part and winding.
-- **The clock family,** from the header's own universe file by the loader's own derivation, called read only (5.4,
-  item 5): the one train whose kinds' character is the four-vector's square's, its first row the 00 slot.
+- **The clock family,** from the header alone (schema 1.3), by the algebra alone (5.4, item 5): the one train whose
+  square flag stands, its kinds' character the four-vector's square's, its first row the 00 slot.
 - **The counts,** from the ledger: per round, Node-clock and train, its counts row by row.
 - **The run back,** from the end: the rounds run back, and whether they came back exactly.
 - **From G5, the clicks:** the chains (per clock, its "clock" field, the lay that made it: its clicks in round order
@@ -1040,7 +1043,7 @@ the new engine does not write (5.3).
 | Module | What it reads | State |
 |---|---|---|
 | records.py | the record (its header and its end, its click lines from G5) and the ledger's Count lines, each bad line refused by name | built; reads the new engine's record and ledger whole |
-| family.py | the clock family (5.2): exactly one train with the square's character; with none or several the reading is NOT READ, the count named | owed, the first to build |
+| family.py | the clock family (5.2), from the header's square flags and kinds' characters (schema 1.3), importing the record and the algebra alone: exactly one train flagged; with none or several the reading is NOT READ, the count named | owed, the first to build, after schema 1.3 |
 | bangs.py | row 46, each later bang shows more: the load (the clock family's 00 slot summed over the board at each round, from the Count lines) and the bangs between its bottoms; per bang, its click kinds and the deepest clock its clicks lay, and the deepest clock holding a winding at its end | the load to move onto the Count lines and the clock family (it reads a time gear named in the header and the windings of the ledger's Ledger lines, and the new engine writes neither); the rest built on records made in memory, owed on the engine at G5 (the clicks, and each train's windings: 5.4, item 3) |
 | books.py | row 15, the books close at every click (conservation, both ways of time): each whole click's books, and the wind over the trains at every round with a click | built on records made in memory; owed on the engine at G5 (the clicks, and each train's wind: 5.4, item 3) |
 | measure.py | D6's first reading (a clock's own count between two of its clicks); D7 (no duration from rounds); the cone check (D8, on the board's cone) | built on records made in memory, owed on the engine at G5; to mend: the twins (equal counts on image paths no fault, "free" by clicks, the winding reported); the site refusal; the cone check on light's cone read from the record, with a spread |
@@ -1054,7 +1057,11 @@ cause, raising nothing; it follows the modules.
 **The tests** (the owner's words through the Boss and David, 09:2x and 09:3x UTC: "what is generic, test only it, and
 then at the end, once, everything"): one test per generic part, each failing on its own mutant, on records made in
 memory; then one test of the whole, once: the example world run by the runner, and its record and ledger read end to
-end, the clock family found, row 46's load read, and every click reading NOT READ with its cause until G5.
+end, the clock family found, row 46's load read, and every click reading NOT READ with its cause until G5. On the
+owner's word that the suite tests only what the example's record holds (the Boss's 6520580216), the decoder keeps five:
+the record, the ledger, the clock family, row 46's load and the whole once; the click readings' tests (row 15's
+books, the cone, proper time, the twins, row 46's clicks and held clocks) leave the suite for git and return with
+G5's clicks.
 
 ### 5.4 What the code needs from the engine and the schema (the Boss's)
 
@@ -1063,14 +1070,18 @@ end, the clock family found, row 46's load read, and every click reading NOT REA
    "tooth"); **on every setting, its frames and the one drawn** ("axes", "members", "drawn"). These are schema 1.2's
    further fields (ANIMATE-SCHEMA-1.2), planned at G5.
 3. **Each train's windings and wind in the ledger,** after the step and after the clicks: the schema's Ledger line,
-   which no run writes. Row 15's second reading and row 46's held clocks read them; term 11 books a train's winding
-   from G5 (the swept area carried at the key: ANIMATE-CLICK, 3.3).
+   which no run writes. Row 15's second reading and row 46's held clocks read them; they come with G5's click as
+   output (the Boss, 6520292395), term 11 booking a train's winding (the swept area carried at the key:
+   ANIMATE-CLICK, 3.3).
 4. **A universe file that lays a travelling wave:** the Boss's, with G2's first test (his 6514633855, item 5).
-5. **The clock family found from the record alone:** form (a), decided by the Boss (6515452856) and built in the
-   loader: trains_of flags the train whose kinds' character is the four-vector's square's, its rows that square's
-   basis (00, the 0i, the ii, the jk by their third axis), its first the 00 slot. The decoder calls the loader's
-   derivation read only on the header's own files, so the reading holds whatever order the file writes its kinds in.
-   Form (b), the header naming the train, would add a key that marks a role, which the law refuses.
+5. **The clock family found from the record alone:** form (a), decided by the Boss (6515452856): the train whose
+   kinds' character is the four-vector's square's, its rows that square's basis (00, the 0i, the ii, the jk by their
+   third axis), its first the 00 slot. The loader flags it (trains_of), but the decoder may import the algebra, the
+   readings and the record alone (the architect's table), so a call into the loader or the engine is refused at the
+   wall (Sofer, 6520466205). Schema 1.3 writes each kind's characters and each train's square flag into the header as
+   whole numbers (the Boss, 6520580216), and the decoder reads the flag there, checked by the characters with the
+   algebra alone, whatever order the file writes its kinds in. Form (b), the header naming the train, would add a key
+   that marks a role, which the law refuses.
 6. **A click's region:** the law's **No click names a Node-clock** asks a reading of a region, never of one
    Node-clock; its alignment of 2026-10-25 makes the click the Node-clock's close and reads a bob over several
    Node-clocks; schema 1.2 writes one site per click. Each reading that uses one site (the twins' meeting, proper time
@@ -1080,22 +1091,23 @@ end, the clock family found, row 46's load read, and every click reading NOT REA
    a Node-clock** binds the reading, which this page makes a region; the region form per reading stays owed at G6.
 7. **The header's `couplings` and `operands`:** no file declares a coupling (decision 35; tensor24-review 8ea447532),
    and no reading of the decoder reads either key, so schema 1.3 retires both (Animate's word on the Boss's 6515656552,
-   item 4); the runner writes the couplings empty until then. Should a reading ever need G3's one plan, the reader
-   derives it read only from the header's files by the loader's own derivation, as in item 5: a copy in the header
-   could disagree with what the act laid.
-8. **The header's classes, draw and kinds' characters:** the schema's header names the classes and the draw, and its
-   kind each kind's characters and T T; the runner writes none of them. No reading needs them: the clock family is
-   the loader's (item 5), and the draw's source is G5's (3.3).
+   item 4), in the Boss's next push (6520580216); the runner writes the couplings empty until then. Should a reading
+   ever need G3's one plan, the header carries what it needs as whole numbers, as in item 5, and the decoder reads it
+   by the algebra alone.
+8. **The header's classes, draw and kinds' characters:** schema 1.2 names them and the runner writes none. Schema
+   1.3 drops the classes and the draw until a reading needs them (the draw's source is G5's, 3.3), and writes each
+   kind's characters and each train's square flag (item 5).
 
 ### 5.5 The order of work
 
-The code waits for this page's approval in Sofer's architecture document and for the Boss's whole cut, and is then
-built from the system's branch, tensor24-review (the owner's words of 10:0x UTC).
+The code waits for this page's approval in Sofer's architecture document and for the Boss to finish (his cut is
+whole at 9143d7092, and schema 1.3 is his next push), and is then built from the system's branch, tensor24-review
+(the owner's words of 10:0x UTC).
 
-1. family.py, on records made in memory and on the example world.
+1. family.py on schema 1.3's header, on records made in memory and on the example world.
 2. Row 46's load on the Count lines and the clock family; clocks.py goes, with proper time's second reading from the
    rate lines and the tool's line of ticks.
-3. The tests: one per generic part with its mutant, then the whole once, on the example world.
+3. The tests: five, one per generic part that the example's record holds with its mutant, then the whole once (5.3).
 4. The mends: measure.twins and the site refusal, on records made in memory.
 5. light.py on records made in memory; with it, the cone check on light's cone read from the record.
 6. mass.py on records made in memory, its room asked first.
@@ -1341,6 +1353,9 @@ tensor24-review 4cb5359ce:
 2. 1.1: the header as the runner writes it.
 3. 1.3, 1.6 and 8.1's second finding: each the law's statement alone.
 4. 9.1: ANIMATE-CLICK, the whole click and the split click's draw on the node's act (3.3).
+5. Sofer's finding (6520466205): the clock family by the loader's derivation crossed the architect's wall; it is
+   read from schema 1.3's header by the algebra alone (5.2 to 5.4), the Boss's (6520580216). The decoder's tests five,
+   those the example's record holds (5.3).
 
 ## 9. The probes
 
