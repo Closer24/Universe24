@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "integers": {"den": 1, "full_rate": 10000, "width": 128},
+  "chosen": {"key": 1, "push": 0, "notch": 0, "hold": 1, "tie": 0, "mesh": 200000},
+  "trains": [
+    {"name": "light", "kinds": ["A1"], "part": 2, "pinion": 1},
+    {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": 1},
+    {"name": "matter", "kinds": ["T1", "T2"], "part": 1, "pinion": 1}
+  ]
+}

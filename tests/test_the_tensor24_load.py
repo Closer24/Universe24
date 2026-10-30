@@ -97,8 +97,8 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
 
 def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_coupling_familys_frame():
     """Yes: the passing's pairs are each train's rows, kind by kind and part by part, through its kinds' table with itself onto A1 at the table's entry (the square's at 0 by its flag), the target the train, each pair once, the key the universe's; on the click world's shape the held hand and the tied hands are found by character, the held rows' own spring is rest and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, light in no monomial;
-    term 5's push in the books' form: every row gliding a count a round alike pushes the 00 slot by k0 = Spokes x senses (the clock's read, from the star) times the momenta in and out of every row the push does not land on, a tent along z pushes the zz slot by minus its two z Meshes' stretches squared, nothing lands elsewhere, the drive's teeth senses on the 00 and ii rows and 1 elsewhere, in either order of the trains.
-    No: no pair crosses two trains or two parts; the tie off the diagonal and the hands' tie the other way are 0; the two tied hands swapped in the file lay the same plan and grips; the pushed rows' own momenta push nothing, and push 0 pushes nothing."""
+    term 5's push in the books' form: every row gliding a count a round alike pushes the 00 slot by k0 = Spokes x senses (the clock's read, from the star) times the momenta in and out of every row the push does not land on, a tent along z pushes the zz slot by minus its two z Meshes' stretches squared, nothing lands elsewhere, the drive's teeth senses on the 00 and ii rows and 1 elsewhere, in either order of the trains; the gradient vertex on light and a tied (T1, T2) hand, -mesh onto each M_i's row from light's difference along i and +mesh onto light's row from M_i's, the T2 rows and light's second part in none.
+    No: no pair crosses two trains or two parts; the tie off the diagonal and the hands' tie the other way are 0; the two tied hands swapped in the file lay the same plan and grips; the pushed rows' own momenta push nothing, and push 0 pushes nothing; light with no vector hand lays no gradient vertex."""
     held, found = loaded(trains := [*TRAINS, METRIC])
     one, two, entry, train, key = (x.tolist() for x in held.click)
     got = dict(zip(zip(one, two, train, strict=True), entry, strict=True))
@@ -145,3 +145,11 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_cou
         assert not np.delete(j, (zero, pushed[-1]), axis=0).any()  # nothing lands elsewhere
         assert laid.gearing.drive[:, 0].tolist() == [senses if r in pushed else 1 for r in range(len(j))]
         assert set(laid.clock.factor.tolist()) == {0, k0}  # the clock's read at k0
+    strength, pair = 3, [TRAINS[0], {"name": "matter", **PAIR}]  # light and a tied hand
+    held, _ = loaded(pair, chosen={**CHOSEN, "mesh": strength})
+    (one, _, _, factor, target), rows, hand = held.mesh, len(held.state[0]), held.trains[1].first
+    terms = {(int(f), int(t)): int(v) for f, t, v in zip(one, target, factor, strict=True) if v}
+    wanted = {((1 + i) * rows, hand + i): -strength for i in range(len(SHAPE))}  # M_i by L's difference
+    wanted |= {((1 + i) * rows + hand + i, 0): strength for i in range(len(SHAPE))}  # L by M_i's
+    _, _, _, alone, _ = loaded([TRAINS[0]], chosen={**CHOSEN, "mesh": strength})[0].mesh  # light alone
+    assert terms == wanted and not alone.any()

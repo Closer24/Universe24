@@ -1,5 +1,5 @@
-"""Clock: the plans every Node-clock reads, laid once at the load from the star, the kinds' tables and the universe file's CHOSEN strengths: the metric's push (the books' form, no strength: push 1 or 0), the volume's notch, the held hand's spring and tie, the hands' tie and each train's passing.
-Algebra: every plan is whole factors on rows of the readings: term 5's push in the books' form, the momenta in and out of every row the push does not land on onto the 00 slot and every row's six stretches squared onto the ii slots of their axes, the monomials of J's potential (term 9's notch, term 6's own spring (rest; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), and term 11's pairs of each train's rows through its own form onto A1, the table's entry the factor.
+"""Clock: the plans every Node-clock reads, laid once at the load from the star, the kinds' tables and the universe file's CHOSEN strengths: the metric's push (the books' form, no strength: push 1 or 0), the volume's notch, the held hand's spring and tie, the hands' tie, the gradient vertex through the Mesh and each train's passing.
+Algebra: every plan is whole factors on rows of the readings: term 5's push in the books' form, the momenta in and out of every row the push does not land on onto the 00 slot and every row's six stretches squared onto the ii slots of their axes, the monomials of J's potential (term 9's notch, term 6's own spring (rest; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), the gradient vertex's two pushes of mesh M_j D_i L, L's difference onto a tied row and the tied row's difference onto L, through the table of its kind with the axes' kind onto A1, and term 11's pairs of each train's rows through its own form onto A1, the table's entry the factor.
 Board: one plan for every Node-clock alike; a train that lacks a term takes it at the factor 0, its places wrapped, so no plan names a train: which train is held, tied or light is read off its character by the load.
 Clicks: the tied hand's beat, 2 hold f |k|^2 / W at the Node-clock, is what the clicks read as its mass, one beat per tied train (the frame's price, FRAMES 6); a plan reaches the clicks only through the act.
 """
@@ -152,6 +152,40 @@ def pushing(trains: Z, spokes: Z, push: Z) -> tuple[Z, Z, Z, Z, Z]:
         two.astype(np.intp),
         third.astype(np.intp),
         factor,
+        target.astype(np.intp),
+    )
+
+
+def meshing(trains: Z, c: Z, traces: Z, square: Z, mesh: Z) -> tuple[Z, Z, Z, Z, Z]:
+    """Term 6's gradient vertex (FRAMES 7), light on matter through the Mesh, as a plan on the plan's readings (the value, the difference along each axis, the force, the unit last): for every row of the trivial kind (A1, whose character is its own square on every turn) in a train that is no square and not the held hand (light: the held hand, Mesh-less, takes none), every row of one part of a tied train and every axis, the potential V = mesh x SUM_i C_ji M_j D_i L through the table of the tied row's kind with the kind the board's axes turn by onto A1 (found by its character, the four-vector square's on its 0i block: the dot product for T1, nothing for T2, so a pair with no such channel takes the factor 0), laid as its two pushes, (L's difference along i at L's row, unit, unit) at -mesh C_ji onto M_j's row and (M_j's difference along i at M_j's row, unit, unit) at +mesh C_ji onto L's row (the push on a gradient leg is the gradient of the other leg, one potential's two pushes; A1 x T1 has no A1 channel at the value legs, so light reaches a vector hand through the Mesh alone); mesh the strength CHOSEN in the universe file, its ground state mesh^2 below grip x 2 hold f / 2 (COUNT5 P2); the drive alone reads the plan, the passing never, so its wind, the Mesh flux, is counted by no click (NOT_CLOSED 4)."""
+    side = c.shape[-1]
+    gap = traces * traces - traces
+    trivial = 1 - lit((gap * gap).sum(axis=-1))  # 1 at A1, the kind whose character is its own square
+    axes = np.einsum(
+        "gii->g", square[:, 1 : 1 + side, 1 : 1 + side]
+    )  # the 0i block's character, the axes' own
+    off = traces - axes[None, :]
+    turning = 1 - lit((off * off).sum(axis=-1))  # 1 at the kind the board's axes turn by
+    form = np.einsum("m,a,kamyxi->kxi", trivial, turning, c)  # each kind with the axes' kind onto A1
+    row, of, kind, component, offset = rows_of(trains)
+    rows, axis = trains.size.sum(), np.arange(side, dtype=np.intp)
+    force = 1 + side  # the planes: the value at 0, the differences along the axes at 1 + i, the force
+    unit = (force + 1) * rows  # the unit, the readings' last row
+    scalar = trivial[kind] * trains.matter[of] * trains.gripped[of]  # a trivial row of light
+    same = 1 - lit(offset[:, None] - offset[None, :])  # 1 where the two rows are of one part
+    channel = form[kind[None, :, None], component[None, :, None], axis[None, None, :]]
+    factor = mesh * (scalar[:, None] * trains.tied[of][None, :] * same)[:, :, None] * channel
+    lrow = np.broadcast_to(row[:, None, None], factor.shape)
+    mrow = np.broadcast_to(row[None, :, None], factor.shape)
+    plane = (1 + axis[None, None, :]) * rows
+    onto_m = spread(plane + lrow, unit + 0 * lrow, unit + 0 * lrow, -factor, mrow)
+    onto_l = spread(plane + mrow, unit + 0 * mrow, unit + 0 * mrow, factor, lrow)
+    first, second, third, terms, target = np.concatenate((onto_m, onto_l), axis=1)
+    return (
+        first.astype(np.intp),
+        second.astype(np.intp),
+        third.astype(np.intp),
+        terms,
         target.astype(np.intp),
     )
 
