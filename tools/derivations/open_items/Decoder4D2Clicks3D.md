@@ -53,6 +53,15 @@ tensor24-review 0b7a9d5ef. Only the Boss writes engine code (decision 40): this 
 The page is a plan: it adds no law. **The engine writes no click before G5**, so every reading this page calls
 "built" is built and tested on records made in memory, and every reading on the engine's own records is owed.
 
+**The new engine alone.** The old engine left the tree at tensor24-review 4cb5359ce (the owner's word to the Boss,
+09:3x UTC: "Yes, all of it now"), and this page reads only what the new engine writes: part 5 is written for its
+record and its ledger (runner/run.py, record/schema.py). The owner's word of 10:0x UTC (in Hebrew; in translation):
+"Wait until he finishes everything, and then work from the branch of the whole system. Bring the decoder's page for
+approval." Then, minutes later: "Pass it to Sofer, and he embeds it in the architecture document he is building." So
+the page goes to Sofer for the architecture document (David's 6519867280, on the owner's word of 09:5x UTC: every
+part gathered under one architecture document, and the work done by it), and the decoder's code is built after its
+approval, from tensor24-review once the Boss's cut is whole (5.5).
+
 **Nature is in the clicks, not in the board** (the owner's word of 05:0x; line 695, the great clock's tick is no
 observable; docs/BIG_PICTURE.md 8.2). Every number from nature on this page is a reading of records: counts of clicks, their rates and their
 ratios. The board's own numbers, its teeth W, its springs D, its grips and its round, are never measured directly: at
@@ -120,11 +129,11 @@ each of its sections names the clock statement it does (the owner's word of 07:1
 
 ### 1.1 What the decoder receives
 
-- **The record:** its header (the files, the board's sides, the kinds with their characters, the trains with their
-  kinds), its click lines and its end line (the rounds run, the digest, the rounds run back and whether they came
-  back exactly).
+- **The record:** its header (the three files verbatim with their digests, the board's sides and the order of its
+  sites, the kinds, the trains with their kinds, parts and windings), its click lines (from G5) and its end line (the
+  rounds run, the digest, the rounds run back and whether they came back exactly).
 - **The ledger:** count lines, one per round, Node-clock and train, holding that train's counts there after the
-  step. It is the read from outside that the law allows (decision 42, line 5 of the Node-clock's law: read only;
+  step, row by row. It is the read from outside that the law allows (decision 42, line 5 of the Node-clock's law: read only;
   the same run with the read and without it gives the same record, byte for byte).
 - **Nothing else.** The decoder never steps the engine, never reads its arrays and never writes into a run.
 
@@ -152,7 +161,7 @@ each of its sections names the clock statement it does (the owner's word of 07:1
 | no duration from rounds | a difference of rounds read as a duration is refused by name ("compares board ticks, no reading"); rounds still order the clicks and bound the cone | built (D7) |
 | no length from labels | a difference of sites read as a length is refused by name, as rounds are (part 4.5) | owed (measure.py) |
 | a light path | a quantum's lay and its take. They lie on light's cone only for a long-wave quantum with no mass: the engine's light disperses (at G1b, measured by the physicist: 995 thousandths of the long-wave speed at wavelength 16, 978 at 8 and 913 at 4 along an axis; at one wavenumber a face diagonal is 27 thousandths faster than an axis) | owed (light.py) |
-| a distance | an echo: a clock lays a quantum, the far clock lays one back at its take, and the first clock counts its own teeth from its lay to the echo's take; where the far clock holds the quantum a while, the hold lengthens the echo, and only two clocks that tick alike can take it off. Two-way only. The two-way composition at light's speed is the law's theorem on the older engine, for long flashes on an empty board with light at one speed (**The two-way reading**, **The measured speed**); on this engine, whose light disperses, it is owed anew. The two-way speed tests light's constancy; the one-way reading and the twins test the clocks | owed (light.py) |
+| a distance | an echo: a clock lays a quantum, the far clock lays one back at its take, and the first clock counts its own teeth from its lay to the echo's take; where the far clock holds the quantum a while, the hold lengthens the echo, and only two clocks that tick alike can take it off. Two-way only. The law states the two-way composition at light's speed for long flashes on an empty board with light at one speed (**The two-way reading**, **The measured speed**); on this engine, whose light disperses, it is owed. The two-way speed tests light's constancy; the one-way reading and the twins test the clocks | owed (light.py) |
 | the redshift | a one-way count ratio: one clock lays a quantum at each of its teeth, another counts its own teeth between the takes, each take paired with its own lay's tooth. It is the first-order Doppler and the lapse together | owed (light.py) |
 | time dilation | read for a moving clock: its quanta's ratios at two clocks standing still, one ahead of it and one behind, taken together (Ives and Stilwell's way), or over a closed path (the twins). Between two clocks standing still on a static board the two directions' ratios multiply to one, and a one-way ratio is the lapse's shift alone | owed (light.py) |
 | proper time read a second time | the count carried by signals: a clock lays one quantum a tooth; each lay is followed by its birth link to its take, and every lay the home clock did not take is named (taken elsewhere, refused, in flight). The home clock's takes are at most the traveller's own count, and equal to it only if none is missing; a short wave can be slower than the traveller | owed (light.py) |
@@ -225,8 +234,8 @@ each of its sections names the clock statement it does (the owner's word of 07:1
   of its own: the click credits a whole quantum of a hand, never a gear or a fraction of it (line 468), and a gear has
   no form, no count, no place and no click of its own (line 326, **The gear of a hand**). The law names it
   **Confinement is the click's** (line 1556): no click ever reports one gear alone. The record says the same: a click
-  line names a train and never one of its rows (schema 1.2's Whole and Split lines). Derived in the law on the older
-  engine; on this engine owed at G5 (the click's one form) and G6 (hands that click).
+  line names a train and never one of its rows (schema 1.2's Whole and Split lines). The law states it; on this
+  engine it is owed at G5 (the click's one form) and G6 (hands that click).
 
 | What it is | In a clock | Taken alone | How the clicks show it |
 |---|---|---|---|
@@ -985,6 +994,22 @@ The board is 3 + the tick, and the clicks are the same 3 + each clock's own coun
 
 ## 5. In code: what the decoder needs, by simple operations alone
 
+What the new engine writes (tensor24-review 4cb5359ce: runner/run.py, record/schema.py at schema 1.2), and so all the
+decoder receives (1.1):
+
+- **The record:** two lines. The header: the record's name, the schema's major and minor, the engine and its runner
+  ("synchronous": every Node-clock steps in every round), the three files verbatim with their digests, the board's
+  sides and the order of its sites, the kinds (index, label, dimension), the trains (index, label, kinds, part and
+  winding), the couplings (empty), the operands and the width. The end: the rounds run, the state's digest, the
+  rounds run back, and 1 where the run back came back exactly. No click line until G5.
+- **The ledger,** its own file beside the record: one Count line per round, Node-clock and train, after the step,
+  holding that train's counts there row by row.
+
+On the example world (examples/tensor24: a board of 4 by 4 by 4, the light train and the metric train, 10 rounds)
+that is one header, one end and 1,280 Count lines. The decoder as built reads the record and the ledger whole, and
+then every row reads NOT READ: no click names a clock (G5), and row 46 still asks the header for a time gear, which
+the new engine does not write (5.3).
+
 ### 5.1 The operations
 
 - **Used:** read a line; check its form and refuse a bad line by name; group by a key; order by round; follow a link
@@ -998,27 +1023,38 @@ The board is 3 + the tick, and the clicks are the same 3 + each clock's own coun
   typed table of values, a number beyond 0 and 1 in the code, a physics formula, a round's difference read as a
   duration, a site's difference read as a length.
 
-### 5.2 Four structures, built once from the record
+### 5.2 The structures, built once from the record and the ledger
 
-- **The chains:** per clock (its "clock" field, the lay that made it), its clicks in round order with their teeth.
-- **The arrows:** per take, its lay (its "birth" field); per lay, its takes, or its refusal, or none in the run.
-- **The frames:** per setting (a split click), the frames it drew among and the one drawn.
-- **The ledger as written:** per round, Node-clock and train, its counts.
+- **The board and the trains,** from the header: the sides and the order of the sites; each train's index, kinds,
+  part and winding.
+- **The clock family,** from the header's own universe file by the loader's own derivation, called read only (5.4,
+  item 5): the one train whose kinds' character is the four-vector's square's, its first row the 00 slot.
+- **The counts,** from the ledger: per round, Node-clock and train, its counts row by row.
+- **The run back,** from the end: the rounds run back, and whether they came back exactly.
+- **From G5, the clicks:** the chains (per clock, its "clock" field, the lay that made it: its clicks in round order
+  with their teeth); the arrows (per take, its lay, its "birth" field; per lay, its takes, or its refusal, or none in
+  the run); the frames (per setting, a split click: the frames it drew among and the one drawn).
 
-### 5.3 The modules: what stands and what is owed
+### 5.3 The modules: what stands, what goes and what is owed
 
 | Module | What it reads | State |
 |---|---|---|
-| records.py | the record and the ledger, each bad line refused by name | built |
-| books.py | the books close at every click (conservation, both ways of time) | built |
-| measure.py | D6's first reading (a clock's own count); D7 (no duration from rounds); the cone check (D8, on the board's cone) | built; to mend: the twins (equal counts on image paths no fault, "free" by clicks, the winding reported); the site refusal; the cone check on light's cone read from the record, with a spread |
-| bangs.py | row 46, each later bang shows more: the load from the header's time-gear lines (older records) | built; moves to the clock family's 00 slots at task 111 |
-| clocks.py | the rate lines of the records written before schema 1.2 | built |
-| light.py | the light line, the echo, the redshift, time dilation, the count by signals (D6's second reading), the free path, the tide, the growing or swinging echoes, the horizon | owed; its test room given (tests/test_the_tensor24_decoder_light.py, 250 lines) |
+| records.py | the record (its header and its end, its click lines from G5) and the ledger's Count lines, each bad line refused by name | built; reads the new engine's record and ledger whole |
+| family.py | the clock family (5.2): exactly one train with the square's character; with none or several the reading is NOT READ, the count named | owed, the first to build |
+| bangs.py | row 46, each later bang shows more: the load (the clock family's 00 slot summed over the board at each round, from the Count lines) and the bangs between its bottoms; per bang, its click kinds and the deepest clock its clicks lay, and the deepest clock holding a winding at its end | the load to move onto the Count lines and the clock family (it reads a time gear named in the header and the windings of the ledger's Ledger lines, and the new engine writes neither); the rest built on records made in memory, owed on the engine at G5 (the clicks, and each train's windings: 5.4, item 3) |
+| books.py | row 15, the books close at every click (conservation, both ways of time): each whole click's books, and the wind over the trains at every round with a click | built on records made in memory; owed on the engine at G5 (the clicks, and each train's wind: 5.4, item 3) |
+| measure.py | D6's first reading (a clock's own count between two of its clicks); D7 (no duration from rounds); the cone check (D8, on the board's cone) | built on records made in memory, owed on the engine at G5; to mend: the twins (equal counts on image paths no fault, "free" by clicks, the winding reported); the site refusal; the cone check on light's cone read from the record, with a spread |
+| light.py | the light line, the echo, the redshift, time dilation, the count by signals (D6's second reading), the free path, the tide, the growing or swinging echoes, the horizon | owed; its test room to be asked |
 | mass.py | the rest beat per species in its own ticks, the width against the mean life, the least life and the least span, the slit's spread; per species, where it stands among a clock's parts and how far its takes spread (1.6) | owed; its test room to be asked |
+| clocks.py | the rate lines, which no run writes since G1b (schema 1.2 retired them) | goes, with proper time's second reading from them in measure.py and the tool's line of ticks; D6's second reading is light.py's, by signals (1.3) |
 
-Every reading is built first on records made in memory, each test failing on its own mutant, and then read on the
-engine's own records as the stages bring them.
+The tool, tools/tensor24_decode.py, reads one record with its ledger and prints every reading with its status and its
+cause, raising nothing; it follows the modules.
+
+**The tests** (the owner's words through the Boss and David, 09:2x and 09:3x UTC: "what is generic, test only it, and
+then at the end, once, everything"): one test per generic part, each failing on its own mutant, on records made in
+memory; then one test of the whole, once: the example world run by the runner, and its record and ledger read end to
+end, the clock family found, row 46's load read, and every click reading NOT READ with its cause until G5.
 
 ### 5.4 What the code needs from the engine and the schema (the Boss's)
 
@@ -1026,33 +1062,46 @@ engine's own records as the stages bring them.
 2. **On every take, its lay** (the "birth" field); **on every clock's click, its clock and its teeth** ("clock" and
    "tooth"); **on every setting, its frames and the one drawn** ("axes", "members", "drawn"). These are schema 1.2's
    further fields (ANIMATE-SCHEMA-1.2), planned at G5.
-3. **A universe file that lays a travelling wave:** the Boss's, with G2's first test (his 6514633855, item 5).
-4. **The clock family found from the record alone,** for row 46 and the ledger's 00 slots: decided by the Boss
-   (6515452856), form (a). The reader derives the square from the header's own board with the loader's own
-   derivation, called read only, and finds the train whose kinds' character is the square's; the square's rows are
-   its own basis (00, the 0i, the ii, the jk by their third axis), whatever order the file writes its kinds in.
+3. **Each train's windings and wind in the ledger,** after the step and after the clicks: the schema's Ledger line,
+   which no run writes. Row 15's second reading and row 46's held clocks read them; term 11 books a train's winding
+   from G5 (the swept area carried at the key: ANIMATE-CLICK, 3.3).
+4. **A universe file that lays a travelling wave:** the Boss's, with G2's first test (his 6514633855, item 5).
+5. **The clock family found from the record alone:** form (a), decided by the Boss (6515452856) and built in the
+   loader: trains_of flags the train whose kinds' character is the four-vector's square's, its rows that square's
+   basis (00, the 0i, the ii, the jk by their third axis), its first the 00 slot. The decoder calls the loader's
+   derivation read only on the header's own files, so the reading holds whatever order the file writes its kinds in.
    Form (b), the header naming the train, would add a key that marks a role, which the law refuses.
-5. **A click's region:** the law's **No click names a Node-clock** asks a reading of a region, never of one
+6. **A click's region:** the law's **No click names a Node-clock** asks a reading of a region, never of one
    Node-clock; its alignment of 2026-10-25 makes the click the Node-clock's close and reads a bob over several
    Node-clocks; schema 1.2 writes one site per click. Each reading that uses one site (the twins' meeting, proper time
    at one Node-clock, the cone's Meshes) needs a region form at G6: a composite's click names the Node-clocks its
    parts span, or the decoder reads the region from the clock's own clicks. Sofer's reading from the law (6515502852): one
    site per click on the record is lawful (the alignment of 2026-10-25 at the end of line 983), and **No click names
    a Node-clock** binds the reading, which this page makes a region; the region form per reading stays owed at G6.
-6. **The header's `couplings` and `operands`:** no file declares a coupling (decision 35; tensor24-review 8ea447532),
+7. **The header's `couplings` and `operands`:** no file declares a coupling (decision 35; tensor24-review 8ea447532),
    and no reading of the decoder reads either key, so schema 1.3 retires both (Animate's word on the Boss's 6515656552,
-   item 4). Should a reading ever need G3's one plan, the reader derives it read only from the header's kinds and
-   board by the loader's own derivation, as in item 4: a copy in the header could disagree with what the act laid.
+   item 4); the runner writes the couplings empty until then. Should a reading ever need G3's one plan, the reader
+   derives it read only from the header's files by the loader's own derivation, as in item 5: a copy in the header
+   could disagree with what the act laid.
+8. **The header's classes, draw and kinds' characters:** the schema's header names the classes and the draw, and its
+   kind each kind's characters and T T; the runner writes none of them. No reading needs them: the clock family is
+   the loader's (item 5), and the draw's source is G5's (3.3).
 
 ### 5.5 The order of work
 
-1. Mend measure.twins and add the site refusal, on records made in memory.
-2. Task 111: row 46 and the ledger's 00 slots, by the form the Boss chose (5.4, item 4: form (a)).
-3. light.py on records made in memory, light's cone read from the record's own light lines.
-4. mass.py on records made in memory, its room asked first.
-5. G5: the reader follows the click lines as the engine writes them, and every reading runs on them; most read NOT
+The code waits for this page's approval in Sofer's architecture document and for the Boss's whole cut, and is then
+built from the system's branch, tensor24-review (the owner's words of 10:0x UTC).
+
+1. family.py, on records made in memory and on the example world.
+2. Row 46's load on the Count lines and the clock family; clocks.py goes, with proper time's second reading from the
+   rate lines and the tool's line of ticks.
+3. The tests: one per generic part with its mutant, then the whole once, on the example world.
+4. The mends: measure.twins and the site refusal, on records made in memory.
+5. light.py on records made in memory; with it, the cone check on light's cone read from the record.
+6. mass.py on records made in memory, its room asked first.
+7. G5: the reader follows the click lines as the engine writes them, and every reading runs on them; most read NOT
    READ, named, until composites click; the spread for the draws, on the Boss's rule.
-6. G6: the readings on composites, against nature's numbers.
+8. G6: the readings on composites, against nature's numbers.
 
 ## 6. What follows, what does not, and what is open
 
@@ -1148,8 +1197,8 @@ changed for the findings:
 1. Overclaims: "built" means on records made in memory (head of 1.3); the arrow row owed, the books reading
    conservation; proper time and the run back exact only with the metric at rest, owed from G2; 3.2's locality cited
    to mesh.py.
-2. The distance: the two-way theorem is the older engine's; this engine's light disperses (his measure, in 1.3); owed
-   anew; the far clock's delay subtracted from an echo.
+2. The distance: the law's two-way theorem holds for light at one speed; this engine's light disperses (his measure,
+   in 1.3); owed; the far clock's delay subtracted from an echo.
 3. The count by signals: at most the traveller's count; every lay followed by its birth link, every missing one named.
 4. Time dilation: a one-way ratio is the redshift; dilation read on a static board from both directions, or over a
    closed path.
@@ -1277,6 +1326,22 @@ The first readings (04:4x and 04:5x UTC) read the first draft: the physicist toy
   for each of 4.1 to 4.5.
 - **Last, on the owner's word (07:4x):** Animate's last look.
 
+### 8.4 The new engine alone, for the architecture document (10:0x UTC)
+
+On the owner's words of 09:2x UTC ("Only the new engine matters; arrange everything accordingly"), 10:0x UTC ("Bring
+the decoder's page for approval"; then to Sofer, for the architecture document he is building), at
+tensor24-review 4cb5359ce:
+
+1. Part 5 written for what the new engine writes: the record's two lines and the ledger's Count lines (5's head,
+   checked on the example world's run: 1,280 Count lines, every row of the decoder as built NOT READ); the
+   structures (5.2); the modules (5.3: family.py the first to build, row 46's load onto the Count lines, clocks.py
+   goes with the rate lines no run writes); the needs (5.4: each train's windings in the ledger, the clock family
+   built in the loader, the header's fields the runner does not write); the order (5.5: after this approval, from
+   tensor24-review once the Boss's cut is whole).
+2. 1.1: the header as the runner writes it.
+3. 1.3, 1.6 and 8.1's second finding: each the law's statement alone.
+4. 9.1: ANIMATE-CLICK, the whole click and the split click's draw on the node's act (3.3).
+
 ## 9. The probes
 
 ### 9.1 The decoder's
@@ -1287,6 +1352,8 @@ The first readings (04:4x and 04:5x UTC) read the first draft: the physicist toy
   horizon, the redshift and the swing (4.5).
 - **ANIMATE-SPRING** (spring.py and .txt): the gear's spring as one operation of the act, on the head's gear step: the
   beat, the four-leg bound, the ceiling, the step's limit and the A1 channel (3.8.7).
+- **ANIMATE-CLICK** (click.py and draw.py, each with its .txt): on the node's act, the whole click pushes nothing back
+  into the gears, and the split click's draw owes the node a dial (3.3).
 
 ### 9.2 The mass parts' (from board2mass)
 
