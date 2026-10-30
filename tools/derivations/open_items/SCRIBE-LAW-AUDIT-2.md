@@ -17,31 +17,67 @@ tools/derivations/open_items/scribe_law_check.py reads docs/ALGEBRA.md and runs 
 
 **Repaired at once** (three lines, exact old and new text, 1,960 lines kept): line 1165 said "the 48 rotations" and now says the 48 are the 24 rotations and their 24 mirror images; line 1786 linked an anchor no heading gives (the bold name beside it stays); line 187 held a stray closing parenthesis for a semicolon.
 
-**Known, standing until the re-cut** (scribe_law_check_known.json; 133 lines in 14 checks, printed at every run; the owner's answer of 04:5x: the old engine is frozen and its rows stand until the re-cut removes them):
+**Known, standing until the owner's word** (scribe_law_check_known.json; 32 lines in 8 checks, printed at every run; the old engine is out of the tree and the body re-cut of 2026-10-30 took out the rest of what the script names, so the rows that stand are dated history that the script's window does not reach, or wait for the owner):
 
 | check | what | lines | in the core (1 to 110) |
 |---|---|---|---|
-| P01 | an integer root named as a code primitive (largest_below and its kin), against line 100 and decision 41 | 35 | |
-| P03 | an act from outside the Node-clock, against line 92 (3) | 1 | |
-| P04 | the click as an act outside the reversal, against Postulates 2 and 4 | 5 | |
-| P05 | the time gear's exponential memo, against decision 41 | 15 | |
-| P06 | a refusal past a range, against decision 40 (e) | 3 | |
-| P07 | a declaration as a status, against line 35 | 12 | |
-| P09 | a parity rule on Gamma, T or den, against K-S2 and decision 40 (h) | 1 | |
-| P10 | real arithmetic in a reading, against line 100 | 20 | |
-| P11 | a special rule for a horizon or a frozen clock, against decision 40 (a) and the owner's 07:1x word | 20 | |
+| P01 | an integer root named as a code primitive (largest_below and its kin), against line 100 and decision 41 | 8 | |
+| P05 | the time gear's exponential memo, against decision 41 | 4 | |
+| P07 | a declaration as a status, against line 35 | 2 | |
+| P10 | real arithmetic in a reading, against line 100 | 8 | |
+| P11 | a special rule for a horizon or a frozen clock, against decision 40 (a) and the owner's 07:1x word | 7 | |
 | P13 | the old spring D / W = 2 / Gamma, against decisions 40 (e) and 41 | 1 | 35 |
-| P14 | the width derived (the law's older clause), against line 100 | 4 | |
-| S5 | a parenthesis unbalanced (348, 799, 1558) | 3 | |
-| S6 | a clause name that stands twice (358, 390, 446, 807, 1079, 1326, 1344, 1576, 1578, 1580, 1596, 1598) | 12 | |
-| S7 | a heading that carries a clause (1254) | 1 | |
+| P14 | the width derived (the law's older clause), against line 100 | 1 | |
+| S6 | a clause name that stands twice (1079) | 1 | |
 
-The lines of each check are in `python -I scribe_law_check.py --all`. **1 of the 133 stands in the law's new core** (line 35, the old spring D / W = 2 / Gamma, P13): the keeper's re-cut of the core, applied on the owner's "Yes." of 09:0x UTC to question a (8 exact edits on lines 80, 92, 96, 98, 100 and 110, 1,960 lines kept, the word diff read), took the law check from 141 rows to 133 and the core from 9 rows to 1. The history window of the script (a sentence marked as history is spared) was narrowed to the sentence's neighbourhood and the root pattern of P01 to a root named, which removed rows that the law itself marks as its record (line 106's list of the departures of the code, P12) and the over-broad reading of line 100's "each is one primitive"; P13 is never spared, since the clause still stands and waits on the owner's rule for the head's notch.
+The lines of each check are in `python -I scribe_law_check.py --all`. **1 of the 32 stands in the law's new core** (line 35, the old spring D / W = 2 / Gamma, P13): it waits on the owner's rule for the head's notch and is never spared by the script. **The body re-cut** (2026-10-30, 10:5x UTC, the old engine being out of the tree by the owner's words of 09:2x and 09:3x to Animate and the Boss, on his words of 07:1x and 09:0x and his standing "Delete"; six read-only readers by line ranges, each edit an exact old and new text counted once in its line, applied by one script with the line count and every untouched line checked): 125 edits on 99 lines, 1,960 lines kept, the law check from 133 rows in 14 checks to 32 in 8 and no new finding. What was taken out, by kind (the former text standing in git at 054cdfe86 and named in the law's closing section): the integer root by search (largest_below) wherever a phrase could go, the exponential memo repeated beside the slot form, real arithmetic in a reading (the float checks), the horizon and the frozen load as a rule (BH-S1's rule, the frozen mask, the release by the turn of its own time), the width derived, a declaration as a status (read as decided on line 35's closing form, as an assumption on line 8's word, or struck), the old engine's acts table. The form defects were mended by the move of a word, the removal of a bold mark from a pointer, or the closing of a parenthesis: S5 three, S7 one, S6 eleven of twelve. The rows that stand, by the readers' judgment each checked here:
+
+**Sixteen rows that wait for the owner** (a row is one line and one check; the recommendation is to strike each to a one-line stub that keeps the name others cite, the text standing in git):
+
+| line | check | what and why |
+|---|---|---|
+| 1045 | P01 | The window turn's integer form is one chain on roots ('k largest_below(P^2) div (R s_d)', precision (iii) 'once per window was a root ... |
+| 1124 | P01 | Step 2's integer form starts the sine recurrence at (0, largest_below(R^2 (den^2 - num^2)) div den) and takes 'one root per window' (not matched by the script), so cutting only the root leaves 'R cos and R sin ... |
+| 1886 | P01 | Item 50's two-quadrature turn is written as k times an integer root of P^2 (largest_below in five places) and the item is cited as item 50 at eight lines, so no clean cut exists and the owner says whether the form is struck or re-derived root-free. |
+| 336 | P05 | The numbers 0.015, 0.146, 1.09 and 1.5 and the edge (Gamma / 2) ln 2 = 0.3466 Gamma are computed from the exponential memo p_0 = Gamma (1 - 1 / Gamma)^c, so deleting the memo leaves them unsupported and re-deriving them under the slot form is not mine to invent. |
+| 352 | P05 | The sentence derives the old spring D / w = 2 / Gamma from the clock's factor per notch of load p_0 = Gamma (1 - 1 / Gamma)^c, the same clause as line 35's P13 that waits on the owner's rule for the head's notch, so deleting the memo alone leaves the spring resting on it. |
+| 699 | P05 | The first sentence defines the exponential clock p_0 and derives it by Cauchy's equation, every later result of the clause (the index e^(2 U), the 5.4366 m shadow, beta = gamma = 1) hangs on it, and W = the rest + c is the tick's weight g^00 and not p_0, so no one-phrase rewrite exists; the owner ... |
+| 1640 | P05 | Row 3 is the exponential time gear itself (the p_0 formula, its derivation by composition and its status), line 1634's alignment says rows 1 to 4 stand, and the core gives no formula to put in its place, so only striking the row (a change at line 1634) or a new rule conforms it. |
+| 1212 | P10 | the clause derives all six variants by the paper's real line (its script two_slits_real_line.py), so variant (E)'s numbers (the grid's step 0.0025, the largest departure 0.0012, the ratio within 0.0018) are real-arithmetic outputs: deleting the phrase 'in real arithmetic with Rule3's coefficients' ... |
+| 1417 | P10 | the old generator's route (the before notch set mode by mode in real arithmetic, rounded once), its test against a real-arithmetic oracle and the misplaced-wind numbers measured with it (1.2 x 10^-2 against 1.2 x 10^-4 and the rest) are one story, and deleting it strands 'open by the choice' in the ... |
+| 1640 | P10 | 'Rounded once' is the same exponential p_0 of row 3 (see P05), so no phrase mends it alone. |
+| 1328 | P11 | the clause name 'A collapse ends in a frozen clock' is cited by name at lines 693 and 1757 (rule 4 bars its deletion) and the body is a result under the exponential composed rates that line 90 and decision 40 (a) now leave to the metric's own gears, so the owner decides whether the clause goes ... |
+| 1610 | P11 | The line is the horizon rule itself and the check matches its bold name, which lines 90 and 106 cite, so only striking the whole clause together with those two citations clears it: strike it, or keep it as the record those lines ... |
+| 1757 | P11 | Row (q2) is the old engine's black hole as a frozen Node-clock with an entropy against the area law, and it is cited as (q2) at lines 448 and 1832, so no small cut exists and only the owner can strike it or send it to be re-derived. |
+| 1909 | P11 | Item (7) is BH-S1's mask for a Mesh at factor 0 (the owner's word of 2026-10-27, built at 87a168c16): cutting it orphans 'Three acts of the same word' and David's harness result 'without acts 7 and 12' (13 against 38 bits), while cutting only the mask's name leaves the act, so the owner picks. |
+| 35 | P13 | The clause 'The time gear's spring is the clock's one notch' holds the old spring D / W = 2 / Gamma (with the pair (den - den div Gamma, den) of line 352) and the exponential memo beside it, and what replaces the head's notch waits on the owner's rule, so no edit is proposed. |
+| 1079 | S6 | The name heads line 142 (the short pointer to the engine-5.0 draw, which the core's line 92 cites) and this long clause, and 25 lines of the law and 9 other documents (21 mentions, UNIVERSE24.md and FURTHER_RESEARCH.md meaning this one) cite it, so keeping it here changes the core's line 92 and ... |
+
+**Sixteen rows kept** (dated history marked by its own words beyond the script's window of 260 characters, or a false positive; nothing to change):
+
+| line | check | why it stands |
+|---|---|---|
+| 354 | P01 | The sentence is the builder's dated finding of 2026-10-24 on the old engine's born amplitude, in a clause whose own Alignment of 2026-10-25 reads 'history as written' (and the key amplitude 'struck ... |
+| 356 | P01 | The same dated finding of 2026-10-24, in a paragraph whose own Alignment of 2026-10-25 reads 'history as written (the top tier's file); kept by name', a mark the check's window does not reach. |
+| 462 | P01 | isqrt(T / 2) only records how that dated finding's pixel was set in the old engine's world; the paragraph is kept by name and dated history is not touched. |
+| 1039 | P01 | 'what was: the detector's own quantum W_d ... |
+| 1653 | P01 | Row 16 is one of the ledger's lines 11 to 25 that the Alignment of 2026-10-25 at line 1634 strikes and keeps by name, so its largest_below is dated history that the check's 260-character window cannot see. |
+| 1618 | P07 | Item 1 opens '(to 2026-10-24, 09:4x UTC, kept by name; since that hour no train ...)', so its status is the dated record of the former declaration. |
+| 1623 | P07 | False positive: item 6 is the setting, the seed (the start's forms, the packets, the bobs' counts), for which 'declared' stands (line 35, decision 38: the seed is free; line 8: declared is a scale or a seed alone). |
+| 360 | P10 | 'rounded once' stands inside the quoted old text of the note 'CHANGED 2026-10-20 ... |
+| 428 | P10 | 'rounded once at the read' belongs to 'the hill's weight in the notch's variable, the two forms', kept by name' (the genericity hand's derivation of 2026-10-22), 425 characters before it, which is dated history marked by its own words. |
+| 1263 | P10 | false positive: 'rounded once' here is one integer rounding of an old-engine rate in whole numbers, no real arithmetic (the rounded divisions belong to row 4 as a whole, 4.0's by the Alignment of line 1256). |
+| 1562 | P10 | The reading belongs to the 2026-10-19 derivation that the line's own clause 'Spin, reopened' (CHANGED 2026-10-24) says 'stands as the record it was', a marker the script's 260-character window does not reach. |
+| 1898 | P10 | The real arithmetic and the single rounding describe 4.0's generator in an item that its own dated Alignment marks as 4.0's declared problem by name with its doors struck, so it is history that the check's window cannot see. |
+| 132 | P11 | Row at char 11063: a dated build record (08:42 UTC) of the engine-5.0 line, in the clause that says the release by the turn of its own time is that line's build and that the turnover's clause which read FR-S1 as its law is cancelled (2026-10-29), naming the old test's input and stating no rule. |
+| 436 | P11 | Row at char 2659: the sentence sits in the swing pair's hard finding of 2026-10-26 inside the clause 'The width is derived', which says of itself 'Struck from the law as a clause by the owner's ruling of 2026-10-26 ... |
+| 1820 | P11 | The bullet stands in the closing section The former clauses, kept by name (From The Node, dated), and names BH-S1's test as 'the records' numbers at the hands' heads, not the law', so it states no rule. |
+| 436 | P14 | Row at char 2: the heading of the struck clause, which reads 'Struck from the law as a clause by the owner's ruling of 2026-10-26, 22:1x UTC' and 'kept by name' (as line 100 confirms), a mark the check's window does not reach. |
 
 ## C. The recommendation for the re-cut
 
 1. **The core first** (the ten rows): each conformed by its exact old and new text to the decisions the owner has already made (27, 35, 40, 41, 42, and his words of 07:1x), the Boss reading the Node-clock's lines.
-2. **The body after** (130 rows and the form defects), section by section beside the engine's cleaning, by the preface's own rule (a line that no longer holds is not in the body; it stands dated in the closing section The former clauses, and the body holds every formula once).
+2. **The body after**, done on 2026-10-30 (the 125 edits above: a line that no longer holds is not in the body, by the preface's own rule; it stands dated in the closing section The former clauses, and the body holds every formula once); what remains is the 32 rows of section B, 16 for the owner's word.
 3. The check runs after every law edit and every hour; the known list only falls, and a finding beyond it refuses.
 
 ## D. The code (tools/derivations/open_items/scribe_code_census.py, an AST scan, at tensor24-review 9751f91c1, reader-5 0b4fb6d3e, toys-5 f89b76a33)
