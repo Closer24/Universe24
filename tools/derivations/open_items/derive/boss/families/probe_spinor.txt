@@ -1,0 +1,51 @@
+The half-speed gear in whole numbers, and how far the act as built carries it (probe_spinor.py)
+1. The order Lambda = Z[sqrt 2] 2O, the ring the 48 generate, as a lattice of whole numbers (scaled by 2).
+   spanned by the 48 and sqrt 2 times each: rank 8; the 48 lie in it: True; closed under products: True (a ring)
+   the 48 as 8 x 8 matrices of left multiplication in its basis: whole True, determinants [1], M(s) M(t) = M(s t) on 2304 of 2304 pairs: True
+   -1 (the full turn) is -I: True
+
+2. The eight gears' kind: its characters, its sign under a full turn, and its pairings.
+   (trace, order) of the 48 and how many: {(-8, 2): 1, (-4, 3): 8, (0, 4): 18, (0, 8): 12, (4, 6): 8, (8, 1): 1}
+   the quarter turns' lifts have trace 0 = sqrt 2 + (-sqrt 2): the two Galois-conjugate spinors E1/2 and E5/2
+   are one whole kind of eight gears (its complexification 2 E1/2 + 2 E5/2); the third turns' lifts trace +-4.
+   the quarter turn's lift to the fourth (one full turn of the board about z) is -I: True; to the eighth +I: True
+   the third turn's lift cubed is -I, to the sixth I: True
+   SUM trace(M M) over the 48 = -192 = -4 x 48: every constituent Kramers (Frobenius-Schur -1); pairings kept (8, 0), symmetric (2, 0), antisymmetric (6, 0)
+   signed permutations among the 48 in the lattice's basis: 2 (+-I); the other 46 mix rows
+   (trace, order) pairs of the 48 that no signed permutation of eight gears has, by its cycles: [(-4, 3), (4, 6)]:
+   the third turns' lifts are signed permutations in no basis of eight gears; the quarter turns' lifts could be
+   (an 8-cycle), but not together with the third turns'.
+
+3. Lambda as a pair of Z[zeta_8] numbers: the right basis (1, w), w = (1 + i + j + k) / 2 (Big Pic's four whole
+   numbers per part, a pair of Gaussian pairs: a + b zeta + c zeta^2 + d zeta^3 = (a + c i) + zeta (b + d i)).
+   the Z-span of zeta^k and w zeta^k (k = 0..3) is Lambda itself: True (each contains the other's spanning set)
+   so every hand of Lambda is (alpha, beta) in Z[zeta_8]^2 with alpha + w beta, the scalars on the right, which
+   commute with the 48 on the left: the hand's own phase (its winding) is right multiplication by zeta^k.
+   the 48 as 2 x 2 matrices over Z[zeta_8] on (1, w): every entry whole (the coordinates are); monomial (one unit zeta^k per column) on 4 of 48
+   the quarter turn about z: columns ((0, 0, 0, 0), (0, 0, 0, -1)) and ((0, -1, 0, 0), (0, 1, 0, -1)), each 4-tuple a Z[zeta_8] number on 1, zeta, zeta^2, zeta^3
+   the third turn about (1, 1, 1): columns ((0, 0, 0, 0), (1, 0, 0, 0)) and ((-1, 0, 0, 0), (1, 0, 0, 0)), each 4-tuple a Z[zeta_8] number on 1, zeta, zeta^2, zeta^3
+
+4. The Gaussian basis (1, j) Z[zeta_8]: the hand (z1, z2), z1 + j z2, each z a Z[zeta_8] number on zeta^k.
+   lifts that map this lattice to itself: 16 of 48; as 8 x 8 matrices all signed permutations: True;
+   they cover 8 turns, every one fixing up to sign the axis ['x'] (the dihedral eight of that axis:
+   zeta = (1 + i) / sqrt 2 is the quarter turn about x); the other 32 lifts send a Gaussian-basis hand to halves:
+   they are no map of these eight gears. Each axis has such a basis; no basis serves two axes.
+
+5. G3/2 = E1/2 x E in whole numbers: the eight gears times the engine's E (two rows), sixteen gears.
+   a representation (M(s) M(t) = M(s t)): True; -1 is -I: True; traces [-16, -4, 0, 4, 16] (all whole: G3/2's character is rational);
+   SUM trace(M M) = -192 = -4 x 48 (Kramers); pairings kept (16, 0), symmetric (6, 0), antisymmetric (10, 0): four copies of G3/2 (its least whole form is eight gears, not built here).
+
+6. On the real act: SYM24's cube of side 3, the eight gears a train of kind A1 at part 8 beside the square.
+   W = 1 standing, the lattice basis: the 2 signed permutations (+-I) hold with the tooth flip on 2 of 2; the 46 mixing lifts, the teeth laid 0, depart over 6 rounds on 0 of 46 (at W = 1 the carry is linear)
+   W = 1 standing, the Gaussian basis: the 16 signed-permutation lifts of one axis's eight turns hold with the tooth flip on 16 of 16; the other 32 are no map of the gears
+   W = 1: the run back by the act alone returns the start after 6 rounds, bit for bit: True
+   W = 9 standing, the lattice basis: the 2 signed permutations (+-I) hold with the tooth flip on 2 of 2; the 46 mixing lifts, the teeth laid 0, depart over 6 rounds on 46 of 46
+   W = 9 standing, the Gaussian basis: the 16 signed-permutation lifts of one axis's eight turns hold with the tooth flip on 16 of 16; the other 32 are no map of the gears
+   W = 9: the run back by the act alone returns the start after 6 rounds, bit for bit: True
+   the quarter turn's lift (a signed permutation of the eight gears) to the fourth is -I on them: True, and +I to the eighth: True;
+   it holds on the act with the flip (above), so four quarter turns of the board send the half-speed hand to minus
+   itself bit for bit, each tooth flipped in its teeth (the sign law), and eight bring it back.
+
+7. What would carry the 48 at W >= 2, named and not derived: a carry whose remainders fill a domain the 48 keep
+   (the per-gear box [0, W) is kept by signed permutations alone); on Lambda that is the nearest lattice point of
+   W Lambda, a search over eight gears at once, which the gate refuses in the act (line 35: no search, no table).

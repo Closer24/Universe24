@@ -1,0 +1,41 @@
+Pauli in the clicks, in clocks: the pair's joint hand and the belt (probe_pair.py)
+1. The belt on the joint hand of two hands, kind by kind: S J = J^T (the swap), R J (one clock turned fully).
+   On J_e = phi x chi + e chi x phi the swap gives e J_e; the full turn gives sigma J_e, sigma the kind's sign under
+   one full turn; the belt law S = R on the pair's hand holds for e = sigma alone. sigma is read off the kind:
+   A1                                          : one full turn +I; the belt holds on a pair hand that is not 0 for e = [1]; the pair in one state J_e(phi, phi) has size 5184 (4 N(phi)^2: bunching)
+   A2                                          : one full turn +I; the belt holds on a pair hand that is not 0 for e = [1]; the pair in one state J_e(phi, phi) has size 5184 (4 N(phi)^2: bunching)
+   E                                           : one full turn +I; the belt holds on a pair hand that is not 0 for e = [1]; the pair in one state J_e(phi, phi) has size 8100 (4 N(phi)^2: bunching)
+   T1                                          : one full turn +I; the belt holds on a pair hand that is not 0 for e = [1]; the pair in one state J_e(phi, phi) has size 63504 (4 N(phi)^2: bunching)
+   T2                                          : one full turn +I; the belt holds on a pair hand that is not 0 for e = [1]; the pair in one state J_e(phi, phi) has size 63504 (4 N(phi)^2: bunching)
+   E1/2 + E5/2 (8 gears)                       : one full turn -I; the belt holds on a pair hand that is not 0 for e = [-1]; the pair in one state J_e(phi, phi) has size 0 (0: no hand, never clicked)
+   the complex spinor of the even 12 (4 gears) : one full turn -I; the belt holds on a pair hand that is not 0 for e = [-1]; the pair in one state J_e(phi, phi) has size 0 (0: no hand, never clicked)
+   (a kind of one row has no antisymmetric pair at all, J_- = 0 identically, so its pair hand is J_+ alone)
+   (the complex spinor of the even 12 also comes out at -1 under a full turn, so the belt picks e = -1 for it too;
+   its own pairing is empty (probe_48 3), so the exclusion there rests on the belt law alone.)
+
+2. The half-speed hand's two pairings, in whole numbers (the order Lambda on the Gaussian basis, eight gears).
+   both pairings kept by the 16 lifts that map the basis to itself: True
+   <chi, phi> = conj <phi, chi> (the Hermitian pairing: its real part symmetric, its i part antisymmetric): True on 20 pairs; det(chi, phi) = -det(phi, chi) (antisymmetric): True on 20 pairs
+   both hands turned by their own quarter turn i: <,> unchanged (charge 0): True; det times i^2 = -1 (charge 2): True: the determinant pairs two hands of one sense, the Hermitian pairing a hand against a counter-turning one
+   det(phi, phi) = 0 on 20 of 20 hands: two hands in one state have no
+   hand of their own; <phi, phi> = N(phi) > 0 on all 20: a hand against its own counter-turn is its norm.
+   the partner T phi = (-conj z2, conj z1): T T = -1 on 20 of 20: True; <phi, T phi> = 0 (Kramers) on 20 of 20: True; det(phi, T phi) = N(phi) on 20 of 20: True
+   a hand turning by i and its partner: the partner's winding is minus the hand's on 20 of 20: True: the two turn in
+   opposite senses, and their pair has the hand N(phi): two at one place, one up and one down.
+   a third hand psi: phi det(chi, psi) + chi det(psi, phi) + psi det(phi, chi) = 0 on 20 of 20 triples: three hands
+   of a two-dimensional kind are never independent; with phi and T phi standing, psi = phi <phi, psi> / N + T phi <T phi, psi> / N
+   exactly (N(phi) psi = phi <phi, psi> + T phi <T phi, psi>): 20 of 20: the filled pair leaves a third no room.
+
+3. On the act, one Node-clock: a giver and a taker of two copies, both copies tied alike to the giver (g = f / 10).
+   whole-speed (A1 at part 2, two copies): the copies' gears alike in 3001 of 3001 states; their
+   symmetric joint hand J_+ not 0 in 3000 of 3000 rounds (the pair bunches: one state, one hand of double size);
+   J_- = 0 in 3001 of 3001; the counts by term 11: copy 1 from 0 to 4, copy 2 from 0 to 4, the giver from -7 to 0
+   half-speed (eight gears, two copies): the copies alike in 3001 of 3001 states; J_- = 0 and
+   det(copy 1, copy 2) = 0 in 3001 and 3001 of 3001: the pair's hand is empty in every round, so a pair
+   click reading it counts 0 for ever; yet each copy's own winding climbs: copy 1 from 0 to 4, copy 2 from 0 to 4 keys, the giver -7 to 0.
+   So on the act as built the half-speed pair in one state is never clicked and still fills: the gears gather what
+   the pair's hand does not hold, and the books of keys between the giver and the pair do not close (what fails).
+   the partner pair (phi, T phi) run free for 600 rounds (own springs alone), copy 2's teeth on the 4 rows T
+   negates laid at W - 1 (the sign law): copy 2 stays T of copy 1 in both slots in 600 of 600 rounds, its teeth the
+   flipped teeth in 600; <copy 1, copy 2> = 0 in 600, det not 0 in 600, the windings opposite in 600:
+   two at one place in opposite senses keep their pair's hand; the act commutes with T, a signed permutation of the gears.

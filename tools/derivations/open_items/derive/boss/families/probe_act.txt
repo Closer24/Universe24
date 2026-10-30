@@ -1,0 +1,60 @@
+Two clocks of one family at one Node-clock, on the Node-clock's own act (probe_act.py)
+W = 100000000000000000000, f = 125000000000000000, the swing 1000000, g = 12500000000000000; the plan through the engine's own A1 table; the kick J at s = T_k = T_d = 1.
+1. A giver and a taker of one kind at part 2, the vertex g = f / 10 through the engine's A1 table; 3,000 rounds.
+   The taker's count in keys after each round: does it pass 1 (two quanta in one hand at one Node-clock)?
+   A1: the key 714285714285714285714285714285 (odd), the giver's area at the lay 7000 thousandths of a key;
+      the taker's count from 0 to 7; it reaches 1 at round 218 and 2 at round 385; its area at its most 7004 thousandths of a key
+      rounds where the giver's click is not minus the taker's (the books): 0 of 3000; rounds with |q_c| >= 2: 0
+      the taker's energy at count 2 over its energy at count 1, in thousandths: 2948 (two keys in one hand: one clock of a bigger swing)
+   A2: the key 714285714285714285714285714285 (odd), the giver's area at the lay 7000 thousandths of a key;
+      the taker's count from 0 to 7; it reaches 1 at round 218 and 2 at round 385; its area at its most 7004 thousandths of a key
+      rounds where the giver's click is not minus the taker's (the books): 0 of 3000; rounds with |q_c| >= 2: 0
+      the taker's energy at count 2 over its energy at count 1, in thousandths: 2948 (two keys in one hand: one clock of a bigger swing)
+   T1: the key 714285714285714285714285714285 (odd), the giver's area at the lay 7000 thousandths of a key;
+      the taker's count from 0 to 7; it reaches 1 at round 218 and 2 at round 385; its area at its most 7004 thousandths of a key
+      rounds where the giver's click is not minus the taker's (the books): 0 of 3000; rounds with |q_c| >= 2: 0
+      the taker's energy at count 2 over its energy at count 1, in thousandths: 2948 (two keys in one hand: one clock of a bigger swing)
+      the taker's largest |count| per component (x, y, z): [1001228, 0, 0]: every key lands in the giver's own component
+   T2: the key 714285714285714285714285714285 (odd), the giver's area at the lay 7000 thousandths of a key;
+      the taker's count from 0 to 7; it reaches 1 at round 218 and 2 at round 385; its area at its most 7004 thousandths of a key
+      rounds where the giver's click is not minus the taker's (the books): 0 of 3000; rounds with |q_c| >= 2: 0
+      the taker's energy at count 2 over its energy at count 1, in thousandths: 2948 (two keys in one hand: one clock of a bigger swing)
+      the taker's largest |count| per component (x, y, z): [1001228, 0, 0]: every key lands in the giver's own component
+
+2. The giver laid with two keys exactly (the key half its area, made odd): both land in the taker's one hand.
+   A1: the key 2500000000000000000000000000001; the taker's count from 0 to 2, 2 first at round 838; the giver's count then 2 keys given
+   T1: the key 2500000000000000000000000000001; the taker's count from 0 to 2, 2 first at round 838; the giver's count then 2 keys given
+
+3. Time's reversal twice on every family's gears (step.mirror, the clock standing): T T = +1, no Kramers sign.
+   A1: mirror(mirror(s)) == s: True
+   A2: mirror(mirror(s)) == s: True
+   T1: mirror(mirror(s)) == s: True
+   T2: mirror(mirror(s)) == s: True
+
+4. The 'no' mutant, declared: outside the act, the vertex is cut in any round where the taker holds one key.
+   A1: the taker's count from 0 to 1; the vertex cut in 2782 of 3000 rounds; the books miss in 0 rounds. An if outside the act holds the count at 1: the measure sees
+   an exclusion where one is imposed; the act as built imposes none (item 1).
+
+5. The 'no' mutant by a strength: a hairspring that stiffens with the swing, the taker's own four-leg term
+   lambda (T . T)^2 through the A1 table (a monomial the plan allows), scanned; the vertex g = f / 10 as in item 1.
+   A clock holding one key then beats off the giver's beat, and the second key does not connect (the blockade).
+   A1: (lambda, the taker's largest count, its largest area in thousandths of a key, rounds the books miss) over 2,000 rounds:
+      (0, 7, 7004, 0)
+      (1000, 7, 6960, 0)
+      (10000, 5, 5231, 0)
+      (30000, 3, 3269, 0)
+      (100000, 2, 1678, 0)
+      (300000, 1, 862, 0)
+      (1000000, 0, 405, 0)
+      (10000000, 0, 92, 0)
+   T1: (lambda, the taker's largest count, its largest area in thousandths of a key, rounds the books miss) over 2,000 rounds:
+      (0, 7, 7004, 0)
+      (1000, 7, 6960, 0)
+      (10000, 5, 5231, 0)
+      (30000, 3, 3269, 0)
+      (100000, 2, 1678, 0)
+      (300000, 1, 862, 0)
+      (1000000, 0, 405, 0)
+      (10000000, 0, 92, 0)
+   The cap is the strength's, not the kind's: A1 and T1 give the same rows; where it holds the count at 1 it is a
+   window of lambda (CHOSEN), and a weaker or stronger hairspring crowds or empties. Not Pauli: no kind picks it.

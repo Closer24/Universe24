@@ -1,0 +1,32 @@
+The 48 turns of spin in whole numbers, and what rides the carry (probe_48.py)
+1. The 48 turns of spin, closed in Z[sqrt 2] from the lifts of two of the engine's own turns.
+   elements reached: 48; the two generators cover the engine's turns 112 and 146 of the 24
+   turns of the 24 covered: 24 of 24; lifts per turn: [2]
+   -1 (the full turn) is among them: True; each turn's two lifts are each other's negatives: True
+   lifts of the even 12 (A2 = +1): 24, their spinor characters (2 Re q): [(-2, 0), (-1, 0), (0, 0), (1, 0), (2, 0)] (whole);
+   lifts of the odd 12 (A2 = -1): 24, their spinor characters: [(0, -1), (0, 0), (0, 1)] ((0, 1) is sqrt 2: the quarter turns' lifts, trace +-sqrt 2)
+   lifts with an irrational trace: 12 (the twelve lifts of the six quarter turns); a whole matrix has a whole trace, so on two gears, on four (trace +-2 sqrt 2) or on any 2n the quarter turns have no whole spinor.
+   SUM chi_2(g g) over the 48 = (-48, 0) = -48 (Frobenius-Schur -1: the own pairing antisymmetric, Kramers); SUM chi_2(g)^2 = (48, 0) = 48 (one kind)
+   on four real gears (a pair of planes, chi_4 = 2 chi_2): pairings the 48 keep 4 (remainder 0), symmetric 1 (0), antisymmetric 3 (0): one dot and three windings, the quaternion's i, j, k.
+   Compare the Gaussian hand of a real kind under its own turn (probe_kinds 6): one dot and one winding.
+
+2. The even 12's Kramers lift, the Hurwitz units, as whole 4 x 4 matrices on the basis 1, i, j, (1 + i + j + k) / 2.
+   24 matrices, every entry whole (the halvings exact), determinants [1], closed under products: True
+   signed permutations among them in this basis: 2 (the identity and -1); the rest mix the rows
+   SUM trace(M M) over the 24 = -48 = -2 x 24 (the realified Kramers spinor); pairings kept (4, 0), symmetric (1, 0), antisymmetric (3, 0)
+   (trace, order) of the 24: [(-4, 2), (-2, 3), (0, 4), (2, 6), (4, 1)]
+   the 384 signed permutations of four gears by (trace, order): {(-4, 2): 1, (-2, 2): 16, (-2, 4): 12, (-1, 6): 64, (0, 2): 42, (0, 4): 108, (0, 8): 48, (1, 3): 32, (1, 6): 32, (2, 2): 16, (2, 4): 12, (4, 1): 1}
+   Hurwitz (trace, order) pairs no signed permutation of four gears has: [(-2, 3), (2, 6)]: the third turns' lifts are signed permutations in no basis, so the Kramers lift never rides the carry as a whole basis.
+
+3. The even 12's whole lift by signed permutations of four gears: Q8 (the three half turns, left multiplication on 1, i, j, k) and the cyclic turn of i, j, k.
+   elements: 24; all signed permutations: True; -1 among them: True
+   the map to the cube's turns (each generator to the turn it lifts) is one-valued on every element: True; its image 12 turns, the even 12 exactly: True; the kernel: [-4, 4] (traces of +-1)
+   SUM trace(M M) over the 24 = 0: Frobenius-Schur 0, a complex kind, with no pairing of its own; pairings kept (2, 0), symmetric (1, 0), antisymmetric (1, 0): one dot and one winding, as a Gaussian hand has.
+   So the one spinor of the even 12 that rides the carry is complex, not Kramers: a full turn is -1 on it, but
+   two of its clocks pair as any Gaussian hand's do, and the pairing rule fixes no exchange sign for it.
+
+4. Both lifts on the real act (SYM24's board: a cube of side 3, a train of kind A1 at part 4 beside the square).
+   W = 1 standing: the whole (complex) spinor's 24 signed permutations, turned run = run turned over 6 rounds: 24 of 24
+   W = 1: the Kramers (Hurwitz) spinor's 24 matrices: its 2 signed permutations (+-1) hold with the tooth flip on 2 of 2; its 22 mixing matrices, the teeth laid 0, depart over 6 rounds on 0 of 22 (at W = 1 the carry is linear, q = n)
+   W = 9 standing: the whole (complex) spinor's 24 signed permutations, turned run = run turned over 6 rounds: 24 of 24
+   W = 9: the Kramers (Hurwitz) spinor's 24 matrices: its 2 signed permutations (+-1) hold with the tooth flip on 2 of 2; its 22 mixing matrices, the teeth laid 0, depart over 6 rounds on 22 of 22
