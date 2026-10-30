@@ -933,7 +933,8 @@ owed at G2 under Postulate 4 (1.3, 1.5), and the decoder never steps the engine 
 (decision 40 (b) is the plan's), and 5.4, item 5 is closed from the law's side.
 
 **Part 1.6 and the edits it brought** (0.1, item 7; 1.3's two rows; 3.1 at part 4; 5.3; 5.4, item 6; 6.1) went to both
-readers and to the writer for their readings; their words are folded here.
+readers and to the writer. The two readers were stopped before they returned a verdict, and a new reading is the
+owner's call; the writer's reading is folded here.
 
 - **The writer's law reading (Sofer, 6516566266): one sentence breached decision 35,** the three generations as three
   trains, the files' three pairs: a file that lays one train per generation with its own pair declares three species
@@ -983,8 +984,8 @@ The first readings (04:4x and 04:5x UTC) read the first draft: the physicist toy
 ### 8.3 The union's readings
 
 The joins and the re-cut sentences (the header's union, frame and words; 0.2's three; 3.9.2; 6.2's T1 row) go to
-board2mass's two hostile readers and to the decoder's two, and the whole page to the writer; their words are folded
-here.
+board2mass's two hostile readers, and the whole page to the writer; their words are folded here. The decoder's two
+readers read again only on the owner's word.
 
 ## 9. The probes
 
