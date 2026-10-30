@@ -26,7 +26,7 @@ read a mass and uncertainty), and every section of part 3 opens with the clock s
 **The union** (the owner's word to David, 06:3x UTC, in Hebrew; in translation: "Sync with Animate on the pages of
 both of you, and unite them into one page that Animate will manage"). This page takes in David's board2mass (toys-5
 dbf541ebe, the text its two hostile readers agreed at 45ad30a57, with Sofer's two wordings) as its mass parts, each
-section whole: 0.2, 2, 3.7 to 3.11, 4.6, 6.2, 7, 8.2 and 9.2. David derives them and checks every version of them;
+section whole but for the re-cuts named in 8.3: 0.2, 2, 3.7 to 3.11, 4.6, 6.2, 7, 8.2 and 9.2. David derives them and checks every version of them;
 Animate manages the page. 9.3 maps both pages' former numbers to these. Animate's reading of the mass and the clock
 (6514375401 and 6514643547) stands as the clicks' side (4.6).
 
@@ -38,7 +38,7 @@ The owner's words to David on the mass (in Hebrew; in translation):
   finish. From the clocks, understand what the transformation from the board to the clicks is. And why those ratios
   are seen in the clicks, and why there are 3 generations, with all their ratios and properties."
 - Before it: "How a mass enters the board, in the four dimensions of the events' spacetime, and how it comes out of
-  the click, whose spacetime is three dimensions, has to be understood, no?" (Sofer's 8.2: both are 3 + 1, and what
+  the click, whose spacetime is three dimensions, has to be understood, no?" (Sofer's docs/BIG_PICTURE.md 8.2: both are 3 + 1, and what
   differs is which 1.)
 - 04:3x UTC: "Think in clock terms, not gears. What does the page say? Check whether trains are allowed at all,
   because everything must be generic and tensor, and a Node-clock is local: only in the definition of the families
@@ -53,14 +53,15 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 "built" is built and tested on records made in memory, and every reading on the engine's own records is owed.
 
 **Nature is in the clicks, not in the board** (the owner's word of 05:0x; line 695, the great clock's tick is no
-observable; 8.2). Every number from nature on this page is a reading of records: counts of clicks, their rates and their
+observable; docs/BIG_PICTURE.md 8.2). Every number from nature on this page is a reading of records: counts of clicks, their rates and their
 ratios. The board's own numbers, its teeth W, its springs D, its grips and its round, are never measured directly: at
 first order they cancel from every reading of the clicks, and at order omega0^2 they show only as small departures
 (4.6.3, 4.6.4), for swings above the floor (3.8.3), which nature's null results bound. The page sets against nature
 only what the board's clicks would read, and the board's sections (3.7 and 3.8) are the mechanism behind them, no
 claim about nature on their own.
 
-**Words.** In clock terms (the owner's ask): a Node-clock is a clock at one place. In the mass parts a **hand** is the
+**Words.** In clock terms (the owner's ask): a Node-clock is a clock at one place. In the mass parts and in 1.7 to
+1.11 a **hand** is the
 law's gear, a dial with its carried remainder (line 90), one row of a family at a Node-clock, and a **family** is the
 law's train, a tensor of one kind defined in the universe file alone (line 96): a family of kind T1 puts three hands
 in every Node-clock, one for each axis. In 1.6, as in the law's line 326, a hand of several gears is one quantum of a
@@ -173,8 +174,8 @@ each of its sections names the clock statement it does (the owner's word of 07:1
 - **What a Node-clock lacks to make a clock** (the owner's word of 06:3x: pass it to the Boss and put it in the page;
   6516545901, taken whole into TENSOR24_NODE.md by the Boss, 6516601236): a beat of its own. A gear on the head is
   pulled only sideways, by its six neighbours, so it moves as light does. It becomes a clock, with a mass, only when
-  something in its own Node-clock pulls it back toward 0: a hairspring tied to a held hand that stands at its count,
-  a ratchet that keeps the held hand from slipping, and swings above the floor (1.7). Its algebra, the gear's spring
+  something in its own Node-clock pulls it back toward 0: a hairspring tied to a held hand, the held hand kept at its
+  count by a spring of its own, a stop that bounds a large swing, and swings between the floor and a ceiling (1.7). Its algebra, the gear's spring
   as one operation of the act, is 3.8.7 (the node's term 6, apart from term 9, the volume's notch).
 - **To beat at every size, a gear needs a spring.** On the head no gear holds a beat. The example's lone gear is
   laid at 1 with its before slot at 0, so it is laid moving (its motion being now less before). It beats every 6
@@ -228,7 +229,7 @@ each of its sections names the clock statement it does (the owner's word of 07:1
 
 | What it is | In a clock | Taken alone | How the clicks show it |
 |---|---|---|---|
-| a gear (the law's form of a quark, a parton) | a wheel inside a watch | never | only inside its clock's clicks; a hard click reads the gears' winds as fractions of the hand's, three summing to one (line 1556) |
+| a gear (the law's form of a quark, a parton) | a wheel inside a watch | never | only inside its clock's clicks; a hard click reads the gears' winds as fractions of the hand's (line 1556: three summing to one, which nature refuses, its valence quarks carrying about 0.4 of the proton's momentum at Q^2 = 10 GeV^2 and the gluons and the sea the rest; what carries the rest on the board is OPEN) |
 | a part of a bound clock (the electron in the atom, a nucleon in the nucleus) | a watch in a case | once a click frees it, with energy (line 468: what nature splits with energy is a bob) | through its clock's clicks: the atom's light and the atom's split clicks |
 | a quantum of its own train (a free electron, a proton) | a watch on its own | yes | its own takes |
 
@@ -238,19 +239,25 @@ each of its sections names the clock statement it does (the owner's word of 07:1
   model's three the dimension's three (lines 326 and 1556). So "only part of a clock" is the law's confinement: a
   hand of three gears is one event, clicked whole; in nature no fractional charge has ever been isolated. A clock's
   beat is not its gears': nature's proton weighs 938 MeV while its three quarks' masses come to about 9 MeV in the
-  usual scheme, and a composite's mass holds its binding (1.3). The top falls apart before a clock forms round it (its
-  life is shorter than the time a hadron takes to form), so nature reads it only from its decay's clicks, never alone
-  and never in a clock.
+  usual scheme; the rest is the positive energy of confinement, not a binding, which would lighten it. On the board a
+  hand's mass is its spring (3.8), and a gear holds no count of its own for the quarks' 9 MeV: OPEN at G3.
+- **The top** falls apart before a hadron forms round it (its life is shorter than the time a hadron takes to form).
+  Nature reads its mass and its spin, even the entanglement of a pair's spins (ATLAS and CMS, 2024), from its own
+  decay's clicks, so it is never taken alone and never in a hadron; a threshold excess read as quasi-bound toponium
+  (CMS and ATLAS, 2025) would be a pair at most. A gear with a mass and a spin of its own, read from its own decay, is
+  what line 326 refuses a gear: OPEN against it.
 - **The electron.** A quantum of its own train (line 468): free, a click takes it whole, and its takes trace its path.
   Bound, it is a part of the atom, a bob, and it is seen through the atom: the atom's lines are the beats of two of
   its levels, born as light, and a line's quantum is taken whole at an absorber, whose own transition is the click's
-  unit (line 458). Its spin is read through the atom too: Stern and Gerlach's split clicks took silver atoms, and a
-  free electron's two beams blur (line 1562: "the click's object is the atom, not the electron").
+  unit (line 458). Its spin is read through a clock too: Stern and Gerlach's split clicks took silver atoms, since a
+  free electron's two beams blur (line 1562: "the click's object is the atom, not the electron"), and a Penning trap
+  reads one electron's spin through its motion in the trap's field (Dehmelt's continuous Stern-Gerlach effect): the
+  atom is one route, not the only one.
 - **The generations.** In the clicks the electron, the muon and the tau are one clock design at three beats: one
   charge and one spin, and only the beat (the mass), the life (the width) and the neutrino each pairs with differ,
   each heavier one living shorter and decaying into lighter ones. All three are taken alone: the muon leaves a long
   path of takes, and the tau is read mostly from its decay's clicks. The quarks' generations are gears, read only
-  through their clocks (the top aside, above).
+  through their hadrons, and the top through its own decay (above).
 - **What the clicks decide about three rows.** A train of kind T1 holds three rows at every Node-clock, one per axis
   (3.1). A click takes the whole train's winding and never a row's, so in the clicks the three rows, unsplit, are one
   species' gears, as the law reads them (line 1556: a train of dimension 3, three gears one per axis, the colours as
@@ -261,18 +268,21 @@ each of its sections names the clock statement it does (the owner's word of 07:1
   but a whole click's take balances only at resonance (docs/BIG_PICTURE.md 5.1's open line), so a take resonant with
   one beat would tell the rows apart by its energy. Then the rows are the generations, and the colours stand
   elsewhere, since rows cannot be both. G5 (the resonant take) and G3 (whether the one plan lays a held E or T2 count)
-  decide it, and the decoder reads the answer from the takes' energies.
+  decide it, and the decoder reads the answer from the takes' energies. OPEN with it: what keeps each row's count
+  apart through a click (nature keeps the electron's, the muon's and the tau's apart: mu -> e gamma below 1.5 x
+  10^-13, MEG II, and a resonant take alone does not forbid mu -> e with light), the quantum per mode
+  (TENSOR24_NODE.md 4.5), and where the colours then stand.
 - **The owner's guess, the proton from the ordinary click and the electron from the split click.** Each form has its
   home, and the guess names both:
   - the whole click is confinement's: one hand holds the whole winding, every gear at once, so the proton's makeup
     shows only through clicks of the whole proton and, in a hard click, its gears' fractions;
   - the split click is the detector's draw between two twins, upper and lower, and the electron's spin is read there,
-    through its atom.
+    through its atom or its trap.
   - Neither form belongs to one species. An electron whose winding sits whole in one hand clicks with nothing to
     choose, as the whole click does; a proton's spin is drawn upper or lower by split clicks, as the electron's is,
     and it too was first read through a clock: Frisch and Stern read the proton's magnetic moment in 1933 from beams
     of hydrogen molecules.
-  - What differs by species is how far the split's draw spreads the takes: at one speed the heavier species' takes
+  - What differs by species is how far the wave spreads, which the split's draw samples: at one speed the heavier species' takes
     spread less, so a proton's takes trace one sharp path while an electron's spread into a slit's fringes; at one
     momentum every species spreads alike (neutrons and large molecules show fringes too). So the guess holds as a
     matter of degree, not of kind.
@@ -281,19 +291,23 @@ each of its sections names the clock statement it does (the owner's word of 07:1
 
 ### 1.7 The mass, in clocks (its algebra: 3.7, 3.8)
 
-- **Light's hand has no spring of its own.** Its own Node-clock pulls it only toward its six neighbours, as pendulums
-  tied by threads: when all swing together nothing pulls, so it does not beat by itself, and it moves only as a wave
-  from clock to clock (3.8.1).
-- **A massive hand has a hairspring** inside its own Node-clock: a tie to a held hand that stands at a fixed count,
-  the coupling family's, pulls it back toward 0. So it swings by itself even when its neighbours swing with it, and
-  that beat, counted in its own ticks, is its mass (decision 37; 3.8.1, 3.8.2).
-- **The escapement's floor:** a swing smaller than about one count a round does not beat at the spring's rate; the
-  carry sets a slower beat of its own, as a clock wound too little stutters (3.8.3).
-- **The escapement's ceiling:** a spring stiffer than the step can follow breaks the step, so every beat stays below
-  a quarter turn a round, and every spring, the ratchet's included, far below the teeth (3.8.4, 3.8.7).
-- **The anchor needs a ratchet:** the hand it holds pushes the held hand back, and a three-leg tie alone lets it slip;
-  the held hand drifts, and the massive hand runs away. A four-leg term holds it, as a ratchet holds a wound spring
-  (3.8.6, 3.8.7).
+- **Light's hand has no spring of its own.** It is a bead joined to its six neighbours by springs alone: move them all
+  together and nothing pulls back, so it has no beat of its own and moves only as a wave from clock to clock (3.8.1).
+- **A massive hand has a hairspring** inside its own Node-clock, as a pendulum has its weight: a tie to a held hand
+  that stands at a fixed count, the coupling family's, pulls it back toward 0. So it swings by itself even when its
+  neighbours swing with it, and that beat, counted in its own ticks, is its mass (decision 37; 3.8.1, 3.8.2).
+- **The anchor's own spring:** the held hand is kept at its count by a spring of its own, which the law must give
+  (OPEN, G3). The hand it holds pushes it back, and with a three-leg tie alone it slips: the held hand drifts, and
+  the massive hand runs away (3.8.6).
+- **The stop:** a four-leg term bounds a large swing of the massive hand, as a stop bounds a balance wheel; it pushes
+  the massive hand, not the anchor (3.8.7).
+- **The floor:** a swing smaller than about one count a round does not beat at the spring's rate; the carry sets a
+  different beat of its own, as a clock wound too little stutters (3.8.3).
+- **The ceiling:** the beat is the mass only while the swing moves the anchor little. A larger swing pushes the held
+  hand down, toward 0 and past it, and the beat then is not the mass's, even where the stop keeps the swing bounded
+  (3.8.7). Whether one quantum's swing fits between the floor and the ceiling is OPEN (line 332).
+- **The step's limit:** a spring stiffer than the step can follow breaks the step, so every beat stays below a quarter
+  turn a round, and every spring, the stop's included, far below the teeth (3.8.4, 3.8.7).
 - **The wound spring stores energy:** the held hand's potential at its count is a vacuum energy, and it gravitates;
   how much depends on where the potential's zero is set (3.8.6; OPEN).
 - **The rounding beat is no clock:** the example's lone hand beats every 6 rounds only while its pull stays below one
@@ -304,35 +318,50 @@ each of its sections names the clock statement it does (the owner's word of 07:1
 ### 1.8 Three hands and three generations, in clocks (its algebra: 3.9 to 3.11)
 
 - **A family of kind T1 is a clock with three hands, one per axis.** The cube's 24 turns swap them as they swap the
-  axes, and the step drives all three alike, so nothing in the act tells them apart (3.9.1, 3.9.2).
+  axes, and as built the step drives all three alike, so nothing in the act tells them apart (3.9.1, 3.9.2).
 - **In the clicks they are one clock's gears** while they share one spring: a click takes the whole train (1.6).
-- **One spring for all three** is what the plan's held counts give: A1, which every turn of the cube leaves alone,
-  and A2, which the even turns leave alone. Three hands, one beat, one mass (3.10.1).
+- **Spin rides on another kind than the family:** if the three hands carried spin, a first-order step would read them
+  against the board's axes; so spin and family are separate kinds, and as built the hands are spin 0 (3.9.3).
+- **At most three alike,** the number of the board's axes, under four assumptions; nature's three alike has another
+  reason, and a cap of three is not derived (3.9.4).
+- **The plan's held counts give the three hands one beat:** A1, which every turn of the cube leaves alone, gives all
+  three one spring; A2 gives them none and only ties a T1 family to a T2 one. Three hands, one beat, one mass (3.10.1).
 - **Three beats need a held count that points along the cube** (E off its three lines, or T2 off the body
-  diagonals), with a common part large enough that no hand runs away (3.10.2, 3.10.3). Such a count must not show the
-  cube's axes to the clicks, or light would run faster along one axis than another, which clocks refuse (3.9.2's
-  condition; OPEN at G3).
-- **Then the three hands are the one candidate for three generations,** told apart in the clicks by a take tuned to
-  one beat (1.6; OPEN at G5).
+  diagonals), with a common part large enough that no hand runs away (3.10.2, 3.10.3), and an E count measured by
+  E's own form, since E's two hands do not stand at right angles (3.10.4). Such a count must not show the cube's axes
+  to the clicks, or light would run faster along one axis than another, which clocks refuse (3.9.2's condition; OPEN
+  at G3).
+- **Then the three hands are a candidate for three generations,** told apart in the clicks by a take tuned to one
+  beat (1.6; OPEN at G5), with what keeps each hand's count apart through a click OPEN too (1.6).
+- **Families of one kind come out alike:** under the law every family of one kind and part meets the same held
+  counts and has the same spring, so what tells the electron's, the quarks' and the neutrinos' families apart is OPEN
+  (3.11.3).
 - **Three beats predict nothing alone:** any three can be written in one form, so the law must fix the springs
-  (3.10.5). Koide's relation among the three lepton beats is a test; on whole counts only a T2 part meets it (3.11.2).
-- **Mixing:** two families whose springs point along different directions; then a hand of one is a mix of the
+  (3.10.5). Nature's three lepton masses, read as squares, as masses or as roots, each leave the electron a remainder
+  of the other two, a remark and no derivation (3.11.1). Koide's relation is a test: read with the springs' values as
+  the roots of the masses, a reading no step gives (3.11.1), the diagonal spring never meets it on whole counts and a
+  T2 part often does (3.11.2).
+- **Mixing** (OPEN): two families whose springs point along different directions; then a hand of one is a mix of the
   other's beats. Springs that point along the same axes give no mixing (3.11.4).
 - **CP:** a clock whose mirror image, every charge swapped, runs differently needs a twisted spring, which only a hand
   of two parts can hold (3.11.5; OPEN).
-- **A mass that joins two hands,** the left and the right, never runs away; a spring between two hands alone does
-  (3.11.8).
+- **The held counts' own ripples** (OPEN): an E or T2 held count's ripples reach the three hands unequally, so with
+  mixing they would change flavour, which nature bounds hard; and if the 24 break by the state, walls stand between
+  regions that broke them differently (3.11.7).
+- **A first-order mass that joins two hands,** the left and the right, never runs away; a second-order spring
+  between two hands alone does (3.11.8).
 
 ### 1.9 How the clicks read a mass, in clocks (its algebra: 4.6)
 
 - **A moving clock beats slower per round and the same in its own ticks,** so the ratio of two masses is the same at
-  every speed, while every species has one top speed (4.6.2).
+  every speed, provided every species has the same top speed, a condition that lattices generically spoil (4.6.2).
 - **The clicks read a mass two ways:** by the energy a take gives between two beats (the rest beat), and by how hard
   the clock is to push (its inertia, the kinetic mass). The two agree at first order and part a little for heavy
   beats (4.6.3).
 - **Gravity reads every clock's teeth alike,** so a clock's weight and its inertia agree at first order and part a
   little for heavy beats (4.6.4).
-- **A short life is a broad mass:** a clock watched over few of its own ticks shows a spread beat (1.3; 4.6.3).
+- **A short life is a broad mass:** the masses read over many lays of one species spread the more, the shorter their
+  mean life; one clock's own window gives only its resolution (1.3; 4.6.3).
 
 ### 1.10 Uncertainty, in clocks (its algebra: 3.6)
 
@@ -341,7 +370,24 @@ each of its sections names the clock statement it does (the owner's word of 07:1
   motion fills the whole board (3.6).
 - **The trade-off is a count:** the Node-clocks a wave holds times the motions it holds are never fewer than the
   board's Node-clocks, with no law of its own (3.6; line 985).
-- **The draw at a click** puts the place at one Node-clock, so the next step is open every way (1.5; 3.6).
+- **The draw at a click** puts the place in the detector's region, at least half a wavelength across and never one
+  Node-clock (line 983; 5.4, item 5), and within it the motion is open (3.3; 3.6).
+
+### 1.11 The clock's stand, its hands and its readings, in clocks (its algebra: 3.1 to 3.5)
+
+- **The stand:** a Node-clock stands on six Spokes, one each way along three axes; the cube's 24 turns are the ways
+  to turn it that leave it looking the same (3.1).
+- **The hands' kinds:** a hand turns with the stand in one of five ways, its kind: unchanged (A1), with a sign (A2),
+  as a pair (E), as an arrow (T1) or as a shear (T2) (3.1).
+- **The clock's own rate and the Meshes' lengths are hands too,** of one family, the metric family: its 00 hand is
+  the clock's teeth, its ii hands the Meshes' grips (3.1; 4.5).
+- **One act a round:** every Node-clock steps once a round by one act, reading its own hands and its six neighbours',
+  and run back the same act undoes the round (3.2; 1.5).
+- **What a click carries:** counts every clock agrees on, and signs along the frames a setting drew, never one
+  component that turns with the board (3.3).
+- **What a reading may read:** only what does not change when the clocks are turned, shifted or relabelled (3.4).
+- **Four to three:** the clicks keep the three axes as light brings them, and each clock's own count as time, never
+  the round (3.5; 0.1, item 2).
 
 ## 2. What nature shows, in the clicks: the facts to meet (from board2mass)
 
@@ -373,10 +419,7 @@ The facts the page has to meet, each a reading of records (PDG 2024 unless named
 
 ### 3.1 From the star to the metric family
 
-In clocks: a Node-clock stands on six Spokes; the cube's 24 turns are the ways to turn it that leave it looking the
-same; a hand turns with the stand in one of five ways, its kind; and the clock's own rate and the Meshes' lengths are
-the hands of one family, the metric family, its 00 hand the clock's teeth and its ii hands the Meshes' grips (1.3,
-4.5).
+In clocks: 1.11, the stand, the hands' kinds and the metric family.
 
 - **The star:** a Node-clock's six Spokes, the plus and the minus of each of three axes, laid by the files at the
   initialization (load.star).
@@ -399,28 +442,32 @@ the hands of one family, the metric family, its 00 hand the clock's teeth and it
 
 ### 3.2 The act, in the algebra (planned, G2 to G4)
 
-In clocks: every Node-clock steps once a round by one act, reading its own hands and its six neighbours', and run back
-the same act undoes the round (1.5).
+In clocks: 1.11, one act a round, and 1.5.
 
 - Every row's operator contracts its own derivative pair with the family's slots, index with index, through the
   24's tables: the 00 slot with the stride twice, the 0i slots with the stride and a difference, the ij slots with
   the differences.
 - Each Node-clock derives its tables once from its own star and reads its six neighbours alone (engine/mesh.py;
   decision 42), so nothing reaches farther than one Mesh a round (the G0 cone gate).
-- **The run back:** the same act on the mirrored state, before and now swapped, undoes a round slot for slot
-  (engine/step.py, mirror and untick; 60 rounds on the example, 3.6); exact while the metric is at rest, and owed at
-  G2 where a clock moves (Postulate 4).
+- **The run back:** the mirror swaps the before and now slots and flips each fine tooth within the teeth it was kept
+  at; a round runs back as mirror, tick, mirror (engine/step.py, mirror and untick), slot for slot (60 rounds on the
+  example, ANIMATE-UNCERTAINTY part 1, item 4; 1.5); exact while the metric is at rest, and owed at G2 where a clock
+  moves (Postulate 4).
 
 ### 3.3 What a click carries, in kinds
 
 In clocks: a click is where a winding reaches a whole: the whole click takes how much and when, the split click which
-and where (1.2), and a click takes a whole train, never one hand of it (1.6).
+and where (1.2), and a click takes a whole train, never one row of it (1.6; 1.11).
 
 - **The two clicks, in the algebra** (TENSOR24_NODE.md, terms 7, 11 and 12):
-  - **one drive for every row of a train** (term 7), and the whole click is that drive's carry (term 11), so a click
-    carries a train's whole winding and never a row's (the Boss, 6516601236; 1.6);
-  - **the whole click:** the drive's carry at the train's winding, q quanta and the remainder kept (DERIVED; owed at
-    G5);
+  - **a click takes a train's whole winding:** the law's one form (lines 468 and 1556) and schema 1.2 (a click line
+    names a train, never a row). How the act forms that winding is OPEN at G5: the drive's teeth are the same for
+    every row (the plan's decision 40 (d)), but each row keeps its own drive's fine tooth (TENSOR24_NODE.md 2), and a
+    T1 train has no linear invariant, its 24 matrices summing to 0, so its winding is an A1 contraction of its rows,
+    quadratic for T1, and one carry on it is no term of the act at the head;
+  - **the whole click:** the drive's carry at the train's winding, q = E div w_c quanta and the remainder kept,
+    DERIVED in form, with three questions OPEN (TENSOR24_NODE.md 4.5): light's w_c = 0, a negative wind, and the
+    quantum per mode; owed at G5;
   - **the split click:** the draw over the parts' sizes by a rank count, the run forward's size times the run back's,
     the forward's alone where the back's are alike (decisions 29 and 40 (b)); a full slot refuses after the draw, and
     the quantum goes back to its giver (term 12; OPEN at G5: the draw's fairness and the doubled node's form).
@@ -435,8 +482,7 @@ and where (1.2), and a click takes a whole train, never one hand of it (1.6).
 
 ### 3.4 The invariants, and who forms them
 
-In clocks: a reading must not change when the clocks are turned, shifted or relabelled, so only counts that every
-clock agrees on are read (1.3).
+In clocks: 1.11, what a reading may read.
 
 - **A reading is unchanged** under the 24's turns (a relabelling of the axes), a shift of the board (a relabelling
   of the sites), a permutation of the trains (task 106) and a change of the rounds' origin (the tick is no
@@ -450,7 +496,7 @@ clock agrees on are read (1.3).
 
 ### 3.5 Four to three, in kinds
 
-In clocks: the clicks keep three axes as light brings them, and each clock's own count as time (0.1, item 2).
+In clocks: 1.11, four to three.
 
 - The board's four-vector index is A1 (the stride, the tick shared by every Node-clock) and T1 (the three axes).
 - The clicks keep the three axes only as light brings them: as echo counts and as signs along frames, each a count
@@ -510,7 +556,7 @@ In clocks: 1.7.
 #### 3.8.2 The formula
 
 - **The step** (the head's gear in engine/step.py): W (a+ - 2a + a-) = push + r - r+, the carry keeping the remainder r below one tooth. With the Meshes' pull and the spring, the push is grip sum over the six Spokes (a_s - a) - D a.
-  - On the head 6 grip = W exactly: grip 3881691330332771584000000 and W 23290147981996629504000000, the loader's teeth 6 den Gamma^2 G^2 and grip den Gamma^2 G^2 per Mesh (CHECKED, m3 (a)).
+  - On the head 6 grip = W exactly: grip 3881691330332771584000000 and W 23290147981996629504000000, the loader's teeth 6 den Gamma^2 G^2 and grip den Gamma^2 G^2 per Mesh (CHECKED, m3 (a), at tensor24-review 2a6203a4a, the Mesh unit G = 16). Since 68c7245ef the Mesh unit is 1: the teeth 6 den Gamma^2, the grip den Gamma^2, W about 9.1 x 10^22, and 6 grip = W still.
 - **The band** (DERIVED, the identity of the linear step, the remainder dropped): a wave of wave number k beats omega a round with W (2 - 2 cos omega) = grip sum_i (2 - 2 cos k_i) + D.
 - **The rest beat, exactly:** at k = 0, 4 sin^2 (omega0 / 2) = D / W.
 - **At long waves, with D far below W:** omega^2 = c0^2 k^2 + omega0^2, with c0^2 = grip / W = 1/6 (light's 1 / sqrt 6 Mesh a round) and omega0^2 = D / W. This is the relativistic form. If a quantum is a fixed action (line 332 at scribe-5 7880f9ec7: "The action of one quantum is T"), so that its energy is hbar times its beat, the mass is m = hbar omega0 / c0^2.
@@ -538,6 +584,8 @@ In clocks: 1.7.
   - But they are fermions, and a fermion's mass on a first-order step (3.11.8) is linear in its counts: its rest beat goes as M / T, so the range one hand type holds is about its teeth T. The head's teeth of about 10^25 would hold 2 x 10^13, and an electron at a Planck round would need T of about 2.4 x 10^22 (OPEN, N2's form).
   - If a round were the Planck time, a scalar of the electron's mass would need D / W of about 1.75 x 10^-45, and W of at least about 5.7 x 10^44. The board's numbers reach the clicks only as ratios at first order, and as departures of order omega0^2 beyond (4.6.3, 4.6.4).
 
+- **At the head since 68c7245ef** (the union's note, for David's check): the Mesh unit is 1, so W = 6 den Gamma^2, about 9.1 x 10^22, and sqrt W about 3.0 x 10^11, below even KATRIN's premise (R of at least 3.8 x 10^11, W of at least 1.5 x 10^23). Every premise above now asks more of the head's W than it holds, for scalar springs. The numbers above were read at tensor24-review 2a6203a4a, where W was 2.3 x 10^25.
+
 #### 3.8.5 What is not a mass
 
 - **The lone hand's 6-round beat** (the example's hand, Animate's item 4): with its six neighbours at 0 the pull is -6 grip a = -W a, so the step reads a+ = a - a-: 1, 0, -1, -1, 0, 1, period 6 (CHECKED, m3 (a)).
@@ -560,30 +608,39 @@ In clocks: 1.7.
   - So no term of one, two or three legs bounds the whole potential: with K at its spring's minimum, the potential left for X is (g/2) n X X - g^2 X^4 / (8 kappa), unbounded below. Only a four-leg term bounds it, as the quartic does in nature's held value, which is held by a quadratic and a quartic term. That is G3's toy, bounded at lambda = 1/Gamma (OPEN), beside the plan's G3 line, which lays only three-leg vertices.
 - **The held hand's own potential gravitates** (OPEN): a uniform potential is a vacuum energy, with rho + 3p = -2V. Its value at the held count is what gravitates, and that value depends on where the tensor operation sets the potential's zero. The depth of the well that holds it does not: kappa n^2 / 2 for a spring kappa, the change in vacuum energy as the count settles. For a held value like the Higgs field's, that depth is about m_H^2 v^2 / 8, 1.2 x 10^8 GeV^4, against the measured rho_Lambda of about 2.5 x 10^-47 GeV^4. That is the cosmological constant's problem, met here too.
 
-#### 3.8.7 The spring as one operation of the act (Animate, 6516692018; tools/derivations/open_items/ANIMATE-SPRING)
+#### 3.8.7 The spring as one operation of the act, for an A1 held count (Animate, 6516692018; tools/derivations/open_items/ANIMATE-SPRING)
 
-In clocks: the hairspring, its anchor and the ratchet of 1.7. At every Node-clock, every round, at the now slot; x a
-family's gears there, k the coupling family's held count there, C the 24's table of kind(x) with kind(x) onto kind(k):
+In clocks: the hairspring, the anchor's own spring and the stop of 1.7. At every Node-clock, every round, at the now
+slot; x a family's gears there, k the coupling family's held count there, of kind A1:
 
-- **contract:** c = the sum over i, j of C[i, j -> k] x_i x_j (for a T1 family and an A1 count, c = x . x);
-- **push each gear, the spring and the ratchet:** P_i = -g k x_i - lam c x_i;
+- **contract:** c = x . x (the 24's table of T1 with T1 onto A1, the dot product);
+- **push each gear, the spring and the stop:** P_i = -g k x_i - lam c x_i;
 - **push the held count:** Q = -(g / 2) c - kappa (k - n);
 - **into the act:** P and Q are sources of the drive (term 7) and reach the step through the kick (term 8).
 - The pushes are minus the derivatives of one potential, V = (g / 2) k c + (lam / 4) c c + (kappa / 2) (k - n)^2, so
-  the vertex pushes all its legs. Sums and products of whole counts and table entries; each strength a quotient by
-  the carry. DERIVED: the beat 4 sin^2 (omega0 / 2) = g n / W (3.8.2); with k at its minimum the potential keeps
-  (lam / 4 - g^2 / (8 kappa)) c c, bounded below exactly when lam is above g^2 / (2 kappa) (3.8.6's runaway is
-  lam = 0); the four-leg term goes through A1, (x . x)^2, since the 24 also allow the sum of x_i^4, which reads the
-  board's axes.
-- CHECKED on the head's gear step in whole numbers (n = 10^6, D = W div 400, kappa = W div 16, as in m3): laid at
-  10^5 the gear beats 64 sign changes in 4,000 rounds with the four-leg term at 0, at half the bound and at twice it;
-  laid at 10^7 and 2 x 10^7 it runs away at 0 and at half the bound and stays at twice the bound; laid at 10^8 it
-  runs away even at twice the bound, where the four-leg term's own spring is W at the lay and the local spring climbs
-  past 4 W, the step's limit; through A1 a T1 family laid along an axis and off it beats alike (95 and 95 sign
-  changes), through the sum of x_i^4 it does not (95 and 66).
-- OPEN (G3, David derives): g, lam, kappa and n from the law (decision 35; decision 40 (g)); a hat of the held family
-  itself, -(mu / 2) k k + (nu / 4) k^4, would give n and kappa from its two strengths; which families the one plan
-  ties to the held count.
+  the vertex pushes all its legs. Sums and products of whole counts; each strength a quotient by the carry.
+- **DERIVED:** the beat, 4 sin^2 (omega0 / 2) = g n / W (3.8.2). With k at its minimum for a given c the potential
+  keeps (g n / 2) c + (lam / 4 - g^2 / (8 kappa)) c c, bounded below exactly when lam is at least g^2 / (2 kappa)
+  (3.8.6's runaway is lam = 0). The four-leg term pushes the gears and not the held count, which kappa alone holds,
+  and the push moves the held count down by g c / (2 kappa), so the beat is the mass's only while that shift stays
+  far below n. The 24 allow T1 exactly two quartic terms, (x . x)^2 through A1 and the sum of x_i^4, and only the
+  first reads no axis.
+- **CHECKED** on the head's gear step, one Node-clock with no Mesh, each strength's remainder dropped (n = 10^6,
+  D = W div 400, kappa = W div 16, as in m3; the counts the same at W 9.1 x 10^22 and 2.3 x 10^25):
+  - laid at 10^5, 64 sign changes in 4,000 rounds with the four-leg term at 0, at half the bound and at twice it: the
+    mass's beat;
+  - laid at 10^7 and 2 x 10^7, the gear runs away at 0 (rounds 49 and 29) and at half the bound (205 and 50); at
+    twice the bound it stays bounded, while the held count falls below 0 (least -3,112,715 and -8,012,335, in 1,913
+    and 2,555 of 4,000 rounds) and the beat is 95 and 206 sign changes, not the mass's 64: the ceiling;
+  - laid at 10^8, the gear runs away even at twice the bound (round 14): the held count reaches -296 n and the local
+    spring first passes 4 W at round 9, a lone gear's limit (the board's top mode holds only below 2 W, 3.8.4);
+  - through A1 a T1 family laid along an axis and off it beats alike (95 and 95 sign changes), and through the sum of
+    x_i^4 it does not (95 and 66).
+- **OPEN** (G3, David derives): the operation for the E or T2 held count that three masses need (3.10.2), whose push
+  runs through its own table and E's own form (3.10.4); g, lam, kappa and n from the law (decision 35; decision 40
+  (g)); which four-leg term the one plan lays; a hat of the held family itself, -(mu / 2) k k + (nu / 4) k^4, would
+  give n and kappa from its two strengths but not the spring's sign, its minima at plus and minus n giving the gears
+  springs of plus and minus g n; whether one quantum's swing fits between the floor and the ceiling (line 332).
 
 ### 3.9 Three hands, three species: what the 24 give
 
@@ -595,9 +652,9 @@ The 24's turns, made from the Node-clock's six Spokes, have five kinds of 1, 1, 
 
 #### 3.9.2 When a T1 family's three hands could be three species in the clicks
 
-- **The step is blind to the hand** (CHECKED on the head): every hand of every family steps at the same teeth W, and the loader lays one grip, den Gamma^2 G^2, on every Mesh for every hand. So the three hands step as the same wave at light's speed.
+- **The step is blind to the hand** (CHECKED on the head): every hand of every family steps at the same teeth W, and the loader lays one grip, den Gamma^2 G^2 (den Gamma^2 since 68c7245ef), on every Mesh for every hand. So the three hands step as the same wave at light's speed.
 - **The vertices at one Node-clock read hands, not places.** A turn of the 24 applied to the hands alone, the places left where they are, keeps the pull and every vertex whose legs are all read at the Node-clock. So the three hands can be turned among themselves apart from the places.
-- **In the clicks, unsplit, they are one species' gears** (1.6): a click takes the train's whole winding and never one hand's, so the three hands, alike in speed and in their couplings through A1, are never taken apart. Split by a held E or T2 count (3.10.2), they are the one candidate for three species alike, told apart by a take resonant with one beat (1.6; OPEN at G5 and G3). Their pair to A1, T1 x T1 -> A1, is the dot product: x with x, y with y, z with z. As built they are spin 0 (3.9.3).
+- **In the clicks, unsplit, they are one species' gears** (1.6): a click takes the train's whole winding and never one hand's, so the three hands, alike in speed and in their couplings through A1, are never taken apart. Split by a held E or T2 count (3.10.2), they are a candidate for three species alike, told apart by a take resonant with one beat (1.6; OPEN at G5 and G3). Their pair to A1, T1 x T1 -> A1, is the dot product: x with x, y with y, z with z. As built they are spin 0 (3.9.3).
 - **The condition** (OPEN, G3): no coupling may read against a direction of the board any of these:
   - the family's hands;
   - the held hands that split them;
@@ -612,7 +669,7 @@ The 24's turns, made from the Node-clock's six Spokes, have five kinds of 1, 1, 
 #### 3.9.3 Spin and the family
 
 - If spin rode on the T1 hands, a first-order step would contract them with the gradient (gamma^i d_i), which the condition forbids.
-- As built, a T1 family's hands are three spin-0 species.
+- As built, a T1 family's hands are spin 0: unsplit, one species' gears (3.9.2); split, a candidate for three spin-0 species.
 - So spin and family must be separate kinds: a twin kind for the spin, times T1 for the family (the twin kinds wait on OPEN 3).
 
 #### 3.9.4 Three, under four assumptions
@@ -640,7 +697,7 @@ In clocks: 1.8.
   - C[A1, T1 -> T1] is the identity.
   - C[A2, T1 -> T1] is zero (A2 x T1 is T2), so an A2 count gives T1 no spring at all.
   - It only mixes a T1 family with a T2 family (C[A2, T2 -> T1] is the identity), with two values, each three alike.
-- **So the plan's A1 or A2** (decision 40 (h)) gives three generations of one mass. Nature refuses it.
+- **So the plan's A1 or A2** (decision 40 (h)) leaves the three hands one mass: unsplit, they are one species' gears (3.9.2), not three generations, and three generations of one mass, which nature refuses, are not on offer either.
 
 #### 3.10.2 What gives three
 
@@ -828,9 +885,9 @@ In clocks: 1.9.
 
 #### 4.6.1 The two spacetimes
 
-The board is 3 + the tick, and the clicks are the same 3 + each clock's own count (8.2). The mass enters on the board as a hand's rest beat, made at every Node-clock by its own spring. It comes out in the clicks as a clock whose energy differences and motion show its mass. The tick cancels, as it cancels in the click's shadow.
+The board is 3 + the tick, and the clicks are the same 3 + each clock's own count (docs/BIG_PICTURE.md 8.2). The mass enters on the board as a hand's rest beat, made at every Node-clock by its own spring. It comes out in the clicks as a clock whose energy differences and motion show its mass. The tick cancels, as it cancels in the click's shadow.
 
-#### 4.6.2 Motion cancels (DERIVED at long waves, the Boss's D7, 8.1 item 10)
+#### 4.6.2 Motion cancels (DERIVED at long waves, the Boss's D7, docs/BIG_PICTURE.md 8.1 item 10)
 
 - A packet of the massive hand moving at v beats, at its own place, omega - k v = omega0^2 / omega = omega0 sqrt (1 - v^2 / c^2) a round: slower per round, which is time dilation.
 - Two clocks moving together share the factor, so the ratio of their rest beats is the same at every speed, provided every species that interacts has the same limiting speed; lattice interactions generically spoil that at some order (Collins et al., 2004), so it is a condition on the board. That is Animate's reading on the board: the mass is the rest beat counted in the clock's own ticks, invariant, with no formula (decision 37).
@@ -947,8 +1004,12 @@ engine's own records as the stages bring them.
 - The spread for finite draws (the Boss's to rule), and with it the tide's step against the counts' jitter, the
   width's spread and the slit's widening.
 - Planck's constant in the textbook's units: the counts need none, and the units would need a Mesh in metres.
-- What makes three generations: the split rows the one candidate, decided at G5 (the resonant take) and G3 (a held E
-  or T2 count); unsplit, a train's three rows are one species' gears (1.6; 3.10 and 3.11.3).
+- What makes three generations: the split rows a candidate, decided at G5 (the resonant take) and G3 (a held E or T2
+  count), with what keeps each row's count apart through a click and where the colours then stand; unsplit, a
+  train's three rows are one species' gears (1.6; 3.10 and 3.11.3).
+- How the act forms a train's whole winding from its rows, and the whole click's three questions (3.3); the E or T2
+  held count's operation, the strengths and the steady count (3.8.7); the top's own mass and spin against line 326
+  (1.6); what carries the proton's momentum beyond the law's three fractions (1.6).
 
 ### 6.2 The mass's claims, each with its status (from board2mass)
 
@@ -967,7 +1028,7 @@ engine's own records as the stages bring them.
 | m_A^2 / m_B^2 = D_A / D_B at leading order, corrections of relative size (D_A - D_B) / W; whole when the spring's values are rational | DERIVED | 4.6.3 |
 | the width is the clock's life | Animate's reading, agreed; OPEN on the act | 4.6.3 |
 | inertia and weight agree at first order and part at order omega0^2 (fall as sec^2 (omega0 / 2)) | DERIVED from the band; OPEN on the act | 4.6.4 |
-| a T1 family, unsplit, is one species' gears in the clicks; split, it is the one candidate for three species alike, coupled alike through A1 | the first the law's (lines 468 and 1556); the second DERIVED under 3.9.2's condition, OPEN at G5 (the resonant take) and G3, the condition in tension with the one plan | 1.6, 3.9.2 |
+| a T1 family, unsplit, is one species' gears in the clicks; split, it is a candidate for three species alike, coupled alike through A1 | the first the law's (lines 468 and 1556), owed at G5 and G6 on this engine; the second OPEN (G5's resonant take, G3's held count; 3.9.2's condition in tension with the one plan) | 1.6, 3.9.2 |
 | spin rides on another kind than the family | DERIVED from 3.9.2; OPEN 3 | 3.9.3 |
 | at most three alike | DERIVED under 3.9.4's four assumptions; nature's alikeness has another reason | 3.9.4 |
 | A1 or A2 held counts give a triplet one mass | DERIVED; CHECKED; nature REFUSES it as the generations' law | 3.10.1; m1, m2 |
@@ -989,10 +1050,10 @@ engine's own records as the stages bring them.
   1. **The held count's kind:** A1 or A2 gives a triplet one mass (3.10.1). Three masses need counts that cut the 24 further, E off its lines or T2 off the body diagonals, each with an A1 part large enough (3.10.2, 3.10.3). A T2 family loads as built.
   2. **The held hand needs a term that holds it:** three-leg vertices alone hold no count, and under the vertex's push it drifts below 0 and the second-order hand it holds runs away (3.8.6, m3 (c)). A spring of its own holds it only while the push's shift (g/2) X X / kappa stays below about n (m3 (i)). Only a four-leg term bounds the whole potential, and the plan's G3 line lays only three-leg vertices. G3's toy must hold it: say which term the one plan lays.
   3. **The one plan against the split:** the kinds that split a triplet are the metric's own. If the one plan pairs a held E or T2 count with the metric's slots of the same kind, a held split shears space, and the cavities refuse that at parts in 10^18 (3.9.2). Say which vertices the one plan lays.
-  4. **The integers:** a mass's beat is its band's only for swings of about a count a round or more (3.8.3). A scalar hand type spans masses of at most about sqrt W, so a range R asks W of at least R^2; if nature's range were held by scalar springs, DESI's neutrino sum would ask about 3.6 x 10^26, above the head's. Nature's wide range is the fermions', and a first-order (fermion) hand type spans about its teeth (3.8.4; OPEN).
+  4. **The integers:** a mass's beat is its band's only for swings of about a count a round or more (3.8.3). A scalar hand type spans masses of at most about sqrt W, so a range R asks W of at least R^2; if nature's range were held by scalar springs, DESI's neutrino sum would ask about 3.6 x 10^26, above the head's (2.3 x 10^25 at 2a6203a4a; since 68c7245ef 9.1 x 10^22, below even KATRIN's 1.5 x 10^23: 3.8.4). Nature's wide range is the fermions', and a first-order (fermion) hand type spans about its teeth (3.8.4; OPEN).
   5. **Families of one kind and part come out alike** under the law and G3's single strength (3.11.3); the rows' own strengths, the one way they could differ, left the files at 8ea447532. What tells them apart is OPEN.
   6. **The equivalence:** inertia and weight part at order omega0^2 on the step (4.6.4).
-- **Sofer:** line 35's "whose kind is to derive" has its answer here: A1 and A2 give no split, and E or T2 counts do. No line of the law changes without the owner's word. The row for 8.2: the mass, on the board a hand's rest beat held by a spring to a held hand (G3); in the clicks, read through energy differences (the rest beat) and through motion (the kinetic mass), by squares at leading order.
+- **Sofer:** line 35's "whose kind is to derive" has its answer here: A1 and A2 give no split, and E or T2 counts do. No line of the law changes without the owner's word. The row for docs/BIG_PICTURE.md 8.2: the mass, on the board a hand's rest beat held by a spring to a held hand (G3); in the clicks, read through energy differences (the rest beat) and through motion (the kinetic mass), by squares at leading order.
 - **Animate:** your rest beat in the clock's own ticks is the board's side (4.6.2). The clicks read it through energy differences, and the kinetic mass through motion; the two equal each other at first order and part at order omega0^2 (4.6.3). Your width and your least stand (4.6.3).
 
 ## 8. The readings
@@ -1120,9 +1181,30 @@ The first readings (04:4x and 04:5x UTC) read the first draft: the physicist toy
 
 ### 8.3 The union's readings
 
-The joins and the re-cut sentences (the header's union, frame and words; 0.2's three; 3.9.2; 6.2's T1 row) go to
-board2mass's two hostile readers, and the whole page to the writer; their words are folded here. The decoder's two
-readers read again only on the owner's word.
+- **The re-cuts** of board2mass's text, each agreed by David (6516593088): the header's union, frame and words; 0.2's
+  three; 3.9.2; 6.2's T1 row; and, on this reading, 3.9.3 and 3.10.1.
+- **The first reading of the whole page** (07:3x UTC, at 0b4fb6d3e, after the owner's 07:1x word; two new readers,
+  the earlier two having been stopped): the mathematician approves with changes (nine blocking, seven minor), the
+  physicist approves with changes (six blocking, eleven minor). What changed for them:
+  1. the stop and the anchor: the four-leg term bounds the massive hand's swing and pushes no held count; the anchor
+     is held by its own spring, which 1.7 now names; a ceiling stands beside the floor, and at 10^7 and 2 x 10^7 the
+     held count falls below 0 and the beat is not the mass's (1.4, 1.7, 3.8.7; ANIMATE-SPRING run again);
+  2. light's picture: a bead joined by springs alone, and the massive hand's spring as a pendulum's weight (1.7);
+  3. a click's place: the detector's region, never one Node-clock (1.10; line 983);
+  4. the whole click: how the act forms a train's whole winding is OPEN (no linear invariant of T1; a fine tooth per
+     row), with the three questions of TENSOR24_NODE.md 4.5 (3.3);
+  5. 3.8.7 holds for an A1 held count; the E or T2 count's operation is OPEN; the bound is "at least";
+  6. the re-cut carried into 3.9.3 and 3.10.1; "a candidate", not "the one";
+  7. the head's W since 68c7245ef (9.1 x 10^22) beside 2a6203a4a's (3.8.2, 3.8.4, 3.9.2, 7; spring.txt run again);
+  8. docs/BIG_PICTURE.md named where a bare 8.2 or 8.1 meant it (the header, 4.6, 7);
+  9. clocks first, closed: 1.8 gains spin, at most three, families alike, E's form, nature's three readings and the
+     ripples, and 1.11 holds the stand, the hands' kinds and the readings, for 3.1 to 3.5;
+  10. nature: the proton's momentum beyond the law's three fractions, the top read from its own decay against line 326
+      and toponium, the confinement energy, the Penning trap, the wave's spread that the draw samples, Koide's
+      reading, the A2 count, the floor's different beat, the first and second order, the one top speed, the width
+      over many lays, and the run back as mirror, tick, mirror (1.6 to 1.9, 3.2).
+- **Next, on the owner's word (07:4x):** David reads the whole page last, and Animate takes a last look; Sofer's law
+  reading of the whole stands beside it.
 
 ## 9. The probes
 
@@ -1133,7 +1215,7 @@ readers read again only on the owner's word.
 - **ANIMATE-LINKS** (links.py and .txt): Meshes that lengthen on a stand-in line of 40 Node-clocks: the echoes, the
   horizon, the redshift and the swing (4.5).
 - **ANIMATE-SPRING** (spring.py and .txt): the gear's spring as one operation of the act, on the head's gear step: the
-  beat, the four-leg bound, the board's limit and the A1 channel (3.8.7).
+  beat, the four-leg bound, the ceiling, the step's limit and the A1 channel (3.8.7).
 
 ### 9.2 The mass parts' (from board2mass)
 

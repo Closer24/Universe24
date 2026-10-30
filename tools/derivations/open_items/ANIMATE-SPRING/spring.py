@@ -8,6 +8,7 @@
 # vertex pushes all its legs. Each push enters the head's gear step, W (a+ - 2 a + a-) = push, its remainder kept in
 # the fine tooth (engine/step.py, gear); each strength enters as a quotient by the carry, the remainder dropped here,
 # a probe's simplification. The strengths are set by hand here, as David's m3 sets them; on the act they are the law's.
+# One Node-clock with no Mesh, an A1 held count: the E or T2 count's operation is OPEN (Decoder4D2Clicks3D 3.8.7).
 
 import json
 import sys
@@ -84,7 +85,7 @@ if __name__ == "__main__":
     print("The gear's spring as one operation of the act, on the head's gear step; whole numbers only\n")
     print(f"The head's teeth W = {W}; the steady count n = {N}; g = (W div 400) div n = {G}; kappa = W div 16")
     bound = (G * G, 2 * KAPPA)
-    print("The four-leg bound, lam above g^2 / (2 kappa); the runs take lam at twice it, at half of it, and at 0\n")
+    print("The four-leg bound, lam at least g^2 / (2 kappa); the runs take lam at twice it, at half of it, and at 0\n")
     strengths = (("none", (0, 1)), ("half the bound", (G * G, 4 * KAPPA)), ("twice the bound", (G * G, KAPPA)))
     print("1. The beat at a small swing, x laid at 10^5: sign changes of x over 4000 rounds (the mass's beat)")
     for name, lam in strengths:
@@ -101,10 +102,22 @@ if __name__ == "__main__":
             told = "past 10^60" if gone else stiffest
             print(f"   laid at {laid_at:>9}, four-leg {name:15}: x {fate}; the held count's least {least};"
                   f" the largest local spring {told} thousandths of W")
+            if not gone:
+                below = sum(1 for k in ks if k < 0)
+                print(f"      the held count below 0 in {below} of {ROUNDS} rounds; x's sign changes {changes([v[0] for v in xs])}"
+                      f" (the mass's beat gives about 64): the four-leg term bounds the swing, and the beat is no longer the mass's")
+            if gone and name == "twice the bound":
+                first = next(i for i, (v, k) in enumerate(zip(xs, ks)) if lam[0] * v[0] * v[0] + lam[1] * G * k > 4 * lam[1] * W)
+                print(f"      the local spring first passes 4 W at round {first + 1}, the held count then {ks[first]}"
+                      f" ({ks[first] // N} n): the step's limit for a lone gear (the board's top mode holds only below 2 W)")
     print(f"   (the bound itself, g^2 / (2 kappa), as a quotient: {bound[0]} / {bound[1]})")
-    print("   At 10^8 the four-leg term's own spring reaches W at the lay, the gear crosses 0 in about a round, and the")
-    print("   local spring climbs past 4 W, where the step x+ - 2 x + x- = -(D / W) x beats no more: the board's limit, not the")
-    print("   potential's, which is bounded. A clock needs both: lam above the bound, and every spring far below W.")
+    print("   At 10^8 the four-leg term's own spring is W at the lay; the step x+ - 2 x + x- = -(D / W) x beats only while")
+    print("   D stays below 4 W, and once the local spring passes it the run breaks: the step's limit, not the potential's,")
+    print("   which is bounded. The beat is the mass's only between the floor and a ceiling where the held count barely")
+    print("   moves: its shift at the swing's top, g x^2 / (2 kappa), far below n.")
+    for laid_at in (10**5, 10**7, 2 * 10**7):
+        shift, _ = carry(G * laid_at * laid_at, 2 * KAPPA, 0)
+        print(f"   laid at {laid_at:>9}: the held count's shift at the swing's top {shift}, against n = {N}")
     print("\n3. The four-leg term's channel, on a T1 family of three gears at twice the bound, laid along an axis and off it,")
     print("   (10^7, 0, 0) and (6 x 10^6, 8 x 10^6, 0), one length: sign changes of the gears' sum over 4000 rounds")
     for quartic, title in (("dot", "through A1, (x . x)^2"), ("cube", "the sum of x_i^4, through E and T2")):
