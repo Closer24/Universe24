@@ -38,7 +38,7 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 - **The ledger:** count lines, one per round, Node-clock and train, holding that train's counts there after the
   step. It is the read from outside that the law allows (decision 42, line 5 of the Node-clock's law: read only;
   the same run with the read and without it gives the same record, byte for byte).
-- **Nothing else.** The decoder never runs the engine, never reads its arrays and never writes into a run.
+- **Nothing else.** The decoder never steps the engine, never reads its arrays and never writes into a run.
 
 ### 1.2 The two clicks, in a clock
 
@@ -50,7 +50,7 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
   - it lets the clock run back exactly (knowing the remainder, the clock returns to the very same moment).
 - **The split click is "which, and where".** A tower clock has two bells, and at the hour one rings. Which one is
   drawn by the sizes, the run forward's times the run back's (decision 29); where the run back's are alike, by the
-  forward's alone (decision 40 (b)). A bell still ringing is busy: it refuses, and the strike goes back to the giver.
+  forward's alone (the plan's decision 40 (b); docs/BIG_PICTURE.md 5.1 and 5.2). A bell still ringing is busy: it refuses, and the strike goes back to the giver.
 - **At 1:59** there is a whole click alone: the minute has one place to go. **At 2:00** there are two whole clicks
   in a chain (the minutes hand to 00, the hours hand to 2) and a split click after them (which bell).
 
@@ -60,7 +60,7 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 
 | Nature's term | The clicks that read it | State |
 |---|---|---|
-| proper time | a clock's own count between two of its clicks: the clock summed its path by ticking, and the decoder reads the sum on its face. That the count is the metric's measure of the path holds where the engine is right: with the metric at rest; from G2, where a clock moves, rising or falling, the step drops a term and promises no exact run back (engine/step.py) | built (D6's first reading); on the engine owed from G2 |
+| proper time | a clock's own count between two of its clicks: the clock summed its path by ticking, and the decoder reads the sum on its face. That the count is the metric's measure of the path holds where the engine is right: with the metric at rest; from G2, where a clock moves, rising or falling, the step drops a term, and its exact run back there is owed at G2 (Postulate 4; engine/step.py) | built (D6's first reading); on the engine owed from G2 |
 | no duration from rounds | a difference of rounds read as a duration is refused by name ("compares board ticks, no reading"); rounds still order the clicks and bound the cone | built (D7) |
 | no length from labels | a difference of sites read as a length is refused by name, as rounds are (part 3.5) | owed (measure.py) |
 | a light path | a quantum's lay and its take. They lie on light's cone only for a long-wave quantum with no mass: the engine's light disperses (at G1b, measured by the physicist: 995 thousandths of the long-wave speed at wavelength 16, 978 at 8 and 913 at 4 along an axis; at one wavenumber a face diagonal is 27 thousandths faster than an axis) | owed (light.py) |
@@ -108,7 +108,7 @@ The page is a plan: it adds no law. **The engine writes no click before G5**, so
 ### 1.5 The past and the future
 
 - The run is fixed by the files and the seeds. With the metric at rest it runs back exactly (60 rounds slot for slot
-  on the example, ANIMATE-UNCERTAINTY part 1); from G2, where a clock moves, rising or falling, the step promises no exact run back.
+  on the example, ANIMATE-UNCERTAINTY part 1); from G2, where a clock moves, rising or falling, its exact run back is owed at G2 (Postulate 4).
 - A click holds the past exactly: its giver and its taker, where the quantum came from and where it went.
 - **The run back brings the settings' frames to the source,** so the source's draw holds the future's part (the
   meeting of the two runs: derived in toys, owed at G5). What no Node-clock holds is an outcome before its draw; and
@@ -328,22 +328,23 @@ engine's own records as the stages bring them.
    "tooth"); **on every setting, its frames and the one drawn** ("axes", "members", "drawn"). These are schema 1.2's
    further fields (ANIMATE-SCHEMA-1.2), planned at G5.
 3. **A universe file that lays a travelling wave:** the Boss's, with G2's first test (his 6514633855, item 5).
-4. **The clock family found from the record alone,** for row 46 and the ledger's 00 slots. Two forms, the choice the
-   Boss's:
-   - (a) the reader derives the square from the header's own board with the loader's own derivation, called read
-     only, and finds the train whose kinds' character is the square's: nothing written for it, one source for the
-     derivation (recommended);
-   - (b) the header names the train the loader marked (Train.square): simplest, but a role written into the record.
+4. **The clock family found from the record alone,** for row 46 and the ledger's 00 slots: decided by the Boss
+   (6515452856), form (a). The reader derives the square from the header's own board with the loader's own
+   derivation, called read only, and finds the train whose kinds' character is the square's; the square's rows are
+   its own basis (00, the 0i, the ii, the jk by their third axis), whatever order the file writes its kinds in.
+   Form (b), the header naming the train, would add a key that marks a role, which the law refuses.
 5. **A click's region:** the law's **No click names a Node-clock** asks a reading of a region, never of one
    Node-clock; its alignment of 2026-10-25 makes the click the Node-clock's close and reads a bob over several
    Node-clocks; schema 1.2 writes one site per click. Each reading that uses one site (the twins' meeting, proper time
    at one Node-clock, the cone's Meshes) needs a region form at G6: a composite's click names the Node-clocks its
-   parts span, or the decoder reads the region from the clock's own clicks. Open, the Boss's and Sofer's.
+   parts span, or the decoder reads the region from the clock's own clicks. Sofer's reading from the law (6515502852): one
+   site per click on the record is lawful (the alignment of 2026-10-25 at the end of line 983), and **No click names
+   a Node-clock** binds the reading, which this page makes a region; the region form per reading stays owed at G6.
 
 ### 4.5 The order of work
 
 1. Mend measure.twins and add the site refusal, on records made in memory.
-2. Task 111: row 46 and the ledger's 00 slots, on the Boss's word on 4.4, item 4.
+2. Task 111: row 46 and the ledger's 00 slots, by the form the Boss chose (4.4, item 4: form (a)).
 3. light.py on records made in memory, light's cone read from the record's own light lines.
 4. mass.py on records made in memory, its room asked first.
 5. G5: the reader follows the click lines as the engine writes them, and every reading runs on them; most read NOT
@@ -426,3 +427,8 @@ orbiting satellites in the static pair (1.3); an expansion's echo steps changing
 
 **The final readings, on this text: the mathematician, APPROVE; the physicist, APPROVE.** Each re-ran 1.4's 1000 run
 on the engine and found it as the page gives it.
+
+**The writer's law reading (Sofer, 6515502852): no breach of the laws in the page,** read against lines 8, 90, 92,
+96, 100, 102, 695, 983 and 985 to 987 and Postulates 1 to 6. His two wordings are folded: the run back from G2 is
+owed at G2 under Postulate 4 (1.3, 1.5), and the decoder never steps the engine (1.1). His citation is folded too
+(decision 40 (b) is the plan's), and 4.4, item 5 is closed from the law's side.
