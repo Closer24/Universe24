@@ -77,6 +77,10 @@ def edits():
         ),
         "another version": ("setting", lambda s: s.update(version=2), "setting.version: 1, not 2"),
         "a push of 2": ("universe", lambda u: u["chosen"].update(push=2), "chosen.push: 0 or 1"),
+        "a push below 0": ("universe", lambda u: u["chosen"].update(push=-1), "chosen.push: 0 or 1"),
+        "a push of 1": ("universe", lambda u: u["chosen"].update(push=1), None),
+        "an even key": ("universe", lambda u: u["chosen"].update(key=2), "key: an odd whole number"),
+        "a key below 1": ("universe", lambda u: u["chosen"].update(key=-1), "key: an odd whole number"),
         "a float of at least 1": (
             "universe",
             lambda u: u["integers"].update(den=2.5),
@@ -218,11 +222,7 @@ def edits():
             lambda u: u.update(couplings=[]),
             "universe: the key 'couplings' is not in the format: no file declares a coupling",
         ),
-        "a side at 0": (
-            "piece",
-            lambda p: p["shape"].__setitem__(0, 0),
-            "piece.shape: one side per axis",
-        ),
+        "a side at 0": ("piece", lambda p: p.update(shape=[0, 4, 4]), "piece.shape: one side per axis"),
         "a side that is a float": (
             "piece",
             lambda p: p["shape"].__setitem__(0, 4.0),

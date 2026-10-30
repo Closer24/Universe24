@@ -1,6 +1,6 @@
 """Clock: before the first round the files say which trains every Node-clock carries, how many stand on each axis, and which gears are laid where.
 Algebra: whole numbers only, every side, part and integer at least 1, each departure refused by name; then the trains read against the engine's kinds.
-Board: the three files read and checked, then laid out as the load's arrays; the universe's chosen block names the free strengths, each CHOSEN by name (the key, the push, the notch, the hold, the tie and the mesh), and nothing else is laid: no coupling, particle or mass.
+Board: the three files read and checked, then laid out as the load's arrays; the universe's chosen block names the key, the push's switch and the four strengths (the notch, the hold, the tie and the mesh), each CHOSEN by name, and nothing else is laid: no coupling, particle or mass.
 Clicks: n/a: nothing the clicks show comes from the files.
 """
 
@@ -69,8 +69,9 @@ ODD = Rule(
     lambda v: whole(v) and v >= 1 and carry(v, SENSES, 0)[1] == 1,
     f"an odd whole number, a pair's two click teeth, each born at (key - 1) div {SENSES}, summing to key - 1",
 )
-# the metric's push on or off: term 5 claims no strength, its books' form laid at the factor 1 or not at all (the
-# second hostile code reader's 2: a push of 2 or more opens the books by that factor)
+# the metric's push on or off: term 5 claims no strength, its books' form laid at the factor 1 or at the factor 0
+# (the second hostile code reader's 2: a push of 2 or more opens the books by that factor; the third's 2: a push
+# below 0 turns the books' form the other way)
 SWITCH = Rule(
     lambda v: whole(v) and v * v == v, "0 or 1, the metric's push off or on: term 5 claims no strength"
 )
@@ -89,8 +90,9 @@ TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, "pinion": None}
 UNIVERSE = {
     "version": VERSIONED,
     "integers": {"den": ONE, "full_rate": ONE, "width": ONE},
-    # the free strengths, each CHOSEN by name: the whole click's key (G5; its value G3's), the metric's push and the
-    # volume's notch (G2), the held hand's tie, the hands' tie and the gradient vertex through the Mesh (G3's frame)
+    # the key, the push's switch and the four strengths, each CHOSEN by name: the whole click's key (G5; its value
+    # G3's), the metric's push on or off (term 5 claims no strength) and the volume's notch (G2), the held hand's tie,
+    # the hands' tie and the gradient vertex through the Mesh (G3's frame)
     "chosen": {
         "key": ODD,
         "push": SWITCH,
