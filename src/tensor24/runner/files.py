@@ -1,6 +1,6 @@
 """Clock: before the first round the files say which trains every Node-clock carries, how many stand on each axis, and which gears are laid where.
 Algebra: whole numbers only, every side, part and integer at least 1, each departure refused by name; then the trains read against the engine's kinds.
-Board: the three files read and checked, then laid out as the load's arrays; nothing else is laid: no coupling, strength, particle or mass.
+Board: the three files read and checked, then laid out as the load's arrays; the universe's chosen block names the free strengths, each CHOSEN by name (the key, the push, the notch, the hold, the tie and the mesh), and nothing else is laid: no coupling, particle or mass.
 Clicks: n/a: nothing the clicks show comes from the files.
 """
 
@@ -62,11 +62,17 @@ def star(axes: int) -> Any:
 
 
 SENSES = len(star(1))  # the Spokes along one axis, its + and its -: the star of one axis
-# the key odd: the click tooth born at (key - 1) div senses is the one the mirror leaves in place only then (the first
-# hostile code reader's M6: with an even key the pair's books miss)
+# the key odd: a pair's two click teeth, each born at (key - 1) div senses, sum to key - 1 only then, and with the
+# pair's S_L + S_M = 0 that forces q_L + q_M = 0 (NOT_CLOSED 11; the first hostile code reader's M6 and the second's 3:
+# with an even key the two sum to key - 2 and the pair's books miss)
 ODD = Rule(
     lambda v: whole(v) and v >= 1 and carry(v, SENSES, 0)[1] == 1,
-    f"an odd whole number, the click tooth born at (key - 1) div {SENSES} the one the mirror keeps",
+    f"an odd whole number, a pair's two click teeth, each born at (key - 1) div {SENSES}, summing to key - 1",
+)
+# the metric's push on or off: term 5 claims no strength, its books' form laid at the factor 1 or not at all (the
+# second hostile code reader's 2: a push of 2 or more opens the books by that factor)
+SWITCH = Rule(
+    lambda v: whole(v) and v * v == v, "0 or 1, the metric's push off or on: term 5 claims no strength"
 )
 LABEL = Rule(lambda v: isinstance(v, str) and v != "", "a label")
 KINDS = Rule(
@@ -87,7 +93,7 @@ UNIVERSE = {
     # volume's notch (G2), the held hand's tie, the hands' tie and the gradient vertex through the Mesh (G3's frame)
     "chosen": {
         "key": ODD,
-        "push": NONE_BELOW,
+        "push": SWITCH,
         "notch": NONE_BELOW,
         "hold": NONE_BELOW,
         "tie": NONE_BELOW,

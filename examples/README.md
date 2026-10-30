@@ -1,7 +1,8 @@
 # The examples
 
-Tensor24's three files under `examples/tensor24/`, the one world the engine runs. The old engine's worlds, records and
-pages left the tree with it on the owner's word of 2026-10-30, 09:3x UTC; git's history keeps them.
+Tensor24's three files under `examples/tensor24/`, the first of the five worlds the engine runs; the live, the well,
+the click and the mesh worlds below are four more folders of the same three files. The old engine's worlds, records
+and pages left the tree with it on the owner's word of 2026-10-30, 09:3x UTC; git's history keeps them.
 
 | File | What it holds |
 | --- | --- |
@@ -46,7 +47,8 @@ promise): the parts' squares, momenta squared and gradients squared, summed, the
 least) / (most + least) of the parts' squares summed at a crest within 72 and 74 permille by windows of 16 rounds (one
 standing part alone beats at twice its frequency and twice its wavevector and rings the metric; the pair does not;
 the period-4 mode's quarter beat, 1.5 rounds, is no count of rounds). The metric family is pushed by term 5 in the
-books' form at push 1, the books closed (push 0 is no gravity, and any other value opens the books by that factor):
+books' form at push 1, the books closed (push 0 is no gravity; any other value would open the books by that
+factor, and the files' format refuses it by name):
 each slot read by a gear is pushed by minus the act's own energy's derivative by it, taken at fixed momentum, the
 momentum being what a clock keeps as its teeth move (dH / dW = -v^2 / 2 there, so the 00 slot is pushed by + k0 v^2 /
 2, a deeper and slower clock where the matter moves; at fixed velocity the derivative would read + v^2 / 2 and push

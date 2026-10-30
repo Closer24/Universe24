@@ -38,7 +38,8 @@ def edits():
         ("universe", "trains"): "universe.trains: a list of one train or more",
         ("universe", "chosen"): "universe.chosen: a mapping, not NoneType",
         ("universe", "chosen", "key"): "universe.chosen.key: an odd whole number",
-        **{("universe", "chosen", k): f"chosen.{k}: {low}" for k in "push notch hold tie mesh".split()},
+        ("universe", "chosen", "push"): "universe.chosen.push: 0 or 1",
+        **{("universe", "chosen", k): f"chosen.{k}: {low}" for k in "notch hold tie mesh".split()},
         **{("universe", "integers", k): f"universe.integers.{k}: {whole}" for k in ("den", "full_rate")},
         ("universe", "trains", 0, "name"): f"{train}.name: a label, not None",
         ("universe", "trains", 0, "kinds"): f"{train}.kinds: a list of the kinds' labels, not None",
@@ -57,9 +58,7 @@ def edits():
         ("setting", "version"): "setting.version: 1, not None",
         ("setting", "ticks"): f"setting.ticks: {low}",
     }
-    nulls = {
-        ("setting", "gears"): "setting.gears: a list of rows, not NoneType"
-    }  # a key left out, not null
+    nulls = {("setting", "gears"): "setting.gears: a list of rows, not NoneType"}  # left out, not null
     return {
         **{f"no {'.'.join(map(str, path))}": (*at(*path), named) for path, named in gone.items()},
         **{
@@ -77,6 +76,7 @@ def edits():
             "piece.version: 1, not True",
         ),
         "another version": ("setting", lambda s: s.update(version=2), "setting.version: 1, not 2"),
+        "a push of 2": ("universe", lambda u: u["chosen"].update(push=2), "chosen.push: 0 or 1"),
         "a float of at least 1": (
             "universe",
             lambda u: u["integers"].update(den=2.5),

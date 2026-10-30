@@ -124,11 +124,10 @@ def spread(*parts: Z) -> Z:
 
 
 def pushing(trains: Z, spokes: Z, push: Z) -> tuple[Z, Z, Z, Z, Z]:
-    """Term 5, the metric's push in the books' form, as a plan on the push's readings (step.stress: the six stretches per row, Spoke s and row r at the plane s rows + r in the star's order, the momenta in and out in whole turns of the rest dial at the planes Spokes rows + r and (Spokes + 1) rows + r, the unit last): the act's energy is H = W v_in v_out / 2 + SUM over the Meshes of grip Delta^2 / 2 with the reads W = rest + k0 c00 into every row but the 00 and grip = grip_rest + ii at both ends, and the books close iff each slot is pushed by -dH / d slot, the derivative taken at fixed momentum, which a clock keeps as its teeth move (dH / dW = -v^2 / 2 there, so the 00 slot is pushed by +k0 v^2 / 2; at fixed velocity it would read +v^2 / 2 and push the wrong way); so for every square train one term (sigma_in, sigma_out, unit) at the factor k0 x push on the 00 slot for every row the push does not land on, the rows on the force's path at T_d = 1 (the matter and the square's 0i and jk rows; its 00 and ii rows left out, as a pushed row's stride as the stress reads it is fictitious, read before the push's own kick and at the dial's remainder, so no plan reads it and the mirror swaps every stride a plan reads, the mirror theorem's hypothesis (d); the price: the metric's own kinetic share of the books, its self-stress, OPEN in G2, is not paid into the 00 slot), k0 the clock read's factor Spokes x senses from the star (the chain rule carries the read's factor into the push, so one number serves both; GR's gamma = 1 for light needs it), and for every row and every Spoke one term (the stretch, the stretch, unit) at the factor -push on the ii slot of the Spoke's axis (the two Meshes' stretches squared, not the centred difference squared, which misses the Meshes at a crest or a foot), both halved by the drive's dial senses on those rows with the remainder kept (load.geared); no term on the jk and 0i slots, which nothing reads, so a push there would be energy from nothing; the momenta are read in whole turns of the rest dial by the centred split, a count a round at the rest teeth, so a row gliding below half a count a round pushes the 00 slot by nothing; push is 1 where the books close (gravity on) and 0 where there is none, and a value other than 1 opens the books by that factor; a train that is no square takes every term at the factor 0, its places wrapped."""
+    """Term 5, the metric's push in the books' form, as a plan on the push's readings (step.stress: the six stretches per row, Spoke s and row r at the plane s rows + r in the star's order, the momenta in and out in whole turns of the rest dial at the planes Spokes rows + r and (Spokes + 1) rows + r, the unit last): the act's energy is H = W v_in v_out / 2 + SUM over the Meshes of grip Delta^2 / 2 with the reads W = rest + k0 c00 into every row but the 00 and grip = grip_rest + ii at both ends, and the books close iff each slot is pushed by -dH / d slot, the derivative taken at fixed momentum, which a clock keeps as its teeth move (dH / dW = -v^2 / 2 there, so the 00 slot is pushed by +k0 v^2 / 2; at fixed velocity it would read +v^2 / 2 and push the wrong way); so for every square train one term (sigma_in, sigma_out, unit) at the factor k0 x push on the 00 slot for every row the push does not land on, the rows on the force's path at T_d = 1 (the matter and the square's 0i and jk rows; its 00 and ii rows left out, as a pushed row's stride as the stress reads it is fictitious, read before the push's own kick and at the dial's remainder, so no plan reads it and the mirror swaps every stride a plan reads, the mirror theorem's hypothesis (d); the price: the metric's own kinetic share of the books, its self-stress, OPEN in G2, is not paid into the 00 slot), k0 the clock read's factor Spokes x senses from the star (the chain rule carries the read's factor into the push, so one number serves both; GR's gamma = 1 for light needs it), and for every row and every Spoke one term (the stretch, the stretch, unit) at the factor -push on the ii slot of the Spoke's axis (the two Meshes' stretches squared, not the centred difference squared, which misses the Meshes at a crest or a foot), both halved by the drive's dial senses on those rows with the remainder kept (load.geared); no term on the jk and 0i slots, which nothing reads, so a push there would be energy from nothing; the momenta are read in whole turns of the rest dial by the centred split, a count a round at the rest teeth, so a row gliding below half a count a round pushes the 00 slot by nothing; push is 1 where the books close (gravity on) and 0 where there is none, and the files' format refuses any other value by name (it would open the books by that factor); a train that is no square takes every term at the factor 0, its places wrapped."""
     n, d = spokes.shape
     senses, _ = carry(n, d, 0)
     scale, rows = n * senses, trains.size.sum()
-    unit = (n + senses) * rows  # the planes: the six stretches, the momenta in and out, then the unit
     row = np.arange(rows, dtype=np.intp)
     first = trains.first.astype(np.intp)
     axis = np.arange(d, dtype=np.intp)
@@ -146,7 +145,7 @@ def pushing(trains: Z, spokes: Z, push: Z) -> tuple[Z, Z, Z, Z, Z]:
     grip = -push * trains.square[:, None, None] + 0 * stretch
     strain = spread(stretch, stretch, grip, slot[:, :, None])
     one, two, factor, target = np.concatenate((kinetic, strain), axis=1)
-    third = unit + 0 * one
+    third = 0 * one - 1  # the unit, the readings' last row
     return (
         one.astype(np.intp),
         two.astype(np.intp),
@@ -169,17 +168,16 @@ def meshing(trains: Z, c: Z, traces: Z, square: Z, mesh: Z) -> tuple[Z, Z, Z, Z,
     form = np.einsum("m,a,kamyxi->kxi", trivial, turning, c)  # each kind with the axes' kind onto A1
     row, of, kind, component, offset = rows_of(trains)
     rows, axis = trains.size.sum(), np.arange(side, dtype=np.intp)
-    force = 1 + side  # the planes: the value at 0, the differences along the axes at 1 + i, the force
-    unit = (force + 1) * rows  # the unit, the readings' last row
     scalar = trivial[kind] * trains.matter[of] * trains.gripped[of]  # a trivial row of light
     same = 1 - lit(offset[:, None] - offset[None, :])  # 1 where the two rows are of one part
     channel = form[kind[None, :, None], component[None, :, None], axis[None, None, :]]
     factor = mesh * (scalar[:, None] * trains.tied[of][None, :] * same)[:, :, None] * channel
     lrow = np.broadcast_to(row[:, None, None], factor.shape)
     mrow = np.broadcast_to(row[None, :, None], factor.shape)
-    plane = (1 + axis[None, None, :]) * rows
-    onto_m = spread(plane + lrow, unit + 0 * lrow, unit + 0 * lrow, -factor, mrow)
-    onto_l = spread(plane + mrow, unit + 0 * mrow, unit + 0 * mrow, factor, lrow)
+    plane = (1 + axis[None, None, :]) * rows  # the value at plane 0, the differences along i at 1 + i
+    unit = 0 * lrow - 1  # the unit, the readings' last row
+    onto_m = spread(plane + lrow, unit, unit, -factor, mrow)
+    onto_l = spread(plane + mrow, unit, unit, factor, lrow)
     first, second, third, terms, target = np.concatenate((onto_m, onto_l), axis=1)
     return (
         first.astype(np.intp),

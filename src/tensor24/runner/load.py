@@ -173,7 +173,7 @@ def load(
     side = c.shape[-1]  # the axes' cube the tables stand in: the board's axes
     senses, _ = carry(len(star(side)), side, 0)  # the Spokes along one axis, its + and its -
     key = np.full((len(trains), 1), universe["chosen"]["key"], dtype=object)  # one key for the board
-    birth, _ = carry(key - 1, senses, 0)  # the one tooth the mirror leaves in place
+    birth, _ = carry(key - 1, senses, 0)  # the click tooth at its birth, a pair's two summing to key - 1
     state, laid = lay(setting.get("gears", []), trains, sites, birth)
     chosen, _, rest = universe["chosen"], *teeth(universe, star(side))
     potential = joined(
