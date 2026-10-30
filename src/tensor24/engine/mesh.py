@@ -31,7 +31,12 @@ def held(layout: Layout, a: Z) -> Z:
     return grip[:, meshes] + gripped(layout, a)
 
 
-def pull(layout: Layout, a: Z) -> Z:
-    """The Meshes' pull on every gear: its grip on each Spoke's Mesh times the neighbour less its own now, summed over the Spokes."""
+def stretches(layout: Layout, a: Z) -> Z:
+    """Every gear's six stretches at the now slot, each neighbour's count less its own along the Spokes in the star's order: the read the pull makes, and the one the metric's push reads (term 5)."""
     nb, _, _, _, _, _, _, _, _, _, _ = layout
-    return ((seen(a, nb) - a[:, None, :]) * held(layout, a)).sum(axis=1)
+    return seen(a, nb) - a[:, None, :]
+
+
+def pull(layout: Layout, a: Z) -> Z:
+    """The Meshes' pull on every gear: its grip on each Spoke's Mesh times its stretch along the Spoke, summed over the Spokes."""
+    return (stretches(layout, a) * held(layout, a)).sum(axis=1)

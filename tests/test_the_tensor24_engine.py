@@ -1,6 +1,6 @@
 """Tensor24's engine, the Node-clock's one act on the edge in its generic parts: J by the vertex law, the act against
 its naive model (the 00 count first, the half-open split), local, pure and turned by the 24, the click tooth carrying
-the passing of a pair with the mirror keeping it, and the run back, the act on the mirrored state by parity."""
+the passing of a pair, the metric pushed by the books' form, and the run back, the act on the mirrored state."""
 
 import itertools
 
@@ -35,33 +35,25 @@ def empty():
 
 def unclicked():
     """The click of no term: one train whose passing is 0, its tooth carried at the key 1 from its birth, 0."""
-    none = np.zeros(0, dtype=np.intp)
-    return Click(none, none, none.astype(object), none, np.ones((1, 1), dtype=object))
+    return Click(*(e := empty())[:2], e.factor, e.target, np.ones((1, 1), dtype=object))
 
 
 def varied(rng, least=1, clocked=False, cubed=False):
     """A layout parted at every gear, Mesh and site: the grips, the teeth at rest, s, T_k and T_d each a divisor from
-    `least`, J's terms on the value legs and on the Mesh (a difference or the force among the legs), and where clocked
-    two drawn rows read into every other gear's teeth (the two read none) and the grips' read; three readings where cubed."""
+    `least`, J's terms on the value legs (the plan) and with a difference or the force among the legs (the Mesh plan), and where clocked two drawn rows read into every other gear's teeth (the two read none) and the grips' read."""
     nb = frame.board(SHAPE)
     n, every = nb.shape[1], np.arange(ROWS, dtype=np.intp)
     teeth, s = draw(rng, least, 20, (ROWS, n)), draw(rng, -3, 4, (ROWS, n))
     gearing = Gearing(teeth, s, *draw(rng, least, 9, (2, ROWS, 1)))  # T_k and T_d; every row even
-    two = rng.permutation(ROWS)[:2]
-    others = np.setdiff1d(every, two)
-    clock = Read(
-        np.repeat(two, len(others)), draw(rng, 1, 4, len(two) * len(others)), np.tile(others, len(two))
-    )
+    o = np.setdiff1d(every, two := rng.permutation(ROWS)[:2])
+    clock = Read(np.repeat(two, len(o)), draw(rng, 1, 4, len(two) * len(o)), np.tile(o, len(two)))
     clock = clock if clocked else frame.unread()
     held = Read(rng.integers(0, ROWS, 4), draw(rng, -3, 4, 4), rng.integers(0, len(nb), 4))
-    # any reading, or the unit, the readings' last row
     index = np.array([rng.integers(0, PLANES * ROWS + 1, size=TERMS) for _ in range(READINGS)])
-    index[-1] = index[-1] if cubed else 0 * index[-1] + PLANES * ROWS
+    index[-1] = index[-1] if cubed else 0 * index[-1] + PLANES * ROWS  # three readings only where cubed
     factor, target = draw(rng, -9, 10, TERMS), rng.integers(0, ROWS, size=TERMS)
-    # a term whose legs are value rows or the unit is the plan's, the unit as -1, the last row of any readings;
-    # a term with a difference or the force among its legs is the Mesh plan's, read by the drive alone
     valued = ((index < ROWS) | (index == PLANES * ROWS)).all(axis=0)
-    legs = np.where(index == PLANES * ROWS, -1, index)
+    legs = np.where(index == PLANES * ROWS, -1, index)  # the unit as -1, the last row of any readings
     plan = Plan(*legs[:, valued], factor[valued], target[valued])
     mesh = Plan(*index[:, ~valued], factor[~valued], target[~valued])
     grip = draw(rng, -3, 4, (ROWS, len(SHAPE) * n))
@@ -71,10 +63,8 @@ def varied(rng, least=1, clocked=False, cubed=False):
 
 
 def world(rng, layout, rows=ROWS):
-    """A state the act may meet: gears across 2**256, the clocks' rows in [0, 2**20), each tooth within its edge's
-    dial and its T_d, one train's click tooth at its birth."""
-    size = (rows, layout.nb.shape[1])
-    a, b = frame.wide(rng, size), frame.wide(rng, size)
+    """A state the act may meet: gears across 2**256, the clocks' rows in [0, 2**20), each tooth in its dial and T_d."""
+    a, b = (frame.wide(rng, size := (rows, layout.nb.shape[1])) for _ in "ab")
     clocks = np.unique(layout.clock.first)
     a[clocks], b[clocks] = (draw(rng, 0, 1 << 20, (len(clocks), size[1])) for _ in "ab")
     d = sum(step.weight(layout.gearing, layout.clock, x) for x in (a, b))
@@ -84,35 +74,29 @@ def world(rng, layout, rows=ROWS):
 
 def naive(layout, s):
     """The act site by site with loops and plain integers: the readings, J term by term from both plans, the drive,
-    the push, the momentum on the edge split at the next edge's dial, the 00 count first; the click of no term keeps
-    its tooth."""
+    the push, the momentum on the edge split at the next edge's dial, the 00 count first; the click of no term keeps its tooth."""
     _, _, _, grip, gearing, plan, clock, stretch, _, _, mesh = layout
     rest, s_, kick, drive, _ = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     plans = [tuple(x.tolist() for x in p) for p in (plan, mesh)]
     a, b, r, rd, k = (x.tolist() for x in s)
-    w, wb = (
-        [row[:] for row in rest] for _ in "ab"
-    )  # every gear's teeth at both slots, the clocks' read added
+    w, wb = ([row[:] for row in rest] for _ in "ab")  # the teeth at both slots, the clocks' read added
     terms = list(zip(*(x.tolist() for x in clock), strict=True))
     for f, m, g in terms:
         w[g] = [x + m * y for x, y in zip(w[g], a[f], strict=True)]
         wb[g] = [x + m * y for x, y in zip(wb[g], b[f], strict=True)]
-    rows, n, axes = len(a), len(a[0]), range(len(SHAPE))
-    gs = range(rows)
+    rows, n, axes, gs = len(a), len(a[0]), range(len(SHAPE)), range(len(a))
     new = [[row[:] for row in x] for x in (a, b, r, rd, k)]
     for x in itertools.product(*map(range, SHAPE)):
         i = np.ravel_multi_index(x, SHAPE)
         around = [np.ravel_multi_index(y, SHAPE) for y in frame.near(x, SHAPE)]
         meshes = [axis * n + j for axis in axes for j in (i, around[axis + axis + 1])]
-        # each Spoke's grip as the grips' read lands it: the row read at the Mesh's two ends
-        lift = [0] * len(around)
+        lift = [0] * len(around)  # each Spoke's grip as the grips' read lands it, at the Mesh's two ends
         for f, m, t in zip(*(x.tolist() for x in stretch), strict=True):
             lift[t] += m * (a[f][i] + a[f][around[t]])
         ends = list(enumerate(zip(meshes, around, strict=True)))
         force = [sum((grip[g][m] + lift[q]) * (a[g][j] - a[g][i]) for q, (m, j) in ends) for g in gs]
-        readings = [a[g][i] for g in gs] + [
-            a[g][around[q + q]] - a[g][around[q + q + 1]] for q in axes for g in gs
-        ]
+        near = [a[g][around[q + q]] - a[g][around[q + q + 1]] for q in axes for g in gs]
+        readings = [a[g][i] for g in gs] + near
         source, read = [0] * rows, readings + force + [1]  # the unit, the readings' last row
         for first, second, third, factor, target in plans:
             for t in range(len(factor)):
@@ -123,9 +107,7 @@ def naive(layout, s):
             push = s_[g][i] * (force[g] + kick[g][i] * q)
             moment[g] = 2 * ((w[g][i] + wb[g][i]) * (a[g][i] - b[g][i]) + 2 * push) + r[g][i]
             count[g] = frame.split(moment[g], w[g][i] + wb[g][i])[0]  # the count at the edge's own dial
-        for (
-            g
-        ) in gs:  # the next edge's dial reads the clocks' next counts, each given first at its own dial
+        for g in gs:  # the next edge's dial: the clocks' next counts, each given first at its own dial
             wa1 = rest[g][i] + sum(m * (a[f][i] + count[f]) for f, m, t in terms if t == g)
             v, new[2][g][i] = frame.split(moment[g], w[g][i] + wa1)
             new[0][g][i], new[1][g][i] = a[g][i] + v, a[g][i]
@@ -133,8 +115,7 @@ def naive(layout, s):
 
 
 def formula():
-    """At three drawn layouts, every gear clocked by two rows' counts, the grips read at both ends of each Mesh and J
-    of three readings, the act equals the naive model at every entry, each layout stepped on two worlds in turn."""
+    """At three drawn layouts, clocked, the grips read and J of three readings, the act equals the naive model at every entry, each layout stepped on two worlds in turn."""
     layouts = [(rng, varied(rng, clocked=True, cubed=True)) for rng in map(np.random.default_rng, SEEDS)]
     states = [(layout, world(rng, layout)) for rng, layout in layouts for _ in "st"]
     return all(frame.same(step.tick(layout, s), naive(layout, s)) for layout, s in states)
@@ -176,9 +157,23 @@ def pair(g, hands=2):
     return layout, State(a, a.copy(), 0 * a, 0 * a, (KEY - 1) // 2 + 0 * key)
 
 
+def pushed():
+    """The layout alike everywhere with the push's plan in the books' form on the agreed planes: each ii slot (rows 1 to
+    3) pushed by minus its axis's two stretches squared on every row, the 00 slot (row 0) by k0 times each other row's momenta in and out, k0 the clock read's factor, Spokes times senses, landing the 00 slot on the other rows."""
+    spokes, rows = len(frame.spokes(len(SHAPE))), np.arange(ROWS, dtype=np.intp)
+    k0 = spokes * (spokes // len(SHAPE))
+    stretch = np.concatenate([s * ROWS + rows for s in range(spokes)])
+    first = np.concatenate((stretch, spokes * ROWS + rows[1:]))
+    second = np.concatenate((stretch, (spokes + 1) * ROWS + rows[1:]))
+    factor = np.array([-1] * len(stretch) + [k0] * (ROWS - 1), dtype=object)
+    target = np.concatenate((np.repeat(np.repeat(rows[1:], 2), ROWS), 0 * rows[1:]))
+    push = Plan(first, second, 0 * first + (spokes + 2) * ROWS, factor, target)
+    clock = Read(0 * rows[1:], k0 + 0 * rows[1:].astype(object), rows[1:])
+    return alike(frame.board(SHAPE))._replace(push=push, clock=clock)
+
+
 def potential(rng, sites=7):
-    """Whole monomials on each site's gears, each a factor and its legs among the gears' values and the unit (-1),
-    with a state and a displacement of whole numbers."""
+    """Whole monomials on each site's gears, each a factor and its legs among the gears' values and the unit (-1), with a state and a displacement of whole numbers."""
     legs = tuple(rng.integers(-1, ROWS, size=TERMS).astype(np.intp) for _ in range(LEGS))
     x, d = (draw(rng, -50, 51, (ROWS, sites)) for _ in "xd")
     return draw(rng, -9, 10, TERMS), legs, x, d
@@ -197,8 +192,7 @@ def vertex(factor, legs, x):
 
 
 def conserved(seed):
-    """J's work on a displacement d is minus V's rate along d, read exactly by the five-point stencil a quartic keeps:
-    12 V'(0) = 8 (V(1) - V(-1)) - (V(2) - V(-2))."""
+    """J's work on a displacement d is minus V's rate along d by the five-point stencil a quartic keeps: 12 V'(0) = 8 (V(1) - V(-1)) - (V(2) - V(-2))."""
     factor, legs, x, d = potential(np.random.default_rng(seed))
     v = [energy(factor, legs, x + t * d) for t in (-2, -1, 1, 2)]
     return -12 * (vertex(factor, legs, x) * d).sum() == 8 * (v[2] - v[1]) - (v[3] - v[0])
@@ -206,16 +200,13 @@ def conserved(seed):
 
 def holding(names):
     """The frame's properties on the act at a layout alike everywhere, each at every seed."""
-    return all(
-        frame.PROPERTIES[name](engine, FRAME, np.random.default_rng(seed))
-        for name in names
-        for seed in SEEDS
-    )
+    held = [frame.PROPERTIES[n] for n in names]
+    return all(p(engine, FRAME, np.random.default_rng(s)) for s in SEEDS for p in held)
 
 
 def mirrored(layout, s):
-    """The mirror by parity, as the law states it: on an even row the slots swapped, the edge's tooth -1 - s and the
-    drive's tooth T_d - 1 - r_d; on an odd row the counts negated and swapped, both teeth kept; the click tooth kept."""
+    """The mirror by parity as the law states it: an even row's slots swapped, its edge tooth -1 - s and its drive tooth
+    T_d - 1 - r_d; an odd row's counts negated and swapped, both teeth kept; the click tooth kept."""
     even = np.broadcast_to(layout.gearing.parity, s.a.shape)
     sign, m = 2 * even - 1, step.mirror(layout, s)
     rd = s.rd + even * (layout.gearing.drive - 1 - s.rd - s.rd)
@@ -224,14 +215,12 @@ def mirrored(layout, s):
 
 def test_j_is_minus_the_gradient_of_its_potential_and_pushes_no_row_its_legs_do_not_name():
     """Yes: each monomial pushes every leg by minus its factor times the others, so J is minus V's gradient, of Python
-    integers on any gears.
-    No: under a potential of monomials, a row no leg names stays 0 while the rows its legs name are pushed."""
+    integers on any gears. No: under a potential of monomials, a row no leg names stays 0 while the named rows are pushed."""
     assert all(conserved(seed) for seed in J_SEEDS)
     factor, legs, x, _ = potential(np.random.default_rng(0))
     j = vertex(factor, legs, np.concatenate((x, x[:1])))  # row 0's counts again, on a row no leg names
     assert not j[-1].any() and j[:-1].any()
-    # the tenth review (fc8c810ff): J took its caller's int64 gears' width, overflowing past 64 bits; back at aa8565cb2
-    wide = factor * (1 << 70)  # strengths past 64 bits
+    wide = factor * (1 << 70)  # strengths past 64 bits: the tenth review's int64 gears (fc8c810ff)
     assert frame.same([vertex(wide, legs, x.astype(np.int64))], [vertex(wide, legs, x)])
 
 
@@ -239,34 +228,29 @@ def test_the_act_is_its_naive_model_on_the_edge_local_pure_and_turned_by_the_24(
     """Yes: at layouts parted everywhere the act is its naive model on the edge, the 00 count first and the half-open
     split, the click of no term keeping its tooth with no click, and the trains' order and the 24's turns are nothing
     to it. No: it reads nothing past one Mesh's reach, keeps no state, and reads no clock by its place."""
-    # G1's B2 (9f1cf7944): a clock read by its place passed; the cut's X1: a J kept per plan passed purity with no J
-    assert formula() and holding(PROPERTIES)
+    assert formula() and holding(PROPERTIES)  # G1's B2 and the cut's X1 mutants
     layout = varied(rng := np.random.default_rng(7), clocked=True, cubed=True)
     s = world(rng, layout)
     moved, clicks = step.act(layout, s)
     assert not clicks.any() and frame.same([moved.k], [s.k]) and clicks.shape == s.k.shape
-    # the second review (227cde2fe): a module's cache and the hash seed passed purity within one interpreter
-    assert frame.unseeded(__name__, "engine", FRAME)
+    assert frame.unseeded(__name__, "engine", FRAME)  # the second review: a cache, the hash seed
 
 
 def test_the_click_tooth_carries_the_pairs_passing_and_the_mirror_keeps_it():
     """Yes: a line hand and a hand at rest tied at one Node-clock click with their quotients summing to 0 and their
-    teeth to key - 1 in every round, run back by the same act on the mirrored state with the quotients negated, and a
-    lone hand with its spring clicks nowhere. No: one half of the passing alone, the fourth text's, does not run back."""
+    teeth to key - 1 in every round, run back by the same act on the mirrored state with the quotients negated, and a lone hand with its spring clicks nowhere. No: one half of the passing alone, the fourth text's, does not run back."""
     layout, s = pair(1 << 10)
     steps = list(rounds(step.act, layout, s, BEATS))
     states, clicks = [s, *(t for t, _ in steps)], [q for _, q in steps]
     assert any(q.any() for q in clicks) and all(int(q.sum()) == 0 for q in clicks)
     assert all(int(t.k.sum()) == KEY - 1 for t in states)
     backs = [step.act(layout, step.mirror(layout, s1)) for s1 in states[1:]]
-    assert all(
-        frame.same(step.mirror(layout, m), t) for (m, _), t in zip(backs, states[:-1], strict=True)
-    )
+    undone = [step.mirror(layout, m) for m, _ in backs]
+    assert all(frame.same(u, t) for u, t in zip(undone, states[:-1], strict=True))
     assert all(frame.same([q], [-r]) for (_, q), r in zip(backs, clicks, strict=True))
     lone, t = pair(0, hands=1)
-    *_, (end, _) = rounds(step.act, lone, t, BEATS)
-    assert frame.same([end.k], [t.k]) and not any(q.any() for _, q in rounds(step.act, lone, t, BEATS))
-    # the fourth text's increment, the read state's X alone, carried at the kept tooth: it does not run back
+    quiet = list(rounds(step.act, lone, t, BEATS))
+    assert frame.same([quiet[-1][0].k], [t.k]) and not any(q.any() for _, q in quiet)
     j = lambda x: contract.contract(layout.plan, step.valued(x), x)  # noqa: E731
     half = lambda u: step.passing(layout.click, u.a, u.b, j(u.a), j(u.b))  # noqa: E731
     teeth, late = [states[0].k], BEATS // 10
@@ -274,6 +258,24 @@ def test_the_click_tooth_carries_the_pairs_passing_and_the_mirror_keeps_it():
         teeth.append(carry(half(u), KEY, teeth[-1])[1])
     backs = [carry(half(step.mirror(layout, states[t])), KEY, teeth[t])[1] for t in range(1, late + 1)]
     assert not all(frame.same([b], [k]) for b, k in zip(backs, teeth[:late], strict=True))
+
+
+def test_the_metric_is_pushed_by_the_stretches_and_the_momenta_in_the_books_form():
+    """Yes: a tent along z at rest pushes the zz slot by -(2 g^2) per row on its slopes and no other slot; a hand gliding
+    alike everywhere pushes the 00 slot by k0 times the other rows' momenta in and out and no ii slot. No: the apex, one stretch 0, takes -(g^2) a row."""
+    layout, g = pushed(), 5
+    z = np.indices(SHAPE)[-1].reshape(-1)
+    tent = (g * np.minimum(z, SHAPE[-1] - z)).astype(object)[None, :].repeat(ROWS, axis=0)
+    j = step.stress(layout, State(tent, tent.copy(), 0 * tent, 0 * tent, 0 * tent[:1]), 0 * tent)
+    slope, apex = np.ravel_multi_index((0, 0, 1), SHAPE), np.ravel_multi_index((0, 0, 2), SHAPE)
+    assert j[:, slope].tolist() == [0, 0, 0, -g * g * ROWS - g * g * ROWS]  # both stretches squared
+    assert j[:, apex].tolist() == [0, 0, 0, -g * g * ROWS]
+    k0, rest, v = layout.clock.factor[0], layout.gearing.rest[0, 0], 3
+    a, b = (1 << 30) + 0 * tent, (1 << 30) - v + 0 * tent
+    a[0], b[0] = 0, 0  # the 00 slot still, so every row's teeth stand at rest at both slots
+    j = step.stress(layout, State(a, b, 0 * a, 0 * a, 0 * a[:1]), 0 * a)
+    sigma = frame.split(2 * (rest + rest) * v, rest + rest)[0]  # the momentum in rest-dial turns
+    assert (j[0] == k0 * (ROWS - 1) * sigma * sigma).all() and not j[1:].any() and sigma == v
 
 
 def test_the_run_back_is_exact_where_every_tooth_stands_within_its_edges_dial_and_not_past_it():
@@ -294,7 +296,5 @@ def test_the_run_back_is_exact_where_every_tooth_stands_within_its_edges_dial_an
     assert not frame.same(step.untick(layout, step.tick(layout, past)), past)
     kept = step.mirror(layout, step.tick(layout, s))._replace(r=step.tick(layout, s).r)
     assert not frame.same(step.mirror(layout, step.tick(layout, kept)), s)
-    # the second review (227cde2fe): a hidden log passed the run back; a fresh engine runs another's steps back
-    assert holding(["bijectivity"])
-    # the third review (81521e0f4): a queue and a memo held in the module passed the run back in one interpreter
-    assert frame.undone_elsewhere(__name__, "engine", FRAME, 0)
+    # the second and third reviews (227cde2fe, 81521e0f4): a hidden log, a queue and a memo passed the run back
+    assert holding(["bijectivity"]) and frame.undone_elsewhere(__name__, "engine", FRAME, 0)
