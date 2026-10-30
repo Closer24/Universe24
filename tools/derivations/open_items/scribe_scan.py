@@ -362,6 +362,10 @@ BOARD = (
 LOADER = (
     RUNNER + "load.py"
 )  # the loader makes every gear's coefficients from the files, so it keeps every rule of the engine (the owner's "5 approved" of 2026-10-29, 13:2x UTC); the rules count its loops, branches, comparisons, clamps and operations, and a mask or a per-row constant built from a table of bits passes them: the uniformity test (G0) is what sees that
+PLANS = (
+    RUNNER + "plans.py"
+)  # the plans' home, where the loader's plan code went at the night's B1: the loader's rules bind it as they bind load.py, or the code moved there would have left them (the owner's "5 approved" of 2026-10-29, 13:2x UTC)
+LOADERS = (LOADER, PLANS)
 BOARD_KEEPS = frozenset(
     {"OPERATION", "LOOP", "CLAMP", "COMPARE", "BRANCH"}
 )  # the rules the board's module keeps and the rest of the runner is spared: a wrap by hand is a remainder, a quotient, a branch, a comparison, a clamp or a loop (the sixth hostile review, follow-up 2)
@@ -390,7 +394,7 @@ BOOK_SCOPE = (
 SPECIAL_SCOPE = (
     NEW_ENGINE + "/algebra/",
     NEW_ENGINE + "/engine/",
-    LOADER,
+    *LOADERS,
     MAIN,
 )  # the Node-clock's code, its loader and main.py: no special code for a clock or a link (the owner's words of 2026-10-30, 07:1x UTC); the runner's other modules, the record and the decoder read from outside and may speak of them
 SPECIAL_STEMS = (
@@ -513,8 +517,8 @@ def exempt(rel: str, rule: str) -> bool:
     if rel.startswith(RUNNER):
         if rel == BOARD and rule in BOARD_KEEPS:
             return False  # the board's wrap is the carry's, imported
-        if rel == LOADER:
-            return False  # the loader is spared no rule: it builds the engine's coefficients (the files' format, the driver, the rewind check and the rounds stay spared)
+        if rel in LOADERS:
+            return False  # the loader is spared no rule, nor its plans' home: they build the engine's coefficients (the files' format, the driver, the rewind check and the rounds stay spared)
         return rule != "LOGREAD" or rel == REWIND  # the undo log is read by the rewind check alone
     return False
 
@@ -1356,7 +1360,7 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add("LENGTH", node, length)
             if enum := enum_name(node):
                 add("ENUM", node, enum)
-    if rel.startswith(ACT) or rel in (LOADER, MAIN):
+    if rel.startswith(ACT) or rel in (*LOADERS, MAIN):
         for node in ast.walk(tree):
             if word := mask_name(node):
                 add("MASK", node, word)
@@ -1376,7 +1380,7 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add("BOOKS", node, word)
             if special and (word := special_name(node, docstrings)):
                 add("SPECIAL", node, word)
-    if rel.startswith(ACT) or rel == LOADER:
+    if rel.startswith(ACT) or rel in LOADERS:
         for node in ast.walk(tree):
             if (
                 isinstance(node, ast.Call)

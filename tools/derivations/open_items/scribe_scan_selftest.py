@@ -42,6 +42,7 @@ NEW_RECORD = "tensor24/record/schema.py"
 NEW_RUNNER = "tensor24/runner/loop.py"
 NEW_BOARD = "tensor24/runner/board.py"
 NEW_LOADER = "tensor24/runner/load.py"
+NEW_PLANS = "tensor24/runner/plans.py"
 NEW_DECODER = "tensor24/decoder/rows.py"
 NEW_READING = "tensor24/readings/wind.py"
 NEW_MESH = "tensor24/engine/mesh.py"
@@ -1530,6 +1531,15 @@ CASES += [
     ("a floor named in runner/load.py", NEW_LOADER, fn("return a.floor"), {"BOUND": 1}),
     ("the undo log in runner/load.py", NEW_LOADER, fn("return a.log"), {"LOGREAD": 1}),
     ("a name added to itself in runner/load.py", NEW_LOADER, fn("return a + a"), {"TWICE": 1}),
+    # the plans' home keeps the loader's rules (the night's B1 moved the loader's plan code there)
+    ("a loop in runner/plans.py (not spared)", NEW_PLANS, fn("for x in a:\n    pass"), {"LOOP": 1}),
+    ("a comprehension in runner/plans.py", NEW_PLANS, fn("return [x for x in a]"), {"LOOP": 1}),
+    ("a branch in runner/plans.py", NEW_PLANS, fn("if a:\n    return 1\nreturn 0"), {"BRANCH": 1}),
+    ("an ordering comparison in runner/plans.py", NEW_PLANS, fn("return a < b", "a, b"), {"COMPARE": 1}),
+    ("max of a pair in runner/plans.py", NEW_PLANS, fn("return max(a, b)", "a, b"), {"CLAMP": 1}),
+    ("a refusal in runner/plans.py", NEW_PLANS, fn("raise ValueError(a)"), {"REFUSE": 1}),
+    ("a remainder in runner/plans.py", NEW_PLANS, fn("return a % b", "a, b"), {"OPERATION": 1}),
+    ("a name added to itself in runner/plans.py", NEW_PLANS, fn("return a + a"), {"TWICE": 1}),
     (
         "a loop in runner/files.py stays spared",
         "tensor24/runner/files.py",
