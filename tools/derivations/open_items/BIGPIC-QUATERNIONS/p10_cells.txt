@@ -1,0 +1,6 @@
+PASS 1. the half-open carry: -1 - x goes to (-q, -1 - s), for every D from 1 to 8 and x from -60 to 60
+PASS 2. the mirrored pointer W - 1 - u against the parts read from the other end picks the same part: 8790 cases
+PASS    with equal sizes m the draw's cell is the carry's quotient
+PASS 3. an odd increment run back with its tooth kept recovers (-q, k): 20000 of 20000; flipped by (iii): 913 of 20000
+PASS 4. W = a^2 + b^2, k = 4 b^2: k (4W - k) = (4ab)^2, cos w = (a^2 - b^2)/(a^2 + b^2), inside the window (a, b from 1 to 29); a = 7, b = 1 is W = 50, k = 4: cos w = 24/25, sin w = 7/25
+ALL PASS

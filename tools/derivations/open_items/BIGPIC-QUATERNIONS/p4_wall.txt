@@ -1,0 +1,9 @@
+PASS 1. dial 3: of the whole 2 x 2 matrices of determinant +-1 with entries -2..2, those the centred per-gear carry commutes with are 8, all signed permutations
+PASS 1. dial 5: of the whole 2 x 2 matrices of determinant +-1 with entries -2..2, those the centred per-gear carry commutes with are 8, all signed permutations
+   Hurwitz, 24 units: (W, non-zero classes fixed by a unit other than 1, W shares a factor with 6): [(1, 0, False), (2, 15, True), (3, 32, True), (4, 15, True), (5, 0, False), (6, 47, True), (7, 0, False), (8, 15, True), (9, 32, True), (10, 15, True), (11, 0, False), (12, 47, True), (13, 0, False)]
+PASS 2. Hurwitz: a unit other than 1 fixes a non-zero class mod W exactly when W shares a factor with 6 (W = 1..13)
+   the eight-part order, 48 units: (W, fixed non-zero classes, classes, W shares a factor with 6): [(1, 0, 1, False), (2, 255, 256, True), (3, 320, 6561, True), (4, 255, 65536, True), (5, 0, 390625, False)]
+PASS    the eight-part order under the 48: the same, W = 1..5
+PASS 3. at dials prime to 6 the nearest lift still ties: W = 5, 192 of 625 classes; W = 7, 576 of 2401
+PASS    one tie written out: (5 + i + j + k)/2 lies at |.|^2 = 7 from both 0 and 5
+ALL PASS

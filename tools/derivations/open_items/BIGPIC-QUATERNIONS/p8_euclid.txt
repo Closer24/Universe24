@@ -1,0 +1,7 @@
+PASS 1. Hurwitz: a = q b + r with N(r) <= N(b) / 2 on 20,000 pairs, q the nearer of two roundings (one compare): the largest N(r) / N(b) met 2088 / 4404
+PASS 2. the worst |x - q|^2 on the grid of eighths: part by part 64/64 (the full divisor), with the halves 32/64 (half), half-D4 16/64
+PASS    the four-fold tie (1+i+j+k)/2 lies at 1 from its nearest part-by-part points and is itself an all-halves point, a corner turn's gear
+   the double deep holes, least N(x - q) over 4^8 candidates: [('(1+i)/2 + root2 (1/2)', 8, 16), ('(1+i)/2 + root2 (1/4)(1+i+j+k)', 128, 256), ('(1+j)/2 + root2 (1/2) k', 8, 16)]
+PASS 3. the octahedral order: at its three double deep holes the least absolute norm of x - q is 1/2 exactly
+PASS    3,000 points close around the double deep holes: none exceeds 1/2: the largest least N(x - q) met 37470473 / 84934656
+ALL PASS

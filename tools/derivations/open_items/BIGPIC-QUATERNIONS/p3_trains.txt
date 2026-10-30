@@ -1,0 +1,10 @@
+PASS 1. the 24-gear train of the units is a signed permutation for every gear, a homomorphism on all 48 x 48, and -1 sends every tooth to minus itself
+   it holds, by characters (complex count): {'E1/2': (2, 0), 'E5/2': (2, 0), 'G3/2': (4, 0)}
+PASS    E1/2 twice, E5/2 twice, G3/2 four times
+   the subgroups holding -1, by order: [2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 8, 8, 8, 8, 8, 12, 12, 12, 12, 16, 16, 16, 24, 48]
+PASS 2. of the 30 subgroups holding -1, only {+-1} and the four sixfold C6 carry a sign character sending -1 to -1: [2, 6, 6, 6, 6]
+   the trains and what they hold: [(24, {'E1/2': 2, 'E5/2': 2, 'G3/2': 4}), (8, {'E1/2': 0, 'E5/2': 0, 'G3/2': 2}), (8, {'E1/2': 0, 'E5/2': 0, 'G3/2': 2}), (8, {'E1/2': 0, 'E5/2': 0, 'G3/2': 2}), (8, {'E1/2': 0, 'E5/2': 0, 'G3/2': 2})]
+PASS 3. the train from {+-1} has 24 gears and holds 2 E1/2 + 2 E5/2 + 4 G3/2; each C6 gives 8 gears holding 2 G3/2 alone; so spin 1/2 rides no signed-permutation train of fewer than 24 gears, and never alone
+   the subgroups without -1 (order, gears, E1/2 held): [(1, 48, 2), (3, 16, 0)]
+PASS 4. without -1 only orders 1 and 3 occur; order 3 gives 16 gears holding no E1/2, order 1 the 48 of the regular train: so the 24-gear train is the least that holds spin 1/2
+ALL PASS

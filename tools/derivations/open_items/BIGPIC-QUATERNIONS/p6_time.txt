@@ -1,0 +1,6 @@
+PASS 1. the beat has determinant 1 and trace c for every whole c in -9..9
+PASS    the traces of its powers follow t_(n+1) = c t_n - t_(n-1): 2 cos(n w) with 2 cos w = c
+PASS 2. the time mirror is the swap S (determinant -1), and S M S = M^-1: the beat run backward
+PASS 3. inside the window (k/W = 0.001 to 3.99) the hand's largest a^2 stays within a thousandth of its ellipse's 4 L^2 W / (4W - k) over 4,000 rounds: [(1, True), (100, True), (1000, True), (2000, True), (3000, True), (3990, True)]
+PASS    outside it (k/W = 4.01 to 6) it runs past a hundred times its lay within 60 rounds: [(4010, True), (4500, True), (6000, True)]
+ALL PASS

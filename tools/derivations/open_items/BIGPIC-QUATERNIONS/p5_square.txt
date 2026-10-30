@@ -1,0 +1,7 @@
+PASS 1. v . v = 0, re . im = 0 and |re| = |im| = |psi|^2 on 3,000 whole hands
+PASS    psi and -psi give one square: the sign is what the square does not hold
+PASS 2. re x im = |psi|^2 s, s = psi^dagger sigma psi the root's spin, with one fixed sign on every hand: [1]
+PASS 3. v(psi) . v(chi) = -2 (psi1 chi2 - psi2 chi1)^2 on 1,875 whole pairs: the pair hand is read from the squares
+PASS 4. for each of the 48 gears, exactly one signed permutation R has v(g psi) = R v(psi) on every test hand, and its determinant is 1: every gear turns the square in whole numbers
+PASS    the 48 gears give 24 such turns, two gears to each
+ALL PASS

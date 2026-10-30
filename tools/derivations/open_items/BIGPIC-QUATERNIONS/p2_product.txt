@@ -1,0 +1,8 @@
+PASS 1. for pure whole v, w: v w = -(v . w) + v x w; the dot table and the epsilon table are one product
+PASS 2. N(p q) = N(p) N(q) on 5^4 x 3 whole pairs (Euler's four squares)
+PASS 3. on all 48 gears: conj(before) x now does not move when the board turns the hand: three inner charges
+PASS    now x conj(before) keeps its real part, and its pure part turns with the board: the spin
+PASS 4. real^2 + |turn|^2 = |before|^2 |now|^2 in both orders, and both orders share one real part (one wind)
+PASS 5. the six turns are the board's triplet and the inner triplet: their half-sum and half-difference are the 4-d area's parts
+PASS 6. with no carry, the step keeps the wind and all six turns exactly, at any spring, inside or outside the window (500 lays)
+ALL PASS

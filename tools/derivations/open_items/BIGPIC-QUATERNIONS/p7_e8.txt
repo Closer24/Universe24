@@ -1,0 +1,7 @@
+   the Gram matrix's diagonal: [2, 2, 2, 2, 2, 2, 2, 4]; leading minors: [2, 3, 4, 4, 4, 3, 2, 1]
+PASS 1. the Gram matrix of the order's whole basis under Q is whole: each entry is an exact carry, and a remainder would have stopped the run
+PASS 2. its diagonal is even
+PASS 3. its determinant is 1: 1
+PASS 4. its leading minors are all positive: the form is positive
+   so the eight-part whole hand under Q is an even unimodular lattice of rank 8: E8
+ALL PASS

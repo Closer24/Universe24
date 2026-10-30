@@ -1,0 +1,14 @@
+PASS 1. the 48 gears give 24 turns, two gears to each (g and -g)
+PASS    every turn is a signed permutation of the axes with determinant 1
+PASS 2. Hurwitz's 24 units (whole and all halves) make 12 turns, all even axis permutations
+PASS    the 24 gears with a root of 2 make the other 12, all odd axis permutations
+PASS 3. on all 48, s * trace(turn) = 4 u0^2 - s: the hand turns by twice the gear's angle
+   the gears by turn and by number: [(('corner third turn', 'halves'), 16), (('edge half turn', 'root2'), 12), (('face half turn', 'whole'), 6), (('face quarter turn', 'root2'), 12), (('none', 'whole'), 2)]
+PASS 4. +-1 no turn; +-i, +-j, +-k the face half turns; the 16 all-halves the corner turns; root 2 with a real part the face quarter turns; pure root 2 the edge half turns
+PASS 5. (1 + k)^2 = 2 k, (1 + k)^4 = -4, (1 + k)^8 = 16: g^2 = k, g^4 = -1, g^8 = 1
+PASS    the whole-speed hand is back after four quarter turns, the half-speed one after eight
+PASS 6. sigma(g) = A2(turn) g on all 48: the A2 kind is the Galois sign of root 2
+PASS    sigma(g)/g is multiplicative over all 48 x 48 products: a character
+PASS 7. every turn permutes the six Spokes +-i, +-j, +-k
+PASS 8. the 24 turns and their 24 mirrors (the bar on pure v) are all 48 signed permutations: the cube's 48
+ALL PASS

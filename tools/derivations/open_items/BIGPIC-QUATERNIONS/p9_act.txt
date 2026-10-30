@@ -1,0 +1,22 @@
+   two-part, a circle, wind: window means from the first, in grains: [0, 0, 0, 2, 3, 4, 4, 3, 4, 6, 7, 6, 7, 8, 9, 9, 10, 10, 9, 8]
+   two-part, a circle, board turn k: window means from the first, in grains: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   two-part, another, wind: window means from the first, in grains: [0, -1, -1, -3, -3, -2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+   two-part, another, board turn k: window means from the first, in grains: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   four-part, one lay, wind: window means from the first, in grains: [0, 0, 0, 1, 3, 3, 2, 1, 2, 5, 5, 4, 4, 5, 5, 6, 5, 5, 3, 4]
+   four-part, one lay, board turn i: window means from the first, in grains: [0, -4, -5, -4, -6, -11, -13, -17, -18, -19, -19, -20, -21, -20, -22, -19, -15, -15, -12, -12]
+   four-part, one lay, board turn j: window means from the first, in grains: [0, -7, -10, -7, -9, -14, -12, -11, -16, -22, -19, -16, -18, -23, -19, -17, -17, -17, -15, -13]
+   four-part, one lay, board turn k: window means from the first, in grains: [0, 0, 1, 1, -4, -7, -14, -13, -12, -12, -11, -7, -9, -7, -10, -18, -16, -20, -22, -19]
+   four-part, one lay, inner turn i: window means from the first, in grains: [0, -3, -3, -3, -7, -14, -20, -22, -23, -23, -23, -21, -23, -21, -24, -27, -23, -25, -24, -22]
+   four-part, one lay, inner turn j: window means from the first, in grains: [0, -2, -2, -1, -4, -7, -9, -5, -7, -10, -8, -3, -5, -8, -6, -11, -12, -14, -16, -13]
+   four-part, one lay, inner turn k: window means from the first, in grains: [0, 7, 11, 8, 7, 11, 7, 8, 13, 18, 16, 16, 18, 22, 18, 11, 11, 8, 5, 5]
+   four-part, another, wind: window means from the first, in grains: [0, -1, -3, -4, -3, -2, -2, -3, -4, -6, -8, -10, -10, -8, -9, -11, -12, -12, -11, -10]
+   four-part, another, board turn i: window means from the first, in grains: [0, 2, 9, 16, 17, 19, 14, 8, 12, 13, 7, 9, 9, 12, 15, 13, 7, 4, 2, 6]
+   four-part, another, board turn j: window means from the first, in grains: [0, 1, 0, -4, -8, -8, -6, -4, -2, -3, -2, -5, -5, -6, -8, -4, 0, 0, 0, -1]
+   four-part, another, board turn k: window means from the first, in grains: [0, -5, -5, -1, 4, 2, 2, 0, -5, -4, -2, 2, 3, 5, 8, 2, 0, 3, 7, 7]
+   four-part, another, inner turn i: window means from the first, in grains: [0, 3, 10, 17, 18, 20, 15, 9, 13, 14, 8, 9, 9, 12, 15, 12, 6, 3, 0, 4]
+   four-part, another, inner turn j: window means from the first, in grains: [0, 2, 0, -2, -5, -5, -3, -1, 0, 0, 0, -2, -3, -5, -7, -4, -2, -3, -5, -7]
+   four-part, another, inner turn k: window means from the first, in grains: [0, 5, 4, 0, -6, -4, -3, -1, 3, 2, 0, -3, -4, -6, -8, -2, 1, -1, -4, -4]
+PASS 1. a free two-part hand's turn (its one charge) holds to under one grain in every window over 240,000 rounds: widest 0
+PASS 2. its wind's window mean wanders by up to ten grains: within grains, not exactly: widest 10
+PASS 3. a four-part hand's six turns wander back and forth by up to about thirty grains: widest 27
+ALL PASS
