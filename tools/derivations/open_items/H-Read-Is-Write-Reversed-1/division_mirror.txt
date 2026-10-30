@@ -1,1 +1,0 @@
-{'triples': 50000, 'inverse exact': 50000, 'the act at -1 the act at +1 under the mirror': 50000}

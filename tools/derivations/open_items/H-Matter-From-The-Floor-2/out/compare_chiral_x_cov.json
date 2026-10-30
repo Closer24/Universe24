@@ -1,1 +1,0 @@
-{"base": "fg_chiral_60_cov.json", "image": "fg_chiral_60_px_cov.json", "axis": "x", "base births": 19, "image births": 19, "verdicts": {"EQUAL": 0, "CONJUGATE": 10, "APART": 9}, "first interval": {"CONJUGATE": 3, "APART": 6}, "per taken row": {"3": {"EQUAL": 0, "CONJUGATE": 10, "APART": 8}, "0": {"EQUAL": 0, "CONJUGATE": 0, "APART": 1}}}

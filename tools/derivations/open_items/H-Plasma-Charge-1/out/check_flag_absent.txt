@@ -1,7 +1,0 @@
-src d7f2c713f4d6165c clicks 0 births 0 census [98, 114]
-src_pl1 absent d7f2c713f4d6165c clicks 0 births 0 census [98, 114]
-src_pl1 sym d7f2c713f4d6165c clicks 0 births 0 census [98, 114]
-src_pl1 odd c89eeb76266b463d clicks 0 births 0 census [98, 114]
-src_pl1 none d7f2c713f4d6165c clicks 0 births 0 census [98, 114]
-src_pl1 click b d7f2c713f4d6165c clicks 0 births 0 census [98, 114]
-flag absent bit for bit: True

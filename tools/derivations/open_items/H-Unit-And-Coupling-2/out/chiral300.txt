@@ -1,5 +1,0 @@
-base chiral300 seconds 10 run back {'intervals': 10, 'exact': 10} counts {"births": "14", "body_clicks": "0", "turns": "1877", "refused_lay": "361", "refused_orientation": "28", "refused_twist": "0", "refused_stop": "2", "taken": "30646883765807872612599", "booked": "29077648659844917984000", "laid": "0"}
-off chiral300 seconds 10 run back {'intervals': 10, 'exact': 10} counts {"births": "14", "body_clicks": "0", "turns": "1877", "refused_lay": "361", "refused_orientation": "28", "refused_twist": "0", "refused_stop": "2", "taken": "30646883765807872612599", "booked": "29077648659844917984000", "laid": "0"}
-on chiral300 seconds 10 run back {'intervals': 10, 'exact': 10} counts {"births": "14", "body_clicks": "0", "turns": "1877", "refused_lay": "361", "refused_orientation": "28", "refused_twist": "0", "refused_stop": "2", "taken": "30646883765807872612599", "booked": "29077648659844917984000", "laid": "0"}
-compare chiral300 base against off EQUAL
-compare chiral300 base against on EQUAL

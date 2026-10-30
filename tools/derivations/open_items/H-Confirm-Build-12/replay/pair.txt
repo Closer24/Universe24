@@ -1,9 +1,0 @@
-pair beside its quarter-turned image | X equal at every Node at 20 of 20 | credits 81 81 | equal take for take in (i, node, taken, levels, taker) True | lines on the board [0] | on the image [1]
-  the image's re line at 0 at every credited Node: True
-image | takes traced 162 | takes logged 81 | equal as multisets False | mismatches of the line (mine against the engine's) 0 []
-  takes per line (line: count) {0: 81, 1: 81} | births 0 | credits 81 | laid back 81 | stops 0
-  stops logged 0 | at intervals []
-  births 0 | charge at every birth (W_children summed 0): no birth | taken at or above booked 0 of 0
-  mergers 0 | both ends read before either written True []
-  run back exact from the seed: 10 of 10
-  run back exact 20: 20 of 20

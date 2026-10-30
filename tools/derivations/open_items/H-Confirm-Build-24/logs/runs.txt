@@ -1,6 +1,0 @@
-world_hole_60.json exit 0 17 s
-world_chiral_60.json exit 0 16 s
-world_bodies_120.json exit 0 79 s
-world_hole_60 conservation exit 1
-world_chiral_60 conservation exit 1
-pytest exit 0 155 s

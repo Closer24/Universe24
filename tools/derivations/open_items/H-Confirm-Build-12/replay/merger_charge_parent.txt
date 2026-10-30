@@ -1,2 +1,0 @@
-births 1 T 36000
-  i 2 node [2, 1, 1] taken_row 1 line_pair 3 W_children [-18000, 18000] sum 0 taken_line None taken 3436583877782536074419 booked 3423800500978311429622

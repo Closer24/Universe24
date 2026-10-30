@@ -1,7 +1,0 @@
-interval 1 off 0 births []
-interval 2 off 0 births []
-interval 3 off 4 births [(3, [0, 1, 2], 0, [0, 1, 2], [1, 1, 2])]
-   ('shape2 line0', 'now', (0, 1, 2), -125, 125)
-   ('shape2 line0', 'now', (2, 1, 2), -125, 125)
-   ('shape2 line1', 'before', (0, 1, 2), -144, 144)
-   ('shape2 line1', 'before', (2, 1, 2), 144, -144)

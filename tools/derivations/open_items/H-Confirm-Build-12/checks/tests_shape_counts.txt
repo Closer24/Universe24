@@ -1,6 +1,0 @@
-base ref: 6703dd95c6a105013faa2f3227d4bcb3e2132b79
-head e1209f752 | tests/ lines 1696 | room_of 584
-parent 99a9ee860 | tests/ lines 1638 | room_of 584
-merge base 6703dd95c6a105013faa2f3227d4bcb3e2132b79 | tests/ lines 1022 | room_of 0
-head against the parent: grew by 58 lines; room_of(head) 584
-with a ROOM entry of 40 lines for David's test the head's room would be 624 and the gate would read 1696 against 1646

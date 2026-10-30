@@ -1,8 +1,0 @@
-[
- {"file": "event_universe/close.py",
-  "old": "import numpy as np\n\nfrom event_universe import gram, readings\n",
-  "new": "import os\n\nimport numpy as np\n\nfrom event_universe import gram, readings\n"},
- {"file": "event_universe/close.py",
-  "old": "            plus, minus = (into, outof) if rest or h > 0 else (outof, into)\n",
-  "new": "            if os.environ.get(\"CX1_ONE_OBJECT\"):\n                hand = flow * h if flow else w[1] - w[0]\n                plus, minus = (j, at) if hand > 0 else (at, j)\n            else:\n                plus, minus = (into, outof) if rest or h > 0 else (outof, into)\n"}
-]

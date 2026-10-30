@@ -1,4 +1,0 @@
-a {"laid W": [18224, 1154], "bottoms": [[167, 939]], "exact at 166 and 167": [false, false], "tops": [[84, 27]], "retrace first parting k": 9, "credits": 0, "laid back": 0, "run back through the top": 10, "integers": 98, "bits": 114, "laid": 0, "births": 0}
-a kick {"laid W": [18224, 1154], "bottoms": [[167, 1000]], "exact at 166 and 167": [true, true], "tops": [[84, 27]], "retrace first parting k": null, "credits": 0, "laid back": 0, "run back through the top": 10, "integers": 98, "bits": 113, "laid": 0, "births": 0}
-b kick {"laid W": [18224, 1154], "bottoms": [[167, 1000]], "exact at 166 and 167": [true, true], "tops": [[84, 27]], "retrace first parting k": null, "credits": 81, "laid back": 81, "run back through the top": 10, "integers": 98, "bits": 113, "laid": 0, "births": 0}
-PASS in 2814 ms

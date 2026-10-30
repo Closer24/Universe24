@@ -1,4 +1,0 @@
-== barred words
-== floats (literal)
-== caps runs
-== end

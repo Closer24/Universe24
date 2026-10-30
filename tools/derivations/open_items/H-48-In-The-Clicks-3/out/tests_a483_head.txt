@@ -1,3 +1,0 @@
-{"flag": "", "first_parting_level_interval": 5, "first_birth_apart": 11, "births": [3, 2]}
-{"flag": "", "births_at_2": 0, "nodes_at_2": 0, "refused_origin": 64, "children": []}
-{"seconds": 1.6}

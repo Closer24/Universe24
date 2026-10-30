@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/gn2/tools/derivations/gn2/conservation_check_gn2.py", line 510, in <module>
-    sys.exit(main())
-             ~~~~^^
-  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/gn2/tools/derivations/gn2/conservation_check_gn2.py", line 119, in main
-    row_pairs = [None] + [b.pairs[k // 2] for k in range(n_rec)] + [(den, den), (den, den), b.vol_pair]
-                                                                                            ^^^^^^^^^^
-AttributeError: 'Checked' object has no attribute 'vol_pair'

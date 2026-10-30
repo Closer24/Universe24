@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cm1/tools/derivations/open_items/H-Children-Laid-Moving-1/tests_cm1.py", line 62, in <module>
-    print(test_cm1(sys.argv[1], sys.argv[2]))
-          ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/cm1/tools/derivations/open_items/H-Children-Laid-Moving-1/tests_cm1.py", line 50, in test_cm1
-    assert 2 * abs(bal[ax]) <= abs(dpl[ax] // q), "the along-Link balance beyond half the quantum"
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: the along-Link balance beyond half the quantum

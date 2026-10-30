@@ -1,3 +1,0 @@
-world_hole_60.json wall bits 92 axis-bookings 6948 by kind {'take': 6840, 'end': 108} -dP identity held 6948 +dP form held 6234 dP summed [220559495130877718156, -92604823308456182512, -391020422568086703846] recoil levels summed [0, 1, 0]
-world_chiral_60.json wall bits 92 axis-bookings 9156 by kind {'take': 9060, 'end': 96} -dP identity held 9156 +dP form held 8521 dP summed [-397690222281731349336, -493747984113543128332, -420646467201918952600] recoil levels summed [0, 0, -1]
-world_bodies_120.json wall bits 69 axis-bookings 53982 by kind {'take': 53850, 'end': 132} -dP identity held 53982 +dP form held 51024 dP summed [-455259110040174, -5249926435890, -5381251679590] recoil levels summed [2, 0, 0]

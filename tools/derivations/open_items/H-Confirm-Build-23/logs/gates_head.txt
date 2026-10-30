@@ -1,7 +1,0 @@
-head | ruff check . | exit 0 | All checks passed!
-head | ruff format --check . | exit 0 | 191 files already formatted
-head | mypy | exit 1 | Found 14 errors in 14 files (checked 33 source files)
-head | /home/user/Universe24/venv314/bin/python tools/engine_gates.py | exit 0 | the engine gates hold against the merge base
-head | /home/user/Universe24/venv314/bin/python tools/record_code_shape.py | exit 0 | the shape of the code holds against the merge base
-head | /home/user/Universe24/venv314/bin/python tools/tests_shape.py | exit 1 | tests/ grew from 2051 to 2113 lines; offset the new tests by deletions in the same pull request
-head | /home/user/Universe24/venv314/bin/python tools/documents_gates.py | exit 1 | docs/ENGINE.md: 'The engine is twenty-one modules'; the tree holds 23: ['board.py', 'bodies.py', 'circle.py', 'clicks.py', 'close.py', 'decoder.py', 'draw.py', 'events.py', 'gates.py', 'gram.py', 'int

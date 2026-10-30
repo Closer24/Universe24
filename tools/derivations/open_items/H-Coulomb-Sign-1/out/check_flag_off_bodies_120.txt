@@ -1,1 +1,0 @@
-{'world': 'worlds/world_bodies_120.json', 'intervals': 120, 'hashes compared': 10, 'equal': 10, 'last': 'c46554211b56c4c6', 'census': (89, 92)}

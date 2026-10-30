@@ -1,7 +1,0 @@
-world_plasma_3 170 exit 0
-world_pair_3 400 exit 0
-world_hole 60 exit 0
-world_universe 400 exit 0
-world_chiral 60 exit 0
-world_bodies 300 exit 0
-ALL

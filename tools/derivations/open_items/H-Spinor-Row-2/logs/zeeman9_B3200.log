@@ -1,1 +1,0 @@
-{"world": "zeeman9_B3200.json", "ms": 7785, "credits": {"0": 0, "1": 0, "2": 248, "3": 0}, "crossings": {"2,0": 5, "2,4": 4, "0,0": 0, "1,0": 2}, "births": 31, "spinor births": 2, "run back": {"intervals": 10, "exact": 10}, "integers": 116, "bits": 92, "transient": 85, "taken>=booked": true}
