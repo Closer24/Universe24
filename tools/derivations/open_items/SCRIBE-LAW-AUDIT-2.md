@@ -45,6 +45,25 @@ The lines of each check are in `python -I scribe_law_check.py --all`. **Ten of t
 2. **The body after** (130 rows and the form defects), section by section beside the engine's cleaning, by the preface's own rule (a line that no longer holds is not in the body; it stands dated in the closing section The former clauses, and the body holds every formula once).
 3. The check runs after every law edit and every hour; the known list only falls, and a finding beyond it refuses.
 
-## D. The code and the documents
+## D. The code (tools/derivations/open_items/scribe_code_census.py, an AST scan, at tensor24-review 9751f91c1, reader-5 0b4fb6d3e, toys-5 f89b76a33)
 
-The sweep of the code and of the documents follows in section E and F of this file as each part closes.
+It counts per file the float literals, the true divisions (a pathlib join spared), the powers with no integer exponent, the imports of math, random, fractions, decimal and statistics, and the calls of a root, an exponential, a logarithm, a circular function, round, float and pow (law line 100: no float anywhere, the probes too; line 102: no circularity). A count is a finding to read, not a verdict.
+
+| the code | files | with a hit | what the hits are |
+|---|---|---|---|
+| src/tensor24, the new engine | 27 | **0** | the independent scan and the gate agree: none |
+| tests/test_the_tensor24_*.py | 17 | 5 | float literals laid on purpose to be refused (18), round (2), math and fractions imported once each, one division |
+| tools/*.py | 12 | 3 | check.py and documents_gates.py (timings and percentages: float, round), engine_gates.py (a power) |
+| derive/ (the Boss's drafts A to I and their verifiers) | 249 | 160 | fractions, random, float, math: the drafts of 2026-10-28 and 10-29, before the owner's word of 03:4x on the probes |
+| derive/david_open | 36 | 29 | the older ones (course, born, click, ladder, twin: float, exp, sqrt, sin, cos; mass, two_boards, tables, gear: fractions, random); the newest c1, c2 and g3 are clean; **t5_trace.py (new) imports fractions and random** |
+| ANIMATE-* | 35 | 16 | older probes of the old line (float, sqrt, math, fractions) |
+
+The whole documents branch (tools, src, tests): 1,345 files, 473 with a hit, most of them the old line's hands (tools/derivations/open_items/H-*) and its first scripts. **The gate (scribe_scan.py) reads src/tensor24 and tools/tensor24_*.py and no probe**, so no gate guards the probes.
+
+**Recommendation:** freeze the old probes as the old era's record; let the gate refuse a new or changed probe under derive/ with a float, a root, a circular call, or (if the owner says a Fraction is no whole number) a Fraction, a random or a math import; convert a probe only when a page cites it as evidence of the new core.
+
+## E. The documents
+
+**Mechanical:** 373 citations of a law line (331 plain, 42 named) in the 130 documents of docs/ and tools/derivations/open_items/ name an existing line, and no named citation points at a line that lacks its name (the six the script flags are phrases quoted, each held by its line). The law check's stale patterns, read on the live documents (a sentence marked as history spared): README.md, the horizon (2 lines); docs/ENGINE.md, a root, a parity, the horizon, the old spring (6); docs/FURTHER_RESEARCH.md, a root, a refusal past a range, real arithmetic, the horizon (6); docs/FOLLOW_UP_PAPERS.md (2); docs/CLOCK_WORDS.md (4); docs/BIG_PICTURE.md and llms.txt none.
+
+**By readers:** four read-only readers read the live documents against the law's digest (README.md, llms.txt and ENGINE.md; BIG_PICTURE.md in two halves; FURTHER_RESEARCH.md, FOLLOW_UP_PAPERS.md, CLOCK_WORDS.md and the non-ledger parts of UNIVERSE24.md); each item is checked by the keeper before it is listed (below, when they return).
