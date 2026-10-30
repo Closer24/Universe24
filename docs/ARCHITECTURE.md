@@ -1,13 +1,13 @@
 # Tensor24: the architecture
 
-The one document that tells the system and how it is built, and the one the work runs from. The owner's words of 2026-10-30 (in Hebrew, in translation): "something not bloated that fits the Node-clock"; "one uniform document that is clear and clean and orderly, the big parts at the top, and below how each part is implemented and how it works together"; "a single document, with the decoder in it, no more splitting documents". The law ([docs/ALGEBRA.md](ALGEBRA.md)) governs it and the owner decides it.
+The one document that tells the system and how it is built, and the one the work runs from (the owner's words of 2026-10-30, in Hebrew, in translation: "a single document, with the decoder in it, no more splitting documents"; "not bloated"; "clear and clean and orderly"). The law ([docs/ALGEBRA.md](ALGEBRA.md)) governs it and the owner decides it. The words it uses are in the glossary at the end.
 
-Tensor24 is a purely algebraic engine: a board of clocks, each clock a train of gears that mesh with its six neighbours, and one act at every Node-clock every round, alike everywhere. Nothing of nature is typed; the physics is read from the clicks alone.
+Tensor24 is a purely algebraic engine: a board of Node-clocks, each a set of gears that mesh with its six neighbours' gears through six Meshes, and one act at every Node-clock, alike everywhere, which the runner repeats in rounds. Rule3's carry is its one division, with the remainder kept. Nothing of nature is typed; the physics is read from the clicks alone.
 
 **Each part answers the same questions**, a few lines each, and one general flag, n/a, stands where a layer does not apply:
 
 - **Clock:** what the clock actually does.
-- **Board:** what the board does in terms of the clocks, the board taken as it stands in our event space, which has no time: time is each Node-clock's own count and nothing else.
+- **Board:** what the board does in terms of the clocks, the board taken as it stands in our event space, which has no time: time is each Node-clock's own count and nothing else (a round is the runner's pass and a gear's now and before are its two counts; none of them is a time of the board's).
 - **Clicks:** what physics shows in the clicks, the board's shadow; the physics stands behind the clicks, and the step from the board to the clicks is the delicate one.
 - **Algebra:** one line of its algebra, in whole numbers and Rule3's carry. Then its **home** in the code, its **test** and its **status**.
 
@@ -42,7 +42,7 @@ The loader lays the board from the three files. The runner gives every Node-cloc
 
 ### The Node-clock (the core)
 
-- **Clock:** a clock of many hands, one gear per row. Every round every gear moves once: its six neighbours pull it through the Meshes and the coupling pushes it; it turns by what its teeth carry and keeps the rest as its fine tooth; the drive carries the coupling's push the same way. No gear waits, sends or is singled out, and there is no special code and no law of the Node-clock's for a slowing, a grip, a sending, a receiving, a lengthening, a shortening or a freezing: these are the act's own results (law, lines 90 and 92).
+- **Clock:** a clock of many hands, one gear per row. Every round every gear moves once: its six neighbours pull it through the Meshes and the coupling pushes it; it turns by what its teeth carry and keeps the rest as its fine tooth; the drive carries the coupling's push the same way. No gear waits, sends or is singled out. A Node-clock is independent and disconnected from the world (decision 42, line 92), and there is no special code and no law of its own for a slowing, a grip, a sending, a receiving, a lengthening, a shortening or a freezing: these are what the act gives on the metric's own gears (law, line 90), once the metric's push is built (G2).
 - **Board:** one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot. The teeth W are the rest plus the metric family's 00 slots here; each Spoke's grip is the rest plus the ii slots at both ends of its Mesh. The run back is the same act on the mirrored state, exact while every fine tooth stands within its teeth.
 - **Clicks:** none is written before G5. A whole click will be the drive's carry of a train's swept area; a split click will be the draw over the parts' sizes. The clicks read the rest beat as a mass, and a clock's own count as its proper time.
 - **Algebra:** q, r+ = carry(W (a - b) + s (F + T_k q_d), W, r); a+ = a + q; b+ = a. F is the sum over the six Spokes of grip (neighbour - own); q_d, r_d+ = carry(J, T_d, r_d); J is the plan's contraction of up to three readings through the 24's tables, each monomial pushing all its legs.
@@ -78,7 +78,7 @@ The loader lays the board from the three files. The runner gives every Node-cloc
 - **Clock:** a hairspring ties a hand to a held hand in its own clock, so it swings by itself.
 - **Board:** a tied hand beats at its rest rate at every clock alike; light's hands have no hairspring and only travel from clock to clock.
 - **Clicks:** the beat is read as a mass, through energy differences and through motion; light reads massless.
-- **Algebra:** the spring g C n, 4 sin^2 (omega0 / 2) = g n / W. **Home:** engine/contract.py, term 6. **Status:** built; the strengths OPEN at G3.
+- **Algebra:** the spring g C n, 4 sin^2 (omega0 / 2) = g n / W. **Home:** engine/contract.py, term 6. **Status:** the vertex law BUILT and tested generically; the spring's beat and bound were checked at the tests' strengths and left the suite (git 2c87a07ed); no spring is laid in any world file yet; the strengths OPEN at G3.
 - **G3's results** (David's DAVID-TENSOR24-G3.md, toys-5 1ae9a6c29): the bound holds for one tied family or one summed four-leg term, and with a term on each family the sum of g_f^2 / (2 kappa lam_f) is at most 1; the ceiling is the smaller of lam's excess scale and the held hand's own (x near kappa / g), never the held hand's sign; light and the metric stay off k (OPEN, no row apart); E is read through its form; an E held count's own potential of up to four legs stands where two of a T1 family's springs meet.
 
 **The families and the three hands:** owed from David in the same form (his (e): the decoder's page 1.8 and 3.9 to 3.11).
@@ -187,12 +187,17 @@ The architect's table; the gate's ISOLATE rule reads it. The standard library is
 
 ## 6. The documents
 
-One document tells the system: this one. Beside it stand the law ([docs/ALGEBRA.md](ALGEBRA.md)); the entry files ([README.md](../README.md), `llms.txt`); the project files (`LICENSE`, `CITATION.cff`, `pyproject.toml`, [CONTRIBUTING.md](../CONTRIBUTING.md), [CHANGELOG.md](../CHANGELOG.md)); and the work's records under tools/derivations (the Boss's derivation pages, David's derivations, the keeper's `SCRIBE-GATE-1.md`, `SCRIBE-LAW-AUDIT-2.md` and `SCRIBE-ROUTINE.md`), which no part depends on. The other documents of docs/ are records of the work, folded into this one: [ENGINE](ENGINE.md), [BIG_PICTURE](BIG_PICTURE.md), [CLOCK_WORDS](CLOCK_WORDS.md), [FURTHER_RESEARCH](FURTHER_RESEARCH.md), [FOLLOW_UP_PAPERS](FOLLOW_UP_PAPERS.md), [HIGHLIGHTS](HIGHLIGHTS.md) and [UNIVERSE24](UNIVERSE24.md). The old engine and its worlds stand in git's history alone.
+One document tells the system: this one. Beside it stand the law ([docs/ALGEBRA.md](ALGEBRA.md)); the entry files ([README.md](../README.md), `llms.txt`); the project files (`LICENSE`, `CITATION.cff`, `pyproject.toml`, [CONTRIBUTING.md](../CONTRIBUTING.md), [CHANGELOG.md](../CHANGELOG.md)); and the work's records under tools/derivations (the Boss's derivation pages, David's derivations, the keeper's `SCRIBE-GATE-1.md`, `SCRIBE-LAW-AUDIT-2.md` and `SCRIBE-ROUTINE.md`), which no part depends on. The other documents of docs/ are records of the old build: [ENGINE](ENGINE.md), [BIG_PICTURE](BIG_PICTURE.md), [CLOCK_WORDS](CLOCK_WORDS.md), [FURTHER_RESEARCH](FURTHER_RESEARCH.md), [FOLLOW_UP_PAPERS](FOLLOW_UP_PAPERS.md), [HIGHLIGHTS](HIGHLIGHTS.md) and [UNIVERSE24](UNIVERSE24.md); what of them is live stands here, in the law or in the decoder's readings, and they leave the tree on the owner's word. The decisions in force are the law's (line 35). The old engine and its worlds stand in git's history alone.
 
 **Who keeps what.** The Boss keeps the status lines of the world, the loader, the Node-clock, the runner and the record true at each push; Animate those of the decoder and the visualizer; David derives, each derivation telling its part in these questions and going to the writer as a section of this document; the writer keeps the form and the law and reads every push against both; the owner decides, and no part changes its place or its wall without his word.
 
 ## 7. The glossary
 
-- **Node-clock:** a site of the board: a train of gears, one act per round. **Gear:** a dial with its count now and before and its fine teeth. **Mesh, Spoke:** the link between two neighbouring Node-clocks, one through each of a Node-clock's six Spokes.
-- **Round:** one full pass of every Node-clock, counted by the runner. **Carry:** Rule3's division, a quotient that leaves and a remainder that stays. **Click:** the carry's quotient where a winding is whole: the one measurement.
-- **The 24, the kinds:** the cube's turns and the five kinds that tie a train's gears. **Board:** the event board. **Bang:** the one run from the seed.
+- **Node-clock:** a site of the board: a set of gears, one for each row of each train, and one act per turn. **Gear:** a dial with its count now and before (the state's two slots) and its fine tooth, a remainder. **Train:** a tensor of gears across the board, the dials of one kind of thing (light, matter, the metric family).
+- **Spoke, Mesh:** a Spoke is one of a Node-clock's six directions; a Mesh is the link through a Spoke between two neighbouring Node-clocks, read once from both ends.
+- **Rule3, carry:** Rule3 is the one division, n + r = q d + r' with 0 <= r' < d: a quotient that leaves and a remainder that stays; the carry is the only place a division is written. **Winding:** the whole turn of a hand, the divisor at which a carry completes.
+- **Click:** the carry's quotient where a winding is whole: the one measurement, whole or split. **Round:** one pass of the runner over every Node-clock, an index from outside and no time of the board's. **Now, before:** a gear's two counts, no clock time.
+- **Mirrored state:** time's reversal at fixed teeth: now and before swapped and each fine tooth r flipped to W - 1 - r in its teeth W; the run back is the tick on the mirrored state, mirrored.
+- **Metric family, 00 slot, ii slots:** the clock's own train: its 00 slot is every gear's teeth here (the clock's rate), its three ii slots are each axis's Mesh grip.
+- **The 24, the kinds:** the cube's turns that leave a Node-clock's star the same, and the five kinds that tie a train's gears. **Board:** the event board, taken in our event space, which has no time. **Bang:** the one run from the seed.
+- **G2 to G5:** the stages that close what the Node-clock lacks (the Boss's plan): G2 the metric's push, the notch and the frozen clock; G3 the strengths and the plan; G4 the shift and the shears; G5 the clicks. **Postulate 6:** the time gear's law, slowdowns composing by their product.
