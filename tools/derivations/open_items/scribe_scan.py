@@ -324,7 +324,7 @@ BOOK_SCOPE = (
     NEW_ENGINE + "/engine/",
     RUNNER,
     MAIN,
-)  # no books in the engine, its loader, its runner or main.py (law line 102, the owner's word of 2026-10-30, 04:1x); the record's schema and the decoder keep the ledger's name until he rules
+)  # no books in the engine, its loader, its runner or main.py (law line 102, the owner's word of 2026-10-30, 04:1x); the record's schema and the decoder keep the ledger's name (his word of 04:3x)
 CARRY_HOME = frozenset(
     {"core/acts.py", "core/rule3.py", NEW_ENGINE + "/algebra/carry.py"}
 )  # where Rule3's division and remainder are written (the architect's design, approved at eaf07f596: algebra/carry.py alone in the new engine)
