@@ -57,7 +57,7 @@ Road A is the head's volume form in the uniform mode with the same push (the Bos
 
 - the books;
 - Postulate 6 for the rates: the wells add in the statics, gamma = beta = 1 (light's bending, Shapiro's delay, Mercury);
-  a note of 2026-10-30 (G2's second text, DAVID-TENSOR24-G2-STATIC.md, section 2), mended by its third text: on the act the grips act on every row, the 00 row's included, so the 00 counts do not add at second order (u2 is their cross term); at gamma = 1 the wells add in -ln N through second order (G2's probe (d3)), as Postulate 6 has it, "what adds up there is the logarithm of the rate". The exponential clock gives beta = 1 - gamma, beta = 0 at gamma = 1, refused by Mercury; the slot form gives beta = 2 - gamma, so beta = 1 at gamma = 1 for test bodies;
+  a note of 2026-10-30 (G2's second text, DAVID-TENSOR24-G2-STATIC.md, section 2), mended by its third text: on the act the grips act on every row, the 00 row's included, so the 00 counts do not add at second order (u2 is their cross term); for the wells of given sources at gamma = 1 they add in -ln N through second order (G2's probe (d3)), as Postulate 6 has it, "what adds up there is the logarithm of the rate"; for two masses that pull each other they do not (G2's fifth text: -ln N^2 = u1 - 8 Phi_2 with N2's cross part, refused by nature). The exponential clock gives beta = 1 - gamma, beta = 0 at gamma = 1, refused by Mercury; the slot form gives beta = 2 - gamma, so beta = 1 at gamma = 1 for test bodies;
 - one cone for light and the time gear;
 - the eras' q and light's weight 1;
 - the tensor waves;
