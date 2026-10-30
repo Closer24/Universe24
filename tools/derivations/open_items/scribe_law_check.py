@@ -15,7 +15,7 @@ The known list (scribe_law_check_known.json) holds the old engine's rows that st
 The same PAIRS table reads the live documents with --docs (README.md, llms.txt and docs/ARCHITECTURE.md), each pair against the law's governing line, a hit above the document's ceiling
 (scribe_law_check_docs_known.json) refusing; the table grows with every contradiction a reader finds (the four readers of 2026-10-30, 08:3x UTC, added P14 to P17).
 
-With --arch ROOT it reads the architecture document against the tree at ROOT (the Boss's head): every path of a part's Home line and every test of its Test line must be there (the older form, a trace table under the heading "The trace table", is read as before).
+With --arch ROOT it reads the architecture document against the tree at ROOT (the Boss's head) in both directions: every path of a part's Home line and every test of its Test line must be there (the older form, a trace table under the heading "The trace table", is read as before), every module of src/tensor24, every file of tests/, every script directly under tools/ and every file of examples/tensor24 must be named by some part's Home or Test line (the owner's word of 2026-10-30, 12:1x UTC: the main reflects the architecture document exactly), and every part carries the four layers and its status.
 Usage: python -I scribe_law_check.py [--law PATH] [--all] [--selftest] [--write-known] [--docs] [--arch ROOT]
 Exit 0: no finding beyond the known list; exit 1: a new finding (printed with its line); the known rows print as counts, and by line with --all."""
 
@@ -413,10 +413,87 @@ def check_trace(text: str, root: Path) -> list[str]:
     return out
 
 
+LAYERS = ("Clock", "Board", "Clicks", "Algebra")
+SYSTEM_SCOPE = (("src/tensor24", "*.py", True), ("tests", "*.py", True), ("examples/tensor24", "*", True), ("tools", "*.py", False))
+
+
+def named_files(text: str) -> tuple[set[str], set[str]]:
+    """The files and the folders the Home and Test lines of the architecture document name: (files, folders); only a folder of src/tensor24 or examples/tensor24 names the files below it, a bare tests/ or tools/ names none."""
+    files: set[str] = set()
+    folders: set[str] = set()
+    for _part, home, test in home_rows(text):
+        for path in home_paths(home):
+            if path.endswith("/"):
+                if path.startswith(("src/tensor24/", "examples/tensor24/")):
+                    folders.add(path)
+            else:
+                files.add(path)
+        for name in re.split(r"[,;]| and ", re.sub(r"\([^)]*\)", "", test)):
+            name = name.strip().strip("`")
+            if name.endswith(".py"):
+                files.add("tests/" + name)
+    return files, folders
+
+
+def system_files(root: Path) -> list[str]:
+    """The files of the tree at ROOT that belong to the system: the modules of src/tensor24, the files of tests/ and examples/tensor24, the scripts directly under tools/; no __init__.py and no cache."""
+    found: list[str] = []
+    for base, pattern, deep in SYSTEM_SCOPE:
+        folder = root / base
+        if not folder.is_dir():
+            continue
+        for path in sorted(folder.rglob(pattern) if deep else folder.glob(pattern)):
+            rel = path.relative_to(root).as_posix()
+            if path.is_file() and "__pycache__" not in rel and path.name != "__init__.py":
+                found.append(rel)
+    return found
+
+
+def check_mirror(text: str, root: Path) -> list[str]:
+    """The tree against the document: every file of the system is named by some part's Home or Test line (the main reflects the document exactly); the departures named."""
+    files, folders = named_files(text)
+    return [
+        f"{rel}: the tree holds it and no part's Home or Test names it"
+        for rel in system_files(root)
+        if rel not in files and not any(rel.startswith(folder) for folder in folders)
+    ]
+
+
+def part_sections(text: str) -> list[tuple[str, str]]:
+    """The parts of the architecture document: each heading of three hashes, with the text up to the next heading of two or three."""
+    parts: list[tuple[str, str]] = []
+    name, body = "", []
+    for line in text.split("\n"):
+        if line.startswith("## ") or line.startswith("### "):
+            if name:
+                parts.append((name, "\n".join(body)))
+            name, body = (line[4:].strip(), []) if line.startswith("### ") else ("", [])
+        elif name:
+            body.append(line)
+    if name:
+        parts.append((name, "\n".join(body)))
+    return parts
+
+
+def check_layers(text: str) -> list[str]:
+    """Every part carries a Clock, a Board, a Clicks and an Algebra line with text after the label (n/a is text) and a Status: the owner's four layers with one general flag; the departures named."""
+    out: list[str] = []
+    for name, body in part_sections(text):
+        missing = [k for k in (*LAYERS, "Status") if not re.search(r"\*\*" + k + r":\*\*[ \t]*\S", body)]
+        if missing:
+            out.append(f"{name}: no {', '.join(missing)} line (every part tells the four layers and its status; n/a is a text)")
+    return out
+
+
+def check_arch(text: str, root: Path) -> list[str]:
+    """The three readings of the architecture document: its paths and tests against the tree, the tree against its Home and Test lines, its parts against the four layers."""
+    return check_trace(text, root) + check_mirror(text, root) + check_layers(text)
+
+
 def arch_main(argv: list[str]) -> int:
-    """`--arch ROOT`: the architecture document's trace table against the tree at ROOT (the Boss's head); exit 1 on a path or a test that is not there."""
+    """`--arch ROOT`: the architecture document against the tree at ROOT (the Boss's head) in both directions and against the four layers; exit 1 on a path or a test that is not there, a file of the system no part names, or a part without its layers."""
     root = Path(argv[argv.index("--arch") + 1])
-    found = check_trace(ARCH.read_text(encoding="utf-8"), root)
+    found = check_arch(ARCH.read_text(encoding="utf-8"), root)
     for line in found:
         print("  " + line)
     print(f"docs/ARCHITECTURE.md against {root}: {len(trace_rows(ARCH.read_text(encoding='utf-8'))) or len(home_rows(ARCH.read_text(encoding='utf-8')))} rows; " + (f"{len(found)} departure(s)" if found else "every path and test stands"))
@@ -583,7 +660,49 @@ def selftest() -> int:
                 print(f"PARTED  {name}: wanted {sorted(want)}, got {sorted(got)}")
             else:
                 print(f"ok      {name}")
-    print(f"selftest: {len(cases) + len(trace_cases)} cases, {failed} parted")
+    layer_part = (
+        "### The act\n\n- **Clock:** a dial turns.\n- **Board:** n/a\n- **Clicks:** none of its own.\n- **Algebra:** the carry.\n"
+        "- **Home:** engine/step.py. **Test:** test_a.py. **Status:** BUILT.\n"
+    )
+    mirror_cases = (
+        ("every file of the system is named", layer_part, ("src/tensor24/engine/step.py", "tests/test_a.py"), set()),
+        ("a module no part names", layer_part, ("src/tensor24/engine/step.py", "tests/test_a.py", "src/tensor24/engine/extra.py"), {"src/tensor24/engine/extra.py: the tree holds it and no part's Home or Test names it"}),
+        ("a folder named in a Home line names the files below it", layer_part.replace("engine/step.py", "decoder/ (it imports the record alone)"), ("src/tensor24/decoder/a.py", "src/tensor24/decoder/b/c.py", "tests/test_a.py"), set()),
+        ("a bare tests/ folder names no test", layer_part.replace("engine/step.py.", "engine/step.py, tests/."), ("src/tensor24/engine/step.py", "tests/test_a.py", "tests/test_extra.py"), {"tests/test_extra.py: the tree holds it and no part's Home or Test names it"}),
+        ("an __init__.py and a cache are no file of the system", layer_part, ("src/tensor24/engine/step.py", "tests/test_a.py", "src/tensor24/engine/__init__.py", "src/tensor24/engine/__pycache__/x.py", "tests/__init__.py"), set()),
+        ("a script under tools/ no part names", layer_part, ("src/tensor24/engine/step.py", "tests/test_a.py", "tools/foo.py"), {"tools/foo.py: the tree holds it and no part's Home or Test names it"}),
+        ("a file of the records under tools/derivations is outside the system", layer_part, ("src/tensor24/engine/step.py", "tests/test_a.py", "tools/derivations/x.py"), set()),
+        ("an example file no part names", layer_part, ("src/tensor24/engine/step.py", "tests/test_a.py", "examples/tensor24/universe.json"), {"examples/tensor24/universe.json: the tree holds it and no part's Home or Test names it"}),
+        ("a helper of tests/ named in a Test line", layer_part.replace("test_a.py.", "test_a.py, frame.py."), ("src/tensor24/engine/step.py", "tests/test_a.py", "tests/frame.py"), set()),
+    )
+    for name, text, files, want in mirror_cases:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for rel in files:
+                (root / rel).parent.mkdir(parents=True, exist_ok=True)
+                (root / rel).write_text("", encoding="utf-8")
+            got = set(check_mirror(text, root))
+        if got != want:
+            failed += 1
+            print(f"PARTED  {name}: wanted {sorted(want)}, got {sorted(got)}")
+        else:
+            print(f"ok      {name}")
+    layer_cases = (
+        ("a part with the four layers and its status", layer_part, set()),
+        ("a part with no Board line", layer_part.replace("- **Board:** n/a\n", ""), {"The act: no Board line (every part tells the four layers and its status; n/a is a text)"}),
+        ("a Clicks label with no text after it", layer_part.replace("**Clicks:** none of its own.", "**Clicks:**"), {"The act: no Clicks line (every part tells the four layers and its status; n/a is a text)"}),
+        ("a part with no Status and no Algebra", layer_part.replace("**Status:** BUILT.", "").replace("- **Algebra:** the carry.\n", ""), {"The act: no Algebra, Status line (every part tells the four layers and its status; n/a is a text)"}),
+        ("a heading of two hashes closes the part", layer_part + "\n## 4. Who may import whom\n\n- **Clock:** words after the part.\n", set()),
+        ("two parts, the second without layers", layer_part + "\n### The loader\n\nOnly words.\n", {"The loader: no Clock, Board, Clicks, Algebra, Status line (every part tells the four layers and its status; n/a is a text)"}),
+    )
+    for name, text, want in layer_cases:
+        got = set(check_layers(text))
+        if got != want:
+            failed += 1
+            print(f"PARTED  {name}: wanted {sorted(want)}, got {sorted(got)}")
+        else:
+            print(f"ok      {name}")
+    print(f"selftest: {len(cases) + len(trace_cases) + len(mirror_cases) + len(layer_cases)} cases, {failed} parted")
     return 1 if failed else 0
 
 
