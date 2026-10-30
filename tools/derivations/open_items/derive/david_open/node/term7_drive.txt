@@ -1,0 +1,44 @@
+the act's layout: three rows at the teeth W = 6000000, every Mesh at 1000000, rows 0 and 1 even and row 2 odd; J's potential each row's spring and a tie between the even rows, the odd row's spring even in it
+(a) the drive's books at every gear and round, read from outside, on a cube of 3:
+  T_d 1, T_k 1: q_d = (J + r_d - r_d+) / T_d whole in 200 of 200 rounds; the kick read off the momentum, (P+ - P - 4 s F) / 4, equal to s T_k q_d in 200 of 200; T_d SUM K = s T_k (SUM J + r_d(0) - r_d(end)) at every gear: True
+  T_d 2, T_k 2: q_d = (J + r_d - r_d+) / T_d whole in 200 of 200 rounds; the kick read off the momentum, (P+ - P - 4 s F) / 4, equal to s T_k q_d in 200 of 200; T_d SUM K = s T_k (SUM J + r_d(0) - r_d(end)) at every gear: True
+  T_d 7, T_k 7: q_d = (J + r_d - r_d+) / T_d whole in 200 of 200 rounds; the kick read off the momentum, (P+ - P - 4 s F) / 4, equal to s T_k q_d in 200 of 200; T_d SUM K = s T_k (SUM J + r_d(0) - r_d(end)) at every gear: True
+  T_d 2, T_k 1: q_d = (J + r_d - r_d+) / T_d whole in 200 of 200 rounds; the kick read off the momentum, (P+ - P - 4 s F) / 4, equal to s T_k q_d in 200 of 200; T_d SUM K = s T_k (SUM J + r_d(0) - r_d(end)) at every gear: True
+  T_d 7, T_k 1: q_d = (J + r_d - r_d+) / T_d whole in 200 of 200 rounds; the kick read off the momentum, (P+ - P - 4 s F) / 4, equal to s T_k q_d in 200 of 200; T_d SUM K = s T_k (SUM J + r_d(0) - r_d(end)) at every gear: True
+(b) the drive's tooth moving, rounds of 200 in which some gear's r_d changes, per row (even, even, odd):
+  T_d 1: [0, 0, 0]
+  T_d 2: [200, 200, 0]
+  T_d 7: [200, 200, 200]
+(c) the run back, 400 rounds out and 400 back by untick, cube of 3, the lay drawn with every tooth moving:
+  T_d 1: the start returned bit for bit: True
+  T_d 2: the start returned bit for bit: True
+  T_d 7: the start returned bit for bit: True
+(d) the mirror by parity against its mutants, T_d 7, 400 rounds out and back:
+  the law's mirror (even rows' drive tooth flipped, the odd row's kept): True
+  the odd row's drive tooth flipped too: False
+  the even rows' drive tooth kept: False
+(e) the drive as the books' dial: T_k 1 against T_k = T_d, the kicks summed over 200 rounds at every gear of row 0:
+  T_d 2, T_k 1: T_d SUM K - SUM J at row 0's gears within -1 to 1, against the bound -(T_d - 1) to T_d - 1; the push carried is SUM J / T_d to within one tooth of the drive
+  T_d 7, T_k 1: T_d SUM K - SUM J at row 0's gears within -6 to 6, against the bound -(T_d - 1) to T_d - 1; the push carried is SUM J / T_d to within one tooth of the drive
+(f) the dial in the beat: 27 Mesh-less Node-clocks, one even row, each its own oscillator, 10,000 rounds, the sign
+    changes of the counts summed; the drive at T_d 7 and the teeth 6,000, against the same equation carried by the
+    teeth 42,000 at T_d 1, the recurrence at the scale 10^30, and the drive at the springs 70 and 77 on each side:
+  the drive, teeth 6,000, T_d 7, spring 73: 5065 sign changes; the drive's tooth moved in 10000 of 10000 rounds; the invariant 42000 SUM (a - b)^2 + 146 SUM a b spread over the run 4805 ppm of its first value
+  the teeth 42,000, T_d 1, spring 73: 5065 sign changes; the drive's tooth moved in 0 of 10000 rounds; the invariant 42000 SUM (a - b)^2 + 146 SUM a b spread over the run 4805 ppm of its first value
+  the drive, teeth 6,000, T_d 7, spring 70: 4961 sign changes; the drive's tooth moved in 0 of 10000 rounds; the invariant 42000 SUM (a - b)^2 + 140 SUM a b spread over the run 4516 ppm of its first value
+  the drive, teeth 6,000, T_d 7, spring 77: 5204 sign changes; the drive's tooth moved in 0 of 10000 rounds; the invariant 42000 SUM (a - b)^2 + 154 SUM a b spread over the run 3737 ppm of its first value
+  the recurrence x+ = 2 x - x- - (146 / 42000) x at the scale 10^30: 5065 sign changes
+(f2) count for count: the drive act at the teeth 6,000 and T_d 7 against the teeth act at 42,000 and T_d 1, spring
+     73 on both, one lay, the teeth act's edge tooth laid 7 s + 4 r_d, 10,000 rounds:
+  the edge tooth laid a multiple of 4: some count differs in 0 of 10000 rounds (first: None); the teeth act's tooth is 7 s + 4 r_d at every Node-clock in 10000 rounds
+  the edge tooth laid at 3 modulo 4: some count differs in 9880 of 10000 rounds (first: 22); the teeth act's tooth is 7 s + 4 r_d at every Node-clock in 24 rounds
+(g) the drive inside the act's two passes: the metric's push J5 (the books' form) reads a row's momenta after the
+    first drive, on J1 alone; 400 rounds out and 400 back by untick, cube of 3, two even rows, J5 on row 0:
+  J5 reads row 1, which it does not push, T_d 7 and 7: J5 not 0 in 400 of 400 rounds; row 0's drive tooth moved in 400; the start returned bit for bit: True
+  J5 reads row 1, T_d 7 on row 0 and 1 on row 1: J5 not 0 in 400 of 400 rounds; row 0's drive tooth moved in 400; the start returned bit for bit: True
+  J5 reads row 1, T_d 1 and 1: J5 not 0 in 400 of 400 rounds; row 0's drive tooth moved in 0; the start returned bit for bit: True
+  J5 reads row 0's momenta too, the row it pushes, T_d 7 and 7: J5 not 0 in 400 of 400 rounds; row 0's drive tooth moved in 400; the start returned bit for bit: False
+  J5 reads row 0's momenta too, the row it pushes, T_d 1 and 1: J5 not 0 in 400 of 400 rounds; row 0's drive tooth moved in 0; the start returned bit for bit: False
+(h) the carry's three identities behind the mirror and the 24, at every T_d from 1 to 11, J from -60 to 60 and r_d
+    within [0, T_d), carry(J, T_d, r_d) = (q, r_d+):
+  carry(J, T_d, T_d - 1 - r_d+) = (q, T_d - 1 - r_d) in 7986 of 7986; carry(-J, T_d, r_d+) = (-q, r_d) in 7986 of 7986; carry(-J, T_d, T_d - 1 - r_d) = (-q, T_d - 1 - r_d+) in 7986 of 7986
