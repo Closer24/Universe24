@@ -1,0 +1,36 @@
+P-mt6. A wave across a still step of the clock: the reflection, the transmission, the books and the run back, five forms
+
+A. Big Pic's lay (p13): a line of 400 with free ends, N 1 to 4/5 at site 200 (L_0 = 4, L = 5 beyond), rest 32000000,
+   grip 2000000 (c^2 = 1/16), the packet of height 1000000000 at 100 moving right, 700 rounds; the reflected wave on 0..199
+   (nature's one-dimensional step reflects nothing; the impedance's (N1 - N2) / (N1 + N2) = 111 permille)
+   the slot reading (the act as built)   : reflected  -112 permille, transmitted   879; the books' largest move 0 permille of the packet's; 700 rounds undone return the lay: True
+   the density reading (nature's form)   : reflected    -2 permille, transmitted   989; the books' largest move 0 permille of the packet's; 700 rounds undone return the lay: True
+   the first text's escapement           : reflected   -99 permille, transmitted   892; the books' largest move 99 permille of the packet's; 700 rounds undone return the lay: True
+   Big Pic's Mesh tooth                  : reflected     1 permille, transmitted   991; the books' largest move 0 permille of the packet's; 700 rounds undone return the lay: True
+   this text's Mesh tooth                : reflected     1 permille, transmitted   989; the books' largest move 0 permille of the packet's; 700 rounds undone return the lay: True
+   (Big Pic's edge-convention numbers: the density reading 1, the slot reading 111, the escapement 98 with its books moving 99, his Mesh tooth 1)
+
+B. The physicist's P6 lays: a ring of 1000, the file's rest 90977140554674334000000 and grip 15162856759112389000000 (c^2 = 1/6), steps at 500 and 0, a pulse of
+   width 40 from 250 moving right; read at round 1225 (his: escapement -90, as built -112, nature -1 at 4/5; -284, -335, -4 at 1/2)
+== N 1 to 4/5 (L = 5/4 L_0)
+   the first text's escapement           : reflected   -90 permille, transmitted   901; the books' largest move 91 permille; undone to the lay: True
+   Big Pic's Mesh tooth                  : reflected    14 permille, transmitted   989; the books' largest move 0 permille; undone to the lay: True
+   this text's Mesh tooth                : reflected    -9 permille, transmitted   989; the books' largest move 0 permille; undone to the lay: True
+   the slot reading (the act as built)   : reflected  -112 permille, transmitted   879; the books' largest move 0 permille; undone to the lay: True
+   the density reading (nature form)     : reflected    -1 permille, transmitted   989; the books' largest move 0 permille; undone to the lay: True
+== N 1 to 1/2 (L = 2 L_0)
+   the first text's escapement           : reflected  -284 permille, transmitted   710; the books' largest move 288 permille; undone to the lay: True
+   Big Pic's Mesh tooth                  : reflected    -1 permille, transmitted   990; the books' largest move 0 permille; undone to the lay: True
+   this text's Mesh tooth                : reflected    -5 permille, transmitted   990; the books' largest move 0 permille; undone to the lay: True
+   the slot reading (the act as built)   : reflected  -335 permille, transmitted   659; the books' largest move 0 permille; undone to the lay: True
+   the density reading (nature form)     : reflected    -4 permille, transmitted   989; the books' largest move 0 permille; undone to the lay: True
+
+C. The mathematician's m9 lay: a ring of 320, rest 10000, grip 625 (c^2 = 1/16), N 1 to 1/2 at 160 (and 0), the bump at 60, 1000 rounds
+   (his: the escapement -318 (flux 101 permille), as built -349 (121); the board's averaged law -333, nature's 0)
+== N 1 to 1/2 (L = 2 L_0), his measure: the extreme of a on 0..149
+   the first text's escapement           : reflected  -318 permille, transmitted   684; the books' largest move 302 permille; undone to the lay: True
+   Big Pic's Mesh tooth                  : reflected    -9 permille, transmitted   984; the books' largest move 0 permille; undone to the lay: True
+   this text's Mesh tooth                : reflected   -14 permille, transmitted   987; the books' largest move 0 permille; undone to the lay: True
+   the slot reading (the act as built)   : reflected  -349 permille, transmitted   653; the books' largest move 0 permille; undone to the lay: True
+   the density reading (nature form)     : reflected   -14 permille, transmitted   980; the books' largest move 0 permille; undone to the lay: True
+

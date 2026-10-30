@@ -1,0 +1,33 @@
+The 00 wave against light in a uniform well under the second text's act, a line of 6 Node-clocks, 6000 rounds;
+the mode 2A, A, -A, -2A, -A, A along z on one row; T^2 ratios in permille (1000 one cone).
+
+== the mode's amplitude A = grip / 1000
+   light at rest (c00 = 0): 391 periods over 5976 rounds (the act as built on the same lay: 391 over 5976)
+ Well: the 00 slot at 6 grips: L = 18 grips, L / L_0 = 18/12, W_eff / rest = 324/144 (2250 permille)
+   light in the well: 261 periods over 5984 rounds; T^2 against rest 2250 permille (nature W_eff / rest)
+   the 00 wave in the well: 261 periods over 5984 rounds; T_light^2 / T_00^2 = 1000 permille
+ Well: the 00 slot at 18 grips: L = 30 grips, L / L_0 = 30/12, W_eff / rest = 900/144 (6250 permille)
+   light in the well: 156 periods over 5962 rounds; T^2 against rest 6252 permille (nature W_eff / rest)
+   the 00 wave in the well: 156 periods over 5962 rounds; T_light^2 / T_00^2 = 1000 permille
+ Well: the 00 slot at 54 grips: L = 66 grips, L / L_0 = 66/12, W_eff / rest = 4356/144 (30250 permille)
+   light in the well: 70 periods over 5885 rounds; T^2 against rest 30257 permille (nature W_eff / rest)
+   the 00 wave in the well: 70 periods over 5885 rounds; T_light^2 / T_00^2 = 1000 permille
+
+== the mode's amplitude A = grip / 10
+   light at rest (c00 = 0): 391 periods over 5976 rounds (the act as built on the same lay: 391 over 5976)
+ Well: the 00 slot at 6 grips: L = 18 grips, L / L_0 = 18/12, W_eff / rest = 324/144 (2250 permille)
+   light in the well: 261 periods over 5984 rounds; T^2 against rest 2250 permille (nature W_eff / rest)
+   the 00 wave in the well: 261 periods over 5984 rounds; T_light^2 / T_00^2 = 1000 permille
+ Well: the 00 slot at 18 grips: L = 30 grips, L / L_0 = 30/12, W_eff / rest = 900/144 (6250 permille)
+   light in the well: 156 periods over 5962 rounds; T^2 against rest 6252 permille (nature W_eff / rest)
+   the 00 wave in the well: 156 periods over 5962 rounds; T_light^2 / T_00^2 = 1000 permille
+ Well: the 00 slot at 54 grips: L = 66 grips, L / L_0 = 66/12, W_eff / rest = 4356/144 (30250 permille)
+   light in the well: 70 periods over 5885 rounds; T^2 against rest 30257 permille (nature W_eff / rest)
+   the 00 wave in the well: 70 periods over 5885 rounds; T_light^2 / T_00^2 = 1000 permille
+
+The 00 mode about rest (c0 = 0, the mode on the 00 row): the promise at the lay and the first round it breaks
+   A = grip / 1000: the promise first breaks at round 0 (the lowest c00 then -30325713518224778000 counts): the rest clock is the fastest the domain admits
+   A = 1 count: the promise first breaks at round 0 (the lowest c00 then -2 counts): the rest clock is the fastest the domain admits
+
+Reading: the 00 row rides the escapement like light, its Meshes paid by their own teeth; in a uniform well every
+Node-clock and every Mesh release together, so the act is the first text's there and the beat scales as W_eff.

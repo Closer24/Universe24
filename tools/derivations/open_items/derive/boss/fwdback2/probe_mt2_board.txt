@@ -1,0 +1,138 @@
+P-mt2. The second text's act on edge_lib's board (the example universe; every row reading the 00 slot, no cut)
+   the rest 6 grips (grip 15162856759112389000000), L_0 = 12 grips
+
+A. The first text's twelve lays (probe_fb2's), 40 rounds each, this text's act
+
+== standing at c00 = 0 (L = L_0: every round releases)
+   rounds run 40 (promise broke at None); L at the start 12 grips .. 12 grips, over the run 12 grips .. 12 grips (L_0 12 grips); 78 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 41 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 40 .. 40 of 40 rounds; per Mesh 40 .. 40
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+   control: the act as built on the same lay agrees state for state in 40 of 40 rounds
+
+== standing at c00 = 6 grips (L = 18 grips)
+   rounds run 40 (promise broke at None); L at the start 18 grips .. 18 grips, over the run 18 grips .. 18 grips (L_0 12 grips); 79 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 14 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 27 .. 27 of 40 rounds; per Mesh 27 .. 27
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+   control: the first text's act on the same standing uniform lay agrees state for state in 40 of 40 rounds
+
+== rising by 1 grip a proper step from c00 = 6 grips
+   rounds run 40 (promise broke at None); L at the start 18 grips .. 18 grips, over the run 18 grips .. 36 grips (L_0 12 grips); 80 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 6 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 18 .. 18 of 40 rounds; per Mesh 18 .. 18
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+
+== rising by 1 grip + 1 a proper step from c00 = 6 grips
+   rounds run 40 (promise broke at None); L at the start 18 grips .. 18 grips, over the run 18 grips .. 36 grips + 18 (L_0 12 grips); 80 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 6 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 18 .. 18 of 40 rounds; per Mesh 18 .. 18
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+
+== falling by 1 grip a proper step from c00 = 60 grips
+   rounds run 40 (promise broke at None); L at the start 72 grips .. 72 grips, over the run 65 grips .. 72 grips (L_0 12 grips); 81 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 27 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 7 .. 7 of 40 rounds; per Mesh 7 .. 7
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+
+== falling by 3 grips + 1 a proper step from c00 = 120 grips
+   rounds run 40 (promise broke at None); L at the start 132 grips .. 132 grips, over the run 120 grips - 4 .. 132 grips (L_0 12 grips); 82 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 33 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 4 .. 4 of 40 rounds; per Mesh 4 .. 4
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+
+== drawn per site in [60, 70] grips with a velocity in [-1, 1] grips (edge_lib's draw: uniform to the permille)
+   rounds run 40 (promise broke at None); L at the start 72 grips + 0 permille .. 72 grips + 0 permille, over the run 65 grips + 0 permille .. 72 grips + 0 permille (L_0 12 grips); 81 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 27 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 7 .. 7 of 40 rounds; per Mesh 7 .. 7
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+
+== varying in space, standing: c00 laid per site at a whole number of grips in [40, 60]
+   rounds run 40 (promise broke at None); L at the start 52 grips .. 72 grips, over the run 48 grips + 493 permille .. 76 grips + 288 permille (L_0 12 grips); 81 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 11 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 7 .. 8 of 40 rounds; per Mesh 7 .. 8
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+
+== varying in space and time: c00 per site in [40, 60] grips, a velocity in [-2, 2] grips a proper step
+   rounds run 40 (promise broke at None); L at the start 52 grips .. 72 grips, over the run 48 grips - 29 permille .. 75 grips - 166 permille (L_0 12 grips); 81 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 10 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 8 .. 8 of 40 rounds; per Mesh 8 .. 8
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 0
+
+== swinging: a hairspring on the 00 row about c00 = 6 grips, amplitude 1 grip(s), 4 f = D (the Nyquist beat of the 00 gear at rest)
+   rounds run 40 (promise broke at None); L at the start 19 grips .. 19 grips, over the run 17 grips .. 19 grips (L_0 12 grips); 79 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 5 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 27 .. 27 of 40 rounds; per Mesh 27 .. 27
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 37245780465772362233009115592546002000000000000
+
+== swinging: a hairspring on the 00 row about c00 = 6 grips, amplitude 1 grip(s), a slow swing, 4 f = D / 100
+   rounds run 40 (promise broke at None); L at the start 19 grips .. 19 grips, over the run 17 grips + 116 permille .. 19 grips (L_0 12 grips); 79 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 1 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 26 .. 26 of 40 rounds; per Mesh 26 .. 26
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 3727578872421275522588561125073666959158060000
+
+== swinging: a hairspring on the 00 row about c00 = 6 grips, amplitude 3 grip(s), a deep swing of 3 grips, 4 f = D / 100
+   rounds run 40 (promise broke at None); L at the start 21 grips .. 21 grips, over the run 15 grips + 350 permille .. 21 grips (L_0 12 grips); 79 bits
+   untick(tick s) = s 40 of 40; rewound to the start True; mirror twice = identity 1 of 41 states
+   the 24 per round [24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24]
+   releases per Node-clock 26 .. 26 of 40 rounds; per Mesh 26 .. 26
+   the rows' books SUM_sites (rest v + r): d SUM P = the Node-clocks' own pushes paid at 40 of 40 rounds (the Meshes pay
+   both ends at once); the light rows' largest move over every round 0; any row's 11182736617263826567768066066532127798281640000
+
+B. The mutants on the non-uniform moving lay (c00 per site in [40, 60] grips, velocity in [-2, 2] grips), 40 rounds, run on
+   past the promise: untick(tick s) = s, the first round the promise breaks, and the rounds with a turn of 2 or more
+   this text's act and mirror                                    : untick 40 of 40; the promise first breaks at None; rounds with a turn >= 2: 0
+   the first text's mirror (a stood Node-clock's gears left)     : untick 25 of 40; the promise first breaks at None; rounds with a turn >= 2: 0
+   the first text's dial L(now) + L(before), its flag and flip   : untick 0 of 40; the promise first breaks at 3; rounds with a turn >= 2: 0
+   the first text's dial and its mirror (stood gears left)       : untick 23 of 40; the promise first breaks at 3; rounds with a turn >= 2: 0
+   Big Pic's tooth at its own dial L(i) + L(j), pushed by 2 L_0  : untick 30 of 40; the promise first breaks at 8; rounds with a turn >= 2: 0
+
+C. The clock's own course on the hostile readers' non-uniform 00 lays (the 00 row moving by its own pull): L min / mean / max
+   in grips, the books' largest move within each window (counts; checked at every round), the light row's widest |a|
+   the physicist's P5c B lay: 1 x 1 x 16, the 00 slot standing at 24 + [-1, 1] grips (his first text: mean L 36 -> 7,747 grips in 4000 rounds)
+   the first text's act: releases per site 146 .. 149 of 4000
+      500: L 133 grips + 57 permille / 147 grips - 157 permille / 166 grips - 461 permille; books 00 256735361088461677468373975588233860311022000000, light 484817182015859525886000000; light 12 bits  |  1000: L 974 grips - 257 permille / 1062 grips + 53 permille / 1158 grips + 428 permille; books 00 3466937785125262211443610741396453594183901000000, light 6567018099514816563511000000; light 16 bits
+      1500: L 1994 grips - 62 permille / 2160 grips + 395 permille / 2351 grips + 53 permille; books 00 7337298876617680177056651861200912626935371000000, light 13904309322392542488222000000; light 17 bits  |  2000: L 2989 grips + 153 permille / 3259 grips + 199 permille / 3540 grips + 5 permille; books 00 11205617516222736985484778056685160601367446000000, light 21244784745189682014623000000; light 17 bits
+      2500: L 3945 grips - 127 permille / 4297 grips + 87 permille / 4672 grips - 34 permille; books 00 14861013847770905291512994683095457648500506000000, light 28172618184144336986778000000; light 18 bits  |  3000: L 5038 grips - 130 permille / 5495 grips - 106 permille / 5951 grips + 348 permille; books 00 19078049588711626634703908259514640804325296000000, light 36167734784659394795865000000; light 18 bits
+      3500: L 5974 grips - 442 permille / 6523 grips + 294 permille / 7078 grips - 114 permille; books 00 22698428610052688383431180613832126523489471000000, light 43033355022331411635953000000; light 18 bits  |  4000: L 7088 grips + 153 permille / 7747 grips - 148 permille / 8418 grips - 198 permille; books 00 27005826134265760290551404418502517044237454000000, light 51202298612732933872536000000; light 18 bits
+   this text's act: releases per site 3316 .. 3316 of 10000
+      1000: L 35 grips - 233 permille / 36 grips + 187 permille / 38 grips - 318 permille; books 00 0, light 0; light 10 bits  |  2000: L 35 grips + 58 permille / 36 grips + 187 permille / 37 grips + 126 permille; books 00 0, light 0; light 11 bits
+      3000: L 35 grips + 197 permille / 36 grips + 187 permille / 37 grips + 210 permille; books 00 0, light 0; light 12 bits  |  4000: L 36 grips - 452 permille / 36 grips + 187 permille / 37 grips + 61 permille; books 00 0, light 0; light 12 bits
+      5000: L 35 grips + 224 permille / 36 grips + 187 permille / 37 grips - 190 permille; books 00 0, light 0; light 13 bits  |  6000: L 35 grips - 373 permille / 36 grips + 187 permille / 37 grips + 462 permille; books 00 0, light 0; light 13 bits
+      7000: L 35 grips + 252 permille / 36 grips + 187 permille / 37 grips - 92 permille; books 00 0, light 0; light 13 bits  |  8000: L 35 grips + 154 permille / 36 grips + 187 permille / 37 grips + 386 permille; books 00 0, light 0; light 13 bits
+      9000: L 35 grips - 162 permille / 36 grips + 187 permille / 37 grips + 396 permille; books 00 0, light 0; light 14 bits  |  10000: L 35 grips + 403 permille / 36 grips + 187 permille / 37 grips - 199 permille; books 00 0, light 0; light 14 bits
+   probe_fb2's own lay: the cube of 3, the 00 slot standing per site at [40, 60] grips (the mathematician: 52..72 -> 1743..3395 grips in 400 rounds)
+   the first text's act: releases per site 17 .. 18 of 400
+      50: L 86 grips + 253 permille / 95 grips - 168 permille / 104 grips + 289 permille; books 00 330709039495114533766094444596011226952263000000, light 30356039231743002778000000; light 7 bits  |  100: L 222 grips + 206 permille / 274 grips + 468 permille / 342 grips + 443 permille; books 00 2919396017769166042478429731489335364252040000000, light 297434598186748622624000000; light 10 bits
+      150: L 466 grips + 36 permille / 580 grips + 134 permille / 719 grips + 260 permille; books 00 7782155380559921744792654574593407657655406000000, light 806633653871260870022000000; light 11 bits  |  200: L 736 grips + 29 permille / 949 grips - 54 permille / 1210 grips + 435 permille; books 00 13736649699591041304057908795502702257565796000000, light 1434709506547214247180000000; light 11 bits
+      250: L 1033 grips - 46 permille / 1372 grips - 54 permille / 1784 grips + 439 permille; books 00 20664017194696025695094859324050029041848357000000, light 2160161225330187386496000000; light 12 bits  |  300: L 1305 grips + 193 permille / 1741 grips + 442 permille / 2328 grips + 20 permille; books 00 26708310200415855616761028458982370220733844000000, light 2790814763655189869784000000; light 12 bits
+      350: L 1677 grips + 325 permille / 2173 grips + 139 permille / 2746 grips - 454 permille; books 00 33778643686007683689700963088149646165103620000000, light 3534719679114002786513000000; light 13 bits  |  400: L 2080 grips - 431 permille / 2721 grips - 336 permille / 3395 grips + 236 permille; books 00 42725794600140158783583522679217588265097981000000, light 4475650755300722085908000000; light 13 bits
+   this text's act: releases per site 758 .. 758 of 4000
+      400: L 55 grips - 22 permille / 63 grips + 333 permille / 76 grips + 354 permille; books 00 0, light 0; light 9 bits  |  800: L 53 grips - 256 permille / 65 grips - 31 permille / 78 grips + 396 permille; books 00 0, light 0; light 10 bits
+      1200: L 55 grips - 265 permille / 64 grips - 377 permille / 76 grips - 268 permille; books 00 0, light 0; light 11 bits  |  1600: L 50 grips - 38 permille / 63 grips + 333 permille / 74 grips + 298 permille; books 00 0, light 0; light 11 bits
+      2000: L 51 grips + 384 permille / 63 grips + 333 permille / 70 grips + 318 permille; books 00 0, light 0; light 11 bits  |  2400: L 43 grips - 275 permille / 63 grips + 333 permille / 75 grips + 181 permille; books 00 0, light 0; light 12 bits
+      2800: L 49 grips - 416 permille / 64 grips + 128 permille / 78 grips + 182 permille; books 00 0, light 0; light 12 bits  |  3200: L 57 grips - 80 permille / 64 grips - 302 permille / 71 grips - 184 permille; books 00 0, light 0; light 12 bits
+      3600: L 54 grips - 314 permille / 63 grips + 333 permille / 71 grips + 229 permille; books 00 0, light 0; light 12 bits  |  4000: L 54 grips - 387 permille / 63 grips + 333 permille / 78 grips - 431 permille; books 00 0, light 0; light 12 bits
+

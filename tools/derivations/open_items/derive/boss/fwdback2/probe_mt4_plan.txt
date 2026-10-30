@@ -1,0 +1,10 @@
+J through the 24's tables under the second text's act: SYM24's plan 1, s = 3, T_k = 2, T_d = 5, the SYM24 board (18 rows x 27 sites, 81 Meshes)
+   standing at c00 = 3 (L = 15, L_0 = 12), 6 rounds: the 24 per round [24, 24, 24, 24, 24, 24]; untick(tick s) = s in 6 of 6; rewound True;
+      the books' identity at 6 of 6 rounds; r_d not 0 at round 6: 311 gears; releases at site 0: 5; promise broke None; 373 bits
+   rising by 1 a proper step from c00 = 3, 6 rounds: the 24 per round [24, 24, 24, 24, 24, 24]; untick(tick s) = s in 6 of 6; rewound True;
+      the books' identity at 6 of 6 rounds; r_d not 0 at round 6: 309 gears; releases at site 0: 4; promise broke None; 125 bits
+   falling by 1 a proper step from c00 = 6, 6 rounds: the 24 per round [24, 24, 24, 24, 24, 24]; untick(tick s) = s in 6 of 6; rewound True;
+      the books' identity at 6 of 6 rounds; r_d not 0 at round 6: 311 gears; releases at site 0: 5; promise broke None; 373 bits
+   standing at c00 = 0 (every round releases), 6 rounds: the 24 per round [24, 24, 24, 24, 24, 24]; untick(tick s) = s in 6 of 6; rewound True;
+      the books' identity at 6 of 6 rounds; r_d not 0 at round 6: 313 gears; releases at site 0: 6; promise broke None; 1113 bits
+   mutant (rising), the drive's tooth of a flipped row moved unflipped: the 24 per round [3, 3, 3, 3, 3, 3]

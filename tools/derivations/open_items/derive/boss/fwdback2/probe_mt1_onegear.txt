@@ -1,0 +1,39 @@
+The second text's escapement on one Node-clock (the dial L(now) + L(now)): rest 10000, L_0 20000
+   the adiabatic course: the 00 gear free at +1 per proper step from c00 = 1 (its before slot at 0: both slots in the domain,
+   the mathematician's minor 5), 30000 rounds; and at -1 from 20000 (28000 rounds)
+
+A. The free gear v0 = 10^6 per proper step: the window velocity v (1000 rounds), v^2 W_eff against the start (nature 1000)
+   rising  : round 0: L 20495, v 976000, v^2 W_eff 1000; round 7500: L 26834, v 746000, v^2 W_eff 1001; round 15000: L 31938, v 627000, v^2 W_eff 1002; round 22500: L 36332, v 551000, v^2 W_eff 1001; round 29000: L 39750, v 504000, v^2 W_eff 1003; c00 at the end 20001
+   falling : round 0: L 39749, v 503000, v^2 W_eff 999; round 7000: L 36056, v 555000, v^2 W_eff 1001; round 14000: L 31937, v 626000, v^2 W_eff 999; round 21000: L 27203, v 735000, v^2 W_eff 999; round 27000: L 22361, v 895000, v^2 W_eff 1001; c00 at the end 1909
+
+B. The hairspring push -100 a, a0 = 10^7: A/A0 (nature 1000), T^2/W_eff over ten periods (nature 1000), by marks
+   rising  : round 7500: L 26833, A 10011851, A/A0 1000, T^2/W_eff 1000; round 15000: L 31982, A 10012377, A/A0 1000, T^2/W_eff 1000; round 22500: L 36379, A 10012339, A/A0 1000, T^2/W_eff 1000
+   falling : round 7000: L 35998, A 10009922, A/A0 1000, T^2/W_eff 1000; round 14000: L 31916, A 10012512, A/A0 1000, T^2/W_eff 1000; round 21000: L 27205, A 10012488, A/A0 1000, T^2/W_eff 1000; round 27000: L 22432, A 10009384, A/A0 999, T^2/W_eff 999
+
+C. The run back untick(tick s) = s per round, the hairspring; the whole run rewound; the mirror twice; the releases
+   rising  : misses 0 of 30000; rewound to the start True; mirror twice differs on 30000 rounds; releases 20000 of 30000
+   falling : misses 0 of 28000; rewound to the start True; mirror twice differs on 28000 rounds; releases 18091 of 28000
+
+D. The fast swing (probe_fp_swing's lay): rest 99856; the 00 gear on its own hairspring about c00 = 30000; the test hairspring g = 201
+   half the beat (the swing's period 80 rounds), 5 percent of W_eff, 50 swings (4085 rounds): A_end/A_start 1000
+   half the beat (the swing's period 80 rounds), 20 percent of W_eff, 50 swings (4084 rounds): A_end/A_start 1000
+   the beat (the swing's period 161 rounds), 5 percent of W_eff, 50 swings (8174 rounds): A_end/A_start 1000
+   the beat (the swing's period 161 rounds), 20 percent of W_eff, 50 swings (8172 rounds): A_end/A_start 1000
+   ten beats (the swing's period 1613 rounds), 5 percent of W_eff, 50 swings (81899 rounds): A_end/A_start 1000
+   ten beats (the swing's period 1614 rounds), 20 percent of W_eff, 50 swings (81921 rounds): A_end/A_start 1000
+
+E. Two clocks at one site, counted in RELEASES (the physicist's minor 7): hairsprings g = 100 and g = 400 on the rising
+   course; the period of each in releases (upward crossings of the release-sampled record), and the amplitudes
+   g = 100: 20000 releases; the period 62 .. 63 releases on the whole course; the amplitude 10008046 .. 10012538
+   g = 400: 20000 releases; the period 31 .. 32 releases on the whole course; the amplitude 10027006 .. 10050384
+
+F. The phase of the releases, n + tau / D (the escapement's own continuous phase), against the clock's own course
+   S = SUM over rounds of L_0 / L(now) (micro-steps, one carry a round): the offset in milli-steps at the end and its range;
+   this text's dial L(now) + L(now) beside the first text's L(now) + L(before)
+   rising, L x2     this text      : the offset at the end 265 milli-steps, its range 265 .. 499
+   rising, L x2     the first text : the offset at the end 610 milli-steps, its range 499 .. 610
+   falling, L / 2   this text      : the offset at the end 720 milli-steps, its range 500 .. 720
+   falling, L / 2   the first text : the offset at the end 417 milli-steps, its range 417 .. 499
+   under a swing: the 00 gear on its own spring about 20000 (amplitude 10000), the offset after each of 20 swings
+   this text      : [538, 518, 510, 491, 486, 467, 462, 442, 443, 424, 420, 398, 395, 375, 370, 342, 340, 318, 315, 302] (5538 rounds)
+   the first text : [441, 458, 465, 483, 490, 518, 524, 550, 555, 581, 586, 611, 618, 634, 641, 655, 663, 675, 684, 703] (5538 rounds)

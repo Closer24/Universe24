@@ -1,0 +1,72 @@
+Cases built to break the second text's act (one Node-clock: rest 10000, L_0 20000; the dial L(now) + L(now))
+
+A. The floor test: a constant push p for 4000 rounds at c00 = L_0 (a release every other round): a(T) against nature's
+   p T_proper^2 / (2 rest)
+   p      1: a(T)         0 after 2000 proper steps; nature       200; ratio 0 permille
+   p     10: a(T)      2002 after 2000 proper steps; nature      2000; ratio 1001 permille
+   p     49: a(T)      9800 after 2000 proper steps; nature      9800; ratio 1000 permille
+   p     50: a(T)     10010 after 2000 proper steps; nature     10000; ratio 1001 permille
+   p     51: a(T)     10200 after 2000 proper steps; nature     10200; ratio 1000 permille
+   p    100: a(T)     20020 after 2000 proper steps; nature     20000; ratio 1001 permille
+   p   1000: a(T)    200200 after 2000 proper steps; nature    200000; ratio 1001 permille
+   p  20000: a(T)   4002000 after 2000 proper steps; nature   4000000; ratio 1000 permille
+   p  50000: a(T)  10005000 after 2000 proper steps; nature  10000000; ratio 1000 permille
+
+B. A hairspring g = 1 laid at a0, 12000 rounds at c00 = L_0: the largest and smallest a, the upward crossings
+   a0    10: max |a|    10, min a    -10, upward crossings 3 in 6000 proper steps
+   a0    25: max |a|    25, min a    -25, upward crossings 6 in 6000 proper steps
+   a0    49: max |a|    49, min a    -49, upward crossings 10 in 6000 proper steps
+   a0    50: max |a|    50, min a    -50, upward crossings 10 in 6000 proper steps
+   a0    51: max |a|    51, min a    -51, upward crossings 10 in 6000 proper steps
+   a0   100: max |a|   100, min a   -100, upward crossings 10 in 6000 proper steps
+   a0  1000: max |a|  1000, min a  -1000, upward crossings 9 in 6000 proper steps
+
+C. The kick of 1: a push of 1 per proper step at c00 = 3 L_0 (a release every fourth round): the round of the first notch
+   first notch at round 19998 = proper step 5000; run back (misses, rewound) (0, True)
+
+D. The clock jumping (the 00 gear's velocity per proper step), a hairspring g = 100: run back misses, rewound, releases
+   halving: c00 from 15 L_0 falling by 3 L_0 a step, run while the next state stays in the domain: misses 0 of 42, rewound True, releases 5, c00 0 .. 300000
+   doubling: c00 from 2 L_0 rising by 2 L_0 a step (its before slot at 0: the first text laid it at -L_0, L = 0, outside), 400 rounds: misses 0 of 400, rewound True, releases 19, c00 40000 .. 800000
+   to the edge: c00 from 3 L_0 falling by 3 L_0 a step (c = 0 at one slot, 3 L_0 at the other): misses 0 of 2, rewound True, releases 1, c00 0 .. 60000
+   alternating: the 00 gear swinging +-5 L_0 about 5 L_0 (a spring 4 f = D on the 00 gear), 400 rounds: misses 0 of 400, rewound True, releases 66, c00 0 .. 200000
+
+E. The domain's edge: (1) c00 = -L_0 / 2 at both slots: the escapement's carry turns 2; (2) one count faster than rest,
+   c00 = -1 at both slots (the mathematician's m2 A: the turn 2 at round (L_0 - 3) / 2 rounded up = 9999)
+   (1) q at the lay 2; run back misses 0 of 20, rewound True
+   (2) the first round whose turn is 2: 9999; outside the domain the form is no act: a PRICE (section 6), not a promise like W >= 1
+
+F. tau laid at 0 and at D - 1; a deep clock c00 = 20 L_0 (a release every 21st round), a hairspring g = 100
+   tau = 0, c00 = 6 L_0 rising L_0 a step: misses 0 of 100, rewound True, releases 9, max |a| / a0 1000 permille
+   tau = D - 1, c00 = 20 L_0 falling L_0 a step: misses 0 of 100, rewound True, releases 6, max |a| / a0 1000 permille
+   tau = 0, c00 = 20 L_0 falling L_0 a step: misses 0 of 100, rewound True, releases 5, max |a| / a0 1000 permille
+   deep clock c00 = 20 L_0 standing: misses 0 of 2100, rewound True, releases 100, max |a| / a0 1001 permille
+
+G. A long wave round a ring of 32 (the light row, a triangle of peak 8000 counts) at c00 = 0 and at c00 = 12 grips (L = 2 L_0):
+   ten periods at site 0 (nature: x2 in T); the run back at every 40th round
+   c00 = 0 grips: ten periods 1106 rounds (crossings 67); untick(tick s) = s at every 40th round: 200 of 200
+   c00 = 12 grips: ten periods 2212 rounds (crossings 15); untick(tick s) = s at every 40th round: 200 of 200
+
+H. Two Node-clocks on one Mesh (the first text's case H: a line of 2, the 00 slot laid at 0 and 12 grips, light 1000 / -1000):
+   the clocks' course (the physicist's minor 8: under the first text's act they stood at 770 and 838 grips by round 400),
+   the books checked at every round, the run back, the light row's largest |a|
+   the first text's act: round 400: L 770 grips - 23 permille and 838 grips + 8 permille, light max |a| 136755; round 1000: L 2142 grips - 315 permille and 2334 grips - 157 permille, light max |a| 386214; round 4000: L 8525 grips + 228 permille and 9297 grips - 420 permille, light max |a| 1547383; the books' largest move over every round 257845868581515147133713664 grips; untick over the first 400 rounds 400 of 400; the promise first breaks at round None
+   this text's act: round 400: L 9295 grips - 307 permille and 2798 grips + 368 permille, light max |a| 1540734; round 1000: L 9295 grips - 307 permille and 9484 grips - 221 permille, light max |a| 1572140; round 4000: L 7406 grips - 125 permille and 7855 grips - 415 permille, light max |a| 1841375; the books' largest move over every round 0; untick over the first 400 rounds 386 of 400; the promise first breaks at round 4
+   the same pair laid with room above rest (12 grips and 12 grips + a gap), this text's act, 4000 rounds: the promise, the lowest
+   c over both slots, the clocks at the end, the light row's largest |a|, the books
+   gap 12 grips: the promise first breaks at 32; the lowest c -59 grips - 351 permille; L at the end 339 grips - 380 permille and 1474 grips + 402 permille; light max |a| 240601; books 0
+   gap  6 grips: the promise first breaks at None; the lowest c 12 grips - 286 permille; L at the end 24 grips + 30 permille and 30 grips - 30 permille; light max |a| 1578; books 0
+   gap  3 grips: the promise first breaks at None; the lowest c 12 grips - 143 permille; L at the end 24 grips - 141 permille and 27 grips + 141 permille; light max |a| 1715; books 0
+   gap  1 grips: the promise first breaks at None; the lowest c 12 grips - 47 permille; L at the end 25 grips - 333 permille and 24 grips + 333 permille; light max |a| 976; books 0
+
+I. The lever (the mathematician's item 2): L_0' = 2 rest m^2, the escapement pushed by 4 rest m (2 rest m a slot) at the dial
+   L(now) + L(now); at one Node-clock: the releases at rest in 12000 rounds, the run back into c < 0 (down to the edge
+   c = -2 rest m (m - 1), a hairspring g = 100), and one count past the edge
+   m = 2: releases at rest 6000 of 12000; a free 00 gear falling 8 a proper step from 0 to c = -40000 (the edge -40000) in 7500 rounds: untick misses 0 of 7500; one count past the edge the turn reaches 2
+   m = 3: releases at rest 4000 of 12000; a free 00 gear falling 24 a proper step from 0 to c = -120000 (the edge -120000) in 10000 rounds: untick misses 0 of 10000; one count past the edge the turn reaches 2
+
+   the lever on the board (the physicist's smooth well scaled to L_0' = 2 rest m^2, the ring model, 64 sites, this text's tooth),
+   8000 proper steps at rest (8000 m rounds): H against its start at four marks (the uniform clock is bounded at every m)
+   m = 1: x2^22, x2^44, x2^66, x2^85
+   m = 2: x2^29, x2^51, x2^73, x2^96
+   m = 4: x2^23, x2^41, x2^63, x2^83
+   m = 8: 164339, x2^16, x2^26, x2^34

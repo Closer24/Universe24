@@ -1,0 +1,10 @@
+P-mt8. Seven rules for a Mesh's payment on the physicist's ring lays; H at round 8000 against its start (permille, or x2^k)
+   and the books' largest move over every round
+    staggered |      e = 1 |    e = 1/2 |    e = 1/3 |   e = 1/10 |  e = 1/100 |   the well
+   the first text (one-ended)    :      x2^56 |      x2^22 |      x2^15 |    1788529 |       7625 |       1030 |      x2^81; books move
+   Big Pic's tooth (own dial)    :       1081 |       1322 |     x2^142 |      x2^22 |      x2^14 |       1507 |     x2^260; books 0
+   this text's tooth, born at 1  :       1081 |       1305 |      x2^51 |      x2^13 |     336131 |       1504 |      x2^85; books 0
+   this text's tooth, born at 0  :       1071 |       1281 |      x2^49 |      x2^13 |     161133 |       1578 |      x2^84; books 0
+   and: both ends release        :       2373 |       1145 |       1078 |       2817 |      x2^12 |       1671 |      x2^71; books 0
+   or: either end releases       :       1119 |       1443 |       1075 |       1427 |       1596 |       1107 |     x2^128; books 0
+   always: every round           :       1484 |       1305 |       1194 |    x2^2161 |     x2^446 |      x2^33 |     x2^171; books 0

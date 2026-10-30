@@ -1,0 +1,86 @@
+P-mt7. The long runs where neighbouring Node-clocks release on different rounds; rest 90977140554674334000000, grip 15162856759112389000000, L_0 = rest + rest
+
+A. The physicist's P5c A on the board (example universe, 1 x 1 x 16, 12 rows, no cut): the 00 slot uniform and standing at
+   12 grips (L = 2 L_0), 20000 rounds; the light row's osc and H in bits by windows of 2000; the books per row checked every round
+   alike (tau at the half dial)   the first text    : laid 6/91; by windows 7/91 8/91 7/91 7/91 7/91 8/91 7/91 7/91 7/92 8/92; the books' largest move over every round 0
+   alike (tau at the half dial)   this text's tooth : laid 6/91; by windows 7/91 8/91 7/91 7/91 7/91 8/91 7/91 7/91 7/92 8/92; the books' largest move over every round 0
+   staggered (tau = 0 on 8..15)   the first text    : laid 6/91; by windows 35/145 65/204 95/263 125/323 154/383 184/443 215/504 245/565 276/626 306/687; the books' largest move over every round 1495426231009929984065642243243673754589027803903351350465725315477363541452743645631088701996457643527269201418000000
+   staggered (tau = 0 on 8..15)   this text's tooth : laid 6/91; by windows 7/91 8/91 7/91 7/91 7/91 8/91 7/91 7/91 7/92 8/92; the books' largest move over every round 0
+
+C. The physicist's P5 C on the ring: equal clocks at L = 2 L_0, the teeth staggered (tau = 0 on 32..63) or alike, 20000 rounds
+   staggered  the first text    : x2^12, x2^27, x2^41, x2^56, x2^71, x2^86, x2^101, x2^116, x2^131, x2^146; books 457833011166837143876859513886538420304048750000000
+   staggered  Big Pic's tooth   : 1076, 1002, 1024, 1081, 1010, 991, 1071, 1048, 978, 1057; books 0
+   staggered  this text's tooth : 1076, 1002, 1024, 1081, 1010, 991, 1071, 1048, 978, 1057; books 0
+   alike      the first text    : 1076, 1002, 1024, 1081, 1010, 991, 1071, 1048, 978, 1057; books 0
+   alike      Big Pic's tooth   : 1076, 1002, 1024, 1081, 1010, 991, 1071, 1048, 978, 1057; books 0
+   alike      this text's tooth : 1076, 1002, 1024, 1081, 1010, 991, 1071, 1048, 978, 1057; books 0
+
+D. Controls on the sharpest lay (the deep half at 2 L_0), 20000 rounds: the act as built (teeth rest, 4 rest; the grip),
+   the density reading (teeth 2 rest, 4 rest; the Mesh's grip 2 G, G and 3 G / 2 across a step: N on the Mesh), and this
+   text's tooth on the uniform clock at 2 L_0 with its teeth alike: H by windows of 4000
+   the act as built      : 1042, 1003, 1007, 1018, 986 (its own energy W-weighted)
+   the density reading   : 994, 1029, 1027, 1010, 984 (its own energy W-weighted)
+   the uniform clock     : 1002, 1081, 991, 1048, 1057; books 0
+
+B. The physicist's P5 B sweep on his ring model (64 sites, the deep half at L_0 (1 + e), sharp steps at 0 and 32, tau at the
+   half dial) and his smooth parabolic well (L_0 at z = 0 to (11/10) L_0 at z = 32): H in permille of its start by windows;
+   the books' largest move over every round
+   e = 1, 20000 rounds, every 2000:
+      the first text    : 26951, 1490174, x2^16, x2^22, x2^28, x2^35, x2^41, x2^47, x2^53, x2^59; books 4200282321542466976282334467886000000
+      Big Pic's tooth   : 1221, 1252, 1256, 1322, 1444, 1778, 2098, 2746, 4627, 7396; books 0
+      this text's tooth : 1100, 1341, 1243, 1305, 1129, 1256, 1239, 1300, 1207, 1213; books 0
+   e = 1/2, 20000 rounds, every 2000:
+      the first text    : 7635, 106093, 1737424, x2^15, x2^19, x2^24, x2^28, x2^33, x2^37, x2^42; books 7481362275870411262373951181000000
+      Big Pic's tooth   : x2^31, x2^69, x2^105, x2^142, x2^180, x2^217, x2^253, x2^291, x2^328, x2^365; books 0
+      this text's tooth : 458094, x2^23, x2^37, x2^51, x2^65, x2^80, x2^94, x2^108, x2^123, x2^136; books 0
+   e = 1/10, 40000 rounds, every 4000:
+      the first text    : 2123, 7625, 41888, 263132, 1926786, x2^14, x2^17, x2^20, x2^23, x2^26; books 1811185408356426149880536000000
+      Big Pic's tooth   : 112883, x2^14, x2^22, x2^30, x2^37, x2^45, x2^52, x2^59, x2^67, x2^74; books 0
+      this text's tooth : 5714, 336131, x2^15, x2^22, x2^30, x2^37, x2^45, x2^52, x2^59, x2^67; books 0
+   e = 1/100, 200000 rounds, every 20000:
+      the first text    : 1304, 2022, 3448, 7557, 18711, 49910, 148423, 384178, 1183475, x2^12; books 150953774976773111352333000000
+      Big Pic's tooth   : 7726, 835231, x2^17, x2^24, x2^31, x2^39, x2^45, x2^53, x2^60, x2^67; books 0
+      this text's tooth : 2316, 5145, 20356, 158588, 2790872, x2^16, x2^21, x2^26, x2^31, x2^35; books 0
+   e = 1/1000, 400000 rounds, every 40000:
+      the first text    : 1085, 1101, 1104, 1153, 1307, 1300, 1444, 1580, 1639, 1858; books 8146108328122298978749000000
+      Big Pic's tooth   : 1679, 2749, 3224, 4622, 3749, 4656, 6058, 8913, 19156, 49121; books 0
+      this text's tooth : 1424, 1557, 3036, 8660, 40191, 206709, 932332, x2^12, x2^15, x2^17; books 0
+   the smooth well, 40000 rounds, every 4000:
+      the first text    : x2^33, x2^81, x2^119, x2^153, x2^199, x2^240, x2^280, x2^321, x2^351, x2^389; books 4803266292687055957562787187069521868622515831856915855034049536435483709695547356000000
+      Big Pic's tooth   : x2^128, x2^260, x2^382, x2^506, x2^647, x2^771, x2^895, x2^1013, x2^1137, x2^1251; books 0
+      this text's tooth : x2^44, x2^85, x2^134, x2^174, x2^218, x2^257, x2^302, x2^350, x2^399, x2^443; books 0
+
+E. The mathematician's m5 (rest 10000, L_0 20000; the row laid at the mode (3, 2, 0, -2, -3, -2, 0, 2) x 10^6 / 3, 20 bits),
+   40000 rounds: the widest |a| in bits by windows of 4000 (his first text: up to 407 bits); the books
+   ring of 8, dc = L_0/4   s = 625, Big Pic's tooth   : [32, 46, 59, 73, 87, 100, 114, 127, 141, 155]; books 0
+   ring of 8, dc = L_0/4   s = 625, this text's tooth : [33, 46, 60, 74, 88, 102, 116, 130, 144, 159]; books 0
+   ring of 8, dc = L_0/4   s = 156, Big Pic's tooth   : [21, 21, 21, 21, 21, 21, 21, 21, 21, 21]; books 0
+   ring of 8, dc = L_0/4   s = 156, this text's tooth : [24, 31, 38, 45, 53, 60, 67, 74, 81, 88]; books 0
+   ring of 8, dc = L_0/4   s =  39, Big Pic's tooth   : [21, 21, 21, 21, 21, 21, 21, 21, 21, 21]; books 0
+   ring of 8, dc = L_0/4   s =  39, this text's tooth : [21, 21, 21, 21, 21, 21, 21, 21, 21, 21]; books 0
+   ring of 8, dc = L_0/10  s = 625, Big Pic's tooth   : [59, 102, 145, 187, 231, 274, 317, 360, 403, 446]; books 0
+   ring of 8, dc = L_0/10  s = 625, this text's tooth : [21, 22, 22, 21, 22, 22, 22, 22, 22, 22]; books 0
+   ring of 8, dc = L_0/10  s = 156, Big Pic's tooth   : [21, 21, 21, 21, 21, 21, 21, 21, 21, 21]; books 0
+   ring of 8, dc = L_0/10  s = 156, this text's tooth : [21, 21, 21, 21, 21, 21, 21, 21, 21, 21]; books 0
+   ring of 8, dc = L_0/10  s =  39, Big Pic's tooth   : [21, 21, 21, 21, 21, 21, 21, 21, 21, 21]; books 0
+   ring of 8, dc = L_0/10  s =  39, this text's tooth : [21, 21, 21, 21, 21, 21, 21, 21, 21, 21]; books 0
+   ring of 8, dc = L_0/100 s = 625, Big Pic's tooth   : [30, 41, 53, 63, 75, 85, 96, 107, 117, 129]; books 0
+   ring of 8, dc = L_0/100 s = 625, this text's tooth : [23, 24, 25, 27, 29, 30, 32, 34, 35, 36]; books 0
+   ring of 8, dc = L_0/100 s = 156, Big Pic's tooth   : [22, 23, 24, 24, 25, 27, 28, 28, 29, 30]; books 0
+   ring of 8, dc = L_0/100 s = 156, this text's tooth : [22, 23, 27, 30, 34, 38, 41, 45, 48, 52]; books 0
+   ring of 8, dc = L_0/100 s =  39, Big Pic's tooth   : [21, 21, 21, 21, 21, 21, 21, 21, 21, 21]; books 0
+   ring of 8, dc = L_0/100 s =  39, this text's tooth : [21, 21, 21, 21, 21, 21, 21, 20, 20, 21]; books 0
+   two clocks L_0 and 2 L_0 on a ring of 2, s = 625, Big Pic's tooth   : [20, 20, 20, 20, 20, 20, 20, 20, 20, 20]; books 0
+   two clocks L_0 and 2 L_0 on a ring of 2, s = 625, this text's tooth : [20, 20, 20, 20, 20, 20, 20, 20, 20, 20]; books 0
+   two clocks L_0 and 2 L_0 on a ring of 2, s = 156, Big Pic's tooth   : [20, 20, 20, 20, 20, 20, 20, 20, 20, 20]; books 0
+   two clocks L_0 and 2 L_0 on a ring of 2, s = 156, this text's tooth : [20, 20, 20, 20, 20, 20, 20, 20, 20, 20]; books 0
+   two clocks L_0 and 2 L_0 on a ring of 2, s =  39, Big Pic's tooth   : [20, 20, 20, 20, 20, 20, 20, 20, 20, 20]; books 0
+   two clocks L_0 and 2 L_0 on a ring of 2, s =  39, this text's tooth : [20, 20, 20, 20, 20, 20, 20, 20, 20, 20]; books 0
+
+F. What the growth is: the smooth well with this text's tooth, the coupling per proper step divided (grip / k), 16000 rounds,
+   H by windows of 2000 (the uniform clock and the act as built are bounded at every coupling here)
+   grip /  1 (c^2 = 1/6): x2^22, x2^44, x2^66, x2^85, x2^109, x2^134, x2^155, x2^174; books 0
+   grip /  4 (c^2 = 1/24): 225694, x2^15, x2^24, x2^37, x2^45, x2^56, x2^62, x2^69; books 0
+   grip / 16 (c^2 = 1/96): 1280, 1821, 2744, 4196, 6285, 10612, 18844, 43848; books 0
+   grip / 64 (c^2 = 1/384): 1007, 1014, 1004, 1026, 1042, 1052, 1090, 1119; books 0
+
