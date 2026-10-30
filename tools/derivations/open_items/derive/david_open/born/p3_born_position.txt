@@ -1,9 +1,0 @@
-the hand: psi [(3, 1), (2, -2), (0, 1), (1, 4), (-2, 0), (5, 1), (1, 1), (0, -3)], rho [10, 8, 1, 17, 4, 26, 2, 9], SUM rho 77
-(A1) the tree by position: P(x) = rho(x) / SUM rho at every Node-clock: True; the loser's wind travels at most 11 Meshes in all, one Mesh per tick
-(A2) the larger-neighbour matching: P(x) = rho(x) / SUM rho at every Node-clock: True; rounds 5
-     P = ['10/77', '8/77', '1/77', '17/77', '4/77', '26/77', '2/77', '9/77']
-(B) on 7a's act, 2947 quanta, one per beat, each tournament drawn by the merging Node-clocks' own dials:
-    clicks per Node-clock [383, 309, 29, 628, 154, 989, 95, 360]; Born's expectation [382.7, 306.2, 38.3, 650.6, 153.1, 995.1, 76.5, 344.5]; chi-square 8.3 on 7
-(C) one quantum at two detectors: P(A) 1/2, P(B) 1/2, both 0: g2 = 0 (Grangier's anticorrelation)
-    two quanta, each with its own full turn: <n_A> 1, <n_B> 1, <n_A n_B> 1/2: g2 = 1/2 (1 - 1/n at n = 2)
-    on 7a's act, 2950 single quanta: A 1437, B 1513, both 0: g2 = 0

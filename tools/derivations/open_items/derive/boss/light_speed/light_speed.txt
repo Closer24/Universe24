@@ -1,9 +1,0 @@
-mass term 0.0: the fastest group speed 0.408178 against light's 1/sqrt 6 = 0.408248; stable: True
-mass term 0.001: the fastest group speed 0.395505 against light's 1/sqrt 6 = 0.408248; stable: True
-mass term 0.05: the fastest group speed 0.330696 against light's 1/sqrt 6 = 0.408248; stable: True
-  axis, k = 0.01: phase speed 0.408247
-  axis, k = 0.5: phase speed 0.404699
-  axis, k = 1.0: phase speed 0.393993
-  diagonal, k = 0.01: phase speed 0.408248
-  diagonal, k = 0.5: phase speed 0.407537
-  diagonal, k = 1.0: phase speed 0.405372

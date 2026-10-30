@@ -1,4 +1,0 @@
-one Node-clock (the board's mean), 30,000 ticks, 214 windows of 140 ticks:
-  the energy's window means: 392,924,222 to 408,057,004, first 405,703,904, last 402,156,710; a straight line through them moves +0.557% of the first over the run
-  the windows' largest counts: 1,786 to 1,804 (2 c* = 1,800)
-  the means of the first 50 windows 403,715,141 and of the last 50 403,755,884

@@ -1,6 +1,0 @@
-(1) carry exact and unique, 100,000 draws to 300 bits: failures 0
-(2) nonneg exact on [-400, 400] and at +-2^k +- 1 to 2^300: failures 0
-(3) home(w, 1-go) = w-1-home(w, go), w 1..400, both goings: failures 0
-(4) the tie rule: N commutes with engine/step.gear, 200,000 draws, W, W+ in 1..12: failures 0 ; fine tooth outside [0, W+): 0
-(5) T gear T = ungear (slots exchanged, w-1-r, going advanced), 200,000 draws: failures 0
-(6) controls: home ignoring the going breaks (4) in 50059 of 200,000; the flip w - r breaks (5) in 90110 of 200,000

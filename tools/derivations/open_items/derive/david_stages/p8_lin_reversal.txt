@@ -1,4 +1,0 @@
-past, dials equal : T S T returns the start in 30 of 30
-past, dials parted: T S T returns the start in 0 of 30
-lin , dials equal : T S T returns the start in 30 of 30
-lin , dials parted: T S T returns the start in 0 of 30
