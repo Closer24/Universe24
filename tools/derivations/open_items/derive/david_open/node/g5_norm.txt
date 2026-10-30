@@ -243,7 +243,7 @@ the draw reads v against T8 in the parts' half-open cells
     T = 64: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 64 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 8, T/8 = 8
     T = 128: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 128 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 16, T/8 = 16
     T = 1024: c(r + T/4)^2 = c(r)^2 mod T failing at 0 of 1024 teeth; c(r + T/8)^2 = c(r)^2 + T/2 failing at 0; one row's distinct squares 128, T/8 = 128
-    at W, a tooth moved by multiples of W/6 (W mod 6 = 0): its square takes at most 2 residues of W over 50 teeth (m = 6, m/4 = 1)
+    at W, a tooth moved by multiples of W/6 (W mod 6 = 0): its square takes at most 2 residues of W over 50 teeth (m = 6, 4 does not divide m, the bound m)
     at W, a tooth moved by multiples of W/16 (W mod 16 = 0): its square takes at most 4 residues of W over 50 teeth (m = 16, m/4 = 4)
     at W, a tooth moved by multiples of W/48 (W mod 48 = 0): its square takes at most 8 residues of W over 50 teeth (m = 48, m/4 = 12)
 (j) the held count displaced, matter at rest, every row read (the mathematician's case, on this board):

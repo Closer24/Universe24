@@ -21,7 +21,8 @@ and section 8 carry it; both readers' items are folded here (section 9). The fou
 4a49b1ae5) passed that mathematician, so its pair passed it; under the owner's rule a new pair read it at the end and
 refused it, the physicist on two items and the mathematician on four. Big Pic's word (6534141348, item 3): the
 physicist's B1 stands, mended by the scope, the phase named a tuning and the past named as the branch's test; the factor
-of ten and the mathematician's B2 to B4 fold as they stand. They are folded here (section 10). Section 11 says how the
+of ten and the mathematician's B2 to B4 fold as they stand. They are folded here (section 10). Both end readers passed
+the fifth text (toys-5 afcd38406); their points, none blocking, are folded at section 10's end. Section 11 says how the
 text checked itself (the owner's word of 16:2x UTC, 6527238774). The probes are derive/david_open/node/term9_notch.py
 (about 125 s) and term9_window.py (under a second), their outputs beside them, whole numbers alone; term9_notch.py's
 section (f), the order and the reach on this notch, is the fifth text's.
@@ -39,21 +40,22 @@ mean.
   cut and the loader's reads.
 - **Not the expansion:** the swing's order, rate and reach all fail against nature.
 - **Refused by its rest:** the notch rests a uniform depth u_c on every clock, the matter within its range. The slot
-  form's clicks read that depth in gamma, gamma_obs = gamma (1 + u_c) / (1 - gamma u_c), with neither G2's rod factor
-  nor N2's source (with N2's source gamma_obs - 1 is 0.090 at 673 Mpc, and Cassini asks 10.9 to 11.0 Mpc). Cassini
-  then needs a range of at most 15 Mpc (21 or 26 Mpc on its measured interval read one-sided; the Milky Way's own
-  depth, gamma_obs - 1 of 5.5 to 7.5 x 10^-6 on the slot form, takes 24 to 33 per cent of Cassini's band and tightens
-  15 Mpc to about 13), while the growth of structure, on the hostile
-  physicist's illustration, needs one above 445 Mpc (section 2), so for a present at the rest no strength serves:
-  REFUSED on the slot form for a present at the rest.
-- **Not refused at the swing's lower turn** (the end physicist's B1). The rest is the centre of an undamped swing,
-  so the board never settles on it. A present within about 71 Myr of the swing's lower turning point, where the
-  background is 0 and gamma_obs = gamma, passes Cassini at every range from 446 Mpc up to the swing's own pole, and
-  lunar laser ranging for at least 14 to 49 Myr: a phase about 143 Myr wide in a period of 9.1 Gyr at 445 Mpc, about
-  1.6 per cent of the swing, named a tuning (section 4; Big Pic, 6534141348 item 3). That branch's past is its test:
-  half a period earlier, at twice the rest, near z = 0.4 to 0.8, gamma_obs - 1 is 0.04 to 0.09 and G is lower by 4 to
-  9 per cent, which lensing with stellar dynamics (gamma at those depths) and type Ia supernovae (G through the
-  Chandrasekhar mass) read; this page does not carry that test: OPEN.
+  form's clicks read that depth in gamma, gamma_obs = gamma (1 + u_c) / (1 - gamma u_c), without N2's source factor
+  (G2's rod factor does not enter gamma_obs; with N2's source gamma_obs - 1 is 0.090 at 673 Mpc, and Cassini asks 10.9
+  to 11.0 Mpc). Cassini then needs a range of at most 15 Mpc (21 or 26 Mpc on its measured interval read one-sided; the
+  Milky Way's own depth, gamma_obs - 1 of 5.5 to 7.5 x 10^-6 on the slot form, takes 24 to 33 per cent of Cassini's band
+  and tightens 15 Mpc to about 13), while the growth of structure, on the hostile physicist's illustration, needs one
+  above 445 Mpc (section 2), so for a present at the rest no strength serves: REFUSED on the slot form for a present at
+  the rest.
+- **Not refused at the swing's lower turn** (the end physicist's B1). The rest is the centre of an undamped swing, so
+  the board never settles on it. A present within about 71 Myr of the swing's lower turning point, where the background
+  is 0 and gamma_obs = gamma, passes Cassini at every range from 446 Mpc up to the swing's own pole, and lunar laser
+  ranging for at least 14 to 49 Myr: a phase about 143 Myr wide in a period of 9.1 Gyr at 445 Mpc, about 1.6 per cent of
+  the swing (about 49 Myr, 0.5 per cent, with N2's factor, where lunar laser ranging holds 24.6 Myr either side), named
+  a tuning (section 4; Big Pic, 6534141348 item 3). That branch's past is its test: half a period earlier, at twice the
+  rest, near z = 0.4 to 0.8, gamma_obs - 1 is 0.04 to 0.09 and, with N2's factor, G is lower by 4 to 8 per cent, which
+  lensing with stellar dynamics (gamma at those depths) and type Ia supernovae (G through the Chandrasekhar mass) read;
+  this page does not carry that test: OPEN.
 - **The tied rest has a pole** (the hostile mathematician; Big Pic: a scope). Every grip rests at g (1 - gamma u_c),
   which vanishes at u_c = 1 / gamma. Read at first order, u_c = 3 Omega_m (lambda H0 / c)^2 pushed to 1 / gamma, that is
   a range near 4,575 Mpc at the cosmic mean density at gamma = 1, and for a swing as large as its rest the pole is met
@@ -83,8 +85,8 @@ mean.
   page's probe holds the 00 row at its rest teeth, and says where that matters.
 - **The notch.** Give each Node-clock's 00 slot a spring of its own, as term 6 gives a gear a hairspring: the slot is
   pulled back toward 0 by its own count, read at its own Node-clock. Then the board's mean swings: pushed up by the
-  matter, pulled back by the springs, it overshoots its rest and returns, again and again; and a mass's field can stand
-  still, held by the springs beyond its range.
+  matter, pulled back by the springs, it overshoots its rest and returns, again and again; and a mass's field has a
+  static solution, held by the springs beyond its range, about which the act swings.
 - **The volume.** The ii slots set the grips, the board's lengths; their trace is the volume. The notch holds the trace
   the same way and with the same range, so the bending of light and the pull of a mass fall off together.
 - **The tensor waves hang free.** The ii slots' parts that differ by direction (the E part) and the shears (the T2
@@ -321,8 +323,9 @@ named.
   - **The order.** On the act, with the trace laid uniform and at rest, the scale factor (G2's, A as grip^(-1/2))
     speeds up first and slows after in every expanding half: 140 rounds and 141 at the probe's amplitude, 252 and 29
     at 9/10 of the rest grip (term9_notch (f), on this page's notch; the first physicist's 114 and 115, 206 and 23
-    were the first text's notch); never the other order. Nature slowed first and speeds up since: the turn at
-    z_t = 0.46 +- 0.13 (Riess and others, ApJ 607, 665 (2004)); Planck 2018's fit gives z_t = 0.632 and q0 = -0.53.
+    were the first text's notch); never the other order (term9_notch (f) reads one run of speeding up, then one of
+    slowing, in each of its three cases). Nature slowed first and speeds up since: the turn at z_t = 0.46 +- 0.13
+    (Riess and others, ApJ 607, 665 (2004)); Planck 2018's fit gives z_t = 0.632 and q0 = -0.53.
   - **The rate at nucleosynthesis.** With H0 = 67.4 km/s/Mpc and q0 below 0, the swing's rate at 1 MeV falls short of
     radiation's 0.677 a second, which nucleosynthesis fixes to about 2 per cent (Fields and others 2020), by
     7.6 x 10^26 (G2's scale factor) or 7.3 x 10^7 (the other map); near the grip's zero the rate goes as 1 / T or T,
@@ -340,10 +343,10 @@ named.
   - 0.01910 at 445 Mpc.
   Cassini's |gamma - 1| below 2.3 x 10^-5 needs a range of at most 15 Mpc (21 or 26 Mpc one-sided on its measured
   interval; with N2's source between 10.9 and 11.0 Mpc, G2's third text), and Newtonian gravity within 10 per cent at k
-  = 0.01 h / Mpc needs at least 445 Mpc (below). On the slot form the window is empty. The notch can stand only where a
-  uniform rest is a change of coordinates for the clicks: the law above, in Big Pic's form (6527540022, item 8: a static
-  frame is one, the expansion is not), which cannot stand on the cut and waits on the 00 row's own law (OPEN; the
-  finding, section 2).
+  = 0.01 h / Mpc needs at least 445 Mpc (below). On the slot form the window is empty. For a present at the rest the
+  notch can stand only where a uniform rest is a change of coordinates for the clicks: the law above, in Big Pic's form
+  (6527540022, item 8: a static frame is one, the expansion is not), which cannot stand on the cut and waits on the 00
+  row's own law (OPEN; the finding, section 2).
 - **At the swing's lower turn: not refused** (the end physicist's B1, his t9e_turn on the act's tick with the cut's
   reads, this page's notch and matter at G2's 12 : -1). The board never settles on the rest, so the present need not
   sit there. With the swing's joint least taken as the present, Cassini holds for 71.2 Myr either side at 673 Mpc and
@@ -354,11 +357,13 @@ named.
   - On the cut the branch needs the present at the two modes' joint least: a present one period after a joint seed
     fails, the trace 146 Myr off its least.
   - The phase is a tuning: about 143 Myr of a 9.1 Gyr swing at 445 Mpc, about 1.6 per cent (Big Pic, 6534141348
-    item 3).
-  - Its past is its test, not carried here: half a period earlier the background stood at 2 u_c (0.043 at 673 Mpc,
-    z near 0.8; 0.019 at 445 Mpc, z near 0.4), where gamma_obs - 1 is 0.090 and 0.039 and G is lower by 8.7 and 3.8
-    per cent with N2's factor. Lensing with stellar dynamics reads gamma at those depths, and type Ia supernovae
-    read G through the Chandrasekhar mass (the same item). OPEN.
+    item 3). With N2's factor, where lunar laser ranging holds 24.6 Myr either side, the joint window is about
+    49.6 Myr, 0.54 per cent at 445 Mpc and 0.36 per cent at 673 Mpc (the end physicist's t9e_tuning).
+  - Its past is its test, not carried here: half a period earlier the background stood at 2 u_c (0.043 at 673 Mpc, z
+    near 0.8; 0.019 at 445 Mpc, z near 0.4), where gamma_obs - 1 is 0.090 and 0.039 and G is lower by 8.1 and 3.7 per
+    cent with N2's factor 1 / (1 + u)^2 (8.7 and 3.8 at first order; the end mathematician). Lensing with stellar
+    dynamics reads gamma at those depths, and type Ia supernovae read G through the Chandrasekhar mass (the same item).
+    OPEN.
 - **G's drift** (the physicist's item 2, blocking). Read as the expansion, the trace's swing would carry G as A^3, a
   drift of 3 H0 = 2.07 x 10^-10 a year, against lunar laser ranging's (7.1 +- 7.6) x 10^-14 a year (Hofmann and
   Mueller, CQG 35, 035015 (2018)): refused. The 00 slot's mean rests at c_bar / W = 3 Omega_m (H0 lambda / c)^2,
@@ -420,7 +425,7 @@ named.
 ## 5. What stands (term 9's row for the architecture document, when its readers agree)
 
 - **Clock:** each Node-clock's 00 slot and ii trace on a spring of their own, with one range, so the board's mean swings
-  and returns and a static field can stand on the wrapped board; the tensor waves get none, by choice.
+  and returns about a static solution on the wrapped board, never settling on it; the tensor waves get none, by choice.
 - **Board:** V9 = f9 c00^2 + (f9 / 3) tr^2 at every Node-clock, two terms of the vertex law (seven monomials), f9 a
   multiple of 3.
 - **Clicks:** REFUSED on the slot form for a present at the rest: the notch's rest moves the gamma the clicks read,
@@ -620,8 +625,24 @@ mathematician's B2 to B4 fold as they stand.
 6. My own: the two places where the beat was written with a circular function now carry the recurrence, under the
    owner's "Sine is forbidden".
 
+**Both end readers PASSED the fifth text** (toys-5 afcd38406). Their points, none blocking, folded here:
+1. The physicist's N1: with N2's factor lunar laser ranging holds 24.6 Myr either side, so the window that passes both
+   is about 49 Myr (49.6 on his t9e_tuning), 0.54 per cent of the swing at 445 Mpc and 0.36 at 673 Mpc, in the finding
+   and section 4.
+2. His N2: section 4's "the notch can stand only where" scoped to a present at the rest.
+3. His nits, with the mathematician's notes outside his own items: G lower by 4 to 8 per cent with N2's factor, 8.1 and
+   3.7 by 1 / (1 + u)^2 (8.7 and 3.8 at first order); G2's rod factor named as not entering gamma_obs; "a static field
+   can stand" replaced in sections 1 and 5.
+4. The mathematician's four: term9_notch (f) checks the order, one run of + and then one of -, true in its three cases;
+   (f)'s line prints W div 2 f9 = 8100; section 11's pole "at first order"; term9_window (c) names 445 Mpc as just
+   under the structure's least, 445.1 Mpc.
+
 ## 11. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
+- **The end pair's points, folded:** term9_window.py rerun, its line (c) alone changed; term9_notch.py rerun in 114 s
+  on main's src at 0df0e8385, its lines (a) to (e) byte for byte, (f) now checking the order (true in its three cases)
+  and printing W div 2 f9 = 8100; G's drop by hand at twice the rest, 1 / (1.04326)^2 = 0.91879 and 1 / (1.01892)^2 =
+  0.96321, so 8.1 and 3.7 per cent; the physicist's t9e_tuning window, 24.6 Myr either side, about 49 Myr in all.
 - **The fifth text's probes:** term9_window.py with its divisor mended, in under a second, its other lines byte for
   byte; term9_notch.py with its new section (f), in 131 s, its lines (a) to (e) byte for byte against the fourth
   text's output; the end pair's five key scripts (the mathematician's t9e_swing_order, t9e_cassini and t9e_kept_tooth,
@@ -638,7 +659,7 @@ mathematician's B2 to B4 fold as they stand.
   byte for byte.
 - **Derived again by hand:** on the cut the notch keeps its rest beat while every other row's teeth read rest (1 + u_c):
   1,415 (1.02)^(-1/2) is 1,401.1 and 1,415 (1.1)^(-1/2) is 1,349.1; the pole at lambda^2 = (c / H0)^2 / (3 Omega_m
-  gamma) = 20,935,812 Mpc^2 at gamma = 1, between 4,575^2 and 4,576^2.
+  gamma) = 20,935,812 Mpc^2 at gamma = 1, between 4,575^2 and 4,576^2, at first order.
 - **The third reading's figures derived again by hand:** N2's factor (1 - u) / (1 + u) times 1 / ((1 + u)(1 - u)) is
   1 / (1 + u)^2, and through G2's rods the tied rest's (1 - u)^(-1/2)(1 + u)^(-5/2) at gamma = 1, each -2 u at first
   order; the 00 swing alone -1 - 1/2 - 2 = -7/2; 2.26 and 1.13 per cent over 7/2 are 0.65 and 0.32 per cent; on the

@@ -1060,8 +1060,9 @@ for m in (6, 16, 48):
     for r in grid[:50]:
         moved = {residue(c_at(residue(r + j * step_m, W), W) ** 2 - c_at(r, W) ** 2, W) for j in range(1, m + 1)}
         counts.append(len(moved))
+    bound = f"m/4 = {carry(m, 4, 0)[0]}" if residue(m, 4) == 0 else "4 does not divide m, the bound m"
     print(f"    at W, a tooth moved by multiples of W/{m} (W mod {m} = {residue(W, m)}): its square takes at most"
-          f" {max(counts)} residues of W over 50 teeth (m = {m}, m/4 = {carry(m, 4, 0)[0]})")
+          f" {max(counts)} residues of W over 50 teeth (m = {m}, {bound})")
 
 
 def held_lay(held_off, light_moving):

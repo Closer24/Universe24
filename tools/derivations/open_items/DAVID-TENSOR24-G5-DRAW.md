@@ -37,7 +37,8 @@ Big Pic's word (6534141348, item 3): both blocking items stand. NB1 is structura
 the mirror and the 24 leave it unmoved, and a square modulo T cannot see a quarter turn of a tooth when 4 divides T,
 so the Born condition takes the scope "off every coarse lattice". NB2: T8 = ceiling(T_f / 8), since T_f follows the
 moving 00 slot and a condition that 8 divides it cannot be laid once. This text keeps the draw, with T8 the ceiling of
-T_f / 8, and mends each item. Section 9 lists where, and section 10 how the text checked itself.
+T_f / 8, and mends each item. Section 9 lists where, and section 10 how the text checked itself. The fifth text
+(toys-5 a83876f53) passed both readers; their three notes, none blocking, are folded at section 9's end.
 
 The probe, derive/david_open/node/g5_norm.py, came with the fourth text, and this text adds its sections (i) to (k):
 the fourth text's readers' cases, ported onto its own board. Its output, g5_norm.txt, sits beside it: whole numbers
@@ -63,11 +64,11 @@ squared, read as the round takes it in and as it gives it out, summed, and carri
   tenths (9.814 on the hot board, 11.703 on the cold packet).
 - On the board's lays it is fair within chance: six lays and the hot board. The cold packet sits on the high side (1:1
   z^2 6.355, between the 5 and the 1 per cent points), named.
-- Where only light moves it is not fair. Light's teeth sit on the grip's lattice, and the pointer takes 3 values. Nor
-  is it fair where the held count, laid alike off n, swings with matter at rest: its tooth moves off the grip's lattice
-  but on its spring's, W/16, and the pointer takes 4 values. So the draw needs rows read off every coarse lattice: the
-  grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4. The condition is necessary,
-  not sufficient.
+- Where only light moves it is not fair. Light's teeth sit on the grip's lattice, and the pointer takes 3 values. Nor is
+  it fair where the held count, laid alike off n, swings with matter at rest: its tooth moves off the grip's lattice but
+  on its spring's, W/16, and the pointer takes 4 values. So the draw needs rows read off every coarse lattice, for
+  instance the grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4. The condition is
+  necessary, not sufficient.
 - On a single rotation the norm relaxes the pitch condition and does not remove it. It fails on W's lattices, one count
   off them, and near fractions of small denominator (W/7, 3W/11). At the readers' off-lattice spring over 64 phases it
   passes on the ring, where the third text's pointer failed. The condition on fractions is stated as necessary, not
@@ -121,8 +122,8 @@ squared, read as the round takes it in and as it gives it out, summed, and carri
     square on few residues.
   - Where only light moves, its hands move on the grip's lattice. Their squares take 2 residues and the pointer 3
     values. Where the held count, laid alike off n, swings with matter at rest, its hand moves off the grip's lattice
-    but on its spring's, and the pointer takes 4 values. So the draw needs rows read off every coarse lattice: the
-    grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4.
+    but on its spring's, and the pointer takes 4 values. So the draw needs rows read off every coarse lattice, for
+    instance the grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4.
   - A single hand turning round runs a short orbit. Near a fraction of small denominator its teeth stay near a lattice,
     and their squares near the lattice's square: the norm relaxes the third text's pitch condition and keeps it.
 - **No held hand, no medium.** The third text's cure was G3's held hand, one winding turning round at every Node-clock.
@@ -324,9 +325,9 @@ moves spread it where the third text's sum froze. What it cannot leave is a latt
   - meeting it is not shown to suffice. The 64 phases at two springs are a record, not a proof, and at the readers'
     spring the board's star puts 8 of 64 phases past the 5 per cent point, against chance's 3.200;
   - read for every moving row, not only for a single rotation, it is the Born condition: rows off every coarse lattice
-    of the teeth, the grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4 (the
-    mathematician's NB1). A row whose every move is a multiple of W/m puts its square on at most m residues, m/4 when 4
-    divides m (the quarter turn, above). It stays necessary, not sufficient.
+    of the teeth, for instance the grip's W/6, the plan's spring kappa's W/16, their joint W/48 and the quarter turn W/4
+    (the mathematician's NB1). A row whose every move is a multiple of W/m puts its square on at most m residues, m/4
+    when 4 divides m (the quarter turn, above). It stays necessary, not sufficient.
 - **Term 5's push of the 00 slot by rho + 3 p** (TENSOR24_NODE.md section 3; light twice, decision 30) is another row
   a merge reads where light crossed, absent from the probe's board. Whether it moves that row's tooth off every coarse
   lattice is not measured.
@@ -581,8 +582,8 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
 
 - **Born's rule, half of it, under a condition.**
   - Over many splits part i takes the quantum with frequency s_i / L within each run's spread only where rows off every
-    coarse lattice move between draws at the meeting (the grip's W/6, the plan's spring kappa's W/16, their joint W/48
-    and the quarter turn W/4), and a single rotation's spring meets the condition on fractions.
+    coarse lattice move between draws at the meeting (for instance the grip's W/6, the plan's spring kappa's W/16, their
+    joint W/48 and the quarter turn W/4), and a single rotation's spring meets the condition on fractions.
   - These conditions are necessary and not shown sufficient (the physicist's D1). His case meets them and fails
     mildly: at the readers' off-lattice spring, probe (g)'s star puts 8 of 64 phases past the 5 per cent point, against
     3.200 by chance.
@@ -647,9 +648,9 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   needs no held hand. Its energy, its rest frame and its sense are G3's, and G3's seventh text is refused by its own
   physicist on that weight (his item B: the load's source, rho + 3 p, reads it). G5 names it as G3's, not as G5's.
 - **Departures, named:**
-  - the draw unfair where the rows it reads move only on a coarse lattice of the teeth, the grip's W/6, kappa's W/16,
-    their joint W/48 or the quarter turn W/4, since a row whose every move is a multiple of W/m puts its square on at
-    most m residues, m/4 when 4 divides m (the mathematician's NB1):
+  - the draw unfair where the rows it reads move only on a coarse lattice of the teeth, for instance the grip's W/6,
+    kappa's W/16, their joint W/48 or the quarter turn W/4, since a row whose every move is a multiple of W/m puts its
+    square on at most m residues, m/4 when 4 divides m (the mathematician's NB1):
     - where only light moves, light's teeth on the grip's lattice and the pointer on 3 values: at form B's merges where
       only light crossed (g5_draw (o): 50 of 66 with sparse absorbers, 0 of 399 on a full screen), and on a board with
       the plan empty (probe (a) of g5_norm);
@@ -724,8 +725,8 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
 - **The condition on fractions, and which strengths meet it** (the heaviest).
   - A single rotation's spring off every a W / q, for q up to the resolution the shares need, by a delta with
     (delta X)^2 beyond about W / q^2, by a margin: stated as necessary.
-  - Every moving row off every coarse lattice of the teeth, the grip's W/6, kappa's W/16, their joint W/48 and the
-    quarter turn W/4 (the mathematician's NB1): stated as necessary.
+  - Every moving row off every coarse lattice of the teeth, for instance the grip's W/6, kappa's W/16, their joint W/48
+    and the quarter turn W/4 (the mathematician's NB1): stated as necessary.
   - Which strengths meet it is G3's to derive. What suffices, over every phase and on the board's seven Node-clocks, is
     unshown: at the readers' spring the star's 8 of 64 phases past the 5 per cent point stand against chance's 3.200.
   - With it, the norm's own bound given the rest, which the third text's lemma does not give.
@@ -745,7 +746,9 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   - longer runs, 1,000 rounds at four seeds, give small z^2 (0.033 to 2.620 at 1:1) but one N D_N^2 of 2.679, just
     past the 1 per cent point;
   - neighbouring draws inside the slow packets, one Mesh apart, show no dependence: pooled, the same half at z^2 0.166,
-    and 0.026 one round on.
+    and 0.026 one round on;
+  - other slow packets, at bases 30 and 300: the tenths pass their 5 per cent point (16.919 on 9) in 2 of 6, at 19.338
+    and 18.275.
   The item stands as worded.
 - **The coupling's read of the kept branch** (term 11 and form B): a merge's draw keeps its branch on the hand. How the
   coupling reads it, so that the outcome acts on the board, is OPEN, and with it the gathering of the losing shares
@@ -830,11 +833,11 @@ C1 to C3, mended, and PASSED the text.
 
 **The hostile mathematician's two:**
 1. NB1, the norm reading each tooth only up to a quarter turn and its sign, so that the Born condition "rows off the
-   grip's lattice" was met by a case where the draw fails. The quarter-turn and eighth-turn identities and the bound
-   of m residues, m/4 when 4 divides m, are derived and checked (2; probe (i)). "It reads every row that moves" is
-   struck: every row is read, each only up to a quarter turn and its sign, and a row moving on a coarse lattice spreads
-   Q over few residues (the finding; 1, 2). The Born condition reads "rows off every coarse lattice", the grip's W/6,
-   kappa's W/16, their joint W/48 and the quarter turn W/4: the condition on fractions read for every moving row,
+   grip's lattice" was met by a case where the draw fails. The quarter-turn and eighth-turn identities and the bound of
+   m residues, m/4 when 4 divides m, are derived and checked (2; probe (i)). "It reads every row that moves" is struck:
+   every row is read, each only up to a quarter turn and its sign, and a row moving on a coarse lattice spreads Q over
+   few residues (the finding; 1, 2). The Born condition reads "rows off every coarse lattice", for instance the grip's
+   W/6, kappa's W/16, their joint W/48 and the quarter turn W/4: the condition on fractions read for every moving row,
    necessary and not sufficient (the finding; 1, 2, 4, 6, 7). His case, the held count displaced off n with matter at
    rest, is ported as probe (j) and named a departure (2, 3, 4, 5, 6).
 2. NB2, the edge where 8 does not divide T_f. T8 is now the ceiling, (T_f + 7) div 8, by one carry, so v stands below
@@ -857,12 +860,23 @@ move" now 4 c, since c moves by twice the tooth (2); probe (e)'s held-count spli
 3. D3, the carry by 8 and the cells needing 8 to divide T_f and even teeth: mended with NB2 (2, 6).
 4. D4, the cold packet. His counts are entered under the OPEN item, which stands as worded (4, 7).
 
+**Both readers PASSED the fifth text** (toys-5 a83876f53). Their notes, none blocking, folded here:
+1. The mathematician's: probe (i) printed "m/4 = 1" beside W/6, where 4 does not divide m; it now prints that the
+   bound there is m itself (6; the tight bound is 3, and 2 residues are found). The lists of coarse lattices (W/6,
+   W/16, W/48 and W/4) hold only sublattices of W/48, so each now reads "for instance": others, such as W/32, fall
+   under "every coarse lattice" and the m-residue bound.
+2. The physicist's: his two other slow packets at bases 30 and 300 that passed the tenths' 5 per cent point (19.338
+   and 18.275, 2 of 6) are entered under the OPEN item.
+
 ## 10. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
 The owner's rule: a deriver checks itself before it reports, as a hostile reader would. It reruns its probes, derives
 each step again, and tries to break its own result by cases built to pass the text's own words; the report names what it
 checked and how.
 
+- **The fifth text's notes, folded:** g5_norm.py rerun in 55 s on main's src at 0df0e8385, its output byte for byte
+  but for probe (i)'s W/6 line, which now names the bound m where 4 does not divide m; the physicist's two packets read
+  off his phys_cold.txt (19.338 and 18.275 against 16.919).
 - **The probes rerun, each by my own run on main's src at 0df0e8385:**
   - g5_norm.py: 62 s. Its first 238 lines equal, byte for byte, the g5_norm.txt the fourth text cited. Its sections
     (i) to (k) are new, ported from the mathematician's g5v4_algebra.py and g5v4_held_vacuum.py, and his figures come

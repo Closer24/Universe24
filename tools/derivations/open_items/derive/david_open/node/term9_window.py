@@ -99,8 +99,8 @@ bound_den = (2 * 10**6 + 23) * 3 * OMEGA_NUM * HUBBLE_DEN * HUBBLE_DEN
 passes = [(lam, lam * lam * bound_den <= bound_num) for lam in (15, 16, 445)]
 print(f"(c) Cassini's |gamma - 1| <= 2.3 x 10^-5 at gamma = 1 reads u_c <= 23 over (2 x 10^6 + 23) and lambda^2 <="
       f" {places(bound_num, bound_den, 2)} Mpc^2, no root taken: lambda = 15 Mpc (225 Mpc^2) passes: {passes[0][1]};"
-      f" 16 Mpc (256 Mpc^2) passes: {passes[1][1]}; the structure's least, 445 Mpc (198025 Mpc^2), passes:"
-      f" {passes[2][1]}: the window is empty: {not passes[2][1]}")
+      f" 16 Mpc (256 Mpc^2) passes: {passes[1][1]}; 445 Mpc (198025 Mpc^2), just under the structure's least (445.1"
+      f" Mpc, the least whole 446), passes: {passes[2][1]}: the window is empty: {not passes[2][1]}")
 
 # (d) the gamma that would cancel the rest at 673 Mpc: gamma (1 + u_c) = 1 - gamma u_c, so gamma = 1 / (1 + 2 u_c)
 uc_num = 3 * OMEGA_NUM * 673 * 673 * HUBBLE_DEN * HUBBLE_DEN

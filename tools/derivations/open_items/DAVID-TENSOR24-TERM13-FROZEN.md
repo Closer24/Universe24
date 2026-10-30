@@ -17,7 +17,8 @@ that mathematician, who found NB1 and NB2 mended and one new item, NB3: the marg
 4 gamma G M / c^2 holds the surface of vanishing grip. Big Pic's word (6534141348, item 3): the reader's sentence
 stands, the shell is the one exception, as the sharp form of Buchdahl's bound is reached only by thin shells in
 general relativity (Andreasson), and the shell's clocks still run, so Postulate 4 is untouched. It is folded here
-(section 10), and section 11 says how this text checked itself. It
+(section 10). The fifth text (toys-5 a440e958a) passed that mathematician, so its pair passed it; his four notes, none
+blocking, are folded at section 10's end. Section 11 says how this text checked itself. It
 reads the act as built on main (0df0e8385), G2's third text (toys-5 fcd74a092) and term 9's second text (toys-5
 ebaedd4e8), in the law's four layers (Postulate 4, item (10)). Energy and momentum are read in the clicks' spacetime
 (the owner's word of 16:4x UTC). The probe is derive/david_open/node/term13_frozen.py, its output term13_frozen.txt
@@ -30,20 +31,19 @@ beside it, whole numbers alone, with no root and no search for one (decision 41)
 - **No static clock freezes.** Every real u has w at most 1 / (2 gamma), so a static field ends where w reaches that
   value, and it reaches it first inside a body. No static exterior holds a zero or negative grip, and no static clock
   freezes.
-- **The surface of vanishing grip** belongs, among fields with grips at or above 0, to a point source and the marginal
-  thin shell alone (section 2). Among static bodies with a source at or above 0, only the marginal thin shell,
-  r_s = 4 gamma G M / c^2 exactly, holds the surface: its own surface is the surface, its inside holds zero grips
-  throughout (w = 1 / (2 gamma), u = 1 / gamma, N^2 = gamma / (1 + gamma)), and its areal radius has no bound (the
-  fourth text's mathematician, NB3). Every other static body's surface lies outside 4 gamma G M / c^2, and inside it
-  the grip at that radius stays above 0. General
-  relativity has a like bound for static balls of ordinary matter: Buchdahl's keeps a ball of isotropic perfect fluid,
-  its density not rising outward, outside 9/8 of its horizon's radius (Buchdahl, Phys. Rev. 116, 1027 (1959)), and
-  Andreasson's carries it to matter with p_r + 2 p_T <= rho and neither pressure below 0 (J. Differential Equations 245,
-  2243 (2008)). Anisotropic stresses can beat it, with 2 G M / (c^2 R) above 8/9 (Bowers and Liang 1974), and a
-  gravastar falls outside both. So a frozen star made by such a ball is refused there too, and a body inside must fall
-  (Big Pic). The slot form's bound asks nothing of the matter's stresses: it stands on the identity of section 2. Around
-  a point source, light that reaches the surface is turned back (probe (d), laid with no root, the grip as the
-  coordinate: the hostile physicist's hp5).
+- **The surface of vanishing grip** belongs, among fields with grips at or above 0 and a source at or above 0, to a
+  point source and the marginal thin shell alone (section 2). Among static bodies with a source at or above 0, only the
+  marginal thin shell, r_s = 4 gamma G M / c^2 exactly, holds the surface: its own surface is the surface, its inside
+  holds zero grips throughout (w = 1 / (2 gamma), u = 1 / gamma, N^2 = gamma / (1 + gamma)), and its areal radius has no
+  bound (the fourth text's mathematician, NB3). Every other static body's surface lies outside 4 gamma G M / c^2, and
+  inside it the grip at that radius stays above 0. General relativity has a like bound for static balls of ordinary
+  matter: Buchdahl's keeps a ball of isotropic perfect fluid, its density not rising outward, outside 9/8 of its
+  horizon's radius (Buchdahl, Phys. Rev. 116, 1027 (1959)), and Andreasson's carries it to matter with p_r + 2 p_T <=
+  rho and neither pressure below 0 (J. Differential Equations 245, 2243 (2008)). Anisotropic stresses can beat it, with
+  2 G M / (c^2 R) above 8/9 (Bowers and Liang 1974), and a gravastar falls outside both. So a frozen star made by such a
+  ball is refused there too, and a body inside must fall (Big Pic). The slot form's bound asks nothing of the matter's
+  stresses: it stands on the identity of section 2. Around a point source, light that reaches the surface is turned back
+  (probe (d), laid with no root, the grip as the coordinate: the hostile physicist's hp5).
 - **Compactness.** On an open board, with no push of the field outside the matter, the exterior's least sphere bounds a
   static, spherical body's compactness by 5^(-5/4) / gamma_ext, where gamma_ext is the body's own ratio of its ii mass
   to its 00 mass: 0.134 at gamma_ext = 1, and 0.152 to 0.165 on G2's pressure estimate.
@@ -70,14 +70,15 @@ beside it, whole numbers alone, with no root and no search for one (decision 41)
   weakens and it climbs faster.
 - **Where the static field ends.** A static field can climb only so far: past a certain depth no setting of the 00 slot
   balances the pull. That depth is reached first inside a body, at its centre for a round one shallower than u = 1/2,
-  where the act's own source stays at or above 0 (section 2); the marginal ball holds a zero grip at its centre. Outside
-  every static body the grips stay above 0, and every clock there runs.
-- **The surface where the grips vanish** belongs to a point mass and to the marginal thin shell alone. The shell at
-  exactly 4 gamma G M / c^2 holds it as its own surface, its inside at zero grips throughout and its clocks running at
-  N^2 = gamma / (1 + gamma), its areal radius without bound. Inside every other real body the radius lies within, where
-  the grip stays above 0 (at gamma = 1, inside the standing ball of radius 7 G M / c^2, (grip / g)^2 = 81/343 at
-  r = 4 G M / c^2; section 2). Around a point mass light's speed falls to 0 there, and light that reaches it comes back.
-  Nothing static with grips above 0 lies past it; the marginal shell's inside holds grips of exactly 0.
+  where the act's own source stays at or above 0 at first order (section 2); the marginal ball holds a zero grip at its
+  centre. Outside every static body the grips stay above 0, and every clock there runs.
+- **The surface where the grips vanish** belongs, among fields with grips at or above 0 and a source at or above 0, to a
+  point mass and to the marginal thin shell alone. The shell at exactly 4 gamma G M / c^2 holds it as its own surface,
+  its inside at zero grips throughout and its clocks running at N^2 = gamma / (1 + gamma), its areal radius without
+  bound. Inside every other real body the radius lies within, where the grip stays above 0 (at gamma = 1, inside the
+  standing ball of radius 7 G M / c^2, (grip / g)^2 = 81/343 at r = 4 G M / c^2; section 2). Around a point mass light's
+  speed falls to 0 there, and light that reaches it comes back. Nothing static with grips above 0 and a source at or
+  above 0 lies past it; the marginal shell's inside holds grips of exactly 0.
 - **The spheres.** Going in, the spheres around the mass first shrink and then grow again toward the surface where the
   grips vanish, so there is a smallest sphere, and no static body smaller than it stands on the board. How small that is
   depends on the body itself: on how its ii slots and its 00 slot weigh it.
@@ -129,17 +130,17 @@ beside it, whole numbers alone, with no root and no search for one (decision 41)
   / gamma on a block of 4^3 inside 6^3 gives a grip of exactly 0 on all 288 Spokes inside the block and a pull of
   exactly 0 at the 8 core sites, at gamma 1 and 2. Inside every other standing body the grip at that radius stays above
   0 (at s = 7, (grip / g)^2 = 81/343 at r = 4, the least inside 1/7; the hostile mathematician's m1). It belongs to a
-  point source and to that shell alone among fields with grips at or above 0: the (c1) identity holds as a rational
-  function of x = grip / g for x < 0 too, so the exterior continues through the surface onto a static, source-free
-  second sheet with negative grips and A^2 = 1 / x < 0, where r > 4 gamma again and w = 2 / r (at x = -1/2 and gamma =
-  1: r = 16/3, u = 3/2, w = 3/8 = 2 / r, the 00 flux -2; the hostile mathematician's t1 (B)), unstable and no body's
-  exterior. Light's coordinate speed falls as (r - r0)^(1/4), so light reaches it in a finite number of rounds. On the
-  lattice a zero-grip Mesh carries no flux. In the continuum, in the grip coordinate, light's radial equation is (2 - x)
-  J d_t^2 phi = d_x (p d_x phi) with J = dr / dx = 8 x / (1 - x^2)^2 and p = (1 - x^2)^2 / 8, which is 1/8 at the
-  surface, while the weight (2 - x) J vanishes there: a regular endpoint, which needs a boundary condition (the hostile
-  mathematician's t1 (C)). Probe (d)'s lay supplies it, grip_0 = 0, with grip_1 about 12.5 g beside it (his t3). So
-  light turns back at the lay's wall, by energy conservation. Probe (d) lays it with no root, the grip as the coordinate
-  (section 3).
+  point source and to that shell alone among fields with grips at or above 0 and a source at or above 0: the (c1)
+  identity holds as a rational function of x = grip / g for x < 0 too, so the exterior continues through the surface
+  onto a static, source-free second sheet with negative grips and A^2 = 1 / x < 0, where r > 4 gamma again and w = 2 / r
+  (at x = -1/2 and gamma = 1: r = 16/3, u = 3/2, w = 3/8 = 2 / r, the 00 flux -2; the hostile mathematician's t1 (B)),
+  unstable and no body's exterior. Light's coordinate speed falls as (r - r0)^(1/4), so light reaches it in a finite
+  number of rounds. On the lattice a zero-grip Mesh carries no flux. In the continuum, in the grip coordinate, light's
+  radial equation is (2 - x) J d_t^2 phi = d_x (p d_x phi) with J = dr / dx = 8 x / (1 - x^2)^2 and p = (1 - x^2)^2 / 8,
+  which is 1/8 at the surface, while the weight (2 - x) J vanishes there: a regular endpoint, which needs a boundary
+  condition (the hostile mathematician's t1 (C)). Probe (d)'s lay supplies it, grip_0 = 0, with grip_1 about 12.5 g
+  beside it (his t3). So light turns back at the lay's wall, by energy conservation. Probe (d) lays it with no root, the
+  grip as the coordinate (section 3).
 - **The smallest sphere** (DERIVED; CHECKED, probe (c5)). The spatial metric is A^2 times the flat one with A^4 =
   1 / (1 - 4 G M / (c^2 r)) at gamma = 1, so the areal radius R = A r has R^4 = r^5 / (r - 4) in units of G M / c^2. The
   factorization r^5 - 3125 gamma^4 (r - 4 gamma) = (r - 5 gamma)^2 (r^3 + 10 gamma r^2 + 75 gamma^2 r + 500 gamma^3)
@@ -325,12 +326,12 @@ image's calibration does not carry over unchanged.
 - **Two bodies touching** (probe (e)). GW150914 reached a 75 Hz orbit, where equal Newtonian point masses of 70 solar
   masses in all would be about 350 km apart (LIGO and Virgo, PRL 116, 061102 (2016)), 3.386 G M / c^2: LIGO and Virgo's
   Newtonian estimate, where post-Newtonian corrections are large. Two static slot-form bodies of the same mass would
-  touch wider apart: wider than 413.455 km, the separation at the lattice radius 4 G m / c^2, a bound reached only by
-  the marginal shell, of unbounded areal radius (section 3); at 516.81875 km at the throat's 5; and between 772.8 and
-  772.9 km at its areal radius 5^(5/4). So they would touch before reaching a 75 Hz orbit. LIGO and Virgo find black
-  holes the only known objects compact enough to reach it without contact. The areal margin, a ratio between 2.208 and
-  2.209, is the robust one: in general relativity Kepler's law is exact in the areal radius for circular test orbits
-  (the hostile physicist). So this test supports Sgr A*'s refusal, and does not carry the refusal alone.
+  touch at 413.455 km or wider, the separation at the lattice radius 4 G m / c^2, a bound reached only by the marginal
+  shell, of unbounded areal radius (section 3); at 516.81875 km at the throat's 5; and between 772.8 and 772.9 km at its
+  areal radius 5^(5/4). So they would touch before reaching a 75 Hz orbit. LIGO and Virgo find black holes the only
+  known objects compact enough to reach it without contact. The areal margin, a ratio between 2.208 and 2.209, is the
+  robust one: in general relativity Kepler's law is exact in the areal radius for circular test orbits (the hostile
+  physicist). So this test supports Sgr A*'s refusal, and does not carry the refusal alone.
 - **No horizon, its tests:** no type I X-ray bursts from black-hole binaries (Narayan and Heyl 2002); no surface
   emission from Sgr A* (Broderick, Loeb and Narayan 2009; Sgr A*'s Paper VI, section 4). The slot form has no horizon to
   ring (GW250114, PRL 135, 111403 (2025), reads a Kerr hole's ringing and its area law). The target named for G2,
@@ -519,8 +520,21 @@ untouched.
    (1 + u) turns the source negative only past u = 1, and at gamma = 1 every static field has u at most 1. Section 2
    says so.
 
+**The fifth text PASSED by its mathematician** (toys-5 a440e958a). His notes, none blocking, folded here:
+1. N1 and N2: every "alone" sentence on the surface (the finding, section 1 twice, section 2) now carries both of its
+   conditions, grips at or above 0 and a source at or above 0. His m5 case shows why the second is needed: a thin shell
+   of mass 3/2 at r = 4 around a uniform core of mass -1/2 holds the surface with every grip at or above 0 ((grip /
+   g)^2 = 1/6 at r = 3), and only its core's source below 0 sets it apart.
+2. N3: the touching separation reads "at 413.455 km or wider", the bound being reached by the marginal shell.
+3. N4: section 1's u < 1/2 caveat is marked first order, as section 2 has it.
+4. N5 needs no change: by the exact ratio matter at u = 1 sources no 00 slot, so the marginal shell is a tied-branch
+   body, as the page sets it.
+
 ## 11. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
+- **The fifth text's notes:** the reader's m5_alone.py rerun by me on main's src at 0df0e8385, byte for byte; by hand,
+  w = r^2 / 16, 3/4 - 1/r and 2 / r meet with w and w' continuous at r = 2 (1/4 and 1/4) and w = 1/2 at r = 4, the jump
+  in w' -3/16 giving the shell's 3/2, the core's Laplacian 3/8 (a source below 0).
 - **The fifth text:** the reader's m4_marginal_shell.py rerun by me byte for byte; by hand, (grip / g)^2 =
   1 - 2 gamma w is 0 at w = 1 / (2 gamma), and N^2 = gamma / (1 + gamma) there; term13_frozen.py unchanged since
   ffb80e335 and its output byte for byte (his rerun at 26.2 s).

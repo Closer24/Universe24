@@ -426,12 +426,16 @@ def expanding_half(c0, rounds=2000):
         s = step.tick(lay_f, s)
         g = GRIP + int(s.a[slot_xx, 0]) + int(s.a[slot_xx, nb[0, 0]])
         if g <= 0:
-            return None, None, None, grip, t
+            return None, None, None, grip, None, t
         if g >= grip[-1] and t > 1:
             break
         grip.append(g)
     signs = [a_second(grip[t + 1], grip[t - 1], grip[t]) for t in range(1, len(grip) - 1)]
-    return len(grip) - 1, signs.count(1), signs.count(-1), grip, None
+    # the order the page states: the signs, zeros dropped, make one run of + and then at most one run of -
+    nonzero = [x for x in signs if x != 0]
+    runs = [x for i, x in enumerate(nonzero) if i == 0 or x != nonzero[i - 1]]
+    ordered = runs in ([1], [1, -1])
+    return len(grip) - 1, signs.count(1), signs.count(-1), grip, ordered, None
 
 
 lay_f = layout(False, True)
@@ -440,17 +444,18 @@ for label, c0, bracket in (("the probe's own lay, c0 = 10^9", 10**9, None),
                            ("c0 = 9/10 of GRIP / 2", carry(9 * GRIP, 20, 0)[0], None),
                            ("c0 = 999975/10^6 of GRIP / 2", carry(999975 * GRIP, 2 * 10**6, 0)[0], 389),
                            ("c0 = 999999/10^6 of GRIP / 2", carry(999999 * GRIP, 2 * 10**6, 0)[0], None)):
-    falling, plus, minus, grip, zero_at = expanding_half(c0)
+    falling, plus, minus, grip, ordered, zero_at = expanding_half(c0)
     if zero_at is not None:
         lines_f.append(f"{label}: the grips pass 0 at round {zero_at}")
         continue
     most, least = max(grip), min(grip)
     ratio_whole, ratio_rest = carry(10 * most, least, 0)
-    text = (f"{label}: {falling} rounds falling; A's second difference + for {plus} rounds, - for {minus}; the grips'"
-            f" largest over least {carry(ratio_whole, 10, 0)[0]}.{carry(ratio_whole, 10, 0)[1]}")
+    text = (f"{label}: {falling} rounds falling; A's second difference + for {plus} rounds, - for {minus}, one run of +"
+            f" then one of -: {ordered}; the grips' largest over least {carry(ratio_whole, 10, 0)[0]}."
+            f"{carry(ratio_whole, 10, 0)[1]}")
     if bracket is not None:
         text += (f"; {bracket}^2 <= that ratio < {bracket + 1}^2: "
                  f"{bracket * bracket * least <= most < (bracket + 1) * (bracket + 1) * least}")
     lines_f.append(text)
-print(f"(f) the order and the reach on this notch, (f9 / 3) tr^2 (the trace's spring 2 f9 = W div"
+print(f"(f) the order and the reach on this notch, (f9 / 3) tr^2 (the trace's spring 2 f9, W div 2 f9 ="
       f" {carry(REST, 2 * F9, 0)[0]}), the three ii slots laid uniform at rest, no source: " + "; ".join(lines_f))
