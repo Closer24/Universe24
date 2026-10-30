@@ -12,7 +12,7 @@ Suppose nature is discrete: space is made of Node-clocks, and between one Node-c
 - [The supplement, Online Resource 1, 85 pages](https://closer24.github.io/Universe24/papers/one_rule/Universe24_Supplement.pdf): the claims list and the algebraic steps of every derivation
 - [The time paper, 22 pages](https://closer24.github.io/Universe24/papers/spacetime_events/Universe24_Discrete_Spacetime_of_Events_Paper.pdf): "A discrete spacetime of events in whole numbers: why clocks slow, why nothing outruns light, and why time has a direction only where something was measured" (Alon Gonen, 2026), its source, run and checks in papers/spacetime_events/, built and run by its build.sh
 - [README](https://closer24.github.io/Universe24/README.md): the aim, what stands (Tensor24, the old engine out), the law in four lines, the description of the system, how to run it, the documents, the papers
-- [The architecture](https://closer24.github.io/Universe24/docs/ARCHITECTURE.md): the parts in the order of the flow (the three files, the loader, the Node-clock, the runner, the record, the decoder, the readings, the visualizer, the guards), each told by the clock, the algebra and the physics, who may import whom, and who keeps which document
+- [The architecture](https://closer24.github.io/Universe24/docs/ARCHITECTURE.md): the one document that tells the system and the one the work runs from: the parts, the Node-clock first (the three files, the loader, the Node-clock, the runner, the record, the decoder, the visualizer, the guards), each told by the clock, the board and the clicks, with its algebra, home, test and status, and who may import whom
 
 ## The documents
 
