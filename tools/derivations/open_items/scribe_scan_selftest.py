@@ -1891,6 +1891,37 @@ CASES += [
     ),
     ("a tool may name books", TOOL_FILES, "def f(books):\n    return books\n", {}),
     (
+        "the main: an index by an equality is a mask",
+        NEW_MAIN,
+        "def f(x, w):\n    return x[w == 1]\n",
+        {"MASK": 1},
+    ),
+    (
+        "the loader: np.flatnonzero is a mask",
+        NEW_LOADER,
+        "import numpy as np\n\n\ndef f(x):\n    return np.flatnonzero(x)\n",
+        {"MASK": 1},
+    ),
+    (
+        "the loader: an index by a negation is a mask",
+        NEW_LOADER,
+        "def f(x, m):\n    return x[~m]\n",
+        {"MASK": 1},
+    ),
+    (
+        "the loader: an index by an integer array is a gather, no mask",
+        NEW_LOADER,
+        "def f(x, idx):\n    return x[idx]\n",
+        {},
+    ),
+    (
+        "the loader: a negative constant index is no mask",
+        NEW_LOADER,
+        "def f(x):\n    return x[-1]\n",
+        {"POSITION": 1},
+    ),
+    ("the decoder is spared the mask rule", NEW_DECODER, "def f(x, w):\n    return x[w == 1]\n", {}),
+    (
         "a tool: a path joined by pathlib's slash with strings",
         TOOL_FILES,
         'from pathlib import Path\n\nROOT = Path(__file__).resolve().parents[1] / "examples" / "tensor24"\n',
