@@ -1,0 +1,60 @@
+PROBE UNITS: the 24 and the 48 as whole quaternions, the tables as Hamilton's product, the carry against Hurwitz's division
+
+== the 24 turns and their whole lifts g (2g printed), N(g), the kind of turn, A2
+  identity                       N(g) = 1 A2 = +1  lifts (2g, up to sign): (-2, 0, 0, 0) and (2, 0, 0, 0)  (2 found)
+  half turn about an edge        N(g) = 1 A2 = +1  lifts (2g, up to sign): (0, -2, 0, 0) and (0, 2, 0, 0)  (2 found)
+  quarter turn about an axis     N(g) = 2 A2 = -1  lifts (2g, up to sign): (-2, 2, 0, 0) and (2, -2, 0, 0)  (2 found)
+  quarter turn about an axis     N(g) = 2 A2 = -1  lifts (2g, up to sign): (-2, -2, 0, 0) and (2, 2, 0, 0)  (2 found)
+  half turn about an edge        N(g) = 1 A2 = +1  lifts (2g, up to sign): (0, 0, -2, 0) and (0, 0, 2, 0)  (2 found)
+  half turn about an edge        N(g) = 1 A2 = +1  lifts (2g, up to sign): (0, 0, 0, -2) and (0, 0, 0, 2)  (2 found)
+  half turn about an axis        N(g) = 2 A2 = -1  lifts (2g, up to sign): (0, 0, -2, -2) and (0, 0, 2, 2)  (2 found)
+  half turn about an axis        N(g) = 2 A2 = -1  lifts (2g, up to sign): (0, 0, -2, 2) and (0, 0, 2, -2)  (2 found)
+  half turn about an axis        N(g) = 2 A2 = -1  lifts (2g, up to sign): (0, -2, -2, 0) and (0, 2, 2, 0)  (2 found)
+  quarter turn about an axis     N(g) = 2 A2 = -1  lifts (2g, up to sign): (-2, 0, 0, 2) and (2, 0, 0, -2)  (2 found)
+  third turn about a diagonal    N(g) = 1 A2 = +1  lifts (2g, up to sign): (-1, 1, 1, 1) and (1, -1, -1, -1)  (2 found)
+  third turn about a diagonal    N(g) = 1 A2 = +1  lifts (2g, up to sign): (-1, -1, -1, 1) and (1, 1, 1, -1)  (2 found)
+  quarter turn about an axis     N(g) = 2 A2 = -1  lifts (2g, up to sign): (-2, 0, 0, -2) and (2, 0, 0, 2)  (2 found)
+  half turn about an axis        N(g) = 2 A2 = -1  lifts (2g, up to sign): (0, -2, 2, 0) and (0, 2, -2, 0)  (2 found)
+  third turn about a diagonal    N(g) = 1 A2 = +1  lifts (2g, up to sign): (-1, 1, -1, -1) and (1, -1, 1, 1)  (2 found)
+  third turn about a diagonal    N(g) = 1 A2 = +1  lifts (2g, up to sign): (-1, -1, 1, -1) and (1, 1, -1, 1)  (2 found)
+  third turn about a diagonal    N(g) = 1 A2 = +1  lifts (2g, up to sign): (-1, -1, -1, -1) and (1, 1, 1, 1)  (2 found)
+  third turn about a diagonal    N(g) = 1 A2 = +1  lifts (2g, up to sign): (-1, 1, -1, 1) and (1, -1, 1, -1)  (2 found)
+  quarter turn about an axis     N(g) = 2 A2 = -1  lifts (2g, up to sign): (-2, 0, -2, 0) and (2, 0, 2, 0)  (2 found)
+  half turn about an axis        N(g) = 2 A2 = -1  lifts (2g, up to sign): (0, -2, 0, -2) and (0, 2, 0, 2)  (2 found)
+  third turn about a diagonal    N(g) = 1 A2 = +1  lifts (2g, up to sign): (-1, 1, 1, -1) and (1, -1, -1, 1)  (2 found)
+  third turn about a diagonal    N(g) = 1 A2 = +1  lifts (2g, up to sign): (-1, -1, 1, 1) and (1, 1, -1, -1)  (2 found)
+  quarter turn about an axis     N(g) = 2 A2 = -1  lifts (2g, up to sign): (-2, 0, 2, 0) and (2, 0, -2, 0)  (2 found)
+  half turn about an axis        N(g) = 2 A2 = -1  lifts (2g, up to sign): (0, -2, 0, 2) and (0, 2, 0, -2)  (2 found)
+summary (kind, N(g), A2): count
+  ('half turn about an axis', 2, -1): 6
+  ('half turn about an edge', 1, 1): 3
+  ('identity', 1, 1): 1
+  ('quarter turn about an axis', 2, -1): 6
+  ('third turn about a diagonal', 1, 1): 8
+Hurwitz units (N = 1) lift 12 turns; Lipschitz g of norm 2 lift 12
+N(g) = 1 exactly where A2 = +1: True
+
+== the sandwich carried at N(g) on 200 drawn whole four-vectors, every turn: misses 0 of 4800 (the scalar part fixed, the vector part turned by m)
+example: (1 + i) (3i + 5j + 7k) (1 - i) = (0, 6, -14, 10) = 2 x (0, 3, -7, 5): the quarter turn about i, whole, no root of 2
+the unit lift (1 + i) / sqrt 2 would act on one side as (1 + i) psi / sqrt 2: (1 + i) psi = (-3, 3, -2, 12), norm 166 = 2 x 83: a whole spinor turned once by one side gains the factor sqrt 2 in its norm; that is where the root is needed (the half-speed gear, the families' piece)
+
+== the 48: the 24 reflections -m are the turns after the parity h -> conj(h) (the four-vector's A1 slot fixed, its T1 slots negated)
+g conj(h) conj(g) / N(g) == (-m) on the vector part, the scalar fixed: misses 0 of 2400
+the time mirror of the act (step.mirror) is the swap of the two slots with the tooth's flip: no quaternion is conjugated (probe.py)
+
+== the tables as Hamilton's product
+C[T1 T1 -> A1] = delta: True; C[T1 T1 -> T1] = eps with eps[0,1,2] = 1; C[A1 A1 -> A1] = 1; C[A1 T1 -> T1] = 1: True; C[T1 A1 -> T1] = 1: True
+-Re(v w) == the T1 T1 -> A1 channel: misses 0 of 300; Im(v w) == the T1 T1 -> T1 channel: misses 0 of 300
+(a + v)(b + w) == A1A1->A1 - T1T1->A1 + A1T1->T1 + T1A1->T1 + T1T1->T1 at the tables' entries: misses 0 of 300
+T1 x T1 = A1 + E + T1 + T2 (9): Hamilton's product of two pure quaternions is A1 + T1 (4 of the 9); E + T2 (the symmetric traceless 5) is outside it (probe_square.py)
+
+== Euler: N(p q) = N(p) N(q) on 300 drawn pairs: misses 0; the law's Gaussian product (a c - b d, a d + b c) is Hamilton's product in the plane Z + Z e for e in (i, j, k), commuting there: misses 0 of 900
+
+== Rule3's carry on a whole quaternion at a whole W: the box remainder [0, W)^4, unique; Hurwitz's remainder of norm below N(W) = W^2: not unique
+the box remainder's norm at or above W^2 (so not a Hurwitz remainder): 307 of 500 drawn (n, W); the box remainder is the unique one in [0, W)^4, which the run back needs (flip(r, W) = W - 1 - r)
+example n = 1, W = 2: q = 0 leaves r = (1, 0, 0, 0) of norm 1 < 4; q = (1 + i + j + k) / 2 leaves r = (0, -1, -1, -1) of norm 3 < 4: two quotients, both Hurwitz-valid; Rule3's is one: ((0, 0, 0, 0), (1, 0, 0, 0))
+a quaternion divisor arises nowhere in the act as built: W, T_d and the grips are whole numbers (load.geared), J is a dividend; the clicks' key is a whole number too (click25)
+
+== the three pure units i, j, k under the 24, and the whole matrices that commute with all 24 on T1
+   the third turn (1 + i + j + k) / 2 sends (i, j, k) to [(0, 0, 1, 0), (0, 0, 0, 1), (0, 1, 0, 0)]: the units are one orbit of the 24, so no law built from the 24 tells i from j from k
+   3 x 3 whole matrices with entries in [-1, 1] commuting with all 24 T1 matrices: 3, all multiples of the identity: True (Schur over Z: one mass for the three; a mass matrix telling the axes apart breaks the 24)

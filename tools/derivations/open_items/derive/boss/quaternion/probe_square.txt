@@ -1,0 +1,29 @@
+PROBE SQUARE: the metric family against Hamilton's product and the act's reading
+
+== degree-2 words of one four-vector h = a + v, as forms on (a2, x2, y2, z2, ax, ay, az, yz, zx, xy)
+   Re(h h)        [1, -1, -1, -1, 0, 0, 0, 0, 0, 0]
+   Im(h h)_x      [0, 0, 0, 0, 2, 0, 0, 0, 0, 0]
+   Im(h h)_y      [0, 0, 0, 0, 0, 2, 0, 0, 0, 0]
+   Im(h h)_z      [0, 0, 0, 0, 0, 0, 2, 0, 0, 0]
+   Re(h conj h)   [1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+   E: x^2 - y^2   [0, 1, -1, 0, 0, 0, 0, 0, 0, 0]
+   E: y^2 - z^2   [0, 0, 1, -1, 0, 0, 0, 0, 0, 0]
+   T2: y z        [0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+   T2: z x        [0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+   T2: x y        [0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+determinant of the ten forms together: -48 (not 0: the five E and T2 slots are outside the span of Hamilton's five)
+the five reachable forms alone are independent (their a2, x2, ax, ay, az minor is -16): True; they are a^2 - |v|^2, 2 a v, a^2 + |v|^2: the slots 00, 0i and the ii trace
+Im(conj(h) h) = 0 and Im(h conj h) = 0: the one four-vector's words give no antisymmetric slot; Re(h conj h) is Euler's norm
+
+== the metric as a whole symmetric 4 x 4 matrix M on four-vectors: M = t I + SUM_ab m_ab E_ab, E_ab h = e_a h e_b
+   the nine E_ab are symmetric matrices: True; traceless: True; with I they are ten
+   the change of basis from (t, m_ab) to the ten slots: a whole 10 x 10 matrix of determinant -128: the slots' lattice is finer than the sandwiches' by that factor, so a whole metric's sandwich coordinates are quarters in general
+   E_ii = diag/entries [[-1, 0, 0, 0], [0, -1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]
+   E_ij = diag/entries [[0, 0, 0, 1], [0, 0, -1, 0], [0, -1, 0, 0], [1, 0, 0, 0]]
+   E_ik = diag/entries [[0, 0, -1, 0], [0, 0, 0, -1], [-1, 0, 0, 0], [0, -1, 0, 0]]
+
+== on the real act: two lays differing only in the metric's 0i and jk slots
+   the hand's and the vec's next slots and teeth equal: False; W equal: True; the ii rows' next slots equal: True
+   (the plan here has the vertex g Re(h conj m), which reads 0i: so hands_same is False where the vertex is laid; without it the act reads 0i and jk by nothing)
+   with the spring alone (no term reads the metric): the hand's and the vec's next slots and teeth equal: True; the ii rows equal: True
+   so the act as built reads the metric's 00 (into W, a whole divisor) and ii (into the grips, whole weights); 0i and jk reach the act only through a plan's term

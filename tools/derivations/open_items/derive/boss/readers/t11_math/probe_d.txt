@@ -1,0 +1,13 @@
+Probe D: the key's parity, by measurement
+  D1 a function count on an exact pair (x, -x), keys 1..40, x in [-3 key, 3 key]: misses n(x) + n(-x) != 0
+     click25 (x + (key-1) div 2) div key: misses at odd keys 0, at even keys 120 (of 4960 cases)
+     law (i) (x + key div 2) div key: misses at odd keys 0, at even keys 120 (of 4960 cases)
+     EDGE centred split, ties to even: misses at odd keys 0, at even keys 0 (of 4960 cases)
+     law (iv) half away from zero: misses at odd keys 0, at even keys 0 (of 4960 cases)
+  D2 EDGE's centred split as a tooth-carry, tooth born at 0, areas (A, -A) over 3 rounds, keys 1..40:
+     q_L + q_M != 0 or s_L + s_M != 0 in 0 of 44640 carries, odd and even keys alike (EDGE's claim holds)
+     the plain carry born at (key - 1) div 2 on the same data: misses at odd keys 0, at even keys 1598
+  D3 CLICK25's half-tooth count, both born at u = key: n = (2 x + key) div (2 key); misses where 2 x + key = 0 mod 2 key?
+     the text's prediction agrees with the count in 4960 of 4960 cases (odd keys never miss, even keys once per key)
+  Settled: the parity condition belongs to the floor carry with one shared offset, not to the count; an odd
+  rounding (EDGE's ties-to-even, or the law's own (iv) half away from zero) closes an exact pair at every key.

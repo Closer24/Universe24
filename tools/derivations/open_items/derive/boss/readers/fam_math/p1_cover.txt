@@ -1,0 +1,58 @@
+1. The 48 from two lifts, as 2 x 2 matrices over Z[zeta_8] (independent construction).
+   elements: 48; -1 among them: True
+   the covering onto the 24 signed permutations of det 1: 24 turns hit, each by [2] lifts
+   rotation(x y) = rotation(x) rotation(y) on 288 pairs: True
+   spinor characters tr(q) as p + q sqrt 2: whole ones [(-2, 0), (-1, 0), (0, 0), (1, 0), (2, 0)]; irrational ones [(0, -1), (0, 1)]; irrational on 12 elements
+   SUM tr(q q) over the 48 = (-48, 0) (Frobenius-Schur -48 / 48 = -1); SUM tr(q)^2 = (48, 0)
+   elements by order: {1: 1, 2: 1, 3: 8, 4: 18, 6: 8, 8: 12}
+
+2. Lambda = Z[sqrt 2] 2O as a lattice of whole numbers, and the 48 on it.
+   rank 8; the 48 lie in it: True; closed under products (48 x 8 pairs): True
+   8 x 8 whole matrices, determinants [1]; M(x) M(y) = M(x y) on 2304 of 2304 pairs: True; -1 is -I: True
+   (trace, order) and counts: {(-8, 2): 1, (-4, 3): 8, (0, 4): 18, (0, 8): 12, (4, 6): 8, (8, 1): 1}
+   SUM trace(M M) = -192 (-4 x 48 = -192); SUM trace(M)^2 = 384 (8 x 48 = 384: End has dimension 8)
+   invariant bilinear forms by a null space: 8, symmetric 2, antisymmetric 6; by characters: 8, 2, 6
+   signed permutations among the 48 in this basis: 2
+   (trace, order) pairs of these 48 that no signed permutation of 8 gears has (by cycle types): [(-4, 3), (4, 6)]
+   so the 8-gear kind E1/2 + E5/2 is a signed permutation of 8 gears in NO basis: confirmed (the third turns' lifts).
+
+3. The fixed-class theorem: a 48-equivariant remainder on Lambda needs a g-fixed representative for every class
+   of Lambda / W Lambda that g fixes; g != 1 fixes no vector of Lambda (left multiplication by a unit != 1 in a
+   division algebra), so every class fixed by some g != 1 must be the class 0. Kernel sizes of (M_g - I) mod W:
+   order 2: det(M - I) = 256, Smith diagonal (2, 2, 2, 2, 2, 2, 2, 2); nonzero fixed classes exist at W in [2, 4, 6, 8, 10, 12] (of 2..13)
+   order 3: det(M - I) = 81, Smith diagonal (1, 1, 1, 1, 3, 3, 3, 3); nonzero fixed classes exist at W in [3, 6, 9, 12] (of 2..13)
+   order 4: det(M - I) = 16, Smith diagonal (1, 1, 1, 1, 2, 2, 2, 2); nonzero fixed classes exist at W in [2, 4, 6, 8, 10, 12] (of 2..13)
+   order 6: det(M - I) = 1, Smith diagonal (1, 1, 1, 1, 1, 1, 1, 1); nonzero fixed classes exist at W in [] (of 2..13)
+   order 8: det(M - I) = 4, Smith diagonal (1, 1, 1, 1, 1, 1, 2, 2); nonzero fixed classes exist at W in [2, 4, 6, 8, 10, 12] (of 2..13)
+   => at every W with gcd(W, 6) > 1 some g != 1 fixes a nonzero class and no equivariant remainder exists;
+      at gcd(W, 6) = 1 the 48 act freely on the nonzero classes (48 divides W^8 - 1: W=5: True, W=7: True, W=11: True, W=13: True).
+   W = 9, g a third turn's lift: x = 3 (1 - g^-1) e_1 = [3, 0, 6, 0, -6, 0, 9, 0]; (g - 1) x mod 9 = [0, 0, 0, 0, 0, 0, 0, 0]; x mod 9 = [3, 0, 6, 0, 3, 0, 0, 0] (not 0): a nonzero class fixed by g, with no fixed representative.
+   W = 2, g = -1: every class is fixed ((-1 - 1) x = -2 x = 0 mod 2), e.g. e_1: [0, 0, 0, 0, 0, 0, 0, 0]; its representative would need d = -d, so d = 0: impossible.
+   an order-6 lift w: det(1 - M_w) = 1 (a unit), so any cocycle c_g = (1 - g) v forces v into Lambda: the
+   'tooth flip' trick (an affine relabeling of the remainders) cannot evade the obstruction on Lambda (see REPORT).
+
+4. The Hurwitz order under the even 12's double cover 2T (the 24 lifts of the tetrahedron's 12 turns).
+   24 elements; closed: True
+   the Z-span of the 24 units: rank 4
+   4 x 4 whole matrices, determinants [1]; (trace, order): {(-4, 2): 1, (-2, 3): 8, (0, 4): 6, (2, 6): 8, (4, 1): 1}; SUM trace(M M) = -48; SUM trace^2 = 96
+   invariant forms 4 (1 symmetric, 3 antisymmetric)
+   (trace, order) with no signed permutation of 4 gears: [(-2, 3), (2, 6)]
+   order 6: det(M - I) = 1, Smith (1, 1, 1, 1), nonzero fixed classes at W in []
+   order 3: det(M - I) = 9, Smith (1, 1, 3, 3), nonzero fixed classes at W in [3, 6, 9, 12]
+   order 2: det(M - I) = 16, Smith (2, 2, 2, 2), nonzero fixed classes at W in [2, 4, 6, 8, 10, 12]
+   order 4: det(M - I) = 4, Smith (1, 1, 2, 2), nonzero fixed classes at W in [2, 4, 6, 8, 10, 12]
+   => on the Hurwitz quaternions too, a 2T-equivariant remainder exists for no W sharing a factor with 6.
+
+5. The two symmetric invariant forms of Lambda and the trace form's Gram determinant.
+   Gram of Tr N(x) (= 2 N_0(x), rational part doubled): det 16; Gram of the sqrt 2 part 2 N_1(x): det 1
+   N(x) of the 48 units is 1, so Tr N = 2 on them; the diagonal of Tr N on the echelon basis: [4, 4, 2, 2, 10, 2, 4, 4]
+   both forms kept by all 48: True; any positive-definite invariant form is a N_0 + b N_1 (a 2-parameter family: 'the nearest
+   point of W Lambda' names no one metric until a and b are chosen).
+
+6. The five kinds of the 24 from my own matrices: Frobenius-Schur sums and antisymmetric squares.
+   A1: SUM chi(g g) = 24 (FS +1); Alt^2 = 0
+   A2: SUM chi(g g) = 24 (FS +1); Alt^2 = 0
+   E: SUM chi(g g) = 24 (FS +1); Alt^2 = 1 A2
+   T1: SUM chi(g g) = 24 (FS +1); Alt^2 = 1 T1
+   T2: SUM chi(g g) = 24 (FS +1); Alt^2 = 1 T1
+   (A1 x A1, A2 x A2, E x E, T1 x T1, T2 x T2 each contain A1 once, symmetric; the antisymmetric squares are A2, T1, T1.)

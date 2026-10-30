@@ -1,0 +1,29 @@
+PROBE TIME: the second order (now, before) as a turn in the time plane, a lone hand on the real act, W = 60
+
+== k = W: trace 1, order 6, Z[zeta_6]
+   returns to the lay after 6 rounds (None: not within 12); the teeth move: False; v+ = 2 v - u - (k/W) v bit for bit: True; the wind W v^2 - (2W - k) v u + W u^2 kept: True
+   gear 0 (now, before, tooth) over the rounds: [(-12, -41, 20), (29, -12, 20), (41, 29, 20), (12, 41, 20), (-29, 12, 20), (-41, -29, 20), (-12, -41, 20), (29, -12, 20)]
+
+== k = 2W: trace 0, order 4, Z[i]
+   returns to the lay after 4 rounds (None: not within 12); the teeth move: False; v+ = 2 v - u - (k/W) v bit for bit: True; the wind W v^2 - (2W - k) v u + W u^2 kept: True
+   gear 0 (now, before, tooth) over the rounds: [(-49, 6, 24), (-6, -49, 24), (49, -6, 24), (6, 49, 24), (-49, 6, 24), (-6, -49, 24), (49, -6, 24), (6, 49, 24)]
+   (v, u) -> (-u, v) every round, the Gaussian i on v + i u: True
+
+== k = 3W: trace -1, order 3, Z[zeta_3]
+   returns to the lay after 3 rounds (None: not within 12); the teeth move: False; v+ = 2 v - u - (k/W) v bit for bit: True; the wind W v^2 - (2W - k) v u + W u^2 kept: True
+   gear 0 (now, before, tooth) over the rounds: [(-3, 11, 2), (-8, -3, 2), (11, -8, 2), (-3, 11, 2), (-8, -3, 2), (11, -8, 2), (-3, 11, 2), (-8, -3, 2)]
+
+== k = W + 2: W does not divide k
+   returns to the lay after None rounds (None: not within 12); the teeth move: True; the wind W v^2 - (2W - k) v u + W u^2 kept: False
+   gear 0 (now, before, tooth) over the rounds: [(51, 43, 7), (6, 51, 25), (-45, 6, 13), (-50, -45, 43), (-3, -50, 23), (47, -3, 29), (48, 47, 55), (0, 48, 19)]
+
+== k = 0: trace 2, parabolic (free)
+   returns to the lay after None rounds (None: not within 12); the teeth move: False; v+ = 2 v - u - (k/W) v bit for bit: True; the wind W v^2 - (2W - k) v u + W u^2 kept: True
+   gear 0 (now, before, tooth) over the rounds: [(64, 45, 12), (83, 64, 12), (102, 83, 12), (121, 102, 12), (140, 121, 12), (159, 140, 12), (178, 159, 12), (197, 178, 12)]
+
+== k = 4W: trace -2, parabolic
+   returns to the lay after None rounds (None: not within 12); the teeth move: False; v+ = 2 v - u - (k/W) v bit for bit: True; the wind W v^2 - (2W - k) v u + W u^2 kept: True
+   gear 0 (now, before, tooth) over the rounds: [(-60, 37, 35), (83, -60, 35), (-106, 83, 35), (129, -106, 35), (-152, 129, 35), (175, -152, 35), (-198, 175, 35), (221, -198, 35)]
+
+== the whole time-turns are the elliptic elements of SL2(Z) of the form [[t, -1], [1, 0]], t = 2 - k/W whole: t in {1, 0, -1} (orders 6, 4, 3); t = 2 and -2 are parabolic; no other t turns
+   so the time plane's ring is the mode's own: Z[zeta_6], Z[i] or Z[zeta_3], not one ring for all modes; space's ring (Hamilton's units) is fixed by the Spokes

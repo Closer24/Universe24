@@ -1,0 +1,27 @@
+Probe A: term 11's count on Animate's world, W = 10^20, A = 10^6, g = f div 10, 6,000 rounds
+  A1 per gear W D_i = W q_i v_i - a_i J_i - a_i (r_i - r_i+): misses 0 of 72000 gear-rounds (exact)
+     2 E_shadow = SUM (W q v - a J) is NOT kept by the act: it moves by up to 32 millionths of itself over the run (the exact leapfrog keeps it; the act's drift is rounded)
+     the remainders' term |a (r - r+)| per gear up to 93159567150000000000000000 (about A x W): both terms are Rule3's
+  A2 D_M on the mirrored state = D_M forward in 6000 of 6000 rounds; this is untick's exactness (mirror tick mirror = tick^-1) read on a product symmetric in next and before, a theorem not a measure
+  A3 key 714285715 (odd), k_0 357142857; giver's clicks sum -6, taker's 6, taker's count 0..7; click rounds 35; books miss in 2; n_L + n_M in [-1, 0]
+     the taker holds a winding in 4919 rounds of 6001; connects (0 -> not 0) 3 times (the text's 4,920 and 3 are probe_wind's tooth-carry numbers, not this count's)
+     the miss rounds (t: click (q_L, q_M); x_L, x_M in millionths of a key; delta = x_L + x_M in millionths; x_L's offset from its nearest cell edge (n key + key/2) in millionths):
+       t=216: q=(-1, 0); x_L -500432, x_M 499655; delta -776; x_L's offset from the edge 431
+       t=217: q=(0, 1); x_L -503989, x_M 504247; delta 258; x_L's offset from the edge 3988
+     the wobble delta over the run: within [-1855, 1712] millionths of a key; the per-round change up to 3351
+     rounds with n_L + n_M != 0 (the books open): 1
+  A4 the four rounding rules on this run (odd key: all four agree where there are no ties):
+     click25 (x + (key-1) div 2) div key: misses 2, n_L + n_M in [-1, 0], taker 0..7
+     law (i) (x + key div 2) div key: misses 2, n_L + n_M in [-1, 0], taker 0..7
+     EDGE centred split, ties to even: misses 2, n_L + n_M in [-1, 0], taker 0..7
+     law (iv) half away from zero: misses 2, n_L + n_M in [-1, 0], taker 0..7
+     at the even key 714285714:
+       click25 (x + (key-1) div 2) div key: misses 2, n_L + n_M in [-1, 0]
+       law (i) (x + key div 2) div key: misses 2, n_L + n_M in [-1, 0]
+       EDGE centred split, ties to even: misses 2, n_L + n_M in [-1, 0]
+       law (iv) half away from zero: misses 2, n_L + n_M in [-1, 0]
+     at the even key 714285716:
+       click25 (x + (key-1) div 2) div key: misses 2, n_L + n_M in [-1, 0]
+       law (i) (x + key div 2) div key: misses 2, n_L + n_M in [-1, 0]
+       EDGE centred split, ties to even: misses 2, n_L + n_M in [-1, 0]
+       law (iv) half away from zero: misses 2, n_L + n_M in [-1, 0]

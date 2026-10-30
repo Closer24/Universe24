@@ -1,0 +1,18 @@
+gamma 16: K/W = g/8; the step's window [0, 4] is g in [0, 32]; 12 lays each, 600 rounds
+   g =   0 (K/W = 0.000): largest |x| in thousandths of the lay's size          66777; ran away  0 of 12; run back exact True
+   g =   1 (K/W = 0.125): largest |x| in thousandths of the lay's size           1000; ran away  0 of 12; run back exact True
+   g =   2 (K/W = 0.250): largest |x| in thousandths of the lay's size           1074; ran away  0 of 12; run back exact True
+   g =   4 (K/W = 0.500): largest |x| in thousandths of the lay's size           1133; ran away  0 of 12; run back exact True
+   g =   8 (K/W = 1.000): largest |x| in thousandths of the lay's size           1000; ran away  0 of 12; run back exact True
+   g =  16 (K/W = 2.000): largest |x| in thousandths of the lay's size           1000; ran away  0 of 12; run back exact True
+   g =  24 (K/W = 3.000): largest |x| in thousandths of the lay's size           2000; ran away  0 of 12; run back exact True
+   g =  28 (K/W = 3.500): largest |x| in thousandths of the lay's size           3466; ran away  0 of 12; run back exact True
+   g =  30 (K/W = 3.750): largest |x| in thousandths of the lay's size           4333; ran away  0 of 12; run back exact True
+   g =  31 (K/W = 3.875): largest |x| in thousandths of the lay's size           6200; ran away  0 of 12; run back exact True
+   g =  32 (K/W = 4.000): largest |x| in thousandths of the lay's size        1201000; ran away  0 of 12; run back exact True
+   g =  33 (K/W = 4.125): largest |x| in thousandths of the lay's size   133309094444; ran away 12 of 12; run back exact True
+   g =  34 (K/W = 4.250): largest |x| in thousandths of the lay's size   114967642666; ran away 12 of 12; run back exact True
+   g =  36 (K/W = 4.500): largest |x| in thousandths of the lay's size   121914436200; ran away 12 of 12; run back exact True
+   g =  40 (K/W = 5.000): largest |x| in thousandths of the lay's size   204034655888; ran away 12 of 12; run back exact True
+   g =  -1 (K/W = -0.125): largest |x| in thousandths of the lay's size   146232675333; ran away 12 of 12; run back exact True
+   g =  -2 (K/W = -0.250): largest |x| in thousandths of the lay's size   120832281444; ran away 12 of 12; run back exact True

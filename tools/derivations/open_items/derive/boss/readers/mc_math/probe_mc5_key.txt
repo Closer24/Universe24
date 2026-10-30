@@ -1,0 +1,30 @@
+MC probe 5: the key's parity under four conventions of the click's tooth
+
+1. The pair's books q(A) + q(-A) = 0 from the birth, keys 1 to 40, areas within 3 keys; and one key added, one more count
+   floor, born (key - 1) div 2: 4960 cases; books miss 0 at odd keys, 120 at even keys; one key added is one more count: 0 misses
+   half-tooth, born u = key (CLICK25): 4960 cases; books miss 0 at odd keys, 120 at even keys; one key added is one more count: 0 misses
+   centre 0, tie even, born 0 (EDGE): 4960 cases; books miss 0 at odd keys, 0 at even keys; one key added is one more count: 120 misses
+   half-open, born 0, flip -1 - s: 4960 cases; books miss 0 at odd keys, 120 at even keys; one key added is one more count: 0 misses
+
+2. A giver and a taker, areas A and -A each round, both born alike, 6,000 rounds at the keys 12 and 13 (the edge probe's section 8)
+   floor, born (key - 1) div 2, key 12: clicks not opposite in 900 of 6000 rounds
+   floor, born (key - 1) div 2, key 13: clicks not opposite in 0 of 6000 rounds
+   half-tooth, born u = key (CLICK25), key 12: clicks not opposite in 900 of 6000 rounds
+   half-tooth, born u = key (CLICK25), key 13: clicks not opposite in 0 of 6000 rounds
+   centre 0, tie even, born 0 (EDGE), key 12: clicks not opposite in 0 of 6000 rounds
+   centre 0, tie even, born 0 (EDGE), key 13: clicks not opposite in 0 of 6000 rounds
+   half-open, born 0, flip -1 - s, key 12: clicks not opposite in 900 of 6000 rounds
+   half-open, born 0, flip -1 - s, key 13: clicks not opposite in 0 of 6000 rounds
+
+3. A hand fed exactly one whole key of area every round, 12 rounds, key 12: the clicks per round from each birth, and from the tie
+   floor, born (key - 1) div 2, from the birth: clicks [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   half-tooth, born u = key (CLICK25), from the birth: clicks [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   centre 0, tie even, born 0 (EDGE), from the birth: clicks [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+   centre 0, tie even, born 0 (EDGE), from the tooth standing on the centre-0 split's edge (the tie): clicks [2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0]
+   half-open, born 0, flip -1 - s, from the birth: clicks [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+ Reading: the floor at an odd key and the half-open split have both the books and 'one key, one click'; the centre-0 tie-even
+ split has the books at every key and, at a tooth on its edge, counts a whole key as 0 or 2 clicks (the lost shift covariance is
+ not harmless for a count); CLICK25's half-tooth birth at u = key has 'one key, one click' and misses the books at even keys once
+ per key of area. No odd tie rule is shift covariant (f(1 - q0) = not f(q0) forbids f(q0 + k) = f(q0)), so this is a theorem,
+ not a choice: a count's tooth cannot be born on the mirror's fixed point and be shift covariant at a dial with a middle tooth.
+

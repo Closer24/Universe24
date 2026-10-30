@@ -1,0 +1,40 @@
+A. the beat against the amplitude, den 1, gamma 1000, g 1: harmonic 4 sin^2(omega/2) = 2/1000 (period 140.5); the room g x.x < 250
+   A =   1: period  1004.000 over 5 swings; max|x| 1; D_x in (0, 1); |k|^2 [1]; first |k|^2 off at round None; light stood [1]; rounds 6000; ran away False; run back True
+   A =   2: period   508.000 over 11 swings; max|x| 2; D_x in (0, 2); |k|^2 [1]; first |k|^2 off at round None; light stood [2]; rounds 6000; ran away False; run back True
+   A =   3: period   346.000 over 16 swings; max|x| 3; D_x in (0, 3); |k|^2 [1]; first |k|^2 off at round None; light stood [3]; rounds 6000; ran away False; run back True
+   A =   4: period   266.000 over 21 swings; max|x| 4; D_x in (0, 4); |k|^2 [1]; first |k|^2 off at round None; light stood [4]; rounds 6000; ran away False; run back True
+   A =   6: period   190.000 over 30 swings; max|x| 6; D_x in (0, 6); |k|^2 [1]; first |k|^2 off at round None; light stood [6]; rounds 6000; ran away False; run back True
+   A =   8: period   158.000 over 37 swings; max|x| 8; D_x in (0, 8); |k|^2 [1]; first |k|^2 off at round None; light stood [8]; rounds 6000; ran away False; run back True
+   A =  10: period   140.000 over 42 swings; max|x| 10; D_x in (0, 10); |k|^2 [1]; first |k|^2 off at round None; light stood [10]; rounds 6000; ran away False; run back True
+   A =  12: period   130.000 over 45 swings; max|x| 12; D_x in (0, 12); |k|^2 [1]; first |k|^2 off at round None; light stood [12]; rounds 6000; ran away False; run back True
+   A =  15: period   126.000 over 46 swings; max|x| 15; D_x in (0, 15); |k|^2 [1]; first |k|^2 off at round None; light stood [15]; rounds 6000; ran away False; run back True
+B. the beat against gamma at A^2 = gamma/8 (the same share of the room): the period grows as the root of gamma, x2 per x4
+   gamma    200 A   5: period    60.000 over 15 swings; max|x| 5; D_x in (0, 5); |k|^2 [1]; first |k|^2 off at round None; light stood [5]; rounds 1000; ran away False; run back True
+   gamma    800 A  10: period   119.250 over 32 swings; max|x| 10; D_x in (0, 10); |k|^2 [0, 1, 2]; first |k|^2 off at round 341; light stood [10]; rounds 4000; ran away False; run back True
+   gamma   3200 A  20: period   238.666 over 66 swings; max|x| 20; D_x in (0, 20); |k|^2 [0, 1, 2]; first |k|^2 off at round 1281; light stood [20]; rounds 16000; ran away False; run back True
+   gamma  12800 A  40: period   477.263 over 133 swings; max|x| 40; D_x in (0, 40); |k|^2 [0, 1, 2]; first |k|^2 off at round 4961; light stood [40]; rounds 64000; ran away False; run back None
+C. the beat against g at A = 4, gamma 1000: 4 sin^2(omega/2) = 2 g / gamma
+   g =   1: period   266.000 over 14 swings; max|x| 4; D_x in (0, 4); |k|^2 [1]; first |k|^2 off at round None; light stood [4]; rounds 4000; ran away False; run back True
+   g =   2: period   142.000 over 27 swings; max|x| 4; D_x in (0, 4); |k|^2 [1]; first |k|^2 off at round None; light stood [4]; rounds 4000; ran away False; run back True
+   g =   4: period    78.000 over 50 swings; max|x| 4; D_x in (0, 4); |k|^2 [1]; first |k|^2 off at round None; light stood [4]; rounds 4000; ran away False; run back True
+   g =   8: period    46.000 over 86 swings; max|x| 4; D_x in (0, 4); |k|^2 [1]; first |k|^2 off at round None; light stood [4]; rounds 4000; ran away False; run back True
+   g =  15: period    31.600 over 125 swings; max|x| 4; D_x in (0, 4); |k|^2 [0, 1, 2]; first |k|^2 off at round 13; light stood [4]; rounds 4000; ran away False; run back True
+D. two quanta held, k = (1, 1), |k|^2 = 2, and four, k = (2, 0): the spring doubles and quadruples
+   k = (1, 1) A = 4: period   142.000 over 27 swings; max|x| 4; D_x in (0, 4); |k|^2 [2]; first |k|^2 off at round None; light stood [4]; rounds 4000; ran away False; run back True
+   k = (2, 0) A = 4: period    78.000 over 50 swings; max|x| 4; D_x in (0, 4); |k|^2 [4]; first |k|^2 off at round None; light stood [4]; rounds 4000; ran away False; run back True
+E. a hand laid moving (velocity 2 counts a round) at A = 4, gamma 1000
+   A = 4, v = 2: period     4.000 over 1 swings; max|x| 3422323768224376538; D_x in (-8186198391115904211367, 153204); |k|^2 [0, 1, 2, 5, 29, 116, 169, 250, 725, 17640, 1653236, 216486935929357, 3380098074928475707033868603629048725]; first |k|^2 off at round 10; light stood [4]; rounds 80; ran away True; run back None
+F. the room's edge and the runaway, gamma 1000, g 1: g x.x < 250 exact; < 1000 bent but bounded; beyond, k's step leaves its window
+   A =  10 (A^2 =   100): period   140.000 over 20 swings; max|x| 10; D_x in (0, 10); |k|^2 [1]; first |k|^2 off at round None; light stood [10]; rounds 3000; ran away False; run back None
+   A =  14 (A^2 =   196): period   126.000 over 23 swings; max|x| 14; D_x in (0, 14); |k|^2 [1]; first |k|^2 off at round None; light stood [14]; rounds 3000; ran away False; run back None
+   A =  16 (A^2 =   256): period   113.960 over 25 swings; max|x| 16; D_x in (0, 16); |k|^2 [0, 1, 2]; first |k|^2 off at round 1; light stood [16]; rounds 3000; ran away False; run back None
+   A =  18 (A^2 =   324): period   115.360 over 25 swings; max|x| 19; D_x in (0, 19); |k|^2 [0, 1, 2]; first |k|^2 off at round 1; light stood [18]; rounds 3000; ran away False; run back None
+   A =  20 (A^2 =   400): period   118.000 over 24 swings; max|x| 20; D_x in (0, 20); |k|^2 [0, 1, 2]; first |k|^2 off at round 1; light stood [20]; rounds 3000; ran away False; run back None
+   A =  24 (A^2 =   576): period   124.913 over 23 swings; max|x| 24; D_x in (0, 24); |k|^2 [0, 1, 2]; first |k|^2 off at round 1; light stood [24]; rounds 3000; ran away False; run back None
+   A =  28 (A^2 =   784): period    14.200 over 5 swings; max|x| 1817955922039773; D_x in (-1165308021898304772, 3460); |k|^2 [1, 2, 4, 5, 8, 9, 10, 13, 16, 17, 18, 20, 25, 26, 29, 32, 34, 37, 41, 45, 52, 58, 61, 65, 80, 85, 100, 106, 117, 146, 157, 405, 1921, 4868, 1025296, 692258746801, 8231292834333816812430325024456]; first |k|^2 off at round 1; light stood [28]; rounds 98; ran away True; run back None
+   A =  31 (A^2 =   961): period    10.642 over 14 swings; max|x| 1654671700139449447; D_x in (-3186897636596607821153, 3259); |k|^2 [1, 2, 4, 5, 8, 9, 10, 13, 17, 18, 20, 25, 26, 29, 32, 34, 36, 37, 40, 41, 45, 49, 50, 53, 58, 65, 68, 73, 80, 85, 89, 97, 100, 104, 106, 116, 117, 125, 130, 136, 137, 153, 157, 160, 164, 169, 170, 180, 185, 194, 208, 218, 221, 232, 245, 250, 260, 261, 274, 281, 289, 292, 298, 305, 320, 325, 436, 712, 1721, 13444, 1975933, 108754617083125, 1456948681397007987081772460604103033]; first |k|^2 off at round 1; light stood [31]; rounds 175; ran away True; run back None
+   A =  32 (A^2 =  1024): period     2.500 over 2 swings; max|x| 316478911983982790; D_x in (-463958059870623121740, 1745); |k|^2 [1, 2, 5, 13, 17, 20, 25, 32, 41, 106, 680, 2120, 2197, 10138, 1709684, 31586108770645, 79584911275537321214036673833335682]; first |k|^2 off at round 1; light stood [32]; rounds 23; ran away True; run back None
+   A =  34 (A^2 =  1156): period     4.000 over 2 swings; max|x| 1049580200078; D_x in (-163665372190919, 7336); |k|^2 [1, 5, 13, 34, 36, 74, 80, 90, 97, 146, 180, 314, 1850, 2341, 844105, 1995833177, 38161961002597418190162545]; first |k|^2 off at round 1; light stood [34]; rounds 21; ran away True; run back None
+   A =  40 (A^2 =  1600): period     2.000 over 1 swings; max|x| 21664766605376917365; D_x in (-27254273669159042850161, 5512); |k|^2 [1, 10, 73, 373, 505, 1394, 4084, 4453, 20731401, 207686002582229, 6148007456235749268227228764517972779400]; first |k|^2 off at round 1; light stood [40]; rounds 10; ran away True; run back None
+G. the sign of g: g = -1 at A = 4, gamma 1000 (a negative spring)
+   g = -1: period       n/a over 0 swings; max|x| 49839341567430; D_x in (-25667169363462606, 4); |k|^2 [1, 2, 4, 5, 10, 45, 245, 2880, 292820, 82362195125, 2760866667410562671003864626]; first |k|^2 off at round 81; light stood [4]; rounds 95; ran away True; run back None

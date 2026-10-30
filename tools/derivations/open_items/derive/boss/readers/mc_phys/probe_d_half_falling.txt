@@ -1,0 +1,7 @@
+The half-tooth act on a falling clock, its promise not asked (whole numbers; 486 gears)
+  falling by 1 from W = 46: untick_h(tick_h s) = s in 0 of 24 rounds; mirror twice differs at 0 of 25 states; 24 unticks return the start: False; gears whose carried tooth fell below 0 per round: [169, 5, 0, 117, 7, 0, 119, 11, 0, 114, 7, 0, 119, 15, 0, 126, 14, 0, 129, 17, 0, 119, 22, 0]
+  rising by 1 from W = 10: untick_h(tick_h s) = s in 24 of 24 rounds; mirror twice differs at 0 of 25 states; 24 unticks return the start: True; gears whose carried tooth fell below 0 per round: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  falling by 3 from W = 126: untick_h(tick_h s) = s in 0 of 24 rounds; mirror twice differs at 0 of 25 states; 24 unticks return the start: False; gears whose carried tooth fell below 0 per round: [227, 9, 108, 7, 117, 11, 4, 116, 11, 112, 5, 119, 8, 4, 118, 7, 110, 9, 116, 18, 7, 125, 15, 122]
+
+Reading: the half-tooth's own text says a falling clock is not mended; here is the measure: where the carried tooth
+leaves its dial the round does not run back, so term 9's notch (the clock falling half of every beat) cannot run on it.

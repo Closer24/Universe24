@@ -1,0 +1,67 @@
+PROBE CARRY: a carry on a half-speed hand all at once that turns with the 24's lifts or the 48
+
+== Hurwitz's 24 units as whole 4 x 4 matrices of left multiplication in the basis (1, i, j, w): a group True; signed permutations among them 2
+orders of the 24: {1: 1, 2: 1, 3: 8, 4: 6, 6: 8}
+
+== nonzero cosets of H / W H fixed by some lift g != 1 (brute force over (Z/W)^4), and gcd(W, 6)
+   a fixed nonzero coset forbids any invariant domain: the coset would need a point g fixes, and g fixes 0 alone
+   W =  1: gcd(W, 6) = 1; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 0, 3: 0, 4: 0, 6: 0}: a domain the 24 keep EXISTS
+   W =  2: gcd(W, 6) = 2; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 15, 3: 0, 4: 18, 6: 0}: NO domain the 24 keep
+   W =  3: gcd(W, 6) = 3; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 0, 3: 64, 4: 0, 6: 0}: NO domain the 24 keep
+   W =  4: gcd(W, 6) = 2; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 15, 3: 0, 4: 18, 6: 0}: NO domain the 24 keep
+   W =  5: gcd(W, 6) = 1; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 0, 3: 0, 4: 0, 6: 0}: a domain the 24 keep EXISTS
+   W =  6: gcd(W, 6) = 6; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 15, 3: 64, 4: 18, 6: 0}: NO domain the 24 keep
+   W =  7: gcd(W, 6) = 1; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 0, 3: 0, 4: 0, 6: 0}: a domain the 24 keep EXISTS
+   W =  8: gcd(W, 6) = 2; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 15, 3: 0, 4: 18, 6: 0}: NO domain the 24 keep
+   W =  9: gcd(W, 6) = 3; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 0, 3: 64, 4: 0, 6: 0}: NO domain the 24 keep
+   W = 10: gcd(W, 6) = 2; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 15, 3: 0, 4: 18, 6: 0}: NO domain the 24 keep
+   W = 11: gcd(W, 6) = 1; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 0, 3: 0, 4: 0, 6: 0}: a domain the 24 keep EXISTS
+   W = 12: gcd(W, 6) = 6; fixed nonzero cosets summed over the 23 lifts, by the lift's order: {2: 15, 3: 64, 4: 18, 6: 0}: NO domain the 24 keep
+
+== the 48 as whole 8 x 8 matrices of left multiplication on Lambda's basis: whole True; products land among them (sampled) True; orders {1: 1, 2: 1, 3: 8, 4: 18, 6: 8, 8: 12}
+   kernel of (g - 1) on (Z/W)^8 by Smith's form: the fixed cosets of g (1 = the zero coset alone)
+   W =  1: gcd(W, 6) = 1; fixed nonzero cosets by the lift's order: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}: a domain the 48 keep EXISTS
+   W =  2: gcd(W, 6) = 2; fixed nonzero cosets by the lift's order: {2: 255, 3: 0, 4: 270, 6: 0, 8: 36}: NO domain the 48 keep
+   W =  3: gcd(W, 6) = 3; fixed nonzero cosets by the lift's order: {2: 0, 3: 640, 4: 0, 6: 0, 8: 0}: NO domain the 48 keep
+   W =  4: gcd(W, 6) = 2; fixed nonzero cosets by the lift's order: {2: 255, 3: 0, 4: 270, 6: 0, 8: 36}: NO domain the 48 keep
+   W =  5: gcd(W, 6) = 1; fixed nonzero cosets by the lift's order: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}: a domain the 48 keep EXISTS
+   W =  6: gcd(W, 6) = 6; fixed nonzero cosets by the lift's order: {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}: NO domain the 48 keep
+   W =  7: gcd(W, 6) = 1; fixed nonzero cosets by the lift's order: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}: a domain the 48 keep EXISTS
+   W =  8: gcd(W, 6) = 2; fixed nonzero cosets by the lift's order: {2: 255, 3: 0, 4: 270, 6: 0, 8: 36}: NO domain the 48 keep
+   W =  9: gcd(W, 6) = 3; fixed nonzero cosets by the lift's order: {2: 0, 3: 640, 4: 0, 6: 0, 8: 0}: NO domain the 48 keep
+   W = 10: gcd(W, 6) = 2; fixed nonzero cosets by the lift's order: {2: 255, 3: 0, 4: 270, 6: 0, 8: 36}: NO domain the 48 keep
+   W = 11: gcd(W, 6) = 1; fixed nonzero cosets by the lift's order: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}: a domain the 48 keep EXISTS
+   W = 12: gcd(W, 6) = 6; fixed nonzero cosets by the lift's order: {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}: NO domain the 48 keep
+   [Lambda : (g - 1) Lambda] by the lift's order: {2: [256], 3: [81], 4: [16], 6: [1], 8: [4]} (2-powers, 3-powers, 1: the primes 2 and 3 alone)
+
+== the nearest point (least norm in the coset) on H / W H: ties, and the orbit domain
+   W = 5: cosets 625; cosets with two or more nearest elements 192; the largest least norm x4 = 36 (W^2 / 2 x4 = 50); orbit domain conflicts 0 (0 iff gcd(W, 6) = 1), its cosets not equivariant 0, not symmetric 0; lexicographic nearest: cosets not equivariant 192, not symmetric 192
+      the tie at W = 5: the coset of (-5/2, 1/2, 1/2, 1/2) holds the nearest elements (doubled) [(-5, 1, 1, 1), (5, 1, 1, 1)] of norm 7; are they one unit apart (g x = y)? False
+   W = 6: cosets 1296; cosets with two or more nearest elements 383; the largest least norm x4 = 72 (W^2 / 2 x4 = 72); orbit domain conflicts 97 (0 iff gcd(W, 6) = 1), its cosets not equivariant None, not symmetric None; lexicographic nearest: cosets not equivariant 383, not symmetric 383
+   W = 7: cosets 2401; cosets with two or more nearest elements 576; the largest least norm x4 = 76 (W^2 / 2 x4 = 98); orbit domain conflicts 0 (0 iff gcd(W, 6) = 1), its cosets not equivariant 0, not symmetric 0; lexicographic nearest: cosets not equivariant 576, not symmetric 576
+   W = 9: cosets 6561; cosets with two or more nearest elements 1280; the largest least norm x4 = 132 (W^2 / 2 x4 = 162); orbit domain conflicts 64 (0 iff gcd(W, 6) = 1), its cosets not equivariant None, not symmetric None; lexicographic nearest: cosets not equivariant 1280, not symmetric 1280
+
+== on the act (a lone Node-clock, the spring J = -2 psi, s = T_k = T_d = 1): turned run == run turned over 6 rounds, the 24 lifts as left multiplication, 20 drawn starts (lifts x starts)
+   W = 5 (gcd(W, 6) = 1):
+      per gear (as built)       : 40 of 480 (lifts x starts) hold
+      orbit domain              : 480 of 480 (lifts x starts) hold; the run back (mirror, tick, mirror with the hand's tooth negated) returns the lay in 20 of 20 starts
+      nearest, lexicographic    : 213 of 480 (lifts x starts) hold; the run back (mirror, tick, mirror with the hand's tooth negated) returns the lay in 4 of 20 starts
+   W = 6 (gcd(W, 6) = 6):
+      per gear (as built)       : 40 of 480 (lifts x starts) hold
+      orbit domain              : no domain exists (fixed cosets)
+      nearest, lexicographic    : 204 of 480 (lifts x starts) hold; the run back (mirror, tick, mirror with the hand's tooth negated) returns the lay in 4 of 20 starts
+   W = 7 (gcd(W, 6) = 1):
+      per gear (as built)       : 40 of 480 (lifts x starts) hold
+      orbit domain              : 480 of 480 (lifts x starts) hold; the run back (mirror, tick, mirror with the hand's tooth negated) returns the lay in 20 of 20 starts
+      nearest, lexicographic    : 150 of 480 (lifts x starts) hold; the run back (mirror, tick, mirror with the hand's tooth negated) returns the lay in 1 of 20 starts
+   W = 9 (gcd(W, 6) = 3):
+      per gear (as built)       : 40 of 480 (lifts x starts) hold
+      orbit domain              : no domain exists (fixed cosets)
+      nearest, lexicographic    : 203 of 480 (lifts x starts) hold; the run back (mirror, tick, mirror with the hand's tooth negated) returns the lay in 2 of 20 starts
+
+== verdict
+   (b) a carry on the hand at once that turns with the 24's lifts (and the 48) exists iff gcd(W, 6) = 1: derived (the lifts of order 6 kill every twist; -1 and the third turns fix nonzero cosets at 2 | W and 3 | W) and measured above
+   (a) where it exists it is bijective and runs back by the mirror with the tooth negated (measured at W = 5, 7)
+   (c) its domain is a union of free orbits with 0: the nearest point gives one only where the least element is unique, and ties stand at W = 5 and 7; the orbit domain is a table of (W^4 - 1) / 24 choices, no formula; no twist, so no flip
+   (d) on whole-speed hands the lifts are signed permutations and the per-gear box with the flip is the invariant domain (sym24); the hand carry is not per gear in any basis (families)
+   the load's teeth 6 den Gamma^2 + a_00 are divisible by 6 at a_00 = 0: on the act as built the half-speed carry can turn only where the 00 slot's count is coprime to 6

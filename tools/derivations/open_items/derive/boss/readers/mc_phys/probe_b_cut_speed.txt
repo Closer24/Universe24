@@ -1,0 +1,26 @@
+The 00 wave against light in a uniform well, the cut against the order (whole numbers; a line of 6 Node-clocks)
+   the mode 2A, A, -A, -2A, -A, A along z (k = pi/3): sin^2(omega/2) = grip / (4 W), so T^2 ~ W at small omega;
+   W is written in grips (rest = 6 grips); the amplitude A = 1 grip / 1000 on the mode's row
+
+Well: the 00 slot uniform at 6 grips, so W = 12 grips on the rows that read it (2 x rest)
+   light (edge act, the cut), W = 12 grips: 68 periods over 1475 rounds: 1000 T = 21691 rounds
+   light (the act as built, loader's lay), W = 12 grips: 68 periods over 1475 rounds: 1000 T = 21691 rounds
+   the 00 wave (edge act, the cut: W_00 = 6 grips): 97 periods over 1483 rounds: 1000 T = 15288 rounds
+   the 00 wave (the order: the 00 row reads itself, W_00 = 12 grips + the mode): 34 periods over 733 rounds: 1000 T = 21558 rounds
+   the 00 wave (the act as built, loader's lay): 34 periods over 733 rounds: 1000 T = 21558 rounds
+   T_light^2 / T_00^2: under the cut 2012 permille (W_light / W_00 = 2000); under the order 1012 permille (1000 = one cone)
+   speed^2 ratio c_00^2 / c_light^2 = T_light^2 / T_00^2: the cut's 00 wave outruns light by that factor in the well;
+
+Well: the 00 slot uniform at 18 grips, so W = 24 grips on the rows that read it (4 x rest)
+   light (edge act, the cut), W = 24 grips: 48 periods over 1475 rounds: 1000 T = 30729 rounds
+   light (the act as built, loader's lay), W = 24 grips: 48 periods over 1475 rounds: 1000 T = 30729 rounds
+   the 00 wave (edge act, the cut: W_00 = 6 grips): 97 periods over 1483 rounds: 1000 T = 15288 rounds
+   the 00 wave (the order: the 00 row reads itself, W_00 = 24 grips + the mode): 48 periods over 1468 rounds: 1000 T = 30583 rounds
+   the 00 wave (the act as built, loader's lay): 48 periods over 1468 rounds: 1000 T = 30583 rounds
+   T_light^2 / T_00^2: under the cut 4039 permille (W_light / W_00 = 4000); under the order 1009 permille (1000 = one cone)
+   speed^2 ratio c_00^2 / c_light^2 = T_light^2 / T_00^2: the cut's 00 wave outruns light by that factor in the well;
+
+Reading: light's cone in the clicks is one (D8). Under the cut the metric's own 00 wave is a second, wider cone in every
+well (the factor W / rest in speed squared), and in proper units too (the local clocks slow by the same N); under the
+order the two cones are one. GW170817 bounds a metric mode's speed against light's at parts in 10^15; the galactic
+well alone is W / rest - 1 of about 2 x 10^-6.

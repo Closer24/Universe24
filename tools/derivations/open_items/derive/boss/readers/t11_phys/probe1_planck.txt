@@ -1,0 +1,22 @@
+Probe 1: the quantum against the beat, free hands on Animate's world (W = 10^20), 1200 rounds
+  the key (the draft's, a seventh of the f-hand's wind at swing A, made odd): 714057179
+
+(a) the same swing A = 10^6 on a circle at springs f, 4 f, 16 f:
+  spring  1 f: wind D = 4998400256 (7000 thousandths of a key; off its lay by at most 1694 millionths); area Omega = 4998400000000000000000000000000; beat period 125666 thousandths of a round
+            D / D_f = 1000 thousandths; Omega / Omega_f = 1000; period_f / period = 1000 (omega / omega_f)
+  spring  4 f: wind D = 19974815876 (27973 thousandths of a key; off its lay by at most 1818 millionths); area Omega = 9987400000000000000000000000000; beat period 62810 thousandths of a round
+            D / D_f = 3996 thousandths; Omega / Omega_f = 1998; period_f / period = 2000 (omega / omega_f)
+  spring 16 f: wind D = 79599806009 (111475 thousandths of a key; off its lay by at most 2593 millionths); area Omega = 19899700000000000000000000000000; beat period 31368 thousandths of a round
+            D / D_f = 15925 thousandths; Omega / Omega_f = 3981; period_f / period = 4006 (omega / omega_f)
+
+(b) the same wind D (the same count of keys) at springs f, 4 f, 16 f: the swing halved each time:
+  spring  1 f, swing 1000000: D = 4998400256 = 7 keys (nearest), Omega = 4998400000000000000000000000000, period 125666 thousandths
+            Omega / Omega_f = 1000 thousandths; the decoder's 'h-bar' = key / omega, over the f-hand's: 1000 thousandths
+  spring  4 f, swing 500000: D = 4993703969 = 7 keys (nearest), Omega = 2496850000000000000000000000000, period 62810 thousandths
+            Omega / Omega_f = 499 thousandths; the decoder's 'h-bar' = key / omega, over the f-hand's: 499 thousandths
+  spring 16 f, swing 250000: D = 4974963001 = 7 keys (nearest), Omega = 1243725000000000000000000000000, period 31368 thousandths
+            Omega / Omega_f = 248 thousandths; the decoder's 'h-bar' = key / omega, over the f-hand's: 249 thousandths
+
+  Reading: at one key for the board the count of 7 is the same for all three hands, while their actions
+  (the area, Planck's quanta at h-bar) stand 1 : 1/2 : 1/4 and the decoder's h-bar = key / omega 1 : 1/2 : 1/4.
+  E = n h-bar omega with one h-bar is NOT what one key of wind gives: it gives E = n x key at every beat.

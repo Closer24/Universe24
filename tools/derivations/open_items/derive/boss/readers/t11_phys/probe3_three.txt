@@ -1,0 +1,19 @@
+Probe 3: three trains at one vertex, the wind's count, Animate's world, 6,000 rounds
+
+(a) the takers tied at g and g, the key 714285715:
+  the counts at the end (-6, 3, 3); each runs -7..0, 0..4, 0..4
+  the three counts' sum: least -1, most 1; off 0 in 2954 rounds of 6000; the clicks' sum not 0 in 89 rounds
+  D_L + D_M + D_O off the lay's by at most 2443 millionths of a key (Rule3's turn)
+  rounds where both takers hold wind below half a key: 1526; the longest stretch with the sum off 0: 306 rounds
+  the three winds read on the backward run equal the forward's in 6000 of 6000 rounds
+
+(b) the takers tied at g and g div 2, the key 714285715:
+  the counts at the end (-5, 4, 1); each runs -7..0, 0..6, 0..1
+  the three counts' sum: least -1, most 1; off 0 in 1282 rounds of 6000; the clicks' sum not 0 in 64 rounds
+  D_L + D_M + D_O off the lay's by at most 1891 millionths of a key (Rule3's turn)
+  rounds where both takers hold wind below half a key: 1078; the longest stretch with the sum off 0: 98 rounds
+  the three winds read on the backward run equal the forward's in 6000 of 6000 rounds
+
+  Reading: the quantum the giver loses is held as two shares below half a key, counted by no one, for as long
+  as the shares stay; the board being classical, nothing moves a share to make it whole: that is not a click
+  'held by the connection until the draw' unless term 12's draw pushes counts, which this term says no click does.

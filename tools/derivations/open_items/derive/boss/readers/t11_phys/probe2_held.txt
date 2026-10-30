@@ -1,0 +1,22 @@
+Probe 2: the held quantum, Animate's world, 6,000 rounds, the vertex g = f div 10
+  the key 714285715; the giver's lay wind 5000000000 = 6999 thousandths of a key, the taker's 0
+
+(a) the two counts on the same run:
+  the draft's (D - D_lay): counts run hand 0 -7..0 (end -6); hand 1 0..7 (end 6); rounds with a click 35; the counts' sum -1..0; |clicks| beyond the net 56
+  the absolute (D)      : counts run hand 0 0..7 (end 1); hand 1 0..7 (end 6); rounds with a click 35; the counts' sum 6..7; |clicks| beyond the net 56
+  the two counts' clicks agree in 6000 of 6000 rounds (the giver's lay is 7 keys less 5 counts^2, so the thresholds nearly coincide here)
+
+(d) at round 3767 the giver's wind is 0 thousandths of a key: the draft's count reads -7, the absolute 0; the taker's wind 7000 thousandths, counts 7 / 7
+
+(b) a free hand (no vertex) laid at 6 1/2 keys of wind (the swing scaled so D = 6.5 keys):
+  swing 963600: the lay's wind 6499 thousandths of a key; its wind over the run moves within 1812 millionths of a key
+  the draft's (D - D_lay): counts run hand 0 0..0 (end 0); rounds with a click 0; the counts' sum 0..0; |clicks| beyond the net 0
+  the absolute (D)      : counts run hand 0 6..7 (end 7); rounds with a click 2893; the counts' sum 6..7; |clicks| beyond the net 2892
+
+(c) the taker's spring one tenth stiffer (probe2 6: its top near 3,500 thousandths of a key), the same key:
+  the taker's wind at its top 3588 thousandths of a key
+  the draft's (D - D_lay): counts run hand 0 -4..0 (end -2); hand 1 0..4 (end 2); rounds with a click 28; the counts' sum -1..1; |clicks| beyond the net 48
+  the absolute (D)      : counts run hand 0 3..7 (end 5); hand 1 0..4 (end 2); rounds with a click 28; the counts' sum 6..8; |clicks| beyond the net 48
+  the taker's click rounds and quanta (draft's count), first 24: [(221, 1), (406, 1), (571, 1), (818, 1), (1000, -1), (1247, -1), (1411, -1), (1597, -1), (2040, 1), (2226, 1), (2391, 1), (2637, 1), (2819, -1), (3066, -1), (3231, -1), (3416, -1), (3860, 1), (4045, 1), (4210, 1), (4457, 1), (4639, -1), (4885, -1), (5050, -1), (5236, -1)]
+  Reading: the half-key birth protects a hand only where its wind stands mid-key; the draft's D_lay puts the LAY there
+  and nothing else: a hand left at a half key by an exchange flickers under Rule3's turn in either count.

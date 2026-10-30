@@ -1,0 +1,25 @@
+Probe 4: the books' misses and the flicker, Animate's world, 6,000 rounds
+
+  g = f div 10: the taker's count runs 0..7 (end 6), reverses its course 4 times;
+    rounds with a click 35; the taker's |clicks| summed 34; the pair's books miss in 2 rounds; n_L + n_M in -1..0
+    D_L + D_M: Rule3's turn in one round at most 3351 millionths of a key, the excursion at most 1854
+    the taker's wind moves by at most 10967 millionths of a key in a round (the exchange's pace)
+    miss at round 215: clicks (giver, taker) around it [(213, (0, 0)), (214, (0, 0)), (215, (-1, 0)), (216, (0, 1)), (217, (0, 0))]; D_L + D_M drift there 489 millionths of a key
+    miss at round 216: clicks (giver, taker) around it [(214, (0, 0)), (215, (-1, 0)), (216, (0, 1)), (217, (0, 0)), (218, (0, 0))]; D_L + D_M drift there -775 millionths of a key
+
+  g = f div 100: the taker's count runs 0..3 (end 3), reverses its course 0 times;
+    rounds with a click 5; the taker's |clicks| summed 3; the pair's books miss in 4 rounds; n_L + n_M in -1..1
+    D_L + D_M: Rule3's turn in one round at most 3471 millionths of a key, the excursion at most 1925
+    the taker's wind moves by at most 2739 millionths of a key in a round (the exchange's pace)
+    taker clicks undone in the very next round (flicker pairs): 0
+
+  g = f div 1000: the taker's count runs 0..0 (end 0), reverses its course 0 times;
+    rounds with a click 0; the taker's |clicks| summed 0; the pair's books miss in 0 rounds; n_L + n_M in 0..0
+    D_L + D_M: Rule3's turn in one round at most 3288 millionths of a key, the excursion at most 1896
+    the taker's wind moves by at most 202 millionths of a key in a round (the exchange's pace)
+    taker clicks undone in the very next round (flicker pairs): 0
+
+  Reading: a miss is a one-round transit of a whole quantum between the two clocks where Rule3's turn on
+  D_L + D_M moves one hand over its threshold before the other; it is never a loss. A flicker is a quantum given
+  and taken back where a hand's wind sits within Rule3's turn of a threshold: a slow meshing shows many,
+  the record then holding clicks that nature does not show. Both scale with Rule3's turn over the key.

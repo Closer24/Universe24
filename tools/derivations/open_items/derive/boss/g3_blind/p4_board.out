@@ -1,0 +1,4 @@
+the 24's images of J and F on the board: 24 of 24 turns agree; J not 0: True
+matter within 1, moving False: |k|^2 seen [0, 1, 2, 4, 5, 8, 9, 10, 16, 17]; matter's largest count 14; rounds 300; ran away False; run back exact True
+matter within 3, moving False: |k|^2 seen [0, 1, 2, 4, 5, 8, 9, 10, 13, 16]; matter's largest count 16; rounds 300; ran away False; run back exact True
+matter within 3, moving True: |k|^2 seen [0, 1, 2, 4, 5, 8, 9, 10, 13, 16]; matter's largest count 117803796198; rounds 36; ran away True; run back exact None

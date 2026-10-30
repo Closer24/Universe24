@@ -1,0 +1,15 @@
+G3/2's least whole form, eight gears as signed permutations, on the real act (p3_act.py)
+1. J = 0, SYM24's harness: the cube of side 3; rows [g32 (8), t1 (3), square (10)]; sites moved by the covered turn.
+   W = 9 standing, J = 0, 6 rounds, teeth drawn in [0, W): the 48 lifts of G3/2's 8-gear form hold with the flip on 48 of 48; the run back returns the start bit for bit: True; the counts within 7 bits
+      CONTROL: 48 random signed permutations in their place (a homomorphism on the sampled products: False): hold on 48 of 48
+   W = 10 standing, J = 0, 6 rounds, teeth drawn in [0, W): the 48 lifts of G3/2's 8-gear form hold with the flip on 48 of 48; the run back returns the start bit for bit: True; the counts within 7 bits
+      CONTROL: 48 random signed permutations in their place (a homomorphism on the sampled products: False): hold on 48 of 48
+   W = 1 standing, J = 0, 6 rounds, teeth drawn in [0, W): the 48 lifts of G3/2's 8-gear form hold with the flip on 48 of 48; the run back returns the start bit for bit: True; the counts within 22 bits
+      CONTROL: 48 random signed permutations in their place (a homomorphism on the sampled products: False): hold on 48 of 48
+
+2. J laid through the kind's own table: C[i, j, k] of G3/2 x G3/2 -> T1 by the group sum over the 48 from the seed (0, 0, 0), 24 entries not 0 in [-2, 2]; the vertex chi = 1 on 24 monomials.
+   W = 9 standing, 4 rounds, J not 0 at 265 of 567 gears at round 0, counts within 35 bits:
+   the true 48 hold with the flip on 48 of 48
+   CONTROL, the 48 random signed permutations: 0 of 48
+   MUTANT, one entry of the table raised by 1: the true 48 hold on 2 of 48
+   the table kept by all 48 (P x P x R acting on it): True

@@ -1,0 +1,16 @@
+Probe C: the exact exchanged wind X = g (b_M.a_L - a_M.b_L) and its tooth-carry (Animate's world, 6,000 rounds)
+  C1-C3 the text's world: A = 1000000, g = f div 10, key 714285715, key_w = W key made odd
+     C1 X_L + X_M != 0 in 0 rounds (0 by construction); |W dD_M - X_M| up to 2607 millionths of key_w per round (Rule3's turn alone) against |W dD_M - tau_D,M| up to 2696 (the text's work)
+     C2 the X tooth-carry: giver's count -6, taker's 6, taker's course 0..7, click rounds 34, books miss in 0 rounds, k_L + k_M != key_w - 1 at 0 of 6001 rounds; |X-count - D-count| of the taker up to 0; the D-count's books: misses 2, n_L + n_M in [-1, 0]
+     the free hand: X = 0 at every round by construction (no vertex), 0 clicks at every swing; the D-count's clicks here 0, its n in 0..0
+     C3 the run back by the act alone: the mirrored round's X is -X; with the tooth KEPT the tooth returns in 6000 of 6000 rounds and the quotient is -q in 6000; with the tooth FLIPPED (law (iii)) it returns in 0
+  C4 the small swing: A = 10000, g = f div 10, key 71429, key_w = W key made odd
+     C1 X_L + X_M != 0 in 0 rounds (0 by construction); |W dD_M - X_M| up to 267013 millionths of key_w per round (Rule3's turn alone) against |W dD_M - tau_D,M| up to 267233 (the text's work)
+     C2 the X tooth-carry: giver's count -6, taker's 6, taker's course 0..7, click rounds 34, books miss in 0 rounds, k_L + k_M != key_w - 1 at 0 of 6001 rounds; |X-count - D-count| of the taker up to 1; the D-count's books: misses 388, n_L + n_M in [-1, 1]
+     the free hand: X = 0 at every round by construction (no vertex), 0 clicks at every swing; the D-count's clicks here 0, its n in 0..0
+     C3 the run back by the act alone: the mirrored round's X is -X; with the tooth KEPT the tooth returns in 6000 of 6000 rounds and the quotient is -q in 6000; with the tooth FLIPPED (law (iii)) it returns in 0
+  C5 the weak vertex: A = 1000000, g = f div 300, key 714285715, key_w = W key made odd
+     C1 X_L + X_M != 0 in 0 rounds (0 by construction); |W dD_M - X_M| up to 752 millionths of key_w per round (Rule3's turn alone) against |W dD_M - tau_D,M| up to 755 (the text's work)
+     C2 the X tooth-carry: giver's count 0, taker's 0, taker's course 0..0, click rounds 0, books miss in 0 rounds, k_L + k_M != key_w - 1 at 0 of 6001 rounds; |X-count - D-count| of the taker up to 0; the D-count's books: misses 0, n_L + n_M in [0, 0]
+     the free hand: X = 0 at every round by construction (no vertex), 0 clicks at every swing; the D-count's clicks here 0, its n in 0..0
+     C3 the run back by the act alone: the mirrored round's X is -X; with the tooth KEPT the tooth returns in 6000 of 6000 rounds and the quotient is -q in 6000; with the tooth FLIPPED (law (iii)) it returns in 0

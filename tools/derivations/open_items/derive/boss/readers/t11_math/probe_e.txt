@@ -1,0 +1,9 @@
+Probe E: a chain of five hands (one train over five Node-clocks, emulated), g = f div 10 between neighbours
+  key 714285715 (a seventh of hand 0's wind at the lay); D_lay of hands 1..4 is 0
+  hand 0: clicks 14 rounds, its count -7..0, first click at round 216
+  hand 1: clicks 12 rounds, its count 0..4, first click at round 218
+  hand 2: clicks 12 rounds, its count 0..3, first click at round 632
+  hand 3: clicks 13 rounds, its count 0..4, first click at round 1056
+  hand 4: clicks 15 rounds, its count 0..7, first click at round 1416
+  the five counts' sum over the run: -1..1 (bound (n - 1) div 2 = 2); rounds where the clicks do not sum to 0: 66
+  the whole train's wind SUM_h D_h off the lay's by up to 2072 millionths of a key (kept to Rule3's turn): the train keeps its beat as a whole and clicks at every Node-clock it reaches

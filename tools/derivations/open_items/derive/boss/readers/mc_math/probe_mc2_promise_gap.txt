@@ -1,0 +1,24 @@
+MC probe 2: the promise, the gap formula, the record's world
+
+A. The promise 'W >= 1 at both slots and |s| <= D_in' holds, and the round's dial 2 D_out is not positive
+   lay: W(a) = 3 grips, W(b) = 13 grips, the 00 slot's velocity -10 grips: the edge's promise on the state: True; W(a+) = -7 grips; D_out = -4 grips; untick(tick s) = s: True; the next state's W >= 1 at both slots: False
+   lay: W(a) = 3 grips, W(b) = 7 grips, the 00 slot's velocity -4 grips: the edge's promise on the state: True; W(a+) = -1 grip; D_out = 2 grips; untick(tick s) = s: True; the next state's W >= 1 at both slots: False
+   lay: W(a) = 1 grip, W(b) = 5 grips, the 00 slot's velocity -4 grips: the edge's promise on the state: True; W(a+) = -3 grips; D_out = -2 grips; untick(tick s) = s: True; the next state's W >= 1 at both slots: False
+   So the promise the runner must read is D >= 1 on the two edges the round uses (D_in and D_out), the latter through the
+   00 row's standing split; 'W >= 1 at both slots' is neither necessary (the second lay: D_out = 2 grips > 0, the round
+   exact, W(a+) < 1) nor sufficient (the first lay).
+
+B. Section 6's formula: 'overlap for q <= -1 and gaps for q >= 1, exactly (2q + 1)(D(q+1) - D(q)) integers each'
+   W_a = 1: integers under no cell (the probe's count) 1560; by the text's formula summed over q >= 0: 1600; by (g - 1): 1560; pairs of consecutive cells out of order (the next cell's floor below this cell's floor): 0 of 41
+   W_a = 2: integers under no cell (the probe's count) 1560; by the text's formula summed over q >= 0: 1600; by (g - 1): 1560; pairs of consecutive cells out of order (the next cell's floor below this cell's floor): 1 of 43
+   W_a = 5: integers under no cell (the probe's count) 1560; by the text's formula summed over q >= 0: 1600; by (g - 1): 1560; pairs of consecutive cells out of order (the next cell's floor below this cell's floor): 4 of 49
+   The text's formula is the difference of two ends, not a count of integers: the integers missed are (2q + 1) dD - 1 (none at q = 0 with
+   dD = 1, two at q = 1), and for q <= -1 the cells are not in order, so 'overlap by exactly ...' is not what happens. The conclusion
+   (no bijection) stands; the sentence does not.
+
+C. The example world behind probe_record (examples/tensor24/setting.json)
+   gears laid: [[0, 0, 0, 1, 0, 0]] (train, component, site, a, b, r); ticks 10: one gear of the light train with the
+   velocity 1, every other gear at 0, the metric at 0. Its push on itself is -6 grips = -W exactly and on each neighbour +1 grip = W/6,
+   whole or a sixth of a notch: the floor and the nearest rounding agree, so 'a and b equal at every one of the 1,280 count lines'
+   is a property of this one-gear world (the pushes never reach half a notch), not a measurement of the two acts' agreement.
+

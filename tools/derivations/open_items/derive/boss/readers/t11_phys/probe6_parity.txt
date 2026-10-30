@@ -1,0 +1,43 @@
+Probe 6: the pair's books in the state-function count, exhaustive
+  key  1 (odd ): one birth (key - 1) div 2: misses 0 of 11; births key div 2 - 1 and key div 2: misses 11
+  key  2 (even): one birth (key - 1) div 2: misses 10 of 21; misses at x mod key in [1]; births key div 2 - 1 and key div 2: misses 0
+  key  3 (odd ): one birth (key - 1) div 2: misses 0 of 31; births key div 2 - 1 and key div 2: misses 10
+  key  4 (even): one birth (key - 1) div 2: misses 10 of 41; misses at x mod key in [2]; births key div 2 - 1 and key div 2: misses 0
+  key  5 (odd ): one birth (key - 1) div 2: misses 0 of 51; births key div 2 - 1 and key div 2: misses 10
+  key  6 (even): one birth (key - 1) div 2: misses 10 of 61; misses at x mod key in [3]; births key div 2 - 1 and key div 2: misses 0
+  key  7 (odd ): one birth (key - 1) div 2: misses 0 of 71; births key div 2 - 1 and key div 2: misses 10
+  key  8 (even): one birth (key - 1) div 2: misses 10 of 81; misses at x mod key in [4]; births key div 2 - 1 and key div 2: misses 0
+  key  9 (odd ): one birth (key - 1) div 2: misses 0 of 91; births key div 2 - 1 and key div 2: misses 10
+  key 10 (even): one birth (key - 1) div 2: misses 10 of 101; misses at x mod key in [5]; births key div 2 - 1 and key div 2: misses 0
+  key 11 (odd ): one birth (key - 1) div 2: misses 0 of 111; births key div 2 - 1 and key div 2: misses 10
+  key 12 (even): one birth (key - 1) div 2: misses 10 of 121; misses at x mod key in [6]; births key div 2 - 1 and key div 2: misses 0
+  key 13 (odd ): one birth (key - 1) div 2: misses 0 of 131; births key div 2 - 1 and key div 2: misses 10
+  key 14 (even): one birth (key - 1) div 2: misses 10 of 141; misses at x mod key in [7]; births key div 2 - 1 and key div 2: misses 0
+  key 15 (odd ): one birth (key - 1) div 2: misses 0 of 151; births key div 2 - 1 and key div 2: misses 10
+  key 16 (even): one birth (key - 1) div 2: misses 10 of 161; misses at x mod key in [8]; births key div 2 - 1 and key div 2: misses 0
+  key 17 (odd ): one birth (key - 1) div 2: misses 0 of 171; births key div 2 - 1 and key div 2: misses 10
+  key 18 (even): one birth (key - 1) div 2: misses 10 of 181; misses at x mod key in [9]; births key div 2 - 1 and key div 2: misses 0
+  key 19 (odd ): one birth (key - 1) div 2: misses 0 of 191; births key div 2 - 1 and key div 2: misses 10
+  key 20 (even): one birth (key - 1) div 2: misses 10 of 201; misses at x mod key in [10]; births key div 2 - 1 and key div 2: misses 0
+  key 21 (odd ): one birth (key - 1) div 2: misses 0 of 211; births key div 2 - 1 and key div 2: misses 10
+  key 22 (even): one birth (key - 1) div 2: misses 10 of 221; misses at x mod key in [11]; births key div 2 - 1 and key div 2: misses 0
+  key 23 (odd ): one birth (key - 1) div 2: misses 0 of 231; births key div 2 - 1 and key div 2: misses 10
+  key 24 (even): one birth (key - 1) div 2: misses 10 of 241; misses at x mod key in [12]; births key div 2 - 1 and key div 2: misses 0
+  key 25 (odd ): one birth (key - 1) div 2: misses 0 of 251; births key div 2 - 1 and key div 2: misses 10
+  key 26 (even): one birth (key - 1) div 2: misses 10 of 261; misses at x mod key in [13]; births key div 2 - 1 and key div 2: misses 0
+  key 27 (odd ): one birth (key - 1) div 2: misses 0 of 271; births key div 2 - 1 and key div 2: misses 10
+  key 28 (even): one birth (key - 1) div 2: misses 10 of 281; misses at x mod key in [14]; births key div 2 - 1 and key div 2: misses 0
+  key 29 (odd ): one birth (key - 1) div 2: misses 0 of 291; births key div 2 - 1 and key div 2: misses 10
+  key 30 (even): one birth (key - 1) div 2: misses 10 of 301; misses at x mod key in [15]; births key div 2 - 1 and key div 2: misses 0
+  key 31 (odd ): one birth (key - 1) div 2: misses 0 of 311; births key div 2 - 1 and key div 2: misses 10
+  key 32 (even): one birth (key - 1) div 2: misses 10 of 321; misses at x mod key in [16]; births key div 2 - 1 and key div 2: misses 0
+  key 33 (odd ): one birth (key - 1) div 2: misses 0 of 331; births key div 2 - 1 and key div 2: misses 10
+  key 34 (even): one birth (key - 1) div 2: misses 10 of 341; misses at x mod key in [17]; births key div 2 - 1 and key div 2: misses 0
+  key 35 (odd ): one birth (key - 1) div 2: misses 0 of 351; births key div 2 - 1 and key div 2: misses 10
+  key 36 (even): one birth (key - 1) div 2: misses 10 of 361; misses at x mod key in [18]; births key div 2 - 1 and key div 2: misses 0
+  key 37 (odd ): one birth (key - 1) div 2: misses 0 of 371; births key div 2 - 1 and key div 2: misses 10
+  key 38 (even): one birth (key - 1) div 2: misses 10 of 381; misses at x mod key in [19]; births key div 2 - 1 and key div 2: misses 0
+  key 39 (odd ): one birth (key - 1) div 2: misses 0 of 391; births key div 2 - 1 and key div 2: misses 10
+  key 40 (even): one birth (key - 1) div 2: misses 10 of 401; misses at x mod key in [20]; births key div 2 - 1 and key div 2: misses 0
+  Reading: the odd key with one birth closes the pair's books for every x once D_L + D_M is exactly kept;
+  an even key misses once per key, at x = key / 2 mod key. The draft's parity reason carries to the new count.

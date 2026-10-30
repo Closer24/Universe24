@@ -1,0 +1,26 @@
+the room against |k|^2, gamma 1000, g 1: the first round with |k|^2 off, and the T1 hand's period
+   k = (1, 0), |k|^2 = 1: the quantum's A_q^2 = gamma / (2 |k|^2) = 500
+      A =  8 (g A^2 =  64): first off at round None; ran away False; period 158.000
+      A = 12 (g A^2 = 144): first off at round None; ran away False; period 130.000
+      A = 15 (g A^2 = 225): first off at round None; ran away False; period 126.000
+      A = 16 (g A^2 = 256): first off at round 1; ran away False; period 113.960
+      A = 20 (g A^2 = 400): first off at round 1; ran away False; period 118.000
+   k = (1, 1), |k|^2 = 2: the quantum's A_q^2 = gamma / (2 |k|^2) = 250
+      A =  8 (g A^2 =  64): first off at round None; ran away False; period 94.000
+      A = 12 (g A^2 = 144): first off at round 2; ran away False; period 75.921
+      A = 15 (g A^2 = 225): first off at round 2; ran away False; period 12.045
+      A = 16 (g A^2 = 256): first off at round 1; ran away True; period 21.576
+      A = 20 (g A^2 = 400): first off at round 1; ran away False; period 16.708
+   k = (2, 0), |k|^2 = 4: the quantum's A_q^2 = gamma / (2 |k|^2) = 125
+      A =  8 (g A^2 =  64): first off at round None; ran away False; period 62.000
+      A = 12 (g A^2 = 144): first off at round 1; ran away False; period 74.000
+      A = 15 (g A^2 = 225): first off at round 1; ran away False; period 80.666
+      A = 16 (g A^2 = 256): first off at round 1; ran away True; period 16.337
+      A = 20 (g A^2 = 400): first off at round 1; ran away True; period 16.970
+   k = (3, 0), |k|^2 = 9: the quantum's A_q^2 = gamma / (2 |k|^2) = 55
+      A =  8 (g A^2 =  64): first off at round None; ran away False; period 46.000
+      A = 12 (g A^2 = 144): first off at round 1; ran away True; period 10.649
+      A = 15 (g A^2 = 225): first off at round 1; ran away True; period 18.000
+      A = 16 (g A^2 = 256): first off at round 1; ran away True; period 15.666
+      A = 20 (g A^2 = 400): first off at round 1; ran away True; period 17.375
+light at 1,000 counts moving 50 a round beside the held hand, 1,000 rounds: |k|^2 seen [1]; light at 51000; run back exact True

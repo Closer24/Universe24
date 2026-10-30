@@ -1,0 +1,11 @@
+PROBE BOOKS: the edge's determinant and the click's product books
+
+== conj(before) now = real + turn on 500 drawn pairs: real^2 + |turn|^2 = |before|^2 |now|^2 misses 0; real = a b + x . y (the A1 channels) and turn = a y - b x - x cross y (the T1 channels and the cross) misses 0; the Gaussian plane's two-square identity misses 0 of 500
+
+== the books |before|^2 |now|^2 of the hand's two slots under the whole time-turns (the lone hand of probe_time)
+   k = W (order 6): |before|^2 |now|^2 kept in 0 of 12 rounds; the real part negated with the turn kept in 0 of 12
+   k = 2W (order 4, the Gaussian i): |before|^2 |now|^2 kept in 12 of 12 rounds; the real part negated with the turn kept in 12 of 12
+   k = 3W (order 3): |before|^2 |now|^2 kept in 0 of 12 rounds; the real part negated with the turn kept in 0 of 12
+
+== the edge (probe.py's rising lay, W up by 1 a round): W' (a+ - a) = W (a - b) + push + r - r+ exactly, the (now, momentum) step scaling the momentum by W' / W
+   misses of w p_out = w' (p_in + push + r - r+) over 6 rounds on every gear: 0; (W', W) seen: [(273, 272), (274, 273), (275, 274), (275, 275), (277, 275)]; at standing W the step [[2 - k/W, -1], [1, 0]] has determinant 1 (probe_time); on the edge the momentum is rescaled by W' / W, the term (d_t W)(d_t a) the act drops (step.py's note)

@@ -1,0 +1,57 @@
+G2's lump without the metric's push: a hand kicked at the centre of a line of 32, on its spring (push -210 a),
+the clock standing at W = 3000; the act as built against the edge (whole numbers)
+  the kick: v0 = 3000 notches a round at the centre (2E0 = W v0^2 = 27000000000; after spreading over 32 sites the strides are about v0 / 6)
+    round | 2E as built | permille of start | 2E edge | permille of start | share of v^2 within 2 of the centre, built / edge | largest |stride| built / edge
+        0 |  27000000000 |   1000 |  27000000000 |   1000 | 1000 / 1000 | 3000 / 3000
+       25 |  29623966132 |   1097 |  29641705876 |   1097 | 1000 / 1000 | 2932 / 2933
+      100 |  28261088976 |   1046 |  28246333076 |   1046 |  999 / 1000 | 525 / 525
+      400 |  26239453468 |    971 |  26225809264 |    971 |  999 / 1000 | 2710 / 2709
+      800 |  26943202224 |    997 |  26954695184 |    998 |  999 /  999 | 2053 / 2055
+     1200 |  28433600408 |   1053 |  28361554796 |   1050 |  993 /  994 | 1224 / 1227
+     1500 |  26028471956 |    964 |  26040972724 |    964 |  971 /  972 | 1278 / 1276
+     2000 |  28038713928 |   1038 |  28035509036 |   1038 |  863 /  866 | 1217 / 1218
+     2500 |  28084892020 |   1040 |  28148831208 |   1042 |  870 /  869 | 1351 / 1355
+     3000 |  26977953976 |    999 |  27056076124 |   1002 |   47 /   45 | 1240 / 1246
+
+  the kick: v0 = 100 notches a round at the centre (2E0 = W v0^2 = 30000000; after spreading over 32 sites the strides are about v0 / 6)
+    round | 2E as built | permille of start | 2E edge | permille of start | share of v^2 within 2 of the centre, built / edge | largest |stride| built / edge
+        0 |     30000000 |   1000 |     30000000 |   1000 | 1000 / 1000 | 100 / 100
+       25 |     32449180 |   1081 |     33045420 |   1101 | 1000 / 1000 | 97 / 98
+      100 |     31121000 |   1037 |     31800800 |   1060 |  987 / 1000 | 17 / 18
+      400 |     28755804 |    958 |     29176208 |    972 |  999 / 1000 | 90 / 90
+      800 |     30302824 |   1010 |     30150292 |   1005 |  998 / 1000 | 69 / 67
+     1200 |     31298008 |   1043 |     31941376 |   1064 |  997 / 1000 | 42 / 38
+     1500 |     27722144 |    924 |     25511476 |    850 |  955 / 1000 | 40 / 49
+     2000 |     30156516 |   1005 |     33675128 |   1122 |  850 / 1000 | 41 / 58
+     2500 |     30882844 |   1029 |     29602960 |    986 |  864 / 1000 | 45 / 56
+     3000 |     30251884 |   1008 |     30644740 |   1021 |   22 / 1000 | 42 / 36
+
+  the kick: v0 = 30 notches a round at the centre (2E0 = W v0^2 = 2700000; after spreading over 32 sites the strides are about v0 / 6)
+    round | 2E as built | permille of start | 2E edge | permille of start | share of v^2 within 2 of the centre, built / edge | largest |stride| built / edge
+        0 |      2700000 |   1000 |      2700000 |   1000 | 1000 / 1000 | 30 / 30
+       25 |      2903980 |   1075 |      2914988 |   1079 | 1000 / 1000 | 29 / 29
+      100 |      2705376 |   1001 |      2734328 |   1012 |  862 / 1000 | 5 / 5
+      400 |      2605140 |    964 |      2553528 |    945 |  994 / 1000 | 29 / 29
+      800 |      2740392 |   1014 |      2599532 |    962 |  988 / 1000 | 25 / 29
+     1200 |      2649020 |    981 |      2390732 |    885 |  970 / 1000 | 18 / 27
+     1500 |      2530172 |    937 |      2970032 |   1100 |  989 / 1000 | 11 / 14
+     2000 |      2714608 |   1005 |      2301248 |    852 |  912 / 1000 | 11 / 24
+     2500 |      2868380 |   1062 |      2956232 |   1094 |  907 / 1000 | 15 / 19
+     3000 |      2577948 |    954 |      2329748 |    862 |  107 / 1000 | 14 / 20
+
+  the kick: v0 = 10 notches a round at the centre (2E0 = W v0^2 = 300000; after spreading over 32 sites the strides are about v0 / 6)
+    round | 2E as built | permille of start | 2E edge | permille of start | share of v^2 within 2 of the centre, built / edge | largest |stride| built / edge
+        0 |       300000 |   1000 |       300000 |   1000 | 1000 / 1000 | 10 / 10
+       25 |       285724 |    952 |       347700 |   1159 | 1000 / 1000 | 9 / 10
+      100 |       290024 |    966 |       309128 |   1030 |  500 / 1000 | 2 / 1
+      400 |       294824 |    982 |       305300 |   1017 |  923 / 1000 | 9 / 10
+      800 |       313712 |   1045 |       321200 |   1070 |  822 / 1000 | 7 / 10
+     1200 |       499636 |   1665 |       347700 |   1159 |  934 / 1000 | 6 / 10
+     1500 |       531360 |   1771 |       278868 |    929 |  724 / 1000 | 4 / 4
+     2000 |       569060 |   1896 |       365112 |   1217 |  777 / 1000 | 5 / 9
+     2500 |       587716 |   1959 |       251312 |    837 |  731 / 1000 | 7 / 6
+     3000 |       648824 |   2162 |       325088 |   1083 |  897 / 1000 | 5 / 6
+
+Reading: the two acts agree while the strides are large; once the packet has spread and the strides fall toward the
+notch the act as built's floor feeds the hand (its energy grows), the edge's does not. Neither binds the hand in space:
+the spring is a potential in a, not in z, so the lump disperses in both (that is term 6's and G3's, not the tooth's).

@@ -1,0 +1,10 @@
+Probe B2
+  (a) g = f, the key a 700th and a 7000th of D_L (made odd): the largest |q| in a round
+     key D_L div 70 = 71428571: largest |q| 1, rounds with |q_M| >= 2: 0, click rounds 3493, misses 68, n_L + n_M in [-1, 1]
+     key D_L div 700 = 7142857: largest |q| 10, rounds with |q_M| >= 2: 5371, click rounds 5815, misses 625, n_L + n_M in [-1, 1]
+     key D_L div 7000 = 714285: largest |q| 95, rounds with |q_M| >= 2: 5937, click rounds 5992, misses 4137, n_L + n_M in [-2, 2]
+  (b) a giver and two takers at g = f div 10, the D-count, key a seventh of D_L:
+     the three counts' sum in [-1, 1] (the bound (3 - 1) div 2 = 1), rounds where the clicks do not sum to 0: 89, click rounds 89; counts at the end (-6, 3, 3)
+  (c) the click's sign under the run back: the runner on the backward run reads the same n at each round and
+      writes n(t-1) - n(t) = -q(t): a take read as a give. Checked on the text's world:
+      the backward run's click at every round is minus the forward's: 5999 of 5999 rounds

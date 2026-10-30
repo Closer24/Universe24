@@ -1,0 +1,47 @@
+MC probe 1: the edge act without a tie rule (the half-open convention), on the edge agent's own board
+
+1. The half-open split s in [-D, D - 1] and its flip -1 - s, n in [-300, 300], D in [1, 12]
+   7212 cases: n = q 2D + s, one pair per n, s in [-D, D-1]: 0 misses; split(-n - 1) = (-q, -1 - s): 0 misses; split(n + 2 D k) = (q + k, s) for k in 1, 2, 3, -1, -5: 0 misses.
+   (no tie exists: the flip's centre is -1/2, not a tooth; one carry, no lit(); the law's (i) r = m div 2 is s = 0 and (iii) r -> m - 1 - r is s -> -1 - s)
+
+2. The half-open edge act on the edge agent's board (12 rows x 27 sites), 40 rounds: the 24, the run back, the books
+   standing at W = 9 grips: promise broke at None; the 24: 24 at every one of the 40 rounds; mirror twice = s at 41 of 41; untick(tick s) = s in 40 of 40; rewound to the start: True; P books misses: 0; bits 78
+      mutant, the same act with the negation s -> -s as its flip (the edge text's 'tie taken upward'): the 24 3 at every one of the 40 rounds
+      mutant, the centre-0 act (tie even) with the flip -1 - s: the 24 3 at every one of the 40 rounds
+   rising by 1 grip from W = 10: promise broke at None; the 24: 24 at every one of the 40 rounds; mirror twice = s at 41 of 41; untick(tick s) = s in 40 of 40; rewound to the start: True; P books misses: 0; bits 81
+      mutant, the same act with the negation s -> -s as its flip (the edge text's 'tie taken upward'): the 24 3 at every one of the 40 rounds
+      mutant, the centre-0 act (tie even) with the flip -1 - s: the 24 3 at every one of the 40 rounds
+   rising by 1 grip + 1 (D odd) from W = 10: promise broke at None; the 24: 24 at every one of the 40 rounds; mirror twice = s at 41 of 41; untick(tick s) = s in 40 of 40; rewound to the start: True; P books misses: 0; bits 81
+      mutant, the same act with the negation s -> -s as its flip (the edge text's 'tie taken upward'): the 24 24 at every one of the 40 rounds
+      mutant, the centre-0 act (tie even) with the flip -1 - s: the 24 24 at every one of the 40 rounds
+   falling by 1 grip from W = 46: promise broke at None; the 24: 24 at every one of the 40 rounds; mirror twice = s at 41 of 41; untick(tick s) = s in 40 of 40; rewound to the start: True; P books misses: 0; bits 81
+      mutant, the same act with the negation s -> -s as its flip (the edge text's 'tie taken upward'): the 24 [24, 24, 24, 24, 24, 12, 12, 12, 6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+      mutant, the centre-0 act (tie even) with the flip -1 - s: the 24 [24, 24, 24, 24, 24, 12, 12, 12, 12, 12, 12, 12, 6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+   falling by 1 grip + 1 (D odd) from W = 46: promise broke at None; the 24: 24 at every one of the 40 rounds; mirror twice = s at 41 of 41; untick(tick s) = s in 40 of 40; rewound to the start: True; P books misses: 0; bits 81
+      mutant, the same act with the negation s -> -s as its flip (the edge text's 'tie taken upward'): the 24 24 at every one of the 40 rounds
+      mutant, the centre-0 act (tie even) with the flip -1 - s: the 24 24 at every one of the 40 rounds
+   falling by 3 grips from W = 126: promise broke at None; the 24: 24 at every one of the 40 rounds; mirror twice = s at 41 of 41; untick(tick s) = s in 40 of 40; rewound to the start: True; P books misses: 0; bits 82
+      mutant, the same act with the negation s -> -s as its flip (the edge text's 'tie taken upward'): the 24 [24, 24, 24, 12, 12, 6, 6, 6, 6, 6, 6, 6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+      mutant, the centre-0 act (tie even) with the flip -1 - s: the 24 [24, 24, 24, 24, 24, 12, 12, 12, 12, 12, 12, 12, 6, 6, 6, 6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+
+3. Shift covariance on the board (the edge text's section 7), standing at W = 9 grips: the light row's a raised by k
+   teeth as drawn, k = 1, half-open: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   teeth as drawn, k = 1, centre-0 tie even: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   teeth as drawn, k = 2, half-open: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   teeth as drawn, k = 2, centre-0 tie even: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   teeth as drawn, k = 3, half-open: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   teeth as drawn, k = 3, centre-0 tie even: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   every carry of the row a tie of the centre-0 split, k = 1, half-open: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   every carry of the row a tie of the centre-0 split, k = 1, centre-0 tie even: the now slot departs from a+ + 2k at 27 of 27 gears, the tooth at 27
+   every carry of the row a tie of the centre-0 split, k = 2, half-open: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   every carry of the row a tie of the centre-0 split, k = 2, centre-0 tie even: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   every carry of the row a tie of the centre-0 split, k = 3, half-open: the now slot departs from a+ + 2k at 0 of 27 gears, the tooth at 0
+   every carry of the row a tie of the centre-0 split, k = 3, centre-0 tie even: the now slot departs from a+ + 2k at 27 of 27 gears, the tooth at 27
+
+4. The still clock, state for state with the act as built (W = 9 and 10 grips, 40 rounds): the half-open tooth s = 4 r - D
+   W = 9 grips: a and b equal at 40 of 40 rounds; the edge tooth's cell (s + D) div 4 is the built tooth r at all gears in 40; the mirror -1 - s lands in the cell of the built mirror W - 1 - r: 0 misses over 41 states x 324 gears
+   W = 10 grips: a and b equal at 40 of 40 rounds; the edge tooth's cell (s + D) div 4 is the built tooth r at all gears in 40; the mirror -1 - s lands in the cell of the built mirror W - 1 - r: 0 misses over 41 states x 324 gears
+
+5. The click's books in the half-open convention, keys 1 to 40, areas within 3 keys: the pair (A, -A - 1) exact, the pair (A, -A) not
+   4960 cases: (A, -A - 1) opposite in count and flipped in tooth: 0 misses; q(A) + q(-A) = 0: 120 misses; one whole key added, one more count: 0 misses
+

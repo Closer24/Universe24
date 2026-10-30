@@ -1,0 +1,16 @@
+Probe F: a whole-number quadratic invariant of the act, searched by elimination
+  control a+ = 3 a - b (exact recurrence): forms in (a, b), 6 monomials, true invariants 1 (a^2 - 3ab + b^2: 1 expected)
+  the act's gear, J = -2 f a, 400 rounds each, forms in the variables named; true invariants beyond the constant and the identically-zero forms:
+     W = 800, f = 1, a0 = 1000, v0 = 50: 400 distinct states; forms in ('a', 'b'): 6 monomials, true invariants 0
+     W = 800, f = 1, a0 = 1000, v0 = 50: 400 distinct states; forms in ('a', 'b', 'r'): 10 monomials, true invariants 0
+     W = 800, f = 1, a0 = 1000, v0 = 50: 400 distinct states; forms in ('a', 'b', 'r', 'a+', 'r+'): 21 monomials, true invariants 0
+     W = 800, f = 1, a0 = 100000, v0 = 500: 400 distinct states; forms in ('a', 'b'): 6 monomials, true invariants 0
+     W = 800, f = 1, a0 = 100000, v0 = 500: 400 distinct states; forms in ('a', 'b', 'r'): 10 monomials, true invariants 0
+     W = 800, f = 1, a0 = 100000, v0 = 500: 400 distinct states; forms in ('a', 'b', 'r', 'a+', 'r+'): 21 monomials, true invariants 0
+     W = 1000000, f = 1250, a0 = 1000000, v0 = 5000: 400 distinct states; forms in ('a', 'b'): 6 monomials, true invariants 0
+     W = 1000000, f = 1250, a0 = 1000000, v0 = 5000: 400 distinct states; forms in ('a', 'b', 'r'): 10 monomials, true invariants 0
+     W = 1000000, f = 1250, a0 = 1000000, v0 = 5000: 400 distinct states; forms in ('a', 'b', 'r', 'a+', 'r+'): 21 monomials, true invariants 0
+     W = 7, f = 1, a0 = 300, v0 = 10: 400 distinct states; forms in ('a', 'b'): 6 monomials, true invariants 0
+     W = 7, f = 1, a0 = 300, v0 = 10: 400 distinct states; forms in ('a', 'b', 'r'): 10 monomials, true invariants 0
+     W = 7, f = 1, a0 = 300, v0 = 10: 400 distinct states; forms in ('a', 'b', 'r', 'a+', 'r+'): 21 monomials, true invariants 0
+  W D = W (a^2 - a+ b) on the first lay: moves within [-456000, 1267200] of its start over 400 rounds (W = 800)

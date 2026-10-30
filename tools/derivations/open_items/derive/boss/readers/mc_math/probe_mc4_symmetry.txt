@@ -1,0 +1,40 @@
+MC probe 4: time symmetry of the forms, and the half-tooth act against the edge
+
+A. Time symmetry as the same act on the mirrored state, the 00 gear at its rest dial (the cut), the 00 tooth 0, a, b in [-3, 3]
+ standing (c = cb = 4):
+   the act as built, its mirror (flip in W(b)): untick(tick s) = s fails at 0 of 490 states
+   Form 3, W(b) v re-split at W(a), the built mirror: untick(tick s) = s fails at 0 of 490 states
+   the half-tooth act, its mirror W(a) + W(b) - 1 - u: untick(tick s) = s fails at 0 of 980 states
+   the edge, centre 0, mirror -s: untick(tick s) = s fails at 0 of 1961 states
+   the edge, half-open, mirror -1 - s: untick(tick s) = s fails at 0 of 1960 states
+ rising (c = 5, cb = 4: W 10 -> 11 -> 12):
+   the act as built, its mirror (flip in W(b)): untick(tick s) = s fails at 0 of 539 states
+   Form 3, W(b) v re-split at W(a), the built mirror: untick(tick s) = s fails at 112 of 539 states
+   the half-tooth act, its mirror W(a) + W(b) - 1 - u: untick(tick s) = s fails at 0 of 980 states
+   the edge, centre 0, mirror -s: untick(tick s) = s fails at 0 of 2059 states
+   the edge, half-open, mirror -1 - s: untick(tick s) = s fails at 0 of 2058 states
+ falling (c = 4, cb = 6: W 12 -> 10 -> 8):
+   the act as built, its mirror (flip in W(b)): untick(tick s) = s fails at 0 of 490 states
+   Form 3, W(b) v re-split at W(a), the built mirror: untick(tick s) = s fails at 220 of 490 states
+   the half-tooth act, its mirror W(a) + W(b) - 1 - u: untick(tick s) = s fails at 196 of 1176 states
+   the edge, centre 0, mirror -s: untick(tick s) = s fails at 0 of 2157 states
+   the edge, half-open, mirror -1 - s: untick(tick s) = s fails at 0 of 2156 states
+ falling fast (c = 2, cb = 7: W 13 -> 8 -> 3):
+   the act as built, its mirror (flip in W(b)): untick(tick s) = s fails at 0 of 392 states
+   Form 3, W(b) v re-split at W(a), the built mirror: untick(tick s) = s fails at 300 of 392 states
+   the half-tooth act, its mirror W(a) + W(b) - 1 - u: untick(tick s) = s fails at 490 of 1274 states
+   the edge, centre 0, mirror -s: untick(tick s) = s fails at 0 of 2059 states
+   the edge, half-open, mirror -1 - s: untick(tick s) = s fails at 0 of 2058 states
+ Reading: 'the momentum form is not time-symmetric' (CLICK25) is true of Form 3's one-slot weights and false of the edge's;
+ the half-tooth act is exact standing and rising, and on a falling clock it is not injective (probe 3), so no mirror mends it.
+
+B. A free gear (no push) on a clock rising by 1 a round from W = 10 to W = 30, laid with v = 6 and the tooth at the middle:
+   W by round: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+   the half-tooth act's velocity a - b: [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6]
+   the edge's velocity, centre 0:        [5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2]
+   the edge's velocity, half-open:       [5, 5, 5, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2]
+   the edge's momentum 2 D v + s, centre 0 (kept): [228]
+ Reading: the half-tooth act keeps the velocity (W d_t v = F, the act as built's law with the tooth re-centred); the edge keeps
+ the momentum 2 D v + s (d_t (W d_t a) = F). One tooth device (the offset from the dial's middle, carried unchanged),
+ two laws of the dial: not one law in two conventions.
+

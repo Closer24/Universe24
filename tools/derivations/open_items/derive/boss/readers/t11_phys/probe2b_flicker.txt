@@ -1,0 +1,11 @@
+Probe 2b: the flicker at a turning point of an exchange, the draft's count, Animate's world
+  the taker's wind at its top 2562900657 counts^2; turning points (tops) at rounds [858, 872, 878, 880, 886, 888]
+  key' = 732257331 (the top at 3499 thousandths of a key): the taker's clicks written 20, its count runs 0..3, its course reverses 6 times (4 turning points of the exchange in the run would give at most 7); click pairs undone the next round 0; rounds within 4 thousandths of a key of the threshold 107
+    the clicks within 60 rounds of the first top (round 858): []
+  key' = 1025160263 (the top at 2499 thousandths of a key): the taker's clicks written 14, its count runs 0..2, its course reverses 6 times (4 turning points of the exchange in the run would give at most 7); click pairs undone the next round 0; rounds within 4 thousandths of a key of the threshold 129
+    the clicks within 60 rounds of the first top (round 858): []
+  key' = 1708600439 (the top at 1499 thousandths of a key): the taker's clicks written 7, its count runs 0..1, its course reverses 6 times (4 turning points of the exchange in the run would give at most 7); click pairs undone the next round 0; rounds within 4 thousandths of a key of the threshold 173
+    the clicks within 60 rounds of the first top (round 858): []
+  Reading: where a turning point of the exchange falls within Rule3's turn of a threshold, the draft's count
+  writes click pairs that pass nothing: the D_lay subtraction guards the lay alone. The flicker is the price
+  of counting a classical wind that jitters by about 3 thousandths of a key a round (W = 10^20, A = 10^6).

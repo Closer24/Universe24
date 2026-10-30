@@ -1,0 +1,29 @@
+Probe 5: the wind on a ring of 48 Node-clocks with Meshes, a one-part train, the real act
+
+(a) G = W (c = 1): a binomial packet C(8, i) x 100 laid at sites 4..12, moving right; the key 5880001 (a third of the top site's wind, odd)
+  the packet's wind per site at the lay: [0, 10000, 360000, 3360000, 11760000, 17640000, 11760000, 3360000, 360000, 10000, 0] (sites 3..13); SUM D = 48620000; SUM P = 48620000 (P = E at c = 1 for a right-mover)
+  over 96 rounds SUM D moves by at most 0 and SUM P by at most 0 (exact arithmetic at c = 1: identities)
+  fine teeth ever not 0: 0 (no remainder at c = 1)
+  the absolute count n = (D + k_0) div key at sites 8, 20, 32 by round (every 4th round shown):
+    site 8: clicks (round, q) [(1, -1), (2, -1), (3, -1), (46, 1), (47, 1), (48, 1), (49, -1), (50, -1), (51, -1), (94, 1), (95, 1)]
+    site 20: clicks (round, q) [(10, 1), (11, 1), (12, 1), (13, -1), (14, -1), (15, -1), (58, 1), (59, 1), (60, 1), (61, -1), (62, -1), (63, -1)]
+    site 32: clicks (round, q) [(22, 1), (23, 1), (24, 1), (25, -1), (26, -1), (27, -1), (70, 1), (71, 1), (72, 1), (73, -1), (74, -1), (75, -1)]
+
+(b) two humps [1000, 3000, 6000, 3000, 1000, 600, 1000, 3000, 6000, 3000, 1000] with a dip, moving right: D per site at the lay [0, 1000000, 3000000, 27000000, 3000000, -800000, -640000, -800000, 3000000, 27000000, 3000000, 1000000, 0, 0] (sites 3..16); negative at [(8, -800000), (9, -640000), (10, -800000)]
+  SUM D = 65760000 > 0 (the whole packet's energy); with the key a seventh of the top site's wind (3857143) the dip's Node-clock reads 0: a give from an empty clock (with the key 5880001 above it reads 0)
+  the most negative site wind over the run -800000 = -207 thousandths of that key
+
+(c) the draft's D_lay on the laid ring of (a), at round 24 (the packet now at sites 28..36):
+  the draft's counts at sites 4..12 (where it was laid): [0, 0, -1, -2, -3, -2, -1, 0, 0]; at sites 28..36: [0, 0, 1, 2, 3, 2, 1, 0, 0]; their sum over the ring 0
+  the absolute counts at sites 4..12: [0, 0, 0, 0, 0, 0, 0, 0, 0]; at sites 28..36: [0, 0, 1, 2, 3, 2, 1, 0, 0]; their sum 9
+
+(d) G = W div 6 (c^2 = 1/6): a standing wave A cos(pi x / 2), A = 60000, laid at rest (a = b):
+  D per site at the lay [1200000000, 0, 1200000000, 0, 1200000000, 0, 1200000000, 0]...; least D over 600 rounds -425; P per Mesh at the lay [0, 0, 0, 0]...; SUM P over the run at most 0
+  SUM D at the lay 28800000000; its excursion over 600 rounds 3515436 = 122 millionths (Rule3's turn)
+  a binomial packet C(12, i) x 300, laid moving: SUM D = 42345300000, SUM P = 66861000000; over 600 rounds SUM D moves by at most 34 millionths of itself and SUM P by at most 15 millionths (Rule3's turn)
+  the most negative site wind of that packet over the run: -874794456 against the top site's 11886741074 (SUM D 42345300000); with the key a seventh of the top (1698105867) a Node-clock reads a negative count in 1 of 28800 site-rounds
+  D read on the mirrored state equals the forward's at every site in 599 of 599 rounds (even under the mirror, with Meshes)
+
+  Reading: the wind D per Node-clock is the time Wronskian, kept in sum and not positive site by site; a whole-number
+  momentum stands beside it, the space Wronskian across the Mesh, kept in sum to Rule3's turn: the two forms the law's
+  line 35 asks for in the clicks. Neither is tested in the draft, whose world has no Mesh.

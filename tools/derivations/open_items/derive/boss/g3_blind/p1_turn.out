@@ -1,0 +1,29 @@
+shape (1, 1, 1) den 1 gamma 8: rest 384
+   first rounds [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0), (0, 1)]
+   |k|^2 values over 4000 rounds: [1]; D values: [1]; run back exact: True
+shape (1, 1, 1) den 7 gamma 1000: rest 42000000
+   first rounds [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0), (0, 1)]
+   |k|^2 values over 4000 rounds: [1]; D values: [1]; run back exact: True
+shape (1, 1, 1) den 15162856759112389 gamma 1000: rest 90977140554674334000000
+   first rounds [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0), (0, 1)]
+   |k|^2 values over 4000 rounds: [1]; D values: [1]; run back exact: True
+shape (3, 3, 3) den 1 gamma 8: rest 384
+   first rounds [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0), (0, 1)]
+   |k|^2 values over 4000 rounds: [1]; D values: [1]; run back exact: True
+shape (3, 3, 3) den 7 gamma 1000: rest 42000000
+   first rounds [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0), (0, 1)]
+   |k|^2 values over 4000 rounds: [1]; D values: [1]; run back exact: True
+shape (3, 3, 3) den 15162856759112389 gamma 1000: rest 90977140554674334000000
+   first rounds [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0), (0, 1)]
+   |k|^2 values over 4000 rounds: [1]; D values: [1]; run back exact: True
+--- the turn in a deeper clock: the 00 slot laid at c, W = rest + c, spring 2 rest (den 1, gamma 1000)
+   c =        0 (c/rest = 0.000): first round with |k|^2 != 1: None; |k|^2 seen [1]; run back exact True
+   c =        1 (c/rest = 0.000): first round with |k|^2 != 1: None; |k|^2 seen [1]; run back exact True
+   c =     6000 (c/rest = 0.001): first round with |k|^2 != 1: None; |k|^2 seen [1]; run back exact True
+   c =    60000 (c/rest = 0.010): first round with |k|^2 != 1: None; |k|^2 seen [1]; run back exact True
+   c =   600000 (c/rest = 0.100): first round with |k|^2 != 1: None; |k|^2 seen [1]; run back exact True
+   c =  1500000 (c/rest = 0.250): first round with |k|^2 != 1: None; |k|^2 seen [1]; run back exact True
+   c =  3000000 (c/rest = 0.500): first round with |k|^2 != 1: 1; |k|^2 seen [1, 2]; run back exact True
+   c =  6000000 (c/rest = 1.000): first round with |k|^2 != 1: 1; |k|^2 seen [1, 2]; run back exact True
+   c =  -600000 (c/rest = -0.100): first round with |k|^2 != 1: None; |k|^2 seen [1]; run back exact True
+   c = -3000000 (c/rest = -0.500): first round with |k|^2 != 1: 1; |k|^2 seen [1, 2, 4, 5, 16, 17, 25, 26]; run back exact False

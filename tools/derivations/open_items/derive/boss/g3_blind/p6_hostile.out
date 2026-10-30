@@ -1,0 +1,22 @@
+(i) the held hand's own factor against its teeth W (den 1, gamma 8, W = 384): the turn is exact only at W
+   factor 1/2 W: first rounds [(1, 0), (1, 1), (0, 1), (-1, 0), (-1, -1), (0, -1), (1, 0), (1, 1)]; |k|^2 seen [1, 2]; ran away False
+   factor 1/1 W: first rounds [(1, 0), (0, 1), (-1, 0), (0, -1), (1, 0), (0, 1), (-1, 0), (0, -1)]; |k|^2 seen [1]; ran away False
+   factor 3/2 W: first rounds [(1, 0), (-1, 1), (0, -1), (1, 0), (-1, 1), (0, -1), (1, 0), (-1, 1)]; |k|^2 seen [1, 2]; ran away False
+   factor 2/1 W: first rounds [(1, 0), (-2, 1), (3, -2), (-4, 3), (5, -4), (-6, 5), (7, -6), (-8, 7)]; |k|^2 seen [1, 5, 13, 25, 41, 61, 85, 113]; ran away False
+   factor 0/1 W: first rounds [(1, 0), (2, 1), (3, 2), (4, 3), (5, 4), (6, 5), (7, 6), (8, 7)]; |k|^2 seen [1, 5, 13, 25, 41, 61, 85, 113]; ran away False
+(ii) light (A1 x 2) tied on purpose through |k|^2 at g 1, gamma 1000, A 4: it beats like any hand
+   light's row: period 266.000 over 14 swings; max 4; ran away False
+(iii) a T2 hand tied (the same dot product row 1,1,1) at g 1, gamma 1000, A 4, against the T1 hand
+   T1: period 266.000 over 14 swings; monomials 8; run back exact True
+   T2: period 266.000 over 14 swings; monomials 8; run back exact True
+(iv) the held hand's fine tooth under a swinging T1 hand, g 1, gamma 1000: its walk from the mid tooth, in thousandths of W
+   A =  4 (g A^2 =  16): tooth walk [-32, 16] thousandths of W; room is +-500; ran away False
+   A =  8 (g A^2 =  64): tooth walk [-128, 32] thousandths of W; room is +-500; ran away False
+   A = 12 (g A^2 = 144): tooth walk [-336, 0] thousandths of W; room is +-500; ran away False
+   A = 14 (g A^2 = 196): tooth walk [-448, 0] thousandths of W; room is +-500; ran away False
+   A = 16 (g A^2 = 256): tooth walk [-450, 488] thousandths of W; room is +-500; ran away False
+(v) two T1 trains tied at once, each a hand at A, sharing the room: first |k|^2 off, g 1, gamma 1000
+   A =  8 each (g x.x up to 128): first |k|^2 off at round None; ran away False
+   A = 10 each (g x.x up to 200): first |k|^2 off at round None; ran away False
+   A = 12 each (g x.x up to 288): first |k|^2 off at round 1; ran away False
+   A = 14 each (g x.x up to 392): first |k|^2 off at round 1; ran away False

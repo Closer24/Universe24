@@ -1,0 +1,27 @@
+MC probe 7: J through the tables on the edge, and two squares
+
+A. The edge act under plan 1 (phi v.v, phi v.0i, chi v.t, chi eps(v, 0i).jk), s = 3, T_k = 2, T_d = 5; the sym24 board, 18 rows x 27 sites
+   standing at W = 9, centre 0 (tie even): J not 0 at 326 of 486 gears; promise broke at None; the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; the drive's teeth r_d not 0 at round 4: 298 gears; bits 96
+   standing at W = 9, half-open: J not 0 at 326 of 486 gears; promise broke at None; the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; the drive's teeth r_d not 0 at round 4: 298 gears; bits 96
+   standing at W = 9, centre 0 with the edge probe's own turned state (the drive's tooth unflipped): the 24 per round [3, 3, 3, 3]
+   standing at W = 9, the act as built (control): the 24 per round [24, 24, 24, 24] (promise broke at None)
+   rising by 1 from W = 9, centre 0 (tie even): J not 0 at 326 of 486 gears; promise broke at None; the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; the drive's teeth r_d not 0 at round 4: 303 gears; bits 90
+   rising by 1 from W = 9, half-open: J not 0 at 326 of 486 gears; promise broke at None; the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; the drive's teeth r_d not 0 at round 4: 305 gears; bits 90
+   rising by 1 from W = 9, centre 0 with the edge probe's own turned state (the drive's tooth unflipped): the 24 per round [3, 3, 3, 3]
+   rising by 1 from W = 9, the act as built (control): the 24 per round [24, 3, 3, 3] (promise broke at None)
+   falling by 1 from W = 9, centre 0 (tie even): J not 0 at 326 of 486 gears; promise broke at None; the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; the drive's teeth r_d not 0 at round 4: 300 gears; bits 103
+   falling by 1 from W = 9, half-open: J not 0 at 326 of 486 gears; promise broke at None; the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; the drive's teeth r_d not 0 at round 4: 301 gears; bits 103
+   falling by 1 from W = 9, centre 0 with the edge probe's own turned state (the drive's tooth unflipped): the 24 per round [3, 3, 3, 3]
+   falling by 1 from W = 9, the act as built (control): the 24 per round [24] (promise broke at 1)
+
+B. Two four-vector squares in the universe (light, metric, metric2): every row reads both 00 slots; the self-reads cut (edge_lib.acyclic)
+   both 00 slots rising by 1 grip: the 00 rows [2, 12]; reads between the two 00 rows left by the cut: 2; promise broke at 1; untick(tick s) = s in 0 of 1; rewound False
+      with every read onto a 00 row cut (no 00 row reads any 00 slot): promise broke at None; untick(tick s) = s in 12 of 12; rewound True
+   the first rising by 1 grip, the second standing: the 00 rows [2, 12]; reads between the two 00 rows left by the cut: 2; promise broke at None; untick(tick s) = s in 12 of 12; rewound True
+      with every read onto a 00 row cut (no 00 row reads any 00 slot): promise broke at None; untick(tick s) = s in 12 of 12; rewound True
+   both falling by 1 grip: the 00 rows [2, 12]; reads between the two 00 rows left by the cut: 2; promise broke at 1; untick(tick s) = s in 0 of 1; rewound False
+      with every read onto a 00 row cut (no 00 row reads any 00 slot): promise broke at None; untick(tick s) = s in 12 of 12; rewound True
+   Reading: 'the clocks' read acyclic' is implemented and measured as 'the 00 row's self-read cut', exact for one square train;
+   with two squares the cut leaves a 2-cycle and the act is not exact. The lawful generic cut is 'no row whose count the clocks
+   read reads the clocks': a rule on the loader's graph, which the text should state in that form.
+

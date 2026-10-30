@@ -1,0 +1,65 @@
+Two clocks at one Node-clock on a uniformly deepening clock, under the three forms (whole numbers)
+
+A. The free gear, v0 = 1000000 notches a round, W from 10000 to 40000:
+   round | W | v (notches a round) per form | v^2 W against the start, permille (nature: 1000; the proper
+   velocity v / N = v sqrt(W / rest) squared); the edge's P = 2 D_in v + s (kept)
+   as built  : 0: W 10000, v 1000000, v^2 W 1000, P 39998000000; 7500: W 17500, v 1000000, v^2 W 1750, P 69998000000; 15000: W 25000, v 1000000, v^2 W 2500, P 99998000000; 22500: W 32500, v 1000000, v^2 W 3250, P 129998000000; 30000: W 40000, v 1000000, v^2 W 4000, P 159998000000
+   edge      : 0: W 10000, v 1000000, v^2 W 1000, P 39998000000; 7500: W 17500, v 571416, v^2 W 571, P 39998000000; 15000: W 25000, v 399988, v^2 W 399, P 39998000000; 22500: W 32500, v 307682, v^2 W 307, P 39998000000; 30000: W 40000, v 249991, v^2 W 249, P 39998000000
+   half-tooth: 0: W 10000, v 1000000, v^2 W 1000, P 39998000000; 7500: W 17500, v 1000000, v^2 W 1750, P 69998007500; 15000: W 25000, v 1000000, v^2 W 2500, P 99998015000; 22500: W 32500, v 1000000, v^2 W 3250, P 129998022500; 30000: W 40000, v 1000000, v^2 W 4000, P 159998030000
+
+B. The hairspring, push -g a with g = 100, laid at a = 10000000 at rest (v = 0), W from 10000 to 40000: omega^2 = g / W, the period 2 pi sqrt(W / g) rounds
+   round | W | A (the largest |a| in the period at the mark) | T (mean period over 10 crossings after the mark) |
+   A against the start, permille (nature: 1000; the edge's adiabatic invariant E / omega makes A^4 W constant) |
+   A^4 W against the start, permille | T^2 / W against the start, permille (the beat: 1000 in every form)
+   as built   round   7500: W  17500 | A   11522419 | 10 T   758 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   as built   round  15000: W  25000 | A   12590390 | 10 T   903 | A/A0  1092 | A^4 W  2036 | T^2/W   993
+   as built   round  22500: W  32500 | A   13436251 | 10 T  1027 | A/A0  1166 | A^4 W  3433 | T^2/W   988
+   as built   round  28000: W  38000 | A   13975799 | 10 T  1111 | A/A0  1212 | A^4 W  4699 | T^2/W   989
+   edge       round   7500: W  17500 | A    8697199 | 10 T   758 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   edge       round  15000: W  25000 | A    7959599 | 10 T   903 | A/A0   915 | A^4 W  1002 | T^2/W   993
+   edge       round  22500: W  32500 | A    7456970 | 10 T  1027 | A/A0   857 | A^4 W  1003 | T^2/W   988
+   edge       round  28000: W  38000 | A    7169032 | 10 T  1111 | A/A0   824 | A^4 W  1002 | T^2/W   989
+   half-tooth round   7500: W  17500 | A   11522428 | 10 T   758 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   half-tooth round  15000: W  25000 | A   12590418 | 10 T   903 | A/A0  1092 | A^4 W  2036 | T^2/W   993
+   half-tooth round  22500: W  32500 | A   13436295 | 10 T  1027 | A/A0  1166 | A^4 W  3433 | T^2/W   988
+   half-tooth round  28000: W  38000 | A   13975850 | 10 T  1111 | A/A0  1212 | A^4 W  4699 | T^2/W   989
+
+C. Notches per beat: the free gear's v times the hairspring's period T at the same clock, against the start,
+   permille (nature: 1000, all clocks slow alike; the edge: v ~ 1/W and T ~ sqrt W, so ~ W^(-1/2); the act as
+   built and the half-tooth: v constant, so ~ W^(+1/2))
+   as built  : 0: W 10000, v 1000000, 10 T 575, v T 1000; 7500: W 17500, v 1000000, 10 T 758, v T 1318; 15000: W 25000, v 1000000, 10 T 903, v T 1570; 22500: W 32500, v 1000000, 10 T 1027, v T 1786; 28000: W 38000, v 1000000, 10 T 1111, v T 1932
+   edge      : 0: W 10000, v 1000000, 10 T 575, v T 1000; 7500: W 17500, v 571416, 10 T 758, v T 753; 15000: W 25000, v 399988, 10 T 903, v T 628; 22500: W 32500, v 307682, 10 T 1027, v T 549; 28000: W 38000, v 263148, 10 T 1111, v T 508
+   half-tooth: 0: W 10000, v 1000000, 10 T 575, v T 1000; 7500: W 17500, v 1000000, 10 T 758, v T 1318; 15000: W 25000, v 1000000, 10 T 903, v T 1570; 22500: W 32500, v 1000000, 10 T 1027, v T 1786; 28000: W 38000, v 1000000, 10 T 1111, v T 1932
+
+E. Term 9's notch: one swing of the clock, W from 10,000 up to 20,000 and back, 1 count a round
+   the free gear:
+A. The free gear, v0 = 1000000 notches a round, W from 10000 to 10000:
+   round | W | v (notches a round) per form | v^2 W against the start, permille (nature: 1000; the proper
+   velocity v / N = v sqrt(W / rest) squared); the edge's P = 2 D_in v + s (kept)
+   as built  : 0: W 10000, v 1000000, v^2 W 1000, P 39998000000; 5000: W 15000, v 1000000, v^2 W 1500, P 59998000000; 10000: W 20000, v 1000000, v^2 W 2000, P 79998000000; 15000: W 15000, v 1000000, v^2 W 1500, P 60002000000; 20000: W 10000, v 1000000, v^2 W 1000, P 40002000000
+   edge      : 0: W 10000, v 1000000, v^2 W 1000, P 39998000000; 5000: W 15000, v 666656, v^2 W 666, P 39998000000; 10000: W 20000, v 499987, v^2 W 499, P 39998000000; 15000: W 15000, v 666611, v^2 W 666, P 39998000000; 20000: W 10000, v 999900, v^2 W 999, P 39998000000
+   half-tooth: 0: W 10000, v 1000000, v^2 W 1000, P 39998000000; 5000: W 15000, v 1000000, v^2 W 1500, P 59998005000; 10000: W 20000, v 1000000, v^2 W 2000, P 79998010000; 15000: W 15000, v 1000000, v^2 W 1500, P 60002005002; 20000: W 10000, v 1000000, v^2 W 1000, P 40002000002
+
+   the hairspring:
+B (swing). The hairspring, push -g a with g = 100, laid at a = 10000000 at rest (v = 0), W from 10000 to 10000: omega^2 = g / W, the period 2 pi sqrt(W / g) rounds
+   round | W | A (the largest |a| in the period at the mark) | T (mean period over 10 crossings after the mark) |
+   A against the start, permille (nature: 1000; the edge's adiabatic invariant E / omega makes A^4 W constant) |
+   A^4 W against the start, permille | T^2 / W against the start, permille (the beat: 1000 in every form)
+   as built   round   5000: W  15000 | A   11070036 | 10 T   701 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   as built   round  10000: W  20000 | A   11901088 | 10 T   790 | A/A0  1075 | A^4 W  1781 | T^2/W   952
+   as built   round  15000: W  15000 | A   11083015 | 10 T   684 | A/A0  1001 | A^4 W  1004 | T^2/W   952
+   as built   round  19000: W  11000 | A   10257051 | 10 T   584 | A/A0   926 | A^4 W   540 | T^2/W   946
+   edge       round   5000: W  15000 | A    9051557 | 10 T   701 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   edge       round  10000: W  20000 | A    8419115 | 10 T   790 | A/A0   930 | A^4 W   997 | T^2/W   952
+   edge       round  15000: W  15000 | A    9041754 | 10 T   684 | A/A0   998 | A^4 W   995 | T^2/W   952
+   edge       round  19000: W  11000 | A    9777342 | 10 T   584 | A/A0  1080 | A^4 W   998 | T^2/W   946
+   half-tooth round   5000: W  15000 | A   11070045 | 10 T   701 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   half-tooth round  10000: W  20000 | A   11901100 | 10 T   790 | A/A0  1075 | A^4 W  1781 | T^2/W   952
+   half-tooth round  15000: W  15000 | A   11083013 | 10 T   684 | A/A0  1001 | A^4 W  1004 | T^2/W   952
+   half-tooth round  19000: W  11000 | A   10257065 | 10 T   584 | A/A0   926 | A^4 W   540 | T^2/W   946
+
+D. The board check: edge_lib's board (12 rows x 27 sites, rest 6, grip 1), the light row uniform at a = 10000000
+   on a spring f = 50 (push -100 a), the 00 slot at W = 10000 rising by 1 a round, 400 rounds:
+   edge     : the board's W at the light row by round equals the course: True; the gear at site 0 against the one-gear run: 0 misses in 400 rounds; the row still uniform at the end: True
+   as built : the board's W at the light row by round equals the course: True; the gear at site 0 against the one-gear run: 0 misses in 400 rounds; the row still uniform at the end: True
+

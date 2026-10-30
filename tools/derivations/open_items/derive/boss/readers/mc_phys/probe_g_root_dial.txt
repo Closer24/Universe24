@@ -1,0 +1,24 @@
+Nature's form on the edge's pattern: the dial of the roots, W = L^2 (whole numbers)
+   L from 100 to 200 (W from 10000 to 40000), one step of L every 300 rounds, 30000 rounds; free gear v0 = 1000000;
+   hairspring push -100 a, A0 = 10000000 (omega^2 = g / W: the same beat as probe A)
+
+A. The free gear: v, L v (the proper velocity; nature keeps it), v^2 W permille of the start
+   root form: 0: L 100, v 1000000, L v 100000000, v^2 W 1000; 7500: L 125, v 803213, L v 100401625, v^2 W 1008; 15000: L 150, v 668896, L v 100334400, v^2 W 1006; 22500: L 175, v 573066, L v 100286550, v^2 W 1005; 29999: L 199, v 502513, L v 100000087, v^2 W 1000
+   edge form: 0: L 100, v 1000000, L v 100000000, v^2 W 1000; 7500: L 125, v 645140, L v 80642500, v^2 W 650; 15000: L 150, v 447417, L v 67112550, v^2 W 450; 22500: L 175, v 328402, L v 57470350, v^2 W 330; 29999: L 199, v 252519, L v 50251281, v^2 W 252
+
+B. The hairspring: A (largest |a| in the period at the mark), 10 T, A/A0 permille (nature 1000), A^4 W permille
+   root form round   7500: W  15625 | A  10010005 | 10 T   712 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   root form round  15000: W  22500 | A  10006888 | 10 T   854 | A/A0   999 | A^4 W  1438 | T^2/W   999
+   root form round  22500: W  30625 | A  10006901 | 10 T   997 | A/A0   999 | A^4 W  1957 | T^2/W  1000
+   edge form round   7500: W  15625 | A   9096022 | 10 T   712 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   edge form round  15000: W  22500 | A   8413167 | 10 T   854 | A/A0   924 | A^4 W  1053 | T^2/W   999
+   edge form round  22500: W  30625 | A   7720462 | 10 T   997 | A/A0   848 | A^4 W  1017 | T^2/W  1000
+
+C. The run back of the root form on the moving clock: untick(tick s) = s per round, the hairspring, and the
+   books P_(t+1) - P_t = 4 q_F with P = 2 D_in v + s
+   untick(tick s) = s: 0 misses in 30000 rounds; the books: 0 misses in 30000 rounds
+
+Reading: with the dial made of the roots the free gear keeps L v, the hairspring keeps its amplitude and the two clocks
+keep their notches per beat (A and v^2 W within a percent, the adiabatic wobble), the round runs back by the negation
+with nothing kept, and the push's remainder is dropped as a coefficient's (rule (ii)). The price: the teeth must be a
+square, W = L^2, with the 00 slot entering L, not W; the law's W = 6 den Gamma^2 + c is not a square.

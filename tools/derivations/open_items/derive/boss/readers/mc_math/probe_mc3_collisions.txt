@@ -1,0 +1,24 @@
+MC probe 3: injectivity of the acts on one gear, the clock external, a = 0, b in [-6, 6], no push
+ standing W = 12:
+   the act as built (r in [0, W(b)), read at W(a)): 156 states, 156 images, 0 collisions
+   the half-tooth act (u in [0, 2 W(b)), carried to 2 W(a)): 312 states, 312 images, 0 collisions
+   the order's 00 row (t in [-2 W(b), 2 W(b)], split at 4 W(a)): 625 states, 625 images, 0 collisions
+   the edge, centre 0 (|s| <= D_in, split at 2 D_out): 625 states, 625 images, 0 collisions
+   the edge, half-open (s in [-D_in, D_in - 1], split at 2 D_out): 624 states, 624 images, 0 collisions
+ rising W(b) 12 -> W(a) 14 -> W(a+) 16:
+   the act as built (r in [0, W(b)), read at W(a)): 156 states, 156 images, 0 collisions
+   the half-tooth act (u in [0, 2 W(b)), carried to 2 W(a)): 312 states, 312 images, 0 collisions
+   the order's 00 row (t in [-2 W(b), 2 W(b)], split at 4 W(a)): 625 states, 625 images, 0 collisions
+   the edge, centre 0 (|s| <= D_in, split at 2 D_out): 677 states, 677 images, 0 collisions
+   the edge, half-open (s in [-D_in, D_in - 1], split at 2 D_out): 676 states, 676 images, 0 collisions
+ falling W(b) 12 -> W(a) 10 -> W(a+) 8:
+   the act as built (r in [0, W(b)), read at W(a)): 156 states, 132 images, 24 collisions; e.g. image (6, 0) from [(-6, 0), (-5, 10)]
+   the half-tooth act (u in [0, 2 W(b)), carried to 2 W(a)): 312 states, 264 images, 48 collisions; e.g. image (5, 18) from [(-6, 0), (-5, 20)]
+   the order's 00 row (t in [-2 W(b), 2 W(b)], split at 4 W(a)): 625 states, 529 images, 96 collisions; e.g. image (5, 16) from [(-6, -24), (-5, 16)]
+   the edge, centre 0 (|s| <= D_in, split at 2 D_out): 573 states, 573 images, 0 collisions
+   the edge, half-open (s in [-D_in, D_in - 1], split at 2 D_out): 572 states, 572 images, 0 collisions
+
+ Reading: a tooth kept in one dial and read in another is injective only while the kept range fits one residue system of the
+ reading modulus (W(b) <= W(a)); on a falling clock the act as built, the half-tooth act and the order's 00 row are not injective,
+ so no promise and no mirror can give them a run back without a booked line. The edge's tooth ranges over one residue system of
+ the very modulus 2 D_in that weights its velocity, and any split at any D_out >= 1 is then a bijection.

@@ -1,0 +1,22 @@
+MC probe 6: the pump, the fair control and the exact source past 12,000 rounds
+
+A. Section C of probe_pump with the p-form hand born at the law's (i): p = W div 2 + m0 (the readers' lay p = m0 beside it)
+   m0 =     -1: p-form born at 0: strides    0, floor source     18000000; p-form born at W div 2: strides    0, floor source            0, exact source     35952000, mean p - W/2     -1; edge: strides    0, floor source            0, exact            0
+   m0 =      1: p-form born at 0: strides    0, floor source            0; p-form born at W div 2: strides    0, floor source            0, exact source     36048000, mean p - W/2      1; edge: strides    0, floor source            0, exact            0
+   m0 =   -300: p-form born at 0: strides   -1, floor source     52356000; p-form born at W div 2: strides    0, floor source            0, exact source     23040000, mean p - W/2   -300; edge: strides    0, floor source            0, exact      1440000
+   m0 =  -1499: p-form born at 0: strides   -1, floor source    104724000; p-form born at W div 2: strides    0, floor source            0, exact source            0, mean p - W/2  -1499; edge: strides    0, floor source            0, exact     35952000
+   m0 =  -1500: p-form born at 0: strides   -1, floor source    104724000; p-form born at W div 2: strides    0, floor source            0, exact source            0, mean p - W/2  -1500; edge: strides    0, floor source            0, exact     36000000
+   m0 =  -1501: p-form born at 0: strides   -1, floor source    104724000; p-form born at W div 2: strides    0, floor source     18000000, exact source     54629625, mean p - W/2     74; edge: strides    0, floor source     18000000, exact     15077625
+   m0 =  -3000: p-form born at 0: strides    1, floor source    110772000; p-form born at W div 2: strides   -1, floor source    104724000, exact source    105760235, mean p - W/2    -61; edge: strides   -1, floor source    104724000, exact     72663335
+   Reading: the pump (a -1 stride every round from a sub-notch negative momentum) is the birth at 0; born at W div 2 the p-form's
+   hand stands as the edge's does for |m0| < W/2 (and at the tie m0 = -1500 too), with the floor source 0. What the (i)-born p-form
+   cannot have is the exact source 2 p^2 / W at 0 for a hand at rest (its rest momentum is W/2, 1,500,000 a round): the edge's rest
+   is at 0 momentum and 0 energy at once. So the credit is the centring's, which the edge has by construction; the dial is not needed.
+
+B. The edge's exact source 2 p^2 / W at p0 = -300 (probe_pump D): W at rounds 0, 4000, ..., 20000, and the 00 gear's tooth
+   (round, W, the 00 gear's tooth s00 in half-teeth of its dial 4 REST = 12000): [(0, 3000, 0), (4000, 3000, 1920), (8000, 3000, 3840), (12000, 3000, 5760), (16000, 6492, -4892), (20000, 10492, -4208)]
+   Reading: a hand at rest with a sub-notch momentum has the energy 2 p^2 / W = 120 a round; through T_d = 1000 the 00 gear's
+   momentum grows 4 half-teeth per 8 rounds and crosses half a notch (6000) near round 12,500, after which the 00 slot moves one
+   notch a round for ever (the zero mode). 'W at 3,000 through 12,000 rounds' holds for the strides-squared source (push 0 exactly)
+   and, for the exact source, only because the run stops at 12,000.
+

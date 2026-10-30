@@ -1,0 +1,47 @@
+The edge's hand with the exact source, traced (probe_pump's replica; whole numbers)
+  p0 = -3000, the source exact (p^2):
+   round |      W |   a |  v | p_in (half-teeth) |  D_in | |p_in| / D_in permille | strides since last mark | 00 push this round
+       0 |   3000 |   0 | -1 |         -12000 |   6000 |   2000 |    0 | 12000
+    1000 |   3411 |   4 |  0 |          -3600 |   6821 |    527 |  716 | -4470
+    2000 |   4905 |   0 |  1 |          14880 |   9808 |   1517 |  620 | 11287
+    3000 |   7056 |   2 | -1 |         -15360 |  14109 |   1088 |  406 | 7645
+    4000 |  10056 |   2 |  0 |           1440 |  20109 |     71 |  200 | -1654
+    5000 |  14078 |  -2 |  0 |          -6960 |  28151 |    247 |  124 | -1003
+    6000 |  19525 |   2 |  0 |          -1920 |  39044 |     49 |   92 | -1574
+    7000 |  26979 |  -2 |  0 |          23280 |  53949 |    431 |   68 | 3718
+    8000 |  37267 |   2 |  0 |          28320 |  74522 |    380 |   52 | 3391
+    9000 |  51524 |   1 |  0 |         -75000 | 103031 |    727 |   19 | 27185
+   10000 |  71742 |   1 |  0 |          54360 | 143460 |    378 |    8 | 9721
+   11000 | 103825 |   0 |  0 |        -155640 | 207607 |    749 |    1 | 58340
+   12000 | 155094 |   0 |  0 |        -155640 | 310129 |    501 |    0 | 39054
+
+  p0 = -300, the source exact (p^2):
+   round |      W |   a |  v | p_in (half-teeth) |  D_in | |p_in| / D_in permille | strides since last mark | 00 push this round
+       0 |   3000 |   0 |  0 |          -1200 |   6000 |    200 |    0 | 120
+    2000 |   3000 |   0 |  0 |          -1200 |   6000 |    200 |    0 | 120
+    4000 |   3000 |   0 |  0 |          -1200 |   6000 |    200 |    0 | 120
+    6000 |   3000 |   0 |  0 |          -1200 |   6000 |    200 |    0 | 120
+    8000 |   3000 |   0 |  0 |          -1200 |   6000 |    200 |    0 | 120
+   10000 |   3000 |   0 |  0 |          -1200 |   6000 |    200 |    0 | 120
+   12000 |   3000 |   0 |  0 |          -1200 |   6000 |    200 |    0 | 120
+
+  p0 = -3000, the source the strides squared:
+   round |      W |   a |  v | p_in (half-teeth) |  D_in | |p_in| / D_in permille | strides since last mark | 00 push this round
+       0 |   3000 |   0 | -1 |         -12000 |   6000 |   2000 |    0 | 12000
+    1000 |   3852 |   3 |  0 |           5640 |   7702 |    732 |  661 | -3780
+    2000 |   6255 |  -1 |  0 |           4800 |  12507 |    383 |  266 | -420
+    3000 |   9255 |  -1 |  0 |           8160 |  18507 |    440 |   52 | -420
+    4000 |  12796 |   1 |  0 |          10680 |  25588 |    417 |   38 | -420
+    5000 |  16796 |   1 |  0 |          22440 |  33588 |    668 |   28 | -420
+    6000 |  20911 |  -1 |  0 |         -30480 |  41817 |    728 |   22 | -420
+    7000 |  25911 |  -1 |  0 |          50160 |  51817 |    968 |   16 | -420
+    8000 |  30911 |   0 |  0 |          51840 |  61817 |    838 |    1 | 0
+    9000 |  35911 |   0 |  0 |          51840 |  71817 |    721 |    0 | 0
+   10000 |  40911 |   0 |  0 |          51840 |  81817 |    633 |    0 | 0
+   11000 |  45911 |   0 |  0 |          51840 |  91817 |    564 |    0 | 0
+   12000 |  50911 |   0 |  0 |          51840 | 101817 |    509 |    0 | 0
+
+Reading: with the exact source the hand strides once (a = -1), then never again: its spring pushes +210 into its tooth
+every round while the dial 2 D_in outgrows the tooth; the frozen hand's momentum p_in grows without bound, its
+p^2 source grows as t^2, and W is wound faster and faster by a hand that does not move. Not the tooth's fault, as the
+deriver says, but a feedback term 5 must face: a hand whose clock deepens faster than its tooth fills never strides again.

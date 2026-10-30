@@ -1,0 +1,7 @@
+Probe 7: light on a ring of 48 Node-clocks, c^2 = 1/6, the real act
+  k = pi/2 (4 sites): wind at an antinode 1200000000 counts^2, at a node 0; beat period 10726 thousandths of a round; SUM D over the ring 28800000000, kept within 174 millionths
+  k = pi (2 sites): wind at an antinode 2400000000 counts^2, at a node 2400000000; beat period 7470 thousandths of a round; SUM D over the ring 115200000000, kept within 103 millionths
+  the winds stand 1000 : 2000 thousandths (energy at the same swing); the beats 1000 : 1435
+  one key of wind makes their quanta 1000 : 2000; Planck's n = E / (h-bar omega) makes them 1000 : 1392
+
+  a packet of 19 keys of wind (the key a seventh of its top site's wind) on the c = 1 ring: the draft's count writes 282 click lines over one lap of 48 rounds with no vertex on the board: free light clicking at every Node-clock it crosses

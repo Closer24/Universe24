@@ -1,0 +1,130 @@
+# quaternion: working notes (saved as I go; the derivation goes to ONE_ALGEBRA.md)
+
+## Read (t24b main 9067de20d)
+- engine/step.py: gear (q, kept = carry(w (a - b) + push, w, r); a+ = a + q; b+ = a), drive (carry(J, T_d, rd)),
+  sources (F = pull; gradient; readings = (a, grad, F, unit); J = contract(plan, ...)), driven (s (F + T_k q)),
+  weight (W = rest + read(clock, a)), tick, mirror ((b, a, flip(r, W(b)), flip(rd, T_d))), untick = mirror tick mirror.
+- engine/contract.py: pushes (each monomial pushes each leg by -f times the other three), contract, read (linear read).
+- engine/mesh.py: seen (a[:, nb]), gripped (the ii slots at both ends), pull (sum over 6 Spokes of grip (nb - own)).
+- engine/kinds.py: the 24 as signed permutation matrices of det 1 (rows three Spokes), kinds A1, A2, E, T1, T2.
+- engine/state.py: State(a, b, r, rd); Layout(nb, spokes, meshes, grip, gearing, plan, clock, stretch).
+- algebra/carry.py: carry(n, d, r) = divmod(n + r, d); flip(r, w) = w - 1 - r; lit.
+- runner/load.py: W rest = 6 den Gamma^2; every row reads the square's 00 slot at 1; grips den Gamma^2 + ii slots;
+  s = T_k = T_d = 1; J's plan empty until G3.
+- runner/board.py: 6 neighbours per site, wrapped by carry.
+- examples/tensor24: shape 4x4x4; trains light (A1, part 2) and metric (A1, T1, A1, E, T2 = the square, 10 rows);
+  den = 15162856759112389, full_rate = 1000.
+
+## Sibling folders (not to redo)
+- families/NOTES.md: the half-speed gear, Pauli, FS indicator; the spinor kinds need sqrt 2 (quarter turn's trace).
+- click25/NOTES.md: the moving-clock defect, the half-tooth, the wind's click; their piece.
+- edge/, g3_blind/: the moving-clock mend and the anchor; theirs.
+
+## The key fact for task 1 (seen at once)
+The act is LINEAR in the gear rows (a, b, r) at fixed W and fixed push, componentwise: every gear row is carried by
+the same whole number W (per row, per site: W = rest + the 00 slot's count at that site). So three gear rows
+(x, y, z) of a T1 train at one site form a pure whole quaternion x i + y j + z k, and the act on it is the
+componentwise act. The quaternion product never enters the tick as built: only the quaternion SUM, the whole-number
+scalar product by W and s, and the componentwise carry. The 24 enter only as the symmetry of the act (the turn
+commutes with the tick), not as an operation the tick performs.
+
+## Plan of the probes (decided before coding)
+- q_lib.py: whole quaternions as 4-tuples of Python ints; add, scale, Hamilton product, conj, norm, componentwise carry.
+- probe.py (task 1): the engine's own load on trains hand [A1, T1] (a whole quaternion), vec [T1] (a pure one), metric
+  (the square: rows 0..3 a four-vector, rows 4..9 a symmetric 3x3 S); a plan through the 24's tables (spring f N(h),
+  vertex g Re(h m-bar), triple product c3 eps(vec, h, m_0i)), s = 2, T_k = 3, T_d = 5, the 00 slot moving at some
+  sites. tick_Q written on quaternions, compared with step.tick bit for bit over 6 rounds; mirror_Q vs step.mirror;
+  untick_Q vs step.untick; the 24 as sandwiches g v g-bar / N(g) at standing W (24 of 24 expected).
+- probe_units.py (task 2): each of the 24 turns = a Lipschitz g of norm 1 (12, Hurwitz units, A2 = +1) or norm 2 (12,
+  A2 = -1: 1 +- e_a quarter turns, e_a +- e_b edge half-turns), the sandwich divided by N(g) with remainder 0; the
+  tables C[T1 T1 -> A1] = -Re(vw) and C[T1 T1 -> T1] = Im(vw) up to measured signs; the four-vector product's five
+  channels; Euler's identity; the Gaussian rule as the plane Z + Z e_a; the E and T2 slots outside Hamilton's product
+  (det of a 10x10 whole matrix).
+- probe_ring.py (task 3c): Lipschitz (deep hole (1,1,1,1)/2 ratio 1: no), Hurwitz (ratio 1/2), the octahedral order
+  O_48 = {(1/2) SUM (u_m + v_m sqrt2) e_m : u all one parity, SUM v even} over Z[sqrt 2]: closure, the 48 units,
+  sampled Euclidean steps against a central divisor d in Z[sqrt 2] (Nm N(y - q d) < Nm(d)^2).
+- probe_time.py (task 3a): the lone swing J = -k v at W | k: k = W, 2W, 3W give whole time-turns of orders 6, 4, 3
+  (k = 2W: (v, u) -> (-u, v), the Gaussian i); k = W + 1: the tooth moves, no ring.
+- probe_square.py (task 3b): the metric's 10 slots = 1 trace + 9 two-sided sandwiches e_a h e_b; the change of basis
+  needs quarters (det); the act reads 00 and ii as whole scalar weights only.
+
+## Key algebra (derived while planning)
+- The sandwich by g of norm 2 on a whole pure v is 2 (m v): the carry at 2 has remainder 0. So no whole-speed turn
+  needs the root of 2; the root is needed only to make g a unit (norm 1), which the one-sided (half-speed) action
+  needs. Check: (1 + i) v (1 - i) = 2 (x i - z j + y k) for v = x i + y j + z k.
+- O_48 = H + (1/sqrt2) P with P = (1 + i) H = the Lipschitz quaternions of even norm; [O_48 : Z[sqrt2] (x) H] = 4;
+  Z[zeta_8] = Z[sqrt2][i] sits in O_48 as the lifts of one axis's quarter turns.
+- The time plane: v+ = 2 v - u - (k / W) v exactly where W | k; k = 2W is the Gaussian i on v + i u.
+- Hamilton's words of degree 2 in one four-vector h reach a^2 +- |v|^2 and a v (five of the square's ten slots);
+  the E and T2 slots (traceless symmetric) are outside: kinds A1 + T1 against E + T2.
+
+## The carry theorem (derived 16:xx, for the coordinator's decisive question)
+Setting: a half-speed hand psi in a lattice L (H = Hurwitz, rank 4, turned by G = 2T, the 24 units; or Lambda = O_48,
+rank 8, turned by G = 2O, the 48), the turn the LEFT multiplication psi -> g psi. A carry at teeth W: n = W q + r with
+r in a set D of coset representatives of L / W L (a fundamental domain; this is what makes (a) the run back exact).
+1. The remainder must turn affinely: r -> g r + c_g with c a 1-cocycle (shown: phi_g(r) - g r is independent of r, since
+   n + r = W q + r' with n arbitrary). The per-gear flip is the case c_{-1} = (W - 1) 1 on the negated rows.
+2. Every integral cocycle is c_g = (g - 1) a with a in the rational algebra A (H^1(G, A) = 0); the class is trivial iff
+   a in L (A^G = 0: g y = y forces y = 0 in a division algebra). The lifts of the third turns of order 6, g = (1 + i +
+   j + k) / 2 and its conjugates, have g - 1 a UNIT (N(g - 1) = 2 - tr g = 1). So (g - 1) a in L forces a in L:
+   H^1(G, L) = 0 for 2T and 2O. No flip-like twist exists; the domain D must be linearly G-invariant (up to a translation).
+3. A G-invariant D exists iff every nonzero coset has trivial stabilizer: a coset x + W L fixed by g != 1 would need a
+   point fixed by g, which is 0 alone, and 0 is not in a nonzero coset. g != 1 fixes a nonzero coset iff
+   gcd(W, [L : (g - 1) L]) > 1. The indices: order 2 (g = -1): 2^rank; order 4 (N(g - 1) = 2): 2-power; order 8
+   (N(g - 1) = 2 -+ sqrt 2, absolute norm 2): 2-power; order 3 (N(g - 1) = 3): 3-power; order 6: 1.
+   => A carry on the hand turning with the 24's lifts (or the 48) exists IFF gcd(W, 6) = 1; where it exists D is a
+   union of free orbits with 0, D = -D, the mirror's flip is r -> -r, and no per-gear form of it exists (families).
+4. The load lays rest = 6 den Gamma^2 (the 6 = the Spokes): W = rest + a_00 is divisible by 6 at the vacuum, so on the
+   act as built the half-speed carry turns only where the 00 slot's count is coprime to 6. W = 9 (families): 3 | 9, none.
+5. Big Pic's division (nearest in each part) is a fundamental domain but (i) at the double farthest points with the
+   two offsets orthogonal its remainder has absolute norm exactly Nm(d)^2 (no reduction; example y = 1 + i + sqrt2 j,
+   d = 2), another quotient reduces (8 < 16): the Euclidean minimum is < 1 but not by that rule alone; (ii) the
+   nearest point has ties even at gcd(W, 6) = 1: W = 5, the coset of (-5/2, 1/2, 1/2, 1/2) ~ (5/2, 1/2, 1/2, 1/2), both
+   of norm 7, so "nearest" is no function without a choice, and a lexicographic choice is not equivariant.
+6. Whole-speed hands: monomial action, the box [0, W)^n with the flip twist is invariant (sym24); the centred box is
+   the nearest-point rule there and equals the built carry with every tooth counted from the middle (odd W).
+
+## Results so far (all probes run; outputs beside them)
+- probe.txt: tick_Q == step.tick 6 of 6 rounds on three lays (rising, standing, varying 00 slot), plan through the
+  tables (spring, vertex, triple product), s = 2, T_k = 3, T_d = 5; mirror_Q == step.mirror; untick_Q == step.untick;
+  6 unticks return the rising lay (promise holds there); W (a+ - 2a + b) = push + r - r+ every round; the 24 as
+  sandwiches: 12 Hurwitz units (A2 = +1), 12 Lipschitz g of norm 2 (A2 = -1), carried at N(g) with remainder 0;
+  turned run == run turned 24 of 24 at standing W (mutant without the flip 3 of 24); with W moving [24, 3, 3, 3].
+- probe_units.txt: tables = Hamilton's product (0 misses of 300 each); Euler 0 misses; the Gaussian rule is the plane
+  Z + Z e; Rule3's box remainder has norm >= W^2 in 307 of 500 draws (not Hurwitz's remainder); Hurwitz's remainder is
+  not unique (n = 1, W = 2: q = 0 and q = w both reduce).
+- probe_carry.txt: fixed nonzero cosets of H / W H and Lambda / W Lambda per lift order: 2 | W: orders 2, 4, 8;
+  3 | W: order 3; none at gcd(W, 6) = 1 (W = 1, 5, 7, 11); indices [Lambda : (g - 1) Lambda] = 256, 81, 16, 1, 4 by
+  order 2, 3, 4, 6, 8; the orbit domain at W = 5, 7: 0 conflicts, equivariant and symmetric on every coset; at W = 6, 9
+  conflicts 97, 64; nearest-point ties: 192 of 625 (W = 5), 576 of 2401 (W = 7); on the act (lone clock, spring):
+  orbit domain 24 of 24 lifts at W = 5, 7 with the run back exact; per gear 1 of 24; (rerun with 20 starts pending).
+- probe_time.txt: k = W, 2W, 3W return after 6, 4, 3 rounds bit for bit, teeth still, the wind kept; k = 2W is
+  (v, u) -> (-u, v); k = W + 2 the teeth move, no return; k = 0, 4W parabolic, no return.
+- probe_square.txt: the ten forms' determinant -48 (E and T2 slots outside Hamilton's degree-2 words); the nine
+  sandwiches E_ab symmetric and traceless; change of basis determinant -128; the act reads 0i and jk by nothing
+  (spring alone: next hands equal), and through the vertex where a plan reads them.
+- probe_ring.txt: Lipschitz fails at (1 + i + j + k) / 2; O_48: Big Pic's rule reduces 129 of 132, the box 132 of 132,
+  worst least ratio 1/2; the double farthest point 1 + i + sqrt 2 j at d = 2: the rule gives ratio 1 (no reduction),
+  another quotient 1/2; zeta_8 in O_48 with zeta - zeta^3 = sqrt 2.
+
+## Final runs (20 starts) and the hostile self-check
+- probe_carry.txt (20 starts): orbit domain 480/480 at W = 5 and 7, run back 20/20; per gear (flip on +-I) 40/480
+  at every W; nearest-lexicographic 213, 204, 150, 203 of 480 at W = 5, 6, 7, 9 with the run back 4, 4, 1, 2 of 20.
+- probe_carry_big.txt: W = 13..1003: fixed cosets exactly where 2 | W or 3 | W; the load's rest teeth gcd 6 with 6.
+- probe_units.txt: i -> j -> k under (1 + i + j + k) / 2; the commutant on T1 in [-1, 1]: 3 matrices, all scalar.
+- probe_square.txt fixed: the 5 x 5 minor on (a2, x2, ax, ay, az) is -16 (first version took zero columns).
+- probe_ring.txt fixed: the Hurwitz sample now divides by 2d (doubled coordinates): worst 8 / 16 = 1/2.
+- Checks done: every probe rerun; the fixed-coset counts recomputed by hand from the indices (15 = 2^4 - 1, 18 = 6 x 3,
+  64 = 8 x 8; 255, 270 = 18 x 15, 36 = 12 x 3, 640 = 8 x 80); cases built to pass the rules (W coprime to 6, composite,
+  large) and to fail them; the mutants (no flip, lexicographic choice, per-gear act).
+- ONE_ALGEBRA.md written: Answer, by Solution24, four layers, Big Pic's items, Measured, the deriver's check, the
+  table, Open, Files.
+
+## Last piece (the coordinator's refocus, Big Pic 6527540022 item 4)
+- Big Pic's own "no" on the two decisive questions checked against the theorem and probes: agrees on all four points.
+- probe_books.txt: conj(before) now = real + turn, real^2 + |turn|^2 = N(before) N(now): 0 misses of 500; real = the two
+  A1 channels, turn = the two T1 channels with the cross: 0 misses; the Gaussian two-square 0 misses; kept round to
+  round 12/12 at k = 2W (the real part negated, the turn kept), 0/12 at k = W, 3W; the edge: w p_out = w' (p_in + push
+  + r - r+) 0 misses over 6 rounds (the momentum rescaled by W'/W: the determinant on the edge).
+- ONE_ALGEBRA.md updated: Answer item 6 (Big Pic's no, the books, the edge), the edge paragraph, the books section,
+  Measured 8, the table rows, Files.

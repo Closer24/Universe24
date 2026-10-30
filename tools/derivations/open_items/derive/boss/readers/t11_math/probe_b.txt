@@ -1,0 +1,26 @@
+Probe B: cases that pass the stated rule and break the books or the words (Animate's world, 6,000 rounds)
+  B1 the vertex weakened, W = 10^20, A = 10^6, key = D_L div 7 made odd:
+     g = f div 10: click rounds 35, taker's count 0..7, books miss in 2 rounds, n_L + n_M in [-1, 0], rounds with the books open 1; wobble |delta| up to 1854 millionths of a key
+     g = f div 30: click rounds 11, taker's count 0..7, books miss in 0 rounds, n_L + n_M in [0, 0], rounds with the books open 0; wobble |delta| up to 1916 millionths of a key
+     g = f div 100: click rounds 5, taker's count 0..3, books miss in 4 rounds, n_L + n_M in [-1, 1], rounds with the books open 2; wobble |delta| up to 1925 millionths of a key
+     g = f div 300: click rounds 0, taker's count 0..0, books miss in 0 rounds, n_L + n_M in [0, 0], rounds with the books open 0; wobble |delta| up to 1746 millionths of a key
+  B2 the swing shrunk (W = 10^20, f = W div 800, g = f div 10; the key a seventh of D_L at the lay each time):
+     A = 10^6: key 714285715; pair: click rounds 35, taker 0..7, misses 2, n_L + n_M in [-1, 0], books open 1 rounds, wobble 1854 millionths; FREE hand: clicks 0, its count 0..0, its wind off the lay's by up to 1855 millionths of a key
+     A = 10^5: key 7142857; pair: click rounds 60, taker 0..7, misses 44, n_L + n_M in [-1, 1], books open 24 rounds, wobble 18728 millionths; FREE hand: clicks 0, its count 0..0, its wind off the lay's by up to 17469 millionths of a key
+     A = 10^4: key 71429; pair: click rounds 433, taker 0..7, misses 388, n_L + n_M in [-1, 1], books open 248 rounds, wobble 201836 millionths; FREE hand: clicks 0, its count 0..0, its wind off the lay's by up to 180360 millionths of a key
+     A = 10^3: key 785; pair: click rounds 4102, taker 0..8, misses 3727, n_L + n_M in [-3, 1], books open 4100 rounds, wobble 2366878 millionths; FREE hand: clicks 4731, its count -2..1, its wind off the lay's by up to 2154140 millionths of a key
+  B3 the long run, g = f div 10, A = 10^6: the wobble delta = x_L + x_M over 60,000 rounds, by 6,000s:
+     rounds 0..6000: delta in [-1855, 1712] millionths of a key
+     rounds 6000..12000: delta in [-1912, 1869] millionths of a key
+     rounds 12000..18000: delta in [-1801, 1705] millionths of a key
+     rounds 18000..24000: delta in [-2133, 1653] millionths of a key
+     rounds 24000..30000: delta in [-1845, 1846] millionths of a key
+     rounds 30000..36000: delta in [-1595, 2024] millionths of a key
+     rounds 36000..42000: delta in [-1689, 1926] millionths of a key
+     rounds 42000..48000: delta in [-1887, 1672] millionths of a key
+     rounds 48000..54000: delta in [-1717, 1764] millionths of a key
+     rounds 54000..60000: delta in [-1753, 1780] millionths of a key
+     over 60,000 rounds: misses 40, n_L + n_M in [-1, 1], books open 20 rounds, click rounds 355, taker 0..7
+  B4 more than a winding in a round: g = f, the key a seventieth of D_L:
+     key 71428571: largest |q| in a round 1, click rounds 3493, taker 0..70, misses 68, n_L + n_M in [-1, 1]
+     (the law line's 'two clocks connecting or coming apart by one winding' is wrong where |q| >= 2)

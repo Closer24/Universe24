@@ -1,0 +1,26 @@
+The order's 00 click on a uniformly falling clock (whole numbers; cc_lib's form 'first', 486 gears)
+  falling by 1 from W = 46, 36 rounds (10 bits): the 00 gears that clicked per round: [1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 3, 0, 1, 0, 1, 1, 0, 0, 1, 2, 1, 2, 0, 0, 0, 1, 2, 2, 1, 2, 0, 2, 1]
+    summed 29 clicks of 27 gears (a tooth laid across the dial overflows once the dial shrinks past it: the share of the
+    dial lost, 27 (W_0 - W_end) / W_0 = 19 gears, is the floor of the count; a tooth thrown to the far edge overflows again);
+    the 00 slot laid uniform: its spread over the sites (max - min) 0 -> 4 (each click moves the clock's own count by a whole notch at one site)
+    untick(tick s) = s: 36 of 36 with the line, 15 of 36 without; rewound to the start with the line: True
+    the 00 row: S (sum of a - b) -27 -> -17, P -4640 -> -908 (the as-built law: the hand's own velocity not redshifted);
+    the a1 row (edge): S -227 -> -741, P -42215 -> -42215 (kept)
+  falling by 2 from W = 86, 36 rounds (11 bits): the 00 gears that clicked per round: [0, 1, 2, 3, 0, 0, 0, 1, 0, 1, 2, 2, 0, 1, 1, 1, 2, 1, 3, 1, 3, 1, 1, 1, 0, 1, 3, 4, 1, 5, 5, 3, 5, 4, 5, 0]
+    summed 64 clicks of 27 gears (a tooth laid across the dial overflows once the dial shrinks past it: the share of the
+    dial lost, 27 (W_0 - W_end) / W_0 = 23 gears, is the floor of the count; a tooth thrown to the far edge overflows again);
+    the 00 slot laid uniform: its spread over the sites (max - min) 0 -> 2 (each click moves the clock's own count by a whole notch at one site)
+    untick(tick s) = s: 36 of 36 with the line, 8 of 36 without; rewound to the start with the line: True
+    the 00 row: S (sum of a - b) -54 -> -54, P -19266 -> -2794 (the as-built law: the hand's own velocity not redshifted);
+    the a1 row (edge): S -227 -> -1406, P -78989 -> -78989 (kept)
+  falling by 3 from W = 126, 36 rounds (11 bits): the 00 gears that clicked per round: [0, 0, 1, 1, 1, 2, 2, 2, 1, 0, 0, 0, 2, 0, 1, 1, 0, 0, 2, 1, 3, 2, 2, 1, 0, 4, 1, 1, 4, 5, 5, 3, 2, 5, 2, 8]
+    summed 65 clicks of 27 gears (a tooth laid across the dial overflows once the dial shrinks past it: the share of the
+    dial lost, 27 (W_0 - W_end) / W_0 = 23 gears, is the floor of the count; a tooth thrown to the far edge overflows again);
+    the 00 slot laid uniform: its spread over the sites (max - min) 0 -> 2 (each click moves the clock's own count by a whole notch at one site)
+    untick(tick s) = s: 36 of 36 with the line, 9 of 36 without; rewound to the start with the line: True
+    the 00 row: S (sum of a - b) -81 -> -83, P -41484 -> -5556 (the as-built law: the hand's own velocity not redshifted);
+    the a1 row (edge): S -227 -> -1567, P -115763 -> -115763 (kept)
+
+Reading: the 00 click fires at about dW / W of the 00 gears a round wherever the clock falls, each a whole count into
+the metric's own step with no partner clock, booked outside the Node-clock for the rewind; at the real calibre
+(W ~ 10^23 counts, dW ~ 1 a round) it is rare, but term 9's notch has the clock falling half of every beat.

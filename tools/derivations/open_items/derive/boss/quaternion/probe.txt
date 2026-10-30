@@ -1,0 +1,76 @@
+PROBE: the act as built on whole quaternions (t24b main 9067de20d)
+board (3, 3, 3), rows 17 (hand A1+T1: 0..3, vec T1: 4..6, metric square: 7..16), W at rest 270, grip 45
+gearing s = 2, T_k = 3, T_d = 5; plan: spring 3 N(h), vertex 2 Re(h conj m), triple 1 eps(vec, h, m_0i)
+
+== lay with the 00 slot rising: promise at round 0 True
+tables: A1 A1 -> A1 = 1; T1 T1 -> A1 = delta: True; T1 T1 -> T1: eps[0,1,2] = 1, eps[0,2,1] = -1
+round 1: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 2: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 3: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 4: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 5: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 6: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+tick_Q == step.tick: 6 of 6 rounds
+mirror_Q == step.mirror: True; untick_Q == step.untick: True
+6 unticks_Q return the lay: True
+mirror_Q twice is the state: False (false where the 00 slot moves, as the act's)
+the same now slot with the before slot moved by 1 gives the same next now slot: False (the act is second order)
+
+== lay with the 00 slot standing: promise at round 0 True
+tables: A1 A1 -> A1 = 1; T1 T1 -> A1 = delta: True; T1 T1 -> T1: eps[0,1,2] = 1, eps[0,2,1] = -1
+round 1: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 2: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 3: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 4: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise False; bits 9
+round 5: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise False; bits 9
+round 6: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise False; bits 9
+tick_Q == step.tick: 6 of 6 rounds
+mirror_Q == step.mirror: True; untick_Q == step.untick: True
+6 unticks_Q return the lay: False
+mirror_Q twice is the state: False (false where the 00 slot moves, as the act's)
+the same now slot with the before slot moved by 1 gives the same next now slot: False (the act is second order)
+
+== lay with the 00 slot varying: promise at round 0 True
+tables: A1 A1 -> A1 = 1; T1 T1 -> A1 = delta: True; T1 T1 -> T1: eps[0,1,2] = 1, eps[0,2,1] = -1
+round 1: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise False; bits 9
+round 2: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise True; bits 9
+round 3: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise False; bits 9
+round 4: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise False; bits 9
+round 5: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise False; bits 9
+round 6: tick_Q == step.tick on (a, b, r, rd): True; W (a+ - 2a + b) = push + r - r+: True; promise False; bits 9
+tick_Q == step.tick: 6 of 6 rounds
+mirror_Q == step.mirror: True; untick_Q == step.untick: True
+6 unticks_Q return the lay: False
+mirror_Q twice is the state: False (false where the 00 slot moves, as the act's)
+the same now slot with the before slot moved by 1 gives the same next now slot: False (the act is second order)
+
+== the 24 as sandwiches g v conj(g) / N(g), the standing lay (the vertex's A1 A1 term left out so nothing pushes the 00 slot; W stands over the run: True), 4 rounds
+turns lifted: 24; by a Hurwitz unit (N = 1): 12; by a Lipschitz g of norm 2: 12; unlifted: 0
+N(g) = 1 exactly where A2 = +1 (the tetrahedral half): 24 of 24
+turned run == run turned (teeth flipped where the sign flips): 24 of 24; the mutant with no flip: 3 of 24
+the same with the vertex's A1 A1 term laid (the 00 slot pushed, W moving): turns holding at rounds 1..4: [24, 3, 3, 3] of 24 each (the moving clock's tooth defect, click25's and sym24's)
+the sandwich g h conj(g) carried at N(g) (g Lipschitz of norm 2, or 2g of norm 4 at 4) leaves remainder 0 on every hand of the lay: 24 of 24 turns
+  m rows [[1, 0, 0], [0, 1, 0], [0, 0, 1]] A2 +1: 2g = (-2, 0, 0, 0), N(g) = 1
+  m rows [[1, 0, 0], [0, -1, 0], [0, 0, -1]] A2 +1: 2g = (0, -2, 0, 0), N(g) = 1
+  m rows [[1, 0, 0], [0, 0, 1], [0, -1, 0]] A2 -1: 2g = (-2, 2, 0, 0), N(g) = 2
+  m rows [[1, 0, 0], [0, 0, -1], [0, 1, 0]] A2 -1: 2g = (-2, -2, 0, 0), N(g) = 2
+  m rows [[-1, 0, 0], [0, 1, 0], [0, 0, -1]] A2 +1: 2g = (0, 0, -2, 0), N(g) = 1
+  m rows [[-1, 0, 0], [0, -1, 0], [0, 0, 1]] A2 +1: 2g = (0, 0, 0, -2), N(g) = 1
+  m rows [[-1, 0, 0], [0, 0, 1], [0, 1, 0]] A2 -1: 2g = (0, 0, -2, -2), N(g) = 2
+  m rows [[-1, 0, 0], [0, 0, -1], [0, -1, 0]] A2 -1: 2g = (0, 0, -2, 2), N(g) = 2
+  m rows [[0, 1, 0], [1, 0, 0], [0, 0, -1]] A2 -1: 2g = (0, -2, -2, 0), N(g) = 2
+  m rows [[0, 1, 0], [-1, 0, 0], [0, 0, 1]] A2 -1: 2g = (-2, 0, 0, 2), N(g) = 2
+  m rows [[0, 1, 0], [0, 0, 1], [1, 0, 0]] A2 +1: 2g = (-1, 1, 1, 1), N(g) = 1
+  m rows [[0, 1, 0], [0, 0, -1], [-1, 0, 0]] A2 +1: 2g = (-1, -1, -1, 1), N(g) = 1
+  m rows [[0, -1, 0], [1, 0, 0], [0, 0, 1]] A2 -1: 2g = (-2, 0, 0, -2), N(g) = 2
+  m rows [[0, -1, 0], [-1, 0, 0], [0, 0, -1]] A2 -1: 2g = (0, -2, 2, 0), N(g) = 2
+  m rows [[0, -1, 0], [0, 0, 1], [-1, 0, 0]] A2 +1: 2g = (-1, 1, -1, -1), N(g) = 1
+  m rows [[0, -1, 0], [0, 0, -1], [1, 0, 0]] A2 +1: 2g = (-1, -1, 1, -1), N(g) = 1
+  m rows [[0, 0, 1], [1, 0, 0], [0, 1, 0]] A2 +1: 2g = (-1, -1, -1, -1), N(g) = 1
+  m rows [[0, 0, 1], [-1, 0, 0], [0, -1, 0]] A2 +1: 2g = (-1, 1, -1, 1), N(g) = 1
+  m rows [[0, 0, 1], [0, 1, 0], [-1, 0, 0]] A2 -1: 2g = (-2, 0, -2, 0), N(g) = 2
+  m rows [[0, 0, 1], [0, -1, 0], [1, 0, 0]] A2 -1: 2g = (0, -2, 0, -2), N(g) = 2
+  m rows [[0, 0, -1], [1, 0, 0], [0, -1, 0]] A2 +1: 2g = (-1, 1, 1, -1), N(g) = 1
+  m rows [[0, 0, -1], [-1, 0, 0], [0, 1, 0]] A2 +1: 2g = (-1, -1, 1, 1), N(g) = 1
+  m rows [[0, 0, -1], [0, 1, 0], [1, 0, 0]] A2 -1: 2g = (-2, 0, 2, 0), N(g) = 2
+  m rows [[0, 0, -1], [0, -1, 0], [-1, 0, 0]] A2 -1: 2g = (0, -2, 0, 2), N(g) = 2

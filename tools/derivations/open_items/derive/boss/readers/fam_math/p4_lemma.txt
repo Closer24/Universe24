@@ -1,0 +1,16 @@
+1. Two gears, W = 2: whole P in [-2, 2]^(2x2) (625) times every bijection of the 4-point box (24):
+   pairs (P, rho) that commute with the per-gear carry on every n in [-6, 6]^2 and every r: 8
+      P = [[-1, 0], [0, -1]], rho = {(0, 0): (1, 1), (0, 1): (1, 0), (1, 0): (0, 1), (1, 1): (0, 0)}, signed permutation: True
+      P = [[-1, 0], [0, 1]], rho = {(0, 0): (1, 0), (0, 1): (1, 1), (1, 0): (0, 0), (1, 1): (0, 1)}, signed permutation: True
+      P = [[0, -1], [-1, 0]], rho = {(0, 0): (1, 1), (0, 1): (0, 1), (1, 0): (1, 0), (1, 1): (0, 0)}, signed permutation: True
+      P = [[0, -1], [1, 0]], rho = {(0, 0): (1, 0), (0, 1): (0, 0), (1, 0): (1, 1), (1, 1): (0, 1)}, signed permutation: True
+      P = [[0, 1], [-1, 0]], rho = {(0, 0): (0, 1), (0, 1): (1, 1), (1, 0): (0, 0), (1, 1): (1, 0)}, signed permutation: True
+      P = [[0, 1], [1, 0]], rho = {(0, 0): (0, 0), (0, 1): (1, 0), (1, 0): (0, 1), (1, 1): (1, 1)}, signed permutation: True
+      P = [[1, 0], [0, -1]], rho = {(0, 0): (0, 1), (0, 1): (0, 0), (1, 0): (1, 1), (1, 1): (1, 0)}, signed permutation: True
+      P = [[1, 0], [0, 1]], rho = {(0, 0): (0, 0), (0, 1): (0, 1), (1, 0): (1, 0), (1, 1): (1, 1)}, signed permutation: True
+
+2. Two gears, W = 3: whole P in [-2, 2]^(2x2) with the affine relabeling rho(r) = P r + c, c in the box:
+   pairs that commute: 8: [([[-1, 0], [0, -1]], (2, 2)), ([[-1, 0], [0, 1]], (2, 0)), ([[0, -1], [-1, 0]], (2, 2)), ([[0, -1], [1, 0]], (2, 0)), ([[0, 1], [-1, 0]], (0, 2)), ([[0, 1], [1, 0]], (0, 0)), ([[1, 0], [0, -1]], (0, 2)), ([[1, 0], [0, 1]], (0, 0))]
+   (each a signed permutation, c = 2 = W - 1 exactly on its negated rows: the flip, forced)
+
+3. Two gears, W = 1: whole P in [-2, 2]^(2x2) commuting with the carry: 625 of 625 (all: the carry is linear).

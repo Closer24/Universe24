@@ -1,0 +1,29 @@
+PROBE CARRY BIG: fixed nonzero cosets by Smith's form at larger W (Lambda, the 48; H, the 24)
+   W =    13: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    17: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    19: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    23: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    25: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    35: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    49: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    55: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    65: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    77: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    91: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =   125: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =    14: gcd(W, 6) = 2; Lambda fixed cosets by order {2: 255, 3: 0, 4: 270, 6: 0, 8: 36}; H fixed cosets by order {2: 15, 3: 0, 4: 18, 6: 0}: NO domain
+   W =    15: gcd(W, 6) = 3; Lambda fixed cosets by order {2: 0, 3: 640, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 64, 4: 0, 6: 0}: NO domain
+   W =    16: gcd(W, 6) = 2; Lambda fixed cosets by order {2: 255, 3: 0, 4: 270, 6: 0, 8: 36}; H fixed cosets by order {2: 15, 3: 0, 4: 18, 6: 0}: NO domain
+   W =    18: gcd(W, 6) = 6; Lambda fixed cosets by order {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}; H fixed cosets by order {2: 15, 3: 64, 4: 18, 6: 0}: NO domain
+   W =    21: gcd(W, 6) = 3; Lambda fixed cosets by order {2: 0, 3: 640, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 64, 4: 0, 6: 0}: NO domain
+   W =    27: gcd(W, 6) = 3; Lambda fixed cosets by order {2: 0, 3: 640, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 64, 4: 0, 6: 0}: NO domain
+   W =    30: gcd(W, 6) = 6; Lambda fixed cosets by order {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}; H fixed cosets by order {2: 15, 3: 64, 4: 18, 6: 0}: NO domain
+   W =    36: gcd(W, 6) = 6; Lambda fixed cosets by order {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}; H fixed cosets by order {2: 15, 3: 64, 4: 18, 6: 0}: NO domain
+   W =    60: gcd(W, 6) = 6; Lambda fixed cosets by order {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}; H fixed cosets by order {2: 15, 3: 64, 4: 18, 6: 0}: NO domain
+   W =    90: gcd(W, 6) = 6; Lambda fixed cosets by order {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}; H fixed cosets by order {2: 15, 3: 64, 4: 18, 6: 0}: NO domain
+   W =  1001: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   W =  1002: gcd(W, 6) = 6; Lambda fixed cosets by order {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}; H fixed cosets by order {2: 15, 3: 64, 4: 18, 6: 0}: NO domain
+   W =  1003: gcd(W, 6) = 1; Lambda fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}; H fixed cosets by order {2: 0, 3: 0, 4: 0, 6: 0}: domains EXIST
+   the criterion holds at every W tried: fixed cosets exactly where 2 or 3 divides W, from the lifts of orders 2, 4, 8 (at 2) and 3 (at 3)
+
+   the load's rest teeth 6 den Gamma^2 with the example's den and full rate: 90977140554674334000000, gcd with 6: 6; W = rest + a_00 is coprime to 6 iff a_00 is: a_00 in -3..3 gives gcd [3, 2, 1, 6, 1, 2, 3]

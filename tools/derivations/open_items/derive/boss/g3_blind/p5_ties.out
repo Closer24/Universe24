@@ -1,0 +1,12 @@
+--- (a) the square tie g f (x.x)|k|^2, gamma 1000, g 1, 3000 rounds
+   A =   1: largest count            1; |k|^2 seen [1]; x every 500 rounds [1, -1, 1, -1, 1, -1, 1]; rounds 3000; ran away False; run back exact True
+   A =   4: largest count            4; |k|^2 seen [1]; x every 500 rounds [4, 4, 3, -4, -4, -4, -4]; rounds 3000; ran away False; run back exact True
+   A =  10: largest count           10; |k|^2 seen [1]; x every 500 rounds [10, -10, 10, -5, -5, 10, -10]; rounds 3000; ran away False; run back exact True
+--- (b) the linear tie g f (x.x) k_re, gamma 1000, g 1, 3000 rounds
+   A =   1: largest count            1; |k|^2 seen [1, 2, 5, 10]; x every 500 rounds [1, 1, 1, 1, 1, 1, 1]; rounds 3000; ran away False; run back exact True
+   A =   4: largest count            4; |k|^2 seen [0, 1, 2, 4]; x every 500 rounds [4, 4, 4, 4, 4, 4, 4]; rounds 3000; ran away False; run back exact True
+   A =  10: largest count 425562676031758; |k|^2 seen [1, 2, 4, 5, 9, 10]; x every 500 rounds [10, 17]; rounds 570; ran away True; run back exact None
+--- (c) the rocking tie g f Re(conj(L) k R) on whole-speed hands, gamma 1000, g 1, 3000 rounds
+   A =   1: largest count            1; |k|^2 seen [1, 2, 5, 10]; x every 500 rounds [1, 1, 1, 1, 1, 1, 1]; rounds 3000; ran away False; run back exact True
+   A =   4: largest count            4; |k|^2 seen [0, 1, 2, 4]; x every 500 rounds [4, 4, 4, 4, 4, 4, 4]; rounds 3000; ran away False; run back exact True
+   A =  10: largest count 692030160077; |k|^2 seen [1, 2, 4, 5, 9, 10]; x every 500 rounds [10, 10, 17]; rounds 1084; ran away True; run back exact None

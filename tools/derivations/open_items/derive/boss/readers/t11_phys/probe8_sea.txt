@@ -1,0 +1,10 @@
+Probe 8: light through a sea of bobs, a ring of 48 Node-clocks, c^2 = 1/6, the real act
+  at the lay: D_light 237872580000, D_bobs 0, P_light 209949480000, P_bobs 0 (a packet laid moving right)
+  over 400 rounds: D_light + D_bobs moves off the lay's by at most 17 millionths of the energy (the bobs hold up to 170 thousandths of it)
+  P_light + P_bobs moves off 0 by at most 4173126 counts^2 while P_light alone reaches 209949480000 and P_bobs 40064372620 (each row's momentum moves; their sum is kept to Rule3's turn: 19 millionths of P_light's reach)
+  the key 10977120001 (a seventh of the top site's light wind at the lay; the packet holds 22 keys):
+    the bobs' count reaches 0 at most; click lines written by the bobs 0, by the light's own Node-clocks 945, over 400 rounds
+    light's Node-clocks reading a negative count: 0 site-rounds of 19200
+  Reading: with Meshes, both books have whole-number forms and both are kept to Rule3's turn through the exchange;
+  the light's clicks are overwhelmingly its own propagation; the bobs' clicks are the exchange. A pinned bob
+  carries momentum as a phase wave across the sea, not as a recoil: nature's atom recoils; this board's cannot.

@@ -1,0 +1,11 @@
+Probe 5: the wind given or taken, the owner's count (15:3x UTC), on Animate's world
+  the key, a seventh of the giver's wind at the lay made odd: 714285715 counts^2 (D_L at the lay 5000000000)
+  the giver's clicks sum to -6, the taker's to 6; the taker's count runs 0..7; rounds with a click 35; the pair's books (q_L + q_M = 0) miss in 2 rounds of 6000
+  D_L + D_M drifts off the lay's by at most 1854 millionths of a key over the run, and by at most 3351 in one round (Rule3's turn)
+  n_L + n_M over the run: least -1, most 0 (closed books keep it at 0)
+  the taker's wind read on the backward run equals the forward's at 6000 of 6000 rounds (D is even under the mirror)
+
+  a free hand, no vertex: clicks over 6000 rounds 0; its wind moves off the lay's by at most 1855 millionths of a key (a clock that keeps its beat does not click)
+  the giver on a line, the taker at rest (key 357142857): the taker's count runs 0..7, the books miss in 4 rounds; the area moved is 0 in every round (TERM11), so the charge's count stays 0 while the wind passes
+
+  Beside it, the area (the charge's count): tau_L + tau_M = 0 in every round and the pair's clicks close in 6,000 of 6,000 (probe_wind.txt); the two counts agree on the circle (both 0..7, both connect 3 times) and part on the line.
