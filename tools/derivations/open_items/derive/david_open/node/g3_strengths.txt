@@ -6,6 +6,8 @@
 (b) on g and kappa from 1 to 40 (1,600 pairs, n = 3): the identity holds at lam = least - 1, least, least + 1 on 81 points each in 1600 pairs; 2 kappa least >= g^2 in 1600; a point with V < 0 at least - 1 in 1600; g^2 div (2 kappa) + 1 above the ceiling in 136 pairs, exactly where 2 kappa divides g^2 in 1600 of 1,600
     on the probe's numbers: g = 227442851386685, kappa = W div 16, 2 kappa divides g^2: False; the least whole lam 4548858; 2 kappa least - g^2 = 11056751168873926210775 >= 0; at 4548857, V < 0 at c = 37504431719006873534815810329227015625000001: True
 (b2) two families sharing K, each with its own four-leg term: the identity on 72 points: True; at the one-family least lam, V < 0 at c1 = c2 = 37504431719006873534815810329227015625000001 on the valley: True; the two-family least whole lam 9097715 (the ceiling of 2 g^2 / (2 kappa)); one four-leg term on the summed C at the one-family least, V >= 0 at the same points: True
+(b2') two families with their own g_f and lam_f (1 to 4 each, kappa 1 to 4, n = 3; 1024 cases): the identity on 225 points each in 1024; the sum of g_f^2 / (2 kappa lam_f) above 1 in 640, each with a written point on the ray c_f along g_f / lam_f where V < 0: 640; at or below 1 in 384, V >= 0 on 3,549 points in 384. With g = (2, -2), lam = (1, 1), kappa = 3 the sum is 4 / 3, yet 4 V stays at or above -108 on 40,000 points and -108 on 313,600: bounded below, while the clock's state (k = n, c = 0) gives 0 and is not the least, since a negative g_f is a negative spring
+(b3) 4.2's hat for the held count with g = 4, mu = 4, nu = 1 (so n = 2 and its spring kappa = 2 mu = 8), lam = 1, the quadratic spring's least: 4 V at the clock's state (n, 0) -16, at (k, c) = (-3, 12) -135; the least on k from -20 to 20 and c from 0 to 199, -135 at (k, c) = (-3, 12): the clock's state is not the least
 (c) X laid at rest, K at n:
     at 100000: lam 0: stays over 4000 rounds; least K 999551, below 0 in 0 rounds; the valley's K at the largest swing 999800; the largest c 10 tenths of the laid one, its reach 10 tenths; the gear's sign changes 64
       the least lam: stays over 4000 rounds; least K 999555, below 0 in 0 rounds; the valley's K at the largest swing 999800; the largest c 10 tenths of the laid one, its reach 10 tenths; the gear's sign changes 64
@@ -30,8 +32,28 @@
       one term on the summed C, the one-family least: stays over 4000 rounds, least K -142459085, sign changes 69 and 69
 (c3) the least lam, one family or two under one summed term, sign changes in 4,000 rounds (the mass 63.7): 1 at 10000000: from n [64], from the valley -999999 [61]; 1 at 20000000: from n [62], from the valley -6999999 [55]; 2 at 10000000: from n [68, 68], from the valley -2999999 [59, 59]; 2 at 20000000: from n [69, 69], from the valley -14999999 [49, 49]
 (c4) sign changes in 4,000 rounds (the mass 63.7), the held hand laid at n unless named:
-    the least lam laid at 1.4 x 10^7 68; 3.0 x 10^7 76; 4.0 x 10^7 78; 5.0 x 10^7 runs away at round 1627
+    the least lam laid at 14 x 10^6 68; 30 x 10^6 76; 40 x 10^6 78; 50 x 10^6 runs away at round 1627
     above the least: least + 100 at 4 x 10^7 67; least + 3000 at 4 x 10^7 61; least + 10000 at 2 x 10^7 64
     two families, the first swinging alone, the second at rest: 1 x 10^7: each its own term 95/0, one summed term at the one-family least 64/0; 2 x 10^7: each its own term 206/0, one summed term at the one-family least 62/0
     kappa at k g n, its own least lam, the held hand laid on its valley, laid at 10^7 and 2 x 10^7: 25 g n: 61 and 55; 9 g n: 59 and 65; 4 g n: 60 and 72; 2 g n: 52 and 48; 1 g n: 73 and 30
+(c3') laid on its valley at its own least lam, the gear's sign changes and the held hand's largest lag behind its valley, at 1, 2 and 3 x 10^7: 100 g n: 64 (41 per mille), 63 (41 per mille), 62 (39 per mille); 25 g n: 61 (159 per mille), 55 (164 per mille), 48 (95 per mille); 9 g n: 59 (586 per mille), 65 (301 per mille), 62 (200 per mille); 4 g n: 60 (400 per mille), 72 (201 per mille), 91 (133 per mille)
+(c5) the spread over 40 lays (laid + 7919 d, d = 0 to 39), the gear's sign changes in 4,000 rounds: the mean, then
+     the least to the most (the mass 63.7)
+    one family, the least lam, laid at 10 x 10^6: the held hand at n 64.0 (64 to 64); on its valley 61.0 (61 to 61)
+    one family, the least lam, laid at 20 x 10^6: the held hand at n 64.3 (49 to 81); on its valley 55.0 (55 to 55)
+    one family, the least lam, laid at 30 x 10^6: the held hand at n 67.2 (49 to 81); on its valley 48.0 (48 to 48)
+    one family, the least lam, laid at 40 x 10^6: the held hand at n 69.9 (53 to 81); on its valley 52.6 (43 to 71)
+    least + 100 at 4 x 10^7, the held hand at n: 68.0 (53 to 85)
+    least + 3000 at 4 x 10^7, the held hand at n: 70.8 (60 to 83)
+    least + 10000 at 4 x 10^7, the held hand at n: 76.5 (66 to 94)
+    two families at 2 x 10^7, the held hand at n: laid alike, one summed term 68.7 (50 to 85); each its own term at the two-family least 68.7 (53 to 87); the first alone, one summed term 64.3 (49 to 81)
+    kappa 25 g n, its own least lam, laid on its valley: at 10^7 61.0 (61 to 61); at 2 x 10^7 55.0 (55 to 55)
+    kappa 9 g n, its own least lam, laid on its valley: at 10^7 57.6 (50 to 65); at 2 x 10^7 63.6 (56 to 72)
+    kappa 4 g n, its own least lam, laid on its valley: at 10^7 63.6 (57 to 70); at 2 x 10^7 57.9 (37 to 79)
+    kappa 2 g n, its own least lam, laid on its valley: at 10^7 58.2 (44 to 72); at 2 x 10^7 54.3 (38 to 90)
+(c6) the step's edge at the least lam: the Hessian's largest root passes 4 W on the valley from a swing of 198369298 (lam c alone reaches 4 W only at c = 4 W / lam, 79999982900916523)
+    laid at 400 x 10^5 (5 lays): stays, stays, stays, stays, stays; the reach's c over the edge's, 69 hundredths; the largest swing of a run that stays 165869426
+    laid at 420 x 10^5 (5 lays): stays, stays, stays, stays, stays; the reach's c over the edge's, 83 hundredths; the largest swing of a run that stays 188048861
+    laid at 440 x 10^5 (5 lays): away, away, stays, away, away; the reach's c over the edge's, 100 hundredths; the Hessian passes 4 W 35 to 291 rounds before the runaway, lam c 4 to 9; the largest swing of a run that stays 174611396
+    laid at 500 x 10^5 (5 lays): away, away, away, away, away; the reach's c over the edge's, 165 hundredths; the Hessian passes 4 W 23 to 2279 rounds before the runaway, lam c 5 to 6
 (d) sign changes over 4,000 rounds: the gear laid at 10^5 with K at n, 64; the held hand laid 10^5 off n with no swing, 319; 4 sin^2 (omega / 2) = spring / W gives 4,000 omega / pi = 63.7 and 319.2

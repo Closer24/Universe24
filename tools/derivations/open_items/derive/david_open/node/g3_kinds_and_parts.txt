@@ -9,7 +9,7 @@
     (iii) mode (1, 1): the least lam stays over 4,000 rounds; lam 0 runs past 10^60 at round 36
     (iii) mode (1, -1): the least lam stays over 4,000 rounds; lam 0 runs past 10^60 at round 21
 (g) two parts, c = x1^2 + x2^2: sign changes at 10^5 and 3 x 10^4, 64 and 64; both parts laid at 10^7: the least lam stays over 4,000 rounds; lam 0 runs past 10^60 at round 36
-(h) E's invariant forms under the 24, degrees 2 to 6: [1, 1, 1, 1, 2] (the form x^T G x, the cubic, its square's companion only at six legs)
+(h) E's invariant forms under the 24, degrees 0 to 9: [1, 0, 1, 1, 1, 1, 2, 1, 2, 2]: x^T G x at two legs, the cubic f at three, (x^T G x)^2 at four, (x^T G x) f at five, (x^T G x)^3 and f^2 at six
     C[E, E -> E] not 0: True; f = (G e) . C(e, e) kept by the 24 on 81 whole points: True; a multiple of the 24's one invariant cubic: True
     f = 0 e1^3 + 9 e1^2 e2 + -9 e1 e2^2 + 0 e2^3 on every whole point: True; the Lagrange form det[grad f, G e] = {(1, 2): 27, (0, 3): -18, (2, 1): 27, (3, 0): -18}, a multiple of (e1 + e2)(2 e1 - e2)(e1 - 2 e2): True
     on the line through e = (1, -1): f = -18; the T1 family's E part diagonal True, [1, -2, 1], two alike True
@@ -18,4 +18,6 @@
     on the line through e = (-1, 1): f = 18; the T1 family's E part diagonal True, [-1, 2, -1], two alike True
     on the line through e = (-1, -2): f = 18; the T1 family's E part diagonal True, [-1, -1, 2], two alike True
     on the line through e = (-2, -1): f = -18; the T1 family's E part diagonal True, [-2, 1, 1], two alike True
-    on the 168 whole points off 0 with |e| up to 6: three different springs exactly off the three lines: 144 off, 24 on, True
+    on the 168 whole points off 0 with |e| up to 6: three different springs on 144, the points off the three lines 144; the two sets are one: True
+    gamma = 0 with the five-leg term +(e^T G e) f alone, on the 18 whole points of one size: its least at (-462, -231), on a line: True
+    gamma = 0 with the five-leg term -(e^T G e) f alone, on the 18 whole points of one size: its least at (-231, -462), on a line: True
