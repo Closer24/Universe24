@@ -24,8 +24,9 @@ standing clock, so the act is exact and the run back returns the start bit for b
 `python -I tools/tensor24_run.py examples/tensor24-live/universe.json examples/tensor24-live/piece.json
 examples/tensor24-live/setting.json <record .jsonl>`; the ledger beside the record holds the light's counts at every
 Node-clock and round, the pulse's peak moving along z. The clocks' wells and the grips' slackening are the well world's
-below (terms 5 and 9, drafted); the clicks are owed to term 11 (drafted, no vertex laid in these worlds); the window of
-the wave, 0 <= SUM grip / W <= 1, is read by the runner.
+below (terms 5 and 9, drafted); the clicks are owed to term 11 (drafted, no vertex laid in these worlds; the click world
+below lays one); the window of the wave, the six Spokes' grips summed within [0, senses W] (2 W, the senses of an axis
+counted from the star), is read by the runner.
 
 ## The well world
 
@@ -89,3 +90,47 @@ is 0.01 Mesh, below the lattice's resolution (the well is 3 parts in 10^4 of W a
 row's teeth stand at rest, the acyclic cut, so its own waves run on the rest cone while light and every other slot
 run on the well's, c^2 = grip / W: at the last round every other row's dial reads 6000852 to 6001812 where the 00
 row's reads 6000000, a second cone 1000142 to 1000302 parts per million of the first.
+
+## The click world
+
+`examples/tensor24-click/` is a fourth folder of the same three files, a world whose clicks fall: term 6's coupling
+family in its frame (the held train found by its character and Mesh-less, the tied trains found by theirs) and term
+11's whole click, on a cube of 3 at den 1 and full_rate 10000 (the rest teeth 6 10^8, f = rest div Gamma = 60000).
+Its setting and its key are laid by `tools/derivations/open_items/derive/boss/click_lay/lay.py` from the universe and
+the piece, in whole numbers by the act itself (its account in `lay.txt` beside it). Five trains: light (A1, part 2)
+and the metric at 0, push 0 and notch 0 (the held turn is exact only for -rest / 4 <= c00 < rest / 2); the held hand
+(A1, A2) at (1, 0) at every Node-clock, its before (0, -1) a quarter turn back, every edge tooth at the dial's middle,
+s = 0, the format's default (the room exists only for a held tooth born there), so that its quarter turn is exact at
+every Node-clock; and two tied hands (T1, T2), tied to the held hand's square at hold 1 (the tied spring 2 hold f =
+120000, a lone tied hand's beat 410 rounds on the act) and to each other by the hands' tie at 96000: the giver laid as
+a line hand at its turning point, a = b = (40, 0, 0) on its T1 rows at every Node-clock, and the taker at 0. Every
+Node-clock is laid alike, so the Meshes pull nothing between like sites and each runs as the one Node-clock the
+generator reads.
+
+The room, with its numbers: the passing's books hold only while the held hand's quarter turn is exact (the tie is a
+monomial of four value legs, NOT_CLOSED 29), which holds while the tied hands' squares summed at the held hand, hold
+(|x_giver|^2 + |x_taker|^2), stay below Gamma div 4 = 2500. The lay starts at hold A^2 = 1600, and the act keeps the
+sum at most 1600 over all 5000 rounds with the energy moving between the giver and the taker (the pair beats on its two
+normal modes, so each beat's most falls from 1600 to about 1000 over the run and does not stand constant). The tie is
+800 permille of the tied spring, not a tenth of it, because the edge moves a count only where a gear's momentum reaches
+half a count a round, and a tied hand inside the room moves at most about 0.7 of a count a round: at a tenth (12000)
+the taker's push stays in its tooth, at most 158400000 of the dial's half 1200000000, no count moves and no click falls
+in 5000 rounds (`lay.txt`, its no). The key is CHOSEN as the nearest odd whole to the seventh of the largest swing of
+the giver's course of S (its passing, the two-round energy change) over its first beat, read off the act at the key
+1, where the click is S itself: a swing of 355680000, so the key 50811429 and about seven keys a beat (a chosen unit of
+wind below the quantum; Planck's key is NOT_CLOSED 3).
+
+Run it as the one bang: `python -I tools/tensor24_run.py examples/tensor24-click/universe.json
+examples/tensor24-click/piece.json examples/tensor24-click/setting.json <record .jsonl>` (5000 rounds out and back in
+about 17 minutes; the ledger is about 54 MB, five lines a Node-clock a round). Measured from outside on its record and
+ledger by `click_lay/measure.py` (`measure.txt`): 4212 click lines, the giver's and the taker's alone; the pair's books,
+the q of the lines summed over the trains, 0 at every one of the 2106 rounds and Node-clocks where a line stands; the
+held train's lines none, and its |k|^2 1 at every Node-clock and round; the room at most 1600 at every Node-clock; the
+largest count 40, no runaway; the taker's course in keys swinging between 1 and 7 from round 91 on, its lines alike at
+every Node-clock, the giver's and the taker's q summing to -4 and 4 at each over the run; the run back exact; the 24,
+the lay turned under the twisted action (a negated row's counts negated and its tooth flipped to -1 - s) with its sites
+moved, run on the cube against the run turned, alike in the state and in every click at 24 of 24 turns over its first
+100 rounds. The frame's prices (FRAMES.md 6): the held train holds no Mesh, so the vacuum does not propagate; its |k|^2
+is laid by the seed and picked by no law (no vacuum minimum); one beat per tied train; the room is half a quantum, and
+past it the held train clicks alone and the books open (NOT_CLOSED 29); a Mesh leg's wind is booked by no click
+(NOT_CLOSED 4).

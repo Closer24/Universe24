@@ -287,9 +287,9 @@ def found(tmp_path, name, edit):
 
 
 def test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds(tmp_path):
-    """Every rule of the one checker's format, two departures of one file each named once, and the tool: the examples
-    hold and load, exit 0; given one file, argparse's usage error, exit 2."""
-    assert departures(*(EXAMPLES / f"{name}.json" for name in NAMES)) == []
+    """Every rule of the one checker's format, two departures of one file each named once, and the tool: every example
+    folder's three files hold, and the examples load, exit 0; given one file, argparse's usage error, exit 2."""
+    assert not any(departures(*(f / f"{n}.json" for n in NAMES)) for f in EXAMPLES.parent.glob("*/"))
     for i, (rule, (name, edit, named)) in enumerate(sorted(edits().items())):
         lines = found(tmp_path / str(i), name, edit)
         assert any(named in line for line in lines) if named else lines == [], (rule, lines)

@@ -1,0 +1,6 @@
+the click world's record tensor24-click.jsonl: [3, 3, 3] Node-clocks, 5000 rounds, 4212 click lines; the run back exact: 1 (undone 5000)
+1. the pair's books: the q of the click lines summed over the trains at every round and Node-clock where any clicked: 2106 places, 0 not 0; the q summed by train over the run {3: -108, 4: 108} (the giver 3, the taker 4)
+2. the held train's click lines: 0 []; the held hand's |k|^2 over every Node-clock and round [1]; the largest count over the run 40 (below 1000000000: no runaway)
+3. the room: hold (|x_giver|^2 + |x_taker|^2) at the held hand at most 1600 over every round and Node-clock against Gamma div 4 = 2500, the same at every Node-clock: True (27 Node-clocks)
+4. the taker's course in keys at Node-clock 0, (round, course) at each of its clicks, the first and the last ten: [(91, 1), (105, 2), (121, 3), (250, 4), (260, 5), (271, 6), (282, 7), (472, 6), (619, 5), (629, 4)] ... [(4257, 5), (4271, 6), (4423, 7), (4458, 6), (4608, 5), (4622, 4), (4637, 3), (4783, 2), (4979, 3), (4994, 4)]; its click lines alike at every Node-clock: True
+5. the 24: the lay turned under the twisted action and its sites moved, run 100 rounds on the cube against the run turned, the state and every train's clicks at every Node-clock and round: alike at 24 of 24 turns
