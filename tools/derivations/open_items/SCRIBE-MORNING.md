@@ -28,3 +28,8 @@ For the owner only: what only the owner can decide, and the law's side (a change
 ## C. Statuses that wait on the owner's word
 
 16. READY for terms 5 (its unit), 9 (the notch's strength h) and 11 (its form at depth) is the Boss's to give after the owner's word; BUILT needs the road to main (the writer's APPROVED, then the fast-forward on the owner's word).
+
+## D. Entered this night on the owner's word
+
+17. **The click-world law (the Boss's 6535922454, 23:46 UTC).** Every claim of physics is transformed to the click world, the board's shadow (dimension three), and checked there, with the tools known for the shadow (the decoder's readings and the measurement's rules, D6 to D8); no new tool is made for one claim. Entered as item (16) of the principle in law line 35 (the law keeps its 1,960 lines) and in Solution24 (the paragraph Where a claim of physics is checked, step 12, the words MEASURED on the board and MEASURED in the click world). Every measured line of the night is a board reading until its click-world check stands. **Recommendation: none needed, since it is entered on the owner's own word; the status words are the writer's proposal to the Boss.**
+18. **Two proposals of the owner's own, with Big Pic for a word on each:** a third click, one that chooses a path no one has chosen yet and changes the history and the future, and a family with three hands. The architect enters each as a frame when Big Pic gives his word; no status moves. **Recommendation: Big Pic first; the third click's place against the act's exact run back and against term 12's split click and G5's draw is the first question.**
