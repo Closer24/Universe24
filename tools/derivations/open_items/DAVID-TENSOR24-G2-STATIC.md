@@ -1,34 +1,52 @@
 # G2, the static field on the slot form: gamma = 1 from Postulate 6, and beta = 2 - gamma for test bodies
 
-David, 2026-10-30 (the third text, 17:xx UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
+David, 2026-10-30 (the fourth text, 23:xx UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
 close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's terms
 2, 3, 5 and 13 and for Postulate 6. It reads the act as built on main (0df0e8385), N2's source for term 5 (the Boss's
-draft, derive/boss/n2), term 9's second text (toys-5 ebaedd4e8) and term 13's second text (toys-5 d94169dc3), in the
-law's four layers (Postulate 4, item (10): the clock, the algebra, the event board and the physics behind the clicks).
+draft, derive/boss/n2), and term 9's and term 13's texts at toys-5 55cc9b567 (their earlier readings cited by their own
+commits), in the law's four layers (Postulate 4, item (10): the clock, the algebra, the event board and the physics
+behind the clicks).
 - **The readers.** The second text (toys-5 8ea1592db) went to a second hostile pair, who refused it with six items and
   nine. Here they are "the mathematician" and "the physicist"; the first text's pair are "the first mathematician" and
   "the first physicist".
 - **Big Pic's re-check.** He re-checked both reports (6527540022, item 8, which the Boss relays as the senior
   reviewer's word): every item stands, and no reader is wrong.
-- **This text** answers the second pair through his re-check. The items are folded here (sections 9 and 10), and
-  section 11 says how this text checked itself (the owner's word of 16:2x UTC, 6527238774).
+- **The third text** (toys-5 fcd74a092) answered the second pair through his re-check (sections 9 and 10). It went
+  back to that pair. The mathematician found his six items mended and one new item blocking, his N1 (Postulate 6 for
+  two masses). The physicist found his nine mended and two new items blocking, his N1 (a strength fixed at -1/12
+  against term 9's rest) and his N2 (N2's teeth factor in G).
+- **Big Pic's word** (6534774141, item 2): all three stand. The density road answers two: on it the push is in the
+  Node-clock's own units by construction, and the teeth factor does not arise. The third is a scope: Postulate 6 holds
+  for clocks in given wells, and its two-body form owes general relativity's Phi_2.
+- **This text** folds them (section 11); section 12 says how it checked itself (the owner's word of 16:2x UTC,
+  6527238774).
 - **The probe** is derive/david_open/node/g2_static.py, its output g2_static.txt beside it, whole numbers alone, about
   75 s (72 to 77 s on this machine). Cases built to break this text are in g2_cases.py beside it, its output
-  g2_cases.txt (section 11). A number the probe does not print is named to the reader whose script prints it, or to its
+  g2_cases.txt (section 12). A number the probe does not print is named to the reader whose script prints it, or to its
   page.
 
 **The finding in one line:** on the slot form, with every grip read at both ends of its Mesh, the 00 slot's second
 order is gamma / 2 times the square of its first plus the source's own second order, so beta = 2 - gamma for test
-bodies; on the act's pull two slowdowns compose by their product at first post-Newtonian order at gamma = 1 and only
-there, so Postulate 6 fixes gamma = 1 (DERIVED), and then beta = 1 for test bodies around sources at rest on an open
-board at zero background, under the two conditions of section 2.
+bodies; for clocks in the wells of given sources Postulate 6 is beta = 1, and on the act's pull two such slowdowns
+compose by their product at first post-Newtonian order at gamma = 1 and only there, so at zero background Postulate 6
+fixes gamma = 1 (DERIVED), with beta = 1 for test bodies around sources at rest on an open board, under the two
+conditions of section 2.
 - **Refused by name:** the exponential of the 00 count, which gives beta = 1 - gamma and Mercury 4/3 of its advance.
   It is the law's older clause, not Postulate 6.
-- **The source moves with the teeth:** N2's 00 source falls as J00 = J_ii (1 - 2 u) in a well, so a body's two
-  exterior masses part and gamma_ext moves up: about +2 x 10^-5 for the Sun on the mathematician's figure, its
-  self-energy part alone about +3 x 10^-5 on the physicist's, at Cassini's 2.3 x 10^-5. The strides weighed at the
-  gear's own teeth would keep one mass: a candidate to measure, not derived (Big Pic).
-- **The background:** gamma = 1 holds at zero background. On the slot form term 9's rest reads in gamma; under the law
+- **The background, in the Node-clock's own units** (the physicist's N1 and N2; Big Pic): at term 9's rest a strength
+  fixed in lattice counts fails Postulate 6 (gamma_obs = 11/9 and beta_obs = 7/9 at u_c = 1/10), and N2's teeth factor
+  moves G at first order. Pushed in the Node-clock's own units at its teeth and grip, as term 5's books' form pushes
+  each slot (the density road), gamma_obs = beta_obs = 1 at every rest, and G does not read the background. The slot
+  reading in fixed units keeps the teeth factor as its price.
+- **Two masses** (the mathematician's N1; Big Pic): for two masses that pull each other, N2's source lowers each
+  body's 00 mass by 2 u1 of the other at its place. General relativity has such a cross part too, the sources' mutual
+  energy (Phi_2), so the comparison is the two-body test, OPEN.
+- **The source moves with the teeth:** N2's 00 source falls as J00 = J_ii (1 - 2 u) in a well, so a body's two exterior
+  masses part and gamma_ext moves up: about +2 x 10^-5 for the Sun on the mathematician's figure, its self-energy part
+  alone about +3 x 10^-5 on the physicist's, at Cassini's 2.3 x 10^-5. The strides weighed at the gear's own teeth would
+  keep one mass: a candidate to measure, not derived (Big Pic).
+- **The background in fixed units:** gamma = 1 holds at zero background. With the push fixed in lattice counts term
+  9's rest reads in gamma; under the law
   above in Big Pic's form the static rest would be a change of coordinates and move nothing, and what moves in time is
   OPEN. On the cut, the 00 row's teeth at rest, the law above does not hold (term 9's two readers, with Big Pic for his
   re-check): it needs a 00 law that keeps one cone.
@@ -52,10 +70,12 @@ board at zero background, under the two conditions of section 2.
   of light's beat goes as the grip over the teeth for long waves, so light crosses a slack Mesh more slowly.
 - **Near a mass** the 00 slot rises and the ii slots fall, each by the mass's push in its own unit: the clocks there run
   slow and the Meshes slacken, and light passing by is slowed by both.
-- **Two causes, one product.** When two masses slow a clock, Postulate 6 asks the slowdowns to multiply. On the act
-  they do, at first post-Newtonian order, only when matter pushes the grips' slots a twelfth as hard as the 00 slot and
-  the other way, as general relativity's are pushed. So the push is no longer a choice: Postulate 6 sets it, and
-  Cassini tests it (2).
+- **Two causes, one product.** When two given masses slow a clock, Postulate 6 asks the slowdowns to multiply. On the
+  act they do, at first post-Newtonian order and at zero background, only when matter pushes the grips' slots a
+  twelfth as hard as the 00 slot and the other way, as general relativity's are pushed. So the push is no longer a
+  choice: Postulate 6 sets it, and Cassini tests it (2). Where every clock rests at term 9's depth, a push fixed in
+  lattice counts no longer composes; a push in the Node-clock's own units, at its own teeth and grip, does at every
+  depth (2). Two masses that pull each other carry a cross part of their own, as general relativity's do (2).
 - **The field's own weight.** The 00 slot is itself pulled through those grips. Where the Meshes slacken, the 00
   slot's pull weakens, so it rises a little more. That extra rise is second order. With the ii slots pushed as
   Postulate 6 sets them, it slows the clocks by just what general relativity asks, together with the clock's own
@@ -71,11 +91,12 @@ board at zero background, under the two conditions of section 2.
   push adds to the slot's summed momentum and no pull removes it, so the slot's sum grows as the square of the rounds.
   A standing field needs the notch (term 9) to hold the board's mean.
 - **The rest every clock carries.** Held by the notch, every clock rests at one depth, set by the matter within the
-  notch's range, and every rod is short by it. On the slot form the clicks read a well against that rest, so how far
-  light bends against how far clocks slow moves with it. Under the law above, a uniform rest that stands still is a
-  change of coordinates and moves nothing; what moves in time is still read (2, 4). On the cut, where the 00 row's teeth
-  stand at rest, it is not: the 00 slot's own beat keeps its pace at every depth while every other clock slows, so a
-  uniform rest changes the ratio of two beats (2, 8).
+  notch's range, and every rod is short by it. On the slot form, with matter's push fixed in lattice counts, the clicks
+  read a well against that rest, so how far light bends against how far clocks slow moves with it; pushed in the
+  Node-clock's own units, at its own teeth and grip, the rest moves neither (2). Under the law above, a uniform rest
+  that stands still is a change of coordinates and moves nothing; what moves in time is still read (2, 4). On the cut,
+  where the 00 row's teeth stand at rest, it is not: the 00 slot's own beat keeps its pace at every depth while every
+  other clock slows, so a uniform rest changes the ratio of two beats (2, 8).
 - **A board at rest.** The board has a frame of its own. This page reads masses at rest on it. A mass moving across it,
   or spinning, pushes the 0i slots, and on the act as built no row reads them: a spinning Earth drags no gyroscope,
   which Gravity Probe B refuses until term 10 (4).
@@ -86,14 +107,18 @@ board at zero background, under the two conditions of section 2.
 ## 2. In the algebra
 
 - **The readings, at zero beat** (CHECKED, probe (a), (a2), (b)).
-  - A gear on a spring s at teeth W beats at 4 sin^2 (omega / 2) = s / W. A clock's rate against a clock at the rest
+  - A gear on a spring s at teeth W follows W (x+ - 2 x + x-) = -s x, so its beat is set by s / W alone, its square
+    near s / W while s is small against W. A clock's rate against a clock at the rest
     teeth is read exactly as the exact linear recurrence's count (probe (a2)), and to the next order
     N^2 = (1 / (1 + u)) (1 - (s / (12 rest)) u / (1 + u)), u = c00 / rest: N^2 = rest / W holds at zero beat.
-  - Light on the lattice beats at 4 sin^2 (omega / 2) = (grip / W) 4 sin^2 (k / 2): grip / W at zero wave number.
+  - Light on the lattice follows W (x+ - 2 x + x-) = grip (x_east - 2 x + x_west) along an axis, so for long waves its
+    beat squared over its wave number squared is grip / W.
 - **The next order, and its sign** (the mathematician's item 5, the physicist's item 4; probe (a2)).
-  - The readers' figures. Against the mathematician's series for the exact reading, the next order's residual in
-    N^2 (1 + u) at u = 3 is -335,739,085, -20,500,154, -1,273,973 and -79,511 x 10^-12 at s = rest / 4, rest / 16,
-    rest / 64 and rest / 256, falling 16-fold a step: second order in s / rest (his g2b_clock.py (K2)). At
+  - The readers' figures. Against the exact recurrence's zero crossings, each placed between its rounds by carry, the
+    next order's residual in N^2 (1 + u) at u = 3 is -335,729,803, -20,499,788 and -1,274,167 x 10^-12 at s = rest / 4,
+    rest / 16 and rest / 64, falling 16.4-fold and 16.1-fold a step: second order in s / rest (the mathematician's
+    r3_next.py; his earlier g2b_clock.py summed the arcsine's series, which law line 102 bars, and is no longer
+    cited). At
     s = rest / 4 and u = 3 the next order gives N^2 = 63/256, below the zero beat's 1/4 (the physicist's numbers.py
     (A)).
   - So N^2 (1 + u) < 1 at every u above 0, and the depth a clock reads back, 1 / N^2 - 1, exceeds u. Probe (a2), from
@@ -174,9 +199,9 @@ board at zero background, under the two conditions of section 2.
     - The second text had about -4 x 10^-6, the other sign. This sits at Cassini's 2.3 x 10^-5 (4). For a neutron star
       the shift is of order one (the physicist).
   - **A third condition, a candidate.** The strides weighed at the gear's own teeth (st = W) keep the ratio between
-    999,919 and 1,000,093 x 10^-6 at every u (the mathematician; probe (f3)'s mutant), and so one exterior mass. That
-    is the edge's dial read for the sources: a candidate for N2's agent to measure, not derived (Big Pic, 6527540022
-    item 8). Until it is measured and derived, the split is a departure, named with its size.
+    999,904 and 1,000,093 x 10^-6 at the depths probes (f2) and (f3) read (the mathematician; their mutant), and so one
+    exterior mass. That is the edge's dial read for the sources: a candidate for N2's agent to measure, not derived (Big
+    Pic, 6527540022 item 8). Until it is measured and derived, the split is a departure, named with its size.
 - **Pressure, condition (ii)** (the first physicist's item 3). N2's matter source puts rho + 3 p on the 00 slot and
   rho - p on each ii slot, in the metric's terms.
   - Outside a body at rest the two 1 / r terms then carry M + 3 P and M - P, P the volume integral of the pressure, and
@@ -197,16 +222,19 @@ board at zero background, under the two conditions of section 2.
     both slots. Condition (i) then holds at the rest, and (Laplacian - mu)(u2 - (gamma / 2) u1^2) = (gamma / 2) mu u1^2,
     exact on the lattice (term 9's second text, section 2).
   - Term 9's first notch screened the ii slots at (3/2) mu, and the relation then gained -2 div(dv grad u1), which
-    halves its right side at leading order (the mathematician's g2b_notch.py (N1) and (N2); his g2b_pull.py (C) shows
+    halves its right side at leading order (the mathematician's g2b_notch.py (N1), through the act's contraction; his
+    (N2) summed the exponential's series, which the rules now bar, and is no longer cited; his g2b_pull.py (C) shows
     the term exactly on mesh.pull). One range mends it.
-  - Near a mass u2 - (gamma / 2) u1^2 goes as (gamma / 4) mu M^2 ln(mu r^2), since the Laplacian of ln r is 1 / r^2.
+  - Near a mass u2 - (gamma / 2) u1^2 goes as gamma mu (G M / c^2)^2 ln(mu r^2), with u1 = 2 G M / (c^2 r), since
+    the Laplacian of ln r is 1 / r^2 (the mathematician's coefficient).
     So beta = 2 - gamma holds to within a relative part (1/2) mu r^2 ln(1 / (mu r^2)), not mu r^2: still negligible,
     with (1 AU / lambda)^2 = 5.2 x 10^-29 at a range of 673 Mpc and the part about 34 mu r^2 across the solar system
     (term 9's second text).
   - The second text's "near 10^-30 if the notch's range is near the Hubble length" is withdrawn: at that range the
     rest is of order one (below).
 - **gamma and G read the background** (the physicist's item 2; the mathematician's item 1).
-  - gamma = 1 is Postulate 6's at zero background (below).
+  - gamma = 1 is Postulate 6's at zero background (below). At term 9's rest a strength fixed in lattice counts fails
+    it, and a push in the Node-clock's own units meets it at every rest (below, the physicist's N1).
   - Term 9's notch rests every clock at a uniform depth u_c, the matter within its range, with the ii slots tied by the
     one range. The slot form's clicks read a well against the background's clocks and rods, so
     gamma_obs = gamma (1 + u_c) / (1 - gamma u_c) (term 9's second text; term9_window (a), in exact ratios: 1.002002,
@@ -217,22 +245,27 @@ board at zero background, under the two conditions of section 2.
       order one.
     - At L = c age / (2 pi), 672 Mpc as probe (h) floors it (term 9's 673), u0 = 0.0216, and gamma_obs / gamma is
       1.044, 1.090 with N2's source.
-    - Cassini needs a range of at most 15 Mpc (term9_window (c)), and the growth of structure one of at least 445 Mpc
-      (term 9's second text): on the slot form no strength serves.
+    - Cassini needs a range of at most 15 Mpc (term9_window (c); between 10.9 and 11.0 Mpc with N2's source), and the
+      growth of structure one of at least 445 Mpc (term 9's text): on the slot form, with a strength fixed in lattice
+      counts, no strength serves for a present at the rest. In the Node-clock's own units Postulate 6 fixes
+      gamma_obs = 1 at every rest, and Cassini is met at any range (below).
   - **The background formulas** (the mathematician's item 1). Take uniform backgrounds C0 on the 00 slot and Cv on each
     ii slot, c = C0 / rest, with N2's push ratio moving as (1 + c) / (1 - c).
     - A reading taken against the teeth rest + C0 and the grip g + 2 Cv gives, at Postulate 6's strength,
       gamma = (1 + c)^2 / ((1 - c)(1 + 2 Cv / g)): its first-order coefficient in c is 3, not 1.
     - At a fixed swing the lattice's G goes as (1 - c) / ((1 + c)^2 (g + 2 Cv)): its coefficient is -3, not -1.
     - That G is in lattice counts at fixed J, not in the local units lunar laser ranging reads.
-  - G as the clicks read it is term 9's: at the tied rest 1 / ((1 + u_c)(1 - gamma u_c)), which moves only as
-    (gamma - 1) u_c at first order; the swing, which is not tied, moves it (term 9's second text, section 2). Term 9's
-    second text withdrew "no click reads it", so the two pages agree.
+  - G as the clicks read it is term 9's: at the tied rest 1 / ((1 + u_c)(1 - gamma u_c)) without N2's teeth factor,
+    which moves only as (gamma - 1) u_c at first order, and 1 / (1 + u_c)^2 at gamma = 1 with it (below); the swing,
+    which is not tied, moves it (term 9's second text, section 2). Term 9's second text withdrew "no click reads it", so
+    the two pages agree.
   - **The law above, in Big Pic's form** (6527540022, item 8). In the frame reading the clicks read the frame between
     neighbours; a uniform, static frame has none between them, so it is a change of coordinates, and a uniform mode
     that moves in time, the expansion, is not.
-    - Under it the static rest reads as term9_window's mutant (a2): gamma_obs = gamma at every u_c, and Cassini no
-      longer bars it.
+    - Under it the static rest reads as term9_window's mutant (a2), gamma_obs = gamma at every u_c, and Cassini no
+      longer bars it, once N2's source is mended (st = W) as well as a 00 law keeps one cone. With N2's factor kept,
+      gamma_obs = (1 + u_c) / (1 - u_c) under it, and Cassini holds at 15 Mpc and fails at 16 (the physicist's
+      phys3_numbers (2)).
     - What moves in time stays OPEN: the swing at the present epoch, against lunar laser ranging (4), and the rest's
       motion with the universe's matter.
     - The frame reading itself is this page's open item (8).
@@ -248,6 +281,38 @@ board at zero background, under the two conditions of section 2.
     - The tied rest has a pole (term 9's mathematician): every grip rests at g (1 - gamma u_c), so at u_c = 1 / gamma
       the grips' rest vanishes and gamma_obs and G diverge. At the cosmic mean density and gamma = 1 that is a range
       between 4,575 and 4,576 Mpc, so the reopened window is bounded above there even under the law above.
+- **Postulate 6 at the rest** (the physicist's N1; his phys3_p6_background and phys3_numbers, rerun by me byte for
+  byte). Lay term 9's tied rest under (d3)'s wells: every clock at W0 = rest (1 + u_c), every grip at g (1 - u_c),
+  u_c = 1/10, gamma = 1, every field standing on the act's pull to third order.
+  - With -1/12 kept: gamma_obs = 11/9; the defect's second-order coefficient over A^2 is 2/9, and the largest |D| grows
+    993,617-fold from S = 10^6 to 10^9 (second order), so the two slowdowns do not compose by their product;
+    u2 / u1^2 = 11/18, so beta_obs = 7/9.
+  - With N2's source at the rest's depth too: gamma_obs = 121/81, the defect 40/81, beta_obs = 41/81.
+  - With each slot pushed in the unit its reading uses at the Node-clock's own teeth and grip, 9/11 of -1/12 there:
+    gamma_obs = 1, the defect 0, |D| growing 876-fold (third order), beta_obs = 1.
+  - So at term 9's rest Postulate 6 fixes lambda_rest = -(1/12) (1 - gamma u_c) / (1 + u_c), times (1 - u_c) / (1 + u_c)
+    with N2's source. At probe (h)'s 672 Mpc rest -1/12 leaves a defect of 44,193 x 10^-6 (90,339 with N2's source),
+    and the strength that composes there is 0.957676 of -1/12 (0.917145 with N2's source).
+  - A strength fixed in lattice counts meets Postulate 6 at one rest only, and breaks it by about
+    (gamma_obs - 1) u1a u1b wherever the rest differs.
+- **The density road** (Big Pic, 6534774141 item 2; the Boss, 6534425413 item 2). Term 5's books' form pushes each slot
+  by minus the derivative of the act's own energy there, so its push is in the Node-clock's own units by construction:
+  the physicist's case B, gamma_obs = beta_obs = 1 at every rest. It is the morning's road for the moving clock, with
+  its debts: the 00 row's own law, the grips' and the spring's densities as slots with laws of their own, and lays that
+  meet the constraints (8).
+- **N2's teeth factor, the slot reading's price** (the physicist's N2; Big Pic). N2's ratio is set by the gear's
+  absolute teeth (st = rest, the strides counted per round), so neither the clicks' units nor a change of coordinates
+  removes it.
+  - With it, G as the clicks read it at the tied rest goes at gamma = 1 as 1 / (1 + u)^2: (G - 1) / u is -1.997,
+    -1.942 and -1.736 at u = 1/1000, 1/50 and 1/10 (his phys3_numbers (1)), first order, not (gamma - 1) u_c.
+  - If the rest dilutes with the matter at a fixed range (u as a^-3; the expansion's law OPEN), G drifts by
+    6 H0 u / (1 + u): 8.75 x 10^-12 a year at the 672 Mpc rest and 3.88 x 10^-12 at 445 Mpc, 400 to 900 times lunar
+    laser ranging's 9.6 x 10^-15 (his (4)).
+  - The Sun's annual depth change at the Earth, u moving by 3.30 x 10^-10 either way, moves the Earth-Moon G by
+    6.6 x 10^-10 over the year: a 253 mm annual term in the lunar distance at fixed angular momentum (term 9's end
+    physicist), to be sized against lunar laser ranging (OPEN).
+  - In the Node-clock's own units none of these arises: G read by local clocks and rods does not depend on the
+    background (Big Pic).
 - **The source, steady** (the physicist's item 6; the first mathematician's item 7).
   - Matter on the act is a beating gear: its source terms, the strides' squares and the swing's square, beat at twice
     its rate, from 0 to about twice their mean. Probe (f) counts it: at W = rest the gear makes 64 sign changes in
@@ -259,8 +324,9 @@ board at zero background, under the two conditions of section 2.
     circle. The probes' clocks are one-part gears, read for their rate and not as sources.
   - A one-part gear's beating source drives the 00 slot's waves at twice its rest beat: its radiation is named in
     section 8.
-- **gamma from Postulate 6** (DERIVED; CHECKED on the act's pull, probe (d3), the physicist's postulate6_product.py
-  ported; the physicist's item 1).
+- **gamma from Postulate 6** (DERIVED for given wells at zero background; the wells' second order CHECKED on the act's
+  pull, probe (d3), the product arithmetic on them; the physicist's postulate6_product.py ported; the physicist's item
+  1).
   - Under the 24 the square has two A1 slots, the 00 slot and the ii trace, so the 24 leave the ratio lambda of
     matter's pushes onto them free, and the mirror keeps both even.
   - N2 pushes the ten slots by 2 T-bar, the trace-reversed stress: J00 = rho + 3 p and J_ii = rho - p, so for matter at
@@ -270,23 +336,41 @@ board at zero background, under the two conditions of section 2.
     the 00 slot's gives gamma = -12 lambda (rest = 6 g).
   - Postulate 6 (the law): when two causes slow a clock, the slowdowns multiply at first post-Newtonian order, and what
     adds up there is the logarithm of the rate; a test shows two slowdowns composing by their product.
+  - **Its content, for given wells, is beta = 1** (the mathematician's N1; his r3_p6 (P1) to (P3), rerun by me byte for
+    byte). A clock with N^2 = 1 + 2 Phi + 2 beta Phi^2 composes two given wells by the product at second order exactly
+    when beta = 1, the defect being 4 (beta - 1) a b. gamma is what each clock form makes of it: the slot form's
+    beta = 2 - gamma gives gamma = 1, and the head's law's beta = -gamma would give gamma = -1. So Mercury tests the
+    postulate, and Cassini the slot form's link, with the split.
   - Probe (d3) is that test on the act's pull.
     - On (c)'s board, grips and laying, two sources' first-order wells Ua and Ub, and Ua + Ub for both, each stand to
       third order. The teeth W = R + c00 read N^2 = R / W, so the rates multiply exactly where the defect D, which is
       R W_ab - W_a W_b, is 0.
     - D = 16 (gamma - 1) S^2 Ua Ub - 8 gamma S Ua Ub (Ua + Ub) - 4 gamma^2 Ua^2 Ub^2, exactly, at all 216 Node-clocks.
+      That closed form is the lay's arithmetic (W = R + c00 as laid), so it cannot fail; the act's part is probe (c)'s
+      identity on the two wells and their sum (the mathematician).
     - Its largest |D| grows by 999 from S = 10^6 to 10^9 at gamma = 1, third order, and by 1,000,000 and 999,993 at
       gamma 0 and 2, second order.
   - So on the act two slowdowns compose by their product at first post-Newtonian order at gamma = 1, and only there.
     There 1 + u = e^(u1) through second order (6 q^3 (e^(u1) - (1 + u)) = 8 at every q only at gamma 1, probe (d3)), so
     N^2 = e^(-u1), and -ln N adds over the first-order wells: Postulate 6's "what adds up there is the logarithm of
     the rate".
-  - **gamma = 1, DERIVED from Postulate 6**, with Cassini its test: the ii slots pushed at -1 / 12 of the 00 slot's,
-    each slot in the unit its reading uses. It is no longer CHOSEN. Given it, beta = 1 follows with no choice left, for
-    test bodies around sources at rest on an open board at zero background, under conditions (i) and (ii).
-  - Its scope: (d3) lays the wells of given sources. The sources' own second order is apart: each body's matter sits
-    in the other's well, where N2's 00 source falls with the depth, and that cross part of psi is OPEN with psi (8).
-    General relativity's 00 field carries such a term too (Will 2014's potential Phi_2).
+  - **gamma = 1, DERIVED from Postulate 6 at zero background**, with Cassini its test: the ii slots pushed at -1 / 12
+    of the 00 slot's, each slot in the unit its reading uses. It is no longer CHOSEN. beta = 1 is the postulate's own
+    content for given wells, here for test bodies around sources at rest on an open board, under conditions (i) and
+    (ii).
+  - **Its scope: given wells** (the mathematician's N1; Big Pic). (d3) lays the wells of given sources, and there
+    Postulate 6 holds. For two masses that pull each other N2's J00 = J_ii (1 - 2 u) lowers each body's 00 mass by 2 u1
+    of the other at its place, so 1 + u gains -2 u1b(A) u1a(x) - 2 u1a(B) u1b(x) at second order (his r3_p6 (P4)).
+    - For unit masses 10 apart its defect times d r_a r_b is 4 d (gamma - 1) - 8 (r_a + r_b), so no single gamma zeroes
+      it (3, 7, 15, 399 and 11 at five points), and at gamma = 1 r_a times the defect tends to -16 / d, a 1 / r part.
+      On (d3)'s own lay the largest |D'| grows as S^2 (his (P5)).
+    - That cross part is physical in general relativity too: the sources' mutual energy gravitates, Will 2014's Phi_2
+      with coefficient 2 (3 gamma - 2 beta + 1) = 4 in g_00 at beta = gamma = 1, U the potential of the rest-mass
+      density in its coordinates. So the cross part is compared with Phi_2, not with 0 (Big Pic).
+    - Read with u1 = 2 U, N2's cross part is -8 Phi_2 in g_00. Written with U* the potential of the conserved density
+      (U = U* - 3 gamma Phi_2), general relativity's coefficient is 2 (1 - 2 beta) = -2. Which density the act's
+      counts are, a count per Node-clock reading at first sight as the conserved one, decides the comparison: the
+      two-body test, OPEN with Nordtvedt's eta (8).
   - The principle the first mathematician named, each slot pushed by minus the derivative of matter's energy with
     respect to it, gives gamma near 0 for slow matter (his estimate): Postulate 6 and Cassini refuse it.
   - N2's draft pushes the ii slots with the 00 slot's sign, +1 (n2_lib.py, potential()): gamma = -12 and beta = 14,
@@ -435,8 +519,10 @@ of rounds is refused by name (D7). No slot ever reaches the record.
     condition, OPEN.
 - **The background** (the physicist's item 2).
   - On the slot form the clicks read term 9's rest in gamma, gamma_obs = gamma (1 + u_c) / (1 - gamma u_c). Cassini
-    then needs a range of at most 15 Mpc, and the growth of structure one of at least 445 Mpc, so no strength serves
-    (term 9's second text; term9_window (b), (c); probe (h)).
+    then needs a range of at most 15 Mpc, and the growth of structure one of at least 445 Mpc, so no strength fixed in
+    lattice counts serves for a present at the rest (term 9's text; term9_window (b), (c); probe (h)). In the
+    Node-clock's own units (the density road) gamma_obs = beta_obs = 1 at every rest, and Cassini is met at any range
+    (2).
   - Under the law above in Big Pic's form the static rest is a change of coordinates, and gamma_obs = gamma
     (term9_window (a2)), once a 00 law keeps one cone: on the cut the law above does not hold (2). What moves in time is
     read.
@@ -444,6 +530,10 @@ of rounds is refused by name (D7). No slot ever reaches the record.
     2.2 x 10^-11 a year at a range of c / H0, and by 3.3 x 10^-12 for a period of the universe's age, with a swing as
     large as its rest: 300 to 2,000 times lunar laser ranging's (-5.0 +- 9.6) x 10^-15 a year (Biskupek, Mueller and
     Torre 2021, Universe 7, 34), unless the present epoch sits at a turning point (the physicist's numbers.py (D)).
+  - **With N2's teeth factor**, the slot reading's price, G at the tied rest goes as 1 / (1 + u)^2; if the rest
+    dilutes with the matter at a fixed range it drifts by 6 H0 u / (1 + u), 400 to 900 times lunar laser ranging's
+    bound, and the Sun's annual depth change gives a 253 mm annual term in the lunar distance (2). In the Node-clock's
+    own units neither arises.
   - G as the clicks read it is term 9's (2). Term 9's second text holds the swing at the present epoch to at most 1.5
     to 2.3 per cent of the rest: a condition on its phase and amplitude, OPEN with term 9.
   - The rest's motion with the universe's matter, which the board reads only with the expansion's law: OPEN.
@@ -453,8 +543,9 @@ of rounds is refused by name (D7). No slot ever reaches the record.
     Sun, at Cassini's 2.3 x 10^-5, and of order one for a neutron star;
   - a redshift that depends on the clock's beat, by s / (12 rest);
   - light's second order, with epsilon OPEN.
-  - **Named apart:** pressure without condition (ii); the background (term 9: under the law above, only what moves in
-    time); the shift (term 10: frame dragging, refused by Gravity Probe B, and alpha_1 and alpha_2, refused by the
+  - **Named apart:** pressure without condition (ii); the background (on the act as built a strength fixed in lattice
+    counts fails Postulate 6 at term 9's rest and N2's teeth factor moves G, while in the Node-clock's own units
+    neither, 2); the shift (term 10: frame dragging, refused by Gravity Probe B, and alpha_1 and alpha_2, refused by the
     pulsars); the waves and a beating source's radiation (8); and the strong field (5).
 
 ## 5. Term 13, the frozen clock: the self-push at strength 0, and its throat
@@ -565,17 +656,22 @@ of rounds is refused by name (D7). No slot ever reaches the record.
   OPEN with G3).
 - **Term 3, the grips:** light reads grip / W at zero wave number, the grip at both ends of a Mesh, going as g^ii
   (CHECKED on the act).
-- **Term 5's strengths per slot:** DERIVED from Postulate 6. Each slot is pushed in the unit its reading uses, the ii
-  slots at -1 / 12 of the 00 slot's, the one strength at which two slowdowns compose by their product on the act's
-  pull (CHECKED, probe (d3)): gamma = 1, with Cassini its test. N2's draft's +1 gives gamma = -12, refused.
-  - Then beta = 1, DERIVED given gamma = 1, for test bodies around sources at rest on an open board at zero background,
-    under condition (i) (v1 = -(gamma / 2) u1 at every Node-clock) and condition (ii) (the field's own stress balances
-    pressure: OPEN, N2's self-push not 0); on the act's wrapped board with term 9's one range, to within
-    (1/2) mu r^2 ln(1 / (mu r^2)).
+- **Term 5's strengths per slot:** DERIVED from Postulate 6 at zero background. Each slot is pushed in the unit its
+  reading uses, the ii slots at -1 / 12 of the 00 slot's, the one strength at which two given wells compose by their
+  product on the act's pull (the wells CHECKED, probe (d3)): gamma = 1, with Cassini its test. At term 9's rest that
+  strength fails Postulate 6; the push in the Node-clock's own units, term 5's books' form (the density road), meets
+  it at every rest (the physicist's case B; Big Pic). N2's draft's +1 gives gamma = -12, refused.
+  - Then beta = 1, the postulate's own content for given wells, for test bodies around sources at rest on an open board
+    at zero background, under condition (i) (v1 = -(gamma / 2) u1 at every Node-clock) and condition (ii) (the field's
+    own stress balances pressure: OPEN, N2's self-push not 0); on the act's wrapped board with term 9's one range, to
+    within (1/2) mu r^2 ln(1 / (mu r^2)).
   - N2's 00 source moves with the teeth, J00 = J_ii (1 - 2 u): the exterior masses split, a departure named with its
-    size. The strides weighed at the gear's own teeth are a candidate for N2's agent to measure (Big Pic), not derived.
+    size; its teeth factor moves G at the rest, the slot reading's price, which does not arise in the Node-clock's own
+    units. The strides weighed at the gear's own teeth are a candidate for N2's agent to measure (Big Pic), not derived.
   - The static source is that of a train whose source does not beat.
-- **Postulate 6:** holds on the slot form exactly at gamma = 1, and fixes it. The exponential of the 00 count, the
+- **Postulate 6:** for clocks in given wells it is beta = 1; the slot form meets it at gamma = 1 at zero background,
+  and in the Node-clock's own units at every rest. Its two-body form owes general relativity's Phi_2 (OPEN). The
+  exponential of the 00 count, the
   law's older clause The rates compose, gives beta = 1 - gamma, beta = 0 at gamma = 1: REFUSED by Mercury, by name.
 - **Term 13:** the one reading, the act with N2's self-push onto the ii slots at strength 0, has a critical curve 16/9
   of general relativity's in b, (16/9)^2 in b^2, and is excluded by the Event Horizon Telescope. The strength cannot
@@ -607,7 +703,13 @@ of rounds is refused by name (D7). No slot ever reaches the record.
 - **The sign in code:** N2's draft pushes the ii slots with the 00 slot's sign; Postulate 6's strength is -1/12 of the
   00 slot's push.
 - **The source's own second order** as general relativity's: N2's psi is -8 |E_grav| on the 00 slot only. With it go
-  Nordtvedt's eta and the two-body cross part beyond (d3)'s wells; a two-body run on the act is owed.
+  Nordtvedt's eta and the two-body test, N2's cross part against general relativity's Phi_2, decided by which density
+  the act's counts are (2); a two-body run on the act is owed.
+- **The density road** (Big Pic, 6534774141 item 2; the Boss, 6534425413 item 2): the push in the Node-clock's own
+  units, term 5's books' form, read on a moving clock; its debts are the 00 row's own law, the grips' and the spring's
+  densities as slots with laws of their own, and lays that meet the constraints.
+- **The Sun's annual term,** through N2's teeth factor on the slot reading: 253 mm in the lunar distance over the year,
+  to be sized against lunar laser ranging.
 - **The strong field and term 13**, at the strength condition (ii) needs (section 5; term 13's second text): G2's 00
   equation owes general relativity's light ring with no clock frozen (Big Pic).
 - **The shift and the shears** (the 0i and jk slots, term 10, G4): a source moving on the board (alpha_1 = -8,
@@ -748,12 +850,71 @@ reports stands, and no reader is wrong. His words carried here:
   the mathematician's 1 and 2 and the physicist's 3; his 5 by the physicist's 5; his 6 by the physicist's 1; his 7 by
   the physicist's 2 and 4; his 8 by the mathematician's 2; his 9 by the physicist's 6.
 
-## 11. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
+## 11. The third text's readers, folded (the fourth text)
+
+**Big Pic's word** (6534774141, item 2): all three items stand as found.
+- The density road answers two. On it the push is in the Node-clock's own units by construction, since term 5's books'
+  form pushes each slot by minus the derivative of the act's own energy there: the physicist's case B, with
+  gamma_obs = beta_obs = 1 at any background. N2's teeth factor belongs to the slot reading, a source in fixed units,
+  so with the push in local units G read by local clocks and rods does not depend on the background.
+- The third is a scope. For given wells the product rule is beta = 1. For a self-gravitating pair the cross part is
+  physical: in general relativity the sources' mutual energy gravitates (Phi_2, with coefficient 4 in g_00 at
+  beta = gamma = 1), so the text's cross part is compared with that term, not with 0.
+- So this text takes the push in local units, keeps N2 as the slot reading's price, and scopes Postulate 6 to given
+  wells, with Phi_2 as the two-body test.
+
+**The mathematician's N1, and his notes:**
+1. N1, Postulate 6 for two masses: scoped to given wells in the finding and sections 1, 2 and 7. Its content for given
+   wells, beta = 1, is stated with his r3_p6 (P1) to (P3); the cross part is named with its size (P4, P5) and compared
+   with general relativity's Phi_2, the two-body test, OPEN (2, 8).
+2. His notes:
+   - (d3)'s closed form is named the lay's arithmetic, the act's part probe (c)'s identity (2);
+   - the st = W mutant's range is given at the depths (f2) and (f3) read (2);
+   - the logarithm's coefficient is gamma mu (G M / c^2)^2 (2);
+   - r3_next.py is cited for the next order's residual, in place of g2b_clock.py, which summed the arcsine's series (2);
+   - g2b_notch.py's (N2), which summed the exponential's series, is no longer cited (2);
+   - term 9's probe (b) and term 13's (c5) and (c8) are in the tree as rebuilt, term9_notch.py and term13_frozen.py,
+     their figures as cited;
+   - law line 35's older clause stays named, a reading for Sofer.
+
+**The physicist's N1 and N2, and his notes:**
+1. N1, a strength fixed at -1/12 against term 9's rest: qualified "at zero background" in the finding and sections 1,
+   2 and 7. What Postulate 6 fixes at the rest, lambda_rest = -(1/12) (1 - gamma u_c) / (1 + u_c), times
+   (1 - u_c) / (1 + u_c) with N2's source, is stated with his phys3_p6_background's and phys3_numbers' figures. The
+   choice is named: the push in the Node-clock's own units, the density road, on Big Pic's word (2, 4, 7, 8).
+   - Term 9's sentence "a chosen gamma ... is against Postulate 6's gamma = 1 (G2)" holds at zero background. At the
+     rest Postulate 6 itself asks for that strength, read in local units: a scope for term 9's page, through the Boss.
+2. N2, N2's teeth factor: carried into G as the clicks read it, 1 / (1 + u)^2 at gamma = 1, with its drift if the rest
+   dilutes, and into the case under the law above, where gamma_obs = (1 + u_c) / (1 - u_c) and Cassini holds at 15 Mpc
+   and not at 16. The reopened window is conditioned on N2's source mended as well as on a 00 law that keeps one cone.
+   The factor is named the slot reading's price, which does not arise in local units (2, 4, 7).
+3. His notes:
+   - the st = W range, as the mathematician's;
+   - "Departures, named" now says what the rest does on the act as built (4);
+   - section 12's "no search" means no search for a root; (g2)'s least rests on the printed factorization (12).
+
+**Also folded:**
+- the beat written with a circular function in section 2 now carries the recurrence, under the owner's "Sine is
+  forbidden";
+- term 9's end physicist's remark for G2: through N2's teeth factor the Sun's annual depth change moves the Earth-Moon
+  G by 6.6 x 10^-10 over the year, a 253 mm annual term in the lunar distance (2, 4, 8).
+
+## 12. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
 The owner's rule: a deriver checks itself before it reports, as a hostile reader would. It reruns its probes, derives
 each step again, and tries to break its own result by cases built to pass the text's own words; the report names what it
 checked and how. The cases are in g2_cases.py beside the probe, its output g2_cases.txt (about 5 s).
 
+- **The fourth text's checks** (no probe changed):
+  - g2_static.py rerun in 61 s and g2_cases.py in 4 s on main's src at 0df0e8385, each byte for byte against its
+    saved output;
+  - the second pair's scripts rerun by me, byte for byte: the physicist's phys3_p6_background and phys3_numbers, the
+    mathematician's r3_p6, r3_next, r3_uas and r3_hand;
+  - by hand: lambda_rest at u_c = 1/10 is -(1/12) (9/10) / (11/10), 9/11 of -1/12; rho = rho* (1 - 3 gamma U) at rest
+    gives U = U* - 3 gamma Phi_2, so general relativity's 2 (3 gamma - 2 beta + 1) Phi_2 becomes 2 (1 - 2 beta) Phi_2,
+    -2 Phi_2 at beta = 1; with u1 = 2 U, N2's cross part -2 u1b(A) u1a(x) - 2 u1a(B) u1b(x) is -8 Phi_2 in u, and since
+    -g_00 = 1 / (1 + u), -8 Phi_2 in g_00; G M_sun / (c^2 AU) = 9.87 x 10^-9, so the orbit's eccentricity 0.0167 moves
+    u by 3.30 x 10^-10 either way, G by twice that, and 384,400 km by 253.6 mm.
 - **The probes rerun, each by my own run on main's src at 0df0e8385:**
   - g2_static.py, as cleaned: 77 s, its 37 lines byte for byte against the g2_static.txt this text cites. Every figure
     of sections 2, 3 and 6 is read against it. Those of (d4), (f3) and (f4) are its own lines now, and match the
