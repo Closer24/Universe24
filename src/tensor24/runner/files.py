@@ -188,11 +188,11 @@ def setting_departures(setting: Any, universe: Any, piece: Any) -> list[str]:
     gears = setting.get("gears", []) if not found else []
     trains, sites = len(universe["trains"]), sites_of(piece["shape"])
     given = Counter((t, c, x) for t, c, x, *_ in gears)
-    for at, (train, component, site, _, _, tooth) in enumerate(gears):
+    for at, (train, component, site, _, _, _) in enumerate(gears):
         if not (0 <= train < trains and 0 <= site < sites):
             found.append(f"setting.gears[{at}]: train {train} or site {site} off the files")
-        if not (component >= 0 and tooth >= 0):
-            found.append(f"setting.gears[{at}]: component {component} or fine tooth {tooth} below 0")
+        if not component >= 0:
+            found.append(f"setting.gears[{at}]: component {component} below 0")
         if given[(train, component, site)] > 1:
             found.append(f"setting.gears[{at}]: the gear ({train}, {component}, {site}) given twice")
     return found

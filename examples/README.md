@@ -39,10 +39,10 @@ whose second difference is minus itself, c(x + 1) = c(x) - c(x - 1) from (2, 1),
 of 6 (a ring's only whole modes are this one, the one whose second difference is minus twice itself, 1, 0, -1, 0, the
 constant and the alternating one; this one is chosen as the longest, and summed over the three axes alike so that it
 is an eigenvector of the board's pull and stands, with no net drive on the E part). The second part is the act's own
-counts a and b a quarter beat later, 4 rounds, the count at which the crest's count has crossed 0 (12000, 10000,
-6333, 1611, -3379), its tooth left at 0 (the state's teeth are below one count, and the files lay a tooth from 0 up):
-the parts' squares, momenta squared and gradients squared, summed, then stand nearly still in time, (most - least) /
-(most + least) of the parts' squares summed at a crest within 71 and 84 permille by windows of 16 rounds (one
+state a quarter beat later, 4 rounds, the count at which the crest's count has crossed 0 (12000, 10000, 6333,
+1611, -3379): its counts a and b and its edge tooth (the format lays a tooth within the edge's dial, the run's
+promise): the parts' squares, momenta squared and gradients squared, summed, then stand nearly still in time, (most -
+least) / (most + least) of the parts' squares summed at a crest within 70 and 85 permille by windows of 16 rounds (one
 standing part alone beats at twice its frequency and twice its wavevector and rings the metric; the pair does not;
 the period-4 mode's quarter beat, 1.5 rounds, is no count of rounds). The metric family is pushed by term 5 at the
 CHOSEN push 30 and held by term 9's notch at the CHOSEN h 60000 (the board's mean swings about its rest with a beat of
@@ -56,18 +56,18 @@ void's. Run it as the one bang:
 examples/tensor24-well/setting.json <record .jsonl>` (128 rounds out and back in about a minute and a half; the
 ledger is about 22 MB, three lines a Node-clock a round; the run back returns the lay bit for bit). In the ledger,
 train 0's two counts are the lump's parts; train 1's first count is the 00 slot (W = rest + c00: in time's mean over
-rounds 65 to 128, 350882 at the mode's crests, x, y and z all multiples of 6 or all 3 more, and 258128 where the mode
-is absent, f = 0, the board's mean 275624, so N^2 = rest / W is 944 permille at the crests and 958 in the void, 1000 at
-the loader's rest; along x through (y, z) = (0, 0) the mean runs 350923, 324760, 277416, 255979, 277392, 324718 and
+rounds 65 to 128, 350866 at the mode's crests, x, y and z all multiples of 6 or all 3 more, and 258119 where the mode
+is absent, f = 0, the board's mean 275614, so N^2 = rest / W is 944 permille at the crests and 958 in the void, 1000 at
+the loader's rest; along x through (y, z) = (0, 0) the mean runs 350920, 324760, 277427, 255985, 277383, 324704 and
 again, the mode's period of 6), its fifth to seventh the xx, yy and zz slots (below 0 where the lump is: yy and zz
--10969 at the crests and -2733 in the void in time's mean, xx -18981 and -10763, the pulse's own stress along x
+-10955 at the crests and -2719 in the void in time's mean, xx -19007 and -10790, the pulse's own stress along x
 drawing xx down through the run, as the E part has no restoring force on the torus, so the x Meshes' grips g + c_xx +
-c_xx' through (0, 0) are 952459 to 965609 of 10^6 at the last round); and train 2's one count is the pulse, slowed by
-the well: over the 127 rounds from the first its centroid along x moves 49.20 Meshes against 50.79 for the same files
+c_xx' through (0, 0) are 952290 to 965416 of 10^6 at the last round); and train 2's one count is the pulse, slowed by
+the well: over the 127 rounds from the first its centroid along x moves 49.21 Meshes against 50.79 for the same files
 at push 0 (the metric standing at 0), a lag of 1.59 Meshes, and the bend between the rows through the crests and the
-rows of the void is 0.011 Mesh, below the lattice's resolution (the well's period, 6 Meshes, is near the pulse's own
+rows of the void is 0.010 Mesh, below the lattice's resolution (the well's period, 6 Meshes, is near the pulse's own
 width, and a bend needs a well wider than the wavelength). OPEN here, by name (the edge text's section 4,
 derive/boss/edge/EDGE2.md on the Boss's derivation branch): the 00 row's own law. The 00 row's teeth stand at rest, the
 acyclic cut, so its own waves run on the rest cone while light and every other slot run on the well's, c^2 = grip / W:
-at this lay every other row's dial reads 6237473 to 6334120 where the 00 row's reads 6000000, a second cone 1039 to
+at this lay every other row's dial reads 6237474 to 6334127 where the 00 row's reads 6000000, a second cone 1039 to
 1055 permille of the first.

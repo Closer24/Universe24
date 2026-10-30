@@ -248,8 +248,8 @@ def edits():
         "a gear's notch that is a float": gear(
             [0, 0, 1, 0.5, 0, 0], "a row of whole numbers, one per field"
         ),
-        "a fine tooth below 0": gear([0, 0, 1, 1, 0, -1], "component 0 or fine tooth -1 below 0"),
-        "a component below 0": gear([0, -1, 1, 1, 0, 0], "component -1 or fine tooth 0 below 0"),
+        "a fine tooth below 0 holds, the edge's dial the run's promise": gear([0, 0, 1, 1, 0, -1], None),
+        "a component below 0": gear([0, -1, 1, 1, 0, 0], "component -1 below 0"),
         "a gear given twice": gear([0, 0, 0, 1, 1, 0], "the gear (0, 0, 0) given twice"),
         "a key doubled": (
             "piece",

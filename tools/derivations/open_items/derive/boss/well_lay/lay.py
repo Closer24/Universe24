@@ -3,8 +3,8 @@ itself (the Boss's code writer, 2026-10-30): no float, no circular function, no 
 one division; the universe and the piece read from their files, no train declared here.
 
 Clock: the light's first part laid at rest (now = before, the tooth 0) on the ring's whole standing mode, the second
-part the act's own counts a quarter beat later (its tooth, below one count, left at 0), so that the two parts'
-squares, momenta squared and gradients squared, summed, stand nearly still in time: a steady source for the metric; the metric's slots laid at the time's
+part the act's own state a quarter beat later (a, b and the edge's tooth), so that the two parts' squares,
+momenta squared and gradients squared, summed, stand nearly still in time: a steady source for the metric; the metric's slots laid at the time's
 mean of a first run from 0, so that the well stands rather than swinging about its rest (the Node-clock has no
 damping).
 Algebra: the ring's whole mode is the sequence whose second difference is minus itself, c(x + 1) = c(x) - c(x - 1)
@@ -140,13 +140,13 @@ def lay():
         s = step.tick(layout, s)
         quarter += 1
         crests.append(int(s.a[first, crest]))
-    partner = [[light, 1, x, int(s.a[first, x]), int(s.b[first, x]), 0] for x in range(sites)]
-    partner = [g for g in partner if g[3] or g[4]]
+    partner = [[light, 1, x, int(s.a[first, x]), int(s.b[first, x]), int(s.r[first, x])] for x in range(sites)]
+    partner = [g for g in partner if g[3] or g[4] or g[5]]
     teeth = sorted({int(v) for v in s.r[first]})
     say(
         f"2. the act alone from that lay: the crest's count by round {crests}; the quarter beat {quarter} rounds;"
-        f" the state's counts a and b then are the second part's lay at {len(partner)} Node-clocks, its tooth left at 0"
-        f" (the state's teeth {teeth} are below one count, and the files lay a tooth from 0 up)"
+        f" the state then, a, b and the edge's tooth, is the second part's lay at {len(partner)} Node-clocks"
+        f" (the state's teeth {teeth}, within the edge's dial, the run's promise)"
     )
     # 3. the pulse along x, alike at every y and z, its before one round back at about NUM / DEN Meshes a round
     moving = []
