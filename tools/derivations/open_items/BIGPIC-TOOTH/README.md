@@ -50,7 +50,7 @@ few seconds.
 
 ## 1. In clocks
 
-- **A fine tooth** is the part of a count the dial has not yet carried. The act counts it from one end of the dial.
+- **A fine tooth** is the part of a count the dial still holds uncarried. The act counts it from one end of the dial.
 - **A sign flip turns the dial round,** so a tooth counted from one end is counted from the other: it reflects the
   tooth about the dial's middle.
 - **When the dial grows between two rounds, its middle moves.** The reflected tooth then no longer sits where the
