@@ -1,10 +1,10 @@
 """Tensor24's three files checked and loaded: whole numbers alone, the integers and the sides at least 1, each train,
-kind, part and site referred to there; then each refusal of the load by name (a kind the 24's five do not hold, a twin
-hand, a channel the 24 forbid, a gradient off A1, the strides before stage 7c, a component off its train's rows).
+kind, part and site referred to there, and no coupling; then each refusal of the load by name (a kind the 24's five do
+not hold, a kind with no whole basis outside the four-vector's square, a component off its train's rows).
 
 Usage: `python tools/tensor24_files.py [universe piece setting]` prints every departure (the examples by default)
 and exits 1 if there is one; files that are not three are argparse's usage error. The fine tooth within its teeth is
-the load's promise, read where the teeth are.
+the run's promise, read before every round where the teeth are.
 """
 
 import argparse
@@ -45,7 +45,7 @@ def main(argv: list[str]) -> int:
         "\n".join(found)
         if found
         else "the three files hold and load: whole numbers, the integers at least 1, references whole, every"
-        " kind, part, channel and component the 24's (the fine tooth's promise is the load's, where the teeth are read)"
+        " kind, part and component the 24's (the fine tooth's promise is the run's, read before every round)"
     )
     return 1 if found else 0
 

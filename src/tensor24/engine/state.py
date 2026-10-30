@@ -15,7 +15,7 @@ class State(NamedTuple):
 
 
 class Plan(NamedTuple):
-    """The coupling rows expanded at load over the kinds' tables: per term its two readings, its whole factor, its target."""
+    """J's terms over the kinds' tables, laid at load: per term its two readings, its whole factor, its target; none until the coupling family's one plan (G3)."""
 
     first: Z  # (terms,): the row of the readings that enters first
     second: Z  # (terms,): the row that enters second

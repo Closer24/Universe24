@@ -97,7 +97,7 @@ def header(
                 zip(labels, (loaded.trains[n] for n in range(len(labels))), strict=True)
             )
         ],
-        "couplings": universe.get("couplings", []),
+        "couplings": [],  # no file declares a coupling: the header's field stands empty until the schema retires it
         "operands": list(OPERANDS),
         "width": universe["integers"]["width"],
     }

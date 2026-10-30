@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tensor24.runner.files import COUPLING, NAMES, OPERANDS, departures
+from tensor24.runner.files import NAMES, departures
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
 DEN = 15162856759112389  # the example's den, as its file holds it: the widest of its integers, 54 bits
@@ -16,14 +16,6 @@ DEN = 15162856759112389  # the example's den, as its file holds it: the widest o
 def edits():
     """One edited file per rule: the file, its one change (or its text), the departure named, or None at a rule's edge."""
     train = "universe.trains[0]"
-
-    def coupling(named, **fields):
-        row = dict(zip(COUPLING, [0] * (len(COUPLING) - 1) + [1], strict=True)) | fields
-        return (
-            "universe",
-            lambda u: u["couplings"].append(list(row.values())),
-            named and f"universe.couplings[0]: {named}",
-        )
 
     def light(**fields):
         return lambda u: u["trains"][0].update(fields)
@@ -65,7 +57,6 @@ def edits():
         ("setting", "ticks"): "setting.ticks: a whole number of at least 0, not None",
     }
     nulls = {  # a key a file may leave out is not left out by a null
-        ("universe", "couplings"): "universe.couplings: a list of rows, not NoneType",
         ("setting", "gears"): "setting.gears: a list of rows, not NoneType",
     }
     return {
@@ -221,39 +212,10 @@ def edits():
             lambda u: u["integers"].update(key=1),
             "universe.integers: the key 'key' is not in the format",
         ),
-        "a coupling to no train": coupling("a train off the trains' rows", with_train=2),
-        "a coupling on a train past the file's": coupling("a train off the trains' rows", train=2),
-        "a coupling's first train below 0": coupling("a train off the trains' rows", train=-1),
-        "a coupling's second train below 0": coupling("a train off the trains' rows", with_train=-1),
-        "a coupling's target beyond": coupling("a train off the trains' rows", target=2),
-        "a coupling's target below 0": coupling("a train off the trains' rows", target=-1),
-        "a coupling's strength that is a float": coupling(
-            "a row of whole numbers, one per field", strength=0.5
-        ),
-        "a coupling's kind beyond": coupling("a kind off its train's", kind=1),
-        "a coupling's kind below 0": coupling("a kind off its train's", kind=-1),
-        "a coupling's second kind beyond": coupling("a kind off its train's", with_kind=1),
-        "a coupling's target kind beyond": coupling("a kind off its train's", target_kind=1),
-        "a coupling's target kind below 0": coupling("a kind off its train's", target_kind=-1),
-        "a coupling's part beyond": coupling("a part off its train's", part=2),
-        "a coupling's part below 0": coupling("a part off its train's", part=-1),
-        "a coupling's second part beyond": coupling("a part off its train's", with_part=2),
-        "a coupling's second part below 0": coupling("a part off its train's", with_part=-1),
-        "a coupling's target part beyond": coupling("a part off its train's", target_part=2),
-        "a coupling's target part below 0": coupling("a part off its train's", target_part=-1),
-        "a coupling's operand beyond": coupling("an operand off the readings", operand=len(OPERANDS)),
-        "a coupling's operand below 0": coupling("an operand off the readings", operand=-1),
-        "a coupling's second operand beyond": coupling(
-            "an operand off the readings", with_operand=len(OPERANDS)
-        ),
-        "a coupling's second operand below 0": coupling("an operand off the readings", with_operand=-1),
-        "a coupling at the last parts and operands": coupling(
-            None,
-            part=1,
-            with_part=1,
-            target_part=1,
-            operand=len(OPERANDS) - 1,
-            with_operand=len(OPERANDS) - 1,
+        "couplings, which no file declares": (
+            "universe",
+            lambda u: u.update(couplings=[]),
+            "universe: the key 'couplings' is not in the format: no file declares a coupling",
         ),
         "a side at 0": (
             "piece",
@@ -302,21 +264,10 @@ def edits():
         "a part of 1": ("universe", light(part=1), None),
         "an integer of 1": ("universe", lambda u: u["integers"].update(full_rate=1), None),
         "a side of 1": ("piece", lambda p: p["shape"].__setitem__(0, 1), None),
-        "a coupling at the first parts": coupling(None),
         "a version 0": ("setting", lambda s: s.update(version=0), "setting.version: 1, not 0"),
         "four axes": ("piece", lambda p: p.update(shape=[4, 4, 4, 4]), "piece.shape: one side per axis"),
         "a gear row of seven": gear([0, 0, 1, 1, 0, 0, 0], "a row of whole numbers, one per field"),
         "a gear row of five": gear([0, 0, 1, 1, 0], "a row of whole numbers, one per field"),
-        "a coupling row of a field more": (
-            "universe",
-            lambda u: u["couplings"].append([0] * (len(COUPLING) + 1)),
-            "universe.couplings[0]: a row of whole numbers, one per field",
-        ),
-        "a coupling row of a field less": (
-            "universe",
-            lambda u: u["couplings"].append([0] * (len(COUPLING) - 1)),
-            "universe.couplings[0]: a row of whole numbers, one per field",
-        ),
     }
 
 

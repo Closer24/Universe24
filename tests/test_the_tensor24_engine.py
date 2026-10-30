@@ -15,7 +15,6 @@ from tensor24.engine.state import Gearing, Layout, Plan, Read, State
 from tensor24.main import made
 from tensor24.runner import board as boards
 from tensor24.runner import load as loading
-from tensor24.runner.load import load
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 from tests import frame
@@ -29,16 +28,14 @@ SHAPE, ROUNDS, SQUARING = (
 ROWS, TERMS, PLANES = 4, 30, 1 + 3 + 1
 CUBE, FRAME = (3, 3, 3), (5, 5, 5)  # the board the 24 turn, and the frame's properties' board
 SIDE, REACH = 7, 60  # the cone's side and its rounds
-TRAINS = [
-    {"name": n, "kinds": [k], "part": 1} for n, k in zip("spva", ("A1", "A2", "T1", "T2"), strict=True)
-]
-# (train, kind, part, operand) twice, then (target, kind, part) and the strength; the operands 0 value, 1 gradient, 2 pull
+KINDS = ("A1", "A2", "T1", "T2")  # four trains, one kind each, at part 1
+# (train, reading) twice, then the target train and the strength; the readings' planes 0 value, 1 gradient, 4 pull
 COUPLINGS = [
-    [0, 0, 0, 1, 2, 0, 0, 0, 0, 0, 0, 3],  # the scalar's gradient with the vector, into the scalar
-    [2, 0, 0, 2, 2, 0, 0, 0, 2, 0, 0, 5],  # the vector's force crossed with the vector, into the vector
-    [1, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 7],  # the pseudoscalar times the vector, into the axial
-    [0, 0, 0, 1, 1, 0, 0, 0, 3, 0, 0, 2],  # the scalar's gradient times the pseudoscalar, into the axial
-    [3, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 1],  # the axial with the vector, into the vector
+    (0, 1, 2, 0, 0, 3),  # the scalar's gradient with the vector, into the scalar
+    (2, 4, 2, 0, 2, 5),  # the vector's force crossed with the vector, into the vector
+    (1, 0, 2, 0, 3, 7),  # the pseudoscalar times the vector, into the axial
+    (0, 1, 1, 0, 3, 2),  # the scalar's gradient times the pseudoscalar, into the axial
+    (3, 0, 2, 0, 2, 1),  # the axial with the vector, into the vector
 ]
 
 
@@ -264,13 +261,34 @@ def held_alike():
 
 @functools.cache
 def cube():
-    """The 24's kinds and tables on the cube, and the plan of four trains, A1 and A2, T1 and T2, coupled through them."""
-    ks, c, square = made(loading.star(len(CUBE)))
-    held, found = load(
-        {"trains": TRAINS, "couplings": COUPLINGS}, {"gears": []}, int(np.prod(CUBE)), ks, c, square
+    """J's terms of four trains, A1 and A2, T1 and T2, coupled through the 24's tables on the cube, entry by entry."""
+    ks, c, _ = made(loading.star(len(CUBE)))
+    labels = [name.upper() for name in ks._fields]
+    kinds = [labels.index(k) for k in KINDS]
+    dims = [ks[k].shape[-1] for k in kinds]
+    first, rows = np.cumsum([0, *dims])[:-1], sum(dims)
+
+    def side(
+        t, plane
+    ):  # the kind a reading enters as, and its rows: a gradient is the T1 reading of an A1 train
+        if plane == 1:
+            return labels.index("T1"), [(plane + axis) * rows + first[t] for axis in range(len(CUBE))]
+        return kinds[t], [plane * rows + first[t] + x for x in range(dims[t])]
+
+    terms = []
+    for t, o, u, p, target, strength in COUPLINGS:
+        (a, ones), (b, twos) = side(t, o), side(u, p)
+        table = c[(a, b, kinds[target])]
+        terms += [
+            (ones[y], twos[z], strength * table[x, y, z], first[target] + x)
+            for x, y, z in np.argwhere(table)
+        ]
+    one, two, factor, landing = zip(*terms, strict=True)
+    return Plan(
+        *(np.array(x, dtype=np.intp) for x in (one, two)),
+        np.array(factor, dtype=object),
+        np.array(landing, dtype=np.intp),
     )
-    assert found == [] and held is not None
-    return Plan(*held.plan)
 
 
 def sourced_images():

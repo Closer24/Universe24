@@ -9,21 +9,27 @@ from typing import Any, NamedTuple, TypeGuard
 import numpy as np
 
 # A kind among the 24's, a kind's whole basis and a gear's component within its train's rows are read against the
-# engine's kinds once they are made (held_departures); a coupling's channel is the plan's to refuse (runner/load.py),
-# and the fine tooth within its teeth is the load's promise, read where the teeth are.
+# engine's kinds once they are made (held_departures); the fine tooth within its teeth is the promise, read before
+# every round where the teeth are (promises). No file declares a coupling: the coupling family's one plan lays the
+# terms at G3, so a universe's couplings are refused by name (RETIRED).
 
 NAMES = ("universe", "piece", "setting")
 VERSION = 1
-COUPLING = (
-    *("train", "kind", "part", "operand"),
-    *("with_train", "with_kind", "with_part", "with_operand"),
-    *("target", "target_kind", "target_part", "strength"),
-)
-OPERANDS = ("value", "gradient", "pull", "before", "after")  # the readings an operand names, in order
+OPERANDS = (
+    "value",
+    "gradient",
+    "pull",
+    "before",
+    "after",
+)  # the readings, in order, as the record's header names them
 GEAR = ("train", "component", "site", "a", "b", "r")
 AXES = ("x", "y", "z")
 # the keys a file may leave out; the pinion's key is its own rule's
-OPTIONAL = ("couplings", "gears")
+OPTIONAL = ("gears",)
+# the keys that left the format, each refused with the reason it left
+RETIRED = {
+    "couplings": "no file declares a coupling; the coupling family's one plan lays the terms at G3"
+}
 
 
 def whole(value: Any) -> TypeGuard[int]:
@@ -57,7 +63,6 @@ UNIVERSE = {
     "version": VERSIONED,
     "integers": {"den": ONE, "full_rate": ONE, "width": ONE},
     "trains": [TRAIN],
-    "couplings": COUPLING,
 }
 PIECE = {"version": VERSIONED, "shape": SIDES}
 SETTING = {"version": VERSIONED, "ticks": NONE_BELOW, "gears": GEAR}
@@ -110,7 +115,12 @@ def checked(where: str, held: Any, form: Any) -> list[str]:
     if isinstance(form, dict):
         if not isinstance(held, dict):
             return [f"{where}: a mapping, not {type(held).__name__}"]
-        found = [f"{where}: the key {key!r} is not in the format" for key in held if key not in form]
+        found = [
+            f"{where}: the key {key!r} is not in the format"
+            + (f": {RETIRED[key]}" if key in RETIRED else "")
+            for key in held
+            if key not in form
+        ]
         return found + [
             line
             for key, inner in form.items()
@@ -140,7 +150,7 @@ def seed_departures(where: str, train: dict[str, Any], den: Any) -> list[str]:
 
 
 def universe_departures(universe: Any) -> list[str]:
-    """Every way a universe file departs: its form, each train's pinion at den, its labels, and its coupling rows."""
+    """Every way a universe file departs: its form, each train's pinion at den, and its labels."""
     found = checked("universe", universe, UNIVERSE)
     if not isinstance(universe, dict) or not isinstance(universe.get("trains"), list):
         return found
@@ -154,17 +164,6 @@ def universe_departures(universe: Any) -> list[str]:
         for name, count in sorted(labels.items())
         if count > 1
     ]
-    for at, row in enumerate(universe.get("couplings", []) if not found else []):
-        train, kind, part, operand, *other, target, target_kind, target_part, _ = row
-        sides = ((train, kind, part, operand), tuple(other), (target, target_kind, target_part, 0))
-        if not all(0 <= train < len(trains) for train, _, _, _ in sides):
-            found.append(f"universe.couplings[{at}]: a train off the trains' rows")
-        elif not all(0 <= kind < len(trains[train]["kinds"]) for train, kind, _, _ in sides):
-            found.append(f"universe.couplings[{at}]: a kind off its train's")
-        elif not all(0 <= part < trains[train]["part"] for train, _, part, _ in sides):
-            found.append(f"universe.couplings[{at}]: a part off its train's")
-        elif not all(0 <= operand < len(OPERANDS) for _, _, _, operand in sides):
-            found.append(f"universe.couplings[{at}]: an operand off the readings {OPERANDS}")
     return found
 
 
@@ -221,9 +220,9 @@ def vocabulary(kinds: Any, square: Any) -> tuple[tuple[str, ...], tuple[int, ...
 def held_departures(
     universe: Any, setting: Any, read: tuple[tuple[str, ...], tuple[int, ...], Any]
 ) -> list[str]:
-    """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the 24's, a kind with no whole basis outside the four-vector's square, a coupling on the square, a gear's component off its train's rows."""
+    """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the 24's, a kind with no whole basis outside the four-vector's square, a gear's component off its train's rows."""
     labels, dims, (traces, wholes, squared) = read
-    found, sizes, squares = [], [], []
+    found, sizes = [], []
     for at, train in enumerate(universe["trains"]):
         where = f"universe.trains[{at}]"
         found += [
@@ -239,14 +238,6 @@ def held_departures(
             if label in labels and not (square or wholes[labels.index(label)])
         ]
         sizes.append(train["part"] * sum(dims[k] for k in kinds))
-        squares.append(square)
-    for at, coupling in enumerate(universe.get("couplings", [])):
-        named = dict(zip(COUPLING, coupling, strict=True))
-        found += [
-            f"universe.couplings[{at}]: train {t} is the four-vector's square, whose rows are the square's basis, and couplings read it from G2"
-            for t in sorted({named["train"], named["with_train"], named["target"]})
-            if squares[t]
-        ]
     for at, (train, component, *_) in enumerate(setting.get("gears", [])):
         if component >= sizes[train]:
             found.append(

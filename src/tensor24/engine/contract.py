@@ -1,4 +1,4 @@
-"""The contraction: the coupling rows' products of two readings into their targets, through the 24's tables, and the clocks' linear read."""
+"""The contraction: J's terms, products of two readings into their targets through the 24's tables, and the clocks' linear read."""
 
 import numpy as np
 

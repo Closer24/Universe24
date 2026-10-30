@@ -1,4 +1,4 @@
-"""The load: the 24's tables, the trains' rows and the metric family found by its kinds, the coupling rows' plan, the gears laid, and the layout: the board, and every coefficient by one formula of the files' integers."""
+"""The load: the 24's tables, the trains' rows and the metric family found by its kinds, the gears laid, and the layout: the board, and every coefficient by one formula of the files' integers."""
 
 # The engine's kinds come in as arguments, as main.py passes them: the runner imports no engine module.
 
@@ -11,7 +11,7 @@ import numpy as np
 
 from tensor24.algebra.carry import Z, carry
 from tensor24.runner.board import board
-from tensor24.runner.files import GEAR, OPERANDS, entries, vocabulary
+from tensor24.runner.files import GEAR, entries, vocabulary
 
 
 class Train(NamedTuple):
@@ -26,10 +26,6 @@ class Train(NamedTuple):
     def rows(self) -> int:
         """Its rows: every component of every kind, times its part."""
         return sum(self.dims) * self.part
-
-    def row(self, kind: int, component: int, part: int) -> int:
-        """The row of one component of one of its kinds, at one part."""
-        return self.first + (sum(self.dims[:kind]) + component) * self.part + part
 
 
 @dataclass(frozen=True, eq=False)
@@ -100,70 +96,6 @@ def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z,
     return Trains(np.cumsum(size) - size, size, part, square, np.cumsum(count) - count, count, kind, dim)
 
 
-def side(
-    train: Train, kind: int, part: int, operand: int, rows: int, labels: tuple[str, ...], d: int
-) -> tuple[int, list[int]]:
-    """One side of a coupling row: the kind it enters as and its readings' rows; a gradient is a T1 reading of an A1 train."""
-    gradient = OPERANDS.index("gradient")
-    if operand == gradient:
-        return labels.index("T1"), [
-            (gradient + axis) * rows + train.row(kind, 0, part) for axis in range(d)
-        ]
-    plane = operand if operand < gradient else operand + d - 1
-    return train.kinds[kind], [plane * rows + train.row(kind, x, part) for x in range(train.dims[kind])]
-
-
-def plan(
-    couplings: list[list[int]], trains: Trains, c: dict[Any, Z], labels: tuple[str, ...], d: int
-) -> tuple[tuple[Z, Z, Z, Z], list[str]]:
-    """The coupling rows over the tables as index arrays; a row the 24 or the readings refuse is named and gives no term."""
-    rows = trains.size.sum()
-    first: list[int] = []
-    second: list[int] = []
-    factor: list[int] = []
-    landing: list[int] = []
-    found = []
-    for at, row in enumerate(couplings):
-        (
-            train,
-            kind,
-            part,
-            operand,
-            with_train,
-            with_kind,
-            with_part,
-            with_operand,
-            target,
-            target_kind,
-            target_part,
-            strength,
-        ) = row
-        where = f"universe.couplings[{at}]"
-        if {OPERANDS[operand], OPERANDS[with_operand]} & {"before", "after"}:
-            found.append(
-                f"{where}: before and after enter at stage 7c, with the trains that step between an impulse and its carry"
-            )
-            continue
-        sides = ((train, kind, part, operand), (with_train, with_kind, with_part, with_operand))
-        if any(OPERANDS[o] == "gradient" and labels[trains[t].kinds[k]] != "A1" for t, k, _, o in sides):
-            found.append(f"{where}: a gradient of a train not of A1, whose channel with T1 is unnamed")
-            continue
-        (a, ones), (b, twos) = (side(trains[t], k, p, o, rows, labels, d) for t, k, p, o in sides)
-        landed = trains[target].kinds[target_kind]
-        table = c[(a, b, landed)]
-        if not table.any():
-            found.append(f"{where}: the 24 hold no {labels[a]} x {labels[b]} -> {labels[landed]}")
-        # every entry of the table a term, its factor the strength times the entry, 0 where the 24 hold none
-        x, y, z = (axis.reshape(-1) for axis in np.indices(table.shape))
-        lands = [trains[target].row(target_kind, n, target_part) for n in range(table.shape[0])]
-        first += np.array(ones, dtype=np.intp)[y].tolist()
-        second += np.array(twos, dtype=np.intp)[z].tolist()
-        factor += (strength * table.reshape(-1)).tolist()
-        landing += np.array(lands, dtype=np.intp)[x].tolist()
-    first_, second_, landing_ = (np.array(column, dtype=np.intp) for column in (first, second, landing))
-    return (first_, second_, np.array(factor, dtype=object), landing_), found
-
-
 def lay(gears: list[list[int]], trains: Trains, sites: int) -> tuple[tuple[Z, ...], list[str]]:
     """The setting's gears laid on the trains' rows, every drive's fine tooth at 0; a board past the machine's arrays, named."""
     rows = trains.size.sum()
@@ -181,7 +113,7 @@ def lay(gears: list[list[int]], trains: Trains, sites: int) -> tuple[tuple[Z, ..
 
 
 class Loaded(NamedTuple):
-    """What the load makes of the universe and the setting: the trains' rows, the coupling rows' plan, the state laid."""
+    """What the load makes of the universe and the setting: the trains' rows, J's plan, the state laid."""
 
     trains: Trains
     plan: tuple[Z, Z, Z, Z]
@@ -191,12 +123,12 @@ class Loaded(NamedTuple):
 def load(
     universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: dict[Any, Z], square: Z
 ) -> tuple[Loaded, list[str]]:
-    """The held files loaded on the engine's kinds on the 24, their tables and the four-vector's square, the plan's and the lay's departures named; nothing is read of a load past one."""
+    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's plan holds no term, as no file declares a coupling, until the coupling family's one plan reads the 24's tables c (G3)."""
     labels, dims, reads = vocabulary(kinds, square)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
-    planned, refused = plan(universe.get("couplings", []), trains, c, labels, kinds.t1.shape[-1])
+    none = np.empty(0, dtype=np.intp)
     state, laid = lay(setting.get("gears", []), trains, sites)
-    return Loaded(trains, planned, state), refused + laid
+    return Loaded(trains, (none, none, none.astype(object), none), state), laid
 
 
 def mesh_unit(gamma: int) -> int:
