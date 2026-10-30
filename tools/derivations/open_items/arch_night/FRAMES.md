@@ -39,13 +39,16 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   involution, undamped), a twin (a doubled 00 row), or a root (the symmetric form, nature's, forbidden by decision 41).
 - Test: the speed of the 00 wave against light's on a well (probe M-8's measure: 1202 permille at W / rest 1200
   under the cut; 1000 would close it).
-- Replaced by: the timegear deriver's text when its pair passes (the carried board: every gear carries its dial, one
-  pass, no cut) or the owner's choice among the three escapes.
+- Replaced by: the road for the owner's morning (NOT_CLOSED 2, Big Pic's word of #2187 6534141348 item 1): the edge
+  act as built read as densities (the 00 slot the time weight A = sqrt(h) / N, the dial D = A(before) + A(now)), its
+  debts the 00 row's own law by the books road, the densities' own laws (G2) and lays meeting the constraints; or
+  the owner's choice among the escapes. The time gear's law and the escapement are refused by their pairs, and the
+  escapement is not the road (its releases pump wherever clocks differ).
 - Choice tonight: the cut stands, because every alternative is a change of the state or of the law that no pair has
   passed, and the cut's price is measured and named; alternatives: the carried dial (a register per gear, resonant),
   the twin (two half-gears per 00 row), the root (refused).
 
-## 3. Term 5, the metric's push: the books' form at dial 2 [FRAME, the Boss's of 19:2x UTC; the fourth text NOT PASSED by the final physicist, PASSED by the final mathematician; the fifth text (TERM5_FIFTH.md) PASSED by the final physicist on his two items at k0 = Spokes x senses = 12 (boss-derive 9fd820527, readers/t5f_phys/REPORT2.md; at k0 = 1 not gravity); BUILT/live as B2b df4fa644c (node-live e88150989), with its price, NOT_CLOSED 30]
+## 3. Term 5, the metric's push: the books' form at dial 2 [DERIVED by the method (the Boss, 22:0x UTC): the fourth text PASSED by the final mathematician (eight minors), the fifth text (TERM5_FIFTH.md) PASSED by the final physicist on his two items at k0 = Spokes x senses = 12 (boss-derive 9fd820527, readers/t5f_phys/REPORT2.md; at k0 = 1 not gravity), the mathematician not re-reading the fifth text and the end's new pair reading it; BUILT/live as B2b df4fa644c on the Boss's frame of 19:2x UTC, with its price, NOT_CLOSED 30]
 
 - Form (the deriver's derivation from the act's own energy, TERM5_FIFTH.md to follow): H = (1/2) W v_in v_out +
   (1/2) SUM_Mesh grip Delta^2 with W = rest + k0 c00 read into every row but the 00 and grip = grip_rest + ii at
@@ -57,8 +60,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   and 0i slots pushed by nothing (nothing reads them). No strength: the factor is 1; the universe's "push" is 1
   (gravity) or 0 (none). The read's factor k0 is 1 as built (the S^2 the fourth text put in the push belongs to the
   00 slot's read); GR's gamma = 1 for light needs k0 = Spokes x senses = 12 (light's h_ii / h_00 144 at 1, 1 at 12,
-  measured 132 and 0.92): BUILT as a frame in B2b (df4fa644c) on the Boss's yes of 19:2x UTC, the owner to confirm,
-  Big Pic's look standing (NOT_CLOSED 26).
+  measured 132 and 0.92): BUILT in B2b (df4fa644c) on the Boss's yes of 19:2x UTC; Big Pic reads k0 = 12 as the
+  star's unit, derived and not a strength, for the owner to confirm as a unit and not to choose as a value
+  (NOT_CLOSED 26).
 - Why this form: the final physicist's two blocking items (the built form adds -eta (v.v); the books open by 588 f
   at every integer strength, 1152 f on the 2K-plan) are both answered by the one derivation from the act's energy,
   with no strength to choose; line 35's "the books fix it" is met. Measured by the deriver on the live act (probe_f):
@@ -98,8 +102,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   pushed rows; the books on dust, the held tent and bump 1000 permille by windows at dial 2 (B2b's probe); the run
   back with r_d moving; the well world re-laid and its clock deeper where the lump is; the run back under the push in
   the engine test (B1's test, A's fold), the K1 read as its no.
-- Replaced by: the fifth text, PASSED by the final physicist, passing its mathematician; then DERIVED, the same code;
-  the two-plan road if the owner takes the metric's self-stress into the books (NOT_CLOSED 30).
+- Replaced by: n/a, DERIVED by the method: the mathematician does not re-read the fifth text, and the end's new pair
+  reads it, the same code; the two-plan road if the owner takes the metric's self-stress into the books (NOT_CLOSED
+  30).
 - Choice: the books' form at dial 2, because it is derived from the act's own energy with nothing chosen and closes
   the books where the readers measured them open; the alternatives: the law's form at an integer strength (books open
   by 1152 f), the built form (588 f, the wrong stress), both refused by the readers and by line 35.
@@ -279,7 +284,12 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     now and before alike, the tooth 0; the grips Mesh-less as built unless the owner chooses the Meshes within the
     window; its first test the pair world's books under the passing NOT_CLOSED 29 derives.
   - What closes it, and who: a lawful one-pass passing for monomials of four value legs, so that a visible held hand
-    books its exchange with the tied trains both ways (the click's deriver, COUNT5's, with David); the lay's integers,
+    books its exchange with the tied trains both ways; its road is David's first answer (#2187 6534266593), the
+    background form, which books the held train's own motion for both trains a monomial joins, S_held = -2 c P(now)
+    (Q(next) - Q(before)) and S_other = -S_held, whole, local, one pass and odd under the window's reversal, the
+    books open in 0 of 1,600 windows in three lays on f72067cdf's act against 1,598 to 1,600 for the act's passing,
+    the held train clicking only where its size moves; unread by a pair, so not tonight's build (NOT_CLOSED 29; its
+    pair and the click's deriver, COUNT5's, with David); the lay's integers,
     f whole and R fine together with the size's beat well below the teeth (David); G3's eighth text passing its pair;
     the owner's word on a potential in the law (NOT_CLOSED 19).
 - Replaced by: G3's next text answering both readers (the physicist's six items, the mathematician's four); the hat,

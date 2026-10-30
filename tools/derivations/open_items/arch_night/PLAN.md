@@ -401,10 +401,10 @@ calibre condition).
   outputs (term11_pass, g3_frame, term5_edge, term9_edge, drive_mirror, well_lay, click_lay, mesh_lay); FRAMES.md
   and NOT_CLOSED.md beside the candidate, so that every CHOSEN strength and every price is read as named, not hidden.
 - The writer's mends to docs/ARCHITECTURE.md (the Boss sends them): the Home, Test and Status lines of terms 1 to 4
-  and 7 on the edge; term 5 DRAFTED with the final pair; term 6's frame (plans.holding, tying, meshing; the flags by
-  character); term 9; term 11 in the S form with the kept tooth and the click line; the record at 1.3; the decoder's
-  basic part (clicks.py); runner/plans.py and the five worlds; the before slot read across the Mesh named in the
-  Node-clock's reads (COUNT4 N6); section 6 from NOT_CLOSED.md.
+  and 7 on the edge; term 5 DERIVED by the method (the end's new pair reads it); term 6's frame (plans.holding, tying,
+  meshing; the flags by character); term 9; term 11 in the S form with the kept tooth and the click line; the record
+  at 1.3; the decoder's basic part (clicks.py); runner/plans.py and the five worlds; the before slot read across the
+  Mesh named in the Node-clock's reads (COUNT4 N6); section 6 from NOT_CLOSED.md.
 
 ## Timeline (UTC)
 
