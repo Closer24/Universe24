@@ -172,10 +172,10 @@ The engine is five modules (engine/): step.py, mesh.py, contract.py, kinds.py an
 ### The guards, beside the run
 
 - **Clock:** the law's clause "The system is a system of clocks, and it is always checked" (line 106): the guards read every push and every line.
-- **Board:** the tests run on a board: each generic part has one small test, with the mutants that break it inside it, and the whole runs once on our bang (line 106); tools/check.py runs the gates and the tests together.
+- **Board:** the tests run on a board: each generic part has one small test and the whole runs once on our bang (line 106), the standard of the world and no more: no test is defined for nothing, no matrix of cases, no table of mutants (the owner's word of 12:4x UTC); tools/check.py runs the gates and the tests together.
 - **Clicks:** the decoder's rows are the validation: what the clicks read is set against what nature shows.
 - **Algebra:** the gate (tools/derivations/open_items/scribe_scan.py) is the algebra's law in a script: it refuses a push that raises a count of a number beyond 0 and 1, a float, a root, a loop, a branch, a comparison, a clamp, a mask, an enumeration, a probe with a float, or a module whose docstring lacks these four layers, and it keeps the table below.
-- **Home:** docs/ALGEBRA.md; tools/check.py (runs the gates and the tests together, in CI on every pull request and on every push to main), tools/merge_base.py, tools/record_code_shape.py, tools/tests_shape.py, tools/documents_gates.py, tools/derivations/open_items/scribe_scan.py (the gate; its self-test beside it, scribe_scan_selftest.py, runs with it), tools/derivations/open_items/scribe_law_check.py (the law's own check and this document's mirror of the tree, `--arch`). **Status:** BUILT; the law check, the mirror and their self-test join tools/check.py's ratchets (the Boss's yes, 12:4x UTC).
+- **Home:** docs/ALGEBRA.md; tools/check.py (runs the gates and the tests together, in CI on every pull request and on every push to main), tools/merge_base.py, tools/record_code_shape.py, tools/tests_shape.py, tools/documents_gates.py, tools/derivations/open_items/scribe_scan.py (the gate; its self-test beside it, scribe_scan_selftest.py, runs with it), tools/derivations/open_items/scribe_law_check.py (the law's own check and this document's mirror of the tree, `--arch`). **Status:** BUILT; the law check, the mirror and their self-test join tools/check.py's ratchets (the Boss's yes, 12:4x UTC); the tests are cut to that shape: the engine's by the Boss's code writer, the decoder's to five by Animate (the owner's word of 12:4x UTC).
 
 ## 4. Who may import whom
 
@@ -192,6 +192,8 @@ The architect's table; the gate's ISOLATE rule reads it. The standard library is
 | main.py | engine, runner |
 
 ## 5. What is open
+
+**When the system is closed.** The owner's word of 2026-10-30, 12:4x UTC: once the Node-clock works well, that is it, the system is closed: its thirteen terms derived with both readers agreeing and the one whole run on our bang; every other part is simple, with one small test of itself and no more.
 
 **G2:** the first-order form of term 5 (N2, in David's reading) and the notch and the frozen clock (terms 9 and 13), and the exponential clock beside the slot form (Postulate 6), both kept written until the test. **G3:** the strengths per channel and the plan, the tables' unit, which families tie to k, the held count's own potential, n's unit. **G4:** the shift and the shears (term 10). **G5:** the clicks (term 11 first, the Boss's derivation), the split's draw and its c (David's draft strikes the c), the visualizer. Beside them: the counts hidden in label tuples (len(GEAR), len(ADDED), WAYS, ENDS), to be read from the star, the piece and the schema with schema 1.3; the spring of line 35, which waits on the owner's rule for the head's notch.
 
