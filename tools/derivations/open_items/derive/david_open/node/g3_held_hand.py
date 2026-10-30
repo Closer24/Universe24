@@ -1,7 +1,11 @@
 """G3's held hand: Big Pic's beating held quantum (thread 6525978806, item 2) read on the act, whole numbers alone.
 
-Whole numbers alone: the head's gear step, Rule3's carry for every division, the sine and cosine by their series and
-pi by Machin's formula; no float and no root. The held quantum is a hand of two parts (re, im), each a gear at teeth
+Whole numbers alone: the head's gear step, Rule3's carry for every division and pi by Machin's formula; every reading
+a quotient with its remainder or a count over a span (the law's line 100), with no float and nothing found by search.
+The series sine and cosine lay a state alone, each lay's angle from the arcsine series of its exact cosine, 1 - spring
+over 2 W (and (b)'s tie (iv) tunes x's spring by them); every predicted beat, sign change or growth is counted on the
+exact linear recurrence run on the same lay, in whole numbers at a high scale, each round's quotient taken afresh and
+no fine tooth carried. The held quantum is a hand of two parts (re, im), each a gear at teeth
 W with its own spring kappa, turning round at its Node-clock; its wind D = now^2 - next times before, summed over its
 parts. The constants are g3_window_and_well.py's: the head's W, n = 10^6, g = (W div 400) div n, kappa = W div 16,
 grip = W div 6; s0 = kappa - g n, so that a gear tied through (g over n) (re^2 + im^2) beats at the hand's own beat
@@ -16,7 +20,9 @@ where re^2 + im^2 = n^2.
     count through 2 re^2, the same mean spring; (iii) the old linear tie g k, k = n + re', re' of n div 100 at twice
     x's beat, and (iii') the same with s0, x at the hand's beat; (iv) the tie through re alone, x at w over 2; and
     the controls, x alone at kappa, at g n and at kappa + W div 16 n + 1: the largest |x|, the round past 10^6,
-    the growth rate against Mathieu's eps w over 4;
+    the rounds for the window's largest |x| to reach twice and ten times the first window's, on the act and on the
+    exact linearized recurrence (the same tie and pump), and eps (Mathieu's eps w over 4 needs the angle w and is
+    dropped);
 (c) the bound: 4 n V = 2 n kappa (re^2 + im^2) + 2 n s0 x^2 + 2 g (re^2 + im^2) x^2 + n lam x^4 on every whole
     (re, im, x) up to 2 n in steps of n div 50, at lam = 0, 1 and g^2 div kappa;
 (d) a ring of 128, each held part and x pulled by its two neighbours at the grip, x tied as in (i) and seeded at 10^3
@@ -26,12 +32,15 @@ where re^2 + im^2 = n^2.
     read through the src's own loader;
 (f) the held hand's fine teeth as G5's pointer in vacuum, the pointer and the draw ported from g5_draw.py (G5's third
     text): a ring of 128, the merge at one Node-clock and its two neighbours, both parts read as A1 rows; the teeth's
-    move over W, the pointer e over 10,800 rounds, part 0 of 1:1, of 1:3 and of 3:7 with z^2, the tenths'
-    chi-square, D_N, the joint tenths one round apart, the Fano factor over windows of 10 to 400 rounds; laid at one
-    phase and at the phase 2 pi 37 j over 128; the controls laid in phase, and the old standing count at n, laid
-    10^3 off it or at n with a tied row laid at 10^3 and at 10; the hand at kappa + 1 and at kappa + W div 16 n + 1,
-    its teeth off W's lattice; every fine tooth born at H = W div 2, as G5 lays it; the run back with the draw
-    read.
+    move over W, the pointer e over 10,800 rounds, part 0 of 1:1, of 1:3 and of 3:7 drawn in the parts' own order
+    (g5_draw.py's drawn) with z^2, the tenths' chi-square, D_N, the joint tenths one round apart, the Fano factor
+    over windows of 10 to 400 rounds; laid at one phase and at the phase 2 pi 37 j over 128; the controls laid in
+    phase, and the old standing count at n, laid 10^3 off it or at n with a tied row laid at 10^3 and at 10; the
+    hand at kappa + 1 and at kappa + W div 16 n + 1, its teeth off W's lattice, and at the latter over 64 start
+    angles (the hostile physicist's g5c_scan.py): the hand laid alike at every Node-clock, so that one Node-clock's
+    two parts give the ring's merge of 3 Node-clocks and the board's star of 7, each angle's tenths, D_N and z^2,
+    and the count past the 5 per cent, 1 per cent and 1 per mille points against chance; every fine tooth born at
+    H = W div 2, as G5 lays it; the run back with the draw read.
 
 Usage: python3 -I g3_held_hand.py <src of tensor24-review at 9751f91c1>
 """
@@ -120,36 +129,9 @@ def arctan_inverse(m):
     return total
 
 
-def artanh_inverse(m):
-    """artanh of 1 over m, times SCALE, by its series."""
-    total, power, j = 0, quotient(SCALE, m), 0
-    while power:
-        total += quotient(power, 2 * j + 1)
-        power = quotient(power, m * m)
-        j += 1
-    return total
-
-
 PI = 16 * arctan_inverse(5) - 4 * arctan_inverse(239)  # Machin's formula, pi times SCALE
-LN_TWO = 2 * artanh_inverse(3)  # ln 2 times SCALE
-
-
-def ln_ratio(a, b):
-    """The natural log of a over b (a, b at least 1), times SCALE: whole powers of 2, then 2 artanh of the rest."""
-    k = 0
-    while a >= 2 * b:
-        b *= 2
-        k += 1
-    while a < b:
-        a *= 2
-        k -= 1
-    t = quotient((a - b) * SCALE, a + b)
-    total, power, j = 0, t, 0
-    while power:
-        total += quotient(power, 2 * j + 1)
-        power = quotient(quotient(power * t, SCALE) * t, SCALE)
-        j += 1
-    return k * LN_TWO + 2 * total
+FINE = 10**10  # the arcsine series' guard digits
+LIN = 10**30  # the exact linear recurrences' scale
 
 
 def sine(x):
@@ -186,29 +168,58 @@ def turned(theta):
     return theta
 
 
-def largest_angle(bound, scale_of_sine):
-    """The largest angle a (times SCALE) in [0, pi over 2] with scale_of_sine sin^2 (a) <= bound (times SCALE^2)."""
-    lo, hi = 0, quotient(PI, 2)
-    while hi - lo > 1:
-        mid = quotient(lo + hi, 2)
-        s = sine(mid)
-        if scale_of_sine * s * s <= bound:
-            lo = mid
-        else:
-            hi = mid
-    return lo
+def arcsine(x):
+    """arcsin of x over SCALE, times SCALE (0 <= x < SCALE), by its series, carried at FINE times SCALE: the sum over j
+    of C(2 j, j) over 4^j x^(2 j + 1) over (2 j + 1), each power the last times (2 j + 1) x^2 over (2 j + 2)."""
+    big, unit = x * FINE, SCALE * FINE
+    total, power, j = 0, big, 0
+    while power:
+        total += quotient(power, 2 * j + 1)
+        power = quotient(quotient(power * big, unit) * big * (2 * j + 1), unit * (2 * j + 2))
+        j += 1
+    return quotient(total, FINE)
 
 
-def beat(spring):
-    """The step's beat w, times SCALE, for 4 W sin^2 (w over 2) = spring."""
-    return 2 * largest_angle(spring * SCALE * SCALE, 4 * W)
+def lay_angle(cos_w):
+    """A lay's angle w, times SCALE, from its exact cosine times SCALE: pi over 2 less the arcsine; for a lay alone."""
+    return quotient(PI, 2) - arcsine(cos_w)
 
 
-def mode_beat(spring, m, size):
-    """The step's beat, times SCALE, of a ring mode of wave number m: 4 W sin^2 (w over 2) = spring + 4 grip
-    sin^2 (pi m over size)."""
+def spring_cos(spring):
+    """cos w times SCALE for a gear's own beat, 4 W sin^2 (w over 2) = spring: 1 - spring over 2 W."""
+    return SCALE - quotient(spring * SCALE, 2 * W)
+
+
+def mode_cos(spring, m, size):
+    """cos w times SCALE for a ring mode of wave number m: 1 - (spring + 4 grip sin^2 (pi m over size)) over 2 W."""
     s = sine(quotient(PI * m, size))
-    return 2 * largest_angle(spring * SCALE * SCALE + 4 * grip * s * s, 4 * W)
+    return SCALE - quotient(spring * SCALE * SCALE + 4 * grip * s * s, 2 * W * SCALE)
+
+
+def linear_count(spring, now, before, rounds):
+    """One gear's exact linear recurrence at teeth W pushed by -spring part, laid (now, before) at LIN, each round's
+    quotient taken afresh and no fine tooth carried: its sign changes over `rounds` rounds."""
+    x, was, changes = now * LIN, before * LIN, 0
+    for _ in range(rounds):
+        x, was = 2 * x - was + carry(-spring * x, W, 0)[0], x
+        changes += int(x * was < 0)
+    return changes
+
+
+def ring_linear_count(row, spring, rounds, node=0):
+    """A ring row's exact linear recurrence, each part pulled by its two neighbours at the grip and pushed by -spring
+    part, laid as the row is at LIN, each round's quotient taken afresh and no fine tooth carried: the sign changes at
+    the Node-clock `node` over `rounds` rounds."""
+    size = len(row)
+    rights = [carry(i + 1, size, 0)[1] for i in range(size)]
+    xs, was = [s[0] * LIN for s in row], [s[1] * LIN for s in row]
+    changes = 0
+    for _ in range(rounds):
+        new = [2 * xs[i] - was[i] + carry(grip * (xs[i - 1] + xs[rights[i]] - 2 * xs[i]) - spring * xs[i], W, 0)[0]
+               for i in range(size)]
+        changes += int(new[node] * xs[node] < 0)
+        xs, was = new, xs
+    return changes
 
 
 def laid(amplitude, phase, w):
@@ -230,10 +241,11 @@ def ring_changes(values):
     return sum(int(values[i] * values[carry(i + 1, size, 0)[1]] < 0) for i in range(size))
 
 
-w_s = beat(kappa)  # the hand's beat on the step, times SCALE
-sin_w, cos_w = sine(w_s), cosine(w_s)
+w_s = lay_angle(spring_cos(kappa))  # the hand's own beat, times SCALE, for the lay alone
+sin_w, cos_w = sine(w_s), cosine(w_s)  # for the lay alone
 A = n
 quarter = ((A, nearest(A * cos_w, SCALE), 0), (0, -nearest(A * sin_w, SCALE), 0))  # re and im, a quarter turn apart
+COS_W = (2 * W - kappa, 2 * W)  # cos w = 1 - kappa over 2 W, exact
 
 
 # (a) one Node-clock, the held hand alone
@@ -267,20 +279,29 @@ def held_alone(re_g, im_g, rounds, marks=(1000, 10000)):
 
 ROUNDS_A = 100000
 low, high, d_total, teeth, end, spreads = held_alone(*quarter, ROUNDS_A)
-closed_d = 2 * A * A * sin_w * sin_w  # 2 A^2 sin^2 w, times SCALE^2
+cos32, cos_rest = carry(32 * COS_W[0], COS_W[1], 0)  # 32 cos w, whole
+sin2_1024 = 1024 - cos32 * cos32  # 1024 sin^2 w, whole
+closed_d = (2 * A * A * sin2_1024, 1024)  # 2 A^2 sin^2 w, exact
+im_b = -quarter[1][1]
+im_nearest = (2 * im_b - 1) ** 2 * 1024 <= 4 * A * A * sin2_1024 <= (2 * im_b + 1) ** 2 * 1024
 print(f"(a) one Node-clock, the held hand alone, each part a gear at teeth W pushed by -kappa part; W divisible by 16:"
-      f" {carry(W, 16, 0)[1] == 0}, so cos w = {places(32 * cos_w, SCALE, 6)} over 32 and sin^2 w ="
-      f" {places(1024 * sin_w * sin_w, SCALE * SCALE, 6)} over 1024 (by the series); laid re = {quarter[0][0]},"
-      f" {quarter[0][1]} and im = {quarter[1][0]}, {quarter[1][1]} (now, before), A = n; {ROUNDS_A} rounds:")
+      f" {carry(W, 16, 0)[1] == 0}, so cos w = 1 - kappa over 2 W = {cos32} over 32 (rest {cos_rest}) and sin^2 w ="
+      f" {sin2_1024} over 1024, exactly; laid re = {quarter[0][0]}, {quarter[0][1]} and im = {quarter[1][0]},"
+      f" {quarter[1][1]} (now, before), A = n, the lay's angle from the arcsine series of its cosine, its sine and"
+      f" cosine by their series (re's before slot A cos w exactly: {quarter[0][1] * COS_W[1] == A * COS_W[0]}; im's"
+      f" the nearest whole to -A sin w, by squares: {im_nearest}); {ROUNDS_A} rounds:")
 print(f"    re^2 + im^2 at the now slot from {low[0]} to {high[0]}, a spread of"
       f" {places(MILLION * (high[0] - low[0]), A * A, 2)} per million of A^2 (over the first 1,000 rounds"
       f" {places(MILLION * spreads[0], A * A, 2)}, the first 10,000 {places(MILLION * spreads[1], A * A, 2)})")
 print(f"    D_re from {low[1]} to {high[1]}, D_im from {low[2]} to {high[2]}; their sum from {low[3]} to {high[3]},"
       f" mean {places(d_total, ROUNDS_A, 2)}, a spread of {places(MILLION * ROUNDS_A * (high[3] - low[3]), d_total, 2)}"
-      f" per million of its mean; 2 A^2 sin^2 w = {places(closed_d, SCALE * SCALE, 2)} (closed form 126 A^2 over 1024"
+      f" per million of its mean; 2 A^2 sin^2 w = {places(*closed_d, 2)} (closed form 126 A^2 over 1024"
       f" = {quotient(126 * A * A, 1024)})")
-print(f"    L = re_now im_before - im_now re_before from {low[4]} to {high[4]}, against -A^2 sin w ="
-      f" {places(-A * A * sin_w, SCALE, 2)}; every kept tooth within [0, W): {teeth}")
+l_square = (A**4 * sin2_1024, 1024)  # (A^2 sin w)^2, exact
+l_within = high[4] ** 2 * l_square[1] <= l_square[0] <= low[4] ** 2 * l_square[1]
+print(f"    L = re_now im_before - im_now re_before from {low[4]} to {high[4]}, against -A^2 sin w, whose square"
+      f" A^4 sin^2 w = {places(*l_square, 2)} lies between the squares of L's ends: {l_within}; every kept tooth within"
+      f" [0, W): {teeth}")
 back = held_alone(mirrored(end[0]), mirrored(end[1]), ROUNDS_A)[4]
 print(f"    the run back: {ROUNDS_A} rounds forward, the mirror (b, a, flip(r, W)), {ROUNDS_A} rounds, the mirror: the"
       f" start returns bit for bit: {(mirrored(back[0]), mirrored(back[1])) == quarter}")
@@ -292,10 +313,9 @@ print(f"    the control laid in phase (im = re): re^2 + im^2 from {in_phase[0][0
 
 # (b) the ties, tuned to resonance
 
-w0_s = beat(gn)  # the beat of the spring g n alone
-spring_iii = nearest(4 * W * sine(w0_s) * sine(w0_s), SCALE * SCALE)  # its beat 2 w0
-spring_iii_w = nearest(4 * W * sin_w * sin_w, SCALE * SCALE)  # its beat 2 w
-sin_quarter = sine(quotient(w_s, 4))
+spring_iii = nearest(4 * gn * W - gn * gn, W)  # 4 W sin^2 w0, exact (cos w0 = 1 - g n over 2 W): its beat 2 w0
+spring_iii_w = quotient(63 * W, 256)  # 4 W sin^2 w = 63 W over 256, its beat 2 w: its rest a half, its whole part
+sin_quarter = sine(quotient(w_s, 4))  # a tuning by the series, as the lays: x's spring at w over 2
 spring_iv = nearest(4 * W * sin_quarter * sin_quarter, SCALE * SCALE)  # x's spring, its beat w over 2
 small = quotient(n, 100)
 OFFSET = quotient(W, 16 * n) + 1  # added to kappa it leaves W's lattice by about W div 16 a swing of n
@@ -311,22 +331,31 @@ TIES = {
 }
 
 
+GROWTH_WINDOW = 100  # the window, in rounds, on which a growth is read
+
+
+def held_lay(kind):
+    """The held parts each tie lays, as gears: the hand of (a), its re alone, or re' of n div 100 at rest on its own
+    beat's double (cos 2 w0 and cos 2 w exact)."""
+    if kind == "i":
+        return list(quarter)
+    if kind in ("ii", "iv"):
+        return [quarter[0]]
+    if kind == "iii":
+        return [(small, nearest(small * (2 * (2 * W - gn) ** 2 - 4 * W * W), 4 * W * W), 0)]
+    if kind == "iii_w":
+        return [(small, nearest(small * 449, 512), 0)]
+    return []
+
+
 def tie_run(kind, seed, rounds=20000, window=500):
     """x laid at rest at the seed; the held parts laid per tie; the back-reaction on the held parts from the same V.
-    Returns x's largest |x|, the first round past 10^6, the largest |x| per window, and the held swing's least and
-    most re^2 + im^2 (tie (i))."""
+    Returns x's largest |x|, the first round past 10^6, the largest |x| per window, the held swing's least and most
+    re^2 + im^2 (tie (i)), and the largest |x| per GROWTH_WINDOW rounds."""
     x = (seed, seed, 0)
-    if kind == "i":
-        held = list(quarter)
-    elif kind in ("ii", "iv"):
-        held = [quarter[0]]
-    elif kind == "iii":
-        held = [(small, nearest(small * cosine(2 * w0_s), SCALE), 0)]
-    elif kind == "iii_w":
-        held = [(small, nearest(small * cosine(2 * w_s), SCALE), 0)]
-    else:
-        held = []
+    held = held_lay(kind)
     most, first, envelope, top, rho_low, rho_high = 0, None, [], 0, None, None
+    fine, fine_top = [], 0
     for t in range(1, rounds + 1):
         xx, c = x[0], x[0] * x[0]
         parts = [h[0] for h in held]
@@ -354,43 +383,99 @@ def tie_run(kind, seed, rounds=20000, window=500):
         x = step.gear(*x, W, px)
         held = [step.gear(*h, W, p) for h, p in zip(held, pushes, strict=True)]
         top = max(top, abs(x[0]))
+        fine_top = max(fine_top, abs(x[0]))
         if first is None and abs(x[0]) > MILLION:
             first = t
         if carry(t, window, 0)[1] == 0:
             envelope.append(top)
             most, top = max(most, top), 0
-    return most, first, envelope, rho_low, rho_high
+        if carry(t, GROWTH_WINDOW, 0)[1] == 0:
+            fine.append(fine_top)
+            fine_top = 0
+    return most, first, envelope, rho_low, rho_high, fine
 
 
-def mathieu(kind, rho_spread):
-    """eps, the tie's relative swing of x's spring, as a fraction, and x's beat times SCALE."""
+def tie_linear(kind, rounds=20000, window=GROWTH_WINDOW):
+    """tie_run's x on the exact linearized recurrence at LIN: x laid at rest at one count, the held parts laid as
+    tie_run lays them and running free (their pull from x is of x's second order), x pushed by the same tie and pump,
+    each round's quotient taken afresh and no fine tooth carried; the largest |x| per window, at LIN."""
+    x, x_was = LIN, LIN
+    held = [[h[0] * LIN, h[1] * LIN] for h in held_lay(kind)]
+    springs = {"i": (kappa, kappa), "ii": (kappa,), "iii": (spring_iii,), "iii_w": (spring_iii_w,), "iv": (kappa,)}
+    alone = {"alone_w": kappa, "alone_w0": gn, "alone_off": kappa + OFFSET}
+    envelope, top = [], 0
+    for t in range(1, rounds + 1):
+        parts = [h[0] for h in held]
+        if kind == "i":
+            push = -carry(g * (parts[0] * parts[0] + parts[1] * parts[1]) * x, n * LIN * LIN, 0)[0] - s0 * x
+        elif kind == "ii":
+            push = -carry(2 * g * parts[0] * parts[0] * x, n * LIN * LIN, 0)[0] - s0 * x
+        elif kind == "iii":
+            push = -gn * x - carry(g * parts[0] * x, LIN, 0)[0]
+        elif kind == "iii_w":
+            push = -(gn + s0) * x - carry(g * parts[0] * x, LIN, 0)[0]
+        elif kind == "iv":
+            push = -spring_iv * x - carry(g * parts[0] * x, LIN, 0)[0]
+        else:
+            push = -alone[kind] * x
+        x, x_was = 2 * x - x_was + carry(push, W, 0)[0], x
+        held = [[2 * h[0] - h[1] + carry(-s * h[0], W, 0)[0], h[0]]
+                for h, s in zip(held, springs.get(kind, ()), strict=True)]
+        top = max(top, abs(x))
+        if carry(t, window, 0)[1] == 0:
+            envelope.append(top)
+            top = 0
+    return envelope
+
+
+def growth(envelope, window=GROWTH_WINDOW):
+    """A growth as a count over a span: the rounds from the first window's end to the first window whose largest |x|
+    reaches twice the first window's, and ten times it; None where the run holds no such window."""
+    twice = next((i for i, v in enumerate(envelope) if v >= 2 * envelope[0]), None)
+    tenfold = next((i for i, v in enumerate(envelope) if v >= 10 * envelope[0]), None)
+    return [None if i is None else window * i for i in (twice, tenfold)]
+
+
+def span(rounds):
+    return "never in 20,000 rounds" if rounds is None else f"{rounds} rounds on"
+
+
+def eps_of(kind, rho_spread):
+    """eps, the tie's relative swing of x's spring, as a fraction."""
     if kind == "i":
-        return (g * rho_spread, 2 * n * kappa), w_s
+        return g * rho_spread, 2 * n * kappa
     if kind == "ii":
-        return (gn, kappa), w_s
+        return gn, kappa
     if kind == "iii":
-        return (g * small, gn), w0_s
+        return g * small, gn
     if kind == "iii_w":
-        return (g * small, kappa), w_s
+        return g * small, kappa
     if kind == "iv":
-        return (gn, spring_iv), quotient(w_s, 2)
-    return (0, 1), (w0_s if kind == "alone_w0" else w_s)
+        return gn, spring_iv
+    return 0, 1
 
 
-print(f"(b) a tied gear x at teeth W, laid at rest, 20,000 rounds; s0 = kappa - g n = {s0}; x's beat w ="
-      f" {places(w_s, SCALE, 5)}, w0 = {places(w0_s, SCALE, 5)} a round; the largest |x| per window of 500 rounds"
-      f" gives the growth rate, ln of the window reaching 10^5 (else the last) over the first, per round:")
+counts_b = (linear_count(kappa, 1, 1, 20000), linear_count(gn, 1, 1, 20000))
+print(f"(b) a tied gear x at teeth W, laid at rest, 20,000 rounds; s0 = kappa - g n = {s0}; laid at rest alone on its"
+      f" exact linear recurrence x changes sign {counts_b[0]} times in 20,000 rounds at the spring kappa and"
+      f" {counts_b[1]} at g n; the largest |x| per window of {GROWTH_WINDOW} rounds read as a growth, the rounds from"
+      f" the first such window to the first at twice and at ten times its largest |x|, on the act and on the exact"
+      f" linearized"
+      f" recurrence (the same tie and pump, the held parts free, at a high scale, no fine tooth carried); Mathieu's"
+      f" eps w over 4 needs the angle w and is dropped:")
 for kind, label in TIES.items():
     print(f"    {label}:")
+    linear_growth = growth(tie_linear(kind))
     for seed in (1, 1000):
-        most, first, envelope, rho_low, rho_high = tie_run(kind, seed)
+        most, first, envelope, rho_low, rho_high, fine = tie_run(kind, seed)
         last = next((i for i, v in enumerate(envelope) if v >= 10**5), len(envelope) - 1)
-        rate = nearest(MILLION * ln_ratio(max(envelope[last], 1), max(envelope[0], 1)), 500 * last * SCALE)
-        (e_num, e_den), beat_x = mathieu(kind, (rho_high - rho_low) if kind == "i" else 0)
-        predicted = nearest(MILLION * e_num * beat_x, 4 * e_den * SCALE)
+        e_num, e_den = eps_of(kind, (rho_high - rho_low) if kind == "i" else 0)
+        act_growth = growth(fine)
         print(f"      seed {seed}: the largest |x| {most}; past 10^6 at round {first}; the first and last windows"
-              f" {envelope[0]} and {envelope[last]} (window {last + 1}); the growth rate {places(rate, MILLION, 6)} a"
-              f" round against Mathieu's eps w over 4 = {places(predicted, MILLION, 6)}, eps = {sci(e_num, e_den)}")
+              f" {envelope[0]} and {envelope[last]} (window {last + 1}); twice the first window's"
+              f" {span(act_growth[0])}, ten times {span(act_growth[1])}; eps = {sci(e_num, e_den)}")
+    print(f"      the exact linearized recurrence: twice the first window's {span(linear_growth[0])}, ten times"
+          f" {span(linear_growth[1])}")
 
 
 # (c) the bound
@@ -480,7 +565,7 @@ print(f"    (d1) one phase everywhere, laid as in (a): re^2 + im^2 over the ring
       f" the ring at most {most_changes} in any round, {ring_changes([r[0] for r in res])} at round 4,000; the largest"
       f" |x| at round 4,000 {max(abs(s[0]) for s in xs)} (the old hat flipped 114 to 126 of 128)")
 
-w1_s = mode_beat(kappa, 1, SIZE)
+w1_s = lay_angle(mode_cos(kappa, 1, SIZE))  # the mode's own beat, times SCALE, for the lay alone
 start2 = ([laid(A, quotient(2 * PI * j, SIZE), w1_s) for j in range(SIZE)],
           [laid(A, quotient(2 * PI * j, SIZE) - quotient(PI, 2), w1_s) for j in range(SIZE)], seeded_x())
 res, ims, xs = start2
@@ -495,8 +580,10 @@ res, ims, xs = ([mirrored(s) for s in part] for part in end2)
 for t in range(1, 4001):
     res, ims, xs = hand_ring_round(res, ims, xs)
 back2 = tuple([mirrored(s) for s in part] for part in (res, ims, xs))
+d2_counts = (ring_linear_count(start2[0], kappa, 4000), linear_count(kappa, *quarter[0][:2], 4000))
 print(f"    (d2) the phase 2 pi j over 128 at Node-clock j (re = A cos, im = A sin, the before slot on the mode's own"
-      f" beat {places(w1_s, SCALE, 6)} against {places(w_s, SCALE, 6)}): the winding over every round"
+      f" beat; on the exact linear recurrence of that lay re changes sign {d2_counts[0]} times at Node-clock 0 in 4,000"
+      f" rounds, the hand laid as in (a) {d2_counts[1]} times): the winding over every round"
       f" {sorted(windings, key=str)} (at the lay {winding(start2[0], start2[1])}); the least re^2 + im^2 anywhere"
       f" {rho_low}"
       f" ({places(MILLION * rho_low, A * A, 0)} per million of A^2); the whole ring's run back, 4,000 rounds, the"
@@ -556,16 +643,16 @@ windings_toy = [layout.gearing.drive[first, 0] for first in loaded.trains.first.
 re_g, im_g = quarter
 d_first = (re_g[0] * re_g[0] - step.gear(*re_g, W, -kappa * re_g[0])[0] * re_g[1]
            + im_g[0] * im_g[0] - step.gear(*im_g, W, -kappa * im_g[0])[0] * im_g[1])
-two_sin2 = 2 * sin_w * sin_w  # 2 sin^2 w times SCALE^2
-key_n = nearest(n * n * two_sin2, SCALE * SCALE)
+two_sin2 = (2 * sin2_1024, 1024)  # 2 sin^2 w = 63 over 512, exact
+key_n = nearest(n * n * two_sin2[0], two_sin2[1])
 print(f"(e) n's unit: D at the lay, summed over the parts, {d_first}; D over 2 sin^2 w ="
-      f" {places(d_first * SCALE * SCALE, two_sin2, 2)}, against A^2 = {A * A}")
+      f" {places(d_first * two_sin2[1], two_sin2[0], 2)}, against A^2 = {A * A}")
 print(f"    one winding = D sets A^2 = key over (2 sin^2 w), the key the law's quantum of D: a key of 2 n^2 sin^2 w ="
       f" {key_n} gives A^2 = key times 512 over 63 (2 sin^2 w = 63 over 512 exactly, kappa being W over 16) ="
       f" {quotient(key_n * 512, 63)}, n^2 exactly: {key_n * 512 == 63 * n * n}")
 print(f"    the src carries no quantum of D; it lays each train card's winding as the drive's teeth T_d, 1 on the"
       f" force's path: the shipped toy's trains {[t['name'] for t in universe['trains']]} read {windings_toy}; read as"
-      f" the key, T = {windings_toy[0]} gives A^2 = {places(windings_toy[0] * SCALE * SCALE, two_sin2, 3)} counts^2")
+      f" the key, T = {windings_toy[0]} gives A^2 = {places(windings_toy[0] * two_sin2[1], two_sin2[0], 3)} counts^2")
 
 
 # (f) the held hand's fine teeth as G5's pointer in vacuum: the pointer, the draw and the statistics are g5_draw.py's
@@ -591,33 +678,17 @@ def nonneg(value):
     return carry(value, value * value + 1, 0)[0] + 1
 
 
-def placing(sizes):
-    """The law's rank count, with no sort and no if: one sign bit per pair of parts; each part's place is the count of
-    parts placed before it. Returns the sizes placed before each part, whether each closes the last interval (the
-    last placed part of nonzero size), and the total."""
-    count = len(sizes)
-    place = [0] * count
-    for j in range(count):
-        for k in range(j + 1, count):
-            first = nonneg(sizes[j] - sizes[k])
-            place[k] += first
-            place[j] += 1 - first
-    total = sum(sizes)
-    before = tuple(sum(sizes[j] * nonneg(place[k] - place[j] - 1) for j in range(count)) for k in range(count))
-    closing = tuple(nonneg(before[k] + sizes[k] - total) * nonneg(sizes[k] - 1) for k in range(count))
-    return before, closing, total
-
-
-PLACED = {sizes: placing(sizes) for sizes in ((1, 1), (1, 3), (3, 7))}
-
-
-def law_drawn(e, h, sizes):
-    """The part whose interval, from B times H up to (B + S) times H, holds e times L; closed at the last placed part
-    of nonzero size, which so takes e = H."""
-    before, closing, total = PLACED[sizes]
-    part = 0
+def drawn(e, h, sizes):
+    """g5_draw.py's draw: the part drawn by the pointer e within H over whole sizes, in the parts' own order, with no
+    rank and no if: part i where C_(i-1) times H is at most e times L and e times L is below C_i times H, C_i the
+    sizes of parts 0 to i summed and L their total; e = H goes to the last part of nonzero size, whose interval is
+    closed there."""
+    total, part, below = sum(sizes), 0, 0
     for k, size in enumerate(sizes):
-        part += k * nonneg(e * total - before[k] * h) * nonneg((before[k] + size) * h - 1 + closing[k] - e * total)
+        above = below + size
+        closing = nonneg(above - total) * nonneg(size - 1)  # 1 at the last part of nonzero size
+        part += k * nonneg(e * total - below * h) * nonneg(above * h - 1 + closing - e * total)
+        below = above
     return part
 
 
@@ -763,7 +834,7 @@ def pointer_report(label, rows, kind, spring, read, born=H):
           f" {shown(chi)} on {free}")
     draws = []
     for s1, s2 in ((1, 1), (1, 3), (3, 7)):
-        zero = sum(int(law_drawn(e, H, (s1, s2)) == 0) for e in es)
+        zero = sum(int(drawn(e, H, (s1, s2)) == 0) for e in es)
         lsum = s1 + s2
         odds_class = odds((lsum * zero - count * s1) ** 2, count * s1 * s2)
         draws.append(f"at {s1}:{s2} part 0 in {zero} (expected {quotient(count * s1, lsum)}), z^2"
@@ -771,23 +842,26 @@ def pointer_report(label, rows, kind, spring, read, born=H):
     print("      " + "; ".join(draws) + f" (of {count})")
     lines = []
     for sizes, lsum in (((1, 1), 2), ((1, 3), 4)):
-        marks = [[int(law_drawn(e, H, sizes) == 0)] for e in es]
+        marks = [[int(drawn(e, H, sizes) == 0)] for e in es]
         cells = []
         for m in WINDOWS:
             f_value, windows, num, den = fano(marks, 1, lsum, m)
             cells.append(f"M {m}: {shown(f_value)} ({windows}, z^2 {shown(carry(1000 * num, den, 0)[0])})")
         lines.append(f"{sizes[0]}:{sizes[1]} " + ", ".join(cells))
     print("      the Fano factor of part 0 (windows, its z^2): " + "; ".join(lines))
+    return es
 
 
-w37_s = mode_beat(kappa, 37, SIZE)
+w37_s = lay_angle(mode_cos(kappa, 37, SIZE))  # the 37-wave's own beat, times SCALE, for the lay alone
 phase37 = [quotient(2 * PI * 37 * j, SIZE) for j in range(SIZE)]
 turning_37 = [[laid(A, p, w37_s) for p in phase37], [laid(A, p - quotient(PI, 2), w37_s) for p in phase37]]
 offset = OFFSET
+f_counts = (ring_linear_count(turning_37[0], kappa, ROUNDS_F), linear_count(kappa, *quarter[0][:2], ROUNDS_F))
 print(f"(f) G5's pointer in vacuum, ported from g5_draw.py: a ring of 128 (each part pulled by its two neighbours at"
       f" the grip), the merge at Node-clock 0 and its two neighbours on the ring, the read rows' fine teeth, every"
-      f" fine tooth born at H = W div 2 as G5 lays it; {ROUNDS_F} rounds; the 37-wave's beat"
-      f" {places(w37_s, SCALE, 5)} against {places(w_s, SCALE, 5)}; a fine tooth moves by its push mod W, and W over"
+      f" fine tooth born at H = W div 2 as G5 lays it, each draw in the parts' own order; {ROUNDS_F} rounds; on its"
+      f" exact linear recurrence the 37-wave's re changes sign {f_counts[0]} times at Node-clock 0, the hand laid at"
+      f" one phase {f_counts[1]} times; a fine tooth moves by its push mod W, and W over"
       f" gcd(W, kappa) = {quotient(W, gcd(W, kappa))}, W over gcd(W, kappa, the grip) ="
       f" {quotient(W, gcd(gcd(W, kappa), grip))}:")
 pointer_report("the turning hand at one phase, re and im read", [[quarter[0]] * SIZE, [quarter[1]] * SIZE],
@@ -807,8 +881,92 @@ pointer_report("the old standing count at n, a tied row laid at 10 (its tooth's 
                [[(n, n, 0)] * SIZE, [(10, 10, 0)] * SIZE], "tied", kappa, (0,))
 pointer_report("the turning hand at kappa + 1, one phase", [[quarter[0]] * SIZE, [quarter[1]] * SIZE],
                "hand", kappa + 1, (0, 1))
-pointer_report(f"the turning hand at kappa + {offset}, one phase, its teeth off W's lattice",
-               [[quarter[0]] * SIZE, [quarter[1]] * SIZE], "hand", kappa + offset, (0, 1))
+es_off = pointer_report(f"the turning hand at kappa + {offset}, one phase, its teeth off W's lattice",
+                        [[quarter[0]] * SIZE, [quarter[1]] * SIZE], "hand", kappa + offset, (0, 1))
+
+
+# the off-lattice spring's start angle, ported from the hostile physicist's g5c_scan.py (his 64 start angles): laid
+# alike at every Node-clock, the grip pulls nothing, so one Node-clock's two parts give every merge's pointer, 3 times
+# the hand's sum at the ring's merge and 7 times at the board's star (G5's rule reads a Node-clock and its six Meshes)
+
+CHI_POINTS = (16919, 21666, 27877)  # chi-square on 9 at its 5 and 1 per cent and 1 per mille points, thousandths
+KS_POINTS = (1844, 2649, 3800)  # N D_N^2 at Kolmogorov's 5 and 1 per cent and 1 per mille points, thousandths
+Z2_POINTS = (3841, 6635, 10828)  # z^2 on 1 at its 5 and 1 per cent and 1 per mille points, thousandths
+SPLITS = ((1, 1), (1, 3), (3, 7))
+STARTS = 64
+
+
+def hand_sums(start, spring, w_k):
+    """One Node-clock's turning hand pushed by -spring part, re laid at the angle start on the spring's own beat w_k
+    and im a quarter turn behind, its fine teeth born at H: each round's c(re_in) + c(re_out) + c(im_in) + c(im_out),
+    c(r) = 2 r + 1 - W, the pointer's sum at one Node-clock."""
+    re, im = laid(A, start, w_k), laid(A, start - quotient(PI, 2), w_k)
+    re, im = (re[0], re[1], H), (im[0], im[1], H)
+    sums = []
+    for _ in range(ROUNDS_F):
+        re_out, im_out = step.gear(*re, W, -spring * re[0]), step.gear(*im, W, -spring * im[0])
+        sums.append((2 * re[2] + 1 - W) + (2 * re_out[2] + 1 - W) + (2 * im[2] + 1 - W) + (2 * im_out[2] + 1 - W))
+        re, im = re_out, im_out
+    return sums
+
+
+def folded(total):
+    """G5's pointer from a sum: u = the sum mod W, e = min(u, W - u)."""
+    u = carry(total, W, 0)[1]
+    return min(u, W - u)
+
+
+def scan_stats(es):
+    """The tenths' chi-square on 9 and N D_N^2, in thousandths, D_N in ppm, and z^2 in thousandths at each split,
+    each draw in the parts' own order."""
+    count = len(es)
+    disc = discrepancy(es)
+    z2s = [z2_fixed(sum(int(drawn(e, H, sizes) == 0) for e in es), count, *sizes) for sizes in SPLITS]
+    return chi_tenths(es), carry(1000 * disc * disc, count * H * H, 0)[0], ppm(disc, count * H), z2s
+
+
+k_off = kappa + offset
+w_off = lay_angle(spring_cos(k_off))  # the off-lattice spring's own beat, times SCALE, for the lay alone
+half_turn = quotient(STARTS, 2)
+scan_rows, same_as_ring, kept, near = [], None, {}, True
+for j in range(STARTS):
+    sums = hand_sums(quotient(2 * PI * j, STARTS), k_off, w_off)
+    row = []
+    for m in (3, 7):
+        es_m = [folded(m * s) for s in sums]
+        row.append(scan_stats(es_m))
+        if j < half_turn:
+            kept[(j, m)] = es_m
+        else:
+            near = near and all(abs(a - b) <= 8 * m for a, b in zip(kept.pop((j - half_turn, m)), es_m, strict=True))
+    scan_rows.append(row)
+    if j == 0:
+        same_as_ring = [folded(3 * s) for s in sums] == es_off
+print(f"    the turning hand at kappa + {offset} over {STARTS} start angles 2 pi j over {STARTS}, laid alike at every"
+      f" Node-clock on the spring's own beat (the hostile physicist's g5c_scan.py, ported): one Node-clock's two parts"
+      f" give every merge's pointer, 3 times the hand's sum at the ring's merge and 7 times at the board's star of"
+      f" seven Node-clocks, as G5's rule reads them; at j = 0 the ring's merge's pointer is the whole ring's above,"
+      f" round by round: {same_as_ring}; per angle, the tenths' chi-square on 9, D_N in ppm, and z^2 at 1:1, 1:3 and"
+      f" 3:7:")
+for j, (ring, star) in enumerate(scan_rows):
+    print(f"      j = {j}: the ring's merge {shown(ring[0])}, D_N {ring[2]}, z^2"
+          f" {', '.join(shown(z) for z in ring[3])}; the board's star {shown(star[0])}, D_N {star[2]}, z^2"
+          f" {', '.join(shown(z) for z in star[3])}")
+negated_same = all(scan_rows[j] == scan_rows[j + half_turn] for j in range(half_turn))
+print(f"    the angle j + {half_turn} lays the hand negated: its pointer e stays within 8 of angle j's for each"
+      f" Node-clock read (24 at the ring's merge, 56 at the board's star) in every round: {near}; so it gives angle"
+      f" j's statistics, at every j: {negated_same}")
+chance = f"{places(STARTS * 5, 100, 1)}, {places(STARTS, 100, 2)} and {places(STARTS, 1000, 3)} of {STARTS}"
+for m, name in ((0, "the ring's merge"), (1, "the board's star")):
+    rows_m = [r[m] for r in scan_rows]
+    tests = [("the tenths", [r[0] for r in rows_m], CHI_POINTS), ("N D_N^2", [r[1] for r in rows_m], KS_POINTS)]
+    tests += [(f"z^2 at {s1}:{s2}", [r[3][i] for r in rows_m], Z2_POINTS) for i, (s1, s2) in enumerate(SPLITS)]
+    cells = []
+    for label, values, points in tests:
+        past = [sum(int(v > p) for v in values) for p in points]
+        cells.append(f"{label} {past[0]}, {past[1]}, {past[2]}")
+    print(f"    {name}, the angles past the 5 per cent, 1 per cent and 1 per mille points (chance gives {chance}): "
+          + "; ".join(cells))
 es_forward, _, end_f = pointer_run(born_at_h(turning_37), "hand", kappa, (0, 1), 1000)
 es_back, _, back_f = pointer_run([[mirrored(s) for s in row] for row in end_f], "hand", kappa, (0, 1), 1000)
 returned = [[mirrored(s) for s in row] for row in back_f] == born_at_h(turning_37)
