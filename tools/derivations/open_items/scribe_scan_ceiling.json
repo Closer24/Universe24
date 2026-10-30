@@ -21,7 +21,7 @@
   "rule": "COMPARE",
   "file": "tensor24/runner/load.py",
   "detail": "ordering",
-  "count": 2
+  "count": 1
  },
  {
   "rule": "LOOP",
@@ -33,7 +33,7 @@
   "rule": "LOOP",
   "file": "tensor24/runner/load.py",
   "detail": "comprehension",
-  "count": 4
+  "count": 3
  },
  {
   "rule": "LOOP",
@@ -51,18 +51,6 @@
   "rule": "POSITION",
   "file": "tensor24/runner/load.py",
   "detail": "seeds[0]",
-  "count": 1
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/runner/load.py",
-  "detail": "g + g",
-  "count": 1
- },
- {
-  "rule": "TWICE",
-  "file": "tensor24/runner/load.py",
-  "detail": "gamma + gamma",
   "count": 1
  }
 ]
