@@ -256,7 +256,8 @@ def edits():
         ),
         "a nesting too deep to read": (
             "piece",
-            lambda p: "[" * 100000 + "]" * 100000,
+            # ten million deep, past any stack: 3.14.9 on CI reads a hundred thousand, 3.14.6 about forty thousand
+            lambda p: "[" * 10**7 + "]" * 10**7,
             "piece.json: not read:",
         ),
         "no JSON": ("setting", lambda s: "{", "setting.json: not read:"),
