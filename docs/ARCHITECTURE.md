@@ -11,6 +11,23 @@ Tensor24 is a purely algebraic engine: a board of Node-clocks, each a set of gea
 - **Clicks:** what physics shows in the clicks, the board's shadow; the physics stands behind the clicks, and the step from the board to the clicks is the delicate one.
 - **Algebra:** one line of its algebra, in whole numbers and Rule3's carry. Then its **home** in the code, its **test** and its **status**.
 
+## Solution24: how every question is solved
+
+Solution24 is our one method of solving, for a term, a part, a reading or a change of code: the owner's principle of the clock and the gear (law line 35) with solving from the big things (line 106), as the law has them, under the name he gave it (his word of 2026-10-30, 13:0x UTC). Every derivation, plan section and push says whether it addressed it.
+
+1. **Does it follow by itself?** Ask first whether it follows from the one act of the Node-clock on the board of clocks. If it does, nothing is added. If it does not, ask the clicks what shows that it is needed: what does not follow is named, never declared (Postulate 6 was the first case).
+2. **Take the picture.** A board of clocks, each a train of gears, the gears of neighbouring clocks meshing through their Meshes. Time belongs to the clock (its count, its beat, the order of its reads) and arithmetic to the gear (every number a gear's notch). The board is taken as it stands in our event space, which has no time.
+3. **Build from the big things only.** The families (the kinds), the tensor, the 24, the clocks (gears, Rule3's carry, the dial) and time's reversal, in whole numbers and Gaussian integers. A floor, a bound, a clamp, a mask, an if, a table, a declaration, a closed form of a result, a number typed into an act or a rule written for a phenomenon is a fake and goes to the owner. Only generic laws are approved: a law stands only if the clocks explain it and the tensors and the 24 realize it (lines 106, 96).
+4. **Tell it in four layers**, starting from the simplest for the question and closing all four: the clock (which clock or gear makes it), the algebra (the act, Rule3's carry, the kinds and their tables), the event board (what stands and moves at each Node-clock, Mesh and round) and the physics behind the clicks (what the clicks read; the step from the board to the clicks is the delicate one). Forward (clock, algebra, board, physics) or backward (physics, board, algebra, clock); n/a where a layer does not apply (line 35, item 10).
+5. **Count the click.** A click is the carry's quotient where a winding is whole; two kinds and no third: the whole, where the wind decides, and the split, where a draw by the sizes chooses, the one place a choice enters. The beat and the time gear's turn are no clicks (line 35, items 4 and 5).
+6. **Check the conservation laws in the clicks.** The carry keeps its sum exactly, the books of every click close and the run back is exact to the bit; flux on the board, energy, momentum and charge follow from the symmetries; a conservation kept on the board and lost in the clicks is no solution (line 35, item 6).
+7. **Go both ways.** Forward from the clocks (gears, whole numbers, the one act) and backward from the clicks: the physics of nature seen in them is the direction and the test; what does not match nature is named, never hidden (line 35, item 7).
+8. **Two hostile readers.** Two hands derive blind before any code or document, and every derivation, the Boss's own included, passes a hostile mathematician and a hostile physicist, each new to it. Only then is it DERIVED, entered here by the writer, and only then does the Boss brief the code writer for main (Postulate 10; line 35, item 11).
+9. **Unify.** At every step look for several operations that are one; the one is written once and the others are its cases (line 104).
+10. **Put it in the document** the moment it is ready, in the four layers and with its status: no code starts on what is not DERIVED, and main takes a change only when its derivation stands here and its candidate is approved (section 4).
+11. **Say whether the method was addressed:** which clock or gear makes each term, what the clicks show (the books first) and what does not follow, asked of the clicks (line 35, item 8).
+12. **The aim and the end.** The board builds ever more complex clocks by its clicks and carries alone, nothing declared (line 35, item 9); the system is closed once the Node-clock works well (the owner's word of 12:4x UTC).
+
 ## 1. The parts
 
 ```
@@ -184,6 +201,7 @@ The code writer reads this section first at every task, as its standing instruct
 **Who writes, and how a change goes in**
 
 - The Boss's code writer, one subagent, alone writes the system's code and tests, the decoder's included; Animate and David check and derive under tools/derivations; the writer keeps these documents and the gate (the owner's words of 2026-10-30, 12:3x to 12:5x UTC).
+- Every derivation, the Boss's own included, passes its hostile mathematician and its hostile physicist first, each new to it; only then does the Boss brief the code writer for main (the owner's word of 2026-10-30, 13:0x UTC), and no status of DERIVED or CHECKED stands on one reader alone.
 - A change is written in its own worktree, the full check against main exits 0, a hostile reader reads the diff, the Boss reviews it and pushes the candidate to tensor24-review, the writer reads that sha for faking and posts the approval, and only then main moves, a fast-forward with no force (12:4x).
 - Locally anything may be built and checked; main takes a change only when its derivation stands in this document as DERIVED and its candidate is approved; no work starts on what is OPEN (12:5x).
 - The hard pieces (the metric's push, the clicks, any change an exact run back hangs on) run on Fable 5.1, the rest on Opus 5.5 (12:5x).
@@ -227,6 +245,8 @@ The architect's table; the gate's ISOLATE rule reads it. The standard library is
 
 ## 6. What is open
 
+**Statuses to confirm under the owner's rule of 13:0x UTC** (a hostile mathematician and a hostile physicist, each new to it): the Koide test, the mass section's one-mass result and the Uncertainty lines stand as CHECKED or DERIVED on readers this document cannot name so; David and Animate confirm that both passed each one, or its status falls to OPEN.
+
 **When the system is closed.** The owner's word of 2026-10-30, 12:4x UTC: once the Node-clock works well, that is it, the system is closed: its thirteen terms derived with both readers agreeing and the one whole run on our bang; every other part is simple, with one small test of itself and no more.
 
 **G2:** the first-order form of term 5 (N2, in David's reading) and the notch and the frozen clock (terms 9 and 13), and the exponential clock beside the slot form (Postulate 6), both kept written until the test. **G3:** the strengths per channel and the plan, the tables' unit, which families tie to k, the held count's own potential, n's unit. **G4:** the shift and the shears (term 10). **G5:** the clicks (term 11 first, the Boss's derivation), the split's draw and its c (David's draft strikes the c), the visualizer. Beside them: the counts hidden in label tuples (len(GEAR), len(ADDED), WAYS, ENDS), to be read from the star, the piece and the schema with schema 1.3; the spring of line 35, which waits on the owner's rule for the head's notch.
@@ -246,5 +266,5 @@ Two documents tell the system: this one and the law ([docs/ALGEBRA.md](ALGEBRA.m
 - **Mirrored state:** time's reversal at fixed teeth: now and before swapped and each fine tooth r flipped to W - 1 - r in its teeth W; the run back is the tick on the mirrored state, mirrored.
 - **Metric family, 00 slot, ii slots:** the clock's own train: its 00 slot is every gear's teeth here (the clock's rate), its three ii slots are each axis's Mesh grip.
 - **The 24, the kinds:** the cube's turns that leave a Node-clock's star the same, and the five kinds that tie a train's gears. **Board:** the event board, taken in our event space, which has no time. **Bang:** the one run from the seed.
-- **Code writer:** the Boss's one subagent that writes the system's code and tests (the owner's words of 2026-10-30, 12:3x UTC). **Approval:** the writer's reading of a candidate sha for faking, posted before main moves (12:4x). **DERIVED, OPEN:** a term whose two hostile readers agree and whose entry stands here is DERIVED; until then its status says OPEN and no code starts on it.
+- **Code writer:** the Boss's one subagent that writes the system's code and tests (the owner's words of 2026-10-30, 12:3x UTC). **Approval:** the writer's reading of a candidate sha for faking, posted before main moves (12:4x). **Solution24:** the method of solving, in the section after the introduction. **DERIVED, OPEN:** a derivation that a hostile mathematician and a hostile physicist, each new to it, both pass, entered here by the writer, is DERIVED; until then its status says OPEN and no code starts on it.
 - **G2 to G5:** the stages that close what the Node-clock lacks (the Boss's plan): G2 the metric's push, the notch and the frozen clock; G3 the strengths and the plan; G4 the shift and the shears; G5 the clicks. **Postulate 6:** the time gear's law, slowdowns composing by their product.
