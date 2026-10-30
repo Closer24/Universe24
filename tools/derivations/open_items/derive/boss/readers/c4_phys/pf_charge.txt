@@ -1,0 +1,5 @@
+Probe F: the common turn (charge) through the exchange, Animate's world, g = f div 10, 6,000 rounds
+  the circle giver: Omega_L at the lay 7000 thousandths of K_a; Omega_L + Omega_M moves off the lay's by at most 261 millionths of K_a over the run; the taker's |Omega_M| at most 7004 thousandths of K_a
+    the taker's energy taken, SUM X_M at its most over the run: 6999 thousandths of the lay's key_w (its wind a 7th)
+  the line giver: Omega_L at the lay 0 thousandths of K_a; Omega_L + Omega_M moves off the lay's by at most 0 millionths of K_a over the run; the taker's |Omega_M| at most 0 thousandths of K_a
+    the taker's energy taken, SUM X_M at its most over the run: 6995 thousandths of the lay's key_w (its wind a 7th)

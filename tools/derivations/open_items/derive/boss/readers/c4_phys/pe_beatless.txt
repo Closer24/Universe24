@@ -1,0 +1,10 @@
+Probe E: two beatless trains (no spring, both with Meshes) and the text's rule 'the hand with the beat writes'
+
+  (a value vertex g a_0 a_1), 200 rounds: X_0 + X_1 != 0 at 0 of 9600 site-rounds; SUM |X_1| = 10282460958951925900000 (wind passes)
+    the second train's 2E over the ring, window means at a stride of 25 rounds, thousandths of the key a 7th of the packet's top wind: [290, 1852, 4651, 8241, 11948, 15997, 18862, -22142]
+
+  (b the derivative vertex g SUM M_s (L_s+1 - L_s-1)), 400 rounds: X_0 + X_1 != 0 at 18776 of 19200 site-rounds; SUM |X_1| = 4720126621398000000 (wind passes)
+    the second train's 2E over the ring, window means at a stride of 25 rounds, thousandths of the key a 7th of the packet's top wind: [981, 5843, 12770, 18191, 19557, 16665, 11548, 7127, 5496, 6906, 9933, 12582, 13518, 12688, 11059, 9811]
+    X_L + X_M = Phi(s, s+1) - Phi(s-1, s) at 19200 of 19200 site-rounds (the text's flux identity, both trains massless)
+
+  Planck's key for either train by the text's relation, 4 f (2W - f) K_a^2 at f = 0: 0: no tooth can carry it (carry needs teeth of at least 1); neither hand has a beat, so the rule names no writer and the exchange is counted by nothing.

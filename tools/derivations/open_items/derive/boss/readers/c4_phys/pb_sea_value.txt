@@ -1,0 +1,22 @@
+Probe B: light (k = pi/2, cos omega = 5/6) through a sea of bobs on a ring of 192 Node-clocks, 400 rounds, g = G div 20
+
+  resonant, f = W/6 (cos theta = 5/6, the bob's beat light's): the packet holds 30481 thousandths of the key-7th (the top site 7); X_light + X_bob != 0 at 0 site-rounds
+    the wind the bobs took net over the sea and the run (SUM X_bob = 2 dE_bob to Rule3): 1984 thousandths of the key-7th
+    the bobs' 2E summed over the sea, window means at a stride of 50 rounds, thousandths of the key-7th: [889, 2984, 4249, 4451, 3813, 2840, 2078, 1877]
+    key a 7th: lines light 0, bobs 0; site-rounds off 0; the bobs' net over all sites 0 (|net| at most 0 at one site, 0 sites not 0); to-and-fro lines 0 of 0
+    key a 70th: lines light 186, bobs 186; site-rounds off 0; the bobs' net over all sites 4 (|net| at most 1 at one site, 4 sites not 0); to-and-fro lines 182 of 186
+    key a 700th: lines light 2371, bobs 2371; site-rounds off 0; the bobs' net over all sites 195 (|net| at most 7 at one site, 112 sites not 0); to-and-fro lines 2176 of 2371
+
+  off resonance, f = W/12 (cos theta = 11/12, the bob slower by 0.70): the packet holds 30481 thousandths of the key-7th (the top site 7); X_light + X_bob != 0 at 0 site-rounds
+    the wind the bobs took net over the sea and the run (SUM X_bob = 2 dE_bob to Rule3): 631 thousandths of the key-7th
+    the bobs' 2E summed over the sea, window means at a stride of 50 rounds, thousandths of the key-7th: [330, 640, 705, 588, 442, 404, 488, 598]
+    key a 7th: lines light 0, bobs 0; site-rounds off 0; the bobs' net over all sites 0 (|net| at most 0 at one site, 0 sites not 0); to-and-fro lines 0 of 0
+    key a 70th: lines light 0, bobs 0; site-rounds off 0; the bobs' net over all sites 0 (|net| at most 0 at one site, 0 sites not 0); to-and-fro lines 0 of 0
+    key a 700th: lines light 980, bobs 980; site-rounds off 0; the bobs' net over all sites 44 (|net| at most 2 at one site, 42 sites not 0); to-and-fro lines 936 of 980
+
+  off resonance, f = W/3 (cos theta = 2/3, the bob faster by 1.43): the packet holds 30481 thousandths of the key-7th (the top site 7); X_light + X_bob != 0 at 0 site-rounds
+    the wind the bobs took net over the sea and the run (SUM X_bob = 2 dE_bob to Rule3): 60 thousandths of the key-7th
+    the bobs' 2E summed over the sea, window means at a stride of 50 rounds, thousandths of the key-7th: [61, 60, 60, 60, 60, 60, 60, 60]
+    key a 7th: lines light 0, bobs 0; site-rounds off 0; the bobs' net over all sites 0 (|net| at most 0 at one site, 0 sites not 0); to-and-fro lines 0 of 0
+    key a 70th: lines light 0, bobs 0; site-rounds off 0; the bobs' net over all sites 0 (|net| at most 0 at one site, 0 sites not 0); to-and-fro lines 0 of 0
+    key a 700th: lines light 18, bobs 18; site-rounds off 0; the bobs' net over all sites 2 (|net| at most 1 at one site, 2 sites not 0); to-and-fro lines 16 of 18

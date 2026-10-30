@@ -1,0 +1,4 @@
+Probe D: the canonical identity on the text's sea (ring of 48, Meshes on light's row), 400 rounds, every gear
+  as the text writes it, 2E = W v+ v- - a J and 2 dE = X + v-(r- - r+): misses 18722 of 38304 gear-rounds
+  with the pull, 2E = W v+ v- - a (J + F) and 2 dE = X + [a F(b) - b F(a)] + v-(r- - r+): misses 0 of 38304
+  the pull's Wronskian a F(b) - b F(a) on light's row = Psi(s, s+1) - Psi(s-1, s), Psi = G (a_s b_s+1 - b_s a_s+1): misses 0 of 19152; its size up to 58097364944000000 (the travelling energy a site gains or loses in a round, counted by no click)

@@ -1,0 +1,19 @@
+Probe T: the stability of the text's sea (a value vertex between light and held bobs) against the derivative vertex
+  the pair's stiffness at k = 0 for the value vertex: [[0, g], [g, 2f]], determinant -g^2 = -2500000000 < 0: a tachyon; for the derivative vertex the coupling at k = 0 is 2 g sin 0 = 0 and the determinant 4 G f (1 - cos k) - 4 g^2 sin^2 k > 0 for g^2 < G f / 2 (2500000000 < 500000000000)
+  the packet at the lay: light's site-sum 19200 (a uniform component of 400 a site), its sum of squares 121728600000
+
+  the text's sea, the value vertex g L M, 400 rounds, window means at a stride of 50:
+    light's site-sum (the uniform mode), in units of the lay's: [1069, 1599, 2998, 6025, 12327, 25331, 52101, 107186] thousandths
+    light's sum of squares over the ring, thousandths of the lay's: [3241, 3022, 2951, 2815, 2784, 2928, 3249, 3851]
+
+  the text's sea, the value vertex g L M, 1200 rounds, window means at a stride of 150:
+    light's site-sum (the uniform mode), in units of the lay's: [1889, 14561, 126603, 1102576, 9602452, 83628749, 728331463, 6343114304] thousandths
+    light's sum of squares over the ring, thousandths of the lay's: [3072, 2842, 4513, 107504, 7931567, 601382913, 45613748881, 3459733698914]
+
+  the mathematician's G2 sea, the derivative vertex, 400 rounds, window means at a stride of 50:
+    light's site-sum (the uniform mode), in units of the lay's: [974, 914, 852, 790, 727, 665, 603, 541] thousandths
+    light's sum of squares over the ring, thousandths of the lay's: [3056, 2630, 2825, 2856, 3069, 2806, 2592, 2999]
+
+  the mathematician's G2 sea, the derivative vertex, 1200 rounds, window means at a stride of 150:
+    light's site-sum (the uniform mode), in units of the lay's: [913, 727, 541, 355, 169, -16, -202, -388] thousandths
+    light's sum of squares over the ring, thousandths of the lay's: [2837, 2911, 2859, 2767, 2865, 2933, 2821, 2793]

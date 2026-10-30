@@ -1,0 +1,29 @@
+Part 1: the pair at a deep clock. The key on the card from the rest teeth; the action laid alike.
+  K_a (a seventh of the giver's lay area, odd) 714285714285714285714285714285; the card's K_X 71406246511186446276006877897: K_X^2 W^2 over 4 f (2W - f) K_a^2 = 999999 millionths at W = rest
+  teeth W = 100000000000000000000 (1 x rest), the giver's swing 1000000, im divisor 20, 6000 rounds; X_L + X_M != 0 in 0 rounds
+    the giver's action at the lay (its area) 7000 thousandths of K_a
+    the taker's area, window means at a stride of 126 rounds: the largest 6959 thousandths of K_a (window 29 of 47); the single-round peak 7004
+    carried at the card's key (71406246511186446276006877897): the taker's course 0..7, click rounds 34, the books miss in 0 rounds
+
+  at W = 4 x rest: the card's key checked by squares there: K_card^2 W'^2 over 4 f (2W' - f) K_a^2 = 3998 thousandths (Planck's would be 1,000); a local key 35703123255593223138003438949 checks at 999531 millionths
+  teeth W = 400000000000000000000 (4 x rest), the giver's swing 707107, im divisor 40, 6000 rounds; X_L + X_M != 0 in 0 rounds
+    the giver's action at the lay (its area) 6999 thousandths of K_a
+    the taker's area, window means at a stride of 504 rounds: the largest 6783 thousandths of K_a (window 4 of 11); the single-round peak 7003
+    carried at the card's key (71406246511186446276006877897): the taker's course 0..4, click rounds 9, the books miss in 0 rounds
+    carried at the local key (35703123255593223138003438949): the taker's course 0..7, click rounds 16, the books miss in 0 rounds
+
+  at W = 16 x rest: the card's key checked by squares there: K_card^2 W'^2 over 4 f (2W' - f) K_a^2 = 15990 thousandths (Planck's would be 1,000); a local key 17851561627796611569001719475 checks at 999414 millionths
+  teeth W = 1600000000000000000000 (16 x rest), the giver's swing 500000, im divisor 80, 12000 rounds; X_L + X_M != 0 in 0 rounds
+    the giver's action at the lay (its area) 7000 thousandths of K_a
+    the taker's area, window means at a stride of 2016 rounds: the largest 6773 thousandths of K_a (window 2 of 5); the single-round peak 7002
+    carried at the card's key (71406246511186446276006877897): the taker's course 0..2, click rounds 5, the books miss in 0 rounds
+    carried at the local key (17851561627796611569001719475): the taker's course 0..7, click rounds 16, the books miss in 0 rounds
+
+Part 2: a lone hand under a rising 00 slot (the clock's read as the teeth), no vertex: W from rest to 4 x rest over 12,000 rounds.
+  the teeth read at round 0: 100000000000000000000, at round 12000: 400000000000000000000 (the 00 slot rising by 25000000000000000 a round)
+  window means at a stride of 1000 rounds, in thousandths of the first window's:
+    the action (the swept area, p = W(a - b) + r at the round's teeth): [1000, 1222, 1444, 1666, 1888, 2110, 2333, 2555, 2777, 2999, 3221, 3444]
+    the energy 2E = W v+ v- - a J at the round's teeth:              [1000, 1105, 1202, 1291, 1375, 1453, 1528, 1599, 1667, 1733, 1796, 1857]
+    SUM X per window (the own spring's Wronskian): [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  the canonical identity 2 dE = X + v-(r- - r+) with the round's own teeth: misses 11999 of 11999 rounds; the gap's largest |.| 64058775625000000000000000 against 2E at the lay 500062718375000000000000000000 (128 millionths a round)
+  control, the clock standing: the action's window means [1000, 999, 999, 999, 999, 999, 1000, 999, 999, 999, 999, 999]

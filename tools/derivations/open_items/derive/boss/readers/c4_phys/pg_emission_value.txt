@@ -1,0 +1,10 @@
+Probe G: emission from one bob at site 20 of 192, g = G div 20, 1600 rounds; the key a 7th of the emitter's lay wind x W: 235714290000001
+  the emitter's 2E, window means at a stride of 100 rounds, thousandths of the key: [6864, 6604, 6351, 6104, 5854, 5625, 5429, 4847, 4864, 10998, -14857, -32552, 466316, -1031219, -4286282, 33116031]
+  the other bobs' 2E summed, window means: [11, 146, 453, 772, 980, 1165, 1451, 1618, 2030, 2933, -7162, 21921, 122456, -876512, 1157816, 13040046]
+  the emitter's lines 43692217, its net count 989009; the other bobs' lines 311054259, their net -222457 (|net| at most 497174 at one site); the wind the others took net -222456305 thousandths of the key; light's lines by the identity's debit 354746476 (its own tooth: none); site-rounds off 0
+
+Probe G: emission from one bob at site 20 of 192, g = G div 5, 800 rounds; the key a 7th of the emitter's lay wind x W: 235714290000001
+  the emitter's 2E, window means at a stride of 100 rounds, thousandths of the key: [5081, 374, -764605, -33544607413, -1655354382465517, -93072108897113559598, -5775021935746956193600221, -389061645537111657051061913424]
+  the other bobs' 2E summed, window means: [1244, 2130, 1817581, 33421716004, 1655321845401639, 93072131303305738566, 5775021929623589286558181, 389061645537650256442661941533]
+  the emitter's lines 4106338681029335489495309111, its net count -4106338681029335489495162649; the other bobs' lines 370605431392974101127429550013, their net 4106338681142303095802284143 (|net| at most 4101833772867262984733259570 at one site); the wind the others took net 4106338681142303095802284139761 thousandths of the key; light's lines by the identity's debit 374711770074003436616924859124 (its own tooth: none); site-rounds off 0
+

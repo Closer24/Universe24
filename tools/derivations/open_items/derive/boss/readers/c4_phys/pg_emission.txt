@@ -1,0 +1,12 @@
+Probe G: emission from one bob at site 20 of 192, the derivative vertex g = G div 20, 1600 rounds; the key a 7th of the emitter's lay wind x W: 235714290000001
+  the emitter's 2E, window means at a stride of 200 rounds, thousandths of the key: [6077, 4591, 3546, 2785, 2282, 1851, 1559, 1291]
+  the other bobs' 2E summed, window means: [609, 2088, 3133, 3897, 4389, 4836, 5127, 5395]
+  light's 2E over the ring, window means: [313, 322, 322, 319, 327, 311, 313, 311]
+  the emitter's lines 6, its net count -6; the other bobs' lines 2, their net 2 (|net| at most 1 at one site, 2 sites not 0); the wind the others took net 5454 thousandths of the key
+
+Probe G: emission from one bob at site 20 of 192, the derivative vertex g = G div 5, 1600 rounds; the key a 7th of the emitter's lay wind x W: 235714290000001
+  the emitter's 2E, window means at a stride of 200 rounds, thousandths of the key: [1891, 346, 195, 137, 108, 91, 76, 65]
+  the other bobs' 2E summed, window means: [4100, 5648, 5806, 5866, 5898, 5904, 5929, 5925]
+  light's 2E over the ring, window means: [1008, 1005, 998, 996, 994, 1005, 994, 1009]
+  the emitter's lines 7, its net count -7; the other bobs' lines 4, their net 0 (|net| at most 0 at one site, 0 sites not 0); the wind the others took net 6052 thousandths of the key
+
