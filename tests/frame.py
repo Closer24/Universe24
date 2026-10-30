@@ -234,7 +234,7 @@ def unread():
 
 
 def unclicked():
-    """The click of no term: one train whose area is 0, its tooth carried at the key 1 from its birth, 0."""
+    """The click of no term: one train whose passing is 0, its tooth carried at the key 1 from its birth, 0."""
     none = np.zeros(0, dtype=np.intp)
     return Click(none, none, none.astype(object), none, np.ones((1, 1), dtype=object))
 

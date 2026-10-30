@@ -40,12 +40,12 @@ class Read(NamedTuple):
 
 
 class Click(NamedTuple):
-    """The whole click's cross, laid at load: per term the row whose now count enters, the row whose kick it crosses, the A1 table's entry signed by the way round, the train the area moves into; and every train's key, CHOSEN in the universe file."""
+    """The whole click's passing, laid at load: per term the row whose count enters, the row whose push it meets (the same row, each gear's own), the factor 1, the train the passing moves into; and every train's key, CHOSEN in the universe file."""
 
-    first: Z  # (terms,): the row read at the now slot
-    second: Z  # (terms,): the row whose kick the term crosses it with
-    factor: Z  # (terms,): the table's entry, + the one way round and - the other, Python integers
-    target: Z  # (terms,): the train whose area the term moves
+    first: Z  # (terms,): the row whose count the term reads
+    second: Z  # (terms,): the row whose push the term reads, the same row
+    factor: Z  # (terms,): the term's factor, 1, Python integers
+    target: Z  # (terms,): the train whose passing the term moves
     key: Z  # (trains, 1): the key each train's click tooth carries at, at least 1
 
 

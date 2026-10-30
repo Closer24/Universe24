@@ -194,7 +194,7 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
         (*stepped, _, _), (*blind, _, _) = step.tick(laid, s), step.tick(unread, s)
         model, out = naive(laid, held, s, piece["shape"]), step.tick(laid, s)
         assert frame.same(stepped, model) and not frame.same(blind, model)
-        assert not step.act(laid, s)[1].any() and not out.k.any()  # no vertex: no area, no click
+        assert not step.act(laid, s)[1].any() and not out.k.any()  # no vertex: no passing, no click
         for m in frame.turns():
             moved = turned(m, laid, held, out, piece["shape"])
             assert frame.same(step.tick(laid, turned(m, laid, held, s, piece["shape"])), moved), (

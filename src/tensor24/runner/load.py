@@ -1,6 +1,6 @@
 """Clock: every Node-clock made alike: the 24's tables, each train's rows, every gear's teeth and every Mesh's grip, each train's click tooth at its birth, and the setting's gears laid.
 Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s, T_k and T_d at 1; the key the universe file's CHOSEN integer, the click tooth born at (key - 1) div 2, the Spokes along one axis the divisor.
-Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth, its own at rest (the acyclic cut), its ii slots into each axis's grips, its 0i slots odd under the mirror, its 00 slot and ii trace on the notch's spring; each train's area the cross of its two parts through its kinds' tables onto A1, the kind found by its character, and the matter's four-vector squared through the same table onto the square's slots, the metric's push.
+Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth, its own at rest (the acyclic cut), its ii slots into each axis's grips, its 0i slots odd under the mirror, its 00 slot and ii trace on the notch's spring; each train's click the passing summed over its rows, and the matter's four-vector squared through its kinds' table onto A1, the kind found by its character, onto the square's slots, the metric's push.
 Clicks: n/a: no number of the load reaches the clicks except through the act.
 """
 
@@ -123,35 +123,12 @@ def lay(gears: list[list[int]], trains: Trains, sites: int, birth: Z) -> tuple[t
     return (a, b, r, rd, k), []
 
 
-def clicking(trains: Trains, c: Z, traces: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
-    """Every train's whole click as the act reads it, with its key: its first part crossed with its second through each of its kinds' table with itself onto A1, the kind whose character is its own square on every turn, one term per entry of the table each way round (one part's now count with the other's kick, less the reverse), each into its train; a train of one part crosses its part with itself, so each term meets its opposite and no area moves."""
-    # A1 is the one kind whose character is 1 on the 24 and 0 off them, its own square everywhere; each kind's form is
-    # its table with itself onto A1, read over A1's one component
-    gap = traces * traces - traces
-    trivial = 1 - lit((gap * gap).sum(axis=-1))
-    form = np.einsum("m,jjmyxi->jxi", trivial, c)
-    # each kind entry's train, and the components before it, counted along the board's rows and within its own train
-    kind, dim, part = trains.kind, trains.dim.astype(np.intp), trains.part
-    of = np.repeat(np.arange(len(trains), dtype=np.intp), trains.count.astype(np.intp))
-    before = np.cumsum(dim) - dim
-    within = before - before[trains.start.astype(np.intp)][of]
-    # one term per entry of each kind's form: the form's row x and column i at each
-    pairs = dim * dim
-    entry = np.repeat(np.arange(len(dim), dtype=np.intp), pairs)
-    place = np.arange(pairs.sum(), dtype=np.intp) - np.repeat(np.cumsum(pairs) - pairs, pairs)
-    x, i = carry(place, np.repeat(dim, pairs), 0)
-    train = of[entry]
-    first, p = trains.first[train], part[train]
-    other = lit(p - 1)  # the second part, where the train has one
-    one, two = first + (within[entry] + x) * p, first + (within[entry] + i) * p
-    factor = form[kind[entry], x, i]
-    return (
-        np.concatenate((one, one + other)).astype(np.intp),
-        np.concatenate((two + other, two)).astype(np.intp),
-        np.concatenate((factor, -factor)),
-        np.concatenate((train, train)),
-        key,
-    )
+def clicking(trains: Trains, key: Z) -> tuple[Z, Z, Z, Z, Z]:
+    """Every train's whole click as the act reads it, with its key: the passing summed over the train's gears, one term per row of the board naming that row twice (a gear's count with its own push), at the factor 1, into the row's train; a train's own spring passes nothing, as its term meets its opposite in the sum."""
+    rows = trains.size.sum()
+    row = np.arange(rows, dtype=np.intp)
+    train = np.repeat(np.arange(len(trains), dtype=np.intp), trains.size.astype(np.intp))
+    return row, row, np.ones(rows, dtype=object), train, key
 
 
 def pairs_of(trains: Trains, c: Z, traces: Z) -> tuple[Z, Z, Z, Z]:
@@ -271,7 +248,7 @@ class Loaded(NamedTuple):
     state: tuple[Z, ...]
     click: tuple[
         Z, Z, Z, Z, Z
-    ]  # the whole click's cross: per term the row read, the row whose kick it crosses, its factor, its train; the keys
+    ]  # the whole click's passing: per term the row read twice (a gear's count with its own push), 1, its train; the keys
     push: tuple[
         Z, Z, Z, Z, Z
     ]  # term 5's plan: per term its three readings (the unit for a leg it lacks), its factor and the slot row it lands on
@@ -291,7 +268,7 @@ def load(
     state, laid = lay(setting.get("gears", []), trains, sites, birth)
     potential = notching(trains, star(side), universe["chosen"]["notch"])
     push = pushing(trains, c, traces, star(side), universe["chosen"]["push"])
-    return Loaded(trains, potential, state, clicking(trains, c, traces, key), push), laid
+    return Loaded(trains, potential, state, clicking(trains, key), push), laid
 
 
 def geared(
