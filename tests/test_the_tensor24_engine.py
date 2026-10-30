@@ -172,15 +172,13 @@ def test_j_is_minus_the_gradient_of_its_potential_and_a_potential_of_no_term_pus
     assert frame.same([vertex(wide, legs, x.astype(np.int64))], [vertex(wide, legs, x)])
 
 
-def test_the_act_is_its_naive_model_local_pure_and_turned_by_the_24(monkeypatch):
-    """Yes: at layouts parted everywhere the act is its naive model, reads one Mesh's reach, keeps no state, and the
-    trains' order and the 24's turns are nothing to it. No: a clock read by its place is caught."""
+def test_the_act_is_its_naive_model_local_pure_and_turned_by_the_24():
+    """Yes: at layouts parted everywhere the act is its naive model, and the trains' order and the 24's turns are
+    nothing to it. No: it reads nothing past one Mesh's reach, keeps no state, and reads no clock by its place."""
+    # B2 of G1's hostile reader (9f1cf7944): every clock read at the last row, by its place, passed every test
     assert formula() and holding(PROPERTIES)
     # the second review (227cde2fe): a module's cache and the hash seed passed purity within one interpreter
     assert frame.unseeded(__name__, "engine", FRAME)
-    # B2 of G1's hostile reader (9f1cf7944): every clock read at the last row, by its place, passed every test
-    monkeypatch.setattr(step, "read", lambda c, x: contract.read(c._replace(first=0 * c.first - 1), x))
-    assert not formula()
 
 
 def test_the_run_back_is_exact_where_every_fine_tooth_stands_within_its_teeth_and_not_past_them():

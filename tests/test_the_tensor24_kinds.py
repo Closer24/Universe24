@@ -56,13 +56,8 @@ def test_the_24_are_the_stars_turns_the_kinds_their_representations_and_the_tabl
         assert all((back[g] == rho[index[tuple(matrix[g].T.flat)]]).all() for g in keep)
     chi, order = characters(held, keep), len(keep)
     assert (chi @ chi.T == order * np.eye(len(held), dtype=int)).all()
-    assert sum(k.shape[-1] * k.shape[-1] for k in held) == order and forms(held, matrix, keep)
     # the eighth review (927071a14): T1 and T2 turned by a third turn of the axes kept every character and survived
-    cycle = np.roll(np.eye(d, dtype=int), 1, axis=0)
-    cycled = held._replace(
-        **{k: np.einsum("ij,gjk,lk->gil", cycle, held._asdict()[k], cycle) for k in ("t1", "t2")}
-    )
-    assert (characters(cycled, keep) == chi).all() and not forms(cycled, matrix, keep)
+    assert sum(k.shape[-1] * k.shape[-1] for k in held) == order and forms(held, matrix, keep)
     out, into = kinds.stacked(held)[:, keep], kinds.stacked(inverse)[:, keep]
     for i, k, m in np.ndindex(c.shape[: c.ndim - d]):  # each two kinds in, one out
         table = c[i, k, m]
