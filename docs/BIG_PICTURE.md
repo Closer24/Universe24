@@ -605,7 +605,7 @@ The owner's ask of 2026-10-30, 03:3x UTC, directly to Sofer (in Hebrew; in trans
 | | The events' spacetime (the board, the block) | The clicks' model (what the clicks record) |
 | --- | --- | --- |
 | Dimensions | 3 + 1 = 4 | 3 + 1 = 4 |
-| The 3, place | the lattice's three axes; a Node-clock meshes through six Meshes, the + and the - of each axis (its six Spokes) | the same three axes: a click is an event at one Node-clock; place reaches a click only as light brings it, a distance being an echo's count |
+| The 3, place | the lattice's three axes; a Node-clock meshes through six Meshes, the + and the - of each axis (its six Spokes) | the same three axes: a click stands at one Node-clock and, with its lay, spans the Mesh between the giver and the taker, the two answers to "where"; place reaches a click only as light brings it, a distance being an echo's count |
 | The 1, time | the tick: the great clock's count of rounds, one count for the whole board, the block's fourth axis | a clock's own count, its proper time: each clock has its own and no common one exists; the tick never |
 | Who reads it | no one: no act reads the tick (law line 695) and no click sees it | the clicks, and the decoder that reads them (no formula: the clicks convert) |
 | Held in the machine as | the Node-clock's state alone; the block is a reading of the history and no array the engine holds (D1) | the record: the clicks with their clocks' counts |
@@ -619,7 +619,7 @@ The owner's ask of 2026-10-30, 03:3x UTC, directly to Sofer (in Hebrew; in trans
 
 **How the clicks get time and length with no tick** (8.1 item 14, Animate's answer, "no formulas"): proper time is a clock's own count between two of its clicks; a null path is a quantum's lay and its take; a distance is an echo's count; the board's round and site only order the clicks and name each click's clock and place, never a duration or a length (a difference of rounds is refused by name).
 
-**Status:** the owner's words of 11:30 to 11:37 on 2026-10-29 (the clicks are a shadow; no one measures the board) and David's four against three, with his correction, stand as the law and the picture hold them; open, as before: the click as the forward-and-backward shadow on the act (G5), the board's frame in the shadow (D4: measured on a thinned board, not on the record) and the decoder's readings on the engine's records (owed). Confirmation asked of the Boss, David and Animate at 03:3x UTC; with none in an hour the keeper holds the page as agreed and says so in one line (decision 43's way of working). No line of the law changes by it.
+**Status:** the owner's words of 11:30 to 11:37 on 2026-10-29 (the clicks are a shadow; no one measures the board) and David's four against three, with his correction, stand as the law and the picture hold them; open, as before: the click as the forward-and-backward shadow on the act (G5), the board's frame in the shadow (D4: measured on a thinned board, not on the record) and the decoder's readings on the engine's records (owed). Confirmation asked of the Boss, David and Animate at 03:3x UTC: Animate confirmed at 03:3x (her 6514375401), with the precision of the click's two answers to "where", entered in the table; with none from the others in an hour the keeper holds the page as agreed and says so in one line (decision 43's way of working). No line of the law changes by it.
 
 ## 9. Does the whole universe reverse time together? No
 
