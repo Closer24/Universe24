@@ -1,0 +1,11 @@
+PASS (a) a uniform clock at N = 4/5, the teeth born at scattered phases: with the Mesh's tooth the largest count holds at 30 to 30 bits over 20000 rounds, the books stand and the run back is exact; without it, on the same lay, 41 to 375 bits
+PASS (a) a uniform clock at N = 10/11 with the Mesh's tooth: the teeth born scattered, 53 to 652 bits (a runaway; the books stand and the run back is exact); the teeth born aligned, 30 to 29 bits
+PASS (b) half the ring at L0 (1 + 1/1) (L 100 and 200) with the Mesh's tooth: 30 to 29 bits (held), the books stand, the run back exact
+PASS (b) half the ring at L0 (1 + 1/10) (L 100 and 110) with the Mesh's tooth: 30 to 163 bits (a runaway), the books stand, the run back exact
+PASS (b) half the ring at L0 (1 + 1/100) (L 100 and 101) with the Mesh's tooth: 30 to 58 bits (a runaway), the books stand, the run back exact
+PASS (c) a smooth well 10 per cent deep (L 1000 to 1100) with the Mesh's tooth: 30 to 51 bits (a runaway), the books stand, the run back exact
+PASS (d) the lever: L0 = 4 with the rest clock at L = 8 (one release in two) and half the ring faster than the rest (L = 6, N = 2/3): 30 to 31 bits over 20000 rounds, the books stand, the run back exact
+   so the Mesh's tooth closes the one-ended kick and keeps the books and the run back on every lay, but where
+   neighbouring teeth release apart at a slow rhythm (rates near 1) the releases switch the couplings in that
+   rhythm and pump the waves; aligned releases, and rhythms faster than twice the band's top, hold
+ALL PASS
