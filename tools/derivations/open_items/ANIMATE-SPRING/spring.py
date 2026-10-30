@@ -8,7 +8,7 @@
 # vertex pushes all its legs. Each push enters the head's gear step, W (a+ - 2 a + a-) = push, its remainder kept in
 # the fine tooth (engine/step.py, gear); each strength enters as a quotient by the carry, the remainder dropped here,
 # a probe's simplification. The strengths are set by hand here, as David's m3 sets them; on the act they are the law's.
-# One Node-clock with no Mesh, an A1 held count: the E or T2 count's operation is OPEN (Decoder4D2Clicks3D 3.8.7).
+# One Node-clock with no Mesh, an A1 held count: the E or T2 count's operation is OPEN (the decoder's page 3.8.7, git 8c4f3ff59).
 
 import json
 import sys

@@ -20,7 +20,7 @@ from tensor24.engine import step  # noqa: E402
 from tensor24.engine.state import State  # noqa: E402
 from tests import frame  # noqa: E402
 
-W = 90977140554674334000000  # the example universe's teeth at rest (Decoder4D2Clicks3D, the head)
+W = 90977140554674334000000  # the example universe's teeth at rest (the decoder's page, git 8c4f3ff59; the head)
 GRIP = W // 6  # its grip, den Gamma^2: W = 6 grip
 SHAPE = (6, 6, 6)
 ROUNDS, FROM = 450, 50
