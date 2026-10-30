@@ -1,0 +1,40 @@
+PROBE A: the quaternion unit of the slots for LIGHT (no spring) on the example's own piece, the act as built
+shape (4, 4, 4), 64 sites, W = 6 grip = 90977140554674334000000 (the square at 0), light rows [0, 1]
+standing modes e(x) = PROD_a cos(pi k_a x_a / 2), k_a in {0, 1, 2}; S = SUM_a 2 (1 - cos(pi k_a / 2)); the step's trace t = 2 - S/6
+        k   S  6 t  t whole   q+ = q j sites/round  teeth still  period
+(0, 0, 0)   0   12      yes                    [0]         True    None
+(0, 0, 1)   2   10       no                [0, 32]        False    None
+(0, 0, 2)   4    8       no                    [0]        False    None
+(0, 1, 0)   2   10       no                [0, 32]        False    None
+(0, 1, 1)   4    8       no            [0, 16, 48]        False    None
+(0, 1, 2)   6    6      yes                   [32]         True       6
+(0, 2, 0)   4    8       no                    [0]        False    None
+(0, 2, 1)   6    6      yes                   [32]         True       6
+(0, 2, 2)   8    4       no                    [0]        False    None
+(1, 0, 0)   2   10       no                [0, 32]        False    None
+(1, 0, 1)   4    8       no            [0, 16, 48]        False    None
+(1, 0, 2)   6    6      yes                   [32]         True       6
+(1, 1, 0)   4    8       no            [0, 16, 48]        False    None
+(1, 1, 1)   6    6      yes                   [56]         True       6
+(1, 1, 2)   8    4       no            [0, 16, 48]        False    None
+(1, 2, 0)   6    6      yes                   [32]         True       6
+(1, 2, 1)   8    4       no            [0, 16, 48]        False    None
+(1, 2, 2)  10    2       no                [0, 32]        False    None
+(2, 0, 0)   4    8       no                    [0]        False    None
+(2, 0, 1)   6    6      yes                   [32]         True       6
+(2, 0, 2)   8    4       no                    [0]        False    None
+(2, 1, 0)   6    6      yes                   [32]         True       6
+(2, 1, 1)   8    4       no            [0, 16, 48]        False    None
+(2, 1, 2)  10    2       no                [0, 32]        False    None
+(2, 2, 0)   8    4       no                    [0]        False    None
+(2, 2, 1)  10    2       no                [0, 32]        False    None
+(2, 2, 2)  12    0      yes                   [64]         True       4
+
+whole turns of the time plane (teeth still, the hand returns): [(0, 1, 2), (0, 2, 1), (1, 0, 2), (1, 1, 1), (1, 2, 0), (2, 0, 1), (2, 1, 0), (2, 2, 2)]
+the Hamilton unit q+ = q j at every site every round: [(2, 2, 2)] (the staggered mode (pi, pi, pi) alone)
+of the 64 Fourier modes of light on this board: 21 are whole turns (S = 6 or 12; S = 0 is the free drift), 1 is the Hamilton unit (S = 12, the corner); the other 42 move their teeth and are no unit of any ring
+every whole turn has |k_a| >= pi/2 on some axis: the cutoff; the long modes (nature's light) are never whole
+
+the hand's own phase (re, im) -> (-im, re), the flipped row's tooth reflected in its teeth, commutes with the act as built at the staggered lay: 12 of 12 rounds
+at the staggered lay SUM_sites N(q) over 4 rounds: [91264, 91264, 91264, 91264]; the hand returns after 4 rounds; teeth still True
+so the draft's slot quaternion needs no spring: light's own staggered mode at the top of its band is the quarter mode, W | k_eff there because k_eff = 12 grip = 2 W

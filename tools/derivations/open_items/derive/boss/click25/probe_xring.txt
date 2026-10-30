@@ -1,0 +1,10 @@
+Probe 7: the exchange count with Meshes (the physicist's ring) and under the 24 (the SYM24 cube)
+
+(a) a binomial packet on a ring of 48 Node-clocks at c = 1, no vertex, 96 rounds: SUM |X| over every site and round = 0; click lines of the exchange count 0; click lines of the first text's per-Node-clock D-count 570
+
+(b) light through a sea of bobs (c^2 = 1/6, the bob's beat light's at k = pi/2, g = f div 20), 400 rounds: X_light + X_bob != 0 at 0 site-rounds of 19200 (an identity of the quadratic vertex)
+    the key W x the top light wind div 7: click lines by light's row 0, by the bobs' row 0; site-rounds where the two rows' quotients do not sum to 0: 0; the wind the bobs took net over the sea: 645 thousandths of a key
+    the key W x the top light wind div 700: click lines by light's row 1977, by the bobs' row 1977; site-rounds where the two rows' quotients do not sum to 0: 0; the wind the bobs took net over the sea: 64519 thousandths of a key
+    the key W x the top light wind div 7000: click lines by light's row 11850, by the bobs' row 11850; site-rounds where the two rows' quotients do not sum to 0: 0; the wind the bobs took net over the sea: 645191 thousandths of a key
+
+(c) the SYM24 cube, plan 1 through the 24's tables (s = 3, T_k = 2, T_d = 5), the 00 slot rising by 1 from W = 9, the half-tooth act, rounds 0..3: the exchange X of every train at every Node-clock turns with the turn, of the 24 per round: [24, 24, 24, 24] (X not 0 at 536 train-sites over the four rounds)

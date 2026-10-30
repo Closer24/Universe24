@@ -1,0 +1,16 @@
+PROBE D: the 24-gear train of the units (fam_math's carrier of spin 1/2): its kinds, its reading, what a click would see
+  the binary octahedral group built from i, (1+i+j+k)/2 and (1+i)/sqrt 2: 48 elements; orders {1: 1, 2: 1, 3: 8, 4: 18, 6: 8, 8: 12}; -1 in it: True
+  L(g) L(h) = L(g h) True; L and R commute True; L(-1) = -I True
+  SUM tr^2 = 1152, SUM tr(g^2) = -384: invariant symmetric forms (SUM tr^2 + SUM tr(g^2)) / 96 = 8, antisymmetric 16; the commutant's dimension SUM tr^2 / 48 = 24
+  pi(f) = SUM_p f_p g_p as an 8 x 24 whole matrix (the doubled Z[sqrt 2] coordinates): rank 8, kernel rank 16: 16 of 24 gears are invisible to the quaternion hand
+  6 P_G (G = G3/2): whole with entries [-1, 0, 1, 4]; (6 P_G)^2 = 6 (6 P_G) True; trace 96 = 6 x 16: the spin-3/2 part has real dimension 16; invariant under L and R True; symmetric True; pi (6 P_G) = 0 True: the kernel of the reading IS the spin-3/2 part
+  D = (1/2) SUM_(order 8) sgn(Re g) L(g): whole with entries [-1, 0, 1]; symmetric True; invariant True; D (6 P_G) = 0 True; D^2 = 18 (I - P_G) True; trace 0: on the 8-dimensional E part D has the eigenvalues +-3 sqrt 2, four each: E1/2 (4 real gears) and E5/2 (4 real gears), the Galois conjugates sqrt 2 -> -sqrt 2
+  a whole invariant symmetric spring M = a I + b D + c (6 P_G) has beats a + 3 sqrt 2 b (E1/2), a - 3 sqrt 2 b (E5/2), a + 6 c (G3/2): with (a, b) = (17, -4) the E1/2 beat is 17 - 12 sqrt 2 and the E5/2 beat 17 + 12 sqrt 2, a^2 - 18 b^2 = 1 (a unit of Z[sqrt 2]); their ratio (17 - 12 sqrt 2)^2 = 577 - 408 sqrt 2 is below 1/1000: 576999^2 < 2 x 408000^2 is True
+  M is whole with entries [-4, 0, 4, 17], symmetric True, invariant True: the doublers CAN be given other beats by a whole spring that reads the kind; nothing in the act derives a, b, c (a declaration by the law's word)
+  over 200 drawn hands, the share of the size SUM f_p^2 in the spin-3/2 part: 675 permille (16 of 24 gears: 667 expected); the size a click reads of the train counts the doublers with the electron
+
+  the count against nature, per Node-clock, in real numbers with the two slots:
+    nature's electron: a Pauli 2-spinor in second order (Feynman-Gell-Mann), 4 real x 2 slots = 8 (Dirac's 8 real components)
+    the Hurwitz hand (4 gears, the even 12's cover 2T): 8: the right count, the wrong group (no quarter turns), the gcd(W, 6) wall
+    the O_48 hand (8 gears, the 48): 16: the electron and its Galois partner E5/2, degenerate; the wall
+    the 24-gear train (the 48): 48: the electron (8), E5/2 (8), two real spin-3/2 quartets (32): 40 of 48 are species nature does not have, all at one beat under any spring f SUM x_p^2

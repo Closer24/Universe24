@@ -1,0 +1,30 @@
+Tie-even against half-open: the tooth from the dial's middle in two conventions, each with its own flip and mirror
+
+A. The algebra, n in [-300, 300], D in [1, 12], 7212 cases, each convention with its own flip
+   tie-even: one pair per n 0 misses; the flip's law (q, s) -> (-q, -s) 0 misses; shift n -> n + 2 D k keeps (q + k, s): misses {1: 934, 2: 0, 3: 934, -1: 934}; the flip's fixed teeth: [0]
+   half-open: one pair per n 0 misses; the flip's law (q, s) -> (-q, -1 - s) 0 misses; shift n -> n + 2 D k keeps (q + k, s): misses {1: 0, 2: 0, 3: 0, -1: 0}; the flip's fixed teeth: none (the middle is -1/2, between -1 and 0)
+   (tie-even: two carries and lit(); half-open: one carry, the plain Rule3 from the dial's half)
+
+B. One gear at rest (stride 0), W = 3000, the push k at and beside the exact half notch: the stride answered
+   tie-even: {-1501: -1, -1500: 0, -1499: 0, 1499: 0, 1500: 0, 1501: 1}
+   half-open: {-1501: -1, -1500: 0, -1499: 0, 1499: 0, 1500: 1, 1501: 1}
+   (tie-even: odd under k -> -k at every k; half-open: at the exact half notch +W/2 moves a notch and -W/2 does not)
+
+C. The click: keys 1 to 40, areas A within 3 keys (4960 cases); q(A) the count of the area's carry at the key
+   tie-even: the books q(A) + q(-A) = 0 with one shared birth 0: 0 misses; with the taker born at the giver's mirror tooth (0): 0 misses; one whole key added is one more count: 120 misses
+   half-open: the books q(A) + q(-A) = 0 with one shared birth 0: 120 misses; with the taker born at the giver's mirror tooth (-1): 0 misses; one whole key added is one more count: 0 misses
+   tie-even: a hand fed one key a round from the tooth 12 at key 12 counts [2, 0, 2, 0, 2, 0, 2, 0]
+   half-open: a hand fed one key a round from the tooth -12 at key 12 counts [1, 1, 1, 1, 1, 1, 1, 1]
+   (the mathematician's item 2: tie-even buys the books at an even key with one shared birth at the price of the count's
+   covariance at a tie; half-open keeps the count and closes the books only with the births paired as mirrors, which an
+   odd key spares by its middle tooth: the odd key keeps both and stays CHOSEN unless the owner takes the trade)
+
+D. The board (the example universe on the cube of 3, 324 gears), 40 rounds, each convention with its own turn and mirror
+   standing at W = 9 grips, tie-even: the 24 24 at every one of 40 rounds; mirror twice = s 41 of 41; untick(tick s) = s 40 of 40; rewound True; books 0 misses; promise broke None; 78 bits
+   standing at W = 9 grips, half-open: the 24 24 at every one of 40 rounds; mirror twice = s 41 of 41; untick(tick s) = s 40 of 40; rewound True; books 0 misses; promise broke None; 78 bits
+   rising by 1 grip from W = 10, tie-even: the 24 24 at every one of 40 rounds; mirror twice = s 41 of 41; untick(tick s) = s 40 of 40; rewound True; books 0 misses; promise broke None; 81 bits
+   rising by 1 grip from W = 10, half-open: the 24 24 at every one of 40 rounds; mirror twice = s 41 of 41; untick(tick s) = s 40 of 40; rewound True; books 0 misses; promise broke None; 81 bits
+   falling by 1 grip + 1 (D odd) from W = 46, tie-even: the 24 24 at every one of 40 rounds; mirror twice = s 41 of 41; untick(tick s) = s 40 of 40; rewound True; books 0 misses; promise broke None; 81 bits
+   falling by 1 grip + 1 (D odd) from W = 46, half-open: the 24 24 at every one of 40 rounds; mirror twice = s 41 of 41; untick(tick s) = s 40 of 40; rewound True; books 0 misses; promise broke None; 81 bits
+   the still clock at W = 9 grips, half-open with s = 4 r - D: a, b and the cell (s + D) div 4 equal the act as built's at 40 of 40 rounds
+

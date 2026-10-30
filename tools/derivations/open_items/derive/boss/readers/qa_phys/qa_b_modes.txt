@@ -1,0 +1,16 @@
+PROBE B: the modes k = 2 f of a two-part hand at a lone Node-clock, the act as built, W = 60: which are whole turns, which the Hamilton unit
+  k from 0 to 240 in steps of 2 (121 springs), 24 rounds each from one drawn lay:
+  whole turns (teeth still and the hand returns), as (k, period): [(60, 6), (120, 4), (180, 3)]  = k/W in {1, 2, 3}: orders 6, 4, 3
+  teeth still but no return within 24 (parabolic): k in [0, 240]  = k/W in {0, 4}
+  the Hamilton unit q+ = q j every round: k in [120]  = k/W = 2 alone
+  in the window k <= W/10 (4 sin^2(omega/2) <= 1/10, omega <= 0.32 rad a round, still a cutoff-scale mass): whole turns [], units []
+  the three whole modes are 4 sin^2(omega/2) = 1, 2, 3: omega = 60, 90, 120 degrees a round: the three heaviest beats below the band's edge (180 degrees at k = 4 W); every lighter mass moves its tooth and is no unit of any ring
+
+  at the load's own W = 6 den Gamma^2 = 90977140554674334000000:
+    k = 1 W: teeth still True, period 6, q+ = q j every round False  (a spring of 45488570277337167000000 per row: 4 sin^2(omega/2) = 1)
+    k = 2 W: teeth still True, period 4, q+ = q j every round True  (a spring of 90977140554674334000000 per row: 4 sin^2(omega/2) = 2)
+    k = 3 W: teeth still True, period 3, q+ = q j every round False  (a spring of 136465710832011501000000 per row: 4 sin^2(omega/2) = 3)
+    k = 2 W_0 with the 00 slot rising by 1 a round (W = W_0 + 1 + n): q+ = q j on the hand per round [1, 1, 1, 1, 1, 1], but the re tooth moves by [-72, 60, 216, -120, -360, 180] a round (2 (n + 1) a: the defect (W - W_0) x 2 a goes into the tooth while it is below W): the hand follows j for as long as the tooth has room; the exact unit (teeth still) is the standing clock's alone
+    standing W, spring W + 1 (k = 2 W + 2): q+ = q j on the hand in 12 of 12 rounds, the tooth moved in 12 of 12: at W ~ 10^23 and hands ~ 40 the hand's quotient cannot see a defect below W / |a|; 'exact at the quarter mode alone' is a statement about the teeth, which no click reads
+    standing W, spring W + 1000 (k = 2 W + 2000): q+ = q j on the hand in 12 of 12 rounds, the tooth moved in 12 of 12: at W ~ 10^23 and hands ~ 40 the hand's quotient cannot see a defect below W / |a|; 'exact at the quarter mode alone' is a statement about the teeth, which no click reads
+    standing W, spring W + 1000000000000 (k = 2 W + 2000000000000): q+ = q j on the hand in 4 of 12 rounds, the tooth moved in 12 of 12: at W ~ 10^23 and hands ~ 40 the hand's quotient cannot see a defect below W / |a|; 'exact at the quarter mode alone' is a statement about the teeth, which no click reads

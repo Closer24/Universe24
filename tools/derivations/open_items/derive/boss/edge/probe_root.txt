@@ -1,0 +1,32 @@
+The equation of motion on a moving clock: the act as built, the edge and the root dial, one gear, the course given
+   W from 10000 to 40000: by 1 count a round (as built, edge) and as L^2 with L from 100 to 200 by 1 every 300 rounds (root);
+   30000 rounds; the free gear v0 = 1000000; the hairspring push -100 a laid at a = 10000000 at rest (omega^2 = g / W)
+
+A. The free gear: v and v^2 W against the start in permille (nature keeps sqrt(W) v: 1000)
+   as built: round 0: W 10000, v 1000000, v^2 W 1000; round 7500: W 17500, v 1000000, v^2 W 1750; round 15000: W 25000, v 1000000, v^2 W 2500; round 22500: W 32500, v 1000000, v^2 W 3250; round 29999: W 39999, v 1000000, v^2 W 3999
+   edge    : round 0: W 10000, v 1000000, v^2 W 1000; round 7500: W 17500, v 571416, v^2 W 571; round 15000: W 25000, v 399988, v^2 W 399; round 22500: W 32500, v 307682, v^2 W 307; round 29999: W 39999, v 249997, v^2 W 249
+   root    : round 0: W 10000, v 1000000, v^2 W 1000; round 7500: W 15625, v 803213, v^2 W 1008; round 15000: W 22500, v 668896, v^2 W 1006; round 22500: W 30625, v 573066, v^2 W 1005; round 29999: W 39601, v 502513, v^2 W 1000
+
+B. The hairspring: A (the largest |a| in the period at the mark), A/A0 (nature 1000), A^4 W (the edge's E / omega), T^2 / W (the beat)
+   as built round  7500: W  17500 | A  11522419 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   as built round 15000: W  25000 | A  12590390 | A/A0  1092 | A^4 W  2036 | T^2/W   993
+   as built round 22500: W  32500 | A  13436251 | A/A0  1166 | A^4 W  3433 | T^2/W   988
+   edge     round  7500: W  17500 | A   8697199 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   edge     round 15000: W  25000 | A   7959599 | A/A0   915 | A^4 W  1002 | T^2/W   993
+   edge     round 22500: W  32500 | A   7456970 | A/A0   857 | A^4 W  1003 | T^2/W   988
+   root     round  7500: W  15625 | A  10010005 | A/A0  1000 | A^4 W  1000 | T^2/W  1000
+   root     round 15000: W  22500 | A  10006888 | A/A0   999 | A^4 W  1438 | T^2/W   999
+   root     round 22500: W  30625 | A  10006901 | A/A0   999 | A^4 W  1957 | T^2/W  1000
+
+C. The root form's run back and books on the rising course, and on the course falling (L 200 -> 100), the hairspring:
+   rising: untick(tick s) = s misses 0 of 30000; P_(t+1) - P_t = 4 q_F misses 0 of 30000
+   falling: untick(tick s) = s misses 0 of 30000; P_(t+1) - P_t = 4 q_F misses 0 of 30000
+   the edge form, W falling 40000 -> 10000 by 1 a round: untick(tick s) = s misses 0 of 30000
+
+D. The 00 row on its own edge with the root dial: its count is L, so D_in v = (L(b) + L(a)) (L(a) - L(b)) = W(a) - W(b),
+   whole, and D_out v+ = W(a+) - W(a): the teeth's second difference is the push; but L(a+) whole needs a split at the dial
+   2 (L(a) + L(a+)) = 2 (2 L(a) + q), moved by its own quotient q: the cells' gap or overlap (2q + 1) (D(q+1) - D(q)) again.
+   L(a) = 10: integers of the hull under no q: 1560; under two or more: 119; of 5071: no bijection
+   L(a) = 100: integers of the hull under no q: 1560; under two or more: 10199; of 39541: no bijection
+   So the root dial gives the 00 row a whole momentum and a linear law for W, and still no lawful split of its own count:
+   the 00 row's own law stays missing in either dial.

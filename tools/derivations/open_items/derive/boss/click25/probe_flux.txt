@@ -1,0 +1,13 @@
+Probe 8: the Mesh flux: the wind a train passes where the plan reads its Meshes (the mathematician's G2 and G3 worlds)
+
+(G2) the derivative vertex g SUM M_s (L_s+1 - L_s-1), light with Meshes, the bobs held, 400 rounds:
+   X_L + X_M != 0 at 18756 of 19200 site-rounds (the mathematician's 18,756); X_L + X_M = Phi(s, s+1) - Phi(s-1, s) at 19200 of 19200
+   Phi on the mirrored state is -Phi in 400 of 400 rounds (odd under the mirror, as X is)
+   with the flux booked, X~_L + X_M = 0 at 19200 of 19200 site-rounds
+   key W x top light wind div 700: unbooked, light 274 lines, bobs 327, site-rounds off 504; the flux booked, light 327, bobs 327, site-rounds off 0
+   key W x top light wind div 7000: unbooked, light 2621 lines, bobs 2962, site-rounds off 3584; the flux booked, light 2962, bobs 2962, site-rounds off 0
+
+(G3) a travelling train alone whose plan reads the force (c^2 = 1/4 by the pull + 1/4 by the plan), 96 rounds:
+   SUM |X| = 676347644500000 (the mathematician's: the train passes wind to itself site by site); X = Psi(s, s+1) - Psi(s-1, s), the space Wronskian's divergence, at 4608 of 4608 site-rounds; with the flux booked SUM |X - div Psi| = 0
+   key W x top wind div 7: click lines unbooked 437 (the mathematician's 437 and 1,886), the flux booked 0
+   key W x top wind div 700: click lines unbooked 1887 (the mathematician's 437 and 1,886), the flux booked 0

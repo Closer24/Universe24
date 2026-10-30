@@ -1,0 +1,20 @@
+PROBE C: the operator algebra of the double Node-clock's hand q = z_now + z_before j (whole 4 x 4 matrices)
+  the draft's phase L_i and quarter step R_j commute: True; (L_i R_j)^2 = +I: True
+  so P = I + L_i R_j has P^2 = 2 P: True: a zero divisor; the algebra <L_i, R_j> is commutative with an idempotent, C (x) C = C (+) C, not Hamilton's division algebra
+  the mirror's swap S commutes with the phase L_i: True (a LINEAR time reversal; Wigner's T anticommutes with the quantum i)
+  the draft's (i q i^-1) j equals S q on the basis: True; S R_j = -R_j S: True; S^2 = I: True
+  the families' side (the 48 on the left, the phase R_i on the right): the Kramers partner R_j ANTIcommutes with R_i: True, R_j^2 = -I: True: antiunitary against that phase and squaring to -1, Wigner's T for spin 1/2
+  so the slot's j (a quarter-period evolution commuting with the phase) and the spinor's j (Kramers' reversal, anticommuting with the phase) are two different operations on the same symbol
+
+  the Verlet step V_t = [[t, -1], [1, 0]] on (z_now, z_before), t = 2 - k/W whole, |t| <= 2:
+    t = -2: [L_i, V_t] = 0 True; det 1; V_t a right multiplication by a quaternion: None; keeps the shadow form v^2 - t v u + u^2: True; keeps N(q) = |z_1|^2 + |z_2|^2: False
+    t = -1: [L_i, V_t] = 0 True; det 1; V_t a right multiplication by a quaternion: None; keeps the shadow form v^2 - t v u + u^2: True; keeps N(q) = |z_1|^2 + |z_2|^2: False
+    t =  0: [L_i, V_t] = 0 True; det 1; V_t a right multiplication by a quaternion: (0, 0, 1, 0); keeps the shadow form v^2 - t v u + u^2: True; keeps N(q) = |z_1|^2 + |z_2|^2: True
+    t =  1: [L_i, V_t] = 0 True; det 1; V_t a right multiplication by a quaternion: None; keeps the shadow form v^2 - t v u + u^2: True; keeps N(q) = |z_1|^2 + |z_2|^2: False
+    t =  2: [L_i, V_t] = 0 True; det 1; V_t a right multiplication by a quaternion: None; keeps the shadow form v^2 - t v u + u^2: True; keeps N(q) = |z_1|^2 + |z_2|^2: False
+  so at EVERY whole mode the step is a unit of the time plane keeping its own form; the quaternion norm is that form at t = 0 alone: 'a Hamilton unit at the quarter mode alone' is a fact about the coordinates (now, before), not a selection in nature
+
+  Dirac: gamma^0 = L_i, gamma^a = L_j R_a (a = i, j, k): {gamma^m, gamma^n} = 2 eta^mn with eta = diag(-1, 1, 1, 1) on R^4: True
+  so H_left (x) H_right = M_4(R) = Cl(3,1) on one quaternion IS the Dirac algebra in a Majorana basis; its time gamma ANTIcommutes with its space gammas, while the draft's time step R_j commutes with its phase L_i and with every operation on the T1 index: True
+  the draft's two algebras act on two different index sets (the slots x parts; the T1 rows, where the 24 act by the adjoint Ad(g), the vector representation) and never anticommute: no Clifford structure, no boost; time and space factorize (Galilean), which is correct for the act and is what 'two algebras, not one' means physically
+  the space quaternion's action on a T1 hand, Ad(i), Ad(j), Ad(k): pairwise commuting True (diag(1,-1,-1) and its turns: the Klein four-group), so on the T1 rows no quaternion algebra of operators acts either; Hamilton's product enters only as the bilinear dot and cross of two hands (the tables), which is right

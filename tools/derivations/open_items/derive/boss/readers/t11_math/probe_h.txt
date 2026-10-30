@@ -1,0 +1,20 @@
+Probe H: COUNT3's Mesh flux pressed
+H1 the derivative vertex g SUM M_s (L_s+1 - L_s-1): my own Phi against the pair's imbalance
+  the text's G2 world (light with Meshes, the bobs held): X_L + X_M != 0 at 18756 of 19200 site-rounds; = div Phi at 19200; the ring sum != 0 in 0 rounds; div Phi odd (a half booking not whole) at 0 site-rounds
+     unbooked: lines row 0 274, row 1 327, site-rounds off 504
+     the flux booked to row 0 (the text's): lines row 0 327, row 1 327, site-rounds off 0
+     the flux booked to row 1: lines row 0 274, row 1 274, site-rounds off 0
+     Phi on the mirrored state is -Phi in 400 of 400 rounds; the booked tooth of row 0 KEPT runs back in 400 of 400 rounds with -q in 400
+  BOTH trains with Meshes and beats, both travelling, g = f div 7: X_L + X_M != 0 at 19131 of 19200 site-rounds; = div Phi at 19200; the ring sum != 0 in 0 rounds; div Phi odd (a half booking not whole) at 8940 site-rounds
+     unbooked: lines row 0 7729, row 1 7745, site-rounds off 8355
+     the flux booked to row 0 (the text's): lines row 0 7745, row 1 7745, site-rounds off 0
+     the flux booked to row 1: lines row 0 7729, row 1 7729, site-rounds off 0
+     Phi on the mirrored state is -Phi in 400 of 400 rounds; the booked tooth of row 0 KEPT runs back in 400 of 400 rounds with -q in 400
+
+H2 the force self term on my G3 world: my own Psi
+  X = div Psi at 4608 of 4608 site-rounds; SUM |X - div Psi| = 0; Psi is the physicist's space Wronskian (momentum form) times G
+
+H4 the act's exact identity per gear, 2 dE_i = X_i + v-_i (r-_i - r+_i), 2 E_i = W v+ v- - a J (Animate's world, 6,000 rounds)
+  misses 0 of 71988 gear-rounds (exact); the Rule3 term |v- (r- - r+)| up to 4703773500000000000000000 (about v x W: the remainders' work)
+  so the shadow energy's change per hand is X_h plus a whole Rule3 term the text can name, and in exact arithmetic X_i is the
+  gear's own energy change with half of every pair interaction assigned to each leg: that is what each hand's X means.

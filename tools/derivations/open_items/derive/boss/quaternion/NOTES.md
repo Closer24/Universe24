@@ -128,3 +128,67 @@ r in a set D of coset representatives of L / W L (a fundamental domain; this is 
   + r - r+) 0 misses over 6 rounds (the momentum rescaled by W'/W: the determinant on the edge).
 - ONE_ALGEBRA.md updated: Answer item 6 (Big Pic's no, the books, the edge), the edge paragraph, the books section,
   Measured 8, the table rows, Files.
+
+## The double Node-clock and the quaternion (the owner's question of 16:3x; derived before the probe)
+- A two-part hand (re, im) with its two slots (now, before) is four whole numbers; read as q = z_now + z_before j
+  (Cayley-Dickson: q = re_1 + im_1 i + re_2 j + im_2 k), the hand's own phase (the winding, (re, im) -> (-im, re) on
+  both slots) is the LEFT multiplication by i; the slot swap is q -> (i q i^-1) j; the time step at the quarter mode
+  (k = 2 W), (v, u) -> (-u, v), is the RIGHT multiplication by j; left and right commute. Only at t = 2 - k/W = 0 is the
+  step [[t, -1], [1, 0]] of the form [[c, -conj d], [d, conj c]] (a right multiplication by a quaternion); at other
+  modes it is a split quaternion (M_2(Z), norm det = 1) acting on the (now, before) pair, outside H.
+- The forward-backward differences: q (1 - j) = (now + before) + (before - now) j: the velocity is the j slot of the
+  right multiplication by the norm-2 element 1 - j (a quarter turn's lift); the edge's dial D = W(b) + W(a) is the sum.
+- The wind now^2 - next x before = (1/W)(W v^2 - (2W - k) v u + W u^2); at the quarter mode it is N(q) = |now|^2 +
+  |before|^2 summed over the parts: the quaternion norm, kept because the step is a unit.
+- The edge form (edge_lib): the tooth between the slots in the dial W(b) + W(a), centred, the mirror negating it:
+  exactly the D = -D the orbit domain needs; the edge act at W | k is the same whole time-turn.
+- fam_math's 24-gear train (the 48 on their 24 pairs +-g with the sign) is the group ring Z[2O] / (-1 = -1) of rank
+  24; left AND right multiplication by units are signed permutations there (Cayley), so the per-gear carry turns with
+  both sides; pi: f -> SUM f_p g_p maps it ONTO O_48 (the eight basis elements are units), equivariantly, with kernel
+  the G3/2 part (rank 16); the carry does not descend through pi (a sum of carries is no carry of a sum), so the
+  quaternion hand is a reading of the 24-gear train, not a carried gear: this is how the units become gears and the
+  wall of gcd(W, 6) is bypassed (the group ring has fixed vectors, the orbit sums; the division algebra has none).
+
+## probe_double.txt (the owner's double Node-clock; the edge act at W = 6 den Gamma^2, a lone clock)
+- k = 2W: q+ = q j every round, the hand returns after 4 rounds with its tooth still, N(q) and the wind kept; the
+  phase (i on the left) commutes 12/12; the mirror's swap is (i q i^-1) j with the tooth negated; 12 edge unticks
+  return; q (1 - j) holds the sum and the negated velocity; the act as built gives q+ = q j too.
+- k = W, 3W: the hand returns after 6, 3 rounds, the wind kept, q j false, N(q) not kept. k = 2W + 2: the tooth moves.
+- the 24-gear train (fam_math): L and R all signed permutations, L a representation, R an anti-representation, they
+  commute, -1 = -I, SUM tr^2 = 1152 = 48 (4 + 4 + 16), SUM tr(LL) = -384; pi onto O_48, equivariant both sides (0 of
+  1600 twice); the per-gear carry does not descend through pi (100 of 100 at W = 7).
+- Bugs of mine caught in the check: the period read on the whole state (the free square rows drift) -> on the hand;
+  the trace label (384 was Lambda's number; the 24-gear train's is 1152).
+- ONE_ALGEBRA.md: Answer item 0, the section "The double Node-clock", Measured 9, table rows, Open narrowed, Files.
+
+## The root dial (the owner's 17:2x word; derived before the probe)
+- The frame as a whole quaternion Phi = L + l_x i + l_y j + l_z k (an A1 + T1 train, a whole basis the 24 permute);
+  its components along the Spokes Phi_mu = Re(Phi conj(e_mu)); the metric's ten slots are the symmetric square
+  M_mu,nu = Phi_mu Phi_nu: 00 = L^2 = W (the time leg's square), 0k = L l_k (the tilt), kk = l_k^2 (the grips), jk =
+  l_j l_k. N(Phi) = L^2 + |l|^2 = the metric's trace; Re(Phi^2) = L^2 - |l|^2 the Lorentz interval of the frame.
+  W = L^2 = N(Phi) iff the space legs vanish (a pure-time frame); in general W = (Re Phi)^2.
+- The root dial reads the frame's COMPONENT L at the first power (the dial L(b) + L(a), the push divided by L at the
+  pivot and by L again at the dial: F / (L L) = F / N(L)); the W dial reads the norm. On the edge the (now, before)
+  step has determinant D_in / D_out: the root dial's is the ratio of leg sums (nature's redshift v ~ 1/L = N), the
+  W dial's the ratio of norm sums (~ the square). Neither is a unit on a moving clock; both are the unit [[2 - k/W,
+  -1], [1, 0]] standing (the quarter mode q -> q j holds on the root dial too); both are shears (det 1) in (a, P).
+- Not natural as built: the ten slots are ten independent gears, and the act's linear pull does not keep a square a
+  square (to measure); the frame reading wants the frame's four gears carried and the square read, as the root dial
+  does for L; the law's W = 6 den Gamma^2 + c is a square only if 6 den is (to test for the example's den).
+- The two divisions by L are the two factors of N(L) = L conj(L): with space legs the natural division of a push by
+  the frame is F conj(Phi) carried at N(Phi) = the metric's trace: the first place a quaternion divisor would enter
+  the act (OPEN, the owner's).
+
+## probe_rootdial.txt (the root dial in the algebra)
+- the frame's square along the Spokes: 0 misses of 300 (slots, trace = N(Phi), 00 - sum ii = Re(Phi^2)); W = N(Phi)
+  for the pure-time frame 300/300.
+- the act as built on a metric laid as a frame's square: 27 -> 0 -> 0 squares (frame by site), 27 -> 27 -> 27 (uniform).
+- the root dial standing (L = 60): k = 2 L^2 q+ = q j 12/12, period 4; k = L^2 period 6; k = 3 L^2 period 3.
+- the free gear on the rising course: books exact 2000/2000; the norms 200/201 (root) vs 20000/20201 (W), the W dial's
+  the root dial's square to the next order (808040000 vs 808020000).
+- 6 den = 90977140554674334 is no square (between 301624171^2 and 301624172^2).
+- Self-check: the component sign Re(Phi conj e_k) = +l_k re-derived (conj e_k = -e_k, Re(l (-e_k)) = l_k); the
+  quarter mode on the root dial derived (q_F = -(k/L) a exact at L | k, the split at 4L exact at L^2 | k) and measured;
+  the floor root checked by the neighbour square. The answer: YES it fits naturally (the first power of the frame's
+  time component, the norm's two factors), and what does not fit is the act as built (ten slots as gears).
+- ONE_ALGEBRA.md: Answer item R, the section "The root dial", Measured 10, a table row, Open (the frame train), Files.

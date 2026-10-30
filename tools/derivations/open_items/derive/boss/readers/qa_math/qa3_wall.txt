@@ -1,0 +1,87 @@
+QA3 WALL: the carry theorem's criterion rebuilt, and a carry outside its framework
+
+== the 24 Hurwitz units as whole matrices on (1, i, j, w): a group True; orders {1: 1, 2: 1, 3: 8, 4: 6, 6: 8}; |det(g - 1)| by order {1: [0], 2: [16], 3: [9], 4: [4], 6: [1]} (expected N(g - 1)^2 = (2 - tr g)^2: 16, 9, 4, 1)
+
+== fixed nonzero cosets of H / W H by brute force (my loop), W = 1..13, against gcd(W, 6)
+   W =  1 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0} total 0: free action, a fundamental domain exists
+   W =  2 gcd(W, 6) = 2: {2: 15, 3: 0, 4: 18, 6: 0} total 33: NO invariant fundamental domain
+   W =  3 gcd(W, 6) = 3: {2: 0, 3: 64, 4: 0, 6: 0} total 64: NO invariant fundamental domain
+   W =  4 gcd(W, 6) = 2: {2: 15, 3: 0, 4: 18, 6: 0} total 33: NO invariant fundamental domain
+   W =  5 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0} total 0: free action, a fundamental domain exists
+   W =  6 gcd(W, 6) = 6: {2: 15, 3: 64, 4: 18, 6: 0} total 97: NO invariant fundamental domain
+   W =  7 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0} total 0: free action, a fundamental domain exists
+   W =  8 gcd(W, 6) = 2: {2: 15, 3: 0, 4: 18, 6: 0} total 33: NO invariant fundamental domain
+   W =  9 gcd(W, 6) = 3: {2: 0, 3: 64, 4: 0, 6: 0} total 64: NO invariant fundamental domain
+   W = 10 gcd(W, 6) = 2: {2: 15, 3: 0, 4: 18, 6: 0} total 33: NO invariant fundamental domain
+   W = 11 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0} total 0: free action, a fundamental domain exists
+   W = 12 gcd(W, 6) = 6: {2: 15, 3: 64, 4: 18, 6: 0} total 97: NO invariant fundamental domain
+   W = 13 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0} total 0: free action, a fundamental domain exists
+   Smith form on H at W in (25, 35, 49, 77, 1001, 1003, 14, 15, 27, 1002):
+   W =    25 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0}
+   W =    35 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0}
+   W =    49 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0}
+   W =    77 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0}
+   W =  1001 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0}
+   W =  1003 gcd(W, 6) = 1: {2: 0, 3: 0, 4: 0, 6: 0}
+   W =    14 gcd(W, 6) = 2: {2: 15, 3: 0, 4: 18, 6: 0}
+   W =    15 gcd(W, 6) = 3: {2: 0, 3: 64, 4: 0, 6: 0}
+   W =    27 gcd(W, 6) = 3: {2: 0, 3: 64, 4: 0, 6: 0}
+   W =  1002 gcd(W, 6) = 6: {2: 15, 3: 64, 4: 18, 6: 0}
+
+== the 48 on Lambda as whole 8 x 8 matrices: orders {1: 1, 2: 1, 3: 8, 4: 18, 6: 8, 8: 12}; |det(g - 1)| by order {1: [0], 2: [256], 3: [81], 4: [16], 6: [1], 8: [4]} (expected Nm(N(g - 1))^2: 256, 81, 16, 1, 4)
+   L_BASIS: element then coordinates round trip and membership on 300 drawn coordinate vectors: misses 0; every basis element a unit: True
+   fixed nonzero cosets of Lambda / W Lambda: brute force at W = 2, 3 (my loop) and Smith at the others
+   W = 2 brute force: {2: 255, 3: 0, 4: 270, 6: 0, 8: 36}
+   W = 3 brute force: {2: 0, 3: 640, 4: 0, 6: 0, 8: 0}
+   W =     5 gcd(W, 6) = 1 Smith: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}
+   W =     6 gcd(W, 6) = 6 Smith: {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}
+   W =     7 gcd(W, 6) = 1 Smith: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}
+   W =     9 gcd(W, 6) = 3 Smith: {2: 0, 3: 640, 4: 0, 6: 0, 8: 0}
+   W =    10 gcd(W, 6) = 2 Smith: {2: 255, 3: 0, 4: 270, 6: 0, 8: 36}
+   W =    11 gcd(W, 6) = 1 Smith: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}
+   W =    13 gcd(W, 6) = 1 Smith: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}
+   W =    25 gcd(W, 6) = 1 Smith: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}
+   W =  1001 gcd(W, 6) = 1 Smith: {2: 0, 3: 0, 4: 0, 6: 0, 8: 0}
+   W =  1002 gcd(W, 6) = 6 Smith: {2: 255, 3: 640, 4: 270, 6: 0, 8: 36}
+
+== the orbit domain (the text's fundamental domain) on H at W = 5, 6, 7, 9: my own construction
+   W = 5: a set of 625 representatives, conflicts 0, linearly invariant True, D = -D True; free orbits (W^4 - 1)/24 = 26
+   W = 6: conflicts 97: no invariant fundamental domain (as the text says)
+   W = 7: a set of 2401 representatives, conflicts 0, linearly invariant True, D = -D True; free orbits (W^4 - 1)/24 = 100
+   W = 9: conflicts 64: no invariant fundamental domain (as the text says)
+
+== A CARRY OUTSIDE THE FRAMEWORK: the orbit-canonical quotient Q on H
+   Q(u) = conj(g) [box quotient of (g u)] where g u is the least of the 24 images; Q(g u) = g Q(u) by construction,
+   Q(-u) = -Q(u) since -1 is a unit; the remainder r = u - W Q(u) is the turned box remainder, so |r| is bounded.
+   The remainder set depends on the quotient (it is the project's own edge form's kind, EDGE.md: s = +-D by the parity of q),
+   so the theorem's hypothesis 'D a set of coset representatives, one for every quotient' does not hold, and its conclusion need not.
+   W = 2 (gcd(W, 6) = 2): Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; 4 N(r) at most 28 on 60 draws and 12 over the whole cell of 0 (4 N(W) = 16); the cell of the quotient 0 holds 73 dividends against W^4 = 16 for a fundamental domain; cosets with two or more remainders in that cell: 15; cosets with none in it: 0 (served by other quotients' cells)
+   W = 3 (gcd(W, 6) = 3): Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; 4 N(r) at most 28 on 60 draws and 12 over the whole cell of 0 (4 N(W) = 36); the cell of the quotient 0 holds 97 dividends against W^4 = 81 for a fundamental domain; cosets with two or more remainders in that cell: 16; cosets with none in it: 16 (served by other quotients' cells)
+   W = 5 (gcd(W, 6) = 1): Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; 4 N(r) at most 80 on 60 draws and 56 over the whole cell of 0 (4 N(W) = 100); the cell of the quotient 0 holds 769 dividends against W^4 = 625 for a fundamental domain; cosets with two or more remainders in that cell: 168; cosets with none in it: 24 (served by other quotients' cells)
+   W = 6 (gcd(W, 6) = 6): Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; 4 N(r) at most 196 on 60 draws and 116 over the whole cell of 0 (4 N(W) = 144); the cell of the quotient 0 holds 2713 dividends against W^4 = 1296 for a fundamental domain; cosets with two or more remainders in that cell: 991; cosets with none in it: 16 (served by other quotients' cells)
+   W = 7 (gcd(W, 6) = 1): Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; 4 N(r) at most 188 on 60 draws and 116 over the whole cell of 0 (4 N(W) = 196); the cell of the quotient 0 holds 2953 dividends against W^4 = 2401 for a fundamental domain; cosets with two or more remainders in that cell: 648; cosets with none in it: 144 (served by other quotients' cells)
+   W = 9 (gcd(W, 6) = 3): Q(g u) = g Q(u) misses 0 of 1440; Q(-u) = -Q(u) misses 0 of 60; 4 N(r) at most 268 on 60 draws and 224 over the whole cell of 0 (4 N(W) = 324); the cell of the quotient 0 holds 8065 dividends against W^4 = 6561 for a fundamental domain; cosets with two or more remainders in that cell: 1768; cosets with none in it: 280 (served by other quotients' cells)
+
+== the same Q on Lambda under the 48 (algebra alone): equivariance and oddness at W = 2, 3, 6, 9
+   W = 2: Q(g u) = g Q(u) misses 0 of 576; Q(-u) = -Q(u) misses 0 of 12
+   W = 3: Q(g u) = g Q(u) misses 0 of 576; Q(-u) = -Q(u) misses 0 of 12
+   W = 6: Q(g u) = g Q(u) misses 0 of 576; Q(-u) = -Q(u) misses 0 of 12
+   W = 9: Q(g u) = g Q(u) misses 0 of 576; Q(-u) = -Q(u) misses 0 of 12
+
+== on the act (the lone Node-clock of worlds/spin4, the spring J = -2 psi, s = T_k = T_d = 1): the hand carried by Q
+   turned run == run turned over 6 rounds for the 24 lifts x 20 drawn valid starts; the run back by (b, a, -r) in 20 starts
+   W = 2 (gcd(W, 6) = 2): the hand carried by Q: 480 of 480 lifts x starts hold; every state of the run valid in 20 of 20; the tooth moves during the run in 18 of 20; the run back returns the lay in 20 of 20 | the act as built (per gear, the flip): 53 of 480
+   W = 3 (gcd(W, 6) = 3): the hand carried by Q: 480 of 480 lifts x starts hold; every state of the run valid in 20 of 20; the tooth moves during the run in 20 of 20; the run back returns the lay in 20 of 20 | the act as built (per gear, the flip): 40 of 480
+   W = 5 (gcd(W, 6) = 1): the hand carried by Q: 480 of 480 lifts x starts hold; every state of the run valid in 20 of 20; the tooth moves during the run in 20 of 20; the run back returns the lay in 20 of 20 | the act as built (per gear, the flip): 40 of 480
+   W = 6 (gcd(W, 6) = 6): the hand carried by Q: 480 of 480 lifts x starts hold; every state of the run valid in 20 of 20; the tooth moves during the run in 20 of 20; the run back returns the lay in 20 of 20 | the act as built (per gear, the flip): 40 of 480
+   W = 7 (gcd(W, 6) = 1): the hand carried by Q: 480 of 480 lifts x starts hold; every state of the run valid in 20 of 20; the tooth moves during the run in 20 of 20; the run back returns the lay in 20 of 20 | the act as built (per gear, the flip): 40 of 480
+   W = 9 (gcd(W, 6) = 3): the hand carried by Q: 480 of 480 lifts x starts hold; every state of the run valid in 20 of 20; the tooth moves during the run in 20 of 20; the run back returns the lay in 20 of 20 | the act as built (per gear, the flip): 40 of 480
+
+== the same on the 8-gear hand (worlds/spin8, Lambda under the 48), the spring J = -2 psi: the hand carried by Q on Lambda
+   W = 2 (gcd(W, 6) = 2): 240 of 240 lifts x starts hold over 4 rounds; the run back returns the lay in 5 of 5
+   W = 9 (gcd(W, 6) = 3): 240 of 240 lifts x starts hold over 4 rounds; the run back returns the lay in 5 of 5
+
+== the project's own edge split (edge_lib.split) read in the same terms, rank 1, G = {+-1}, dial 2D
+   D = 3: cell sizes among the quotients -4..4: [3, 5, 7] (a fundamental domain would give one size, 6); the class D mod 2D, fixed by -1, has the remainders [-3, 3]: two representatives, chosen by the quotient's parity
+   D = 4: cell sizes among the quotients -4..4: [4, 7, 9] (a fundamental domain would give one size, 8); the class D mod 2D, fixed by -1, has the remainders [-4, 4]: two representatives, chosen by the quotient's parity
+   so the edge form is a carry whose remainder set depends on the quotient; the theorem's framework excludes it, and on H the same kind of carry turns with every lift at every W (above)

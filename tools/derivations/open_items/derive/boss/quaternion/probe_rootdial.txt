@@ -1,0 +1,23 @@
+PROBE ROOT DIAL: the frame quaternion, the metric as its square, the two dials' norms, the quarter mode, the square kept or not
+
+== the frame Phi = L + l_x i + l_y j + l_z k and its square along the Spokes, 300 drawn frames
+   M_mu,nu = Re(Phi conj e_mu) Re(Phi conj e_nu) gives 00 = L^2, 0k = L l_k, kk = l_k^2, jk = l_j l_k: misses 0; the trace 00 + xx + yy + zz = N(Phi): misses 0; 00 - xx - yy - zz = Re(Phi^2): misses 0
+   W = 00 = L^2 equals N(Phi) for the pure-time frame (l = 0): 300 of 300; in general W = (Re Phi)^2, the time leg's square, and N(Phi) is the metric's trace
+
+== the act as built with the metric laid as the frame's square at every Node-clock (probe.py's cube, the spring on the hand alone, J = 0 on the metric)
+   the frame drawn by site: Node-clocks whose metric is a square (every 2 x 2 minor 0): at the lay 27 of 27, after one round 0, after two 0
+   the frame uniform over the board: Node-clocks whose metric is a square (every 2 x 2 minor 0): at the lay 27 of 27, after one round 27, after two 27
+   the pull moves the ten slots as ten gears, linearly, and a sum of squares is no square: the frame reading holds only where the frame is uniform (F = 0)
+
+== the root dial (edge/probe_root.step_root) at a standing clock L, the two-part hand (re, im), the spring k on each part
+   k = 2 L^2: the quarter mode: q+ == q j every round True; the hand returns after 4 rounds (teeth included)
+   k = L^2: q+ == q j every round False; the hand returns after 6 rounds (teeth included)
+   k = 3 L^2: q+ == q j every round False; the hand returns after 3 rounds (teeth included)
+
+== the step's norm on the edge, the free gear on the edge agent's rising course (L 100 -> 200 by 1 every 300 rounds; W = L^2)
+   round 299: L 100, 100, 101: the root dial's norm D_in / D_out = 200 / 201; the W dial's W_in / W_out = 20000 / 20201; (D_in/D_out)^2 against W_in/W_out: 808040000 against 808020000 (the W dial's norm is the root dial's squared, to the next order)
+   round 599: L 101, 101, 102: the root dial's norm D_in / D_out = 202 / 203; the W dial's W_in / W_out = 20402 / 20605; (D_in/D_out)^2 against W_in/W_out: 840766420 against 840746018 (the W dial's norm is the root dial's squared, to the next order)
+   round 899: L 102, 102, 103: the root dial's norm D_in / D_out = 204 / 205; the W dial's W_in / W_out = 20808 / 21013; (D_in/D_out)^2 against W_in/W_out: 874477008 against 874456200 (the W dial's norm is the root dial's squared, to the next order)
+   the free gear's books 2 D_out v_out + s_out = 2 D_in v_in + s_in: misses 0 of 2000 rounds; so the (now, before) step's determinant is D_in / D_out exactly, a unit only where the clock stands; in (now, momentum) it is a shear of determinant 1 on either dial
+
+== the law's teeth 6 den Gamma^2 + c at the example's den: 6 den = 90977140554674334, floor sqrt = 301624171, its square 90977140531437241: a square False; so W = 6 den Gamma^2 is no L^2 for a whole L (Gamma^2 is), as EDGE2 says: the root dial is a law change, the 00 slot entering L

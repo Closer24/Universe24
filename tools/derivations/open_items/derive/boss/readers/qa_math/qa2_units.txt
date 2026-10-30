@@ -1,0 +1,18 @@
+QA2 UNITS: the 48 quaternions as turns, matched to the engine's 24 (from the quaternion side)
+   48 quaternions (24 Hurwitz units, 24 Lipschitz of norm 2): every sandwich / N(g) is whole (asserted); determinant 1 misses 0
+   distinct turns reached: 24; turns not among the engine's 24: 0; engine turns not reached: 0
+   each turn reached by exactly two quaternions: True; the two are g and -g: True
+   N(g) = 1 exactly where the engine's A2 = +1: 24 of 24
+      half turn about an axis    lifted by norm 2   A2 = -1: 6
+      half turn about an edge    lifted by Hurwitz  A2 = +1: 3
+      identity                   lifted by Hurwitz  A2 = +1: 1
+      quarter turn               lifted by norm 2   A2 = -1: 6
+      third turn                 lifted by Hurwitz  A2 = +1: 8
+   Euler: N((1 + i) psi) = 2 N(psi): an identity; the one-sided half-speed action by a norm-2 lift leaves H's norm lattice, as the text says
+
+== the engine's tables, entry by entry
+   C[T1 T1 -> A1] = delta: True; C[A1 A1 -> A1] = 1; C[A1 T1 -> T1] = I: True; C[T1 A1 -> T1] = I: True
+   C[T1 T1 -> T1] = the Levi-Civita symbol with eps[0,1,2] = +1: True (entries [-1, 0, 1])
+   e_a e_b = -delta_ab + sum_x eps[x, a, b] e_x on all nine pairs of units: misses 0 of 9 (so the T1 T1 -> A1 and -> T1 channels are -Re and Im of Hamilton's product, exactly, not by samples)
+   the remaining T1 x T1 channels: -> E has 6 entries not 0, -> T2 has 6: the symmetric traceless five, outside Hamilton's product (as the text says)
+   parity then the turn: g conj(e_a) conj(g) = -N(g) m e_a on the 24 Hurwitz lifts and three units: misses 0 of 72

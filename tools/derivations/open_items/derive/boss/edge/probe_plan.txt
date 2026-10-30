@@ -1,0 +1,14 @@
+J through the 24's tables on the edge: SYM24's plan 1, s = 3, T_k = 2, T_d = 5, the SYM24 board (18 rows x 27 sites), 4 rounds
+   standing at W = 9, tie-even: the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; r_d not 0 at round 4: 298 gears; promise broke None; 96 bits
+   standing at W = 9, half-open: the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; r_d not 0 at round 4: 298 gears; promise broke None; 96 bits
+   standing at W = 9, mutant, the first text's turned state (the drive's tooth of a flipped row unflipped): [3, 3, 3, 3]
+   standing at W = 9, the act as built (control): [24, 24, 24, 24]; promise broke None
+   rising by 1 from W = 9, tie-even: the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; r_d not 0 at round 4: 303 gears; promise broke None; 90 bits
+   rising by 1 from W = 9, half-open: the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; r_d not 0 at round 4: 305 gears; promise broke None; 90 bits
+   rising by 1 from W = 9, mutant, the first text's turned state (the drive's tooth of a flipped row unflipped): [3, 3, 3, 3]
+   rising by 1 from W = 9, the act as built (control): [24, 3, 3, 3]; promise broke None
+   falling by 1 from W = 9, tie-even: the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; r_d not 0 at round 4: 300 gears; promise broke None; 103 bits
+   falling by 1 from W = 9, half-open: the 24 per round [24, 24, 24, 24]; untick(tick s) = s in 4 of 4; rewound True; r_d not 0 at round 4: 301 gears; promise broke None; 103 bits
+   falling by 1 from W = 9, mutant, the first text's turned state (the drive's tooth of a flipped row unflipped): [3, 3, 3, 3]
+   falling by 1 from W = 9, the act as built (control): [24]; promise broke 1
+

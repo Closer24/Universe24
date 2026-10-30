@@ -1,0 +1,21 @@
+Probe G: COUNT2 pressed
+G1 the text's X against the vertex form, and the pair's books by my own carry
+  the text's world: the two forms differ in 0 of 6000 rounds; carry at key_w: totals [-6, 6], taker 0..7, |q| <= 1, misses 0, k_L + k_M != key - 1 at 0
+  A = 10^5: the two forms differ in 0 of 6000 rounds; carry at key_w: totals [-6, 6], taker 0..7, |q| <= 1, misses 0, k_L + k_M != key - 1 at 0
+  A = 10^3: the two forms differ in 0 of 6000 rounds; carry at key_w: totals [-6, 6], taker 0..6, |q| <= 1, misses 0, k_L + k_M != key - 1 at 0
+  g = f div 100: the two forms differ in 0 of 6000 rounds; carry at key_w: totals [-3, 3], taker 0..3, |q| <= 1, misses 0, k_L + k_M != key - 1 at 0
+  g = f, key div 700: the two forms differ in 0 of 6000 rounds; carry at key_w: totals [-408, 408], taker -4..704, |q| <= 10, misses 0, k_L + k_M != key - 1 at 0
+  g = f, key div 7000: the two forms differ in 0 of 6000 rounds; carry at key_w: totals [-4084, 4084], taker -37..7037, |q| <= 93, misses 0, k_L + k_M != key - 1 at 0
+
+G2 a derivative vertex on the ring (48 Node-clocks, Meshes on light's row, the bobs held): V = g SUM_s M_s (L_{s+1} - L_{s-1})
+  X_L + X_M != 0 at 18756 site-rounds of 19200; summed over the whole ring, != 0 in 0 rounds of 400 (0: a potential's plan); summed over a Node-clock and its two neighbours, != 0 at 18840 site-rounds
+  key W x top light wind div 7: click lines light 0, bobs 0; site-rounds where the two rows' quotients do not sum to 0: 0; rounds where the ring's whole quotient is not 0: 0; the bobs took net 142 thousandths of a key
+  key W x top light wind div 700: click lines light 274, bobs 327; site-rounds where the two rows' quotients do not sum to 0: 504; rounds where the ring's whole quotient is not 0: 238; the bobs took net 14239 thousandths of a key
+  key W x top light wind div 7000: click lines light 2621, bobs 2962; site-rounds where the two rows' quotients do not sum to 0: 3584; rounds where the ring's whole quotient is not 0: 338; the bobs took net 142393 thousandths of a key
+  (the text's value vertex g M L on the same lay: X_L + X_M != 0 at 0 site-rounds)
+
+G3 a travelling train alone whose plan reads the force (its own gradient energy through the plan, V = (G / 2) SUM (L_{s+1} - L_s)^2; c^2 = 1/4 by the pull + 1/4 by the plan)
+  key W x top wind div 7: click lines 437 over 96 rounds (the text's empty ring: 0); rounds where the ring's whole quotient is not 0: 53
+  key W x top wind div 700: click lines 1886 over 96 rounds (the text's empty ring: 0); rounds where the ring's whole quotient is not 0: 73
+  SUM |X| over every site and round = 676347644500000 (not 0: the train passes wind to itself site by site); the ring-summed X != 0 in 0 rounds (0: a potential's plan)
+  (the text's own travel test, no plan at all: SUM |X| = 0: J = 0 everywhere, so X = 0 by having nothing to read)

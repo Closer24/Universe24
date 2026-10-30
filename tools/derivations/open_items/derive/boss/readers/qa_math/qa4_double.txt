@@ -1,0 +1,34 @@
+QA4 DOUBLE: the slot quaternion q = z_now + z_before j on the act as built, at and off the quarter mode, lone and with Meshes
+
+== a lone Node-clock (the example universe), W = 6 den Gamma^2 = 90977140554674334000000, grip 15162856759112389000000; the hand q = (-20, 12, 23, 15)
+   k = 2 W (quarter mode): the pull F on the light rows is not 0 at the lay: False; q+ == q j at every site, 12 rounds: True; N(q) kept: True; the mode's wind v^2 - t v u + u^2 kept: True; the teeth still: True
+   k = W (order 6): the pull F on the light rows is not 0 at the lay: False; q+ == q j at every site, 12 rounds: False; N(q) kept: False; the mode's wind v^2 - t v u + u^2 kept: True; the teeth still: True
+   k = 3 W (order 3): the pull F on the light rows is not 0 at the lay: False; q+ == q j at every site, 12 rounds: False; N(q) kept: False; the mode's wind v^2 - t v u + u^2 kept: True; the teeth still: True
+   k = 2 W + 2: the teeth move within 6 rounds: True
+   identities of the reading at any mode: (i q i^-1) j = (23, 15, -20, 12) is the slot swap True; q (1 - j) = (3, 27, 43, 3): its j, k slots are before - now = (43, 3) (the text's Answer calls this 'the velocity'; it is the velocity negated)
+   k = 2 W: the phase (re, im) -> (-im, re) with the flip commutes with the act as built: 12 of 12 rounds (so the phase is left multiplication by i at EVERY mode; only the step's form is the quarter mode's)
+   k = 1 W: the phase (re, im) -> (-im, re) with the flip commutes with the act as built: 12 of 12 rounds (so the phase is left multiplication by i at EVERY mode; only the step's form is the quarter mode's)
+   k = 3 W: the phase (re, im) -> (-im, re) with the flip commutes with the act as built: 12 of 12 rounds (so the phase is left multiplication by i at EVERY mode; only the step's form is the quarter mode's)
+
+== a cube of side 3 with Meshes, the spring k = 2 W: the text's two cases, then an eigen-hand
+   the light hand drawn by site: the pull F on the light rows is not 0 at the lay: True; q+ == q j at every site, 1 rounds: False; N(q) kept: False; the mode's wind v^2 - t v u + u^2 kept: False; the teeth still: False
+   the light hand uniform over the board (F = 0): the pull F on the light rows is not 0 at the lay: False; q+ == q j at every site, 12 rounds: True; N(q) kept: True; the mode's wind v^2 - t v u + u^2 kept: True; the teeth still: True
+   an eigen-hand of the pull (patterns (2, -1, -1) and (0, 1, -1) along x, drawn amplitudes [-4, 4, -8, -1, -4, -3, 6, -9]), the spring k = 2 W - 3 grip = 136465710832011501000000 = 3 W / 2:
+      the eigen-hand with the tuned spring: the pull F on the light rows is not 0 at the lay: True; q+ == q j at every site, 12 rounds: True; N(q) kept: True; the mode's wind v^2 - t v u + u^2 kept: True; the teeth still: True
+      the same eigen-hand at k = 2 W (untuned): the pull F on the light rows is not 0 at the lay: True; q+ == q j at every site, 1 rounds: False; N(q) kept: False; the mode's wind v^2 - t v u + u^2 kept: False; the teeth still: False
+   so q+ = q j holds with F != 0 wherever the round's push is -2 W now: the quarter mode is a dispersion condition (k + s lambda grip = 2 W), not the lone clock's or the uniform hand's alone: True
+
+== even boards, NO spring (k = 0): the checkerboard hand (-1)^(x+y+z) has F = -12 grip v = -2 W v
+   side 2, 8 sites, the checkerboard hand with amplitudes [6, 2, -3, 2], no spring: the pull F on the light rows is not 0 at the lay: True; q+ == q j at every site, 12 rounds: True; N(q) kept: True; the mode's wind v^2 - t v u + u^2 kept: True; the teeth still: True
+   side 4, 64 sites, the checkerboard hand with amplitudes [-7, 9, -3, 7], no spring: the pull F on the light rows is not 0 at the lay: True; q+ == q j at every site, 12 rounds: True; N(q) kept: True; the mode's wind v^2 - t v u + u^2 kept: True; the teeth still: True
+   so a light hand with no spring at all is at the quarter mode on an even board: the slot quaternion's unit step comes from the Meshes alone there
+
+== off the quarter mode: is the step a right multiplication by a unit quaternion in ANOTHER whole basis of the two slots?
+   S_t = [[t, -1], [1, 0]] on Z[i]^2. A right multiplication by a unit quaternion preserves |z1|^2 + |z2|^2; in a basis M in GL_2(Z[i])
+   it would preserve the Hermitian form M^* M, positive, of determinant |det M|^2 = 1. The S_t-invariant Hermitian forms rational over Q(i)
+   are c [[1, -t/2], [-t/2, 1]] (the eigenvalues e^(+-i theta), 2 cos theta = t, lie outside Q(i) for t = +-1, so the two eigenlines are
+   swapped by Galois and h1 = h2), of determinant c^2 (1 - t^2/4) = 3 c^2 / 4 for t = +-1: never 1 for a rational c. DERIVED: at k = W and
+   3 W the step is a unit quaternion's right multiplication in no whole basis of the two slots; at t = 0 it is (the text's claim, strengthened).
+   t = +1: among 1184 bases M in GL_2(Z[i]) with entries in {-1, 0, 1} + i {-1, 0, 1}, the forms M^* M that S_t preserves: 0
+   t = +0: among 1184 bases M in GL_2(Z[i]) with entries in {-1, 0, 1} + i {-1, 0, 1}, the forms M^* M that S_t preserves: 32
+   t = -1: among 1184 bases M in GL_2(Z[i]) with entries in {-1, 0, 1} + i {-1, 0, 1}, the forms M^* M that S_t preserves: 0

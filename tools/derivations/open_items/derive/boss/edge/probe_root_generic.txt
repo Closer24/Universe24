@@ -1,0 +1,34 @@
+The root dial against the owner's two conditions, on the real act (whole numbers; the owner's half-open convention)
+
+A. Our laws
+   A1. W = L^2 is never computed: the root form reads L at the two slots, sums them for the dial and divides the
+       push once at L(now); the only divisions are Rule3's carries (the splits, the push's rounding, the sign test).
+   A2. The push's rounding under F -> -F, L in [1, 12], F in [-60, 60], 1452 cases: half up (rule (ii)'s words) misses 148, every one a tie (ties 148, at an even L with F = L/2 mod L); the odd rounding (rule (iv)) misses 0.
+   A3. The rest 6 den Gamma^2 is a square only if 6 den is: the example's den is odd and 6 den = 2 mod 4, no square (a square is 0 or 1 mod 4); 6 den a square needs den = 6 k^2, even, and then L_rest = 6 k Gamma, the Spokes'
+       count x Gamma x the seed's root k: derivable with nothing typed once the file holds k (or den = 6 k^2); the law's line 110
+       calls den's parity a finding and no refusal, so an even den is allowed and the odd seed of term 11's text is a text's.
+
+B. Generic: one dial law for every row on the board (den 6, Gamma 1: rest 36 = 6^2, L_rest 6, grip 6; 12 rows x 27 sites)
+   standing at L = 9: L from 9 to 9 on the rows that read the 00 slot (the 00 row's own L 6), 40 rounds, 10 bits, promise broke None
+      remainder dropped, odd rounding: the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses; the push dropped 17304 of 9176412 (1 permille)
+      remainder dropped, rounding half up: the 24 24 at every one of 40 rounds
+      remainder kept on a push tooth at the pivot's dial: the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; push teeth outside the dial that reads them 0 gear-rounds of 12960
+   rising by 1 a round from L = 10: L from 10 to 50 on the rows that read the 00 slot (the 00 row's own L 6), 40 rounds, 9 bits, promise broke None
+      remainder dropped, odd rounding: the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses; the push dropped 63465 of 9250368 (6 permille)
+      remainder dropped, rounding half up: the 24 [24, 24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+      remainder kept on a push tooth at the pivot's dial: the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; push teeth outside the dial that reads them 0 gear-rounds of 12960
+   falling by 1 a round from L = 46: L from 46 to 6 on the rows that read the 00 slot (the 00 row's own L 6), 40 rounds, 11 bits, promise broke None
+      remainder dropped, odd rounding: the 24 24 at every one of 40 rounds; untick(tick s) = s 40 of 40; rewound True; books per gear 0 misses; the push dropped 56493 of 43353624 (1 permille)
+      remainder dropped, rounding half up: the 24 [24, 24, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+      remainder kept on a push tooth at the pivot's dial: the 24 24 at every one of 40 rounds; untick(tick s) = s 2 of 40; push teeth outside the dial that reads them 446 gear-rounds of 12960
+   varying: the 00 slot drawn per site in [60, 70] with a velocity in [-1, 1]: L from 72 to 73 on the rows that read the 00 slot (the 00 row's own L 6), 24 rounds, 11 bits, promise broke None
+      remainder dropped, odd rounding: the 24 24 at every one of 24 rounds; untick(tick s) = s 24 of 24; rewound True; books per gear 0 misses; the push dropped 93776 of 41400444 (2 permille)
+      remainder dropped, rounding half up: the 24 [6, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+      remainder kept on a push tooth at the pivot's dial: the 24 24 at every one of 24 rounds; untick(tick s) = s 3 of 24; push teeth outside the dial that reads them 69 gear-rounds of 7776
+
+C. J through the 24's tables (SYM24's plan 1, s = 3, T_k = 2, T_d = 5) on the SYM24 board with its rest and grips scaled by 6
+   (rest 36 = 6^2, L_rest 6, grip 6; 18 rows x 27 sites), the root dial with the remainder dropped, odd rounding, 4 rounds
+   standing at L = 9: the 24 per round [24, 24, 24, 24]; untick(tick s) = s 4 of 4; rewound True; r_d not 0 at round 4: 311 gears; promise broke None; 24 bits
+   rising by 1 from L = 9: the 24 per round [24, 24, 24, 24]; untick(tick s) = s 4 of 4; rewound True; r_d not 0 at round 4: 299 gears; promise broke None; 17 bits
+   falling by 1 from L = 9: the 24 per round [24, 24, 24, 24]; untick(tick s) = s 4 of 4; rewound True; r_d not 0 at round 4: 309 gears; promise broke None; 32 bits
+

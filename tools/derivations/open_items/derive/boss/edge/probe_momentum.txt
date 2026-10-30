@@ -1,0 +1,17 @@
+The momentum form on the click-law text's falling lay (its cube, 486 gears, W = 40 falling, seed 11), 30 and 15 rounds,
+no promise asked: untick(tick s) = s per round, and the 40 rounds rewound to the start
+
+   lay                     act                                                   untick(tick s) = s   rewound to the start   promise at the lay
+   falling by 1 from W = 40   click-law half-tooth act (its u, carried by W(a) - W(b))        0 of 30             0                      carried tooth below 0 at 178 gears
+   falling by 1 from W = 40   momentum form W(b) v -> W(a) v+, centred count                    0 of 30             0                      -
+   falling by 1 from W = 40   edge form W(b) + W(a) -> W(a) + W(a+), centred count            30 of 30             1                      held (1)
+   falling by 1 from W = 40   the act as built                                                  1 of 30             0                      breaks
+
+   falling by 2 from W = 40   click-law half-tooth act (its u, carried by W(a) - W(b))        0 of 15             0                      carried tooth below 0 at 178 gears
+   falling by 2 from W = 40   momentum form W(b) v -> W(a) v+, centred count                    0 of 15             0                      -
+   falling by 2 from W = 40   edge form W(b) + W(a) -> W(a) + W(a+), centred count            15 of 15             1                      held (1)
+   falling by 2 from W = 40   the act as built                                                  1 of 15             0                      breaks
+
+   The momentum form runs back exactly when its two dials are read symmetrically: the edge's in-dial W(b) + W(a) is the
+   mirrored round's out-dial and its out-dial W(a) + W(a+) the mirrored round's in-dial; W(b) v -> W(a) v+ reads the
+   before slot's teeth forward and the now slot's backward, the future's teeth, as the click-law text says of it.

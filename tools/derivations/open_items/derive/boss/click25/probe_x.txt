@@ -1,0 +1,70 @@
+Probe 6: the exchange count X = SUM a J(b) - b J(a), the second text (Animate's world, 6,000 rounds each)
+
+  A the pair, the text's world: A = 1000000, g = f div 10, key_w 71428571400000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 2607 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 6], the taker's course 0..7, click rounds 34, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+     the run back: X on the mirrored state is -X in 6000 of 6000 rounds; the tooth KEPT returns in 6000 with the quotient -q in 6000; the tooth FLIPPED returns in 0
+     the first text's D-count on the same run: books miss in 2 rounds, n_L + n_M in [-1, 0]
+     Planck in whole numbers: key_X^2 W^2 over 4 f (2W - f) key_a^2 = 1000625 millionths (key_a 714285714285714285714285714285, the area's key); the loader's key from key_a by that relation: 71406246511186446276006877897 against key_w 71428571400000000000000000001
+
+  B1 the weak vertex: A = 1000000, g = f div 100, key_w 71428571400000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 1867 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-3, 3], the taker's course 0..3, click rounds 3, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  B2 the weaker vertex: A = 1000000, g = f div 300, key_w 71428571400000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 752 millionths of key_w a round (Rule3's turn)
+     the carry: totals [0, 0], the taker's course 0..0, click rounds 0, |q| up to 0; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  B3 the small swing: A = 100000, g = f div 10, key_w 714285700000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 25701 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 6], the taker's course 0..7, click rounds 34, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  B4 the smaller swing: A = 10000, g = f div 10, key_w 7142800000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 267017 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 6], the taker's course 0..7, click rounds 34, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  B5 the smallest swing: A = 1000, g = f div 10, key_w 78500000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 2823543 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 6], the taker's course 0..6, click rounds 30, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  B6 the small key (many clicks a round): A = 1000000, g = f div 1, key_w 714285700000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 283146 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-408, 408], the taker's course -4..704, click rounds 5793, |q| up to 10; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  B7 the smaller key: A = 1000000, g = f div 1, key_w 71428500000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 2831468 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-4084, 4084], the taker's course -37..7037, click rounds 5979, |q| up to 93; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  B8 three hands at g, g: A = 1000000, g = f div 10, key_w 71428571400000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 2061 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 3, 3], the taker's course 0..4, click rounds 73, |q| up to 1; the books miss in 73 rounds, the running sum within [-1, 1]
+
+  B9 three hands at g, g/2: A = 1000000, g = f div 10, key_w 71428571400000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 2434 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-5, 4, 1], the taker's course 0..6, click rounds 69, |q| up to 1; the books miss in 64 rounds, the running sum within [-1, 1]
+
+  C the free hand, no vertex: SUM |X| over 6000 rounds = 0 (the own spring drops out of the Wronskian: a check of the code)
+
+  D the giver on a line, the taker at rest: A = 1000000, g = f div 10, key_w 35714285700000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 4820 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 6], the taker's course 0..7, click rounds 34, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  F1 the taker's spring 1.1 f (one key for both): A = 1000000, g = f div 10, key_w 71428571400000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 1836 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-2, 2], the taker's course 0..4, click rounds 26, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  F1 the taker's spring 1.1 f (Planck's key per train): A = 1000000, g = f div 10, key_w 71428571400000000000000000001, the taker's key 74889161295823287746423410845
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 1836 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-2, 2], the taker's course 0..3, click rounds 46, |q| up to 1; the books miss in 46 rounds, the running sum within [-1, 0]
+
+  F2 the taker's spring 1.01 f (one key for both): A = 1000000, g = f div 10, key_w 71428571400000000000000000001
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 3023 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 6], the taker's course 0..7, click rounds 34, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 0 of 6001
+
+  F2 the taker's spring 1.01 f (Planck's key per train): A = 1000000, g = f div 10, key_w 71428571400000000000000000001, the taker's key 71762165202785212051308898807
+     SUM_h X_h != 0 in 0 rounds of 6000; |W dD_M - X_M| up to 3023 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 6], the taker's course 0..7, click rounds 65, |q| up to 1; the books miss in 62 rounds, the running sum within [-1, 0]
+
+  G a cubic term g3 M_x L_x L_y added, g3 = g div 10^6: A = 1000000, g = f div 10, key_w 71428571400000000000000000001
+     SUM_h X_h != 0 in 5993 rounds of 6000; |W dD_M - X_M| up to 2903 millionths of key_w a round (Rule3's turn)
+     the carry: totals [-6, 6], the taker's course 0..7, click rounds 34, |q| up to 1; the books miss in 0 rounds, the running sum within [0, 0]; k_L + k_M != key - 1 at 5993 of 6001

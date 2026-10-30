@@ -21,6 +21,70 @@ reader has read it. Where it says what fails, it fails on the act as built, or i
 
 ## Answer
 
+R. **The root dial sits naturally in the one algebra: YES, as the first power of the frame quaternion, and the act as
+   built is the part that does not** (the owner's word of 17:2x UTC; EDGE2.md section 3, probe_root.py; Big Pic
+   6528097443 items 2.6 and 3 B; probe_rootdial.py). The frame is a whole quaternion Phi = L + l_x i + l_y j + l_z k
+   (an A1 + T1 train, a whole basis the 24 permute, with no E inside); the metric's ten slots are its square read
+   along the Spokes, M_mu,nu = Re(Phi conj e_mu) Re(Phi conj e_nu): 00 = L^2 = W, 0k = L l_k (the tilt), kk = l_k^2
+   (the grips: the space legs' squares), jk = l_j l_k (0 misses of 300). So W = L^2 is the square of the frame's time
+   COMPONENT; it is the norm N(Phi) exactly for the pure-time frame (l = 0; 300 of 300), while in general N(Phi) =
+   L^2 + |l|^2 is the metric's trace and Re(Phi^2) = L^2 - |l|^2 its Lorentz interval. Hence: (i) L IS the time
+   part's own scale: the root dial reads the frame's component at the first power (the dial L(b) + L(a), the push
+   divided by L at the pivot and by L again at the dial: by L conj(L) = N(L) = W in all, the two factors of the norm),
+   where the W dial reads the norm itself; (ii) W = L^2 is a norm of the algebra in the pure-time frame and the
+   00 slot otherwise; (iii) the root dial does NOT make the time step a unit where the edge's dial does not: on a
+   moving clock the (now, before) step has determinant D_in / D_out under either dial (the free gear's books exact,
+   0 misses of 2000 rounds on the edge agent's course), the root dial's being the ratio of leg sums
+   (200 / 201 at L 100 -> 101) and the W dial's the ratio of norm sums (20000 / 20201), the latter the former's square
+   to the next order (808040000 against 808020000): the root dial's redshift is nature's first power, v ~ 1 / L = N,
+   which is the physicist's point, not a unit; standing, both are the same unit [[2 - k/W, -1], [1, 0]] and the
+   quarter mode q -> q j holds on the root dial too (12 of 12, the hand back after 4 rounds); in (now, momentum) both
+   are shears of determinant 1; (iv) the frame reading makes the grips the space legs' squares, l_k^2, and the Mesh's
+   light run at the leg ratio l_k / L, with the E part of the ii slots an anisotropic frame and the 0i and jk slots
+   the tilt and the legs' cross products, read by nothing as built. What does not fit as built: the ten slots are
+   ten gears moved linearly by the pull, and a sum of squares is no square: a metric laid as a frame's square at
+   every Node-clock stays one only where the frame is uniform (27 of 27 after two rounds uniform; 0 of 27 after one
+   round with the frame drawn by site). The natural whole form is the one the root dial already takes for the time
+   leg: the frame's four gears carried and the square read, extended to the space legs. And the law's W = 6 den
+   Gamma^2 + c is no square (6 den = 90977140554674334 lies between 301624171^2 and 301624172^2): the root dial is a
+   law change, as EDGE2 says. With space legs in the dial the natural division of a push by the frame would be
+   F conj(Phi) carried at N(Phi), the metric's trace: the first place a quaternion divisor would enter the act (OPEN,
+   the owner's). By Solution24: 1 (the frame's square follows from Hamilton's product along the Spokes, nothing
+   added; the frame as gears does not follow from the act and is named), 2, 3 (whole quaternions, the carry; the
+   dropped push remainder is the edge agent's CHOSEN price, said), 4, 6 (the run back exact on the root dial, EDGE2),
+   7 (nature's lapse L = 1 / N is the direction), 8 (the real act: the square not kept; the root act: the quarter
+   mode and the books), 10 (the two divisions by L are the one norm's two factors), 13 (the frame train as the
+   metric's whole form).
+0. **The double Node-clock and the quaternion** (the owner's question of 16:3x UTC, now the main one; the section
+   "The double Node-clock" below; probe_double.py on the edge form of scratchpad/edge/edge_lib.py and on the act as
+   built). The return in time is indeed more gears: every gear's before slot is its backward gear, the tooth stands
+   between the two, and the differences are the velocity a - b and the tooth. For a hand of two parts (re, im) the
+   two slots are four whole gears, and they are one quaternion q = z_now + z_before j (q = re_1 + im_1 i + re_2 j +
+   im_2 k): the hand's own phase, (re, im) -> (-im, re) on both slots, is the LEFT multiplication by i; the time
+   step at the quarter mode (k = 2 W), (now, before) -> (-before, now), is the RIGHT multiplication by j; the two
+   commute; the mirror's swap of the slots is q -> (i q i^-1) j; the forward-backward difference is the j slot of
+   q (1 - j), the velocity, beside the sum (the edge's dial W(b) + W(a) is the sum of the two slots' teeth); the
+   wind now^2 - next x before is, at the quarter mode, the quaternion norm N(q) = |now|^2 + |before|^2. MEASURED on
+   the edge act at W = 6 den Gamma^2 (a lone Node-clock, the example universe's light hand, a spring k = 2 W): q+ = q j
+   every round, the hand returns after 4 rounds with its tooth still, N(q) and the wind kept, the phase commutes with
+   the act 12 of 12, the swap is (i q i^-1) j, 12 edge unticks return the lay; the act as built gives q+ = q j too.
+   At k = W and 3 W the step is a whole unit of the time plane (orders 6 and 3) but no right multiplication by a
+   quaternion (q+ = q j false, N(q) not kept, the wind kept): Big Pic's split quaternion [[2 - k/W, -1], [1, 0]] is a
+   Hamilton unit exactly at t = 0, and where W does not divide k the tooth moves and the step is no unit at all.
+   So the double Node-clock IS Hamilton's quaternion of the slots, with the phase on the left and time on the right,
+   at the quarter mode exactly, and a split quaternion (M_2(Z)) elsewhere. By Solution24: 1 (it follows from the one
+   act at W | k, nothing added), 2 (time to the clock, the slots; arithmetic to the gear), 3 (the carry, the mirror,
+   the units), 4 (four layers below), 6 (the run back exact on the edge form and as built), 8 (the real act, with
+   the mutant k = 2 W + 2), 10 (the slot swap, the phase and the time step as three multiplications of one
+   quaternion), 13 (the units as gears, next).
+   **The units as gears** (fam_math's 24-gear train, read and not redone): the 48 acting on their 24 pairs +-g with the
+   sign is the group ring Z[2O] with -1 = -1, rank 24; left AND right multiplication by the units are signed
+   permutations of its gears (Cayley), so the per-gear carry turns with both sides: the two hands of a matter clock
+   (Big Pic's anchor shape L Phi conj(R)) on the act as built; pi(f) = SUM f_p g_p maps the train onto the
+   quaternion order O_48, equivariantly on both sides (0 misses of 1600 each), with kernel of rank 16 (the G3/2
+   part); the per-gear carry does not pass through pi (100 of 100 draws differ): the quaternion hand is a reading of
+   the 24-gear train, not a carried gear. That is why the group ring escapes the gcd(W, 6) wall (it has fixed
+   vectors, the orbit sums, where the division algebra has none) and why E1/2 + E5/2 on four or eight gears cannot.
 1. **The carry a half-speed hand needs** (the decisive question; reported first). A carry on a whole hand of four
    gears (Hurwitz's order H, turned by the 24's lifts, the 24 Hurwitz units) or of eight (Lambda = O_48, the 48's
    order, turned by the 48) that is (a) a bijective division with remainder, so the run back holds by a mirror, and
@@ -331,6 +395,99 @@ not the norm's division (Hurwitz's remainder is not unique: n = 1, W = 2 has the
 both valid); the run back needs the unique one. So the quarter turns' ring keeps a division with remainder, and
 that division is not the act's carry; the carry the hand needs is finding 1's.
 
+### The double Node-clock (the owner's question of 16:3x UTC)
+
+The implementation. Every gear holds two slots, a (now) and b (before), and a fine tooth r (state.State); the round
+reads W and the push at the now slot and carries W (a - b) + push with the tooth; the run back is the same round on
+the mirrored state, mirrored (step.untick = mirror o tick o mirror), so the backward gears are the before slots: the
+return in time is more gears, as the owner says, and the differences between the forward and the backward gears are
+the velocity a - b (what the round multiplies by W) and the tooth (what it keeps). The edge form (scratchpad/edge,
+edge_lib.py) puts the tooth where it belongs, between the slots: in the dial D = W(b) + W(a), centred, the mirror
+negating it, (a, b, t) -> (b, a, -t); its dividend is 2 (D_in (a - b) + 2 push) + t split at 2 D_out. The wind of the
+law, now^2 - next x before, is for the exact time step the invariant (1 / W)(W v^2 - (2 W - k) v u + W u^2).
+
+DERIVED. Take a hand of two parts, the law's Gaussian hand z = re + im i (the example world's light, A1 at part 2),
+with its two slots: four whole gears (re_1, im_1, re_2, im_2). Read them as the quaternion q = z_1 + z_2 j =
+re_1 + im_1 i + re_2 j + im_2 k (Cayley-Dickson's doubling of the Gaussian hand by the time unit j; j z = conj(z) j).
+Then (i) the hand's own phase, z -> i z on both slots, is i q, the left multiplication; (ii) a right multiplication by
+r = c + d j (c, d complex) acts on (z_1, z_2) by [[c, -conj d], [d, conj c]], complex-linear, so it commutes with the
+phase; the time step [[t, -1], [1, 0]] with t = 2 - k / W is of that form iff t = 0: at the quarter mode the step is
+q -> q j exactly, (z_1, z_2) -> (-z_2, z_1), and at no other mode is it a right multiplication by a quaternion (for
+|t| < 2 it is an elliptic unit of the split quaternions M_2(Z), Big Pic's time part; for t = +-2 parabolic); (iii)
+the swap of the slots is (i q i^-1) j, since i q i^-1 = z_1 - z_2 j and (z_1 - z_2 j) j = z_2 + z_1 j; (iv)
+q (1 - j) = (z_1 + z_2) + (z_2 - z_1) j: the sum of the slots and their difference (the velocity, negated) are the two
+slots of the right multiplication by the norm-2 element 1 - j, a quarter turn's lift, exactly as the edge's dial
+D = W(b) + W(a) is the sum of the two slots' teeth and the dividend reads D_in (a - b); (v) at the quarter mode the
+wind now^2 - next x before summed over the two parts is |z_1|^2 + |z_2|^2 = N(q), the quaternion norm, kept because the
+step is a unit; at other whole modes the wind is v^2 - t v u + u^2, the time ring's own norm, and N(q) is not kept.
+The space quaternion of a T1 hand (the Spokes) and this quaternion of the slots (the phase i, the time j) act on
+different indices and commute; they are two algebras, not one.
+
+MEASURED (probe_double.txt): the edge act at a lone Node-clock, the example universe (light A1 x 2 and the square),
+W = 6 den Gamma^2 standing, springs f on the two light rows (k = 2 f): at k = 2 W, q+ = q j every round, the hand
+returns after 4 rounds with its tooth still, N(q) and the wind kept; the phase as a signed permutation of the two rows
+with the edge tooth negated commutes with the edge act 12 of 12 rounds; the mirror's swap is (i q i^-1) j with the
+tooth negated; 12 edge unticks return the lay; q (1 - j) = (-37, -3, 23, 13) at the lay, the j, k slots the negated
+velocity (-23, -13). At k = W and 3 W: the hand returns after 6 and 3 rounds, the wind kept, q+ = q j false and N(q)
+not kept. At k = 2 W + 2 the tooth moves within 6 rounds. The act as built on the same lay (teeth drawn in [0, W)):
+q+ = q j every round at k = 2 W, not at W or 3 W. A case built to break it: the same spring on a cube of side 3, the
+light hand drawn by site, q+ = q j at 0 of 27 Node-clocks (the Meshes pull); the hand laid uniform over the board
+(F = 0), 27 of 27: the slot quaternion's unit step is the lone clock's or the uniform hand's, and the pull adds the
+neighbours' difference, as the act says; the quaternion form of the pull is probe.py's (a sum with whole weights).
+
+The units as gears (fam_math's REPORT.md items 1 and 2, read and not redone; measured here only as algebra). The 48
+acting on their own 24 pairs +-g with the sign is the group ring Z[2O] with -1 = -1, rank 24: left and right
+multiplication by every unit are signed permutations of its 24 gears (Cayley), L(g) L(h) = L(g h), R(g) R(h) =
+R(h g), L and R commute, -1 = -I; SUM trace(L)^2 = 1152 = 48 (2^2 + 2^2 + 4^2) and SUM trace(L L) = -384: the
+constituents 2 E1/2 + 2 E5/2 + 4 G3/2, all Kramers, as fam_math found. The map pi(f) = SUM_p f_p g_p sends the train
+onto the quaternion order O_48 (every basis element of O_48 is one of the 48 units), pi(L(g) f) = g pi(f) and
+pi(R(g) f) = pi(f) g (0 misses of 1600 each), its kernel of rank 16 the G3/2 part. The per-gear carry on the 24 gears
+followed by pi differs from pi followed by the carry on the eight coordinates (100 of 100 draws at W = 7). So the
+quaternion hand of O_48 is a reading of the 24-gear train, and the train is what the act carries: both sides turn it
+by signed permutations, which the per-gear carry keeps with the flip (the carry's lemma), and the fixed vectors of
+the group ring (the orbit sums) are what the division algebra lacks; this is how the units become gears and how the
+wall of gcd(W, 6) (finding 1, which stands for the hand on the order, four or eight gears) is passed: not by a new
+carry but by a wider train. Whether that train's quotient under pi is what a click should read of the hand is OPEN
+(click25; families).
+
+### The root dial (the owner's word of 17:2x UTC)
+
+The root dial (EDGE2.md section 3, probe_root.step_root): the clock's count is L, the teeth W = L^2, the edge's dial
+D_in = L(b) + L(a) and D_out = L(a) + L(a+), the push carried once at the pivot's root (q_F the centred quotient of F
+by L(a), its remainder dropped: CHOSEN, the edge agent's price), N = 2 (D_in (a - b) + 2 q_F) + s split at 2 D_out, the
+mirror (b, a, -s); it gives L d_t (L d_t a) = F, the field in the proper time of a lapse N = 1 / L.
+
+DERIVED. The frame Phi = L + l_x i + l_y j + l_z k is a whole quaternion, an A1 + T1 train; its components along 1
+and the Spokes are Re(Phi conj e_mu); the metric's ten slots are the products of two components (the frame's
+symmetric square), so 00 = L^2 = W, 0k = L l_k, kk = l_k^2, jk = l_j l_k; the trace is N(Phi) = L^2 + |l|^2 and the
+Lorentz interval Re(Phi^2) = L^2 - |l|^2. The act as built reads W = 00 = (Re Phi)^2 and the grips kk = l_k^2: the
+time leg's and the space legs' squares, so the Mesh's light runs at (l_k / L)^2 per leg pair: the frame ratio. The
+root dial changes what the gear holds: L, the component at the first power, with W = L^2 a reading; dividing the push
+by L at the pivot and by L again at the dial is dividing by L conj(L) = N(L) = W, the norm's two factors, exactly
+what the act as built does in one carry at W (up to the dropped first remainder). On the edge the (now, before) step
+(a, b) -> (a + rho (a - b) + ..., a) has determinant rho = D_in / D_out under either dial: the root dial's rho is the
+ratio of the time legs' sums, nature's redshift of a velocity (v ~ 1 / L); the W dial's is the ratio of the norms'
+sums, the former's square to the next order. Neither is a unit of the split quaternions on a moving clock; both are
+the unit [[2 - k/W, -1], [1, 0]] standing, so the slot quaternion's quarter mode q -> q j holds on the root dial as on
+the others; in (now, momentum) both are shears of determinant 1. Where the root dial's form is natural and the act's
+is not: the metric's ten slots as ten gears. The frame reading is a rank-one condition (every 2 x 2 minor of the
+symmetric 4 x 4 of slots is 0), and the pull moves the slots linearly, so the condition is not kept; the natural
+whole form is the frame's four gears carried (A1 + T1: a whole basis, no E) and the square read, as the root dial
+already does for the time leg. With space legs in the dial the natural division of a quaternion push by the frame is
+F conj(Phi) carried at N(Phi) (the metric's trace, a central whole number): a quaternion divisor, the first in the
+act, OPEN.
+
+MEASURED (probe_rootdial.txt). The square identity on 300 drawn frames: 0 misses (the slots, the trace, the interval);
+W = N(Phi) for the pure-time frame 300 of 300. The act as built (probe.py's cube, a spring on the hand, J = 0 on the
+metric) with the metric laid as a frame's square at every Node-clock: 27 of 27 squares at the lay; after one round 0
+of 27 with the frame drawn by site, 27 of 27 after two rounds with the frame uniform. The root dial at a standing L =
+60 on a two-part hand: k = 2 L^2 gives q+ = q j every round and the hand back after 4 rounds (teeth included); k = L^2
+and 3 L^2 back after 6 and 3. On the edge agent's rising course (L 100 -> 200 by 1 every 300 rounds), the free gear's
+books 2 D_out v_out + s_out = 2 D_in v_in + s_in hold 2000 of 2000 rounds; at the steps of L the root dial's norm is
+200 / 201, 202 / 203, 204 / 205 against the W dial's 20000 / 20201, 20402 / 20605, 20808 / 21013, the latter the
+former's square to the next order (808040000 against 808020000). The example's 6 den = 90977140554674334 is no square
+(floor root 301624171), so the law's W is no L^2 with a whole L.
+
 ### The click's product books (Big Pic's third piece)
 
 DERIVED: for the hand's two slots u = a + x (before) and v = b + y (now), conj(u) v = (a b + x . y) + (a y - b x -
@@ -422,6 +579,15 @@ Pic's item 2, E1/2, E1/2 x A2, E1/2 x E; families) they are three different kind
 8. `probe_books.py` (probe_books.txt): the product books identity 0 misses of 500, the channel decomposition 0, the
    Gaussian case 0; kept 12 of 12 rounds at k = 2 W, 0 of 12 at k = W and 3 W; the edge's momentum rescaling
    w p_out = w' (p_in + push + r - r+) 0 misses over 6 rounds on the rising lay.
+9. `probe_double.py` (probe_double.txt): the edge act at W = 6 den Gamma^2: q+ = q j, period 4, tooth still, N(q) and
+   the wind kept, the phase 12 of 12, the swap (i q i^-1) j, 12 unticks return (k = 2 W); periods 6 and 3 with the
+   wind kept and q j false (k = W, 3 W); the tooth moves at k = 2 W + 2; the act as built q+ = q j at k = 2 W; the
+   24-gear train: both sides signed permutations, a representation and an anti-representation that commute, -1 = -I,
+   traces 1152 and -384, pi onto O_48 and equivariant (0 misses of 1600 twice), the carry not descending (100 of 100).
+10. `probe_rootdial.py` (probe_rootdial.txt): the frame's square 0 misses of 300 (slots, trace, interval), W = N(Phi)
+    pure-time 300 of 300; the square metric kept 27 -> 0 (frame by site) and 27 -> 27 (uniform); the quarter mode on
+    the root dial 12 of 12, periods 4, 6, 3; the free gear's books 2000 of 2000 on the course, the two dials' norms
+    200 / 201 against 20000 / 20201 (and two more steps); 6 den no square.
 
 ## The deriver's own check (hostile)
 
@@ -460,19 +626,28 @@ means the engine's act on a train of four A1 rows with the lifts laid from outsi
 | the metric in the algebra | 00 and ii as whole scalars; the ten slots as trace + nine two-sided sandwiches | E and T2 outside Hamilton's words (det -48); quarters in the sandwich coordinates; 0i, jk unread |
 | the generations as i, j, k | - | one orbit of the 24; commutant Z I |
 | the click's product books real^2 + turn^2 = before^2 now^2 | an identity of the hand's two slots, Euler's, the channels the tables' (0 misses) | a conservation: only at the quarter mode; its booking in a click is click25's |
+| the double Node-clock as one quaternion q = z_now + z_before j | the phase i on the left, the quarter mode's step j on the right, the swap (i q i^-1) j, the velocity in q (1 - j), the wind N(q): exact on the edge act and as built | the step is a Hamilton unit at the quarter mode alone; elsewhere a split quaternion, or no unit (the tooth moves) |
+| the units as gears (fam_math's 24-gear train) | both sides monomial, pi onto O_48 equivariant, the wall passed by the wider train | the carry does not descend to the quaternion: the hand is a reading |
+| the root dial in the algebra | the frame a whole quaternion Phi, the metric its square along the Spokes (0 misses), W = L^2 its time component's square (the norm of the pure-time frame), the root dial the first power, the W dial the norm; the quarter mode holds on it | no unit on a moving clock under either dial (determinant D_in / D_out, the leg ratio against the norm ratio); the ten slots as gears do not keep a square (27 -> 0); the law's W is no square |
 | the edge's determinant | W' / W on the (now, momentum) step, exact (0 misses) | 1 only where the clock stands |
 | the owner's one algebra | space at whole speed: yes; the half-speed hand whole: yes (families); one law of the carries: yes | one carry formula: no; one ring for time and space: no |
 
 ## Open, so no code starts
 
 - A formula for the orbit domain (a half-speed carry free of a table), or a proof that none exists in the gate's
-  operations: OPEN. Until then a half-speed train is carried per gear and turns with +-I (and one axis's eight in the
-  Gaussian basis, families), or at W = 1.
+  operations: OPEN, and now narrowed: the wall binds the hand on the order (E1/2 + E5/2 on four or eight gears); the
+  24-gear train of the units (fam_math) and G3/2 on eight gears ride the per-gear carry with all 48 (their
+  measurement, 48 of 48 with the table, 0 of 48 for the random control). What a click reads of such a train (pi's
+  quotient, the quaternion hand) is OPEN.
 - The half-speed train's teeth: whether it reads its own rest, coprime to 6, and how the moving 00 slot enters it:
   the owner's and the Boss's.
 - The time plane's ring per mode against the owner's "one big clock": whether the clock's own beat (the 00 slot's
   teeth) picks one mode for all hands is a question for the metric's law (G2).
 - The metric's 0i and jk slots: read by no gear as built; their reading is the coupling family's plan (G3, g3_blind).
+- The frame train: whether the metric family is carried as the frame's four gears Phi = L + l (A1 + T1, a whole
+  basis) with the ten slots read as its square, the root dial's pattern extended to the space legs, and whether the
+  push of a four-vector hand is then divided by the frame (F conj(Phi) at N(Phi)): a law change, the owner's; with
+  the dropped push remainder of the root dial (CHOSEN, EDGE2) and the 00 row's own law (EDGE2 section 4) beside it.
 - The covering radii used for O_48's division are the literature's; a whole-number proof of the two deep holes is
   not written here.
 
@@ -481,4 +656,5 @@ means the engine's act on a train of four A1 rows with the lifts laid from outsi
 /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/quaternion/ONE_ALGEBRA.md (this text),
 NOTES.md (the working notes, saved as the work went), q_lib.py, probe.py and probe.txt, probe_units.py and .txt,
 probe_carry.py and .txt, probe_carry_big.py and .txt, probe_time.py and .txt, probe_square.py and .txt, probe_ring.py
-and .txt, probe_books.py and .txt (the .err files are empty but for the exit codes).
+and .txt, probe_books.py and .txt, probe_double.py and .txt, probe_rootdial.py and .txt (the .err files are empty but
+for the exit codes).

@@ -1,0 +1,11 @@
+QA5 TRAIN24: the 24-gear train of the units, its fixed vectors and why the per-gear carry rides it
+   L(-1) = -I: True; R(-1) = -I: True
+   SUM_g L(g) (the orbit-sum operator) is the zero matrix: True: every orbit sum SUM_g L(g) v vanishes
+   a common fixed vector v of all L(g) has v = L(-1) v = -v, so v = 0: the train has NO nonzero fixed vector; the text's reason ('it has fixed vectors, the orbit sums') is false
+   |det(L(g) - I)| by the order of g: {1: [0], 2: [16777216], 3: [0], 4: [4096], 6: [256], 8: [64]}: for the order-6 lifts g - 1 is NOT a unit here (it is on H and on Lambda), so the text's H^1 = 0 argument does not run on this train
+   W = 9: the flip twist c_g = (W - 1) [negated rows] is a cocycle (c_gh = c_g + g c_h on 576 pairs): misses 0; 48 a = -SUM c_h = [-192] per entry, (g - 1) a = c_g over Q: True; a whole: True -> the twist is a coboundary iff W is odd; at even W the per-gear flip is a twist the theorem forbids on H and Lambda but not here
+   W = 10: the flip twist c_g = (W - 1) [negated rows] is a cocycle (c_gh = c_g + g c_h on 576 pairs): misses 0; 48 a = -SUM c_h = [-216] per entry, (g - 1) a = c_g over Q: True; a whole: False -> the twist is a coboundary iff W is odd; at even W the per-gear flip is a twist the theorem forbids on H and Lambda but not here
+   the real reason the train rides the per-gear carry: every L(g), R(g) is a signed permutation (monomial), and the box [0, W)^24 with the flip is the invariant domain of every signed permutation (the carry's lemma); fixed vectors have nothing to do with it
+   pi(f) = SUM f_p g_p in Lambda's coordinates: an 8 x 24 whole matrix; det(pi pi^T) = 104976 (not 0: rank 8, kernel of rank 16)
+   every element of L_BASIS is among the 48 units: True: pi is onto Lambda = O_48
+   SUM tr(L)^2 = 1152 (48 (4 + 4 + 16) = 1152: 2 E1/2 + 2 E5/2 + 4 G3/2), SUM tr(L L) = -384 (-48 (2 + 2 + 4) = -384, Frobenius-Schur -1 on each): the text's numbers

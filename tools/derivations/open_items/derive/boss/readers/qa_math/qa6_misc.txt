@@ -1,0 +1,26 @@
+QA6 MISC: the metric's determinants, the time plane, the ring, the identities
+
+== the metric (probe_square's -48 and -16)
+   the ten forms' determinant: -48 (the text's -48); with Im(h h) written a v instead of 2 a v: -6; Smith diagonal of the ten forms: [1, 1, 1, 1, 1, 1, 2, 2, 2, 6]
+   so the -48 is a normalization (2 a v and the choice a^2 - |v|^2, a^2 + |v|^2 as rows); the invariant statement is: the five words span a 5-dimensional space (rank 5), and E, T2 are outside it (det != 0)
+   the nine E_ab = (h -> e_a h e_b) symmetric True, traceless True; the change of basis (t, m_ab) -> slots: determinant -128, Smith diagonal [1, 1, 1, 1, 2, 2, 2, 2, 2, 4]: the slots' lattice contains the sandwiches' with index 128, and the inverse needs denominators dividing 4 (the text: 'halves and quarters')
+
+== the time plane (probe_time): S_t = [[t, -1], [1, 0]]
+   t = +1: order 6 (None: not within 12, parabolic or hyperbolic); the kept form v^2 - t v u + u^2 has discriminant -3: Z[zeta_6]
+   t = +0: order 4 (None: not within 12, parabolic or hyperbolic); the kept form v^2 - t v u + u^2 has discriminant -4: Z[i]
+   t = -1: order 3 (None: not within 12, parabolic or hyperbolic); the kept form v^2 - t v u + u^2 has discriminant -3: Z[zeta_3]
+   t = +2: order None (None: not within 12, parabolic or hyperbolic); the kept form v^2 - t v u + u^2 has discriminant 0: no definite ring
+   t = -2: order None (None: not within 12, parabolic or hyperbolic); the kept form v^2 - t v u + u^2 has discriminant 0: no definite ring
+   t = +3: order None (None: not within 12, parabolic or hyperbolic); the kept form v^2 - t v u + u^2 has discriminant 5: no definite ring
+   DERIVED (one line): S_t^T Q_t S_t = Q_t for Q_t = [[1, -t/2], [-t/2, 1]], so the mode's form is kept at every whole t; at |t| < 2 it is definite and S_t has finite order iff t in {1, 0, -1} (the crystallographic restriction). Agrees with the text.
+
+== O_48 (probe_ring): the double farthest point y = 1 + i + sqrt 2 j, d = 2, two quotients
+   q = ((2, 0), (2, 0), (0, 1), (0, -1)) (halves): r = ((-2, 0), (-2, 0), (0, 0), (0, 2)), 4 N(r) = 16 + 0 sqrt 2, 16 Nm N(r) = 256 against 16 Nm(d)^2 = 256: the rule's (A nearest in H, B nearest in D4/2): reduces False
+   q = ((2, 0), (2, 1), (0, 1), (0, 0)) (halves): r = ((-2, 0), (-2, -2), (0, 0), (0, 0)), 4 N(r) = 16 + 8 sqrt 2, 16 Nm N(r) = 128 against 16 Nm(d)^2 = 256: another, <alpha, beta> != 0: reduces True
+   agrees with the text: 'nearest in each part' does not reduce there; a choice among the ties does (the half). Nm N(alpha + sqrt 2 beta) = (N alpha + 2 N beta)^2 - 8 <alpha, beta>^2 is (x + y sqrt 2)(x - y sqrt 2) with y = 2 <alpha, beta>: an identity.
+   Hurwitz, n = 1, W = 2, q = (0, 0, 0, 0) (doubled): 4 N(r) = 4 < 4 N(W) = 16: True
+   Hurwitz, n = 1, W = 2, q = (1, 1, 1, 1) (doubled): 4 N(r) = 12 < 4 N(W) = 16: True
+   so Hurwitz's norm-reducing remainder is not unique while the box remainder is: agrees with the text
+
+== identities on the act: W (a+ - 2 a + b) = push + r - r+ and W p' = W' (p + push + r - r+)
+   6 rounds, W rising 60 -> 66: the second order misses 0; the edge's rescaling misses 0. Both are the carry's definition rearranged (W q = n + r - r+): DERIVED, trivially; 'a determinant W'/W' names a non-linear map's scale, wording only.
