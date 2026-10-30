@@ -1,0 +1,55 @@
+DAVID-ONE-PICTURE_CHECKS.txt: the check behind row 8 of DAVID-ONE-PICTURE.md (David, 2026-10-27), on the head 608d97134; the other rows' checks stand in the documents each row names. The clock checked working: the full check exit 0 on toys-5 with this file, and the rewind 20 of 20 on both charts below.
+
+====================================================================================================
+8. The regulator's sources as one tensor act T(mu, nu), each chart regenerated under it against the committed chart
+---------------------------------------- tensor_fold.py
+"""The regulator's sources as one tensor act: T(mu, nu) = SUM over records of pinion Re(conj(d_mu z) d_nu z), the centred gradients' one bilinear per index pair, in place of stress_parts and shear_parts; each committed chart regenerated under it against the committed chart (argv: the chart)."""
+import json, os, sys, time
+sys.set_int_max_str_digits(0)
+WT = os.environ.get("WT", "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/wt_g4")
+sys.path.insert(0, WT + "/src")
+from event_universe import regulation, hands
+from event_universe.core.spokes import AXES, transverse
+from event_universe.meshes import gradient
+from event_universe.trains import zeros
+import event_universe.tick as tick
+
+
+def tensor(rows, shape, pairs):
+    """One act: for each index pair (a, b), SUM over records of pinion Re(conj(d_a z) d_b z)."""
+    found = [zeros(shape) for _ in pairs]
+    for levels, num in rows:
+        d = [[gradient(x, a) for x in levels] for a in range(AXES)]
+        for k, (a, b) in enumerate(pairs):
+            found[k] = found[k] + num * hands.dot(d[a], d[b])
+    return found
+
+
+def stress_parts(rows, shape):
+    return tensor(rows, shape, [(a, a) for a in range(AXES)])
+
+
+def shear_parts(rows, shape):
+    return tensor(rows, shape, [(a, transverse(a)[0]) for a in range(AXES)])
+
+
+regulation.stress_parts, regulation.shear_parts = stress_parts, shear_parts
+tick.stress_parts, tick.shear_parts = stress_parts, shear_parts
+from event_universe.run import chart
+from event_universe.gates import gates
+name = sys.argv[1]
+R = WT + "/examples/records/"
+c = json.load(open(R + name + ".json"))
+reading = [json.loads(l) for l in open(R + name + ".reading.jsonl") if l.strip()]
+t = time.time()
+found = json.loads(json.dumps(chart(c["universe"], c["world"], 20, lambda line: None)))
+timeless = lambda rows: [{k: v for k, v in r.items() if k != "milliseconds"} for r in rows]
+same = {k: found[k] == c[k] for k in ("nodes", "counts", "turns", "run_back", "log")}
+same["rows"] = timeless(found["rows"]) == timeless(c["rows"])
+same["the reading"] = [{k: v} for k, v in json.loads(json.dumps(gates(found))).items()] == reading
+print(name, "the regulator's sources as one tensor act:", same, f"{time.time() - t:.0f}s", flush=True)
+---------------------------------------- output
+hole the regulator's sources as one tensor act: {'nodes': True, 'counts': True, 'turns': True, 'run_back': True, 'log': True, 'rows': True, 'the reading': True} 22s
+chiral the regulator's sources as one tensor act: {'nodes': True, 'counts': True, 'turns': True, 'run_back': True, 'log': True, 'rows': True, 'the reading': True} 22s
+DONE
+

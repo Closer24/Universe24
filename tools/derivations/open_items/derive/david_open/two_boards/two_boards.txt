@@ -1,0 +1,43 @@
+Two boards on one Node-clock, in exact integers (David, 2026-10-29)
+
+1. The product draw
+  each part drawn exactly sigma_f sigma_b times over a full turn: 67104 of 67104 cases (1 to 4 parts, sizes 0 to 3)
+  a silent future (sigma_b alike for every part) draws by sigma_f alone, law 9 (Born): 1008 of 1008 cases
+
+2. Bell by the zigzag through the birth
+  A first (A clicks at tick 12, B at 17): S = -82/29 = -2.82759
+    E(a,b), E(a,b'), E(a',b), E(a',b') = -21/29, -21/29, -20/29, 20/29
+    A's marginal at every setting pair: 1/2, 1/2, 1/2, 1/2; B's: 1/2, 1/2, 1/2, 1/2
+    histories agreeing at both ends: 464 of 464, one per draw; carries one Mesh a step: 5636; reads across space: 0
+  both at one tick (A clicks at tick 15, B at 15): S = -82/29 = -2.82759
+    E(a,b), E(a,b'), E(a',b), E(a',b') = -21/29, -21/29, -20/29, 20/29
+    A's marginal at every setting pair: 1/2, 1/2, 1/2, 1/2; B's: 1/2, 1/2, 1/2, 1/2
+    histories agreeing at both ends: 464 of 464, one per draw; carries one Mesh a step: 5640; reads across space: 0
+  B first (A clicks at tick 17, B at 12): S = -82/29 = -2.82759
+    E(a,b), E(a,b'), E(a',b), E(a',b') = -21/29, -21/29, -20/29, 20/29
+    A's marginal at every setting pair: 1/2, 1/2, 1/2, 1/2; B's: 1/2, 1/2, 1/2, 1/2
+    histories agreeing at both ends: 464 of 464, one per draw; carries one Mesh a step: 5636; reads across space: 0
+  the board's cone closure at one tick reads S = 0 there (l4); the zigzag needs no window
+
+3. Three parties (GHZ, settings X or Y)
+  every one-party marginal at every setting: [Fraction(1, 2)]
+  two-party marginals that move with the third party's setting: 0 of 48
+  Mermin's products: XXX -> [1]; XYY -> [-1]; YXY -> [-1]; YYX -> [-1]
+  the carried closure in a window moved B and C's joint law by up to 1/2 (l5); the zigzag has no window
+
+4. A machine's feed-forward
+  E at each setting pair the machine reaches: (0, 0): -21/29, (0, 1): -21/29, (1, 0): -20/29, (1, 1): 20/29
+  histories agreeing at both ends: 13456 of 13456 (one per pair of digits); sweeps per pair: 2
+  a loop with no history needs each setting to depend on the other's outcome, so each in the other's past: no light can carry both
+
+5. The aim: a split whose one side leads to a composite clock
+  forward sizes (left, right) = (1, 1); left lays a hand that meets a partner and binds
+    w = 0: histories none 0, one 60060, two 0 of 60060; left kept 1/2 (the composite's lean 1/2), 1/2 with the fewer kept (Born 1/2)
+    w = 1: histories none 0, one 50050, two 10010 of 60060; left kept 2/3 (the composite's lean 2/3), 1/2 with the fewer kept (Born 1/2)
+    w = 3: histories none 0, one 42042, two 18018 of 60060; left kept 4/5 (the composite's lean 4/5), 1/2 with the fewer kept (Born 1/2)
+    w = 9: histories none 0, one 35490, two 24570 of 60060; left kept 10/11 (the composite's lean 10/11), 1/2 with the fewer kept (Born 1/2)
+  forward sizes (left, right) = (1, 3); left lays a hand that meets a partner and binds
+    w = 0: histories none 0, one 60060, two 0 of 60060; left kept 1/4 (the composite's lean 1/4), 1/4 with the fewer kept (Born 1/4)
+    w = 1: histories none 0, one 51051, two 9009 of 60060; left kept 2/5 (the composite's lean 2/5), 1/4 with the fewer kept (Born 1/4)
+    w = 3: histories none 0, one 40755, two 19305 of 60060; left kept 4/7 (the composite's lean 4/7), 1/4 with the fewer kept (Born 1/4)
+    w = 9: histories none 0, one 28875, two 31185 of 60060; left kept 10/13 (the composite's lean 10/13), 1/4 with the fewer kept (Born 1/4)

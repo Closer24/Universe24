@@ -1,1 +1,0 @@
-the animation's table for b7 (the cycle lay at the count 2,500,000) is 588 KB, above the brief's 200 KB, so it stands at /dev/shm/tmp/bb2/b7_wave_q2500000_table.tsv

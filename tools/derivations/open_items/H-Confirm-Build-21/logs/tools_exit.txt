@@ -1,6 +1,0 @@
-== engine_gates base 66a45b4b0: the engine gates hold against the merge base exit 0 
-== record_code_shape base 66a45b4b0: the shape of the code holds against the merge base exit 0 
-== tests_shape base 66a45b4b0: the shape of tests/ holds against the merge base exit 0 
-== engine_gates base 6703dd95c: the engine gates hold against the merge base exit 0 
-== record_code_shape base 6703dd95c: the shape of the code holds against the merge base exit 0 
-== tests_shape base 6703dd95c: tests/ grew from 1943 to 1947 lines; offset the new tests by deletions in the same pull request exit 1 

@@ -1,0 +1,10 @@
+One quantum spread over many absorbers, on the doubled Node-clock (David, 2026-10-29): exact
+
+1 and 2. The takes merged back along the backward half, on a board of side 7 with eight parts
+  each absorber wins with odds its take over the sum of the takes, on two trees: True; the two trees' laws equal: True
+  a silent future (sigma_b alike) gives Born over sigma_f: True; the absorber with no free slot wins with odds 0; the absorber with two slots: 1/4 (4 x 2 over 32)
+
+3. Every digit of every merge, on a board of side 5 with five absorbers, the merges nested
+  merges that draw: 3, their turns [9, 5, 3], the joint turn 135 combinations
+  each absorber drawn exactly its take's share of the joint turn: True (wins [30, 15, 30, 45, 15] for takes [2, 1, 2, 3, 1])
+  exactly one absorber clicks at every combination (g2 = 0): 135 of 135

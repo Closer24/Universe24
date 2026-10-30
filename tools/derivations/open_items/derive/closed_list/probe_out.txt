@@ -12,29 +12,29 @@ section A: 29 acts; if, comparison, while, and/or, try, raise: none
   ok   the turnover at the top: T applied by the time gear's carry: 4000 of 4000
   ok   the beat: a tick or no tick, by the rate dial's carry: 4000 of 4000
 the mutants (each must fail):
-    nonneg: nonneg, the one whether: 174 of 4000 fail
+    nonneg: nonneg, the one whether: 172 of 4000 fail
   caught nonneg
-    min: min, max and equality: 3974 of 4000 fail
+    min: min, max and equality: 3978 of 4000 fail
   caught min
-    gmul: the Gaussian product, dot and cross, norm, i z: 3930 of 4000 fail
+    gmul: the Gaussian product, dot and cross, norm, i z: 3927 of 4000 fail
   caught gmul
     reverse: the twin hands: T T = -1, Lagrange's identity: 2000 of 2000 fail
   caught reverse
     the24: the 24 from the six Spokes (48 found): 1 of 1 fail
   caught the24
-    table: the contraction T1 x T1 -> A1 + T1 + E + T2 (dot, cross, the stress), and back: 1994 of 2000 fail
+    table: the contraction T1 x T1 -> A1 + T1 + E + T2 (dot, cross, the stress), and back: 1995 of 2000 fail
   caught table
-    unstep: the step of a gear (p+ = p + s F + K and the carry) and its exact inverse: 3895 of 4000 fail
+    unstep: the step of a gear (p+ = p + s F + K and the carry) and its exact inverse: 3884 of 4000 fail
   caught unstep
-    whole: the whole click: q quanta leave, the remainder stays: 3988 of 4000 fail
+    whole: the whole click: q quanta leave, the remainder stays: 3986 of 4000 fail
   caught whole
     split: the split click: the draw picks one part by the sizes: 4000 of 4000 fail
   caught split
-    sort: the draw's digits in order: a fixed network of min and max: 3797 of 4000 fail
+    sort: the draw's digits in order: a fixed network of min and max: 3789 of 4000 fail
   caught sort
-    turnover: the turnover at the top: T applied by the time gear's carry: 1982 of 4000 fail
+    turnover: the turnover at the top: T applied by the time gear's carry: 2012 of 4000 fail
   caught turnover
-    beat: the beat: a tick or no tick, by the rate dial's carry: 3606 of 4000 fail
+    beat: the beat: a tick or no tick, by the rate dial's carry: 3589 of 4000 fail
   caught beat
 the closed list refuses 7 of 7 off-list uses: 7 of 7
 RESULT: the engine's acts are written with the carry, addition and multiplication alone

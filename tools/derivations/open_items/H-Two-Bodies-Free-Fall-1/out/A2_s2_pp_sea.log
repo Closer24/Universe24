@@ -1,8 +1,0 @@
-family 24 'point 2 0 0' num 2580388913625285 den 15162856759112389 g 0.8298; bodies at (3, 3, 2) and (3, 3, 4), senses 1 1; unit W_rec 1613701501183721088000
-laid quanta per record: [1.0123220029239766, 1.0123220029239766] at the lay Nodes: [1.0123220029239766, 1.0123220029239766]
-t    1 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 1.011 1.011 quanta 1.017 1.017 U_a 0.0010 U_mid 0.0000 U_far 0.0000 tens [0, 0, 0] turned 1 (0 s)
-t    2 pos 2.0000 4.0000 dist 2.0000 peaks 2 4 share@lay 0.997 0.997 quanta 1.019 1.019 U_a 0.0020 U_mid 0.0020 U_far 0.0000 tens [0, 0, 0] turned 6 (0 s)
-t    5 pos 2.0001 3.9999 dist 1.9999 peaks 2 4 share@lay 0.923 0.923 quanta 1.051 1.051 U_a 0.0070 U_mid 0.0080 U_far 0.0260 tens [0, 0, 0] turned 38 (1 s)
-t   10 pos 4.8024 4.7897 dist 0.0127 peaks 0 0 share@lay 0.767 0.739 quanta 20.352 20.352 U_a 0.0510 U_mid 0.0440 U_far 0.1901 tens [1, 1, 1] turned 105 (8 s)
-t   20 pos 1.5578 1.5486 dist 0.0092 peaks 0 0 share@lay 2.418 0.206 quanta 408.518 406.421 U_a 0.3272 U_mid 0.2731 U_far 0.5263 tens [3, 3, 3] turned 3 (43 s)
-t   50 pos 5.6830 5.6564 dist 0.0267 peaks 1 1 share@lay 13.161 1.275 quanta 4520.446 4513.724 U_a 0.7924 U_mid 0.8084 U_far 0.8174 tens [9, 9, 9] turned 0 (240 s)

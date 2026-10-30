@@ -1,5 +1,0 @@
-out/hh3_q5_m0_far_800.json slimmed to 995794
-out/hh3_q5_m0_far_until2_800.json slimmed to 697275
-out/ht6_q5_far_until1_400.json slimmed to 529501
-out/p00_q5_m0_crowdoff_400.json slimmed to 488039
-out/p05_q5_m0_crowdoff_400.json slimmed to 551308

@@ -1,0 +1,8 @@
+(d) start with r = W: 2 of 60 run back exactly, 0 raised
+(d) start with r = -1: 2 of 60 run back exactly, 0 raised
+(d) start with r_d = T_d: 2 of 60 run back exactly, 0 raised
+(d) start with r_d = -1: 2 of 60 run back exactly, 0 raised
+(d) start with tn = c + 1: 17 of 60 run back exactly, 0 raised
+(d) T_d = 0: raises ZeroDivisionError (division by zero)
+(d) T_d = -3: no raise; run back exact True; r_d+ range [-2, 0]
+(d) W+ = 0: raises ZeroDivisionError (division by zero)

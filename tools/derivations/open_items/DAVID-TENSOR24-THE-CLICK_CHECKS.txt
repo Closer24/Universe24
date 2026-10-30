@@ -1,0 +1,240 @@
+DAVID-TENSOR24-THE-CLICK_CHECKS.txt: the checks of DAVID-TENSOR24-THE-CLICK.md, run with toys-5's own src on the path (engine 526a5666d merged; 9dd1401c2 and 04cd7355f add TENSOR24.md alone, no src).
+Two harnesses, kept in this file below. Exact integers and fractions only; no float decides a check.
+
+The phenomenon: the split's share is one trace of two twin readings, and the closure gives Born's singlet.
+The rewind: a move through a link and its return are the identity.
+
+== Check 1: the twist the engagement reads, under all 48 images (meshes.train_twists on a random hand, 5 x 5 x 5 torus) ==
+  venv314/bin/python -I twist_kind.py <tree>
+  det -1 images 24 ratios seen ['[-1.0]']
+  det 1 images 24 ratios seen ['[1.0]']
+  (det 1: the 24 turns keep it at every link; det -1: the 24 mirrors reverse it at every link.)
+
+== Checks 2 to 11: the split's share, the open axis, the closure, the 48, the move, the twins under the turns ==
+  venv314/bin/python -I tz_click_checks.py <tree>
+  check 11: the carry of the sum differs from the sum of the carries in 956 of 2000
+  cases drawn 2000
+  check 2 head     runs  30388 failures 0
+  check 3 pure     runs   1599 failures 0
+  check 4 overlap  runs   1599 failures 0
+  check 5 open     runs   1599 failures 0
+  check 6 singlet  runs   1411 failures 0
+  check 7 mirror   runs   1411 failures 0
+  check 8 shift    runs      6 failures 0
+  check 9 half     runs   1500 failures 0
+  check 10 quarter  runs    500 failures 0
+  check 11 carries  runs   2000 failures 0
+  2 head:     with the pair's own up twin as the detector, the rule picks as bobs.splits picks, at every draw c in [0, room)
+              (the pairs whose twins share one sense, as a split's twins do; 30,388 draws).
+  3 pure:     a pair turning whole has S . S = W W: the axis's length is the wind, no root.
+  4 overlap:  against a turning detector the share is |<phi|chi>|^2 / (|phi|^2 |chi|^2), Born's overlap, exactly.
+  5 open:     with S = 0 the share is exactly one half against every detector.
+  6 singlet:  with the partner's reading set to (W1, -a m1) by the first answer a, the two answers correlate as
+              -(m1 . m2) / (W1 W2), exactly.
+  7 mirror:   under a signed permutation of the axes, both axes turn with the permutation times its determinant, and S . m is kept.
+  8 shift:    spokes.across through a spoke and then through its opposite returns every array: the move's rewind.
+  9 half:     the half turns about x, y and z act on the twins by Gaussian units; W stays and S turns as the axis turns.
+  10 quarter: the quarter turn about z as (1 - i, 1 + i) gives (2 W, 2 S turned a quarter): exact only up to the scale 2.
+  11 carries: acts.carry of a sum against the sum of the carries, on random numerators, teeth and fine teeth: they differ.
+
+== twist_kind.py ==
+"""Is the engagement's twist kept by every turn of the cube and reversed by every mirror? The engine's own train_twists on a random hand, the hand's gears carried as scalars."""
+import itertools
+import sys
+
+import numpy as np
+
+sys.path.insert(0, sys.argv[1] + "/src")
+from event_universe.meshes import train_twists  # noqa: E402
+from event_universe.trains import Gear  # noqa: E402
+
+L = 5
+rng = np.random.default_rng(20261028)
+
+
+def gear():
+    return Gear(rng.integers(-40, 41, (L, L, L)).astype(object), rng.integers(-40, 41, (L, L, L)).astype(object), None, None)
+
+
+def moved(arr, perm, signs):
+    out = np.empty_like(arr)
+    for x in np.ndindex(arr.shape):
+        out[tuple((signs[i] * x[perm[i]]) % L for i in range(3))] = arr[x]
+    return out
+
+
+def parity(perm):
+    p, s = list(perm), 1
+    for i in range(3):
+        for j in range(i + 1, 3):
+            if p[i] > p[j]:
+                s = -s
+    return s
+
+
+gears = [gear(), gear()]
+tw = train_twists(gears)
+tally = {}
+for perm in itertools.permutations(range(3)):
+    for signs in itertools.product((1, -1), repeat=3):
+        det = parity(perm) * signs[0] * signs[1] * signs[2]
+        g2 = [Gear(moved(g.now, perm, signs), moved(g.before, perm, signs), None, None) for g in gears]
+        tw2 = train_twists(g2)
+        ratios = set()
+        for a in range(3):
+            i0 = perm.index(a)
+            s = signs[i0]
+            for x in np.ndindex((L, L, L)):
+                y = [(signs[i] * x[perm[i]]) % L for i in range(3)]
+                if s == -1:
+                    y[i0] = (y[i0] - 1) % L
+                v, w = int(tw[a][x]), int(tw2[i0][tuple(y)])
+                if v:
+                    ratios.add(w / v if w % v == 0 else None)
+        tally.setdefault(det, []).append(sorted(ratios, key=str))
+for det, rs in sorted(tally.items()):
+    print("det", det, "images", len(rs), "ratios seen", sorted({str(r) for r in rs}))
+
+== tz_click_checks.py ==
+"""Checks for DAVID-TENSOR24-THE-CLICK.md: the split's share as one contraction of two twin readings, exact integers only."""
+import random
+import sys
+from fractions import Fraction
+
+import numpy as np
+
+sys.path.insert(0, sys.argv[1] + "/src")
+from event_universe.core.acts import carry  # noqa: E402
+from event_universe.core.spokes import SPOKES, across  # noqa: E402
+
+rnd = random.Random(20261028)
+
+
+def gauss(k=9):
+    return complex(rnd.randint(-k, k), rnd.randint(-k, k))
+
+
+def reading(up_now, up_before, down_now, down_before):
+    """A twin pair's reading from its slots, the doubled density D = i (conj(b) n^T - conj(n) b^T) entry by entry:
+    W = D_uu + D_dd, S = (2 Re D_ud, -2 Im D_ud, D_uu - D_dd); D_aa is the twin's sweep doubled."""
+    n, b = (up_now, down_now), (up_before, down_before)
+
+    def d(a, c):
+        z = 1j * (b[a].conjugate() * n[c] - n[a].conjugate() * b[c])
+        return complex(round(z.real), round(z.imag))
+
+    duu, ddd, dud = d(0, 0).real, d(1, 1).real, d(0, 1)
+    return int(duu + ddd), (int(2 * dud.real), int(-2 * dud.imag), int(duu - ddd))
+
+
+def sweep(now, before):
+    return int(now.real * before.imag - now.imag * before.real)
+
+
+def share(child, detector):
+    """Up along the detector where c (W + W) W_d < room (W W_d + S . m): the share as a fraction."""
+    (w, s), (wd, m) = child, detector
+    return Fraction(w * wd + sum(x * y for x, y in zip(s, m)), (w + w) * wd)
+
+
+def rigid(chi_u, chi_d, g):
+    """A spinor turning by the Gaussian g a tick: now = g before."""
+    return g * chi_u, chi_u, g * chi_d, chi_d
+
+
+NAMES = ("head", "pure", "overlap", "open", "singlet", "mirror", "shift", "half", "quarter", "carries")
+fails = {k: 0 for k in NAMES}
+runs = {k: 0 for k in NAMES}
+cases = 0
+for _ in range(2000):
+    cases += 1
+    # 1. the head's split (bobs.splits) is the case of the detector the pair's own up twin
+    un, ub, dn, db = gauss(), gauss(), gauss(), gauss()
+    su, sd = sweep(un, ub), sweep(dn, db)
+    if su * sd > 0:
+        child = reading(un, ub, dn, db)
+        room = rnd.randint(2, 60)
+        for c in range(room):
+            head = c * (abs(su) + abs(sd)) < room * abs(su)
+            w, s = child
+            mine = c * (w + w) * 1 < room * (w * 1 + s[2])
+            if w < 0:  # the reading's sign follows the sweeps' common sign; the share is a ratio
+                mine = c * (w + w) * 1 > room * (w * 1 + s[2])
+            fails["head"] += head != mine
+            runs["head"] += 1
+    # 2. a turning child against a turning detector: the share is Born's overlap |<phi|chi>|^2 / (|phi|^2 |chi|^2)
+    chi, phi, g, h = (gauss(), gauss()), (gauss(), gauss()), gauss(4), gauss(4)
+    if g.imag == 0 or h.imag == 0 or chi == (0, 0) or phi == (0, 0):
+        continue
+    child, det = reading(*rigid(*chi, g)), reading(*rigid(*phi, h))
+    ov = phi[0].conjugate() * chi[0] + phi[1].conjugate() * chi[1]
+    born = Fraction(round(abs(ov) ** 2), round(abs(phi[0]) ** 2 + abs(phi[1]) ** 2) * round(abs(chi[0]) ** 2 + abs(chi[1]) ** 2))
+    fails["overlap"] += share(child, det) != born
+    runs["overlap"] += 1
+    # 3. a pure reading has |S| = W (no root needed: the length is the wind)
+    fails["pure"] += sum(x * x for x in det[1]) != det[0] * det[0]
+    runs["pure"] += 1
+    # 4. the open pair (S = 0) shares one half against every detector
+    fails["open"] += share((child[0], (0, 0, 0)), det) != Fraction(1, 2)
+    runs["open"] += 1
+    # 5. the closure: the partner's reading is the first detector's with its axis reversed by the first answer;
+    #    the two answers' correlation is Born's singlet, -(m1 . m2) / (W1 W2)
+    d1, d2 = det, reading(*rigid(gauss(), gauss(), gauss(4)))
+    if d2[0] == 0:
+        continue
+    e = Fraction(0)
+    for a1 in (1, -1):
+        partner = (d1[0], tuple(-a1 * x for x in d1[1]))
+        p_up = share(partner, d2)
+        e += Fraction(1, 2) * a1 * (p_up - (1 - p_up))
+    want = Fraction(-sum(x * y for x, y in zip(d1[1], d2[1])), d1[0] * d2[0])
+    fails["singlet"] += e != want
+    runs["singlet"] += 1
+    # 6. a mirror reverses every axial reading with det -1, so S . m is kept under all 48
+    sign = rnd.choice((1, -1))
+    perm = rnd.sample(range(3), 3)
+    signs = [rnd.choice((1, -1)) for _ in range(3)]
+    det_r = signs[0] * signs[1] * signs[2] * (1 if perm in ([0, 1, 2], [1, 2, 0], [2, 0, 1]) else -1)
+    turn = lambda v: tuple(det_r * signs[i] * v[perm[i]] for i in range(3))  # noqa: E731
+    fails["mirror"] += sum(x * y for x, y in zip(turn(child[1]), turn(det[1]))) != sum(x * y for x, y in zip(child[1], det[1]))
+    runs["mirror"] += 1
+# 7. the closure's move through a link and back is the identity (spokes.across through a spoke and its opposite)
+a = np.array([[[rnd.randint(-9, 9) for _ in range(5)] for _ in range(5)] for _ in range(5)], dtype=object)
+for k in range(SPOKES):
+    fails["shift"] += int(not (across(across(a, k), k ^ 1) == a).all())
+    runs["shift"] += 1
+
+# 9. the twins under the turns: a half turn acts by a Gaussian unit and moves (W, S) by exchange and sign;
+#    a quarter turn about z acts as (1 - i, 1 + i) and doubles W and S while turning S a quarter
+HALF = {  # the half turns about x, y, z on the twins (u, v), and what they do to S
+    "x": (lambda u, v: (-1j * v, -1j * u), lambda s: (s[0], -s[1], -s[2])),
+    "y": (lambda u, v: (-v, u), lambda s: (-s[0], s[1], -s[2])),
+    "z": (lambda u, v: (-1j * u, 1j * v), lambda s: (-s[0], -s[1], s[2])),
+}
+for _ in range(500):
+    un, ub, dn, db = gauss(), gauss(), gauss(), gauss()
+    w, s = reading(un, ub, dn, db)
+    for name, (act, axis) in HALF.items():
+        n2, b2 = act(un, dn), act(ub, db)
+        fails["half"] += reading(n2[0], b2[0], n2[1], b2[1]) != (w, axis(s))
+        runs["half"] += 1
+    qn, qb = ((1 - 1j) * un, (1 + 1j) * dn), ((1 - 1j) * ub, (1 + 1j) * db)
+    w2, s2 = reading(qn[0], qb[0], qn[1], qb[1])
+    fails["quarter"] += (w2, s2) != (2 * w, (2 * s[1], -2 * s[0], 2 * s[2]))
+    runs["quarter"] += 1
+# 10. a carry of a sum is not the sum of the carries: the mixed gear of a scaled image cannot carry as the two gears did
+differ = 0
+for _ in range(2000):
+    d = rnd.randint(2, 50)
+    n1, n2 = rnd.randint(-500, 500), rnd.randint(-500, 500)
+    f1, f2 = rnd.randint(0, d - 1), rnd.randint(0, d - 1)
+    q1, r1 = carry(n1, d, f1)
+    q2, r2 = carry(n2, d, f2)
+    q12, r12 = carry(n1 + n2, d, f1 + f2)
+    differ += int(q12) != int(q1) + int(q2)
+    runs["carries"] += 1
+fails["carries"] = 0 if differ else 1  # the claim is that they differ somewhere
+print("check 11: the carry of the sum differs from the sum of the carries in", differ, "of", runs["carries"])
+print("cases drawn", cases)
+for n, k in enumerate(NAMES, start=2):
+    print(f"check {n} {k:8s} runs {runs[k]:6d} failures {fails[k]}")

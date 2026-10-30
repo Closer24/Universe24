@@ -1,0 +1,5 @@
+m^2 linear (a Z3 ring of trains, g4 P6): Q in [0.333333, 0.500000], the top at b / a = 0.500, phi = 1.047
+m linear (the law's line 340): Q in [0.333333, 0.500000], the top at b / a = 0.500, phi = 1.047
+sqrt m linear, b / a <= 1/2: Q in [0.333333, 0.500000], the top at b / a = 0.500, phi = 0.009
+nature's charged leptons: Q = 0.666661 (Koide's 2/3 = 0.666667), reached with sqrt m linear only at b / a = 1 / sqrt 2 > 1/2
+the axis split's sum rule (g4 P2, P3: mu = 0, +-g, equal steps in m^2): (m_e^2 + m_tau^2) / 2 = 1.5786e+06 MeV^2 against m_mu^2 = 1.1164e+04, a factor 141.4

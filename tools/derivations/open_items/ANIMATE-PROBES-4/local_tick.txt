@@ -1,0 +1,5 @@
+a ring of 60 clocks, the patch 20..39 at c = 27/25 (outside c = 1), 120 great ticks; the probe clock 47
+  global  : grows past 10^6 (to tick 48); the front at the probe at tick 39; 2880 events; the rewind exact: None
+  clamped : largest |now| 2.0000 (to tick 120); the front at the probe at tick 39; 7200 events; the rewind exact: True
+  local   : largest |now| 2.1350 (to tick 120); the front at the probe at tick 38; 9600 events; the rewind exact: True
+  fine    : largest |now| 1.8125 (to tick 120); the front at the probe at tick 39; 14400 events; the rewind exact: True

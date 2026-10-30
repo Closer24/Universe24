@@ -1,1 +1,0 @@
-{"per_step_matched": 80, "chained_matched": 80, "chained_first_unmatched": null, "turn_intervals": 1, "turned_nodes_forward": 27, "backward_misses": 0, "backward_false_tops": 0, "former_reading_misses": 0, "former_reading_false_tops": 0, "births": 0, "charge_sum": 0, "largest_state_integer_bits": 59}

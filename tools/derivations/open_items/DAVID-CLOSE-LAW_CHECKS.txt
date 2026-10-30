@@ -1,0 +1,444 @@
+DAVID-CLOSE-LAW_CHECKS.txt: the scripts and outputs behind DAVID-CLOSE-LAW.md (David, 2026-10-27), on the head 608d97134.
+The clock checked working under every fix: the rewind 20 of 20 on every chart and world run.
+
+====================================================================================================
+The set-up
+---------------------------------------- common.py
+"""Shared set-up for the close's law checks: the engine tree on the path (the head 608d97134 unless WT names another)."""
+import os, sys, json
+sys.set_int_max_str_digits(0)
+WT = os.environ.get("WT", "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/wt_g4")
+sys.path.insert(0, WT + "/src")
+R = WT + "/examples/records/"
+
+
+def committed(name):
+    return json.load(open(R + name + ".json"))
+
+====================================================================================================
+1. Every light take: the claimed fall against the board's own fall (the hole, the chiral, the bodies)
+---------------------------------------- fall_check.py
+"""Item 1: every exact take of the light on a chart (direction 1), the fall fall_of claims at its count against the wind's own fall over the take's window (hands.wind at the clock and its six neighbours, before and after the move), and the closed form with the pull's sign turned."""
+import sys
+from common import *
+from event_universe import unwind, hands
+from event_universe.core import rule3
+from event_universe.core.rule3 import carries
+from event_universe.clock import Clock
+name, ticks = sys.argv[1], int(sys.argv[2])
+real = unwind.fall_of
+rows = []
+ALONE = []
+
+
+def fall_of(node, at, walls, r, row, direction=1):
+    s, claimed, k = real(node, at, walls, r, row, direction)
+    if direction == 1 and s:
+        line = row.gears[k]
+        now, before = int(line.now[at]), int(line.before[at])
+        t = 1 if before > now else -1
+        window = unwind.window_clocks(node, at)
+        was = sum(int(v) for v in hands.wind(node, row.gears, r, window))
+        alone_was = int(hands.wind(node, row.gears, r, [at])[0])
+        board_was = sum(int(v) for v in hands.wind(node, row.gears, r).reshape(-1))
+        line.now[at] = now + t * s
+        after = sum(int(v) for v in hands.wind(node, row.gears, r, window))
+        alone_after = int(hands.wind(node, row.gears, r, [at])[0])
+        board_after = sum(int(v) for v in hands.wind(node, row.gears, r).reshape(-1))
+        line.now[at] = now
+        ALONE.append((claimed, alone_was - alone_after, board_was - board_after, was - after))
+        own, w, reached = int(__import__("numpy").asarray(r.hold)[at]), int(r.teeth), 0
+        for port, reach in enumerate(r.grips):
+            reached += int(__import__("numpy").asarray(reach)[at]) * int(line.before[unwind.neighbour(node, at, port)])
+        pull = own * before + reached
+        x, weight = int(node.start_stretch[at]), rule3.wind_weight(node.full_rate, node.G)
+        moved = now + t * s
+        turned = int(carries(x * (w * (now * now - moved * moved) + t * s * pull), weight))
+        rows.append((node.ticks, at, s, walls, claimed, was - after, turned))
+    return s, claimed, k
+
+
+unwind.fall_of = fall_of
+import event_universe.unspring as un
+un.fall_of = fall_of
+r = committed(name)
+node = Clock(r["universe"], dict(r["world"], intervals=ticks))
+for _ in range(ticks):
+    node.tick()
+print(f"{name} {ticks} ticks: {len(rows)} light takes")
+ratios = [c / f for (_, _, _, _, c, f, _) in rows if f > 0]
+print("  the claimed fall over the wind's own fall: least", f"{min(ratios):.2f}", "largest", f"{max(ratios):.2f}", "takes whose own fall is not above 0:", sum(1 for x in rows if x[5] <= 0))
+rel = [abs(tf - f) / f for (_, _, _, _, _, f, tf) in rows if f > 0]
+print("  the closed form with the pull's sign turned against the wind's own fall: largest relative miss", f"{max(rel):.2e}")
+al = [c / a for c, a, b, w in ALONE if a > 0]
+bo = [abs(b - w) for c, a, b, w in ALONE]
+print("  the claimed fall over the clock's own wind's fall (the clock alone): least", f"{min(al):.2f}", "largest", f"{max(al):.2f}", "; the board's fall against the window's: largest difference", max(bo))
+for row in rows[:6]:
+    print("  tick %d clock %s count %d walls %d: claimed %d, the wind fell %d, the turned form %d" % row)
+---------------------------------------- output: out_fall_hole.txt
+hole 60 ticks: 236 light takes
+  the claimed fall over the wind's own fall: least 10.92 largest 1196.69 takes whose own fall is not above 0: 34
+  the closed form with the pull's sign turned against the wind's own fall: largest relative miss 1.11e-02
+  the claimed fall over the clock's own wind's fall (the clock alone): least 12.02 largest 36885.95 ; the board's fall against the window's: largest difference 0
+  tick 8 clock (4, 1, 2) count 16 walls 3309673817612367715302: claimed 3519967642673576728007, the wind fell 284502794643363543100, the turned form 284478030185572701470
+  tick 8 clock (4, 1, 3) count 16 walls 3309673817612367715302: claimed 3519967642673576728007, the wind fell 284502794643363543100, the turned form 284478030185572701470
+  tick 8 clock (4, 2, 1) count 16 walls 3309673817612367715302: claimed 3519967642673576728007, the wind fell 284502794643363543101, the turned form 284478030185572701470
+  tick 8 clock (4, 2, 4) count 16 walls 3309673817612367715302: claimed 3519967642673576728007, the wind fell 284502794643363543102, the turned form 284478030185572701470
+  tick 8 clock (4, 3, 1) count 16 walls 3309673817612367715302: claimed 3519967642673576728007, the wind fell 284502794643363543100, the turned form 284478030185572701470
+  tick 8 clock (4, 3, 4) count 16 walls 3309673817612367715302: claimed 3519967642673576728007, the wind fell 284502794643363543101, the turned form 284478030185572701470
+
+====================================================================================================
+1. The chiral
+---------------------------------------- output: out_fall_chiral.txt
+chiral 60 ticks: 203 light takes
+  the claimed fall over the wind's own fall: least 1.47 largest 1636.06 takes whose own fall is not above 0: 30
+  the closed form with the pull's sign turned against the wind's own fall: largest relative miss 1.02e-01
+  the claimed fall over the clock's own wind's fall (the clock alone): least 1.50 largest 6980.51 ; the board's fall against the window's: largest difference 0
+  tick 3 clock (0, 1, 3) count 28 walls 3322905896843201769135: claimed 3367986282731521923554, the wind fell 451699553669085592975, the turned form 451678046199613428515
+  tick 4 clock (1, 2, 4) count 22 walls 3327867926554764539323: claimed 3344318934096142210026, the wind fell 345717921948226439317, the turned form 345801224856381264374
+  tick 4 clock (2, 4, 4) count 23 walls 3327867926554764539323: claimed 3468746528722571340941, the wind fell 353597783063179664946, the turned form 353463158647002689644
+  tick 5 clock (0, 4, 1) count 21 walls 3293133718573825148008: claimed 3371486163342181263771, the wind fell 439803737540365122681, the turned form 439857851199526347082
+  tick 5 clock (3, 4, 1) count 20 walls 3359294114727995417180: claimed 3407116476160006730388, the wind fell 193862826914712303441, the turned form 194064430186267115094
+  tick 5 clock (0, 1, 2) count 1 walls 878848879465440000: claimed 145454064262513444567, the wind fell -3588298512736064160, the turned form -3604326252476316482
+
+====================================================================================================
+1. The bodies
+---------------------------------------- output: out_fall_bodies.txt
+bodies 120 ticks: 986 light takes
+  the claimed fall over the wind's own fall: least 0.27 largest 28294.78 takes whose own fall is not above 0: 79
+  the closed form with the pull's sign turned against the wind's own fall: largest relative miss 7.30e-02
+  the claimed fall over the clock's own wind's fall (the clock alone): least 0.27 largest 455305.91 ; the board's fall against the window's: largest difference 0
+  tick 4 clock (2, 2, 1) count 12 walls 170273819520000: claimed 181803703653996, the wind fell 11745629699342, the turned form 11742136091634
+  tick 4 clock (2, 2, 2) count 10 walls 170273819520000: claimed 177020670982268, the wind fell 15681723782427, the turned form 15662175155438
+  tick 4 clock (2, 2, 3) count 12 walls 170273819520000: claimed 182396016657120, the wind fell 11427997670413, the turned form 11419749525766
+  tick 4 clock (2, 2, 4) count 12 walls 170273819520000: claimed 182396016657120, the wind fell 11427997670413, the turned form 11419749525766
+  tick 4 clock (2, 2, 5) count 10 walls 170273819520000: claimed 177020670982268, the wind fell 15681723782428, the turned form 15662175155438
+  tick 4 clock (2, 2, 6) count 12 walls 170273819520000: claimed 181803703653996, the wind fell 11745629699342, the turned form 11742136091634
+DONE
+
+====================================================================================================
+1 to 5. The fixes as harnesses (one engine function replaced each)
+---------------------------------------- fixes.py
+"""The close's law: each item's fix as a harness on the head (one engine function replaced, no engine file changed).
+1 `wind_fall`: the exact take reads the wind's own fall over its window (hands.wind at the clock and its six neighbours) and its count by the one search by comparisons (rule3.least_at), bounded by the move's distance at 1 and unbounded at -1; the closed form and its price struck.
+2 `back_mesh`: the vernier reads each neighbour's grip on the mesh back to the clock (the opposite spoke), R_ji.
+3 `lay_back_whole`: the lay-back restores the take's remainder too (the whole take at -1).
+5 `one_moment`: the light's take books its push on the gears at the tick's start (CL-S2), as the sprung take does."""
+import numpy as np
+from common import *
+
+
+def wind_fall():
+    from event_universe import unwind, hands
+    from event_universe.core.rule3 import least_at
+
+    def fall_of(node, at, walls, r, row, direction=1):
+        gaps = [n * n - b * b for n, b in ((int(z.now[at]), int(z.before[at])) for z in row.gears)]
+        k = gaps.index(max(gaps))
+        line = row.gears[k]
+        now, before = int(line.now[at]), int(line.before[at])
+        if walls <= 0 and direction == 1:
+            return 0, 0, k
+        if now == before and direction == 1:
+            return None, 0, k
+        t = (1 if before > now else -1) if direction == 1 else (1 if now > before else -1)
+        window = unwind.window_clocks(node, at)
+        base = sum(int(v) for v in hands.wind(node, row.gears, r, window))
+
+        def fall(s):
+            line.now[at] = now + t * s
+            found = direction * (base - sum(int(v) for v in hands.wind(node, row.gears, r, window)))
+            line.now[at] = now
+            return found
+
+        if direction == -1:
+            s = least_at(lambda c: fall(c) >= walls)
+            return s, fall(s), k
+        dist = abs(now - before)
+        if fall(dist) < walls:
+            return None, fall(dist), k
+        s = least_at(lambda c: c >= dist or fall(c) >= walls)
+        return s, fall(s), k
+
+    unwind.fall_of = fall_of
+
+
+def back_mesh():
+    from event_universe import draw
+    from event_universe.core import acts
+    from event_universe.core.rule3 import carries, pitch, remainder
+    from event_universe.core.spokes import AXES
+    from event_universe.trains import HAND
+    from event_universe.unwind import at_clock, window_clocks
+
+    def vernier(node, at, rules, unit):
+        modulus = unit * sum(1 for r in node.hands() if r.size == HAND)
+        nodes, digits, origin, coarse, w_half = window_clocks(node, at), [], True, True, acts.mid(node.teeth)
+        for line, r in rules:
+            for k, n in enumerate(nodes):
+                wl, key = at_clock(line.teeth, n), (id(r), k, n)
+                if key not in node.pitches:
+                    node.pitches[key] = (
+                        pitch(wl, at_clock(r.spring, n), *[at_clock(x, n) for x in r.grips])
+                        if k == 0
+                        else pitch(wl, at_clock(r.grips[(k - 1) ^ 1], n))
+                    )
+                rem, values = int(line.fine[n]), carries(wl, f := node.pitches[key])
+                origin = origin and rem in (w_half, acts.flip(w_half, node.teeth, 1))
+                coarse = coarse and values <= AXES
+                digits.append((carries(rem, f), values + 1))
+        if origin or coarse:
+            node.counts["refused_origin"] += origin
+            return None
+        carry, room = 0, 1
+        for d, b in sorted(digits):
+            carry = remainder(carry * b + d, modulus)
+            room = min(room * b, modulus)
+        return carry, room
+
+    draw.vernier = vernier
+    import event_universe.striking as sk
+    sk.vernier = vernier
+
+
+def lay_back_whole():
+    from event_universe import bobs
+    import event_universe.unwind as uw
+    real_move = bobs.move
+    state = {}
+    real_chime = bobs.chime
+
+    def chime(node, rec, at, take, frame, start):
+        state["take"] = take
+        return real_chime(node, rec, at, take, frame, start)
+
+    def move(node, rec0, k, at, count):
+        real_move(node, rec0, k, at, count)
+        take = state.get("take")
+        if take is not None and "remainder_was" in take:
+            node.slack[at] = take["remainder_was"]
+
+    bobs.chime, bobs.move = chime, move
+
+
+def one_moment():
+    import event_universe.unspring as un
+    real = un.push_of
+
+    def push_of(node, gears, at, notches, pinion, sign=1):
+        rec0 = node.hands().index(node.unsprung())
+        live = node.hands()[rec0].gears
+        if len(gears) == 1 and any(g is gears[0] for g in live):
+            k = next(i for i, g in enumerate(live) if g is gears[0])
+            return real(node, [node.start_gears[rec0][k]], at, notches, pinion, sign)
+        return real(node, gears, at, notches, pinion, sign)
+
+    un.push_of = push_of
+
+====================================================================================================
+1, 3, 4. Each chart under a fix against the committed chart (the counts, the run back, the reading)
+---------------------------------------- run_fix.py
+"""A committed chart under one fix (argv: the chart's name, the fix): the counts, the turns, the run back and the reading's rows that move, against the committed chart."""
+import json, sys, time
+from common import *
+import fixes
+name, fix = sys.argv[1], sys.argv[2]
+if fix != "none":
+    getattr(fixes, fix)()
+from event_universe.run import chart
+from event_universe.gates import gates
+c = committed(name)
+reading = [json.loads(l) for l in open(R + name + ".reading.jsonl") if l.strip()]
+back = int((c.get("run_back") or {}).get("intervals", 0))
+t = time.time()
+found = json.loads(json.dumps(chart(c["universe"], c["world"], back, lambda line: None)))
+keys = ("births", "body_clicks", "turns", "taken", "booked", "laid_back", "refused_stop", "refused_lay", "refused_origin")
+moved = {k: (c["counts"].get(k), found["counts"].get(k)) for k in keys if c["counts"].get(k) != found["counts"].get(k)}
+new_reading = [{k: v} for k, v in json.loads(json.dumps(gates(found))).items()]
+rows = [list(r)[0] for r, o in zip(new_reading, reading) if r != o]
+verdicts = {}
+for r, o in zip(new_reading, reading):
+    k = list(r)[0]
+    if r != o and isinstance(r[k], dict) and "verdict" in r[k]:
+        a, b = str(o[k].get("verdict", ""))[:60], str(r[k].get("verdict", ""))[:60]
+        if a != b:
+            verdicts[k[:40]] = (a, b)
+same = found["nodes"] == c["nodes"] and found["log"] == c["log"]
+print(name, fix, "SAME" if same and not moved and not rows else "MOVED", "run back", found["run_back"], "counts moved", moved,
+      "reading rows moved", len(rows), "verdicts moved", verdicts, f"{time.time() - t:.0f}s", flush=True)
+
+====================================================================================================
+1. The take reading the wind's own fall
+---------------------------------------- output: out_fix1.txt
+hole wind_fall MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('18', '0'), 'body_clicks': ('2262', '0'), 'turns': ('537', '587'), 'taken': ('102617899053186723978745', '0'), 'booked': ('99589590320968651927074', '0'), 'refused_stop': ('9138', '38'), 'refused_lay': ('488', '162')} reading rows moved 50 verdicts moved {'2 the Links lengthening in the clicks': ("SHOWN in the reader's view; NOT READ in the one-place view (", "NOT READ: too few spans between a Node's credits"), '4 an era of matter': ('SHOWN', 'NOT SHOWN'), '7 light present and absorbed': ("SHOWN: the gap-0 line's quanta absorbed at the takes, at mat", 'NOT READ: no take in the record'), '8 families forming (whole view)': ('SHOWN in part: every credit within the floor, tracks right 1', 'NOT READ: no credit in the record'), '8b species over the track (one-place vie': ('NOT SHOWN: tracks right 145 of 151', 'NOT READ: no credit decoded'), '9 collisions': ('NOT SHOWN: the credited Nodes receding, farthest 4 Links at ', 'NOT READ: fewer than two bodies credited at one interval'), '10 gravitational time dilation': ("SHOWN in the reader's view; NOT READ in the one-place view: ", 'NOT READ: too few credits decoded'), '13 free fall': ('NOT SHOWN: the approach does not quicken', 'NOT READ: fewer than two bodies credited at one interval'), '15 conservation at the click': ('SHOWN exact: taken + the remainder before - the remainder af', 'NOT READ: no birth in the record'), '16 uncertainty floor (one click)': ("SHOWN as the law's floor: no credit reads beyond it", 'NOT READ: no credit decoded'), '17 charge conservation': ('SHOWN: the senses sum to 0 over every birth, each pair oppos', 'NOT READ: no birth in the record; the magnitude NOT READ'), '19 mass ratios (parts per million)': ("SHOWN: the mass ratio in the clicks reads the header's withi", 'NOT READ: no credit decoded'), '21 the C of the birth': ('SHOWN: births of both hands', 'NOT READ: no moving birth; the predicate: births of both han'), "22 Coulomb's sign": ('SHOWN in part: unlike senses approach', 'NOT READ: no two intervals hold a pair of credited senses; t'), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 18 births (the lay's fo", 'NOT READ: no click booked its momentum'), '24 the merger (a pair into light)': ('NOT SHOWN: 18610 gapped meetings reached the premise and eve', "NOT READ: no gapped record's meeting in the record; the pred"), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1314 bits over ', 'NOT READ: no birth'), "26 the lifts born and their beats' ratio": ('SHOWN in part: 3 of 3 lifts born', 'NOT READ: no birth and fewer than two planes credited; the p'), '27 confinement (no third alone)': ('SHOWN: every child the whole charge, no third alone, every t', 'NOT READ: no birth; the predicate: no child carries a third '), '30 the dilation': ("as gate 10: SHOWN in the reader's view; NOT READ in the one-", 'as gate 10: NOT READ: too few credits decoded'), '33 free fall by the tail': ('as gate 13: NOT SHOWN: the approach does not quicken', 'as gate 13: NOT READ: fewer than two bodies credited at one '), '40 the photoelectric click': ('NOT SHOWN: 218 clicks take fewer levels than one quantum (th', 'NOT READ: no credit; the predicate: one whole quantum per cl'), "45 the bodies' well, binding and collaps": ('SHOWN: a body stands in its own well through the run', 'NOT READ: no credit; the predicate: a body of enough quanta '), '47 the exact take': ('SHOWN: the take exact on every birth, its excess kept as the', 'NOT READ: no birth; the predicate: taken equals booked on ev'), '49 the exponential decay': ("NOT SHOWN: the spacings' counts do not fall from the least", 'NOT READ: fewer than two spacings; the predicate: the spacin'), '56 Bell': ("SHOWN in part: the law's own bound met exactly, S = -240 / 1", 'NOT READ: 0 births, 0 of the four setting cells filled by pa'), '58 the fast expansion after the bang': ("SHOWN: the credits' spacing grows fastest in the first eight", "NOT READ: fewer than two eighths' growths of the spacing"), '59 the deceleration in the clicks': ("SHOWN: an eighth's growth of the spacing smaller than the on", "NOT READ: fewer than two eighths' growths of the spacing"), '60 the acceleration in the clicks': ("SHOWN: after a slowing, an eighth's growth of the spacing la", "NOT READ: fewer than two eighths' growths of the spacing"), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 2228 of 2228 ', 'NOT READ: no frame carries a charge; the predicate: W negate'), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 154 against', 'NOT READ: no credit; the predicate: every region credited, t'), '64 dark matter in kind': ('SHOWN: 91 of 151 bodies credited at a Node where no light wa', 'NOT READ: no body; the predicate: a body credited in its own'), '65 the lepton number': ("SHOWN: every species' senses sum to 0 over its births, its n", "NOT READ: no birth; the predicate: every species' senses sum"), '66 the energy in the clicks': ('SHOWN in part: on most pairs', 'NOT READ: no click pair of a body; the predicate: the beat b'), '67 CPT in the clicks': ('SHOWN: the charge odd under C and under T and even under CPT', 'NOT READ: no frame carries a charge; the predicate: W odd un'), '68 matter against antimatter': ("SHOWN: the + child at the take's Node on 6 moving births and", "NOT READ: no moving birth; the predicate: the + child's end "), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 6 and 12 moving births (no conv', 'NOT READ: no moving birth; the predicate: one hand at every '), '70 the baryon number': ("SHOWN: the children's own charges sum to 0 at every birth, n", "NOT READ: no birth; the predicate: the children's own charge"), '71 the momentum booked on the Link': ('SHOWN exact: -dP p_0^2 + the carry before - the carry after ', 'NOT READ: no booking on the record (a record run before LT-S'), '72 the angular momentum booked on the Li': ("SHOWN exact: the move's moment and the moment written on the", 'NOT READ: no booking on the record (a record run before LT-S'), 'the conservations in the clicks': ('SHOWN: the charge 0 over the births and the beat unchanged o', 'NOT READ: no birth or no click pair')} 3s
+chiral wind_fall MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('16', '3'), 'body_clicks': ('3003', '1'), 'turns': ('614', '612'), 'taken': ('62560865293540718769720', '11402274053770089731651'), 'booked': ('61324071195300422495009', '11248921356112800015875'), 'refused_stop': ('9353', '111'), 'refused_lay': ('699', '666')} reading rows moved 51 verdicts moved {'2 the Links lengthening in the clicks': ("SHOWN in the reader's view; NOT READ in the one-place view (", "NOT READ: too few spans between a Node's credits"), '8 families forming (whole view)': ('SHOWN in part: every credit within the floor, tracks right 1', 'SHOWN in part: every credit within the floor, tracks right 0'), '8b species over the track (one-place vie': ('NOT SHOWN: tracks right 139 of 143', 'NOT SHOWN: tracks right 0 of 1'), '9 collisions': ("SHOWN: two bodies' credited Nodes approached and stood one L", 'NOT READ: fewer than two bodies credited at one interval'), '10 gravitational time dilation': ("SHOWN in the reader's view; NOT READ in the one-place view: ", 'NOT READ: too few credits decoded'), '13 free fall': ('NOT SHOWN: the approach does not quicken', 'NOT READ: fewer than two bodies credited at one interval'), '19 mass ratios (parts per million)': ("SHOWN: the mass ratio in the clicks reads the header's withi", 'NOT SHOWN: 1 plane credited, a ratio needs two'), '21 the C of the birth': ('SHOWN: births of both hands', 'NOT SHOWN: every moving birth of one hand'), "22 Coulomb's sign": ('NOT SHOWN: unlike senses do not approach, like senses do not', 'NOT READ: no two intervals hold a pair of credited senses; t'), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 16 births (the lay's fo", "NOT SHOWN: the recoil passed at 0 of 3 births (the lay's for"), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1168 bits over ', 'SHOWN: H never falls (a sum of bit lengths), 219 bits over 3'), "26 the lifts born and their beats' ratio": ('SHOWN in part: 3 of 3 lifts born', 'NOT SHOWN: 2 of 3 lifts born, the beats of 1 planes not orde'), '30 the dilation': ("as gate 10: SHOWN in the reader's view; NOT READ in the one-", 'as gate 10: NOT READ: too few credits decoded'), '33 free fall by the tail': ('as gate 13: NOT SHOWN: the approach does not quicken', 'as gate 13: NOT READ: fewer than two bodies credited at one '), '40 the photoelectric click': ('NOT SHOWN: 188 clicks take fewer levels than one quantum (th', 'NOT SHOWN: 1 clicks take fewer levels than one quantum (the '), "45 the bodies' well, binding and collaps": ('SHOWN: a body stands in its own well through the run', 'NOT SHOWN: no body stands at one Node through the run'), '49 the exponential decay': ("NOT SHOWN: the spacings' counts do not fall from the least", 'NOT READ: fewer than two spacings; the predicate: the spacin'), '56 Bell': ("SHOWN in part: the law's own bound met exactly, S = -120 / 6", 'NOT READ: 3 births, 0 of the four setting cells filled by pa'), '58 the fast expansion after the bang': ('NOT SHOWN: the first growth of the spacing is not above zero', "NOT READ: fewer than two eighths' growths of the spacing"), '59 the deceleration in the clicks': ("SHOWN: an eighth's growth of the spacing smaller than the on", "NOT READ: fewer than two eighths' growths of the spacing"), '60 the acceleration in the clicks': ("SHOWN: after a slowing, an eighth's growth of the spacing la", "NOT READ: fewer than two eighths' growths of the spacing"), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 2856 of 2856 ', 'SHOWN: the charge odd under the slot exchange, 1 of 1 frames'), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 190 against', 'NOT SHOWN: 7 regions without a credit, the least 1 against t'), '64 dark matter in kind': ('SHOWN: 97 of 143 bodies credited at a Node where no light wa', "NOT SHOWN: every body's Node laid light"), '66 the energy in the clicks': ('SHOWN in part: on most pairs', 'NOT READ: no click pair of a body; the predicate: the beat b'), '68 matter against antimatter': ("SHOWN: the + child at the take's Node on 7 moving births and", "SHOWN: the + child at the take's Node on 0 moving births and"), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 7 and 8 moving births (no conve', 'SHOWN: one hand at every moving birth of the record'), 'the conservations in the clicks': ('SHOWN: the charge 0 over the births and the beat unchanged o', 'NOT READ: no birth or no click pair')} 5s
+bodies wind_fall MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('23', '0'), 'body_clicks': ('17944', '83'), 'turns': ('2270', '2004'), 'taken': ('65307900193140216', '0'), 'booked': ('13389312667353436', '0'), 'refused_stop': ('51337', '1993'), 'refused_lay': ('2147', '276')} reading rows moved 49 verdicts moved {'2 the Links lengthening in the clicks': ("NOT SHOWN in the reader's view; NOT READ in the one-place vi", "SHOWN in the reader's view; NOT READ in the one-place view ("), '4 an era of matter': ('SHOWN', 'NOT SHOWN'), '5 acceleration (the lengthening quickens': ('SHOWN at the board: the rises grow from mark to mark; the li', 'NOT SHOWN: the rises do not grow; the lift NOT SHOWN: L with'), '8 families forming (whole view)': ('NOT SHOWN: 943 credits beyond the floor', 'NOT SHOWN: 2 credits beyond the floor'), '8b species over the track (one-place vie': ('NOT SHOWN: tracks right 407 of 409', 'SHOWN: every track read right'), '9 collisions': ('NOT SHOWN: the credited Nodes receding, farthest 7 Links at ', "SHOWN: two bodies' credited Nodes approached and stood one L"), '15 conservation at the click': ('SHOWN: taken + the remainder before - the remainder after = ', 'NOT READ: no birth in the record'), '17 charge conservation': ('SHOWN: the senses sum to 0 over every birth, each pair oppos', 'NOT READ: no birth in the record; the magnitude NOT READ'), '19 mass ratios (parts per million)': ("NOT SHOWN: the ratio in the clicks is off the header's beyon", 'NOT SHOWN: 1 plane credited, a ratio needs two'), '21 the C of the birth': ('SHOWN: births of both hands', 'NOT READ: no moving birth; the predicate: births of both han'), "22 Coulomb's sign": ('SHOWN: unlike senses approach and like senses part', 'NOT SHOWN: unlike senses do not approach, like senses do not'), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 23 births (the lay's fo", "NOT READ: no birth; the predicate: the take's dP and the lay"), '24 the merger (a pair into light)': ('SHOWN: 15 pairs into light (the gap-0 children born from a g', 'NOT SHOWN: 11415 gapped meetings reached the premise and eve'), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1127 bits over ', 'NOT READ: no birth'), "26 the lifts born and their beats' ratio": ('SHOWN in part: 2 of 2 lifts born', 'NOT READ: no birth and fewer than two planes credited; the p'), '27 confinement (no third alone)': ('SHOWN: every child the whole charge, no third alone, every t', 'NOT READ: no birth; the predicate: no child carries a third '), '40 the photoelectric click': ('NOT SHOWN: 978 clicks take fewer levels than one quantum (th', 'NOT SHOWN: 83 clicks take fewer levels than one quantum (the'), "45 the bodies' well, binding and collaps": ('SHOWN: a body stands in its own well through the run', 'NOT SHOWN: no body stands at one Node through the run'), '47 the exact take': ('SHOWN: the take exact on every birth, its excess kept as the', 'NOT READ: no birth; the predicate: taken equals booked on ev'), '56 Bell': ('NOT READ: 23 births, 3 of the four setting cells filled by p', 'NOT READ: 0 births, 0 of the four setting cells filled by pa'), '58 the fast expansion after the bang': ("SHOWN: the credits' spacing grows fastest in the first eight", "NOT READ: fewer than two eighths' growths of the spacing"), '59 the deceleration in the clicks': ("SHOWN: an eighth's growth of the spacing smaller than the on", "NOT READ: fewer than two eighths' growths of the spacing"), '60 the acceleration in the clicks': ("SHOWN: after a slowing, an eighth's growth of the spacing la", "NOT READ: fewer than two eighths' growths of the spacing"), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 17115 of 1711', 'SHOWN: the charge odd under the slot exchange, 31 of 31 fram'), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 1253 agains', 'NOT SHOWN: 0 regions without a credit, the least 3 against t'), '64 dark matter in kind': ('SHOWN: 335 of 409 bodies credited at a Node where no light w', 'SHOWN: 49 of 49 bodies credited at a Node where no light was'), '65 the lepton number': ("SHOWN: every species' senses sum to 0 over its births, its n", "NOT READ: no birth; the predicate: every species' senses sum"), '68 matter against antimatter': ("SHOWN: the + child at the take's Node on 5 moving births and", "NOT READ: no moving birth; the predicate: the + child's end "), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 5 and 3 moving births (no conve', 'NOT READ: no moving birth; the predicate: one hand at every '), '70 the baryon number': ("SHOWN: the children's own charges sum to 0 at every birth, n", "NOT READ: no birth; the predicate: the children's own charge"), '73 E = mc^2 at the merger': ("NOT SHOWN: at 30 of 30 merger ends the pair's share taken ex", 'NOT READ: no merger in the record; the predicate: at every m'), 'the conservations in the clicks': ('SHOWN: the charge 0 over the births and the beat unchanged o', 'NOT READ: no birth or no click pair')} 15s
+DONE
+
+====================================================================================================
+3. The vernier reading the mesh back
+---------------------------------------- output: out_fix2.txt
+hole back_mesh MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('18', '17'), 'body_clicks': ('2262', '1887'), 'turns': ('537', '572'), 'taken': ('102617899053186723978745', '73730908142328360279270'), 'booked': ('99589590320968651927074', '70414509626883417479176'), 'refused_stop': ('9138', '8434'), 'refused_lay': ('488', '543')} reading rows moved 49 verdicts moved {'8b species over the track (one-place vie': ('NOT SHOWN: tracks right 145 of 151', 'NOT SHOWN: tracks right 137 of 144'), '15 conservation at the click': ('SHOWN exact: taken + the remainder before - the remainder af', 'SHOWN: taken + the remainder before - the remainder after = '), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 18 births (the lay's fo", "NOT SHOWN: the recoil passed at 0 of 17 births (the lay's fo"), '24 the merger (a pair into light)': ('NOT SHOWN: 18610 gapped meetings reached the premise and eve', 'SHOWN: 1 pairs into light (the gap-0 children born from a ga'), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1314 bits over ', 'SHOWN: H never falls (a sum of bit lengths), 1230 bits over '), "26 the lifts born and their beats' ratio": ('SHOWN in part: 3 of 3 lifts born', 'SHOWN: 3 of 3 lifts born, the beats ordered as the legs (the'), '40 the photoelectric click': ('NOT SHOWN: 218 clicks take fewer levels than one quantum (th', 'NOT SHOWN: 165 clicks take fewer levels than one quantum (th'), '56 Bell': ("SHOWN in part: the law's own bound met exactly, S = -240 / 1", "SHOWN in part: the law's own bound met exactly, S = -24 / 12"), '58 the fast expansion after the bang': ("SHOWN: the credits' spacing grows fastest in the first eight", 'NOT SHOWN: the first growth of the spacing is not above zero'), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 2228 of 2228 ', 'SHOWN: the charge odd under the slot exchange, 1849 of 1849 '), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 154 against', 'NOT SHOWN: 0 regions without a credit, the least 114 against'), '64 dark matter in kind': ('SHOWN: 91 of 151 bodies credited at a Node where no light wa', 'SHOWN: 96 of 144 bodies credited at a Node where no light wa'), '68 matter against antimatter': ("SHOWN: the + child at the take's Node on 6 moving births and", "SHOWN: the + child at the take's Node on 5 moving births and"), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 6 and 12 moving births (no conv', 'NOT SHOWN: both hands stand, 5 and 11 moving births (no conv'), '73 E = mc^2 at the merger': ('NOT READ: no merger in the record; the predicate: at every m', "NOT SHOWN: at 2 of 2 merger ends the pair's share taken exce")} 21s
+chiral back_mesh MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('16', '17'), 'body_clicks': ('3003', '2801'), 'turns': ('614', '660'), 'taken': ('62560865293540718769720', '62697551164093908643215'), 'booked': ('61324071195300422495009', '61912898721072537890635'), 'refused_stop': ('9353', '9056'), 'refused_lay': ('699', '696')} reading rows moved 44 verdicts moved {'8b species over the track (one-place vie': ('NOT SHOWN: tracks right 139 of 143', 'NOT SHOWN: tracks right 138 of 145'), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 16 births (the lay's fo", "NOT SHOWN: the recoil passed at 0 of 17 births (the lay's fo"), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1168 bits over ', 'SHOWN: H never falls (a sum of bit lengths), 1241 bits over '), '40 the photoelectric click': ('NOT SHOWN: 188 clicks take fewer levels than one quantum (th', 'NOT SHOWN: 192 clicks take fewer levels than one quantum (th'), '56 Bell': ("SHOWN in part: the law's own bound met exactly, S = -120 / 6", "SHOWN in part: the law's own bound met exactly, S = -24 / 12"), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 2856 of 2856 ', 'SHOWN: the charge odd under the slot exchange, 2653 of 2653 '), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 190 against', 'NOT SHOWN: 0 regions without a credit, the least 198 against'), '64 dark matter in kind': ('SHOWN: 97 of 143 bodies credited at a Node where no light wa', 'SHOWN: 96 of 145 bodies credited at a Node where no light wa'), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 7 and 8 moving births (no conve', 'NOT SHOWN: both hands stand, 7 and 9 moving births (no conve')} 23s
+bodies back_mesh MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('23', '19'), 'body_clicks': ('17944', '13812'), 'turns': ('2270', '2246'), 'taken': ('65307900193140216', '56176713734747662'), 'booked': ('13389312667353436', '12907026464023482'), 'refused_stop': ('51337', '32511'), 'refused_lay': ('2147', '1794')} reading rows moved 49 verdicts moved {'8 families forming (whole view)': ('NOT SHOWN: 943 credits beyond the floor', 'NOT SHOWN: 647 credits beyond the floor'), '8b species over the track (one-place vie': ('NOT SHOWN: tracks right 407 of 409', 'SHOWN: every track read right'), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 23 births (the lay's fo", "NOT SHOWN: the recoil passed at 0 of 19 births (the lay's fo"), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1127 bits over ', 'SHOWN: H never falls (a sum of bit lengths), 931 bits over 1'), "26 the lifts born and their beats' ratio": ('SHOWN in part: 2 of 2 lifts born', 'NOT SHOWN: 1 of 2 lifts born, the beats of 2 planes not orde'), '40 the photoelectric click': ('NOT SHOWN: 978 clicks take fewer levels than one quantum (th', 'NOT SHOWN: 859 clicks take fewer levels than one quantum (th'), '56 Bell': ('NOT READ: 23 births, 3 of the four setting cells filled by p', 'NOT READ: 19 births, 3 of the four setting cells filled by p'), '58 the fast expansion after the bang': ("SHOWN: the credits' spacing grows fastest in the first eight", 'NOT SHOWN: the first growth of the spacing is not above zero'), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 17115 of 1711', 'SHOWN: the charge odd under the slot exchange, 12895 of 1289'), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 1253 agains', 'NOT SHOWN: 0 regions without a credit, the least 1032 agains'), '64 dark matter in kind': ('SHOWN: 335 of 409 bodies credited at a Node where no light w', 'SHOWN: 336 of 406 bodies credited at a Node where no light w'), '68 matter against antimatter': ("SHOWN: the + child at the take's Node on 5 moving births and", "SHOWN: the + child at the take's Node on 2 moving births and"), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 5 and 3 moving births (no conve', 'NOT SHOWN: both hands stand, 2 and 2 moving births (no conve')} 94s
+DONE
+
+====================================================================================================
+4. One moment for the take's push
+---------------------------------------- output: out_fix5.txt
+hole one_moment MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('18', '17'), 'body_clicks': ('2262', '2258'), 'turns': ('537', '536'), 'taken': ('102617899053186723978745', '88404854549033379334964'), 'booked': ('99589590320968651927074', '85391569306283712162874'), 'refused_stop': ('9138', '9317'), 'refused_lay': ('488', '497')} reading rows moved 44 verdicts moved {'8b species over the track (one-place vie': ('NOT SHOWN: tracks right 145 of 151', 'NOT SHOWN: tracks right 142 of 149'), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 18 births (the lay's fo", "NOT SHOWN: the recoil passed at 0 of 17 births (the lay's fo"), '24 the merger (a pair into light)': ('NOT SHOWN: 18610 gapped meetings reached the premise and eve', 'NOT SHOWN: 18604 gapped meetings reached the premise and eve'), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1314 bits over ', 'SHOWN: H never falls (a sum of bit lengths), 1241 bits over '), '40 the photoelectric click': ('NOT SHOWN: 218 clicks take fewer levels than one quantum (th', 'NOT SHOWN: 215 clicks take fewer levels than one quantum (th'), '56 Bell': ("SHOWN in part: the law's own bound met exactly, S = -240 / 1", "SHOWN in part: the law's own bound met exactly, S = -168 / 8"), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 2228 of 2228 ', 'SHOWN: the charge odd under the slot exchange, 2214 of 2214 '), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 154 against', 'NOT SHOWN: 0 regions without a credit, the least 142 against'), '64 dark matter in kind': ('SHOWN: 91 of 151 bodies credited at a Node where no light wa', 'SHOWN: 91 of 149 bodies credited at a Node where no light wa'), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 6 and 12 moving births (no conv', 'NOT SHOWN: both hands stand, 6 and 11 moving births (no conv')} 22s
+chiral one_moment MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('16', '19'), 'body_clicks': ('3003', '2980'), 'turns': ('614', '611'), 'taken': ('62560865293540718769720', '76382299398248149655607'), 'booked': ('61324071195300422495009', '75500590081235256921722'), 'refused_stop': ('9353', '9465')} reading rows moved 44 verdicts moved {'8b species over the track (one-place vie': ('NOT SHOWN: tracks right 139 of 143', 'NOT SHOWN: tracks right 139 of 145'), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 16 births (the lay's fo", "NOT SHOWN: the recoil passed at 0 of 19 births (the lay's fo"), '24 the merger (a pair into light)': ('SHOWN: 1 pairs into light (the gap-0 children born from a ga', 'SHOWN: 2 pairs into light (the gap-0 children born from a ga'), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1168 bits over ', 'SHOWN: H never falls (a sum of bit lengths), 1387 bits over '), '40 the photoelectric click': ('NOT SHOWN: 188 clicks take fewer levels than one quantum (th', 'NOT SHOWN: 193 clicks take fewer levels than one quantum (th'), '56 Bell': ("SHOWN in part: the law's own bound met exactly, S = -120 / 6", "SHOWN in part: the law's own bound met exactly, S = -12 / 6,"), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 2856 of 2856 ', 'SHOWN: the charge odd under the slot exchange, 2840 of 2840 '), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 190 against', 'NOT SHOWN: 0 regions without a credit, the least 184 against'), '64 dark matter in kind': ('SHOWN: 97 of 143 bodies credited at a Node where no light wa', 'SHOWN: 93 of 145 bodies credited at a Node where no light wa'), '68 matter against antimatter': ("SHOWN: the + child at the take's Node on 7 moving births and", "SHOWN: the + child at the take's Node on 8 moving births and"), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 7 and 8 moving births (no conve', 'NOT SHOWN: both hands stand, 8 and 9 moving births (no conve'), '73 E = mc^2 at the merger': ("NOT SHOWN: at 2 of 2 merger ends the pair's share taken exce", "NOT SHOWN: at 4 of 4 merger ends the pair's share taken exce")} 24s
+bodies one_moment MOVED run back {'intervals': 20, 'exact': 20} counts moved {'births': ('23', '22'), 'body_clicks': ('17944', '17927'), 'turns': ('2270', '2275'), 'taken': ('65307900193140216', '63978113799334561'), 'booked': ('13389312667353436', '12114415280423510'), 'refused_stop': ('51337', '50840'), 'refused_lay': ('2147', '2135')} reading rows moved 44 verdicts moved {'8 families forming (whole view)': ('NOT SHOWN: 943 credits beyond the floor', 'NOT SHOWN: 916 credits beyond the floor'), '8b species over the track (one-place vie': ('NOT SHOWN: tracks right 407 of 409', 'NOT SHOWN: tracks right 404 of 406'), '23 the momentum across the click': ("NOT SHOWN: the recoil passed at 0 of 23 births (the lay's fo", "NOT SHOWN: the recoil passed at 0 of 22 births (the lay's fo"), '25 the entropy of the clicks rising': ('SHOWN: H never falls (a sum of bit lengths), 1127 bits over ', 'SHOWN: H never falls (a sum of bit lengths), 1078 bits over '), '40 the photoelectric click': ('NOT SHOWN: 978 clicks take fewer levels than one quantum (th', 'NOT SHOWN: 955 clicks take fewer levels than one quantum (th'), '56 Bell': ('NOT READ: 23 births, 3 of the four setting cells filled by p', 'NOT READ: 22 births, 3 of the four setting cells filled by p'), '62 the arrow of time in the clicks': ('SHOWN: the charge odd under the slot exchange, 17115 of 1711', 'SHOWN: the charge odd under the slot exchange, 17079 of 1707'), '63 the uniformity in the clicks': ('NOT SHOWN: 0 regions without a credit, the least 1253 agains', 'NOT SHOWN: 0 regions without a credit, the least 1490 agains'), '64 dark matter in kind': ('SHOWN: 335 of 409 bodies credited at a Node where no light w', 'SHOWN: 336 of 406 bodies credited at a Node where no light w'), '68 matter against antimatter': ("SHOWN: the + child at the take's Node on 5 moving births and", "SHOWN: the + child at the take's Node on 4 moving births and"), "69 the neutrino's one hand": ('NOT SHOWN: both hands stand, 5 and 3 moving births (no conve', 'NOT SHOWN: both hands stand, 4 and 3 moving births (no conve')} 120s
+DONE
+
+====================================================================================================
+2. The unspringings' dropped excess, from the committed logs
+---------------------------------------- merger_excess.py
+"""Item 4: every merger (unspringing) of a committed chart: each end's take of the sprung record (its fall against its wall) and each end's light laid at -1 (its rise against the same wall), the excess the close drops, in walls."""
+import sys
+from common import *
+for name in ("chiral", "bodies"):
+    log = committed(name)["log"]
+    mergers = [e for e in log if e.get("event") == "birth" and "takes" in e]
+    fall_x, rise_x, n = [], [], 0
+    for e in mergers:
+        for t in e["takes"]:
+            fall_x.append((t["taken"] - t["booked"]) / t["booked"])
+        for t, lay in zip(e["takes"], e.get("exact_lay", [])):
+            if lay is not None:
+                rise_x.append((lay[2] - t["booked"]) / t["booked"])
+        n += 1
+    print(f"{name}: {n} unspringings, {len(fall_x)} ends; the sprung take's dropped excess (fall - wall) / wall: "
+          f"least {min(fall_x):.3e}, largest {max(fall_x):.3e}, summed {sum(fall_x):.3e} walls; "
+          f"the light's lay excess (rise - wall) / wall over {len(rise_x)} ends: least {min(rise_x):.3e}, largest {max(rise_x):.3e}, summed {sum(rise_x):.3e} walls")
+---------------------------------------- output: out_merger.txt
+chiral: 1 unspringings, 2 ends; the sprung take's dropped excess (fall - wall) / wall: least 9.715e-03, largest 1.038e-01, summed 1.135e-01 walls; the light's lay excess (rise - wall) / wall over 2 ends: least 3.300e-03, largest 1.425e-01, summed 1.458e-01 walls
+bodies: 15 unspringings, 30 ends; the sprung take's dropped excess (fall - wall) / wall: least 2.819e-01, largest 2.452e+01, summed 1.819e+02 walls; the light's lay excess (rise - wall) / wall over 30 ends: least 1.651e-03, largest 1.657e-01, summed 2.189e+00 walls
+
+====================================================================================================
+3. The vernier's lattices beyond against back
+---------------------------------------- vernier_count.py
+"""Item 2: at every vernier read of a chart through a tick, each neighbour's mesh lattice as the code reads it (the neighbour's grip on the same spoke, the mesh beyond) against the law's (the grip on the opposite spoke, back to the clock, R_ji)."""
+import sys
+from common import *
+from event_universe import draw
+from event_universe.core.rule3 import pitch
+from event_universe.unwind import at_clock, window_clocks
+from event_universe.clock import Clock
+import event_universe.striking as sk
+name, n = sys.argv[1], int(sys.argv[2])
+real = draw.vernier
+tally = {"reads": 0, "lattices": 0, "differ": 0}
+
+
+def vernier(node, at, rules, unit):
+    tally["reads"] += 1
+    for line, r in rules:
+        for k, m in enumerate(window_clocks(node, at)):
+            if k == 0:
+                continue
+            wl = at_clock(line.teeth, m)
+            beyond = pitch(wl, at_clock(r.grips[k - 1], m))
+            back = pitch(wl, at_clock(r.grips[(k - 1) ^ 1], m))
+            tally["lattices"] += 1
+            tally["differ"] += beyond != back
+    return real(node, at, rules, unit)
+
+
+sk.vernier = vernier
+c = committed(name)
+node = Clock(c["universe"], dict(c["world"], intervals=n))
+for _ in range(n):
+    node.tick()
+print(name, n, "ticks:", tally)
+---------------------------------------- output: out_vernier.txt
+hole 12 ticks: {'reads': 100, 'lattices': 13800, 'differ': 4070}
+hole 60 ticks: {'reads': 5305, 'lattices': 732090, 'differ': 385260}
+
+====================================================================================================
+5. The lay-back on the test worlds that lay back
+---------------------------------------- run_world.py
+"""A test world under one fix (argv: the world file, the ticks, the fix or none): the counts, the state hash, the slack standing at the lay-backs, and the run back."""
+import json, sys, time
+from common import *
+import fixes
+world_file, n, fix = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+if fix != "none":
+    getattr(fixes, fix)()
+from event_universe.clock import Clock
+from event_universe.run import state_hash
+world = json.load(open(WT + "/tests/worlds/" + world_file))
+universe = json.load(open(WT + "/tests/worlds/" + world["universe"]))
+node = Clock(universe, dict(world, intervals=n))
+hashes = [state_hash(node)]
+slack_after_layback = []
+for _ in range(n):
+    before = len(node.log)
+    node.tick()
+    for e in node.log[before:]:
+        if e.get("event") == "credit" and "laid_back" in e:
+            slack_after_layback.append(int(node.slack[tuple(e["node"])]))
+    hashes.append(state_hash(node))
+counts = {k: node.counts[k] for k in ("births", "body_clicks", "laid_back", "taken", "booked", "refused_stop")}
+back = min(n, 20)
+exact = 0
+for k in range(n, n - back, -1):
+    node.tick(-1)
+    exact += state_hash(node) == hashes[k - 1]
+nz = [s for s in slack_after_layback if s]
+print(world_file, n, fix, counts, "lay-backs", len(slack_after_layback), "with a slack standing after", len(nz), "the largest", max(nz) if nz else 0,
+      "state", hashes[-1][:16], f"the rewind {exact} of {back}", flush=True)
+---------------------------------------- output: out_fix3.txt
+world_pair_3.json 100 none {'births': 0, 'body_clicks': 81, 'laid_back': 81, 'taken': 0, 'booked': 0, 'refused_stop': 0} lay-backs 81 with a slack standing after 81 the largest 147537602697661259914 state 441dc4d1177837fa the rewind 20 of 20
+world_pair_3.json 100 lay_back_whole {'births': 0, 'body_clicks': 81, 'laid_back': 81, 'taken': 0, 'booked': 0, 'refused_stop': 0} lay-backs 81 with a slack standing after 0 the largest 0 state a49b6e6b7b5377e1 the rewind 20 of 20
+world_plasma_3.json 100 none {'births': 0, 'body_clicks': 135, 'laid_back': 135, 'taken': 0, 'booked': 0, 'refused_stop': 0} lay-backs 135 with a slack standing after 135 the largest 328027681241426976550 state 6d237ce9cd0bd5bf the rewind 20 of 20
+world_plasma_3.json 100 lay_back_whole {'births': 0, 'body_clicks': 135, 'laid_back': 135, 'taken': 0, 'booked': 0, 'refused_stop': 0} lay-backs 135 with a slack standing after 0 the largest 0 state e5104215865d2f96 the rewind 20 of 20
+DONE
+
+====================================================================================================
+6. The orbit's half turn by the three tie rules
+---------------------------------------- orbit_ties.py
+"""Item 6: the standard's orbit walked from its seed at a scale X, its half turn by the three tie rules: the table's (readings.standard_angle: the first count whose cosine does not fall), the floor's (features/standard.deviation: the first count whose cosine rises), and the sine's turn (the first count whose sine is not above 0)."""
+from common import *
+from event_universe.features import standard
+for X in (23 * 1000, 1000 * 1000, 288230376000):
+    gamma = 1000
+    c, s = standard.first_pair(X, gamma)
+    cos, sin = [int(c[0])], [int(s[0])]
+    for _ in range(4000):
+        c, s = standard.act(c, gamma, 1), standard.act(s, gamma, 1)
+        cos.append(int(c[0])); sin.append(int(s[0]))
+    table = next(n for n in range(1, 4000) if cos[n + 1] >= cos[n])
+    floor = next(n for n in range(1, 4000) if cos[n + 1] > cos[n])
+    turn = next(n for n in range(1, 4000) if sin[n + 1] <= 0) 
+    flat = sum(1 for n in range(1, 40) if cos[n + 1] == cos[n])
+    print(f"X {X} ({X // gamma} Gamma): the table's half turn {table}, the floor's {floor}, the sine's turn {turn}; flat steps among the first 40 counts {flat}")
+---------------------------------------- output: out_ties.txt
+X 23000 (23 Gamma): the table's half turn 1, the floor's 3161, the sine's turn 3139; flat steps among the first 40 counts 20
+X 1000000 (1000 Gamma): the table's half turn 3141, the floor's 3142, the sine's turn 3141; flat steps among the first 40 counts 0
+X 288230376000 (288230376 Gamma): the table's half turn 3142, the floor's 3142, the sine's turn 3141; flat steps among the first 40 counts 0
+
+====================================================================================================
+7. The rows' tension range against the tensions alone
+---------------------------------------- tensions.py
+"""Item 7: the rows' "tension min/max" as run.py reads it (every axis gear of the regulator: tensions, fluxes and shears) against the tensions alone (gears 1 .. AXES), at each tick of a chart."""
+import sys
+from common import *
+from event_universe.clock import Clock
+from event_universe.core.spokes import AXES
+from event_universe.trains import REGULATOR
+name, n = sys.argv[1], int(sys.argv[2])
+c = committed(name)
+node = Clock(c["universe"], dict(c["world"], intervals=n))
+differ = []
+for _ in range(n):
+    node.tick()
+    gears = node.train(REGULATOR).gears
+    every = [int(x) for g in gears[1:] for x in g.now.reshape(-1)]
+    tensions = [int(x) for g in gears[1:1 + AXES] for x in g.now.reshape(-1)]
+    if (min(every), max(every)) != (min(tensions), max(tensions)):
+        differ.append((node.ticks, [min(every), max(every)], [min(tensions), max(tensions)]))
+print(name, n, "ticks whose row reads another range than the tensions':", len(differ), "of", n, "e.g.", differ[:4])
+---------------------------------------- output: out_tensions.txt
+hole 60 ticks whose row reads another range than the tensions': 50 of 60 e.g. [(6, [-3, 2], [-2, 2]), (7, [-2, 3], [-1, 3]), (9, [-2, 3], [-1, 3]), (10, [-3, 4], [-2, 4])]
+

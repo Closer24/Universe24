@@ -1,0 +1,83 @@
+numpy 2.5.4
+1 2^60+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^60+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^61-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^61+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^61+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^62-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^62+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^62+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^63-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1 2^63+0 caught ValueError Maximum allowed dimension exceeded
+1 2^63+1 caught ValueError Maximum allowed dimension exceeded
+1 2^64-1 caught ValueError Maximum allowed dimension exceeded
+1 2^64+0 caught ValueError Maximum allowed dimension exceeded
+1 2^64+1 caught ValueError Maximum allowed dimension exceeded
+1 2^65-1 caught ValueError Maximum allowed dimension exceeded
+1 2^65+0 caught ValueError Maximum allowed dimension exceeded
+1 2^65+1 caught ValueError Maximum allowed dimension exceeded
+1 2^100-1 caught ValueError Maximum allowed dimension exceeded
+1 2^100+0 caught ValueError Maximum allowed dimension exceeded
+1 2^100+1 caught ValueError Maximum allowed dimension exceeded
+1 2^1000-1 caught ValueError Maximum allowed dimension exceeded
+1 2^1000+0 caught ValueError Maximum allowed dimension exceeded
+1 2^1000+1 caught ValueError Maximum allowed dimension exceeded
+3 2^59-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^59+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^59+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^60-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^60+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^60+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^61-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^61+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^61+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^62-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^62+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^62+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^63-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+3 2^63+0 caught ValueError Maximum allowed dimension exceeded
+3 2^63+1 caught ValueError Maximum allowed dimension exceeded
+3 2^64-1 caught ValueError Maximum allowed dimension exceeded
+3 2^64+0 caught ValueError Maximum allowed dimension exceeded
+3 2^64+1 caught ValueError Maximum allowed dimension exceeded
+3 2^65-1 caught ValueError Maximum allowed dimension exceeded
+3 2^65+0 caught ValueError Maximum allowed dimension exceeded
+3 2^65+1 caught ValueError Maximum allowed dimension exceeded
+3 2^100-1 caught ValueError Maximum allowed dimension exceeded
+3 2^100+0 caught ValueError Maximum allowed dimension exceeded
+3 2^100+1 caught ValueError Maximum allowed dimension exceeded
+3 2^1000-1 caught ValueError Maximum allowed dimension exceeded
+3 2^1000+0 caught ValueError Maximum allowed dimension exceeded
+3 2^1000+1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^40+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^40+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^48-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^48+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^48+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^59-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^59+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^59+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^60-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^60+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^60+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^61-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^61+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^61+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^62-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^62+0 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^62+1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^63-1 caught ValueError array is too big; `arr.size * arr.dtype.itemsize` is larger than the m
+1048576 2^63+0 caught ValueError Maximum allowed dimension exceeded
+1048576 2^63+1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^64-1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^64+0 caught ValueError Maximum allowed dimension exceeded
+1048576 2^64+1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^65-1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^65+0 caught ValueError Maximum allowed dimension exceeded
+1048576 2^65+1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^100-1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^100+0 caught ValueError Maximum allowed dimension exceeded
+1048576 2^100+1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^1000-1 caught ValueError Maximum allowed dimension exceeded
+1048576 2^1000+0 caught ValueError Maximum allowed dimension exceeded
+1048576 2^1000+1 caught ValueError Maximum allowed dimension exceeded

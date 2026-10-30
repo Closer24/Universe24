@@ -1,1 +1,0 @@
-{"world": "pile_two_up.json", "ms": 2427, "credits": {"0": 0, "1": 0, "2": 58, "3": 0}, "crossings": {"2,0": 4, "2,4": 0, "0,0": 0, "1,0": 0}, "births": 0, "spinor births": 0, "run back": {"intervals": 5, "exact": 5}, "integers": 116, "bits": 92, "transient": 76, "taken>=booked": true}

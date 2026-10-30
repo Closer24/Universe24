@@ -1,4 +1,0 @@
-family 24 'point 2 0 0' g 0.8298; body at (3, 3, 3); detector Node (3, 3, 6); seed family 2 unit 1637588529984138012000
-t    1 U_body 0.0010 U_det 0.0000 U_far 0.0000 light@body 0.996 light@det 0.992 light_max 1.654 body@node 1.011 quanta 1.017 credits 0 (0 s)
-t   10 U_body 0.0400 U_det 0.0390 U_far 0.1901 light@body 0.600 light@det 0.321 light_max 9.657 body@node 0.737 quanta 8.180 credits 56 (7 s)
-t   50 U_body 0.8174 U_det 0.7924 U_far 0.8174 light@body 0.973 light@det 1.365 light_max 53.483 body@node 18.823 quanta 4947.396 credits 1602 (222 s)

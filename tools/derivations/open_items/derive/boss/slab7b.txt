@@ -1,0 +1,12 @@
+Gamma 1000, p 800, N 0.8, slab 40 Meshes, vacuum speed 0.5 Mesh per tick
+vacuum: peak at round 480.70 (height 0.999)
+beat: peak at round 500.82 (height 1.048); extra delay 20.12, continuum 20.00
+grip: peak at round 526.01 (height 1.054); extra delay 45.31, continuum 45.00
+Gamma 1000, p 900, N 0.9, slab 40 Meshes, vacuum speed 0.5 Mesh per tick
+vacuum: peak at round 480.70 (height 0.999)
+beat: peak at round 489.77 (height 1.009); extra delay 9.07, continuum 8.89
+grip: peak at round 499.79 (height 1.011); extra delay 19.09, continuum 18.77
+Gamma 1000, p 950, N 0.95, slab 40 Meshes, vacuum speed 0.5 Mesh per tick
+vacuum: peak at round 480.70 (height 0.999)
+beat: peak at round 484.29 (height 0.993); extra delay 3.59, continuum 4.21
+grip: peak at round 489.46 (height 0.987); extra delay 8.76, continuum 8.64

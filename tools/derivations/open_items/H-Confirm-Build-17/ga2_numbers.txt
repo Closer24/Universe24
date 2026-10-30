@@ -1,5 +1,0 @@
-turns [[110, 64], [331, 64]]
-run_back {'intervals': 10, 'exact': 10}
-counts births 64 credits/laid_back 1408
-births by interval Counter({2: 64})
-X = Gamma at every Node at [218, 442]

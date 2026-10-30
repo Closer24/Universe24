@@ -1,0 +1,117 @@
+DAVID-WORLDS-EVERY-TEST_CHECKS.txt: the checks of DAVID-WORLDS-EVERY-TEST.md (David, 2026-10-27, 18:1x UTC), on the head 5f8680de2 (engine-5.0-test); no src touched.
+What they show: (1) the clock works: every run is the engine's own chart (run.chart) with its rewind of 10 ticks compared bit for bit, 10 of 10 in every run; (2) the phenomenon: under the wave every chime of the uniform worlds is refused as a stop; laying the light twice brings part of them back; the chime where nothing arrives, laid back with no take, brings every one back as at the head.
+
+== 1. The act (own_beat.py, the own beat's chiming with the switch NULL: where nothing arrives, the chime credited laid back with no take)
+            if NULL[0] and int(net[at]) == 0:
+                clock.wound[rec][at] = 0
+                g = clock.hands()[rec0].gears[0]
+                slack = int(clock.slack[at])
+                take = {"taken": 0, "levels": 0, "taken_now_was": int(g.now[at]), "taken_line": 0, "taker": [int(g.now[at]), int(g.before[at]), 0], "remainder_was": slack, "remainder": slack}
+                clock.last_push = [0] * AXES
+                clock.last_recoil = recoil(clock, at, [0] * AXES, int(clock.start_rate[at]), 1)
+                clock.strikes[at] += 1
+                clock.counts["body_clicks"] += 1
+                clock.counts["laid_back"] += 1
+                entry = chime(clock, rec, at, take, B.face_of(clock, rec, at, hand_starts), hand_starts[rec])
+                entry["laid_back"], entry["dP_take"], entry["booked"] = 0, [0] * AXES, 0
+                entry["recoil"], entry["carry"] = [0] * AXES, clock.last_recoil["carry"]
+                clock.log.append(entry)
+                continue
+
+== 2. The runs (survey.py WORLD 20 K MODE: own = the head with the own beat; wave = the wave and the own beat; null = the wave, the own beat and the act)
+world_bodies.json 20 ticks, the light's sea x1, own: chimes 1136 (laid back 0), fittings 22 (unspringings 16), refused stops 4019, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_500.json 20 ticks, the light's sea x1, own: chimes 513 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_800.json 20 ticks, the light's sea x1, own: chimes 702 (laid back 0), fittings 0 (unspringings 0), refused stops 144, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_1200.json 20 ticks, the light's sea x1, own: chimes 708 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_emission.json 20 ticks, the light's sea x1, own: chimes 1136 (laid back 0), fittings 22 (unspringings 16), refused stops 4019, the rewind {'intervals': 10, 'exact': 10}
+world_emission_none.json 20 ticks, the light's sea x1, own: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_emission_one.json 20 ticks, the light's sea x1, own: chimes 240 (laid back 0), fittings 0 (unspringings 0), refused stops 158, the rewind {'intervals': 10, 'exact': 10}
+world_ga2.json 20 ticks, the light's sea x1, own: chimes 128 (laid back 128), fittings 64 (unspringings 0), refused stops 5504, the rewind {'intervals': 10, 'exact': 10}
+world_hole.json 20 ticks, the light's sea x1, own: chimes 296 (laid back 0), fittings 13 (unspringings 0), refused stops 999, the rewind {'intervals': 10, 'exact': 10}
+world_nature.json 20 ticks, the light's sea x1, own: chimes 955 (laid back 0), fittings 16 (unspringings 1), refused stops 2062, the rewind {'intervals': 10, 'exact': 10}
+world_node.json 20 ticks, the light's sea x1, own: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_packet.json 20 ticks, the light's sea x1, own: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 452, the rewind {'intervals': 10, 'exact': 10}
+world_pair_3.json 20 ticks, the light's sea x1, own: chimes 108 (laid back 108), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma.json 20 ticks, the light's sea x1, own: chimes 625 (laid back 625), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x1, own: chimes 135 (laid back 135), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_sea.json 20 ticks, the light's sea x1, own: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_sea_3.json 20 ticks, the light's sea x1, own: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe.json 20 ticks, the light's sea x1, own: chimes 875 (laid back 875), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe_3.json 20 ticks, the light's sea x1, own: chimes 189 (laid back 189), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_bodies.json 20 ticks, the light's sea x1, wave: chimes 83 (laid back 0), fittings 0 (unspringings 0), refused stops 676, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_500.json 20 ticks, the light's sea x1, wave: chimes 220 (laid back 0), fittings 0 (unspringings 0), refused stops 448, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_800.json 20 ticks, the light's sea x1, wave: chimes 148 (laid back 0), fittings 0 (unspringings 0), refused stops 534, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_1200.json 20 ticks, the light's sea x1, wave: chimes 156 (laid back 0), fittings 0 (unspringings 0), refused stops 528, the rewind {'intervals': 10, 'exact': 10}
+world_emission.json 20 ticks, the light's sea x1, wave: chimes 83 (laid back 0), fittings 0 (unspringings 0), refused stops 676, the rewind {'intervals': 10, 'exact': 10}
+world_emission_none.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_emission_one.json 20 ticks, the light's sea x1, wave: chimes 85 (laid back 0), fittings 0 (unspringings 0), refused stops 313, the rewind {'intervals': 10, 'exact': 10}
+world_ga2.json 20 ticks, the light's sea x1, wave: chimes 128 (laid back 128), fittings 64 (unspringings 0), refused stops 5504, the rewind {'intervals': 10, 'exact': 10}
+world_hole.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 30, the rewind {'intervals': 10, 'exact': 10}
+world_nature.json 20 ticks, the light's sea x1, wave: chimes 121 (laid back 0), fittings 2 (unspringings 0), refused stops 983, the rewind {'intervals': 10, 'exact': 10}
+world_node.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_packet.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 452, the rewind {'intervals': 10, 'exact': 10}
+world_pair_3.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 108, the rewind {'intervals': 10, 'exact': 10}
+world_plasma.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 625, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 135, the rewind {'intervals': 10, 'exact': 10}
+world_sea.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_sea_3.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 875, the rewind {'intervals': 10, 'exact': 10}
+world_universe_3.json 20 ticks, the light's sea x1, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 189, the rewind {'intervals': 10, 'exact': 10}
+world_bodies.json 20 ticks, the light's sea x1, null: chimes 83 (laid back 0), fittings 0 (unspringings 0), refused stops 676, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_500.json 20 ticks, the light's sea x1, null: chimes 220 (laid back 0), fittings 0 (unspringings 0), refused stops 448, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_800.json 20 ticks, the light's sea x1, null: chimes 148 (laid back 0), fittings 0 (unspringings 0), refused stops 534, the rewind {'intervals': 10, 'exact': 10}
+world_collapse_1200.json 20 ticks, the light's sea x1, null: chimes 156 (laid back 0), fittings 0 (unspringings 0), refused stops 528, the rewind {'intervals': 10, 'exact': 10}
+world_emission.json 20 ticks, the light's sea x1, null: chimes 83 (laid back 0), fittings 0 (unspringings 0), refused stops 676, the rewind {'intervals': 10, 'exact': 10}
+world_emission_none.json 20 ticks, the light's sea x1, null: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_emission_one.json 20 ticks, the light's sea x1, null: chimes 85 (laid back 0), fittings 0 (unspringings 0), refused stops 313, the rewind {'intervals': 10, 'exact': 10}
+world_ga2.json 20 ticks, the light's sea x1, null: chimes 640 (laid back 640), fittings 64 (unspringings 0), refused stops 4992, the rewind {'intervals': 10, 'exact': 10}
+world_hole.json 20 ticks, the light's sea x1, null: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 30, the rewind {'intervals': 10, 'exact': 10}
+world_nature.json 20 ticks, the light's sea x1, null: chimes 121 (laid back 0), fittings 2 (unspringings 0), refused stops 983, the rewind {'intervals': 10, 'exact': 10}
+world_node.json 20 ticks, the light's sea x1, null: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_packet.json 20 ticks, the light's sea x1, null: chimes 452 (laid back 452), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_pair_3.json 20 ticks, the light's sea x1, null: chimes 108 (laid back 108), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma.json 20 ticks, the light's sea x1, null: chimes 625 (laid back 625), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x1, null: chimes 135 (laid back 135), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_sea.json 20 ticks, the light's sea x1, null: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_sea_3.json 20 ticks, the light's sea x1, null: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe.json 20 ticks, the light's sea x1, null: chimes 875 (laid back 875), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe_3.json 20 ticks, the light's sea x1, null: chimes 189 (laid back 189), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+
+== 3. The light's sea laid k times under the wave
+world_plasma_3.json 20 ticks, the light's sea x2, wave: chimes 54 (laid back 54), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x3, wave: chimes 54 (laid back 54), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x4, wave: chimes 27 (laid back 27), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x6, wave: chimes 27 (laid back 27), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x8, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x16, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x32, wave: chimes 0 (laid back 0), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x48, wave: chimes 54 (laid back 54), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x64, wave: chimes 27 (laid back 27), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma_3.json 20 ticks, the light's sea x96, wave: chimes 27 (laid back 27), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_pair_3.json 20 ticks, the light's sea x2, wave: chimes 54 (laid back 54), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_pair_3.json 20 ticks, the light's sea x3, wave: chimes 27 (laid back 27), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe_3.json 20 ticks, the light's sea x2, wave: chimes 162 (laid back 162), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe_3.json 20 ticks, the light's sea x3, wave: chimes 108 (laid back 108), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma.json 20 ticks, the light's sea x2, wave: chimes 250 (laid back 250), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_plasma.json 20 ticks, the light's sea x3, wave: chimes 250 (laid back 250), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe.json 20 ticks, the light's sea x2, wave: chimes 750 (laid back 750), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+world_universe.json 20 ticks, the light's sea x3, wave: chimes 500 (laid back 500), fittings 0 (unspringings 0), refused stops 0, the rewind {'intervals': 10, 'exact': 10}
+
+== 4. Why the chime is refused (stops_small.py world_plasma_3.json 20 1), and the windings (hand 3 the light)
+world_plasma_3.json x1: 135 stops; per stop, in the heaviest bob's winding:
+  tick 5 clock [0, 0, 0] row 3: the full fall 0.9243 against owed 1.0000
+  tick 5 clock [0, 0, 1] row 3: the full fall 0.9243 against owed 1.0000
+  tick 5 clock [0, 0, 2] row 3: the full fall 0.9243 against owed 1.0000
+  tick 5 clock [0, 1, 0] row 3: the full fall 0.9243 against owed 1.0000
+windings on the toy calibre: {0: 878848879465440000, 1: 1615924816158049488000, 2: 1613701501183721088000, 3: 1637588529984138012000}, the light's hand 3; the light's wind at a clock of plasma_3 at the seed 1624897218876760942407
+
+== 5. B's seeds where light arrives, under the wave and the own beat, with and without the act (the world files in scratchpad/survey/worlds)
+world_hole_56.json 60 ticks, the light's sea x1, wave: chimes 8 (laid back 0), fittings 6 (unspringings 2), refused stops 79, the rewind {'intervals': 10, 'exact': 10}
+world_hole_56.json 60 ticks, the light's sea x1, null: chimes 8 (laid back 0), fittings 6 (unspringings 2), refused stops 79, the rewind {'intervals': 10, 'exact': 10}
+world_nature_2.json 60 ticks, the light's sea x1, wave: chimes 3323 (laid back 0), fittings 5 (unspringings 0), refused stops 8687, the rewind {'intervals': 10, 'exact': 10}
+world_nature_2.json 60 ticks, the light's sea x1, null: chimes 3323 (laid back 0), fittings 5 (unspringings 0), refused stops 8687, the rewind {'intervals': 10, 'exact': 10}
+world_bodies_4.json 120 ticks, the light's sea x1, wave: chimes 1607 (laid back 0), fittings 11 (unspringings 10), refused stops 5349, the rewind {'intervals': 10, 'exact': 10}
+world_bodies_4.json 120 ticks, the light's sea x1, null: chimes 1607 (laid back 0), fittings 11 (unspringings 10), refused stops 5349, the rewind {'intervals': 10, 'exact': 10}
+world_hole_56.json: {"universe": "universe_toy.json", "shape": [5, 5, 5], "intervals": 60, "seed": [{"lay": "sea", "row": 0}, {"lay": "hole", "at": [0, 0, 0]}, {"lay": "at", "row": 0, "centre": [1, 0, 0], "quanta": 56}, {"lay": "at", "row": 0, "centre": [2, 0, 0], "quanta": 56}, {"lay": "at", "row": 0, "centre": [0, 0, 0], "quanta": 56}, {"lay": "at", "row": 0, "centre": [1, 1, 0], "quanta": 56}, {"lay": "at", "row": 0, "centre": [1, 4, 0], "quanta": 56}, {"lay": "at", "row": 0, "centre": [1, 0, 1], "quanta": 56}, {"lay": "at", "row": 0, "centre": [1, 0, 4], "quanta": 56}]}
+world_nature_2.json: {"universe": "universe_toy.json", "shape": [5, 5, 5], "intervals": 60, "seed": [{"lay": "sea", "row": 0}, {"lay": "hole", "at": [0, 0, 0]}, {"lay": "at", "row": 0, "centre": [1, 0, 0], "quanta": 2}, {"lay": "at", "row": 0, "centre": [0, 2, 1], "quanta": 2}, {"lay": "at", "row": 0, "centre": [2, 1, 3], "quanta": 2}]}
+world_bodies_4.json: {"universe": "universe_middle.json", "shape": [7, 7, 7], "intervals": 120, "seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 2, "centre": [3, 3, 2], "width": 2, "quanta": 125}, {"lay": "at", "row": 2, "centre": [3, 3, 5], "width": 2, "quanta": 125}, {"lay": "at", "row": 0, "centre": [3, 3, 2], "quanta": 4}, {"lay": "at", "row": 0, "centre": [3, 3, 5], "quanta": 4}]}

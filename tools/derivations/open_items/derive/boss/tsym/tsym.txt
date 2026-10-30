@@ -1,0 +1,31 @@
+Time symmetry of stage 7b's act (tensor24's committed act, the clean copy): tick(L, T s1) = T s0?
+C = 1007; T = 23290147981996629504000000; the ruler's last count 3792
+
+0. Carry by carry, 3000 random cases each (W != W+, go in [-3, 3]); cases off:
+   gear 0, drive 0, beat 0, home 0, home go+1 2593
+   (gear: gear(b1, a1, W+-1-r1, 1-go, W+, W, push) = (b, a, W-1-r); drive, beat: remainder flipped at T_d, Gamma, q and k kept; home: home(W,go) + home(W,go') = W-1 with go' = 1-go, and with go' = go+1)
+
+1. Synchronous runs from the laid state, every due beat firing, every tick's state checked (120 each):
+   light, A = 600 (2 rows): exact 120/120; W != W+ in 84 rounds (5315 cells); time gear's count -656..1530, past the ruler's last in 0 rounds, below 0 in 39; first failure None; doubled clock at C = 1007, 0: [None, None]
+   light, A = 300 (2 rows): exact 120/120; W != W+ in 120 rounds (7570 cells); time gear's count -1..634, past the ruler's last in 0 rounds, below 0 in 1; first failure None; doubled clock at C = 1007, 0: [None, None]
+   matter, A = 600 (2 rows): exact 120/120; W != W+ in 120 rounds (7572 cells); time gear's count -68..945, past the ruler's last in 0 rounds, below 0 in 16; first failure None; doubled clock at C = 1007, 0: [None, None]
+   matter, A = 300 (2 rows): exact 120/120; W != W+ in 120 rounds (7305 cells); time gear's count -7..259, past the ruler's last in 0 rounds, below 0 in 10; first failure None; doubled clock at C = 1007, 0: [None, None]
+   light + matter, A = 300 (3 rows): exact 120/120; W != W+ in 120 rounds (15162 cells); time gear's count -17..767, past the ruler's last in 0 rounds, below 0 in 10; first failure None; doubled clock at C = 1007, 0: [None, None]
+   light + matter, A = 600 (3 rows): exact 120/120; W != W+ in 55 rounds (6994 cells); time gear's count -10..191513, past the ruler's last in 67 rounds, below 0 in 2; first failure None; doubled clock at C = 1007, 0: [None, None]
+   light: 240 of 240 states exact on all eight components and the out (204 with W != W+)
+   matter: 240 of 240 states exact on all eight components and the out (240 with W != W+)
+   light + matter: 240 of 240 states exact on all eight components and the out (175 with W != W+)
+
+2. Ablations of T on light A = 600, 40 states from tick 40 (one round from s / from T s; T T = 1):
+   laid W: exact from s 0/40, from T s 0/40, T T = 1 40/40; first difference a[0, 0]: -98 vs -97 (62 cells)
+   rd kept: exact from s 0/40, from T s 0/40, T T = 1 40/40; first difference a[1, 0]: 1438 vs 1437 (17 cells)
+   go+1: exact from s 40/40, from T s 40/40, T T = 1 0/40; first difference go[0, 0]: 2 vs 0 (128 cells)
+   ph kept: exact from s 40/40, from T s 40/40, T T = 1 40/40; first difference None
+
+3. Staggered counts (masks; every dial at the full rate, so tn = c), light A = 600:
+   all ones from the laid state s and from s' = s after site 0's beat alone: results differ at None (None: the round maps s and s' to one state)
+   minimal failing example, s0 = s': fire at site 0 forward 0, mirrored 1; tick(T s1) vs T s0 differ at ['a[0, 0]: 673 vs 681 (1 cells)', 'b[0, 0]: 681 vs 432 (2 cells)', 'r[0, 0]: 7287984882393756661327934 vs 27059959753396133653817606 (1 cells)', 'rd[1, 0]: 419222663675939331071999999999 vs 312973008582070707274751999999 (1 cells)', 'c[0, 0]: 1007 vs 1006 (1 cells)', 'tn[0, 0]: 1007 vs 1006 (1 cells)']; the out at ['fire[0, 0]: 1 vs 0 (1 cells)', 'k[0, 0]: 1 vs 0 (1 cells)']
+   31 staggered states (counts spread up to 3): mirrored round with all ones exact at 0; due(T s1) = the forward fire at 0, contains it at 31; with the forward fire as the mirrored round's mask exact (state and out) at 31
+
+4. Dials below the full rate (the layout's rate replaced in memory, 400..999 per site), light A = 600:
+   60 synchronous states: the first differing component of tick(T s1) vs T s0 {'exact': 1, 'tn': 59}; the out exact 60/60, with the dial not flipped 0/60; doubled clock (60 ticks): a[0, 0]: 96119 vs 681 (128 cells)

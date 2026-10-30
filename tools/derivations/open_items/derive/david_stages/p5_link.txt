@@ -1,0 +1,4 @@
+law    : (1) L not symmetric on 0 of 2000 boards; (2) not commuting with the framed quarter turn on 0 of 2000; (3) the charge moved on 0 of 200 boards over 40 ticks
+nopawl : (1) L not symmetric on 300 of 300 boards; (2) not commuting with the framed quarter turn on 0 of 300; (3) the charge moved on 40 of 40 boards over 40 ticks
+noK    : (1) L not symmetric on 300 of 300 boards; (2) not commuting with the framed quarter turn on 300 of 300; (3) the charge moved on 40 of 40 boards over 40 ticks
+(5) n = 0: the pull is T times the plain Laplacian at every site: True

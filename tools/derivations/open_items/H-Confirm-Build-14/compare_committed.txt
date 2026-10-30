@@ -1,9 +1,0 @@
---- hole:world_hole_60
-keys ['G', 'T', 'counts', 'cube', 'den', 'gamma', 'gapped', 'intervals', 'log', 'nodes', 'planes', 'rows', 'run_back', 'turns', 'universe', 'world'] floats 0 0 run_back {'intervals': 20, 'exact': 20} {'intervals': 20, 'exact': 20} counts {'births': '24', 'taken': '127294047772696892085196', 'booked': '123706708729067569296800', 'body_clicks': '1124', 'laid_back': '0', 'refused_stop': '547', 'refused_origin': '0', 'refused_lay': '5060', 'refused_orientation': '2180', 'refused_twist': '3507', 'refused_sense': '8608', 'turns': '570', 'met': '19391', 'laid': '192', 'laid_nodes': '192'}
-EQUAL []
---- chiral:world_chiral_60
-keys ['G', 'T', 'counts', 'cube', 'den', 'gamma', 'gapped', 'intervals', 'log', 'nodes', 'planes', 'rows', 'run_back', 'turns', 'universe', 'world'] floats 0 0 run_back {'intervals': 20, 'exact': 20} {'intervals': 20, 'exact': 20} counts {'births': '19', 'taken': '67276692123257956281129', 'booked': '66237015387596813367171', 'body_clicks': '3052', 'laid_back': '0', 'refused_stop': '2231', 'refused_origin': '0', 'refused_lay': '9968', 'refused_orientation': '259', 'refused_twist': '62', 'refused_sense': '10549', 'turns': '659', 'met': '20863', 'laid': '28', 'laid_nodes': '28'}
-EQUAL []
---- bodies:world_bodies_300
-keys ['G', 'T', 'counts', 'cube', 'den', 'gamma', 'gapped', 'intervals', 'log', 'nodes', 'planes', 'rows', 'run_back', 'turns', 'universe', 'world'] floats 0 0 run_back {'intervals': 20, 'exact': 20} {'intervals': 20, 'exact': 20} counts {'births': '0', 'taken': '0', 'booked': '0', 'body_clicks': '1973', 'laid_back': '0', 'refused_stop': '825', 'refused_origin': '0', 'refused_lay': '112', 'refused_orientation': '1062', 'refused_twist': '8656', 'refused_sense': '3152', 'turns': '4229', 'met': '12982', 'laid': '0', 'laid_nodes': '0'}
-EQUAL []

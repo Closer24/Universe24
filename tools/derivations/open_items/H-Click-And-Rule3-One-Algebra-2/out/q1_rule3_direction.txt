@@ -1,3 +1,0 @@
-lines 20000 back_bit_for_bit 20000 exchange_and_mirror_equal_back 20000 exchange_alone_equal_back 0 mirror_alone_equal_back 0
-complement_commutes_with_floor 20000 of 20000
-node_3cube_run_back 20 of 20

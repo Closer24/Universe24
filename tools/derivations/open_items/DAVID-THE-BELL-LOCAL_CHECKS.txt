@@ -1,0 +1,43 @@
+DAVID-THE-BELL-LOCAL_CHECKS.txt: the checks of DAVID-THE-BELL-LOCAL.md. The build: a local worktree of 97e5b3fd6 with DAVID-THE-BELL-LOCAL.patch applied (bobs.py: bell_turn, bell_answers carried on the clock-nodes' marks and the closures in flight, bell_undo; striking.py: the strike calls bell_answers after the bobs and bell_undo at -1; predicates.py: row 56 reads the clicks' answers). The click reads only its own clock-node's marks and this strike's own lines; no log index. Each check a harness in scratchpad/field; nothing pushed to src.
+
+1. The carriage against the global index (bell_run3.py through each build, 13 seeds at 500 ticks; every click's end, setting, turn, twins, answer, closure and draw compared; the charts compared key by key without the answers):
+   1500000: answers 68, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   2000000: answers 83, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   2500000: answers 74, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   3000000: answers 112, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   4000000: answers 151, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   5000000: answers 447, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   7000000: answers 90, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   10000000: answers 130, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   14000000: answers 84, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   20000000: answers 80, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   30000000: answers 72, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   50000000: answers 64, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   200000000: answers 82, equal to the global index's click by click True; the board equal without the answers True; the rewind {'intervals': 20, 'exact': 20}
+   seeds equal click by click 13 of 13; answers 1537
+
+2. The reading over the 13 seeds through the carriage (bell_final.py):
+   charts 13, the rewind {'{"intervals": 20, "exact": 20}': 13}; pairs answered at both ends 688 (367 in one strike); the first clicks' answers {-1: 409, 1: 440}
+     cell (0, 0): pairs 154, the same answer 21, E thousandths -727
+     cell (0, 1): pairs 163, the same answer 131, E thousandths 607
+     cell (1, 0): pairs 181, the same answer 22, E thousandths -756
+     cell (1, 1): pairs 190, the same answer 22, E thousandths -768
+     S = -88174439/30830635 = -2859 thousandths, its spread about 106 thousandths (Tsirelson 2828, the local bound 2000)
+     the + end's answers for the - end's setting 0: {-1: 168, 1: 149}
+     the + end's answers for the - end's setting 1: {-1: 193, 1: 178}
+     the - end's answers for the + end's setting 0: {1: 182, -1: 153}
+     the - end's answers for the + end's setting 1: {1: 169, -1: 184}
+     the cone: 688 of 688 pairs with the two clicks' mesh distance within the ticks back to the birth and forward again
+
+3. The carriage runs back (bell_rewind.py: the bang's world with the detectors, 300 ticks, the carriage and the board's state text kept at five ticks, then 200 ticks back):
+   answers by tick 300: 221; back from 300 to 100, the carriage and the board alike at the kept ticks: [(300, True, True), (250, True, True), (200, True, True), (150, True, True), (100, True, True)]
+
+4. The full check on the build, the machine quiet (CHECK_BASE=origin/engine-5.0-test tools/check.py --full in the build's worktree):
+   All checks passed!
+   the engine gates hold against the merge base
+   the shape of the code holds against the merge base
+   the shape of tests/ holds against the merge base
+   the documents' six gates hold
+   ======================== 117 passed in 69.20s (0:01:09) ========================
+
+5. The rewind and the phenomenon: the rewind 20 of 20 at all 13 seeds (items 1 and 2) and the carriage's own run back (item 3); the phenomenon is item 2's S beyond the local bound at Born's 478/169, the closure carried one mesh a tick on the clock-nodes.

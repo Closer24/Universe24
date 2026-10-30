@@ -1,0 +1,2343 @@
+DAVID-TENSOR24-THE-LOCAL-TICK_CHECKS.txt: the checks of DAVID-TENSOR24-THE-LOCAL-TICK.md.
+A helper's nine probes (core.py the asynchronous step, importing only the head's acts.carry, acts.mid, rule3.mean_teeth_of,
+rates.rounded and the Spokes' order; h1_head.py a read-only harness on the head's own tick), rerun by David on toys-5 with its
+own src, each output identical to the helper's; then the helper's draft with its proofs in full. Integers only.
+
+== venv314/bin/python -I a1_local_tick.py ==
+a1: the local tick against the head form (sync_round), bit for bit on every integer of every Node-clock
+  A lam const, full formula: side 3, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  A lam const, full formula: side 3, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  B lam X, one rate for all, speeding up: side 3, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  B lam X, one rate for all, speeding up: side 3, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  C lam W, one rate for all, speeding up: side 3, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [886500])
+  C lam W, one rate for all, speeding up: side 3, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [886500])
+  A lam const, full formula: side 3, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  A lam const, full formula: side 3, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  B lam X, one rate for all, speeding up: side 3, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  B lam X, one rate for all, speeding up: side 3, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  C lam W, one rate for all, speeding up: side 3, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [889455])
+  C lam W, one rate for all, speeding up: side 3, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [889455])
+  A lam const, full formula: side 4, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  A lam const, full formula: side 4, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  B lam X, one rate for all, speeding up: side 4, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  B lam X, one rate for all, speeding up: side 4, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  C lam W, one rate for all, speeding up: side 4, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [886500])
+  C lam W, one rate for all, speeding up: side 4, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [886500])
+  A lam const, full formula: side 4, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  A lam const, full formula: side 4, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  B lam X, one rate for all, speeding up: side 4, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  B lam X, one rate for all, speeding up: side 4, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  C lam W, one rate for all, speeding up: side 4, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [889455])
+  C lam W, one rate for all, speeding up: side 4, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [889455])
+  A lam const, full formula: side 5, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  A lam const, full formula: side 5, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  B lam X, one rate for all, speeding up: side 5, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  B lam X, one rate for all, speeding up: side 5, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  C lam W, one rate for all, speeding up: side 5, T 600, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [886500])
+  C lam W, one rate for all, speeding up: side 5, T 600, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [886500])
+  A lam const, full formula: side 5, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  A lam const, full formula: side 5, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [4000])
+  B lam X, one rate for all, speeding up: side 5, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  B lam X, one rate for all, speeding up: side 5, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [2955])
+  C lam W, one rate for all, speeding up: side 5, T 602, seed 1: 9 asynchronous runs, 0 differ from the head form (tick lengths [889455])
+  C lam W, one rate for all, speeding up: side 5, T 602, seed 2: 9 asynchronous runs, 0 differ from the head form (tick lengths [889455])
+a1 RESULT: 324 asynchronous runs (186624 local events) against the head form, 0 differ
+a1 mutants (each must make the asynchronous runs differ from the head form):
+  mutant zoh_now: 36 runs, 32 differ from the head form -> FAILS AS IT MUST
+  mutant wrong_end: 36 runs, 36 differ from the head form -> FAILS AS IT MUST
+
+== venv314/bin/python -I a2_order_free.py ==
+a2: the order-free reads, lam = X, the full formula (the time gear driven, the ticks slowing and speeding up)
+  side 3, two rates (X 1000 | 2000), phases zero, read lin: 8 runs, 441 events, 72 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 3, two rates (X 1000 | 2000), phases random, read lin: 8 runs, 431 events, 0 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 3, three rates (X 1000, 1500, 2000), phases zero, read lin: 8 runs, 395 events, 72 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 3, three rates (X 1000, 1500, 2000), phases random, read lin: 8 runs, 375 events, 0 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 3, every Node-clock its own rate, phases zero, read lin: 8 runs, 379 events, 27 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 3, every Node-clock its own rate, phases random, read lin: 8 runs, 355 events, 0 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 4, two rates (X 1000 | 2000), phases zero, read lin: 8 runs, 948 events, 168 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 4, two rates (X 1000 | 2000), phases random, read lin: 8 runs, 926 events, 2 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 4, three rates (X 1000, 1500, 2000), phases zero, read lin: 8 runs, 1023 events, 152 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 4, three rates (X 1000, 1500, 2000), phases random, read lin: 8 runs, 988 events, 2 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 4, every Node-clock its own rate, phases zero, read lin: 8 runs, 907 events, 66 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 4, every Node-clock its own rate, phases random, read lin: 8 runs, 914 events, 0 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 5, two rates (X 1000 | 2000), phases zero, read lin: 8 runs, 1752 events, 295 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 5, two rates (X 1000 | 2000), phases random, read lin: 8 runs, 1702 events, 2 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 5, three rates (X 1000, 1500, 2000), phases zero, read lin: 8 runs, 1925 events, 315 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 5, three rates (X 1000, 1500, 2000), phases random, read lin: 8 runs, 1873 events, 6 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 5, every Node-clock its own rate, phases zero, read lin: 8 runs, 1765 events, 129 at a tie with a neighbour, distinct end states beyond the first: 0
+  side 5, every Node-clock its own rate, phases random, read lin: 8 runs, 1675 events, 2 at a tie with a neighbour, distinct end states beyond the first: 0
+a2 RESULT: 432 runs over 54 boards (56327 events of the reference runs, 3963 at a tie with a neighbour), boards whose runs disagree: 0; the largest |tau_x - tau_y| / max(L_x, L_y) on a Mesh: 1 (1.000, read every 7 events)
+a2 mutants (each must give different end states for different orders):
+  mutant zoh_now: 6 boards, 6 with order-dependent end states -> FAILS AS IT MUST
+  mutant slope_read: 6 boards, 6 with order-dependent end states -> FAILS AS IT MUST
+
+== venv314/bin/python -I a3_partition.py ==
+a3: the partition the 24 make
+A. the orbits of the group the 24 generate about every Node-clock, on the torus of side n
+  side 3: 1 orbit(s) of sizes [27]; each orbit one parity class of x+y+z: None; Meshes inside an orbit: 81 of 81; a split into two Mesh-free classes exists: False
+  side 4: 2 orbit(s) of sizes [32, 32]; each orbit one parity class of x+y+z: True; Meshes inside an orbit: 0 of 192; a split into two Mesh-free classes exists: True
+  side 5: 1 orbit(s) of sizes [125]; each orbit one parity class of x+y+z: None; Meshes inside an orbit: 375 of 375; a split into two Mesh-free classes exists: False
+  side 6: 2 orbit(s) of sizes [108, 108]; each orbit one parity class of x+y+z: True; Meshes inside an orbit: 0 of 648; a split into two Mesh-free classes exists: True
+B. the 24 about the Node-clock at the origin on the eight corners Z^3 / 2 Z^3
+  orbits: [1, 3, 3, 1] -> [[(0, 0, 0)], [(0, 0, 1), (0, 1, 0), (1, 0, 0)], [(0, 1, 1), (1, 0, 1), (1, 1, 0)], [(1, 1, 1)]]
+  the parity of x+y+z joins them in two: even 4 corners, odd 4 corners
+  Margolus blocks on the side 4: kept by 3 of the 24 about a Node-clock, by 24 of the 24 about the block centre
+C. order inside a class (side 4, equal rates, every notch a tie for all), 3 seeds
+  read lin: 24 runs class-first; distinct end states inside a class order beyond the first: 0; boards where the class taken first matters: 0 of 3; boards where one Mesh's translation parts the run from its image: 0 of 3
+  read zoh_now: 24 runs class-first; distinct end states inside a class order beyond the first: 0; boards where the class taken first matters: 3 of 3; boards where one Mesh's translation parts the run from its image: 3 of 3
+  read slope_read: 24 runs class-first; distinct end states inside a class order beyond the first: 0; boards where the class taken first matters: 3 of 3; boards where one Mesh's translation parts the run from its image: 3 of 3
+a3 RESULT: A as derived; B as derived; C as derived
+a3 mutants: the order-dependent reads (zoh_now, slope_read) must part the class orders and the translation: FAIL AS THEY MUST
+
+== venv314/bin/python -I a4_rewind.py ==
+a4: the exact rewind, forward to the end notch and back to notch 0
+  side 3, two rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 48, failures 0
+  side 3, three rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 96, failures 0
+  side 3, own rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 144, failures 0
+  side 4, two rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 192, failures 0
+  side 4, three rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 240, failures 0
+  side 4, own rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 288, failures 0
+  side 5, two rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 336, failures 0
+  side 5, three rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 384, failures 0
+  side 5, own rates: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs: cases so far 432, failures 0
+a4 RESULT: 432 runs (477088 events forward, each undone), 0 fail to return to the start exactly; tick lengths at the end (lam = X) from 2184 to 4102 notches; the drive slowed a tick 74493 times and sped one 80323 times
+a4 mutants (each must fail to return):
+  mutant back_order: 6 runs, 6 fail -> FAILS AS IT MUST
+  mutant drive_going: 6 runs, 6 fail -> FAILS AS IT MUST
+  mutant undo_moment: 6 runs, 6 fail -> FAILS AS IT MUST
+  mutant undo_W: 6 runs, 6 fail -> FAILS AS IT MUST
+
+== venv314/bin/python -I a5_kept.py ==
+a5: what the asynchronous step keeps
+A. the books: 3907 events, the identity W+ (a+ - a) + (r+ - mid W+) = P + s F broken at 0; 70326 reads, 68031 of them rounded (the undo recomputes each)
+B. the sweep, the time gear held: Q_w(end) - Q_w(start) against the events' Mesh and carry parts
+  read lin, one rate, lam X, phases zero, side 4: 1280 events; identity exact: True; SUM Mesh parts 0 of a gross 669590600 (0.00e+00); SUM carry parts 6.707e+05
+  read lin, own rates, lam const, phases zero, side 4: 960 events; identity exact: True; SUM Mesh parts 0 of a gross 429088120 (0.00e+00); SUM carry parts -4871
+  read lin, two rates, lam X, phases random, side 4: 1440 events; identity exact: True; SUM Mesh parts -1954220 of a gross 686323780 (-2.85e-03); SUM carry parts -9216
+  read lin, three rates, lam X, phases random, side 4: 1520 events; identity exact: True; SUM Mesh parts -5771400 of a gross 661190840 (-8.73e-03); SUM carry parts -1.689e+05
+  read lin, own rates, lam X, phases random, side 4: 1410 events; identity exact: True; SUM Mesh parts 5873940 of a gross 694296700 (8.46e-03); SUM carry parts -1.48e+05
+  read past, one rate, lam X, phases zero, side 4: 1280 events; identity exact: True; SUM Mesh parts 0 of a gross 669590600 (0.00e+00); SUM carry parts 6.707e+05
+  read past, own rates, lam const, phases zero, side 4: 960 events; identity exact: True; SUM Mesh parts 0 of a gross 429088120 (0.00e+00); SUM carry parts -4871
+  read past, two rates, lam X, phases random, side 4: 1440 events; identity exact: True; SUM Mesh parts 52941300 of a gross 843457020 (6.28e-02); SUM carry parts -1.119e+06
+  read past, three rates, lam X, phases random, side 4: 1520 events; identity exact: True; SUM Mesh parts -85187380 of a gross 801992100 (-1.06e-01); SUM carry parts 7.76e+05
+  read past, own rates, lam X, phases random, side 4: 1410 events; identity exact: True; SUM Mesh parts -8464600 of a gross 742733120 (-1.14e-02); SUM carry parts -4.157e+05
+  read near, one rate, lam X, phases zero, side 4: 1280 events; identity exact: True; SUM Mesh parts 0 of a gross 669590600 (0.00e+00); SUM carry parts 6.707e+05
+  read near, own rates, lam const, phases zero, side 4: 960 events; identity exact: True; SUM Mesh parts 0 of a gross 429088120 (0.00e+00); SUM carry parts -4871
+  read near, two rates, lam X, phases random, side 4: 1440 events; identity exact: True; SUM Mesh parts -1484960 of a gross 694616240 (-2.14e-03); SUM carry parts -1.198e+06
+  read near, three rates, lam X, phases random, side 4: 1520 events; identity exact: True; SUM Mesh parts -4312080 of a gross 671554280 (-6.42e-03); SUM carry parts -2.347e+05
+  read near, own rates, lam X, phases random, side 4: 1410 events; identity exact: True; SUM Mesh parts 8961560 of a gross 721033240 (1.24e-02); SUM carry parts 5.914e+05
+  the identity exact on 30 of 30 runs; the Mesh parts sum to 0 on 12 of 12 runs at one tick for all, and on 0 of 18 runs at different rates
+C. order-free step: 288 images (24 rotations and 24 mirrors x 6 boards); the 24 parted at 0, the mirrors at 0
+C. mutant zoh_now: 288 images (24 rotations and 24 mirrors x 6 boards); the 24 parted at 63, the mirrors at 63
+D. the read rounded half_up: 56250 reads (3984 at a tie); odd under negation fails 3984; time-symmetric fails 0 (0 of them at odd L); the endpoints fail 0
+D. the read rounded odd: 56250 reads (3984 at a tie); odd under negation fails 0; time-symmetric fails 3984 (0 of them at odd L); the endpoints fail 0
+E. the unit: lam = X against lam = W (the local tick the mean teeth W+), 12 boards, 0 differ
+a5 RESULT: A True, B True, C True, D True, E True (True: as derived)
+
+== venv314/bin/python -I a6_cone.py ==
+a6: the light cone
+A. the stencil test: 24 Node-clocks stepped with everything outside their seven changed; their new integers differ at 0
+A. the stencil test (mutant reach2): 24 Node-clocks stepped with everything outside their seven changed; their new integers differ at 16
+B. the front of a push (side 5, the time gear held): delay against d L_min
+  read lin, delta 1000000: one rate: reached 124 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.000; two rates: reached 124 of 124, faster than one Mesh per L_min at 102, least delay / (d L_min) 0.346; three rates: reached 124 of 124, faster than one Mesh per L_min at 114, least delay / (d L_min) 0.321; own rates: reached 124 of 124, faster than one Mesh per L_min at 102, least delay / (d L_min) 0.369
+  read lin, delta 1: one rate: reached 91 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.000; two rates: reached 68 of 124, faster than one Mesh per L_min at 3, least delay / (d L_min) 0.863; three rates: reached 58 of 124, faster than one Mesh per L_min at 4, least delay / (d L_min) 0.652; own rates: reached 41 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.194
+  read past, delta 1000000: one rate: reached 124 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.000; two rates: reached 124 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.092; three rates: reached 124 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.039; own rates: reached 124 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.194
+  read past, delta 1: one rate: reached 91 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.000; two rates: reached 65 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.127; three rates: reached 69 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.040; own rates: reached 59 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.194
+  read near, delta 1000000: one rate: reached 124 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.000; two rates: reached 124 of 124, faster than one Mesh per L_min at 61, least delay / (d L_min) 0.672; three rates: reached 124 of 124, faster than one Mesh per L_min at 59, least delay / (d L_min) 0.652; own rates: reached 124 of 124, faster than one Mesh per L_min at 34, least delay / (d L_min) 0.673
+  read near, delta 1: one rate: reached 91 of 124, faster than one Mesh per L_min at 0, least delay / (d L_min) 1.000; two rates: reached 90 of 124, faster than one Mesh per L_min at 3, least delay / (d L_min) 0.863; three rates: reached 66 of 124, faster than one Mesh per L_min at 4, least delay / (d L_min) 0.652; own rates: reached 40 of 124, faster than one Mesh per L_min at 1, least delay / (d L_min) 0.781
+a6 RESULT: A as derived; B: the read past keeps one Mesh per L_min at every Node-clock reached: True; the read lin crosses faster at 318 Node-clocks for delta 10^6 and 7 for delta 1; near at 154 and 8
+a6 mutant reach2 (the stencil test): FAILS AS IT MUST
+
+== venv314/bin/python -I a7_reversal.py ==
+a7: T S T = S^-1 on the asynchronous board
+  side 3, two rates, lam X, phases zero (ties), read lin: 360 events forward, 360 after T; back at T(S0): True
+  side 3, two rates, lam X, phases random, read lin: 336 events forward, 336 after T; back at T(S0): True
+  side 3, two rates, lam const, phases random, read lin: 202 events forward, 202 after T; back at T(S0): True
+  side 3, three rates, lam X, phases zero (ties), read lin: 315 events forward, 315 after T; back at T(S0): True
+  side 3, three rates, lam X, phases random, read lin: 291 events forward, 291 after T; back at T(S0): True
+  side 3, three rates, lam const, phases random, read lin: 202 events forward, 202 after T; back at T(S0): True
+  side 3, own rates, lam X, phases zero (ties), read lin: 285 events forward, 285 after T; back at T(S0): True
+  side 3, own rates, lam X, phases random, read lin: 258 events forward, 258 after T; back at T(S0): True
+  side 3, own rates, lam const, phases random, read lin: 202 events forward, 202 after T; back at T(S0): True
+  side 4, two rates, lam X, phases zero (ties), read lin: 768 events forward, 768 after T; back at T(S0): True
+  side 4, two rates, lam X, phases random, read lin: 720 events forward, 720 after T; back at T(S0): True
+  side 4, two rates, lam const, phases random, read lin: 484 events forward, 484 after T; back at T(S0): True
+  side 4, three rates, lam X, phases zero (ties), read lin: 816 events forward, 816 after T; back at T(S0): True
+  side 4, three rates, lam X, phases random, read lin: 757 events forward, 757 after T; back at T(S0): True
+  side 4, three rates, lam const, phases random, read lin: 484 events forward, 484 after T; back at T(S0): True
+  side 4, own rates, lam X, phases zero (ties), read lin: 701 events forward, 701 after T; back at T(S0): True
+  side 4, own rates, lam X, phases random, read lin: 651 events forward, 651 after T; back at T(S0): True
+  side 4, own rates, lam const, phases random, read lin: 484 events forward, 484 after T; back at T(S0): True
+  side 5, two rates, lam X, phases zero (ties), read lin: 1400 events forward, 1400 after T; back at T(S0): True
+  side 5, two rates, lam X, phases random, read lin: 1322 events forward, 1322 after T; back at T(S0): True
+  side 5, two rates, lam const, phases random, read lin: 937 events forward, 937 after T; back at T(S0): True
+  side 5, three rates, lam X, phases zero (ties), read lin: 1550 events forward, 1550 after T; back at T(S0): True
+  side 5, three rates, lam X, phases random, read lin: 1442 events forward, 1442 after T; back at T(S0): True
+  side 5, three rates, lam const, phases random, read lin: 937 events forward, 937 after T; back at T(S0): True
+  side 5, own rates, lam X, phases zero (ties), read lin: 1350 events forward, 1350 after T; back at T(S0): True
+  side 5, own rates, lam X, phases random, read lin: 1314 events forward, 1314 after T; back at T(S0): True
+  side 5, own rates, lam const, phases random, read lin: 937 events forward, 937 after T; back at T(S0): True
+a7 RESULT: 81 runs (117030 events); T S T = S^-1 fails, by the read: lin 0 of 27, past 27 of 27, near 0 of 27
+a7 mutants:
+  the read rounded odd (one tick for all, phases staggered): 9 runs, 9 fail -> FAILS AS IT MUST
+  the tick from one slot, L = 2 lam(X+): 9 runs, 9 fail -> FAILS AS IT MUST
+
+== venv314/bin/python -I a8_weights.py ==
+a8: the read's weight over L = 1..16, u = 0..L, |n|, |b| <= 9
+  read lin: 54872 reads; the endpoints fail 0; the time symmetry fails 0; the new slot first seen at u = 1 of L = 16, at u / L <= 0.500 over L = 2..16
+  read near: 54872 reads; the endpoints fail 0; the time symmetry fails 0; the new slot first seen at u = 8 of L = 16, at u / L <= 0.667 over L = 2..16
+  read past: 54872 reads; the endpoints fail 0; the time symmetry fails 41040; the new slot first seen at u = 16 of L = 16, at u / L <= 1.000 over L = 2..16
+
+== venv314/bin/python -I h1_head.py ==
+h1: the local events against the head
+  world_nature.json, 12 ticks, 3 random orders a tick, side 5:
+    (i) value reads: 540000
+    (i) value reads equal to the start board: 540000
+    (ii) pulls equal to the head's: 27000
+    (ii) pulls of the raw-read trains: 27000
+    (iii) driven carries: 27000
+    (iii) driven carries equal to the head's: 27000
+    (iv) regulator gears: 31500
+    (iv) regulator gears equal to the head's: 31500
+    (v) every other gear's fine-tooth reads: 513000
+    (v) every other gear's fine-tooth reads equal to the start board: 281479
+    (v) every other gear's stride reads: 513000
+    (v) every other gear's stride reads equal to the start board: 425633
+    (v) the ratchet's fine-tooth reads: 27000
+    (v) the ratchet's fine-tooth reads equal to the start board: 27000
+    (v) the ratchet's stride reads: 27000
+    (v) the ratchet's stride reads equal to the start board: 26763
+  world_hole.json, 12 ticks, 3 random orders a tick, side 5:
+    (i) value reads: 540000
+    (i) value reads equal to the start board: 540000
+    (ii) pulls equal to the head's: 27000
+    (ii) pulls of the raw-read trains: 27000
+    (iii) driven carries: 27000
+    (iii) driven carries equal to the head's: 27000
+    (iv) regulator gears: 31500
+    (iv) regulator gears equal to the head's: 31500
+    (v) every other gear's fine-tooth reads: 513000
+    (v) every other gear's fine-tooth reads equal to the start board: 278439
+    (v) every other gear's stride reads: 513000
+    (v) every other gear's stride reads equal to the start board: 428796
+    (v) the ratchet's fine-tooth reads: 27000
+    (v) the ratchet's fine-tooth reads equal to the start board: 27000
+    (v) the ratchet's stride reads: 27000
+    (v) the ratchet's stride reads equal to the start board: 27000
+  world_bang.json, 6 ticks, 3 random orders a tick, side 4:
+    (i) value reads: 145152
+    (i) value reads equal to the start board: 145152
+    (ii) pulls equal to the head's: 6912
+    (ii) pulls of the raw-read trains: 6912
+    (iii) driven carries: 6912
+    (iii) driven carries equal to the head's: 6912
+    (iv) regulator gears: 8064
+    (iv) regulator gears equal to the head's: 8064
+    (v) every other gear's fine-tooth reads: 138240
+    (v) every other gear's fine-tooth reads equal to the start board: 76032
+    (v) every other gear's stride reads: 138240
+    (v) every other gear's stride reads equal to the start board: 107136
+    (v) the ratchet's fine-tooth reads: 6912
+    (v) the ratchet's fine-tooth reads equal to the start board: 6912
+    (v) the ratchet's stride reads: 6912
+    (v) the ratchet's stride reads equal to the start board: 6912
+h1: MUTANT zoh_now (the neighbour END now once it has stepped)
+  world_nature.json, 12 ticks, 3 random orders a tick, side 5:
+    (i) value reads: 540000
+    (i) value reads equal to the start board: 455589
+    (ii) pulls equal to the head's: 22836
+    (ii) pulls of the raw-read trains: 27000
+    (iii) driven carries: 27000
+    (iii) driven carries equal to the head's: 22836
+    (iv) regulator gears: 31500
+    (iv) regulator gears equal to the head's: 10932
+    (v) every other gear's fine-tooth reads: 513000
+    (v) every other gear's fine-tooth reads equal to the start board: 281479
+    (v) every other gear's stride reads: 513000
+    (v) every other gear's stride reads equal to the start board: 425633
+    (v) the ratchet's fine-tooth reads: 27000
+    (v) the ratchet's fine-tooth reads equal to the start board: 27000
+    (v) the ratchet's stride reads: 27000
+    (v) the ratchet's stride reads equal to the start board: 26763
+  world_hole.json, 12 ticks, 3 random orders a tick, side 5:
+    (i) value reads: 540000
+    (i) value reads equal to the start board: 455361
+    (ii) pulls equal to the head's: 23175
+    (ii) pulls of the raw-read trains: 27000
+    (iii) driven carries: 27000
+    (iii) driven carries equal to the head's: 23175
+    (iv) regulator gears: 31500
+    (iv) regulator gears equal to the head's: 9104
+    (v) every other gear's fine-tooth reads: 513000
+    (v) every other gear's fine-tooth reads equal to the start board: 278439
+    (v) every other gear's stride reads: 513000
+    (v) every other gear's stride reads equal to the start board: 428796
+    (v) the ratchet's fine-tooth reads: 27000
+    (v) the ratchet's fine-tooth reads equal to the start board: 27000
+    (v) the ratchet's stride reads: 27000
+    (v) the ratchet's stride reads equal to the start board: 27000
+  world_bang.json, 6 ticks, 3 random orders a tick, side 4:
+    (i) value reads: 145152
+    (i) value reads equal to the start board: 116352
+    (ii) pulls equal to the head's: 5739
+    (ii) pulls of the raw-read trains: 6912
+    (iii) driven carries: 6912
+    (iii) driven carries equal to the head's: 5739
+    (iv) regulator gears: 8064
+    (iv) regulator gears equal to the head's: 2432
+    (v) every other gear's fine-tooth reads: 138240
+    (v) every other gear's fine-tooth reads equal to the start board: 76032
+    (v) every other gear's stride reads: 138240
+    (v) every other gear's stride reads equal to the start board: 107136
+    (v) the ratchet's fine-tooth reads: 6912
+    (v) the ratchet's fine-tooth reads equal to the start board: 6912
+    (v) the ratchet's stride reads: 6912
+    (v) the ratchet's stride reads equal to the start board: 6912
+
+== the draft (DERIVATION.md) ==
+# Draft ASYNC: the local tick, its order-free reads, and the exact rewind on an asynchronous board
+
+A helper's draft for David, 2026-10-28. It answers the Boss's ask: "the formula of the local tick, with its order-free reads; the step stays one local event, and the rewind stays exact", on the owner's word (11:2x to 11:3x UTC, through Animate, 6467743683, translated): "Possible when it is very large. Every clock has its own tick, which can slow and speed up. Note that not the whole board ticks together: the board is to run asynchronously."
+
+Read on: the plan TENSOR24.md at origin/engine-5.0-test, read whole at 33d9ecaa3 (sections 2, 17, 18, 19, 30, 31), and its change to 08ec59132 that landed while this was written (the owner's law "no bound and no floor", sections 12 and 30, taken in section 2.5); Cut 0's letter of the step, DAVID-TENSOR24-THE-ONE-FORMULA.md on toys-5 b56643b0e; the head's code on toys-5 (src/event_universe/tick.py, clock.py, phase.py, meshes.py, core/acts.py, core/rule3.py, core/rates.py); the law docs/ALGEBRA.md at origin/scribe-5 f32b67cc3. No file of the repository is changed and no git write is made there. Every probe is a pure-integer program, or a read-only harness on the head's tick, run with venv314/bin/python -I; each run is under three minutes; the probes and their outputs sit beside this file (section 8).
+
+The protocol's steps 1 to 4 are here (the formula in the three operations, the proofs, the probes that can fail, what it replaces). Steps 5 and 6 (a verifier; Sofer's law check and David's sign-off) are not mine. Every claim is marked PROVED (with its proof), CHECKED (with its probe's counts) or OPEN (with what blocks it).
+
+**The law's lines this draft stands under** (docs/ALGEBRA.md at scribe-5 f32b67cc3, quoted for Sofer's check):
+- line 37: "so the Node-clocks, each stepped on its own clock, in any order and at any rates, each when the arrivals it needs from its six neighbours stand, are one great clock: at every equal count of ticks it is the same, bit for bit, whatever the order was";
+- line 98, **The Node-clock steps on its own clock; the great clock at equal ticks is one**: "each Node-clock stepping only when the arrivals it needs from its six neighbours stand; whenever every Node-clock has reached the same count of ticks the great clock is one and the same bit for bit", and the owner's word as Sofer entered it there: "The clause stands as the law and the synchronous pass does not: a Node-clock's tick slows and speeds with its own rate (the lapse), its step is a local event at its own tick, the rewind stays exact, and the one-to-one with nature is possible when the board is very large; the pass of the head that steps every Node-clock at once is a linear extension of the causal order, the reader's tick, and no law. Status: decided and unbuilt";
+- line 557, **The tick is the count of rounds**: "no Node-clock reads the tick. A Node-clock steps Rule3 at its own event from its two numbers and the six arrivals on its Spokes, m_ij the value its neighbour j last sent". This draft corrects "last sent" to "where it stands at the reading node-clock's moment" (section 3): read literally, "the value last sent" makes the order matter (the mutant zoh_now below).
+
+## 0. The answer in one page
+
+| what | the formula (three operations) | status |
+| --- | --- | --- |
+| the local tick | a Node-clock holds its dial tau, the great clock's notch of its now; it steps at that notch, and its next notch is tau+ = tau + L(X, X+), L = lambda(X) + lambda(X+) | PROVED (sections 2, 4); lambda's form OPEN (section 6) |
+| the step, one local event | Cut 0's one formula, every read across a Mesh the neighbour's notch at the reading node-clock's moment: m = b + R((n - b) u, L_y), u = tau - sigma_y | PROVED: it is the head's formula bit for bit wherever every clock has one tick; CHECKED a1: 324 asynchronous runs (186,624 events) against the head's form, 0 differ; h1: the head's own tick taken as local events in random orders on nature, the hole and the bang: 1,225,152 reads, 60,912 pulls and carries, 71,064 regulator gears, 0 differ |
+| the order-free reads | a read is a value at the moment, exact at the tick's ends; the conservative rule: x is due when tau_x <= tau_y at its six neighbours | PROVED (two events at one notch commute, any runner gives the same board); CHECKED a2: 432 runs on 54 boards (two rates, three rates, or a rate per Node-clock), 3,963 events at a tie with a neighbour, 0 disagree |
+| the partition | the 24 about every Node-clock generate two orbits, the parity classes of x + y + z, with no Mesh inside a class | PROVED and CHECKED (a3); not needed by value reads; it needs an even side, chooses an order between the classes and breaks the odd translations |
+| the exact rewind | the latest before-notch undone first; each event's acts in the reverse order, each inverted (acts.carry at going -1) | PROVED; CHECKED a4: 432 runs at two, three and many rates (477,088 events, the ticks slowing 74,493 times and speeding 80,323 times), 0 fail to return |
+| the time reversal | T S T = S^-1 on the asynchronous board, with L symmetric and the read rounded half up | PROVED for the board; CHECKED a7: 81 runs (117,030 events), 0 fail with the reads lin and near; the carry's own at even teeth OPEN as before |
+| the books | P+ = P + s F + K exact; every carry's remainder kept; the read's rounding recomputed by the undo | PROVED; CHECKED a5 A (3,907 events, 0 off) and a4 |
+| the sweep | per event exactly s Im(conj(a) F) + Im(conj(v) rho+); the Mesh's two terms cancel only where both ends read at one moment | PROVED; CHECKED a5 B: exact on 30 of 30 runs; the Mesh parts cancel on 12 of 12 runs at one tick, on 0 of 18 at different rates. Exact at different rates OPEN |
+| the 24 (and the 48) | the image of a run is the run of the image | PROVED for A1 and E reads; CHECKED a5 C: 288 images, 0 off; T1 and T2 reads at a tie OPEN (the carry's tie rule) |
+| the light cone | the event reads the stencil of seven: one Mesh per local tick | PROVED; CHECKED a6 A (24 of 24). In notches: the read past keeps one Mesh per tick, lin and near do not where phases stagger, and no time-symmetric read can (PROVED) |
+| what it replaces | the tick loop; and of the head's synchronous order: the tick index, the stack, the start-board copies, the non-value reads across a Mesh, the whole-board reductions and the click's phase stay fakes | section 7 |
+
+## 1. The words and the state
+
+- The Node-clock x, its six Spokes j in the head's order (core/spokes.py, SPOKE_SIDES), its six neighbours y = x + e_j on the torus. The great clock's notch is only the unit every dial counts in (section 2.4).
+- The state at x is the new engine's (plan section 31: every gear's notch now n and before b, its fine tooth r in [0, W), its drive fine tooth), plus one integer: **the dial tau_x, the great clock's notch at which x's now stands**.
+- The regulator's time gear at x has its two slots, X now and X- before (the stretch, s = X). Its fine tooth lies in [0, T_r), its drive fine tooth in [0, T_d).
+- **The local tick.** The tick from x's before to its now lasts L(X-, X) = lambda(X-) + lambda(X) notches. lambda is the count of notches per half tick at one slot of the time gear; the proofs ask only that lambda be an integer of at least 1, read from the slot.
+- **The before-notch** sigma_x = tau_x - L(X-_x, X_x) is a function of the state. It is not stored.
+- The probes use lambda = X, lambda = X + X X div 1000, L = W+ itself (lambda = (T div 2) X), and lambda = 1 + X X (section 2.5); a1 also runs lambda constant (the head).
+
+## 2. The local tick and the step
+
+### 2.1 The event E_x
+
+x is due at its own notch tau = tau_x. The event does five acts:
+
+1. **(R) the reads.** For every neighbour y and every gear the step reads across the Mesh:
+
+       u = tau - sigma_y,   L_y = tau_y - sigma_y,   m = b_y + R((n_y - b_y) u, L_y),   R(k, L) = (k + mid L) div L
+
+   R is Rule3's quotient with the mid tooth, acts.carry(k, L, mid L), the carry's own rounding. In clock words: each Spoke reads the neighbour's hand where it stands at this Node-clock's own notch, on the neighbour's current tick, between its before and its now.
+2. **(I) the impulse** (Cut 0's matter half):
+
+       W = (T div 2)(X- + X),  s = X
+       P = W (a - a-) + (r - mid W)
+       P+ = P + s F + K,  F = SUM_j g_j (m_j - a) - D a + q_P,  K = T s q_K
+
+3. **(G) the regulator** (Cut 0's metric half). Its turn at its own teeth reads its gears' values m_j at the moment; its drive is one carry of its numerator. The numerator reads P and P+ symmetrically, as u_in u_out does, and the middle slot.
+4. **(C) the carry** at W+ = (T div 2)(X + X+): a+ = a + (P+ + mid W+) div W+, and r+ is the remainder.
+5. **(D) the dial:** tau+ = tau + L(X, X+).
+
+The order of the acts is forced:
+- the carry needs W+, so the regulator's step comes before it;
+- the regulator's source reads P and P+, so the impulse comes before the regulator.
+
+This is section 31's "schedule of two stages", inside one event.
+
+**The step stays one local event. PROVED** by reading E_x:
+- it writes only x's integers;
+- it reads only x and, at each of its six neighbours, the notches now and before of the gears it reads, the time gear's two slots (for L_y) and the dial tau_y.
+
+### 2.2 The endpoint lemma
+
+**PROVED.** R((n - b) 0, L) = 0 and R((n - b) L, L) = n - b. The reason: (k L + mid L) div L = k + (mid L) div L = k, since 0 <= mid L < L for every L >= 1. So a read at u = 0 is the before b exactly, and a read at u = L is the now n exactly. Exhaustively CHECKED in a8 (54,872 reads, 0 off) for the three reads of section 3.
+
+### 2.3 The conservative rule, and why every read falls on a tick
+
+The runner's rule (Chandy and Misra's, on the stencil): **x is due when tau_x <= tau_y at each of its six neighbours.** In three operations it is the product over the six Spokes of [tau_y - tau_x >= 0], with [n >= 0] = 1 + n div (n n + 1) (plan section 31).
+
+**Lemma 1. PROVED.** When x is due, every neighbour's current tick holds x's moment: sigma_y <= tau_x <= tau_y.
+- tau_x <= tau_y is the rule itself.
+- sigma_y is the notch of y's last event. When y stepped, it was due, so sigma_y <= the dial x had then, which is <= tau_x, since dials only grow.
+- The start: every Node-clock's before-notch lies below every neighbour's now-notch (the probes start every dial in [0, L)).
+
+**Lemma 2. PROVED.** On every Mesh, |tau_x - tau_y| <= max(L_x, L_y).
+- When x steps, tau_x <= tau_y, so its new dial is at most tau_y + L_x.
+- y's dial is at most tau_x + L_y, by the same step at y.
+- So a Node-clock may hold its dial modulo any M > 2 max L, and every difference the step reads is still exact. No number of the great clock is held.
+- CHECKED a2: the largest |tau_x - tau_y| / max(L_x, L_y) on any Mesh is exactly 1.
+
+There is no deadlock: the least dial on the board is always due.
+
+### 2.4 The head is the asynchronous board at one tick
+
+**Theorem 1. PROVED.** Suppose every Node-clock has the same tick at every count of ticks and the same starting dial. Then every run under the rule, in any order, one event at a time or all at once double-buffered, gives the head's synchronous step bit for bit at every count.
+
+Proof, by induction on the count. At the count k every dial reads the same notch, so every Node-clock is due. When x steps at that notch, each neighbour y is in one of two states:
+- it has not stepped: its now-notch is the moment, u = L, and the read is n_y, its now at the round's start;
+- it has stepped: its before-notch is the moment, u = 0, and the read is b_y, which its own step set to its now at the round's start.
+
+Either way the read is the start board's now, the head's m_j, and x's own integers are its start's. So x's new integers are the head's. After the round every dial reads the next notch. QED.
+
+"The same rate" means the same L:
+- lambda constant: the head's one great clock's tick, the lapse only in the coefficients W, s, D, g_j;
+- or lambda(X) with X alike at every Node-clock; the common tick may still slow or speed (a1, case B).
+
+CHECKED:
+- a1, sides 3, 4 and 5, T = 600 and 602:
+  - A, lambda constant with the full formula and a time gear different and driven at every Node-clock;
+  - B, lambda = X at one rate speeding up every tick;
+  - C, L = W+.
+
+  36 boards, 9 asynchronous runs each (4 random orders by the great clock's order, 4 by random local minima, 1 all at once double-buffered): 324 runs against the head's form, 186,624 events, 0 differ. Mutants: the neighbour's now whatever the moment (zoh_now) differs in 32 of 36 runs (the 4 that do not are the double-buffered runner's, which reads the frozen board), and the weight from the wrong end in 36 of 36.
+- h1, a harness on the head's own tick.py, no engine change, run on the hole, nature and the one big bang: every tick, taken as local events in 3 random orders. Of those reads:
+  - (i) 1,225,152 value reads, every gear of every train at every Spoke: all equal to the start board's;
+  - (ii) the pulls of the trains the head reads raw (the light, the offset), F = SUM_j g_j m_j - (D + SUM_j g_j) a, rebuilt from those reads with the head's own grips and spring: 60,912 of 60,912 equal to the head's pull;
+  - (iii) the driven carries a+ = a + carry(P + s F + K, W+): 60,912 of 60,912 equal to the head's;
+  - (iv) the regulator's turn from those reads plus the head's drive: 71,064 of 71,064 gears equal.
+
+  The mutant zoh_now fails all four: (i) 1,027,302 of 1,225,152, (ii) 51,750 of 60,912, (iii) the same, (iv) 22,468 of 71,064.
+
+**The unit of the notch. PROVED.** Only differences and ratios of dials enter the step (u and L_y), and the read depends on u / L_y alone: floor(k / L + 1/2) is a function of the rational number k / L. So shifting every dial, or multiplying every dial and every L by one integer, gives the same run. This is how "possible when it is very large" costs nothing: the great clock's notch may be as fine as wanted. CHECKED a5 E: lambda = X against L = W+ ((T div 2) times finer), 12 boards, 0 differ.
+
+### 2.5 The tick at every integer
+
+The plan's law that landed while this was written (08ec59132, section 12): "nothing holds an integer of the state inside a range, so no clamp ..., no floor value and no range. Where an act needs one to keep a symmetry or to stay defined, it is rewritten from the symmetries to hold at every integer".
+
+The local tick needs L(X-, X) >= 1: a tick of 0 notches stalls the dial, and a negative one runs it back past its neighbours (Lemma 1 fails).
+- **lambda = X, the probes' first choice, asks X >= 1: a range on the state, struck under that law.**
+- **PROVED:** lambda = 1 + X X gives L = 2 + X- X- + X X >= 2 at every integer pair, with no range, no clamp and no comparison. It is even under X -> -X, and symmetric in the two slots as section 4.3 needs.
+- CHECKED a4 with it (108 of the 432 runs, 0 fail).
+- The runner's rule (2.3) is a comparison of two dials that decides which Node-clock steps. It holds no integer inside a range.
+- The step's own carry at W+ = (T div 2)(X + X+) still asks X + X+ >= 1. That is the mathematician's "X + X+ > 0 proved, or the gate before the driven carry" (section 30), OPEN as before. The tick adds no new range to it.
+
+## 3. The order-free reads
+
+### 3.1 Two events at one notch commute
+
+**Theorem 2. PROVED.** If x and y are both due at the notch tau, then E_x E_y = E_y E_x on the whole board.
+
+Proof:
+- E_x writes only x.
+- If y is no neighbour of x, neither event reads what the other writes.
+- If y is a neighbour, E_x reads y only through (R) at the moment tau:
+  - before E_y, y's tick is [sigma_y, tau]: u = L_y and the read is n_y;
+  - after E_y, y's tick is [tau, tau + L_y'], u = 0, and the read is b_y'. E_y set b_y' to n_y, the same integer.
+  - y's dial and slots enter E_x only through u and L_y, inside this same read.
+- The same holds for E_y. QED.
+
+**Corollary. PROVED.** Every run under the conservative rule executes the events below a given notch with the same results, whatever its order. This covers the great clock's order with any ties, a random local minimum at a time, and every local minimum at once double-buffered. Proof: by induction over the events of any such run. The k-th event reads values written by events already executed, at the same moments the great clock's order reads them. By Lemma 1, a neighbour's current tick there either is the same or differs by an event at the same notch, which Theorem 2 makes invisible. This is line 37's and line 98's "the same bit for bit, whatever the order was", extended from equal counts of ticks to clocks of different rates.
+
+CHECKED a2, sides 3, 4 and 5:
+- the boards: two rates (X 1000 and 2000), three rates (1000, 1500, 2000), or every Node-clock its own rate; every phase at 0, or random; the reads lin, past and near; the full formula with the time gear driven both ways;
+- 432 runs on 54 boards; the reference runs held 56,327 events, 3,963 of them at a tie with a neighbour;
+- 0 boards whose runs disagree;
+- the mutants fail on 6 of 6 boards each: zoh_now (the value last sent), and slope_read (the value plus the neighbour's stride n - b).
+
+### 3.2 What a read may be
+
+The proof of Theorem 2 needs every read across a Mesh to be **a value at the moment**: a notch on the neighbour's current tick, exact at its ends.
+
+Three kinds of read fail it (**PROVED** by Theorem 2's own case: the neighbour's event at the same notch changes each of them):
+- a neighbour's fine tooth, drive fine tooth or counter: one slot, overwritten by its event;
+- a neighbour's stride n - b: its event moves it to the next tick's;
+- a neighbour's before: a second moment, lost to its event.
+
+The head makes such reads at its start board (section 7, item 3d). h1 counts them at the head's own one tick taken as local events:
+- the ratchet's stride (the centred count the Mesh offsets read): 237 of 27,000 reads on nature change with the order;
+- every other gear's fine tooth: 45 percent of the reads change;
+- every other gear's stride: 17 percent change.
+
+They must become value reads before the board can run asynchronously (OPEN, section 10).
+
+### 3.3 The weight of the read
+
+Write the read as m = b + R((n - b) w(u, L)). Three laws constrain the weight w (**PROVED**):
+
+1. **w(0) = 0 and w(L) = 1:** order-free (Theorem 2) and the head at one tick (Theorem 1).
+2. **w(L - u) = 1 - w(u):** the read is unchanged when the slots are exchanged and the moment reflected. This is what the turnover's retrace needs (section 4.3).
+3. **The support of w** (the least u at which the new slot is seen) bounds how fast a word crosses a Mesh in notches (section 5.4).
+
+**Lemma 3. PROVED.** A weight with law 2 is above 0 by u = (L + 1) div 2: at u = L / 2 it is 1 / 2, and at odd L one of w((L - 1) / 2) and w((L + 1) / 2) is above 0. So **no time-symmetric read waits a whole tick**.
+
+The three reads of the probes:
+- **lin**, w = u / L: Lew, Marsden, Ortiz and West's interpolation of a node's trajectory, second order. Laws 1 and 2 hold; it sees the new slot at u = 1.
+- **near**, w = (1 + sgn(2u - L)) / 2: the nearer slot, and the slots' mean at the midpoint, with sgn(k) = k div (k k + 1) - (-k) div (k k + 1). Laws 1 and 2 hold; it sees the new slot at u = L / 2.
+- **past**, w = u div L: the slot last passed. Law 1 holds, law 2 fails; it sees the new slot only at u = L.
+
+CHECKED a8 over L = 1 to 16 and every u, n, b in [-9, 9] (54,872 reads each):
+- the endpoints fail 0, 0 and 0;
+- the time symmetry fails 0, 0 and 41,040;
+- the first u at which the new slot is seen at L = 16: 1, 8 and 16.
+
+**The tie.**
+- With R half up, the read keeps law 2 at every integer, ties included: (k + j L + mid L) div L = j + (k + mid L) div L.
+- It is not odd under the negation of a gear at a tie, where (n - b) u / L is a half-integer, which happens only at even L.
+- The head's odd rounding (rates.rounded) keeps the negation and loses law 2 at the same ties.
+- **No integer rounding keeps both** (PROVED: R(-x) = -R(x) and R(1 - x) = 1 - R(x) at x = 1/2 ask R(1/2) = 1/2).
+
+CHECKED a5 D, 56,250 small-integer reads with 3,984 ties:
+- half up: the negation fails at the 3,984 ties and the time symmetry at 0;
+- odd: the reverse;
+- at odd L: neither fails.
+
+This matters only for the gears the 24 negate (T1, T2, A2). It is the same decision as the carry's own tie rule (plan section 31, risk 2; section 30, item 5) and must be taken with it (OPEN).
+
+### 3.4 The partition the 24 make (asked, derived, and not needed)
+
+**Theorem 3. PROVED.** Let G be the group the 24 rotations about every Node-clock generate.
+
+On Z^3:
+- every rotation about a site p, v -> p + M (v - p), keeps the parity of x + y + z, since a signed permutation does;
+- G holds the translations by e_a + e_b, a quarter turn about p composed with the inverse quarter turn about p + e_a, and with them D3, every even-sum translation;
+- D3 is transitive on each parity class. So **G has exactly two orbits, the parity classes**, and no Mesh joins two Node-clocks of one class, since a Mesh changes one coordinate by 1.
+
+On the torus of side n:
+- at even n the same two classes stand;
+- at odd n, 2 is invertible modulo n, so the translations by 2 e_a give every translation, and G has one orbit. The Meshes' graph then has cycles of odd length n, so no split into two Mesh-free classes exists at all.
+
+Margolus's block partition:
+- the 24 about one Node-clock split the eight corners Z^3 / 2 Z^3 of his block as 1 + 3 + 3 + 1;
+- the parity of x + y + z joins them into the two classes, 4 + 4;
+- his blocks are kept by the 24 only about the block's centre, which is no Node-clock.
+
+**Inside a class, any order. PROVED for any read whatsoever:** two Node-clocks of one class share no Mesh, so neither event reads what the other writes.
+
+CHECKED a3:
+- sides 3, 4, 5 and 6: the orbits are 1, 2, 1, 2. At the even sides each orbit is one parity class, with 0 Meshes inside it of 192 and of 648. At the odd sides the one orbit holds all 81 and 375 Meshes, and no two-colouring exists.
+- the 24 about the origin on the eight corners: orbits 1, 3, 3, 1.
+- the blocks are kept by 3 of the 24 about a Node-clock, and by 24 of 24 about the block centre.
+- at side 4, every notch a tie for all, with the order-dependent mutants zoh_now and slope_read: 24 runs each that take one class first, in random orders inside the class, give 0 distinct end states. The class taken first matters on 3 of 3 boards, and a one-Mesh translation parts the run from its image on 3 of 3. With the value read lin, none of the three matters.
+
+**What the partition costs:**
+- it needs an even side: a typed parity of the board, which the end check refuses (plan section 12, "No typed condition");
+- it chooses an order between the two classes;
+- it breaks the odd translations (the translation by one Mesh swaps the classes);
+- on an odd torus there is none.
+
+**So the board takes no partition.** It is order-free by value reads alone, on every side; it is Lemma 1 with Theorem 2 that frees the order, not a colouring. This agrees with the architect's note in section 31 ("their partitions are avoided, since they break the 24 at every tick").
+
+## 4. The exact rewind
+
+### 4.1 One event undone
+
+**Theorem 4. PROVED.** E_x is a bijection of x's integers, given its reads. Its inverse is the same acts in the reverse order, each inverted:
+
+    (D^-1) tau = tau+ - L(X, X+)                       X, X+: the time gear's slots after the event
+    (R)    the same reads at tau
+    (C^-1) P+ = W+ (a+ - a) + (r+ - mid W+)
+    (I^-1) P = P+ - s F - K                           s, F, K from the middle slot and the reads
+    (G^-1) the drive off (acts.carry at going -1 on the drive fine tooth), then the turn backward
+           (acts.carry at going -1 on the fine tooth): X-, its fine tooth
+    (C'^-1) a - a- = (P + mid W) div W,  r = the remainder,  W = (T div 2)(X- + X)
+
+Proof:
+- Every forward act is either a shear that adds to a slot a function of slots it leaves alone, or a carry n + r = q d + r' with 0 <= r < d. acts.carry at going -1 gives the carry's unique pre-image (the division algorithm, law 1).
+- The impulse needs W, so it is undone after the regulator; the carry needs W+, available before.
+- The regulator's numerator is symmetric in P and P+ and read at the middle slot, so (G^-1) recomputes it.
+- The undo reads at the same moment the same neighbours as the event did (Lemma 4).
+- The tick, read from the slots (D^-1), tells the undo its own moment, with no log and no stack.
+
+**Lemma 4. PROVED.** Take the reverse rule: undo the Node-clock whose before-notch is a local maximum (or the greatest on the board).
+- Its last event read its neighbours at sigma_x.
+- Every neighbour's last event is at or before sigma_x. So its current tick still holds sigma_x, and differs from the tick x read at most by an event at the very notch sigma_x, which is invisible to x by Theorem 2.
+- Undoing x's event changes no value any remaining event read, since those read x at moments at or before sigma_x, which x's last event does not move.
+
+So the reverse run retraces every event exactly, in any order this rule allows. This is the mirror of Lemma 1.
+
+CHECKED a4:
+- sides 3, 4 and 5; two rates, three rates, or every Node-clock its own; lambda = X, X + X X div 1000, W+ and 1 + X X; the reads lin, past and near; R half up and odd; T = 600 and 602; forward by the great clock's order or by random local minima, back by the matching rule;
+- **432 runs, 477,088 events forward, each undone: 0 fail to return** in every integer (every notch, before, fine tooth, the time gear's slots and fine teeth, and the dial);
+- the drive slowed a tick 74,493 times and sped one 80,323 times;
+- the mutants fail 6 of 6 each: the undo in the wrong order; the drive undone at going +1; the undo reading one notch early; the undo's carry at W+.
+
+### 4.2 The rewind owes nothing to a stack
+
+The reverse schedule and every undo read only the Node-clocks' own integers. This answers G1 for the step (plan section 8): "no log read and no stack on the great clock". The clicks are not covered here (section 10).
+
+### 4.3 The time reversal, T S T = S^-1, on the asynchronous board
+
+Take a cut at the notch t0: every event below it done, so sigma_x < t0 <= tau_x at every x. T at the cut:
+- every Node-clock's two slots are exchanged;
+- every fine tooth is mirrored about its mid tooth (acts.mirror, the one mirror);
+- every dial is reflected, tau' = 2 t0 - sigma.
+
+The reflected tick is consistent, tau' - sigma' = tau - sigma = L(X-, X) = L(X, X-), **only because L is symmetric in its slots**.
+
+**PROVED:** with the read's law 2 (section 3.3) and the symmetric tick, the board reversed at the cut runs forward to T(S0), wherever the step's own carry and mirror are exact.
+
+CHECKED a7:
+- the time gear runs free, one notch down a tick, so that X- + X and W = 301 (X- + X) stay odd and the mirror has its mid tooth;
+- the boards: two rates, three rates or every Node-clock its own, the clocks speeding up; one tick for all with the phases staggered (lambda constant, L = 4000 even, so that the reads meet ties);
+- 81 runs, 117,030 events. T S T = S^-1 fails at 0 of 27 runs with lin and 0 of 27 with near. It fails at 27 of 27 with past, as Lemma 3 says.
+- The mutants fail 9 of 9 each: the read rounded odd (not time-symmetric at a tie), and the tick read from one slot (L = 2 lambda(X+)).
+- At even W, the mirror's missing mid tooth (the mathematician's finding, section 30) stays the carry's, not the board's (OPEN, as in the plan).
+
+## 5. What is kept
+
+### 5.1 The books
+
+**PROVED.** Every carry of the event keeps its remainder in a fine tooth: the driven gears' r+, the regulator's turn and drive teeth. The read's rounding is a coefficient of the event, like rates.rounded's, recomputed bit for bit by the undo, so the state loses nothing (Theorem 4).
+
+CHECKED a5 A:
+- W+ (a+ - a) + (r+ - mid W+) = P + s F at every gear of 3,907 events, 0 off;
+- of 70,326 reads, 68,031 rounded, and a4's exact return shows none of them lost an integer of the state.
+
+Whether law 8 must also hold a coefficient's remainder is the mathematician's open question about rates.rounded (section 30). It is no new one.
+
+### 5.2 The sweep (the charge)
+
+**The event's identity. PROVED** (draft A's verifier's identity, at one Node-clock). With D = Im(conj(a) P), v = a+ - a and rho+ = r+ - mid W+:
+
+    D+ - D = s Im(conj(a) F) + Im(conj(v) rho+)
+
+and Im(conj(a) F) = SUM_j g_j Im(conj(a) m_j), since the spring and the a-terms are real multiples of |a|^2. With the time gear held and the grips symmetric (the probe's; on the head the weight that makes them symmetric is 1 / (s mr^2), draft A's Q*), Q_w = SUM_x D_x / s_x moves at each event by the **Mesh part** SUM_j g Im(conj(a_x) m_j(tau_x)) and the **carry part** Im(conj(v) rho+) / s.
+
+**One rate. PROVED.** A Mesh's two terms, g Im(conj(a_x) a_y) at x and g Im(conj(a_y) a_x) at y, cancel exactly when both ends read each other at one moment. At one tick for all every read is the other end's value at the same notch, so the Mesh parts cancel every round, and the sweep moves by the carry parts alone, as on the head (draft A: "the step does not keep the sweep").
+
+**Different rates.** The two ends read each other at their own moments, so a Mesh's two terms sample one current at two moments and do not cancel. **PROVED** by this; it is the known lesson of local time stepping: a conservative interface needs one flux booked for both sides (Osher and Sanders; Berger and Colella's refluxing).
+
+CHECKED a5 B:
+- the identity is exact on 30 of 30 runs (Q_w read before and after, against the sum of the events' parts, in exact fractions);
+- the Mesh parts sum to 0 on 12 of 12 runs at one tick for all (one rate, or lambda constant over 27 to 64 different stretches), and on 0 of 18 at different rates;
+- the residue against the gross Mesh flux, side 4: 2.9e-3, 8.7e-3 and 8.5e-3 with lin; 6.3e-2, 1.1e-1 and 1.1e-2 with past; 2.1e-3, 6.4e-3 and 1.2e-2 with near.
+
+**OPEN:** an exact sweep at different rates. The ways known:
+- AVI's element step, the Mesh's impulse applied to both ends at one moment: a two-ended act;
+- a flux register at the two ends.
+
+Neither is derived here.
+
+### 5.3 The wind
+
+**OPEN.** No exactly kept wind is derived at different rates. The head's integer wind already drifts (section 30), and AVI keeps the energy only nearly, its momentum exactly.
+
+### 5.4 The light cone
+
+**One Mesh per local tick. PROVED** by section 2.1: the event reads the stencil of seven and nothing else. CHECKED a6 A, the stencil test: with every gear outside a Node-clock's seven changed, its event gives the same integers at 24 of 24 Node-clocks. The mutant reach2 (one read two Meshes away) parts 16 of 24.
+
+**In notches.** A word written at y's event at sigma_y is read by x at any moment in (sigma_y, tau_y] where the weight is above 0, so a hop takes at least the weight's support (section 3.3).
+- **PROVED:** with past every hop takes at least one tick of the sender (delay >= d L_min).
+- With near, at least half a tick.
+- With lin, as little as one notch, the word weighed by the elapsed fraction.
+- At one tick for all every read is at a tick's end and the delay is d L exactly, the head's.
+
+CHECKED a6 B: side 5, the time gear held, a push of 10^6 or of 1 at one Node-clock, the delay counted from the pushed slot's before-notch:
+
+| read | push 10^6: Node-clocks reached faster than one Mesh per L_min (of 372) | least delay / (d L_min) | push 1: faster |
+| --- | --- | --- | --- |
+| past | 0 | 1.039 | 0 |
+| near | 154 | 0.652 | 8 |
+| lin | 318 | 0.321 | 7 |
+
+The head (one rate): 0 faster, delay = d L exactly.
+
+**So:** by Lemma 3, a time-symmetric read cannot keep one Mesh per local tick in notches. The best it can do is one Mesh per half tick (near); lin keeps only one Mesh per notch, the elapsed fraction weighing the word.
+- Where the neighbouring ticks coincide, every read keeps it.
+- The lattice's own cone is already wider than light's (section 18, items 2 and 23).
+
+**OPEN**, for the owner and David: the time reversal (laws 4 and 10) with lin or near, or the strict notch cone with past. My recommendation is lin: it is second order, and it is the one AVI and the space-time refinements use.
+
+### 5.5 The 24 (and the 48)
+
+**PROVED** for the A1 and E reads: the gears the 24 permute and never negate (the hands, which are A1 under the 24; the time gear; the three diagonal tensions).
+- Under g of the 24 or the 48 about a Node-clock, the event at x through Spoke j becomes the event at g x through Spoke g j of the turned board.
+- The dials, the tick lengths and the weights u / L are A1.
+- The step is the head's covariant one formula.
+- By Theorem 2, the run's result does not depend on the runner's tie-break, which no rotation keeps.
+
+CHECKED a5 C: every Node-clock its own rate, sides 3, 4 and 5, every phase at 0 or random, the runner breaking ties by the site's index:
+- 288 images (24 rotations and 24 mirrors on each of 6 boards): the 24 part at 0, the mirrors at 0;
+- the mutant zoh_now parts the 24 at 63 and the mirrors at 63.
+
+The probe's calibre has no one-hand coupling, so the mirrors hold too; with the plan's coupling only the 24 are asked.
+
+For the T1, T2 and A2 gears (negated by some of the 24), the read keeps the 24 only where its rounding is odd at a tie, which is section 3.3's open tie rule.
+
+## 6. The lapse, counted once
+
+**PROVED (the units at a uniform rate; the law's line, The same clock and the same ruler for every act: "a uniform notch ... is a change of units, time by N = p_0 / Gamma").**
+
+- Per local tick the event is the head's formula. A region whose tick lasts L notches makes 1 / L events per notch.
+- On the head the clock's rate already sits in the step's coefficients: the beat goes as p_0 through D = 12 (rim - pinion) p_s^2 G^2, and light's speed as p_0^2 / Gamma through the grips g_j = 2 p_i^2 Q_j pinion, p_i = p_0^2 / Gamma.
+- At a rate uniform in space and constant in time the factors W ~ T X and s = X cancel: the per-tick motion is T a'' = F, whatever X is.
+- So if the tick also carries the rate (L ~ 1 / N), **the clock's rate acts twice**: per notch the beat goes as N^2, against the law's N.
+- And lambda = X (the probes' choice, and the ask's "the lapse X") makes the tick go as X, which in the head's gauge X = Gamma (Gamma / p_0)^(d + 1) is the rate to the power -(d + 1), not -1.
+
+Two ways to count it once:
+1. **The one tick** (lambda constant): the head, with no asynchrony.
+2. **The tick at the rate:**
+   - lambda the count of notches per half tick at the Node-clock's rate, about Gamma / p_0 in units of the vacuum's;
+   - the spring at the vacuum's clock;
+   - one power of the rate in the grips, 2 p_0^2 Q_j pinion: the ruler alone, since the tick is the clock.
+
+   Then per notch the beat goes as N and light as N^2, as the law's same clock and same ruler have them, and the redshift comes from the tick itself, not from the typed exponential (E8).
+   - Gamma / p_0 = (X / Gamma)^(1 / (d + 1)) is a root of the stretch, no act of the three operations. The rate must come from a reading the clock holds: the head's load and rate table, a search section 16 wants replaced, or the regulator's own motion (David's general relativity item d).
+   - A stopped clock then has a tick that never comes due, no restore (BH-S1) needed. That is OPEN, under David's item e.
+
+**OPEN, David's:**
+- which integer of the regulator gives lambda;
+- the step's coefficients with the rate counted once;
+- the rows of gravity this moves (11, 12, 13, 29, 31, 32, 33 and the horizon's, section 14).
+
+Nothing in sections 2 to 5 depends on lambda's form: every proof holds for any lambda >= 1, and the probes run four.
+
+## 7. What it replaces, and what of the head's synchronous order stays a fake
+
+1. **The global tick loop goes.**
+   - What goes: tick.run, the five acts over the whole board in one pass, and the runner's loop over ticks (section 31's runner "the tick loop").
+   - What replaces it: the local event E_x, and the runner's event loop "while some Node-clock is due, step one, or all that are due at once".
+   - The conservative rule is the runner's one comparison. The record's tick becomes the event's own notch, and the record keeps a fixed order of the lines for its bytes.
+2. **What of tick.py's acts' order stands:** the order inside one event, which is forced. The readings, then the impulse at W (Tick.impulse), then the regulator at its own teeth, then the driven carry at W+ (Tick.carry with end_teeth). Its reverse is the head's own order at going -1. The head's one pass is one linear extension of the causal order at one tick for all: the asynchronous board at lambda constant (Theorem 1; line 98).
+3. **What stays a fake** (it cannot be carried onto the asynchronous board, and goes):
+   - (a) **The great clock's index.** clock.ticks, counted in Tick.__init__, read by the log (phase.crowded's "i": clock.ticks) and the turnovers' list. No Node-clock reads it (line 557). The event's notch replaces it in the record, for the decoder.
+   - (b) **The rewind note stack** (clock.stack, popped in Tick.__init__ and pushed in Tick.click; the release's tallies in it): G1. An event is undone from its own Node-clock's integers (section 4).
+   - (c) **The start-board copies:** Tick.held, phase.snapshot and Tick.at's choice of the slot by the going. The two slots and the dial hold the start where a value is read, and stay right only for value reads.
+   - (d) **The start-board reads that are no value reads** (section 3.2): the pawls read the ratchet's fine tooth across the Mesh (meshes.pawls); the Mesh offsets read the neighbour's centred count 2 (Phi_now - Phi_before) + c, a stride (meshes.offsets, meshes.py:95); the lead's time link reads the neighbour's before (meshes.mesh_lead, meshes.py:142: the fitting's senses and the twist); the click's wind reads the neighbours' befores (hands.wind). The ones in the step are the sprung hands' Mesh turn U_j; the click's are the rest. h1 counts them as section 3.2 gives.
+   - (e) **The whole-board reductions inside the step:** clock.count_max (Tick.standard_rate's maximum over the board), clock.max_transient (clock.turn), and clock.counts and clock.log written from the acts. They are the runner's and the decoder's, never the step's.
+   - (f) **The click's whole-board phase:** phase.snapshot, phase.crowded's jams across the board, phase.books over the board, and click.click after every Node-clock has stepped. On the asynchronous board a click is inside its Node-clock's event. Its one-ended writes are order-free by Theorem 2; its two-ended writes are not (section 10).
+   - (g) **The dial as the rate summed per great clock tick** (Tick.rate_readings, clock.dial += going rate). It becomes the count of the Node-clock's own ticks, beside its notch tau.
+   - (h) **The lapse put into the coefficients** (E8: the rate in D and the grips), counted twice once the tick carries the rate (section 6).
+   - (i) **Margolus's blocks and the red-black split**: derived in section 3.4 and not needed.
+4. **What it removes from the plan's list:** section 30 item 4's "one great clock's tick" (the fixed lattice stays), and section 18's root II in its "one tick" half. It moves no row until section 6's choice is made.
+
+## 8. The probes and their outputs
+
+All lie in this folder. run_all.sh reruns them, each in under three minutes (run_all.log: a4 75 s, a2 34 s, a5 15 s, a1 and h1 13 s, the others under 10 s). head_commit.txt holds the two commits the probes ran beside (toys-5 b56643b0e, engine-5.0-test 08ec59132). core.py is the asynchronous step; it imports the head's acts.carry, acts.mid, rule3.mean_teeth_of, rates.rounded and the Spokes' order, and nothing else of the engine.
+
+| file | what it checks | counts | mutants (must fail) |
+| --- | --- | --- | --- |
+| a1_local_tick.py / .txt | Theorem 1 against the head's form | 324 runs, 186,624 events, 0 differ | zoh_now 32 of 36, wrong_end 36 of 36 |
+| h1_head.py / .txt | the head's own tick taken as local events | 1,225,152 reads, 60,912 pulls, 60,912 carries, 71,064 regulator gears, 0 differ; the non-value reads counted | zoh_now: (i) 1,027,302, (ii) 51,750, (iii) 51,750, (iv) 22,468 equal |
+| a2_order_free.py / .txt | Theorem 2, Lemma 2 | 432 runs, 54 boards, 3,963 ties, 0 disagree; the dial bound 1.000 | zoh_now 6 of 6, slope_read 6 of 6 |
+| a3_partition.py / .txt | Theorem 3 | orbits 1, 2, 1, 2; 0 Meshes in a class; corners 1, 3, 3, 1; blocks 3 of 24 | the order-dependent reads part the class order and the translation, 3 of 3 each |
+| a4_rewind.py / .txt | Theorem 4, Lemma 4 | 432 runs, 477,088 events, 0 fail | back_order, drive_going, undo_moment, undo_W: 6 of 6 each |
+| a5_kept.py / .txt | sections 5.1, 5.2, 5.5, 3.3; the unit | books 0 off; sweep identity 30 of 30; cancels at 12 of 12 and 0 of 18; images 288, 0 off; ties 3,984; unit 12 of 12 | zoh_now parts 63 + 63 images |
+| a6_cone.py / .txt | section 5.4 | stencil 24 of 24; the table of 5.4 | reach2 16 of 24 |
+| a7_reversal.py / .txt | section 4.3 | 81 runs, 117,030 events: lin 0, near 0, past 27 of 27 | the odd rounding 9 of 9, the one-slot tick 9 of 9 |
+| a8_weights.py / .txt | section 3.3 | 3 x 54,872 reads | past's symmetry fails 41,040 |
+
+## 9. Prior art, and what is taken from each
+
+- **Nakamura (1974), "Asynchronous cellular automata and their computational ability"; Toffoli (1978), on the phase-difference relations of asynchronous sequential networks; Nehaniv (2004), "Asynchronous automata networks can emulate any synchronous automata network".** A cell keeps its present and its past state and a local count, and steps only when its neighbours are not behind, reading the state of the right count. Taken: the two slots and the dial are that construction. Lemma 2 is its bound on the neighbours' counts, which lets a dial be held modulo a turn.
+- **Toffoli and Margolus (1987; 1990, "Invertible cellular automata: a review"); Margolus (1984), "Physics-like models of computation".**
+  - Taken: Fredkin's second-order form, and the shear that inverts exactly when it leaves its controls untouched (Theorem 4).
+  - Derived and set aside: the block partition. It keeps the 24 only about the block's centre (section 3.4), as the architect found.
+- **Lew, Marsden, Ortiz and West (2003), "Asynchronous variational integrators", Arch. Rational Mech. Anal. 167.**
+  - Taken: every degree of freedom moves on its own clock; a force is read with every neighbour interpolated linearly to the force's moment (the read lin).
+  - Their element step keeps the momentum exactly because an element's impulse reaches all its nodes at one moment; the Node-clock's step does not, hence section 5.2's residue.
+  - AVIs keep the energy only nearly, and can show resonances at some ratios of steps (Fong, Darve and Lew, 2008); stability here is unprobed beyond about 20 ticks (section 10).
+- **Chandy and Misra (1979), Bryant (1977); Lamport (1978); Jefferson (1985), "Virtual time"; Carothers, Perumalla and Fujimoto (1999), reverse computation.** The conservative rule (a Node-clock steps when no neighbour is behind its notch) gives the sequential result in any order, with no rollback. The rewind is reverse computation with no state saved, every act its own inverse. Time Warp's optimistic rollback is not needed, since the conservative rule never steps out of order.
+- **Local time stepping for the wave equation.** Collino, Fouquet and Joly (2003); Diaz and Grote (2009), "Energy conserving explicit local time stepping for second-order wave equations"; Piperno (2006); Osher and Sanders (1983); Berger and Oliger (1984); Berger and Colella (1989). Conservation across an interface of two step sizes needs one flux booked for both sides: refluxing, or the energy-conserving interface. That is the way out named in section 5.2 and not derived.
+
+## 10. OPEN
+
+1. **lambda and the coefficients** (section 6):
+   - which integer of the regulator gives the tick;
+   - the rate taken out of the spring and the grips so that it acts once;
+   - the stopped clock as a tick that never comes due.
+
+   These are David's general relativity items d and e.
+2. **The read's tie rule for the T1, T2 and A2 gears** (section 3.3): the 24 against the time reversal at a tie. It is the same decision as the carry's (plan section 31, risk 2; section 30, item 5).
+3. **The head's non-value reads across a Mesh** (section 7, item 3d) to be derived as value reads:
+   - the sprung hands' Mesh turn U_j (the pawls, the centred count);
+   - the click's orientation, twist and wind;
+   - the pawl's change at a turnover.
+4. **The clicks inside the event.** A click that writes the far end of a Mesh (the fitting's lay, the unspringing's) writes outside its Node-clock, which Theorem 2's premise forbids. Ways to try: the write taken by the far end at its own next event, as a value it reads; or a click only where the two ends share a notch. Draft A's "what a click writes" must be read again with this.
+5. **The turnover as a local event.** Its triggers are the Node-clock's own integers: the top X- <= X >= X+, and the bottom as the top's mirror X- >= X <= X+ (the plan at 08ec59132, section 30, item 10). The schedule's symmetry is shown (section 4.3). Its own T S T = S^-1 at even teeth is the carry's (section 30).
+6. **The tick at every integer** (section 2.5): lambda = 1 + X X is range-free. The rate-tick of section 6 must be range-free too: the rate rounds to 0 far out, so lambda ~ Gamma / p_0 is undefined there.
+7. **The sweep and the wind at different rates** (sections 5.2, 5.3).
+8. **The cone in notches** (section 5.4): the owner's choice between the time-symmetric reads and the strict notch cone.
+9. **Stability at different rates** over long runs: AVI's known resonances. Probed only to about 20 ticks.
+10. **The protocol's steps 5 and 6:** a verifier who did not write this; Sofer's law check (including the quotation of lines 37, 98 and 557); David's sign-off.
+
+== core.py ==
+"""core.py: the local tick of the one formula on an asynchronous board, in integers (draft for David).
+
+The probes import this module. It imports the head's own primitives and nothing else of the engine:
+  acts.carry and acts.mid (Rule3's one carry and the mid tooth), rule3.mean_teeth_of (the mean teeth
+  W = (T div 2)(X- + X)), rates.rounded (the head's odd rounding of a coefficient) and the Spokes' order.
+
+A Node-clock x holds (the new engine's state, plan section 31, plus one integer):
+  a hand (two gears, now n and before b, fine teeth r in [0, W)), the regulator's time gear (X now, Xb before,
+  its fine tooth rX in [0, Tr) and its drive fine tooth dX in [0, Td)), and tau, its own count of the great
+  clock's notches at its now (its dial in notches).
+Its local tick lasts L(X, X+) = lam(X) + lam(X+) notches, a function of its own time gear's two slots.
+
+The event at x (its now-notch tau is due):
+  1. read every neighbour y at the moment tau: m = b_y + R((n_y - b_y) u, L_y), u = tau - sigma_y, where
+     sigma_y = tau_y - L(Xb_y, X_y) is y's before-notch and L_y its current tick (0 <= u <= L_y);
+  2. the matter's impulse: P = W (n - b) + (r - mid W), W = (T div 2)(Xb + X); P+ = P + s F, s = X,
+     F = SUM_j g (m_j - n) - d n;
+  3. the regulator: its turn X' = (hold X - Tr Xb + SUM_j Rg mX_j + rX) div Tr (hold = 2 Tr - Dr - 6 Rg), its fine
+     tooth the remainder; its drive q = (N + dX) div Td with N = kappa (P . P+) + nu T X X (n . F), symmetric in P, P+;
+     X+ = X' + q;
+  4. the matter's carry at W+ = (T div 2)(X + X+): n+ = n + (P+ + mid W+) div W+, r+ the remainder;
+  5. the tick: tau+ = tau + L(X, X+).
+The undo is the same acts in the reverse order, each inverted (the head's going -1 of acts.carry)."""
+
+from __future__ import annotations
+
+import random
+import sys
+from fractions import Fraction
+
+sys.path[:0] = ['/home/user/Universe24/src']
+from event_universe.core.acts import carry, mid  # noqa: E402  Rule3's one carry, the mid tooth
+from event_universe.core.rates import rounded as head_odd_rounded  # noqa: E402  the head's odd rounding
+from event_universe.core.rule3 import mean_teeth_of  # noqa: E402  (T div 2)(X- + X)
+from event_universe.core.spokes import SPOKE_SIDES, SPOKES  # noqa: E402  [+X, -X, +Y, -Y, +Z, -Z]
+
+
+class Causality(Exception):
+    """A read outside the neighbour's current tick: the schedule broke the conservative rule."""
+
+
+def half_up(k, teeth):
+    """The carry's own rounding of k over the teeth: (k + mid) div teeth (acts.carry with the mid tooth)."""
+    return carry(k, teeth, mid(teeth))[0]
+
+
+def odd(k, teeth):
+    """The head's odd rounding: half up on the magnitude, the sign after (rates.rounded)."""
+    return int(head_odd_rounded(k, teeth))
+
+
+ROUNDINGS = {'half_up': half_up, 'odd': odd}
+
+
+class Params:
+    """The calibre of the probe board: every integer of the step, and the choices under test."""
+
+    def __init__(self, **kw):
+        self.T, self.g, self.d = 600, 20, 30          # matter: teeth multiplier, grip, spring
+        self.Tr, self.Rg, self.Dr = 1000, 1, 0        # regulator: teeth, grip, spring
+        self.Td, self.kappa, self.nu = 3 * 10 ** 15, 1, 1  # regulator's drive: teeth, weights
+        self.lam = 'X'          # the local tick: 'X' (lam = X), 'W' (L = W+), 'const' (the head's one tick)
+        self.const = 2000       # lam for 'const'
+        self.read = 'lin'       # 'lin' (interpolation), 'past' (the last passed slot), 'near' (the nearer slot, the mean at the midpoint)
+        self.rnd = 'half_up'    # the read's rounding: 'half_up' (the carry's) or 'odd' (rates.rounded)
+        self.mutant = None      # one changed term, for the mutation proofs
+        for k, v in kw.items():
+            if not hasattr(self, k):
+                raise KeyError(k)
+            setattr(self, k, v)
+
+    def lam_of(self, x):
+        if self.lam == 'X':
+            return x
+        if self.lam == 'X2':          # another increasing lam, to show nothing leans on lam = X
+            return x + x * x // 1000
+        if self.lam == 'sq':          # 1 + X X: at least 1 at every integer, with no range on X
+            return 1 + x * x
+        if self.lam == 'const':
+            return self.const
+        raise KeyError(self.lam)
+
+    def L(self, xa, xb):
+        """The local tick from a Node-clock's two time-gear slots, symmetric in them."""
+        if self.lam == 'W':
+            return mean_teeth_of(self.T, xa, xb)
+        if self.mutant == 'L_asym':
+            return self.lam_of(xb) + self.lam_of(xb)
+        return self.lam_of(xa) + self.lam_of(xb)
+
+
+def read_value(n, b, u, L, P):
+    """The neighbour's notch at the moment, u notches into its current tick of L notches."""
+    R = ROUNDINGS[P.rnd]
+    if P.mutant == 'zoh_now':        # the value it last sent, whatever the moment
+        return n
+    if P.mutant == 'wrong_end':      # the weight measured from the wrong end
+        return b + R((n - b) * (L - u), L)
+    if P.mutant == 'slope_read':     # the value read, plus the neighbour's stride (n - b): a slope read
+        return b + R((n - b) * u, L) + (n - b)
+    if P.read == 'lin':
+        return b + R((n - b) * u, L)
+    if P.read == 'past':             # the slot last passed: b + (n - b) [u = L], [u = L] = u div L
+        return b + (n - b) * (u // L)
+    if P.read == 'near':             # the nearer slot, the two slots' mean at the midpoint: w2 = 1 + sgn(2u - L)
+        k = u + u - L
+        sgn = k // (k * k + 1) - (-k) // (k * k + 1)
+        return b + R((n - b) * (1 + sgn), 2)
+    raise KeyError(P.read)
+
+
+class Board:
+    """A cube torus of side n, its Node-clocks indexed x + n (y + n z), the six neighbours in the head's Spoke order."""
+
+    def __init__(self, n):
+        self.n, self.N = n, n ** 3
+        self.coords = [(i % n, (i // n) % n, i // (n * n)) for i in range(self.N)]
+        self.nb = []
+        for c in self.coords:
+            row = []
+            for axis, side in SPOKE_SIDES:
+                d = list(c)
+                d[axis] = (d[axis] + side) % n
+                row.append(d[0] + n * (d[1] + n * d[2]))
+            self.nb.append(row)
+        assert len(self.nb[0]) == SPOKES
+
+    def index(self, c):
+        n = self.n
+        return (c[0] % n) + n * ((c[1] % n) + n * (c[2] % n))
+
+
+FIELDS = ('n3', 'n12', 'b3', 'b12', 'r3', 'r12', 'X', 'Xb', 'rX', 'dX', 'tau')
+
+
+class State:
+    def __init__(self, board):
+        self.board = board
+        for f in FIELDS:
+            setattr(self, f, [0] * board.N)
+
+    def copy(self):
+        s = State(self.board)
+        for f in FIELDS:
+            setattr(s, f, list(getattr(self, f)))
+        return s
+
+    def key(self, with_tau=True):
+        return tuple(tuple(getattr(self, f)) for f in FIELDS if with_tau or f != 'tau')
+
+    def own(self, x):
+        return tuple(getattr(self, f)[x] for f in FIELDS[:-1])
+
+    def write(self, x, vals):
+        for f, v in zip(FIELDS[:-1], vals):
+            getattr(self, f)[x] = v
+
+    def sigma(self, x, P):
+        return self.tau[x] - P.L(self.Xb[x], self.X[x])
+
+
+def build(n, P, pattern, phases, seed, amp=100, vamp=100):
+    """A board with random hands, a time gear per Node-clock from the pattern, and the phases of the dials."""
+    rng = random.Random(seed)
+    board = Board(n)
+    st = State(board)
+    for x in range(board.N):
+        c = board.coords[x]
+        X = pattern(c, rng)
+        st.X[x], st.Xb[x] = X, X
+        st.n3[x], st.n12[x] = rng.randint(-amp, amp), rng.randint(-amp, amp)
+        st.b3[x], st.b12[x] = st.n3[x] - rng.randint(-vamp, vamp), st.n12[x] - rng.randint(-vamp, vamp)
+        W = mean_teeth_of(P.T, st.Xb[x], st.X[x])
+        st.r3[x], st.r12[x] = rng.randrange(W), rng.randrange(W)
+        st.rX[x], st.dX[x] = rng.randrange(P.Tr), rng.randrange(P.Td)
+        L = P.L(st.Xb[x], st.X[x])
+        st.tau[x] = 0 if phases == 'zero' else rng.randrange(L)
+    return st
+
+
+def reads_at(st, x, moment, P):
+    """The six neighbours' values at the moment: the hand's two gears and the time gear."""
+    out = []
+    for j, y in enumerate(st.board.nb[x]):
+        if P.mutant == 'reach2' and j == 0:     # a read two Meshes away along +X
+            y = st.board.nb[y][0]
+        Ly = P.L(st.Xb[y], st.X[y])
+        u = moment - (st.tau[y] - Ly)
+        if not 0 <= u <= Ly:
+            raise Causality((x, y, moment, st.tau[y], Ly))
+        out.append((read_value(st.n3[y], st.b3[y], u, Ly, P),
+                    read_value(st.n12[y], st.b12[y], u, Ly, P),
+                    read_value(st.X[y], st.Xb[y], u, Ly, P)))
+    return out
+
+
+def pull(P, n3, n12, reads):
+    """F = SUM_j g (m_j - n) - d n, per gear."""
+    f3 = sum(P.g * (m[0] - n3) for m in reads) - P.d * n3
+    f12 = sum(P.g * (m[1] - n12) for m in reads) - P.d * n12
+    return f3, f12
+
+
+def source(P, Pm, Pp, n3, n12, F, X):
+    """The regulator's drive numerator: the strides' product (symmetric under P <-> P+, the head's u_in u_out)
+    and the hand's work against its pull at the middle slot (the head's -a F), so that it changes sign."""
+    return P.kappa * (Pm[0] * Pp[0] + Pm[1] * Pp[1]) + P.nu * P.T * X * X * (n3 * F[0] + n12 * F[1])
+
+
+def step_values(P, own, reads, info=None):
+    """The event's acts 2 to 4 on a Node-clock's own integers, given the six reads at its moment."""
+    n3, n12, b3, b12, r3, r12, X, Xb, rX, dX = own
+    W = mean_teeth_of(P.T, Xb, X)
+    s = X
+    Pm = (W * (n3 - b3) + r3 - mid(W), W * (n12 - b12) + r12 - mid(W))
+    f3, f12 = pull(P, n3, n12, reads)
+    if P.mutant == 'force_sign':
+        f3, f12 = -f3, -f12
+    Pp = (Pm[0] + s * f3, Pm[1] + s * f12)
+    hold = 2 * P.Tr - P.Dr - SPOKES * P.Rg
+    M = sum(P.Rg * m[2] for m in reads)
+    Xt, rXn = carry(hold * X - P.Tr * Xb + M, P.Tr, rX)
+    q, dXn = carry(source(P, Pm, Pp, n3, n12, (f3, f12), X), P.Td, dX)
+    Xn = Xt + q
+    Wp = mean_teeth_of(P.T, X, Xn)
+    if Wp <= 0:
+        raise ValueError('W+ <= 0')
+    v3, r3n = carry(Pp[0], Wp, mid(Wp))
+    v12, r12n = carry(Pp[1], Wp, mid(Wp))
+    if info is not None:
+        info.update(W=W, Wp=Wp, s=s, Pm=Pm, Pp=Pp, F=(f3, f12), v=(v3, v12), rho=(r3n - mid(Wp), r12n - mid(Wp)),
+                    a=(n3, n12), q=q)
+    return (n3 + v3, n12 + v12, n3, n12, r3n, r12n, Xn, X, rXn, dXn)
+
+
+def unstep_values(P, cur, reads):
+    """The event undone: the same acts in the reverse order, each inverted (acts.carry at going -1)."""
+    n3p, n12p, n3, n12, r3p, r12p, Xn, X, rXn, dXn = cur
+    Wp = mean_teeth_of(P.T, X, Xn)
+    s = X
+    Pp = (Wp * (n3p - n3) + r3p - mid(Wp), Wp * (n12p - n12) + r12p - mid(Wp))
+    f3, f12 = pull(P, n3, n12, reads)
+    Pm = (Pp[0] - s * f3, Pp[1] - s * f12)
+    going = 1 if P.mutant == 'drive_going' else -1
+    q, dX = carry(source(P, Pm, Pp, n3, n12, (f3, f12), X), P.Td, dXn, going)
+    Xt = Xn - q
+    hold = 2 * P.Tr - P.Dr - SPOKES * P.Rg
+    M = sum(P.Rg * m[2] for m in reads)
+    Xb, rX = carry(hold * X - P.Tr * Xt + M, P.Tr, rXn, -1)
+    W = mean_teeth_of(P.T, Xb, X) if P.mutant != 'undo_W' else Wp
+    if W <= 0:
+        raise ValueError('W <= 0 in the undo')
+    v3, r3 = carry(Pm[0], W, mid(W))
+    v12, r12 = carry(Pm[1], W, mid(W))
+    return (n3, n12, n3 - v3, n12 - v12, r3, r12, X, Xb, rX, dX)
+
+
+def event(st, x, P, info=None):
+    """One local event at x, at its own now-notch."""
+    moment = st.tau[x]
+    reads = reads_at(st, x, moment, P)
+    new = step_values(P, st.own(x), reads, info)
+    st.write(x, new)
+    st.tau[x] = moment + P.L(new[7], new[6])
+    if info is not None:
+        info.update(x=x, moment=moment, reads=reads)
+    return moment
+
+
+def undo(st, x, P):
+    """The event at x's before-notch undone."""
+    moment = st.sigma(x, P)
+    reads = reads_at(st, x, moment - (1 if P.mutant == 'undo_moment' else 0), P)
+    old = unstep_values(P, st.own(x), reads)
+    st.write(x, old)
+    st.tau[x] = moment
+    return moment
+
+
+def due_local(st, x, t_end):
+    """The conservative rule: x's now-notch is below the end and no neighbour's now-notch is earlier."""
+    t = st.tau[x]
+    return t < t_end and all(t <= st.tau[y] for y in st.board.nb[x])
+
+
+def run_queue(st, P, t_end, rng=None, log=None, info_log=None):
+    """The great clock's order: the earliest now-notch next, a tie broken at random (rng) or by index."""
+    count = 0
+    while True:
+        m = min(st.tau)
+        if m >= t_end:
+            return count
+        due = [x for x in range(st.board.N) if st.tau[x] == m]
+        x = rng.choice(due) if rng is not None else due[0]
+        info = {} if info_log is not None else None
+        event(st, x, P, info)
+        if log is not None:
+            log.append((x, m))
+        if info_log is not None:
+            info_log.append(info)
+        count += 1
+
+
+def run_local(st, P, t_end, rng):
+    """No great clock: any Node-clock whose now-notch is a local minimum, picked at random."""
+    count = 0
+    while True:
+        cand = [x for x in range(st.board.N) if due_local(st, x, t_end)]
+        if not cand:
+            return count
+        event(st, rng.choice(cand), P)
+        count += 1
+
+
+def run_rounds(st, P, t_end):
+    """Every local minimum at once, double-buffered: all read the board as it is, then all write."""
+    count = 0
+    while True:
+        cand = [x for x in range(st.board.N) if due_local(st, x, t_end)]
+        if not cand:
+            return count
+        frozen = st.copy()
+        for x in cand:
+            moment = frozen.tau[x]
+            new = step_values(P, frozen.own(x), reads_at(frozen, x, moment, P))
+            st.write(x, new)
+            st.tau[x] = moment + P.L(new[7], new[6])
+        count += len(cand)
+
+
+def back_queue(st, P, t_start, rng=None):
+    """The rewind: the latest before-notch undone first, a tie at random or by index."""
+    count = 0
+    while True:
+        sig = [st.sigma(x, P) for x in range(st.board.N)]
+        m = max(sig)
+        if m < t_start:
+            return count
+        due = [x for x in range(st.board.N) if sig[x] == m]
+        if P.mutant == 'back_order':        # undone in the forward order's sense: the earliest first
+            m = min(s for s in sig if s >= t_start)
+            due = [x for x in range(st.board.N) if sig[x] == m]
+        undo(st, rng.choice(due) if rng is not None else due[0], P)
+        count += 1
+
+
+def back_local(st, P, t_start, rng):
+    """The rewind with no great clock: any Node-clock whose before-notch is a local maximum."""
+    count = 0
+    while True:
+        sig = [st.sigma(x, P) for x in range(st.board.N)]
+        cand = [x for x in range(st.board.N)
+                if sig[x] >= t_start and all(sig[x] >= sig[y] for y in st.board.nb[x])]
+        if not cand:
+            return count
+        undo(st, rng.choice(cand), P)
+        count += 1
+
+
+def sync_round(st, P):
+    """The head's form: every Node-clock reads the start board's nows, then every one writes."""
+    frozen = st.copy()
+    for x in range(st.board.N):
+        reads = [(frozen.n3[y], frozen.n12[y], frozen.X[y]) for y in st.board.nb[x]]
+        new = step_values(P, frozen.own(x), reads)
+        st.write(x, new)
+        st.tau[x] = frozen.tau[x] + P.L(new[7], new[6])
+
+
+# the 24 and the 48: the signed permutation matrices of determinant +1 (and -1)
+def signed_perms():
+    import itertools
+    mats = []
+    for perm in itertools.permutations(range(3)):
+        for signs in itertools.product((1, -1), repeat=3):
+            M = [[0] * 3 for _ in range(3)]
+            for i in range(3):
+                M[i][perm[i]] = signs[i]
+            det = (M[0][0] * (M[1][1] * M[2][2] - M[1][2] * M[2][1])
+                   - M[0][1] * (M[1][0] * M[2][2] - M[1][2] * M[2][0])
+                   + M[0][2] * (M[1][0] * M[2][1] - M[1][1] * M[2][0]))
+            mats.append((M, det))
+    return mats
+
+
+def image(st, M):
+    """The state turned by M about the Node-clock at the origin: every A1 integer moved to its image site."""
+    b = st.board
+    out = State(b)
+    for x in range(b.N):
+        c = b.coords[x]
+        img = b.index([sum(M[i][k] * c[k] for k in range(3)) for i in range(3)])
+        for f in FIELDS:
+            getattr(out, f)[img] = getattr(st, f)[x]
+    return out
+
+
+def charge_terms(info, P):
+    """The event's exact charge identity, weighted by 1 / s: the Mesh part and the carry part (Fractions)."""
+    a3, a12 = info['a']
+    s = info['s']
+    mesh = sum(P.g * (a3 * m[1] - a12 * m[0]) for m in info['reads'])   # SUM_j g Im(conj(a) m_j)
+    v3, v12 = info['v']
+    p3, p12 = info['rho']
+    carry_part = Fraction(v3 * p12 - v12 * p3, s)                       # Im(conj(v) rho+) / s
+    return mesh, carry_part
+
+
+def charge_of(st, P):
+    """Q_w = SUM_x Im(conj(a) P) / s, the sweep weighted so that the Mesh's two ends' terms are equal."""
+    total = Fraction(0)
+    for x in range(st.board.N):
+        W = mean_teeth_of(P.T, st.Xb[x], st.X[x])
+        p3 = W * (st.n3[x] - st.b3[x]) + st.r3[x] - mid(W)
+        p12 = W * (st.n12[x] - st.b12[x]) + st.r12[x] - mid(W)
+        total += Fraction(st.n3[x] * p12 - st.n12[x] * p3, st.X[x])
+    return total
+
+== a1_local_tick.py ==
+"""a1: the local tick is the head's one formula exactly when every clock has the same rate.
+
+The head's form (sync_round): every Node-clock reads its six neighbours' nows on the start board, then all write.
+The asynchronous board: each Node-clock steps at its own now-notch, reading each neighbour at that moment
+(b + R((n - b) u, L)); three runners: the great clock's order with ties at random (queue), no great clock with
+a random local minimum each time (local), and every local minimum at once double-buffered (rounds).
+Cases:
+  A. the head's one tick (lam const): the full formula, the time gear driven and different at every Node-clock;
+  B. lam = X with every clock at the same rate, the common rate changing every tick (Xb = X + 3: the clocks speed up);
+  C. lam = W (the local tick the mean teeth W+ itself), as B.
+Mutants that must fail: the neighbour's now read whatever the moment (zoh_now), the weight from the wrong end."""
+import random
+import sys
+
+sys.path.insert(0, '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/async')
+from core import Params, build, run_queue, run_local, run_rounds, sync_round, Causality  # noqa: E402
+
+ORDERS = 4
+
+
+def case(P, n, pattern, Xb_shift, seed, rounds):
+    st = build(n, P, pattern, 'zero', seed)
+    for x in range(st.board.N):
+        st.Xb[x] = st.X[x] + Xb_shift
+    from core import mean_teeth_of
+    for x in range(st.board.N):    # the fine teeth back in range of the shifted mean teeth
+        W = mean_teeth_of(P.T, st.Xb[x], st.X[x])
+        st.r3[x] %= W
+        st.r12[x] %= W
+    head = st.copy()
+    notches = []
+    for _ in range(rounds):
+        sync_round(head, P)
+        notches.append(head.tau[0])
+    assert len(set(head.tau)) == 1, 'the head form needs one tick for all'
+    t_end = head.tau[0]
+    outs = []
+    for k in range(ORDERS):
+        a = st.copy()
+        run_queue(a, P, t_end, random.Random(1000 * seed + k))
+        outs.append(('queue', a))
+        b = st.copy()
+        run_local(b, P, t_end, random.Random(2000 * seed + k))
+        outs.append(('local', b))
+    c = st.copy()
+    run_rounds(c, P, t_end)
+    outs.append(('rounds', c))
+    return head, outs
+
+
+def main():
+    total = fails = events = 0
+    print('a1: the local tick against the head form (sync_round), bit for bit on every integer of every Node-clock')
+    patterns = {
+        'random X per site': lambda c, rng: rng.randint(1000, 2000),
+        'uniform X 1500': lambda c, rng: 1500,
+    }
+    setups = []
+    for n in (3, 4, 5):
+        for T in (600, 602):
+            setups.append(('A lam const, full formula', Params(lam='const', const=2000, T=T), n, 'random X per site', 0))
+            setups.append(('B lam X, one rate for all, speeding up', Params(lam='X', T=T, kappa=0, nu=0, Rg=1, Dr=0), n, 'uniform X 1500', 3))
+            setups.append(('C lam W, one rate for all, speeding up', Params(lam='W', T=T, kappa=0, nu=0, Rg=1, Dr=0), n, 'uniform X 1500', 3))
+    for name, P, n, pat, shift in setups:
+        for seed in (1, 2):
+            head, outs = case(P, n, patterns[pat], shift, seed, 8)
+            bad = sum(1 for _, o in outs if o.key() != head.key())
+            total += len(outs)
+            fails += bad
+            events += 8 * head.board.N * len(outs)
+            print(f'  {name}: side {n}, T {P.T}, seed {seed}: {len(outs)} asynchronous runs, {bad} differ from the head form'
+                  f' (tick lengths {sorted(set(P.L(head.Xb[x], head.X[x]) for x in range(head.board.N)))[:3]})')
+    print(f'a1 RESULT: {total} asynchronous runs ({events} local events) against the head form, {fails} differ')
+    # the mutants
+    print('a1 mutants (each must make the asynchronous runs differ from the head form):')
+    for mut in ('zoh_now', 'wrong_end'):
+        mt = mf = 0
+        for n in (3, 4):
+            for seed in (1, 2):
+                P = Params(lam='const', const=2000, mutant=mut)
+                try:
+                    head, outs = case(P, n, patterns['random X per site'], 0, seed, 6)
+                    head0, _ = case(Params(lam='const', const=2000), n, patterns['random X per site'], 0, seed, 6)
+                    bad = sum(1 for _, o in outs if o.key() != head0.key())
+                except Causality:
+                    bad, outs = 1, [None]
+                mt += len(outs)
+                mf += bad
+        print(f'  mutant {mut}: {mt} runs, {mf} differ from the head form -> {"FAILS AS IT MUST" if mf else "DOES NOT FAIL: THE PROBE IS BLIND"}')
+
+
+if __name__ == '__main__':
+    main()
+
+== a2_order_free.py ==
+"""a2: the order-free reads on a board of clocks at different rates.
+
+Every run executes exactly the events whose now-notch lies below the end; the runners differ in the order:
+  queue  - the great clock's order, the Node-clocks due at one notch taken in a random order;
+  local  - no great clock: any Node-clock whose now-notch is a local minimum, at random;
+  rounds - every local minimum at once, double-buffered (all read, then all write).
+All must end in the same integers. Ties are counted: an event at the same notch as an event of a neighbour.
+Mutants that must make the order matter: the neighbour's now whatever the moment (zoh_now), and a slope read
+(the neighbour's stride n - b added to the value read: a read the neighbour's event at the same notch changes)."""
+import random
+import sys
+from fractions import Fraction
+
+sys.path.insert(0, '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/async')
+from core import Params, build, run_queue, run_local, run_rounds  # noqa: E402
+
+BOUND = [Fraction(0)]
+PATTERNS = {
+    'two rates (X 1000 | 2000)': lambda c, rng: 1000 if c[0] < 2 else 2000,
+    'three rates (X 1000, 1500, 2000)': lambda c, rng: (1000, 1500, 2000)[c[0] % 3],
+    'every Node-clock its own rate': lambda c, rng: rng.randint(1000, 2000),
+}
+
+
+def ties(P, st, t_end):
+    """Events at a notch where a neighbour also has an event; and the bound |tau_x - tau_y| <= max(L_x, L_y) on every
+    Mesh after every event (so that a dial held modulo M > 2 max L gives every difference the step reads)."""
+    a = st.copy()
+    log = []
+    worst = [0]
+    from core import event as _event
+    b = a.board
+
+    def check():
+        for x in range(b.N):
+            Lx = P.L(a.Xb[x], a.X[x])
+            for y in b.nb[x]:
+                Ly = P.L(a.Xb[y], a.X[y])
+                worst[0] = max(worst[0], Fraction(abs(a.tau[x] - a.tau[y]), max(Lx, Ly)))
+    check()
+    while True:
+        m = min(a.tau)
+        if m >= t_end:
+            break
+        x = min(z for z in range(b.N) if a.tau[z] == m)
+        _event(a, x, P)
+        log.append((x, m))
+        if len(log) % 7 == 0:
+            check()
+    check()
+    BOUND[0] = max(BOUND[0], worst[0])
+    at = {}
+    for x, m in log:
+        at.setdefault(m, set()).add(x)
+    count = 0
+    for x, m in log:
+        if any(y in at[m] for y in a.board.nb[x]):
+            count += 1
+    return len(log), count
+
+
+def trial(P, n, pat, phases, seed, t_end, orders):
+    st = build(n, P, PATTERNS[pat], phases, seed)
+    ref = st.copy()
+    run_queue(ref, P, t_end, random.Random(seed))
+    keys = set()
+    runs = 0
+    for k in range(orders):
+        a = st.copy()
+        run_queue(a, P, t_end, random.Random(100 * seed + k))
+        b = st.copy()
+        run_local(b, P, t_end, random.Random(200 * seed + k))
+        keys.add(a.key())
+        keys.add(b.key())
+        runs += 2
+    c = st.copy()
+    run_rounds(c, P, t_end)
+    keys.add(c.key())
+    keys.add(ref.key())
+    runs += 2
+    return st, runs, len(keys) - 1
+
+
+def main():
+    print('a2: the order-free reads, lam = X, the full formula (the time gear driven, the ticks slowing and speeding up)')
+    tot_runs = tot_fail = tot_events = tot_ties = boards = 0
+    for n in (3, 4, 5):
+        for pat in PATTERNS:
+            for phases in ('zero', 'random'):
+                for read in ('lin', 'past', 'near'):
+                    P = Params(read=read)
+                    st, runs, extra = trial(P, n, pat, phases, 7 + n, 40000, 3)
+                    ev, ti = ties(P, st, 40000)
+                    tot_runs += runs
+                    boards += 1
+                    tot_fail += 1 if extra else 0
+                    tot_events += ev
+                    tot_ties += ti
+                    if read == 'lin' or extra:
+                        print(f'  side {n}, {pat}, phases {phases}, read {read}: {runs} runs, {ev} events, {ti} at a tie'
+                              f' with a neighbour, distinct end states beyond the first: {extra}')
+    print(f'a2 RESULT: {tot_runs} runs over {boards} boards ({tot_events} events of the reference runs, {tot_ties} at a tie '
+          f'with a neighbour), boards whose runs disagree: {tot_fail}; the largest |tau_x - tau_y| / max(L_x, L_y) on a Mesh: '
+          f'{BOUND[0]} ({float(BOUND[0]):.3f}, read every 7 events)')
+    print('a2 mutants (each must give different end states for different orders):')
+    for mut in ('zoh_now', 'slope_read'):
+        boards = differ = 0
+        for n in (3, 4):
+            for pat in PATTERNS:
+                P = Params(mutant=mut)
+                st, runs, extra = trial(P, n, pat, 'zero', 11 + n, 30000, 3)
+                boards += 1
+                differ += 1 if extra else 0
+        print(f'  mutant {mut}: {boards} boards, {differ} with order-dependent end states -> '
+              f'{"FAILS AS IT MUST" if differ else "DOES NOT FAIL: THE PROBE IS BLIND"}')
+
+
+if __name__ == '__main__':
+    main()
+
+== a3_partition.py ==
+"""a3: the partition the 24 makes, and what it buys.
+
+A. The group G generated by the 24 rotations about every Node-clock of the torus of side n: its orbits on the
+   Node-clocks (union-find over every generator), the Meshes inside an orbit, and whether any split of the torus
+   into two classes with no Mesh inside a class exists (a 2-colouring of the Meshes' graph).
+B. The 24 about one Node-clock on the eight corners Z^3 / 2 Z^3 (the Margolus block's eight cells), and how many of
+   the 24 keep Margolus's block partition, about a Node-clock and about the block's centre.
+C. Order inside a class: equal rates, every notch a tie for all Node-clocks. With an order-dependent read (the
+   mutants zoh_now and slope_read), the runs that take one class first at every notch, in any order inside the
+   class, must agree; the class taken first must matter; and the translation by one Mesh (which swaps the classes)
+   must part the run from its image. With the value read (lin) nothing of this matters."""
+import itertools
+import random
+import sys
+
+sys.path.insert(0, '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/async')
+from core import Params, build, event, signed_perms, State, FIELDS  # noqa: E402
+
+ROT = [M for M, det in signed_perms() if det == 1]
+assert len(ROT) == 24
+
+
+def orbits_of_G(n):
+    N = n ** 3
+    parent = list(range(N))
+
+    def find(a):
+        while parent[a] != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+
+    def idx(c):
+        return (c[0] % n) + n * ((c[1] % n) + n * (c[2] % n))
+
+    coords = [(i % n, (i // n) % n, i // (n * n)) for i in range(N)]
+    for p in coords:
+        for M in ROT:
+            for v in coords:
+                w = [v[k] - p[k] for k in range(3)]
+                img = [p[i] + sum(M[i][k] * w[k] for k in range(3)) for i in range(3)]
+                a, b = find(idx(v)), find(idx(img))
+                if a != b:
+                    parent[a] = b
+    groups = {}
+    for i in range(N):
+        groups.setdefault(find(i), []).append(i)
+    return coords, list(groups.values()), idx
+
+
+def two_colouring(n):
+    """A split into two classes with no Mesh inside a class, by breadth-first search, or None."""
+    N = n ** 3
+    coords = [(i % n, (i // n) % n, i // (n * n)) for i in range(N)]
+
+    def idx(c):
+        return (c[0] % n) + n * ((c[1] % n) + n * (c[2] % n))
+    colour = [None] * N
+    colour[0] = 0
+    queue = [0]
+    while queue:
+        x = queue.pop()
+        c = coords[x]
+        for axis in range(3):
+            for side in (1, -1):
+                d = list(c)
+                d[axis] += side
+                y = idx(d)
+                if colour[y] is None:
+                    colour[y] = 1 - colour[x]
+                    queue.append(y)
+                elif colour[y] == colour[x]:
+                    return None
+    return colour
+
+
+def part_a():
+    print('A. the orbits of the group the 24 generate about every Node-clock, on the torus of side n')
+    rows = []
+    for n in (3, 4, 5, 6):
+        coords, groups, idx = orbits_of_G(n)
+        inside = 0
+        for g in groups:
+            s = set(g)
+            for x in g:
+                c = coords[x]
+                for axis in range(3):
+                    d = list(c)
+                    d[axis] += 1
+                    if idx(d) in s:
+                        inside += 1
+        parity_ok = None
+        if len(groups) == 2:
+            parity_ok = all(len({sum(coords[x]) % 2 for x in g}) == 1 for g in groups)
+        col = two_colouring(n)
+        rows.append((n, len(groups), sorted(len(g) for g in groups), parity_ok, inside, col is not None))
+        print(f'  side {n}: {len(groups)} orbit(s) of sizes {sorted(len(g) for g in groups)}; each orbit one parity class of x+y+z:'
+              f' {parity_ok}; Meshes inside an orbit: {inside} of {3 * n ** 3}; a split into two Mesh-free classes exists: {col is not None}')
+    return rows
+
+
+def part_b():
+    print('B. the 24 about the Node-clock at the origin on the eight corners Z^3 / 2 Z^3')
+    corners = list(itertools.product((0, 1), repeat=3))
+    seen, orbits = set(), []
+    for c in corners:
+        if c in seen:
+            continue
+        orb = {tuple(sum(M[i][k] * c[k] for k in range(3)) % 2 for i in range(3)) for M in ROT}
+        seen |= orb
+        orbits.append(sorted(orb))
+    print(f'  orbits: {[len(o) for o in orbits]} -> {orbits}')
+    even = [o for o in orbits if sum(o[0]) % 2 == 0]
+    odd = [o for o in orbits if sum(o[0]) % 2 == 1]
+    print(f'  the parity of x+y+z joins them in two: even {sum(len(o) for o in even)} corners, odd {sum(len(o) for o in odd)} corners')
+    n = 4
+    # Margolus's block partition with corners at even coordinates: a block is named by (x div 2, y div 2, z div 2)
+
+    def block_of(c):
+        return tuple((ci % n) // 2 for ci in c)
+    sites = list(itertools.product(range(n), repeat=3))
+    blocks = {}
+    for c in sites:
+        blocks.setdefault(block_of(c), set()).add(c)
+    partition = {frozenset(b) for b in blocks.values()}
+    about_site = about_centre = 0
+    for M in ROT:
+        img = {frozenset(tuple(sum(M[i][k] * c[k] for k in range(3)) % n for i in range(3)) for c in b) for b in partition}
+        about_site += img == partition
+        # about the block's centre (1/2, 1/2, 1/2): v -> 2 M (v - h) + 2 h in doubled coordinates
+        img2 = set()
+        for b in partition:
+            cells = set()
+            for c in b:
+                w = [2 * c[k] - 1 for k in range(3)]
+                u = [sum(M[i][k] * w[k] for k in range(3)) for i in range(3)]
+                cells.add(tuple(((u[i] + 1) // 2) % n for i in range(3)))
+            img2.add(frozenset(cells))
+        about_centre += img2 == partition
+    print(f'  Margolus blocks on the side {n}: kept by {about_site} of the 24 about a Node-clock, by {about_centre} of the 24 about the block centre')
+    return [len(o) for o in orbits], about_site, about_centre
+
+
+def run_classes(st, P, t_end, first, rng):
+    """At every notch the due Node-clocks of class `first` (x+y+z mod 2) before the others, at random inside."""
+    b = st.board
+    while True:
+        m = min(st.tau)
+        if m >= t_end:
+            return
+        due = [x for x in range(b.N) if st.tau[x] == m]
+        pref = [x for x in due if sum(b.coords[x]) % 2 == first]
+        event(st, rng.choice(pref if pref else due), P)
+
+
+def translated(st):
+    b = st.board
+    out = State(b)
+    for x in range(b.N):
+        c = b.coords[x]
+        y = b.index((c[0] + 1, c[1], c[2]))
+        for f in FIELDS:
+            getattr(out, f)[y] = getattr(st, f)[x]
+    return out
+
+
+def part_c():
+    print('C. order inside a class (side 4, equal rates, every notch a tie for all), 3 seeds')
+    out = {}
+    for read_mut in ('lin', 'zoh_now', 'slope_read'):
+        P = Params(lam='const', const=2000) if read_mut == 'lin' else Params(lam='const', const=2000, mutant=read_mut)
+        inside_runs = inside_differ = class_matters = trans_parts = 0
+        for seed in (1, 2, 3):
+            st = build(4, P, lambda c, rng: rng.randint(1000, 2000), 'zero', seed)
+            t_end = 6 * 4000
+            keys = {}
+            for first in (0, 1):
+                ks = set()
+                for k in range(4):
+                    a = st.copy()
+                    run_classes(a, P, t_end, first, random.Random(10 * seed + k + 100 * first))
+                    ks.add(a.key())
+                    inside_runs += 1
+                inside_differ += len(ks) - 1
+                keys[first] = ks
+            class_matters += keys[0] != keys[1]
+            a = st.copy()
+            run_classes(a, P, t_end, 0, random.Random(seed))
+            b = translated(st)
+            run_classes(b, P, t_end, 0, random.Random(seed + 7))
+            trans_parts += translated(a).key() != b.key()
+        out[read_mut] = (inside_runs, inside_differ, class_matters, trans_parts)
+        print(f'  read {read_mut}: {inside_runs} runs class-first; distinct end states inside a class order beyond the first: {inside_differ};'
+              f' boards where the class taken first matters: {class_matters} of 3; boards where one Mesh\'s translation parts the run from its image: {trans_parts} of 3')
+    return out
+
+
+def main():
+    print('a3: the partition the 24 make')
+    rows = part_a()
+    orbs, about_site, about_centre = part_b()
+    out = part_c()
+    ok_a = all((r[1] == 2 and r[3] and r[4] == 0 and r[5]) if r[0] % 2 == 0 else (r[1] == 1 and not r[5]) for r in rows)
+    ok_b = sorted(orbs) == [1, 1, 3, 3] and about_site < 24 and about_centre == 24
+    ok_c = (out['lin'][1:] == (0, 0, 0) and all(out[m][1] == 0 and out[m][2] > 0 and out[m][3] > 0 for m in ('zoh_now', 'slope_read')))
+    print(f'a3 RESULT: A {"as derived" if ok_a else "AGAINST THE DERIVATION"}; B {"as derived" if ok_b else "AGAINST THE DERIVATION"}; '
+          f'C {"as derived" if ok_c else "AGAINST THE DERIVATION"}')
+    print('a3 mutants: the order-dependent reads (zoh_now, slope_read) must part the class orders and the translation: '
+          + ('FAIL AS THEY MUST' if all(out[m][2] > 0 for m in ('zoh_now', 'slope_read')) else 'DO NOT FAIL: THE PROBE IS BLIND'))
+
+
+if __name__ == '__main__':
+    main()
+
+== a4_rewind.py ==
+"""a4: the exact rewind of the asynchronous run.
+
+Forward: every event whose now-notch lies below the end, by a runner (the great clock's order with random ties, or
+no great clock: a random local minimum each time). Back: every event undone, the latest before-notch first (the
+mirror runners: the great clock's reverse order, or a random local maximum of the before-notches each time),
+each event undone by the same acts in the reverse order, each inverted. The board must return to its start in
+every integer: every notch, before, fine tooth, the time gear's two slots, its fine and drive fine teeth and the
+dial tau. Boards: sides 3, 4, 5; two rates, three rates, every Node-clock its own; the ticks slow and speed up
+(the time gear driven both ways); lam = X, X2, W and 1 + X X (at least 1 at every integer, no range); reads lin, past and near; roundings half_up and odd; T 600
+and 602. Mutants that must fail: the undo in the wrong order, the drive undone at going +1, the undo reading its
+neighbours one notch early, the undo's carry at W+ in place of W."""
+import random
+import sys
+
+sys.path.insert(0, '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/async')
+from core import Params, build, run_queue, run_local, back_queue, back_local, Causality  # noqa: E402
+
+PATTERNS = {
+    'two rates': lambda c, rng: 1000 if c[0] < 2 else 2000,
+    'three rates': lambda c, rng: (1000, 1500, 2000)[c[0] % 3],
+    'own rates': lambda c, rng: rng.randint(1000, 2000),
+}
+
+
+def one(P, n, pat, phases, seed, t_end, fwd, bwd):
+    st = build(n, P, PATTERNS[pat], phases, seed)
+    start = st.copy()
+    info = []
+    if fwd == 'queue':
+        k = run_queue(st, P, t_end, random.Random(seed), info_log=info)
+    else:
+        k = run_local(st, P, t_end, random.Random(seed))
+    moved = st.key() != start.key()
+    Ls = [P.L(st.Xb[x], st.X[x]) for x in range(st.board.N)]
+    ups = sum(1 for i in info if i['q'] > 0)
+    downs = sum(1 for i in info if i['q'] < 0)
+    if bwd == 'queue':
+        kb = back_queue(st, P, 0, random.Random(seed + 1))
+    else:
+        kb = back_local(st, P, 0, random.Random(seed + 1))
+    return k, kb, st.key() == start.key(), moved, (min(Ls), max(Ls)), ups, downs
+
+
+def main():
+    print('a4: the exact rewind, forward to the end notch and back to notch 0')
+    cases = fails = events = 0
+    Lmin, Lmax, ups, downs = 10 ** 18, 0, 0, 0
+    for n in (3, 4, 5):
+        for pat in PATTERNS:
+            for lam in ('X', 'X2', 'W', 'sq'):
+                for read in ('lin', 'past', 'near'):
+                    for rnd in ('half_up', 'odd'):
+                        T = 600 if (n + len(pat)) % 2 else 602
+                        P = Params(lam=lam, read=read, rnd=rnd, T=T)
+                        scale = {'X': 1, 'X2': 1, 'W': T // 2, 'sq': 1500}[lam]
+                        for fwd, bwd in (('queue', 'queue'), ('local', 'local')):
+                            seed = 31 * n + len(pat) + len(lam) + len(read)
+                            k, kb, ok, moved, (lo, hi), u, d = one(P, n, pat, 'random', seed, 50000 * scale, fwd, bwd)
+                            cases += 1
+                            events += k
+                            fails += 0 if (ok and k == kb and moved) else 1
+                            if lam == 'X':
+                                Lmin, Lmax = min(Lmin, lo), max(Lmax, hi)
+                            ups += u
+                            downs += d
+            print(f'  side {n}, {pat}: lam X, X2, W, 1 + X X x reads lin, past, near x roundings half_up, odd x two runner pairs:'
+                  f' cases so far {cases}, failures {fails}')
+    print(f'a4 RESULT: {cases} runs ({events} events forward, each undone), {fails} fail to return to the start exactly;'
+          f' tick lengths at the end (lam = X) from {Lmin} to {Lmax} notches; the drive slowed a tick {ups} times and sped one {downs} times')
+    print('a4 mutants (each must fail to return):')
+    for mut in ('back_order', 'drive_going', 'undo_moment', 'undo_W'):
+        mc = mf = 0
+        for n in (3, 4):
+            for pat in PATTERNS:
+                P = Params(mutant=mut)
+                try:
+                    k, kb, ok, moved, _, _, _ = one(P, n, pat, 'random', 5 + n, 30000, 'queue', 'queue')
+                    bad = not ok
+                except (Causality, ValueError, ZeroDivisionError):
+                    bad = True
+                mc += 1
+                mf += bad
+        print(f'  mutant {mut}: {mc} runs, {mf} fail -> {"FAILS AS IT MUST" if mf == mc else ("FAILS IN PART" if mf else "DOES NOT FAIL: THE PROBE IS BLIND")}')
+
+
+if __name__ == '__main__':
+    main()
+
+== a5_kept.py ==
+"""a5: what the asynchronous step keeps: the books, the sweep, the 24 (and the 48), the read's ties, the unit.
+
+A. The books: at every event W+ (a+ - a) + (r+ - mid W+) = P + s F exactly, P = W (a - a-) + (r - mid W);
+   the reads that rounded (a remainder the undo recomputes; a4 shows the state loses nothing).
+B. The sweep: the time gear held (no drive, no turn), so s = X is fixed at every Node-clock. The charge
+   Q_w = SUM_x Im(conj(a) P) / s changes at an event by the Mesh part SUM_j g Im(conj(a) m_j) and the carry part
+   Im(conj(v) rho+) / s, exactly (checked against Q_w read before and after). Summed over a run, the Mesh parts
+   cancel where the two ends of every Mesh read each other at one moment (one rate for all) and not otherwise.
+C. The 24 and the 48: the image of a run is the run of the image, bit for bit, the runner breaking ties by the
+   site's index (a rule no rotation keeps), so only an order-free step passes. Mutant: zoh_now must fail.
+D. The read's ties, exhaustively over small integers: oddness under the negation of a gear (the 24's T1 and T2),
+   the time symmetry (the slots and the moment reflected), and the endpoints.
+E. The unit of the notch: lam = X against lam = W (L = W+, the mean teeth itself): the same run."""
+import random
+import sys
+from fractions import Fraction
+
+sys.path.insert(0, '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/async')
+from core import (Params, build, run_queue, image, signed_perms, charge_terms, charge_of, mid, read_value,  # noqa: E402
+                  ROUNDINGS, mean_teeth_of)
+
+PAT = {
+    'one rate': lambda c, rng: 1500,
+    'two rates': lambda c, rng: 1000 if c[0] < 2 else 2000,
+    'three rates': lambda c, rng: (1000, 1500, 2000)[c[0] % 3],
+    'own rates': lambda c, rng: rng.randint(1000, 2000),
+}
+
+
+def part_a():
+    ev = bad = rounded_reads = reads = 0
+    for n in (3, 4):
+        for pat in ('two rates', 'three rates', 'own rates'):
+            P = Params()
+            st = build(n, P, PAT[pat], 'random', 3 + n)
+            info = []
+            run_queue(st, P, 40000, random.Random(n), info_log=info)
+            for i in info:
+                ev += 1
+                Wp = i['Wp']
+                for g in (0, 1):
+                    lhs = Wp * i['v'][g] + i['rho'][g]
+                    if lhs != i['Pp'][g] or i['Pp'][g] != i['Pm'][g] + i['s'] * i['F'][g]:
+                        bad += 1
+            # the reads' remainders, counted on a fresh run
+            st = build(n, P, PAT[pat], 'random', 3 + n)
+            cnt = [0, 0]
+
+            def counting_read(nn, bb, u, L, PP, _orig=read_value):
+                cnt[0] += 1
+                if ((nn - bb) * u) % L:
+                    cnt[1] += 1
+                return _orig(nn, bb, u, L, PP)
+            import core
+            core.read_value = counting_read
+            run_queue(st, P, 40000, random.Random(n))
+            core.read_value = read_value
+            reads += cnt[0]
+            rounded_reads += cnt[1]
+    print(f'A. the books: {ev} events, the identity W+ (a+ - a) + (r+ - mid W+) = P + s F broken at {bad};'
+          f' {reads} reads, {rounded_reads} of them rounded (the undo recomputes each)')
+    return bad == 0
+
+
+def part_b():
+    print('B. the sweep, the time gear held: Q_w(end) - Q_w(start) against the events\' Mesh and carry parts')
+    ok_identity = True
+    rows = []
+    for read in ('lin', 'past', 'near'):
+        for pat, lam, phases in (('one rate', 'X', 'zero'), ('own rates', 'const', 'zero'), ('two rates', 'X', 'random'),
+                                 ('three rates', 'X', 'random'), ('own rates', 'X', 'random')):
+            for n in (3, 4):
+                P = Params(Rg=0, Dr=0, kappa=0, nu=0, lam=lam, const=2000, read=read)
+                st = build(n, P, PAT[pat], phases, 17 + n)
+                q0 = charge_of(st, P)
+                info = []
+                run_queue(st, P, 60000, random.Random(n), info_log=info)
+                q1 = charge_of(st, P)
+                mesh = sum(charge_terms(i, P)[0] for i in info)
+                carr = sum((charge_terms(i, P)[1] for i in info), Fraction(0))
+                gross = sum(abs(charge_terms(i, P)[0]) for i in info)
+                ident = (q1 - q0) == mesh + carr
+                ok_identity &= ident
+                rows.append((read, pat, lam, n, len(info), mesh, gross, float(carr), ident))
+                if n == 4:
+                    print(f'  read {read}, {pat}, lam {lam}, phases {phases}, side {n}: {len(info)} events; identity exact: {ident};'
+                          f' SUM Mesh parts {mesh} of a gross {gross} ({mesh / gross:.2e}); SUM carry parts {float(carr):.4g}')
+    one = [r for r in rows if r[1] in ('one rate',) or r[2] == 'const']
+    many = [r for r in rows if not (r[1] in ('one rate',) or r[2] == 'const')]
+    zero_one = sum(1 for r in one if r[5] == 0)
+    zero_many = sum(1 for r in many if r[5] == 0)
+    print(f'  the identity exact on {sum(1 for r in rows if r[8])} of {len(rows)} runs; the Mesh parts sum to 0 on {zero_one} of {len(one)}'
+          f' runs at one tick for all, and on {zero_many} of {len(many)} runs at different rates')
+    return ok_identity and zero_one == len(one) and zero_many < len(many)
+
+
+def part_c():
+    mats = signed_perms()
+    rows = {}
+    for label, mut in (('order-free step', None), ('mutant zoh_now', 'zoh_now')):
+        cases = fails24 = fails48 = 0
+        for n in (3, 4, 5):
+            for phases in ('zero', 'random'):
+                P = Params(mutant=mut)
+                st = build(n, P, PAT['own rates'], phases, 41 + n)
+                ran = st.copy()
+                run_queue(ran, P, 30000, None)
+                for M, det in mats:
+                    im = image(st, M)
+                    run_queue(im, P, 30000, None)
+                    same = im.key() == image(ran, M).key()
+                    cases += 1
+                    if not same:
+                        if det == 1:
+                            fails24 += 1
+                        else:
+                            fails48 += 1
+        rows[label] = (cases, fails24, fails48)
+        print(f'C. {label}: {cases} images (24 rotations and 24 mirrors x 6 boards); the 24 parted at {fails24}, the mirrors at {fails48}')
+    return rows['order-free step'][1] == 0 and rows['mutant zoh_now'][1] > 0
+
+
+def part_d():
+    stats = {}
+    for rnd in ('half_up', 'odd'):
+        R = ROUNDINGS[rnd]
+        P = Params(rnd=rnd)
+        odd_f = sym_f = end_f = odd_L_f = ties = cases = 0
+        for L in range(1, 13):
+            for u in range(0, L + 1):
+                for nn in range(-12, 13):
+                    for bb in range(-12, 13):
+                        cases += 1
+                        k = (nn - bb) * u
+                        tie = (2 * k) % (2 * L) == L % (2 * L) and L % 2 == 0
+                        ties += tie
+                        r = read_value(nn, bb, u, L, P)
+                        if read_value(-nn, -bb, u, L, P) != -r:
+                            odd_f += 1
+                        if read_value(bb, nn, L - u, L, P) != r:
+                            sym_f += 1
+                            if L % 2:
+                                odd_L_f += 1
+                        if (u == 0 and r != bb) or (u == L and r != nn):
+                            end_f += 1
+        stats[rnd] = (cases, ties, odd_f, sym_f, end_f, odd_L_f)
+        print(f'D. the read rounded {rnd}: {cases} reads ({ties} at a tie); odd under negation fails {odd_f}; time-symmetric fails {sym_f}'
+              f' ({odd_L_f} of them at odd L); the endpoints fail {end_f}')
+    h, o = stats['half_up'], stats['odd']
+    return h[3] == 0 and h[4] == 0 and o[2] == 0 and o[4] == 0 and h[2] > 0 and o[3] > 0 and h[5] == 0 and o[5] == 0
+
+
+def part_e():
+    cases = fails = 0
+    for n in (3, 4):
+        for pat in ('two rates', 'three rates', 'own rates'):
+            for T in (600, 602):
+                Px = Params(lam='X', T=T)
+                Pw = Params(lam='W', T=T)
+                a = build(n, Px, PAT[pat], 'random', 61 + n)
+                b = a.copy()
+                h = T // 2
+                b.tau = [h * t for t in a.tau]
+                run_queue(a, Px, 40000, None)
+                run_queue(b, Pw, 40000 * h, None)
+                cases += 1
+                same = a.key(with_tau=False) == b.key(with_tau=False) and b.tau == [h * t for t in a.tau]
+                fails += not same
+    print(f'E. the unit: lam = X against lam = W (the local tick the mean teeth W+), {cases} boards, {fails} differ')
+    return fails == 0
+
+
+def main():
+    print('a5: what the asynchronous step keeps')
+    ok = [part_a(), part_b(), part_c(), part_d(), part_e()]
+    print(f'a5 RESULT: A {ok[0]}, B {ok[1]}, C {ok[2]}, D {ok[3]}, E {ok[4]} (True: as derived)')
+
+
+if __name__ == '__main__':
+    main()
+
+== a6_cone.py ==
+"""a6: the light cone of the asynchronous board.
+
+A. The stencil test: every gear outside a Node-clock's seven changed, the Node-clock stepped once at its moment:
+   its new integers must be equal. Mutant: a read two Meshes away (reach2) must fail.
+B. The front: the time gear held (no drive, no turn), so every Node-clock's tick is fixed, 2 X notches. One
+   Node-clock's hand is pushed by delta at the start; the pushed and the plain boards run the same events in the
+   same order. For every Node-clock, the first event after which it differs; its delay is counted from the pushed
+   slot's before-notch (when the pushed value was written). One Mesh per local tick means delay >= d L_min at the
+   Mesh distance d (the head: delay = d L exactly). Counted for the reads lin, past and near, delta 10^6 and 1."""
+import random
+import sys
+
+sys.path.insert(0, '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/async')
+from core import Params, build, event, Causality  # noqa: E402
+
+PAT = {
+    'one rate': lambda c, rng: 1500,
+    'two rates': lambda c, rng: 1000 if c[0] < 2 else 2000,
+    'three rates': lambda c, rng: (1000, 1500, 2000)[c[0] % 3],
+    'own rates': lambda c, rng: rng.randint(1000, 2000),
+}
+
+
+def part_a():
+    out = {}
+    for mut in (None, 'reach2'):
+        cases = differ = 0
+        for n in (3, 4, 5):
+            for seed in range(8):
+                P = Params(mutant=mut)
+                st = build(n, P, PAT['own rates'], 'random', 70 + seed)
+                rng = random.Random(seed)
+                # a Node-clock whose now-notch is a local minimum, so that its event is due
+                due = [x for x in range(st.board.N) if all(st.tau[x] <= st.tau[y] for y in st.board.nb[x])]
+                x = rng.choice(due)
+                keep = {x, *st.board.nb[x]}
+                other = st.copy()
+                for z in range(st.board.N):
+                    if z not in keep:
+                        other.n3[z] += rng.randint(1, 999)
+                        other.b12[z] -= rng.randint(1, 999)
+                        other.X[z] += rng.randint(1, 99)
+                a, b = st.copy(), other.copy()
+                try:
+                    event(a, x, P)
+                    event(b, x, P)
+                    same = a.own(x) == b.own(x) and a.tau[x] == b.tau[x]
+                except Causality:
+                    same = False
+                cases += 1
+                differ += not same
+        out[mut] = (cases, differ)
+        print(f'A. the stencil test{" (mutant reach2)" if mut else ""}: {cases} Node-clocks stepped with everything outside their seven'
+              f' changed; their new integers differ at {differ}')
+    return out[None][1] == 0 and out['reach2'][1] > 0
+
+
+def distance(b, x, y):
+    n = b.n
+    return sum(min((b.coords[x][k] - b.coords[y][k]) % n, (b.coords[y][k] - b.coords[x][k]) % n) for k in range(3))
+
+
+def front(P, n, pat, phases, seed, delta, t_end):
+    st = build(n, P, PAT[pat], phases, seed)
+    src = 0
+    pushed = st.copy()
+    pushed.n3[src] += delta
+    sig0 = st.tau[src] - P.L(st.Xb[src], st.X[src])
+    Lmin = min(P.L(st.Xb[x], st.X[x]) for x in range(st.board.N))
+    first = {src: sig0}
+    b = st.board
+    while True:
+        m = min(st.tau)
+        if m >= t_end:
+            break
+        x = min(z for z in range(b.N) if st.tau[z] == m)
+        event(st, x, P)
+        event(pushed, x, P)
+        if x not in first and st.own(x) != pushed.own(x):
+            first[x] = m
+    viol = []
+    ratios = []
+    for x, t in first.items():
+        if x == src:
+            continue
+        d = distance(b, src, x)
+        delay = t - sig0
+        ratios.append(delay / (d * Lmin))
+        if delay < d * Lmin:
+            viol.append((d, delay))
+    return len(first) - 1, b.N - 1, viol, (min(ratios) if ratios else None), Lmin
+
+
+def part_b():
+    print('B. the front of a push (side 5, the time gear held): delay against d L_min')
+    res = {}
+    for read in ('lin', 'past', 'near'):
+        for delta in (10 ** 6, 1):
+            tot_reached = tot_viol = 0
+            worst = None
+            lines = []
+            for pat, phases in (('one rate', 'zero'), ('two rates', 'random'), ('three rates', 'random'), ('own rates', 'random')):
+                P = Params(Rg=0, Dr=0, kappa=0, nu=0, read=read)
+                reached, others, viol, ratio, Lmin = front(P, 5, pat, phases, 91, delta, 40000)
+                tot_reached += reached
+                tot_viol += len(viol)
+                if pat != 'one rate' and ratio is not None:
+                    worst = ratio if worst is None else min(worst, ratio)
+                lines.append(f'{pat}: reached {reached} of {others}, faster than one Mesh per L_min at {len(viol)},'
+                             f' least delay / (d L_min) {ratio:.3f}' if ratio is not None else f'{pat}: reached none')
+            res[(read, delta)] = (tot_reached, tot_viol, worst)
+            print(f'  read {read}, delta {delta}: ' + '; '.join(lines))
+    return res
+
+
+def main():
+    print('a6: the light cone')
+    ok_a = part_a()
+    res = part_b()
+    ok_past = all(res[('past', d)][1] == 0 for d in (10 ** 6, 1))
+    lin_fast = res[('lin', 10 ** 6)][1]
+    print(f'a6 RESULT: A {"as derived" if ok_a else "AGAINST THE DERIVATION"}; B: the read past keeps one Mesh per L_min at every'
+          f' Node-clock reached: {ok_past}; the read lin crosses faster at {lin_fast} Node-clocks for delta 10^6'
+          f' and {res[("lin", 1)][1]} for delta 1; near at {res[("near", 10 ** 6)][1]} and {res[("near", 1)][1]}')
+    print('a6 mutant reach2 (the stencil test): ' + ('FAILS AS IT MUST' if ok_a else 'see A'))
+
+
+if __name__ == '__main__':
+    main()
+
+== a7_reversal.py ==
+"""a7: the time reversal of the asynchronous board (T S T = S^-1), the turnover's own law, on clocks of different rates.
+
+Forward: every event below the cut t0 from the start S0. Then T at the cut: every Node-clock's two slots exchanged
+(the hand's gears and the time gear's), every fine tooth mirrored about its mid tooth (acts.mirror, the one mirror),
+its now-notch reflected to 2 t0 - sigma (its before-notch reflected to 2 t0 - tau). Forward again to 2 t0: the board
+must be T(S0) in every integer. The time gear runs free (no source, no turn), one notch down a tick, so that
+X- + X is odd and W = 301 (X- + X) is odd at every tick (the mirror has its mid tooth); the clocks speed up, each
+at its own rate; and one tick for all (lam const, L = 4000 even) with the phases staggered, so that the reads fall
+inside the neighbours' ticks and meet ties. The reads past and near are run too (past is not time-symmetric).
+Mutants that must fail: the read rounded odd (the 24's rounding, not time-symmetric at a tie), and the tick read
+from one slot (L = 2 lam(X+))."""
+import random
+import sys
+
+sys.path.insert(0, '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/async')
+from core import Params, build, run_queue, mean_teeth_of, FIELDS  # noqa: E402
+from event_universe.core.acts import mirror  # noqa: E402  the one mirror
+
+PAT = {
+    'two rates': lambda c, rng: 1000 if c[0] < 2 else 2000,
+    'three rates': lambda c, rng: (1000, 1500, 2000)[c[0] % 3],
+    'own rates': lambda c, rng: rng.randint(1000, 2000),
+}
+
+
+def reverse(st, P, t0):
+    out = st.copy()
+    for x in range(st.board.N):
+        sig = st.sigma(x, P)
+        W = mean_teeth_of(P.T, st.Xb[x], st.X[x])
+        out.n3[x], out.b3[x] = st.b3[x], st.n3[x]
+        out.n12[x], out.b12[x] = st.b12[x], st.n12[x]
+        out.r3[x], out.r12[x] = mirror(st.r3[x], W, 1), mirror(st.r12[x], W, 1)
+        out.X[x], out.Xb[x] = st.Xb[x], st.X[x]
+        out.rX[x], out.dX[x] = mirror(st.rX[x], P.Tr, 1), mirror(st.dX[x], P.Td, 1)
+        out.tau[x] = 2 * t0 - sig
+    return out
+
+
+def trial(P, n, pat, seed, t0, ties):
+    st = build(n, P, PAT[pat], 'zero' if ties else 'random', seed)
+    if P.lam == 'const' and not ties:
+        rng = random.Random(seed)
+        st.tau = [rng.randrange(4001) for _ in range(st.board.N)]
+    for x in range(st.board.N):
+        st.Xb[x] = st.X[x] + 1
+        W = mean_teeth_of(P.T, st.Xb[x], st.X[x])
+        st.r3[x] %= W
+        st.r12[x] %= W
+        if not ties:
+            st.tau[x] %= P.L(st.Xb[x], st.X[x])
+    s0 = st.copy()
+    k1 = run_queue(st, P, t0, random.Random(seed))
+    rev = reverse(st, P, t0)
+    k2 = run_queue(rev, P, 2 * t0 + 1, random.Random(seed + 1))   # the reflections of the events at 0..t0-1
+    target = reverse(s0, P, t0)       # T(S0): the start's slots exchanged, its notches reflected about t0
+    return k1, k2, rev.key() == target.key()
+
+
+def main():
+    print('a7: T S T = S^-1 on the asynchronous board')
+    cases = fails = events = 0
+    by_read = {}
+    for n in (3, 4, 5):
+        for pat in PAT:
+            for ties, lam in ((True, 'X'), (False, 'X'), (False, 'const')):
+                for read in ('lin', 'past', 'near'):
+                    P = Params(T=602, Tr=1001, Td=3 * 10 ** 15 + 1, Rg=0, Dr=0, kappa=0, nu=0, read=read, lam=lam, const=2000)
+                    k1, k2, ok = trial(P, n, pat, 3 + n, 30000, ties)
+                    cases += 1
+                    events += k1 + k2
+                    fails += not ok
+                    c, f = by_read.get(read, (0, 0))
+                    by_read[read] = (c + 1, f + (not ok))
+                    if read == 'lin':
+                        print(f'  side {n}, {pat}, lam {lam}, phases {"zero (ties)" if ties else "random"}, read lin: {k1} events forward, {k2} after T;'
+                              f' back at T(S0): {ok}')
+    print(f'a7 RESULT: {cases} runs ({events} events); T S T = S^-1 fails, by the read: '
+          + ', '.join(f'{r} {f} of {c}' for r, (c, f) in by_read.items()))
+    print('a7 mutants:')
+    for label, kw, ties in (('the read rounded odd (one tick for all, phases staggered)', dict(rnd='odd', lam='const', const=2000), False),
+                            ('the tick from one slot, L = 2 lam(X+)', dict(mutant='L_asym'), True)):
+        mc = mf = 0
+        for n in (3, 4, 5):
+            for pat in PAT:
+                base = dict(T=602, Tr=1001, Td=3 * 10 ** 15 + 1, Rg=0, Dr=0, kappa=0, nu=0, read='lin')
+                base.update(kw)
+                P = Params(**base)
+                try:
+                    _, _, ok = trial(P, n, pat, 3 + n, 30000, ties)
+                except Exception:
+                    ok = False
+                mc += 1
+                mf += not ok
+        print(f'  {label}: {mc} runs, {mf} fail -> {"FAILS AS IT MUST" if mf else "DOES NOT FAIL"}')
+
+
+if __name__ == '__main__':
+    main()
+
+== a8_weights.py ==
+"""a8: the read's weight, exhaustively over small integers: the endpoints (order-free and the head), the time symmetry
+(the turnover's retrace) and the support (the cone in notches: the least u at which the new slot is seen).
+The read is m = b + R((n - b) w(u, L)) for the three weights: lin w = u / L; near w = (1 + sgn(2u - L)) / 2; past
+w = [u = L]. A theorem checked here: a time-symmetric read (w(L - u) = 1 - w(u)) sees the new slot by half its
+tick at the latest, so no time-symmetric read keeps one Mesh per local tick in notches."""
+import sys
+sys.path.insert(0, '/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/derive/async')
+from core import Params, read_value  # noqa: E402
+
+
+def main():
+    print('a8: the read\'s weight over L = 1..16, u = 0..L, |n|, |b| <= 9')
+    for read in ('lin', 'near', 'past'):
+        P = Params(read=read)
+        cases = end_f = sym_f = 0
+        firsts = {}               # for each L, the least u at which some read differs from b (the new slot seen)
+        for L in range(1, 17):
+            first = None
+            for u in range(0, L + 1):
+                for n in range(-9, 10):
+                    for b in range(-9, 10):
+                        cases += 1
+                        m = read_value(n, b, u, L, P)
+                        if (u == 0 and m != b) or (u == L and m != n):
+                            end_f += 1
+                        if read_value(b, n, L - u, L, P) != m:
+                            sym_f += 1
+                        if m != b and first is None:
+                            first = u
+            firsts[L] = first
+        worst = max(firsts[L] / L for L in range(2, 17))
+        print(f'  read {read}: {cases} reads; the endpoints fail {end_f}; the time symmetry fails {sym_f};'
+              f' the new slot first seen at u = {firsts[16]} of L = 16, at u / L <= {worst:.3f} over L = 2..16')
+
+
+if __name__ == '__main__':
+    main()
+
+== h1_head.py ==
+"""h1: the local events against the head's own tick, at the head's one rate for all (a harness, no engine change).
+
+Every tick of the head (tick.run, forward) is read twice:
+  START - every gear of every train at the tick's start (the start board the head's acts read);
+  END   - every gear after the carry, before the release's advance and the stopped Node-clocks' restore.
+The asynchronous board at one rate for all is the same tick taken as local events in an order: every Node-clock
+steps at the one notch, in a random order. When x steps, a neighbour y that has stepped holds (END now, END
+before) and one that has not holds (START now, START before); the read at the moment is the slot whose notch is
+the moment: the before of a stepped neighbour, the now of one that has not. Counted, over 3 random orders a tick:
+  (i)   the value reads: every gear of every train at every Spoke, the read at the moment against START now;
+  (ii)  the pull of the trains the head reads raw (the light, the offset), F = SUM_j g_j m_j - (D + SUM_j g_j) a
+        with the head's own grips and spring and the reads of (i), against the head's pull;
+  (iii) the driven carry with that pull, a+ = a + carry(P + s F + K, W+), against END;
+  (iv)  the regulator's turn from the reads of (i), then the head's drive, against END;
+  (v)   the single-slot and slope reads the head also makes across a Mesh (a neighbour's fine tooth, as the pawls
+        read the ratchet's; a neighbour's stride now - before, as the centred count reads the ratchet's): the
+        read in the order against START. These are not order-free, and are counted as found.
+Mutant: the neighbour's END now read once it has stepped (the value it last sent): (i) to (iii) must fail.
+Stopped Node-clocks (BH-S1) are left out of (ii) to (iv), as in formula0.py."""
+import random
+import sys
+
+sys.path[:0] = ['/home/user/Universe24/src', '/home/user/Universe24']
+import numpy as np  # noqa: E402
+from tests.laws import world_of  # noqa: E402
+from event_universe import tick as T, readings  # noqa: E402
+from event_universe.clock import Clock  # noqa: E402
+from event_universe.core.acts import carry, mid  # noqa: E402
+from event_universe.core.rule3 import held_numerator  # noqa: E402
+from event_universe.core.spokes import AXES, SPOKE_SIDES  # noqa: E402
+from event_universe.regulation import tensor_parts  # noqa: E402
+
+ORDERS = 3
+cap = {}
+
+
+def snap(trains):
+    return [[(g.now.copy(), g.before.copy(), np.asarray(g.fine).copy() if np.ndim(g.fine) else g.fine) for g in tr]
+            for tr in trains]
+
+
+orig_impulse, orig_carry, orig_adv, orig_end = T.Tick.impulse, T.Tick.carry, T.Tick.advances, T.Tick.end_teeth
+
+
+def impulse(self):
+    cap['START'] = snap(self.trains)
+    cap['w_side'] = readings.mean_teeth(self.clock, self.regulator.gears[0])
+    cap['gearings'] = {}
+    for r in self.driven:
+        k = self.where[id(r)]
+        cap['gearings'][k] = readings.gearing_of(self.clock, r, self.load, self.factors)
+    orig_impulse(self)
+    cap['pull'] = {k: list(v) for k, v in self.pull.items()}
+    cap['impelled'] = {k: list(v) for k, v in self.impelled.items()}
+    cap['s'] = self.stretch_now
+    cap['driven'] = [self.where[id(r)] for r in self.driven]
+    cap['light'] = self.where[id(self.clock.unsprung())]
+    cap['offset'] = self.where[id(self.offset)]
+    cap['reg'] = self.where[id(self.regulator)]
+    cap['ratchet'] = self.where[id(self.ratchet)]
+    clk, rk = self.clock, cap['reg']
+    p02, (trace, traceless) = self.rate * self.rate, tensor_parts(self.stress[:AXES])
+    drive = held_numerator(clk.trace, self.stretch_now, self.forms, trace, self.rate, clk.rim, clk.full_rate)
+    hold = self.stretch_now * self.trains[rk][0].dteeth
+    cap['numerators'] = [np.minimum(np.maximum(drive, -hold), hold)] + [part * p02 for part in (*traceless, *self.stress[AXES:])]
+    cap['reg_gearing'] = readings.gearing_of(clk, self.regulator, self.load, self.factors)
+    cap['reg_dfine'] = [None if g.dfine is None else g.dfine.copy() for g in self.trains[rk]]
+    cap['stopped'] = np.asarray(self.stopped, dtype=bool)
+
+
+def end_teeth(self, time_gear):
+    w = orig_end(self, time_gear)
+    cap['w_div'] = w
+    return w
+
+
+def advances(self):
+    if self.going == 1:
+        cap['END'] = snap(self.clock.trains())
+    orig_adv(self)
+
+
+T.Tick.impulse, T.Tick.end_teeth, T.Tick.advances = impulse, end_teeth, advances
+
+
+def neighbour(c, spoke, size):
+    axis, side = SPOKE_SIDES[spoke]
+    d = list(c)
+    d[axis] = (d[axis] + side) % size[axis]
+    return tuple(d)
+
+
+def check_tick(clock, rng, stats, mutant):
+    S, E = cap['START'], cap['END']
+    size = clock.size
+    sites = list(np.ndindex(size))
+    stopped = cap['stopped']
+    w_side, w_div, s = cap['w_side'], cap['w_div'], cap['s']
+    for _ in range(ORDERS):
+        order = sites[:]
+        rng.shuffle(order)
+        stepped = set()
+        for x in order:
+            reads = {}
+            for k, tr in enumerate(S):
+                for gi, (now, before, fine) in enumerate(tr):
+                    for j in range(6):
+                        y = neighbour(x, j, size)
+                        e_now, e_before, e_fine = E[k][gi]
+                        if y in stepped:
+                            m = e_now[y] if mutant else e_before[y]
+                            fine_read, stride = (e_fine[y] if np.ndim(e_fine) else e_fine), e_now[y] - e_before[y]
+                        else:
+                            m = now[y]
+                            fine_read, stride = (fine[y] if np.ndim(fine) else fine), now[y] - before[y]
+                        reads[(k, gi, j)] = m
+                        stats['(i) value reads'] += 1
+                        stats['(i) value reads equal to the start board'] += int(m == now[y])
+                        tag = 'the ratchet\'s' if k == cap['ratchet'] else 'every other gear\'s'
+                        stats[f'(v) {tag} fine-tooth reads'] += 1
+                        stats[f'(v) {tag} fine-tooth reads equal to the start board'] += int(fine_read == (fine[y] if np.ndim(fine) else fine))
+                        stats[f'(v) {tag} stride reads'] += 1
+                        stats[f'(v) {tag} stride reads equal to the start board'] += int(stride == now[y] - before[y])
+            if not stopped[x]:
+                for k in (cap['light'], cap['offset']):
+                    gr = cap['gearings'][k]
+                    for gi, (now, before, fine) in enumerate(S[k]):
+                        a = now[x]
+                        grips = [gr.grips[j][x] if np.ndim(gr.grips[j]) else gr.grips[j] for j in range(6)]
+                        D = gr.spring[x] if np.ndim(gr.spring) else gr.spring
+                        F = sum(grips[j] * reads[(k, gi, j)] for j in range(6)) - (D + sum(grips)) * a
+                        stats['(ii) pulls of the raw-read trains'] += 1
+                        stats['(ii) pulls equal to the head\'s'] += int(F == cap['pull'][k][gi][x])
+                        wv = w_side[x] if np.ndim(w_side) else w_side
+                        P = wv * (now[x] - before[x]) + fine[x] - mid(wv)
+                        sx = s[x] if np.ndim(s) else s
+                        K = cap['impelled'][k][gi][x] - (P + sx * cap['pull'][k][gi][x])
+                        wd = w_div[x] if np.ndim(w_div) else w_div
+                        v, fn = carry(P + sx * F + K, wd, mid(wd))
+                        e_now, e_before, e_fine = E[k][gi]
+                        stats['(iii) driven carries'] += 1
+                        stats['(iii) driven carries equal to the head\'s'] += int(a + v == e_now[x] and fn == e_fine[x])
+                rk = cap['reg']
+                gr = cap['reg_gearing']
+                for gi, (now, before, fine) in enumerate(S[rk]):
+                    grips = [gr.grips[j][x] if np.ndim(gr.grips[j]) else gr.grips[j] for j in range(6)]
+                    hold = gr.hold[x] if np.ndim(gr.hold) else gr.hold
+                    teeth = gr.teeth[x] if np.ndim(gr.teeth) else gr.teeth
+                    total = hold * now[x] - teeth * before[x] + sum(grips[j] * reads[(rk, gi, j)] for j in range(6))
+                    notch, fn = carry(total, teeth, fine[x])
+                    dt = clock.trains_[rk].gears[gi].dteeth
+                    q, _ = carry(cap['numerators'][gi][x], dt, cap['reg_dfine'][gi][x])
+                    e_now, e_before, e_fine = E[rk][gi]
+                    stats['(iv) regulator gears'] += 1
+                    stats['(iv) regulator gears equal to the head\'s'] += int(notch + q == e_now[x] and fn == e_fine[x])
+            stepped.add(x)
+
+
+def main():
+    worlds = [('world_nature.json', 12), ('world_hole.json', 12), ('world_bang.json', 6)]
+    if len(sys.argv) > 1:
+        worlds = [(w, int(t)) for w, t in zip(sys.argv[1::2], sys.argv[2::2])]
+    for mutant in (False, True):
+        print(f'h1: {"MUTANT zoh_now (the neighbour END now once it has stepped)" if mutant else "the local events against the head"}')
+        for name, ticks in worlds:
+            calibre, piece = world_of(name)
+            clock = Clock(calibre, piece)
+            stats = {}
+            from collections import Counter
+            stats = Counter()
+            rng = random.Random(len(name))
+            for _ in range(ticks):
+                clock.tick()
+                check_tick(clock, rng, stats, mutant)
+            print(f'  {name}, {ticks} ticks, {ORDERS} random orders a tick, side {clock.size[0]}:')
+            for key in sorted(stats):
+                print(f'    {key}: {stats[key]}')
+
+
+if __name__ == '__main__':
+    main()

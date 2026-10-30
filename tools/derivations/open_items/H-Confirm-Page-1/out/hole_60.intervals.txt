@@ -1,3 +1,0 @@
-intervals 1 60
-interval 1: sum X 125260; rising 0 falling 0 at rest 125
-interval 60: sum X 2531468; rising 115 falling 10 at rest 0

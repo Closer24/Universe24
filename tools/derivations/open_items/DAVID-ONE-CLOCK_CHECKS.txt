@@ -1,0 +1,97 @@
+# The checks of DAVID-ONE-CLOCK.md: two Python scripts, run with the repository's src on the path from the repository's root.
+
+# 1. spin_rank.py (section 1 (a) and (b))
+"""The hand of the eighth roots: no integer 2 x 2 matrix has order 8 (the crystallographic restriction; checked by exhaustion on entries in [-6, 6]); the companion matrix of x^4 + 1 on Z^4 does (a 45-degree hand on four integer lines, two planes), its fourth power -I."""
+from itertools import product
+
+
+def mul(a, b):
+    n = len(a)
+    return [[sum(a[i][k] * b[k][j] for k in range(n)) for j in range(n)] for i in range(n)]
+
+
+def order(m, top=24):
+    n = len(m)
+    eye = [[int(i == j) for j in range(n)] for i in range(n)]
+    p = m
+    for k in range(1, top + 1):
+        if p == eye:
+            return k
+        p = mul(p, m)
+    return None
+
+
+orders = set()
+for a, b, c, d in product(range(-6, 7), repeat=4):
+    if a * d - b * c in (1, -1):
+        k = order([[a, b], [c, d]])
+        if k:
+            orders.add(k)
+print("finite orders of integer 2 x 2 matrices with entries in [-6, 6]:", sorted(orders))
+C = [[0, 0, 0, -1], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0]]
+C4 = mul(mul(C, C), mul(C, C))
+print("the companion matrix of x^4 + 1: order", order(C), "; its fourth power", C4)
+
+# a time reversal on one plane sends the phase turn R(theta) to R(-theta): its map M on (re, im) anticommutes
+# with the quarter turn J; every such integer M with det +-1 squares to the identity (T^2 = +1 on a plane)
+J = [[0, -1], [1, 0]]
+squares = set()
+for a, b, c, d in product(range(-6, 7), repeat=4):
+    M = [[a, b], [c, d]]
+    if a * d - b * c in (1, -1) and mul(M, J) == [[-x for x in row] for row in mul(J, M)]:
+        squares.add(str(mul(M, M)))
+print("M J = -J M, det +-1, entries in [-6, 6]: M M is", sorted(squares))
+
+# its output:
+#   finite orders of integer 2 x 2 matrices with entries in [-6, 6]: [1, 2, 3, 4, 6]
+#   the companion matrix of x^4 + 1: order 8 ; its fourth power [[-1, 0, 0, 0], [0, -1, 0, 0], [0, 0, -1, 0], [0, 0, 0, -1]]
+#   M J = -J M, det +-1, entries in [-6, 6]: M M is ['[[1, 0], [0, 1]]']
+
+# 2. bell_cone.py (section 2), run on examples/records/chiral.json, hole.json and bodies.json
+"""The Boss's bell2 pairing (the first credit of the children's record at each end of a birth after it; outcome 2 r >= booked; setting the detector's proper parity) read with the light cone: the Link distance of the two clicks on the torus against the intervals between them (influence travels one Link per interval: Rule3, the close and the draw read the six neighbours)."""
+import json, sys
+from fractions import Fraction
+
+
+def dist(a, b, shape):
+    return sum(min(abs(x - y), n - abs(x - y)) for x, y, n in zip(a, b, shape))
+
+
+for path in sys.argv[1:]:
+    r = json.load(open(path))
+    shape = r["world"]["shape"]
+    log = r["log"]
+    births = [e for e in log if e.get("event") == "birth"]
+    credits = [e for e in log if e.get("event") == "credit"]
+    by_end = {}
+    for k in credits:
+        by_end.setdefault((tuple(k["node"]), k["line"]), []).append(k)
+    pairs = []
+    for b in births:
+        ends = []
+        for where in (b["minus"], b["plus"]):
+            ks = [k for k in by_end.get((tuple(where), b["line_pair"]), []) if int(k["i"]) > int(b["i"])]
+            ends.append(ks[0] if ks else None)
+        if None in ends:
+            continue
+        a, c = ends
+        d = dist(a["node"], c["node"], shape)
+        di = abs(int(a["i"]) - int(c["i"]))
+        pairs.append((d, di, int(a["i"]) - int(b["i"]), int(c["i"]) - int(b["i"]), int(a["proper"]) % 2, int(c["proper"]) % 2,
+                      1 if 2 * int(a["remainder"]) >= int(a["booked"]) else -1, 1 if 2 * int(c["remainder"]) >= int(c["booked"]) else -1))
+    space = [p for p in pairs if p[0] > p[1]]
+    cells = {}
+    for p in pairs:
+        cells.setdefault((p[4], p[5]), []).append(p[6] * p[7])
+    S = None
+    if len(cells) == 4:
+        E = {k: Fraction(sum(v), len(v)) for k, v in cells.items()}
+        S = E[(0, 0)] + E[(0, 1)] + E[(1, 0)] - E[(1, 1)]
+    print(path.split("/")[-1], "births", len(births), "pairs", len(pairs), "Link distance of the two clicks", sorted({p[0] for p in pairs}),
+          "intervals between them", sorted({p[1] for p in pairs})[:8], "delays from the birth", sorted({(p[2], p[3]) for p in pairs})[:6],
+          "spacelike pairs", len(space), "cells", {k: len(v) for k, v in sorted(cells.items())}, "S", S)
+
+# its output:
+#   chiral.json births 16 pairs 14 Link distance of the two clicks [1] intervals between them [0, 1, 2, 3, 7] delays from the birth [(1, 1), (1, 2), (2, 1), (2, 2), (2, 3), (2, 4)] spacelike pairs 3 cells {(0, 0): 3, (0, 1): 5, (1, 0): 2, (1, 1): 4} S 4/3
+#   hole.json births 18 pairs 18 Link distance of the two clicks [1] intervals between them [0, 1, 2, 3, 4] delays from the birth [(1, 2), (2, 1), (2, 5), (2, 6), (3, 6), (3, 7)] spacelike pairs 2 cells {(0, 0): 8, (0, 1): 5, (1, 0): 3, (1, 1): 2} S 27/20
+#   bodies.json births 23 pairs 8 Link distance of the two clicks [1] intervals between them [1, 6] delays from the birth [(1, 2), (1, 7), (2, 1), (3, 2), (3, 4)] spacelike pairs 0 cells {(0, 0): 2, (0, 1): 3, (1, 0): 3} S None

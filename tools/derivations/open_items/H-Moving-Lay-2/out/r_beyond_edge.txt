@@ -1,3 +1,0 @@
-    if any(abs(x) > self.den for x in h): raise ValueError('a wave number beyond the band\'s edge: |h| = %d above den = %d (|h| = den is the edge, k = pi)' % (max(abs(x) for x in h), self.den))
-                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: a wave number beyond the band's edge: |h| = 1655909142 above den = 1655909141 (|h| = den is the edge, k = pi)

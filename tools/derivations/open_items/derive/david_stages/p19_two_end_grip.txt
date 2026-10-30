@@ -1,0 +1,6 @@
+the law's, the gears reading the ruler, N_i^4: largest error 3.67e-02 at n = 64, 2.29e-03 at 256, 1.43e-04 at 1,024; speed in a uniform N 0.9 and 0.99: 0.8100, 0.9801 (N^2: 0.8100, 0.9801)
+(c) split, the beat and W at Y^2, N_i^2 N_i^2: largest error 3.67e-02 at n = 64, 2.29e-03 at 256, 1.43e-04 at 1,024; speed in a uniform N 0.9 and 0.99: 0.8100, 0.9801 (N^2: 0.8100, 0.9801)
+the Boss's two-end grip, N_i^2 N_i N_j: largest error 1.52e+00 at n = 64, 1.54e+00 at 256, 1.54e+00 at 1,024; speed in a uniform N 0.9 and 0.99: 0.8100, 0.9801 (N^2: 0.8100, 0.9801)
+(c) with the vacuum's grip, N_i^2: largest error 4.69e+00 at n = 64, 4.67e+00 at 256, 4.66e+00 at 1,024; speed in a uniform N 0.9 and 0.99: 0.9000, 0.9900 (N^2: 0.8100, 0.9801)
+so in a uniform slab the two-end grip reads light at N^2 as the law's form does, and in a gradient of N it
+misses general relativity's operator by order 1 (its extra 2 N^3 N' phi'), where the law's form misses by h^2

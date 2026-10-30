@@ -1,0 +1,31 @@
+DAVID-MEDIATOR checks, 2026-10-27, 21:3x UTC, Rule3's integers from core/rule3.gearing on the head 87a168c16 (no src touched).
+range.py: D and R from rule3.gearing(pinion, rim, Gamma, Gamma, Gamma, None, G) at Gamma 1,000 (G 16); the letter x + 1/x = 2 + D / R;
+the static solve: a(k) = 1 / (D/R + SUM_a 2 (1 - cos k_a)) on a periodic 61-cube, inverted by the board's Fourier modes, r a(r) along x from 6 to 7.
+
+   ratio 999/1000: D / R = 3072000000/511488000000 = 0.006006 (6 (rim - pinion) / pinion = 0.006006); the decay a mesh x = 0.9254, the range 1 / ln(1/x) = 12.91 meshes; the static solve's r a(r) ratio at r = 6 to 7: 0.9256
+   ratio 990/1000: D / R = 30720000000/506880000000 = 0.060606 (6 (rim - pinion) / pinion = 0.060606); the decay a mesh x = 0.7823, the range 1 / ln(1/x) = 4.07 meshes; the static solve's r a(r) ratio at r = 6 to 7: 0.7789
+   ratio 900/1000: D / R = 307200000000/460800000000 = 0.66667 (6 (rim - pinion) / pinion = 0.66667); the decay a mesh x = 0.4514, the range 1 / ln(1/x) = 1.26 meshes; the static solve's r a(r) ratio at r = 6 to 7: 0.4462
+   ratio 5/13: D / R = 24576000000/2560000000 = 9.6 (6 (rim - pinion) / pinion = 9.6); the decay a mesh x = 0.0869, the range 1 / ln(1/x) = 0.41 meshes; the static solve's r a(r) ratio at r = 6 to 7: 0.0861
+
+The script:
+   """The mediator's range from its ratio alone (Rule3's integers at the vacuum, core/rule3.gearing): a held one-gear train with a gap, its static line away from a source 0 = SUM R (a_j - a_i) - D a_i, decays along an axis by x a mesh, x + 1/x = 2 + D / R, D / R = 6 (rim - pinion) / pinion. Checked against the static solve on a periodic 3D board (the exact lattice Green's function by the board's Fourier modes)."""
+   import os, sys, math
+   sys.path.insert(0, os.environ["WT"] + "/src")
+   import numpy as np
+   from event_universe.core import rule3
+   gamma = 1000
+   g = rule3.mesh_unit_of(gamma)
+   n = 61
+   k = 2 * np.pi * np.fft.fftfreq(n)
+   kx, ky, kz = np.meshgrid(k, k, k, indexing="ij")
+   lap = 2 * (1 - np.cos(kx)) + 2 * (1 - np.cos(ky)) + 2 * (1 - np.cos(kz))
+   for pinion, rim in ((999, 1000), (990, 1000), (900, 1000), (5, 13)):
+       gr = rule3.gearing(pinion, rim, gamma, gamma, gamma, None, g)
+       D, R = int(gr.spring), int(gr.grips[0])
+       ratio = D / R
+       x = ((2 + ratio) - math.sqrt((2 + ratio) ** 2 - 4)) / 2
+       a = np.real(np.fft.ifftn(1.0 / (ratio + lap)))  # the static profile of a unit source at the origin, in units of 1 / R
+       line = a[:, 0, 0]
+       r1, r2 = 6, 7
+       measured = (line[r2] * r2) / (line[r1] * r1)
+       print(f"ratio {pinion}/{rim}: D / R = {D}/{R} = {ratio:.5g} (6 (rim - pinion) / pinion = {6 * (rim - pinion) / pinion:.5g}); the decay a mesh x = {x:.4f}, the range 1 / ln(1/x) = {1 / math.log(1 / x):.2f} meshes; the static solve's r a(r) ratio at r = 6 to 7: {measured:.4f}")

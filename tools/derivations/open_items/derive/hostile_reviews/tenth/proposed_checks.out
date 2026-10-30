@@ -1,0 +1,23 @@
+### the worktree as committed
+a gears not 0: True; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: True; d b counted: True; e the last train's last component: True; f a strength of 2^70: True
+### mutant S1
+a gears not 0: False; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: True; d b counted: True; e the last train's last component: True; f a strength of 2^70: True
+### mutant S2
+a gears not 0: False; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: True; d b counted: True; e the last train's last component: True; f a strength of 2^70: True
+### mutant S10
+a gears not 0: True; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: True; d b counted: True; e the last train's last component: True; f a strength of 2^70: raised OverflowError: Python int too large to convert to C long
+### mutant S18
+a gears not 0: True; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: raised OverflowError: Python int too large to convert to C long; d b counted: True; e the last train's last component: True; f a strength of 2^70: raised OverflowError: Python int too large to convert to C long
+### mutant S19
+a gears not 0: True; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: False; d b counted: True; e the last train's last component: True; f a strength of 2^70: True
+### mutant S20
+a gears not 0: True; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: False; d b counted: True; e the last train's last component: True; f a strength of 2^70: True
+### mutant S21
+a gears not 0: True; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: True; d b counted: False; e the last train's last component: True; f a strength of 2^70: True
+### mutant S22
+a gears not 0: True; b int64 gears: raised OverflowError: Python int too large to convert to C long; c the lay's dtype and 2^70: True; d b counted: True; e the last train's last component: False; f a strength of 2^70: True
+### the fix: source = np.zeros_like(gears, dtype=object)
+a gears not 0: True; b int64 gears: True; c the lay's dtype and 2^70: True; d b counted: True; e the last train's last component: True; f a strength of 2^70: True
+250 passed in 19.70s
+tools/tensor24_files.py exit 0
+the gate on the fixed contract.py: []

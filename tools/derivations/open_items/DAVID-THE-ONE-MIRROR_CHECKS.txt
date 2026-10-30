@@ -1,0 +1,143 @@
+DAVID-THE-ONE-MIRROR checks, 2026-10-27, 23:5x UTC, on the Boss's head 13f58bb25 (worktree scratchpad/wt_g11) and on 6a853217f (scratchpad/wt_g10), each worktree's own src on the path; no src touched. Every harness under scratchpad/field; rot24.py and polar_pair.py under scratchpad/close5 (DAVID-THE-24-IN-THE-CLOSE_CHECKS.txt).
+
+1. The cube's 24 rotations in lockstep (rot24.py: a world and its image under each rotation, every scalar gear compared through the image before and after each strike), on 13f58bb25:
+   as built:
+     nature, 14 ticks: alike 3 of 24
+     the hole, 20 ticks: alike 3 of 24
+     the bodies, 20 ticks (on 0a3b16bc1, DAVID-THE-24-IN-THE-CLOSE_CHECKS.txt): alike 24 of 24
+   the one mirror (mirror3.py):
+     nature: alike 24 of 24
+     the hole: alike 24 of 24
+     the bodies: alike 24 of 24
+   the mirror without the fold (mirror4.py):
+     nature: alike 3 of 24
+
+2. The bang at 250 ticks (v10.py, read_bang.py, kinds.py), on 13f58bb25:
+   as built: bang250_g11.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 382, chimes 11592, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   bang250_g11.json {'SHOWN': 35, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 378 of 482 merger ends the pair's share taken exceeds the light's quantum booked, up to 5470 thousandths of it, the excess booked nowhere
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its acceleration with the kick's sign on 95 of 617, 160 of 652, 61 of 554 ki
+       76 SHOWN: gapped 2, gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   the one mirror: bang250_m3.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 516, chimes 14600, rows SHOWN 39, the rewind {'intervals': 20, 'exact': 20}
+   bang250_m3.json {'SHOWN': 34, 'NOT SHOWN': 13, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 5 Links at first and 6 at last
+       73 NOT SHOWN: at 644 of 742 merger ends the pair's share taken exceeds the light's quantum booked, up to 8835 thousandths of it, the excess booked nowhere
+       74 SHOWN in part: the light polarized along its kick on 2 of 3 axes read (71 of 621, 141 of 739, 78 of 533)
+       76 SHOWN: gapped 2, gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+
+3. The charts regenerated (v10.py, the rewind of 20), on 13f58bb25:
+   as built: hole: fittings 17, chimes 920, rows SHOWN 36, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   as built: chiral: fittings 2, chimes 2849, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   as built: bodies: fittings 8, chimes 712, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   the one mirror: hole: fittings 0, chimes 0, rows SHOWN 5, the rewind {'intervals': 20, 'exact': 20}, the record moved
+   the one mirror: chiral: fittings 8, chimes 3047, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record moved
+   the one mirror: bodies: fittings 8, chimes 692, rows SHOWN 26, the rewind {'intervals': 20, 'exact': 20}, the record moved
+   the mirror without the fold: hole: fittings 20, chimes 723, rows SHOWN 37, the rewind {'intervals': 20, 'exact': 20}, the record moved
+
+4. The fold's price on the hole's first 30 ticks, on 13f58bb25 (hole_why.py: the counters; hole_fits.py: the fits the engagement passes, by (the unwound hand, the family the draw picks), and those the lay keeps; hole_lay.py: the lay's jams by kind):
+   as built {'births': 12, 'taken': 232753501001163692551790, 'booked': 193649825533352523608171, 'body_clicks': 125, 'refused_stop': 1170, 'refused_lay': 5047, 'refused_orientation': 413, 'refused_twist': 926, 'refused_sense': 1938, 'refused_disengaged': 1278, 'turns': 829, 'met': 10740, 'laid': 2, 'laid_nodes': 2}
+      the first tick of each event: {'refused': 1, 'birth': 14, 'credit': 21}
+      refusals by cause in the log: {'orientation': 413, 'twist': 926, 'disengaged': 1278, 'lay': 5047, 'stop': 1170, 'sense': 1938}
+   mirror3 {'refused_lay': 3440, 'refused_orientation': 674, 'refused_twist': 2065, 'refused_disengaged': 816, 'turns': 828, 'met': 6995}
+      the first tick of each event: {'refused': 1}
+      refusals by cause in the log: {'orientation': 674, 'twist': 2065, 'disengaged': 816, 'lay': 3440}
+   mirror4 {'births': 9, 'taken': 123594960117771100913588, 'booked': 119492291494046923150593, 'body_clicks': 6, 'refused_stop': 141, 'refused_lay': 4120, 'refused_orientation': 664, 'refused_twist': 1632, 'refused_sense': 354, 'refused_disengaged': 914, 'turns': 828, 'met': 7818}
+      the first tick of each event: {'refused': 1, 'birth': 21, 'credit': 28}
+      refusals by cause in the log: {'orientation': 664, 'twist': 1632, 'disengaged': 914, 'lay': 4120, 'stop': 141, 'sense': 354}
+   as built fits by (the unwound hand, the family picked): {(3, 0): 1260, (3, 2): 1258, (3, 1): 1184, (3, 3): 1372, (0, 3): 1053, (1, 3): 58} kept by the lay: {(3, 0): 7, (3, 1): 13, (0, 3): 1053, (1, 3): 58, (3, 2): 7}
+   mirror3 fits by (the unwound hand, the family picked): {(3, 0): 968, (3, 3): 936, (3, 2): 736, (3, 1): 800} kept by the lay: {}
+   mirror4 fits by (the unwound hand, the family picked): {(3, 1): 989, (3, 2): 1135, (3, 3): 1003, (3, 0): 1020, (2, 3): 10, (0, 3): 97} kept by the lay: {(3, 0): 12, (3, 2): 11, (2, 3): 10, (0, 3): 97, (3, 1): 4}
+   as built {('crowded', 3, 2): 385, ('standing', 3): 3218, ('crowded', 3, 4): 617, ('crowded', 3, 3): 317, ('crowded', 3, 6): 182, ('crowded', 3, 5): 328}
+   mirror3 {('standing', 3): 936, ('crowded', 3, 2): 832, ('crowded', 3, 4): 816, ('crowded', 3, 3): 336, ('crowded', 3, 5): 520}
+
+5. The polarization's swap of x and y (polar_pair.py: the source along x and along y in lockstep through the swap, the regulator and the light compared per tick; the test's sums at the detector):
+   6a853217f as built: VSCALAR=0: along x [64, 4, 42], along y [4, 64, 42]; exact images through the swap
+   6a853217f, the second letter of the merger's book: VSCALAR=0: along x [64, 4, 42], along y [4, 64, 42]; part at tick 8 (light at (2, 1, 2))
+   6a853217f, the one mirror (the origin at each gear's teeth, mirror1.py): VSCALAR=0: along x [51, 3, 20], along y [3, 51, 20]; part at tick 9 (regulator at (2, 1, 2))
+   13f58bb25 as built: VSCALAR=0: along x [64, 4, 42], along y [4, 64, 42]; part at tick 11 (light at (3, 1, 1))
+   13f58bb25, the one mirror: VSCALAR=0: along x [51, 3, 20], along y [3, 51, 20]; part at tick 9 (regulator at (2, 1, 2))
+   13f58bb25, the cross term at the fitting's own clock (cross_at.py): VSCALAR=0: along x [64, 4, 42], along y [4, 64, 42]; exact images through the swap
+   13f58bb25, the one mirror and the cross term at the fitting's own clock: VSCALAR=0: along x [51, 3, 20], along y [3, 51, 20]; part at tick 9 (regulator at (2, 1, 2))
+   The first parted gear under mirror1 on 6a853217f (polar_first.py: every train's gears at a clock against the image clock as multisets of (|now|, |before|, |fine - mid|, |dfine - mid|)):
+     (9, 'before the turnover', train 1, (2, 1, 1), ['(123, 0, 1066830670915643589120, None)', '(52, 125, 919366056542291500392, None)'], ['(129, 0, 59614000447547589120, None)', '(52, 125, 919366056542291500392, None)'])
+   The births at tick 8 under mirror1 on 6a853217f (polar_events.py, the y run's clocks swapped back):
+     x: birth at [2, 1, 1], minus [2, 1, 2], plus [2, 1, 1]; birth at [2, 3, 1], minus [2, 3, 1], plus [2, 3, 2]
+     y: birth at [2, 1, 1], minus [2, 1, 1], plus [2, 1, 2]; birth at [2, 3, 1], minus [2, 3, 2], plus [2, 3, 1]
+   The births at tick 11 on 13f58bb25 as built: the y run's credit at (3, 1, 1) swapped back against the x run's at (3, 3, 1), takes 1,957,080,458,242 and 1,856,786,601,095 of a winding 170,273,819,520,000 (the rest paid by the remainder).
+
+6. On 6a853217f with the origin at each gear's own teeth (mirror1.py): the 24 alike on nature 24 of 24, the hole 24 of 24, the bodies 24 of 24;
+   bang250_m1.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 486, chimes 14467, rows SHOWN 39, the rewind {'intervals': 20, 'exact': 20}
+   hole: fittings 0, chimes 0, rows SHOWN 5, the rewind {'intervals': 20, 'exact': 20}, the record moved
+   chiral: fittings 8, chimes 3020, rows SHOWN 32, the rewind {'intervals': 20, 'exact': 20}, the record moved
+   bodies: fittings 8, chimes 696, rows SHOWN 25, the rewind {'intervals': 20, 'exact': 20}, the record moved
+
+7. The one mirror as a harness (mirror3.py):
+   """The one mirror (a harness): every negation of a gear's state mirrors its fine tooth about its half teeth, r to 2 mid(w) - r (the turnover's reverse once per reversal, its drive fine tooth, the setting's negated gear, the draw's origin its fixed point mid alone, at the clock's teeth as built); the flip w - 1 - r kept where the floor is conjugated into the ceiling (acts.carry at -1, rates.rounded at a negative numerator); the draw's digits read folded on every gear, |r - mid(w)| div F at the base (w div F) div 2 + 1."""
+   import os, sys, types, inspect, textwrap
+   sys.path.insert(0, os.environ["WT"] + "/src")
+   import numpy as np
+   from event_universe.core import acts
+   import event_universe.clock as CL
+   import event_universe.draw as DR
+   import event_universe.striking as SK
+   import event_universe.bobs as BO
+   import event_universe.assembly.cycle as CY
+   
+   def mirror(fine, teeth, reversals):
+       return acts.mid(teeth) + acts.mid(teeth) - fine if reversals & 1 else fine
+   
+   def reverse(nows, befores, fines, train_teeth, signs):
+       new_nows = [s * b for s, b in zip(signs, befores, strict=True)]
+       new_befores = [s * n for s, n in zip(signs, nows, strict=True)]
+       return new_nows, new_befores, [mirror(f, w, 1 + (s < 0)) for f, w, s in zip(fines, train_teeth, signs, strict=True)]
+   
+   proxy = types.SimpleNamespace(**{k: getattr(acts, k) for k in dir(acts) if not k.startswith("__")})
+   proxy.flip, proxy.reverse = mirror, reverse
+   CL.acts = proxy
+   CY.acts = proxy
+   
+   src = textwrap.dedent(inspect.getsource(DR.vernier))
+   old = "            digits.append((carries(fine, f), values + 1))\n"
+   new = "            digits.append((carries(abs(fine - acts.mid(teeth)), f), carries(values, 2) + 1))\n"
+   assert old in src
+   src = src.replace(old, new).replace("origin = origin and fine in (mid, acts.flip(mid, clock.teeth, 1))", "origin = origin and fine == mid")
+   ns = dict(vars(DR))
+   ns["acts"] = proxy
+   exec(compile(src, DR.__file__, "exec"), ns)
+   DR.vernier = ns["vernier"]
+   SK.vernier = ns["vernier"]
+   BO.vernier = ns["vernier"]
+
+8. The cross term at the fitting's own clock as a harness (cross_at.py), and its runs on 13f58bb25:
+   """The merger's cross term booked at the fitting's own clock (a harness on 13f58bb25): the clock the engagement names, where the push's cross term is tallied (CL-S2), in place of the first end's clock by the list's order."""
+   import os, sys, inspect, textwrap
+   sys.path.insert(0, os.environ["WT"] + "/src")
+   import event_universe.unspring as UN
+   import event_universe.striking as SK
+   src = textwrap.dedent(inspect.getsource(UN.unwinds))
+   old = """        first = reads[0][0]
+           clock.slack[first] += cross
+           found[0]["taken"], found[0]["remainder"] = found[0]["taken"] + cross, int(clock.slack[first])
+   """
+   new = """        first = reads[0][0] if at is None else at
+           k = next(i for i, read in enumerate(reads) if read[0] == first)
+           clock.slack[first] += cross
+           found[k]["taken"], found[k]["remainder"] = found[k]["taken"] + cross, int(clock.slack[first])
+   """
+   assert old in src, src
+   src = src.replace(old, new)
+   ns = dict(vars(UN))
+   exec(compile(src, UN.__file__, "exec"), ns)
+   UN.unwinds = ns["unwinds"]
+   SK.unwinds = ns["unwinds"]
+   field, 250 ticks: strikings whose whole book (wind + remainders + credits' windings) moves 0 of 250; largest 0.0; net 0.0 light windings; credits booked 201.47872687662084 light windings
+   bang250_ca.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 450, chimes 11667, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   bang250_ca.json {'SHOWN': 34, 'SHOWN in part': 7, 'NOT READ': 27, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 454 of 558 merger ends the pair's share taken exceeds the light's quantum booked, up to 6787 thousandths of it, the excess booked nowhere
+       74 SHOWN in part: the light polarized along its kick on 1 of 3 axes read (131 of 652, 128 of 682, 20 of 663)
+       76 SHOWN: gapped 2, gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   hole: fittings 17, chimes 920, rows SHOWN 36, the rewind {'intervals': 20, 'exact': 20}, the record moved
+   chiral: fittings 2, chimes 2849, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bodies: fittings 8, chimes 708, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record moved

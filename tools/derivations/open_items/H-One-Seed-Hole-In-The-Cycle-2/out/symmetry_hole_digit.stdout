@@ -1,5 +1,0 @@
-the hole's digit is the drift on the re line, a fixed vector of the plane: under a quarter turn c it turns, so a holed state is preserved by the maps with c = 0 alone (s = 1 the identity on the plane, s = -1 the conjugation, which fixes the re line)
-ga2, no hole, c = 0 alone: identity-on-the-plane maps 8 (orbits: [8, 8, 8, 8, 8, 8, 8, 8]); with the conjugation 16 (orbits: [16, 16, 16, 16])
-hole at the class 0, c = 0 alone: identity-on-the-plane maps 8 (orbits: [8, 8, 8, 8, 8, 8, 8, 8]); with the conjugation 16 (orbits: [16, 16, 16, 16])
-hole at every Node, c = 0 alone: identity-on-the-plane maps 8 (orbits: [8, 8, 8, 8, 8, 8, 8, 8]); with the conjugation 16 (orbits: [16, 16, 16, 16])
-hole at the even lattice, c = 0 alone: identity-on-the-plane maps 2 (orbits: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]); with the conjugation 2 (orbits: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2])

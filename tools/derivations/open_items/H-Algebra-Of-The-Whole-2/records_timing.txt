@@ -1,7 +1,0 @@
-world_hole run ms 4558 gates ms 275
-world_chiral run ms 8148 gates ms 1111
-world_sea_3 run ms 2770 gates ms 131
-world_pair_3 run ms 4698 gates ms 331
-world_universe_3 run ms 5164 gates ms 309
-world_plasma_3 run ms 6027 gates ms 379
-world_bodies run ms 14342 gates ms 1190

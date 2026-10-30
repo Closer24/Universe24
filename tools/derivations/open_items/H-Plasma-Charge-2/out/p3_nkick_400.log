@@ -1,3 +1,0 @@
-{"world": "../../../tests/worlds/world_plasma_3.json", "flags": {"CS7_EQ": "n", "PL2_CHARGE": "kick"}, "tops": [84, 252], "bottoms (interval, mean X)": [[167, 1000], [336, 1000]], "exact at Gamma at every Node": [166, 167, 335, 336], "credits": 405, "laid back": 405, "run back": {"intervals": 10, "exact": 10}, "integers": 98, "bits": 112, "forward ms": 4691}
-{"top": 84, "equal k": 1, "state parting": {"k": 2, "fall interval": 86, "mirrored rise interval": 81, "X fall": 6053, "X rise mirror": 6053, "lines parted": 2}, "X parting": null}
-{"top": 252, "equal k": 5, "state parting": {"k": 6, "fall interval": 258, "mirrored rise interval": 245, "X fall": 6101, "X rise mirror": 6101, "lines parted": 2}, "X parting": null}

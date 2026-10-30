@@ -1,0 +1,12 @@
+one Node-clock over 4096 bangs, the former turnover at the top; the detector the last record, or the bang's own lead axis
+  rewound : the next choice on the last choice's line 1343 of 4095; the last choice repeated 657, reversed 686; fresh draws 4096 of 4096
+  axis    : the next choice on the last choice's line 4095 of 4095; the last choice repeated 2062, reversed 2033; fresh draws 4096 of 4096
+  choice  : the next choice on the last choice's line 4095 of 4095; the last choice repeated 0, reversed 4095; fresh draws 1 of 4096
+  half    : the next choice on the last choice's line 4095 of 4095; the last choice repeated 1010, reversed 3085; fresh draws 4096 of 4096
+the 24: every frame the draw gives turned by each turn R; the law keeps the 24 where the choices turn by R
+  rewound : the choices turned by R under 24 of 24 turns
+  axis    : the choices turned by R under 24 of 24 turns
+  choice  : the choices turned by R under 24 of 24 turns
+  half    : the choices turned by R under 24 of 24 turns
+  mutant  : the choices turned by R under 16 of 24 turns
+            it parts at 8 turns; 8 of them carry the run's line (1, 0, 0) onto the z line or off it

@@ -1,5 +1,0 @@
-{"run": "zeeman_spinor_B0", "exit": 0, "seconds": 13}
-{"run": "zeeman_spinor_B800", "exit": 0, "seconds": 29}
-{"run": "zeeman_spinor_B1600", "exit": 0, "seconds": 23}
-{"run": "zeeman_plane_B0", "exit": 0, "seconds": 14}
-{"run": "zeeman_plane_B1600", "exit": 0, "seconds": 33}

@@ -1,0 +1,217 @@
+DAVID-THE-MERGERS-BOOK checks, 2026-10-27, 23:5x UTC, on the Boss's heads 6a853217f (worktree scratchpad/wt_g10) and 13f58bb25 (scratchpad/wt_g11), each worktree's own src on the path; no src touched. Every harness under scratchpad/field.
+
+1. 6a853217f verified (v10.py: the committed charts regenerated with the rewind of 20, compared key by key; the bang at 250 ticks with and without the field):
+   hole: fittings 17, chimes 920, rows SHOWN 35, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   chiral: fittings 2, chimes 2849, rows SHOWN 32, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bodies: fittings 8, chimes 716, rows SHOWN 26, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bang250.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 318, chimes 11548, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   bang250_nofield.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 356, chimes 12564, rows SHOWN 38, the rewind {'intervals': 20, 'exact': 20}
+   (returns counts the ticks at the full rate, two a bounce: 50 exact returns.) The rows by kind (kinds.py):
+   bang250.json {'SHOWN': 34, 'SHOWN in part': 7, 'NOT READ': 27, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 SHOWN: two bodies' credited Nodes approached and stood one Link apart
+       73 NOT SHOWN: at 318 of 420 merger ends the pair's share taken exceeds the light's quantum booked, up to 5359 thousandths of it, the excess booked nowhere
+       74 SHOWN in part: the light polarized along its kick on 1 of 3 axes read (33 of 591, 87 of 496, -11 of 551)
+       76 SHOWN: gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   bang250_nofield.json {'SHOWN': 33, 'SHOWN in part': 6, 'NOT READ': 28, 'NOT SHOWN': 13, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 368 of 476 merger ends the pair's share taken exceeds the light's quantum booked, up to 5028 thousandths of it, the excess booked nowhere
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its acceleration with the kick's sign on 157 of 630, 95 of 639, 103 of 545 k
+       76 NOT READ: no held field in the universe (a row of one gear with its weight)
+   bang250_regfree.json {'SHOWN': 34, 'SHOWN in part': 7, 'NOT READ': 27, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 614 of 714 merger ends the pair's share taken exceeds the light's quantum booked, up to 5446 thousandths of it, the excess booked nowhere
+       74 SHOWN in part: the light polarized along its kick on 1 of 3 axes read (18 of 517, 59 of 477, 41 of 425)
+       76 SHOWN: gapped 2 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   bang250_m1.json {'SHOWN': 35, 'NOT SHOWN': 13, 'SHOWN in part': 5, 'NOT READ': 27, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 5 Links at first and 6 at last
+       73 NOT SHOWN: at 606 of 694 merger ends the pair's share taken exceeds the light's quantum booked, up to 7723 thousandths of it, the excess booked nowhere
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its acceleration with the kick's sign on 145 of 921, 88 of 934, 145 of 661 k
+       76 SHOWN: gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   bang250_bf.json {'SHOWN': 34, 'SHOWN in part': 7, 'NOT READ': 27, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 SHOWN: two bodies' credited Nodes approached and stood one Link apart
+       73 NOT SHOWN: at 342 of 444 merger ends the pair's share taken exceeds the light's quantum booked, up to 7611 thousandths of it, the excess booked nowhere
+       74 SHOWN in part: the light polarized along its kick on 1 of 3 axes read (9 of 486, 82 of 486, 2 of 514)
+       76 SHOWN: gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+
+2. The merger's book on 6a853217f (book.py: around every striking's fittings act, every hand's conserved form at the striking's gearing summed over the clocks plus the remainders, before and after; at every unspringing the two ends' falls read end by end against both at once):
+   as built nofield, 250 ticks, the light's winding 1637588529984138012000: strikings with a fitting 82, with a merger 70
+   as built   strikings with a merger whose book moves: 68; largest |moved| 3113934009224948064637/818794264992069006000 light windings, net 23.83607254738769
+   as built   strikings with births alone whose book moves: 9 of 12; net -0.020261417807209036
+   as built   unspringings read: 238; read end by end minus both at once (the cross term), in light windings: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+   as built   per striking with a merger, the book's move against minus the cross terms summed: [(0.0, -0.0), (1.206, -1.206), (3.803, -3.803), (-0.001, -0.0), (-0.114, -0.163), (0.049, -0.049), (-0.097, 0.097), (0.0, -0.0), (0.156, -0.156), (-0.098, 0.098), (-0.098, 0.098), (-0.098, 0.098)]
+   as built   strikings where the book's move is exactly the cross terms summed: 64 of 70
+   as built   whole strikings (fittings, splits, chimes) whose book moves: 246 of 250; largest 3113934009224948064637/818794264992069006000; net 17.073056695589216 light windings
+   as built field, 250 ticks, the light's winding 1637588529984138012000: strikings with a fitting 75, with a merger 59
+   as built   strikings with a merger whose book moves: 52; largest |moved| 232911469208470396441/136465710832011501000 light windings, net 18.325515143562463
+   as built   strikings with births alone whose book moves: 12 of 16; net -1.249930532578875
+   as built   unspringings read: 210; read end by end minus both at once (the cross term), in light windings: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+   as built   per striking with a merger, the book's move against minus the cross terms summed: [(0.0, -0.0), (0.609, -0.414), (1.707, -1.707), (-0.206, 0.206), (-0.0, -0.0), (0.159, -0.159), (-0.058, 0.058), (0.057, -0.057), (0.0, -0.0), (-0.16, 0.16), (0.721, -0.721), (0.0, -0.0)]
+   as built   strikings where the book's move is exactly the cross terms summed: 51 of 59
+   as built   whole strikings (fittings, splits, chimes) whose book moves: 233 of 250; largest 120087763929408128/15162856759112389; net -178.2562359684287 light windings
+   With the second letter (book_fix.py, below):
+   nofield, 250 ticks, the light's winding 1637588529984138012000: strikings with a fitting 86, with a merger 74
+     strikings with a merger whose book moves: 0; largest |moved| 0 light windings, net 0.0
+     strikings with births alone whose book moves: 0 of 12; net 0.0
+     unspringings read: 229; read end by end minus both at once (the cross term), in light windings: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+     per striking with a merger, the book's move against minus the cross terms summed: [(0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0)]
+     strikings where the book's move is exactly the cross terms summed: 74 of 74
+     whole strikings (fittings, splits, chimes) whose book moves: 240 of 250; largest 4293120/124992409; net -6.970303612597786 light windings
+   field, 250 ticks, the light's winding 1637588529984138012000: strikings with a fitting 82, with a merger 67
+     strikings with a merger whose book moves: 0; largest |moved| 0 light windings, net 0.0
+     strikings with births alone whose book moves: 0 of 15; net 0.0
+     unspringings read: 222; read end by end minus both at once (the cross term), in light windings: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+     per striking with a merger, the book's move against minus the cross terms summed: [(0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0), (0.0, -0.0)]
+     strikings where the book's move is exactly the cross terms summed: 67 of 67
+     whole strikings (fittings, splits, chimes) whose book moves: 231 of 250; largest 120071488950158768/15162856759112389; net -195.2540030537096 light windings
+
+3. The whole striking's book (book3.py: the hands' wind, the remainders and the windings booked into the strike's credits, before and after every striking):
+   6a853217f as built bk3_nofield.txt:nofield, 250 ticks: strikings whose whole book (wind + remainders + credits' windings) moves 77 of 250; largest 3.80307256946299; net 23.81581112958048 light windings; credits booked 6.7427544339912675 light windings
+   6a853217f as built bk3_field.txt:field, 250 ticks: strikings whose whole book (wind + remainders + credits' windings) moves 64 of 250; largest 1.7067398673882486; net 17.075584610983586 light windings; credits booked 195.3318205794123 light windings
+   6a853217f with the second letter bk3fix_nofield.txt:nofield, 250 ticks: strikings whose whole book (wind + remainders + credits' windings) moves 0 of 250; largest 0.0; net 0.0 light windings; credits booked 6.970303612597786 light windings
+   6a853217f with the second letter bk3fix_field.txt:field, 250 ticks: strikings whose whole book (wind + remainders + credits' windings) moves 0 of 250; largest 0.0; net 0.0 light windings; credits booked 195.2540030537096 light windings
+   13f58bb25 as built g11_bk3_nofield.txt:nofield, 250 ticks: strikings whose whole book (wind + remainders + credits' windings) moves 0 of 250; largest 0.0; net 0.0 light windings; credits booked 6.8592123862497925 light windings
+   13f58bb25 as built g11_bk3_field.txt:field, 250 ticks: strikings whose whole book (wind + remainders + credits' windings) moves 0 of 250; largest 0.0; net 0.0 light windings; credits booked 176.76632697479175 light windings
+   The bang and the charts with the second letter on 6a853217f:
+   bang250_bf.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 331, chimes 11403, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   hole: fittings 17, chimes 920, rows SHOWN 35, the rewind {'intervals': 20, 'exact': 20}, the record moved
+   chiral: fittings 2, chimes 2849, rows SHOWN 32, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bodies: fittings 8, chimes 712, rows SHOWN 26, the rewind {'intervals': 20, 'exact': 20}, the record moved
+
+4. 13f58bb25 verified:
+   hole: fittings 17, chimes 920, rows SHOWN 36, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   chiral: fittings 2, chimes 2849, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bodies: fittings 8, chimes 712, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bang250_g11.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 382, chimes 11592, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   bang250_g11.json {'SHOWN': 35, 'SHOWN in part': 6, 'NOT READ': 27, 'NOT SHOWN': 12, 'NOT REACHED': 2}
+       9 NOT SHOWN: the credited Nodes receding, farthest 4 Links at first and 6 at last
+       73 NOT SHOWN: at 378 of 482 merger ends the pair's share taken exceeds the light's quantum booked, up to 5470 thousandths of it, the excess booked nowhere
+       74 SHOWN: the light kicked by the current is polarized along it, on every axis kicked: its acceleration with the kick's sign on 95 of 617, 160 of 652, 61 of 554 ki
+       76 SHOWN: gapped 2, gapped 1 chime bound one mesh apart in the held field's well, above twice the board's own share 6 of 63
+   the bang on 13f58bb25, the identity taken + the remainder before - the remainder after = booked: merger ends 482 of 482 (remainder negative after 37 ); births from the light 141 of 141 ; credits 11592 of 11592
+
+5. Row 74 on 6a853217f (polar_gear.py reproduces the decoder's tally from the faces at the chimed clocks, 'face chimed'; polar_parts.py and polar_slope.py decompose the odd gear's stride change at every kicked clock with no turnover at the tick or before and no stop: the wall's part [W_side v + r - W_side div 2] / W_new - v, the meshes' stretch pull / W_new, the kick's T stretch q / W_new):
+   nofield, 250 ticks:
+     gear all: read [884, 883, 823], tally [[262, -14, -3], [-18, 161, -28], [8, -1, 213]]
+     face all: read [884, 883, 823], tally [[228, -16, 1], [-37, 162, -33], [21, 10, 190]]
+     gear chimed: read [630, 639, 545], tally [[185, -2, -25], [-2, 89, 1], [9, -13, 93]]
+     face chimed: read [630, 639, 545], tally [[157, -8, -5], [-27, 95, 5], [4, 4, 103]]
+     kick x kick: read [884, 883, 823], tally [[884, -12, -5], [-12, 883, 3], [-5, 3, 823]]
+   field, 250 ticks:
+     gear all: read [817, 714, 728], tally [[149, -16, -76], [-2, 202, -53], [-77, -37, 38]]
+     face all: read [817, 714, 728], tally [[128, -10, -95], [-4, 157, -39], [-124, -40, -13]]
+     gear chimed: read [591, 496, 551], tally [[60, -3, -59], [22, 109, -43], [-84, -23, 43]]
+     face chimed: read [591, 496, 551], tally [[33, 22, -59], [18, 87, -23], [-114, -32, -11]]
+     kick x kick: read [817, 714, 728], tally [[817, -7, -19], [-7, 714, -8], [-19, -8, 728]]
+   nofield, 250 ticks, kicks read per axis [891, 893, 834]:
+     acc: tally [[256, -39, -22], [-13, 160, -4], [-1, -4, 208]], mean size on the kick's own axis [3.9316124067804, 3.8844837388212876, 4.301947652327853]
+     wall: tally [[1, 4, -31], [44, -70, -5], [-37, 9, 3]], mean size on the kick's own axis [1.3032657314817853, 1.282591806600559, 1.3740375793520552]
+     meshes: tally [[118, -9, -12], [-11, 53, 7], [11, -31, 101]], mean size on the kick's own axis [3.417539018193264, 3.4273904856892514, 3.7266431217007785]
+     kick: tally [[891, -12, -6], [-12, 893, 2], [-6, 2, 834]], mean size on the kick's own axis [0.7717794769244755, 0.759767761334909, 0.7632469464286363]
+     the slope SUM q_a part_b / SUM q_a^2, per part [a][b]:
+       acc: [[1.333, -0.133, -0.056], [-0.096, 0.957, -0.273], [0.059, -0.111, 1.096]]
+       wall: [[0.06, -0.052, -0.042], [0.053, -0.148, -0.139], [-0.05, 0.032, -0.016]]
+       meshes: [[0.507, -0.074, -0.01], [-0.143, 0.347, -0.136], [0.113, -0.144, 0.351]]
+       kick: [[0.766, -0.006, -0.004], [-0.007, 0.759, 0.002], [-0.005, 0.002, 0.761]]
+   field, 250 ticks, kicks read per axis [829, 724, 739]:
+     acc: tally [[139, -5, -69], [-16, 218, -44], [-71, -63, 47]], mean size on the kick's own axis [4.661462107645497, 3.596537393141793, 5.137461605365911]
+     wall: tally [[-33, -17, -31], [58, 16, -38], [-97, -77, -99]], mean size on the kick's own axis [1.8192959706423244, 1.1719968150219215, 2.133933809674916]
+     meshes: tally [[84, 9, -32], [1, 88, -49], [-8, -44, 48]], mean size on the kick's own axis [3.91229560421604, 3.237738318253398, 4.218666788375085]
+     kick: tally [[829, -6, -20], [-6, 724, -9], [-20, -9, 739]], mean size on the kick's own axis [0.7588836777653084, 0.7641958884227268, 0.7398097758306974]
+     the slope SUM q_a part_b / SUM q_a^2, per part [a][b]:
+       acc: [[1.228, 0.067, -0.577], [-0.052, 1.062, -0.332], [-0.239, -0.238, 0.542]]
+       wall: [[-0.258, -0.069, -0.1], [0.06, -0.005, -0.189], [-0.188, -0.121, -0.458]]
+       meshes: [[0.728, 0.141, -0.458], [-0.106, 0.307, -0.131], [-0.029, -0.106, 0.26]]
+       kick: [[0.758, -0.005, -0.02], [-0.006, 0.76, -0.011], [-0.022, -0.011, 0.74]]
+   The regulator's spring read at the load (regfree.py), the bang and row 74:
+   bang250_regfree.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 593, chimes 9705, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+   field, 250 ticks, kicks read per axis [997, 951, 872]:
+     acc: tally [[161, 3, -25], [-65, 203, 51], [30, 62, 142]], mean size on the kick's own axis [5.037380298320198, 3.4792231361967114, 3.9713255673801378]
+     wall: tally [[21, -5, 17], [-103, -43, 87], [-20, -26, 6]], mean size on the kick's own axis [2.1347847269238076, 1.4357351858335052, 1.4754635365899167]
+     meshes: tally [[72, 11, -31], [-55, 12, 2], [26, 42, 19]], mean size on the kick's own axis [4.318098421259992, 2.8850195678689516, 3.3276696272437616]
+     kick: tally [[997, 34, 27], [34, 951, 4], [27, 4, 872]], mean size on the kick's own axis [0.7569572842470966, 0.7408414644761189, 0.7543023423253455]
+     the slope SUM q_a part_b / SUM q_a^2, per part [a][b]:
+       acc: [[0.759, -0.11, -0.158], [-0.358, 0.874, 0.227], [0.134, 0.3, 0.965]]
+       wall: [[-0.182, 0.003, -0.1], [-0.174, -0.034, 0.157], [0.031, -0.002, -0.106]]
+       meshes: [[0.189, -0.135, -0.08], [-0.209, 0.168, 0.074], [0.079, 0.306, 0.324]]
+       kick: [[0.752, 0.023, 0.021], [0.025, 0.741, -0.003], [0.024, -0.004, 0.748]]
+   With the second letter and under the one mirror (DAVID-THE-ONE-MIRROR.md), the slope:
+   the second letter   the slope SUM q_a part_b / SUM q_a^2, per part [a][b]:
+   the second letter     acc: [[0.879, -0.016, 0.154], [-0.029, 0.788, -0.305], [-0.172, 0.27, 0.737]]
+   the second letter     wall: [[-0.371, 0.134, -0.092], [0.145, -0.092, 0.066], [0.004, 0.031, -0.248]]
+   the second letter     meshes: [[0.5, -0.153, 0.238], [-0.177, 0.115, -0.366], [-0.185, 0.244, 0.236]]
+   the second letter     kick: [[0.75, 0.003, 0.009], [0.003, 0.765, -0.005], [0.009, -0.005, 0.749]]
+   the one mirror   the slope SUM q_a part_b / SUM q_a^2, per part [a][b]:
+   the one mirror     acc: [[0.811, -0.067, 0.06], [0.02, 1.067, -0.167], [0.463, 0.235, 1.087]]
+   the one mirror     wall: [[-0.086, 0.02, 0.019], [-0.06, -0.082, -0.12], [0.037, 0.122, 0.029]]
+   the one mirror     meshes: [[0.111, -0.081, 0.029], [0.087, 0.383, -0.042], [0.405, 0.122, 0.295]]
+   the one mirror     kick: [[0.786, -0.005, 0.012], [-0.006, 0.766, -0.005], [0.021, -0.008, 0.763]]
+   The current's turn (polar_lag.py: sign(q_a(t)) sign(q_b(t - lag)) at one clock):
+   nofield, 250 ticks:
+     lag 0: sum sign(q_a(t)) sign(q_b(t-lag)) [[1358, -17, -9], [-17, 1313, 10], [-9, 10, 1264]], both kicking [[1358, 193, 199], [193, 1313, 194], [199, 194, 1264]]
+     lag 1: sum sign(q_a(t)) sign(q_b(t-lag)) [[-340, 31, -6], [-4, -290, 13], [2, 14, -326]], both kicking [[352, 159, 136], [170, 310, 153], [140, 144, 344]]
+     lag 2: sum sign(q_a(t)) sign(q_b(t-lag)) [[-21, 3, 4], [-7, -33, -14], [-2, 4, 0]], both kicking [[209, 165, 134], [165, 193, 128], [138, 158, 204]]
+     lag 3: sum sign(q_a(t)) sign(q_b(t-lag)) [[42, -16, 20], [11, 26, 6], [-9, -28, 29]], both kicking [[184, 162, 134], [141, 164, 122], [143, 128, 191]]
+     lag 4: sum sign(q_a(t)) sign(q_b(t-lag)) [[-93, 24, -13], [5, -91, -11], [0, 6, -91]], both kicking [[213, 190, 139], [151, 189, 139], [138, 150, 187]]
+     lag 5: sum sign(q_a(t)) sign(q_b(t-lag)) [[-21, -15, -13], [-5, -2, -18], [4, 7, -8]], both kicking [[157, 161, 127], [157, 140, 130], [126, 145, 130]]
+   field, 250 ticks:
+     lag 0: sum sign(q_a(t)) sign(q_b(t-lag)) [[1241, -12, -19], [-12, 1088, 1], [-19, 1, 1133]], both kicking [[1241, 162, 211], [162, 1088, 145], [211, 145, 1133]]
+     lag 1: sum sign(q_a(t)) sign(q_b(t-lag)) [[-336, 1, 7], [0, -256, -24], [42, -5, -263]], both kicking [[342, 153, 133], [138, 276, 144], [146, 127, 279]]
+     lag 2: sum sign(q_a(t)) sign(q_b(t-lag)) [[22, -5, 8], [-5, -4, -15], [-5, 3, -1]], both kicking [[186, 123, 162], [143, 122, 131], [115, 135, 147]]
+     lag 3: sum sign(q_a(t)) sign(q_b(t-lag)) [[15, -11, -6], [-21, 24, 22], [-28, 0, 16]], both kicking [[159, 149, 146], [137, 122, 122], [128, 120, 154]]
+     lag 4: sum sign(q_a(t)) sign(q_b(t-lag)) [[-68, 12, 5], [5, -49, 9], [12, 7, -59]], both kicking [[164, 134, 135], [151, 145, 141], [156, 139, 153]]
+     lag 5: sum sign(q_a(t)) sign(q_b(t-lag)) [[0, -27, 8], [-20, -12, 0], [-34, 13, -46]], both kicking [[136, 135, 138], [118, 130, 120], [128, 147, 132]]
+
+6. The bang's windings (clock.windings, in the light's winding): gapped 0 0.000537, gapped 1 0.986771, gapped 2 0.985413, the light 1.
+
+7. The second letter as a harness (book_fix.py):
+   """The second letter of the merger's book (a harness): (1) an unspringing's sprung ends read in turn, each end's fall read on the great clock as the earlier ends' unwinds leave it (the earlier ends advanced at -1 for the read and every one returned before any write, CR-S2's reads before writes kept), so the falls sum to the great clock's own; (2) a birth's fitted hands' rise read on the great clock as they are laid, its excess over the windings booked in the take's remainder, signed (as the light's child books its rise's excess, MG-S1)."""
+   import os, sys
+   sys.path.insert(0, os.environ["WT"] + "/src")
+   from event_universe import unspring, striking, hands, readings
+   from event_universe.unwind import advance, window_clocks
+   
+   _read = unspring.read_ends
+   def read_ends(clock, ends, gearing, cause, rec, cache=None, twins=None):
+       if clock.hands()[rec] is clock.unsprung() or len(ends) < 2:
+           return _read(clock, ends, gearing, cause, rec, cache, twins)
+       found, trials = [], []
+       try:
+           for end, (where, tallied) in enumerate(ends):
+               r = rec if twins is None else twins[end]
+               notches = unspring.notches_at(clock.hands()[r], where)
+               fall = unspring.wind_fall(clock, r, gearing, where, notches, {})
+               if fall < tallied:
+                   clock.counts["refused_stop"] += cause
+                   entry = {"event": "refused", "i": clock.ticks, "node": list(where), "cause": "stop"}
+                   clock.log.append(entry | {"fall": fall, "walls": tallied, "owed": tallied, "row": rec})
+                   return None
+               found.append((where, tallied, notches, fall, None, 0, tallied, r))
+               advance(clock, r, where, notches, -1)
+               trials.append((r, where, notches))
+       finally:
+           for r, where, notches in reversed(trials):
+               advance(clock, r, where, notches, 1)
+           if cache is not None:
+               cache.clear()
+       return found
+   unspring.read_ends = read_ends
+   
+   _fitted = striking.fitted
+   def fitted(clock, at, fits, unwind, rec, c, factors):
+       if "takes" in unwind:
+           return _fitted(clock, at, fits, unwind, rec, c, factors)
+       all_hands = clock.hands()
+       involved = sorted({p for f in fits for p in (f[1], hands.twin_of(all_hands, f[1]))})
+       window = sorted({w for f in fits for end in (f[2], f[3]) for w in window_clocks(clock, end)})
+       def wind():
+           return sum(
+               int(v)
+               for p in involved
+               for v in hands.wind(clock, all_hands[p].gears, readings.gearing(clock, all_hands[p].ratio, c, factors), window)
+           )
+       before = wind()
+       out = _fitted(clock, at, fits, unwind, rec, c, factors)
+       rise = wind() - before
+       clock.slack[at] = clock.slack[at] + int(unwind["booked"]) - rise
+       return out
+   striking.fitted = fitted

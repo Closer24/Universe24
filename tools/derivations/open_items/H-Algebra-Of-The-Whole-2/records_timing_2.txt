@@ -1,2 +1,0 @@
-world_sea run ms 8570 gates ms 315
-world_universe run ms 10117 gates ms 1307

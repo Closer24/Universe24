@@ -1,5 +1,0 @@
-flag 2 tag mend rides True mended True swap.py 0a2845a0eb75c85d
-standing wave, open (no close): MATCH 76 of 80, first unmatched (4, 19); turns forward 28 intervals, back 28; false tops 2, missed tops 13; 48 at end levels 48 all 48; bits 60; births 0 charge sum 0 exact takes 0 of 0
-uniform sea, open (no close): MATCH 80 of 80, first unmatched None; turns forward 1 intervals, back 1; false tops 0, missed tops 0; 48 at end levels 48 all 48; bits 59; births 0 charge sum 0 exact takes 0 of 0
-hole seed, every act and the close: MATCH 60 of 60, first unmatched None; turns forward 20 intervals, back 20; false tops 0, missed tops 0; 48 at end levels 1 all 1; bits 76; births 6 charge sum 0 exact takes 6 of 6
-standing wave A 576, every act and the close: MATCH 48 of 60, first unmatched (12, 135); turns forward 30 intervals, back 31; false tops 62, missed tops 95; 48 at end levels 1 all 1; bits 76; births 9 charge sum 0 exact takes 9 of 9

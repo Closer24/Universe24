@@ -1,3 +1,0 @@
-[{"file": "event_universe/gates.py",
-  "old": "from event_universe.rows import WIDTH",
-  "new": "import os as _os\nfrom event_universe.rows import WIDTH as LAW_WIDTH\n\nWIDTH = int(_os.environ.get(\"BB1_STATE_WIDTH\") or LAW_WIDTH)"}]

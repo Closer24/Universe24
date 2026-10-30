@@ -1,7 +1,0 @@
-engine /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad/hands/t48/tools/derivations/t48/src_a48b/event_universe/take.py A48B_FOLD 
-intervals 7 base births 5 first turn 1 counts {'rotations': {'equal': 12, 'senses exchanged': 0, 'apart': 12}, 'reflections': {'equal': 0, 'senses exchanged': 0, 'apart': 24}}
-1 failed in 7.52s
-
-real	0m7.829s
-user	0m8.074s
-sys	0m0.056s

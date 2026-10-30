@@ -1,9 +1,0 @@
---- ruff check
-All checks passed!
-exit 0
---- ruff format --check
-192 files already formatted
-exit 0
---- mypy
-Success: no issues found in 34 source files
-exit 0

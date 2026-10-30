@@ -1,0 +1,159 @@
+diff --git a/src/event_universe/bobs.py b/src/event_universe/bobs.py
+index 4d3098729..aad888216 100644
+--- a/src/event_universe/bobs.py
++++ b/src/event_universe/bobs.py
+@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any
+ import numpy as np
+ 
+ from event_universe.core import rule3
+-from event_universe.core.rule3 import carries, largest_below
++from event_universe.core.rule3 import carries, largest_below, remainder
+ from event_universe.core.spokes import AXES, SPOKE_SIDES, SPOKES
+ from event_universe.draw import vernier
+ from event_universe.hands import dot, sweep, twin_pairs, wind
+@@ -200,3 +200,95 @@ def face_of(
+         "X": clock.standard_length,
+         "factors": [int(f[at]) for f in clock.start_factors],
+     }
++
++
++_BELL_INDEX: dict[int, dict[str, Any]] = {}
++BELL_DETECTORS: dict[
++    str, Any
++] = {}  # the world's detectors as the run hands them over (each end's two directions, the choices made outside)
++
++
++def _bell_index(clock: Any) -> dict[str, Any]:
++    """The born pairs and their answered ends read from the log, rebuilt where the log was cut back (the rewind)."""
++    held = _BELL_INDEX.get(id(clock))
++    stale = (
++        held is None
++        or len(clock.log) < held["n"]
++        or (held["n"] > 0 and clock.log[held["n"] - 1] is not held["last"])
++    )
++    found: dict[str, Any] = (
++        {"n": 0, "by_child": {}, "answered": {}, "last": None} if stale or held is None else held
++    )
++    _BELL_INDEX[id(clock)] = found
++    for pos in range(found["n"], len(clock.log)):
++        e = clock.log[pos]
++        if e["event"] == "birth":
++            for end, where in enumerate((e["minus"], e["plus"])):
++                found["by_child"].setdefault((tuple(where), int(e["line_pair"])), []).append(
++                    (int(e["i"]), pos, end)
++                )
++        elif e["event"] == "credit" and "bell" in e:
++            b = e["bell"]
++            found["answered"][(b["pair"], b["end"])] = (b["answer"], tuple(b["direction"]))
++    found["n"] = len(clock.log)
++    found["last"] = clock.log[-1] if clock.log else None
++    return found
++
++
++def _bell_opposite(c: int, room: int, d1: tuple[int, ...], d2: tuple[int, ...]) -> bool:
++    """Born's odds for the partner against the closed axis, on integers: opposite where (2 c - room) |d1| |d2| < room (d1 . d2)."""
++    left, right = c + c - room, room * sum(a * b for a, b in zip(d1, d2, strict=True))
++    q = sum(a * a for a in d1) * sum(b * b for b in d2)
++    if left < 0 <= right:
++        return True
++    if right < 0 <= left:
++        return False
++    if left >= 0:
++        return left * left * q < right * right
++    return left * left * q > right * right
++
++
++def bell_answers(clock: Any, gearings: list[Any], log_from: int) -> None:
++    """The detector's click on a born pair, every click of this strike that is a born child's first click answered (the owner's order of 2026-10-28, 02:59 UTC: the click solution built locally): a fitting's two children carry one open axis from the birth to the first click of either; the first click reads its detector's direction and draws half and half (the vernier's draw c in [0, room): up where 2 c < room), and that answer closes the pair's axis for both; the partner's click reads its own direction and draws against the closed axis with Born's odds, the answer opposite to the first where (2 c - room) |d1| |d2| < room (d1 . d2), compared on integers alone; two clicks of one pair in one strike take the - end first by its role. The detectors' directions and the choices between them come from the world as the run hands them over (`DETECTORS`: each end's two directions, and the choices made outside the board, one per answered click in turn), so the engine holds no number of them. The answers are the clicks' readings, written into the credit lines (no gear written), so the rewind cuts them with the log. A local build for David's verification. Nothing where the run hands over no detectors."""
++    if not BELL_DETECTORS:
++        return
++    directions, choices = BELL_DETECTORS["directions"], BELL_DETECTORS["choices"]
++    index = _bell_index(clock)
++    clicks: dict[int, dict[int, int]] = {}
++    for pos in range(log_from, len(clock.log)):
++        e = clock.log[pos]
++        if e["event"] != "credit":
++            continue
++        at, line, tick = tuple(e["node"]), int(e["line"]), int(e["i"])
++        for born, fit, end in index["by_child"].get((at, line), []):
++            if born < tick and (fit, end) not in index["answered"] and end not in clicks.get(fit, {}):
++                clicks.setdefault(fit, {})[end] = pos
++                break
++    for fit in sorted(clicks):
++        for end in sorted(clicks[fit]):
++            e = clock.log[clicks[fit][end]]
++            at, line = tuple(e["node"]), int(e["line"])
++            drawn = vernier(clock, at, gearings, clock.windings[line])
++            if drawn is None:
++                continue
++            c, room = drawn
++            bit = int(choices[int(remainder(len(index["answered"]), len(choices)))])
++            d = tuple(int(x) for x in directions[end][bit])
++            partner = index["answered"].get((fit, 1 - end))
++            if partner is None:
++                answer, closed = (1 if c + c < room else -1), 0
++            else:
++                answer = -partner[0] if _bell_opposite(c, room, partner[1], d) else partner[0]
++                closed = 1
++            index["answered"][(fit, end)] = (answer, d)
++            e["bell"] = {
++                "pair": fit,
++                "end": end,
++                "setting": bit,
++                "direction": list(d),
++                "answer": answer,
++                "axis_closed": closed,
++                "draw": [c, room],
++            }
++    index["n"] = len(clock.log)
++    index["last"] = clock.log[-1] if clock.log else None
+diff --git a/src/event_universe/predicates.py b/src/event_universe/predicates.py
+index aa2ae24e4..5d28a7fd6 100644
+--- a/src/event_universe/predicates.py
++++ b/src/event_universe/predicates.py
+@@ -273,7 +273,19 @@ def two_slits(chart: Chart) -> dict[str, Any]:
+ def bell(chart: Chart) -> dict[str, Any]:
+     """Row 56: Bell (QG-S3, BK-S1; the reading of The-Setting-From-The-Frame_COMPARISON.md section 3, the Boss's 6411759969): S as the count over the fitted pairs' four cells, the setting at each end the detector's own datum at its strike (the dial's parity, two-valued) and the outcome the fitted hand's own sense from the fitting line; nature's band 4 < S^2 <= 8 SHOWN as nature, else NOT SHOWN with the cause named: the outcome reads no datum of the detector, the fitted hand has no axis (BS-S1 owed), so every filled cell reads E = -1 and S^2 = 4."""
+     cells: dict[tuple[int, int], list[int]] = {}
++    answered: dict[int, dict[int, tuple[int, int]]] = {}
++    for k in chart.chimes:
++        if "bell" in k:
++            answered.setdefault(int(k["bell"]["pair"]), {})[int(k["bell"]["end"])] = (
++                int(k["bell"]["setting"]),
++                int(k["bell"]["answer"]),
++            )
++    for got in answered.values():
++        if 0 in got and 1 in got:
++            cells.setdefault((got[0][0], got[1][0]), []).append(got[0][1] * got[1][1])
+     for b, (a, c) in zip(chart.fittings, chart.sweeps_of(), strict=True):
++        if answered:
++            break
+         if not a or not c:
+             continue
+         ends = [
+diff --git a/src/event_universe/striking.py b/src/event_universe/striking.py
+index 04a7283de..1065bdf70 100644
+--- a/src/event_universe/striking.py
++++ b/src/event_universe/striking.py
+@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Any, NamedTuple
+ import numpy as np
+ 
+ from event_universe import hands, readings
+-from event_universe.bobs import bobs, splits
++from event_universe.bobs import bell_answers, bobs, splits
+ from event_universe.core import rule3
+ from event_universe.core.rule3 import carries, remainder
+ from event_universe.core.spokes import AXES, across, spoke_of
+@@ -357,6 +357,7 @@ def strike(
+         assert rewind_note is not None
+         undo(clock, rewind_note)
+         return
++    log_from = len(clock.log)
+     c = clock.start_load
+     clock.start_gears = hand_starts
+     clock.pitches, clock.vernier_read, clock.twin_ends = {}, {}, {}
+@@ -386,3 +387,4 @@ def strike(
+     fitted_clocks = fittings(clock, jam(clock, fits, winds), c, read, gearings)
+     splits(clock, hand_starts, (winds, hand_gearings, gearings), fitted_clocks, stopped, r_unsprung)
+     bobs(clock, hand_starts, winds, fitted_clocks, stopped, r_unsprung)
++    bell_answers(clock, gearings, log_from)

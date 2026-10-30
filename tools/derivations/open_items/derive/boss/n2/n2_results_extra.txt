@@ -1,0 +1,5 @@
+head's act with no term 5, the clock moving, lay 16: the run back departs at round back 1
+head's act with no term 5, the clock moving, lay 17: the run back departs at round back 1
+00 row reading itself (rest 3000): 00 counts 0 and 1 with p = 15000 both drift to 5 and 5; whole states equal after the drift: True
+00 row at rest teeth: the same two drift to 5 and 6
+first-order form, 800 rounds, the clock moving (23856 site-rounds rising, 23798 falling, W in [2784, 3236]): forth and back bit for bit: True; the state moved: True

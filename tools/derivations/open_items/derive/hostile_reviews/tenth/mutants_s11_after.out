@@ -1,0 +1,36 @@
+control (no edit)                                              SURVIVED tests: 250 passed in 22.68s; tool exit 0; 
+S1 J added onto the gears (source = gears + 0)                 NOT APPLIED (0 matches of 'source = 0 * gears')
+S2 J written into the caller's gears (source = gears)          NOT APPLIED (0 matches of 'source = 0 * gears')
+S3 the source of int64                                         NOT APPLIED (0 matches of 'source = 0 * gears')
+S4 a buffered add (repeated landings collapse)                 killed   tests: 1 failed, 200 passed in 13.22s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S5 a plain write (the last term of a row wins)                 killed   tests: 1 failed, 200 passed in 12.73s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S6 the factor squared                                          killed   tests: 1 failed, 200 passed in 13.32s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S7 the second reading twice                                    killed   tests: 1 failed, 200 passed in 12.90s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S8 the landings reversed                                       killed   tests: 1 failed, 200 passed in 12.76s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S9 the landing column of object integers                       killed   tests: 1 failed, 200 passed in 12.65s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S10 the plan's factor of int64                                 killed   tests: 1 failed, 200 passed in 12.79s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S11 the plan's two reading columns swapped                     SURVIVED tests: 250 passed in 23.53s; tool exit 0; ; gate: +0 []
+S12 the landing at the first side's part                       killed   tests: 1 failed, 200 passed in 12.63s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S13 the landing at the first side's kind                       killed   tests: 1 failed, 200 passed in 12.56s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S14 the table of the target train's first kind                 killed   tests: 1 failed, 200 passed in 12.97s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S15 the gradient's three axes on one plane                     killed   tests: 1 failed, 200 passed in 13.27s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S16 the gradient reads its A1 at the axis's component          killed   tests: 1 failed, 200 passed in 13.04s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_the_plan_contracts_as_the_naive_sum_over_the_rows_and_t
+S17 the strides' refusal falls through (equivalent at the load) SURVIVED tests: 250 passed in 22.16s; tool exit 0; ; gate: +0 []
+S18 the lay's five arrays of int64                             killed   tests: 1 failed, 216 passed in 12.57s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is
+S19 the going alone of int64                                   killed   tests: 1 failed, 216 passed in 11.99s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is
+S20 the clocks of int64                                        killed   tests: 1 failed, 216 passed in 12.75s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is
+S21 the lay's before at every site of its row                  killed   tests: 1 failed, 216 passed in 13.31s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is
+S22 the lay's bound read on the first train                    killed   tests: 1 failed, 216 passed in 12.92s; tool exit 0; FAILED tests/test_the_tensor24_load.py::test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is
+S23 the three clocks one array (aliased) and the going a's     SURVIVED tests: 250 passed in 22.52s; tool exit 0; ; gate: +0 []
+S24 det's first cofactor's minus turned                        killed   tests: 1 failed, 178 passed in 8.45s; tool exit 0; FAILED tests/test_the_tensor24_kinds.py::test_every_law_holds_on_the_kinds_as_made
+S25 the Spokes without their opposites                         killed   tests: 1 failed, 178 passed in 7.86s; tool exit 0; FAILED tests/test_the_tensor24_kinds.py::test_every_law_holds_on_the_kinds_as_made
+S26 the tables' shape in the order (m, k, i)                   killed   tests: 1 failed, 178 passed in 7.35s; tool exit 0; FAILED tests/test_the_tensor24_kinds.py::test_every_law_holds_on_the_kinds_as_made
+S27 the sites the sum of the sides                             killed   tests: 1 failed, 90 passed in 1.85s; tool exit 0; FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_fil
+S28 a gear's train one past                                    killed   tests: 1 failed, 93 passed in 2.01s; tool exit 0; FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_fil
+S29 a gear's site from 1                                       killed   tests: 1 failed, 61 passed in 1.73s; tool exit 1; FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_fil
+S30 a component below 0 passes                                 killed   tests: 1 failed, 61 passed in 2.05s; tool exit 0; FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_fil
+S31 an empty trains list passes                                killed   tests: 1 failed, 137 passed in 2.09s; tool exit 0; FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_fil
+S32 a nesting too deep not caught                              killed   tests: 1 failed, 111 passed in 1.98s; tool exit 0; FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_fil
+S33 the width unchecked inside lists                           killed   tests: 1 failed, 131 passed in 1.72s; tool exit 0; FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_fil
+S34 a doubled key passes                                       killed   tests: 1 failed, 104 passed in 1.63s; tool exit 0; FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_fil
+survived (the control aside): 3 of 34

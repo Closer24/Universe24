@@ -1,0 +1,619 @@
+DAVID-AMPLITUDES_CHECKS.txt: the scripts and outputs behind DAVID-AMPLITUDES.md (David, 2026-10-27, 14:5x UTC).
+Run with the repository's venv314 Python; WT names the engine tree (default: a worktree of 41ad9bc81).
+
+====================================================================================================
+The set-up shared by the checks
+---------------------------------------- common.py
+"""Shared set-up for the amplitudes' checks: a Clock of each universe on an empty board, its sprung hands."""
+import json, os, sys
+WT = os.environ.get("WT", "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/wt_amp")
+sys.path.insert(0, WT + "/src")
+from event_universe.clock import Clock
+from event_universe import readings, hands
+from event_universe.assembly import setting
+from event_universe.core.rates import sine_rim
+from event_universe.meshes import factors
+from event_universe.trains import REGULATOR
+
+UNIVERSES = {
+    "toy": WT + "/tests/worlds/universe_toy.json",
+    "middle": WT + "/tests/worlds/universe_middle.json",
+    "ga2": WT + "/reader/worlds/universe_ga2.json",
+}
+
+
+def clock_of(name, cube=3, seed=()):
+    u = json.load(open(UNIVERSES[name]))
+    if "amplitude" not in u["integers"]:
+        u["integers"]["amplitude"] = 288230376000
+    return Clock(u, {"shape": [cube] * 3, "seed": list(seed)})
+
+
+def vacuum_rule(node, row):
+    node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
+    return readings.gearing(node, row.ratio, node.start_load, factors(node))
+
+
+def sprung(node):
+    return [(k, r) for k, r in enumerate(node.hands()) if r is not node.unsprung()]
+
+====================================================================================================
+(a) The rest wind's identities on every sprung hand of the three universes (the head 41ad9bc81)
+---------------------------------------- check_a.py
+"""(a) The wind of a hand at rest, uniform at the vacuum: hands.wind against the integer identities, every sprung hand of the three universes."""
+from common import *
+
+AMPS = list(range(1, 3001)) + [10**k + j for k in (6, 9, 12) for j in (0, 1, 7)]
+for name in UNIVERSES:
+    node = clock_of(name)
+    T = node.key
+    e = T // 2
+    for rec, row in sprung(node):
+        num, den = row.ratio
+        s = sine_rim(num, den)
+        assert num * num + s * s == den * den
+        assert node.windings[rec] == 3 * T * s, (name, rec)
+        rule = vacuum_rule(node, row)
+        bad_form = bad_sweep = 0
+        worst = 0.0
+        ratios = []
+        for sense in (1, -1, 0):
+            for a in AMPS:
+                lines = setting.even_notches(node, row, a, sense)
+                w = setting.wind_at_clock(node, row, lines, rule)
+                n0, n1 = int(lines[0].now.reshape(-1)[0]), int(lines[1].now.reshape(-1)[0])
+                b0, b1 = int(lines[0].before.reshape(-1)[0]), int(lines[1].before.reshape(-1)[0])
+                form = 3 * (den * (n0 * n0 + n1 * n1 + b0 * b0 + b1 * b1) - 2 * num * (n0 * b0 + n1 * b1))
+                bad_form += form != w
+                if sense:
+                    W = n0 * b1 - n1 * b0
+                    r1, r2 = (a * num) % den, (a * s) % den
+                    rem = 3 * (r1 * r1 + r2 * r2)
+                    assert rem % den == 0
+                    bad_sweep += w != 6 * s * abs(W) + rem // den
+                    if a >= 10**6:
+                        ratios.append(w / (6 * a * a * s * s / den))
+        print(f"{name} hand {rec} pair ({num}, {den}) s {s} rim/s {den / s:.4f}: winding = 3 T s exact; "
+              f"wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at {bad_form} of {3 * len(AMPS)}; "
+              f"wind = 6 s |W| + 3(r1^2+r2^2)/rim off at {bad_sweep} of {2 * len(AMPS)}; "
+              f"wind / (6 a^2 s^2 / rim) at a >= 1e6: {min(ratios):.12f} .. {max(ratios):.12f}")
+---------------------------------------- output: out_a.txt
+toy hand 0 pair (15162854575528411, 15162856759112389) s 8137489624680 rim/s 1863.3335: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.998741813508 .. 0.999999999901
+toy hand 1 pair (2458210083751875, 15162856759112389) s 14962266816278236 rim/s 1.0134: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999020731 .. 1.000000000000
+toy hand 2 pair (2580388913625285, 15162856759112389) s 14941680566515936 rim/s 1.0148: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999705592 .. 1.000000000000
+middle hand 0 pair (1655880909, 1655909141) s 9669460 rim/s 171.2515: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999930290258 .. 0.999999999901
+middle hand 1 pair (506298091, 1655909141) s 1576609440 rim/s 1.0503: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999218161 .. 0.999999999999
+ga2 hand 0 pair (115762739551980, 15162856759112389) s 15162414850065661 rim/s 1.0000: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999144157 .. 0.999999999999
+ga2 hand 1 pair (115762739551980, 15162856759112389) s 15162414850065661 rim/s 1.0000: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999144157 .. 0.999999999999
+
+====================================================================================================
+(a) The same on boss-spin-1 5850be5b7
+---------------------------------------- output: out_a_bspin.txt
+toy hand 0 pair (15162854575528411, 15162856759112389) s 8137489624680 rim/s 1863.3335: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.998741813508 .. 0.999999999901
+toy hand 1 pair (2458210083751875, 15162856759112389) s 14962266816278236 rim/s 1.0134: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999020731 .. 1.000000000000
+toy hand 2 pair (2580388913625285, 15162856759112389) s 14941680566515936 rim/s 1.0148: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999705592 .. 1.000000000000
+middle hand 0 pair (1655880909, 1655909141) s 9669460 rim/s 171.2515: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999930290258 .. 0.999999999901
+middle hand 1 pair (506298091, 1655909141) s 1576609440 rim/s 1.0503: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999218161 .. 0.999999999999
+ga2 hand 0 pair (115762739551980, 15162856759112389) s 15162414850065661 rim/s 1.0000: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999144157 .. 0.999999999999
+ga2 hand 1 pair (115762739551980, 15162856759112389) s 15162414850065661 rim/s 1.0000: winding = 3 T s exact; wind = 3[rim(|z_now|^2+|z_before|^2) - 2 pinion Re(conj z_now z_before)] off at 0 of 9027; wind = 6 s |W| + 3(r1^2+r2^2)/rim off at 0 of 6018; wind / (6 a^2 s^2 / rim) at a >= 1e6: 0.999999144157 .. 0.999999999999
+
+====================================================================================================
+(b) The fourth form's search against the typed form and the sweep's count, n = 1 .. 200
+---------------------------------------- check_b.py
+"""(b) The fourth form's search (setting.set_even) against the sweep's count and against the closed form, every sprung hand of the three universes, n = 1 .. N quanta, the three senses."""
+import sys
+from common import *
+from event_universe.core.rule3 import least_at
+
+N = int(sys.argv[1]) if len(sys.argv) > 1 else 200
+for name in UNIVERSES:
+    node = clock_of(name)
+    T = node.key
+    e = T // 2
+    for rec, row in sprung(node):
+        num, den = row.ratio
+        s = sine_rim(num, den)
+        rule = vacuum_rule(node, row)
+        agree = {"sweep": 0, "closed": 0}
+        differ = {"sweep": [], "closed": []}
+        total = 0
+        for sense in (1, -1, 0):
+            senses = 1 if sense else 2
+
+            def wind(a):
+                return setting.wind_at_clock(node, row, setting.even_notches(node, row, a, sense), rule)
+
+            def sweep(a):
+                return senses * a * ((a * s) // den)
+
+            for n in range(1, N + 1):
+                target = n * node.windings[rec]
+                a_search = least_at(lambda a: wind(a) > target)
+                a_sweep = least_at(lambda a: sweep(a) >= n * e)
+                a_closed = least_at(lambda a: senses * (s + s) * a * a > n * den * T)
+                total += 1
+                for key, a in (("sweep", a_sweep), ("closed", a_closed)):
+                    if a == a_search:
+                        agree[key] += 1
+                    else:
+                        differ[key].append((sense, n, a_search, a))
+        print(f"{name} hand {rec} rim/s {den / s:.4f}: of {total} (sense, n), the sweep's count agrees at {agree['sweep']}, "
+              f"the closed form at {agree['closed']}; first differences sweep {differ['sweep'][:3]} closed {differ['closed'][:3]}")
+---------------------------------------- output: out_b.txt
+toy hand 0 rim/s 1863.3335: of 600 (sense, n), the sweep's count agrees at 198, the closed form at 0; first differences sweep [(1, 1, 5690, 6000), (1, 2, 8669, 9000), (1, 3, 10535, 10800)] closed [(1, 1, 5690, 5792), (1, 2, 8669, 8191), (1, 3, 10535, 10031)]
+toy hand 1 rim/s 1.0134: of 600 (sense, n), the sweep's count agrees at 548, the closed form at 506; first differences sweep [(0, 6, 234, 235), (0, 7, 253, 254), (0, 11, 317, 318)] closed [(1, 3, 235, 234), (1, 6, 332, 331), (1, 12, 469, 468)]
+toy hand 2 rim/s 1.0148: of 600 (sense, n), the sweep's count agrees at 552, the closed form at 516; first differences sweep [(0, 5, 214, 215), (0, 7, 253, 254), (0, 9, 287, 288)] closed [(1, 14, 507, 506), (1, 22, 635, 634), (1, 29, 729, 728)]
+middle hand 0 rim/s 171.2515: of 600 (sense, n), the sweep's count agrees at 256, the closed form at 53; first differences sweep [(1, 1, 1791, 1800), (1, 2, 2561, 2569), (1, 4, 3593, 3597)] closed [(1, 1, 1791, 1756), (1, 2, 2561, 2483), (1, 3, 3083, 3041)]
+middle hand 1 rim/s 1.0503: of 600 (sense, n), the sweep's count agrees at 549, the closed form at 498; first differences sweep [(0, 8, 275, 276), (0, 12, 337, 338), (0, 14, 364, 365)] closed [(1, 4, 276, 275), (1, 6, 338, 337), (1, 7, 365, 364)]
+ga2 hand 0 rim/s 1.0000: of 600 (sense, n), the sweep's count agrees at 508, the closed form at 391; first differences sweep [(0, 1, 95, 96), (0, 4, 190, 191), (0, 7, 251, 252)] closed [(1, 2, 191, 190), (1, 6, 330, 329), (1, 7, 356, 355)]
+ga2 hand 1 rim/s 1.0000: of 600 (sense, n), the sweep's count agrees at 508, the closed form at 391; first differences sweep [(0, 1, 95, 96), (0, 4, 190, 191), (0, 7, 251, 252)] closed [(1, 2, 191, 190), (1, 6, 330, 329), (1, 7, 356, 355)]
+
+====================================================================================================
+(b) and (e) The packets' search, and the one-clock wind
+---------------------------------------- check_b2.py
+"""(b) The packets (setting.fitted) and the one-Node lay: the search's amplitude, the packet's wind against SPOKES s |sweep| and against the closed form; the one-Node wind against 3 rim (|z_now|^2 + |z_before|^2)."""
+import sys
+from common import *
+from event_universe.core.rule3 import least_at
+
+node = clock_of("middle", cube=9)
+rec, row = [(k, r) for k, r in sprung(node) if r.ratio[0] == 506298091][0]
+num, den = row.ratio
+s = sine_rim(num, den)
+T = node.key
+e = T // 2
+rule = vacuum_rule(node, row)
+for h, n in ((2, 125), (3, 218), (3, 250), (3, 400), (3, 600), (1, 1), (1, 125)):
+    envelope, w0 = setting.envelope_of(node, (4, 4, 4), h)
+    target = n * node.windings[rec]
+    a = setting.fitted(node, row, envelope, w0, target)
+    lines = setting.rest_hand(node, row, envelope, w0, a, 1)
+    wind = setting.packet_wind(node, row, lines, rule)
+    W = sum(int(x) for x in hands.sweep(2, lines).reshape(-1))
+    big = 10**9
+    lb = setting.rest_hand(node, row, envelope, w0, big, 1)
+    c = setting.packet_wind(node, row, lb, rule)
+    a_closed = least_at(lambda x: c * x * x > target * big * big) - 1
+    a_sweep = least_at(lambda x: sum(int(v) for v in hands.sweep(2, setting.rest_hand(node, row, envelope, w0, x, 1)).reshape(-1)) > n * e) - 1
+    print(f"middle hand {rec} width {h} n {n}: the search's amplitude {a}, the closed form's {a_closed}, the sweep's {a_sweep}; "
+          f"at the search's: wind / winding {wind / node.windings[rec]:.4f}, sweep / e {W / e:.4f}, wind / (6 s sweep) {wind / (6 * s * W):.5f}")
+# the one-Node lay at the vacuum: wind summed over the board against 3 rim (|z_now|^2 + |z_before|^2)
+from event_universe.trains import Gear, zeros
+for name in UNIVERSES:
+    nd = clock_of(name, cube=5)
+    A, B = nd.A, nd.B
+    worst = 0
+    for k, r in enumerate(nd.hands()):
+        p, q = r.ratio
+        rl = vacuum_rule(nd, r)
+        for zn, zb in (((A, 0), (0, B)), ((A, 0), (0, -B)), ((B, 0), (0, A)), ((7, -3), (11, 5)), ((1000, 20), (-30, 999))):
+            lines = []
+            for i in range(2):
+                g_now, g_b = zeros(nd.size), zeros(nd.size)
+                g_now[2, 2, 2], g_b[2, 2, 2] = zn[i], zb[i]
+                lines.append(Gear(g_now, g_b, None, None))
+            wind = setting.packet_wind(nd, r, lines, rl)
+            norm = zn[0] ** 2 + zn[1] ** 2 + zb[0] ** 2 + zb[1] ** 2
+            worst = max(worst, abs(wind - 3 * q * norm))
+    print(f"{name}: the one-Node wind against 3 rim (|z_now|^2 + |z_before|^2), every hand, five lays: off by at most {worst}; "
+          f"the child (A, B) = ({A}, {B}): A B = {A * B} = T div 2, (A^2 + B^2) / T = {(A * A + B * B) / T:.6f} light quanta")
+---------------------------------------- output: out_b2.txt
+middle hand 1 width 2 n 125: the search's amplitude 823, the closed form's 822, the sweep's 839; at the search's: wind / winding 124.5445, sweep / e 120.4148, wind / (6 s sweep) 1.03430
+middle hand 1 width 3 n 218: the search's amplitude 598, the closed form's 596, the sweep's 603; at the search's: wind / winding 217.9711, sweep / e 214.2898, wind / (6 s sweep) 1.01718
+middle hand 1 width 3 n 250: the search's amplitude 639, the closed form's 638, the sweep's 645; at the search's: wind / winding 248.7654, sweep / e 244.5492, wind / (6 s sweep) 1.01724
+middle hand 1 width 3 n 400: the search's amplitude 810, the closed form's 807, the sweep's 815; at the search's: wind / winding 399.8576, sweep / e 393.0807, wind / (6 s sweep) 1.01724
+middle hand 1 width 3 n 600: the search's amplitude 990, the closed form's 989, the sweep's 999; at the search's: wind / winding 598.4965, sweep / e 588.4023, wind / (6 s sweep) 1.01716
+middle hand 1 width 1 n 1: the search's amplitude 131, the closed form's 130, the sweep's 137; at the search's: wind / winding 0.9959, sweep / e 0.9024, wind / (6 s sweep) 1.10361
+middle hand 1 width 1 n 125: the search's amplitude 1464, the closed form's 1463, the sweep's 1537; at the search's: wind / winding 124.9724, sweep / e 113.2973, wind / (6 s sweep) 1.10305
+toy: the one-Node wind against 3 rim (|z_now|^2 + |z_before|^2), every hand, five lays: off by at most 6; the child (A, B) = (125, 144): A B = 18000 = T div 2, (A^2 + B^2) / T = 1.010028 light quanta
+middle: the one-Node wind against 3 rim (|z_now|^2 + |z_before|^2), every hand, five lays: off by at most 6; the child (A, B) = (125, 144): A B = 18000 = T div 2, (A^2 + B^2) / T = 1.010028 light quanta
+ga2: the one-Node wind against 3 rim (|z_now|^2 + |z_before|^2), every hand, five lays: off by at most 6; the child (A, B) = (125, 144): A B = 18000 = T div 2, (A^2 + B^2) / T = 1.010028 light quanta
+
+====================================================================================================
+(b) and (e) The same on boss-spin-1 5850be5b7
+---------------------------------------- output: out_b2_bspin.txt
+middle hand 1 width 2 n 125: the search's amplitude 823, the closed form's 822, the sweep's 839; at the search's: wind / winding 124.5445, sweep / e 120.4148, wind / (6 s sweep) 1.03430
+middle hand 1 width 3 n 218: the search's amplitude 598, the closed form's 596, the sweep's 603; at the search's: wind / winding 217.9711, sweep / e 214.2898, wind / (6 s sweep) 1.01718
+middle hand 1 width 3 n 250: the search's amplitude 639, the closed form's 638, the sweep's 645; at the search's: wind / winding 248.7654, sweep / e 244.5492, wind / (6 s sweep) 1.01724
+middle hand 1 width 3 n 400: the search's amplitude 810, the closed form's 807, the sweep's 815; at the search's: wind / winding 399.8576, sweep / e 393.0807, wind / (6 s sweep) 1.01724
+middle hand 1 width 3 n 600: the search's amplitude 990, the closed form's 989, the sweep's 999; at the search's: wind / winding 598.4965, sweep / e 588.4023, wind / (6 s sweep) 1.01716
+middle hand 1 width 1 n 1: the search's amplitude 131, the closed form's 130, the sweep's 137; at the search's: wind / winding 0.9959, sweep / e 0.9024, wind / (6 s sweep) 1.10361
+middle hand 1 width 1 n 125: the search's amplitude 1464, the closed form's 1463, the sweep's 1537; at the search's: wind / winding 124.9724, sweep / e 113.2973, wind / (6 s sweep) 1.10305
+toy: the one-Node wind against 3 rim (|z_now|^2 + |z_before|^2), every hand, five lays: off by at most 6; the child (A, B) = (125, 144): A B = 18000 = T div 2, (A^2 + B^2) / T = 1.010028 light quanta
+middle: the one-Node wind against 3 rim (|z_now|^2 + |z_before|^2), every hand, five lays: off by at most 6; the child (A, B) = (125, 144): A B = 18000 = T div 2, (A^2 + B^2) / T = 1.010028 light quanta
+ga2: the one-Node wind against 3 rim (|z_now|^2 + |z_before|^2), every hand, five lays: off by at most 6; the child (A, B) = (125, 144): A B = 18000 = T div 2, (A^2 + B^2) / T = 1.010028 light quanta
+DONE
+
+====================================================================================================
+(b) The bodies' packet laid by the sweep's count
+---------------------------------------- check_b3.py
+"""(b) The bodies' packet laid by the sweep's count: at the largest amplitude whose summed sweep is at most 125 e, its sweep and its wind."""
+from common import *
+from event_universe.core.rule3 import least_at
+node = clock_of("middle", cube=9)
+rec, row = [(k, r) for k, r in sprung(node) if r.ratio[0] == 506298091][0]
+e = node.key // 2
+rule = vacuum_rule(node, row)
+envelope, w0 = setting.envelope_of(node, (4, 4, 4), 2)
+sweep = lambda a: sum(int(v) for v in hands.sweep(2, setting.rest_hand(node, row, envelope, w0, a, 1)).reshape(-1))
+a = least_at(lambda x: sweep(x) > 125 * e) - 1
+lines = setting.rest_hand(node, row, envelope, w0, a, 1)
+wind = setting.packet_wind(node, row, lines, rule)
+print(f"the sweep's lay of 125 at width 2: amplitude {a}, sweep / e {sweep(a) / e:.4f}, wind / winding {wind / node.windings[rec]:.4f}")
+---------------------------------------- output: out_b3.txt
+the sweep's lay of 125 at width 2: amplitude 839, sweep / e 124.9470, wind / winding 129.2475
+
+====================================================================================================
+(c) One clock at the vacuum: the riding gear's kick and carry, the head's lay against the carried lay
+---------------------------------------- leapfrog.py
+"""One clock's gear at the vacuum as the engine steps a riding line (tick.impulse and tick.carry): the momentum P = W (a_now - a_before) + fine - mid(W) at the mean wall W = (w div 2)(X_before + X_now) = w Gamma, kicked by X F = Gamma (-D a) (a uniform hand: no mesh pulls), then one carry at W from mid(W); against the rest orbit a cos(k omega), for the head's lay and the carried lay."""
+import math
+G, Gam = 16, 1000
+
+
+def run(num, den, now, before, fine, ticks):
+    w = 6 * den * Gam * Gam * G * G
+    D = 12 * (den - num) * Gam * Gam * G * G
+    W = (w // 2) * (Gam + Gam)
+    mid = W // 2
+    out = [now]
+    for _ in range(ticks):
+        P = W * (now - before) + fine - mid - Gam * D * now
+        v, fine = (P + mid) // W, (P + mid) % W
+        before, now = now, now + v
+        out.append(now)
+    return out
+
+
+for num, den, a in ((15162854575528411, 15162856759112389, 5690), (2458210083751875, 15162856759112389, 135)):
+    w = 6 * den * Gam * Gam * G * G
+    W = (w // 2) * (Gam + Gam)
+    om = math.acos(num / den)
+    head = run(num, den, a, (a * num) // den, W // 2, 1000)
+    V = W * a - (W // den) * (a * num) + W // 2
+    carried = run(num, den, a, a - V // W, V % W, 1000)
+    for k in (1, 10, 30, 100, 300, 1000):
+        print(f"pair ratio {num / den:.9f} a {a} tick {k}: the rest orbit {a * math.cos(k * om):.2f}  the head's lay {head[k]}  the carried lay {carried[k]}")
+---------------------------------------- output: out_leap.txt
+pair ratio 0.999999856 a 5690 tick 1: the rest orbit 5690.00  the head's lay 5691  the carried lay 5690
+pair ratio 0.999999856 a 5690 tick 10: the rest orbit 5689.92  the head's lay 5700  the carried lay 5690
+pair ratio 0.999999856 a 5690 tick 30: the rest orbit 5689.26  the head's lay 5720  the carried lay 5690
+pair ratio 0.999999856 a 5690 tick 100: the rest orbit 5681.81  the head's lay 5790  the carried lay 5690
+pair ratio 0.999999856 a 5690 tick 300: the rest orbit 5616.41  the head's lay 5987  the carried lay 5690
+pair ratio 0.999999856 a 5690 tick 1000: the rest orbit 4890.07  the head's lay 5864  the carried lay 4947
+pair ratio 0.162120511 a 135 tick 1: the rest orbit 21.89  the head's lay 23  the carried lay 22
+pair ratio 0.162120511 a 135 tick 10: the rest orbit 7.77  the head's lay 9  the carried lay 8
+pair ratio 0.162120511 a 135 tick 30: the rest orbit -23.21  the head's lay -24  the carried lay -25
+pair ratio 0.162120511 a 135 tick 100: the rest orbit -113.22  the head's lay -113  the carried lay -109
+pair ratio 0.162120511 a 135 tick 300: the rest orbit 21.12  the head's lay 14  the carried lay 34
+pair ratio 0.162120511 a 135 tick 1000: the rest orbit 116.91  the head's lay 108  the carried lay 134
+
+====================================================================================================
+(c) In the engine: a sea of one quantum on a 3-cube with the light's sea
+---------------------------------------- check_c.py
+"""(c) The rest lay carried: a uniform sea of one hand on a 3-cube, the head's lay against the lay whose before and fine wheel come from one carry of the rest velocity; the hand at a Node against the exact rest orbit, tick by tick."""
+import sys, math, json
+from common import *
+from event_universe.assembly import setting as st
+from event_universe import unwind
+from event_universe.core import acts
+
+name, row_index, sense, ticks = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4])
+mode = sys.argv[5] if len(sys.argv) > 5 else "head"
+
+
+def carried_even(node, rec, n, sense_):
+    """set_even with the before and the fine wheel of each gear from one carry of the rest velocity."""
+    row = node.hands()[rec]
+    num, den = row.ratio
+    s = sine_rim(num, den)
+    node.start_load, node.start_stretch = readings.load(node), node.train(REGULATOR).gears[0].now
+    rule = readings.gearing(node, row.ratio, node.start_load, factors(node))
+    target = n * node.windings[rec]
+    from event_universe.core.rule3 import least_at
+    a = least_at(lambda x: st.wind_at_clock(node, row, st.even_notches(node, row, x, sense_), rule) > target)
+    for g, (now, exact) in zip(row.gears, ((a, a * num), (0, sense_ * a * s)), strict=True):
+        w = g.teeth
+        V = w * now - (w // den) * exact + acts.mid(w)
+        g.now[...] = g.now + now
+        g.before[...] = g.before + now - V // w
+        g.fine[...] = V % w
+    return a
+
+
+if mode == "carried":
+    st.set_even = carried_even
+u = json.load(open(UNIVERSES[name]))
+node = Clock(u, {"shape": [3, 3, 3], "seed": [{"lay": "sea", "row": 0}, {"lay": "sea", "row": row_index, "quanta": 1, "sense": sense}]})
+row = node.by_index[row_index]
+num, den = row.ratio
+om = math.acos(num / den)
+re, im = row.gears
+a = int(re.now[0, 0, 0])
+worst = 0.0
+turned = {}
+marks = {}
+for k in range(ticks + 1):
+    if k:
+        node.tick()
+        if node.turnovers and k not in turned:
+            turned[k] = len(node.turnovers)
+    re, im = row.gears
+    x, y = int(re.now[0, 0, 0]), int(im.now[0, 0, 0])
+    ex, ey = a * math.cos(k * om), -sense * a * math.sin(k * om)
+    off = math.hypot(x - ex, y - ey)
+    worst = max(worst, off)
+    if k in (1, 10, 30, 60, 100, 200, 400):
+        marks[k] = (x, y, round(ex, 1), round(ey, 1), round(off, 1))
+print("turnovers", node.turnovers[:5], "births", node.counts["births"])
+print(f"{name} row {row_index} ratio {num / den:.9f} sense {sense} a {a} the {mode} lay: worst distance from the rest orbit over {ticks} ticks {worst:.1f} notches; {marks}")
+---------------------------------------- output: out_cc.txt
+turnovers [(60, 27)] births 0
+toy row 1 ratio 0.999999856 sense -1 a 5690 the head lay: worst distance from the rest orbit over 100 ticks 356.2 notches; {1: (5691, 3, 5690.0, 3.1, 1.0), 10: (5700, 30, 5689.9, 30.5, 10.1), 30: (5720, 74, 5689.3, 91.6, 35.4), 60: (5728, -118, 5687.1, 183.2, 304.0), 100: (5708, -50, 5681.8, 305.2, 356.2)}
+turnovers [(86, 27)] births 0
+toy row 2 ratio 0.162120511 sense 1 a 136 the head lay: worst distance from the rest orbit over 100 ticks 230.0 notches; {1: (22, -134, 22.0, -134.2, 0.2), 10: (55, -108, 7.8, -135.8, 54.7), 30: (48, 71, -23.4, 134.0, 95.2), 60: (-27, -60, -128.0, -46.1, 101.9), 100: (-23, -58, -114.1, -74.1, 92.5)}
+turnovers [(61, 27)] births 0
+toy row 1 ratio 0.999999856 sense -1 a 5690 the carried lay: worst distance from the rest orbit over 100 ticks 360.3 notches; {1: (5690, 3, 5690.0, 3.1, 0.1), 10: (5690, 30, 5689.9, 30.5, 0.5), 30: (5690, 75, 5689.3, 91.6, 16.6), 60: (5690, 123, 5687.1, 183.2, 60.3), 100: (5690, -55, 5681.8, 305.2, 360.3)}
+turnovers [(85, 27)] births 0
+toy row 2 ratio 0.162120511 sense 1 a 136 the carried lay: worst distance from the rest orbit over 100 ticks 230.9 notches; {1: (22, -134, 22.0, -134.2, 0.2), 10: (55, -107, 7.8, -135.8, 55.3), 30: (47, 70, -23.4, 134.0, 95.1), 60: (-28, -58, -128.0, -46.1, 100.7), 100: (-56, 27, -114.1, -74.1, 116.6)}
+
+====================================================================================================
+(c) The carried lay as a harness (no engine file changed)
+---------------------------------------- carried.py
+"""The rest lay carried, as a harness on the head (no engine file changed): each rest lay of the setting (the fourth form and the packets) sets each gear's before and fine wheel, at the clocks it lays, from one carry of the rest velocity: V = w now - (w div rim) N_exact + mid(w), before = now - V div w, fine = V mod w, where now is the lay's own level and N_exact its own numerator (base pinion on the three gear, sense base s on the twelve gear), summed over the senses laid."""
+import numpy as np
+
+from common import *
+from event_universe.assembly import setting as st
+from event_universe.core import acts
+
+_rest_hand = st.rest_hand
+CALLS = []
+CHANGED = []
+
+
+def rest_hand(node, row, envelope, w0, amplitude, sense, pairs=None):
+    lines = _rest_hand(node, row, envelope, w0, amplitude, sense, pairs)
+    if pairs is None:
+        num, den = row.ratio[0], node.rim
+        base = st.carries(amplitude * envelope, w0)
+        CALLS.append((lines, (base * num, sense * base * sine_rim(num, den))))
+    return lines
+
+
+def carry_rest(node, rec, laid_calls):
+    """After a rest lay: at the clocks the lay touched, each gear's before and fine from one carry of the lay's rest velocity."""
+    row = node.hands()[rec]
+    den = node.rim
+    for k, g in enumerate(row.gears):
+        now = sum(c[0][k].now for c in laid_calls)
+        before = sum(c[0][k].before for c in laid_calls)
+        exact = sum(c[1][k] for c in laid_calls)
+        w = g.teeth
+        V = w * now - (w // den) * exact + acts.mid(w)
+        touched = (np.asarray(now) != 0) | (np.asarray(exact) != 0)
+        carried_before = now - V // w
+        shift = np.where(touched, carried_before - before, 0)
+        assert all(abs(int(x)) <= 1 for x in shift.reshape(-1)), "the carried before is the head's to one notch"
+        assert np.all(np.asarray(g.fine)[touched] == np.asarray(acts.mid(w) + 0 * now)[touched]), "a clock laid twice"
+        CHANGED.append(int(sum(1 for x in shift.reshape(-1) if x)))
+        g.before = g.before + shift
+        g.fine = np.where(touched, V % w, g.fine)
+
+
+def install():
+    st.rest_hand = rest_hand
+    real_set_even, real_set_packet = st.set_even, st.set_packet
+
+    def set_even(node, rec, n, sense):
+        CALLS.clear()
+        real_set_even(node, rec, n, sense)
+        carry_rest(node, rec, CALLS[-1:] if sense else CALLS[-2:])
+
+    def set_packet(node, rec, at, h, n, one_sense=None, wave=None, top=1):
+        CALLS.clear()
+        real_set_packet(node, rec, at, h, n, one_sense, wave, top)
+        if wave is not None:
+            return
+        senses = 1 if one_sense else 2
+        carry_rest(node, rec, CALLS[-1 - senses : -1])
+
+    st.set_even, st.set_packet = set_even, set_packet
+
+====================================================================================================
+(c) The tests' worlds with the head's lay and the carried lay
+---------------------------------------- run_carried.py
+"""A committed world run with the head's rest lay and with the rest lay carried: the counts, the run back, the lay's log."""
+import sys, json, time
+sys.set_int_max_str_digits(0)
+from common import *
+from event_universe.run import state_hash
+mode, world_file, n = sys.argv[1], sys.argv[2], int(sys.argv[3])
+if mode == "carried":
+    import carried
+    carried.install()
+world = json.load(open(WT + "/tests/worlds/" + world_file))
+universe = json.load(open(WT + "/tests/worlds/" + world["universe"]))
+t = time.time()
+node = Clock(universe, dict(world, intervals=n))
+lays = [{k: e[k] for k in ("line_pair", "quanta", "amplitude", "share")} for e in node.log if e.get("event") == "lay"]
+hashes = [state_hash(node)]
+for _ in range(n):
+    node.tick()
+    hashes.append(state_hash(node))
+counts = {k: node.counts[k] for k in ("births", "body_clicks", "turns", "taken", "laid_back")}
+back = 20 if n >= 20 else n
+exact = 0
+for k in range(n, n - back, -1):
+    node.tick(-1)
+    exact += state_hash(node) == hashes[k - 1]
+extra = {}
+if mode == "carried":
+    extra = {"befores moved one notch, per lay and gear": carried.CHANGED}
+print(world_file, mode, n, "lays", lays, extra, "counts", counts, f"the rewind {exact} of {back}", "state", hashes[-1][:16], f"{time.time() - t:.0f}s", flush=True)
+---------------------------------------- output: out_c_all.txt
+world_bodies.json head 120 lays [{'line_pair': 1, 'quanta': 125, 'amplitude': 823, 'share': 21206668375413833}, {'line_pair': 1, 'quanta': 125, 'amplitude': 823, 'share': 21206668375413833}] counts {'births': 23, 'body_clicks': 17944, 'turns': 2270, 'taken': 65307900193140216, 'laid_back': 0} the rewind 20 of 20 state 32a4218e47ee05c2 111s
+world_plasma_3.json head 100 lays [{'line_pair': 1, 'quanta': 1, 'amplitude': 136, 'share': 1636036044340211940312}, {'line_pair': 0, 'quanta': 1, 'amplitude': 5690, 'share': 878986754597117550}] counts {'births': 0, 'body_clicks': 135, 'turns': 27, 'taken': 0, 'laid_back': 135} the rewind 20 of 20 state 6d237ce9cd0bd5bf 3s
+world_plasma_3.json carried 100 lays [{'line_pair': 1, 'quanta': 1, 'amplitude': 136, 'share': 1636036044340211940312}, {'line_pair': 0, 'quanta': 1, 'amplitude': 5690, 'share': 878986754597117550}] {'befores moved one notch, per lay and gear': [0, 0, 27, 0]} counts {'births': 0, 'body_clicks': 135, 'turns': 27, 'taken': 0, 'laid_back': 135} the rewind 20 of 20 state e6232cb3f8e7c0d6 3s
+world_bodies.json carried 120 lays [{'line_pair': 1, 'quanta': 125, 'amplitude': 823, 'share': 21206668375413833}, {'line_pair': 1, 'quanta': 125, 'amplitude': 823, 'share': 21206668375413833}] {'befores moved one notch, per lay and gear': [19, 0, 19, 0]} counts {'births': 21, 'body_clicks': 17870, 'turns': 2426, 'taken': 55790444529622642, 'laid_back': 0} the rewind 20 of 20 state 911a439e5b4ca410 115s
+
+====================================================================================================
+(d) The state and the log with X from the rim (Gamma (rim div Gamma)), the state hash and the log hash
+---------------------------------------- check_d.py
+"""(d) The standard length X derived from the rim: each committed chart's piece run with the declared amplitude and with X = Gamma (rim div Gamma), the state hash and the log compared after n ticks."""
+import json, sys, time, copy
+sys.set_int_max_str_digits(0)
+from common import *
+from event_universe.run import state_hash
+
+path, n, which = sys.argv[1], int(sys.argv[2]), sys.argv[3]
+r = json.load(open(path))
+u = copy.deepcopy(r["universe"])
+ints = u["integers"]
+gamma, rim = int(ints["node_clock"]), int(ints["den"])
+if which == "rim":
+    ints["amplitude"] = gamma * (rim // gamma)
+elif which != "declared":
+    ints["amplitude"] = int(which)
+t = time.time()
+node = Clock(u, dict(r["world"], intervals=n))
+for _ in range(n):
+    node.tick()
+log = json.dumps(node.log, sort_keys=True, default=int)
+import hashlib
+print(path.split("/")[-1], n, which, "X", ints["amplitude"], "state", state_hash(node)[:16],
+      "log", hashlib.sha256(log.encode()).hexdigest()[:16], "events", len(node.log),
+      "fittings", node.counts["births"], "chimes", node.counts["body_clicks"], f"{time.time() - t:.0f}s", flush=True)
+---------------------------------------- output: out_d.txt
+hole.json 60 declared X 288230376000 state 478aeb245a987204 log 59bc7f429abf2bd5 events 21712 fittings 18 chimes 2262 22s
+hole.json 60 rim X 15162856759112000 state 478aeb245a987204 log 0376c95392d00c4e events 21712 fittings 18 chimes 2262 19s
+chiral.json 60 declared X 288230376000 state 5f34155e2c2e1d6d log dea14b9290369e72 events 23655 fittings 16 chimes 3003 22s
+chiral.json 60 rim X 15162856759112000 state 5f34155e2c2e1d6d log 4cca6906b0a844ee events 23655 fittings 16 chimes 3003 24s
+bodies.json 120 declared X 288230376000 state 32a4218e47ee05c2 log 6422265b64cd27a0 events 133133 fittings 23 chimes 17944 107s
+bodies.json 120 rim X 1655909000 state 32a4218e47ee05c2 log e4793f62be59ffe5 events 133133 fittings 23 chimes 17944 109s
+DONE
+
+====================================================================================================
+(d) Which log fields move
+---------------------------------------- diff_log.py
+"""The two logs of a chart's piece, at the declared X and at X from the rim: which keys differ."""
+import json, sys, copy, collections
+sys.set_int_max_str_digits(0)
+from common import *
+path, n = sys.argv[1], int(sys.argv[2])
+r = json.load(open(path))
+logs = []
+for which in ("declared", "rim"):
+    u = copy.deepcopy(r["universe"])
+    ints = u["integers"]
+    if which == "rim":
+        ints["amplitude"] = int(ints["node_clock"]) * (int(ints["den"]) // int(ints["node_clock"]))
+    node = Clock(u, dict(r["world"], intervals=n))
+    for _ in range(n):
+        node.tick()
+    logs.append(node.log)
+keys = collections.Counter()
+examples = {}
+for a, b in zip(*logs):
+    for k in set(a) | set(b):
+        if a.get(k) != b.get(k):
+            keys[(a.get("event"), k)] += 1
+            examples.setdefault((a.get("event"), k), (a.get(k), b.get(k)))
+print(len(logs[0]), len(logs[1]), dict(keys))
+for k, v in examples.items():
+    print(k, str(v)[:300])
+
+====================================================================================================
+(d) The committed charts regenerated with X = Gamma (rim div Gamma), every part and the reading compared
+---------------------------------------- check_d2.py
+"""(d) A committed chart regenerated with X = Gamma (rim div Gamma) in place of the declared amplitude: the Node lines, the rows, the counts, the turns, the run back and the log against the committed chart (the chime frames' X and phases aside, which record the scale), and the reading of the new chart against the committed reading."""
+import json, sys, copy, time, os
+sys.set_int_max_str_digits(0)
+from common import *
+from event_universe.run import chart
+from event_universe.gates import gates
+
+name = sys.argv[1]
+R = WT + "/examples/records/"
+committed = json.load(open(R + name + ".json"))
+reading = [json.loads(l) for l in open(R + name + ".reading.jsonl") if l.strip()]
+u = copy.deepcopy(committed["universe"])
+ints = u["integers"]
+ints["amplitude"] = int(ints["node_clock"]) * int(ints["den"]) if os.environ.get("XMODE") == "times" else int(ints["node_clock"]) * (int(ints["den"]) // int(ints["node_clock"]))
+back = int((committed.get("run_back") or {}).get("intervals", 0))
+t = time.time()
+found = json.loads(json.dumps(chart(u, committed["world"], back, lambda line: None)))
+def strip(log):
+    out = []
+    for e in log:
+        e = dict(e)
+        if "frame" in e:
+            e["frame"] = {k: v for k, v in e["frame"].items() if k not in ("X", "phases")}
+        out.append(e)
+    return out
+timeless = lambda rows: [{k: v for k, v in r.items() if k != "milliseconds"} for r in rows]
+same = {
+    "nodes": found["nodes"] == committed["nodes"],
+    "rows": timeless(found["rows"]) == timeless(committed["rows"]),
+    "counts": found["counts"] == committed["counts"],
+    "turns": found["turns"] == committed["turns"],
+    "run_back": found["run_back"] == committed["run_back"],
+    "log (the frames' X and phases aside)": strip(found["log"]) == strip(committed["log"]),
+    "log whole": found["log"] == committed["log"],
+}
+found["universe"] = committed["universe"]
+new_reading = [{k: v} for k, v in json.loads(json.dumps(gates(found))).items()]
+same["the reading, line for line"] = new_reading == reading
+print(name, "X", ints["amplitude"], "back", back, found["run_back"], same, f"{time.time() - t:.0f}s", flush=True)
+---------------------------------------- output: out_d2.txt
+hole X 15162856759112000 back 20 {'intervals': 20, 'exact': 20} {'nodes': True, 'rows': True, 'counts': True, 'turns': True, 'run_back': True, "log (the frames' X and phases aside)": True, 'log whole': False, 'the reading, line for line': True} 26s
+chiral X 15162856759112000 back 20 {'intervals': 20, 'exact': 20} {'nodes': True, 'rows': True, 'counts': True, 'turns': True, 'run_back': True, "log (the frames' X and phases aside)": True, 'log whole': False, 'the reading, line for line': True} 26s
+bodies X 1655909000 back 20 {'intervals': 20, 'exact': 20} {'nodes': True, 'rows': True, 'counts': True, 'turns': True, 'run_back': True, "log (the frames' X and phases aside)": True, 'log whole': False, 'the reading, line for line': True} 136s
+DONE
+
+====================================================================================================
+(d) The same with X = Gamma rim (XMODE=times)
+---------------------------------------- output: out_d3.txt
+hole X 15162856759112389000 back 20 {'intervals': 20, 'exact': 20} {'nodes': True, 'rows': True, 'counts': True, 'turns': True, 'run_back': True, "log (the frames' X and phases aside)": True, 'log whole': False, 'the reading, line for line': True} 24s
+chiral X 15162856759112389000 back 20 {'intervals': 20, 'exact': 20} {'nodes': True, 'rows': True, 'counts': True, 'turns': True, 'run_back': True, "log (the frames' X and phases aside)": True, 'log whole': False, 'the reading, line for line': True} 25s
+bodies X 1655909141000 back 20 {'intervals': 20, 'exact': 20} {'nodes': True, 'rows': True, 'counts': True, 'turns': True, 'run_back': True, "log (the frames' X and phases aside)": True, 'log whole': False, 'the reading, line for line': True} 126s
+DONE
+
+====================================================================================================
+The Boss's undo fix on boss-spin-1: the whole rewind as twin hands
+---------------------------------------- rewind_twins.py
+"""The whole rewind of a committed world as twin hands on a given engine tree (argv: the tree, the world file, the ticks): forward n ticks hashing each state, then n ticks back, every state compared."""
+import sys, json, copy
+sys.set_int_max_str_digits(0)
+tree, world_file, n = sys.argv[1], sys.argv[2], int(sys.argv[3])
+sys.path.insert(0, tree + "/src")
+sys.path.insert(0, "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/spin3")
+from clk import doubled
+from event_universe.clock import Clock
+from event_universe.run import state_hash
+world = json.load(open(tree + "/tests/worlds/" + world_file))
+universe = json.load(open(tree + "/tests/worlds/" + world["universe"]))
+node = Clock(doubled(universe), dict(world, intervals=n))
+hashes = [state_hash(node)]
+for _ in range(n):
+    node.tick()
+    hashes.append(state_hash(node))
+groups = 0
+from collections import Counter
+births = Counter((tuple(e["node"]), e["i"]) for e in node.log if e.get("event") == "birth")
+groups = sum(1 for v in births.values() if v > 1)
+exact = 0
+first_bad = None
+for k in range(n, 0, -1):
+    node.tick(-1) if hasattr(node, "tick") else None
+    if state_hash(node) == hashes[k - 1]:
+        exact += 1
+    elif first_bad is None:
+        first_bad = k - 1
+print(world_file, "as twins on", tree.split("/")[-1], f": the rewind {exact} of {n} exact, first off at tick {first_bad}; fittings {node.counts['births']}, clocks with two births in one tick {groups}")
+---------------------------------------- output: out_rw.txt
+world_node.json as twins on wt_bspin : the rewind 20 of 20 exact, first off at tick None; fittings 6, clocks with two births in one tick 2
+world_node.json as twins on wt_clk : the rewind 5 of 20 exact, first off at tick 14; fittings 6, clocks with two births in one tick 2
+world_hole.json as twins on wt_bspin : the rewind 60 of 60 exact, first off at tick None; fittings 38, clocks with two births in one tick 11
+DONE
+

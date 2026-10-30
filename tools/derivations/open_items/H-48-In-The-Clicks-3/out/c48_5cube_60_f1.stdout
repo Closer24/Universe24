@@ -1,2 +1,0 @@
-{"image": 0, "det": 1, "verdict": "EQUAL", "births": 19, "credits": 2981, "first_apart_equal": null, "first_apart_conjugate": 3}
-{"image": 1, "det": -1, "verdict": "APART", "births": 16, "credits": 2831, "first_apart_equal": 3, "first_apart_conjugate": 7}

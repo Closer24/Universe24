@@ -1,0 +1,28 @@
+# The bang runs away: on the cycle lay's world the carrier's level squares every two intervals, and the bang's births and the runaway are one letter (David, 2026-10-27, 05:2x UTC; counsel to the Boss on the owner's word of 05:1x UTC, "sync with the Boss and advise him"; measured on the head e48273be8)
+
+## 1. The finding
+
+- The bang of nature's world (the cycle lay at 12,000,000 on the side 4, `The-One-Record-Of-Nature/worlds/b20_cyc_q12000000_20.json`) run to 60 intervals, the carrier's level X_now at the board's largest Node in bits per interval: 26 37 26 10 31 32 38 32 31 10, 26 37 26 10 31 32 45 32 31 30, 44 35 50 35 67 35 100 37 166 37 299 37 565 37 1097 37 2160 37 4285 37 8536 37, then 17,038, 34,043, 68,052, 136,071, 272,109, 544,184, 1,088,334, 2,176,634 and 4,353,234 bits at 59 and 60. Three bangs at 4, 10 and 14 (X back at Gamma over the board), then none: from the interval 23 the level at the origin Node squares every two intervals, X_{n+2} = 4 X_n^2 / (Gamma^2 T), exactly to four digits at 25, 27, 29, 31, 33 and 35 (the ratio 1.1111 x 10^-10 = 4 / (10^6 x 36,000)).
+- The Reader's own 48-interval world of the same lay (`b19_cyc_q12000000_48.json`) does the same: 68,052 bits at 48, with births at 23, 24, 27, 28, 30, 31, 35, 37, 40 and 41 inside the runaway. The smaller cycle lay (2,500,000 quanta) runs away too, later and noisier: 7,210 bits at 60, births at 36 of the 60 intervals.
+- Nature's chiral seed (`tests/worlds/world_nature.json`) does not: X_now at 10 to 16 bits through 200 intervals, flat at 15 to 16 from the interval 73, the births at 3 to 17 as on the record.
+- Under the former width this world would have been refused at the interval 18 (the riders' walls at 128 bits); the Reader's 20-interval record is the window before the runaway. The engine now carries it silently, the bits measured and compared by nothing, which is right and which is why it is seen.
+
+## 2. The mechanism, traced at the origin Node
+
+At the origin (0, 0, 0) from the interval 21: at every odd interval the carrier's time line reads now = X (huge), before = Gamma, the Node not turned, its content 7,597 and its clock p_0 = 1 (frozen, BH-S1); at every even interval the Node is turned (the swap, now and before exchanged), so now = Gamma, before = X, the content 0 and p_0 = Gamma. The kick (interval.py, `kick`): a riding line's momentum P = W (a_now - a_before) + r - W div 2 is read at the mean wall W = scale (w div 2)(X_before + X_now), and its velocity u is the odd rounding of 2 P + 1 over 2 w X_now at the scale (PL-S1's letter, the owner's word of 2025-10-25, 22:50 UTC, through the Boss, 6404425423). After the swap X_now = Gamma and X_before = X, so W is of w X / 2, P of w X, and u of X / (2 Gamma); the forms u_in . G . u_out are then of (X / 2 Gamma)^2; and the carrier's held write 4 X_now (forms weight den Gamma^2 - trace p_0^2) p_0 over the held wall weight den Gamma^4 T gives the next level 4 X^2 / (Gamma^2 T): the squaring measured, to the digit. In words: the velocity is read against the clock of the Node that has just swapped, so every swap at a high top multiplies the level by itself. Measured in the same trace: the held numerator at the origin 647 bits against X at 565, the quotient 532 bits (X less 33: Gamma^2 T to the factor 4 is 2^33), the forms 1 bit at the frozen odd intervals and of X^2 at the turned even ones.
+
+## 3. The test of the letter, a measurement and nothing built
+
+In a worktree on e48273be8 the velocity read over the mean wall, one line (`d = w_side + w_side` in place of `(node.w + node.w) * self.x_now`, interval.py:166):
+
+- the bang world runs 60 intervals at 26 and 37 bits alternating, with no birth at all, the board frozen at every even interval: a dead two-cycle; the smaller lay the same at 31 and 33 bits, no birth;
+- the three records change: the hole 18 births to 22 and 2,262 credits to 2,124; the chiral 16 to 18 and 3,003 to 3,023; the bodies 23 to 16 and 17,944 to 16,579; the run back 0 of 20 exact on each (the inverse not re-cut with it: the letter sits inside the direction's symmetry).
+
+So the bang's births and the runaway are one letter: the cycle lay's three bangs with 18 births are the velocity read against a swapped clock, and so is the squaring that follows them. The chiral seed's births stand on it too in part (16 to 18).
+
+## 4. The counsel
+
+1. This goes to the owner before any word on "the radiation": the growth he has been told is the physics' own has a closed form, X_{n+2} = 4 X_n^2 / (Gamma^2 T), and a named letter, and the three bangs stand on the same letter. Whether the clause stands as written (PL-S1, u over 2 w X_now) or the velocity is read over the mean wall is his to say; the two are different physics, and the first runs every cycle lay to a squaring.
+2. The Reader's page of the bangs reads the recurring bang SHOWN on this record (25 of 71 rows on 20 intervals); the row should carry the 60-interval reading beside the 20: three bangs, then the runaway from 23, the board's largest integer 4,353,234 bits at 60. A verdict on a window is a window.
+3. Nothing to build until the word. The measuring scripts are in David's scratch (adv/origin.py, feedback.py, constant.py, the worktree's one line); each runs in seconds.
+4. The rest, unchanged: e48273be8 with d7fd32957 for the merge (the Reader's universe copies need the `amplitude` key, else refused by name); the long chiral's parting fold by sha (the bisection on David's box, about two hours, on the word); the kit's close-book re-cut (the Boss's); the draw's base, the merger's orientation, F48-S1 and BS-S1 (words); the release after the merge (the Scribe's changelog, the owner's version word).

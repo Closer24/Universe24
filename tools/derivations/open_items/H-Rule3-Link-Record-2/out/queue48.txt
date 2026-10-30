@@ -1,5 +1,0 @@
-RL2_FORM=arith /home/user/Universe24/venv314/bin/python run_48.py /dev/shm/tmp/rl2/src_rl2 worlds/world_chiral_3_30.json 60 /dev/shm/tmp/rl2/out/c48_arith.json
-RL2_FORM=link /home/user/Universe24/venv314/bin/python run_48.py /dev/shm/tmp/rl2/src_rl2 worlds/world_chiral_3_30.json 60 /dev/shm/tmp/rl2/out/c48_link.json
-RL2_FORM= /home/user/Universe24/venv314/bin/python run_48.py /dev/shm/tmp/rl2/src_rl2 worlds/world_chiral_3_30.json 60 /dev/shm/tmp/rl2/out/c48_off.json
-RL2_FORM=harm /home/user/Universe24/venv314/bin/python run_48.py /dev/shm/tmp/rl2/src_rl2 worlds/world_chiral_3_30.json 60 /dev/shm/tmp/rl2/out/c48_harm.json
-RL2_FORM=geom /home/user/Universe24/venv314/bin/python run_48.py /dev/shm/tmp/rl2/src_rl2 worlds/world_chiral_3_30.json 60 /dev/shm/tmp/rl2/out/c48_geom.json

@@ -1,4 +1,0 @@
-gate open: push_done present, load 2.43 at 06:37:50 after 180 s
-worlds done at 06:38:53, 243 s from the start
-merge done at 06:40:05, 315 s
-suite done at 06:42:12, 442 s

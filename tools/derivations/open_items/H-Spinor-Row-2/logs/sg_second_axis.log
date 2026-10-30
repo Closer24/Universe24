@@ -1,1 +1,0 @@
-{"world": "sg_second_axis.json", "ms": 8295, "credits": {"0": 0, "1": 0, "2": 295, "3": 0}, "crossings": {"2,0": 5, "2,4": 5, "0,0": 1, "1,0": 2}, "births": 26, "spinor births": 1, "run back": {"intervals": 10, "exact": 10}, "integers": 116, "bits": 92, "transient": 84, "taken>=booked": true}

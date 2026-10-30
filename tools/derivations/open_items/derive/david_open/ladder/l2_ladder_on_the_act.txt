@@ -1,0 +1,12 @@
+the plan: 9 terms (T1 x T1 -> T2 and T1 x T2 -> A2 through 7a's tables), refused: []
+the tick at which each train first stands off 0: {'A1 (a)': 0, 'T2 (t)': 1, 'A2 (p)': 3}
+  tick  1: the largest |a| 28, |t| 85, |p| 0
+  tick  2: the largest |a| 16, |t| 75, |p| 0
+  tick  3: the largest |a| 42, |t| 42, |p| 30
+  tick 12: the largest |a| 14, |t| 24, |p| 36
+the 24: the run of the turned start equals the turned run at every tick and every slot, for 24 of 24 turns
+the run back over 12 ticks returns the start bit for bit: True
+  the sources read at the start of tick 1: the largest |J_t| 2030, |J_p| 0
+  the sources read at the start of tick 2: the largest |J_t| 220, |J_p| 0
+  the sources read at the start of tick 3: the largest |J_t| 494, |J_p| 723
+  the sources read at the start of tick 4: the largest |J_t| 640, |J_p| 134

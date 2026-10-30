@@ -1,0 +1,65 @@
+1. Subgroups of the 24: 30, in 11 conjugacy classes:
+   order  1, 1 conjugate(s): 1
+   order  2, 3 conjugate(s): C2 (axis)
+   order  2, 6 conjugate(s): C2' (face diagonal)
+   order  3, 4 conjugate(s): C3 (body diagonal)
+   order  4, 3 conjugate(s): D2' (C2 + two C2')
+   order  4, 3 conjugate(s): C4 (axis)
+   order  4, 1 conjugate(s): V4 (normal: the 3 axes' 180-deg turns)
+   order  6, 4 conjugate(s): D3 (body diagonal)
+   order  8, 3 conjugate(s): D4 (axis)
+   order 12, 1 conjugate(s): A4
+   order 24, 1 conjugate(s): S4 (the 24)
+
+2. Each subgroup's invariant rest operators on a triplet: dim symmetric (+ dim antisymmetric for hands); '3 distinct' if 6 of 6 generic operators (random integers to 10^6) have three distinct eigenvalues, 'pair forced' if 0 of 6 (the discriminant vanishes on the whole space):
+   1                                          T1: real: dims 6, 3 distinct; hermitian: dims 6+3, 3 distinct
+   1                                          T2: real: dims 6, 3 distinct; hermitian: dims 6+3, 3 distinct
+   C2 (axis)                                  T1: real: dims 4, 3 distinct; hermitian: dims 4+1, 3 distinct
+   C2 (axis)                                  T2: real: dims 4, 3 distinct; hermitian: dims 4+1, 3 distinct
+   C2' (face diagonal)                        T1: real: dims 4, 3 distinct; hermitian: dims 4+1, 3 distinct
+   C2' (face diagonal)                        T2: real: dims 4, 3 distinct; hermitian: dims 4+1, 3 distinct
+   C3 (body diagonal)                         T1: real: dims 2, pair forced; hermitian: dims 2+1, 3 distinct
+   C3 (body diagonal)                         T2: real: dims 2, pair forced; hermitian: dims 2+1, 3 distinct
+   D2' (C2 + two C2')                         T1: real: dims 3, 3 distinct; hermitian: dims 3+0, 3 distinct
+   D2' (C2 + two C2')                         T2: real: dims 3, 3 distinct; hermitian: dims 3+0, 3 distinct
+   C4 (axis)                                  T1: real: dims 2, pair forced; hermitian: dims 2+1, 3 distinct
+   C4 (axis)                                  T2: real: dims 2, pair forced; hermitian: dims 2+1, 3 distinct
+   V4 (normal: the 3 axes' 180-deg turns)     T1: real: dims 3, 3 distinct; hermitian: dims 3+0, 3 distinct
+   V4 (normal: the 3 axes' 180-deg turns)     T2: real: dims 3, 3 distinct; hermitian: dims 3+0, 3 distinct
+   D3 (body diagonal)                         T1: real: dims 2, pair forced; hermitian: dims 2+0, pair forced
+   D3 (body diagonal)                         T2: real: dims 2, pair forced; hermitian: dims 2+0, pair forced
+   D4 (axis)                                  T1: real: dims 2, pair forced; hermitian: dims 2+0, pair forced
+   D4 (axis)                                  T2: real: dims 2, pair forced; hermitian: dims 2+0, pair forced
+   A4                                         T1: real: dims 1, pair forced; hermitian: dims 1+0, pair forced
+   A4                                         T2: real: dims 1, pair forced; hermitian: dims 1+0, pair forced
+   S4 (the 24)                                T1: real: dims 1, pair forced; hermitian: dims 1+0, pair forced
+   S4 (the 24)                                T2: real: dims 1, pair forced; hermitian: dims 1+0, pair forced
+
+3. Isotropy subgroups (stabilizers of a nonzero background vector) of each kind, and the maximal ones (Michel):
+   A2: isotropy classes ['A4']; maximal ['A4']
+   E: isotropy classes ["V4 (normal: the 3 axes' 180-deg turns)", 'D4 (axis)']; maximal ['D4 (axis)']
+   T1: isotropy classes ['1', "C2' (face diagonal)", 'C3 (body diagonal)', 'C4 (axis)']; maximal ["C2' (face diagonal)", 'C3 (body diagonal)', 'C4 (axis)']
+   T2: isotropy classes ['1', "C2' (face diagonal)", "D2' (C2 + two C2')", 'D3 (body diagonal)']; maximal ["D2' (C2 + two C2')", 'D3 (body diagonal)']
+
+4. Invariant polynomials (Molien, exact to degree 6) and the lowest anisotropic one:
+   A2: invariants of degree 0..6: [1, 0, 1, 0, 1, 0, 1]
+   E: invariants of degree 0..6: [1, 0, 1, 1, 1, 1, 2]
+   T1: invariants of degree 0..6: [1, 0, 1, 0, 2, 0, 3]
+   T2: invariants of degree 0..6: [1, 0, 1, 1, 2, 1, 3]
+   isotropic invariants are the powers of the norm (one in each even degree); so the lowest anisotropic invariant is of degree 3 for E (Re z^3) and T2 (u v w, the triple product), of degree 4 for T1 (x^4 + y^4 + z^4; x y z is A2, no invariant of T1), and A2's every value breaks the 24 to A4
+   T1's quartic f = (x^4 + y^4 + z^4) / |x|^4 at the three maximal orbits and on rational points 1/100 off:
+     axis [100] (C4): f = 1; off: [-0.0001999600059992001, -0.00039986003998960254] -> maximum
+     face [110] (C2'): f = 1/2; off: [-4.999375049996563e-05, 0.0001999600059992001] -> saddle
+     body [111] (C3): f = 1/3; off: [8.887777886410206e-05, 2.952964385331961e-05] -> minimum
+   T2's cubic g = u v w / |u|^3: on the axis 0 and degenerate; on the body diagonals +-1/(3 sqrt 3), its extrema on the sphere (the gradient (v w, w u, u v) is parallel to u exactly at axes and body diagonals; at a face diagonal (1, 1, 0) it is (0, 0, 1), not parallel: no critical point there)
+     check: gradient at (1, 1, 0) = (0, 0, 1); at (1, 1, 1) = (1, 1, 1); at (1, 0, 0) = (0, 0, 0)
+
+5. The table: a background at each maximal orbit -> its stabilizer -> a T1 triplet's (and a T2's) pattern:
+   A2 at A4                                       -> T1: gears 3 (degenerate), hands 3 (degenerate); T2: gears 3 (degenerate), hands 3 (degenerate)
+   E at D4 (axis)                                -> T1: gears 1+2 (a pair), hands 1+2 (a pair); T2: gears 1+2 (a pair), hands 1+2 (a pair)
+   T1 at C2' (face diagonal)                      -> T1: gears 1+1+1, hands 1+1+1; T2: gears 1+1+1, hands 1+1+1
+   T1 at C3 (body diagonal)                       -> T1: gears 1+2 (a pair), hands 1+1+1; T2: gears 1+2 (a pair), hands 1+1+1
+   T1 at C4 (axis)                                -> T1: gears 1+2 (a pair), hands 1+1+1; T2: gears 1+2 (a pair), hands 1+1+1
+   T2 at D2' (C2 + two C2')                       -> T1: gears 1+1+1, hands 1+1+1; T2: gears 1+1+1, hands 1+1+1
+   T2 at D3 (body diagonal)                       -> T1: gears 1+2 (a pair), hands 1+2 (a pair); T2: gears 1+2 (a pair), hands 1+2 (a pair)
+   the act's own lowest invariant selects: T1 -> an axis (C4) or a body diagonal (C3), the face diagonal a saddle; T2 -> a body diagonal (D3); E -> its D4 points; A2 -> A4. At every one of these a T1 or T2 triplet on gears keeps a pair (1+2) or all three (3); three apart on gears needs T2 on an axis (D2', the cubic's degenerate point) or T1 on a face diagonal (C2', a saddle of the quartic) or E off its D4 points (V4), none the lowest invariant's extremum; on hands (re <-> im, a cross product read with the Gaussian i) a T1 background on an axis (C4) or a body diagonal (C3) splits a triplet into three, the Zeeman pattern of g3/g4.

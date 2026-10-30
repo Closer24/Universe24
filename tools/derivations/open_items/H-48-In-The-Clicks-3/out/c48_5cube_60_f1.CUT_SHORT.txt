@@ -1,1 +1,0 @@
-5-cube run cut short at Mon Oct 26 01:07:33 UTC 2026 (4 cores; the 3-cube's 48 and the cycle seed given the cores)

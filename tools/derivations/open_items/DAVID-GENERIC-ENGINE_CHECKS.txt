@@ -1,0 +1,112 @@
+DAVID-GENERIC-ENGINE_CHECKS.txt: the scripts and outputs behind DAVID-GENERIC-ENGINE.md (David, 2026-10-27), on the head 608d97134. The clock checked working: the full check exit 0 on toys-5 with this file.
+
+====================================================================================================
+The engine proper's literals beyond 0 and 1, by an AST scan
+---------------------------------------- output: out_scan.txt
+the engine proper's literals beyond 0 and 1 (the readers apart): 12
+  trains.py:15: 2
+  trains.py:16: 4
+  trains.py:17: 2
+  meshes.py:127: 4
+  assembly/cycle.py:21: 4
+  assembly/setting.py:23: 2
+  assembly/setting.py:24: 3
+  core/acts.py:15: 2
+  core/spokes.py:7: 3
+  core/spokes.py:8: 2
+  core/rule3.py:126: 2
+  core/rule3.py:136: 2
+
+====================================================================================================
+(A) each derived against the typed; (C) the four fixed trains derived against every committed universe file
+---------------------------------------- derive.py
+"""(A) The engine's twelve integers derived from the world's shape or from 0 and 1, each against the typed one; (C) every committed universe's fixed trains derived from the board's dimension d and den, against the file's rows."""
+import json, os, sys, glob
+WT = os.environ.get("WT", "/tmp/claude-0/-home-user-Universe24/2ac4c1db-b416-55d7-b373-04f98f505363/scratchpad/wt_g4")
+sys.path.insert(0, WT + "/src")
+from event_universe.core import spokes, rule3, acts
+from event_universe import trains, meshes
+from event_universe.assembly import setting, cycle
+from event_universe.features import standard
+one = 1
+two = one + one
+world = json.load(open(WT + "/tests/worlds/world_hole.json"))
+d = len(world["shape"])  # the board's dimension, read from the world file
+
+
+def order_of_i():
+    """The least k with i^k = 1, by the Gaussian product from (1, 0)."""
+    z, k = (one, 0), 0
+    while True:
+        z, k = (-z[1], z[0]), k + one
+        if z == (one, 0):
+            return k
+
+
+def half_spans():
+    """The h at which the doubled cosines from t_1 = h - 2 close at the half turn t_h = -2 (the crystallographic restriction), searched until the first that fails."""
+    found, h = [], one
+    while True:
+        t = [two, h - two]
+        while len(t) <= h:
+            t.append(t[1] * t[-1] - t[-2])
+        if h > one and t[h] != -two:
+            return tuple(found)
+        found.append(h)
+        h += one
+
+
+gamma = 1000
+checks = [
+    ("core/spokes.AXES", spokes.AXES, d),
+    ("core/spokes.SIDES", spokes.SIDES, one + one),
+    ("trains.HAND", trains.HAND, one + one),
+    ("trains.POWER_TIME", trains.POWER_TIME, d + one),
+    ("trains.POWER_AXIS", trains.POWER_AXIS, one + one),
+    ("meshes.mesh_teeth(Gamma) / Gamma", meshes.mesh_teeth(gamma) // gamma, (standard.standard_rate(gamma) + standard.standard_rate(gamma)) // gamma),
+    ("assembly/cycle.QUARTERS", cycle.QUARTERS, order_of_i()),
+    ("assembly/setting.HALF_SPANS", setting.HALF_SPANS, half_spans()),
+    ("core/acts.mid's 2: mid(10) against 10 div (1 + 1)", acts.mid(10), 10 // (one + one)),
+    ("core/rule3.half's 2: half(11)", rule3.half(11), 11 // (one + one)),
+    ("core/rule3.odd's 2: odd(11)", rule3.odd(11), 11 % (one + one)),
+    ("trains.REGULATOR = (d + 1)(d + 2) / 2", trains.REGULATOR, (d + one) * (d + two) // two),
+    ("trains.OFFSET = d + 1", trains.OFFSET, d + one),
+]
+for name, typed, derived in checks:
+    print(f"{name}: typed {typed}, derived {derived}: {'the same' if typed == derived else 'DIFFERENT'}")
+# (C) the fixed trains derived from d and den against every committed universe's rows
+seen = 0
+bad = []
+for f in sorted(set(glob.glob(WT + "/tests/worlds/universe_*.json") + glob.glob(WT + "/reader/worlds/universe_*.json"))):
+    u = json.load(open(f))
+    ints = u["integers"]
+    den, g = int(ints["den"]), int(ints["node_clock"])
+    fixed = [
+        {"shape": trains.HAND, "pair": [den, den]},
+        {"shape": (d + one) * (d + two) // two, "pair": [den - den // g, den]},
+        {"shape": d + one, "pair": [den, den]},
+        {"shape": one, "wall": two},
+    ]
+    rows = u["rows"]
+    gapped = [r for r in rows if r not in fixed]
+    rebuilt = [r for r in rows if r in fixed]
+    seen += 1
+    if sorted(map(json.dumps, rebuilt)) != sorted(map(json.dumps, fixed)):
+        bad.append(os.path.basename(f))
+print(f"(C) {seen} universe files: the four fixed trains are the ones derived from d and den in {seen - len(bad)}; other: {bad}")
+---------------------------------------- output: out_derive.txt
+core/spokes.AXES: typed 3, derived 3: the same
+core/spokes.SIDES: typed 2, derived 2: the same
+trains.HAND: typed 2, derived 2: the same
+trains.POWER_TIME: typed 4, derived 4: the same
+trains.POWER_AXIS: typed 2, derived 2: the same
+meshes.mesh_teeth(Gamma) / Gamma: typed 4, derived 4: the same
+assembly/cycle.QUARTERS: typed 4, derived 4: the same
+assembly/setting.HALF_SPANS: typed (1, 2, 3), derived (1, 2, 3): the same
+core/acts.mid's 2: mid(10) against 10 div (1 + 1): typed 5, derived 5: the same
+core/rule3.half's 2: half(11): typed 5, derived 5: the same
+core/rule3.odd's 2: odd(11): typed 1, derived 1: the same
+trains.REGULATOR = (d + 1)(d + 2) / 2: typed 10, derived 10: the same
+trains.OFFSET = d + 1: typed 4, derived 4: the same
+(C) 6 universe files: the four fixed trains are the ones derived from d and den in 6; other: []
+

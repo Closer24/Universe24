@@ -1,8 +1,0 @@
-i 1: births 0 at classes []; lay refusals 64 at classes [0, 1, 2, 3]; stops 0:
-i 2: births 64 at classes [0, 1, 2, 3]; lay refusals 0 at classes []; stops 0:
-i 3: births 0 at classes []; lay refusals 64 at classes [0, 1, 2, 3]; stops 0:
-i 4: births 0 at classes []; lay refusals 64 at classes [0, 1, 2, 3]; stops 128:
-    class 0 taken row 2: 32 stops at 16 Nodes, fall over walls (thousandths) min 321 max 321
-    class 1 taken row 2: 32 stops at 16 Nodes, fall over walls (thousandths) min 321 max 321
-    class 2 taken row 2: 32 stops at 16 Nodes, fall over walls (thousandths) min 321 max 321
-    class 3 taken row 2: 32 stops at 16 Nodes, fall over walls (thousandths) min 321 max 321

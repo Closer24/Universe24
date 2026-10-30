@@ -1,1 +1,0 @@
-{"universe": "../toy/universe_middle.json", "shape": [7, 7, 7], "intervals": 60, "seed": [{"lay": "sea", "row": 0}, {"lay": "at", "row": 2, "centre": [3, 3, 3], "width": 2, "quanta": 40, "sense": 1}, {"lay": "at", "row": 2, "centre": [3, 3, 6], "width": 2, "quanta": 40, "sense": 1}]}

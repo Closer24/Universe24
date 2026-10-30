@@ -1,0 +1,40 @@
+DAVID-THE-LIGHTS-LAST-ROLES checks, 2026-10-28, 00:4x UTC, on the Boss's head 42e9fb4af (worktree scratchpad/wt_g12, its own src on the path; no src touched).
+
+1. 42e9fb4af verified (v10.py: the committed charts regenerated with the rewind of 20, compared key by key; the bang at 250 ticks against 13f58bb25's chart key by key):
+   hole: fittings 17, chimes 920, rows SHOWN 36, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   chiral: fittings 2, chimes 2849, rows SHOWN 33, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   bodies: fittings 8, chimes 712, rows SHOWN 27, the rewind {'intervals': 20, 'exact': 20}, the record the same
+   the bang at 250 ticks on 42e9fb4af against 13f58bb25: the same
+   bang250_g12.json: returns 100 (first [4, 5, 9, 10]), widest X bits 13, fittings 382, chimes 11592, rows SHOWN 40, the rewind {'intervals': 20, 'exact': 20}
+
+2. The hands' couplings (meshes.coupling_of), every universe here holding one uncoupled hand:
+    world_bang.json the hands (pinion, rim) and their coupling: [(15162854575528411, 1), (2458210083751875, 1), (2580388913625285, 1), (15162856759112389, 0)]
+    hole couplings [1, 1, 1, 0] uncoupled hands 1
+    chiral couplings [1, 1, 1, 0] uncoupled hands 1
+    bodies couplings [1, 1, 0] uncoupled hands 1
+
+3. The light's role reads standing on 42e9fb4af (grep of clock.unsprung() in src/event_universe), by the four asks:
+   (a) the take: unspring.py:163, :250, :274; striking.py:187
+   (b) the chime's sea: bobs.py:161 (light_lead), striking.py:296, :366
+   (c) the release: tick.py:292, :303
+   (d) the setting's seas: assembly/setting.py:49, :55, :65, :77
+   the writer: run.py:205, :227, :261, :283
+     bobs.py:161:    rec0 = clock.hands().index(clock.unsprung())
+     run.py:205:        if train is clock.unsprung():
+     run.py:227:    regulator, offset, unsprung = clock.train(REGULATOR), clock.train(OFFSET), clock.unsprung().gears[0]
+     run.py:261:        "gap-0 W abs max": max(abs(x) for x in ints(sweeps[hand_trains.index(clock.unsprung())])),
+     run.py:283:    unsprung = clock.unsprung().gears[0]
+     striking.py:187:        if hand is not clock.unsprung():
+     striking.py:296:    rec0 = clock.hands().index(clock.unsprung())
+     striking.py:366:    r_unsprung = readings.gearing_of(clock, clock.unsprung(), c, read)
+     tick.py:292:        gear, time_gear = clock.unsprung().gears[0], clock.train(REGULATOR).gears[0]
+     tick.py:303:            advanced, ratio = gear.now - notches, clock.unsprung().ratio
+     unspring.py:163:        if hand is not clock.unsprung():
+     unspring.py:250:        if hand is not clock.unsprung():
+     unspring.py:274:    unwound = clock.hands().index(clock.unsprung()) if rec is None else rec
+     assembly/setting.py:49:            if train is None or train is not clock.unsprung() or "sense" in lay:
+     assembly/setting.py:55:            if train is None or train is clock.unsprung():
+     assembly/setting.py:65:            if train is None or train is not clock.unsprung() or "quanta" not in lay:
+     assembly/setting.py:77:            if train is clock.unsprung() and stride is None:
+
+4. The book's writes in turn (DAVID-THE-MERGERS-BOOK_CHECKS.txt, section 3): with each end read on the board the earlier writes leave, the whole book moves at 0 of 250 strikings of the bang, with and without the field.

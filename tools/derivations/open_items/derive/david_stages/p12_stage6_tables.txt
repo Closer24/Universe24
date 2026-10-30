@@ -1,0 +1,12 @@
+channels held: 43; tables not 0: 43
+24: failures 0
+representation: failures 0
+orthonormal: failures 0
+nonzero exactly on the channels: failures 0
+equivariant: failures 0
+primitive: failures 0
+the sign: 0 of the nonzero tables have a negative first entry ()
+the order: the seeds in the reverse order move 0 tables (); 0 of them with no E ()
+  the reverse order and 20 random orders move 0 tables in all
+the rule, the first nonzero entry positive, laid on top: it turns 0 of the head's tables over (); under it the 21 orders move 0
+the dot: plain ; the cross: plain ; A2 x T1 -> T2: plain

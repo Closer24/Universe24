@@ -1,7 +1,0 @@
-merge | ruff check . | exit 1 | Found 53 errors.
-merge | ruff format --check . | exit 2 | 191 files already formatted
-merge | mypy | exit 1 | Found 14 errors in 14 files (checked 34 source files)
-merge | /home/user/Universe24/venv314/bin/python tools/engine_gates.py | exit 0 | the engine gates hold against the merge base
-merge | /home/user/Universe24/venv314/bin/python tools/record_code_shape.py | exit 1 | SyntaxError: invalid decimal literal
-merge | /home/user/Universe24/venv314/bin/python tools/tests_shape.py | exit 1 | SyntaxError: invalid decimal literal
-merge | /home/user/Universe24/venv314/bin/python tools/documents_gates.py | exit 1 | SyntaxError: invalid decimal literal

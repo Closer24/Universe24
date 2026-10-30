@@ -1,4 +1,0 @@
-em_default_c0 exit 0
-em_flag_c0 exit 0
-em_default_c400 exit 0
-em_flag_c400 exit 0

@@ -1,0 +1,5 @@
+(i) (2T, 2) runs as (T, 1) with r = 2 r' + e, a and r_d alike: 1609 of 1609 round-ticks (300 worlds, half with J)
+    the parity bit e of every fine tooth kept: 1609 of 1609
+(ii) the wind's identity dE = sum (a+ - b)(s T_k q - (r+ - r)) at (2T, 2): 1609 of 1609
+(iii) one free gear at (W, s) = (4, 2), D = 1: kept space dim 2; the wind kept False; the parity of r kept True
+(iii) one free gear at (W, s) = (6, 2), D = 1: kept space dim 2; the wind kept False; the parity of r kept True

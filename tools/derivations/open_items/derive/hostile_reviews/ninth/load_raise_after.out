@@ -1,0 +1,22 @@
+### case B
+B: a board of 40000000 sites, two rows: one array 610 MiB; the cap holds 3.75 of them (three, and the clocks of half of one)
+files: universe.json 195 bytes, piece.json 41 bytes, setting.json 39 bytes; the checker: holds
+the load: named ['piece.shape: 2 rows at 40000000 sites, more than the arrays of this machine hold (Unable to allocate 610. MiB for an array with shape (2, 40000000) and data type object)'], loaded False in 9.6s
+exit 0
+### case A
+A: one T1 train of 10000 kinds on a hand (rows 60000), 10000 cross rows (60000 terms); a dense scatter of them asks 26.8 GiB
+files: universe.json 440187 bytes, piece.json 34 bytes, setting.json 39 bytes; the checker: holds
+the load: named [], loaded True in 0.4s
+tools/tensor24_files.py on them: exit 0 (1 is also its exit for a named departure); stderr's last line: -
+exit 0
+### case C
+files: universe.json 4587 bytes, piece.json 34 bytes, setting.json 39 bytes; the checker: holds
+the load: named [], loaded True in 0.1s
+C: rows 600, terms 600, rows x terms 360000: one contraction 0.0004s
+files: universe.json 8987 bytes, piece.json 34 bytes, setting.json 39 bytes; the checker: holds
+the load: named [], loaded True in 0.1s
+C: rows 1200, terms 1200, rows x terms 1440000: one contraction 0.0007s
+files: universe.json 17787 bytes, piece.json 34 bytes, setting.json 39 bytes; the checker: holds
+the load: named [], loaded True in 0.1s
+C: rows 2400, terms 2400, rows x terms 5760000: one contraction 0.0014s
+exit 0
