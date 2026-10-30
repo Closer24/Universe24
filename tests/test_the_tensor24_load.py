@@ -11,8 +11,8 @@ from tensor24.engine.state import Plan, State
 from tensor24.engine.step import tick, untick
 from tensor24.main import made as joint
 from tensor24.runner.board import board
-from tensor24.runner.files import COUPLING, OPERANDS, entries, held_departures, vocabulary
-from tensor24.runner.load import geometry, load, promises, star
+from tensor24.runner.files import COUPLING, OPERANDS, entries, held_departures, promises, vocabulary
+from tensor24.runner.load import geometry, load, star
 from tests.frame import plain
 
 D = 3
@@ -172,6 +172,15 @@ def edits():
     def coupling(**fields):
         return lambda u: u["couplings"].append(row(**fields))
 
+    def square(
+        part=1, **fields
+    ):  # the four-vector's square appended, and a coupling where fields are given
+        def edit(u):
+            u["trains"].append({"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": part})
+            u["couplings"] += [row(**fields)] * bool(fields)
+
+        return edit
+
     return {
         "a kind none of the 24's": (
             train(1, kinds=["E1/2"]),
@@ -179,13 +188,16 @@ def edits():
         ),
         "E alone": (
             train(1, kinds=["E"]),
-            "universe.trains[1].kinds: a kind with no whole basis the 24 permute stands only in the four-vector's square",
+            "universe.trains[1].kinds[0]: 'E' has no whole basis the 24 permute",
         ),
-        "E in the four-vector's square": (
-            lambda u: u["trains"].append(
-                {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1}
-            ),
-            None,
+        "E in the four-vector's square": (square(), None),
+        "the square's kinds at part 2, its character twice the square's": (
+            square(part=1 + 1),
+            f"universe.trains[{len(TRAINS)}].kinds[3]: 'E' has no whole basis the 24 permute",
+        ),
+        "a coupling on the four-vector's square": (
+            square(target=len(TRAINS)),
+            f"{AT}: train {len(TRAINS)} is the four-vector's square",
         ),
         "a twin hand, the act generic in the part": (train(1, part=4), None),
         "a part of 3": (train(1, part=3), None),
@@ -269,7 +281,7 @@ def test_a_gear_off_its_trains_rows_is_named_and_the_last_row_is_laid(made):
     assert held is None and found == [f"setting.gears[0]: component {rows} off train 0's {rows} rows"]
 
 
-def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
+def test_a_coupling_the_table_lacks_weighs_every_term_0_and_gives_0(made):
     ks, c, square = made
     u = universe(couplings=[row(target=1)])
     held, found = loaded(made, u)
@@ -280,7 +292,8 @@ def test_a_coupling_the_table_lacks_holds_no_term_and_gives_0(made):
     trains = trains_of(*entries(u["trains"], labels), dims, reads)
     planned, _ = plan(u["couplings"], trains, c, labels, D)
     readings = np.ones(((len(OPERANDS) + D - 1) * sum(t.rows() for t in trains), SITES), dtype=object)
-    assert planned[0].size == 0 and not contract(Plan(*planned), readings, gears()).any()
+    _, _, factors, _ = planned
+    assert not factors.any() and not contract(Plan(*planned), readings, gears()).any()
 
 
 def rewound(r, w):
@@ -362,3 +375,14 @@ def test_a_board_the_machine_cannot_hold_is_named(made, monkeypatch):
     assert found == [
         f"piece.shape: {LAID} rows at {SITES} sites, more than the arrays of this machine hold (no room)"
     ]
+
+
+def test_the_square_is_found_by_its_kinds_character_in_every_order_and_by_nothing_else(made):
+    """A train is marked the four-vector's square where its part times its kinds' character is the square's: in every
+    order of the square's five kinds, and not for ten rows of three T1 kinds and one of A1."""
+    family, other = ("A1", "T1", "A1", "E", "T2"), ("T1", "T1", "T1", "A1")
+    for kinds in [*sorted(set(itertools.permutations(family))), other]:
+        u = universe()
+        u["trains"].append({"name": "metric", "kinds": list(kinds), "part": 1})
+        held, found = loaded(made, u)
+        assert found == [] and held.trains.square.tolist() == [0] * len(TRAINS) + [int(kinds != other)]

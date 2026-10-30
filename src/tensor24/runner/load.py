@@ -153,11 +153,13 @@ def plan(
         table = c[(a, b, landed)]
         if not table.any():
             found.append(f"{where}: the 24 hold no {labels[a]} x {labels[b]} -> {labels[landed]}")
-        for x, y, z in np.argwhere(table):
-            first.append(ones[y])
-            second.append(twos[z])
-            factor.append(strength * table[x, y, z])
-            landing.append(trains[target].row(target_kind, x, target_part))
+        # every entry of the table a term, its factor the strength times the entry, 0 where the 24 hold none
+        x, y, z = (axis.reshape(-1) for axis in np.indices(table.shape))
+        lands = [trains[target].row(target_kind, n, target_part) for n in range(table.shape[0])]
+        first += np.array(ones, dtype=np.intp)[y].tolist()
+        second += np.array(twos, dtype=np.intp)[z].tolist()
+        factor += (strength * table.reshape(-1)).tolist()
+        landing += np.array(lands, dtype=np.intp)[x].tolist()
     first_, second_, landing_ = (np.array(column, dtype=np.intp) for column in (first, second, landing))
     return (first_, second_, np.array(factor, dtype=object), landing_), found
 
@@ -176,15 +178,6 @@ def lay(gears: list[list[int]], trains: Trains, sites: int) -> tuple[tuple[Z, ..
     at = (trains.first[train.astype(np.intp)] + component).astype(np.intp), site.astype(np.intp)
     a[at], b[at], r[at] = now, before, tooth
     return (a, b, r, rd), []
-
-
-def promises(r: Z, w: Z) -> list[str]:
-    """The engine's promise, each departure named where it stands: every fine tooth within [0, w), its teeth."""
-    w = np.broadcast_to(w, r.shape)
-    return [
-        f"row {g}, site {x}: the fine tooth {r[g, x]} not within [0, {w[g, x]})"
-        for g, x in np.argwhere((r < 0) | (r >= w))
-    ]
 
 
 class Loaded(NamedTuple):
@@ -212,8 +205,8 @@ def mesh_unit(gamma: int) -> int:
 
 
 def geared(
-    universe: dict[str, Any], trains: Trains, spokes: int
-) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], Z]:
+    universe: dict[str, Any], trains: Trains, spokes: Z
+) -> tuple[tuple[Z, ...], tuple[Z, Z, Z], tuple[Z, Z, Z], Z]:
     """Every gear's coefficients by one formula of the files' integers (David's table at rest, #2187 6488192915): the teeth at rest T = 6 den Gamma^2 G^2, the 6 the board's Spokes; every row reading the 00 slot of every train whose kinds are the four-vector's square, at the factor 1, the slot itself; s = 1; the kick and the drive 1, the force's path, the one drive owed with the coupling family (G3); no spring, as no row holds a term of its own, so the swing's top is owed to the metric's law (G2); every grip den Gamma^2 G^2 per Mesh."""
     integers, first, rows = universe["integers"], trains.first, trains.size.sum()
     den, gamma = integers["den"], integers["full_rate"]
@@ -221,19 +214,29 @@ def geared(
     grip = den * gamma * gamma * g * g
     ones = np.ones((rows, 1), dtype=object)
     gearing = (
-        spokes * grip * ones,
+        len(spokes) * grip * ones,
         ones,
         ones.copy(),
         ones.copy(),
     )  # main.py makes them the engine's records
-    # every row reads each square's 00 slot, its first row, one term each
-    squares, every = np.flatnonzero(trains.square), np.arange(rows, dtype=np.intp)
+    # every row reads every train's first row at the factor of its square flag: a square's 00 slot at 1, the rest at 0
+    trained, every = len(trains), np.arange(rows, dtype=np.intp)
     clock = (
-        np.repeat(first[squares].astype(np.intp), rows),
-        np.ones(len(squares) * rows, dtype=object),
-        np.tile(every, len(squares)),
+        np.repeat(first.astype(np.intp), rows),
+        np.repeat(trains.square, rows).astype(object),
+        np.tile(every, trained),
     )
-    return gearing, clock, grip
+    # every Spoke's grip reads a square's diagonal slot for its axis, after the 00 slot and the 0i slots, at the factor 1;
+    # a train not the square reads its first row at the factor 0
+    n, d = spokes.shape
+    axis = (spokes * spokes) @ np.arange(d, dtype=np.intp)
+    diagonal = first[:, None] + trains.square[:, None] * (1 + d + axis[None, :])
+    stretch = (
+        diagonal.reshape(-1).astype(np.intp),
+        np.repeat(trains.square, n).astype(object),
+        np.tile(np.arange(n, dtype=np.intp), trained),
+    )
+    return gearing, clock, stretch, grip
 
 
 def star(axes: int) -> Z:
@@ -252,10 +255,10 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's seven parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's plan and every gear's clock; main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's eight parts: the board and its Spokes from the piece's sides, every coefficient and grip from the universe's integers, J's plan, every gear's clock and the grips' read; main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
     nb = board((sx, sy, sz))
     spokes, meshes = geometry(nb, len(shape))
-    gearing, clock, grip = geared(universe, loaded.trains, len(nb))
+    gearing, clock, stretch, grip = geared(universe, loaded.trains, spokes)
     grips = np.full((1, len(shape) * nb.shape[1]), grip, dtype=object)
-    return nb, spokes, meshes, grips, gearing, loaded.plan, clock
+    return nb, spokes, meshes, grips, gearing, loaded.plan, clock, stretch

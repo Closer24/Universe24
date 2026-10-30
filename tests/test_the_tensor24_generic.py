@@ -55,8 +55,8 @@ def test_every_row_of_every_kind_and_part_is_geared_by_one_formula_and_the_load_
     for name, column in zip(state.Gearing._fields, laid.gearing, strict=True):
         assert len(set(np.broadcast_to(column, (rows, 1))[:, 0].tolist())) == 1, name
     assert len(set(laid.grip.ravel().tolist())) == 1 and all(len(x) == 0 for x in laid.plan)
-    first, factor, target = (x.tolist() for x in laid.clock)
-    assert set(first) == {clock_of(held)} and set(factor) == {1} and target == list(range(rows))
+    read, ones = frame.dense(laid.clock, rows, rows), np.ones(rows, dtype=int)
+    assert (read == np.outer(ones, np.eye(rows, dtype=int)[clock_of(held)])).all()
     assert not {"Ruler", "LAID"} & set(dir(state)) and not {"ruled", "reading", "at"} & set(dir(step))
 
 
@@ -92,8 +92,8 @@ def test_every_order_of_the_trains_runs_alike_and_a_clock_found_by_place_does_no
     geared = loading.geared
 
     def by_place(universe, trains, spokes):
-        gearing, (first, factor, target), grip = geared(universe, trains, spokes)
-        return gearing, (0 * first + trains[-1].first, factor, target), grip
+        gearing, (first, factor, target), stretch, grip = geared(universe, trains, spokes)
+        return gearing, (0 * first + trains[-1].first, factor, target), stretch, grip
 
     monkeypatch.setattr(loading, "geared", by_place)
     assert not orders_alike()

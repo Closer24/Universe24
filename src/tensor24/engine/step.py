@@ -21,7 +21,7 @@ def drive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
 
 def sources(layout: Layout, a: Z) -> tuple[Z, Z]:
     """Every gear's force, its pull, and its source J: the plan on the value, the differences along each axis, the force."""
-    nb, spokes, _, _, _, plan, _ = layout
+    nb, spokes, _, _, _, plan, _, _ = layout
     force = pull(layout, a)
     # each axis's + neighbour less its - neighbour: the neighbours summed with their Spokes' directions
     gradient = np.tensordot(spokes, seen(a, nb), axes=(0, 1))
@@ -38,17 +38,25 @@ def driven(gearing: Gearing, force: Z, q: Z) -> Z:
 # W = W+ holds a round's teeth fixed, so a round runs back exactly wherever W is at least 1 and every fine tooth stands
 # within [0, W), and a run while every kept tooth stands below the teeth of the round that reads it: only a falling
 # clock can break that. Wherever a clock moves, rising or falling, W = W+ drops the term (d_t W)(d_t a) of
-# d_t (W d_t a) = F. Every run the files make keeps the metric family at rest as laid, no source moving it; the
-# metric's stage (G2) owes both by design, with no promise in the round.
+# d_t (W d_t a) = F. No source moves the metric family before G2, but a setting may lay it moving: the runner reads
+# the promise from outside before every round and names the round where it breaks; the metric's stage (G2) owes both
+# by design.
 def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
     """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and with no bound on the read."""
     rest, _, _, _ = gearing
     return rest + read(clock, a)
 
 
+def teeth(layout: Layout, s: State) -> Z:
+    """Every gear's teeth at the state's now slot, as its round reads them: the promise's measure, read from outside."""
+    _, _, _, _, gearing, _, clock, _ = layout
+    a, _, _, _ = s
+    return weight(gearing, clock, a)
+
+
 def tick(layout: Layout, s: State) -> State:
     """One round: every gear steps on its sources at the teeth it reads at the now slot, in one pass."""
-    _, _, _, _, gearing, _, clock = layout
+    _, _, _, _, gearing, _, clock, _ = layout
     a, b, r, rd = s
     force, j = sources(layout, a)
     _, _, _, teeth = gearing
@@ -59,7 +67,7 @@ def tick(layout: Layout, s: State) -> State:
 
 def mirror(layout: Layout, s: State) -> State:
     """The state mirrored, time's reversal at fixed teeth: the slots swapped, each fine tooth flipped in the teeth it was kept at, the before slot's; mirrored twice, r moves by W(a) - W(b), so the mirror is its own inverse only where the clock stands still."""
-    _, _, _, _, gearing, _, clock = layout
+    _, _, _, _, gearing, _, clock, _ = layout
     a, b, r, rd = s
     _, _, _, teeth = gearing
     return State(b, a, flip(r, weight(gearing, clock, b)), flip(rd, teeth))

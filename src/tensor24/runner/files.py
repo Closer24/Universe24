@@ -208,20 +208,22 @@ def departures(universe: Path, piece: Path, setting: Path) -> list[str]:
 
 
 def vocabulary(kinds: Any, square: Any) -> tuple[tuple[str, ...], tuple[int, ...], tuple[Any, Any, Any]]:
-    """The engine's kinds as the files are read against them: their labels and dimensions, each one's character on the 24, 1 where its basis is whole (each row one Spoke's sign), and the four-vector's square's character."""
+    """The engine's kinds as the files are read against them: their labels and dimensions, each one's character on the 24, 1 where its basis is whole, and the four-vector's square's character; every kind 0 off the 24."""
     labels = tuple(name.upper() for name in kinds._fields)
     dims = tuple(k.shape[-1] for k in kinds)
     traces = np.stack([np.einsum("gii->g", k) for k in kinds])
-    wholes = np.array([int((np.einsum("gij,gij->gi", k, k) == 1).all()) for k in kinds], dtype=object)
+    # whole: each row one Spoke's sign on the 24, its squares summing to 1 there and to 0 off them
+    sums = [np.einsum("gij,gij->gi", k, k) for k in kinds]
+    wholes = np.array([int((s * s == s).all()) for s in sums], dtype=object)
     return labels, dims, (traces, wholes, np.einsum("gii->g", square))
 
 
 def held_departures(
     universe: Any, setting: Any, read: tuple[tuple[str, ...], tuple[int, ...], Any]
 ) -> list[str]:
-    """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the 24's, a kind with no whole basis outside the four-vector's square, a gear's component off its train's rows."""
+    """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the 24's, a kind with no whole basis outside the four-vector's square, a coupling on the square, a gear's component off its train's rows."""
     labels, dims, (traces, wholes, squared) = read
-    found, sizes = [], []
+    found, sizes, squares = [], [], []
     for at, train in enumerate(universe["trains"]):
         where = f"universe.trains[{at}]"
         found += [
@@ -230,18 +232,36 @@ def held_departures(
             if label not in labels
         ]
         kinds = [labels.index(label) for label in train["kinds"] if label in labels]
-        square = (train["part"] * traces[kinds].sum(axis=0) == squared).all()
-        if not (square or wholes[kinds].all()):
-            found.append(
-                f"{where}.kinds: a kind with no whole basis the 24 permute stands only in the four-vector's square, whose basis is whole"
-            )
+        square = bool((train["part"] * traces[kinds].sum(axis=0) == squared).all())
+        found += [
+            f"{where}.kinds[{j}]: {label!r} has no whole basis the 24 permute, so it stands only in the four-vector's square, whose basis is whole"
+            for j, label in enumerate(train["kinds"])
+            if label in labels and not (square or wholes[labels.index(label)])
+        ]
         sizes.append(train["part"] * sum(dims[k] for k in kinds))
+        squares.append(square)
+    for at, coupling in enumerate(universe.get("couplings", [])):
+        named = dict(zip(COUPLING, coupling, strict=True))
+        found += [
+            f"universe.couplings[{at}]: train {t} is the four-vector's square, whose rows are the square's basis, and couplings read it from G2"
+            for t in sorted({named["train"], named["with_train"], named["target"]})
+            if squares[t]
+        ]
     for at, (train, component, *_) in enumerate(setting.get("gears", [])):
         if component >= sizes[train]:
             found.append(
                 f"setting.gears[{at}]: component {component} off train {train}'s {sizes[train]} rows"
             )
     return found
+
+
+def promises(r: Any, w: Any) -> list[str]:
+    """The engine's promise on a state the files lay or a run reaches, each departure named where it stands: every fine tooth within [0, w), its teeth."""
+    w = np.broadcast_to(w, r.shape)
+    return [
+        f"row {g}, site {x}: the fine tooth {r[g, x]} not within [0, {w[g, x]})"
+        for g, x in np.argwhere((r < 0) | (r >= w))
+    ]
 
 
 def entries(trains: list[dict[str, Any]], labels: tuple[str, ...]) -> tuple[Any, Any, Any]:

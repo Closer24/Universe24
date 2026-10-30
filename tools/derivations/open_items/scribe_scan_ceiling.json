@@ -9,7 +9,7 @@
   "rule": "BRANCH",
   "file": "tensor24/runner/load.py",
   "detail": "ternary",
-  "count": 5
+  "count": 4
  },
  {
   "rule": "CLAMP",
@@ -27,12 +27,6 @@
   "rule": "FAMILY",
   "file": "tensor24/runner/load.py",
   "detail": "'A1'",
-  "count": 2
- },
- {
-  "rule": "FAMILY",
-  "file": "tensor24/runner/load.py",
-  "detail": "'E'",
   "count": 1
  },
  {
@@ -75,18 +69,12 @@
   "rule": "POSITION",
   "file": "tensor24/runner/load.py",
   "detail": "held[-1]",
-  "count": 4
+  "count": 2
  },
  {
   "rule": "POSITION",
   "file": "tensor24/runner/load.py",
   "detail": "seeds[0]",
-  "count": 1
- },
- {
-  "rule": "POSITION",
-  "file": "tensor24/runner/load.py",
-  "detail": "trains[-1]",
   "count": 1
  },
  {

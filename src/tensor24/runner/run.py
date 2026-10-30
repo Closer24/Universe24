@@ -8,8 +8,8 @@ from pathlib import Path
 from typing import Any, NamedTuple
 
 from tensor24.record import schema
-from tensor24.runner.files import OPERANDS, departures, held_departures, sites_of, vocabulary
-from tensor24.runner.load import load, promises, star
+from tensor24.runner.files import OPERANDS, departures, held_departures, promises, sites_of, vocabulary
+from tensor24.runner.load import load, star
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
 
@@ -18,13 +18,14 @@ STEP = "step"  # a count line's place in its round: after the step
 
 
 class Engine(NamedTuple):
-    """The engine's functions as main.py passes them: the kinds and their tables, the layout, the round, its run back, the state."""
+    """The engine's functions as main.py passes them: the kinds and their tables, the layout, the round, its run back, the state, and every gear's teeth at a state's now slot."""
 
     made: Callable[..., Any]
     layout: Callable[..., Any]
     tick: Callable[..., Any]
     untick: Callable[..., Any]
     state: Callable[..., Any]
+    teeth: Callable[..., Any]
 
 
 def digest(text: str) -> str:
@@ -119,14 +120,18 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
         return found
     layout = engine.layout(universe, shape, loaded)
     start = engine.state(*loaded.state)
-    # the clocks stand at 0 as laid, so the teeth are the rest; a moving clock's are read at G2
-    found = promises(start.r, layout.gearing.rest)
+    found = promises(start.r, engine.teeth(layout, start))
     if found:
         return found
-    ticks, end = setting["ticks"], start
-    with ledger_of(record).open("w", encoding="utf-8") as counted:
+    ticks, end, ledger = setting["ticks"], start, ledger_of(record)
+    with ledger.open("w", encoding="utf-8") as counted:
         for at, end in enumerate(rounds(engine.tick, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))
+            # the promise of the round that reads this state, read from outside: every kept tooth within its teeth
+            found = promises(end.r, engine.teeth(layout, end)) if at < ticks else []
+            if found:
+                ledger.unlink()
+                return [f"round {at + 1}: {line}" for line in found]
     exact = int(stated(rewind(engine.untick, layout, end, ticks)) == stated(start))
     lines = [
         header(record, files, universe, shape, kinds, loaded, layout),

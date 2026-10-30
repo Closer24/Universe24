@@ -260,12 +260,21 @@ def unread():
     return Read(none, none.astype(object), none)
 
 
+def dense(read, rows, landed):
+    """A read as the matrix of its whole factors, per row it lands on and row it reads, the factors summed."""
+    m = np.zeros((landed, rows), dtype=object)
+    np.add.at(m, (read.target, read.first), read.factor)
+    return m
+
+
 def plain(nb, meshes, grip, w):
     """A layout of stage 4 in the generic records: the teeth W at rest and no clock read, s = 1, the force's
     path (T_k = T_d = 1), no term of J."""
     none = np.zeros(0, dtype=np.intp)
     plan = Plan(none, none, none.astype(object), none)
-    return Layout(nb, spokes(), meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, unread())
+    return Layout(
+        nb, spokes(), meshes, np.reshape(grip, (1, -1)), Gearing(w, 1, 1, 1), plan, unread(), unread()
+    )
 
 
 def holds(name, make, shape, seed):

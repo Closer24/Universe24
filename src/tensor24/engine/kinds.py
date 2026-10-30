@@ -8,7 +8,7 @@ from tensor24.algebra.carry import Z, carry
 
 
 class Kinds(NamedTuple):
-    """Each kind's matrix on every candidate turn, in the kinds' order; a candidate's weight is 1 on the 24 alone."""
+    """Each kind's matrix on every candidate, three of the Spokes as rows, in the kinds' order; a candidate's weight is 1 on the 24 alone."""
 
     a1: Z  # (candidates, 1, 1): 1
     a2: Z  # (candidates, 1, 1): the sign of the turn's permutation of the axes
@@ -60,6 +60,13 @@ def kinds(matrix: Z) -> Kinds:
     return Kinds(0 * sign + 1, sign, e, matrix, sign * matrix)
 
 
+def weighed(held: Kinds, weight: Z) -> Kinds:
+    """Each kind's matrix on every candidate times the candidate's weight: the kinds on the 24, 0 on every other candidate, none set apart."""
+    a1, a2, e, t1, t2 = held
+    w = weight[:, None, None]
+    return Kinds(w * a1, w * a2, w * e, w * t1, w * t2)
+
+
 def beside(x: Z, y: Z) -> Z:
     """Two stacks of matrices set along one diagonal, every entry beside them 0."""
     gap = 0 * np.einsum("gij,gkl->gil", x, y)
@@ -68,7 +75,7 @@ def beside(x: Z, y: Z) -> Z:
 
 
 def square(held: Kinds) -> Z:
-    """The four-vector's symmetric square on each turn, the stride fixed and the differences turned, on the index pairs 00, 0i, ii and jk (by the third axis): A1, T1, the axes' permutation and T2, each a signed permutation where the turn is one of the 24."""
+    """The four-vector's symmetric square on each candidate, the stride fixed and the differences turned, on the index pairs 00, 0i, ii and jk (by the third axis): A1, T1, the axes' permutation and T2, each a signed permutation where the candidate is one of the 24; its first row, 00, the one row every turn fixes."""
     a1, _, _, t1, t2 = held
     return beside(beside(a1, t1), beside(t1 * t1, t2))
 
