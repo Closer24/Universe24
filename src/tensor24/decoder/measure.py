@@ -1,8 +1,4 @@
-"""Clock: a duration is a clock's own count between two of its clicks; two clocks that part and meet again count apart by their paths; a click's past is what could reach it, one Mesh a round.
-Algebra: differences of a clock's teeth; the Meshes between two sites, the shorter way round each side, summed; shares compared by cross products.
-Board: the clicks with their clocks, faces and lays, the settings with their frames, and the board's sides; the rounds give order alone.
-Clicks: D6 proper time, D7 no duration from rounds, D8 no signal outside the cone, and the twins: shown, not shown or not read, with its cause.
-"""
+"""The measurement's rules on the record (D6 to D8): a duration as a clock's own count, the twins, the cone check by click."""
 
 # The rules (the owner's text to the Boss, space and time the shadows of one four-dimensional spacetime, and his word
 # "This is also important for the decoder, no?"; the Boss's D6 to D8, entered at 6499774896; ANIMATE-SCHEMA-1.2,

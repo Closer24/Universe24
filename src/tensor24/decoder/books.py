@@ -1,8 +1,4 @@
-"""Clock: at a whole click whole turns move from a giver's dial to a taker's, and each remainder stays at its dial: what one clock gives, another takes.
-Algebra: per train, the windings at its winding and the kept, before and after, summed over each part to 0; the wind over every train after the clicks against after the step.
-Board: the books a whole click carries, at the click or at each of its two ends, and the ledger's wind per round and train.
-Clicks: row 15, conservation at every click, both ways of time: shown, not shown or not read, with its cause.
-"""
+"""Row 15, the conservation at the click, read twice: the books at every whole click, and the ledger beside them."""
 
 # The first reading, K3 (Animate's part C): a whole click's books stand at the click itself, or at each of its two
 # ends where it takes at both (the record's guard), and are read per train. A part's taken and its laid each hold one

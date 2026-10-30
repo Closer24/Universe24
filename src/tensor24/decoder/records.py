@@ -1,30 +1,29 @@
-"""Clock: the watchmaker's first look: a record's lines are read under the schema's rules, each bad line refused by name, and the ledger beside it the same way.
-Algebra: whole numbers and labels checked by their shape and their order; nothing is computed.
-Board: the boundary: the header (the files, the sides, the kinds, the trains), the events in round order and the end; the ledger's count lines, one per round, Node-clock and train.
-Clicks: the click lines are the clicks' only source; a record that is not read names its cause, and every reading of it reads not read.
-"""
+"""The record read: one record of the schema 1.2 into its header, its events and its end, or the cause it is not."""
 
-# The schema's rules are its guards, checked in order as it reads: the file reads; every line is a JSON object with its
-# kind, a label, each key once; the record holds a header and an end; the header comes first, with a whole major version
-# that is known; the end comes last; every event is of a known kind and stands at a whole round and site; every field a
-# line holds has its shape in the schema's record of its kind, a whole number, a label, a row of them or a record of the
-# schema, and a field the schema does not name holds whole numbers and labels alone, through its rows and mappings, so a
-# float, a truth value, NaN or null, or a row of another length, is seen; the header's sides make a board, each side 1
-# or more; the header's train cards name each train once, each card's winding 1 or more (a winding counts its train's
-# notches, and the books read each train's windings at it); every value stands on the record, read where the line's
-# record names it: an event's round from 1 to the end's rounds and its site on the board, a whole click's ends and
-# children on the board and its ends' Spokes among the board's, and a count from the first beat on the kinds whose
-# record holds one; a whole click's q, where it holds one, at least 1, and every holding's windings from 0 (a whole
-# click is the carry's quotient, and the wind a positive form); a whole click that takes at both ends books in its two
-# ends alone, its own taken and laid empty, and one that takes at one end holds no end (G3); the events keep the
-# schema's order (round, kind, site, train). A field may stand absent where its writer lacks it: a reading that needs it
-# reads not read, the cause named. A record that breaks a rule is not read, and the cause is named in ASCII: a field's
-# name and a kind as Python's ascii() writes them, so a line feed or a lone surrogate in a name stands escaped, and a
-# board by its sides, never their product, which may pass the interpreter's digits; nothing is raised. The lines are
-# split at the line feed alone, so U+2028 and its kin stand inside a label as JSON lets them; a line nested past the
-# interpreter's depth, or holding a whole number past its digits (sys.get_int_max_str_digits(), which the tool lifts),
-# is named so. The ledger beside the record is read under its own guards: every line a JSON object, at a whole round and
-# train, after the step or after the clicks, its fields of their shape, each place once.
+# The schema's rules are its guards, checked in order as it reads (Animate): the file reads; every line is a JSON
+# object with its kind, a label, each key once; the record holds a header and an end; the header comes first, with a
+# whole major version that is known; the end comes last; every event is of a known kind and stands at a whole round
+# and site; every field a line holds has its shape in the schema's record of its kind, a whole number, a label, a row
+# of them or a record of the schema, and a field the schema does not name holds whole numbers and labels alone,
+# through its rows and mappings (the schema's first line), so a float, a truth value, NaN or null, or a row of
+# another length, is seen (Sofer's G1 and G2); the header's sides make a board, each side 1 or more; the header's
+# train cards name each train once, each card's winding 1 or more (a winding counts its train's notches, and the books
+# read each train's windings at it); every value
+# stands on the record, read where the line's record names it: an event's round from 1 to the end's rounds and its
+# site on the board, a whole click's ends and children on the board and its ends' Spokes among the board's, and a
+# count from the first beat on the kinds whose record holds one (the digests are the runner's, which the decoder
+# never reads); a whole click's q, where it holds one, at least 1, and every holding's windings from 0 (the Boss's
+# ruling of 2026-10-29, 04:4x UTC: a whole click is the carry's quotient at least 1, and the wind a positive form); a
+# whole click that takes at both ends books in its two ends alone, its own taken and laid empty, and one that takes
+# at one end holds no end (G3); the events keep the schema's order (round, kind, site, train). A field may stand
+# absent where its writer lacks it: a reading that needs it reads not read, the cause named. A record that breaks a
+# rule is not read, and the cause is named in ASCII: a field's name and a kind as Python's ascii() writes them, so a
+# line feed or a lone surrogate in a name stands escaped, and a board by its sides, never their product, which may
+# pass the interpreter's digits; nothing is raised. The lines are split at the line feed alone, so U+2028, U+0085 and
+# their kin stand inside a label as JSON lets them; a line nested past the interpreter's depth, or holding a whole
+# number past its digits (sys.get_int_max_str_digits(), which the tool lifts), is named so. The ledger beside the
+# record is read under its own guards: every line a JSON object, at a whole round and train, after the step or after
+# the clicks, its fields of their shape, each place once. The standard library and the record's schema alone.
 
 import dataclasses
 import json
