@@ -56,7 +56,14 @@ BARE = {
     "site": 0,
     "train": 0,
     "q": 1,
-}  # a line of no side, which no guard pairs
+}  # a line of no sides field, which the sides' guard refuses: the schema gives every click line its sides
+
+
+def given(fields):
+    """A record of the meeting, the giver's line holding the fields given beside its own."""
+    return [H, {**GIVE, **fields}, TOOK, E]
+
+
 SENT = {
     **GIVE,
     "sides": [],
@@ -77,7 +84,9 @@ UNPLACED, SITE = (
     "line 2 names site {}, off the board of sides [2, 1, 1]",
 )
 KEYED = '{"kind": "click", "round": 1, "round": 1, "site": 0}'
-NAN = '{"kind": "click", "round": 1, "site": 0, "train": 0, "q": NaN}'
+NAN = '{"kind": "end", "rounds": 6, "undone": NaN, "exact": 1}'
+SIDELESS = "line 2 holds a tooth beside its sides, or no sides"
+KEYLESS = "line 2 names no train whose card holds a whole key"
 # ten million deep, past any stack: 3.14.9 on CI reads a hundred thousand, 3.14.6 about forty thousand
 DEEP, NESTS = "[" * 10**7 + "]" * 10**7, "line 2 nests past the interpreter's depth"
 OFF = "line 1's sides {} make no board, a side below 1"
@@ -116,13 +125,9 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
     ),
     "an event without its site": ([H, without(BARE, "site"), E], "placed", UNPLACED),
     "an event without its round": ([H, without(BARE, "round"), E], "placed", UNPLACED),
-    "a float for a whole number": ([H, {**BARE, "q": 1.5}, E], "shaped", SHAPE.format("q")),
-    "a truth value for a whole number": (
-        [H, {**BARE, "train": True}, E],
-        "shaped",
-        SHAPE.format("train"),
-    ),
-    "NaN for a whole number": ([H, NAN, E], "shaped", SHAPE.format("q")),
+    "a float for a whole number": (given({"q": -1.0}), "shaped", SHAPE.format("q")),
+    "a truth value for a whole number": ([H, {**E, "exact": True}], "shaped", SHAPE.format("exact")),
+    "NaN for a whole number": ([H, NAN], "shaped", SHAPE.format("undone")),
     "a float in the header": ([{**H, "width": 0.5}, E], "shaped", LINE1.format("width")),
     "a label that is no label": ([{**H, "engine": [1]}, E], "shaped", LINE1.format("engine")),
     "a kind card's characters off its shape": (
@@ -136,19 +141,11 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         LINE1.format("trains"),
     ),
     "an end's digest that is no label": ([H, {**E, "digest": 1}], "shaped", SHAPE.format("digest")),
-    "null in an unnamed field": ([H, {**BARE, "note": None}, E], "shaped", SHAPE.format("note")),
-    "a float in an unnamed row": ([H, {**BARE, "note": [1, [0.5]]}, E], "shaped", SHAPE.format("note")),
-    "a float in an unnamed mapping": (
-        [H, {**BARE, "note": {"a": 0.5}}, E],
-        "shaped",
-        SHAPE.format("note"),
-    ),
-    "a field named with a line feed": ([H, {**BARE, "a\nb": 0.5}, E], "shaped", SHAPE.format("a\\nb")),
-    "a field named with a lone surrogate": (
-        [H, {**BARE, "\ud800": 0.5}, E],
-        "shaped",
-        SHAPE.format("\\ud800"),
-    ),
+    "null in an unnamed field": (given({"note": None}), "shaped", SHAPE.format("note")),
+    "a float in an unnamed row": (given({"note": [1, [0.5]]}), "shaped", SHAPE.format("note")),
+    "a float in an unnamed mapping": (given({"note": {"a": 0.5}}), "shaped", SHAPE.format("note")),
+    "a field named with a line feed": (given({"a\nb": 0.5}), "shaped", SHAPE.format("a\\nb")),
+    "a field named with a lone surrogate": (given({"\ud800": 0.5}), "shaped", SHAPE.format("\\ud800")),
     "a round past the end's rounds": (
         [H, *met(7), E],
         "valued",
@@ -177,16 +174,9 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "valued",
         "line 1's train cards name the train 0 twice",
     ),
-    "a train no card names": (
-        [H, {**BARE, "train": 5}, E],
-        "clicked",
-        "line 2 names train 5, which no train card names",
-    ),
-    "q 0 on a line of no side": (
-        [H, {**GIVE, "q": 0, "sides": []}, E],
-        "paired",
-        "line 2 holds a tooth beside its sides, or no sides",
-    ),
+    "a train no card names": ([H, {**GIVE, "train": 5}, E], "paired", KEYLESS),
+    "q 0 on a line of no side": ([H, {**GIVE, "q": 0, "sides": []}, E], "paired", SIDELESS),
+    "a click line with no sides field": ([H, BARE, E], "paired", SIDELESS),
     "a line at an earlier line's place": (
         [H, GIVE, GIVE, TOOK, E],
         "clicked",
@@ -205,7 +195,7 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
     "a side across a Mesh on a line of no train": (
         [B, without(SENT, "train"), CROSS[1], ENDED],
         "paired",
-        "line 2 names no train whose card holds a whole key",
+        KEYLESS,
     ),
     "the events out of order": ([H, *met(1 + 1), *met(), E], "ordered", ORDER),
 }
@@ -227,11 +217,11 @@ def cause_of(lines, tmp_path):
     return records.read(str(path))[1]
 
 
-def read(lines, tmp_path):
+def read(lines, tmp_path, guards=records.GUARDS):
     """A record of the given lines, read."""
     path = tmp_path / "record.jsonl"
     path.write_text(text(lines), encoding="utf-8")
-    return records.read(str(path))[0]
+    return records.read(str(path), guards)[0]
 
 
 def test_the_record_is_read_by_its_schema_and_each_guard_refuses_its_own_broken_record(tmp_path):
@@ -259,8 +249,8 @@ def test_the_record_is_read_by_its_schema_and_each_guard_refuses_its_own_broken_
     record, cause = records.read(str(path))
     assert cause == "" and record is not None and record.of("click")[: 1 + 1] == [GIVE, TOOK]
     assert record.of("click")[-1 - 1]["note"] == label
-    reads = [[B, {**BARE, "ends": [1]}, E], [{**B, "ends": [5]}, BARE, E], [B, BARE, {"kind": "end"}]]
-    reads += [[B, *CROSS, ENDED]]  # the end's across holding the side across a Mesh the lines name
+    reads = [[B, {**GIVE, "ends": [1]}, TOOK, E], [{**B, "ends": [5]}, *met(), E]]
+    reads += [[B, *met(), {"kind": "end"}], [B, *CROSS, ENDED]]  # an end of no field; an end's across
     assert [cause_of(lines, tmp_path) for lines in reads] == ["", "", "", ""]
     sides = [10**4000, 10**4000, 1]
     cause = cause_of([{**B, "sides": sides}, *met(1, -1), E], tmp_path)
@@ -322,10 +312,11 @@ def test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits(tmp_path):
     ASCII however its field is named."""
     names = ("record", "ledger", "broken", "wide")
     record, good, broken, wide = (tmp_path / f"{name}.jsonl" for name in names)
-    number = '{"kind": "click", "round": 1, "site": 0, "train": 0, "q": ' + "9" * (DIGITS + 1) + "}"
+    # the giver's line holding a whole number past the interpreter's digits in a field of its own
+    number = json.dumps(GIVE)[:-1] + ', "note": ' + "9" * (DIGITS + 1) + "}"
     for path, lines in zip(
         (record, good, broken, wide),
-        ([H, GIVE, TOOK, E], GOOD, [H, "no json", E], [H, number, E]),
+        ([H, GIVE, TOOK, E], GOOD, [H, "no json", E], [H, number, TOOK, E]),
         strict=True,
     ):
         path.write_text(text(lines), encoding="utf-8")
@@ -403,7 +394,9 @@ def test_the_click_world_reads_the_books_no_own_count_and_no_cone_where_none_cou
     assert held["kind"] == shadow.HOLDS and far.startswith(
         "the click line at round 1, site 2 stands outside the lay's cone"
     )
-    assert shadow.books(read([ring, without(BARE, "q"), E], tmp_path))["kind"] == "NOT READ"
+    # a line of no q, read without the sides' guard (the last), which refuses a line of no side
+    loose = read([ring, without(BARE, "q"), E], tmp_path, records.GUARDS[:-1])
+    assert shadow.books(loose)["kind"] == "NOT READ"
     assert {v["kind"] for v in shadow.shadow(read([ring, E], tmp_path)).values()} == {shadow.ABSENT}
     run = tool(tmp_path / "record.jsonl")  # the record of no click line, read last
     last = run.stdout.splitlines()[-1]

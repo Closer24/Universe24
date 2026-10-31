@@ -8,12 +8,15 @@
 # through its rows and mappings (the schema's first line), so a float, a truth value, NaN or null, or a row of
 # another length, is seen (Sofer's G1 and G2); the header's sides make a board, each side 1 or more; the header's
 # train cards name each train once, each card's winding 1 or more; an event's round stands from 1 to the end's rounds
-# and its site on the board (the digests are the runner's, which the decoder never reads); a click line's train has a
-# card, and a line stands once at its round, site and train (the first hostile code reader's M10); the events keep the
-# schema's order (round, site, train); and every click line's sides, in its site and across a Mesh, close against their
-# partners (sides.paired), whose guard alone refuses a line of no side, whatever its q, q 0 among them. A field may
-# stand absent where its writer lacks it: a reading that needs it reads not read, the cause named. A record that
-# breaks a rule is not read, and the cause is
+# and its site on the board (the digests are the runner's, which the decoder never reads); a click line stands once
+# at its round, site and train (the first hostile code reader's M10); the events keep the schema's order (round, site,
+# train); the end's across, where the end holds one, names places on the board and an entry for every side across a
+# Mesh a click line of a whole train names; and every click line holds its sides, as the schema gives every click line
+# its sides (the Boss's Q3 of 09:59 UTC), its train on a card with a whole key and its q their sum, and they close, in
+# its site and across a Mesh, against their partners (sides.paired), whose guard alone refuses a line of no side,
+# whatever its q, q 0 among them, and a line of a train no card names. A field may stand absent where its writer
+# lacks it, but a click line's sides, train and q: a reading that needs it reads not read, the cause named. A record
+# that breaks a rule is not read, and the cause is
 # named in ASCII: a field's name and a kind as Python's ascii() writes them, so a line feed or a lone surrogate in a
 # name stands escaped, and a board by its sides, never their product, which may pass the interpreter's digits;
 # nothing is raised. The lines are split at the line feed alone, so U+2028, U+0085 and their kin stand inside a label
@@ -261,14 +264,9 @@ def valued(lines: Lines) -> str:
 
 
 def clicked(lines: Lines) -> str:
-    """The first click line off the train cards: a train no card names, or an earlier click line's round, site and train; a line of no side, in its site or across a Mesh, q 0 among them, is the sides' guard's alone (sides.sided: "holds a tooth beside its sides, or no sides"; the ninth code reader's MINOR 10)."""
-    header = lines[0] if isinstance(lines[0], dict) else {}
-    keys = {t["index"]: t.get("key") for t in header.get("trains", []) if whole(t.get("index"))}
+    """The first click line at an earlier click line's round, site and train; a line of no side, in its site or across a Mesh, q 0 among them, and a line naming no train whose card holds a whole key, a train no card names among them, are the sides' guard's alone, which holds every click line (sides.sided: "holds a tooth beside its sides, or no sides" and "names no train whose card holds a whole key"; the ninth code reader's MINOR 10 and the Boss's Q3)."""
     seen: set[tuple[int, int, int, int]] = set()
     for n, e in [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]:
-        train = e.get("train")
-        if whole(train) and train not in keys:
-            return f"line {n} names train {train}, which no train card names"
         if place(e) in seen:
             return f"line {n} stands at the round, the site and the train of an earlier click line"
         seen.add(place(e))

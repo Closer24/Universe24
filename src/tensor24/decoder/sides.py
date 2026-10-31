@@ -37,7 +37,7 @@ def edged(e: Line) -> list[Side]:
 def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
     """The first rule of its own one line's sides break: a tooth beside them or none, one off its form, a line naming no train whose card holds a whole key, one naming the line's own train or a train no card names, their trains, or across a Mesh their places and trains, out of order or one twice, their q not summing to the line's, or a tooth outside [0, K)."""
     t, key = e.get("train"), keys.get(e.get("train"))
-    sides, across = e.get("sides", []), e.get("across", [])
+    sides, across = e.get("sides"), e.get("across", [])  # no default: every click line carries its sides
     if "tooth" in e or not (isinstance(sides, list) and isinstance(across, list)) or not sides + across:
         return f"line {n} holds a tooth beside its sides, or no sides"
     if not all(map(formed, sides)):
@@ -91,17 +91,13 @@ def mirrored(n: int, e: Line, sides: dict[Place, Side], keys: dict[Any, Any]) ->
 
 
 def paired(lines: Lines) -> str:
-    """The first click line of the record whose sides break a rule of the edges, its own or against its partners', named: the decoder's guard on schema 1.4's sides, in the site and across a Mesh."""
+    """The first click line of the record whose sides break a rule of the edges, its own or against its partners', named: the decoder's guard on schema 1.4's sides, in the site and across a Mesh, on every click line, as the schema gives every click line its sides, so a line with no sides field is refused (the Boss's Q3 of 09:59 UTC, the ninth code reader's MINOR 2 on node-fold)."""
     header = lines[0] if lines and isinstance(lines[0], dict) else {}
     keys = {
         card.get("index"): card.get("key") for card in header.get("trains", []) if isinstance(card, dict)
     }
     events = list(enumerate(lines, start=1))[1:-1]
-    held = [
-        (n, e)
-        for n, e in events
-        if isinstance(e, dict) and e.get("kind") == "click" and ("sides" in e or "across" in e)
-    ]
+    held = [(n, e) for n, e in events if isinstance(e, dict) and e.get("kind") == "click"]
     for n, e in held:
         cause = sided(n, e, keys)
         if cause:

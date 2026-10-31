@@ -48,7 +48,7 @@ def across(round_, give, take):
     return sorted([line, far], key=lambda e: e["site"])
 
 
-# every guard but the sides' (sides.paired, last), which refuses a side with no partner
+# every guard but the sides' (sides.paired, last), which refuses a line of no side and a side with no partner
 LOOSE = records.GUARDS[:-1]
 
 
@@ -165,7 +165,7 @@ def test_the_cone_reads_the_lines_that_could_stand_outside_it_and_the_setting_by
 def test_the_books_read_in_row_15_order_and_the_tool_refuses_only_a_record_of_no_click(tmp_path):
     """Yes: a meeting, the edges' consistency check holding by construction, the trains' tallies (one of no line) in the
     reading and the tool, no refusal line. No: a give at round 1 and its take at round 2, refused at read for the absent
-    partner and, read without the sides' guard, FAILS at round 1, row 15's first, the gap of no q beside it, the meetings so; no train first, NOT READ."""
+    partner and, read without the sides' guard, FAILS at round 1, row 15's first, the gap of no q beside it, the meetings so; no train first, NOT READ there, the tool refusing it by the sides' guard."""
     shown = shadow.books(read(tmp_path, *edges(1, 0, (0, 1, 1))))
     out = tool(tmp_path)
     assert shown["kind"] == shadow.HOLDS and shown["trains"][0] == clicks.Tally(1, 1, 0, -1)
@@ -184,11 +184,11 @@ def test_the_books_read_in_row_15_order_and_the_tool_refuses_only_a_record_of_no
     books = f"the sum of q over the trains is -1 at round 2, site 0: not 0 at 1 of 2 places; {lacks} books are read from"
     assert shadow.books(record)["cause"] == books
     assert shadow.meetings(record)["cause"].endswith(f"at 1 of 2 places; {lacks} meeting is read from")
-    bare = {"kind": "click", "round": 1, "site": 0, "q": 1}  # lines of no side, which no guard pairs
+    bare = {"kind": "click", "round": 1, "site": 0, "q": 1}  # lines of no side, read with LOOSE
     gap = {"kind": "click", "round": 3, "site": 0, "train": 0}
-    record = read(tmp_path, bare, {**bare, "train": 1, "q": -1}, gap)
+    record = read(tmp_path, bare, {**bare, "train": 1, "q": -1}, gap, guards=LOOSE)
     trainless = "the click line at round 1, site 0 holds no train, which its meeting is read from"
     unread = "NOT READ", trainless
     for reading in (shadow.meetings, shadow.clock_lines):
         assert (reading(record)["kind"], reading(record)["cause"]) == unread
-    assert f"  the meetings: {unread[0]}: {unread[1]}" in tool(tmp_path).splitlines()
+    assert tool(tmp_path) == "not read: line 2 holds a tooth beside its sides, or no sides\n"
