@@ -1,0 +1,2 @@
+tensor24-click carried: books open 0 of 4212; run back True; one hidden unit in edge 1 at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+tensor24-click turned: books open 0 of 4158; run back True; one hidden unit in edge 1 at Node-clock 0: 298 click lines differ, the first at round 18, at Node-clocks [0]
