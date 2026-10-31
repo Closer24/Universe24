@@ -15,12 +15,13 @@ with open(f'{G}/jobs_{lane}.txt', encoding='ascii') as f:
 for out, *args in jobs:
     while os.path.exists(S + '/check.lock'):
         time.sleep(30)
-    t0 = time.time()
+    t0 = time.monotonic_ns()  # whole nanoseconds: no float
     with open(f'{G}/{out}', 'w', encoding='ascii') as fh:
         script, rest = (args[0], args[1:]) if args and args[0].endswith('.py') else ('g1_ties.py', args)
         code = subprocess.run([PY, '-I', f'{G}/{script}', *rest], stdout=fh, stderr=subprocess.STDOUT,
                               cwd=G, timeout=5400).returncode
+    took = str(time.monotonic_ns() - t0).rjust(10, '0')[:-9]  # whole seconds, cut from the nanoseconds' digits
     with open(f'{G}/queue_{lane}.txt', 'a', encoding='ascii') as log:
-        log.write(f'{out} exit {code} {time.time() - t0:.0f}s\n')
+        log.write(f'{out} exit {code} {took}s\n')
 with open(f'{G}/queue_{lane}.txt', 'a', encoding='ascii') as log:
     log.write('DONE\n')
