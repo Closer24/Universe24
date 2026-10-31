@@ -92,3 +92,31 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
   - **OPEN:** the law on the board's own act, that is, the end click leaving the hand along its setting, the run back
     to the birth on the pair world, and the far click's share by its own seeds. Also open: the order reading both ways,
     and the pair's reading.
+
+## The uncertainty from the share rule alone (spread.py, spread.txt)
+
+- **The share rule** is bellend.py's part (iii): a click along a setting s takes the hand h's share
+  p = (h . s)^2 / ((h . h)(s . s)), the square of their overlap, by its own seed.
+- **Per click:**
+  - the reading is E = 2 p - 1;
+  - its spread is 1 - E^2 = 4 p (1 - p).
+- **The relation (DERIVED from the share rule, by algebra on the plane):** for every hand and any two settings whose
+  own share is c, the two spreads sum to at least 1 - |2 c - 1|.
+  - At 30 or 60 degrees apart the bound is 1/2. Along or across each other it is 0.
+  - So no hand gives two sharp readings on settings that are neither along nor across each other.
+- **MEASURED** (exactly, whole numbers and Rule3's carry), with the hands the 288 Eisenstein integers m + n w with |m|
+  and |n| at most 8, and the settings the six lattice lines and five powers of z = 13 + 5 w (55 pairs):
+  - the relation holds in 15,840 of 15,840 hand-pair readings;
+  - the bound is met exactly in 7 of the 55 pairs, where its best hand lies on the lattice;
+  - every hand sharp on both settings (80 of them) sits on a pair along or across each other.
+- **What it rests on:**
+  - The share rule alone: no end law, no pair, no draw beyond the click's own seed.
+  - The share rule's place on the board is a CANDIDATE, OPEN. Every click lands energy on its edge: the edge's passing
+    is the energy flowing through it, (kappa / 2) f times the pair's wedge, which is how the books close. A hand's
+    energy along a setting is the square of its overlap.
+  - So a click that lands one quantum, split between an outlet along the setting and one across it by their
+    passings, takes the share rule. That is not run.
+- **With the share rule, Bell needs only the end law** (parts i and ii above), and the free-lay control stays at or below
+  2.
+
+Usage: python3 -I spread.py <src> [RANGE]
