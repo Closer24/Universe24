@@ -281,6 +281,23 @@ def ordered(lines: Lines) -> str:
     return "the events stand out of the schema's order" if places != sorted(places) else ""
 
 
+def crossed(lines: Lines) -> str:
+    """The end's across against the record, where the end holds one: every place it names on the board, and every side across a Mesh a click line names standing among its entries (a writer's line, the ninth code reader's REPORT1 MINOR 2)."""
+    end = lines[-1] if isinstance(lines[-1], dict) else {}
+    if "across" not in end:
+        return ""
+    sides, size = board(lines[0])
+    far = [p for _, _, places, _ in end["across"] for p in places if whole(size) and not 0 <= p < size]
+    if far:
+        return f"the end's across names place {far[0]}, off the board of sides {sides}"
+    held = {(t, u) for t, u, _, _ in end["across"]}
+    clicks = [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]
+    named = [(n, u) for n, e in clicks for u, *_ in e.get("across", []) if (e["train"], u) not in held]
+    if named:
+        return f"line {named[0][0]}'s side across a Mesh to train {named[0][-1]} stands in no entry of the end's across"
+    return ""
+
+
 GUARDS: tuple[Guard, ...] = (
     jsoned,
     framed,
@@ -293,6 +310,7 @@ GUARDS: tuple[Guard, ...] = (
     valued,
     clicked,
     ordered,
+    crossed,
     paired,
 )
 

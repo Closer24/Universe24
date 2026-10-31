@@ -362,3 +362,24 @@ def test_the_run_back_is_exact_where_every_tooth_stands_within_its_edges_dial_an
     assert not all(frame.same([b], [k]) for b, k in zip(backs, teeth[:-1], strict=True))
     # the second and third reviews (227cde2fe, 81521e0f4): a hidden log, a queue and a memo passed the run back
     assert holding(["bijectivity"]) and frame.undone_elsewhere(__name__, "engine", FRAME, 0)
+
+
+def test_a_clocks_plan_reading_a_row_it_clocks_runs_back_inexact():
+    """No: the precondition, every row the clocks' plan reads standing at its rest teeth, broken by two clocked rows
+    reading each other, so one round out and back is not exact in any drawn layout. Named beside it for det(gt) L^4,
+    owed until it is laid: the parity condition, that a plan read no odd 0i row to an odd power."""
+    for seed in (3, 5, 8):
+        rng = np.random.default_rng(seed)
+        layout = varied(rng, least=2, clocked=True, cubed=True)
+        legs, factor, target = layout.clock
+        o = np.setdiff1d(
+            np.arange(ROWS), legs[legs >= 0]
+        )  # the clocked rows, which the plan reads none of
+        cyclic = np.concatenate((o[::-1][None, :], -1 + 0 * legs[1:, :1].repeat(len(o), axis=1)))
+        clock = Plan(
+            np.concatenate((legs, cyclic), axis=1),
+            np.concatenate((factor, 1 + 0 * o)),
+            np.concatenate((target, o)),
+        )
+        bad, s = layout._replace(clock=clock), world(rng, layout)
+        assert not frame.same(step.untick(bad, step.tick(bad, s)), s)

@@ -41,7 +41,7 @@ def world(cube=None):
             [tied, c, g[2], *counts]
             for g in wave
             if not held.trains.held[g[0]]
-            for c in range(len(cube))
+            for c in range(held.trains[tied].dims[0])  # the tied train's first kind's components
         ]
         held, _ = loading.load(universe, setting, sites_of(shape), *made)
     return held, main.layout(universe, shape, held), State(*held.state), shape

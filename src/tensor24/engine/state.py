@@ -1,6 +1,6 @@
 """Clock: what a Node-clock holds: each gear's count now and before, the tooth of the edge between them, its drive's fine tooth, and the click tooth of every side of an edge between two trains.
 Algebra: whole-number arrays a, b, r, r_d and k, and the layout's coefficients and plans, read once at load.
-Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan on the value legs, the clocks' read, term 11 on the edges with the edge key, the metric's push, term 5's plan on the stretches and the momenta, and the plan's terms with a Mesh leg, the gradient vertex, each laid by the loader.
+Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan on the value legs, the clocks' plan, term 11 on the edges with the edge key, the metric's push, term 5's plan on the stretches and the momenta, and the plan's terms with a Mesh leg, the gradient vertex, each laid by the loader.
 Clicks: n/a: these hold the board, not its shadow.
 """
 
@@ -30,7 +30,7 @@ class Plan(NamedTuple):
 
 
 class Read(NamedTuple):
-    """A linear read of the gears' now counts: per term the row read, its whole factor, the row or Spoke it lands on."""
+    """The grips' linear read, the stretch's (mesh.gripped gathers it; the clocks read a Plan since ONELAW3's widened step): per term the row read, its whole factor, the Spoke it lands on."""
 
     first: Z  # (terms,): the row read
     factor: Z  # (terms,): its whole factor
@@ -45,7 +45,7 @@ class Click(NamedTuple):
     # ((1 + Spokes) x trains x trains, 1): the key each side (t, u) at each reach carries its passing at, odd
     key: Z
     across: Z  # (Spokes, rows, rows): the Mesh edge's coupling of row r here with row p across the Spoke, times kappa / two
-    onto: Z  # (Spokes, rows, rows): the side ((1 + Spoke) trains + t) trains + u that the pair books on, t r's train, u p's
+    onto: Z  # (Spokes, rows, rows): the side (Spoke trains + t) trains + u that the pair books on, t r's train, u p's
 
 
 class Gearing(NamedTuple):

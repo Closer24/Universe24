@@ -57,6 +57,16 @@ BARE = {
     "train": 0,
     "q": 1,
 }  # a line of no side, which no guard pairs
+SENT = {
+    **GIVE,
+    "sides": [],
+    "across": [[0, 1, -1, 3, 6]],
+}  # train 0 gives across a Mesh, site 0 to site 1
+CROSS = [SENT, {**SENT, "site": 1, "q": 1, "across": [[0, 0, 1, 3, 0]]}]
+ENDED = {
+    **E,
+    "across": [[0, 0, [1, 0], [3, 3]]],
+}  # the end's across: the side (0, 0), its places and teeth
 NO_JSON, ORDER = "line 2 is no JSON object with its kind", "the events stand out of the schema's order"
 SHAPE, LINE1 = (
     "line 2's {} has not its shape in the schema",
@@ -182,6 +192,16 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "clicked",
         "line 3 stands at the round, the site and the train of an earlier click line",
     ),
+    "the end's across dropped": (
+        [B, *CROSS, {**E, "across": []}],
+        "crossed",
+        "line 2's side across a Mesh to train 0 stands in no entry of the end's across",
+    ),
+    "the end's across off the board": (
+        [B, *CROSS, {**E, "across": [[0, 0, [5, 0], [3, 3]]]}],
+        "crossed",
+        "the end's across names place 5, off the board of sides [2, 1, 1]",
+    ),
     "the events out of order": ([H, *met(1 + 1), *met(), E], "ordered", ORDER),
 }
 
@@ -235,7 +255,8 @@ def test_the_record_is_read_by_its_schema_and_each_guard_refuses_its_own_broken_
     assert cause == "" and record is not None and record.of("click")[: 1 + 1] == [GIVE, TOOK]
     assert record.of("click")[-1 - 1]["note"] == label
     reads = [[B, {**BARE, "ends": [1]}, E], [{**B, "ends": [5]}, BARE, E], [B, BARE, {"kind": "end"}]]
-    assert [cause_of(lines, tmp_path) for lines in reads] == ["", "", ""]
+    reads += [[B, *CROSS, ENDED]]  # the end's across holding the side across a Mesh the lines name
+    assert [cause_of(lines, tmp_path) for lines in reads] == ["", "", "", ""]
     sides = [10**4000, 10**4000, 1]
     cause = cause_of([{**B, "sides": sides}, *met(1, -1), E], tmp_path)
     assert cause == f"line 2 names site -1, off the board of sides {sides}"
