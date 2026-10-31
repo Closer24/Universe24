@@ -225,7 +225,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "INDICATOR": (
         "WARN",
-        "a quotient spelt as a mask or a cap (the quotient of a bit, 1 div x; 1 minus a quotient; the sign test x div (x x + 1); the agreement (x + x x) div k, 1 where two columns agree and 0 elsewhere, multiplied into a mask): an indicator that zeroes a term above a bound is a bound spelt as a quotient, and a floor or a bound is an if (law: A floor or a bound is an if, and the Node-clock has none); read each note for a mask (the count per file may not rise)",
+        "a quotient spelt as a mask or a cap (the quotient of a bit, 1 div x, and the algebra's whether lit(x), 1 where x is not 0; 1 minus a quotient, 1 - lit(x) among them; the sign test x div (x x + 1); the agreement (x + x x) div k, 1 where two columns agree and 0 elsewhere, multiplied into a mask): an indicator that zeroes a term above a bound is a bound spelt as a quotient, and a floor or a bound is an if (law: A floor or a bound is an if, and the Node-clock has none); read each note for a mask (the count per file may not rise)",
     ),
     "BOUND": (
         "WARN",
@@ -361,6 +361,7 @@ CLAMPS = frozenset(
 QUOTIENT_CALLS = frozenset(
     "carry carries signed_carries quotient div floordiv floor_divide".split()
 )  # the carry's quotient under a function's name (the indicator is made of one)
+WHETHER_CALLS = frozenset({"lit"})  # the algebra's whether under its name: 1 where x is not 0, by one carry of the bit's quotient; it takes one argument, so the divisor is none to read and it counts as the quotient of the bit 1
 BOUND_WORDS = frozenset(
     "floor floors ceiling cap capped clamp clamped clip clipped limit limits limited bound bounds bounded "
     "saturate saturated saturation".split()
@@ -794,11 +795,13 @@ def is_bit(node: ast.AST) -> bool:
 
 
 def quotient_parts(node: ast.AST) -> tuple[ast.AST, ast.AST] | None:
-    """The dividend and the divisor of a quotient (a floor division, or a call of the carry's quotient with both)."""
+    """The dividend and the divisor of a quotient (a floor division, or a call of the carry's quotient with both, or the whether lit with its one argument)."""
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.FloorDiv):
         return node.left, node.right
     if isinstance(node, ast.Call) and callee_name(node) in QUOTIENT_CALLS and len(node.args) >= 2:
         return node.args[0], node.args[1]
+    if isinstance(node, ast.Call) and callee_name(node) in WHETHER_CALLS and len(node.args) == 1:
+        return ast.Constant(1), node.args[0]  # lit(x), the carry's quotient of the bit 1: 1 where x is not 0
     return None
 
 

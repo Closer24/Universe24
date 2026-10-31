@@ -1013,6 +1013,24 @@ CASES: list[tuple[str, str, str, dict[str, int]]] = [
         {"INDICATOR": 1},
     ),
     (
+        "the algebra's whether lit, the quotient of a bit with one argument",
+        "tensor24/engine/step.py",
+        "def f(lit, x):\n    return lit(x)\n",
+        {"INDICATOR": 1},
+    ),
+    (
+        "1 minus the whether: the whether and 1 minus a quotient",
+        NEW_PLANS,
+        "def f(lit, x):\n    return 1 - lit(x)\n",
+        {"INDICATOR": 2},
+    ),
+    (
+        "a call of lit with two arguments is no whether: no indicator, and the closed list refuses it",
+        "tensor24/engine/step.py",
+        "def f(lit, x, y):\n    return lit(x, y)\n",
+        {"ALLOW": 1},
+    ),
+    (
         "an indicator in the readings",
         NEW_READING,
         "def f(carries, x):\n    return carries(1, x + 1)\n",
