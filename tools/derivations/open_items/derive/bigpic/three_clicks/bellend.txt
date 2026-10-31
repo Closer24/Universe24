@@ -1,0 +1,61 @@
+== the end law, the ends weighed A 1 : B 0
+   A at 0, B at 30: E = 186624 / 373248 = 500 per mille
+   A at 0, B at 90: E = -373248 / 373248 = -1000 per mille
+   A at 60, B at 30: E = 186624 / 373248 = 500 per mille
+   A at 60, B at 90: E = 186624 / 373248 = 500 per mille
+   CHSH = 48521024904413357015040 / 19408409961765342806016 = 2500 per mille (2 is 2000)
+   no signal, A at 0 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 0 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+== the end law, the ends weighed A 0 : B 1
+   A at 0, B at 30: E = 186624 / 373248 = 500 per mille
+   A at 0, B at 90: E = -373248 / 373248 = -1000 per mille
+   A at 60, B at 30: E = 186624 / 373248 = 500 per mille
+   A at 60, B at 90: E = 186624 / 373248 = 500 per mille
+   CHSH = 48521024904413357015040 / 19408409961765342806016 = 2500 per mille (2 is 2000)
+   no signal, A at 0 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 0 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+== the end law, the ends weighed A 1 : B 1
+   A at 0, B at 30: E = 373248 / 746496 = 500 per mille
+   A at 0, B at 90: E = -746496 / 746496 = -1000 per mille
+   A at 60, B at 30: E = 373248 / 746496 = 500 per mille
+   A at 60, B at 90: E = 373248 / 746496 = 500 per mille
+   CHSH = 776336398470613712240640 / 310534559388245484896256 = 2500 per mille (2 is 2000)
+   no signal, A at 0 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 0 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+== the end law, the ends weighed A 1 : B 2
+   A at 0, B at 30: E = 559872 / 1119744 = 500 per mille
+   A at 0, B at 90: E = -1119744 / 1119744 = -1000 per mille
+   A at 60, B at 30: E = 559872 / 1119744 = 500 per mille
+   A at 60, B at 90: E = 559872 / 1119744 = 500 per mille
+   CHSH = 3930203017257481918218240 / 1572081206902992767287296 = 2500 per mille (2 is 2000)
+   no signal, A at 0 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 0 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+== the free-lay control: the hand born free over the plane's lines, each wing taking its share
+   A at 0, B at 30: E = 559872 / 2239488 = 250 per mille
+   A at 0, B at 90: E = -1119744 / 2239488 = -500 per mille
+   A at 60, B at 30: E = 559872 / 2239488 = 250 per mille
+   A at 60, B at 90: E = 559872 / 2239488 = 250 per mille
+   CHSH = 31441624138059855345745920 / 25153299310447884276596736 = 1250 per mille (2 is 2000)
+   no signal, A at 0 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 0 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+== Tsirelson on the plane's own lattice: A at z^0 and z^2, B at z and z^3, z = 13 + 5 w (the square of its turn's overlap 3969 / 4644); the ends weighed 1 : 1
+   the end law: CHSH = 2828 per mille (Tsirelson's 2 r2 is 2828); the free lay: 1414 per mille
+== the pair's curve, E against the angle between the settings (A at 0, B at the angle; the ends weighed 1 : 1)
+   0 degrees: the end law 1000 per mille; the free lay 500 per mille
+   30 degrees: the end law 500 per mille; the free lay 250 per mille
+   60 degrees: the end law -500 per mille; the free lay -250 per mille
+   90 degrees: the end law -1000 per mille; the free lay -500 per mille
+   120 degrees: the end law -500 per mille; the free lay -250 per mille
+   150 degrees: the end law 500 per mille; the free lay 250 per mille
+   180 degrees: the end law 1000 per mille; the free lay 500 per mille
+exit

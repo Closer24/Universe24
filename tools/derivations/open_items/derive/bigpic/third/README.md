@@ -1,0 +1,100 @@
+# The third click as the triangle's one tooth (Big Pic's bench)
+
+Wanted, in the owner's words: the third click with at most one new number per triangle. The owner's answers of 09:30
+UTC say "two new numbers per triangle are not approved", "there is surely a mathematical miracle here that solves this
+cleanly" and "check what an equilateral triangle gives". The owner's word of 09:35 says to derive what is open from
+ALG2's coupling complex.
+
+Every probe here uses whole numbers, with Rule3's carry as the one division, and picks nothing. Each runs with
+python3 -I on node-all 9d75a4904's carry, with the click world's spring, hands' tie, rest teeth and key.
+
+## The form: ALG2's 2-cochain (THIRD7's member, with no twin and no turn)
+
+- In ALG2, a tooth is a cochain: one whole number per oriented cell. A triangle's wraps are written as +w, +w, -w on
+  its edges' sides by C, and never in a line, because B C = 0.
+- **The triangle's one tooth tau**, born at the middle of G D, carries the circulation y = C^T x of its edges'
+  passings.
+- **Each edge** carries G x_e - c_e y at G D, its curl-free part scaled by G = C^T C. No division enters:
+  G I = (G I - C C^T) + C C^T.
+- **Each quantum that tau lands** is booked as c_e w on the triangle's edges.
+- This is tri7.Member with turned=False, the unturned member that THIRD7 kept as its reading's control. It is
+  THIRD9's member with its twin and its turn left out.
+
+## What the equilateral triangle gives: the circulation is Noether's charge of the triangle's turn (DERIVED)
+
+tooth.py checks each identity below at every round.
+
+- **The side passing is the pair's angular momentum.** On a two-leg edge f x_u x_v, the act's own side passing is
+  x_e = (kappa / 2) f (l_uv(a, a+) + l_uv(b, a)), with l_uv(p, r) = p_u r_v - p_v r_u. This is the wedge of the
+  pair's two counts, taken at the round's two windows. node-all's step.passing and crossing have the same form,
+  P(a, b) + P(a+, a).
+- **Summed around the triangle:** y = (kappa / 2) f (L(a, a+) + L(b, a)), where L is the triple's angular momentum
+  about the triangle's axis (1, 1, 1).
+- **The torque identity.** The gear gives 2 D (a+ - 2a + b) = 4 F(a) + s - s', with D the gear's dial 2 W. So
+  2 D (L(a, a+) - L(b, a)) = 4 a^T J F(a) + a^T J (s - s'): the force's torque plus the teeth's torque.
+- **The force's torque is 0.** The equilateral potential of two-leg edges, S |x|^2 + f SUM x_u x_v, is turned into
+  itself about the axis, so a^T J F(a) = 0 at every state. L moves by the teeth's torque alone: it is booked to the
+  unit, as road B's energy is.
+- **So the third click lands the triangle's angular momentum** in whole quanta of G D: W = (SUM y + born) div (G D).
+  The landings tick at the charge's rate.
+- **The lines read the components across the axis.** Each clock's net passing is (kappa / 2) f times the triple's
+  angular momentum across the axis, which has two components. The circulation reads the one component along the axis.
+  So the Hodge split of the edges' flows is the split of the triple's angular momentum along and across the axis.
+- **In the board's continuum** the three edges' wedges close under the bracket as the turning group's:
+  {l_01, l_12} = l_20, and its turns.
+
+## MEASURED (tooth_5000.txt, 5,000 rounds each)
+
+Every identity above held at every round on every lay: y, the lines, the torque, the zero force torque, tau's books,
+and the books per clock in the clicks on both forms (15,000 of 15,000 clock-rounds each). On every lay the run back
+from the end state alone is exact on both forms, and S_3 holds in 6 of 6. An odd turn reads each edge's tooth from its
+other end, and tau as G D - 1 - tau.
+
+| lay (now; before) | L at the lay, at the end, its range | landings over the run | the largest line, against y |
+|---|---|---|---|
+| turning: (40, -20, -20); (20, -40, 20), a test's lay in the triangle's own plane | 3,600; 355; [336, 3,810] | 15,009 | 1.7e9 against 0.19e9 to 2.2e9 |
+| at rest: (40, 20, 1) | 0; -471; [-524, 524] | -127 | 3.0e8 against -3.0e8 to 3.0e8 |
+| turning the other way (the slots swapped) | -3,600; -355; [-3,810, -336] | -15,009 | the mirror image |
+| turning at ten times the counts | 360,000; 385,231; [349,434, 386,434] | 2,315,503 | 2.0e10 against 2.0e11 to 2.2e11 |
+| at rest at ten times the counts | 0; 27,003; [-264, 27,003] | 83,501 | 6.0e10 against -1e8 to 1.6e10 |
+
+- **The charge is kept up to the teeth's torque.** At the shipped grain the teeth's torque wears it away, from 3,600 to
+  355 over 5,000 rounds. At ten times the counts it stays within 7 percent. From rest, the teeth's torque builds it,
+  to 27,003 at ten times the counts. This is the walk of miracle/README.md, read in the angular momentum.
+- **The control:** the equilateral triangle of four-leg edges, c x_u^2 x_v^2, under the present act, laid turning. Its
+  potential is turned into itself only by S_3, not about the axis.
+  - The torque identity holds at every round, but the force's torque is 0 in only 96 of 2,914 rounds.
+  - A count passes 64 bits at round 2,914, where the reading stops: the present act's residual heats it past its
+    potential's floor (miracle/README.md).
+  - Under road B, laid at rest, the same triangle stays within 6 bits over 5,000 rounds (miracle/equil.py).
+- **The record (Q11: the teeth out).** c . q on the sides reads the circulation on both forms. Its running sum stays
+  within 1 of 3 W under the triangle's tooth, and within 2 under the first click, at every lay. So the triangle's
+  charge is in the sides on either form, as the Boss's ruling says. A click reading that tells the two forms apart
+  with the teeth out is OPEN.
+
+## The twin and the turn, read against the one tooth
+
+- With one tooth, every check that THIRD9 read with its pair holds on the equilateral triangle:
+  - the books in the clicks, per clock;
+  - the triangle's own books, tau' + G D w = tau + y;
+  - the run back from the end state alone, with tau kept by the carry's sign law;
+  - the whole of S_3.
+- The turn makes the landings' timing follow the pair's hidden digits. Under Q10, a clock reads only its own clicks,
+  and no landing ever enters a clock's line (B C = 0). So the turn hides nothing that a clock reads. The member is
+  never "the choice" (the Boss's 08:1x ruling).
+- ALG3 (0e308f17) reaches the same member on its own bench: tau, one number per triangle beyond the first click's three.
+- So no check here needs the twin. The third click is one number per triangle, the 2-cochain's. It is set by the
+  board's own flows, and on the equilateral triangle by its conserved charge, not by a hidden pair.
+
+## OPEN
+
+- **The click world's own triangle** has four-leg giver-held and taker-held edges and a two-leg giver-taker edge. Its
+  potential is not turned into itself about any axis, so its circulation is no conserved charge. Its landings follow
+  the flows.
+- **The uncertainty relation among the click readings.** The lines and the third click read the components of one
+  angular momentum, across and along the axis, and their brackets are the turning group's. A relation between the
+  click readings themselves is OPEN. UNC2 keeps the name "uncertainty principle" for place and motion, read by light's
+  echo.
+- **Road (C)'s births on the one tooth:** tau's birth, read from the seeds' law.
+
+Usage: python3 -I tooth.py <node-all src> <the click world's universe.json> [rounds]

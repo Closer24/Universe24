@@ -206,7 +206,7 @@ for n in range(1, ROUNDS + 1):
     if ENGINE:
         widest = max(widest, max(int(abs(x)).bit_length() for x in s1.a.ravel()))
         window_max = max(window_max, int((s1.a[H] * s1.a[H]).sum(axis=0).max()))
-        if n % EVERY == 0:
+        if carry(n, EVERY, 0)[1] == 0:
             walk.append((n, window_max))
             window_max = 0
         s = s1
@@ -228,7 +228,7 @@ for n in range(1, ROUNDS + 1):
     widest = max(widest, max(int(abs(x)).bit_length() for x in s1.a.ravel()))
     past32 = past32 or (n if widest > 32 else 0)
     window_max = max(window_max, int((s1.a[H] * s1.a[H]).sum(axis=0).max()))
-    if n % EVERY == 0:
+    if carry(n, EVERY, 0)[1] == 0:
         walk.append((n, window_max))
         window_max = 0
     s = s1

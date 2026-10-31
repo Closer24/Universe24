@@ -76,3 +76,19 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
 - **Stage 3, the record for the decoder** (`record14.py`): the three clicks in schema 1.4's sides shape, both ends of every edge, k_before the tooth the carry reads and k_after the tooth it leaves, read back on the record alone (partner, quotients summing to 0, teeth summing to the dial less one, q the sum of its sides) with each side's weight by the carry's own law, x = dial q + k_after - k_before. The twins are written nowhere. Records: record14_click_road3_100.txt, record14_k1_tri_100.txt, every refusal at 0.
 - **Stage 4, the pair in whole numbers** (`pairwhole.py`, gate clean): the triangle's own settings (sides 0 and 60 degrees, heights 30 and 90), every weight the triangle's own squares (the height's 3 and the half side's 1 over the side's 4); CHSH from the click counts 2,501 per mille against the hand's own 2,499 and the triangle's 5/2, no signal, the run back, and the first click with no draw beside it (2,499 too: Bell reads the pair's hand), with the order of the landings (lag-1 -1 per mille in the third click, -1,000 in the first).
 - **Stage 4b, the pair world's two ends, road (C)** (`twoends.py`, gate clean; PICTURE.md section 11): the free end, each wing's end laid apart and kept where the two copies run back to one birth, reads at most 2 (the sign rule 1,981 to 2,021 per mille over eight births against the exact 2,000, every hand value giving +2; the member's landing read back from its end tooth 818 to 879 against 849, the run back exact at 50,000 of 50,000); (B) forward reads the same; the timelike case 2,490 to 2,517 against 2,499; no signal (at most 9 per mille between a wing's two far-setting shares); the order at lags 1 and 2 within -9 to 10 per mille. Two seeds' laws that pick nothing: the end at the middle reads the sign rule at 388 of 388; one birth with one death keeps one hand value per setting pair and reads 2 with a signal (A's share 917 against 752). Records: twoends_200000.txt, twoends_200000_runs8.txt.
+- **Stage 4c, Bell from the end** (`bellend.py`, bellend.txt; the owner's words of 09:33 and 10:10 UTC, David's
+  meeting's weight). The probe counts every seed, so every reading is an exact fraction: no draw, no stand-in stream,
+  nothing picked. The law has three parts, and the pair's one hand runs from the birth to both wings:
+  - (i) one wing's click fixes the hand: clicking +1 it leaves the hand along its setting, clicking -1 across it;
+  - (ii) the board runs that end back to the birth;
+  - (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap, which is one
+    of the triangle's own squares.
+  - **Read exactly:**
+    - the pair's curve E = cos 2 theta at every multiple of 30 degrees;
+    - CHSH 5/2 at the triangle's settings, at every weight between the ends read (1:0, 0:1, 1:1, 1:2);
+    - 2,828 per mille on the plane's own lattice at the turn of z = 13 + 5 w, which is Tsirelson's 2 r2;
+    - each wing's +1 share 500 per mille under every far setting: no signal.
+  - **The free-lay control** reads half of each: CHSH 1,250 and 1,414 per mille.
+  - **OPEN:** the law on the board's own act, that is, the end click leaving the hand along its setting, the run back
+    to the birth on the pair world, and the far click's share by its own seeds. Also open: the order reading both ways,
+    and the pair's reading.
