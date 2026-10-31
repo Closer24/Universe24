@@ -4,8 +4,8 @@ one division, no float, no circular function, no root, no rounding; the universe
 no train declared here (the held train and the two tied trains read off the loader's flags by character, the giver
 the first tied train in the file's order).
 
-Clock: the held hand (A1, A2) at (1, 0) at every Node-clock, its before (0, -1) a quarter turn back, every edge tooth
-at the dial's middle, s = 0, the format's default (the room exists only for a held tooth born there); the giver, the
+Clock: the held hand (A1, A2) at rest at (1, 0) at every Node-clock, its before its now (no angle aimed: its own
+spring, CHOSEN in the universe file, turns it as the act will), every edge tooth at the dial's middle, s = 0, the format's default (the room exists only for a held tooth born there); the giver, the
 first (T1, T2) hand, laid as a line hand at its turning point, a = b = (A, 0, 0) on its first row at every Node-clock;
 the taker, the second, at 0; light and the metric at 0.
 Algebra: f = rest div Gamma, the tied spring 2 hold f; the edge moves a count only where a gear's momentum reaches half
@@ -13,16 +13,16 @@ a count a round, and a tied hand inside the room moves at most about 0.7 of a co
 Gamma div 4 and omega^2 = 2 hold / Gamma), so a taker at rest is moved by the hands' tie only where the tie is a large
 part of the tied spring (at a tenth of it the taker's push stays in its tooth: no count moves and no click falls,
 measured below); the room, hold (|x_giver|^2 + |x_taker|^2) below Gamma div 4 at the held hand, read over the whole run
-on the act; the key the nearest odd whole to the seventh of the largest swing of the giver's course of S (its passing,
-the two-round energy change) over its first beat, read off the act at the key 1, where the click is S itself, so that
-about seven keys pass in a beat.
+on the act; the key CHOSEN in the universe file, read against the largest swing of the giver's course of S (its
+passing, the two-round energy change) over its first beat at the key 1, where the click is S itself: its window an
+odd whole from 1 to that swing, and the lay computes no key (the audit's C7).
 Board: a cube of 3, every Node-clock laid alike, so the Meshes pull nothing between like sites and one Node-clock's
 run is every site's (the run tool's record and ledger read every site: click_lay/measure.py).
 Clicks: the giver's and the taker's lines, their q summing to 0 at every round and site (the pair's books, inside the
 room); the held train clicks nowhere while its quarter turn is exact (NOT_CLOSED 29).
 
 Run: .venv/bin/python tools/derivations/open_items/derive/boss/click_lay/lay.py; it writes the setting beside the
-universe and the piece under examples/tensor24-click/, the key into the universe, and lay.txt beside itself.
+universe and the piece under examples/tensor24-click/, and lay.txt beside itself; it writes no universe.
 """
 
 import json
@@ -42,9 +42,9 @@ from tensor24.runner.files import sites_of  # noqa: E402
 WORLD = ROOT.joinpath("examples", "tensor24-click")
 A = 40  # the giver's turning point: hold A^2 = 1600 of the room's Gamma div 4 = 2500
 TICKS = 5000  # past ten tied beats (the physicist's rule)
-SEVENTH = 7  # about seven keys pass in a beat
 ONE = [1, 1, 1]  # one Node-clock: every site of the cube is laid alike
-SEARCH = 1000  # the rounds the lone giver is run for its beat
+READ = 250  # the rounds between two readings of the held hand's |k|^2 in the long run
+SEARCH = 1000  # the run's window: the rounds the lone giver is run for its beat, a fixed run and no search
 
 
 def files():
@@ -69,22 +69,15 @@ def by_character(held):
 
 
 def gears_of(hand, giver, sites):
-    """The lay: the held hand (1, 0) now and (0, -1) before, the giver a = b = (A, 0, 0), at every Node-clock."""
-    turning = [[hand, 0, x, 1, 0, 0] for x in range(sites)] + [[hand, 1, x, 0, -1, 0] for x in range(sites)]
-    return turning + [[giver, 0, x, A, A, 0] for x in range(sites)]
+    """The lay: the held hand at rest at (1, 0), its before its now, the giver a = b = (A, 0, 0), at every Node-clock."""
+    resting = [[hand, 0, x, 1, 1, 0] for x in range(sites)]
+    return resting + [[giver, 0, x, A, A, 0] for x in range(sites)]
 
 
 def squares(s, held, train):
     """A train's counts squared and summed at the one Node-clock."""
     first = int(held.trains.first[train])
     return sum(int(v) ** 2 for v in s.a[first : first + held.trains[train].rows(), 0].tolist())
-
-
-def text(universe):
-    """The universe file in the examples' own layout: the version, the integers, the chosen, a train a line."""
-    trains = ",\n".join("    " + json.dumps(t) for t in universe["trains"])
-    head = [f'  "{k}": {json.dumps(universe[k])},' for k in ("version", "integers", "chosen")]
-    return "{\n" + "\n".join(head) + '\n  "trains": [\n' + trains + "\n  ]\n}\n"
 
 
 def lay():
@@ -110,7 +103,7 @@ def lay():
     )
     gears = gears_of(hand, giver, sites)
     say(
-        f"1. the held hand (1, 0) at every Node-clock, its before (0, -1) a quarter turn back, every edge tooth at the dial's middle s = 0;"
+        f"1. the held hand at rest at (1, 0) at every Node-clock, its before its now (no angle aimed), every edge tooth at the dial's middle s = 0;"
         f" the giver a line hand at its turning point, a = b = ({A}, 0, 0): hold A^2 = {hold * A * A} of the room's {room}; the taker,"
         f" light and the metric at 0: {len(gears)} gears"
     )
@@ -138,17 +131,15 @@ def lay():
         swing[0] = max(swing[0], abs(course[0]))
 
     run_one(one, gears_of(hand, giver, 1), period, wind)
-    near, _ = carry(2 * swing[0] + SEVENTH, 2 * SEVENTH, 0)  # the nearest whole to the seventh
-    _, odd = carry(near, 2, 0)
-    key = near + (1 - odd) * (1 if SEVENTH * near <= swing[0] else -1)
+    key = universe["chosen"]["key"]
     say(
-        f"3. the act at the key 1 over the first beat, rounds 1..{period} (the window): the giver's course of S swings to {swing[0]} at most;"
-        f" the key CHOSEN as the nearest odd whole to its seventh, {key}, so that about seven keys pass in a beat (twice the one-round key, S"
-        f" counting each round's energy change twice; a chosen unit of wind below the quantum, Planck's key being NOT_CLOSED 3)"
+        f"3. the key CHOSEN in the universe file, {key}, read against the act at the key 1 over the giver's first beat, rounds"
+        f" 1..{period}, where the click is S itself: the giver's course of S swings to {swing[0]} at most, so the key's window, an odd"
+        f" whole from 1 to that swing, holds it, and about {carry(swing[0], key, 0)[0]} keys pass in that beat (a chosen unit of wind below"
+        f" the quantum, Planck's key being NOT_CLOSED 3; the lay computes no key, the audit's C7)"
     )
-    universe["chosen"]["key"] = key
     # 4. the room over the whole run, at the key: the tied hands' squares at the held hand, |k|^2, the clicks
-    seen = {"most": 0, "at": 0, "k": set(), "held": 0, "books": 0, "taker": 0, "course": [0, 0], "windows": []}
+    seen = {"most": 0, "at": 0, "k": set(), "climb": [], "held": 0, "books": 0, "taker": 0, "course": [0, 0], "windows": []}
     window = [0, None]
 
     def watch(n, held_, s, clicks):
@@ -156,6 +147,7 @@ def lay():
         if total > seen["most"]:
             seen["most"], seen["at"] = total, n
         seen["k"].add(squares(s, held_, hand))
+        seen["climb"] += [(n, squares(s, held_, hand))] * int(not carry(n, READ, 0)[1])
         seen["held"] += int(clicks[hand, 0] != 0)
         seen["books"] += int(int(clicks[giver, 0]) + int(clicks[taker, 0]) != 0)
         seen["course"] = [seen["course"][0] + int(clicks[giver, 0]), seen["course"][1] + int(clicks[taker, 0])]
@@ -167,16 +159,19 @@ def lay():
             seen["windows"].append((window[1], window[0]))
             window[0], window[1] = 0, None
 
-    run_one(universe, gears_of(hand, giver, 1), TICKS, watch)
+    wide = run_one(universe, gears_of(hand, giver, 1), TICKS, watch)
     say(
-        f"4. the run at the key {key} for its {TICKS} rounds, on one Node-clock (every site of the cube alike): the tied hands' squares"
-        f" summed at the held hand, hold (|x_giver|^2 + |x_taker|^2), at most {seen['most']} (round {seen['at']}) against the room's {room},"
-        f" so the run stays inside the room for every round, the energy moving between the giver and the taker included (the lay's own"
-        f" {hold * A * A} the most); by beats of {period} rounds (least, most): {seen['windows']}; the held hand's |k|^2 {sorted(seen['k'])};"
+        f"4. the run at the key {key} for its {TICKS} rounds, on one Node-clock (every site of the cube alike), a count past the"
+        f" universe's width {universe['integers']['width']} after (round, bits) {wide}, which the run tool's promise \"wide\" names at the next"
+        f" round, the one that reads it, the run writing no record (None where it runs every round), the readings below over the rounds before it: the tied hands' squares"
+        f" summed at the held hand, hold (|x_giver|^2 + |x_taker|^2), at most {seen['most']} (round {seen['at']}) against the room's {room}"
+        f" (inside it for every round: {seen['most'] < room}; the lay's own {hold * A * A}); by beats of {period} rounds (least, most):"
+        f" {seen['windows']}; the held hand's |k|^2 from {min(seen['k'])} to {max(seen['k'])}, {len(seen['k'])} values, every {READ} rounds"
+        f" {seen['climb']};"
         f" the held train's clicks {seen['held']}; rounds where the giver's and the taker's q do not sum to 0: {seen['books']}; their"
         f" courses in keys {seen['course']}; the taker's largest count {seen['taker']}"
     )
-    # 5. the tie the plan first named, a tenth of the tied spring: the taker's push stays in its tooth
+    # 5. the tie the plan first named, a tenth of the tied spring: the taker's push stays in its tooth, as read below
     tenth = json.loads(json.dumps(universe))
     tenth["chosen"]["tie"], tenth["chosen"]["key"] = carry(2 * hold * f, 10, 0)[0], 1
     still = {"taker": 0, "tooth": 0, "clicks": 0}
@@ -187,14 +182,13 @@ def lay():
         still["tooth"] = max(still["tooth"], abs(int(s.r[first, 0])))
         still["clicks"] += sum(int(int(clicks[t, 0]) != 0) for t in range(len(held_.trains)))
 
-    run_one(tenth, gears_of(hand, giver, 1), TICKS, quiet)
+    quiet_wide = run_one(tenth, gears_of(hand, giver, 1), TICKS, quiet)
     dial = 2 * rest
     say(
         f"5. the no, the hands' tie at a tenth of the tied spring ({tenth['chosen']['tie']}) at the key 1 for {TICKS} rounds: the taker's largest"
         f" count {still['taker']}, its tooth at most {still['tooth']} of the dial's half {dial} (its push lives in the tooth, below the half count"
-        f" a round that moves a count), and {still['clicks']} clicks: no exchange, no click"
+        f" a round that moves a count), and {still['clicks']} clicks, a count past the width at (round, bits) {quiet_wide}"
     )
-    WORLD.joinpath("universe.json").write_text(text(universe), encoding="utf-8")
     WORLD.joinpath("setting.json").write_text(
         '{"version": 1, "ticks": '
         + str(TICKS)
@@ -208,11 +202,19 @@ def lay():
 
 
 def run_one(universe, gears, rounds, reader):
-    """The world laid by the gears on one Node-clock for the rounds, each round's state and clicks handed to the reader."""
+    """The world laid by the gears on one Node-clock for the rounds, each round's state and clicks handed to the reader;
+    the run stops at the round whose state holds a count past the universe's width, read from the universe file as
+    run.py reads it (its promise "wide"), that state unread, and gives the round and the count's bits (None where it
+    runs every round)."""
     held, layout, s = world(universe, ONE, gears)
+    width = universe["integers"]["width"]
     for n in range(1, rounds + 1):
         s, clicks = step.act(layout, s)
+        bits = max(int(v).bit_length() for v in s.a.ravel().tolist())
+        if bits > width:
+            return n, bits
         reader(n, held, s, clicks)
+    return None
 
 
 if __name__ == "__main__":

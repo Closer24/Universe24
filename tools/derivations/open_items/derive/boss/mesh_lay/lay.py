@@ -6,7 +6,8 @@ tied train read off the loader's flags by character).
 
 Clock: the first part of the board's wave a pulse along x, the well world's pulse form, laid at rest (its before its
 now), so that the act alone sets how it moves: it splits into two halves that run apart along the ring; the held hand
-(A1, A2) at (1, 0) at every Node-clock with its before (0, -1) and every edge tooth at the dial's middle, s = 0; the tied hand (T1, T2) at rest; the gradient vertex at the universe's
+(A1, A2) at rest at (1, 0) at every Node-clock, its before its now (no angle aimed: its own spring, CHOSEN in the
+universe file, turns it as the act will), and every edge tooth at the dial's middle, s = 0; the tied hand (T1, T2) at rest; the gradient vertex at the universe's
 CHOSEN mesh couples the difference of the board's wave to the tied hand's T1 rows and back.
 Algebra: the room, hold |x_tied|^2 below Gamma div 4 at the held hand, read over the whole run on the act; the
 squares of the board's wave summed against the same run at mesh 0 (the wave's own dispersion on the ring apart); the tied hand moves a count
@@ -36,7 +37,7 @@ from tensor24.runner.files import sites_of  # noqa: E402
 
 WORLD = ROOT.joinpath("examples", "tensor24-mesh")
 PULSE, HALF, CENTRE = 500, 4, 20  # the pulse's peak, half-width and centre along x
-SCAN = ((250000, 250), (200000, 125))  # the no: (mesh, rounds), the file's own run on and a weaker vertex
+SCAN = ((200000, 125), (240000, 125), (350000, 125), (250000, 250))  # the window about the file's mesh: (mesh, rounds)
 TICKS = 125  # the setting's ticks: inside the room at the file's mesh, measured below
 
 
@@ -69,9 +70,9 @@ def gears_of(held, shape):
     light, hand, _ = by_character(held)
     sx = shape[0]
     sites = sites_of(shape)
-    turning = [[hand, 0, x, 1, 0, 0] for x in range(sites)] + [[hand, 1, x, 0, -1, 0] for x in range(sites)]
+    resting = [[hand, 0, x, 1, 1, 0] for x in range(sites)]  # the held hand at rest: before = now
     still = [[light, 0, x, bump(x, sx), bump(x, sx), 0] for x in range(sx) if bump(x, sx)]  # at rest: before = now
-    return turning + still
+    return resting + still
 
 
 def run(universe, shape, gears, ticks):
@@ -123,7 +124,7 @@ def lay():
     )
     gears = gears_of(held, shape)
     say(
-        f"1. the lay: the held hand (1, 0) at every Node-clock, its before (0, -1), every edge tooth s = 0; the first part of the board's wave the pulse"
+        f"1. the lay: the held hand at rest at (1, 0) at every Node-clock, its before its now, every edge tooth s = 0; the first part of the board's wave the pulse"
         f" {[bump(x, shape[0]) for x in range(CENTRE - HALF, CENTRE + HALF + 1)]} about x = {CENTRE}, at rest, its before its now, so"
         f" that the act alone sets how it moves; the tied hand at rest: {len(gears)} gears; ticks {ticks}"
     )
@@ -151,7 +152,7 @@ def lay():
         other["chosen"]["mesh"] = mesh
         found, _, _, _, _ = run(other, shape, gears, rounds)
         say(
-            f"3. the no, mesh {mesh} for {rounds} rounds: hold |x_tied|^2 at most {found['most']}, first out of the room at round"
+            f"3. the window about the file's mesh, mesh {mesh} for {rounds} rounds: hold |x_tied|^2 at most {found['most']}, first out of the room at round"
             f" {found['out']}, the tied hand moved at {len(found['moved'])} Node-clocks, the held hand's |k|^2 within"
             f" {min(found['k'])} and {max(found['k'])}, {found['clicks']} clicks, the largest count {found['largest']}"
         )

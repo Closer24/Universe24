@@ -21,7 +21,7 @@ examples/tensor24/setting.json <record .jsonl>`. Read the record: `python -I too
 first component laid as a pulse along z by `tools/derivations/open_items/derive/boss/live_lay/lay.py` from the universe
 and the piece (its account in `lay.txt` beside it), 2^28 (64 - d^2)^2 at the distance d below 8 from z = 10, its peak
 at 2^40 counts (far above one notch), laid at rest, its before its now, so that the act alone sets how it moves: it
-splits into two halves of about half its peak (499 permille each at round 20) that run apart along z on the board of 3
+splits into two halves of about half its peak (498 permille each at round 20) that run apart along z on the board of 3
 by 3 by 40, about 8 Meshes in 20 rounds, meet at its far side, z = 30, near round 50, and meet again at z = 10 at round
 100, where the pair makes 967 permille of the laid peak (a board reading off the run's ledger, no claim of physics);
 the metric family stands at 0, a standing clock, so the act is exact and the run back returns the start bit for bit.
@@ -100,49 +100,50 @@ a lawful steady source.
 `examples/tensor24-click/` is a fourth folder of the same three files, a world whose clicks fall: term 6's coupling
 family in its frame (the held train found by its character and Mesh-less, the tied trains found by theirs) and term
 11's whole click, on a cube of 3 at den 1 and full_rate 10000 (the rest teeth 6 10^8, f = rest div Gamma = 60000).
-Its setting and its key are laid by `tools/derivations/open_items/derive/boss/click_lay/lay.py` from the universe and
-the piece, in whole numbers by the act itself (its account in `lay.txt` beside it). Five trains: light (A1, part 2)
-and the metric at 0, push 0 and notch 0; the held hand (A1, A2) at (1, 0) at every Node-clock, its before (0, -1),
-every edge tooth at the dial's middle, s = 0, the format's default, and its own spring CHOSEN at 10^8 by the rule: the
-grip at rest, den Gamma^2, the Mesh's own strength, which the held hand does not hold (its stiffness 2 spring = 2 10^8,
-a third of W = 6 10^8, inside the held hand's window 0 < 2 spring < 4 W and on no exact turn, W, 2 W or 3 W; the
-world's tie, 96000, the rule first tried, runs away, its counts past 4300 digits by round 1734); and two tied hands
-(T1, T2), tied to the held hand's square at hold 1 (the tied spring 2 hold f = 120000, a lone tied hand's beat 410
-rounds on the act) and to each other by the hands' tie at 96000: the giver laid as a line hand at its turning point,
-a = b = (40, 0, 0) on its T1 rows at every Node-clock, and the taker at 0. Every
-Node-clock is laid alike, so the Meshes pull nothing between like sites and each runs as the one Node-clock the
-generator reads.
+Its setting is laid by `tools/derivations/open_items/derive/boss/click_lay/lay.py` from the universe and the piece, in
+whole numbers by the act itself (its account in `lay.txt` beside it). Five trains: light (A1, part 2) and the metric
+at 0, push 0 and notch 0; the held hand (A1, A2) laid at rest at (1, 0) at every Node-clock, its before its now, no
+angle aimed (the sixth code reader's minor 1, the audit's N3), every edge tooth at the dial's middle, s = 0, the
+format's default, and its own spring CHOSEN at 10^8 by the rule: the grip at rest, den Gamma^2, the Mesh's own
+strength, which the held hand does not hold (its stiffness 2 spring = 2 10^8, a third of W = 6 10^8, inside the held
+hand's window 0 < 2 spring < 4 W and on no exact turn, W, 2 W or 3 W; the world's tie, 96000, the rule first tried,
+runs away, its counts past 4300 digits by round 1734); and two tied hands (T1, T2), tied to the held hand's square at
+hold 1 (the tied spring 2 hold f = 120000; the giver alone beats in 428 rounds on this lay) and to each other by the
+hands' tie at 96000: the giver laid as a line hand at its turning point, a = b = (40, 0, 0) on its T1 rows at every
+Node-clock, and the taker at 0. Every Node-clock is laid alike, so the Meshes pull nothing between like sites and each
+runs as the one Node-clock the generator reads. The key is CHOSEN in the universe file, 50811429, and the lay computes
+none (the audit's C7): its window is an odd whole from 1 to the largest swing of the giver's course of S (its passing,
+the two-round energy change) over its first beat, read off the act at the key 1, where the click is S itself, on this
+lay a swing of 687744000, so that about 13 keys pass in that beat (a chosen unit of wind below the quantum; Planck's
+key is NOT_CLOSED 3).
 
-The room, with its numbers, as `lay.txt` reads them on the act at the own spring the plan laid before, 2 W, an exact
-quarter turn, which law line 102 forbids in code (#2187 6537222053 item 4; the lay not rerun, so its key stands as
-chosen there): the passing's books hold only while the held hand's quarter turn is exact (the tie is a monomial of
-four value legs, NOT_CLOSED 29), which held while the tied hands' squares summed at the held hand, hold
-(|x_giver|^2 + |x_taker|^2), stay below Gamma div 4 = 2500. The lay starts at hold A^2 = 1600, and the act keeps the
-sum at most 1600 over all 5000 rounds with the energy moving between the giver and the taker (the pair beats on its two
-normal modes, so each beat's most falls from 1600 to about 1000 over the run and does not stand constant). The tie is
-800 permille of the tied spring, not a tenth of it, because the edge moves a count only where a gear's momentum reaches
-half a count a round, and a tied hand inside the room moves at most about 0.7 of a count a round: at a tenth (12000)
-the taker's push stays in its tooth, at most 158400000 of the dial's half 1200000000, no count moves and no click falls
-in 5000 rounds (`lay.txt`, its no). The key is CHOSEN as the nearest odd whole to the seventh of the largest swing of
-the giver's course of S (its passing, the two-round energy change) over its first beat, read off the act at the key
-1, where the click is S itself: a swing of 355680000, so the key 50811429 and about seven keys a beat (a chosen unit of
-wind below the quantum; Planck's key is NOT_CLOSED 3).
+What the act does with this lay, as it falls (`lay.txt`, on one Node-clock, every site of the cube alike; no tick count
+and no strength picked to avoid it): the first click falls at round 1, the held train clicking (596 of its clicks
+before the run stops); the giver's and the taker's q do not sum to 0 at 2490 rounds, so the books are open; the held
+hand's |k|^2, read every 250 rounds, is 1, 1, 1, 1, 1, 1, 0, 9, 9, 1, 4, 1, 1 and 4 to round 3500 and a number of 69 digits at round 3750, and the tied hands'
+squares summed at the held hand, hold (|x_giver|^2 + |x_taker|^2), leave the room, Gamma div 4 = 2500, within the first
+beat (their most 6829 there); then the counts climb, and after round 3751 a count takes 339 bits against the universe's
+width of 128, which the run tool's promise "wide" names at round 3752, the round that reads it, and the run writes no
+record, so the decoder has nothing to
+read on this lay. Its cause, in Big Pic's words (#2187 6538018966 item 4): a held hand laid at rest beats as a standing
+wave, so its square, and the giver's spring 2 hold f |k|^2 with it, swings, a parametric drive. The road is OPEN
+(NOT_CLOSED 37): a finer notch first, then the held pair laid above it with the hat's own spring. The lay's no, the
+hands' tie at a tenth of the tied spring (12000) at the key 1: no count of the taker moves in 5000 rounds, its push in
+its tooth, at most 1128528000 of the dial's half 1200000000, while the held train's 5187 clicks fall, and no count
+passes the width.
 
 Run it as the one bang: `python -I tools/tensor24_run.py examples/tensor24-click/universe.json
-examples/tensor24-click/piece.json examples/tensor24-click/setting.json <record .jsonl>` (5000 rounds out and back in
-about 14 minutes; the ledger is about 54 MB, five lines a Node-clock a round). At the chosen spring the record reads
-(`tools/tensor24_decode.py`'s readings, and the ledger): 282663 click lines, the held train's 73980, the giver's
-108162 and the taker's 100521, every Node-clock alike; the books NOT SHOWN, the q summed over the trains not 0 at
-123066 of the 123795 places with a line, the first at round 1; the meetings NOT SHOWN, one give and one take of one
-quantum at 540 places alone; each clock's line NOT SHOWN, 81 of 81 clocks clicking outside a meeting; D6, D7, D8 and
-the echo NOT READ by their causes; the held hand's |k|^2 climbs through the run (its most 5 by round 250, 100 by 2500,
-404 by 4250 and 680 by 5000, its largest count 22), the tied hands' largest counts 48 and 50, so no runaway holds only
-for the 5000 rounds read; the run back exact. The account of `click_lay/measure.py` in `measure.txt` (4212 click
-lines, the books 0 at 2106 of 2106 places, the held train's lines none and its |k|^2 1, the 24 of 24 turns alike over
-the first 100 rounds) is the quarter turn's record, not rerun. The frame's prices (FRAMES.md 6): the held train holds
-no Mesh, so the vacuum does not propagate; its |k|^2 is laid by the seed and picked by no law (no vacuum minimum); one
-beat per tied train; the room was the exact quarter turn, and with none laid the held train clicks and the books open
-(NOT_CLOSED 29); a Mesh leg's wind is booked by no click (NOT_CLOSED 4).
+examples/tensor24-click/piece.json examples/tensor24-click/setting.json <record .jsonl>`: on this lay the run names the
+count past the width at round 3752, every Node-clock alike, and writes no record (307 s on the run tool). The numbers of the lay before this one, the held hand laid at
+a quarter turn ((1, 0) now and (0, -1) before, aimed at 90 degrees a round, the audit's N3) at the same spring, were
+writer D's run (36fbfbbde and a66674061): 5000 rounds out and back exact, 282663 click lines, the books NOT SHOWN at
+123066 of 123795 places, the meetings NOT SHOWN, the held hand's |k|^2 climbing to 5, 100, 404 and 680 by rounds 250,
+2500, 4250 and 5000; and the account of `click_lay/measure.py` in `measure.txt` (4212 click lines, the books 0 at 2106
+of 2106 places, the held train's lines none and its |k|^2 1) is the lay of the exact quarter turn, before the spring key,
+not rerun. The frame's prices (FRAMES.md 6): the held train holds no Mesh, so the vacuum does not propagate; its |k|^2
+is laid by the seed and picked by no law (no vacuum minimum); one beat per tied train; the room was the exact quarter
+turn, and with none laid the held train clicks and the books open (NOT_CLOSED 29); a Mesh leg's wind is booked by no
+click (NOT_CLOSED 4).
 
 ## The mesh world
 
@@ -155,8 +156,9 @@ wave reaches a vector hand through the Mesh alone, and the held hand, Mesh-less,
 beside it): a ring of 180 Node-clocks along x, one across y and z, at den 1 and full_rate 10000 (the rest teeth 6 10^8,
 the grip 10^8, f = 60000); three trains: light (A1, part 2), its first part the well world's pulse (95, 281, 439, 500,
 439, 281, 95 about x = 20), laid at rest, its before its now, so that the act alone sets how it moves; the held hand
-(A1, A2) at (1, 0), its before (0, -1) and every edge tooth at the dial's middle, its own spring CHOSEN at 10^8 by
-the click world's rule, the grip at rest (the world's tie is 0, outside the window); and a tied hand (T1, T2) at rest
+(A1, A2) at rest at (1, 0), its before its now (no angle aimed; the sixth code reader's minor 1, the audit's N3), every
+edge tooth at the dial's middle, its own spring CHOSEN at 10^8 by the click world's rule, the grip at rest (the world's
+tie is 0, outside the window); and a tied hand (T1, T2) at rest
 at every Node-clock, tied to the held hand's square at hold 1 (the tied spring 120000); push 0, notch 0, tie 0, mesh
 250000 (its ground state needs mesh^2 below grip x 2 hold f / 2 = 6 10^12, and it is 625 10^8), 125 ticks.
 
@@ -165,19 +167,18 @@ round 25, 232 at round 125), about 10 Meshes in 25 rounds: at rounds 25, 50, 75,
 70 ahead and at x = 10, 0, 170, 160 and 150 behind (read off the run's ledger; a board reading, no claim of physics).
 The strengths are chosen by the act, as the click world's are, so that the world stays inside the room, hold
 |x_tied|^2 below Gamma div 4 = 2500, for its whole run, and so that the tied hand moves at all: the edge moves a count
-only where a momentum reaches half a count a round, and at mesh 200000 the tied hand never moves in the 125 rounds
-(`lay.txt`, the no), so mesh is 250000. The tied hand is gripped as the board's wave is, so its waves ride with each half and it
+only where a momentum reaches half a count a round, and at mesh 200000 and at 240000 the tied hand never moves in the
+125 rounds, while at 350000 it moves at 128 Node-clocks inside the room (at most 900; `lay.txt`, the window about the
+file's mesh), so mesh is 250000. The tied hand is gripped as the board's wave is, so its waves ride with each half and it
 grows by resonance along their paths, linearly in its count (hold |x|^2 4, 81, 196, 361 and 576 at rounds 25 to 125);
-it stays at most 576 over the 125 rounds and the same mesh leaves the room at round 225 (`lay.txt`, the no). Measured
-on the act (`lay.txt`, at the own spring the plan laid before, 2 W, an exact quarter turn; the lay not rerun): the tied
-hand moves at 122 Node-clocks, where the halves pass, up to 24 counts; the held hand's |k|^2 1 at every Node-clock and
-round; the squares of the board's wave summed within 61 permille of the same files at mesh 0 (the wave's
-own dispersion on the ring apart: the vertex takes that much into the tied hand); no click line, as the Mesh leg's
-wind, the Mesh flux, is counted by no click (NOT_CLOSED 4); the run back exact. At the chosen spring the run tool's
-record reads otherwise (its ledger and `tools/tensor24_decode.py`): the held hand's |k|^2 1 to 8, its largest count 2,
-the tied hand's hold |x|^2 at most 361, up to 19 counts, and 9896 click lines at the key 1, the held train's 4610 and
-the tied hand's 5286, the books NOT SHOWN at 6193 of 6193 places (no exact quarter turn: the room is gone, NOT_CLOSED
-29); the run back exact. Run it as the one bang: `python -I
+it stays at most 576 over the 125 rounds and the same mesh leaves the room at round 226 (`lay.txt`, the window).
+Measured on the act at the chosen spring (`lay.txt`, and the run's ledger and `tools/tensor24_decode.py`): the tied
+hand moves at 122 Node-clocks, where the halves pass, up to 24 counts; the held hand's |k|^2 swings between 0 and 1, as
+its own spring turns it by no quarter turn; the squares of the board's wave summed within 62 permille of the same files
+at mesh 0 (the wave's own dispersion on the ring apart: the vertex takes that much into the tied hand); 7592 click
+lines at the key 1 from round 20, the held train's 4302 and the tied hand's 3290, the books open at 5942 of their 6018
+places (no exact quarter turn: the room is gone, NOT_CLOSED 29; the Mesh leg's wind, the Mesh flux, is counted by no
+click, NOT_CLOSED 4); the run back exact. Run it as the one bang: `python -I
 tools/tensor24_run.py examples/tensor24-mesh/universe.json examples/tensor24-mesh/piece.json
 examples/tensor24-mesh/setting.json <record .jsonl>` (125 rounds out and back in under a minute; the ledger is about 5
-MB, three lines a Node-clock a round; 9896 click lines; the run back returns the lay bit for bit).
+MB, three lines a Node-clock a round; 7592 click lines; the run back returns the lay bit for bit).

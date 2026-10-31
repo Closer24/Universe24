@@ -105,7 +105,7 @@ def main_():
         f" {per(rest, rest + k0 * at, 10**6)} ppm at the centre and {per(rest, rest + k0 * outside, 10**6)} over the void"
         f" (10^6 at the loader's rest); along x through (y, z) = (0, 0): {along}"
     )
-    ii = {name: base + 1 + len(shape) + i for i, name in enumerate(("xx", "yy", "zz"))}
+    ii = {i: base + 1 + len(shape) + i for i in range(len(shape))}  # each axis's ii slot, read from the shape
     slots = {
         name: (mean([mean([int(s.a[r, x]) for s in half]) for x in support]), mean([mean([int(s.a[r, x]) for s in half]) for x in void]))
         for name, r in ii.items()

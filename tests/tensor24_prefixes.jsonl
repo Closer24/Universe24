@@ -1,4 +1,4 @@
-{"world": "tensor24-click", "kind": "end", "rounds": 4, "digest": "a81cc581dad9bedea8f3233f50957984de86ddba3a35e1499d04298a430e0102", "undone": 4, "exact": 1}
-{"world": "tensor24-live", "kind": "end", "rounds": 4, "digest": "95bf6efd15a93651abea5a661d3073dabaab033592b615d3a370f2e4a3d0d5e3", "undone": 4, "exact": 1}
-{"world": "tensor24-mesh", "kind": "end", "rounds": 4, "digest": "e245edb5261d90d2cf4f1678ce1a55e4916ef75b09c332221a941d70da886791", "undone": 4, "exact": 1}
-{"world": "tensor24-well", "kind": "end", "rounds": 4, "digest": "7ed5ba949701b05f131426790bdd7b9f8469c26446df448abd9a8106a989598c", "undone": 4, "exact": 1}
+{"world": "tensor24-click", "clicks": 27, "no": 4, "kind": "end", "rounds": 1, "digest": "20b720ef254c87527c65732f83b0b2cd65173b4d1ac46e7ec02d75fc44f44da9", "undone": 1, "exact": 1}
+{"world": "tensor24-live", "clicks": 0, "no": 4, "kind": "end", "rounds": 4, "digest": "95bf6efd15a93651abea5a661d3073dabaab033592b615d3a370f2e4a3d0d5e3", "undone": 4, "exact": 1}
+{"world": "tensor24-mesh", "clicks": 0, "no": 4, "kind": "end", "rounds": 4, "digest": "7b2c33d51df77b8448d6aabee2a921f7e44de3dbe64c87ac29370b4fc98d29c1", "undone": 4, "exact": 1}
+{"world": "tensor24-well", "clicks": 0, "no": 4, "kind": "end", "rounds": 4, "digest": "7ed5ba949701b05f131426790bdd7b9f8469c26446df448abd9a8106a989598c", "undone": 4, "exact": 1}
