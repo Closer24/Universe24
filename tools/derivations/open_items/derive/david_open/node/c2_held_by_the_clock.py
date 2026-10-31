@@ -6,14 +6,24 @@ the gear stepped, mirrored again). Omega drifts on the way out and returns bit f
 state: the step is a bijection on (a, b, r), so no swept area leaves the clock; what Omega misses each round,
 Delta q_re r_im - Delta q_im r_re, is written in the kept teeth.
 
-Usage: python3 -I c2_held_by_the_clock.py <src of tensor24-review at 68c7245ef>
+Usage: python3 -I c2_held_by_the_clock.py <src of tensor24-review at 68c7245ef>   (the example files are read from
+<src>/../examples/tensor24)
 """
+import json
 import sys
+from pathlib import Path
 
 sys.path.insert(0, sys.argv[1])
+from tensor24 import main  # noqa: E402
+from tensor24.runner import load as L  # noqa: E402
+from tensor24.runner.files import sites_of  # noqa: E402
 from tensor24.engine import step  # noqa: E402
 
-W = 6 * 15162856759112389 * 1000 * 1000
+ex = Path(sys.argv[1]).parent.joinpath("examples", "tensor24")
+universe = json.loads(ex.joinpath("universe.json").read_text())
+shape = json.loads(ex.joinpath("piece.json").read_text())["shape"]
+loaded, _ = L.load(universe, {"version": 1, "ticks": 1, "gears": []}, sites_of(shape), *main.made(L.star(len(shape))))
+W = int(main.layout(universe, shape, loaded).gearing.rest[0][0])  # the head's teeth, read through the loader
 A, K = 10**6, 8
 D = W // (K * K)
 

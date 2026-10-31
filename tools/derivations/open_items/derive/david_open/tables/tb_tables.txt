@@ -2,9 +2,9 @@
 (2) the seed B^(index), first index heaviest, B = 2, through P P^T, over the gcd: 43 of 43 tables bit for bit
 (2) the seed B^(index), first index heaviest, B = 3, through P P^T, over the gcd: 43 of 43 tables bit for bit
 (2) the seed B^(index), first index heaviest, B = 5, through P P^T, over the gcd: 43 of 43 tables bit for bit
-(3) E's form G = [[2, -1], [-1, 2]] kept by the 24: True
+(3) E's form G = [[2, -1], [-1, 2]] kept by the 24: True; its adjugate [[2, 1], [1, 2]] is det G = 3 times G^-1: True
     S = P (3 G^-1 on an E output, G on each E input): whole and symmetric on 43 of 43; c u u^T on 43; c in ['4', '8', '12', '24', '36']
 (4) the diagonal reading: the table on 33 of 43; off on the 10 holding a 2: ['A2 x E -> E', 'E x A2 -> E', 'E x E -> A1', 'E x E -> E', 'E x T1 -> T2', 'E x T2 -> T1', 'T1 x E -> T2', 'T1 x T1 -> E', 'T2 x E -> T1', 'T2 x T2 -> E']
 (5) the four-power reading: exact on 10 channels; 0 / 0 on 33, every one a table of 0 and +-1
 (6) E read in the weight basis where a table reads it: 10 tables still hold a 2: ['A1 x E -> E', 'E x A1 -> E', 'E x E -> A1', 'E x E -> E', 'E x T1 -> T1', 'E x T2 -> T2', 'T1 x E -> T1', 'T1 x T1 -> E', 'T2 x E -> T2', 'T2 x T2 -> E']
-(7) Gamma 1000: one notch moves the old factor off K exactly when 2 K (2 Gamma - 1) > Gamma^2, K = 1..1000: True; the least K by one carry 251 (250 x 3998 = 999500, 251 x 3998 = 1003498); the least square 16^2 = 256
+(7) Gamma 1000: one notch moves the old factor off K exactly when 2 K (2 Gamma - 1) > Gamma^2, K = 1..1000: True; the least K by one carry 251 (250 x 3998 = 999500, 251 x 3998 = 1003498)

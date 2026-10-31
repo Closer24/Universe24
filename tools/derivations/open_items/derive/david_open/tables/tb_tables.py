@@ -13,15 +13,18 @@ and five kinds:
     on the 33 it reads 0 / 0;
 (6) E read in the weight basis where a table reads it still leaves ten tables holding a 2;
 (7) the Mesh unit: one notch of tension moves the old Link factor (K (Gamma - 1)^2 + Gamma^2 div 2) div Gamma^2 off K
-    exactly when 2 K (2 Gamma - 1) > Gamma^2, for every K up to 1,000 at Gamma 1,000; the least such K by one carry,
-    Gamma^2 div (2 (2 Gamma - 1)) + 1, is 251, and the least square among them is 16^2 = 256.
+    exactly when 2 K (2 Gamma - 1) > Gamma^2, for every K up to 1,000 at the example's Gamma (its full rate, read from
+    its universe file); the least such K by one carry, Gamma^2 div (2 (2 Gamma - 1)) + 1.
 
-Usage: python3 -I tb_tables.py <src of tensor24-review at 8ea447532>
+Usage: python3 -I tb_tables.py <src of tensor24-review at 8ea447532>   (the example files are read from
+<src>/../examples/tensor24)
 """
 
 import functools
 import itertools
+import json
 import sys
+from pathlib import Path
 
 import numpy as np
 
@@ -30,12 +33,17 @@ from tensor24.engine import kinds as K  # noqa: E402
 from tensor24.runner import load as L  # noqa: E402
 
 matrix, weight = K.turns(L.star(3))
-held = list(K.kinds(matrix))
+named = K.kinds(matrix)
+held = list(named)
 inv = list(K.kinds(K.inverse(matrix)))
-names = ["A1", "A2", "E", "T1", "T2"]
+names = [f.upper() for f in named._fields]
+E = names.index("E")
+group = int(sum(weight))
 head = L.tables(held, inv, weight, K.projector)
-G = np.array([[2, -1], [-1, 2]], dtype=object)  # the Gram matrix of (e1 - e2, e2 - e3)
-G3inv = np.array([[2, 1], [1, 2]], dtype=object)  # 3 G^-1
+plane = np.array([[1, -1, 0], [0, 1, -1]], dtype=object)  # the act's basis of E, (e1 - e2, e2 - e3)
+G = plane.dot(plane.T)  # its Gram matrix
+det = int(G[0, 0] * G[1, 1] - G[0, 1] * G[1, 0])
+G3inv = np.array([[G[1, 1], -G[0, 1]], [-G[1, 0], G[0, 0]]], dtype=object)  # the adjugate, det G times G^-1
 
 
 def eye(d):
@@ -49,7 +57,7 @@ def name(i, k, m):
 def channels(inputs):
     """Every channel with a table: (i, k, m, shape, P), P from seed (y, p, q) to table entry (x, a, b)."""
     out = []
-    for i, k, m in itertools.product(range(5), repeat=3):
+    for i, k, m in itertools.product(range(len(held)), repeat=3):
         shape = tuple(held[n].shape[-1] for n in (m, i, k))
         n = int(np.prod(shape))
         P = K.projector(weight, held[m], inputs[i], inputs[k]).reshape(n, n)
@@ -95,7 +103,7 @@ def order(p, q):
 chan = channels(inv)
 traces = {sum(int(P[j, j]) for j in range(P.shape[0])) for _, _, _, _, P in chan}
 print(
-    f"(1) channels with a table: {len(chan)}; their group sums' traces: {sorted(traces)} (24 x the multiplicity)"
+    f"(1) channels with a table: {len(chan)}; their group sums' traces: {sorted(traces)} ({group} x the multiplicity)"
 )
 
 for B in (2, 3, 5):
@@ -110,19 +118,22 @@ for B in (2, 3, 5):
             and all(int(a) // g == int(b) for a, b in zip(v, head[(i, k, m)].reshape(-1), strict=True))
         )
     print(
-        f"(2) the seed B^(index), first index heaviest, B = {B}, through P P^T, over the gcd: {same} of 43 tables bit for bit"
+        f"(2) the seed B^(index), first index heaviest, B = {B}, through P P^T, over the gcd: {same} of {len(chan)} tables"
+        " bit for bit"
     )
 
-kept = all((held[2][t].T.dot(G).dot(held[2][t]) == G).all() for t in range(len(weight)) if weight[t])
-print(f"(3) E's form G = [[2, -1], [-1, 2]] kept by the 24: {kept}")
+kept = all((held[E][t].T.dot(G).dot(held[E][t]) == G).all() for t in range(len(weight)) if weight[t])
+adjugate = bool((G3inv.dot(G) == det * eye(2)).all())
+print(f"(3) E's form G = {G.tolist()} kept by the 24: {kept}; its adjugate {G3inv.tolist()} is det G = {det} times"
+      f" G^-1: {adjugate}")
 sym = rank1 = boss = power = zero = 0
 off, cs = [], []
 for i, k, m, shape, P in chan:
     n = P.shape[0]
     u = [int(a) for a in head[(i, k, m)].reshape(-1)]
     form = np.kron(
-        np.kron(G3inv if m == 2 else eye(shape[0]), G if i == 2 else eye(shape[1])),
-        G if k == 2 else eye(shape[2]),
+        np.kron(G3inv if m == E else eye(shape[0]), G if i == E else eye(shape[1])),
+        G if k == E else eye(shape[2]),
     )
     S = P.dot(form)
     sym += int((S == S.T).all())
@@ -144,17 +155,18 @@ for i, k, m, shape, P in chan:
         power += int(r == 0 and q * c[1] == c[0])
     cs.append(c)
 print(
-    f"    S = P (3 G^-1 on an E output, G on each E input): whole and symmetric on {sym} of 43; c u u^T on {rank1};"
+    f"    S = P ({det} G^-1 on an E output, G on each E input): whole and symmetric on {sym} of {len(chan)}; c u u^T on"
+    f" {rank1};"
     f" c in {[shown(q) for q in sorted(set(cs), key=functools.cmp_to_key(order))]}"
 )
-print(f"(4) the diagonal reading: the table on {boss} of 43; off on the {len(off)} holding a 2: {off}")
+print(f"(4) the diagonal reading: the table on {boss} of {len(chan)}; off on the {len(off)} holding a 2: {off}")
 print(
     f"(5) the four-power reading: exact on {power} channels; 0 / 0 on {zero}, every one a table of 0 and +-1"
 )
 
 dual = list(inv)
-dual[2] = np.einsum(
-    "gij->gji", held[2]
+dual[E] = np.einsum(
+    "gij->gji", held[E]
 )  # E's matrices of g^-1 in the weight basis: (E(g^-1))^-T = E(g)^T
 tab = L.tables(held, dual, weight, K.projector)
 two = [
@@ -164,16 +176,16 @@ two = [
 ]
 print(f"(6) E read in the weight basis where a table reads it: {len(two)} tables still hold a 2: {two}")
 
-gamma = 1000
+universe = json.loads(Path(sys.argv[1]).parent.joinpath("examples", "tensor24", "universe.json").read_text())
+gamma = universe["integers"]["full_rate"]  # the example's Gamma, read from its file
 wall = gamma * gamma
 agree = all(
     ((kk * (gamma - 1) ** 2 + wall // 2) // wall < kk) == (2 * kk * (2 * gamma - 1) > wall)
     for kk in range(1, 1001)
 )
 least = wall // (2 * (2 * gamma - 1)) + 1
-g = next(g for g in itertools.count(1) if 2 * g * g * (2 * gamma - 1) > wall)
 print(
     f"(7) Gamma {gamma}: one notch moves the old factor off K exactly when 2 K (2 Gamma - 1) > Gamma^2, K = 1..1000: {agree};"
     f" the least K by one carry {least} ({least - 1} x {2 * (2 * gamma - 1)} = {(least - 1) * 2 * (2 * gamma - 1)},"
-    f" {least} x {2 * (2 * gamma - 1)} = {least * 2 * (2 * gamma - 1)}); the least square {g}^2 = {g * g}"
+    f" {least} x {2 * (2 * gamma - 1)} = {least * 2 * (2 * gamma - 1)})"
 )

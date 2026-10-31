@@ -22,14 +22,20 @@ over it and its six neighbours of the A1 rows' fine teeth (all five rows here).
     (everything at rest but one packet of 27 Node-clocks near 100 counts): spread, halves, and a part of 1 in 100
     drawn in two rounds running against chance.
 
-Usage: python3 -I g5_draw.py <src of tensor24-review at a7f40fc16>
+Usage: python3 -I g5_draw.py <src of tensor24-review at a7f40fc16>   (the example files are read from
+<src>/../examples/tensor24)
 """
 
+import json
 import sys
+from pathlib import Path
 
 import numpy as np
 
 sys.path.insert(0, sys.argv[1])
+from tensor24 import main  # noqa: E402
+from tensor24.runner import load as L  # noqa: E402
+from tensor24.runner.files import sites_of  # noqa: E402
 from tensor24.algebra.carry import carry  # noqa: E402
 from tensor24.engine import step  # noqa: E402
 from tensor24.engine.contract import pushes  # noqa: E402
@@ -37,8 +43,13 @@ from tensor24.engine.state import Gearing, Layout, Plan, Read, State  # noqa: E4
 from tensor24.runner.board import board  # noqa: E402
 from tensor24.runner.load import geometry  # noqa: E402
 
-GRIP = 15162856759112389 * 1000 * 1000
-W = 6 * GRIP
+ex = Path(sys.argv[1]).parent.joinpath("examples", "tensor24")
+universe = json.loads(ex.joinpath("universe.json").read_text())
+example = json.loads(ex.joinpath("piece.json").read_text())["shape"]
+loaded, _ = L.load(universe, {"version": 1, "ticks": 1, "gears": []}, sites_of(example), *main.made(L.star(len(example))))
+teeth = main.layout(universe, example, loaded)
+GRIP = int(teeth.grip[0][0])  # the example's grip, read through the loader
+W = int(teeth.gearing.rest[0][0])  # the example's teeth, 6 grips
 SHAPE = (6, 6, 6)
 ROWS = 5  # light re, im; matter re, im; the held count
 ROUNDS, FROM = 420, 20
