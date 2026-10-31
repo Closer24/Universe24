@@ -853,7 +853,7 @@ footer { font-size: 0.8rem; color: var(--muted); max-width: 80ch; }
   // the readings, one row each, block by block
   (function readings() {
     var holder = $("readings");
-    var kinds = { "SHOWN": "ok", "NOT SHOWN": "no", "NOT READ": "unread", "NO CLICK": "unread", "READ": "read" };
+    var kinds = { "SHOWN": "ok", "NOT SHOWN": "no", "NOT READ": "unread", "NO CLICK": "unread", "READ": "read", "HOLDS": "read", "FAILS": "no" };
     function flat(v, path, out) {
       if (v !== null && typeof v === "object") {
         Object.keys(v).forEach(function (k) { flat(v[k], path ? path + " " + k : k, out); });

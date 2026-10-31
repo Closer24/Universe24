@@ -69,7 +69,7 @@ def tool(tmp_path):
 
 def test_the_meetings_are_one_give_and_one_take_at_a_place(tmp_path):
     """Yes: a give and a take at each of two places, the meetings SHOWN. No: q -2 and +2 at a place, and +1, +1 and -2,
-    each NOT SHOWN though the books close (the sum alone shows both); a record of no click line NO CLICK in each of the
+    each NOT SHOWN though the edges' consistency check holds (the sum alone shows both); a record of no click line NO CLICK in each of the
     four readings called alone, the owner's phrase whole."""
     yes = read(tmp_path, *edges(1, 0, (0, 1, 1)), *edges(1 + 1, 0, (1 + 1, 1, 1)))
     met = "one give and one take of one quantum at 2 of 2 places: 1 from train 0 to train 1, 1 from train 2 to train 1"
@@ -81,7 +81,7 @@ def test_the_meetings_are_one_give_and_one_take_at_a_place(tmp_path):
     ):
         no = read(tmp_path, *lines)
         odd = f"the click lines at round 1, site 0 hold {held}: not one give and one take of one quantum at 1 of 1 places"
-        assert shadow.books(no)["kind"] == "SHOWN"
+        assert shadow.books(no)["kind"] == shadow.HOLDS
         assert (shadow.meetings(no)["kind"], shadow.meetings(no)["cause"]) == ("NOT SHOWN", odd)
     empty = read(tmp_path)
     for reading in (shadow.books, shadow.cone, shadow.meetings, shadow.clock_lines):
@@ -163,12 +163,12 @@ def test_the_cone_reads_the_lines_that_could_stand_outside_it_and_the_setting_by
 
 
 def test_the_books_read_in_row_15_order_and_the_tool_refuses_only_a_record_of_no_click(tmp_path):
-    """Yes: a meeting, the books SHOWN, the trains' tallies (one of no line) in the reading and the tool, no refusal line.
-    No: a give at round 1 and its take at round 2, refused at read for the absent partner and, read without the sides'
-    guard, NOT SHOWN at round 1, row 15's first, the gap of no q beside it, the meetings so; no train first, NOT READ."""
+    """Yes: a meeting, the edges' consistency check holding by construction, the trains' tallies (one of no line) in the
+    reading and the tool, no refusal line. No: a give at round 1 and its take at round 2, refused at read for the absent
+    partner and, read without the sides' guard, FAILS at round 1, row 15's first, the gap of no q beside it, the meetings so; no train first, NOT READ."""
     shown = shadow.books(read(tmp_path, *edges(1, 0, (0, 1, 1))))
     out = tool(tmp_path)
-    assert shown["kind"] == "SHOWN" and shown["trains"][0] == clicks.Tally(1, 1, 0, -1)
+    assert shown["kind"] == shadow.HOLDS and shown["trains"][0] == clicks.Tally(1, 1, 0, -1)
     assert REFUSAL not in out
     assert "    train 0 (a): 1 lines, given 1, taken 0, net -1" in out.splitlines()
     assert "    train 2 (c): 0 lines, given 0, taken 0, net 0" in out.splitlines()
@@ -176,7 +176,7 @@ def test_the_books_read_in_row_15_order_and_the_tool_refuses_only_a_record_of_no
     assert read(tmp_path, *apart) is None and REFUSAL not in tool(tmp_path)
     held = shadow.books(read(tmp_path, *apart, guards=LOOSE))
     opened = "the sum of q over the trains is -1 at round 1, site 0: not 0 at 2 of 2 places"
-    assert (held["kind"], held["cause"]) == ("NOT SHOWN", opened)
+    assert (held["kind"], held["cause"]) == (shadow.FAILS, opened)
     gap = {key: value for key, value in edges(3, 0, (0, 1, 1))[0].items() if key != "q"}
     lone = edges(1 + 1, 0, (0, 1, 1))[0]
     record = read(tmp_path, *edges(1, 0, (0, 1, 1)), lone, gap, edges(3, 0, (0, 1, 1))[1], guards=LOOSE)
