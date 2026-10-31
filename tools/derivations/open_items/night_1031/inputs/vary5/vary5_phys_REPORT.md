@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:3x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of VARY5 (frozen 747442ca), the hostile physicist (the VARY pair's physicist). -->
+<!-- Boss note, 2026-10-31 09:15 UTC (first labelled ~09:3x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of VARY5 (frozen 747442ca), the hostile physicist (the VARY pair's physicist). -->
 
 # The hostile physicist (THIRD pair) on VARY5 (the varied lay, fifth text), 2026-10-31, 09:0x to 09:3x UTC
 

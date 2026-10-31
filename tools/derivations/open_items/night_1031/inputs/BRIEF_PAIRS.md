@@ -570,7 +570,7 @@ Reports: S/miracle_a_math/REPORT.md, S/miracle_a_phys/REPORT.md. Both read MIRAC
   P, and MIRACLE_B's 225 and 2,545 keys are cited as road B's clicks' residual. The residual is named by its class
   (D's class), with both references' numbers (G and G'); G' is no privileged reference where the step is not small.
 
-## The Boss's rulings, 09:3x UTC (from VARY5's physicist, with its mathematician)
+## The Boss's rulings, 09:3x UTC [a name only: written 09:15 UTC; the label ran ahead of the clock] (from VARY5's physicist, with its mathematician)
 
 - The open book in the clicks is reported in two parts: (i) the head's reference part, -2 delta G' (the tie's
   normalized form's change at the counts, about four fifths of the place's miss at L1's peak), a state part by the 08:3x
@@ -583,7 +583,7 @@ Reports: S/miracle_a_math/REPORT.md, S/miracle_a_phys/REPORT.md. Both read MIRAC
   from a bounded wander. This belongs with the energy's bound (STOP1's, now Big Pic's).
 - VARY6 is held: VARY5 with both reports goes to Big Pic as an input to the miracle (the owner's word of about 09:05).
 
-## The Boss's rulings, 09:4x UTC (from THIRD9's two readers; both NOT PASSED on one point)
+## The Boss's rulings, 09:4x UTC [a name only: written 09:19 UTC; the label ran ahead of the clock] (from THIRD9's two readers; both NOT PASSED on one point)
 
 - c . x = c . ((dial) q + k_after - k_before) reads the teeth, so it is a board check (08:5x), DERIVED and exact by the
   carry, never the third click's click reading. Q11's case (a), the teeth as click content, would make it one, but it
@@ -599,7 +599,7 @@ Reports: S/miracle_a_math/REPORT.md, S/miracle_a_phys/REPORT.md. Both read MIRAC
   harness, or a test's lay named so. The shipped click world cannot host it (no meeting joins two Node-clocks there),
   and its order reading passes there by structure. Whether a Mesh meeting names a pair is DECODE3f's item, in the batch.
 
-## The Boss's rulings, 09:5x UTC (from UNC2's and MASS2's mathematicians)
+## The Boss's rulings, 09:5x UTC [a name only: written 09:22 UTC; the label ran ahead of the clock] (from UNC2's and MASS2's mathematicians)
 
 - Q11 is now the owner's law (about 09:05): no click reading reads the teeth; case (a) is a counterfactual, named so.
   The uncertainty principle from two click observables is Big Pic's alone; LIGHT3's lines and echo are his inputs.
@@ -615,7 +615,7 @@ Reports: S/miracle_a_math/REPORT.md, S/miracle_a_phys/REPORT.md. Both read MIRAC
 - Per Big Pic (09:1x): UNC2, NATURE3, ALG2 and MATH4 get their current round and no new one; MIRACLE_A2 and ONELAW4's
   runs are stopped; their texts go to him as they stand.
 
-## The Boss's rulings, 10:0x UTC (from LIGHT3's physicist, MASS2's physicist and STOP1)
+## The Boss's rulings, 10:0x UTC [a name only: written 09:23 UTC; the label ran ahead of the clock] (from LIGHT3's physicist, MASS2's physicist and STOP1)
 
 - An observer of the echo needs own meetings: a clock with no own meeting in the whole record has no count (FACE2), so
   it is no A and no B. The echo rule requires own meetings of A and B, or names per train that it admits clocks with no
@@ -635,7 +635,7 @@ Reports: S/miracle_a_math/REPORT.md, S/miracle_a_phys/REPORT.md. Both read MIRAC
   its four choices (the pairing, the held hand's own square, the factor, the reach) decide the worlds' outcomes. It goes
   to Big Pic as an input on the miracle's path; he says whether the owner is needed.
 
-## The Boss's rulings, 10:1x UTC (from ALG2's physicist, MIRACLE_B2's mathematician and UNC2's physicist)
+## The Boss's rulings, 10:1x UTC [a name only: written 09:24 UTC; the label ran ahead of the clock] (from ALG2's physicist, MIRACLE_B2's mathematician and UNC2's physicist)
 
 - "Place" in a text means a Node-clock, a board site, until the owner rules on the click world's place (08:5x).
   ALG2's X_-1 is renamed "the part": a connected part of the laid structure, a board fact.
@@ -673,7 +673,7 @@ Reports: S/miracle_a_math/REPORT.md, S/miracle_a_phys/REPORT.md. Both read MIRAC
 - A text with no next round goes to Big Pic with its readers' reports beside it; the MINORs that rest on rulings made
   after its freeze travel in those reports.
 
-## The owner's answers, about 09:4x UTC (in force; in Hebrew, the Boss's translation; Sofer enters them whole)
+## The owner's answers, about 09:4x UTC [a name only: the owner wrote at 09:30 UTC; the label ran ahead of the clock] (in force; in Hebrew, the Boss's translation; Sofer enters them whole)
 
 To the Boss's list of 09:1x (items as numbered there):
 1. "Approved": a clock reads only its own clicks (Q10). Its sides and the board are not "what a clock can read".
@@ -702,7 +702,7 @@ The Boss's rulings with them, 09:4x UTC:
 - The odd dial is needed by the triangle's pair (its flip about the birth), not by the edges' act (ALG2's mathematician,
   MINOR 1, MEASURED and DERIVED).
 
-## The owner's word, about 09:4x UTC, on (C)'s two forms (in Hebrew; the Boss's translation)
+## The owner's word, about 09:4x UTC [a name only: the owner wrote at 09:33 UTC; the label ran ahead of the clock], on (C)'s two forms (in Hebrew; the Boss's translation)
 
 - "I answered you... Bell from the end feels closer to nature..." Of Big Pic's two forms for (C)'s seeds' law, the end
   form (a tie of the two wings' ends, with no signal) comes first on Big Pic's bench; the start form stays derived
@@ -712,7 +712,7 @@ The Boss's rulings with them, 09:4x UTC:
   rationals part sound), and nothing in whole numbers leans on it. A test's lay that differs at a whole row is lawful
   as the check of a DERIVED fact, named a test's lay (09:5x, any board shape).
 
-## The Boss's rulings, 09:5x UTC, second part (from DECODE3g's physicist; the owner's word on ALG2)
+## The Boss's rulings, 09:5x UTC [a name only: written 09:36 UTC; the owner's word on ALG2 came at 09:35 UTC; the label ran ahead of the clock], second part (from DECODE3g's physicist; the owner's word on ALG2)
 
 - R2's gate is taken from the clock's own counts (the exchangeable chance, given the half's N clicks and the n with side
   1, that no two side-1 clicks stand in a row), so R2 is a click reading by the 09:5x rule; the passing-given chance
@@ -734,7 +734,7 @@ The Boss's rulings with them, 09:4x UTC:
 - With the teeth out of the record, the checks that read teeth (K1's birth check, F1's teeth ranges, the twins' board
   halves) read the board's own state, as code checks (writer I, node-rec).
 
-## The Boss's rulings, 10:0x UTC, second part (from DECODE3g's mathematician, with its physicist)
+## The Boss's rulings, 10:0x UTC [a name only: written 09:40 UTC; the label ran ahead of the clock], second part (from DECODE3g's mathematician, with its physicist)
 
 - R2's gate is read from the clock's own counts and covers every context rung 1 needs: the exact chance of no "11" and
   of no "00", by the transfer recursion on the clock's own counts, summed and read where the sum is at most 1/20; the
@@ -745,3 +745,13 @@ The Boss's rulings with them, 09:4x UTC:
 - (3b)'s per-K cuts (two tails, whole numbers, Poisson sums for even K) are a test's convention computed from its law:
   the decoder's writer tabulates them now. They are not Big Pic's.
 - A ladder's share is spent once: the rungs' bounds sum against the share.
+
+## The Boss's correction, 09:4x UTC: labels that ran ahead of the clock
+
+From 09:15 to 09:40 UTC I labelled nine section headers of this brief, and the notes on eighteen readers' reports,
+with times ahead of the clock (09:3x to 10:1x for what was written from 09:15 to 09:40); three more notes, written at
+08:59 and 09:09, carried the next ten minutes' label. Each such header and note now carries its true time beside its
+label; the labels stay as the sections' names, since rulings and texts cite them. The order
+of the sections in this file is the true order. The times in my posts on #2187 were right. Three commit messages on
+boss-derive carry wrong times: 04b7385dd says 09:4x (made 09:21 UTC), 9967a224b says 10:1x (made 09:27 UTC) and
+9b4407b5f says 09:5x (made 09:41 UTC); their history is not rewritten, and INDEX.md names them.

@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:5x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MASS2 (frozen c41cbea6), the hostile mathematician (MASS1's mathematician). -->
+<!-- Boss note, 2026-10-31 09:22 UTC (first labelled ~09:5x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MASS2 (frozen c41cbea6), the hostile mathematician (MASS1's mathematician). -->
 
 # MASS2, read by the hostile mathematician (2026-10-31), the reader of MASS1
 

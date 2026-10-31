@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:0x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MIRACLE_A (frozen d88bd712), the hostile physicist. -->
+<!-- Boss note, 2026-10-31 08:59 UTC (first labelled ~09:0x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MIRACLE_A (frozen d88bd712), the hostile physicist. -->
 
 (My harness refused the write to S/miracle_a_phys/REPORT.md, so the whole report is here for the Boss to file. S = S.)
 

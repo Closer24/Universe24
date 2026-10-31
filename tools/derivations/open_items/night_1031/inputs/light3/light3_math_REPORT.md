@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:4x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of LIGHT3 (frozen e111cfcd), the hostile mathematician (LIGHT2's mathematician). -->
+<!-- Boss note, 2026-10-31 09:32 UTC (first labelled ~09:4x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of LIGHT3 (frozen e111cfcd), the hostile mathematician (LIGHT2's mathematician). -->
 
 # The hostile mathematician on LIGHT3, 2026-10-31, 09:01 to 09:30 UTC
 

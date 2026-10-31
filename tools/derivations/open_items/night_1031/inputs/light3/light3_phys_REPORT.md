@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~10:0x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of LIGHT3 (frozen e111cfcd), the hostile physicist (LIGHT2's physicist). -->
+<!-- Boss note, 2026-10-31 09:23 UTC (first labelled ~10:0x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of LIGHT3 (frozen e111cfcd), the hostile physicist (LIGHT2's physicist). -->
 
 VERDICT on LIGHT3: PASSED
 

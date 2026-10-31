@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~10:0x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of UNC2 (frozen 4f127c83), the hostile physicist (UNC1's physicist). -->
+<!-- Boss note, 2026-10-31 09:24 UTC (first labelled ~10:0x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of UNC2 (frozen 4f127c83), the hostile physicist (UNC1's physicist). -->
 
 This session's harness refuses report files from subagents (it refused my earlier REPORT.md writes the same way), so the whole report is below for the Boss to write to S/unc2_phys/REPORT.md.
 

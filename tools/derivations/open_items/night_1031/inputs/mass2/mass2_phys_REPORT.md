@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:5x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MASS2 (frozen c41cbea6), the hostile physicist (MASS1's physicist). -->
+<!-- Boss note, 2026-10-31 09:23 UTC (first labelled ~09:5x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MASS2 (frozen c41cbea6), the hostile physicist (MASS1's physicist). -->
 
 (My harness refuses report files, so this is the whole report for the Boss to write into S/mass2_phys/REPORT.md. S = S.)
 

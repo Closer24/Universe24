@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:4x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of ALG2 (frozen 4d60d6d7), the hostile mathematician (ALG1's mathematician). -->
+<!-- Boss note, 2026-10-31 09:32 UTC (first labelled ~09:4x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of ALG2 (frozen 4d60d6d7), the hostile mathematician (ALG1's mathematician). -->
 
 # The hostile mathematician on ALG2 (ALG1 corrected), 2026-10-31
 

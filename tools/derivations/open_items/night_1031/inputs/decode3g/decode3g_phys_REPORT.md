@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:5x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of DECODE3g (frozen 083032b0), the hostile physicist (the HALF pair's physicist). -->
+<!-- Boss note, 2026-10-31 09:36 UTC (first labelled ~09:5x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of DECODE3g (frozen 083032b0), the hostile physicist (the HALF pair's physicist). -->
 
 This session's harness refuses report files from subagents, as it did for my earlier REPORT.md writes. So the whole report is below; the Boss can write it to S/decode3g_phys/REPORT.md.
 

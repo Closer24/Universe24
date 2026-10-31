@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:3x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of THIRD9 (frozen 54c6ac14), the hostile physicist (the THIRD pair's physicist). -->
+<!-- Boss note, 2026-10-31 09:19 UTC (first labelled ~09:3x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of THIRD9 (frozen 54c6ac14), the hostile physicist (the THIRD pair's physicist). -->
 
 # The hostile physicist (THIRD pair) on THIRD9, 2026-10-31, 09:01 to 09:18 UTC
 

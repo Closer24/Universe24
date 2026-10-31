@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:5x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of UNC2 (frozen 4f127c83), the hostile mathematician (UNC1's mathematician). -->
+<!-- Boss note, 2026-10-31 09:22 UTC (first labelled ~09:5x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of UNC2 (frozen 4f127c83), the hostile mathematician (UNC1's mathematician). -->
 
 # The hostile mathematician (THIRD pair) on UNC2 (what the click record fixes of the board's passing and teeth), 2026-10-31
 

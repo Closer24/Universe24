@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:5x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of DECODE3g (frozen 083032b0), the hostile mathematician (the HALF pair's mathematician). -->
+<!-- Boss note, 2026-10-31 09:40 UTC (first labelled ~09:5x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of DECODE3g (frozen 083032b0), the hostile mathematician (the HALF pair's mathematician). -->
 
 My harness does not let me write report files, so the whole report is below for the Boss to file as S/decode3g_math/REPORT.md. My probes and their outputs are in that folder: g_r2r3, g_r4 and g_cuts, each a .py with its .txt, plus rerun/ with its math_*_run.txt files.
 

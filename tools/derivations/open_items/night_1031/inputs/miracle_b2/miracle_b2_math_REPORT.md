@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~10:0x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MIRACLE_B2 (frozen 33345ba9), the hostile mathematician (MIRACLE_B's mathematician). -->
+<!-- Boss note, 2026-10-31 09:24 UTC (first labelled ~10:0x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MIRACLE_B2 (frozen 33345ba9), the hostile mathematician (MIRACLE_B's mathematician). -->
 
 MIRACLE_B2, read by the hostile mathematician (miracle_b2_math)
 

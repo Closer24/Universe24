@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~10:1x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MIRACLE_B2 (frozen 33345ba9), the hostile physicist (MIRACLE_B's physicist). -->
+<!-- Boss note, 2026-10-31 09:25 UTC (first labelled ~10:1x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MIRACLE_B2 (frozen 33345ba9), the hostile physicist (MIRACLE_B's physicist). -->
 
 # The hostile physicist on MIRACLE_B2 (road B, each edge's own dial), 2026-10-31, 09:1x to 09:2x UTC
 

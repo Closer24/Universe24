@@ -1,4 +1,4 @@
-# Inputs for Big Pic's bench (night_1031/inputs/, the Boss, 2026-10-31, 09:5x UTC)
+# Inputs for Big Pic's bench (night_1031/inputs/, the Boss, 2026-10-31, 09:4x UTC by the clock)
 
 The owner's word of about 09:05 UTC: Big Pic solves every open item in the code on his own bench, as he solved the
 clicks; our writers implement what is settled; the team only helps. Big Pic asked (6541571347) for each finished text
@@ -34,7 +34,12 @@ One text per line: folder/text, sha256 prefix, standing.
 - decode3g/DECODE3g.md 083032b0: mathematician NOT PASSED; physicist NOT PASSED.
 - key4/KEY4.md c169c30c: with both its readers now (KEY3's pair); the key's machinery, its value Big Pic's by the strengths law.
 
-BRIEF_PAIRS.md is the pairs' brief with every ruling to 10:0x UTC, second part, and the owner's answers of 09:4x and the owner's word of about 09:05.
+BRIEF_PAIRS.md is the pairs' brief with every ruling to the Boss's correction of 09:4x UTC, the owner's
+answers of 09:30 UTC and his word of about 09:05. From 09:15 to 09:40 UTC the Boss labelled nine of its sections, and
+the notes on eighteen readers' reports, with times ahead of the clock; each such header and note now carries its true
+time beside its label, and the labels stay as the sections' names, since rulings and texts cite them. Three commit
+messages on this branch carry wrong times: 04b7385dd says 09:4x (made 09:21 UTC), 9967a224b says 10:1x (made 09:27
+UTC) and 9b4407b5f says 09:5x (made 09:41 UTC); their history is not rewritten.
 
 Left out, named: onelaw4/p1_gap.py and onelaw4/p2_closure.py draw their test states with np.random, which the
 gate refuses in the tree (REFUSED PROBE); their two runs each are here, so ONELAW4's p1 and p2 readings stand on

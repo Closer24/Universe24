@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:1x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MATH3 (frozen 6e9a9cd0), the hostile physicist (the MATH pair's physicist). -->
+<!-- Boss note, 2026-10-31 09:09 UTC (first labelled ~09:1x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of MATH3 (frozen 6e9a9cd0), the hostile physicist (the MATH pair's physicist). -->
 
 # The hostile physicist (MATH pair) on MATH3, 2026-10-31, 09:0x UTC
 

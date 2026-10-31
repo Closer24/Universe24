@@ -1,4 +1,4 @@
-<!-- Boss note, 2026-10-31 ~09:4x UTC: written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of NATURE3 (frozen 8f5e823d), the hostile mathematician (NATURE2's mathematician). -->
+<!-- Boss note, 2026-10-31 09:39 UTC (first labelled ~09:4x, ahead of the clock): written by the Boss from the reader's hand-back (the harness refuses report files from readers); the text below is the reader's, whole. Reader of NATURE3 (frozen 8f5e823d), the hostile mathematician (NATURE2's mathematician). -->
 
 # The hostile mathematician on NATURE3, 2026-10-31, 09:33 to 09:45 UTC
 
