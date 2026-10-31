@@ -103,6 +103,11 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "versioned",
         f"the version 1.4 is of another major than the schema's {schema.VERSION}",
     ),
+    "a major and minor of no 1.x header, and no label": (
+        [{**{k: v for k, v in H.items() if k != "version"}, "major": 3, "minor": 0}, E],
+        "versioned",
+        "the header holds no version",
+    ),
     **{
         f"a version off the label's form, {label}": (
             [{**H, "version": label}, E],

@@ -3,7 +3,7 @@
 # The schema's rules are its guards, checked in order as it reads (Animate): the file reads; every line is a JSON
 # object with its kind, a label, each key once; the record holds a header and an end; the header comes first, with a
 # version, a label of digits, a point and digits, of the schema's own major (a 1.x header's major and minor, two whole
-# numbers, read as their label and refused as another major); the end comes last; every event is of a known kind and stands at a whole round
+# numbers, major 1, read as their label and refused as another major); the end comes last; every event is of a known kind and stands at a whole round
 # and site; every field a line holds has its shape in the schema's record of its kind, a whole number, a label, a row
 # of them or a record of the schema, and a field the schema does not name holds whole numbers and labels alone,
 # through its rows and mappings (the schema's first line), so a float, a truth value, NaN or null, or a row of
@@ -203,9 +203,11 @@ def headed(lines: Lines) -> str:
 
 def versioned(lines: Lines) -> str:
     first = lines[0] if isinstance(lines[0], dict) else {}
-    # a 1.x header held its major and its minor as two whole numbers and no label: read as their label
+    # a 1.x header held its major, 1, and its minor as two whole numbers and no label: read as their label; another pair
+    # is no version
     pair = [first.get(field) for field in ("major", "minor")]
-    version = first.get("version", ".".join(map(str, pair)) if all(map(whole, pair)) else None)
+    held = ".".join(map(str, pair)) if all(map(whole, pair)) and pair[0] == 1 else None
+    version = first.get("version", held)
     if not isinstance(version, str):
         return "the header holds no version"
     named, (major, point, minor) = ascii(version)[1:-1], version.partition(".")
