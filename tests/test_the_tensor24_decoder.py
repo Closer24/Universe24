@@ -172,6 +172,11 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "valued",
         "line 1's train card 2 holds the winding 0, below 1",
     ),
+    "a train card's key off the header's dial": (
+        [{**H, "dial": 7 + 7}, *met(), E],
+        "valued",
+        "line 1's train card 1 holds the key 7, off the record's one dial 14",
+    ),
     "a train on two cards": (
         [{**H, "trains": [*CARDS, CARDS[0]]}, *met(), E],
         "valued",
@@ -256,7 +261,8 @@ def test_the_record_is_read_by_its_schema_and_each_guard_refuses_its_own_broken_
     assert record.of("click")[-1 - 1]["note"] == label
     reads = [[B, {**BARE, "ends": [1]}, E], [{**B, "ends": [5]}, BARE, E], [B, BARE, {"kind": "end"}]]
     reads += [[B, *CROSS, ENDED]]  # the end's across holding the side across a Mesh the lines name
-    assert [cause_of(lines, tmp_path) for lines in reads] == ["", "", "", ""]
+    reads += [[{**B, "dial": 7}, *met(), E]]  # a header whose dial is every card's key
+    assert [cause_of(lines, tmp_path) for lines in reads] == [""] * len(reads)
     sides = [10**4000, 10**4000, 1]
     cause = cause_of([{**B, "sides": sides}, *met(1, -1), E], tmp_path)
     assert cause == f"line 2 names site -1, off the board of sides {sides}"

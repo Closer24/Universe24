@@ -3,6 +3,7 @@ with its 0i rows odd, the chosen strengths read, each refusal named, the round's
 
 import itertools
 import json
+import runpy
 from pathlib import Path
 
 import numpy as np
@@ -10,12 +11,16 @@ import numpy as np
 from tensor24 import main
 from tensor24.engine import state, step
 from tensor24.runner import load as loading
+from tensor24.runner import run
 from tensor24.runner.board import board
+from tensor24.runner.files import NAMES as FILES
 from tensor24.runner.files import held_departures, sites_of, vocabulary
 from tensor24.runner.run import promises
 from tests import frame
 
 UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
+CLICK = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24-click")
+TOOL = Path(__file__).resolve().parents[1].joinpath("tools", "tensor24_files.py")
 INTEGERS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["integers"]
 SHAPE = (3, 4, 5)  # a board of sides that differ, so no two axes are taken for each other
 SITES = sites_of(SHAPE)
@@ -181,3 +186,31 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_fam
     wanted += [((1 + i) * rows + hand + i, 0, strength) for i in range(len(SHAPE))]  # L by M_i's
     _, alone, _ = loaded([TRAINS[0]], chosen={**CHOSEN, "mesh": strength})[0].mesh  # the wave alone
     assert terms == sorted(wanted) and {*two.tolist(), *three.tolist()} == {-1} and not alone.any()
+
+
+def test_the_run_refuses_an_even_edge_dial_and_a_broken_scale_by_the_loads_two_counts(monkeypatch):
+    """Yes: the click world's files load with both counts 0 and no dial refused. No: a four-leg monomial joined to J's
+    potential on the tied hands' edge (no file lays one) makes every dial D even, and a scale its carry leaves 1 of is
+    broken; the run and the files tool refuse each, every name with its count, the run writing nothing."""
+    paths = [CLICK.joinpath(f"{n}.json") for n in FILES]
+    nowhere = CLICK.joinpath("nowhere", "dials.jsonl")  # its folder stands nowhere: a write would raise
+    universe, piece, setting = (json.loads(path.read_bytes()) for path in paths)
+    sites, made = sites_of(piece["shape"]), main.made(loading.star(len(piece["shape"])))
+    held, found = loading.load(universe, setting, sites, *made)
+    assert found == [] and (held.spare, held.even) == (0, 0) and run.dialled(held) == []
+    tied = [int(held.trains.first[n]) for n in range(len(held.trains)) if held.trains.tied[n]]
+    joined, edged, sides = loading.joined, loading.edging, len(held.click[-1])
+
+    def four(*potentials):
+        """J's potential with a four-leg monomial joined on the tied hands' edge, its factor 1."""
+        factors, legs = joined(*potentials)
+        rows = (tied[0], tied[0], tied[-1], tied[-1])  # two legs on each tied hand
+        return np.append(factors, 1), tuple(map(np.append, legs, rows, strict=True))
+
+    spared = lambda *a: (*edged(*a)[:2], 1)  # noqa: E731  edging's click and scale, its carry leaving 1
+    tool = runpy.run_path(str(TOOL))["loaded"]  # the files tool's load, in this process
+    for name, patch, counts in [("joined", four, (0, sides)), ("edging", spared, (1, 0))]:
+        monkeypatch.setattr(loading, name, patch)
+        refused = [line.format(count) for line, count in zip(run.DIALS, counts, strict=True)]
+        assert run.run(main.ENGINE, paths, nowhere) == tool(*paths) == refused, name
+        monkeypatch.undo()
