@@ -1,0 +1,9 @@
+tensor24-click, 300 rounds, the triangle's own tooth: one whole circulation per quantum (third click): key 50811429, dial 152434287, edges [(2, 3), (2, 4), (3, 4)]
+  the start seed's board cd45cb9792e980a3; the end seed's board c8ddb7f022c4bd2c; 13203 click sides on the way
+  from the end seed alone, run back: the board reaches the start seed: True; every tooth and twin reaches the birth: True
+  the first click from the same start: the end board is the same: True; its click sides differ from the third click's at 11988
+  one hidden unit in edge (2, 3)'s tooth at Node-clock 0: the click sides differ at 397 (at Node-clocks [0]), and the end board is the same: True
+  one hidden unit in edge (2, 4)'s tooth at Node-clock 0: the click sides differ at 397 (at Node-clocks [0]), and the end board is the same: True
+  one hidden unit in edge (3, 4)'s tooth at Node-clock 0: the click sides differ at 397 (at Node-clocks [0]), and the end board is the same: True
+the clicks differ, the end is the same, and the end runs back to the start: True
+exit 0

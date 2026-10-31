@@ -1,0 +1,15 @@
+dial 152434287 (3 K, K the click world's key), born 76217143, m = D div 50 = 3048685; steady passings [27438165, 27438165, 36584220] on [(2, 3), (2, 4), (3, 4)]; 200000 rounds
+ no turn:
+   clock 2's line: 36000 rounds with a click (net 72000 quanta); after one the next 0 against 6480 independent; after two in a row a third 0 against 0
+   clock 3's line: 68000 rounds with a click (net 12000 quanta); after one the next 16000 against 23120 independent; after two in a row a third 0 against 5440
+   clock 4's line: 76000 rounds with a click (net -84000 quanta); after one the next 16000 against 28880 independent; after two in a row a third 0 against 6080
+   edge (2, 3): 36000 clicks; after one click the next 0 against 6480 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 820
+   edge (3, 4): 48000 clicks; after one click the next 0 against 11520 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 760
+   edge (2, 4): 36000 clicks; after one click the next 0 against 6480 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 820
+ the triangle's own tooth, one whole circulation per quantum:
+   clock 2's line: 64000 rounds with a click (net 72000 quanta); after one the next 8000 against 20480 independent; after two in a row a third 0 against 2560
+   clock 3's line: 44000 rounds with a click (net 12000 quanta); after one the next 8000 against 9680 independent; after two in a row a third 0 against 1760
+   clock 4's line: 68000 rounds with a click (net -84000 quanta); after one the next 0 against 23120 independent; after two in a row a third 0 against 0
+   edge (2, 3): 35920 clicks; after one click the next 4182 against 6451 independent; after two in a row a third 460 against 751; lives' variance over mean squared 329 per mille, the geometric law's 821
+   edge (3, 4): 47920 clicks; after one click the next 5873 against 11481 independent; after two in a row a third 658 against 1407; lives' variance over mean squared 209 per mille, the geometric law's 761
+   edge (2, 4): 36080 clicks; after one click the next 8173 against 6508 independent; after two in a row a third 892 against 1474; lives' variance over mean squared 203 per mille, the geometric law's 820

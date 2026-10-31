@@ -11,7 +11,7 @@ The board steps by step.act as it stands; the click pushes nothing into the gear
   a lone edge has no triangle, so nothing turns it and it carries as the first click.
 No line asks how many trains meet: the turn is the product over the triangles the edge set holds.
 
-Usage: python3 -I edgeclick.py <src> <world> <rounds> <mode 0 to 10> [laid] [hidden unit: site edge-index]
+Usage: python3 -I edgeclick.py <src> <world> <rounds> <mode 0 to 11> [laid] [hidden unit: site edge-index]
 """
 
 import hashlib
@@ -216,6 +216,10 @@ def run(src, world_dir, rounds, turned, hidden=None, laid=False):
 
 
 def run_from(lay, s, world, rounds, turned, hidden=None, kinds_of=None):
+    if turned == 11:
+        import circ
+
+        return circ.run_circ(lay, s, world, rounds, hidden, kinds_of, sys.modules[__name__])
     rows, sites = s.a.shape
     key = int(lay.click.key[0, 0])
     edges = Edges(world, key, sites, kinds_of)
@@ -305,6 +309,12 @@ def run_from(lay, s, world, rounds, turned, hidden=None, kinds_of=None):
     }
 
 
+
+def modes_of(spec):
+    """Modes as one digit each ("045"), or as a comma list ("9,10" or "11,")."""
+    return [int(m) for m in spec.split(",") if m] if "," in spec else [int(c) for c in spec]
+
+
 NAMES = ["carried (first click)", "turned by the triangle M (third click)", "the 3+3 palindrome (third click)",
          "SPLIT3 (third click, the apex's edges)", "the triangle's coupling, C C^T off its diagonal (third click)",
          "road 3, C C^T's diagonal: each triangle edge with its own twin (third click)",
@@ -312,7 +322,8 @@ NAMES = ["carried (first click)", "turned by the triangle M (third click)", "the
          "the circulation: g += C C^T h, h += C C^T off its diagonal of g (third click)",
          "the circulation: g += C C^T h, h += C C^T g (third click)",
          "mode 7 with each flow-tooth shear's quotient booked (third click)",
-         "the full C C^T, mode 8 with each flow-tooth shear's quotient booked (third click)"]
+         "the full C C^T, mode 8 with each flow-tooth shear's quotient booked (third click)",
+         "the triangle's own tooth: one whole circulation per quantum (third click)"]
 
 if __name__ == "__main__":
     src, world_dir, rounds, turned = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])

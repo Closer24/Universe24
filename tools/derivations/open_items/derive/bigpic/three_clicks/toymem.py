@@ -17,7 +17,7 @@ import edgeclick as E  # noqa: E402
 from tensor24.algebra.carry import carry  # noqa: E402
 
 ROUNDS = int(sys.argv[2]) if len(sys.argv) > 2 else 200000
-MODES = [int(m) for m in ((sys.argv[3] if len(sys.argv) > 3 else "0456").split(",") if "," in (sys.argv[3] if len(sys.argv) > 3 else "") else (sys.argv[3] if len(sys.argv) > 3 else "0456"))]
+MODES = E.modes_of("0456" if len(sys.argv) <= 3 else sys.argv[3])
 universe, shape, held, lay, s, world = E.load_world(sys.argv[1], "tensor24-click")
 ed = E.Edges(world, int(lay.click.key[0, 0]), 1, [t["kinds"] for t in universe["trains"]])
 D, B = ed.dial, ed.born
@@ -30,14 +30,25 @@ H1, H2, H3 = ("h", ga), ("h", gb), ("h", ab)
 FIVE = [(G1, H1, 1), (G2, H2, 1), (G1, H3, 1), (G2, H3, -1), (G3, H1, 1), (G3, H2, -1), (H1, G2, 1), (H2, G1, 1), (H3, G3, -1)]
 NAMES = {0: "no turn", 4: "C C^T off its diagonal", 5: "road 3, C C^T's diagonal", 6: "the THIRD deriver's five blocks",
          7: "the circulation, h += C C^T off its diagonal of g", 8: "the circulation, h += C C^T g",
-         9: "mode 7 with the shears' quotients booked", 10: "the full C C^T with the shears' quotients booked"}
+         9: "mode 7 with the shears' quotients booked", 10: "the full C C^T with the shears' quotients booked",
+         11: "the triangle's own tooth, one whole circulation per quantum"}
 
 
 def order(mode):
     return [] if mode == 0 else (FIVE if mode == 6 else ed.forward(mode))
 
 
+def run11(flows, rounds):
+    import circ
+
+    st = circ.Stepper(ed)
+    state = st.born()
+    return [st.step(list(flows), *state) for _ in range(rounds)]
+
+
 def run(mode, flows, rounds, u=None, w=None):
+    if mode == 11:
+        return run11(flows, rounds), None, None
     u = [B] * n if u is None else u
     w = [B] * n if w is None else w
     fw = order(mode)

@@ -1,0 +1,12 @@
+tensor24-mesh, 125 rounds: key 1, dial 3; edges [(1, 2)], triangles [], edges on no triangle [(1, 2)]; trains alike []
+ carried (first click): 4442 click places, 8884 click lines
+   mode 0: the books close at every place: True
+   mode 0: R1, the record run twice byte for byte: True
+   mode 0: the run back to the lay: True
+ the triangle's own tooth: one whole circulation per quantum (third click): 4442 click places, 8884 click lines
+   mode 11: the books close at every place: True
+   mode 11: R1, the record run twice byte for byte: True
+   mode 11: the run back to the lay: True
+   mode 11: edge (1, 2), on no triangle, carries as the first click: True
+every law holds: True
+exit 0

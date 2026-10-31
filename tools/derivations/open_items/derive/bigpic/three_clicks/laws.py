@@ -6,8 +6,8 @@ the third click's two members from the structure, C C^T off its diagonal (mode 4
 - the run back to the lay: the carry's own inverse for the first click, the same act on the mirrored state for the third;
 - the label rule, draw by draw, for every two trains alike in kinds: the run of the swapped lay is the original with the
   names swapped, each line's train exchanged and each edge read from its other end;
-- R2 and its reach: one hidden unit in each edge's tooth at Node-clock 0 moves a later click in the third click, every
-  moved line at that Node-clock;
+- R2 and its reach: one hidden unit in each edge's tooth at Node-clock 0 moves a later click side in the third click,
+  every moved side at that Node-clock (in mode 11 the unit is laid in the twin of the edge's triangle);
 - the split click's choice between the first and the third: an edge on no triangle, which C C^T leaves alone, carries
   in the third click exactly as in the first.
 The exit status is 0 if every law reads as it should, and 1 if one does not, named.
@@ -18,10 +18,11 @@ import sys
 
 src, world_dir, rounds = sys.argv[1], sys.argv[2], int(sys.argv[3])
 laid = len(sys.argv) > 4 and "laid" in sys.argv[4]
-thirds = [int(m) for m in ((sys.argv[5] if len(sys.argv) > 5 else "45").split(",") if "," in (sys.argv[5] if len(sys.argv) > 5 else "") else (sys.argv[5] if len(sys.argv) > 5 else "45"))]
+thirds = "45" if len(sys.argv) <= 5 else sys.argv[5]  # one digit per mode, or a comma list (edgeclick.modes_of)
 sys.path.insert(0, src)
 sys.path.insert(0, ".")
 import edgeclick as E  # noqa: E402
+thirds = E.modes_of(thirds)
 from tensor24.engine import step  # noqa: E402
 
 universe, shape, held, lay, s0, world = E.load_world(src, world_dir)
@@ -90,9 +91,9 @@ for mode in [0] + thirds:
         if e in lone:
             continue
         h = E.run_from(lay, s0, world, rounds, mode, hidden=(0, e), kinds_of=kinds_of)
-        diff = set(map(tuple, a["lines"])) ^ set(map(tuple, h["lines"]))
+        diff = set(map(tuple, a["sides"])) ^ set(map(tuple, h["sides"]))
         at = sorted({d[1] for d in diff})
-        print(f"   mode {mode}: one hidden unit in edge {ed.pairs[e]}'s tooth at Node-clock 0 moves {len(diff)} click lines,"
+        print(f"   mode {mode}: one hidden unit in edge {ed.pairs[e]}'s tooth at Node-clock 0 moves {len(diff)} click sides,"
               f" the first at round {min(d[0] for d in diff) if diff else None}, at Node-clocks {at}")
         check(f"mode {mode}: R2 for edge {ed.pairs[e]}, a later click moved, at Node-clock 0 alone", bool(diff) and at == [0])
 print(f"every law holds: {not failed}" + (f"; failed: {failed}" if failed else ""))

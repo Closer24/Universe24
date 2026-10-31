@@ -1,0 +1,6 @@
+tensor24-click, carried (first click), 1000 rounds: books open 0 of 18036; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 497 (442), (2, 4) 497 (197), (3, 4) 499 (67)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 928 (244), 3 973 (375), 4 984 (130)
+tensor24-click, the triangle's own tooth: one whole circulation per quantum (third click), 1000 rounds: books open 0 of 17820; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 8300 (4442), (2, 4) 8570 (4197), (3, 4) 8730 (5067)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 943 (244), 3 965 (624), 4 914 (869)

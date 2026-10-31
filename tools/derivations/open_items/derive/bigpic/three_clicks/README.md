@@ -43,7 +43,12 @@ Run: `python3 -I edgeclick.py <src> tensor24-click 200 1`; `python3 -I cmp.py <s
 
 C is each edge's sign on the boundary of every triangle it lies on (the boundary of [i, j, k] is [j, k] - [i, k] + [i, j]). Modes 4 and 5 are the two parts of C C^T, each a palindrome of two blocks (each twin gains K of the edge teeth, then each edge tooth K of the twins; the carries; the blocks again in reverse), so the round's turn is L = [[I + 2 K^2, 2 K], [2 K + 2 K^3, I + 2 K^2]], a pair of trace 2 + 4 kappa^2 per eigenvalue kappa of K. A lone edge lies on no triangle, so K gives it nothing and it carries as the first click, with no condition: the structure chooses between the first click and the third. C C^T itself has the roots 3, 0, 0, so its palindrome would keep two directions unturned. Every edge tooth is kept by the mirror and every twin flipped about the birth, which an odd dial makes its own complement: the click lay makes every key odd.
 
-**Mode 4 is the turn this stage proposes:** it keeps the label rule draw by draw, runs back by the board's own law, turns every edge of the triangle, shows no memory in the Boss's toy over 1,000,000 rounds, and needs no rule to pick it from a family.
+| 9, 10 | modes 7 and 8 (the flow teeth gain only along the circulation) with each flow-tooth shear's quotient booked on its edge | yes | yes | one turned pair | each clock's books hold, but each clock's clicks remember (the wraps booked edge by edge) |
+| **11** | **the triangle's own tooth (circ.py): each edge carries 3 x - C C^T x at the dial 3D, unturned; the triangle's tooth carries y = c . x and lands each quantum as one whole circulation, +1, +1, -1, in one round** | **yes** | **yes** | **the circulation alone** | **the circulation's quanta carry no memory over 1,000,000 rounds; each clock's books hold by construction** |
+
+**Mode 11 is the form this stage ends on** (the owner's word of 06:0x UTC: the third click is never seen alone): each clock's line is the carry of its own passing, since B c = 0, so the circulation's quantum never shows in any clock's line; it rides on a passing as its path, read in the sides; an idle triangle lands none. The earlier proposal, mode 4, keeps the mirror, the swap and no memory but breaks each clock's books (drift.py).
+
+**Mode 4, the earlier proposal:** it keeps the label rule draw by draw, runs back by the board's own law, turns every edge of the triangle, shows no memory in the Boss's toy over 1,000,000 rounds, and needs no rule to pick it from a family.
 
 | record | what it reads |
 |---|---|
