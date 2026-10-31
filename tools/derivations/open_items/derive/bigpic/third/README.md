@@ -57,6 +57,7 @@ other end, and tau as G D - 1 - tau.
 | turning the other way (the slots swapped) | -3,600; -355; [-3,810, -336] | -15,009 | the mirror image |
 | turning at ten times the counts | 360,000; 385,231; [349,434, 386,434] | 2,315,503 | 2.0e10 against 2.0e11 to 2.2e11 |
 | at rest at ten times the counts | 0; 27,003; [-264, 27,003] | 83,501 | 6.0e10 against -1e8 to 1.6e10 |
+| two clocks in one state: (40, 40, 7); (25, 25, 3) | 0 at every round | 0 | (the exclusion, below) |
 
 - **The charge is kept up to the teeth's torque.** At the shipped grain the teeth's torque wears it away, from 3,600 to
   355 over 5,000 rounds. At ten times the counts it stays within 7 percent. From rest, the teeth's torque builds it,
@@ -71,6 +72,22 @@ other end, and tau as G D - 1 - tau.
   within 1 of 3 W under the triangle's tooth, and within 2 under the first click, at every lay. So the triangle's
   charge is in the sides on either form, as the Boss's ruling says. A click reading that tells the two forms apart
   with the teeth out is OPEN.
+
+## Pauli's exclusion in the third click (the owner's lead of 10:15 UTC: "the reversal of the clocks by family")
+
+- **The charge is a determinant.** L(b, a) = det(1, b, a), the three clocks' counts at the two slots under a row of ones.
+- **So it is odd under the exchange of any two clocks.** The exchange is the 2-cell's orientation, the sign character
+  of ALG2's complex, which ALG3 reads too. Under an odd turn the landings reverse, w -> -w, and tau is read as
+  G D - 1 - tau, in 6 of 6 turns.
+- **And it is 0 when two clocks share their state:** two equal columns.
+- **On any triangle whose law is turned into itself by the exchange of two clocks,** a state that is its own swap stays
+  its own swap. Its circulation then equals its own negative, so it is 0, and the triangle lands no third click
+  (DERIVED).
+- **MEASURED** (the last reading but one of tooth_5000.txt): clocks 0 and 1 laid in one state, (40, 40, 7) now and
+  (25, 25, 3) before. Over 5,000 rounds they stay in one state, counts and teeth. L and y are 0 at every round, and
+  the triangle lands no third click.
+- **The click world's open direction** (miracle/README.md) is the exchange-odd mode of its two like hands, the giver
+  and the taker. Their pair form [[c h^2, t/2], [t/2, c h^2]] has its lower value, c h^2 - t/2, on (1, -1) (DERIVED).
 
 ## The twin and the turn, read against the one tooth
 

@@ -32,6 +32,9 @@ Readings, 5,000 rounds unless given: the identities; L's drift; the landings (th
 balance of the landing word over every window up to 64 rounds); the record's circulation c . q against 3 W on both
 forms; the run back from the end state alone (board, edge teeth, tau); the triangle's three turns and three flips (S_3),
 with an odd one reading each edge's tooth from its other end (dial - 1 - k) and tau as G D - 1 - tau.
+Pauli's exclusion in the third click: L = det(1, b, a) is odd under the exchange of any two clocks (the 2-cell's
+orientation, the sign character) and 0 when two clocks share their state; laid so, the state stays its own swap, and
+the triangle lands no third click.
 A control: the equilateral triangle of four-leg edges (c x_u^2 x_v^2, the click world's tie factor) under the present
 act, whose torque is not 0.
 Usage: python3 -I tooth.py <node-all src> <the click world's universe.json> [rounds]
@@ -255,6 +258,27 @@ def read(name, lay_a, lay_b):
           f" {alike} of 6 (200 rounds each)", flush=True)
 
 
+def exclusion(name, lay_a, lay_b):
+    """Two clocks laid in one state: the law is turned into itself by their exchange, so the state stays its own swap,
+    and the triangle's charge L(b, a) = det(1, b, a) has two equal columns."""
+    a, b, s = list(lay_a), list(lay_b), [0, 0, 0]
+    k, f, tau = [born(D)] * 3, [born(GD)] * 3, [born(GD)]
+    same, zero_l, zero_y, landings = 0, 0, 0, 0
+    for _ in range(ROUNDS):
+        a1, s1, _ = round_(a, b, s)
+        x = passings(b, a, a1)
+        y = sum(c * xe for c, xe in zip(C, x))
+        _, w = record_round(x, k, f, tau, True)
+        same += a1[0] == a1[1] and s1[0] == s1[1]
+        zero_l += big_l(a, a1) == 0
+        zero_y += y == 0
+        landings += abs(w)
+        a, b, s = a1, a, s1
+    print(f"== {name}: the lay {lay_a} now, {lay_b} before; {ROUNDS} rounds", flush=True)
+    print(f"   clocks 0 and 1 in one state (counts and teeth) in {same} rounds; L = 0 in {zero_l}; y = 0 in {zero_y};"
+          f" the triangle's landings, counted whole: {landings}", flush=True)
+
+
 def control(name, lay_a, lay_b):
     a, b, s = list(lay_a), list(lay_b), [0, 0, 0]
     l0, held, zero, lmax, lmin, done, past = big_l(b, a), 0, 0, big_l(b, a), big_l(b, a), 0, None
@@ -283,5 +307,6 @@ read("the equilateral triangle of two-leg edges, laid at rest", *AT_REST)
 read("the same, laid turning the other way (the lay's two slots swapped)", TURNING[1], TURNING[0])
 read("the same, laid turning at ten times the counts", [10 * v for v in TURNING[0]], [10 * v for v in TURNING[1]])
 read("the same, laid at rest at ten times the counts", [10 * v for v in AT_REST[0]], [10 * v for v in AT_REST[1]])
+exclusion("two clocks in one state (Pauli's exclusion in the third click)", [40, 40, 7], [25, 25, 3])
 control("the control: the equilateral triangle of four-leg edges under the present act, laid turning", *TURNING)
 print("exit", flush=True)

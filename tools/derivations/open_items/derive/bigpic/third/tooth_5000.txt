@@ -54,6 +54,8 @@ three clocks at W 600000000, spring 100000000, two-leg tie 96000, four-leg tie 6
    the run back (the first click): the start reached True; the sides and landings back negated and reversed True
    the run back (the triangle tooth): the start reached True; the sides and landings back negated and reversed True
    the triangle's turns and flips: the round, its edge teeth, its sides, tau and the landings turned alike in 6 of 6 (200 rounds each)
+== two clocks in one state (Pauli's exclusion in the third click): the lay [40, 40, 7] now, [25, 25, 3] before; 5000 rounds
+   clocks 0 and 1 in one state (counts and teeth) in 5000 rounds; L = 0 in 5000; y = 0 in 5000; the triangle's landings, counted whole: 0
 == the control: the equilateral triangle of four-leg edges under the present act, laid turning: the lay [40, -20, -20] now, [20, -40, 20] before; 2914 rounds (a count passed 64 bits at round 2914, where the reading stops)
    the torque identity held in 2914 of 2914 rounds; the force's torque 0 in 96; L at the lay 3600, at the end 173968314686126281413600927153601078651728018994469795732564050, its range [-80870, 173968314686126281413600927153601078651728018994469795732564050]
 exit
