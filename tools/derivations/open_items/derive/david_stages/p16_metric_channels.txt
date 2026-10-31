@@ -3,6 +3,6 @@ T1 x T1 -> A2: no channel
 T1 x T1 -> E: symmetric in its two Spokes (2 components)
 T1 x T1 -> T1: antisymmetric in its two Spokes (3 components)
 T1 x T1 -> T2: symmetric in its two Spokes (3 components)
-the symmetric channels hold 6 components; a symmetric tensor of three axes holds 6
+the symmetric channels hold 6 components; a symmetric tensor of 3 axes holds 6
 a wave along z, h_xx - h_yy: lands in ['E']
 a wave along z, h_xy: lands in ['T2']

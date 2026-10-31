@@ -14,7 +14,8 @@ import numpy as np  # noqa: E402
 
 from tensor24 import main  # noqa: E402
 
-held, tables = main.made((3, 3, 3))
+shape = (3, 3, 3)
+held, tables = main.made(shape)
 names = [f.upper() for f in held._fields]
 t1 = names.index("T1")
 symmetric_dims = 0
@@ -27,7 +28,9 @@ for x, name in enumerate(names):
     kind = "symmetric" if np.array_equal(c, swapped) else "antisymmetric" if np.array_equal(c, -swapped) else "neither"
     print(f"T1 x T1 -> {name}: {kind} in its two Spokes ({c.shape[0]} components)")
     symmetric_dims += c.shape[0] if kind == "symmetric" else 0
-print(f"the symmetric channels hold {symmetric_dims} components; a symmetric tensor of three axes holds 6")
+axes = len(shape)
+slots = [(a, b) for a in range(axes) for b in range(a, axes)]  # a symmetric tensor's slots, one per pair a <= b
+print(f"the symmetric channels hold {symmetric_dims} components; a symmetric tensor of {axes} axes holds {len(slots)}")
 
 # a wave along z: h_xx - h_yy and h_xy, as symmetric tensors of two Spokes, read through each channel
 plus = np.zeros((3, 3), dtype=int)

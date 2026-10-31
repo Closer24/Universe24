@@ -188,15 +188,18 @@ def first_return(d, amp, rounds):
     return None
 
 
+spring = W // 400
+wd, rest = carry(W, spring, 0)  # W over the spring laid, by Rule3's carry, its remainder kept
+assert rest == 0, rest  # so 2 W / (A D) below is 2 wd / A as written
 for amp in (1, 2, 5, 10, 30, 1000):
-    u = beat(W // 400, 8000, a=amp)
+    u = beat(spring, 8000, a=amp)
     changes = sum(1 for x, y in zip(u, u[1:]) if (x < 0) != (y < 0))
     q, r = carry(2 * 8000, changes, 0) if changes else (0, 0)
-    exact = first_return(W // 400, amp, 8000)
+    exact = first_return(spring, amp, 8000)
     told = f"the state returns exactly at round {exact}" if exact else "the state does not return within 8000 rounds"
     print(f"(h) the uniform wave at D = W div 400 laid at {amp}: {changes} sign changes in 8000 rounds,"
-          f" a period of about {q} rounds and {r}/{changes}; {told}; 2 W / (A D) + 4 A = {2 * 400 // amp + 4 * amp}"
-          f"{'' if 2 * 400 % amp == 0 else ' and ' + str(2 * 400 % amp) + '/' + str(amp)}")
+          f" a period of about {q} rounds and {r}/{changes}; {told}; 2 W / (A D) + 4 A = {2 * wd // amp + 4 * amp}"
+          f"{'' if 2 * wd % amp == 0 else ' and ' + str(2 * wd % amp) + '/' + str(amp)}")
 
 
 print()

@@ -54,7 +54,7 @@ channels = line = 0
 seeds_tried = seeds_same = 0
 powers = {b: 0 for b in range(2, 8)}
 closed_form = 0
-for i, k, m in itertools.product(range(5), repeat=3):
+for i, k, m in itertools.product(range(len(held)), repeat=3):
     shape = tuple(held[q].shape[-1] for q in (m, i, k))
     n = int(np.prod(shape))
     P = K.projector(weight, held[m], inv[i], inv[k]).reshape(n, n)
@@ -74,7 +74,7 @@ for i, k, m in itertools.product(range(5), repeat=3):
         powers[b] += int(proportional(P.dot(P.T).dot(x), t))
     x = np.array([times(spokes, n - 1 - a) for a in range(n)], dtype=object)
     closed_form += int(proportional(P.dot(P.T).dot(x), t))
-print(f"(2) channels {channels}; trace 24 and P P = 24 P, one invariant line, on {line}")
+print(f"(2) channels {channels}; trace {len(turns)} and P P = {len(turns)} P, one invariant line, on {line}")
 print(
     f"(3) elementary seeds with a group sum not 0: {seeds_tried}, each proportional to the head's table: {seeds_same};"
     f" x = B^(index) through P P^T, B = 2 to 7: {[powers[b] for b in powers]} of {channels}"

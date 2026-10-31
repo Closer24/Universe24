@@ -49,4 +49,3 @@ kinds ('A1', 'A2', 'E', 'T1', 'T2') dims (1, 1, 2, 3, 3) turns weighed 1: 24
   C[T1; T2, T2]: C C^T = 2 I
   C[T2; T2, T2]: C C^T = 2 I
 tables not 0: 43 ; the scalar norms: [1, 2, 3, 10]
-integer k_1, k_2 with k_1^2 * 1 = k_2^2 * 2, for k up to 199: none

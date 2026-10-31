@@ -7,10 +7,11 @@ whose Gram matrix is [[2, -1], [-1, 2]], so every table through E but the ones w
 scalar norm: E has no whole basis that the 24 permute.
 
 The integrality point: the scalar norms are 1, 2, 3 and 10, and one strength for every table would scale each by
-sqrt(Lambda / lambda); no integer k_t gives k_t^2 lambda_t one value for lambda_t = 1 and 2 at once (sqrt 2 is
-irrational). So one Schur lambda for all 43 is no integer rule on the act's tables.
+sqrt(Lambda / lambda); no integer k_t gives k_t^2 lambda_t one value for lambda_t = 1 and 2 at once: a^2 = 2 b^2 has
+no positive whole solution, since a is then even, so b is even, and halving both descends without end (no search is
+run). So one Schur lambda for all the tables is no integer rule on the act's tables.
 
-Usage: python3 -I norms.py <src of tensor24-review>
+Usage: python3 -I norms.py <src of tensor24-review at 52bb1a7bf>
 """
 
 import sys
@@ -46,5 +47,3 @@ for (i, k, m), c in sorted(tables.items()):
     print(f"  C[{labels[m]}; {labels[i]}, {labels[k]}]: "
           + (f"C C^T = {lam} I" if scalar else f"C C^T not scalar: {cct.tolist()}"))
 print("tables not 0:", count, "; the scalar norms:", sorted(scalars))
-both = [(a, b) for a in range(1, 200) for b in range(1, 200) if a * a == 2 * b * b]
-print("integer k_1, k_2 with k_1^2 * 1 = k_2^2 * 2, for k up to 199:", both or "none")

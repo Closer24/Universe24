@@ -10,6 +10,7 @@ The Boss's asks of 15:22 (comment 6500777188) are answered here: N1, N3, the for
 Probes, each with its output beside it:
 - derive/david_open/gear/: e1_ruler_read.py on integers; n1_slicing.py and n3_slots.py exact, with no root (the owner's word to David of 2026-10-30, 02:2x UTC: "A root in the code is forbidden, and tables are forbidden... in the logic... and not outside it either...").
 - derive/david_open/couplings/: norms.py on integers; virial.py in floats.
+- The gear's three and virial.py left the tree on the owner's word (1b6ca0bf9, main 9067de20d); each stays in git at 6f31d41bb, and its readings below are the record of this page.
 
 Only the Boss writes engine code (decision 40). This page is a specification and its checks, nothing more.
 
