@@ -1,6 +1,6 @@
 # Term 13, the frozen clock: with a source at or above 0 no static clock freezes, and the strong field is refused
 
-David, 2026-10-31 (the eighth text, 02:3x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
+David, 2026-10-31 (the ninth text, 02:4x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
 close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's term
 13 (a clock freezes where its teeth grow without bound; whatever freezes is the act's own result, with no hold and no
 restore). It is derived blind beside the Boss's agent, whose draft stands on boss-derive (b271ddfb8, derive/boss/g2/
@@ -28,12 +28,14 @@ Pic's word (6536901666, item 1): all three stand, with the pair bound's general 
 every mass ratio. They are folded in the seventh text (section 13). The seventh text (toys-5 d5745d134) went back to the
 end pair: both found the general form right and refused it on the owner's word "there is no light on the board", light's
 physics and nature's numbers set beside the board with no label; their items, a rename and a label, and their minors are
-folded here (section 14). The title's "refused" is a board reading set against nature, not in the click world (section
-4). It reads the act as built on main (0df0e8385), G2's third text (toys-5 fcd74a092) and term 9's second text (toys-5
-ebaedd4e8), in the law's four layers (Postulate 4, item (10)). Energy and momentum are read in the clicks' spacetime
-(the owner's word of 16:4x UTC). The probe is derive/david_open/node/term13_frozen.py, its output term13_frozen.txt
-beside it, whole numbers alone, with no root and no search for one (decision 41); the sixth text's own checks are
-term13_checks.py beside it, with the seventh text's check 14 (sections 12 and 13).
+folded in the eighth (section 14). The eighth went back to them: the physicist PASSED it, and the mathematician refused
+it on two lines of section 2 left without the label, folded here (section 15). The title's "refused" is a board reading
+set against nature, not in the click world (section 4). It reads the act as built on main (0df0e8385), G2's third text
+(toys-5 fcd74a092) and term 9's second text (toys-5 ebaedd4e8), in the law's four layers (Postulate 4, item (10)).
+Energy and momentum are read in the clicks' spacetime (the owner's word of 16:4x UTC). The probe is
+derive/david_open/node/term13_frozen.py, its output term13_frozen.txt beside it, whole numbers alone, with no root and
+no search for one (decision 41); the sixth text's own checks are term13_checks.py beside it, with the seventh text's
+check 14 (sections 12 and 13).
 
 **The finding in one line:**
 - **The law on the slot form.** With the ii slots tied to the 00 slot, the 00 row's pull through the grips is exactly
@@ -136,8 +138,8 @@ term13_checks.py beside it, with the seventh text's check 14 (sections 12 and 13
   round, pushed by the board's own swings. Every clock slows together, read against the rounds: a board freezing, not a
   clock at a place. Term 9's notch would hold that mean, OPEN: laid through the act's own plan, a notch at mu = kappa
   rest holds it only to an offset near 2 a / kappa, 145 millionths of rest at kappa = 10^-3 and 1,343,697 millionths at
-  10^-7 over 16,000 rounds (the hostile mathematician's m2), so a notch of the universe's range holds nothing in
-  practice.
+  10^-7 over 16,000 rounds (the hostile mathematician's m2), so a notch at kappa = 10^-7 of rest holds nothing over that
+  run.
 
 ## 2. In the algebra
 
@@ -260,11 +262,12 @@ term13_checks.py beside it, with the seventh text's check 14 (sections 12 and 13
   the grip g / A^2 = g / 16. The slot form's field stops at u = 1 / gamma, where its grips vanish.
 - **A uniform background** (term 9's hostile physicist; probe (c4); term 9's second text). On the slot form a uniform 00
   background changes the clocks' reading of one depth at first order: across a depth of rest / 50, W_A / W_B - 1 is
-  1/50, 1/55 and 1/45 at a background of 0, +rest / 10 and -rest / 10. Read against a tied background u_c, the clicks'
-  gamma is gamma (1 + u_c) / (1 - gamma u_c) (term 9's window), so the slot form reads the cosmic mean at first order.
-  In general relativity a uniform rescaling is a change of coordinates; a uniform shift is not. Big Pic's form of the
-  law above (6527540022, item 8): a uniform, static frame is a change of coordinates, and a uniform mode that moves in
-  time is not.
+  1/50, 1/55 and 1/45 at a background of 0, +rest / 10 and -rest / 10. Read against a tied background u_c, the board's
+  ratio is gamma (1 + u_c) / (1 - gamma u_c) (term 9's window), so the slot form's reading moves with the board's mean
+  at first order; what the clicks would read of it, and the cosmic mean, are owed in the click world (a board reading
+  set against nature, not in the click world; owed there). In general relativity a uniform rescaling is a change of
+  coordinates; a uniform shift is not. Big Pic's form of the law above (6527540022, item 8): a uniform, static frame is
+  a change of coordinates, and a uniform mode that moves in time is not.
 - **The act as built: the board's mean rises** (DERIVED in real arithmetic; MEASURED on the act, probe (a2); the hostile
   mathematician's hm4c).
   - The gear's carry gives W (a+ - 2 a + b) = push + r - r+.
@@ -277,7 +280,8 @@ term13_checks.py beside it, with the seventh text's check 14 (sections 12 and 13
     fine teeth gives -4 in one tick, while the exact identity still holds (the end mathematician). So the climb without
     bound is measured on the probe's runs, not derived for every lay.
   - Where it climbs, every Node-clock's teeth grow without bound: every clock slows together, read against the rounds,
-    and by G2 the rising mean is a drift of G.
+    and the board's coupling, read through G2's static field, drifts with the mean (a board reading set against nature,
+    not in the click world; owed there).
   - The control, the same lay with the teeth held at rest, keeps the mean near its lay.
   - The Boss's readers find a second pump on his term 13: a resting hand's fine tooth, born at the half, reads as half a
     notch of motion (6526646804, item 2.1). Big Pic finds that the edge's tooth, counted from its dial's middle, removes
@@ -400,14 +404,15 @@ What the event board's counts do (term13_frozen.txt).
   ceiling at the contact, w = 25/32). Two touching thin shells of masses 49 mu and mu, lattice radii 224 gamma mu and 32
   gamma mu, touch at d = 256 gamma mu = 5.12 gamma G M / c^2: at the contact point w = 7 / (16 gamma) + 1 / (16 gamma) =
   1 / (2 gamma), the ceiling, and on each shell |p - c_other|^2 - s_other^2 = 2 s (s + s_other)(1 - n_x) >= 0 keeps w
-  below it elsewhere, so the pair is static, at 529.222 km for 70 solar masses (the end mathematician). Masses 10 and 1,
-  radii 53 and 17, touch at 70 = 6.3636 M with w = 446/901 at the contact, below 1/2 (the end physicist's S1), above the
-  bound, which lies between 6.299 and 6.300 M (check 14). At GW150914's 36:29 the bound is 824.50 km (D between 129.621
-  and 129.622 of the mass unit, d between 824,499 and 824,506 m; check 14), against 826.91 at equal masses (a board
-  reading set against nature, not in the click world; owed there). Any pair inside touching balls of any sizes lies
-  inside the ball of radius d that holds both, centred on the line of centres at the second ball's radius from the first
-  centre (about either centre alone the other ball reaches past d), so d > 4 gamma G M / c^2 = 413.455 km (the end
-  mathematician), above 350 km (a board reading set against nature, not in the click world; owed there).
+  below it elsewhere, so the pair is static, at 529.222 km for 70 solar masses (the end mathematician; a board reading
+  set against nature, not in the click world; owed there). Masses 10 and 1, radii 53 and 17, touch at 70 = 6.3636 M with
+  w = 446/901 at the contact, below 1/2 (the end physicist's S1), above the bound, which lies between 6.299 and 6.300 M
+  (check 14). At GW150914's 36:29 the bound is 824.50 km (D between 129.621 and 129.622 of the mass unit, d between
+  824,499 and 824,506 m; check 14), against 826.91 at equal masses (a board reading set against nature, not in the click
+  world; owed there). Any pair inside touching balls of any sizes lies inside the ball of radius d that holds both,
+  centred on the line of centres at the second ball's radius from the first centre (about either centre alone the other
+  ball reaches past d), so d > 4 gamma G M / c^2 = 413.455 km (the end mathematician), above 350 km (a board reading set
+  against nature, not in the click world; owed there).
 
 ## 4. In the clicks
 
@@ -899,3 +904,23 @@ pair's facing point, w = 2 m1 / s1 + 2 m2 / (d - s1), is the touching form with 
 centre lies (d + s2 - s1) / 2 = s2 from the first centre, where s1 + s2 = d; a matter-free region's w is harmonic and
 fixed at 1/2 on its boundary, so 1/2 inside. The text searched again every "light", "nature", "Pound", "about one
 centre", "dynamical collapse" and "x =": each is renamed, labelled, scoped or gone.
+
+## 15. The end mathematician's fourth reading, folded (the ninth text)
+
+The eighth text (toys-5 60719503d) went back to the end pair. The physicist PASSED it, with B2, the sweep and his three
+minors mended and both probes rerun byte for byte. The mathematician found every item sent back folded right and
+refused it on two lines of section 2 that read physics from the board with no label, under the owner's word of 02:0x
+(the Boss's 6537595690 item 1).
+
+**His two, and how they are folded:** B1, "by G2 the rising mean is a drift of G": the line now says the board's
+coupling, read through G2's static field, drifts with the mean, with the label (2). B2, "the clicks' gamma ... so the
+slot form reads the cosmic mean at first order": the line now says the board's ratio moves with the board's mean, and
+what the clicks would read of it, and the cosmic mean, are owed in the click world, with the label (2). Two labels,
+under the owner's pace (the Boss's 6537101472).
+
+**His minors:** section 1's notch now says what the run shows, a notch at kappa = 10^-7 of rest holding nothing over
+that run, with no physical scale (1); the 529.222 km line carries its own label (3).
+
+**How the ninth text checked itself:** no probe moved (term13_frozen.py and term13_checks.py, their outputs with them,
+both rerun byte for byte by both end readers on main 0df0e8385). The text searched again every "click" outside section
+4, "G" read as a drift, "cosmic", "universe" and "solar": each now carries the label or says the clock fact alone.
