@@ -1,0 +1,21 @@
+ no turn:
+   clock 2's line: 36000 rounds with a click (net 72000 quanta); after one the next 0 against 6480 independent; after two in a row a third 0 against 0
+   clock 3's line: 68000 rounds with a click (net 12000 quanta); after one the next 16000 against 23120 independent; after two in a row a third 0 against 5440
+   clock 4's line: 76000 rounds with a click (net -84000 quanta); after one the next 16000 against 28880 independent; after two in a row a third 0 against 6080
+   edge (2, 3): 36000 clicks; after one click the next 0 against 6480 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 820
+   edge (3, 4): 48000 clicks; after one click the next 0 against 11520 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 760
+   edge (2, 4): 36000 clicks; after one click the next 0 against 6480 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 820
+ C C^T off its diagonal:
+   clock 2's line: 65789 rounds with a click (net 72138 quanta); after one the next 21716 against 21640 independent; after two in a row a third 7208 against 7143
+   clock 3's line: 66821 rounds with a click (net 12197 quanta); after one the next 22415 against 22325 independent; after two in a row a third 7520 against 7488
+   clock 4's line: 75622 rounds with a click (net -84335 quanta); after one the next 28570 against 28593 independent; after two in a row a third 10899 against 10802
+   edge (2, 3): 36088 clicks; after one click the next 6549 against 6511 independent; after two in a row a third 1184 against 1181; lives' variance over mean squared 820 per mille, the geometric law's 820
+   edge (3, 4): 48285 clicks; after one click the next 11839 against 11657 independent; after two in a row a third 2868 against 2858; lives' variance over mean squared 772 per mille, the geometric law's 759
+   edge (2, 4): 36050 clicks; after one click the next 6425 against 6498 independent; after two in a row a third 1223 against 1158; lives' variance over mean squared 813 per mille, the geometric law's 820
+ the full C C^T with the shears' quotients booked:
+   clock 2's line: 87791 rounds with a click (net 71999 quanta); after one the next 27205 against 38536 independent; after two in a row a third 14161 against 11941
+   clock 3's line: 67471 rounds with a click (net 12000 quanta); after one the next 32816 against 22761 independent; after two in a row a third 13207 against 11070
+   clock 4's line: 94678 rounds with a click (net -83999 quanta); after one the next 29713 against 44819 independent; after two in a row a third 13091 against 14065
+   edge (2, 3): 35229 clicks; after one click the next 138730 against 6205 independent; after two in a row a third 115513 against 24436; lives' variance over mean squared 168 per mille, the geometric law's 824
+   edge (3, 4): 47229 clicks; after one click the next 138927 against 11152 independent; after two in a row a third 115750 against 32806; lives' variance over mean squared 167 per mille, the geometric law's 764
+   edge (2, 4): 36770 clicks; after one click the next 139115 against 6760 independent; after two in a row a third 116060 against 25576; lives' variance over mean squared 168 per mille, the geometric law's 817

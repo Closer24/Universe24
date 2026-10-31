@@ -11,7 +11,7 @@ The board steps by step.act as it stands; the click pushes nothing into the gear
   a lone edge has no triangle, so nothing turns it and it carries as the first click.
 No line asks how many trains meet: the turn is the product over the triangles the edge set holds.
 
-Usage: python3 -I edgeclick.py <src> <world> <rounds> <mode 0 to 5> [laid] [hidden unit: site edge-index]
+Usage: python3 -I edgeclick.py <src> <world> <rounds> <mode 0 to 10> [laid] [hidden unit: site edge-index]
 """
 
 import hashlib
@@ -139,16 +139,24 @@ class Edges:
                 + [(("g", e), ("h", f), kg[e][f]) for e in range(n) for f in range(n)])
 
     def forward(self, mode):
-        return {2: self.shears, 3: self.split3, 4: self.tri_k, 5: self.road3, 7: self.circ_k, 8: self.circ_cc}[mode]
+        return {2: self.shears, 3: self.split3, 4: self.tri_k, 5: self.road3, 7: self.circ_k, 8: self.circ_cc,
+                9: self.circ_k, 10: self.circ_cc}[mode]
 
     def backward(self, mode):
         return list(reversed(self.forward(mode)))
 
-    def shear_all(self, u, w, order):
+    def shear_all(self, u, w, order, book=None):
+        """The shears in order, each a remainder about the birth. With book, a list per edge, every shear onto an edge
+        tooth is the carry of its hidden passing, sign times the source about the birth, and its quotient is booked on
+        that edge as the flow's carry books its own (modes 9 and 10): the turn lands the click; the teeth move alike."""
         for (dk, di), (sk, si), sign in order:
             src = (u if sk == "g" else w)[si] - self.born
             dst = u if dk == "g" else w
-            dst[di] = self.born + self.cen(dst[di] - self.born + sign * src)
+            if book is not None and dk == "g":
+                q, dst[di] = carry(sign * src, self.dial, dst[di])
+                book[di] += q
+            else:
+                dst[di] = self.born + self.cen(dst[di] - self.born + sign * src)
 
     def cen(self, v):
         _, r = carry(v + self.born, self.dial, 0)
@@ -228,22 +236,27 @@ def run_from(lay, s, world, rounds, turned, hidden=None, kinds_of=None):
             fl = world.split_flows(0, b, a, a1)
             u = edges.teeth[x]
             w = edges.twins[x]
+            book = [0] * len(edges.pairs) if turned >= 9 else None
             if turned >= 2:
-                edges.shear_all(u, w, edges.forward(turned))
+                edges.shear_all(u, w, edges.forward(turned), book)
             elif turned:
                 edges.turn(u)
             q = {tr_: 0 for tr_ in world.trains}
             xs = []
+            per_edge = [0] * len(edges.pairs)
             for e, pr in enumerate(edges.pairs):
                 f = fl.get(pr, 0)
                 xs.append(f)
                 c, u[e] = carry(f, edges.dial, u[e])
+                per_edge[e] += c
+            if turned >= 2:
+                edges.shear_all(u, w, edges.backward(turned), book)
+            for e, pr in enumerate(edges.pairs):
+                c = per_edge[e] + (book[e] if book is not None else 0)
                 q[pr[0]] += c
                 q[pr[1]] -= c
                 if c:
                     sides.append((t, x, e, c))
-            if turned >= 2:
-                edges.shear_all(u, w, edges.backward(turned))
             round_flows.append(xs)
             if any(q.values()):
                 places += 1
@@ -297,7 +310,9 @@ NAMES = ["carried (first click)", "turned by the triangle M (third click)", "the
          "road 3, C C^T's diagonal: each triangle edge with its own twin (third click)",
          "the THIRD deriver's five blocks (third click)",
          "the circulation: g += C C^T h, h += C C^T off its diagonal of g (third click)",
-         "the circulation: g += C C^T h, h += C C^T g (third click)"]
+         "the circulation: g += C C^T h, h += C C^T g (third click)",
+         "mode 7 with each flow-tooth shear's quotient booked (third click)",
+         "the full C C^T, mode 8 with each flow-tooth shear's quotient booked (third click)"]
 
 if __name__ == "__main__":
     src, world_dir, rounds, turned = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])

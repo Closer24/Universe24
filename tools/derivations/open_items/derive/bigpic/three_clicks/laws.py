@@ -18,7 +18,7 @@ import sys
 
 src, world_dir, rounds = sys.argv[1], sys.argv[2], int(sys.argv[3])
 laid = len(sys.argv) > 4 and "laid" in sys.argv[4]
-thirds = [int(m) for m in (sys.argv[5] if len(sys.argv) > 5 else "45")]
+thirds = [int(m) for m in ((sys.argv[5] if len(sys.argv) > 5 else "45").split(",") if "," in (sys.argv[5] if len(sys.argv) > 5 else "") else (sys.argv[5] if len(sys.argv) > 5 else "45"))]
 sys.path.insert(0, src)
 sys.path.insert(0, ".")
 import edgeclick as E  # noqa: E402

@@ -9,7 +9,7 @@ Usage: python3 -I drift.py <src> <world> <rounds> [modes, 047 unless given] [lai
 import sys
 
 src, world, rounds = sys.argv[1], sys.argv[2], int(sys.argv[3])
-modes = [int(m) for m in (sys.argv[4] if len(sys.argv) > 4 else "047")]
+modes = [int(m) for m in ((sys.argv[4] if len(sys.argv) > 4 else "047").split(",") if "," in (sys.argv[4] if len(sys.argv) > 4 else "") else (sys.argv[4] if len(sys.argv) > 4 else "047"))]
 laid = len(sys.argv) > 5 and "laid" in sys.argv[5]
 sys.path.insert(0, src)
 sys.path.insert(0, ".")

@@ -1,0 +1,12 @@
+tensor24-click, carried (first click), 1000 rounds: books open 0 of 18036; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 497 (442), (2, 4) 497 (197), (3, 4) 499 (67)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 928 (244), 3 973 (375), 4 984 (130)
+tensor24-click, the circulation: g += C C^T h, h += C C^T g (third click), 1000 rounds: books open 0 of 17955; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 10502 (5557), (2, 4) 13677 (802), (3, 4) 7067 (7067)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 12443 (4755), 3 16299 (12624), 4 19317 (7869)
+tensor24-click, mode 7 with each flow-tooth shear's quotient booked (third click), 1000 rounds: books open 0 of 22896; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 29557 (15557), (2, 4) 29802 (15802), (3, 4) 29932 (15932)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 961 (244), 3 984 (375), 4 954 (130)
+tensor24-click, the full C C^T, mode 8 with each flow-tooth shear's quotient booked (third click), 1000 rounds: books open 0 of 22707; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 62442 (62442), (2, 4) 63197 (63197), (3, 4) 63067 (63067)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 964 (755), 3 961 (624), 4 982 (130)

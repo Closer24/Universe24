@@ -1,0 +1,9 @@
+dial 152434287 (3 K, K the click world's key), born 76217143, m = D div 50 = 3048685; steady passings [27438165, 27438165, 36584220] on [(2, 3), (2, 4), (3, 4)]; 200000 rounds
+ mode 7 with the shears' quotients booked: the swap draw by draw fails at 0 of 200000 rounds; the same act on the mirrored state runs back to the lay: True
+   edge (2, 3): 36865 clicks; after one click the next 84272 against 6795 independent; after two in a row a third 54737 against 15533; lives' variance over mean squared 348 per mille, the geometric law's 816
+   edge (3, 4): 48865 clicks; after one click the next 85564 against 11938 independent; after two in a row a third 55820 against 20905; lives' variance over mean squared 348 per mille, the geometric law's 756
+   edge (2, 4): 35135 clicks; after one click the next 85040 against 6172 independent; after two in a row a third 55472 against 14939; lives' variance over mean squared 349 per mille, the geometric law's 825
+ the full C C^T with the shears' quotients booked: the swap draw by draw fails at 0 of 200000 rounds; the same act on the mirrored state runs back to the lay: True
+   edge (2, 3): 35229 clicks; after one click the next 138730 against 6205 independent; after two in a row a third 115513 against 24436; lives' variance over mean squared 168 per mille, the geometric law's 824
+   edge (3, 4): 47229 clicks; after one click the next 138927 against 11152 independent; after two in a row a third 115750 against 32806; lives' variance over mean squared 167 per mille, the geometric law's 764
+   edge (2, 4): 36770 clicks; after one click the next 139115 against 6760 independent; after two in a row a third 116060 against 25576; lives' variance over mean squared 168 per mille, the geometric law's 817

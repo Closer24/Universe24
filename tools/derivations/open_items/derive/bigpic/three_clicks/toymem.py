@@ -17,7 +17,7 @@ import edgeclick as E  # noqa: E402
 from tensor24.algebra.carry import carry  # noqa: E402
 
 ROUNDS = int(sys.argv[2]) if len(sys.argv) > 2 else 200000
-MODES = [int(m) for m in (sys.argv[3] if len(sys.argv) > 3 else "0456")]
+MODES = [int(m) for m in ((sys.argv[3] if len(sys.argv) > 3 else "0456").split(",") if "," in (sys.argv[3] if len(sys.argv) > 3 else "") else (sys.argv[3] if len(sys.argv) > 3 else "0456"))]
 universe, shape, held, lay, s, world = E.load_world(sys.argv[1], "tensor24-click")
 ed = E.Edges(world, int(lay.click.key[0, 0]), 1, [t["kinds"] for t in universe["trains"]])
 D, B = ed.dial, ed.born
@@ -29,7 +29,8 @@ G1, G2, G3 = ("g", ga), ("g", gb), ("g", ab)
 H1, H2, H3 = ("h", ga), ("h", gb), ("h", ab)
 FIVE = [(G1, H1, 1), (G2, H2, 1), (G1, H3, 1), (G2, H3, -1), (G3, H1, 1), (G3, H2, -1), (H1, G2, 1), (H2, G1, 1), (H3, G3, -1)]
 NAMES = {0: "no turn", 4: "C C^T off its diagonal", 5: "road 3, C C^T's diagonal", 6: "the THIRD deriver's five blocks",
-         7: "the circulation, h += C C^T off its diagonal of g", 8: "the circulation, h += C C^T g"}
+         7: "the circulation, h += C C^T off its diagonal of g", 8: "the circulation, h += C C^T g",
+         9: "mode 7 with the shears' quotients booked", 10: "the full C C^T with the shears' quotients booked"}
 
 
 def order(mode):
@@ -43,12 +44,15 @@ def run(mode, flows, rounds, u=None, w=None):
     bw = list(reversed(fw))
     qs = []
     for _ in range(rounds):
-        ed.shear_all(u, w, fw)
+        book = [0] * n if mode >= 9 else None
+        ed.shear_all(u, w, fw, book)
         row = []
         for e in range(n):
             q, u[e] = carry(flows[e], D, u[e])
             row.append(q)
-        ed.shear_all(u, w, bw)
+        ed.shear_all(u, w, bw, book)
+        if book is not None:
+            row = [r + b for r, b in zip(row, book)]
         qs.append(row)
     return qs, u, w
 
@@ -75,6 +79,18 @@ for mode in MODES:
         run(mode, [-f for f in flows], ROUNDS, mu, mw)
         back = mu == [B] * n and [B + ed.cen(-(v - B)) for v in mw] == [B] * n
         print(f" {NAMES[mode]}: the swap draw by draw fails at {swap_bad} of {ROUNDS} rounds; the same act on the mirrored state runs back to the lay: {back}")
+    tri = sorted({t for e in (ga, ab, gb) for t in ed.pairs[e]})
+    lines = {tr: [sum(row[e] * ((ed.pairs[e][0] == tr) - (ed.pairs[e][1] == tr)) for e in range(n)) for row in qs] for tr in tri}
+    for tr in tri:
+        c = [int(v != 0) for v in lines[tr]]
+        n1 = sum(c)
+        n11 = sum(1 for t in range(1, ROUNDS) if c[t] and c[t - 1])
+        n111 = sum(1 for t in range(2, ROUNDS) if c[t] and c[t - 1] and c[t - 2])
+        e11, _ = carry(n1 * n1, ROUNDS, 0)
+        e111, _ = carry(n11 * n1, ROUNDS, 0)
+        net = sum(lines[tr])
+        print(f"   clock {tr}'s line: {n1} rounds with a click (net {net} quanta); after one the next {n11} against {e11} independent;"
+              f" after two in a row a third {n111} against {e111}")
     for e in (ga, ab, gb):
         c = [row[e] for row in qs]
         n1 = sum(c)
