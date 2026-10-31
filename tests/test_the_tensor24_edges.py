@@ -29,10 +29,10 @@ def world(cube=None):
     the test's lay, the tied hand's components at the held hand's counts where the wave is laid, so its Mesh edges carry at once."""
     folder = ROOT / "examples" / "tensor24-mesh"
     universe, piece, setting = (json.loads((folder / f"{n}.json").read_text("utf-8")) for n in NAMES)
-    universe["chosen"]["key"], shape = KEY, cube or piece["shape"]
+    setting["middle"], shape = KEY // 2, cube or piece["shape"]  # the key's middle, its unit KEY
     setting["gears"] = [g for g in setting["gears"] if g[2] < sites_of(shape)]
     made = main.made(loading.star(len(shape)))
-    held, _ = loading.load(universe, setting, sites_of(shape), *made)
+    held, [] = loading.load(universe, setting, sites_of(shape), *made)  # read: no departure
     if cube:
         (tied,) = [n for n in range(len(held.trains)) if held.trains.tied[n]]
         hand, wave = (g for g in setting["gears"] if held.trains.held[g[0]]), list(setting["gears"])
@@ -43,7 +43,7 @@ def world(cube=None):
             if not held.trains.held[g[0]]
             for c in range(held.trains[tied].dims[0])  # the tied train's first kind's components
         ]
-        held, _ = loading.load(universe, setting, sites_of(shape), *made)
+        held, [] = loading.load(universe, setting, sites_of(shape), *made)  # read: no departure
     return held, main.layout(universe, shape, held), State(*held.state), shape
 
 
@@ -80,7 +80,7 @@ def test_the_mesh_edges_are_the_mesh_contraction_one_coupling_at_both_ends_with_
     restarted at the teeth's birth misses, and one tooth born one past its complement opens the books."""
     held, laid, start, _ = world()
     _, _, key, across, _ = laid.click
-    scale, (_, opposite) = key[0, 0] // KEY, faces(laid, held)
+    scale, (_, opposite) = held.scale, faces(laid, held)  # the load's, D over KEY
     assert frame.same([across], [np.stack([across[x].T for x in opposite])]) and across.any()
     s, moved = start, False
     for _ in range(ROUNDS):

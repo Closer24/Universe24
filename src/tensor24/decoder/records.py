@@ -7,7 +7,8 @@
 # of them or a record of the schema, and a field the schema does not name holds whole numbers and labels alone,
 # through its rows and mappings (the schema's first line), so a float, a truth value, NaN or null, or a row of
 # another length, is seen (Sofer's G1 and G2); the header's sides make a board, each side 1 or more; the header's
-# train cards name each train once, each card's winding 1 or more; an event's round stands from 1 to the end's rounds
+# train cards name each train once, each card's winding 1 or more and each card's key the record's one dial,
+# the header's (KEY4; the 07:5x ruling's one key per record); an event's round stands from 1 to the end's rounds
 # and its site on the board (the digests are the runner's, which the decoder never reads); a click line's train has a
 # card, a line of no side holds no q 0, and a line stands once at its round, site and train (the first hostile code
 # reader's M10); the events keep the schema's order (round, site, train); and every click line's sides, in its site and
@@ -151,7 +152,7 @@ def board(header: Any) -> tuple[Any, Any]:
 
 
 def carded(header: Line) -> str:
-    """The first train card off the record: a winding below 1, or a train an earlier card names; or nothing."""
+    """The first train card off the record: a winding below 1, a train an earlier card names, or a key off the record's one dial, the header's dial, or in a header with no dial the first card's key (the 07:5x ruling's one key per record: every side's dial is the load's one D, which every card holds; KEY4, the physicist's m5; not the 08:5x guard item, a header dial off the file's key, which would need the middle and kappa div senses in the header); or nothing."""
     cards = header.get("trains", [])
     windings = [(n, t.get("winding")) for n, t in enumerate(cards, start=1)]
     low = [(n, w) for n, w in windings if whole(w) and w < 1]
@@ -159,7 +160,14 @@ def carded(header: Line) -> str:
         return f"train card {low[0][0]} holds the winding {low[0][1]}, below 1"
     trains = [t["index"] for t in cards if whole(t.get("index"))]
     twice = [i for n, i in enumerate(trains) if i in trains[:n]]
-    return f"train cards name the train {twice[0]} twice" if twice else ""
+    if twice:
+        return f"train cards name the train {twice[0]} twice"
+    keys = [(n, t["key"]) for n, t in enumerate(cards, start=1) if whole(t.get("key"))]
+    one = header["dial"] if whole(header.get("dial")) else next((k for _, k in keys), None)
+    off = [(n, k) for n, k in keys if k != one]
+    if off:
+        return f"train card {off[0][0]} holds the key {off[0][1]}, off the record's one dial {one}"
+    return ""
 
 
 def place(e: Line) -> tuple[int, int, int, int]:

@@ -1,4 +1,4 @@
-"""The click world's lay, examples/tensor24-click/setting.json and its universe's key (the Boss's code writer,
+"""The click world's lay, examples/tensor24-click/setting.json with its key laid once (the Boss's code writer,
 2026-10-30, the night's PLAN.md B3, FRAMES.md 6 and NOT_CLOSED 29): whole numbers by the act itself, Rule3's carry the
 one division, no float, no circular function, no root, no rounding; the universe and the piece read from their files,
 no train declared here (the held train and the two tied trains read off the loader's flags by character, the giver
@@ -13,7 +13,10 @@ a count a round, and a tied hand inside the room moves at most about 0.7 of a co
 Gamma div 4 and omega^2 = 2 hold / Gamma), so a taker at rest is moved by the hands' tie only where the tie is a large
 part of the tied spring (at a tenth of it the taker's push stays in its tooth and no count of it moves, while the
 held train clicks, measured below); the room, hold (|x_giver|^2 + |x_taker|^2) below Gamma div 4 at the held hand, read over the whole run
-on the act; the key CHOSEN in the universe file, read against the largest swing of the giver's course of S (its
+on the act; the key laid once in the setting, the key's middle MIDDLE, the file's key moved (set from a run at
+the key 1, about a seventh of the giver's swing there, the audit's C7, and the file's own until the owner rules,
+KEY4), the click's unit K = 2 MIDDLE + 1 read off the loader, read against the largest swing of the giver's course
+of S (its
 passing, the two-round energy change) over its first beat at the key 1, where the click is S itself: its window an
 odd whole from 1 to that swing, and the lay computes no key (the audit's C7).
 Board: a cube of 3, every Node-clock laid alike, so the Meshes pull nothing between like sites and one Node-clock's
@@ -46,6 +49,8 @@ TICKS = 5000  # past ten tied beats (the physicist's rule)
 ONE = [1, 1, 1]  # one Node-clock: every site of the cube is laid alike
 READ = 250  # the rounds between two readings of the held hand's |k|^2 in the long run
 BEAT_RUN = 1000  # the run's window: the rounds the lone giver is run for its beat, a fixed run
+MIDDLE = 25405714  # the key, laid once as the key's middle: the file's key 50811429 moved, (key - 1) div 2, not
+# derived (KEY4; its value set from a run, the audit's C7); the click's unit 2 MIDDLE + 1 is the loader's
 
 
 def files():
@@ -54,10 +59,10 @@ def files():
     return universe, shape
 
 
-def world(universe, shape, gears):
+def world(universe, shape, gears, middle):
     """The loaded files on the engine: the held trains, the layout and the state; no departure of the lay."""
     made = main.made(loading.star(len(shape)))
-    held, laid = loading.load(universe, {"version": 1, "gears": gears}, sites_of(shape), *made)
+    held, laid = loading.load(universe, {"version": 1, "middle": middle, "gears": gears}, sites_of(shape), *made)
     assert not laid, laid
     return held, main.layout(universe, shape, held), State(*held.state)
 
@@ -90,7 +95,7 @@ def lay():
 
     universe, shape = files()
     sites = sites_of(shape)
-    held, layout, _ = world(universe, shape, [])
+    held, layout, _ = world(universe, shape, [], MIDDLE)
     hand, giver, taker = by_character(held)
     rest, gamma = int(layout.gearing.rest[0, 0]), universe["integers"]["full_rate"]
     f, _ = carry(rest, gamma, 0)
@@ -123,23 +128,22 @@ def lay():
     period = turns[2] - turns[0]
     say(f"2. the giver alone (the hands' tie at 0): its count changes sign at rounds {turns[:4]}, a beat of {period} rounds")
     # 3. the key: the act at the key 1, where the click is S, over the first beat with the hands' tie on
-    one = json.loads(json.dumps(universe))
-    one["chosen"]["key"] = 1
     course, swing = [0], [0]
 
     def wind(n, held_, s, clicks):
         course[0] += int(clicks[giver, 0])
         swing[0] = max(swing[0], abs(course[0]))
 
-    run_one(one, gears_of(hand, giver, 1), period, wind)
-    key = universe["chosen"]["key"]
-    _, odd = carry(key, 2, 0)  # the key's parity by Rule3's carry
-    holds = odd == 1 and 1 <= key <= swing[0]
+    run_one(universe, gears_of(hand, giver, 1), period, wind, 0)  # the middle 0: the click's unit 1
+    edge = int(layout.click.key[0, 0])  # the edge dial D, every side's, read off the loader
+    key, _ = carry(edge, held.scale, 0)  # the click's unit K, D over edging's scale, the loader's
+    holds = 1 <= key <= swing[0]  # odd by construction, K = 2 MIDDLE + 1: no parity is read
     say(
-        f"3. the key CHOSEN in the universe file, {key}, read against the act at the key 1 over the giver's first beat, rounds"
+        f"3. the key laid in the setting as the key's middle, {MIDDLE}, the click's unit {key} read off the loader (the edge dial {edge}), read against the act at the key 1 over the giver's first beat, rounds"
         f" 1..{period}, where the click is S itself: the giver's course of S swings to {swing[0]} at most; the key's window, an odd"
-        f" whole from 1 to that swing, holds it: {holds} (its remainder by 2, {odd}); about {carry(swing[0], key, 0)[0]} keys pass in that"
-        f" beat (a chosen unit of wind below the quantum, Planck's key being NOT_CLOSED 3; the lay computes no key, the audit's C7)"
+        f" whole from 1 to that swing, holds it: {holds} (odd by construction, no parity read); about {carry(swing[0], key, 0)[0]} keys pass in that"
+        f" beat (the swing over the key, a clock fact; the key's value the file's own, set from a run at the key 1, the audit's C7,"
+        f" OPEN for the owner; Planck's key NOT_CLOSED 3; the lay computes no key)"
     )
     # 4. the room over the whole run, at the key: the tied hands' squares at the held hand, |k|^2, the clicks
     seen = {"most": 0, "at": 0, "k": set(), "climb": [], "held": 0, "books": 0, "taker": 0, "course": [0, 0], "windows": []}
@@ -176,7 +180,7 @@ def lay():
     )
     # 5. the tie the plan first named, a tenth of the tied spring: the taker's push stays in its tooth, as read below
     tenth = json.loads(json.dumps(universe))
-    tenth["chosen"]["tie"], tenth["chosen"]["key"] = carry(2 * hold * f, 10, 0)[0], 1
+    tenth["chosen"]["tie"] = carry(2 * hold * f, 10, 0)[0]
     still = {"taker": 0, "tooth": 0, "clicks": 0}
 
     def quiet(n, held_, s, clicks):
@@ -185,7 +189,7 @@ def lay():
         still["tooth"] = max(still["tooth"], abs(int(s.r[first, 0])))
         still["clicks"] += sum(int(int(clicks[t, 0]) != 0) for t in range(len(held_.trains)))
 
-    quiet_wide = run_one(tenth, gears_of(hand, giver, 1), TICKS, quiet)
+    quiet_wide = run_one(tenth, gears_of(hand, giver, 1), TICKS, quiet, 0)  # the middle 0: the click's unit 1
     dial = 2 * rest
     say(
         f"5. the no, the hands' tie at a tenth of the tied spring ({tenth['chosen']['tie']}) at the key 1 for {TICKS} rounds: the taker's largest"
@@ -195,21 +199,23 @@ def lay():
     WORLD.joinpath("setting.json").write_text(
         '{"version": 1, "ticks": '
         + str(TICKS)
+        + ', "middle": '
+        + str(MIDDLE)
         + ', "gears": [\n'
         + ",\n".join("  " + json.dumps(g) for g in gears)
         + "\n]}\n",
         encoding="utf-8",
     )
-    say(f"the setting written: {len(gears)} gears, ticks {TICKS}; the universe's key {key}")
+    say(f"the setting written: {len(gears)} gears, ticks {TICKS}, the middle {MIDDLE}; the click's unit {key}, the edge dial {edge}")
     Path(__file__).with_name("lay.txt").write_text("\n".join(out) + "\n", encoding="utf-8")
 
 
-def run_one(universe, gears, rounds, reader):
+def run_one(universe, gears, rounds, reader, middle=MIDDLE):
     """The world laid by the gears on one Node-clock for the rounds, each round's state and clicks handed to the reader;
     the run stops at the round whose state holds a count past the universe's width, read from the universe file as
     run.py reads it (its promise "wide"), that state unread, and gives the round and the count's bits (None where it
     runs every round)."""
-    held, layout, s = world(universe, ONE, gears)
+    held, layout, s = world(universe, ONE, gears, middle)
     width, trains = universe["integers"]["width"], len(held.trains)
     for n in range(1, rounds + 1):
         s, sides = step.act(layout, s)

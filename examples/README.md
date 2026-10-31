@@ -8,7 +8,7 @@ and pages left the tree with it on the owner's word of 2026-10-30, 09:3x UTC; gi
 | --- | --- |
 | `universe.json` | The universe's integers (`den`, `full_rate`, `width`) and its trains, each with its kinds among the 24's five, its part and its pinion. |
 | `piece.json` | The board's shape, the Node-clocks along each axis. |
-| `setting.json` | The run's ticks and the gears laid at the start. |
+| `setting.json` | The run's ticks, the key's middle and the gears laid at the start. The middle is the world's one key, laid once (KEY4): the click's unit K = 2 middle + 1, so a key K is laid as (K - 1) div 2, and the record's dial shows the edge dial (kappa div 2) K, every side's. |
 
 Check and load them: `python -I tools/tensor24_files.py` (the examples by default). Run them to a record and its
 ledger: `python -I tools/tensor24_run.py examples/tensor24/universe.json examples/tensor24/piece.json
@@ -23,8 +23,9 @@ A1, Sofer's form 4 list; the Boss's ruling of 07:5x UTC); until he rules none mo
 - the mesh world's mesh, 250000: searched in a window for an outcome (at 200000 and 240000 the tied hand never moves in
   125 rounds, at 350000 it moves at 128 Node-clocks, so 250000 was taken), a value found by search, Forbidden by the
   law and OPEN;
-- the click world's key, 50811429: set from a run (the code-clean auditor's C7), its window an odd whole up to the
-  giver's swing over its first beat read at the key 1, about 13 keys in that beat, OPEN;
+- the click world's key, 50811429, laid as the setting's middle 25405714: set from a run (the code-clean auditor's
+  C7), its window an odd whole up to the giver's swing over its first beat read at the key 1, about 13 keys in that
+  beat, the file's own value until the key is derived from the structure, OPEN;
 - the click world's tie, 96000: the rule first tried (it runs away, the run's stop at round 3752 below), OPEN;
 - the well world's notch, 120000: twice the 60000 it was at the dial 1, picked so the notch rides the same dial, OPEN;
 - the springs of the click and the mesh worlds, 10^8: the file's den Gamma^2 by a stated rule (the grip at rest, the
@@ -34,7 +35,7 @@ A1, Sofer's form 4 list; the Boss's ruling of 07:5x UTC); until he rules none mo
 
 Three of the five worlds write no click line by their structure, NO CLICK in every reading of the decoder: our bang
 (`tensor24`), the live world and the well world lay no monomial whose value legs stand in two trains and no Mesh plan,
-so they hold no edge, the edge key is 1, every click tooth stands at 0 in [0, 1) and no tooth can carry. They stay
+so they hold no edge, the edge dial is 1, every click tooth stands at 0 in [0, 1) and no tooth can carry. They stay
 shipped as board-only worlds (the Boss's ruling of 07:5x UTC); laying an edge or a key on them is the world-maker's
 initialization, the owner's batch.
 
@@ -134,11 +135,11 @@ runs away, its counts past 4300 digits by round 1734); and two tied hands (T1, T
 hold 1 (the tied spring 2 hold f = 120000; the giver alone beats in 428 rounds on this lay) and to each other by the
 hands' tie at 96000: the giver laid as a line hand at its turning point, a = b = (40, 0, 0) on its T1 rows at every
 Node-clock, and the taker at 0. Every Node-clock is laid alike, so the Meshes pull nothing between like sites and each
-runs as the one Node-clock the generator reads. The key stands in the universe file, 50811429 (OPEN, above), and the lay computes
-none (the audit's C7): its window is an odd whole from 1 to the largest swing of the giver's course of S (its passing,
+runs as the one Node-clock the generator reads. The key stands in the setting as its middle, 25405714, the click's unit 50811429 (OPEN, above), and
+the lay computes none (the audit's C7): its window is an odd whole from 1 to the largest swing of the giver's course of S (its passing,
 the two-round energy change) over its first beat, read off the act at the key 1, where the click is S itself, on this
-lay a swing of 687744000, so that about 13 keys pass in that beat (a chosen unit of wind below the quantum; Planck's
-key is NOT_CLOSED 3).
+lay a swing of 687744000, so that about 13 keys pass in that beat (the swing over the key, a clock fact; the key's value the
+file's own, OPEN; Planck's key is NOT_CLOSED 3).
 
 What the act does with this lay, as it falls (`lay.txt`, on one Node-clock, every site of the cube alike; no tick count
 and no strength picked to avoid it): the first click falls at round 1, the held train clicking (596 of its clicks
@@ -154,7 +155,7 @@ wave, so its square, and the giver's spring 2 hold f |k|^2 with it, swings, a pa
 hands' tie at a tenth of the tied spring (12000) at the key 1: no count of the taker moves in 5000 rounds, its push in
 its tooth, at most 1128528000 of the dial's half 1200000000, while the held train's 5187 clicks fall, and no count
 passes the width. These click readings, and the key's window read at the key 1, are the per-train passing's, measured
-before term 11 was laid on the edges; on the edges (`runner/plans.py`'s `edging`, the edge key 3 times the key) every
+before term 11 was laid on the edges; on the edges (`runner/plans.py`'s `edging`, the edge dial 3 times the click's unit) every
 edge's books are 0 at every place by the carry's law, the counts are the board's as before (the click pushes no gear),
 and the lay's click readings wait for the re-lay.
 
@@ -207,7 +208,7 @@ hand moves at 122 Node-clocks, where the halves pass, up to 24 counts; the held 
 its own spring turns it by no quarter turn; the squares of the board's wave summed within 62 permille of the same files
 at mesh 0 (the wave's own dispersion on the ring apart: the vertex takes that much into the tied hand); on term 11's
 edges (the shared tooth for every pair of clocks, NC29b; `runner/plans.py`'s `edging`) and the Mesh's edges (term 6's
-gradient vertex split by the Spoke it reads across, `crossing`), at the edge key 3, the key 1 times kappa / two, 21589
+gradient vertex split by the Spoke it reads across, `crossing`), at the edge dial 3, the click's unit 1 (the middle 0) times kappa / two, 21589
 click lines from round 20, 14547 of them with Mesh sides that carried (27308 Mesh sides, the wave and the tied hand
 across the Meshes along the ring, a two-clock meeting each), every edge's books 0 at every place by the carry's law, at
 the held and tied hands' own Node-clock and across every Mesh; the run back exact. Run it as the one bang: `python -I

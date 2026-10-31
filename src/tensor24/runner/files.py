@@ -1,6 +1,6 @@
 """Clock: before the first round the files say which trains every Node-clock carries, how many stand on each axis, and which gears are laid where.
 Algebra: whole numbers only, every side, part and integer at least 1, each departure refused by name; then the trains read against the engine's kinds.
-Board: the three files read and checked, then laid out as the load's arrays; the universe's chosen block names the key, the push's switch and the five strengths (the notch, the hold, the held rows' own spring, the tie and the mesh), each CHOSEN by name, and nothing else is laid: no coupling, particle or mass.
+Board: the three files read and checked, then laid out as the load's arrays; the universe's chosen block names the push's switch and the five strengths (the notch, the hold, the held rows' own spring, the tie and the mesh), each CHOSEN by name; the setting, the world's initialization, lays the gears and the world's one key, the key's middle, once for the world, the interim source of the click's unit (the file's own value, OPEN, until the key is derived from the structure; KEY4); and nothing else is laid: no coupling, particle or mass.
 Clicks: n/a: nothing the clicks show comes from the files.
 """
 
@@ -12,7 +12,6 @@ from typing import Any, NamedTuple, TypeGuard
 
 import numpy as np
 
-from tensor24.algebra.carry import carry
 from tensor24.runner.board import board
 
 # A kind among the 24's, a kind's whole basis and a gear's component within its train's rows are read against the
@@ -57,12 +56,14 @@ def star(axes: int) -> Any:
 
 
 SENSES = len(star(1))  # the Spokes along one axis, its + and its -: the star of one axis
-# the key odd: a pair's two click teeth, each born at (key - 1) div senses, sum to key - 1 only then, and with the
-# pair's S_L + S_M = 0 that forces q_L + q_M = 0 (NOT_CLOSED 11; the first hostile code reader's M6 and the second's 3:
-# with an even key the two sum to key - 2 and the pair's books miss)
-ODD = Rule(
-    lambda v: whole(v) and v >= 1 and carry(v, SENSES, 0)[1] == 1,
-    f"an odd whole number, a pair's two click teeth, each born at (key - 1) div {SENSES}, summing to key - 1",
+# the world's one key as the initialization lays it, the key's middle, once for the world: the interim source of the
+# click's unit K (the file's own value, OPEN, until the key is derived from the structure; KEY4), read by load.dial
+# alone, K = senses middle + 1, an odd unit written by its middle (a definition); the node computes from it every edge
+# side's dial D = (kappa div senses) K and its tooth's birth (D - 1) div senses, and names an even D and a broken scale
+# (plans.dialled); no parity is read here
+MIDDLE = Rule(
+    lambda v: whole(v) and v >= 0,
+    f"a whole number of at least 0, the key's middle laid once for the world, the click's unit {SENSES} middle + 1",
 )
 # the metric's push on or off: term 5 claims no strength, its books' form laid at the factor 1 or at the factor 0
 # (the second hostile code reader's 2: a push of 2 or more opens the books by that factor; the third's 2: a push
@@ -97,11 +98,10 @@ TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, "pinion": None}
 UNIVERSE = {
     "version": VERSIONED,
     "integers": {"den": ONE, "full_rate": ONE, "width": ONE},
-    # the key, the push's switch and the five strengths, each CHOSEN by name: the whole click's key (G5; its value
-    # G3's), the metric's push on or off (term 5 claims no strength) and the volume's notch (G2), the held hand's tie,
-    # the held rows' own spring, the hands' tie and the gradient vertex through the Mesh (G3's frame)
+    # the push's switch and the five strengths, each CHOSEN by name: the metric's push on or off (term 5 claims no
+    # strength) and the volume's notch (G2), the held hand's tie, the held rows' own spring, the hands' tie and the
+    # gradient vertex through the Mesh (G3's frame); the click's key is laid in the setting, as its middle (KEY4)
     "chosen": {
-        "key": ODD,
         "push": SWITCH,
         "notch": NONE_BELOW,
         "hold": NONE_BELOW,
@@ -112,7 +112,7 @@ UNIVERSE = {
     "trains": [TRAIN],
 }
 PIECE = {"version": VERSIONED, "shape": SIDES}
-SETTING = {"version": VERSIONED, "ticks": NONE_BELOW, "gears": GEAR}
+SETTING = {"version": VERSIONED, "ticks": NONE_BELOW, "middle": MIDDLE, "gears": GEAR}
 
 
 def once(pairs: list[tuple[str, Any]]) -> dict[str, Any]:

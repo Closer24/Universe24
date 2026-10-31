@@ -40,6 +40,7 @@ WORLD = ROOT.joinpath("examples", "tensor24-mesh")
 PULSE, HALF, CENTRE = 500, 4, 20  # the pulse's peak, half-width and centre along x
 SCAN = ((200000, 125), (240000, 125), (350000, 125), (250000, 250))  # the window about the file's mesh: (mesh, rounds)
 TICKS = 125  # the setting's ticks: inside the room at the file's mesh, measured below
+MIDDLE = 0  # the key, laid once as the key's middle: 0, for the click's unit 1, the file's key (KEY4)
 
 
 def bump(x, sx):
@@ -53,7 +54,7 @@ def bump(x, sx):
 
 def world(universe, shape, gears):
     made = main.made(loading.star(len(shape)))
-    held, laid = loading.load(universe, {"version": 1, "gears": gears}, sites_of(shape), *made)
+    held, laid = loading.load(universe, {"version": 1, "middle": MIDDLE, "gears": gears}, sites_of(shape), *made)
     assert not laid, laid
     return held, main.layout(universe, shape, held), State(*held.state)
 
@@ -161,7 +162,7 @@ def lay():
             f" {min(found['k'])} and {max(found['k'])}, {found['clicks']} clicks, the largest count {found['largest']}"
         )
     WORLD.joinpath("setting.json").write_text(
-        '{"version": 1, "ticks": ' + str(ticks) + ', "gears": [\n' + ",\n".join("  " + json.dumps(g) for g in gears) + "\n]}\n",
+        '{"version": 1, "ticks": ' + str(ticks) + ', "middle": ' + str(MIDDLE) + ', "gears": [\n' + ",\n".join("  " + json.dumps(g) for g in gears) + "\n]}\n",
         encoding="utf-8",
     )
     say(f"the setting written: {len(gears)} gears, ticks {ticks}")

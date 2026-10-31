@@ -35,6 +35,7 @@ from tensor24.runner.files import sites_of  # noqa: E402
 WORLD = ROOT.joinpath("examples", "tensor24-live")
 SCALE, REACH, CENTRE = 1 << 28, 8, 10  # the bump SCALE (REACH^2 - d^2)^2 about z = CENTRE, its peak 2^40
 TICKS = 100  # the setting's ticks
+MIDDLE = 0  # the key, laid once as the key's middle: 0, for the click's unit 1, the file's key (KEY4)
 SPAN = 20  # the account's windows of rounds
 
 
@@ -58,7 +59,7 @@ def bump(z, sz):
 def world(universe, shape, gears):
     """The loaded files on the engine: the held trains, the layout and the state; no departure of the lay."""
     made = main.made(loading.star(len(shape)))
-    held, laid = loading.load(universe, {"version": 1, "gears": gears}, sites_of(shape), *made)
+    held, laid = loading.load(universe, {"version": 1, "middle": MIDDLE, "gears": gears}, sites_of(shape), *made)
     assert not laid, laid
     return held, main.layout(universe, shape, held), State(*held.state)
 
@@ -118,7 +119,7 @@ def lay():
         f" the run back exact: {exact}"
     )
     WORLD.joinpath("setting.json").write_text(
-        '{"version": 1, "ticks": ' + str(TICKS) + ', "gears": [\n' + ",\n".join("  " + json.dumps(g) for g in gears) + "\n]}\n",
+        '{"version": 1, "ticks": ' + str(TICKS) + ', "middle": ' + str(MIDDLE) + ', "gears": [\n' + ",\n".join("  " + json.dumps(g) for g in gears) + "\n]}\n",
         encoding="utf-8",
     )
     say(f"the setting written: {len(gears)} gears, ticks {TICKS}")

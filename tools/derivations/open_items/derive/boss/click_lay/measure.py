@@ -78,7 +78,7 @@ def turned(m, turn, layout, s, shape):
 
 def the_24(say, universe, shape, setting, rounds):
     """Every turn of the 24 on the lay: the run of the turned lay against the run turned, clicks and state, each round."""
-    held, layout, s0 = lay.world(universe, shape, setting["gears"])
+    held, layout, s0 = lay.world(universe, shape, setting["gears"], setting["middle"])
     states, clicks = [s0], []
     for _ in range(rounds):
         s, q = step.act(layout, states[-1])
@@ -111,7 +111,7 @@ def main_(record, rounds):
 
     universe, shape = lay.files()
     setting = json.loads(lay.WORLD.joinpath("setting.json").read_text(encoding="utf-8"))
-    held, layout, _ = lay.world(universe, shape, setting["gears"])
+    held, layout, _ = lay.world(universe, shape, setting["gears"], setting["middle"])
     hand, giver, taker = lay.by_character(held)
     hold, gamma = universe["chosen"]["hold"], universe["integers"]["full_rate"]
     room, _ = carry(gamma, 4, 0)

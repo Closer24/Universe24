@@ -38,7 +38,7 @@ def edits():
         ("universe", "integers"): "universe.integers: a mapping, not NoneType",
         ("universe", "trains"): "universe.trains: a list of one train or more",
         ("universe", "chosen"): "universe.chosen: a mapping, not NoneType",
-        ("universe", "chosen", "key"): "universe.chosen.key: an odd whole number",
+        ("setting", "middle"): "setting.middle: a whole number of at least 0, the key's middle",
         ("universe", "chosen", "push"): "universe.chosen.push: 0 or 1",
         **{
             ("universe", "chosen", k): f"universe.chosen.{k}: {low}"
@@ -83,8 +83,8 @@ def edits():
         "a push of 2": ("universe", lambda u: u["chosen"].update(push=2), "chosen.push: 0 or 1"),
         "a push below 0": ("universe", lambda u: u["chosen"].update(push=-1), "chosen.push: 0 or 1"),
         "a push of 1": ("universe", lambda u: u["chosen"].update(push=1), None),
-        "an even key": ("universe", lambda u: u["chosen"].update(key=2), "key: an odd whole number"),
-        "a key below 1": ("universe", lambda u: u["chosen"].update(key=-1), "key: an odd whole number"),
+        "a key retired": ("universe", lambda u: u["chosen"].update(key=1), "the key 'key' is not in"),
+        "a middle below 0": ("setting", lambda s: s.update(middle=-1), "middle: a whole number of at"),
         "a float of at least 1": (
             "universe",
             lambda u: u["integers"].update(den=2.5),

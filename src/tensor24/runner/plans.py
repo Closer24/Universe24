@@ -47,9 +47,9 @@ def widening(c: Z, kept: Z) -> tuple[Z, Z]:
 
 
 def edging(
-    trains: Z, potential: tuple[Z, tuple[Z, Z, Z, Z]], structure: Z, key: Z, spokes: Z
-) -> tuple[Z, Z, Z]:
-    """Term 11 on the edges, every passing between two trains as the act reads it, with the edge key (the owner's shared tooth for every pair of clocks, NC29b on David's split): per term of J's plan, as contract.pushes lays them (leg by leg, each leg's monomials in their order), its weight on every train and the train of the leg it pushes; and every side's key. A monomial's legs: each position one leg, a held train's positions one leg together, its excursion |k|^2 (the held spring's rest, n = 0); a leg's weight kappa (L - l) / L, L the monomial's legs and l its own train's, so a two-leg monomial weighs kappa / 2 on both legs and a tie kappa 2 / 3 on its held legs and kappa / 3 on its tied pair, David's split in the work form (NC29b's 3, 4 and 2 at kappa 6); its weight on a train u is that times 1 where the monomial has a value leg in u (one scatter of its legs' trains, lit), 0 elsewhere, so the side (t, u) passes SUM over the monomials on both trains of SUM_i ([leg i in t] - [leg i in u]) w_i W_i and the side (u, t) its negative, the diagonal, an own monomial and a pair of trains no monomial joins weighing 0; a monomial with value legs in three trains lies on the triangle's three edges, each edge passing the difference of its two trains' weighed work, the third train's legs weighing 0 there (no plan lays one; the mathematician's count on every world, NC29b's minor 1). kappa: the product of two and of every legs count a live monomial on an edge holds, each once, so that every weight is whole (6 on every world laid: the hands' tie's two legs and the tie's three); every side's key the universe file's one CHOSEN key times kappa / two, 3 there (David's OPEN, a change of a declared number, NC29b), the same for every side at every reach, its own Node-clock and across each Spoke (crossing, the Mesh's edges), odd as the key is, so a side's two teeth born at (key - 1) div senses sum to key - 1 (load.load) and stay so by the carry's law; no count typed: two the senses of an axis, read from the star, the positions the legs' own."""
+    trains: Z, potential: tuple[Z, tuple[Z, Z, Z, Z]], structure: Z, unit: Z, spokes: Z
+) -> tuple[tuple[Z, Z, Z], Z, list[str]]:
+    """Term 11 on the edges, every passing between two trains as the act reads it, with the edge key (the owner's shared tooth for every pair of clocks, NC29b on David's split): per term of J's plan, as contract.pushes lays them (leg by leg, each leg's monomials in their order), its weight on every train and the train of the leg it pushes, and every side's key; the scale, kappa / two, which the load keeps for the Mesh edges (laid_out); and the dials' departures, a scale with a remainder and an even D, each named (dialled). A monomial's legs: each position one leg, a held train's positions one leg together, its excursion |k|^2 (the held spring's rest, n = 0); a leg's weight kappa (L - l) / L, L the monomial's legs and l its own train's, so a two-leg monomial weighs kappa / 2 on both legs and a tie kappa 2 / 3 on its held legs and kappa / 3 on its tied pair, David's split in the work form (NC29b's 3, 4 and 2 at kappa 6); its weight on a train u is that times 1 where the monomial has a value leg in u (one scatter of its legs' trains, lit), 0 elsewhere, so the side (t, u) passes SUM over the monomials on both trains of SUM_i ([leg i in t] - [leg i in u]) w_i W_i and the side (u, t) its negative, the diagonal, an own monomial and a pair of trains no monomial joins weighing 0; a monomial with value legs in three trains lies on the triangle's three edges, each edge passing the difference of its two trains' weighed work, the third train's legs weighing 0 there (no plan lays one; the mathematician's count on every world, NC29b's minor 1). kappa: the product of two and of every legs count a monomial the structure lays on an edge holds (its factor with every CHOSEN strength at 1, a chosen 0 its factor alone), each once, so that every weight is whole (6 on the click and mesh worlds, where the tie's three legs lie on an edge; 2 on our bang and the live and well worlds, where no monomial lies on an edge); every side's key the edge dial D, the click's unit K times kappa / two, K the node's own from the setting's one middle (load.dial), 3K on the click and mesh worlds (David's OPEN, a change of a declared number, NC29b), the same for every side at every reach, its own Node-clock and across each Spoke (crossing, the Mesh's edges), odd while kappa / two is, as on every plan laid today, so a side's two teeth born at (D - 1) div senses sum to D - 1 (load.load) and stay so by the carry's law; a monomial on an edge holding four legs makes kappa / two even and D even for every middle, which dialled names; no count typed: two the senses of an axis, read from the star, the positions the legs' own."""
     _, legs = potential
     n, d = spokes.shape
     senses, _ = carry(n, d, 0)
@@ -82,12 +82,29 @@ def edging(
     # kappa over the monomial's legs, a constant monomial reading 1
     share, _ = carry(kappa, total + 1 - lit(total), 0)
     weight = (share * edged)[None, :] * (total[None, :] - mine) * value
-    scale, _ = carry(kappa, senses, 0)
-    return (
-        (weight[:, :, None] * present[None, :, :]).reshape(positions * monomials, count),
-        (train * value).reshape(-1),
-        np.full(((1 + n) * count * count, 1), key * scale, dtype=object),
-    )
+    # kappa / two, and what its carry leaves: 0 as kappa is formed, a product of senses and of legs counts
+    scale, spare = carry(kappa, senses, 0)
+    key = np.full(((1 + n) * count * count, 1), unit * scale, dtype=object)
+    weights = (weight[:, :, None] * present[None, :, :]).reshape(positions * monomials, count)
+    return (weights, (train * value).reshape(-1), key), scale, dialled(key, senses, spare)
+
+
+def dialled(key: Z, senses: Z, spare: Z) -> list[str]:
+    """The two refusals on the edge dial D = (kappa div senses) K that edging lays, each named, so that the run runs nothing: a broken scale, kappa over senses leaving a remainder (spare, edging's: a code check by construction, kappa being a product of senses and of legs counts and so a multiple of senses on any file, so that only a change of kappa's form leaves one; KEY4's mathematician, MINOR 3); and an even D. K is odd for every middle, and D is odd while kappa div senses is, as on every plan laid today (kappa 2, or 6 where a tie's three legs lie on an edge); a monomial on an edge holding four legs makes kappa div senses 4 or 12 and D even for every middle. On an even D a side's two teeth born at (D - 1) div senses are not each other's complement, so an edge's books can be one quantum off (the running sum of its two quotients 0 or -1), and the triangle's pair needs the odd dial for its flip about the birth (the Boss's 09:4x ruling; KEY4's mathematician, MINOR 1)."""
+    _, half = carry(key - 1, senses, 0)
+    pairs = zip(key.ravel().tolist(), half.ravel().tolist(), strict=True)
+    even = sorted({int(d) for d, r in pairs if r})
+    broken = [
+        f"the edge dials' scale: kappa over senses leaves {spare}, so no dial and no Mesh edge's factor is kappa / two"
+    ]
+    return (broken if spare else []) + [
+        f"the edge dial {d}: even, so a side's two click teeth born at (D - 1) div senses are not each other's"
+        " complement and an edge's two quotients can sum to -1, not 0, and the triangle's pair needs an odd dial for its"
+        " flip;"
+        " K being odd by construction, D = (kappa div senses) K is even only where kappa div senses is, as a monomial on"
+        " an edge holding four legs makes it"
+        for d in even
+    ]
 
 
 def crossing(trains: Z, mesh: tuple[Z, Z, Z], spokes: Z, nb: Z, scale: Z) -> tuple[Z, Z]:

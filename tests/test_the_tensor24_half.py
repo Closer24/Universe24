@@ -148,7 +148,7 @@ def laid(trains, chosen, integers=None, shape=(2, 1, 1)):
         "trains": trains,
         "chosen": {**universe["chosen"], **chosen},
     }
-    held, found = loading.load(universe, {"gears": []}, sites_of(list(shape)), *MADE)
+    held, found = loading.load(universe, {"middle": 0, "gears": []}, sites_of(list(shape)), *MADE)
     assert found == []
     return held, main.layout(universe, list(shape), held)
 

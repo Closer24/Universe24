@@ -1,7 +1,7 @@
 {
   "version": 1,
   "integers": {"den": 1, "full_rate": 10000, "width": 128},
-  "chosen": {"key": 50811429, "push": 0, "notch": 0, "hold": 1, "spring": 100000000, "tie": 96000, "mesh": 0},
+  "chosen": {"push": 0, "notch": 0, "hold": 1, "spring": 100000000, "tie": 96000, "mesh": 0},
   "trains": [
     {"name": "wave", "kinds": ["A1"], "part": 2, "pinion": 1},
     {"name": "square", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1, "pinion": 1},

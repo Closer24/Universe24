@@ -40,6 +40,7 @@ LUMP = (0, 0, 0)  # the lump's centre
 PULSE, HALF = 500, 4  # the pulse's peak and half-width
 CENTRE = 9  # the pulse's centre along x, the ring's far side from the lump
 TICKS = 128  # the setting's ticks, and the first run's rounds
+MIDDLE = 0  # the key, laid once as the key's middle: 0, for the click's unit 1, the file's key (KEY4)
 WINDOW = 64  # the first run's last rounds, over which the metric's slots are averaged
 SPAN = 16  # the account's windows of rounds
 
@@ -95,7 +96,7 @@ def world(universe, shape, gears):
     """The loaded files on the engine: the held trains, the layout and the state; no departure of the lay."""
     sites = sites_of(shape)
     made = main.made(loading.star(len(shape)))
-    held, laid = loading.load(universe, {"version": 1, "gears": gears}, sites, *made)
+    held, laid = loading.load(universe, {"version": 1, "middle": MIDDLE, "gears": gears}, sites, *made)
     assert not laid, laid
     return held, main.layout(universe, shape, held), State(*held.state)
 
@@ -202,6 +203,8 @@ def lay():
     WORLD.joinpath("setting.json").write_text(
         '{"version": 1, "ticks": '
         + str(TICKS)
+        + ', "middle": '
+        + str(MIDDLE)
         + ', "gears": [\n'
         + ",\n".join("  " + json.dumps(g) for g in gears)
         + "\n]}\n",

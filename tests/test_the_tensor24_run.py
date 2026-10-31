@@ -158,17 +158,17 @@ def ledger(held, laid, s, setting, sites):
 def pair_world():
     """A pair world of one Node-clock, NOT_CLOSED 37's (the first hostile code reader's M3; the seventh's rulings: the held hand at rest,
     and no assert that it runs away), its three files: the held hand (1, 0), its before its now, its spring CHOSEN at the grip at rest, den
-    Gamma^2, the giver at its turning point at 14 and the taker at rest, at Gamma 1000, the hands' tie 9600 and the key 614401 odd."""
+    Gamma^2, the giver at its turning point at 14 and the taker at rest, at Gamma 1000, the hands' tie 9600 and the key 614401, laid as its middle 307200."""
     den = 1  # every pinion den, the seed's
     hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
     pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
     trains = [hand, {"name": "giver", **pair}, {"name": "taker", **pair}]
     integers = {"den": den, "full_rate": 1000, "width": 128}
     grip = den * integers["full_rate"] * integers["full_rate"]  # the grip at rest, the spring's rule
-    chosen = {"key": 614401, "push": 0, "notch": 0, "hold": 1, "spring": grip, "tie": 9600, "mesh": 0}
+    chosen = {"push": 0, "notch": 0, "hold": 1, "spring": grip, "tie": 9600, "mesh": 0}
     world = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
     gears = [[0, 0, 0, 1, 1, 0], [1, 0, 0, 14, 14, 0]]  # the held hand at rest, as every pulse
-    laid_ = {"version": 1, "ticks": 1260, "gears": gears}
+    laid_ = {"version": 1, "ticks": 1260, "middle": 307200, "gears": gears}  # the key 614401's middle
     return {"universe": world, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": laid_}
 
 
@@ -208,7 +208,7 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     card = {k: [t[k] for t in got.header["trains"]] for k in ("label", "winding", "key", "square")}
     assert card["label"] == [t["name"] for t in universe["trains"]] and card["square"] == [0, 1]
     assert card["winding"] == [1, len(laid.spokes) // len(piece["shape"])]  # the 00 row's dial, senses
-    assert set(card["key"]) == {universe["chosen"]["key"]} and card["square"] == list(held.trains.square)
+    assert set(card["key"]) == {held.scale} and card["square"] == list(held.trains.square)  # D, middle 0
     traced, turns = [k["characters"] for k in got.header["kinds"]], len(list(frame.turns()))
     assert {len(c) for c in traced} == {turns} and len(set(map(tuple, traced))) == len(traced)
 
@@ -235,17 +235,17 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert all(
         leaves(dataclasses.make_dataclass("Broken", [("x", hint)])) - {int, str} for hint in broken
     )
-    # a departing file, an even key, a broken promise or a lay outside the wave's window (the 00 slot at site 0 laid so
+    # a departing file, a middle below 0, a broken promise or a lay outside the wave's window (the 00 slot at site 0 laid so
     # deep that the teeth there, the rest and k0 times it, are within 1 and k0, every row's but the 00 row's own) is
     # named, and nothing is written, by the run and its tool
-    even = {**universe, "chosen": {**universe["chosen"], "key": universe["chosen"]["key"] + 1}}
+    below = {**json.loads(json.dumps(setting)), "middle": -1}  # the key's middle below 0
     universe["version"], k0 = 1 + 1, int(laid.clock.factor.max())  # the clock's read factor
     deep, low = json.loads(json.dumps(setting)), (k0 - int(laid.gearing.rest[0, 0])) // k0
     deep["gears"].append([[n for n, t in enumerate(held.trains) if t.square][0], 0, 0, low, low, 0])
     setting["gears"][0][-1] = TOOTH
     edits = (
         ("universe", universe, "universe.version: 1, not 2", 1),
-        ("universe", even, "universe.chosen.key: an odd whole number", 1),
+        ("setting", below, "setting.middle: a whole number of at least 0", 1),
         ("setting", setting, "round 1: row 0, site 0: the tooth", 1),
         ("setting", deep, "round 1: row 0, site 0: the Spokes' grips", len(laid.gearing.rest) - 1),
     )
@@ -322,7 +322,7 @@ def test_the_widths_promise_names_a_count_past_the_width_in_either_slot_and_none
     universe["chosen"].update(spring=0, hold=0, tie=0)  # no strength on it: free
     (hand,) = [n for n, t in enumerate(universe["trains"]) if t["kinds"] == ["A1", "A2"]]
     for ticks in (1, 1 + 1):  # the end state's read, then the round-2 promise
-        setting = {"version": 1, "ticks": ticks, "gears": [[hand, 0, 0, edge, edge - 1, 0]]}
+        setting = dict(version=1, ticks=ticks, middle=0, gears=[[hand, 0, 0, edge, edge - 1, 0]])
         files = {"universe": universe, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": setting}
         for name, held_ in files.items():
             (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")

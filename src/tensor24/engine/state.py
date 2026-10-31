@@ -38,7 +38,7 @@ class Read(NamedTuple):
 
 
 class Click(NamedTuple):
-    """Term 11 on the edges, laid at load (runner/plans.py's edging and crossing): per term of J's plan on the value legs, in the plan's order, its weight on every train, 0 on a train its monomial has no value leg in, and the train of the leg it pushes; every edge side's key at every reach, its own Node-clock and across each Spoke, the edge key: the universe file's CHOSEN key times kappa / two, the same for every side; and the Mesh's edges, term 6's gradient vertex split by the Spoke it reads across, per pair of rows their coupling and the side it books on."""
+    """Term 11 on the edges, laid at load (runner/plans.py's edging and crossing): per term of J's plan on the value legs, in the plan's order, its weight on every train, 0 on a train its monomial has no value leg in, and the train of the leg it pushes; every edge side's key at every reach, its own Node-clock and across each Spoke, the edge dial: the click's unit K, the node's own from the setting's one middle (the key's middle), times kappa / two, the same for every side; and the Mesh's edges, term 6's gradient vertex split by the Spoke it reads across, per pair of rows their coupling and the side it books on."""
 
     weight: Z  # (terms, trains): the leg's share of its monomial's flow, kappa (L - l) / L, onto each other train of the monomial
     train: Z  # (terms,): the train of the leg the term pushes, the side's first train
