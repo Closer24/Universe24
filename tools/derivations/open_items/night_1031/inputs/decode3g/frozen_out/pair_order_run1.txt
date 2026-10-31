@@ -1,0 +1,5 @@
+R4 on records of Big Pic's pair act, 40000 pair events each, read per half; N_T 26, CUT_FW 9622
+  the third click (the pair's teeth turned), first half: S 2456 thousandths, Var S 455 millionths; (a) SHOWN; past the pair's limit False; no signal and the 2 x 2 tests SHOWN (largest z^2 2868); the order: lag-1 A -3, B -10 per mille, z^2 151 and 1723: SHOWN
+  the third click (the pair's teeth turned), second half: S 2522 thousandths, Var S 445 millionths; (a) SHOWN; past the pair's limit False; no signal and the 2 x 2 tests SHOWN (largest z^2 2499); the order: lag-1 A -1, B -2 per mille, z^2 0 and 31: SHOWN
+  the first click (unturned, no draw), first half: S 2499 thousandths, Var S 446 millionths; (a) SHOWN; past the pair's limit False; no signal and the 2 x 2 tests SHOWN (largest z^2 7147); the order: lag-1 A -1000, B 119 per mille, z^2 19994000 and 285397: NOT SHOWN
+  the first click (unturned, no draw), second half: S 2499 thousandths, Var S 449 millionths; (a) SHOWN; past the pair's limit False; no signal and the 2 x 2 tests SHOWN (largest z^2 4404); the order: lag-1 A -1000, B 122 per mille, z^2 19998000 and 301319: NOT SHOWN

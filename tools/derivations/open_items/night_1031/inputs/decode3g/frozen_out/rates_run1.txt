@@ -1,0 +1,3 @@
+fair, 190 a round, halves of 1,000, 1000 draws: (3b) {'NOT SHOWN': 85, 'SHOWN': 915}, by half {'NOT SHOWN': 85, 'SHOWN': 1915}; (3d) {'NOT SHOWN': 108, 'SHOWN': 892}, by half {'NOT SHOWN': 111, 'SHOWN': 1889}
+fair, 175 a round, halves of 2,000, 1000 draws: (3b) {'NOT SHOWN': 85, 'SHOWN': 915}, by half {'NOT SHOWN': 86, 'SHOWN': 1914}; (3d) {'NOT SHOWN': 92, 'SHOWN': 908}, by half {'NOT SHOWN': 96, 'SHOWN': 1904}
+fair moving, swing, halves of 2,000, 1000 draws: (3b) {'NOT SHOWN': 83, 'SHOWN': 917}, by half {'NOT SHOWN': 84, 'SHOWN': 1916}; (3d) {'NOT SHOWN': 60, 'SHOWN': 940}, by half {'NOT SHOWN': 60, 'SHOWN': 1940}

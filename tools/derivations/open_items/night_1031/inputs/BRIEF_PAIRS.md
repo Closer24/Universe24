@@ -661,3 +661,87 @@ Reports: S/miracle_a_math/REPORT.md, S/miracle_a_phys/REPORT.md. Both read MIRAC
   and its edge-form books (OWED). Its physicist's stake for the owner's triangle: if the three edges were equal in
   strength and kind, no family would be picked by structure and any order would break S_3; it goes to Big Pic with the
   triangle question.
+
+## The Boss's rulings, 09:3x UTC, second part (from NATURE3's physicist)
+
+- The click world's order is "strictly later" (rule (t), the 07:5x words): two meetings of one clock in one round are
+  simultaneous in its own lines and unordered. Rule (s), a chain passing within one round, is a board check of the
+  act's one-round reach (at most two Meshes in one round, AUDIT2's B7), named so. On the mesh world the split is
+  114 / 62 / 187 under (t).
+- Beside the gap, C1 says the click world's causal order is not closed on either world: the board couples sites that no
+  meeting joins.
+- A text with no next round goes to Big Pic with its readers' reports beside it; the MINORs that rest on rulings made
+  after its freeze travel in those reports.
+
+## The owner's answers, about 09:4x UTC (in force; in Hebrew, the Boss's translation; Sofer enters them whole)
+
+To the Boss's list of 09:1x (items as numbered there):
+1. "Approved": a clock reads only its own clicks (Q10). Its sides and the board are not "what a clock can read".
+2. The teeth go out of the record entirely (Q11): the record writes lines and sides, q alone; no tooth, birth or end
+   tooth is written. The engine keeps its teeth; the code checks that read them read the board's own state.
+3. "Yes, as you recommend": Big Pic's strengths law. Every strength comes from the structure, or is laid once at the
+   start for each clock; never searched, and never one choice for the whole universe.
+4. The three silent worlds (the bang, the live world, the well) "out".
+5. On the triangle's tooth and twin (two new numbers per triangle): "There is surely a mathematical miracle here that
+   solves this cleanly." Not approved as two new numbers; Big Pic seeks the clean form.
+7. "Check what an equilateral triangle gives, because that seems to me the way." Big Pic's, first on the third click.
+8. D1, one number per edge: "if it helps, and it is generic and not a fake." Built if so.
+
+The Boss's rulings with them, 09:4x UTC:
+- The echo rule is not built to print SHOWN: at the file's key on 250 rounds it reads SHOWN with no reflector, from the
+  uniform relay (LIGHT3's mathematician, B1). Rule L and the per-clock cone are settled build items for the decoder.
+  A cut on the sizes of q is lawful only when it comes from the structure; any other cut is a pick (Big Pic's).
+- A's quiet holds at the file's key after about round 170, beyond the shipped ticks: the batch item "a key finer than
+  the grain for A's quiet" leaves the batch.
+- A text cites every ruling verbatim with its source: the brief's section, a post's number on the thread, or "the
+  owner's word relayed by the Boss at HH:MM".
+- A text with no next round goes to Big Pic with its readers' reports; their notes on later rulings travel with it.
+- ALG2's rule 1 ("triangles of three clocks at one Node-clock") and rule 3 ("no tooth on an H_1 cycle") cite the 10:1x
+  ruling (the cross-Mesh triangles stay H_1 cycles, carried as first clicks; one triangle per Node-clock, each edge on
+  one triangle). The owner's 09:4x word (check what an equilateral triangle gives) is Big Pic's to weigh against it.
+- The odd dial is needed by the triangle's pair (its flip about the birth), not by the edges' act (ALG2's mathematician,
+  MINOR 1, MEASURED and DERIVED).
+
+## The owner's word, about 09:4x UTC, on (C)'s two forms (in Hebrew; the Boss's translation)
+
+- "I answered you... Bell from the end feels closer to nature..." Of Big Pic's two forms for (C)'s seeds' law, the end
+  form (a tie of the two wings' ends, with no signal) comes first on Big Pic's bench; the start form stays derived
+  beside it.
+- MATH4 is PASSED by both its readers: the map of the whole system as derived, its open items named for Big Pic, its
+  MINORs carried as notes. Road A's rational exactness: the 09:0x line governs (both MIRACLE_A readers found the
+  rationals part sound), and nothing in whole numbers leans on it. A test's lay that differs at a whole row is lawful
+  as the check of a DERIVED fact, named a test's lay (09:5x, any board shape).
+
+## The Boss's rulings, 09:5x UTC, second part (from DECODE3g's physicist; the owner's word on ALG2)
+
+- R2's gate is taken from the clock's own counts (the exchangeable chance, given the half's N clicks and the n with side
+  1, that no two side-1 clicks stand in a row), so R2 is a click reading by the 09:5x rule; the passing-given chance
+  stays beside it, named a board check.
+- R3 on W, with (3p), leaves the settled list (10:1x, rule 5): a bench reading of the member, Big Pic's. DECODE3f's W
+  field is struck from the writers' list.
+- The free-lay control is the ruled member born at the middle, with a local act at the bound (S = 2 exactly) beside it,
+  so that the control is a test that can fail.
+- The chain rule in force is variant (i), "strictly later" (09:3x, second part).
+- The owner's word, about 09:4x UTC (in Hebrew; the Boss's translation): "The shortcut ALG2 explained something
+  important about the general mechanism of the clock system and the big algebra. Derive from it the solution to what is
+  still open." ALG3 (the ALG writer) reads every open item through the coupling complex, as an input for Big Pic's
+  bench and for ALG2's pair.
+- NATURE3 is PASSED by both its readers: an honest ledger of what the shipped worlds show (every SHOWN a code check, a
+  board check or forced by the lay; the one causal reading that can fail does fail, at the mesh world's islands). It
+  goes to Big Pic with both reports.
+- A significance level (a chi-square point, a family-wise level) is a convention of the test, named before the reading,
+  fixed for every reading and never moved to get a result; it is no number of the act or the world, and no pick.
+- With the teeth out of the record, the checks that read teeth (K1's birth check, F1's teeth ranges, the twins' board
+  halves) read the board's own state, as code checks (writer I, node-rec).
+
+## The Boss's rulings, 10:0x UTC, second part (from DECODE3g's mathematician, with its physicist)
+
+- R2's gate is read from the clock's own counts and covers every context rung 1 needs: the exact chance of no "11" and
+  of no "00", by the transfer recursion on the clock's own counts, summed and read where the sum is at most 1/20; the
+  higher rungs bounded as (e)'s ladder gate; R2 read for every side. The passing-given chance stays beside it, a board
+  check.
+- R4 adds each place's outcome against its own settings and against its own outcomes at lags 2, 4 and 8, beside lag 1,
+  each a 2 x 2 counted in N_T; the reach sentence is corrected (a partial dependence at depth 2 is refused).
+- (3b)'s per-K cuts (two tails, whole numbers, Poisson sums for even K) are a test's convention computed from its law:
+  the decoder's writer tabulates them now. They are not Big Pic's.
+- A ladder's share is spent once: the rungs' bounds sum against the share.

@@ -1,0 +1,89 @@
+the tree: tree_key4, tensor24 from src/tensor24/__init__.py
+L tensor24: universe.chosen holds a key 0; setting.middle 0; the node's K 1; edging's scale 1; the edge dial D [1] on 28 sides, D over the scale 1 (remainder 0); every tooth born at [0]
+L tensor24-click: universe.chosen holds a key 0; setting.middle 25405714; the node's K 50811429; edging's scale 3; the edge dial D [152434287] on 175 sides, D over the scale 50811429 (remainder 0); every tooth born at [76217143]
+L tensor24-live: universe.chosen holds a key 0; setting.middle 0; the node's K 1; edging's scale 1; the edge dial D [1] on 28 sides, D over the scale 1 (remainder 0); every tooth born at [0]
+L tensor24-mesh: universe.chosen holds a key 0; setting.middle 0; the node's K 1; edging's scale 3; the edge dial D [3] on 63 sides, D over the scale 1 (remainder 0); every tooth born at [1]
+L tensor24-well: universe.chosen holds a key 0; setting.middle 0; the node's K 1; edging's scale 1; the edge dial D [1] on 63 sides, D over the scale 1 (remainder 0); every tooth born at [0]
+U: the files read: examples/tensor24-click; universe.chosen holds a key: 0; setting.middle 25405714; the probe types no key
+U: the read: K = 2 x 25405714 + 1 = 50811429; edging's scale 3; every side's D [152434287] = 3 K, its remainder by 2 [1]; every tooth born at [76217143] (4725 teeth), D's middle; the Mesh couplings laid not 0: 0 (this world's mesh is 0)
+U uniform, by the read: lines 12636 against node-all's 12636; lines differing 0; end digest alike 1; the end's counts (a, b, r, rd) alike 1
+E1: the giver is train 3 and the taker 4 by the loader's flags; the giver's side to the taker at its own Node-clock, site 0, on the dial 152434288, every other on [152434287]
+E1 an even dial at one side of one tooth: lines 12636 against node-all's 12636; lines differing 102; end digest alike 0; the end's counts (a, b, r, rd) alike 1
+E2: refused at the load, loaded 0; named 1:
+    load: the edge dial 152434290: even, so a side's two click teeth born at (D - 1) div senses would sum to D - 2, not D - 1, and the edge's books would open (NOT_CLOSED 11); K be ... (311 characters)
+E2: the mutated read's K 50811430, every side's D [152434290], its click teeth born at [76217144]
+E2 an even unit everywhere, the form senses middle + senses, the even-dial promise mutated away: lines 12636 against node-all's 12636; lines differing 12636; end digest alike 0; the end's counts (a, b, r, rd) alike 1
+O: the mutated read's K 76217143, every side's D [228651429], its click teeth born at [114325714]
+O another form, odd at this middle, axes middle + 1: lines 12312 against node-all's 12636; lines differing 12636; end digest alike 0; the end's counts (a, b, r, rd) alike 1
+I: the mutated read's K 1, every side's D [3], its click teeth born at [1]
+I the key laid, the read ignoring it (middle 0): lines 14094 against node-all's 12636; lines differing 14094; end digest alike 0; the end's counts (a, b, r, rd) alike 1
+M: refused at the load, loaded 0; named 1:
+    load: the edge dial 76217142: even, so a side's two click teeth born at (D - 1) div senses would sum to D - 2, not D - 1, and the edge's books would open (NOT_CLOSED 11); K bei ... (310 characters)
+M: the mutated read's K 25405714, every side's D [76217142], its click teeth born at [38108570]
+M the read handing the middle as the click's unit, the even-dial promise mutated away: lines 12474 against node-all's 12636; lines differing 12636; end digest alike 0; the end's counts (a, b, r, rd) alike 1
+R1 a second key at one train: the giver's card lays its own odd key: loaded 0; the load's promise names 1:
+    load: universe.trains[3].key: a second key: the world's key is laid once, as the setting's middle
+  the format names 1:
+    files: universe.trains[3]: the key 'key' is not in the format: the world's key is laid once, in the setting, as the key's middle (setting.middle); the node computes the click's  ... (238 characters)
+  the run tool (main.ran) names 1, the format's first (alike: 1); a record or a ledger written: 0
+R2 a second key at one site: the middle laid per site, site 0's one more: loaded 0; the load's promise names 1:
+    load: setting.middle: one whole number of at least 0, laid once for the world and at no tooth or site, not a list of 27
+  the format names 1:
+    files: setting.middle: a whole number of at least 0, the key's middle laid once for the world, the click's unit 2 middle + 1, not [25405715, 25405714, 25405714, 25405714, 254057 ... (393 characters)
+  the run tool (main.ran) names 1, the format's first (alike: 1); a record or a ledger written: 0
+R3 KEY2's form: the middle laid per tooth (train, site, middle), the giver's at site 0 one more: loaded 0; the load's promise names 1:
+    load: setting.middle: one whole number of at least 0, laid once for the world and at no tooth or site, not a list of 135
+  the format names 1:
+    files: setting.middle: a whole number of at least 0, the key's middle laid once for the world, the click's unit 2 middle + 1, not [[0, 0, 25405714], [0, 1, 25405714], [0, 2, 254 ... (2638 characters)
+  the run tool (main.ran) names 1, the format's first (alike: 1); a record or a ledger written: 0
+R4 the retired key kept: universe.chosen.key beside the setting's middle: loaded 0; the load's promise names 1:
+    load: universe.chosen.key: a second key: the world's key is laid once, as the setting's middle
+  the format names 1:
+    files: universe.chosen: the key 'key' is not in the format: the world's key is laid once, in the setting, as the key's middle (setting.middle); the node computes the click's uni ... (235 characters)
+  the run tool (main.ran) names 1, the format's first (alike: 1); a record or a ledger written: 0
+R5 no key laid: neither the setting's middle nor any other: loaded 0; the load's promise names 1:
+    load: setting.middle: no key laid: the world's key is laid once, as the key's middle, a whole number of at least 0 (0 for the click's unit 1)
+  the format names 1:
+    files: setting.middle: a whole number of at least 0, the key's middle laid once for the world, the click's unit 2 middle + 1, not None
+  the run tool (main.ran) names 1, the format's first (alike: 1); a record or a ledger written: 0
+R6 today's integer moved under its old name, setting.key, with no middle: loaded 0; the load's promise names 2:
+    load: setting.key: a second key: the world's key is laid once, as the setting's middle
+    load: setting.middle: no key laid: the world's key is laid once, as the key's middle, a whole number of at least 0 (0 for the click's unit 1)
+  the format names 2:
+    files: setting: the key 'key' is not in the format: the world's key is laid once, in the setting, as the key's middle (setting.middle); the node computes the click's unit and ev ... (227 characters)
+    files: setting.middle: a whole number of at least 0, the key's middle laid once for the world, the click's unit 2 middle + 1, not None
+  the run tool (main.ran) names 2, the format's first (alike: 1); a record or a ledger written: 0
+R7: one live monomial of four legs laid at the load's join, factor 1, on the rows [14, 15, 20, 21] (the giver's first two and the taker's), no file laying it
+R7 an edged monomial of four legs: loaded 0; the load's promise names 1:
+    load: the edge dial 609737148: even, so a side's two click teeth born at (D - 1) div senses would sum to D - 2, not D - 1, and the edge's books would open (NOT_CLOSED 11); K be ... (311 characters)
+R7, the promise mutated away: K 50811429, every side's D [609737148] = 12 K, the teeth born at [304868573]; the edges [(2, 3), (2, 4), (3, 4)]: an edge's two teeth sum to [609737146] at birth, D - 1 = 609737147
+R7, the promise mutated away, 200 rounds: 12636 click lines; the places (round, site, edge) where an edge's two quotients do not sum to 0: 0
+R8 the scale's carry leaving 1, as kappa + 1 = 7 does (7 over 2: [3, 1], the scale as it was): loaded 0; the load's promise names 1:
+    load: the edge dials' scale: kappa over senses leaves 1, so no dial and no Mesh edge's factor is kappa / two
+S tensor24: edging's scale as laid 1, with every chosen strength at 1 1
+S tensor24-click: edging's scale as laid 3, with every chosen strength at 1 3
+S tensor24-live: edging's scale as laid 1, with every chosen strength at 1 1
+S tensor24-mesh: edging's scale as laid 3, with every chosen strength at 1 3
+S tensor24-well: edging's scale as laid 1, with every chosen strength at 1 1
+S the click world with hold 0: edging's scale 1 (D [50811429]), by node-all's edging, which reads lit of the chosen factor; with every chosen strength at 1 3 (D [152434287])
+N today's integer under the new name, middle 50811429: the format names 0, the load's promise 0; K 101622859, every side's D [304868577], born at [152434288]; its first-click record (304868577 the header's dial, the cards' keys [304868577]): its click lines' digest is node-all's pin's 0, its end digest 0
+B1 the format's largest middle, 2^width - 1: the middle's bits 128 against the width 128; the format names 0; the load's promise names 0; K's bits 129, D's bits 131
+B2 a middle of 2^width: the middle's bits 129 against the width 128; the format names 1: setting.middle: the integer 340282366920938463463374607431768211456 takes more bits than the width, 128; the load's promise names 0; K's bits 130, D's bits 131
+W: tensor24-click (reach, 200 rounds): click lines 12636, end digest cb66502ed09837fe, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [152434287], dial 152434287, birth 76217143; the header's file digests moved: ['tensor24-click.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-click (first, 1 rounds): click lines 81, end digest fcde1e2959526e45, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [152434287], dial 152434287, birth 76217143; the header's file digests moved: ['tensor24-click.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-click (prefix, 4 rounds): click lines 243, end digest f089249ef77a74bb, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [152434287], dial 152434287, birth 76217143; the header's file digests moved: ['tensor24-click.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-live (reach, 200 rounds): click lines 0, end digest 4ce6b79675f4eaa2, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [1], dial 1, birth 0; the header's file digests moved: ['tensor24-live.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-live (first, 4 rounds): click lines 0, end digest 348f708ff889b9c4, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [1], dial 1, birth 0; the header's file digests moved: ['tensor24-live.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-live (prefix, 4 rounds): click lines 0, end digest 348f708ff889b9c4, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [1], dial 1, birth 0; the header's file digests moved: ['tensor24-live.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-mesh (reach, 200 rounds): click lines 56866, end digest d38aef9e2e673d37, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [3], dial 3, birth 1; the header's file digests moved: ['tensor24-mesh.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-mesh (first, 20 rounds): click lines 8, end digest 12f880dc89598879, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [3], dial 3, birth 1; the header's file digests moved: ['tensor24-mesh.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-mesh (prefix, 4 rounds): click lines 0, end digest 4c7d27feb83ddcb3, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [3], dial 3, birth 1; the header's file digests moved: ['tensor24-mesh.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-well (reach, 200 rounds): click lines 0, end digest 547fa810400be1e3, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [1], dial 1, birth 0; the header's file digests moved: ['tensor24-well.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-well (first, 4 rounds): click lines 0, end digest 6c876b3ee74e4925, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [1], dial 1, birth 0; the header's file digests moved: ['tensor24-well.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24-well (prefix, 4 rounds): click lines 0, end digest 6c876b3ee74e4925, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [1], dial 1, birth 0; the header's file digests moved: ['tensor24-well.json', 'universe.json']; the copy's decoder reads it: no cause
+W: tensor24 (whole, 10 rounds): click lines 0, end digest 0c23e7a3ae354ab7, run back exact 1; alike with node-all's: {'rounds': 1, 'clicks': 1, 'lines': 1, 'end': 1, 'keys': 1, 'dial': 1, 'birth': 1, 'head': 1, 'body': 1, 'ledger': 1}; the cards' keys [1], dial 1, birth 0; the header's file digests moved: ['setting.json', 'universe.json']; the copy's decoder reads it: no cause
+W: the lines write.py would write, on the copy and the migrated worlds, equal node-all's byte for byte: 1, and node-all's tests/tensor24_prefixes.jsonl: 1
+C, the copy's decoder: click1.jsonl: read 1; cause: none
+C, the copy's decoder: click1.card1.jsonl: read 0; cause: line 1's train card 2 holds the key 152434289, off the world's one key 152434287
+C, the copy's decoder: click1.card3.jsonl: read 0; cause: line 1's train card 4 holds the key 152434289, off the world's one key 152434287
+VERDICT: the read reproduces node-all's click world: 1

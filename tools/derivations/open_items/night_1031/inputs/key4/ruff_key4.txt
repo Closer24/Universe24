@@ -1,0 +1,5 @@
+$ ruff check --config pyproject.toml src/tensor24
+All checks passed!
+$ ruff format --config pyproject.toml --check src/tensor24
+27 files already formatted
+ruff 0.16.9

@@ -1,0 +1,5 @@
+tensor24: key today 1 (universe.json chosen.key); laid as setting.json middle 0 (key = 2 x 0 + 1, the remainder 0); its gears 1, ticks 10, each byte of the gears unmoved
+tensor24-click: key today 50811429 (universe.json chosen.key); laid as setting.json middle 25405714 (key = 2 x 25405714 + 1, the remainder 0); its gears 54, ticks 5000, each byte of the gears unmoved
+tensor24-live: key today 1 (universe.json chosen.key); laid as setting.json middle 0 (key = 2 x 0 + 1, the remainder 0); its gears 135, ticks 100, each byte of the gears unmoved
+tensor24-mesh: key today 1 (universe.json chosen.key); laid as setting.json middle 0 (key = 2 x 0 + 1, the remainder 0); its gears 187, ticks 125, each byte of the gears unmoved
+tensor24-well: key today 1 (universe.json chosen.key); laid as setting.json middle 0 (key = 2 x 0 + 1, the remainder 0); its gears 2937, ticks 128, each byte of the gears unmoved

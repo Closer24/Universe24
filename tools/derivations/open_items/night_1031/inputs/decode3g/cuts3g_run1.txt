@@ -1,0 +1,11 @@
+N 1: one degree 3842
+N 6: one degree 6961
+N 18: one degree 8948
+N 20: one degree 9141
+N 26: one degree 9622
+N 30: one degree 9885
+N 34: one degree 10116
+N 46: one degree 10674
+N 58: one degree 11103
+N 1: two degrees 5992; four degrees 9488
+N 6: two degrees 9575; four degrees 13696

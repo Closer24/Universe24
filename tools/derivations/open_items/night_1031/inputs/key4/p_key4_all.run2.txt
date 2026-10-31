@@ -1,0 +1,25 @@
+the tree: tree_all, tensor24 from src/tensor24/__init__.py
+L tensor24: the file's key K 1; the edge dial D [1] on 28 sides; D over K 1 (remainder 0), kappa = senses x that = 2; every tooth born at [0] (1792 teeth); D's remainder by senses [1]
+L tensor24-click: the file's key K 50811429; the edge dial D [152434287] on 175 sides; D over K 3 (remainder 0), kappa = senses x that = 6; every tooth born at [76217143] (4725 teeth); D's remainder by senses [1]
+L tensor24-live: the file's key K 1; the edge dial D [1] on 28 sides; D over K 1 (remainder 0), kappa = senses x that = 2; every tooth born at [0] (10080 teeth); D's remainder by senses [1]
+L tensor24-mesh: the file's key K 1; the edge dial D [3] on 63 sides; D over K 3 (remainder 0), kappa = senses x that = 6; every tooth born at [1] (11340 teeth); D's remainder by senses [1]
+L tensor24-well: the file's key K 1; the edge dial D [1] on 63 sides; D over K 1 (remainder 0), kappa = senses x that = 2; every tooth born at [0] (40824 teeth); D's remainder by senses [1]
+A, node-all: the click world's files, 200 rounds: click lines 12636; end digest cb66502ed09837fe; the end's counts (a, b, r, rd) digest 445a7fa1d70c4fb4
+C: the first-click record: 81 click lines, of the trains ['held', 'giver', 'taker']; the header's dial 152434287, birth 76217143, the cards' keys [152434287, 152434287, 152434287, 152434287, 152434287]
+C, node-all's decoder: click1.jsonl: read 1; cause: none
+C, node-all's decoder: click1.card1.jsonl: read 1; cause: none
+C, node-all's decoder: click1.card3.jsonl: read 0; cause: line 3's side to train 2 and its partner hold teeth not summing to the key less 1, 152434288
+R, node-all: tensor24-click (reach): 200 rounds, click lines 12636 (e1f61d0d77af9a5f), end digest cb66502ed09837fe, run back exact 1, the cards' keys [152434287], dial 152434287, birth 76217143; the decoder reads it: no cause
+R, node-all: tensor24-click (first): 1 rounds, click lines 81 (88b7bf893dd125a0), end digest fcde1e2959526e45, run back exact 1, the cards' keys [152434287], dial 152434287, birth 76217143; the decoder reads it: no cause
+R, node-all: tensor24-click (prefix): 4 rounds, click lines 243 (95224e359ab1b8bf), end digest f089249ef77a74bb, run back exact 1, the cards' keys [152434287], dial 152434287, birth 76217143; the decoder reads it: no cause
+R, node-all: tensor24-live (reach): 200 rounds, click lines 0 (e3b0c44298fc1c14), end digest 4ce6b79675f4eaa2, run back exact 1, the cards' keys [1], dial 1, birth 0; the decoder reads it: no cause
+R, node-all: tensor24-live (first): 4 rounds, click lines 0 (e3b0c44298fc1c14), end digest 348f708ff889b9c4, run back exact 1, the cards' keys [1], dial 1, birth 0; the decoder reads it: no cause
+R, node-all: tensor24-live (prefix): 4 rounds, click lines 0 (e3b0c44298fc1c14), end digest 348f708ff889b9c4, run back exact 1, the cards' keys [1], dial 1, birth 0; the decoder reads it: no cause
+R, node-all: tensor24-mesh (reach): 200 rounds, click lines 56866 (e03a53554fc04ea4), end digest d38aef9e2e673d37, run back exact 1, the cards' keys [3], dial 3, birth 1; the decoder reads it: no cause
+R, node-all: tensor24-mesh (first): 20 rounds, click lines 8 (293f6859048365e7), end digest 12f880dc89598879, run back exact 1, the cards' keys [3], dial 3, birth 1; the decoder reads it: no cause
+R, node-all: tensor24-mesh (prefix): 4 rounds, click lines 0 (e3b0c44298fc1c14), end digest 4c7d27feb83ddcb3, run back exact 1, the cards' keys [3], dial 3, birth 1; the decoder reads it: no cause
+R, node-all: tensor24-well (reach): 200 rounds, click lines 0 (e3b0c44298fc1c14), end digest 547fa810400be1e3, run back exact 1, the cards' keys [1], dial 1, birth 0; the decoder reads it: no cause
+R, node-all: tensor24-well (first): 4 rounds, click lines 0 (e3b0c44298fc1c14), end digest 6c876b3ee74e4925, run back exact 1, the cards' keys [1], dial 1, birth 0; the decoder reads it: no cause
+R, node-all: tensor24-well (prefix): 4 rounds, click lines 0 (e3b0c44298fc1c14), end digest 6c876b3ee74e4925, run back exact 1, the cards' keys [1], dial 1, birth 0; the decoder reads it: no cause
+R, node-all: tensor24 (whole): 10 rounds, click lines 0 (e3b0c44298fc1c14), end digest 0c23e7a3ae354ab7, run back exact 1, the cards' keys [1], dial 1, birth 0; the decoder reads it: no cause
+R: the lines write.py would write equal node-all's tests/tensor24_prefixes.jsonl byte for byte: 1

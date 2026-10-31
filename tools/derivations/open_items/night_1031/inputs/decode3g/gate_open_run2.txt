@@ -1,0 +1,6 @@
+n 2000 a half: the joint past's gate at L = 8 opens False (its bound 14099 per million, against 1086)
+n 2200 a half: the joint past's gate at L = 8 opens False (its bound 3903 per million, against 1086)
+n 2300 a half: the joint past's gate at L = 8 opens False (its bound 2005 per million, against 1086)
+n 2400 a half: the joint past's gate at L = 8 opens True (its bound 1021 per million, against 1086)
+n 2500 a half: the joint past's gate at L = 8 opens True (its bound 519 per million, against 1086)
+n 3000 a half: the joint past's gate at L = 8 opens True (its bound 19 per million, against 1086)

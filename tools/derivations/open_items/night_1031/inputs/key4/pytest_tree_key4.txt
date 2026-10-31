@@ -1,0 +1,53 @@
+................FF.......F...FFF....FF.FFF....                           [100%]
+=================================== FAILURES ===================================
+E   AttributeError: 'NoneType' object has no attribute 'trains'
+S/key4/tree_key4/src/tensor24/runner/load.py:401: AttributeError: 'NoneType' object has no attribute 'trains'
+E   AttributeError: 'NoneType' object has no attribute 'trains'
+S/key4/tree_key4/src/tensor24/runner/load.py:401: AttributeError: 'NoneType' object has no attribute 'trains'
+E   AssertionError: ('a key below 1', ["universe.chosen: the key 'key' is not in the format: the world's key is laid once, in the setting,...(setting.middle); the node computes the click's unit and every edge side's dial from it at the initialization (KEY4)"])
+    assert False
+S/key4/tree_key4/tests/test_the_tensor24_files.py:299: AssertionError: ('a key below 1', ["universe.chosen: the key 'key' is not in the format: the world's key is laid once, in the setting,...(setting.middle); the node computes the click's unit and every edge side's dial from it at the initialization (KEY4)"])
+E   assert ["setting.mid...ck's unit 1)"] == []
+      
+      Left contains one more item: "setting.middle: no key laid: the world's key is laid once, as the key's middle, a whole number of at least 0 (0 for the click's unit 1)"
+      Use -v to get more diff
+S/key4/tree_key4/tests/test_the_tensor24_half.py:152: assert ["setting.mid...ck's unit 1)"] == []
+E   assert ["setting.mid...ck's unit 1)"] == []
+      
+      Left contains one more item: "setting.middle: no key laid: the world's key is laid once, as the key's middle, a whole number of at least 0 (0 for the click's unit 1)"
+      Use -v to get more diff
+S/key4/tree_key4/tests/test_the_tensor24_half.py:152: assert ["setting.mid...ck's unit 1)"] == []
+E   assert ["setting.mid...ck's unit 1)"] == []
+      
+      Left contains one more item: "setting.middle: no key laid: the world's key is laid once, as the key's middle, a whole number of at least 0 (0 for the click's unit 1)"
+      Use -v to get more diff
+S/key4/tree_key4/tests/test_the_tensor24_half.py:152: assert ["setting.mid...ck's unit 1)"] == []
+E   AttributeError: 'NoneType' object has no attribute 'state'
+S/key4/tree_key4/tests/test_the_tensor24_load.py:55: AttributeError: 'NoneType' object has no attribute 'state'
+E   AttributeError: 'NoneType' object has no attribute 'trains'
+S/key4/tree_key4/tests/test_the_tensor24_load.py:128: AttributeError: 'NoneType' object has no attribute 'trains'
+E   KeyError: 'key'
+S/key4/tree_key4/tests/test_the_tensor24_run.py:212: KeyError: 'key'
+E   assert (["universe.ch...ck's unit 1)"] == []
+      
+      Left contains 2 more items, first extra item: "universe.chosen.key: a second key: the world's key is laid once, as the setting's middle"
+      Use -v to get more diff)
+S/key4/tree_key4/tests/test_the_tensor24_run.py:55: assert (["universe.ch...ck's unit 1)"] == []
+E   AssertionError: ["setting.middle: a whole number of at least 0, the key's middle laid once for the world, the click's unit 2 middle + 1, not None"]
+    assert (False)
+     +  where False = <built-in method startswith of str object at 0x7f637a3433c0>('round 2: row ')
+     +    where <built-in method startswith of str object at 0x7f637a3433c0> = "setting.middle: a whole number of at least 0, the key's middle laid once for the world, the click's unit 2 middle + 1, not None".startswith
+S/key4/tree_key4/tests/test_the_tensor24_run.py:334: AssertionError: ["setting.middle: a whole number of at least 0, the key's middle laid once for the world, the click's unit 2 middle + 1, not None"]
+=========================== short test summary info ============================
+FAILED tests/test_the_tensor24_edges.py::test_the_mesh_edges_are_the_mesh_contraction_one_coupling_at_both_ends_with_every_edges_books_closed
+FAILED tests/test_the_tensor24_edges.py::test_the_mesh_edges_turn_with_the_lines_8_turns_and_a_cubes_24
+FAILED tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds
+FAILED tests/test_the_tensor24_half.py::test_a_half_speed_world_laid_in_memory_turns_with_its_48_lifts_runs_back_and_pairs_by_the_dot
+FAILED tests/test_the_tensor24_half.py::test_the_board_with_its_sites_turned_by_each_lifts_own_turn_turns_the_run_alike
+FAILED tests/test_the_tensor24_half.py::test_the_hand_on_the_three_axes_splits_into_three_doublets_alike_but_for_omegas_charge
+FAILED tests/test_the_tensor24_load.py::test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_each_refusal
+FAILED tests/test_the_tensor24_load.py::test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_familys_frame
+FAILED tests/test_the_tensor24_run.py::test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and_runs_to_a_record_and_back
+FAILED tests/test_the_tensor24_run.py::test_the_edge_teeth_close_every_edges_books_run_back_and_turn_with_the_24_and_the_split_alone_does_not
+FAILED tests/test_the_tensor24_run.py::test_the_widths_promise_names_a_count_past_the_width_in_either_slot_and_none_at_its_edge
+11 failed, 35 passed in 59.76s
