@@ -3,7 +3,7 @@
 ## 0. Where everything is
 
 The owner (02:5x UTC): "Everything converges to one place, closed or not." This file is the index of that place.
-- The code: node-live, at 5ecb100f5 (the engine, the runner, the record, the decoder, the worlds and their tests;
+- The code: node-live, at 1919dd64c (the engine, the runner, the record, the decoder, the worlds and their tests;
   writer B's re-lay with the held hand at rest); the table below was read at 0456fa478. The seventh code reader's
   second read is NOT PASSED on three small blocks (code_readers/hcr7_REPORT2.md), writer B fixing them; writer D
   sweeps light and matter out of the code's board side.
@@ -21,6 +21,14 @@ The owner (02:5x UTC): "Everything converges to one place, closed or not." This 
 - The owner's words since 03:1x UTC, each in BRIEF_PAIRS.md: on the third click's solution (03:1x); on the full
   picture with the three generations (03:1x); all the new gate files enter main (03:1x); light and matter only in the
   click world, through the decoder, the board only clocks (03:2x).
+- The owner's words of 03:3x and 03:4x UTC, in BRIEF_PAIRS.md: the law of the choice, "Yes, there is a choice for the
+  third click, for every clock inside the universe. For the universe as a whole there is none: the run back is exact,
+  and so the whole state determines everything."; what the choice means and how the clicks show it, Bell's test (the
+  local bound 2 against the pair's 2 r2: the choice is the pair's, made across both places together and in neither
+  alone); a shared tooth for every pair of clocks (every transfer between two clocks in one pair of complementary
+  teeth, David's split; three clocks meeting at one place as a triangle, each edge closing); and build everything, "No
+  readings: build everything generically, by the approval of the hostile mathematician and physicist." The build list
+  is BUILD.md, beside this file.
 - Still to land here: THIRD5's pair's reports, the seventh code reader's first report (hcr7/REPORT.md, not yet at its
   path) and node-half's code reader.
 
