@@ -61,33 +61,33 @@ def world(universe, shape, gears):
 def by_character(held):
     """The board's wave (no square, not held, not tied), the held train and the tied train, by the loader's flags."""
     trains = range(len(held.trains))
-    (light,) = [t for t in trains if held.trains.sourcing[t] and held.trains.gripped[t] and not held.trains.tied[t]]
+    (wave,) = [t for t in trains if held.trains.sourcing[t] and held.trains.gripped[t] and not held.trains.tied[t]]
     (hand,) = [t for t in trains if held.trains.held[t]]
     (tied,) = [t for t in trains if held.trains.tied[t]]
-    return light, hand, tied
+    return wave, hand, tied
 
 
 def gears_of(held, shape):
-    light, hand, _ = by_character(held)
+    wave, hand, _ = by_character(held)
     sx = shape[0]
     sites = sites_of(shape)
     resting = [[hand, 0, x, 1, 1, 0] for x in range(sites)]  # the held hand at rest: before = now
-    still = [[light, 0, x, bump(x, sx), bump(x, sx), 0] for x in range(sx) if bump(x, sx)]  # at rest: before = now
+    still = [[wave, 0, x, bump(x, sx), bump(x, sx), 0] for x in range(sx) if bump(x, sx)]  # at rest: before = now
     return resting + still
 
 
 def run(universe, shape, gears, ticks):
     """The run on the act: the squares of the board's wave by round, the tied hand's room and moves, |k|^2, the clicks, the run back."""
     held, layout, s0 = world(universe, shape, gears)
-    light, hand, tied = by_character(held)
-    lf, hf, tf = (int(held.trains.first[t]) for t in (light, hand, tied))
+    wave, hand, tied = by_character(held)
+    lf, hf, tf = (int(held.trains.first[t]) for t in (wave, hand, tied))
     rows = held.trains[tied].rows()
     hold, room = universe["chosen"]["hold"], carry(universe["integers"]["full_rate"], 4, 0)[0]
     seen = {"squares": [], "most": 0, "out": None, "moved": set(), "k": set(), "clicks": 0, "held": 0, "tied": 0, "largest": 0}
     s = s0
     for n in range(1, ticks + 1):
         s, clicks = step.act(layout, s)
-        seen["squares"].append(int((s.a[lf : lf + held.trains[light].rows()] ** 2).sum()))
+        seen["squares"].append(int((s.a[lf : lf + held.trains[wave].rows()] ** 2).sum()))
         total = hold * int((s.a[tf : tf + rows] ** 2).sum(axis=0).max())
         seen["most"] = max(seen["most"], total)
         seen["out"] = n if seen["out"] is None and total >= room else seen["out"]
@@ -113,14 +113,14 @@ def lay():
     shape = json.loads(WORLD.joinpath("piece.json").read_text(encoding="utf-8"))["shape"]
     ticks = TICKS
     held, layout, _ = world(universe, shape, [])
-    light, hand, tied = by_character(held)
+    wave, hand, tied = by_character(held)
     integers, chosen = universe["integers"], universe["chosen"]
     rest, grip = int(layout.gearing.rest[0, 0]), int(layout.grip[0, 0])
     f, _ = carry(rest, integers["full_rate"], 0)
     room, _ = carry(integers["full_rate"], 4, 0)
     say(
         f"the board {shape}, {sites_of(shape)} Node-clocks along x; den {integers['den']}, Gamma {integers['full_rate']}: rest {rest}, the"
-        f" grip {grip}, f = rest div Gamma {f}; the board's wave train {light}, the held train {hand} and the tied train {tied} by character; hold"
+        f" grip {grip}, f = rest div Gamma {f}; the board's wave train {wave}, the held train {hand} and the tied train {tied} by character; hold"
         f" {chosen['hold']} (the tied spring 2 hold f = {2 * chosen['hold'] * f}), tie 0, push 0, notch 0, mesh {chosen['mesh']}"
         f" (its ground state needs mesh^2 below grip x 2 hold f / 2 = {grip * chosen['hold'] * f}); the room hold |x_tied|^2 below Gamma"
         f" div 4 = {room}"

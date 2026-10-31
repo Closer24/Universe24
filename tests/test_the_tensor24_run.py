@@ -298,23 +298,26 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
 
 def test_the_widths_promise_names_a_count_past_the_width_in_either_slot_and_none_at_its_edge(tmp_path):
     """Yes: counts of 2^w - 1 and -(2^w - 1) in both slots, w the universe file's width, are within it and named by none.
-    No: a count of 2^w or -2^w in either slot is named where it stands; and a free gear laid at 2^w - 1 now and 2^w - 2
-    before, Mesh-less and with no strength, crosses the width by its inertia alone in its one round, named, nothing written."""
-    width = read(PATHS[0])["integers"]["width"]
+    No: a count of 2^w or -2^w in either slot is named where it stands; a free gear at 2^w - 1, before 2^w - 2, crosses
+    by inertia in round 1, named at round 2, nothing written (1 tick the end state's read, 2 ticks the round-2 promise)."""
+    universe = read(ROOT / "examples" / "tensor24-click" / "universe.json")  # a held train, Mesh-less
+    width = universe["integers"]["width"]  # the width of the universe the case runs
     edge, past, zero = (1 << width) - 1, 1 << width, np.zeros((1, 1), dtype=object)
     held = lambda a, b: state.State(zero + a, zero + b, zero, zero, zero)  # noqa: E731
     assert run.wide(held(edge, -edge), width) == run.wide(held(-edge, edge), width) == []
     for n in (past, -past):
         named = [f"row 0, site 0: the count {n} takes more bits than the width, {width}"]
         assert run.wide(held(n, 0), width) == run.wide(held(0, n), width) == named
-    universe = read(ROOT / "examples" / "tensor24-click" / "universe.json")  # a held train, Mesh-less
     universe["chosen"].update(spring=0, hold=0, tie=0)  # no strength on it: free
     (hand,) = [n for n, t in enumerate(universe["trains"]) if t["kinds"] == ["A1", "A2"]]
-    setting = {"version": 1, "ticks": 1, "gears": [[hand, 0, 0, edge, edge - 1, 0]]}
-    files = {"universe": universe, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": setting}
-    for name, held_ in files.items():
-        (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")
-    found = main.ran([tmp_path / f"{name}.json" for name in NAMES], tmp_path / "free.jsonl")
-    named = f"site 0: the count {past} takes more bits than the width, {width}"  # at the held train's first row
-    assert len(found) == 1 and found[0].startswith("round 2: row ") and found[0].endswith(named), found
-    assert not (tmp_path / "free.jsonl").exists() and not run.ledger_of(tmp_path / "free.jsonl").exists()
+    for ticks in (1, 1 + 1):  # the end state's read, then the round-2 promise
+        setting = {"version": 1, "ticks": ticks, "gears": [[hand, 0, 0, edge, edge - 1, 0]]}
+        files = {"universe": universe, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": setting}
+        for name, held_ in files.items():
+            (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")
+        free = tmp_path / "free.jsonl"
+        found = main.ran([tmp_path / f"{name}.json" for name in NAMES], free)
+        named = f"site 0: the count {past} takes more bits than the width, {width}"  # the held train's first row
+        assert len(found) == 1, found  # one departure
+        assert found[0].startswith("round 2: row ") and found[0].endswith(named), found
+        assert not free.exists() and not run.ledger_of(free).exists()  # round 1's ledger unlinked
