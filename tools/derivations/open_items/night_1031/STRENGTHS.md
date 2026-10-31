@@ -27,7 +27,8 @@ by 1), the setting's ticks (10, 100, 128, 5000, 125), the trains by name, kind a
 
 ## 2. The solution: what a world may hold, and what a law must give
 
-This is the rule the writers follow from now on.
+This is the rule the writers follow from now on. Where Big Pic's solution (section 3) is stricter, his stands in place
+of this section's "or at 0 with its term off" (the architect's reading; the Boss's to rule).
 - A world's initialization may hold as given:
   - the three files' integers: the piece's shape, the setting's ticks, and the trains by name, kind and part;
   - den and width, the same in every world;
@@ -49,3 +50,47 @@ This is the rule the writers follow from now on.
   - the held spring, from the hat (Big Pic, 6538018966);
   - the mesh, from the gradient vertex's law;
   - Gamma, from the units of the 3+1 gears.
+
+## 3. Big Pic's solution, against this file (#2187 6538866082 (d), 04:1x UTC)
+
+His words, in short: the law holds no strength, every coupling is its table's own whole entry, at 1; the
+initialization holds every scale (the counts laid at round 0, the teeth's births by the loader's rule, and the one
+unit the counts are read in, the key). "So a world is its lay alone: it has an initialization; that is all; from there
+it runs by itself. A runaway or a still hand is then the lay's reading, never a reason to re-pick." His stage 1 runs
+the click and mesh worlds this way beside their files and posts what each does.
+
+| Number | This file's law (section 1) | Big Pic's solution | Agree or differ |
+|---|---|---|---|
+| key | the world's one quantum unit, OPEN | the initialization's unit, given with the counts, picked by no outcome | agree on what it is; his says where it comes from, the lay, which closes this file's OPEN |
+| push | term 5's own term, its strength the unit, 1 in every world | already none: term 5's factors, k0 and -1 | agree: no push strength; the file's push field is a switch and leaves |
+| notch | OPEN: term 9 gives its form, not h | the rest's own, rest div Gamma | differ: his gives the value (section 3.2) |
+| hold | the unit; the hat's form OPEN | its table's entry at 1, the scale from the laid hands' squares | agree |
+| spring | from the hat, on the pair's square; OPEN | from the hat, which reads only the pair's square (6538018966) | agree |
+| tie | one product of two hands' squares; OPEN | its table's entry at 1, the scale from the laid hands' squares | agree in substance: the product of squares is the monomial, its entry 1 |
+| mesh | the gradient vertex's strength; OPEN | the vertex's entry at 1, the scale from the laid wave and tied hand | differ: his gives the value, 1 |
+| den, Gamma, width | the unit; the 3+1 gears' units, OPEN; a bound | scales of the initialization, given with the lay | agree that none is a strength; he places Gamma in the lay now, this file after the 3+1 gears |
+| the rule | a strength ships at its law's unit, or at 0 with its term off | every coupling at 1, every scale in the lay, a runaway the lay's reading | differ: his is the stricter (section 3.1) |
+
+3.1 The rule. His is the stricter reading of the owner's word of 03:5x UTC, "Choosing a strength is forbidden": a 0
+that switches a term off is itself a chosen strength, since it decides whether a family acts in the world, and this
+file's rule left each term a choice between two values. His leaves no strength to choose at all: every coupling is its
+table's entry, every scale is the initialization's, which the owner allows ("A Node-clock does a simple and generic
+act. It does an initialization"), and no run can feed back into a world's numbers.
+
+3.2 The notch. His is again the stricter: rest div Gamma removes the last value a run set (h re-chosen to hold the
+board's mean). It gives the well h = 6000 (rest teeth 6 10^6, Gamma 1000), against its 120000, so the well is laid
+again.
+
+3.3 The click world's key, read from its own files with no run. Its setting lays the giver at 40 on row 0 at all 27
+Node-clocks (now = before = 40), the held hand at 1 and the taker at 0. With every coupling at its entry 1, the one
+quantum the lay holds is the giver's laid square, so the unit the counts are read in is 40^2 = 1600: key 1600, given
+with the counts, against today's 50811429 read off a run's swing. If the carry's window needs an odd key, as the click
+lay's window says, the lay lays an odd giver (39 or 41, giving 1521 or 1681): a laid count, so still the
+initialization's and no outcome. The other reading, the bare count as the unit, gives key 1, where the click is S
+itself. Which one the act needs, his stage 1 run on the files will show.
+
+3.4 The consequence for main. The click and mesh worlds, the only two with click lines, must be laid again on his rule
+(their couplings at 1, the held spring from the hat, the key the lay's unit) before the three clicks can be read in
+them; the third click waits besides on THIRD6, and the split click on its draw. Our bang, the live world and the well
+hold no click line, so they show none of the three clicks until a world lays a tie; the well is laid again for its
+notch, and the four worlds with push 0 for term 5's factors.
