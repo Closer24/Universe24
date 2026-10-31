@@ -9,7 +9,8 @@ the circulation of the bands' passings (tooth.py's member, unturned), and at eac
 its own triangle: it turns the three hands' whole state (counts, teeth, and the triangle's edge teeth) by the cycle
 (0 1 2) taken w times. The turn is a symmetry of the triangle's law, so the round commutes with it, and the
 circulation and the total energy are kept by it. Each clock's books, read per clock, are not: a write moves each
-clock's whole state and its energy to the next clock, which no side carries (the THIRD pair's B1, NOT PASSED).
+clock's whole state and its energy to the next clock, which no side carries (the THIRD pair's B1; the verdict, NOT
+PASSED).
 Readings, per lay and per birth of tau: E32's change against the teeth's share at every round (the turn included); the
 widest count (the floor); the turned path against the path with no writes: every round's three states alike as a set,
 and the rounds where a clock's own count differs (the writes seen in the lines); the net turn over the run, modulo 3,

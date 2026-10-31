@@ -24,8 +24,8 @@ Which end is laid with the hand is weighed w_A : w_B, "by how much the board is 
 click reads the weight in this law. The readings are taken at w_A : w_B = 1 : 0, 0 : 1, 1 : 1 and 1 : 2. On the key's
 odd dial the signal (5 D - 1) / (4 D^2) holds with one end alone, and half of it at 1 : 1.
 DERIVED, per setting pair: the joint counts, the correlation E as a fraction, each wing's +1 share under each far
-setting (no signal), CHSH (A0 B30 - A0 B90 + A60 B30 + A60 B90) as a fraction; the pair's curve E against the settings'
-angle at every multiple of 30 degrees; and the free lay, a reading: each wing's copy laid free over the plane's six
+setting (no signal), CHSH (A0 at B30, less A0 at B90, plus A60 at B30, plus A60 at B90) as a fraction; the pair's
+curve E against the settings' angle at every multiple of 30 degrees; and the free lay, a reading: each wing's copy laid free over the plane's six
 lattice directions at 30 degrees, and each wing's click taking its share by (iii), with no end fixing it; and the ruled
 control, a local act at the bound: each wing's copy laid free over the same lines, each wing's click fixed by it alone,
 +1 where the hand's share along its setting is more than half and -1 where it is less (a share of exactly half, read
