@@ -9,8 +9,6 @@
   "tests/test_the_tensor24_decoder.py::test_the_ticks_are_read_from_the_rate_lines_and_never_from_the_rounds": 0.0,
   "tests/test_the_tensor24_decoder.py::test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits": 1.0,
   "tests/test_the_tensor24_decoder.py::test_the_wind_is_read_over_every_train_at_every_round_with_a_click": 0.0,
-  "tests/test_the_tensor24_decoder_bangs.py::test_each_later_bang_shows_more_or_reads_not_shown_or_not_read_named": 0.0,
-  "tests/test_the_tensor24_decoder_bangs.py::test_the_tool_prints_row_46_from_the_record_and_its_ledger": 0.1,
   "tests/test_the_tensor24_decoder_cases.py::test_each_click_is_read_at_its_own_node_clock_from_its_first_beat": 0.1,
   "tests/test_the_tensor24_decoder_cases.py::test_the_books_read_each_holding_once_at_its_own_winding_and_name_what_they_cannot_read": 0.1,
   "tests/test_the_tensor24_decoder_cases.py::test_the_reader_reads_unnamed_and_absent_fields_and_names_each_refusal_in_ascii": 0.4,
