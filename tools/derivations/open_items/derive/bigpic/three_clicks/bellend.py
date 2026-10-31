@@ -1,7 +1,7 @@
 """Bell from the end (the owner's word of 09:33 UTC, "Bell from the end feels closer to nature"; the owner's words to
 David of 09:4x to 09:5x, "is it not possible to say that it is from the past and also from the future?"; the owner's
 10:10 word to the Boss, "Bell's weight is by how much the board is in the future or in the past, maybe"; David's
-meeting's weight, 6541948938). Road (C)'s end form, read exactly in whole numbers and Rule3's carry, by counting every
+meeting's weight, 6541948938). Road (C)'s end form, DERIVED in whole numbers and Rule3's carry by counting every
 seed: no draw and no stand-in stream. In (C)'s form (the Boss's ruling on the HALF pair, 6542866096 item 2): the hand
 and the fixing end are fixed in advance, and the far click chooses by its own seeds. The hand's dependence on the
 fixing end's setting is a laid measure. Under the owner's law of 11:52 UTC ("The connection between two places comes,
@@ -20,9 +20,9 @@ form, in the HALF pair's words (its mathematician's N1 and physicist's B1; the B
   (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap,
         (h . s)^2 / ((h . h)(s . s)), at multiples of 30 degrees the triangle's own squares (1, 3/4, 1/4, 0), and 147 /
         172 at z's lay, read from its own seed over the share's whole denominator.
-Which end fixes the hand is weighed w_A : w_B, "by how much the board is in the future or in the past"; no click reads
-the weight in this law. The readings are taken at w_A : w_B = 1 : 0, 0 : 1, 1 : 1 and 1 : 2. On the key's odd dial the
-signal (5 D - 1) / (4 D^2) holds with one end alone, and half of it at 1 : 1.
+Which end is laid with the hand is weighed w_A : w_B, "by how much the board is in the future or in the past"; no
+click reads the weight in this law. The readings are taken at w_A : w_B = 1 : 0, 0 : 1, 1 : 1 and 1 : 2. On the key's
+odd dial the signal (5 D - 1) / (4 D^2) holds with one end alone, and half of it at 1 : 1.
 DERIVED, per setting pair: the joint counts, the correlation E as a fraction, each wing's +1 share under each far
 setting (no signal), CHSH (A0 B30 - A0 B90 + A60 B30 + A60 B90) as a fraction; the pair's curve E against the settings'
 angle at every multiple of 30 degrees; and the free lay, a reading: each wing's copy laid free over the plane's six
@@ -110,7 +110,7 @@ def end_law_on(a, b, w_a, w_b):
 
 def free_lay(a_units, b_units):
     """Joint counts with each wing's copy laid free over the plane's six lattice lines (each with both signs) and each
-    wing taking its share by (iii): no end fixes the hand."""
+    wing taking its share by (iii): no end is laid with the hand."""
     return free_lay_on(direction(a_units), direction(b_units))
 
 

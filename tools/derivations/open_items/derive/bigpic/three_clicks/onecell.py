@@ -6,7 +6,8 @@ Two ways to weigh the pair's two clicks under the square form, every weight the 
          (a . e_k)(e_k . b), with a and b the two ends' readings (each its setting, along or across); its square, over
          the source's equal split, is the joint weight;
   (per)  one cell per state: the sum over k of the squares ((a . e_k)(e_k . b))^2, each over the same split: a hand
-         born along e_k or across it, each end taking its own share of it, the local act.
+         born along e_k or across it, each end taking its own share of it, a local model on one basis (Bell's local
+         bound is the local act's exact 2, bellend.py).
 Read exactly, in whole numbers and Rule3's carry, nothing drawn:
   - the identity under (one): the sum over k of (a . e_k)(e_k . b), each over (e_k . e_k), equals a . b, so the cell is
     the plane's own unit form between the two ends and holds no hand; checked on every lattice a, b and basis;
@@ -109,8 +110,8 @@ for name, group in (("the triangle's settings", sets), ("the powers of z", zsets
         pn, pd = chsh(lambda a, b, e=e: per_state(a, b, e), group)
         q = bellend.per_mille(pn, pd)
         worst = q if worst is None or q > worst else worst
-    print(f"{name}: CHSH under the one cell {bellend.per_mille(n, d)} per mille; under one cell per state, the largest"
-          f" over the six bases {worst} per mille (2 is 2000)", flush=True)
+    print(f"{name}: CHSH under the one cell {bellend.per_mille(n, d)} per mille; under one cell per state, a local"
+          f" model on one basis, the largest over the six bases {worst} per mille (2 is 2000)", flush=True)
 signal = 0
 for (a, b), _ in sets + zsets:
     c = one_cell(a, b)

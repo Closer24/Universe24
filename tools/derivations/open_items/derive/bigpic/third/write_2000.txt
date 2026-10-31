@@ -1,0 +1,10 @@
+two triangles of like hands joined by one band (0, 3); 2000 rounds; the hands' tie 96000, W 600000000, each triangle's dial G D 457302861; A laid [40, -20, -20] now and [20, -40, 20] before, B [-20, 40, -20] and [-40, 20, 20]
+== none: writes 0; each clock's books, read across the write, in 12000 of 12000; E32 moved at 0 of 0 writes; E32's narrowest 956 per mille of its widest; widest count 12 bits; the run back by the same act exact: True
+== the whole turn: writes 3951; each clock's books, read across the write, in 3082 of 12000; E32 moved at 2677 of 3951 writes; E32's narrowest 390 per mille of its widest; widest count 12 bits; the run back by the same act exact: False
+   B's clock 3 apart from the unwritten path in 1999 rounds, A's clock 0 in 1995
+== the momenta turn: writes 3980; each clock's books, read across the write, in 12000 of 12000; E32 moved at 0 of 3980 writes; E32's narrowest 757 per mille of its widest; widest count 12 bits; the run back by the same act exact: False
+   B's clock 3 apart from the unwritten path in 1999 rounds, A's clock 0 in 1990
+== the ends over a grid of 12 x 12 births of A's and B's taus, 1000 rounds
+   none: 1 distinct board ends over 144 pairs of births; pairs per end from 144 to 144; A's own part of the end takes 1 values, B's 1
+   the momenta turn: 144 distinct board ends over 144 pairs of births; pairs per end from 1 to 1; A's own part of the end takes 144 values, B's 144
+exit

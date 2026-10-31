@@ -297,8 +297,8 @@ def paths(name, lay_a, lay_b):
         backs += (ba, bb, bs, back[5]) == (start[0], start[1], start[2], [b0])
     print(f"== {name}: the lay {lay_a} now, {lay_b} before; {ROUNDS} rounds; tau born at {births}", flush=True)
     print(f"   the board's end one for every birth: {board_one}; every clock's line one at every round: {lines_one}; the"
-          f" landings apart from the first birth's in {apart} rounds; each run back from its own end to the same start"
-          f" and its own birth: {backs} of {len(runs)}", flush=True)
+          f" landings apart from the first birth's in {apart} rounds; each run back from its own end to the same board"
+          f" start and its own birth: {backs} of {len(runs)}", flush=True)
 
 
 def exchange(name, lay_a, lay_b):

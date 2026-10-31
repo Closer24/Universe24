@@ -75,7 +75,7 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
 
 - **Stage 3, the record for the decoder** (`record14.py`): the three clicks in schema 1.4's sides shape, both ends of every edge, k_before the tooth the carry reads and k_after the tooth it leaves, read back on the record alone (partner, quotients summing to 0, teeth summing to the dial less one, q the sum of its sides) with each side's weight by the carry's own law, x = dial q + k_after - k_before. The twins are written nowhere. Records: record14_click_road3_100.txt, record14_k1_tri_100.txt, every refusal at 0.
 - **Stage 4, the pair in whole numbers** (`pairwhole.py`, gate clean): the triangle's own settings (sides 0 and 60 degrees, heights 30 and 90), every weight the triangle's own squares (the height's 3 and the half side's 1 over the side's 4); CHSH from the click counts 2,501 per mille against the hand's own 2,499 and the triangle's 5/2, no signal, the run back, and the first click with no draw beside it (2,499 too: Bell reads the pair's hand), with the order of the landings (lag-1 -1 per mille in the third click, -1,000 in the first).
-- **Stage 4b, the pair world's two ends, road (C)** (`twoends.py`, gate clean; PICTURE.md section 11): the free end, each wing's end laid apart and kept where the two copies run back to one birth, reads at most 2 (the sign rule 1,981 to 2,021 per mille over eight births against the exact 2,000, every hand value giving +2; the member's landing read back from its end tooth 818 to 879 against 849, the run back exact at 50,000 of 50,000); (B) forward reads the same; the timelike case 2,490 to 2,517 against 2,499 (wing A's setting and landing carried on to wing B: refused under the owner's 11:47 and 11:52 laws, and kept only as a control of what the law forbids); no signal (at most 9 per mille between a wing's two far-setting shares); the order at lags 1 and 2 within -9 to 10 per mille. Two seeds' laws that pick nothing: the end at the middle reads the sign rule at 388 of 388; one birth with one death keeps one hand value per setting pair and reads 2 with a signal (A's share 917 against 752). Records: twoends_200000.txt, twoends_200000_runs8.txt.
+- **Stage 4b, the pair world's two ends, road (C)** (`twoends.py`, gate clean; PICTURE.md section 11), in the 11:52 restatement each wing's copy laid with the start and the end: the free end, each wing's end laid apart and kept where the two copies run back to one birth, reads at most 2 (the sign rule 1,981 to 2,021 per mille over eight births against the exact 2,000, every hand value giving +2; the member's landing read back from its end tooth 818 to 879 against 849, the run back exact at 50,000 of 50,000); (B) forward reads the same; the timelike case 2,490 to 2,517 against 2,499 (wing A's setting and landing carried on to wing B: refused under the owner's 11:47 and 11:52 laws, and kept only as a control of what the law forbids); no signal (at most 9 per mille between a wing's two far-setting shares); the order at lags 1 and 2 within -9 to 10 per mille. Two seeds' laws that pick nothing: the end at the middle reads the sign rule at 388 of 388; one birth with one death keeps one hand value per setting pair and reads 2 with a signal (A's share 917 against 752). Records: twoends_200000.txt, twoends_200000_runs8.txt.
 - **Stage 4c, Bell from the end** (`bellend.py`, bellend.txt; the owner's words of 09:33 and 10:10 UTC, David's
   meeting's weight). The probe counts every seed, so every reading is an exact fraction: no draw and no stand-in
   stream.
@@ -111,7 +111,7 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
   - **The ruled controls at the bound:**
     - the local act: each wing's copy laid free over the same lines, and each wing's click fixed by it alone (+1 where
       its share along the setting is more than half);
-    - beside it, stage 4b's member born at the middle, which reads the sign rule at 388 of 388 (twoends.py).
+    - beside it, the end at the middle (stage 4b), which reads the sign rule at 388 of 388 (twoends.py).
   - The local act reads CHSH 2,000 per mille exactly, at the triangle's settings and at z's. 2 is its largest over all 12^4 setting choices (the mathematician). Its
     count of shares at exactly half is 0 by the lattice's structure, a check by construction.
   - **No signal rests on the fixing end's equal split,** one count each way. On the key's odd dial a signal of
@@ -170,18 +170,28 @@ Usage: python3 -I spread.py <src> [RANGE]
   - the joint counts are alike as fractions in 8 of 8 setting pairs, at the triangle's settings and at z's;
   - CHSH is 2,500 and 2,828 per mille;
   - each wing's +1 share is exactly half in 8 of 8.
-- **One cell per state is the local act.** Squaring each state's cell apart means the hand is born along e_k or across
-  it, and each end takes its own share. It reads at most 1,750 and 1,420 per mille over the six bases.
-- **So the 11:52 law's form, as a candidate:** the pair's two clicks weigh as the square of one cell joining the two
-  ends through the start.
-  - It is David's cell rule again: one cell over what a source ties. Its cross term is the band at the held hand, and
-    the correlation here.
-  - A cell per part gives no band there, and the local bound here.
-  - CANDIDATE.
+- **One cell per state is a local model on one basis** (renamed on the HALF physicist's B1). Squaring each state's
+  cell apart means the hand is born along e_k or across it, and each end takes its own share. It reads at most 1,750
+  and 1,420 per mille over the six bases. Bell's local bound here is the local act's exact 2 (bellend.py).
+- **The HALF pair's verdict: NOT PASSED by both** (the Boss's 6543768769 item 2).
+  - **The form is the target's** (the mathematician's B1): the one cell is the quantum rule restated, Born's square of
+    the plane's unit form over an equal-weight source, DERIVED by the plane's completeness. Why the source's states are
+    summed before they are squared is the owner's condition (a) itself, OPEN.
+  - Withdrawn until a derivation from the clocks gives them: "it is David's cell rule again" and "not set to the
+    target". David's cell sums what a held hand ties; the one cell sums the source's states. They are different sums.
+  - **The gain, DERIVED and MEASURED by both readers:** condition (b), no signal, is met by the form itself at every
+    source weight (0 of 20,736 and 0 of 5,280 moves at 2:1, 3:1 and 1:0), since each end's two readings resolve the
+    unit form. The equal weight moves to (a): it fixes the half and the pattern (CHSH 47/20 and 11/5 at 2:1 and 3:1).
+  - **(c), restated:** in the one-cell form no hand conditions the outcomes, so (c) turns into (a)'s question, OPEN.
+    In the end law's (C) form with one fixing end, independence holds at the far place and fails at the fixing end:
+    measurement dependence at the fixing end, with its cost, that the fixing end's setting is no choice of that place,
+    and under 12:23 only the third click chooses.
+  - The 13,824 cases are a window of the plane and a check by construction; z is a test's lay.
 - **OPEN:**
-  - why one cell (shared with the cell rule);
-  - the board form: how the board carries the joining cell, with no click writing on it;
-  - the weight between the start and the end, idle here, since the form is symmetric in the two ends.
+  - why the source's states are summed before they are squared (condition (a));
+  - the board form, which carries 11:52 by name: the tie laid with the start and the end, and nothing passing between
+    the places within the run;
+  - the weight between the start and the end.
 
 Usage: python3 -I onecell.py <src>
 

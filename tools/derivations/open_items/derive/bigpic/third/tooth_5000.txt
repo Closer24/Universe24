@@ -55,7 +55,7 @@ three clocks at W 600000000, spring 100000000, two-leg tie 96000, four-leg tie 6
    the run back (the triangle tooth): the start reached True; the sides and landings back negated and reversed True
    the triangle's turns and flips: the round, its edge teeth, its sides, tau and the landings turned alike in 6 of 6 (200 rounds each)
 == four starts: one lay, the triangle's tooth born at four places (the owner's guiding line read on four starts; the clicks choosing the path OWED): the lay [40, -20, -20] now, [20, -40, 20] before; 5000 rounds; tau born at [228651430, 0, 152434287, 304868574]
-   the board's end one for every birth: True; every clock's line one at every round: True; the landings apart from the first birth's in [2773, 1384, 1470] rounds; each run back from its own end to the same start and its own birth: 4 of 4
+   the board's end one for every birth: True; every clock's line one at every round: True; the landings apart from the first birth's in [2773, 1384, 1470] rounds; each run back from its own end to the same board start and its own birth: 4 of 4
 == two clocks in one state (a clock fact: the charge odd under exchange): the lay [40, 40, 7] now, [25, 25, 3] before; 5000 rounds
    clocks 0 and 1 in one state (counts and teeth) in 5000 rounds; L = 0 in 5000; y = 0 in 5000; the triangle's landings, counted whole: 0
 == the control: the equilateral triangle of four-leg edges under the present act, laid turning: the lay [40, -20, -20] now, [20, -40, 20] before; 2914 rounds (a count passed 64 bits at round 2914, where the reading stops)

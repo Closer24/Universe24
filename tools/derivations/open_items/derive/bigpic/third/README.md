@@ -201,10 +201,30 @@ Usage: python3 -I tooth.py <node-all src> <the click world's universe.json> [rou
     together.
   - **The run back from the end state alone is exact,** the writes part of the state, at every birth on both lays.
   - **Laid with the hands' difference moving,** the circulation is 0: no landing, no write, the path the unwritten one.
-- **So, as a candidate:**
+- **So, as first read** (withdrawn in part on the THIRD pair's verdict below):
   - the third click writes by turning its triangle of like hands;
   - the floor is the triangle's own, from the structure;
   - the end stays fixed as a state of like hands, with the choices in the labels along the path.
+- **The THIRD pair's verdict: NOT PASSED by both** (the Boss's 6543768769 item 3 and 6543794891; their reports at
+  S/bp_turns_phys and S/bp_turns_math). Taken whole:
+  - **The write is a relabelling** (the physicist's B1). Every label-free reading equals the unwritten path's: the set
+    of states, the energy, the circulation and so the landings, in 5,000 of 5,000. The end is fixed only as a set; by
+    label it moves, and no birth fixes it. So "the writes are seen in the lines" is withdrawn: they are seen by label
+    alone, against a run no clock holds, and by the Boss's ruling a relabelling of like hands is a choice of names,
+    not the owner's write.
+  - **Each clock's books break at every write** (the mathematician's B1, the physicist's B2). Read per clock on
+    tooth.py's form, each clock misses its books at every write round, three misses per write (7,170 of 15,000 rounds
+    at 2,390 writes; with no write, 0). A write moves each clock's whole state and its energy to the next clock, and no
+    side carries it. The total is kept by construction alone. turns.py's docstring is mended.
+  - **The net turn** (the mathematician's B2): "the net is 17,575 at every birth" holds for the four births tried
+    alone. On this lay a birth gives a net turn of 1, or of 2 from birth 404,748,936 on (11.5 percent of the dial), and
+    never 0, so the unwritten end is not reached on this lay.
+  - **The floor is the bands' own form** (the physicist's m2): V = (t/2)(|x|^2 + (SUM x)^2), springs t/2, t/2 and 2t,
+    held over 10^6 rounds with no write. It is a board structure, not the clicks'.
+  - **SOUND, both readers:** the turn is an exact symmetry of the isolated round in whole numbers, carry and teeth
+    included (5,000 of 5,000 rounds on all eight runs); the run back from the end state alone is exact at every birth.
+  - **On a joined board a turn is no symmetry** (the physicist's m1): E32's change parts from the teeth's share at
+    every write. write.py reads the same on two joined triangles (below).
 - **Not shown:**
   - the click world's own triangle, which is no triangle of like hands;
   - a swap, the odd move, which reverses the circulation and the owner's Pauli lead would ask;
@@ -257,3 +277,75 @@ Usage: python3 -I turns.py <node-all src> <the click world's universe.json> [rou
   - any physics.
 
 Usage: python3 -I cone.py <node-all src> <the click world's universe.json> [rounds] [chain]
+
+## The write the rest read: the condition and two writes on two joined triangles (write.py, write_2000.txt)
+
+- **The owner's word of 13:0x UTC** (the Boss's 6543746068 item 1): "There is a connection between click 3 and click 3
+  and the rest, because the universe must return to what the future fixed... and it changes its path only through
+  click 3... Is the coupling family inside?"
+- **The ask** (the Boss's 6543746068 item 3 and 6543794891 item 4): a write that the rest read, that keeps each clock's
+  books by a passing, that stands on a meshed board, and whose sum over every triangle meets the fixed end, read by
+  label.
+- **DERIVED, the condition on a write between rounds.**
+  - Let R be the round, M the mirror (the run back is M R M = R^-1), and W(w) the write at a landing w, so a step is
+    F = W(w(X)) R.
+  - The same act runs back exactly when M F M = F^-1, that is when R^-1 W(w) R = M W(w')^-1 M, with w' the landing the
+    run back reads (-w).
+  - The left side moves the write one round back, which the round spreads to the write's neighbours. The right side
+    is a write at the same place. So a local write is undone by the same act only when it commutes with the round: a
+    symmetry of the whole round.
+  - On a board that reads the hands apart, such a write fixes all that the rest reads.
+  - **So the rest reading the write, each clock's books, and the same act's run back cannot all hold for any write
+    between rounds.** turns.py's turn keeps the run back because it is a symmetry, and so nothing label-blind reads it.
+- **The model** (a test's lay in a stand-alone model, not the engine's board):
+  - two triangles of like hands, A and B, each a triangle of bands at the click world's hands' tie, joined by one band
+    between a hand of each, so the rest reads each triangle's hands apart;
+  - this is a stand-in for a meshed board: the Mesh's own crossing is not built here;
+  - A is laid as turns.py's turning lay, and B as that lay turned once; each triangle's tau carries its own
+    circulation.
+- **Two writes at each landing w,** against no write:
+  - **the whole turn**, turns.py's write;
+  - **the momenta turn**, new. The hands' exact momenta P = 2 G (a - b) + s are turned by the cycle, w times (mod 3).
+    The counts are kept, so the teeth alone move: no clock's count or energy moves at the write, and the momentum moved
+    enters each hand through its own tooth at the next round.
+- **MEASURED, 2,000 rounds:**
+  - **No write:** each clock's books hold in 12,000 of 12,000; E32's narrowest is 956 per mille of its widest; the run
+    back is exact.
+  - **The whole turn on the joined board:**
+    - each clock's books hold, read across the write as the THIRD pair read them, in 3,082 of 12,000;
+    - E32 moves at 2,677 of 3,951 writes, and its narrowest is 390 per mille of its widest;
+    - the rest read it: B's clock 3 is apart from the unwritten path in 1,999 rounds;
+    - the run back by the same act is not exact.
+  - **The momenta turn:**
+    - each clock's books hold across the write in 12,000 of 12,000, by the round's own identity, since no count moves
+      at the write;
+    - E32 moves at 0 of 3,980 writes;
+    - the rest read it: B's clock 3 is apart in 1,999 rounds, and A's clock 0 in 1,990;
+    - the run back by the same act is not exact, as the condition says;
+    - its cost: the momentum moved is booked through each hand's own tooth, not by a side, and E32's narrowest over
+      the run is 757 per mille of its widest, against 956 with no write.
+  - **The ends over a grid of 12 x 12 births of the two taus, 1,000 rounds:**
+    - with no write, the 144 pairs of births give one end;
+    - under the momenta turn they give 144 distinct ends, one pair of births for each;
+    - each triangle's own part of the end takes 144 values, so each hangs on the other triangle's birth too.
+- **So, as a reading:**
+  - a write the rest read is in reach: the momenta turn is read by the rest, keeps each clock's books at every round
+    and E32 at every write, and stands on a joined board;
+  - under it, the end fixes both triangles' choices together. Each triangle's end hangs on the other's choice through
+    the band between them, within the cone: the 13:0x connection between click 3 and click 3, here through the board
+    and the end;
+  - what it does not keep is the same act's run back, and the condition shows that no write between rounds that the
+    rest read can keep it.
+- **The way left open by the condition, DERIVED and not built:** the third click inside the round, not between rounds.
+  - tau's record is split into its two half-windows, the half before the round and the half after;
+  - the round reads the triangle's landed count at the round's centre, which is the same count both ways in time;
+  - so the act's run back is exact by construction, and the write is a term of the round that the rest read;
+  - its energy would be booked as a passing from the triangle's tooth (named), and its choice is tau's birth.
+- **Not shown:**
+  - the Mesh's own crossing;
+  - the third click inside the round;
+  - the energy kept to the board's own band under a write;
+  - the sum over many triangles meeting a fixed end that is laid in advance;
+  - any physics.
+
+Usage: python3 -I write.py <node-all src> <the click world's universe.json> [rounds] [grid] [grid rounds]
