@@ -262,6 +262,32 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
     return star(axes), meshes
 
 
+def scaled(
+    parts: tuple[Any, ...], state: tuple[Z, ...], lam: Z
+) -> tuple[tuple[Any, ...], tuple[Z, ...]]:
+    """ONELAW3 4A's units, the machinery alone: the layout's eleven parts and the state laid, the whole action times one whole factor lam of at least 1: the teeth at rest and the clocks' read, every grip and the grips' read, the three plans' factors, the kick's teeth T_k, the drive's teeth T_d and the click's key, each times lam, and the state's edge tooth, the drive's fine tooth and the click tooth with them; the gear is homogeneous, split(lam n, lam D) = (q, lam r) on every carry of the act, so the counts and the clicks move bit for bit as at lam 1, every tooth lam times, the tooth's quantum 1 / lam of the dial at lam 1 (4A.1); the run back is the scaled act's own, exact by the engine's mirror, its -1 one quantum of the finer tooth (4A.3); a scalar commutes with every turn of the 24 (4A.4). OPEN, so no run scales and no file names a unit (the owner's word of 03:5x UTC, choosing a strength is forbidden): the flat, rest / grip = (gt0 L0^2)^2, a square that today's 6 is not, its ratio picked by nothing the structure fixes alone (4, 9, any square); and the units lam, gam and u, Lam = gam^3 lam^4 u^2, which no integer of the files names (den and the grips fix grip0 = den Gamma^2 and rest = Spokes grip0, whose ratio is no square, so no unit follows from them)."""
+    nb, spokes, meshes, grips, gearing, potential, clock, stretch, click, push, mesh = parts
+    rest, s, kick, drive, even = gearing
+    factor, legs = potential
+    (read, at, landed), (diagonal, by, spoke) = clock, stretch
+    first, second, entry, train, key = click
+    (pushed, pushes, onto), (meshed, meshes_at, into) = push, mesh
+    a, b, tooth, fine, k = state
+    return (
+        nb,
+        spokes,
+        meshes,
+        lam * grips,
+        (lam * rest, s, lam * kick, lam * drive, even),
+        (lam * factor, legs),
+        (read, lam * at, landed),
+        (diagonal, lam * by, spoke),
+        (first, second, entry, train, lam * key),
+        (pushed, lam * pushes, onto),
+        (meshed, lam * meshes_at, into),
+    ), (a, b, lam * tooth, lam * fine, lam * k)
+
+
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
     """The board read once from the files as the layout's eleven parts: the board and its Spokes from the piece's sides, every coefficient from the universe's integers, the grips per row, den Gamma^2 on every Mesh of a row whose train is not the held hand and 0 on the held hand's rows (a site-local oscillator: its turn at every Node-clock is its own whatever its neighbours do, and its stability at every wavevector the one Node-clock's; the ii slots' read still lands on its Spokes, so a world with the held hand keeps the push at 0 or its summed grips within the window, which the runner refuses by name otherwise), J's potential, every gear's clock and the grips' read, the passing's pairs with their key, the metric's push, the plan's terms with a Mesh leg (the gradient vertex, plans.meshing); main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape

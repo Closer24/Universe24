@@ -11,6 +11,7 @@ from tensor24 import main
 from tensor24.engine import state, step
 from tensor24.runner import load as loading
 from tensor24.runner.board import board
+from tensor24.runner.files import NAMES as FILES
 from tensor24.runner.files import held_departures, sites_of, vocabulary
 from tensor24.runner.run import promises
 from tests import frame
@@ -153,3 +154,30 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_cou
     wanted += [((1 + i) * rows + hand + i, 0, strength) for i in range(len(SHAPE))]  # L by M_i's
     _, alone, _ = loaded([TRAINS[0]], chosen={**CHOSEN, "mesh": strength})[0].mesh  # the wave alone
     assert terms == sorted(wanted) and {*two.tolist(), *three.tolist()} == {-1} and not alone.any()
+
+
+def test_the_whole_action_times_one_factor_moves_every_count_and_click_bit_for_bit_and_runs_back():
+    """Yes: a round in, on the click world (its key and click tooth), the well world (term 5's push and the notch at the drive's teeth senses) and the
+    mesh world (the Mesh plan), the whole action times 7 and 1000 moves the counts and clicks as at 1 bit for bit, every tooth that many
+    times, and runs back to its start. No: one carry left unscaled (the drive's teeth, the kick, the key, the tooth) moves them otherwise."""
+    for world in ("tensor24-click", "tensor24-well", "tensor24-mesh"):
+        u, p, s = (json.loads((UNIVERSE.parents[1] / world / f"{n}.json").read_text()) for n in FILES)
+        held, _ = loading.load(u, s, sites_of(p["shape"]), *MADE)
+        base, runs = loading.laid_out(u, p["shape"], held), {}
+        turned = step.tick(main.typed(base), state.State(*held.state))  # a round in: its teeth off 0
+        for lam in (1, 7, 1000):
+            parts, laid = loading.scaled(base, tuple(turned), lam)
+            layout, start, clicks = main.typed(parts), state.State(*laid), []
+            now = start
+            for _ in range(1 + 1):  # two rounds: every carry turns in the first
+                now, c = step.act(layout, now)
+                clicks.append(c)
+            back = now
+            for _ in clicks:
+                back = step.untick(layout, back)
+            runs[lam] = now, clicks, all((x == y).all() for x, y in zip(back, start, strict=True))
+        one, ones, _ = runs[1]
+        for lam, (now, clicks, exact) in runs.items():
+            _, after = loading.scaled(base, tuple(one), lam)  # the run at 1, scaled after it
+            assert exact and all((x == y).all() for x, y in zip(now, after, strict=True)), (world, lam)
+            assert all((c == d).all() for c, d in zip(clicks, ones, strict=True)), (world, lam)
