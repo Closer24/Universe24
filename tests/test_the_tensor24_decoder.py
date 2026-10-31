@@ -391,9 +391,9 @@ def test_the_click_world_reads_the_books_no_own_count_and_no_cone_where_none_cou
     ]  # two sites of one round
     world = shadow.shadow(read([ring, *apart, E], tmp_path))
     held, far = world[shadow.CONSISTENCY], world[shadow.CONE]["cause"]
-    assert held["kind"] == shadow.HOLDS and far.startswith(
-        "the click line at round 1, site 2 stands outside the lay's cone"
-    )
+    assert held["kind"] == shadow.HOLDS and held["cause"].startswith("by construction")
+    assert f"of {held['places']} places" not in held["cause"]  # no count of places: the across net's
+    assert far.startswith("the click line at round 1, site 2 stands outside the lay's cone")
     # a line of no q, read without the sides' guard (the last), which refuses a line of no side
     loose = read([ring, without(BARE, "q"), E], tmp_path, records.GUARDS[:-1])
     assert shadow.books(loose)["kind"] == "NOT READ"
