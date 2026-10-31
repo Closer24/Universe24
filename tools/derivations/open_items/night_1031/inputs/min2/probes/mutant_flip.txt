@@ -1,0 +1,2 @@
+mode flip on tensor24-click, side (2, 3), 30 rounds: the teeth part at 1 ; the record's click lines part at 1
+END

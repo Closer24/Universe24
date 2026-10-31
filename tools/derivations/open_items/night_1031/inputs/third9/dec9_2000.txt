@@ -1,0 +1,15 @@
+dec9: the click world, Node-clock 0, 2000 rounds; edges [(2, 3), (2, 4), (3, 4)], c [1, -1, 1]; G D 457302861, the twin's D 152434287; the member lands in 663 rounds
+Q10 clock 2, its sides [(2, 3), (2, 4)]: the learned map gives w right in 937 of 1000 later rounds; always guessing 0: 769
+Q10 clock 3, its sides [(2, 3), (3, 4)]: the learned map gives w right in 856 of 1000 later rounds; always guessing 0: 769
+Q10 clock 4, its sides [(2, 4), (3, 4)]: the learned map gives w right in 820 of 1000 later rounds; always guessing 0: 769
+Q10 the three sides together (c . q's nearest multiple of 3): right in 984 of 1000 later rounds
+CQ member: rounds read as a landing by c . q 668 of 2000; its own landings 663; rounds whose three sides form one whole circulation 12
+CQ unturned: rounds read as a landing by c . q 782 of 2000; its own landings 774; rounds whose three sides form one whole circulation 12
+CQ first click: rounds read as a landing by c . q 603 of 2000; its own landings 0; rounds whose three sides form one whole circulation 0
+M2 the member's 663 landing rounds with 3, 2, 1, 0 of the triangle's edges passing a quantum: 116, 269, 278, 0
+X the member's side passing x = (G D) q + k_after - k_before equals p_e + G D c_e w at 6000 of 6000 side-rounds; at the 1989 landing side-rounds x - p_e = G D c_e w at 1989; the first click's x equals its passing x_e at 6000 of 6000
+X c . x in whole quanta of G (G D): the member's record 2000 of 2000 rounds, the first click's 538 (rounds with y = 0: 538); c . x = G (G D) w on the member's record at 2000 of 2000 (a code check)
+TD the twin on D against on G D: 0 rounds apart in sides or landings (lines follow the sides); the run back from the end alone reaches the birth (the edges' teeth, tau, the twin on D): True; its landings the forward ones negated and reversed: True; one hidden unit in the twin moves 1377 (round, edge) places on G D and 1377 on D
+GL the state at the round's start rebuilt from (u(t), u(t+1)) and y: right at 1999 of 1999 rounds (the twin on D)
+R3 f_e = born - c_e (tau - born) mod 3 at 6000 of 6000 side-rounds; the twin's residue mod 3 its birth's at 2000 of 2000 rounds
+DONE

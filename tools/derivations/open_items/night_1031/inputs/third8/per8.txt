@@ -1,0 +1,6 @@
+per8: edges [(2, 3), (2, 4), (3, 4)], the triangle (ga, ab, gb) = [(0, 2, 1)], C [((0, 1), (2, 1), (1, -1))], G [3]; D = 152434287, G D = 457302861
+y = 3048685 ([2, 3, 2] m; y mod 3 = 1), the birth lay: the pair returns to its start after 1585440 rounds; landings in that span 10694, against y k / (G D) = 10569
+y = 3048685 ([2, 3, 2] m; y mod 3 = 1), the standin lay: the pair returns to its start after 1585440 rounds; landings in that span 10566, against y k / (G D) = 10569
+y = 45730275 ([20, 30, 25] m; y mod 3 = 0), the standin lay: the pair returns to its start after 528480 rounds; landings in that span 51039, against y k / (G D) = 52847
+y = 36584220 ([9, 9, 12] m; y mod 3 = 0), the birth lay: the pair returns to its start after 528480 rounds; landings in that span 42248, against y k / (G D) = 42278
+DONE

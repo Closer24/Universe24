@@ -1,0 +1,37 @@
+
+(a) tensor24-mesh on one Node-clock, gears [[2, 0, 0, 41, 40, 0]]; held held, tied ['tied']
+  round 100: held |k|^2 0 | tied first rows [141] | V 0
+  round 200: held |k|^2 0 | tied first rows [241] | V 0
+  round 300: held |k|^2 0 | tied first rows [341] | V 0
+  round 400: held |k|^2 0 | tied first rows [441] | V 0
+  round 500: held |k|^2 0 | tied first rows [541] | V 0
+  round 600: held |k|^2 0 | tied first rows [641] | V 0
+  round 700: held |k|^2 0 | tied first rows [741] | V 0
+  round 800: held |k|^2 0 | tied first rows [841] | V 0
+  round 900: held |k|^2 0 | tied first rows [941] | V 0
+  round 1000: held |k|^2 0 | tied first rows [1041] | V 0
+  over the rounds read: the held |k|^2 most 0, at 0 in 1000 rounds; the tied first rows' least and most [[0, 1041]]
+
+(b) tensor24-mesh on one Node-clock, gears [[1, 0, 0, 1, 1, 0], [2, 0, 0, 40, 40, 0]]; held held, tied ['tied']
+  round 250: held |k|^2 1 | tied first rows [-32] | V 161440000
+  round 500: held |k|^2 1 | tied first rows [43] | V 210940000
+  round 750: held |k|^2 0 | tied first rows [-43] | V 0
+  round 1000: held |k|^2 1 | tied first rows [44] | V 216160000
+  round 1250: held |k|^2 1 | tied first rows [-43] | V 210940000
+  round 1500: held |k|^2 0 | tied first rows [43] | V 0
+  round 1750: held |k|^2 1 | tied first rows [-17] | V 117340000
+  round 2000: held |k|^2 1 | tied first rows [34] | V 169360000
+  over the rounds read: the held |k|^2 most 9, at 0 in 558 rounds; the tied first rows' least and most [[-43, 44]]
+
+(c) tensor24-click on one Node-clock, gears [[3, 0, 0, 40, 40, 0]]; held held, tied ['giver', 'taker']
+  round 100: held |k|^2 0 | tied first rows [40, -22] | u 18 | v 62 | V -84480000
+  round 200: held |k|^2 0 | tied first rows [83, -122] | u -39 | v 205 | V -972096000
+  round 300: held |k|^2 0 | tied first rows [351, -381] | u -30 | v 732 | V -12838176000
+  round 400: held |k|^2 0 | tied first rows [1310, -1285] | u 25 | v 2595 | V -161601600000
+  round 500: held |k|^2 0 | tied first rows [4623, -4575] | u 48 | v 9198 | V -2030421600000
+  round 600: held |k|^2 0 | tied first rows [16291, -16286] | u 5 | v 32577 | V -25470261696000
+  round 700: held |k|^2 0 | tied first rows [57684, -57729] | u -45 | v 115413 | V -319683805056000
+  round 800: held |k|^2 0 | tied first rows [204428, -204458] | u -30 | v 408886 | V -4012506242304000
+  round 900: held |k|^2 0 | tied first rows [724306, -724279] | u 27 | v 1448585 | V -50361564035904000
+  round 1000: held |k|^2 0 | tied first rows [2566007, -2565961] | u 46 | v 5131968 | V -632090293221792000
+  over the rounds read: the held |k|^2 most 0, at 0 in 1000 rounds; the tied first rows' least and most [[0, 2566007], [-2565961, 0]]

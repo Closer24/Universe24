@@ -1,0 +1,35 @@
+live monomials: 32 | pairs of trains a live monomial joins:
+  held - giver: 12 live monomials
+  held - taker: 12 live monomials
+  giver - taker: 6 live monomials
+clocks joined: ['held', 'giver', 'taker'] | triangles: [['held', 'giver', 'taker']]
+B C: [[0], [0], [0]] | K = C^T C: [[3]]
+B^T B + C C^T: [[3, 0, 0], [0, 3, 0], [0, 0, 3]]
+Laplacian B B^T: [[2, -1, -1], [-1, 2, -1], [-1, -1, 2]] | trace 6 | L (L - K I): [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+adjacency: [[0, 1, 1], [1, 0, 1], [1, 1, 0]] | degree [2, 2, 2] | (A - degree I)(A + I): [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+the palindrome L at K: [[19, 6], [60, 19]] | trace 38 | det 1 | L^2 - trace L + I: [[0, 0], [0, 0]]
+discriminant trace^2 - 4: 1440 = (4K)^2 x 10 : True
+(K + r10)^2 = 19 + 6 r10: the eigenvalue (trace/2 + 2K r10): True | norm of K + r: -1
+hyperbolic (no rotation angle, no beat): trace^2 > 4: True
+(K + r10)^4 = 721 + 228 r10; 228^2 x 10 = 519840 against 721^2 = 519841: so it lies between 1441 and 1442
+lifts x trace: 48 x 38 = 1824 | lifts^2: 2304
+
+the file's key: 50811429 | every side's key (one value): [152434287] | the triangle's dial K D: 457302861
+the dial = 3^3 x 16937143
+L^(3^2) = I mod 27: True | L^(3^1) = I mod 27: False
+THIRD7's N: 528480 = product of [(2, 5), (3, 2), (5, 1), (367, 1)] : True
+L^N = I mod the dial: True
+  L^(N/2) = I mod the dial: False (remainder 0)
+  L^(N/3) = I mod the dial: False (remainder 0)
+  L^(N/5) = I mod the dial: False (remainder 0)
+  L^(N/367) = I mod the dial: False (remainder 0)
+the cofactor 16937143: L^(N/9) = L^58720 = I mod it: True [(2, False), (5, False), (367, False)]
+
+W (rest): 600000000 | Gamma: 10000 | f = W div Gamma: 60000 (remainder 0 ) | hold, spring, tie: 1 100000000 96000
+held trains: ['held'] | tied trains: ['giver', 'taker'] | at Node-clock 0: |k|^2 = 1 | |x|^2 over the tied = 1600
+held curvature 2 spring + 2 c |x|^2: 392000000 | per mille of the explicit window 4W: (163, 800000000)
+tied curvature 2 c |k|^2: 120000 | the hands' tie splits it: 216000 and 24000 | their ratio: (9, 0)
+held over the slow tied mode, curvatures: (16333, 8000)
+the polarized step's multiplier on the held spring alone, cos = W / (W + spring): 600000000 / 700000000
+every chosen strength read as 1 (a reading, no world): the held spring's curvature 2 | the tied curvature 2 f |k|^2: 120000 | their ratio f |k|^2: (60000, 0) | = Spokes x den x Gamma x |k|^2: 60000

@@ -1,0 +1,11 @@
+record mesh.jsonl: 21589 click lines; the guard (sides.paired): well formed
+  meetings (sides of q not 0, once each): 18096, own 4442, across a Mesh 13654
+RULE L per clock: medium clocks 125, matter clocks 244; per train [medium, matter] clocks {0: [125, 0], 1: [0, 122], 2: [0, 122]}; the medium, as trains: [0]; trains with clocks of both classes [] (matter trains)
+  the medium train set on prefixes, where it changes: [(20, (0, 2)), (21, (0,))]
+  components of the clocks' meeting graph: 3, sizes [187, 91, 91]; sites with two clocks or more 122, all of them in one component 0
+CONE per clock from round 20's meetings: of 369 clocks, first meeting reached at its own round 120, only later 62, never 187; board check, the per-Node-clock order (a site's trains pooled through the board's act): of 125 sites, reached at the round of their first meeting 125, only later 0, never 0
+ECHO (meetings, turn at B; A's own quiet): NOT SHOWN: 0 echoes, 0 pairs, B among []; 4012 gives of a matter clock, 2956 windows ending in A's take, 4 of them with an own meeting of A inside
+ECHO (meetings, no turn; A's own quiet): NOT SHOWN: 0 echoes, 0 pairs, B among []; 4012 gives of a matter clock, 2956 windows ending in A's take, 4 of them with an own meeting of A inside
+ECHO (directed, turn at B; A's own quiet): NOT SHOWN: 0 echoes, 0 pairs, B among []; 4012 gives of a matter clock, 2956 windows ending in A's take, 4 of them with an own meeting of A inside
+ECHO (directed, no turn; A's own quiet): NOT SHOWN: 0 echoes, 0 pairs, B among []; 4012 gives of a matter clock, 2956 windows ending in A's take, 4 of them with an own meeting of A inside
+ECHO (meetings, turn at B; the site quiet, a board check): NOT SHOWN: 0 echoes; 4012 gives, 2898 windows

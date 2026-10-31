@@ -1,0 +1,16 @@
+load before grain click200 a: 5.83 6.03 6.98 11/157 10146
+load before grain click200 b: 5.83 6.03 6.98 9/160 10167
+grain click200: the two outputs alike byte for byte
+load before grain mesh125 a: 5.83 6.03 6.98 9/160 10190
+load before grain mesh125 b: 5.83 6.03 6.98 12/160 10198
+grain mesh125: the two outputs alike byte for byte
+load before twin click200 half a: 6.00 6.07 6.99 10/160 10209
+twin half a: 94 s
+load before twin click200 half b: 7.88 6.75 7.14 7/159 10867
+twin half b: 97 s
+twin half: the two outputs alike byte for byte
+load before twin click200 unit a: 7.85 7.21 7.27 7/167 11748
+twin unit a: 91 s
+load before twin click200 unit b: 7.93 7.50 7.37 10/181 12693
+twin unit b: 96 s
+twin unit: the two outputs alike byte for byte

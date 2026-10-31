@@ -1,0 +1,391 @@
+1. (3b), (3d) and R2 against the board's passing, on the stand-ins (verdict counts; DECODE3d's (3b) and DECODE3b's (3d) beside them)
+ carried steady sides, 20 phases each:
+  carried steady, 950 a round, halves of 200:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'SHOWN': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT SHOWN': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 950 a round, halves of 400:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 900 a round, halves of 200:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 900 a round, halves of 400:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 800 a round, halves of 200:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 800 a round, halves of 400:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 40 a round, halves of 100:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT READ': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'NOT READ': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 40 a round, halves of 1000:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT READ': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 70 a round, halves of 100:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT READ': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'NOT READ': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 70 a round, halves of 1000:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT READ': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 70 a round, halves of 3000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 10989; largest Z / K there 4 thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 100 a round, halves of 100:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT READ': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'NOT READ': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 100 a round, halves of 1000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT READ': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 190 a round, halves of 100:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT READ': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'NOT READ': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read None
+  carried steady, 190 a round, halves of 1000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT SHOWN': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 14852; largest Z / K there 17 thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 175 a round, halves of 2000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT SHOWN': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 14822; largest Z / K there 18 thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 190 a round, halves of 2000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT SHOWN': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 15043; largest Z / K there 13 thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 250 a round, halves of 2000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT SHOWN': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 15585; largest Z / K there 0 thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 300 a round, halves of 2000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT SHOWN': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 15278; largest Z / K there 12 thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+  carried steady, 400 a round, halves of 2000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT SHOWN': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 15245; largest Z / K there 15 thousandths; (3d) halves NOT SHOWN by two values or fewer 40; least (3d) X^2 among the rest read None
+ carried moving sides, 20 phases each:
+  carried moving, swing 50 to 300 and back within each half, halves of 2,000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 13015; largest Z / K there 13 thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read 18317
+  carried moving, wide 300 to 700 and back, halves of 100:
+    3b given 15: {'NOT READ': 20}
+    3b given 20: {'NOT READ': 20}
+    3b given 30: {'NOT READ': 20}
+    3b DECODE3d: {'NOT READ': 20}
+    3d given: {'NOT READ': 20}
+    3d DECODE3b: {'NOT SHOWN': 17, 'SHOWN': 3}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 None; largest Z / K there None thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read 34605
+  carried moving, wide 300 to 700 and back, halves of 1,000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT SHOWN': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 14550; largest Z / K there 44 thousandths; (3d) halves NOT SHOWN by two values or fewer 0; least (3d) X^2 among the rest read 36648
+  carried moving, step 100 then 250 within each half, halves of 2,000:
+    3b given 15: {'NOT SHOWN': 20}
+    3b given 20: {'NOT SHOWN': 20}
+    3b given 30: {'NOT SHOWN': 20}
+    3b DECODE3d: {'NOT SHOWN': 20}
+    3d given: {'NOT SHOWN': 20}
+    3d DECODE3b: {'NOT SHOWN': 20}
+    R2 gated on 3b given: {'NOT READ': 20}
+    R2 gated on 3b DECODE3d: {'NOT READ': 20}
+    carried: least (3b) z^2 among halves read at K_MIN 20 14646; largest Z / K there 19 thousandths; (3d) halves NOT SHOWN by two values or fewer 8; least (3d) X^2 among the rest read 63129
+ fair draws at a steady chance:
+  fair, 175 a round, halves of 2000, 200 draws:
+    3b given 15: {'NOT SHOWN': 14, 'SHOWN': 186}
+    3b given 20: {'NOT SHOWN': 14, 'SHOWN': 186}
+    3b given 30: {'NOT SHOWN': 14, 'SHOWN': 186}
+    3b DECODE3d: {'NOT SHOWN': 16, 'SHOWN': 184}
+    3d given: {'NOT SHOWN': 26, 'SHOWN': 174}
+    3d DECODE3b: {'SHOWN': 200}
+    R2 gated on 3b given: {'NOT READ': 14, 'SHOWN': 186}
+    R2 gated on 3b DECODE3d: {'NOT READ': 16, 'SHOWN': 184}
+  fair, 190 a round, halves of 1000, 200 draws:
+    3b given 15: {'NOT SHOWN': 22, 'SHOWN': 178}
+    3b given 20: {'NOT SHOWN': 27, 'SHOWN': 173}
+    3b given 30: {'NOT SHOWN': 27, 'SHOWN': 173}
+    3b DECODE3d: {'NOT SHOWN': 16, 'SHOWN': 184}
+    3d given: {'NOT SHOWN': 18, 'SHOWN': 182}
+    3d DECODE3b: {'NOT SHOWN': 2, 'SHOWN': 198}
+    R2 gated on 3b given: {'NOT READ': 27, 'SHOWN': 173}
+    R2 gated on 3b DECODE3d: {'NOT READ': 16, 'SHOWN': 184}
+  fair, 190 a round, halves of 100, 200 draws:
+    3b given 15: {'NOT READ': 200}
+    3b given 20: {'NOT READ': 200}
+    3b given 30: {'NOT READ': 200}
+    3b DECODE3d: {'NOT READ': 200}
+    3d given: {'NOT READ': 200}
+    3d DECODE3b: {'NOT READ': 173, 'SHOWN': 27}
+    R2 gated on 3b given: {'NOT READ': 200}
+    R2 gated on 3b DECODE3d: {'NOT READ': 200}
+  fair, 300 a round, halves of 2000, 100 draws:
+    3b given 15: {'NOT SHOWN': 7, 'SHOWN': 93}
+    3b given 20: {'NOT SHOWN': 5, 'SHOWN': 95}
+    3b given 30: {'NOT SHOWN': 5, 'SHOWN': 95}
+    3b DECODE3d: {'NOT SHOWN': 4, 'SHOWN': 96}
+    3d given: {'NOT SHOWN': 4, 'SHOWN': 96}
+    3d DECODE3b: {'SHOWN': 100}
+    R2 gated on 3b given: {'NOT READ': 5, 'SHOWN': 95}
+    R2 gated on 3b DECODE3d: {'NOT READ': 4, 'SHOWN': 96}
+  fair, 950 a round, halves of 200, 100 draws:
+    3b given 15: {'NOT READ': 100}
+    3b given 20: {'NOT READ': 100}
+    3b given 30: {'NOT READ': 100}
+    3b DECODE3d: {'NOT SHOWN': 3, 'SHOWN': 97}
+    3d given: {'NOT READ': 100}
+    3d DECODE3b: {'SHOWN': 100}
+    R2 gated on 3b given: {'NOT READ': 100}
+    R2 gated on 3b DECODE3d: {'NOT READ': 3, 'NOT SHOWN': 81, 'SHOWN': 16}
+  fair, 800 a round, halves of 400, 100 draws:
+    3b given 15: {'NOT READ': 100}
+    3b given 20: {'NOT READ': 100}
+    3b given 30: {'NOT READ': 100}
+    3b DECODE3d: {'NOT SHOWN': 6, 'SHOWN': 94}
+    3d given: {'NOT SHOWN': 10, 'SHOWN': 90}
+    3d DECODE3b: {'SHOWN': 100}
+    R2 gated on 3b given: {'NOT READ': 100}
+    R2 gated on 3b DECODE3d: {'NOT READ': 6, 'SHOWN': 94}
+  fair, 70 a round, halves of 600, 100 draws:
+    3b given 15: {'NOT READ': 100}
+    3b given 20: {'NOT READ': 100}
+    3b given 30: {'NOT READ': 100}
+    3b DECODE3d: {'NOT READ': 100}
+    3d given: {'NOT READ': 70, 'NOT SHOWN': 1, 'SHOWN': 29}
+    3d DECODE3b: {'NOT SHOWN': 1, 'SHOWN': 99}
+    R2 gated on 3b given: {'NOT READ': 100}
+    R2 gated on 3b DECODE3d: {'NOT READ': 100}
+  fair, 70 a round, halves of 1400, 100 draws:
+    3b given 15: {'NOT READ': 100}
+    3b given 20: {'NOT READ': 100}
+    3b given 30: {'NOT READ': 100}
+    3b DECODE3d: {'NOT READ': 99, 'SHOWN': 1}
+    3d given: {'NOT SHOWN': 7, 'SHOWN': 93}
+    3d DECODE3b: {'SHOWN': 100}
+    R2 gated on 3b given: {'NOT READ': 100}
+    R2 gated on 3b DECODE3d: {'NOT READ': 99, 'SHOWN': 1}
+  fair, 70 a round, halves of 2560, 100 draws:
+    3b given 15: {'NOT SHOWN': 7, 'SHOWN': 93}
+    3b given 20: {'NOT SHOWN': 7, 'SHOWN': 93}
+    3b given 30: {'NOT READ': 100}
+    3b DECODE3d: {'NOT SHOWN': 8, 'SHOWN': 92}
+    3d given: {'NOT SHOWN': 11, 'SHOWN': 89}
+    3d DECODE3b: {'SHOWN': 100}
+    R2 gated on 3b given: {'NOT READ': 7, 'SHOWN': 93}
+    R2 gated on 3b DECODE3d: {'NOT READ': 8, 'SHOWN': 92}
+ fair draws whose chance follows a moving passing:
+  fair moving, swing 50 to 300 and back within each half, halves of 2,000, 200 draws:
+    3b given 15: {'NOT SHOWN': 13, 'SHOWN': 187}
+    3b given 20: {'NOT SHOWN': 20, 'SHOWN': 180}
+    3b given 30: {'NOT READ': 200}
+    3b DECODE3d: {'NOT SHOWN': 200}
+    3d given: {'NOT SHOWN': 13, 'SHOWN': 187}
+    3d DECODE3b: {'NOT SHOWN': 72, 'SHOWN': 128}
+    R2 gated on 3b given: {'NOT READ': 20, 'SHOWN': 180}
+    R2 gated on 3b DECODE3d: {'NOT READ': 200}
+  fair moving, wide 300 to 700 and back, halves of 1,000, 200 draws:
+    3b given 15: {'NOT SHOWN': 18, 'SHOWN': 182}
+    3b given 20: {'NOT SHOWN': 11, 'SHOWN': 189}
+    3b given 30: {'NOT SHOWN': 11, 'SHOWN': 189}
+    3b DECODE3d: {'NOT SHOWN': 200}
+    3d given: {'NOT SHOWN': 19, 'SHOWN': 181}
+    3d DECODE3b: {'NOT SHOWN': 32, 'SHOWN': 168}
+    R2 gated on 3b given: {'NOT READ': 11, 'SHOWN': 189}
+    R2 gated on 3b DECODE3d: {'NOT READ': 200}
+  fair moving, step 100 then 250 within each half, halves of 2,000, 100 draws:
+    3b given 15: {'NOT SHOWN': 10, 'SHOWN': 90}
+    3b given 20: {'NOT SHOWN': 8, 'SHOWN': 92}
+    3b given 30: {'NOT SHOWN': 8, 'SHOWN': 92}
+    3b DECODE3d: {'NOT SHOWN': 100}
+    3d given: {'NOT SHOWN': 9, 'SHOWN': 91}
+    3d DECODE3b: {'NOT SHOWN': 56, 'SHOWN': 44}
+    R2 gated on 3b given: {'NOT READ': 8, 'SHOWN': 92}
+    R2 gated on 3b DECODE3d: {'NOT READ': 100}
+ a record that does not carry the passing: (3b) NOT READ, (3d) NOT READ
+2. R4: the power condition on the local bound (a), root-free. With m^2 = CUT_FW x Var S / 1,000 (millionths), (a) is NOT READ where b^2 <= m^2 or (b^2 - m^2)^2 <= 4 b^2 m^2, b = 2,000 the local bound: where 2,000 + m does not reach the hand's bound, whose square is 2 b^2. The least trials per setting pair and half at which (a) is read:
+  CUT_FW about 8,948 (N_T = 18): |E_ab| 0: 53; |E_ab| 500: 40
+  CUT_FW about 9,140 (N_T = 20): |E_ab| 0: 54; |E_ab| 500: 40
+3. The seed test's click part of (ii), on the run tool's board records (Big Pic's stage 1 act, the click world, 200 rounds; one hidden unit in edge 1's tooth at Node-clock 0):
+  third click (turned): SHOWN; first round apart 18; Node-clocks apart [0]; places apart 76, click lines apart 298. (The run tool's: the board's passing alike every round in the two runs: True)
+  first click (carried): NOT SHOWN: the clicks do not differ; first round apart None; Node-clocks apart []; places apart 0, click lines apart 0. (The run tool's: the board's passing alike every round in the two runs: True)
+  its no, the third click's pair with one line at Node-clock 5 one off (round 0): NOT SHOWN: apart at Node-clock 5, round 0
+  its no, a record against itself (no unit apart): NOT SHOWN: the clicks do not differ
+4. The three kinds of event (a), and the checks (b) and (c), on a stand-in triangle and a two-clock site, 400 rounds, the triangle idle from round 200 (to be checked against Big Pic's text):
+  the first click: (a) events {'first': 92, 'split': 64, 'third': 0}, verdicts {'first': 'SHOWN', 'split': 'SHOWN', 'third': 'NOT READ: none'}, whole circulations by sense {1: 0, -1: 0}; (b) the largest departure of a clock's booked total from its passing 1000 thousandths of a dial (its two edge teeth hold under 2,000), the first round where a clock's line is not its passing's own carry None; (c) whole circulations at an idle round 0, against y 0
+  one circulation (THIRD7's form): (a) events {'first': 92, 'split': 39, 'third': 12}, verdicts {'first': 'SHOWN', 'split': 'SHOWN', 'third': 'SHOWN'}, whole circulations by sense {1: 12, -1: 0}; (b) the largest departure of a clock's booked total from its passing 981 thousandths of a dial (its two edge teeth hold under 2,000), the first round where a clock's line is not its passing's own carry None; (c) whole circulations at an idle round 0, against y 0
+  the booked wrap: (a) events {'first': 92, 'split': 46, 'third': 0}, verdicts {'first': 'SHOWN', 'split': 'SHOWN', 'third': 'NOT READ: none'}, whole circulations by sense {1: 0, -1: 0}; (b) the largest departure of a clock's booked total from its passing 1981 thousandths of a dial (its two edge teeth hold under 2,000), the first round where a clock's line is not its passing's own carry (14, 2); (c) whole circulations at an idle round 0, against y 0
+  stage 1's turn: (a) events {'first': 92, 'split': 48, 'third': 0}, verdicts {'first': 'SHOWN', 'split': 'SHOWN', 'third': 'NOT READ: none'}, whole circulations by sense {1: 0, -1: 0}; (b) the largest departure of a clock's booked total from its passing 16800 thousandths of a dial (its two edge teeth hold under 2,000), the first round where a clock's line is not its passing's own carry (1, 2); (c) whole circulations at an idle round 0, against y 0
+  its no for (a)'s books, the first click with one line at a two-clock place one off: {'first': 'NOT SHOWN at (2, 1)', 'split': 'SHOWN', 'third': 'NOT READ: none'}
+  its no for (a)'s books, one circulation with one quantum moved between clock 2's sides (its sum kept): {'first': 'SHOWN', 'split': 'NOT SHOWN at (1, 0)', 'third': 'NOT SHOWN at (1, 0)'}
+  the first click's check on the lone edge (one circulation's record): its booked net within 500 thousandths of a dial of its passing (one dial: 1,000)
+  its no for (c), one whole circulation forged at idle round 200, both ends booked: (a) {'first': 'SHOWN', 'split': 'SHOWN', 'third': 'SHOWN'}; (c) whole circulations at an idle round 1
+  its no for (c), one whole circulation forged against y at round 0: (a) {'first': 'SHOWN', 'split': 'SHOWN', 'third': 'SHOWN'}; (c) against y 1
+  its no for the lone edge, one quantum forged on it at round 0, both ends booked: (a) SHOWN; its booked net within 1490 thousandths of a dial
+4b. The third click's draw, read on its circulation's landings W (the triangle's own, not a side), against its circulating passing y over the dial 3 D: (3b), (3d) and R2 as in section 1 with x_r -> y_r, D -> 3 D; one circulation, 4,000 rounds (halves of 2,000), the triangle never idle:
+  y steady at 257, turned (the palindrome, the choice): landings 291 against the passing's 342666 thousandths; (3b) SHOWN; (3d) NOT SHOWN; R2 NOT SHOWN
+  y steady at 257, carried (no turn: the no): landings 343 against the passing's 342666 thousandths; (3b) NOT SHOWN; (3d) NOT SHOWN; R2 NOT READ
+  y swinging from 180 to 334 and back within each half, turned (the palindrome, the choice): landings 330 against the passing's 342001 thousandths; (3b) SHOWN; (3d) SHOWN; R2 SHOWN
+  y swinging from 180 to 334 and back within each half, carried (no turn: the no): landings 342 against the passing's 342001 thousandths; (3b) NOT SHOWN; (3d) NOT SHOWN; R2 NOT READ
+  at the click world's own dial 3 D = 457302861 (9 times its key), the triangle's tooth alone, halves of 2,000:
+    p steady at 86 thousandths, turned, 20 lays (the twin at the birth and 1 to 19 hidden units above it): landings 286 to 384 against the passing's 343999 thousandths; (3b) {'SHOWN': 17, 'NOT SHOWN': 3}; (3d) {'SHOWN': 17, 'NOT SHOWN': 3}; R2 {'SHOWN': 17, 'NOT READ': 3}
+    p steady at 86 thousandths, carried (the no), its one lay: landings 344 to 344 against the passing's 343999 thousandths; (3b) {'NOT SHOWN': 1}; (3d) {'NOT SHOWN': 1}; R2 {'NOT READ': 1}
+    p swinging from 60 to 111 thousandths and back within each half, turned, 20 lays (the twin at the birth and 1 to 19 hidden units above it): landings 307 to 377 against the passing's 339701 thousandths; (3b) {'SHOWN': 18, 'NOT SHOWN': 2}; (3d) {'SHOWN': 17, 'NOT SHOWN': 3}; R2 {'SHOWN': 18, 'NOT READ': 2}
+    p swinging from 60 to 111 thousandths and back within each half, carried (the no), its one lay: landings 340 to 340 against the passing's 339701 thousandths; (3b) {'NOT SHOWN': 1}; (3d) {'NOT SHOWN': 1}; R2 {'NOT READ': 1}
+  (the stand-in dial 3 D = 3,000 above is the small dial's no: the turn's orbit there is short, and memory shows)
+5. The three kinds of event on the run tool's board records (stage 1's format: one c per edge, no zero sides), Node-clock 0, with (b)'s booked totals against the board's passing (edgeclick's flows):
+  first click: places by the edges carrying {'one edge': 67, 'two edges': 85, 'three edges': 4, 'a clock sharing a passing': 89, 'whole circulations': 0}; lines off their sides' sum 0; (b) the largest departure of a clock's booked total from its passing 984 thousandths of a dial (its two edge teeth hold under 2,000)
+    the slow edge (3, 4) at Node-clock 0, against the board's passing: (3b) NOT READ ['NOT READ', 'NOT READ'], windows read [0, 0]; (3d) NOT READ [('NOT READ', 'fewer than K_MIN gaps'), ('NOT READ', 'fewer than K_MIN gaps')]; its landings by half 3, 8, the first at round 81
+    its passing (the board's, a board field): 0 until round 77, then in thousandths of a quantum a round [(78, 75), (80, 151), (100, 151), (120, 113), (150, 113), (199, 0)]; over the record 55, over rounds 78 to 199 90
+  third click (stage 1's turn): places by the edges carrying {'one edge': 63, 'two edges': 82, 'three edges': 9, 'a clock sharing a passing': 91, 'whole circulations': 0}; lines off their sides' sum 0; (b) the largest departure of a clock's booked total from its passing 10441 thousandths of a dial (its two edge teeth hold under 2,000)
+    the slow edge (3, 4) at Node-clock 0, against the board's passing: (3b) NOT READ ['NOT READ', 'NOT READ'], windows read [0, 0]; (3d) NOT READ [('NOT READ', 'fewer than K_MIN gaps'), ('NOT READ', 'fewer than K_MIN gaps')]; its landings by half 5, 9, the first at round 81
+    its passing (the board's, a board field): 0 until round 77, then in thousandths of a quantum a round [(78, 75), (80, 151), (100, 151), (120, 113), (150, 113), (199, 0)]; over the record 55, over rounds 78 to 199 90

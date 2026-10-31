@@ -1,0 +1,6 @@
+WORLD tensor24-mesh ; trains 3 ; sites 180 ; own edge pairs [(1, 2)] ; Mesh edges (+ end) [(0, 0, 2), (0, 2, 0)] ; triangles at a Node-clock []
+BOARD: |V| 540 |E| 540 |F| 0 ; connected parts 2 ; rank B 538 ; rank C 0 ; H_1 2 ; H_2 0
+  clocks on some edge 540 of 540 ; the parts among them 2
+A NODE-CLOCK'S OWN PART: |V| 3 |E| 1 |F| 0 ; H_1 0
+TRIANGLES ACROSS ONE MESH: 0 ; e.g. []
+END

@@ -1,0 +1,21 @@
+WORLD tensor24-click rounds 200 edge key K 152434287 birth B 76217143 trains 5 rows 26 sites 27
+COMPLEX per place: own edges [(2, 3), (2, 4), (3, 4)] ; Mesh edges (+ end) [(0, 0, 3), (0, 0, 4), (0, 3, 0), (0, 4, 0), (2, 0, 3), (2, 0, 4), (2, 3, 0), (2, 4, 0), (4, 0, 3), (4, 0, 4), (4, 3, 0), (4, 4, 0)] ; triangles [(2, 3, 4)]
+MONOMIALS: laid 2416 ; structural 42 ; live 32 ; canonical (each multiset once) 39 (merged 3 )
+STATE per Node-clock: node-all 279 ; cochain 97 (a, b, r 26 each; rd 4 ; own edge teeth 3 ; Mesh edge teeth 12 )
+TERMS per Node-clock per round: node-all {'J plan': 9664, 'Mesh plan': 4056, 'push plan': 910, 'clock plan (x5 reads)': 130, 'passing terms': 9664, 'crossing pairs': 4056, 'teeth carries': 175}
+                                cochain (structural) {'J plan': 126, 'Mesh plan': 12, 'push plan': 178, 'clock plan (x5 reads)': 25, 'passing terms': 108, 'crossing pairs': 12, 'teeth carries': 15}
+                                live at the world's strengths {'J plan': 112, 'Mesh plan': 0, 'push plan': 0, 'clock plan (x5 reads)': 25}
+PRODUCTS per Node-clock per round (MIN1's count): node-all about 144984 ; cochain about 1899
+BOOKS over 200 rounds; kappa 6 ; coupled clocks [2, 3, 4] ; the cone's teeth per place 3 ; the deg of each clock [0, 0, 2, 2, 2]
+  own - swept at a clock : [2957760000, 'train, site', (4, 26), 155] ; in edge keys 19 and a tooth 61508547
+  with the cone: K (booked + cone) - own at a clock : [-180617139, 'train, site', (4, 26), 95] ; in edge keys 1 and a tooth 28182852
+  K booked - swept at a clock (David's identity, the teeth's part) : [-150089166, 'train, site', (4, 26), 151] ; in edge keys 0 and a tooth 150089166
+  place: kappa sum R, four-leg : [-5459040000, 'site', (26,), 156] ; in edge keys 35 and a tooth 123839955
+  place: kappa sum R, two-leg : [2661120000, 'site', (26,), 156] ; in edge keys 17 and a tooth 69737121
+  place: kappa (sum R + dV~), four-leg : [8139960000, 'site', (26,), 155] ; in edge keys 53 and a tooth 60942789
+  place: kappa (sum R + dE), two-leg : [0] ; in edge keys 0 and a tooth 0
+  place: kappa (sum R + dE4), four-leg, E4 the full polarization : [1800840000, 'site', (26,), 151] ; in edge keys 11 and a tooth 124062843
+END by train, summed over the sites: own - swept in keys [0, 0, -323, 316, -490] ; cone quanta [0, 0, -324, 324, -486] ; booked quanta [0, 0, -162, -324, 486]
+END the place's cone line (sum of its cone quanta) at each site: [-18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18, -18]
+END at site 0, round 200 : sum R four-leg (no kappa) -909840000 ; its V~ change V(a)+V(b) (no kappa) 627480000 ; V(a) alone change 313740000 ; sum R two-leg 443520000 ; the two-leg E change -443520000
+END

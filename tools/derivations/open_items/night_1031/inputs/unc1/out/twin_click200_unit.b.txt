@@ -1,0 +1,8 @@
+world click200, 200 rounds; side 13, site 0, key 152434287, round 1's passing there 768000000; tooth 76217143 moved by 1 to 76217144
+(a) the board alike at 200 of 200 rounds (a board check)
+(b) the (side, site) whose clicks differ: []; rounds where the moved side's q differ: 0 of 200
+(c) windows [m, n) on the moved side: 20100; largest |Q_W - Q'_W| = 0; windows that differ: 0
+(d) Q_n - Q'_n from the birth over the rounds 0 to 200: the values [0]; the whole run's counts 1 and 1
+(e) the moved side's tooth at the end: 47622856 and 47622857; their difference mod K 152434286, the move 152434286 or 1 mod K
+(f) Q'_n - Q_n = [k_n >= K - u] at 200 of 200 rounds; rounds with the first lay's tooth in the strip [152434286, 152434286]: 0
+(g) the birth mod 3: 1; K - 1 mod 3: 2; K mod 3: 0

@@ -1,0 +1,4 @@
+round's edge: (eta, tau) = (1, 0) -> (19, 6), (0, 1) -> (60, 19): matrix [[19, 60], [6, 19]] on (eta, tau)
+between carries: (eta, tau) = (1, 0) -> (19, 60), (0, 1) -> (6, 19): matrix [[19, 6], [60, 19]] on (eta, tau)
+Stepper.step at y = 0 from (eta, tau) = (2, 5): (338, 107) ; at_edge: (338, 107)
+60 states: {'edge -27': 60, 'edge +27': 0, 'edge b+=a': 0, 'between +27': 60, 'between -27': 0, 'between b+=a': 0, 'mirror swaps': 60}

@@ -1,0 +1,16 @@
+K 3, N 4, passings in [-6, 6]: sequences 28561, two sequences on one (q-word, tooth path): 0
+  T1 q-words with every |q| <= 1: 81; each over all 81 tooth paths: 81 of 81
+  T2 windows from round 1 on: 486, sums exactly the 2K - 1 = 5 values: 486; windows from the birth: 324, sums exactly the K = 3 values: 324
+  T3 rounds where 2 |K Q_n - S_n| > K - 1: 0
+  T4 births paired under passings in [-3, 3]^4: 21609 pairs; largest |Q_W - Q'_W| = 1
+K 5, N 4, passings in [-10, 10]: sequences 194481, two sequences on one (q-word, tooth path): 0
+  T1 q-words with every |q| <= 1: 81; each over all 625 tooth paths: 81 of 81
+  T2 windows from round 1 on: 486, sums exactly the 2K - 1 = 9 values: 486; windows from the birth: 324, sums exactly the K = 5 values: 324
+  T3 rounds where 2 |K Q_n - S_n| > K - 1: 0
+  T4 births paired under passings in [-5, 5]^4: 366025 pairs; largest |Q_W - Q'_W| = 1
+K 7, N 4, passings in [-14, 14]: sequences 707281, two sequences on one (q-word, tooth path): 0
+  T1 q-words with every |q| <= 1: 81; each over all 2401 tooth paths: 81 of 81
+  T2 windows from round 1 on: 486, sums exactly the 2K - 1 = 13 values: 486; windows from the birth: 324, sums exactly the K = 7 values: 324
+  T3 rounds where 2 |K Q_n - S_n| > K - 1: 0
+  T4 births paired under passings in [-7, 7]^4: 2480625 pairs; largest |Q_W - Q'_W| = 1
+CHSH: the 16 local deterministic strategies give S in [-2, 2]

@@ -1,0 +1,57 @@
+lifts: 48 | rebuilt words' doubled unit part equals spun's E1/2 character at every lift: True
+the identity lift: [0] | the full turn (turn the identity, E1/2 at minus its dimension): [24]
+dimensions: {'A1': 1, 'A2': 1, 'E': 2, 'T1': 3, 'T2': 3, 'E1/2': 2, 'E5/2': 2, 'G3/2': 4}
+at the full turn, each kind's character (p, q) against its dimension:
+  A1      1 (r2 part 0) | dimension 1 | +I
+  A2      1 (r2 part 0) | dimension 1 | +I
+  E       2 (r2 part 0) | dimension 2 | +I
+  T1      3 (r2 part 0) | dimension 3 | +I
+  T2      3 (r2 part 0) | dimension 3 | +I
+  E1/2   -2 (r2 part 0) | dimension 2 | -I
+  E5/2   -2 (r2 part 0) | dimension 2 | -I
+  G3/2   -4 (r2 part 0) | dimension 4 | -I
+sum of squares, the five whole kinds: 24 | all eight: 48
+each lift's square found once among the 48: True
+
+Frobenius-Schur indicators, (1/48) SUM chi(g g), as (value, remainder, r2 part):
+  A1     1 (rem 0, r2 0): real
+  A2     1 (rem 0, r2 0): real
+  E      1 (rem 0, r2 0): real
+  T1     1 (rem 0, r2 0): real
+  T2     1 (rem 0, r2 0): real
+  E1/2  -1 (rem 0, r2 0): quaternionic
+  E5/2  -1 (rem 0, r2 0): quaternionic
+  G3/2  -1 (rem 0, r2 0): quaternionic
+
+lifts with A2 = +1 (the 24 whole units, 2T): 24
+
+E1/2 cubed (three half-speed members): complex content [('E1/2', 2), ('G3/2', 1)] (every remainder 0: True)
+  quaternionic kinds at an odd multiplicity: ['G3/2']: its real form is the train twice
+  (1/48) SUM chi^2, the commutant's dimension (over the reals for a real train, over the complex numbers otherwise): 5 (rem 0, r2 0)
+  (1/48) SUM (chi^2 + chi(g g)) / 2, the invariant symmetric forms on the train as it stands: 1 (rem 0 then 0, r2 0)
+  real irreducibles (kind, real multiplicity, remainder): [('E1/2', 2, 0), ('G3/2', 1, 0)] | at most 3 distinct beats under every symmetric coupling the 48 keep
+  on the 24 whole units, (1/24) SUM chi^2: 6 (rem 0, r2 0)
+
+E1/2 x T1 (the half-speed hand on the three axes): complex content [('E1/2', 1), ('G3/2', 1)] (every remainder 0: True)
+  quaternionic kinds at an odd multiplicity: ['E1/2', 'G3/2']: its real form is the train twice
+  (1/48) SUM chi^2, the commutant's dimension (over the reals for a real train, over the complex numbers otherwise): 2 (rem 0, r2 0)
+  (1/48) SUM (chi^2 + chi(g g)) / 2, the invariant symmetric forms on the train as it stands: 0 (rem 0 then 0, r2 0)
+  real irreducibles (kind, real multiplicity, remainder): [('E1/2', 1, 0), ('G3/2', 1, 0)] | at most 2 distinct beats under every symmetric coupling the 48 keep
+  on the 24 whole units, (1/24) SUM chi^2: 3 (rem 0, r2 0)
+
+the 8-gear train: complex content [('G3/2', 2)] (every remainder 0: True)
+  quaternionic kinds at an odd multiplicity: none: real as it stands
+  (1/48) SUM chi^2, the commutant's dimension (over the reals for a real train, over the complex numbers otherwise): 4 (rem 0, r2 0)
+  (1/48) SUM (chi^2 + chi(g g)) / 2, the invariant symmetric forms on the train as it stands: 1 (rem 0 then 0, r2 0)
+  real irreducibles (kind, real multiplicity, remainder): [('G3/2', 1, 0)] | at most 1 distinct beats under every symmetric coupling the 48 keep
+  on the 24 whole units, (1/24) SUM chi^2: 8 (rem 0, r2 0)
+
+the 24-gear train: complex content [('E1/2', 2), ('E5/2', 2), ('G3/2', 4)] (every remainder 0: True)
+  quaternionic kinds at an odd multiplicity: none: real as it stands
+  (1/48) SUM chi^2, the commutant's dimension (over the reals for a real train, over the complex numbers otherwise): 24 (rem 0, r2 0)
+  (1/48) SUM (chi^2 + chi(g g)) / 2, the invariant symmetric forms on the train as it stands: 8 (rem 0 then 0, r2 0)
+  real irreducibles (kind, real multiplicity, remainder): [('E1/2', 1, 0), ('E5/2', 1, 0), ('G3/2', 2, 0)] | at most 4 distinct beats under every symmetric coupling the 48 keep
+  on the 24 whole units, (1/24) SUM chi^2: 48 (rem 0, r2 0)
+
+G3/2 on the 24 whole units, (1/24) SUM chi^2: 2 (rem 0, r2 0): two distinct doublets there
+<E1/2, E5/2> on the 24 whole units: 1 (rem 0, r2 0): one doublet there

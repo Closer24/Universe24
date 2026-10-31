@@ -1,0 +1,47 @@
+one Node-clock against the 27-site cube's site 0, every count, tooth and own click over 100 rounds: alike
+a count passes the width after round 3751 (its bit length 339); read to round 3750
+rounds read: 3750 | the held |k|^2: least 0, most 764837699745784548267273995187120366659969343030372189524065220194681
+per 250 rounds: the held |k|^2 most, at 0, summed | most |u| | most |v|
+      1 to   250: |k|^2 most   1, at 0 in  50, summed   200 | |u| most     47 | |v| most    107
+    251 to   500: |k|^2 most   1, at 0 in  81, summed   169 | |u| most     45 | |v| most    105
+    501 to   750: |k|^2 most   4, at 0 in  37, summed   450 | |u| most     42 | |v| most     17
+    751 to  1000: |k|^2 most   1, at 0 in  61, summed   189 | |u| most     42 | |v| most     10
+   1001 to  1250: |k|^2 most   1, at 0 in  59, summed   191 | |u| most     42 | |v| most      6
+   1251 to  1500: |k|^2 most   1, at 0 in  61, summed   189 | |u| most     42 | |v| most      6
+   1501 to  1750: |k|^2 most   1, at 0 in  70, summed   180 | |u| most     42 | |v| most     11
+   1751 to  2000: |k|^2 most   9, at 0 in  38, summed   951 | |u| most     41 | |v| most     18
+   2001 to  2250: |k|^2 most   9, at 0 in  37, summed  1281 | |u| most     34 | |v| most     34
+   2251 to  2500: |k|^2 most   9, at 0 in  37, summed  1281 | |u| most     34 | |v| most     35
+   2501 to  2750: |k|^2 most  36, at 0 in  23, summed  2242 | |u| most     41 | |v| most     20
+   2751 to  3000: |k|^2 most  16, at 0 in  47, summed   913 | |u| most     57 | |v| most     21
+   3001 to  3250: |k|^2 most   4, at 0 in  57, summed   235 | |u| most     57 | |v| most    130
+   3251 to  3500: |k|^2 most   4, at 0 in  55, summed   213 | |u| most     64 | |v| most    148
+   3501 to  3750: |k|^2 most 764837699745784548267273995187120366659969343030372189524065220194681, at 0 in  17, summed 764837699745784548267273995187120366659970155889829908984678597825607 | |u| most 126428320379702844816802684231721915 | |v| most 490292004178213017275382835412596715
+u: 35 sign changes, the first at [111]; half-beats [186, 221, 127, 196, 195, 196, 195, 196, 206, 93, 86, 87, 85, 77, 90, 83, 87, 80, 55, 56, 95, 90, 173, 144, 156, 153, 83, 70, 47, 27, 1, 1, 1, 1]
+v: 22 sign changes, the first at [544]; half-beats [1309, 131, 89, 93, 100, 97, 93, 118, 62, 85, 97, 99, 409, 263, 82, 46, 29, 1, 1, 1, 1]
+whole beats of u (between every second sign change): 17
+  rounds 112 to 518: 407 rounds | held |k|^2 most 4 | own lines [('held', 308), ('giver', 312), ('taker', 293)] | side landings [('held', 594), ('giver', 324), ('taker', 302)]
+  rounds 519 to 841: 323 rounds | held |k|^2 most 4 | own lines [('held', 203), ('giver', 99), ('taker', 194)] | side landings [('held', 286), ('giver', 100), ('taker', 196)]
+  rounds 842 to 1232: 391 rounds | held |k|^2 most 1 | own lines [('held', 168), ('giver', 167), ('taker', 164)] | side landings [('held', 326), ('giver', 167), ('taker', 165)]
+  rounds 1233 to 1623: 391 rounds | held |k|^2 most 1 | own lines [('held', 172), ('giver', 166), ('taker', 169)] | side landings [('held', 332), ('giver', 166), ('taker', 170)]
+  rounds 1624 to 1922: 299 rounds | held |k|^2 most 9 | own lines [('held', 208), ('giver', 198), ('taker', 180)] | side landings [('held', 376), ('giver', 203), ('taker', 183)]
+  rounds 1923 to 2095: 173 rounds | held |k|^2 most 9 | own lines [('held', 148), ('giver', 130), ('taker', 135)] | side landings [('held', 263), ('giver', 135), ('taker', 140)]
+  rounds 2096 to 2257: 162 rounds | held |k|^2 most 9 | own lines [('held', 137), ('giver', 130), ('taker', 127)] | side landings [('held', 255), ('giver', 131), ('taker', 128)]
+  rounds 2258 to 2430: 173 rounds | held |k|^2 most 9 | own lines [('held', 136), ('giver', 92), ('taker', 130)] | side landings [('held', 216), ('giver', 94), ('taker', 134)]
+  rounds 2431 to 2597: 167 rounds | held |k|^2 most 16 | own lines [('held', 146), ('giver', 128), ('taker', 128)] | side landings [('held', 251), ('giver', 132), ('taker', 131)]
+  rounds 2598 to 2708: 111 rounds | held |k|^2 most 36 | own lines [('held', 95), ('giver', 92), ('taker', 82)] | side landings [('held', 173), ('giver', 94), ('taker', 85)]
+  rounds 2709 to 2893: 185 rounds | held |k|^2 most 16 | own lines [('held', 121), ('giver', 113), ('taker', 105)] | side landings [('held', 218), ('giver', 115), ('taker', 107)]
+  rounds 2894 to 3210: 317 rounds | held |k|^2 most 9 | own lines [('held', 219), ('giver', 218), ('taker', 213)] | side landings [('held', 412), ('giver', 236), ('taker', 230)]
+  rounds 3211 to 3519: 309 rounds | held |k|^2 most 4 | own lines [('held', 199), ('giver', 202), ('taker', 197)] | side landings [('held', 376), ('giver', 229), ('taker', 223)]
+  rounds 3520 to 3672: 153 rounds | held |k|^2 most 49 | own lines [('held', 138), ('giver', 136), ('taker', 138)] | side landings [('held', 262), ('giver', 156), ('taker', 158)]
+  rounds 3673 to 3746: 74 rounds | held |k|^2 most 26244 | own lines [('held', 72), ('giver', 72), ('taker', 70)] | side landings [('held', 142), ('giver', 79), ('taker', 77)]
+  rounds 3747 to 3748: 2 rounds | held |k|^2 most 8977183504 | own lines [('held', 2), ('giver', 2), ('taker', 2)] | side landings [('held', 4), ('giver', 4), ('taker', 4)]
+  rounds 3749 to 3750: 2 rounds | held |k|^2 most 764837699745784548267273995187120366659969343030372189524065220194681 | own lines [('held', 2), ('giver', 2), ('taker', 2)] | side landings [('held', 4), ('giver', 4), ('taker', 4)]
+M1 across consecutive whole beats, own lines, each pair of clocks:
+  held : giver: ['32844/922 FAILS', '17269/637 FAILS', '836/673 FAILS', '472/744 holds', '2264/684 FAILS', '1430/545 FAILS', '5076/495 FAILS', '3976/502 FAILS', '1272/461 FAILS', '397/421 holds', '1631/671 FAILS', '856/838 FAILS', '812/675 FAILS', '144/418 holds', '0/148 holds', '0/8 holds']
+  held : taker: ['273/998 holds', '700/729 holds', '184/673 holds', '4192/729 FAILS', '1440/671 FAILS', '301/547 holds', '538/530 FAILS', '1572/540 FAILS', '188/451 holds', '53/403 holds', '2778/658 FAILS', '756/828 holds', '276/672 holds', '276/418 holds', '4/146 holds', '0/8 holds']
+  giver : taker: ['31521/898 FAILS', '16162/624 FAILS', '999/666 FAILS', '3582/713 FAILS', '3330/643 FAILS', '1040/522 FAILS', '5216/479 FAILS', '4864/478 FAILS', '1280/430 FAILS', '394/392 FAILS', '1179/649 FAILS', '80/830 holds', '1084/673 FAILS', '416/416 holds', '4/146 holds', '0/8 holds']
+M1 across consecutive whole beats, each clock's own lines against its window's rounds (a board count):
+  held: ['16863/1241 FAILS', '25109/1085 FAILS', '1564/1122 FAILS', '29900/1070 FAILS', '8268/828 FAILS', '275/620 holds', '1669/608 FAILS', '2546/622 FAILS', '341/519 holds', '4144/512 FAILS', '2158/842 FAILS', '4588/1044 FAILS', '12195/799 FAILS', '804/437 FAILS', '4/150 holds', '0/8 holds']
+  giver: ['60483/1141 FAILS', '15232/980 FAILS', '391/1115 holds', '27784/1054 FAILS', '4616/800 FAILS', '1430/595 FAILS', '7586/557 FAILS', '6780/560 FAILS', '1156/498 FAILS', '4477/501 FAILS', '4509/833 FAILS', '3328/1046 FAILS', '11118/800 FAILS', '952/435 FAILS', '4/150 holds', '0/8 holds']
+  taker: ['15681/1217 FAILS', '22882/1072 FAILS', '1955/1115 FAILS', '19849/1039 FAILS', '9225/787 FAILS', '101/597 holds', '911/592 FAILS', '434/598 holds', '514/488 FAILS', '3515/483 FAILS', '6120/820 FAILS', '3368/1036 FAILS', '12501/797 FAILS', '498/435 FAILS', '8/148 holds', '0/8 holds']

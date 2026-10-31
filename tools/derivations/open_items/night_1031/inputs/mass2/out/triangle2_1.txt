@@ -1,0 +1,21 @@
+live monomials: 32 | pairs joined: [('held', 'giver', 12), ('held', 'taker', 12), ('giver', 'taker', 6)]
+clocks joined: ['held', 'giver', 'taker'] | triangles: [['held', 'giver', 'taker']]
+B C: [[0], [0], [0]] | K: [[3]] | B^T B + C C^T: [[3, 0, 0], [0, 3, 0], [0, 0, 3]]
+Laplacian: [[2, -1, -1], [-1, 2, -1], [-1, -1, 2]] trace 6 | L (L - K I): [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+adjacency: [[0, 1, 1], [1, 0, 1], [1, 1, 0]] trace 0 | (A - degree I)(A + I): [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+L: [[19, 6], [60, 19]] | trace 38 | det 1 | L^2 - trace L + I: [[0, 0], [0, 0]]
+trace^2 - 4 det = 1440 = (4K)^2 x 10: True | (K + r10)^2 = 19 + 6 r10, the larger eigenvalue: True | the unit's norm K^2 - 10 = -1 | trace^2 > 4: hyperbolic, no rotation angle: True
+
+the file's key: 50811429 =  [(3, 1), (641, 1), (26423, 1)] | every side's key: [152434287] | the dial K D: 457302861 = [(3, 3), (641, 1), (26423, 1)]
+  mod 3^3 = 27: L = I mod 3: True; order 9 = [(3, 2)]; L^(order/q) = I for its primes q: [False]
+  mod 641: 10^((p-1)/2) = +1 mod p, so split: L^(p - 1) = I, 640 = [(2, 7), (5, 1)]; order 160 = [(2, 5), (5, 1)]; L^(order/q) = I for its primes q: [False, False]
+  mod 26423: 10^((p-1)/2) = -1 mod p, so inert: L^(p + 1) = I, 26424 = [(2, 3), (3, 2), (367, 1)]; order 2936 = [(2, 3), (367, 1)]; L^(order/q) = I for its primes q: [False, False]
+the order modulo the dial, the lcm: 528480 = [(2, 5), (3, 2), (5, 1), (367, 1)] | L^528480 = I mod the dial: True
+
+the lay at site 0: held row 12 at 1, giver row 14 at 40, taker row 20 at 0 | W 600000000 | 4W 2400000000
+the file's strengths: d2V/dk2 392000000 (163 per mille of 4W) | d2V/dk dx 9600000 | d2V/dx2 120000 | d2V/dx_g dx_t 96000
+  the (held, giver) minor's determinant -45120000000000: indefinite | the tied block's sum 216000 and difference 24000, their carry (9, 0) | held over tied diagonal (3266, 80000)
+every chosen strength read as 1: d2V/dk2 192000002 (80 per mille of 4W) | d2V/dk dx 9600000 | d2V/dx2 120000 | d2V/dx_g dx_t 1
+  the (held, giver) minor's determinant -69119999760000: indefinite | the tied block's sum 120001 and difference 119999, their carry (1, 2) | held over tied diagonal (1600, 2)
+every chosen strength read as 1, the tied counts read at 0 (the held spring's own curvature): d2V/dk2 2 | the tied over it at the lay's |k|: (60000, 0)

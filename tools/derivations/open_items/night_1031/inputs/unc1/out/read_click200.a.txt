@@ -1,0 +1,35 @@
+record: click200.run1.jsonl
+R0 dial K 152434287, birth 76217143, the dial's half (K - 1) div 2 = 76217143, birth at the half: 1
+R0 click lines 12636, rounds 200
+R0 sides listed: 162 own (at a Node-clock), 0 across a Mesh; listings 25272 own, 0 across
+R0 listings with q not 0: 13446
+R1 consecutive listings one round apart: 17982, k_before(next) = k_after(prev) at 17982 of them
+R1 silent gaps between listings: 7128; their passing G = k_before(next) - k_after(prev) from -37440000 to 37440000 (band [-152434286, 152434286])
+U1 from the birth, D = K Q_n - S_n = birth - k_after over every listing: from -75771435 to 75771435; |D| at most 75771435 = 994 per mille of the half 76217143
+U1 one-line windows: 41 distinct q, from -37 to 37; q not 0 holding two passings or more: 24
+U1 one-line windows at q -3: 9 distinct passings, from -571200000 to -362880000, spread 208320000 against the band's 2 (K - 1) = 304868572
+U1 one-line windows at q -2: 3 distinct passings, from -312000000 to -242880000, spread 69120000 against the band's 2 (K - 1) = 304868572
+U1 one-line windows at q -1: 9 distinct passings, from -221760000 to -17280000, spread 204480000 against the band's 2 (K - 1) = 304868572
+U1 one-line windows at q 0: 35 distinct passings, from -87360000 to 87360000, spread 174720000 against the band's 2 (K - 1) = 304868572
+U1 one-line windows at q 1: 9 distinct passings, from 17280000 to 221760000, spread 204480000 against the band's 2 (K - 1) = 304868572
+U1 one-line windows at q 2: 3 distinct passings, from 242880000 to 312000000, spread 69120000 against the band's 2 (K - 1) = 304868572
+U1 one-line windows at q 3: 9 distinct passings, from 362880000 to 571200000, spread 208320000 against the band's 2 (K - 1) = 304868572
+U1 the count does not fix the beat (one line, q not 0, two passings), record-wide: SHOWN; within one side: 162 of 162 sides hold a q with two passings
+U2 (side, count from the birth) classes holding two teeth or more: 1620; sides with one: 162 of 162; distinct (side, count, tooth) 6966
+U2 the count does not fix the tooth: SHOWN
+F2 clocks with two meetings or more: 54 of 54 that meet; windows between consecutive meetings: 270, of own count T = 0: 0
+F2 realized D = K Q - S on the clocks' own sides over the windows: from -117668574 to 83520000; the q-only band per window [-(K - 1), K - 1] = [-152434286, 152434286]
+F2 (own count T, quanta Q) classes: 6; holding two passings or more: 1
+F2 class T 6, Q -2: 1 passings, spread 0; the q-only beat's width per own line 2 (K - 1) div T = 50811428, so T x width = 304868568 (2 (K - 1) = 304868572)
+F2 class T 6, Q -1: 3 passings, spread 20160000; the q-only beat's width per own line 2 (K - 1) div T = 50811428, so T x width = 304868568 (2 (K - 1) = 304868572)
+F2 class T 6, Q 0: 1 passings, spread 0; the q-only beat's width per own line 2 (K - 1) div T = 50811428, so T x width = 304868568 (2 (K - 1) = 304868572)
+F2 class T 6, Q 1: 1 passings, spread 0; the q-only beat's width per own line 2 (K - 1) div T = 50811428, so T x width = 304868568 (2 (K - 1) = 304868572)
+F2 class T 9, Q 1: 1 passings, spread 0; the q-only beat's width per own line 2 (K - 1) div T = 33874285, so T x width = 304868565 (2 (K - 1) = 304868572)
+F2 class T 12, Q -3: 1 passings, spread 0; the q-only beat's width per own line 2 (K - 1) div T = 25405714, so T x width = 304868568 (2 (K - 1) = 304868572)
+F2 the own count and the quanta do not fix the beat: SHOWN
+G0 the passings' grain g (gcd of every passing read): 48000; gcd(g, K) = 3; the tooth's reachable places on the dial K / gcd(g, K) = 50811429
+G0 distinct teeth written in the record: 283
+U3 places holding a triangle of three clocks on laid edges: 4212; triangles with all three edges passing a quantum: 108; lines whose q is its sides' sum there: 4212
+U3 circulations c = q_tu + q_uv + q_vt: not 0 at 4158; values (c: places) [(-32, 594), (-31, 27), (-30, 27), (-28, 27), (-12, 27), (-11, 27), (-10, 27), (-9, 27), (-7, 27), (-6, 54), (-5, 864), (-4, 81)]
+U3 the lines' q do not fix the circulation (a circulation not 0 stands): SHOWN
+G1 sides by (train, other train): 6; distinct histories across the sites: 6

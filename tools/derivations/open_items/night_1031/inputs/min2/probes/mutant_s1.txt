@@ -1,0 +1,2 @@
+S1 on tensor24-well 3 rounds: the sum parts at None ; the mutant (first factor kept) parts at 1
+END

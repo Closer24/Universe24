@@ -1,0 +1,10 @@
+load before read mesh125 a: 9.08 8.59 8.16 11/212 17430
+load before read mesh125 b: 9.23 8.63 8.17 12/212 17442
+load before read mesh125 on the second record: 9.23 8.63 8.17 12/212 17451
+read mesh125: the two outputs alike byte for byte
+read mesh125: the second record reads alike but its name line
+load before read click200 a: 9.45 8.68 8.19 12/213 17500
+load before read click200 b: 9.45 8.68 8.19 11/214 17523
+load before read click200 on the second record: 9.74 8.75 8.22 14/217 17564
+read click200: the two outputs alike byte for byte
+read click200: the second record reads alike but its name line

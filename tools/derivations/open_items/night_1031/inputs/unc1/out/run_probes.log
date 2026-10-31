@@ -1,0 +1,20 @@
+load before read mesh125 a: 9.09 7.83 7.26 11/187 3379
+load before read mesh125 b: 9.08 7.85 7.27 9/179 3419
+load before read mesh125 on the second record: 9.08 7.85 7.27 7/178 3435
+read mesh125: the two outputs alike byte for byte
+read mesh125: the second record reads alike but its name line
+load before read click200 a: 8.91 7.84 7.27 7/178 3462
+load before read click200 b: 8.91 7.84 7.27 15/184 3556
+load before read click200 on the second record: 8.91 7.84 7.27 9/184 3562
+read click200: the two outputs alike byte for byte
+read click200: the second record reads alike but its name line
+load before twin click200 half a: 8.91 7.84 7.27 9/184 3576
+twin half a: 88 s
+load before twin click200 half b: 8.64 7.95 7.35 12/189 4599
+twin half b: 97 s
+twin half: the two outputs alike byte for byte
+load before twin click200 unit a: 9.16 8.37 7.57 8/196 5358
+twin unit a: 80 s
+load before twin click200 unit b: 8.38 8.29 7.61 10/191 6057
+twin unit b: 91 s
+twin unit: the two outputs alike byte for byte

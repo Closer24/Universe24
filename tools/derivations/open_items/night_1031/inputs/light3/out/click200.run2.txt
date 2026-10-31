@@ -1,0 +1,6 @@
+record click200.jsonl: 12636 click lines; the guard (sides.paired): well formed
+  meetings (sides of q not 0, once each): 6723, own 6723, across a Mesh 0
+RULE L per clock: medium clocks 0, matter clocks 81; per train [medium, matter] clocks {2: [0, 27], 3: [0, 27], 4: [0, 27]}; the medium, as trains: []; trains with clocks of both classes [] (matter trains)
+  light's lines: NOT SHOWN (no Mesh meeting)
+  components of the clocks' meeting graph: 27, sizes [3, 3, 3, 3, 3, 3, 3, 3] ...; sites with two clocks or more 27, all of them in one component 27
+CONE per clock from round 1's meetings: of 81 clocks, first meeting reached at its own round 81, only later 0, never 0; board check, the per-Node-clock order (a site's trains pooled through the board's act): of 27 sites, reached at the round of their first meeting 27, only later 0, never 0

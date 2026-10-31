@@ -1,0 +1,22 @@
+rounds read: 400 | sites alike at the end: True
+held |k|^2 at Node-clock 0: first 0 | least 0 | most 1 | last 1
+  round 1: |k|^2 0 | the tied curvature 2 c |k|^2 = 0
+  round 41: |k|^2 1 | the tied curvature 2 c |k|^2 = 120000
+  round 81: |k|^2 1 | the tied curvature 2 c |k|^2 = 120000
+  round 121: |k|^2 0 | the tied curvature 2 c |k|^2 = 0
+  round 161: |k|^2 1 | the tied curvature 2 c |k|^2 = 120000
+  round 201: |k|^2 1 | the tied curvature 2 c |k|^2 = 120000
+  round 241: |k|^2 1 | the tied curvature 2 c |k|^2 = 120000
+  round 281: |k|^2 0 | the tied curvature 2 c |k|^2 = 0
+  round 321: |k|^2 1 | the tied curvature 2 c |k|^2 = 120000
+  round 361: |k|^2 1 | the tied curvature 2 c |k|^2 = 120000
+own lines (sides with a quotient not 0) per clock at Node-clock 0, in two windows of 200 rounds:
+  wave    first window      0 | second window      0
+  metric  first window      0 | second window      0
+  held    first window    238 | second window    292
+  giver   first window    161 | second window    162
+  taker   first window     99 | second window    150
+two-window check of the ratios, |n1 m2 - n2 m1| against the calibre n1 + m1 + n2 + m2 (fails if above):
+  held : giver: gap 8456, calibre 853: FAILS
+  held : taker: gap 6792, calibre 779: FAILS
+  giver : taker: gap 8112, calibre 572: FAILS

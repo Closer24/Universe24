@@ -1,0 +1,12 @@
+ring60.jsonl against ring60h.jsonl: 15352 and 15352 lines; 1095 differ, at 24 sites
+  the first differing line: round 44, site 40, train 1
+  round 44: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 50: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 60: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 70: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 80: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 90: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 100: 8 sites differ; below 40: 35 to 39; at 40: True; above: 41 to 42
+  round 110: 13 sites differ; below 40: 32 to 39; at 40: True; above: 41 to 44
+  round 120: 21 sites differ; below 40: 28 to 39; at 40: True; above: 41 to 48
+  round 125: 24 sites differ; below 40: 27 to 39; at 40: True; above: 41 to 50

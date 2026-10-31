@@ -1,0 +1,36 @@
+WORLD tensor24-click  chosen {'key': 50811429, 'push': 0, 'notch': 0, 'hold': 1, 'spring': 100000000, 'tie': 96000, 'mesh': 0} trains 5 rows 26 sites 27 rounds 100
+KEY edge key 152434287 (strengths at 1: 152434287 ) birth by the load's carry 76217143 ; header's birth (the full k's [0, 0]) 76217143 ; header's dial 152434287 ; distinct keys over the sides 1
+TEETH per Node-clock: laid 175 {'a': 5, 'b': 140, 'c': 24, 'live': 6}
+STATE per Node-clock: engine 279 ; AB (a, b dropped, D3) 112 ; ABC 88
+S1 combine like monomials: monomials 2416 -> 1196 ; edge key unchanged True ; J terms 9664 -> 4784
+WORK as laid (engine):
+  engine J contract (3 / term): {'a': 4512, 'b': 24084, 'c': 60, 'live': 336}
+  engine passing (4 + T / J term): {'a': 13536, 'b': 72468, 'c': 0, 'live': 972}
+  engine Mesh plan (3 / term): {'a': 0, 'b': 12132, 'c': 36, 'live': 0}
+  engine push (3 / term): {'a': 0, 'b': 2196, 'c': 534, 'live': 0}
+  engine clocks' read (5 calls x 1 / term): {'a': 0, 'b': 525, 'c': 0, 'live': 125}
+  engine grips' read (1 / term): {'a': 0, 'b': 24, 'c': 0, 'live': 6}
+  engine crossing (3 / coupling entry): {'a': 0, 'b': 12096, 'c': 72, 'live': 0}
+  engine PRODUCTS: by cause {'a': 18048, 'b': 123525, 'c': 702, 'live': 1439}; the board's per-row work (45 R, live) 1170; all 144884
+  engine SHARE per mille of all: {'a': 124, 'b': 852, 'c': 4, 'live': 9}; per-row 8
+  engine terms J {'a': 1504, 'b': 8028, 'c': 20, 'live': 112}, Mesh plan {'b': 4044, 'c': 12, 'live': 0}, push {'b': 732, 'c': 178, 'live': 0}, clock {'b': 105, 'c': 0, 'live': 25}, grips' read {'b': 24, 'live': 6}, across {'b': 4032, 'c': 24, 'live': 0}
+WORK after S1 (like monomials combined):
+  S1 J contract (3 / term): {'a': 2106, 'b': 11868, 'c': 42, 'live': 336}
+  S1 passing (4 + T / J term): {'a': 6318, 'b': 35766, 'c': 0, 'live': 972}
+  S1 Mesh plan (3 / term): {'a': 0, 'b': 12132, 'c': 36, 'live': 0}
+  S1 push (3 / term): {'a': 0, 'b': 2196, 'c': 534, 'live': 0}
+  S1 clocks' read (5 calls x 1 / term): {'a': 0, 'b': 525, 'c': 0, 'live': 125}
+  S1 grips' read (1 / term): {'a': 0, 'b': 24, 'c': 0, 'live': 6}
+  S1 crossing (3 / coupling entry): {'a': 0, 'b': 12096, 'c': 72, 'live': 0}
+  S1 PRODUCTS: by cause {'a': 8424, 'b': 74607, 'c': 684, 'live': 1439}; the board's per-row work (45 R, live) 1170; all 86324
+  S1 SHARE per mille of all: {'a': 97, 'b': 864, 'c': 7, 'live': 16}; per-row 13
+  S1 terms J {'a': 702, 'b': 3956, 'c': 14, 'live': 112}, Mesh plan {'b': 4044, 'c': 12, 'live': 0}, push {'b': 732, 'c': 178, 'live': 0}, clock {'b': 105, 'c': 0, 'live': 25}, grips' read {'b': 24, 'live': 6}, across {'b': 4032, 'c': 24, 'live': 0}
+CARRIES per Node-clock per round: the board's 6 R = 156 ; the teeth by cause {'a': 5, 'b': 140, 'c': 24, 'live': 6}
+FORM AB: J terms 126, Mesh plan 12, push 178, clock 25, grips' read 6; teeth held per Node-clock 30; state per Node-clock 112
+FORM ABC: J terms 112, Mesh plan 0, push 0, clock 25, grips' read 6; teeth held per Node-clock 6; state per Node-clock 88
+FORM ABC+D1: J terms 112, Mesh plan 0, push 0, clock 25, grips' read 6; teeth held per Node-clock 3; state per Node-clock 85
+RUN engine: click entries not 0 4050 ; record click lines 5508
+FORM AB: entries off over 100 rounds {'a': 0, 'b': 0, 'r': 0, 'rd': 0, 'k': 0, 'clicks': 0, 'lines': 0}; end teeth equal True; end digest on the state read back equal True; run back from its reduced end alone exact True
+FORM ABC: entries off over 100 rounds {'a': 0, 'b': 0, 'r': 0, 'rd': 0, 'k': 0, 'clicks': 0, 'lines': 0}; end teeth equal True; end digest on the state read back equal True; run back from its reduced end alone exact True
+FORM ABC+D1: entries off over 100 rounds {'a': 0, 'b': 0, 'r': 0, 'rd': 0, 'k': 0, 'clicks': 0, 'lines': 0}; end teeth equal True; end digest on the state read back equal True; run back from its reduced end alone exact True
+END

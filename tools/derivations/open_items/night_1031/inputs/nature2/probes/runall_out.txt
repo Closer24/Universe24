@@ -1,0 +1,40 @@
+load 6.53 after 0 checks
+S/nature2/runs/t24_1.jsonl: written
+t24 pass 1: 2270 ms, 2 lines
+load 6.40 after 0 checks
+S/nature2/runs/mesh_1.jsonl: written
+mesh pass 1: 33969 ms, 21591 lines
+load 5.85 after 0 checks
+S/nature2/runs/click200_1.jsonl: written
+click200 pass 1: 58083 ms, 12638 lines
+load 5.53 after 0 checks
+S/nature2/runs/live_1.jsonl: written
+live pass 1: 90235 ms, 2 lines
+load 7.73 after 0 checks
+S/nature2/runs/well_1.jsonl: written
+well pass 1: 248480 ms, 2 lines
+load 7.13 after 0 checks
+S/nature2/runs/t24_2.jsonl: written
+t24 pass 2: 2328 ms, 2 lines
+load 7.13 after 0 checks
+S/nature2/runs/mesh_2.jsonl: written
+mesh pass 2: 43598 ms, 21591 lines
+load 7.07 after 0 checks
+S/nature2/runs/click200_2.jsonl: written
+click200 pass 2: 67710 ms, 12638 lines
+load 6.82 after 0 checks
+S/nature2/runs/live_2.jsonl: written
+live pass 2: 63508 ms, 2 lines
+load 6.17 after 0 checks
+S/nature2/runs/well_2.jsonl: written
+well pass 2: 270940 ms, 2 lines
+t24: the two runs alike after the header
+{"kind": "end", "rounds": 10, "digest": "0c23e7a3ae354ab73216d1c78799f7848992fea690f58726da7bd2b9699732d9", "undone": 10, "exact": 1, "teeth": [], "across": []}
+mesh: the two runs alike after the header
+{"kind": "end", "rounds": 125, "digest": "58298185d690c8df150a2e6f08e21343ed787230f3c590e8b4cb06af6d87129f", "undone": 125, "exact": 1, "teeth": [[1, 2, [1, 1, 
+click200: the two runs alike after the header
+{"kind": "end", "rounds": 200, "digest": "cb66502ed09837fe2b7599064e28ec315657e6d0576ea0208076bbb4a6543f09", "undone": 200, "exact": 1, "teeth": [[2, 3, [476228
+live: the two runs alike after the header
+{"kind": "end", "rounds": 100, "digest": "479ed1d22ae5fb4700774c3a3a8a485f827a1b4212e968d1078104d837b8a47d", "undone": 100, "exact": 1, "teeth": [], "across": [
+well: the two runs alike after the header
+{"kind": "end", "rounds": 128, "digest": "99f18e7f2c862510a998b7b5086a9c7195ea2bdbbe575f00906c10614282654c", "undone": 128, "exact": 1, "teeth": [], "across": [

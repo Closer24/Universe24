@@ -1,0 +1,4 @@
+tensor24: 10 of 10 rounds, the closure alike with F's act at every round True; cross slots off 0 in all rounds 0; clicks off 0 0
+tensor24-live: 100 of 100 rounds, the closure alike with F's act at every round True; cross slots off 0 in all rounds 0; clicks off 0 0
+tensor24-mesh: 125 of 125 rounds, the closure alike with F's act at every round True; cross slots off 0 in all rounds 0; clicks off 0 7592
+tensor24-well: 128 of 128 rounds, the closure alike with F's act at every round True; cross slots off 0 in all rounds 0; clicks off 0 0

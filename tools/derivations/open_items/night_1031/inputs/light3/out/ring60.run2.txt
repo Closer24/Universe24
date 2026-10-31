@@ -1,0 +1,12 @@
+record ring60.jsonl: 15352 click lines; the guard (sides.paired): well formed
+  meetings (sides of q not 0, once each): 12898, own 3188, across a Mesh 9710
+RULE L per clock: medium clocks 60, matter clocks 116; per train [medium, matter] clocks {0: [60, 0], 1: [0, 58], 2: [0, 58]}; the medium, as trains: [0]; trains with clocks of both classes [] (matter trains)
+  components of the clocks' meeting graph: 3, sizes [90, 43, 43]; sites with two clocks or more 58, all of them in one component 0
+CONE per clock from round 20's meetings: of 176 clocks, first meeting reached at its own round 56, only later 30, never 90; board check, the per-Node-clock order (a site's trains pooled through the board's act): of 60 sites, reached at the round of their first meeting 60, only later 0, never 0
+ECHO (meetings, turn at B; A's own quiet): NOT SHOWN: 0 echoes, 0 pairs, B among []; 2616 gives of a matter clock, 2156 windows ending in A's take, 4 of them with an own meeting of A inside
+ECHO (meetings, no turn; A's own quiet): SHOWN: 2 echoes, 2 pairs, B among [(1, 2), (39, 2)]; 2616 gives of a matter clock, 2156 windows ending in A's take, 4 of them with an own meeting of A inside
+    A (3, 2) gives at 81, B (1, 2) takes at 82 from site 2 and gives to site 0 at 84, A takes at 87; A's own meetings between 0, B's own meetings between b1 and b2 0
+    A (37, 2) gives at 81, B (39, 2) takes at 82 from site 38 and gives to site 40 at 84, A takes at 87; A's own meetings between 0, B's own meetings between b1 and b2 0
+ECHO (directed, turn at B; A's own quiet): NOT SHOWN: 0 echoes, 0 pairs, B among []; 2616 gives of a matter clock, 2156 windows ending in A's take, 4 of them with an own meeting of A inside
+ECHO (directed, no turn; A's own quiet): NOT SHOWN: 0 echoes, 0 pairs, B among []; 2616 gives of a matter clock, 2156 windows ending in A's take, 4 of them with an own meeting of A inside
+ECHO (meetings, turn at B; the site quiet, a board check): NOT SHOWN: 0 echoes; 2616 gives, 2108 windows

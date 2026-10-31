@@ -1,0 +1,4 @@
+cube world: edge key 3000009 birth 1500004 + Spokes [0, 2, 4] opp [1, 0, 3, 2, 5, 4] own held [(1, 2)] Mesh held [(0, 0, 2), (0, 2, 0), (2, 0, 2), (2, 2, 0), (4, 0, 2), (4, 2, 0)] rd held []
+after 25 rounds: held Mesh teeth entries off birth 162 of 162 ; held own teeth off birth 26 of 27
+24 on the reduced form: {'turns': 24, 'reversing': 21, 'law kept': 24, 'flip seen': 72, 'transport seen': 72, 'commute state': 24, 'commute clicks': 24}
+END

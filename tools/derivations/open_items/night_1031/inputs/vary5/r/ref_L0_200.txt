@@ -1,0 +1,11 @@
+world/setting_shipped.json: edge key 152434287, kappa 6, departures []; edged terms by legs: [(2, 12), (4, 96)]
+  round 170, site 17: place D (VARY4) 690240000; place D' (normalized) -564720000; giver Res/2 -218400000, Res'/4 117600000; giver St/2 2002560000, St'/4 1666560000; giver M 1784160000
+  2 M = St + Res off at 0 clock-rounds (VARY4's identity, recomputed)
+  VARY4 Res/2: largest 1636080000 at (4, 0, 150), 10 edge keys
+  VARY4 St/2: largest -4361280000 at (4, 0, 156), 28 edge keys
+  normalized Res'/4: largest 1635720000 at (4, 0, 151), 10 edge keys
+  normalized St'/4: largest 2098560000 at (3, 0, 157), 13 edge keys
+  place D (VARY4), kappa 1: largest 708840000 at (0, 150), 4 edge keys
+  place D' (normalized), kappa 1: largest 1092660000 at (0, 151), 7 edge keys
+  VARY4 Res/2: clocks past 4 edge keys by train [0, 0, 27, 0, 27]; first round [None, None, 147, None, 123]
+  normalized Res'/4: clocks past 4 edge keys by train [0, 0, 27, 0, 27]; first round [None, None, 151, None, 141]

@@ -1,0 +1,3 @@
+D 21: 1323 pairs (tau on 3D, the twin on D), 30 rounds: run back misses the start 0; its landings not the forward ones negated and reversed 0
+D 85: 21675 pairs (tau on 3D, the twin on D), 30 rounds: run back misses the start 0; its landings not the forward ones negated and reversed 0
+END

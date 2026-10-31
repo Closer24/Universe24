@@ -1,0 +1,20 @@
+record ring60k.jsonl: 5055 click lines; the guard (sides.paired): well formed
+  meetings (sides of q not 0, once each): 2414, own 68, across a Mesh 2346
+RULE L per clock: medium clocks 88, matter clocks 48; per train [medium, matter] clocks {0: [56, 0], 1: [0, 24], 2: [32, 24]}; the medium, as trains: [0]; trains with clocks of both classes [2] (matter trains)
+  components of the clocks' meeting graph: 4, sizes [65, 34, 34, 3]; sites with two clocks or more 52, all of them in one component 0
+CONE per clock from round 20's meetings: of 136 clocks, first meeting reached at its own round 38, only later 26, never 72; board check, the per-Node-clock order (a site's trains pooled through the board's act): of 60 sites, reached at the round of their first meeting 53, only later 4, never 3
+ECHO (meetings, turn at B; A's own quiet): SHOWN: 4 echoes, 4 pairs, B among [(6, 2), (11, 2), (29, 2), (34, 2)]; 316 gives of a matter clock, 272 windows ending in A's take, 0 of them with an own meeting of A inside
+    A (8, 2) gives at 36, B (6, 2) takes at 40 from site 5 and gives to site 5 at 41, A takes at 50; A's own meetings between 0, B's own meetings between b1 and b2 0
+    A (13, 2) gives at 39, B (11, 2) takes at 68 from site 12 and gives to site 12 at 69, A takes at 83; A's own meetings between 0, B's own meetings between b1 and b2 0
+    A (27, 2) gives at 39, B (29, 2) takes at 68 from site 28 and gives to site 28 at 69, A takes at 83; A's own meetings between 0, B's own meetings between b1 and b2 0
+ECHO (meetings, no turn; A's own quiet): SHOWN: 6 echoes, 4 pairs, B among [(6, 2), (11, 2), (29, 2), (34, 2)]; 316 gives of a matter clock, 272 windows ending in A's take, 0 of them with an own meeting of A inside
+    A (8, 2) gives at 36, B (6, 2) takes at 38 from site 7 and gives to site 5 at 41, A takes at 50; A's own meetings between 0, B's own meetings between b1 and b2 0
+    A (8, 2) gives at 36, B (6, 2) takes at 38 from site 7 and gives to site 5 at 43, A takes at 50; A's own meetings between 0, B's own meetings between b1 and b2 0
+    A (13, 2) gives at 39, B (11, 2) takes at 68 from site 12 and gives to site 12 at 69, A takes at 83; A's own meetings between 0, B's own meetings between b1 and b2 0
+ECHO (directed, turn at B; A's own quiet): SHOWN: 2 echoes, 2 pairs, B among [(11, 2), (29, 2)]; 316 gives of a matter clock, 272 windows ending in A's take, 0 of them with an own meeting of A inside
+    A (13, 2) gives at 39, B (11, 2) takes at 68 from site 12 and gives to site 12 at 69, A takes at 83; A's own meetings between 0, B's own meetings between b1 and b2 0
+    A (27, 2) gives at 39, B (29, 2) takes at 68 from site 28 and gives to site 28 at 69, A takes at 83; A's own meetings between 0, B's own meetings between b1 and b2 0
+ECHO (directed, no turn; A's own quiet): SHOWN: 2 echoes, 2 pairs, B among [(11, 2), (29, 2)]; 316 gives of a matter clock, 272 windows ending in A's take, 0 of them with an own meeting of A inside
+    A (13, 2) gives at 39, B (11, 2) takes at 68 from site 12 and gives to site 12 at 69, A takes at 83; A's own meetings between 0, B's own meetings between b1 and b2 0
+    A (27, 2) gives at 39, B (29, 2) takes at 68 from site 28 and gives to site 28 at 69, A takes at 83; A's own meetings between 0, B's own meetings between b1 and b2 0
+ECHO (meetings, turn at B; the site quiet, a board check): NOT SHOWN: 0 echoes; 316 gives, 232 windows

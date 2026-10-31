@@ -1,0 +1,2 @@
+mesh180h.jsonl: clocks of matter trains meeting light 122; with a turn somewhere 110; turns per clock from 0 to 31
+  the cone's never-reached clocks 187; exactly one whole component: True (187 clocks)

@@ -1,0 +1,6 @@
+R1 header dial 152434287 birth 76217143 ; layout key 152434287 ; lay teeth [76217143]
+R2 own sides: x = K q + after - before equals the act's passing on 324 of 324 listed sides
+R3 across sides: equal on 0 of 0
+click lines 162 rounds 3
+R4 the end line's teeth equal the act's end teeth on 162 of 162 entries (own edges 6, across 0)
+R5 the ledger: 405 Count lines; each equal to the act's now counts of its train, site and round on 405 of 405

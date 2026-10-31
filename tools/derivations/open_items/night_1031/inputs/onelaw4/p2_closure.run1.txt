@@ -1,0 +1,22 @@
+(A) one round, wide counts, the shift off 0
+  layout 0, u drawn wide: run back exact True; cross slots off 0 at 180 entries
+  layout 0, u = a - b: run back exact True; cross slots off 0 at 180 entries
+  layout 1, u drawn wide: run back exact True; cross slots off 0 at 300 entries
+  layout 1, u = a - b: run back exact True; cross slots off 0 at 300 entries
+  layout 2, u drawn wide: run back exact True; cross slots off 0 at 300 entries
+  layout 2, u = a - b: run back exact True; cross slots off 0 at 300 entries
+(B) 100 rounds inside the window, the shift off 0
+  layout 0: run back over 100 rounds exact True; widest count 22 bits at round 100; least tooth W 200; cross slots off 0 at 342 entries at round 100
+  layout 1: run back over 100 rounds exact True; widest count 22 bits at round 100; least tooth W 202; cross slots off 0 at 285 entries at round 100
+  layout 2: run back over 100 rounds exact True; widest count 22 bits at round 100; least tooth W 201; cross slots off 0 at 295 entries at round 100
+(C) the cross plan emptied: the closure against F's act, state and clicks, every round
+  drawn engine-test layout 0 (J cubed, Mesh plan, grips' read, 4 rounds): alike True
+  drawn engine-test layout 1 (J cubed, Mesh plan, grips' read, 4 rounds): alike True
+  drawn engine-test layout 2 (J cubed, Mesh plan, grips' read, 4 rounds): alike True
+  windowed layout 0, cross plan emptied, 100 rounds: alike True
+  windowed layout 1, cross plan emptied, 100 rounds: alike True
+  windowed layout 2, cross plan emptied, 100 rounds: alike True
+(D) a uniform constant shift on a 40-site ring: a velocity bump, its centroid (Rule3's quotient) at 0, 50, 100
+  closure: centroid [20, 15, 10]; run back over 100 rounds exact True
+  F's act as built: centroid [20, 15, 10]; run back over 100 rounds exact False
+  pivot, no cross push: centroid [20, 20, 20]; run back over 100 rounds exact True

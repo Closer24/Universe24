@@ -1,0 +1,10 @@
+mesh.jsonl against mesh180h.jsonl: 21589 and 21589 lines; 110 differ, at 1 sites
+  the first differing line: round 44, site 40, train 1
+  round 44: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 50: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 60: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 70: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 80: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 100: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 110: 1 sites differ; below 40: - to -; at 40: True; above: - to -
+  round 125: 1 sites differ; below 40: - to -; at 40: True; above: - to -

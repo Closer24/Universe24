@@ -1,0 +1,2 @@
+unit-row pruning on tensor24-click 3 rounds: the pruning parts at None ; the mutant (one live value-leg term dropped) parts at 1
+END

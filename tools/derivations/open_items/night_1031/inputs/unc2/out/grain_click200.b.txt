@@ -1,0 +1,5 @@
+world click200: the file's key 50811429, the edge keys [152434287]
+  nonzero |weight x factor| on the edges: [120000, 240000, 288000]
+  nonzero |Mesh couplings|: []
+  G = 24000; K = 152434287; gcd(G, K) = 3; the tooth's coset size K / gcd(G, K) = 50811429
+  the birth h = 76217143; h mod 3 = 1; (K - 1) mod 3 = 2; (K - 2) mod 3 = 1; 0 mod 3 = 0

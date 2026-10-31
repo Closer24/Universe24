@@ -1,0 +1,5 @@
+world mesh125: the file's key 1, the edge keys [3]
+  nonzero |weight x factor| on the edges: [120000, 240000]
+  nonzero |Mesh couplings|: [750000]
+  G = 30000; K = 3; gcd(G, K) = 3; the tooth's coset size K / gcd(G, K) = 1
+  the birth h = 1; h mod 3 = 1; (K - 1) mod 3 = 2; (K - 2) mod 3 = 1; 0 mod 3 = 0

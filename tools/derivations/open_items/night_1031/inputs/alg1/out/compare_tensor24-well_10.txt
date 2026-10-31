@@ -1,0 +1,13 @@
+WORLD tensor24-well rounds 10 edge key K 1 birth B 0 trains 3 rows 13 sites 648
+COMPLEX per place: own edges [] ; Mesh edges (+ end) [] ; triangles []
+MONOMIALS: laid 563 ; structural 10 ; live 10 ; canonical (each multiset once) 7 (merged 3 )
+STATE per Node-clock: node-all 115 ; cochain 43 (a, b, r 13 each; rd 4 ; own edge teeth 0 ; Mesh edge teeth 0 )
+TERMS per Node-clock per round: node-all {'J plan': 2252, 'Mesh plan': 1014, 'push plan': 273, 'clock plan (x5 reads)': 39, 'passing terms': 2252, 'crossing pairs': 1014, 'teeth carries': 63}
+                                cochain (structural) {'J plan': 14, 'Mesh plan': 0, 'push plan': 87, 'clock plan (x5 reads)': 12, 'passing terms': 0, 'crossing pairs': 0, 'teeth carries': 0}
+                                live at the world's strengths {'J plan': 20, 'Mesh plan': 0, 'push plan': 87, 'clock plan (x5 reads)': 12}
+PRODUCTS per Node-clock per round (MIN1's count): node-all about 30008 ; cochain about 483
+ROUND BY ROUND entries off (engine vs cochain read back): {'a': 0, 'b': 0, 'r': 0, 'rd': 0, 'k': 0, 'clicks': 0, 'lines': 0} ; click entries not 0: 0 ; record click lines: 0
+END teeth line equal: True ; end digest (state read back) equal: True
+cochain teeth off the birth at the end (cells x places): 0
+RUN BACK on the complex from its end alone, 10 rounds: start reached exactly: True
+END

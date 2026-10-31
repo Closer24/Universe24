@@ -1,0 +1,42 @@
+08:59:32 load 4.68 start tensor24 run 1
+08:59:34 end tensor24 run 1 exit 0
+08:59:34 load 4.70 start tensor24-live run 1
+tensor24-live: round 50 alike True
+tensor24-live: round 100 alike True
+09:00:42 end tensor24-live run 1 exit 0
+09:00:42 load 4.53 start tensor24-mesh run 1
+tensor24-mesh: round 50 alike True
+tensor24-mesh: round 100 alike True
+09:01:17 end tensor24-mesh run 1 exit 0
+09:01:17 load 4.92 start tensor24-well run 1
+tensor24-well: round 50 alike True
+tensor24-well: round 100 alike True
+09:07:30 end tensor24-well run 1 exit 0
+09:08:00 load 7.90 start tensor24-click run 1
+tensor24-click: round 50 alike True
+tensor24-click: round 100 alike True
+tensor24-click: round 150 alike True
+tensor24-click: round 200 alike True
+tensor24-click: round 250 alike True
+tensor24-click: round 300 alike True
+tensor24-click: round 350 alike True
+tensor24-click: round 400 alike True
+tensor24-click: round 450 alike True
+tensor24-click: round 500 alike True
+tensor24-click: round 550 alike True
+tensor24-click: round 600 alike True
+tensor24-click: round 650 alike True
+tensor24-click: round 700 alike True
+tensor24-click: round 750 alike True
+tensor24-click: round 800 alike True
+tensor24-click: round 850 alike True
+tensor24-click: round 900 alike True
+tensor24-click: round 950 alike True
+tensor24-click: round 1000 alike True
+tensor24-click: round 1050 alike True
+tensor24-click: round 1100 alike True
+tensor24-click: round 1150 alike True
+tensor24-click: round 1200 alike True
+tensor24-click: round 1250 alike True
+tensor24-click: round 1300 alike True
+tensor24-click: round 1350 alike True

@@ -1,0 +1,51 @@
+lifts read: 48 | kinds: 8 | labels: A1 A2 E T1 T2 E1/2 E5/2 G3/2
+identity lift(s) found: [0]
+dimensions (character at the identity): {'A1': 1, 'A2': 1, 'E': 2, 'T1': 3, 'T2': 3, 'E1/2': 2, 'E5/2': 2, 'G3/2': 4}
+sum of squares of the five whole kinds' dimensions: 24
+sum of squares of all eight kinds' dimensions: 48
+the full turn (-1) acts as -I on the half-speed kinds: ['E1/2', 'E5/2', 'G3/2']
+
+orthogonality on the 48: (1/48) SUM chi_a chi_b, as (multiplicity, remainder, r2 part)
+  A1    [1, 0, 0, 0, 0, 0, 0, 0]
+  A2    [0, 1, 0, 0, 0, 0, 0, 0]
+  E     [0, 0, 1, 0, 0, 0, 0, 0]
+  T1    [0, 0, 0, 1, 0, 0, 0, 0]
+  T2    [0, 0, 0, 0, 1, 0, 0, 0]
+  E1/2  [0, 0, 0, 0, 0, 1, 0, 0]
+  E5/2  [0, 0, 0, 0, 0, 0, 1, 0]
+  G3/2  [0, 0, 0, 0, 0, 0, 0, 1]
+orthogonality departures (must be 0): 0
+
+lifts with A2 = +1 (the 24 whole units, 2T): 24
+
+E1/2 cubed (three half-speed members) on the 48:
+  A1    multiplicity 0 (remainder 0, r2 part 0)
+  A2    multiplicity 0 (remainder 0, r2 part 0)
+  E     multiplicity 0 (remainder 0, r2 part 0)
+  T1    multiplicity 0 (remainder 0, r2 part 0)
+  T2    multiplicity 0 (remainder 0, r2 part 0)
+  E1/2  multiplicity 2 (remainder 0, r2 part 0)
+  E5/2  multiplicity 0 (remainder 0, r2 part 0)
+  G3/2  multiplicity 1 (remainder 0, r2 part 0)
+
+E1/2 x T1 (the half-speed hand on the three axes) on the 48:
+  A1    multiplicity 0 (remainder 0, r2 part 0)
+  A2    multiplicity 0 (remainder 0, r2 part 0)
+  E     multiplicity 0 (remainder 0, r2 part 0)
+  T1    multiplicity 0 (remainder 0, r2 part 0)
+  T2    multiplicity 0 (remainder 0, r2 part 0)
+  E1/2  multiplicity 1 (remainder 0, r2 part 0)
+  E5/2  multiplicity 0 (remainder 0, r2 part 0)
+  G3/2  multiplicity 1 (remainder 0, r2 part 0)
+
+restricted to the 24 whole units: (1/24) SUM |chi|^2, the number of distinct irreducible pieces (each once)
+  E1/2       on the 24 units: 1 (rem 0, r2 0) | on the 48: 1 (rem 0, r2 0)
+  E5/2       on the 24 units: 1 (rem 0, r2 0) | on the 48: 1 (rem 0, r2 0)
+  G3/2       on the 24 units: 2 (rem 0, r2 0) | on the 48: 1 (rem 0, r2 0)
+  E1/2 x T1  on the 24 units: 3 (rem 0, r2 0) | on the 48: 2 (rem 0, r2 0)
+  <E1/2, E5/2> on the 24 units: 1 (rem 0, r2 0): one doublet, the same on the 24 units
+  <E1/2, G3/2> on the 24 units: 0 (rem 0, r2 0)
+
+the two half-speed trains' characters (the 8-gear and the 24-gear train) on the 48:
+  8-gear train: [('G3/2', 2)] | all remainders 0: True | (1/24) SUM chi^2 on the 24 units: 8 (rem 0)
+  24-gear train: [('E1/2', 2), ('E5/2', 2), ('G3/2', 4)] | all remainders 0: True | (1/24) SUM chi^2 on the 24 units: 48 (rem 0)

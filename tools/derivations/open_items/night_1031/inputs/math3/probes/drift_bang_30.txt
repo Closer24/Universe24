@@ -1,0 +1,3 @@
+world tensor24 (a test's lay: row 0 a uniform drift from c = 1); rounds 30
+D1 the row at c + n + 1 at every site after round n: 30 of 30; the promise met before every round: 30 of 30
+D1 the row's count after the last round: [32]

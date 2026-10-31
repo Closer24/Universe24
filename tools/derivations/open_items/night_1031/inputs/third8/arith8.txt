@@ -1,0 +1,28 @@
+0. the click world's structure: edges [(2, 3), (2, 4), (3, 4)], C [((0, 1), (2, 1), (1, -1))], G = C^T C [3]; D = 152434287; the triangle's dial G D = 457302861, born 228651430
+1. L from the Member's shears = [[19, 60], [6, 19]]: trace 38, det 1, det(L - I) -36, det(L + I) 40; L^2 = tr L - I: True
+2. G D = 3^3 x 641 x 26423; L's order modulo 27: 9, 641: 160, 26423: 2936; N = lcm 528480; L^N = I on the dial: True; L^(N/p) != I for p in [2, 3, 5, 367]: [True, True, True, True]
+3. S = L + ... + L^N on the dial = [[152434287, 0], [0, 152434287]] (D = 152434287): the round's N-th power is z -> z + S (y, 0) = z + (D y, 0) mod G D: True
+   [9, 9, 12] m: y = 36584220, y mod 3 = 0; S (y, 0) = (0, 0); at 3 N: (0, 0); so the period divides 528480
+   [20, 30, 25] m: y = 45730275, y mod 3 = 0; S (y, 0) = (0, 0); at 3 N: (0, 0); so the period divides 528480
+   [40, 40, 45] m: y = 137190825, y mod 3 = 0; S (y, 0) = (0, 0); at 3 N: (0, 0); so the period divides 528480
+   [2, 3, 2] m: y = 3048685, y mod 3 = 1; S (y, 0) = (152434287, 0); at 3 N: (0, 0); so the period divides 1585440
+   [1, 1, 2] m: y = 6097370, y mod 3 = 2; S (y, 0) = (304868574, 0); at 3 N: (0, 0); so the period divides 1585440
+4. [9, 9, 12] m: u(t+2) - 38 u(t+1) + u(t) on the dial over 3,000 rounds takes 1 value(s) [201213117]; derived (L00 - 1) y + (2 - tr) b = 201213117 = 18 (y + 1) mod G D: True; -y mod G D = 420718641
+4. [20, 30, 25] m: u(t+2) - 38 u(t+1) + u(t) on the dial over 3,000 rounds takes 1 value(s) [365842107]; derived (L00 - 1) y + (2 - tr) b = 365842107 = 18 (y + 1) mod G D: True; -y mod G D = 411572586
+4. [40, 40, 45] m: u(t+2) - 38 u(t+1) + u(t) on the dial over 3,000 rounds takes 1 value(s) [182920563]; derived (L00 - 1) y + (2 - tr) b = 182920563 = 18 (y + 1) mod G D: True; -y mod G D = 320112036
+4. [2, 3, 2] m: u(t+2) - 38 u(t+1) + u(t) on the dial over 3,000 rounds takes 1 value(s) [54876348]; derived (L00 - 1) y + (2 - tr) b = 54876348 = 18 (y + 1) mod G D: True; -y mod G D = 454254176
+5. square roots of 1 on the dial G D: 8, each r^2 = 1: True; other than +-1: [76336048, 169371431, 211595383, 245707478, 287931430, 380966813]
+6. [20, 30, 25] m, a = y / G D = 99 per mille, tr a = 3799 per mille: P(third | two at u0) / a per mille at nine u0 across W and its top [789, 789, 789, 789, 789, 789, 789, 789, 789, 789]; floor(tr a) / (tr a) = 789 per mille; a whole number of dials in (18 (y - 1), 20 (y - 1)]: False
+6. [40, 40, 45] m, a = y / G D = 299 per mille, tr a = 11399 per mille: P(third | two at u0) / a per mille at nine u0 across W and its top [964, 964, 964, 964, 964, 964, 964, 964, 964, 964]; floor(tr a) / (tr a) = 964 per mille; a whole number of dials in (18 (y - 1), 20 (y - 1)]: False
+6. [9, 9, 12] m, a = y / G D = 79 per mille, tr a = 3039 per mille: P(third | two at u0) / a per mille at nine u0 across W and its top [986, 986, 986, 986, 986, 986, 986, 986, 986, 986]; floor(tr a) / (tr a) = 986 per mille; a whole number of dials in (18 (y - 1), 20 (y - 1)]: False
+7. toy7_rate_20_30_25_birth_1M.txt: after two a third 703 of 10035; derived 792; ratio to the derived 887 per mille; z^2 10913 per mille over 1000000 rounds, 5767 per mille per period (1892 per mille periods)
+7. toy7_rate_20_30_25_standin_1M.txt: after two a third 671 of 9073; derived 716; ratio to the derived 936 per mille; z^2 3108 per mille over 1000000 rounds, 1642 per mille per period (1892 per mille periods)
+7. toy7_rate_40_40_45_birth_1M.txt: after two a third 25698 of 89061; derived 25780; ratio to the derived 996 per mille; z^2 374 per mille over 1000000 rounds, 197 per mille per period (1892 per mille periods)
+7. toy7_rate_40_40_45_standin_1M.txt: after two a third 26639 of 91057; derived 26358; ratio to the derived 1010 per mille; z^2 4198 per mille over 1000000 rounds, 2218 per mille per period (1892 per mille periods)
+7. toy7_birth_1M.txt: after two a third 506 of 6325; derived 499; ratio to the derived 1013 per mille; z^2 96 per mille over 1000000 rounds, 50 per mille per period (1892 per mille periods)
+7. toy7_standin_1M.txt: after two a third 504 of 6380; derived 503; ratio to the derived 1000 per mille; z^2 0 per mille over 1000000 rounds, 0 per mille per period (1892 per mille periods)
+8. (tau, eta) -> (u(t), u(t+1)) at y = 0, from the Member's shears: [[10, 3], [370, 117]], det 60, its common factor with G D 3 (so 3 states share each (u(t), u(t+1))); L in (a, b) = ((tau + eta) / 2, (tau - eta) / 2): [[52, -27], [27, -14]] (b' = 27 a + -14 b, not b' = a)
+9. [9, 9, 12] m, y = 36584220: the second difference less the birth's (2 - tr) b, centred: at the round's start [0], before the carry [201213099] (18 y = 201213099), after the carry [-201213099] (-18 y = -201213099)
+9. [2, 3, 2] m, y = 3048685: the second difference less the birth's (2 - tr) b, centred: at the round's start [0], before the carry [54876330] (18 y = 54876330), after the carry [-54876330] (-18 y = -54876330)
+9. the round from its start to its end (first half, carry, second half) at y = 0, on (tau, eta): [[19, 6], [60, 19]]; on (eta, tau): [[19, 60], [6, 19]]; L transposed: True; in (a, b): [[52, 27], [-27, -14]]
+DONE

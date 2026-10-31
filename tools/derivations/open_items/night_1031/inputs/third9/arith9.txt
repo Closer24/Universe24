@@ -1,0 +1,14 @@
+0. G = C^T C 3; D = 152434287 (the twin's dial on D: 152434287, born 76217143); G D = 457302861, born 228651430; L from the Member's shears [[19, 60], [6, 19]]
+1. (u(t), u(t+1)) of the centred shifts (0, D) and (0, 2 D) at y = 0: (0, 0) and (0, 0); of (0, 1): (3, 117); eta's residue mod 3 under + D and + 2 D: kept, D mod 3 = 0
+2. [20, 30, 25] m, y mod 3 = 0, the twin on G D: fixed points 9 (the 3-part 9, one at each of [641, 26423]); each back after one round by the Member's own step: True; their landings per round [1, 1, 1, 0, 0, 0, 0, 0, 0]
+2. [20, 30, 25] m, y mod 3 = 0, the twin on D: fixed points 9 (the 3-part 9, one at each of [641, 26423]); each back after one round by the Member's own step: True; their landings per round [1, 0, 0, 0, 0, 0, 0, 0, 0]
+2. [9, 9, 12] m, y mod 3 = 0, the twin on G D: fixed points 9 (the 3-part 9, one at each of [641, 26423]); each back after one round by the Member's own step: True; their landings per round [0, 0, 0, 0, 0, 0, 0, 0, 0]
+2. [9, 9, 12] m, y mod 3 = 0, the twin on D: fixed points 9 (the 3-part 9, one at each of [641, 26423]); each back after one round by the Member's own step: True; their landings per round [0, 0, 0, 0, 0, 0, 0, 0, 0]
+2. [40, 40, 45] m, y mod 3 = 0, the twin on G D: fixed points 9 (the 3-part 9, one at each of [641, 26423]); each back after one round by the Member's own step: True; their landings per round [1, 1, 1, 0, 0, 0, 0, 0, 0]
+2. [40, 40, 45] m, y mod 3 = 0, the twin on D: fixed points 9 (the 3-part 9, one at each of [641, 26423]); each back after one round by the Member's own step: True; their landings per round [1, 0, 1, 0, 0, 0, 0, 1, 0]
+2. [2, 3, 2] m, y mod 3 = 1, the twin on G D: fixed points 0 (the 3-part 0, one at each of [641, 26423]); each back after one round by the Member's own step: -; their landings per round []
+2. [2, 3, 2] m, y mod 3 = 1, the twin on D: fixed points 0 (the 3-part 0, one at each of [641, 26423]); each back after one round by the Member's own step: -; their landings per round []
+3. [20, 30, 25] m: y = 45730275; no multiple of G D in (18 (y - 1), 20 (y - 1)]: True; the gap above 20 (y - 1) to 2 G D is 242 units, below 18 (y - 1) to 1 G D 365842071 units; so y + 13 or y - 20324560 lets a lift be partly swept (the window y = 45730275 units wide, the dial 457302861)
+3. [40, 40, 45] m: y = 137190825; no multiple of G D in (18 (y - 1), 20 (y - 1)]: True; the gap above 20 (y - 1) to 6 G D is 686 units, below 18 (y - 1) to 5 G D 182920527 units; so y + 35 or y - 10162252 lets a lift be partly swept (the window y = 137190825 units wide, the dial 457302861)
+3. [9, 9, 12] m: y = 36584220; no multiple of G D in (18 (y - 1), 20 (y - 1)]: True; the gap above 20 (y - 1) to 2 G D is 182921342 units, below 18 (y - 1) to 1 G D 201213081 units; so y + 9146068 or y - 11178505 lets a lift be partly swept (the window y = 36584220 units wide, the dial 457302861)
+DONE

@@ -1,0 +1,5 @@
+built (first slot's gradient), cross push: exact 0 of 3; defect equals the formula at every site 3 of 3; sites off: [120, 120, 120]
+built, no cross push: exact 0 of 3; defect equals the formula at every site 3 of 3; sites off: [120, 120, 120]
+pivot (now slot's gradient), cross push: exact 0 of 3; defect equals the formula at every site 3 of 3; sites off: [120, 120, 120]
+pivot, no cross push: exact 3 of 3; defect equals the formula at every site 3 of 3; sites off: [0, 0, 0]
+the cross plan emptied, built: exact 3 of 3

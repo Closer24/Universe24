@@ -1,0 +1,2 @@
+tensor24-mesh, first click (carried): 8 of 8 turns give the same clicks at the turned Node-clocks over 40 rounds (420 click lines)
+tensor24-mesh, third click (turned): 8 of 8 turns give the same clicks at the turned Node-clocks over 40 rounds (420 click lines)

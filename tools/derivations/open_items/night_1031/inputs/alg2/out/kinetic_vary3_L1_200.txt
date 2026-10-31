@@ -1,0 +1,27 @@
+WORLD vary3_L1 rounds 200 edge key K 152434287 birth B 76217143 trains 5 rows 26 sites 27
+COMPLEX per place: own edges [(2, 3), (2, 4), (3, 4)] ; Mesh edges (+ end) [(0, 0, 3), (0, 0, 4), (0, 3, 0), (0, 4, 0), (2, 0, 3), (2, 0, 4), (2, 3, 0), (2, 4, 0), (4, 0, 3), (4, 0, 4), (4, 3, 0), (4, 4, 0)] ; triangles [(2, 3, 4)]
+MONOMIALS: laid 2416 ; structural 42 ; live 32 ; canonical (each multiset once) 39 (merged 3 )
+STATE per Node-clock: node-all 279 ; cochain 97 (a, b, r 26 each; rd 4 ; own edge teeth 3 ; Mesh edge teeth 12 )
+TERMS per Node-clock per round: node-all {'J plan': 9664, 'Mesh plan': 4056, 'push plan': 910, 'clock plan (x5 reads)': 130, 'passing terms': 9664, 'crossing pairs': 4056, 'teeth carries': 175}
+                                cochain (structural) {'J plan': 126, 'Mesh plan': 12, 'push plan': 178, 'clock plan (x5 reads)': 25, 'passing terms': 108, 'crossing pairs': 12, 'teeth carries': 15}
+                                live at the world's strengths {'J plan': 112, 'Mesh plan': 0, 'push plan': 0, 'clock plan (x5 reads)': 25}
+PRODUCTS per Node-clock per round, MIN2's rule (3 a J, Mesh-plan or push term; 4 + T a passing term, on the complex 4 + its edges; 5 a clock-read term; 1 a grips'-read term; 3 a crossing entry; 45 R per-row): node-all 144884 ; cochain 2849 ; grips'-read terms 30
+PRODUCTS per Node-clock per round (MIN1's count): node-all about 144984 ; cochain about 1899
+KINETIC over 200 rounds; edge dial D 152434287 ; 4D 609737148
+CHECKS (each a check by construction where it holds): {'W not the rest (row-site-rounds)': 0, 'grip moved (entries x rounds)': 0, '4 push (a+ - b) != 4 W (v+^2 - v^2) + dr (a+ - b) (row-site-rounds)': 0, "the kicks' work != the J terms' work (site-rounds)": 0, "4 Res' != 4 dH' + Teeth - 4 Fw (site-rounds)": 0, 'board: SUM Fw != -dE_mesh (rounds)': 0, 'two-leg and own: 4 SUM R + 4 dE != 0 (site-rounds)': 0, 'SUM D two-leg and own != 0 (site-rounds)': 0, 'p+ != p + 4 push (row-site-rounds)': 0, '16 W push (a+ - b) != (p+^2 - p^2) - 4 push (r + r+) (row-site-rounds)': 0, "16 W Res' != dH'_p + Teeth_p - 16 W Fw (site-rounds)": 0}
+the rest teeth W 600000000 ; 16 W D 1463369155200000000
+  momentum form: dH'_p (x 16 W) : [592540188606254080000, (10,), 190] ; in edge keys (whole) 404
+  momentum form: Teeth_p (x 16 W) : [-253544489499895040000, (7,), 199] ; in edge keys (whole) 173
+  momentum form: board dH'_p with the Mesh energy (x 16 W) : [2894149848595835520000, (0,), 200] ; in edge keys (whole) 1977
+  momentum form: board Teeth_p (x 16 W) : [-2848180152595835520000, (0,), 200] ; in edge keys (whole) 1946
+  VARY4's place residual SUM D (kappa 1) : [10023720000, (17,), 170] ; in edge keys (whole) 65
+  Res' = SUM R_tie + dE'_tie, x 4 : [6588960000, (17,), 163] ; in edge keys (whole) 10
+  dH' x 4 (the place's whole two-slot energy) : [260627080000, (10,), 190] ; in edge keys (whole) 427
+  Teeth (SUM (r+ - r)(a+ - b)) : [-108141600000, (7,), 200] ; in edge keys (whole) 177
+  Fw x 4 (the board's wave's work at the place) : [178400000000, (10,), 190] ; in edge keys (whole) 292
+  the pair's stored energy change, 4 dE_pair : [0, (26,), 1] ; in edge keys (whole) 0
+  board: Res' x 4 : [19154040000, (0,), 200] ; in edge keys (whole) 31
+  board: dH' x 4 with the Mesh energy : [1230732120000, (0,), 200] ; in edge keys (whole) 2018
+  board: Teeth : [-1211578080000, (0,), 200] ; in edge keys (whole) 1987
+END at round 200 , site 0 and site 17 (x 4): Res' [1197600000, 4252200000] ; dH' [22520320000, 29842600000] ; Teeth [-97322720000, -63190400000] ; Fw [-76000000000, -37600000000]
+END

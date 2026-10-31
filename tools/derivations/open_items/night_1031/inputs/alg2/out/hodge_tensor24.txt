@@ -1,0 +1,6 @@
+WORLD tensor24 ; trains 2 ; sites 64 ; own edge pairs [] ; Mesh edges (+ end) [] ; triangles at a Node-clock []
+BOARD: |V| 128 |E| 0 |F| 0 ; connected parts 128 ; rank B 0 ; rank C 0 ; H_1 0 ; H_2 0
+  clocks on some edge 0 of 128 ; the parts among them 0
+A NODE-CLOCK'S OWN PART: |V| 2 |E| 0 |F| 0 ; H_1 0
+TRIANGLES ACROSS ONE MESH: 0 ; e.g. []
+END

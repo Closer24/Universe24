@@ -1,0 +1,10 @@
+world click200, 200 rounds; the edge (2, 3) at site 0: side 13 and its mirror 17, key 152434287, round 1's passing 768000000; teeth 76217143 and 76217143 moved by +76217143 and -76217143 to 152434286 and 0, summing to 152434286 (K - 1 = 152434286)
+(a) the board alike at 200 of 200 rounds (a board check)
+(b) the (side, site) whose clicks differ, with the rounds each: [((13, 0), 122), ((17, 0), 122)]
+(c) the moved lay's edge books q(t, u) + q(u, t) = 0 at 200 of 200 rounds; its two teeth summing to K - 1 at 200 of 200 rounds
+(d) side 13: rounds whose q differ 122 of 200; windows 20100; the largest |Q_W - Q'_W| = 1; windows that differ: 10088
+(e) side 13, its move v = 76217143: Q'_n - Q_n = [k_n >= K - v] - [k_0 >= K - v] at 200 of 200 rounds (the wrap bracket [k_0 >= K - v] = 0)
+(f) side 13: rounds with the first lay's tooth in the strip [76217144, 152434286]: 97
+(d) side 17: rounds whose q differ 122 of 200; windows 20100; the largest |Q_W - Q'_W| = 1; windows that differ: 10088
+(e) side 17, its move v = 76217144: Q'_n - Q_n = [k_n >= K - v] - [k_0 >= K - v] at 200 of 200 rounds (the wrap bracket [k_0 >= K - v] = 1)
+(f) side 17: rounds with the first lay's tooth in the strip [76217143, 152434286]: 103

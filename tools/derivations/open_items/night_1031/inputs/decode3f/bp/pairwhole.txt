@@ -1,0 +1,12 @@
+dial 50811429 (odd, the click world's key) | pairs 400000 | the run back to the lay: True
+CHSH from the click counts: 2501 per mille | the hand's own value from its whole weights: 2499 per mille (127028568 over 50811429) | the triangle's own, 5/2: 2500 per mille | the local bound: 2000 per mille
+   settings (0, 1): pairs 99709, E 502 per mille
+   settings (0, 3): pairs 99696, E -1000 per mille
+   settings (2, 1): pairs 100270, E 502 per mille
+   settings (2, 3): pairs 100325, E 496 per mille
+   no signal: Alice's +1 share under Bob's setting 1: 500 per mille (199979)
+   no signal: Alice's +1 share under Bob's setting 3: 499 per mille (200021)
+   no signal: Bob's +1 share under Alice's setting 0: 499 per mille (199405)
+   no signal: Bob's +1 share under Alice's setting 2: 499 per mille (200595)
+the first click, the pair's teeth unturned (no draw): CHSH 2499 per mille
+Alice's landings in order, lag-1 correlation: the third click -1 per mille, the first click -1000 per mille

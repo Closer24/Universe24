@@ -1,0 +1,21 @@
+integers: 12 | multisets of at most three: 454 | of one, two, three: 12 78 364
+distinct products: 169 | the least: 2 | the most: 110592 | the most's bit length: 17
+distinct products per octave [2^j, 2^(j+1)):
+  j =  0: 0
+  j =  1: 2
+  j =  2: 2
+  j =  3: 4
+  j =  4: 6
+  j =  5: 7
+  j =  6: 11
+  j =  7: 12
+  j =  8: 16
+  j =  9: 20
+  j = 10: 19
+  j = 11: 21
+  j = 12: 17
+  j = 13: 14
+  j = 14: 10
+  j = 15: 5
+  j = 16: 3
+the most multisets one distinct product has: 13

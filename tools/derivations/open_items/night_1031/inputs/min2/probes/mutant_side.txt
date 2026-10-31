@@ -1,0 +1,2 @@
+mode side on tensor24-mesh var_tensor24-mesh_key7, side (1, 2), 30 rounds: the teeth part at 21 ; the record's click lines part at 21
+END

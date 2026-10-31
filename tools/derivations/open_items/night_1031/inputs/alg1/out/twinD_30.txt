@@ -1,0 +1,10 @@
+D 5 (3D 15, the twin's dial D born 2), steady 7, 225 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+D 5 (3D 15, the twin's dial D born 2), steady 2D+3, 225 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+D 5 (3D 15, the twin's dial D born 2), walk, 225 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+D 21 (3D 63, the twin's dial D born 10), steady 7, 3969 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+D 21 (3D 63, the twin's dial D born 10), steady 2D+3, 3969 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+D 21 (3D 63, the twin's dial D born 10), walk, 3969 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+D 85 (3D 255, the twin's dial D born 42), steady 7, 65025 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+D 85 (3D 255, the twin's dial D born 42), steady 2D+3, 65025 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+D 85 (3D 255, the twin's dial D born 42), walk, 65025 pairs x 30 rounds: landings off 0, tau off 0, the D-twin off eta's class 0
+END

@@ -1,0 +1,8 @@
+per9: edges [(2, 3), (2, 4), (3, 4)], C [((0, 1), (2, 1), (1, -1))], G [3]; G D = 457302861; the twin's dial on D 152434287
+[20, 30, 25] m, birth: one period 528480 rounds; landings 52824 (y k / (G D) = 52847); two running 5298; after two a third 374 of 5298, derived 418 (789 per mille of a); z^2 5085 per mille; the twin on D against on G D: 0 rounds apart
+[20, 30, 25] m, standin: one period 528480 rounds; landings 51039 (y k / (G D) = 52847); two running 4797; after two a third 354 of 4797, derived 378 (789 per mille of a); z^2 1750 per mille; the twin on D against on G D: 0 rounds apart
+[40, 40, 45] m, birth: one period 176160 rounds; landings 52824 (y k / (G D) = 52847); two running 15694; after two a third 4526 of 15694, derived 4542 (964 per mille of a); z^2 89 per mille; the twin on D against on G D: 0 rounds apart
+[40, 40, 45] m, standin: one period 528480 rounds; landings 158806 (y k / (G D) = 158543); two running 48140; after two a third 14067 of 48140, derived 13935 (964 per mille of a); z^2 1752 per mille; the twin on D against on G D: 0 rounds apart
+[9, 9, 12] m, birth: one period 528480 rounds; landings 42248 (y k / (G D) = 42278); two running 3340; after two a third 268 of 3340, derived 263 (986 per mille of a); z^2 76 per mille; the twin on D against on G D: 0 rounds apart
+[2, 3, 2] m, birth: one period 1585440 rounds; landings 10694 (y k / (G D) = 10569); two running 52; after two a third 0 of 52, derived 1 (3947 per mille of a); z^2 1405 per mille; the twin on D against on G D: 0 rounds apart
+DONE

@@ -1,0 +1,11 @@
+world tensor24-well shape [18, 6, 6] rounds 10 rows 13
+C1 largest |W - rest|: 1248
+C2 largest |J5|: 346116240
+C3 rounds where rd moved: 10
+C4 rows that move: [0, 2, 6, 7, 8, 12] ; odd rows: [3, 4, 5] ; largest |a| on an odd row: 0
+C5 rows that move and keep their momentum sum over the sites exactly, every round: [0, 12]
+C5 rows that move and do not keep it: [2, 6, 7, 8]
+
+real	0m19.060s
+user	0m7.268s
+sys	0m2.261s

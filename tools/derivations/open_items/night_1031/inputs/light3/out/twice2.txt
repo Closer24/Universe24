@@ -1,0 +1,5 @@
+same turns_mesh.run1.txt 0079c97bebac21bf
+same turns_mesh180h.run1.txt 5b827b13827647ba
+same turns_mesh180hk.run1.txt 03999cd90d1f7d1b
+same turns_ring180k.run1.txt 2f5a3b370705d75c
+same diff3b_mesh180h.run1.txt 6a48948116576ea7

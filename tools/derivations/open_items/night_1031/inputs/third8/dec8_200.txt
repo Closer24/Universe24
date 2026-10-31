@@ -1,0 +1,15 @@
+dec8: the click world, Node-clock 0, 200 rounds; edges [(2, 3), (2, 4), (3, 4)], c [1, -1, 1], edges on no triangle []; the member lands in 145 rounds
+R1 lines: rounds whose lines differ, the member against the member unturned 0, against one hidden unit in the twin 0
+R1 clock 2, its sides on edges [(2, 3), (2, 4)]: 48 side pairs seen, 1 of them with more than one w (27 of 200 rounds); e.g. [((-5, 0), [-2, -1])]
+R1 clock 3, its sides on edges [(2, 3), (3, 4)]: 23 side pairs seen, 12 of them with more than one w (137 of 200 rounds); e.g. [((5, 0), [-11, 1, 2]), ((-5, 0), [-2, -1, 11]), ((6, 0), [-9, 2])]
+R1 clock 4, its sides on edges [(2, 4), (3, 4)]: 44 side pairs seen, 5 of them with more than one w (115 of 200 rounds); e.g. [((0, 0), [-2, -1, 0, 2]), ((1, -1), [-2, -1, 1]), ((-1, 1), [-1, 2])]
+R2 c . q against 3 w: apart in 77 rounds, by 2 or more in 3; the nearest multiple of 3 misses w in 3 rounds (right in 197); the running |c . Q - 3 W| at most 1; side triples 56, 1 of them with more than one w
+R2 member: rounds whose three sides form one whole circulation 3 of 200; landings so seen 3 of 145
+R2 unturned: rounds whose three sides form one whole circulation 1 of 200; landings so seen 1 of 148
+R2 first click: rounds whose three sides form one whole circulation 0 of 200
+R3 one hidden unit in the twin: (round, edge) places apart per edge [54, 54, 54] (sum 162), from round 12; rounds whose landing differs 54; lines apart 0
+R4 member: rounds with 3, 2, 1, 0 of the triangle's edges passing a quantum: 41, 59, 53, 47
+R4 unturned: rounds with 3, 2, 1, 0 of the triangle's edges passing a quantum: 18, 74, 61, 47
+R4 first click: rounds with 3, 2, 1, 0 of the triangle's edges passing a quantum: 4, 85, 67, 44
+R4 with each edge's tooth before and after in the record: c . (G D q + k_after - k_before) = G (G D) w in 200 of 200 rounds (so the three sides with their teeth give w exactly)
+DONE

@@ -1,0 +1,11 @@
+same click200.run1.txt 847d8320532865e8
+same diff_mesh180h.run1.txt 69b7d7cc7d812429
+same diff_ring60h.run1.txt 6bf68721ba768944
+same mesh.run1.txt fb3c005ef5827891
+same mesh180h.run1.txt 0291649849332663
+same mesh180hk.run1.txt 3c5d77fbbaa9d185
+same ring180k.run1.txt c3c9eb77db786d3b
+same ring60.run1.txt b2be984bc1fa0174
+same ring60h.run1.txt fa9c00af48cb9736
+same ring60k.run1.txt 0b23b0156bc23f30
+same tests.run1.txt 4c0fa847e3441636

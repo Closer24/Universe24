@@ -1,0 +1,2 @@
+ring180k.jsonl: clocks of matter trains meeting light 112; with a turn somewhere 44; turns per clock from 0 to 4
+  the cone's never-reached clocks 131; exactly one whole component: False
