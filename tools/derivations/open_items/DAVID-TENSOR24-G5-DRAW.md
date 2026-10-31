@@ -1,6 +1,6 @@
 # G5, the split click's draw: two clocks parting a winding, read by the norm of the meeting's fine teeth
 
-David, 2026-10-31 (the seventh text, 01:5x UTC). It answers Sofer's ask (#2187 6518975579, item 3: "the build has held
+David, 2026-10-31 (the eighth text, 02:5x UTC). It answers Sofer's ask (#2187 6518975579, item 3: "the build has held
 no beat count since G1b ... so the draw needs a source for c on the act. Which gear's tooth or sum is c is yours and
 David's to name"). It follows the owner's words:
 - of 11:1x UTC: derive what the Node-clock needs to close, everything to stand with a hostile mathematician and a
@@ -9,7 +9,10 @@ David's to name"). It follows the owner's words:
 - of 16:4x UTC: energy and momentum are read in the clicks' spacetime, not on the board;
 - of 16:2x UTC (6527238774): a deriver checks himself (section 10);
 - of 17:20 UTC (6528925479 item 2; law line 102 as Sofer entered it on scribe-5, 3474bb609): "Sine is forbidden", no
-  circular function in any probe, by a call, by a series or by any construction, lays included.
+  circular function in any probe, by a call, by a series or by any construction, lays included; and the owner's answer
+  on that line (relayed 01:30 UTC): a construction aimed at an angle or a root is forbidden, in a lay and in code, and a
+  value is lawful only when it comes out of the act, the families and their coupling, or by chance from a generic start
+  (sections 3, 4 and 13).
 
 It reads the act as built on main (0df0e8385), in the law's four layers (Postulate 4, item (10)). The third text
 (toys-5 51536ec7f) went back to its second pair, and both readers found it NOT PASSED.
@@ -58,29 +61,31 @@ found B2 closed, the Pell lay gone, and returned NOT PASSED on B1's last clause 
 single rotation's spring to meet the condition, where section 2 puts it on the moving rows together) and on one new
 item, B3: section 6's Clicks row stated with no click-world label. He added six minors and a seventh for the owner, m7:
 the rebuilt (n)'s whole sizes are the cosine law's. Big Pic's word (6536901666, item 2): B1's clause and B3 stand; on
-m7, as built (n) types its sizes to the cosine law, so his test reaches it, and laid as the board's own directions the
-same sizes come by themselves, which is his proposal for the owner. They are folded here (section 12).
+m7, as built (n) types its sizes to the cosine law, so his test reaches it, and his proposal for the owner lays the
+settings as the board's own directions and computes the same sizes from them. They are folded in section 12. The seventh
+text (toys-5 d5745d134) went to the end mathematician, who found B1 and B3 mended and refused it on the owner's two
+later words, line 102 and "there is no light on the board"; folded here (section 13).
 
 The probe, derive/david_open/node/g5_norm.py, came with the fourth text, and the fifth text added its sections (i) to
-(k): the fourth text's readers' cases, ported onto its own board. Its output, g5_norm.txt, sits beside it: whole
-numbers alone, with no root, logarithm, series or call of a circular function, about 55 to 70 s; its one Pythagorean
-lay waits on the owner's word (below). Its board, lays, term 6, statistics and draw machinery are g5_draw.py's.
-g5_draw.py, the third text's probe, stays in the tree for its sections (k), (n), (o), (i) and (r), which g5_norm does
-not redo, and as the third text's record; each place this text cites it says where it reads the third text's pointer
-P. g5_norm's own (i) and (k) are not g5_draw's, so the text names each section with its probe.
-- The sixth text rebuilt g5_draw (n). Alice's settings are given by the whole sizes of the four joint outcomes alone,
-  with no angle and no cosine, where the fifth text's (n) built cos 30 degrees by a Pell pair and sized the singlets by
-  a cosine law (the end mathematician's B2). Only (n)'s lines moved in g5_draw.txt. Big Pic's m7 (6536901666, item 2)
-  finds those whole sizes typed to the cosine law, so his test reaches them; his proposal for the owner lays the
-  settings as lattice directions, the sizes following from them. This text leaves (n) as built until the owner rules
-  (section 4; 7).
-- Under the owner's word of 17:20 UTC every single-rotation lay is rebuilt. G3's quarter lay, the mathematician's
-  own-beat lays and the physicist's 64 start angles came from series. One Pythagorean hand (a = 7, b = 1, Big Pic's
-  beats, 6528217535 item 3) stands for them all: it turns exactly round at 2 W div 25, and the act itself turns it to
-  its 64 starts. The controls' numbers moved with the lay (section 3).
-  - Its lay turns the hand's before slot from its now slot by 48/50 and 14/50, a rational point of the circle
-    (48^2 + 14^2 = 50^2) from (7, 1). Whether law line 102's "any construction that finds one" reaches such a point
-    is the owner's word (the end mathematician's M7). If it is barred, (g)'s single-rotation lays are rebuilt again.
+(k): the fourth text's readers' cases, ported onto its own board. Its output, g5_norm.txt, sits beside it: whole numbers
+alone, with no root, logarithm, series or call of a circular function, about a minute; the eighth text rebuilt its
+single-rotation lay, (g), with both before slots drawn (below). Its board, lays, term 6, statistics and draw machinery
+are g5_draw.py's. g5_draw.py, the third text's probe, stays in the tree for its sections (k), (n), (o), (i) and (r),
+which g5_norm does not redo, and as the third text's record; each place this text cites it says where it reads the third
+text's pointer P. g5_norm's own (i) and (k) are not g5_draw's, so the text names each section with its probe.
+- The eighth text rebuilt g5_draw (n) under law line 102 (toys-5 e770b91ec). The sixth text's typed sizes, 1, 3, 3, 1;
+  3, 1, 1, 3; 1, 1, 1, 1, which Big Pic's m7 found typed to the cosine law, are gone: Alice's settings are now
+  (x, y, y, x), x and y laid by the probe's carry sequence, not typed sizes, so Bob's own share of + is a half at each.
+  Only (n)'s lines moved in g5_draw.txt. With the pointer frozen, Bob's draw can move with Alice's far setting; spread
+  evenly, it does not (section 4). Big Pic's proposal, the settings as the board's own directions with the sizes
+  computed from them, is lawful only if the act itself draws the directions (sections 4 and 7).
+- Under the owner's word of 17:20 UTC every single-rotation lay was rebuilt as one Pythagorean hand (a = 7, b = 1, Big
+  Pic's beats, 6528217535 item 3), its before slot turned from its now slot by 48/50 and 14/50, its own spring
+  2 W div 25. Under law line 102 that lay is withdrawn, a pick aimed at a root (the end mathematician's L1, which closes
+  his M7). The eighth text rebuilt probe (g) of g5_norm: one hand, re's now slot at the swing n and im's at 0, both
+  before slots drawn by the probe's carry sequence, turned by the act itself for its 64 start phases. The own-spring
+  rows and (a)'s lattice of 25 went with the old lay: only (g)'s lines and (a)'s q = 25 row, with its line in (a)'s
+  heading, moved in g5_norm.txt, and (g)'s figures moved with the lay (section 3).
 - G3's g3_held_hand.py left the tree in toys-5 2927b2e63. Its figures appear here only as the third text's.
 
 **The finding in one line:** the draw's pointer is the norm of the escapement's phase at the meeting. It is where the
@@ -99,23 +104,24 @@ squared, read as the round takes it in and as it gives it out, summed, and carri
   boards Kolmogorov's statistic passes its 5 per cent point at 44 against 25.5 by chance, at splits off the page's
   grid: mild in size, not in significance, since 44 of 510 has an exact one-sided tail of 382 ppm (z^2 14.127), against
   0.46 per cent for 20 of 210 and 1.68 per cent for 24 of 300 (the end mathematician's m4); named and OPEN.
-- Where only light moves it is not fair. Light's teeth sit on the grip's lattice, and the pointer takes 3 values. Nor is
-  it fair where the held count, laid alike off n, swings with matter at rest: its tooth moves off the grip's lattice but
-  on its spring's, W/16, and the pointer takes 4 values.
+- Where only the board's wave moves it is not fair. The board's wave's teeth sit on the grip's lattice, and the pointer
+  takes 3 values. Nor is it fair where the held count, laid alike off n, swings with matter at rest: its tooth moves off
+  the grip's lattice but on its spring's, W/16, and the pointer takes 4 values.
 - So the draw needs the moving rows' squares to reach a fine lattice together. Rows moving on W/m_i put Q on at most
   lcm_i (m_i div gcd(m_i, 4)) residues, and that number must not be coarse at the resolution the shares need (the end
   mathematician's B1). The condition reads the rows together: rows on W/6, W/64 and W/125 each fail alone and pass the
   page's battery together, on 6,000 residues. It is necessary, not sufficient.
-- On a single rotation the norm relaxes the pitch condition and does not remove it. It fails on W's lattices, one count
-  off them, and near fractions of small denominator (W/7, and 3W/11 on the ring; on the board's star at 3W/11 it sits
-  near 121 points and passes the battery, a failure below its reach at 10,800 draws). At the readers' off-lattice
-  spring over 64 phases it passes on the ring, where the third text's pointer failed. The condition on fractions is
+- On a single rotation, its lay drawn by the carry sequence (probe (g)), the norm relaxes the pitch condition and does
+  not remove it. It fails on W's lattices, one count off them, and near a fraction of small denominator, W/7, on the
+  ring and on the board's star; at 3W/11 it sits near 121 points, a failure the battery at 10,800 draws reaches only at
+  its 5 per cent points on the ring and not at all on the star. At the readers' off-lattice spring over 64 phases it
+  passes on the ring and on the star, where the third text's pointer fails on the ring. The condition on fractions is
   stated as necessary, not sufficient.
 - The held hand is withdrawn as the draw's source (Big Pic). The turning vacuum it brought is G3's to weigh.
 - A merge's draw keeps its branch on the hand, a write the run back undoes (g5_draw (k) on the third text's pointer, and
   for the norm by probe (b)). How the coupling reads it is OPEN, and until it does no outcome acts on the board.
-- OPEN: the condition on the rows' join and on fractions, and which strengths meet it; the draw where only light moves;
-  the hot board's excess; the coupling's read of the kept branch; the split click on the act.
+- OPEN: the condition on the rows' join and on fractions, and which strengths meet it; the draw where only
+  the board's wave moves; the hot board's excess; the coupling's read of the kept branch; the split click on the act.
 
 ## 1. In clocks
 
@@ -161,10 +167,10 @@ squared, read as the round takes it in and as it gives it out, summed, and carri
   - The pointer sums every hand's square, so what counts is the lattice their squares reach together. Hands each on
     its own coarse lattice can reach a fine one between them, and then the pointer spreads (the end mathematician's
     B1).
-  - Where only light moves, its hands move on the grip's lattice. Their squares take 2 residues and the pointer 3
-    values. Where the held count, laid alike off n, swings with matter at rest, its hand moves off the grip's lattice
-    but on its spring's, and the pointer takes 4 values. So the draw needs the hands it reads to reach, together, a
-    lattice finer than the shares need.
+  - Where only the board's wave moves, its hands move on the grip's lattice. Their squares take 2 residues and the
+    pointer 3 values. Where the held count, laid alike off n, swings with matter at rest, its hand moves off the grip's
+    lattice but on its spring's, and the pointer takes 4 values. So the draw needs the hands it reads to reach,
+    together, a lattice finer than the shares need.
   - A single hand turning round runs a short orbit. Near a fraction of small denominator its teeth stay near a lattice,
     and their squares near the lattice's square: the norm relaxes the third text's pitch condition and keeps it.
 - **No held hand, no medium.** The third text's cure was G3's held hand, one winding turning round at every Node-clock.
@@ -321,8 +327,8 @@ squares, so its moves are sums of the rows' moves.
   residues, and rows on W/3, W/64 and W/125 on 6,000 (g5r_algebra section 4), none of the rows off its own lattice. W
   is 2^7 x 3 x 5^6 x 617 x 24575132510717, so its lattices join far.
 - The fifth text's condition, "every moving row off every coarse lattice", is not necessary. On the page's own fair
-  lays light's fine teeth move in 143,932 to 144,271 of 172,800 gear rounds, not one move off the grip's lattice
-  (g5r_light_moves, the old lay and seeds 1 to 5).
+  lays the board's wave's fine teeth move in 143,932 to 144,271 of 172,800 gear rounds, not one move off the grip's
+  lattice (g5r_light_moves, the old lay and seeds 1 to 5).
 - The mended condition: the subgroup the moving rows' squares reach together must be fine at the resolution the shares
   need. It is necessary, by the bound, and not shown sufficient.
 
@@ -370,9 +376,10 @@ digits). The norm's draw is that form: one carry of Q at the teeth, one carry by
 
 **The motion the draw needs.** The norm reads every row, each only up to a quarter turn and its sign, so a row's
 moves spread it where the third text's sum froze. What it cannot leave is the lattice its rows reach together.
-- **Light alone** (probe (f) of g5_norm). On this board term 6 holds no light row (the probe's monomials), so light's
-  fine teeth move by whole grips. Each light term's c^2 is then 1 or 1 + 2 grips mod W, and with matter and the held
-  count at rest Q takes 3 values. The draw needs rows whose squares reach a fine lattice together (above).
+- **The board's wave alone** (probe (f) of g5_norm). On this board term 6 holds no row of the board's wave (the probe's
+  monomials), so the board's wave's fine teeth move by whole grips. For each term of the board's wave, c^2 is then 1 or
+  1 + 2 grips mod W, and with matter and the held count at rest Q takes 3 values. The draw needs rows whose squares
+  reach a fine lattice together (above).
 - **The held count alone** (probe (e) of g5_norm). Its fine tooth moves little, and the norm spreads all the same: c^2
   moves by about 4 c times the tooth's move (c = 2 r + 1 - T, so c moves by twice the tooth), and c is of the order of
   the teeth, so a move far below a turn still carries c^2 round W many times (a rough account, not derived).
@@ -393,14 +400,15 @@ moves spread it where the third text's sum froze. What it cannot leave is the la
     q c = q + 2 e X (mod W), so q^2 c^2 = (q + 2 e X)^2 (mod W): at 43,200 of 43,200 teeth at W/7 (e = 2) and at
     3W/11 (e = 1), in his g5r_fractions. So Q sits within about 4 (delta X)^2 of the lattice of W/q^2, delta = e / q,
     the threshold above. Laid alike, the star reads 7 times one Node-clock's sum, and 7 times W/49 is W/7: so at W/7
-    the star sits near 7 points against the ring's 49, the tenths 4,675.418 against 62.272.
+    the star sits near 7 points against the ring's 49, the tenths 4,675.387 against 53.316 (probe (g)).
   - For q dividing W the lattice term lands on W/q, q points, q/4 when 4 divides q, not on q^2, and the threshold is
     about W/(4 q), above W/q^2: the condition there is weaker, and still necessary.
   - X, the hand's sweep, swings. Which X the condition reads, its range over the run or its value at each draw, is not
     derived (his M4).
-  - So the norm relaxes the pitch condition and does not remove it. It fails on a lattice (W div 16: 4 values; 2 W div
-    25: 25), one count off it (kappa + 1: the tenths 16,204.409, near W div 16's 16,202.007) and near fractions of small
-    denominator (W/7 and 3W/11: the tenths 62.272 and 24.792 on the ring; W/7 on the board's star 4,675.418).
+  - So the norm relaxes the pitch condition and does not remove it. It fails on a lattice (W div 16: 4 values), one
+    count off it (kappa + 1: the tenths 16,201.179, near W div 16's 16,213.809) and near a fraction of small denominator
+    (W/7: the tenths 53.316 on the ring and 4,675.387 on the board's star); at 3W/11 the battery barely reaches it
+    (below).
   - At the readers' off-lattice spring over 64 phases it passes on the ring, where P failed (section 3).
   - Big Pic: "A pure rotation whose orbit runs through the whole dial is even at every phase... So the failures come
     from a short orbit and the fold's lattice: the pointer does not mix." The norm takes away the fold and keeps the
@@ -408,18 +416,18 @@ moves spread it where the third text's sum froze. What it cannot leave is the la
 - **The condition on fractions** (the mathematician's N1 fix), necessary and not sufficient:
   - for every q up to the resolution the shares need, dividing W or not, the spring's distance delta to the nearest
     a W / q, times the hand's sweep X, squared, must exceed about W / q^2, by a margin;
-  - below it the norm sits near up to q^2 points and fails, as kappa + 1 and W/7 do, and 3W/11 on the ring. On the
-    board's star at 3W/11 it sits near all 121 points (g5r_fractions) and passes the battery, the tenths 11.166,
-    N D_N^2 1.294 and z^2 at most 3.652: there the failure lies below the battery's reach at 10,800 draws (the end
-    mathematician's M4);
-  - meeting it is not shown to suffice. The 64 phases at two springs are a record, not a proof, and at the readers'
-    spring the board's star puts 8 of 64 phases past the 5 per cent point, against chance's 3.200;
+  - below it the norm sits near up to q^2 points and fails, as kappa + 1 and W/7 do. At 3W/11 it sits near all 121
+    points (g5r_fractions, on the star), and the battery at 10,800 draws barely reaches that: on the drawn hand the
+    ring's tenths pass (9.061) while N D_N^2 1.995 and one split's z^2 4.234 sit past their 5 per cent points, and the
+    star passes, the tenths 14.794, N D_N^2 1.709 and z^2 at most 0.684 (the end mathematician's M4);
+  - meeting it is not shown to suffice. The 64 phases at the readers' spring are a record, not a proof: on the drawn
+    hand the board's star puts 3 of 64 phases past the 5 per cent point and the ring 2, against chance's 3.200;
   - it reads the rows together, as the lattices do (the rows together, above): rotations near different fractions
     with coprime denominators join the same way (the end mathematician's B1), so the condition is on the fractions the
     moving rows reach together, not on each row. It stays necessary, not sufficient.
 - **Term 5's push of the 00 slot by rho + 3 p** (TENSOR24_NODE.md section 3; light twice, decision 30) is another row
-  a merge reads where light crossed, absent from the probe's board. Whether it moves that row so that the rows read
-  join finely is not measured.
+  a merge reads where the board's wave crossed, absent from the probe's board. Whether it moves that row so that the
+  rows read join finely is not measured.
 
 **The click writes nothing on the board; the draw keeps its branch** (Big Pic's ruling; the physicist's item 3).
 - Term 11's click pushes nothing into a, b, r or r_d (ARCHITECTURE.md, term 11), and on the act as built nothing reads
@@ -433,8 +441,8 @@ moves spread it where the third text's sum froze. What it cannot leave is the la
     the board runs back by the engine's bijection, and the tooth returns wherever the part drawn back is the part drawn
     out, which (b) finds at 64,800 of 64,800 at the same sizes.
 - A write into the board's slots holds or fails by its form (g5_draw (k), on P). A whole count into the taker's now
-  slot returns. Shrinking both slots of light's row (decision 29 (2), the law's take) leaves the velocity and moves the
-  position, and mirrored the same write shrinks them again: 0 of 300 rounds return, whatever part is drawn.
+  slot returns. Shrinking both slots of the board's wave's row (decision 29 (2), the law's take) leaves the velocity and
+  moves the position, and mirrored the same write shrinks them again: 0 of 300 rounds return, whatever part is drawn.
 - How the coupling reads the kept branch, so that the outcome acts on the board, is OPEN (term 11). Until it does, no
   outcome acts on the board: a departure, named in section 4.
 - Struck from the third text: "the outcome is on the board as the coupling's passing, which the act runs back as
@@ -442,8 +450,8 @@ moves spread it where the third text's sum froze. What it cannot leave is the la
 
 ## 3. On the board
 
-What the event board's counts do (g5_norm.txt). The board: 6 by 6 by 6 Node-clocks; light, matter (two parts each)
-and the held count, all A1 on this board; W = 6 grips. Term 6 at G3's probe strengths: g = 227442851386684,
+What the event board's counts do (g5_norm.txt). The board: 6 by 6 by 6 Node-clocks; the board's wave, matter (two parts
+each) and the held count, all A1 on this board; W = 6 grips. Term 6 at G3's probe strengths: g = 227442851386684,
 kappa = 5686071284667145875000, lam = 4548860, the least whole multiple of 4 with 2 kappa lam >= g^2, n = 1000000.
 Rounds 21 to 420 read, 86,400 draws. Every number below is the pointer at every Node-clock in every round, a stand-in
 for the draws a split click would make. No split click is built on the act, and the draws fall only at births and
@@ -470,9 +478,9 @@ backward step (the end physicist's M7).
   - The act turns with the board in 5 of 5 rounds, and Q is equal at the image at 1,080 under all 24 turns.
   - The draw, the parts in their own order: covariant at 1,080 under the 12 turns taking +x to a + direction, and at
     677 under the 12 taking it to a - direction (the third text had 658); at sizes 1 and 1, at 1,080 and at 0.
-  - The trains' own signed permutations, every Node-clock in place: light's re row negated; matter's re and im rows
-    swapped; matter's two rows negated and light's two rows swapped. Under each the act commutes in 5 of 5 rounds and
-    Q is equal at 1,080 of 1,080; the third text's e is equal at 0, 1,080 and 0.
+  - The trains' own signed permutations, every Node-clock in place: the board's wave's re row negated; matter's re and
+    im rows swapped; matter's two rows negated and the board's wave's two rows swapped. Under each the act commutes in 5
+    of 5 rounds and Q is equal at 1,080 of 1,080; the third text's e is equal at 0, 1,080 and 0.
 - **The old lay** (probe (d) of g5_norm), rounds 21 to 420 at all 216 Node-clocks:
   - 86,400 distinct v of 86,400; the tenths 8.994 on 9;
   - the same half two rounds running 43,054 of 86,184, z^2 0.067, and one Mesh apart 43,334 of 86,400, z^2 0.831, both
@@ -548,75 +556,69 @@ backward step (the end physicist's M7).
   - the cold packet, 1.006 to 1.492 / 0.915 to 1.031, on 27 to 1,080 windows.
   Every z^2 against the factor's own binomial spread is below 3.841, the largest 3.288 (the cold packet at 400 rounds,
   1:1): binomial within its error.
-- **Where only light moves** (probe (f) of g5_norm): term 6, light laid moving at every Node-clock, matter at rest at 0
-  and the held count at rest at n, 400 rounds, every row read.
-  - Matter and the held count stay at rest; only light's rows' fine teeth move.
-  - Each light term's c^2 - 1 is 0 or 2 grips mod 6 grips: light's teeth sit on the grip's lattice.
+- **Where only the board's wave moves** (probe (f) of g5_norm): term 6, the board's wave laid moving at every
+  Node-clock, matter at rest at 0 and the held count at rest at n, 400 rounds, every row read.
+  - Matter and the held count stay at rest; only the fine teeth of the board's wave's rows move.
+  - For each term of the board's wave, c^2 - 1 is 0 or 2 grips mod 6 grips: the board's wave's teeth sit on the grip's
+    lattice.
   - v takes at most 3 values at a Node-clock and 3 over the board, at 0, 333 and 666 thousandths of T8: the tenths
     201,608.254 on 9; the halves z^2 966.773 and 1,078.253; D_N 334,641 ppm; at 1:1 part 0 in 57,495 of 86,400
     (expected 43,200), z^2 9,460.510; at 3:7 z^2 493.719.
-  - Light's two rows alone on the old lay give the same 3 values.
-  - The third text's pointer, light outside, froze at e = 42 here. The norm no longer freezes, but it is not fair: it
-    reads light, and light's squares sit on 2 residues.
+  - The board's wave's two rows alone on the old lay give the same 3 values.
+  - The third text's pointer, the board's wave outside, froze at e = 42 here. The norm no longer freezes, but it is not
+    fair: it reads the board's wave, and the board's wave's squares sit on 2 residues.
 - **The single rotations** (probe (g) of g5_norm): G3's held hand on G3's ring of 128, the merge at Node-clock 0 and its
   two neighbours, re and im read, every fine tooth born at H, 10,800 rounds; beside it the board's star of seven. Laid
   alike at every Node-clock the Meshes pull nothing, so the merge reads 3 times one Node-clock's sum (checked against
   the whole ring at the readers' spring, 1,000 of 1,000 rounds), and the star 7 times.
-  - **The lay.** Every lay is whole: one Pythagorean hand, a = 7 and b = 1, re laid at 1,000,000 and 960,000 (now,
-    before), im at 0 and -280,000. The beat's two whole ratios are 48 over 50 and 14 over 50, with 48^2 + 14^2 = 50^2,
-    and re^2 + im^2 is the same at both slots. Its own spring is 4 b^2 W over (a^2 + b^2), 2 W div 25, where it turns
-    exactly round; at another spring it turns on an ellipse. It stands for G3's quarter lay, the mathematician's
-    own-beat lays and the physicist's 64 angles, all of which came from series. Whether law line 102 reaches its
-    rational point of the circle is the owner's word (the end mathematician's M7).
+  - **The lay.** Every lay is whole: one hand whose two before slots are drawn by the carry sequence, turned by the act
+    itself for its 64 start phases (drawn, not picked: law line 102). re is laid at 1,000,000 and 955,176 (now, before)
+    and im at 0 and -540,026, each before slot drawn within n - 1 of 0 by the probe's carry sequence from its seed
+    20261030, as g5_draw (n) lays Alice's settings. The Pythagorean hand it replaces (a = 7, b = 1, its before slot set
+    by 48/50 and 14/50, its own spring 2 W div 25) was a pick aimed at a root, withdrawn with its own-spring rows and
+    (a)'s lattice of 25 (the end mathematician's L1; section 13).
   - **At one phase**, the lay's own, the tenths on 9:
 
   | Spring | Q, the ring | Q, the star | P, the ring | P, the star |
   |---|---|---|---|---|
-  | W div 16, on its lattice of 16 | 16,202.007, 4 values | 16,202.007 | 9,420.896, 8 values | 9,420.896 |
-  | kappa + 1, one count off it | 16,204.409 | 16,204.409 | 9,541.648 | 9,541.648 |
-  | 2 W div 25, on its lattice of 25 | 428.629, 25 values | 443.294 | 420.294, 25 values | 421.705 |
-  | W div 7, rounded | 62.272 | 4,675.418 | 17,987.435 | 97,200.000 |
-  | 3 W div 11, rounded | 24.792 | 11.166 | 7,940.051 | 7,940.051 |
-  | kappa + W div (16 n) + 1, the readers' | 8.148 | 5.127 | 22.709 | 5.614 |
-  | 2 W div 25 + W div (25 n) + 1 | 11.272 | 7.366 | 12.862 | 6.331 |
+  | W div 16, on its lattice of 16 | 16,213.809, 4 values | 16,213.809 | 9,257.518, 8 values | 9,257.518 |
+  | kappa + 1, one count off it | 16,201.179 | 16,201.179 | 9,468.505 | 9,468.505 |
+  | W div 7, rounded | 53.316 | 4,675.387 | 18,000.625 | 97,200.000 |
+  | 3 W div 11, rounded | 9.061 | 14.794 | 7,956.718 | 7,956.718 |
+  | kappa + W div (16 n) + 1, the readers' | 7.457 | 13.175 | 6.953 | 7.344 |
 
-    - W div 7, where 7 does not divide W (W mod 7 = 2): on the ring N D_N^2 8.922 and z^2 10.703, 16.901 and 7.111 at
+    - W div 7, where 7 does not divide W (W mod 7 = 2): on the ring N D_N^2 9.347 and z^2 10.578, 27.504 and 11.146 at
       1:1, 1:3 and 3:7. P on the star puts every draw in one tenth (97,200.000 on 9).
-    - 3 W div 11 on the ring: the tenths past the 1 per cent point, 21.666, though its splits pass (z^2 1.001, 2.351
-      and 1.102). On the star it passes the battery, the tenths 11.166, N D_N^2 1.294 and z^2 at most 3.652, while
-      it sits near all 121 points of W/121 (the end mathematician's g5r_fractions): a failure below the battery's
-      reach.
-    - kappa + 1: 10,800 distinct values of Q, and the tenths, 16,204.409, near those of W div 16's 4 values: 4
-      clusters.
-    - At the two off-lattice springs, at this phase, Q passes on the ring and on the star (z^2 at most 3.004); P on the
-      ring fails the tenths at the readers' spring (22.709).
-  - **Over 64 phases** at the two off-lattice springs: the hand turned by the act itself between starts, 602 rounds at
-    the readers' spring and 421 at the Pythagorean one, which takes the starts once round (7 to 9 in each octant), every
-    fine tooth born again at H for each start. Counts of 64: the tenths past their 5, 1 and 0.1 per cent points (16.919,
-    21.666 and 27.877); N D_N^2 past 1.844; the largest of three splits' z^2 past 6.635:
+    - 3 W div 11, near all 121 points of W/121 on the ring and on the star by section 2's account (the end
+      mathematician's g5r_fractions, on the star): on the ring the tenths pass, 9.061, while N D_N^2 1.995 and 3:7's z^2
+      4.234 sit past their 5 per cent points, 1.844 and 3.841, and below the 1 per cent point, 6.635; on the star it
+      passes the battery, the tenths 14.794, N D_N^2 1.709 and z^2 at most 0.684. The battery at 10,800 draws reaches
+      this failure only at its 5 per cent points, on the ring.
+    - kappa + 1: 10,800 distinct values of Q, and the tenths, 16,201.179, near those of W div 16's 4 values: 4 clusters.
+    - At the readers' off-lattice spring, at this phase, Q passes on the ring and on the star (the tenths 7.457 and
+      13.175, z^2 at most 1.640), and so does P (6.953 and 7.344).
+  - **Over 64 phases** at the readers' off-lattice spring: the hand turned by the act itself between starts, 602 rounds,
+    which takes the starts once round (4 to 12 in each octant: 5, 12, 11, 4, 5, 12, 11, 4), every fine tooth born again
+    at H for each start. Counts of 64: the tenths past their 5, 1 and 0.1 per cent points (16.919, 21.666 and 27.877);
+    N D_N^2 past 1.844; the largest of three splits' z^2 past 6.635:
 
   | Spring | Pointer | The ring's merge | The board's star |
   |---|---|---|---|
-  | kappa + W div (16 n) + 1, the readers' | Q | 4, 0, 0; 6; 1 | 8, 0, 0; 4; 3 |
-  | kappa + W div (16 n) + 1, the readers' | P | 47, 32, 23; 8; 1 | 10, 2, 0; 3; 0 |
-  | 2 W div 25 + W div (25 n) + 1 | Q | 3, 1, 0; 1; 0 | 3, 0, 0; 2; 1 |
-  | 2 W div 25 + W div (25 n) + 1 | P | 3, 0, 0; 2; 1 | 4, 0, 0; 3; 4 |
+  | kappa + W div (16 n) + 1, the readers' | Q | 2, 0, 0; 1; 1 | 3, 1, 0; 2; 1 |
+  | kappa + W div (16 n) + 1, the readers' | P | 24, 11, 1; 6; 3 | 1, 0, 0; 4; 0 |
   | chance for independent draws | | 3.200, 0.640, 0.064; 3.200; about 1.900 | the same |
 
-    - At the readers' spring the norm removes the phase dependence that broke P on the ring (47, 32 and 23 of 64). On
-      the star Q shows a mild excess at the 5 per cent point, 8 of 64 against 3.200, named.
-    - At the Pythagorean spring, whose offset is a step of its lattice at the hand's swing, both pointers pass the
-      tenths; P on the star puts a split past 6.635 in 4 of 64, against about 1.900.
-    - The largest tenths over the 64 starts, for Q: 20.220 on the ring and 19.062 on the star at the readers' spring,
-      25.498 and 21.033 at the Pythagorean.
-  - **The controls moved with the lay.** P's figures on the readers' own lays, made with series the owner's word now
-    bars, against the Pythagorean hand's:
-    - kappa + W div (16 n) + 1, one phase: the tenths 11.753 (the third text, from G3's (f)) to 22.709;
-    - W div 16: 9,612.814 (G3's (f)) to 9,420.896; kappa + 1: 9,406.448 to 9,541.648;
+    - The norm removes the phase dependence that breaks P on the ring (24, 11 and 1 of 64 past the three points). On the
+      star Q puts 3 of 64 past the 5 per cent point, against 3.200, and 1 past the 1 per cent point, against 0.640.
+    - The largest tenths over the 64 starts, for Q: 21.231 on the ring (start 17) and 22.400 on the star (start 27).
+  - **The controls moved with the lay.** P's figures on the readers' own lays, made with series the owner's word bars,
+    against the drawn hand's:
+    - kappa + W div (16 n) + 1, one phase: the tenths 11.753 (the third text, from G3's (f)) to 6.953;
+    - W div 16: 9,612.814 (G3's (f)) to 9,257.518; kappa + 1: 9,406.448 to 9,468.505;
     - W div 7: 17,774.835 on the quarter lay and 17,911.494 on its own beat (the mathematician's g5v3_seven.py) to
-      17,987.435; 3 W div 11: 7,908.931 and 7,941.220 to 7,940.051;
-    - the 64 starts at the readers' spring: on the ring 34, 26 and 18 of 64 (the physicist's g5c_scan.py) to 47, 32
-      and 23; on the star 34, 20 and 6 to 10, 2 and 0.
+      18,000.625; 3 W div 11: 7,908.931 and 7,941.220 to 7,956.718;
+    - the 64 starts at the readers' spring: on the ring 34, 26 and 18 of 64 (the physicist's g5c_scan.py) to 24, 11 and
+      1; on the star 34, 20 and 6 to 1, 0 and 0.
     On both lays P fails on the lattices, one count off them and near the fractions, and its phase dependence fails the
     ring at the readers' spring. The tenths read no rank.
 - **The conditional draw and the backward pass's step** (probe (h) of g5_norm):
@@ -633,31 +635,30 @@ backward step (the end physicist's M7).
     teeth, against the bounds 3, 4 and 12 (section 2; the probe prints the weaker bound m beside W/6).
 - **The held count displaced** (probe (j) of g5_norm, the mathematician's g5v4_held_vacuum ported): term 6, matter laid
   at rest at 0, the held count laid off n at rest, every row read, rounds 21 to 420 at all 216 Node-clocks:
-  - laid 1,000 off n alike, light at rest: its tooth moves in 83,592 of 90,720 Node-clock rounds, 77,976 of them off
-    the grip's lattice; v takes 4 values; the tenths 129,891.600 on 9; part 0 at 1:1 in 44,280 of 86,400 (expected
-    43,200), z^2 54.000; at 1:3 z^2 103.680; at 3:7 in 44,280 (expected 25,920), z^2 18,578.571;
-  - laid off n by the generator, up to 1,000, light at rest: v takes 12 values; the tenths 9,246.031 on 9; at 1:1 z^2
-    0.746 and at 1:3 0.010, both boundaries on the 12-point lattice (the mathematician); at 3:7 z^2 465.434;
-  - the same with light moving as (f)'s vacuum: 12 values; the tenths 9,582.172 on 9; at 3:7 z^2 463.514.
+  - laid 1,000 off n alike, the board's wave at rest: its tooth moves in 83,592 of 90,720 Node-clock rounds, 77,976 of
+    them off the grip's lattice; v takes 4 values; the tenths 129,891.600 on 9; part 0 at 1:1 in 44,280 of 86,400
+    (expected 43,200), z^2 54.000; at 1:3 z^2 103.680; at 3:7 in 44,280 (expected 25,920), z^2 18,578.571;
+  - laid off n by the generator, up to 1,000, the board's wave at rest: v takes 12 values; the tenths 9,246.031 on 9; at
+    1:1 z^2 0.746 and at 1:3 0.010, both boundaries on the 12-point lattice (the mathematician); at 3:7 z^2 465.434;
+  - the same with the board's wave moving as (f)'s vacuum: 12 values; the tenths 9,582.172 on 9; at 3:7 z^2 463.514.
   So a row moving off the grip's lattice is not enough: the draw fails where it moves on kappa's.
 - **Rows on several coarse lattices, read together** (the end mathematician's g5r_join_act, on the engine at main
   0df0e8385): the probe's board, every fine tooth born at H, rounds 21 to 420 at all 216 Node-clocks, 86,400 draws;
   each row a single-row A1 train, every push a multiple of its own row's step, and a tooth off its own row's lattice
   at 0 of 90,720 gear rounds per row.
-  - Light on the grip's W/6 with rows on W/64 and W/125 at matter's swings (his case B2): each row alone fails by
-    orders, 3, 16 and 125 values, the tenths 201,605.186, 8,034.804 and 132.817. Read together: 6,000 distinct v, the
-    tenths 4.713, D_N 3,814 ppm, N D_N^2 1.257, the seven splits' z^2 at most 3.518, the halves 0.635 and 1.097, the
-    lag-1 joint tenths 94.429 on 81.
+  - The board's wave on the grip's W/6 with rows on W/64 and W/125 at matter's swings (his case B2): each row alone
+    fails by orders, 3, 16 and 125 values, the tenths 201,605.186, 8,034.804 and 132.817. Read together: 6,000 distinct
+    v, the tenths 4.713, D_N 3,814 ppm, N D_N^2 1.257, the seven splits' z^2 at most 3.518, the halves 0.635 and 1.097,
+    the lag-1 joint tenths 94.429 on 81.
   - Two rows on each of W/64 and W/125 (his case C): 6,000 values, the tenths 15.398, N D_N^2 1.022, the largest z^2
     2.695.
   - Five more lays of each: 5 single tests past a 5 per cent point in about 120, none past a 1 per cent point.
   - At swings to 1,000 (his case B) the same three lattices give 6,000 values and the page's four splits pass, while
     5:8 at z^2 6.345, the tenths 17.032 and N D_N^2 2.242 pass their 5 per cent points: the join is necessary and not
     sufficient.
-  - The page's own three lattices, W/6, kappa's W/16 and the Pythagorean 2 W/25 (his case A): 300 values; the tenths
-    5.168 and every z^2 (at most 1.991) pass, and N D_N^2 2.578 fails, as a 300-point lattice is expected to: its
-    saw-tooth guarantees only N D_N^2 >= 0.960, below the 1.844 point, and the mathematician's two runs gave 1.964 and
-    2.578 (his m1).
+  - His case A joined the page's lattices, the grip's W/6 and kappa's W/16, with 2 W/25, the lattice of (g)'s
+    Pythagorean lay, withdrawn under law line 102 (section 13), so its figures are no longer cited. The page's own two
+    lattices join on W/12: 12 residues of u for two or three rows (probe (a), q = 48).
   So a draw within chance needs no row off its own coarse lattice, only rows whose lattices join finely.
 - **The cells where 8 does not divide T_f** (probe (k) of g5_norm; the mathematician's NB2, the physicist's D3): at
   T_f = W + 1, W + 4, W + 7 and W - 3, of the top 16 residues v reaches T_f div 8 at 1, 4, 7 and 5, and the ceiling
@@ -670,24 +671,24 @@ backward step (the end physicist's M7).
   |---|---|---|---|
   | a record tooth on the hand, flipped by the mirror (term 11's design) | 64,800 | 64,800 | 300 |
   | a whole count into the taker's now slot, matter's row | 64,800 | 64,800 | 300 |
-  | a whole count into the taker's now slot, light's row | 64,800 | 64,800 | 300 |
-  | both slots of light's row, the law's take | 64,800 | 64,800 | 0 |
+  | a whole count into the taker's now slot, the board's wave's row | 64,800 | 64,800 | 300 |
+  | both slots of the board's wave's row, the law's take | 64,800 | 64,800 | 0 |
   | both slots of matter's row | 0 | 48,274 | 0 |
   | a fine tooth moved by a grip, its quotient into the now slot | 39 | 48,282 | 0 |
 
     The record tooth's row carries to the norm by probe (b) of g5_norm (section 2). The other rows are not rerun with
     the norm.
   - **The frozen merges' weight** (g5_draw (o), no pointer read): form B's backward pass on a tree toward the source,
-    CLICKS-CLOSED section 13, in whole numbers. The deciding merges where only light crossed the seven Node-clocks the
-    pointer reads:
+    CLICKS-CLOSED section 13, in whole numbers. The deciding merges where only the board's wave crossed the seven
+    Node-clocks the pointer reads:
     - spread_quantum's own board: 1 of 3;
     - two detectors 10 Meshes out along +x and -x, or along +x and +y: 0 of 1 (the merge falls at the source);
     - two detectors at +z and at +6 x +4 z: 1 of 1;
     - a full screen: 0 of 399; one pixel in four: 6 of 85;
     - sparse absorbers, one in about 100 Node-clocks: 50 of 66.
-    The third text read these merges as frozen. The norm reads light there, so by probe (f) of g5_norm they sit on
-    light's lattice: no longer frozen, and still not fair. Which merges are light-only still turns with the
-    apparatus's bearing to the board's axes.
+    The third text read these merges as frozen. The norm reads the board's wave there, so by probe (f) of g5_norm they
+    sit on the board's wave's lattice: no longer frozen, and still not fair. The set of merges where only
+    the board's wave crossed still turns with the apparatus's bearing to the board's axes.
   - **Decision 29's dial on the raw sum** (g5_draw (i), no pointer read): with the plan empty V mod 1,000 is 0 at every
     Node-clock in every round, by arithmetic; the dial gives part 0 exactly 500 times at each of the 216 Node-clocks,
     and with c struck, part 0 in 216,000 of 216,000. The probe's heading still reads "decision 29's dial"; the case is
@@ -710,17 +711,19 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
 
 - **Born's rule, half of it, under a condition.**
   - Over many splits part i takes the quantum with frequency s_i / L within each run's spread only where the rows that
-    move between draws at the meeting reach, together, a lattice finer than the shares need (rows on W/m_i reach at
-    most lcm_i (m_i div gcd(m_i, 4)) residues); where one rotation is all that moves, its spring meets the condition on
-    fractions. A rotation that fails it alone can pass read with the others: g5_norm's Pythagorean hand at its own
-    spring W / 7, laid alike, fails it by about nine orders ((delta X)^2 <= 2.6 x 10^12 against W / 49 = 1.9 x 10^21)
-    and draws 400 distinct values, the tenths 38,674.8 and N D_N^2 2,075.8; read together with one freely moving row
-    (grip W / 6) it passes every test, the tenths 8.474, N D_N^2 0.785, the seven splits' z^2 at most 2.731 and the
-    halves 0.922 (the end mathematician's g6_rotation_plus_row, a reader's run outside the tree).
-  - These conditions are necessary and not shown sufficient (the physicist's D1). His case meets them and fails
-    mildly: at the readers' off-lattice spring, probe (g)'s star puts 8 of 64 phases past the 5 per cent point, against
-    3.200 by chance. The hot board's lay shows an excess over 510 seeds, mild in size and not in significance (a tail
-    of 382 ppm), at splits off the page's grid (section 3).
+    move between draws at the meeting reach, together, a lattice finer than the shares need (rows on W/m_i reach at most
+    lcm_i (m_i div gcd(m_i, 4)) residues); where one rotation is all that moves, its spring meets the condition on
+    fractions. Rows that fail it alone can pass read together (section 3, g5r_join_act). The end mathematician's
+    g6_rotation_plus_row showed that for a rotation on the seventh text's Pythagorean hand at W / 7 rounded, g5_norm's
+    SEVEN, not that hand's own spring, 2 W div 25 (alone the tenths 38,674.8; with one freely moving row on the grip's
+    W / 6, 8.474: a reader's run outside the tree); that lay is withdrawn under law line 102, so the run is a record and
+    carries no claim. On the drawn hand probe (g) shows the rotation at W / 7 rounded failing alone (the tenths 53.316
+    on the ring, 4,675.387 on the star); read with a free row it is not rerun.
+  - These conditions are necessary and not shown sufficient (the physicist's D1). His case, probe (g)'s star at the
+    readers' off-lattice spring, put 8 of 64 phases past the 5 per cent point on the withdrawn Pythagorean hand; on the
+    drawn hand it puts 3 of 64, against 3.200 by chance, so it no longer fails, and sufficiency stays unshown. The hot
+    board's lay shows an excess over 510 seeds, mild in size and not in significance (a tail of 382 ppm), at splits off
+    the page's grid (section 3).
   - On the probe's board those rows are matter's and the held count's, laid as A1: six lays and one hot board agree,
     the old lay's five splits at z^2 0.733 to 3.095, to a resolution near 5 x 10^-3 at 86,400 draws. The held count
     displaced off n with matter at rest moves on a coarse lattice, kappa's where it is laid alike, and there the draw
@@ -728,14 +731,16 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   - The norm reads the vector trains as well (Big Pic), so in nature the motion may be any such row's. Half-speed
     matter has no kind on the act, and on an E row the norm's invariance under the 24 is not shown (the physicist's
     D2). Which rows move at nature's meetings, and whether their lattices join finely, is not shown: no fair pointer
-    in nature is shown, and where only light moves the draw is not fair.
+    in nature is shown, and where only the board's wave moves the draw is not fair (a board reading set against nature,
+    not in the click world; owed there).
   - The other half, that the sizes are the amplitudes squared, is the sizes' item (section 7). The bound on
     higher-order interference tests both halves (the end physicist's M4). With an unfair pointer part i's frequency is
     F(C_i / L) - F(C_(i-1) / L), F the pointer's spread, which is not linear in the sizes: so Sorkin's third-order term
     is not 0 even where the sizes are the amplitudes squared, and on 3 values it is of order 1. It is bounded below
     10^-2 (Sinha and others, Science 329, 418 (2010)), and at 0.0 within 1.6 x 10^-3 with heralded single photons
     (Kauten and others, New J. Phys. 19, 033017 (2017)), finer than the board's resolution near 5 x 10^-3. Wherever a
-    many-path single-photon test's deciding merge is light-only, that bound excludes the departure named below.
+    many-path single-photon test's deciding merge is one where only the board's wave crossed, that bound excludes the
+    departure named below (a board reading set against nature, not in the click world; owed there).
 - **Independent trials, in scope.** Binomial partition is what nature shows for single quanta entering by one port: the
   shot noise 2 e I (1 - T) of a quantum point contact (Reznikov and others, PRL 75, 3340 (1995); Kumar and others, PRL
   76, 2778 (1996)).
@@ -748,38 +753,37 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   - Two indistinguishable quanta entering by two ports are one draw over two-quantum outcomes, with the Hong-Ou-Mandel
     dip as its test (Hong, Ou and Mandel, PRL 59, 2044 (1987)): OPEN.
 - **No signal, as far as the pointer is fair.** The part drawn is a function of v and the sizes, and the sizes carry
-  both settings back to the birth (decisions 28 and 29). So a far setting moves no click only while the pointer is
-  fair and v is independent of the sizes, which is untested (section 7). Spread is not enough (the end physicist's
-  M3, below), and the frozen pointer below is one case of a signal, not a proof of the converse (the end
-  mathematician's M8).
+  both settings back to the birth (decisions 28 and 29). So a far setting moves no click only while the pointer is fair
+  and v is independent of the sizes, which is untested (section 7). Spread is not enough: a pointer spread over many
+  values, but not evenly, weights the cells unevenly (the end physicist's M3), and the frozen pointer below is one case
+  of a signal, not a proof of the converse (the end mathematician's M8).
   - Pilot waves keep signal-locality only in equilibrium (Valentini, Phys. Lett. A 158, 1 (1991), Part II), and every
     deterministic hidden-variable theory does too (Valentini, Phys. Lett. A 297, 273 (2002)).
-  - Measured on the rule (g5_draw (n), rebuilt), with Bob's analyser fixed and Alice's settings given by the whole
-    sizes of the four joint outcomes alone, ++, +-, -+, --: 1, 3, 3, 1 and 3, 1, 1, 3, and a third, 1, 1, 1, 1,
-    between them, Bob's own share of + a half at each. With the pointer frozen at 3/10 of its range Bob draws -, + at
-    the two settings and -, -, + at the three, so the far setting moves Bob's click, a signal; with the pointer spread
-    evenly over 6,240 values, Bob + in 3,120 of 6,240 at every setting. Both read the third text's rule below its edge,
-    the cells' inequality, so both hold for v. (n)'s count on the act's own spread reads P's draws.
-  - **Big Pic's m7, for the owner beside M7** (6536901666, item 2). As built, (n)'s sizes are typed to the cosine law,
-    so his test ("a point picked to land at an angle") reaches them. Laid as the board's own directions, the same sizes
-    come by themselves: two face diagonals of the cube have u.v of 1, 0 or -1 over the squared length 2, so they meet at
-    60, 90 or 120 degrees, and the singlet's joint sizes, (1 - u.v / 2) / 4 for like outcomes and (1 + u.v / 2) / 4 for
-    unlike, are 2 - u.v and 2 + u.v over 8: (1, 3, 3, 1), (2, 2, 2, 2) and (3, 1, 1, 3), (n)'s sizes over their sums,
-    with no angle and no root. Three face diagonals in one plane meet at 120 degrees each, Mermin's three settings: in
-    nature, with one side's outcomes read flipped, the pair agrees half the time against the local bound of 5/9 (a
-    reading set beside nature, not in the click world). So a Bell test can be laid from the 24's own directions. **His
-    proposal:** lay the settings as lattice directions and let the sizes follow; built on the owner's word, which also
-    rules whether line 102 reaches a lay picked to land at an angle or every such lay (the Boss's P5 question).
-  - On the norm's own pointer (the end physicist's phys_signal, Alice's settings given as whole sizes, 4 - k, k, k,
-    4 - k eighths for k from 4 to 0, Bob's share of + a half at each; his script labels the settings by angles, and the
-    page reads its sizes as whole sizes alone): on the old lay the largest shift of Bob's count
-    between two settings is 204 of 86,400, 2,361 ppm, z^2 1.926 against a uniform pointer, no signal at the board's
-    resolution. Where only light moves it is 334,641 ppm, and with the held count displaced alike 265,000 ppm. On the
-    cold packet, whose pointer is spread over 10,800 values, it is 264 of 10,800, 24,444 ppm, z^2 8.604, between
-    settings 3 apart; the 1:1 Born test's own shift, between settings 4 apart, is 262, z^2 6.355 (the end
-    mathematician's m2): a fluctuation by his M1, but a spread pointer can signal.
-  - The frozen pointer is a no-signal item as well as a Born item, and a pointer on 3 values, where only light moves,
-    is not spread either, nor one on 4, where the held count swings on kappa's lattice.
+  - Measured on the rule (g5_draw (n), rebuilt under law line 102), with Bob's analyser fixed and Alice's settings the
+    sizes of the four joint outcomes, ++, +-, -+, --, as (x, y, y, x), x and y laid by the probe's carry sequence, not
+    typed sizes, so Bob's own share of + is a half at each. Two settings, 8, 7, 7, 8 and 4, 9, 9, 4: with e frozen at
+    the middle of each tenth of H, the far setting moves Bob's draw at 2 of 10 frozen values (tenths 2 and 7, counted
+    from 0); spread evenly over 6,240 values, Bob + in 3,120 of 6,240 at each; as the act spreads it, 43,082 (z^2 0.644)
+    and 42,925 (z^2 3.501) of 86,400. Three settings, 6, 4, 4, 6; 6, 4, 4, 6; 8, 8, 8, 8 (the sequence drew the first
+    twice): the far setting moves Bob's draw at 1 of 10 frozen values (tenth 2); spread evenly, 3,120 of 6,240 at each;
+    as the act spreads it, 43,208 (z^2 0.002), 43,208 (z^2 0.002) and 43,028 (z^2 1.369) of 86,400. So with the pointer
+    frozen Bob's draw can move with Alice's far setting, a signal, while Bob's share of + stays a half when e is spread
+    evenly. Both read the third text's rule below its edge, the cells' inequality, so both hold for v. (n)'s count on
+    the act's own spread reads P's draws.
+  - **Big Pic's proposal** (his m7, 6536901666, item 2): lay Alice's settings as the board's own directions, face
+    diagonals of the cube, and size the joint outcomes from them. Its arithmetic checks (the end mathematician's
+    g7_mermin, a reader's run outside the tree): 12 face diagonals, all of squared length 2; u.v takes -2, -1, 0, 1 and
+    2, where the seventh text gave only the middle three, though its own Mermin sum needs u.v = 2 at equal settings
+    (sizes 0, 4, 4, 0); the sizes 2 - u.v, 2 + u.v, 2 + u.v and 2 - u.v over 8, Bob's + 4 of 8 at every setting; the
+    plane's three diagonals all at u.v = -1; Mermin's agreement 36 of 72 = 1/2, against the least local agreement 5
+    of 9. The settings themselves are not lawful: the diagonals are picked, and the sizes are computed from the
+    singlet's formula, (1 -/+ u.v / 2) / 4, the cosine law written as a dot product, so they do not come by themselves.
+    Under law line 102 the proposal is lawful only if the act itself draws the directions: OPEN (section 7).
+  - On the norm's own pointer the end physicist's phys_signal sets Alice's settings as typed whole sizes, 4 - k, k, k,
+    4 - k eighths, so under law line 102 its figures are a reader's run on typed settings and are no longer cited for
+    any claim.
+  - The frozen pointer is a no-signal item as well as a Born item, and a pointer on 3 values, where only
+    the board's wave moves, is not spread either, nor one on 4, where the held count swings on kappa's lattice.
   - Bell's theorem (Bell, Physics 1, 195 (1964)) is why the claim stops there (the end physicist's M5). The draw meets
     the loophole-free violations (Hensen and others, Nature 526, 682 (2015); Giustina and others, PRL 115, 250401
     (2015); Shalm and others, PRL 115, 250402 (2015); Storz and others, Nature 617, 265 (2023)) only through the sizes'
@@ -792,20 +796,20 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   outcomes (Kirchmair and others, Nature 460, 494 (2009); Lapkiewicz and others, Nature 474, 490 (2011)). Every split
   whose parts are apart, one particle or two, stands on the two boards (decision 28), which are not on the act
   (TENSOR24_NODE.md 4.5), and not on the pointer alone. A merge geometry like Guerreiro's (two detectors, one
-  particle) is where the light-only merges must be read (g5_draw (o)).
-- **Can a split click fall where only light moves?** The text's own rules settle part of it, not all:
+  particle) is where the merges that only the board's wave crossed must be read (g5_draw (o)).
+- **Can a split click fall where only the board's wave moves?** The text's own rules settle part of it, not all:
   - a one-part gear never clicks (term 11): a click counts a two-part train's swept area completing its key. Where only
-    light moves, the held count is one part, and matter at rest sweeps nothing, so no train there can click but
-    light's, two parts on this board;
+    the board's wave moves, the held count is one part, and matter at rest sweeps nothing, so no train there can click
+    but the board's wave train, two parts on this board;
   - under form B the click is an absorber's whole click at the end of pass 3, and the draws fall upstream, at the birth
     and at each merge of the backward pass (CLICKS-CLOSED, section 13). So the click falls where an absorber takes the
-    quantum, and a draw can fall where only light crossed: g5_draw (o) counts such merges, 50 of 66 with sparse
-    absorbers and 0 of 399 on a full screen;
+    quantum, and a draw can fall where only the board's wave crossed: g5_draw (o) counts such merges, 50 of 66 with
+    sparse absorbers and 0 of 399 on a full screen;
   - each such draw picks the branch pass 3 follows, so its unfairness would reach the click downstream;
-  - whether light's own two rows can click where nothing else moves is not read here, and Sofer's hold keeps a free
-    light train from being credited by its own click (TENSOR24_NODE.md 4.5).
-  So the departure is the draw's, at form B's merges where only light crossed; whether those draws are how the act
-  will part a winding is OPEN with form B on the act.
+  - whether the board's wave's own two rows can click where nothing else moves is not read here, and Sofer's hold keeps
+    a free train of the board's wave from being credited by its own click (TENSOR24_NODE.md 4.5).
+  So the departure is the draw's, at form B's merges where only the board's wave crossed; whether those draws are how
+  the act will part a winding is OPEN with form B on the act.
 - **Gravity follows the outcome** (Page and Geilker, PRL 47, 979 (1981)). In their test the click set the lead masses
   and the balance followed them. On the act as built nothing reads the draw: the click writes nothing on the board, and
   no coupling reads the branch a merge keeps. So no outcome acts on the board, and Page and Geilker's masses cannot
@@ -820,12 +824,12 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   - the draw unfair where the rows it reads reach, together, only a coarse lattice of the teeth, since rows moving on
     W/m_i put Q on at most lcm_i (m_i div gcd(m_i, 4)) residues (the mathematician's NB1; the end mathematician's
     B1):
-    - where only light moves, light's teeth on the grip's lattice and the pointer on 3 values: at form B's merges where
-      only light crossed (g5_draw (o): 50 of 66 with sparse absorbers, 0 of 399 on a full screen), and on a board with
-      the plan empty (probe (a) of g5_norm);
+    - where only the board's wave moves, the board's wave's teeth on the grip's lattice and the pointer on 3 values: at
+      form B's merges where only the board's wave crossed (g5_draw (o): 50 of 66 with sparse absorbers, 0 of 399 on a
+      full screen), and on a board with the plan empty (probe (a) of g5_norm);
     - where the held count is displaced off n and matter rests (probe (j) of g5_norm): laid 1,000 off n alike, a row on
       kappa's lattice, v on 4 values and 3:7 at z^2 18,578.571; scattered up to 1,000, 12 values and 3:7 at z^2
-      465.434, and 463.514 with light moving;
+      465.434, and 463.514 with the board's wave moving;
   - the draw unfair on a single rotation on W's lattices, one count off them, or near a fraction of small denominator;
   - a frozen board, no row moving between draws, holds Q, so every draw goes to the one part whose cell holds that v:
     the frequencies follow the board's order of the parts, not their shares (the physicist's C1). At the birth every
@@ -834,13 +838,14 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   - the 24 kept in the frequencies, not draw by draw, under the turns that reverse the parts' order, and broken in
     frequency where the pointer is frozen or on a coarse lattice;
   - no outcome acts on the board, so Page and Geilker's masses cannot follow a click;
-  - a far setting moving a click wherever the pointer is not fair: 334,641 ppm of Bob's clicks where only light moves,
-    265,000 ppm with the held count displaced alike, and 24,444 ppm on the spread cold packet (the end physicist's
-    M3);
-  - the light-only merges turning with the apparatus's bearing: g5_draw (o)'s pair of detectors at +10 z and
-    +6 x +4 z, turned by the board's 24 rotations, decides at a light-only merge in 12 and at the source in the other
-    12 (the end physicist's M10, his phys_bearing), so the same apparatus draws Born frequencies or not by its bearing,
-    a dependence nature does not show;
+  - a far setting able to move a click wherever the pointer is not fair: with the pointer frozen, at 2 of 10 and 1 of 10
+    frozen values (g5_draw (n); the end physicist's M3); the cold packet's shift on a spread pointer is a fluctuation,
+    not a departure (section 7);
+  - the merges where only the board's wave crossed, which turn with the apparatus's bearing: g5_draw (o)'s pair of
+    detectors at +10 z and +6 x +4 z, turned by the board's 24 rotations, decides in 12 at a merge where only
+    the board's wave crossed and in the other 12 at the source (the end physicist's M10, his phys_bearing), so the same
+    apparatus draws Born frequencies or not by its bearing, a dependence nature does not show (a board reading set
+    against nature, not in the click world; owed there);
   - the hot board's lay, N D_N^2 past its 5 per cent point at 44 of 510 lays against 25.5 by chance, with splits off
     the page's grid past 6.635 (seed 271 at 4:9, z^2 15.054): an excess mild in size, not in significance (an exact
     one-sided tail of 382 ppm), OPEN (the end physicist's M2, the end mathematician's m4);
@@ -850,7 +855,7 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
 
 | Check | Result |
 |---|---|
-| (a) the residues | primes: one row (T + 1) / 2, two rows all, nonzero ones equally; on lattices at W: 3, 4, 25, 12 |
+| (a) the residues | primes: one row (T + 1) / 2, two rows all, nonzero ones equally; on lattices at W: 3, 4, 12 |
 | (b) the run back, the test | Q equal at 64,800 of 64,800, and the part; the one-sided control 32,340, z^2 0.222 |
 | (c) the 24 and the gears | Q at the image 1,080 under all 24 turns; 1,080 under each of three signed permutations |
 | (c) the draw's covariance | 1,080 under the 12 turns keeping the split axis's sense; 677 under the other 12 |
@@ -860,16 +865,16 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
 | (e) one hot board, the cold packet | 1:1 z^2 0.140 and 6.355; D_N 2,961 and 12,538 ppm; lag 1: 80.353, 82.003 on 81 |
 | (e) the held count's row alone | the tenths 9.814 hot, 11.703 cold, the test there; 1:1 z^2 0.011 and 0.053 |
 | (e) the Fano factor | 0.915 to 1.492 over every lay, split and window; every z^2 below 3.841 |
-| (f) only light moving | 3 values of v, at 0, 333 and 666 thousandths of T8; 1:1 z^2 9,460.510 |
-| (g) single rotations, one phase | Q's tenths: W div 16 16,202.007; kappa + 1 16,204.409; W/7 62.272; 3W/11 24.792 |
-| (g) 64 phases, the readers' spring | Q 4, 0, 0 on the ring, 8, 0, 0 on the star; P 47, 32, 23 and 10, 2, 0 |
+| (f) only the board's wave moving | 3 values of v, at 0, 333 and 666 thousandths of T8; 1:1 z^2 9,460.510 |
+| (g) single rotations, one phase | Q's tenths: W div 16 16,213.809; kappa + 1 16,201.179; W/7 53.316; 3W/11 9.061 |
+| (g) 64 phases, the readers' spring | Q 2, 0, 0 on the ring, 3, 1, 0 on the star; P 24, 11, 1 and 1, 0, 0 |
 | (h) conditional draw, the step | 14,333 crossings, the tenths 4.622, 1:1 z^2 0.141; 62.412 and 79.462 on 81 |
 | (i) the quarter turn | c^2 kept by T/4 and moved T/2 by T/8 at every tooth of six dials; at W 2, 4 and 8 residues |
 | (j) the held count displaced | alike: 4 values, 3:7 z^2 18,578.571; up to 1,000: 12 values, 3:7 z^2 465.434 |
 | (k) 8 not dividing T_f | v reaches T_f div 8 at 1, 4, 7 and 5 of the top 16 residues, the ceiling at 0 |
 | g5_draw (k), reading P | the record tooth, a whole count into the now slot: 300 of 300 rounds; the law's take: 0 |
-| g5_draw (n), rebuilt | settings as whole sizes; frozen pointer: Bob -, + and -, -, +; spread evenly: 3,120 of 6,240 |
-| g5_draw (o) | light-only deciding merges: 50 of 66 with sparse absorbers; 0 of 399 on a full screen |
+| g5_draw (n), rebuilt | settings drawn; frozen: Bob moved at 2 of 10 and 1 of 10; spread evenly: 3,120 of 6,240 |
+| g5_draw (o) | deciding merges of the board's wave alone: 50 of 66 with sparse absorbers; 0 of 399 on a full screen |
 | g5_draw (i), the raw sum | exactly 500 of 1,000 at every Node-clock, by arithmetic |
 | g5_draw (r) | each part its exact share on an even grid, with zero sizes; the edge to the last nonzero part |
 
@@ -897,11 +902,11 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   the frequencies. The join condition itself is algebra, DERIVED, in the row above.
 - **Home:** owed in code at G5, beside term 11's click tooth. **Status:** the pointer CHOSEN, Big Pic's candidate, not
   derived; its mirror DERIVED and its gears DERIVED on every kind but E, both CHECKED on the act; its fairness CHECKED
-  on one board with term 6 at G3's probe strengths, on six lays, one hot board and the cold packet's 50 seeds, with a
-  mild excess over 510 hot boards; not fair where only light moves, nor where the held count swings on kappa's lattice,
-  nor on a single rotation near a fraction of small denominator. OPEN: the condition on the rows' join and on
-  fractions, and which strengths meet it; the draw where only light moves; the hot board's excess; the coupling's read
-  of the kept branch; the split click on the act.
+  on one board with term 6 at G3's probe strengths, on six lays, one hot board and the cold packet's 50 seeds, with an
+  excess over 510 hot boards, mild in size, not in significance (a tail of 382 ppm); not fair where only the board's
+  wave moves, nor where the held count swings on kappa's lattice, nor on a single rotation near a fraction of small
+  denominator. OPEN: the condition on the rows' join and on fractions, and which strengths meet it; the draw where only
+  the board's wave moves; the hot board's excess; the coupling's read of the kept branch; the split click on the act.
 
 ## 7. OPEN
 
@@ -911,13 +916,16 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   - The moving rows' squares reaching, together, a lattice finer than the shares need, at most
     lcm_i (m_i div gcd(m_i, 4)) residues for rows on W/m_i (the end mathematician's B1): stated as necessary.
   - Which strengths meet it is G3's to derive. What suffices, over every phase and on the board's seven Node-clocks, is
-    unshown: at the readers' spring the star's 8 of 64 phases past the 5 per cent point stand against chance's 3.200.
+    unshown: on the drawn hand the 64 phases at the readers' spring pass (3 of 64 past the 5 per cent point on the star
+    and 2 on the ring, against chance's 3.200), a record and not a proof.
   - With it, the norm's own bound given the rest, which the third text's lemma does not give.
-- **The draw where only light moves.**
-  - Light's teeth on the grip's lattice give the pointer 3 values, at form B's merges where only light crossed and on a
-    board with the plan empty. The draw needs rows there whose squares reach a fine lattice together.
-  - Which row moves there (term 5's push of the 00 slot, or a push that takes light's teeth off the grip's lattice) is
-    OPEN with G2 and G3, and whether such a merge's draw is how the act parts a winding is OPEN with form B on the act.
+- **The draw where only the board's wave moves.**
+  - The board's wave's teeth on the grip's lattice give the pointer 3 values, at form B's merges where only
+    the board's wave crossed and on a board with the plan empty. The draw needs rows there whose squares reach a fine
+    lattice together.
+  - Which row moves there (term 5's push of the 00 slot, or a push that takes the board's wave's teeth off the grip's
+    lattice) is OPEN with G2 and G3, and whether such a merge's draw is how the act parts a winding is OPEN with form B
+    on the act.
 - **The cold packet, answered: a fluctuation** (the end physicist's M1). The fifth text's item read: 1:1 at z^2 6.355,
   its 27 Node-clocks sharing Meshes; whether a fluctuation or a departure of a slow packet, more packets and longer runs
   would say.
@@ -934,8 +942,9 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
     -759 ppm, z^2 1.565.
   - Bases 30 and 300, 20 packets each, and six runs of 1,000 rounds at base 100: every pooled z^2 below 3.0, and no
     count of tenths or N D_N^2 failures above chance (his phys_tally).
-  So seed 7's z^2 6.355 is the tail of chance, and the cold packet's Born test leaves the departures; its no-signal
-  shift, 24,444 ppm on a spread pointer, stays among them (the end mathematician's m3).
+  So seed 7's z^2 6.355 is the tail of chance (its N D_N^2 1.697, under 1.844), and the cold packet leaves the
+  departures, its Born test and its no-signal shift alike: a fluctuation, not a departure (the end mathematician's m3);
+  the shift was read on phys_signal's typed settings, no longer cited (section 4).
 - **The hot board's lay:** N D_N^2 past its 5 per cent point at 44 of 510 lays against 25.5 by chance, and splits off
   the page's grid past 6.635 on some (section 3; the end physicist's M2). Whether matter at 10 counts mixes
   incompletely on its mass spring's lattice, W div 400, as he reads it, is not derived; W/400 is one more coarse
@@ -951,9 +960,10 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
     amplitudes squared; the pointer's independence of the sizes at form B's sizes, and of the far settings (Bell,
     section 4), untested;
   - **two quanta at two ports** (Hong-Ou-Mandel);
-  - **the owner's word on (n)'s settings** (Big Pic's m7, section 4): the whole sizes as built, which his test reaches,
-    or the settings laid as lattice directions with the sizes following, Mermin's three among them; and on (g)'s
-    Pythagorean lay (M7), under the same question;
+  - **Big Pic's proposal** (his m7, section 4): settings laid as the board's own directions are lawful only if the act
+    itself draws the directions; picked, with the sizes computed from the singlet's formula, they are barred by law
+    line 102. (n)'s settings are now laid by the probe's carry sequence, and (g)'s Pythagorean lay (the end
+    mathematician's M7) is closed by the rebuild (section 3);
   - **the owner's word:** decision 29's d = (c + V) mod L becomes this pointer, c struck, and decision 29 (2)'s take
     gives way to "the click writes nothing" on the board, the draw keeping its branch on the hand. The law's wording
     follows his word (Sofer's 6518975579).
@@ -1141,7 +1151,7 @@ checked and how.
   - the trains' own signed permutations: the third text's pointer is equal at 0, 1,080 and 0 of 1,080 draws, the norm at
     1,080 of 1,080 under each;
   - the held count's row alone, where the third text's pointer froze: fair on one hot board and on the cold packet;
-  - the vacuum, light alone moving: broken, 3 values (sections 3 and 4);
+  - the vacuum, the board's wave alone moving: broken, 3 values (sections 3 and 4);
   - the readers' own single rotations: W/7 and 3W/11 break the draw, and the off-lattice springs over 64 phases pass;
   - six lays and one hot board pass; the cold packet sat between the 5 and the 1 per cent points, the tail of chance by
     the end physicist's 50 seeds (section 7);
@@ -1172,8 +1182,8 @@ byte for byte, and both reports went to Big Pic first (David's 6535686784).
 **The end mathematician's two, and his minors:**
 1. B1, the Born condition stated row by row: struck. The condition is on the join of the moving rows' lattices, at
    most lcm_i (m_i div gcd(m_i, 4)) residues, DERIVED from the bound, necessary and not shown sufficient, with his
-   runs: light's teeth on the grip's lattice in every fair lay, and rows on W/6, W/64 and W/125 within chance together
-   while each fails alone (the finding; 1; 2, the rows together; 3; 4; 6; 7).
+   runs: the board's wave's teeth on the grip's lattice in every fair lay, and rows on W/6, W/64 and W/125 within chance
+   together while each fails alone (the finding; 1; 2, the rows together; 3; 4; 6; 7).
 2. B2, g5_draw (n)'s Pell cosine and cosine-law sizes: (n) rebuilt with Alice's settings given by whole sizes alone,
    the spin singlet at 30 degrees dropped, and section 10's false line corrected (the preamble; 4; 5; 10).
 3. His minors:
@@ -1243,3 +1253,47 @@ as lattice directions give the same sizes with no angle (section 4).
   flipped, 1/3 x 1 + 2/3 x 1/4 = 1/2, against 5/9.
 - **What the text searched again:** every "single rotation", "Clicks", "must", "264", "cold packet", "mild" and
   "(n)": each now carries the scope the reader asked.
+
+## 13. The end mathematician's third reading, folded (the eighth text)
+
+The seventh text (toys-5 d5745d134) went back to its end mathematician. No probe had moved since the sixth text, so his
+reruns stood (g5_draw 91 s, g5_norm 59 s, byte for byte). He found B1's last clause and B3 mended, and returned
+NOT PASSED on two items, both from the owner's words given after that text was written.
+
+**The end mathematician's two, and his minors:**
+1. L1, law line 102, the owner's answer: a construction aimed at an angle or a root is forbidden, in a lay and in code;
+   a value is lawful only when it comes out of the act, the families and their coupling, or by chance from a generic
+   start, and G5's settings only if drawn, not picked (Big Pic). His four things, one item, each folded:
+   - g5_draw (n)'s typed sizes: (n) rebuilt, Alice's settings (x, y, y, x) laid by the probe's carry sequence; with the
+     pointer frozen the far setting moves Bob's draw at 2 of 10 and 1 of 10 frozen values, and Bob's share of + stays a
+     half when e is spread evenly (the preamble; 4; 5);
+   - g5_norm (g)'s Pythagorean hand: withdrawn, with its own spring 2 W div 25, its offset case and (a)'s lattice of 25;
+     (g) rebuilt with both before slots drawn by the carry sequence, its figures moved, and 3W/11 now reached only at
+     the battery's 5 per cent points on the ring (the finding; the preamble; 2; 3; 4; 5; 7);
+   - the phys_signal settings, 4 - k, k, k, 4 - k: typed, so their figures are a reader's run on typed settings, no
+     longer cited for any claim (4; 7);
+   - Big Pic's proposal: the face diagonals picked and the sizes computed from the singlet's formula,
+     (1 -/+ u.v / 2) / 4, the cosine law as a dot product, so the sizes do not come by themselves; u.v takes -2, -1, 0,
+     1 and 2, as his g7_mermin shows; lawful only if the act itself draws the directions, OPEN (the preamble; 4; 7).
+2. L2, the owner's word "there is no light on the board": the train the files named so is the board's wave, a clock
+   fact, and its physics belongs to the click world. The sweep names it the board's wave throughout, and the three
+   sentences that set a board figure beside nature carry the click-world label (4). Three places keep the word: decision
+   30's own words, cited (2), and the end mathematician's script name (2; 10).
+3. His minors:
+   - m3, the cold packet's no-signal shift: a fluctuation, not a departure, out of the departures with its Born test (4;
+     7);
+   - m4, section 6's Status line: the excess over 510 hot boards now reads mild in size, not in significance (a tail of
+     382 ppm); section 12's search line, false as written there, stays as the seventh text's record (6);
+   - the seventh text's line 715, "g5_norm's Pythagorean hand at its own spring W / 7": W / 7 rounded is g5_norm's
+     SEVEN, not that hand's own spring, 2 W div 25; the sentence now says so, and its run is a record on the withdrawn
+     lay (4);
+   - m1, m2, m5 and m6, mended as he found.
+
+**How the eighth text checked itself:**
+- **The probes rebuilt and rerun:** g5_draw.py's (n) and g5_norm.py's (g) rebuilt with drawn lays and rerun on main's
+  src at 0df0e8385; only (n)'s lines moved in g5_draw.txt, and in g5_norm.txt only (g)'s lines and (a)'s q = 25 row,
+  with its line in (a)'s heading. (n)'s heading, "no signal with a frozen pointer", which its own figures contradict,
+  now reads "the frozen pointer against Alice's far setting", rerun byte for byte but that line.
+- **What the text searched again:** every "Pythagorean", "48/50", "2 W div 25", "by themselves", "phys_signal",
+  "1, 0 or -1", "mild" and "24,444". Each one left names the withdrawal or the scope the reader asked, or stands in a
+  record of an earlier text or reading (the preamble's history; sections 8 to 12).

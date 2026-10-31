@@ -18,7 +18,7 @@ summed and L their total. Beside it, as the control, the third text's pointer e:
 over x, its six neighbours and the A1 rows, folded to a half turn, drawn by its own rule.
 
 (a) the residue check: Q mod T over one, two and three rows, each row's c over its whole range, at the primes 97, 101
-    and 103 and at small even dials; and at W, each row's tooth on the probe's lattices of 6, 16, 25 and 48 points;
+    and 103 and at small even dials; and at W, each row's tooth on the probe's lattices of 6, 16 and 48 points;
 (b) the run back inside the act: 300 rounds out from the old lay and back, against a control at chance;
 (c) the 24: Q at the image under every turn of the cube, the draw's covariance in the parts' own order; and the
     trains' own signed permutations, under which Q stands and P moves;
@@ -26,7 +26,8 @@ over x, its six neighbours and the A1 rows, folded to a half turn, drawn by its 
 (e) the hot board and the cold packet, the held count's row alone, and the Fano factors in windows of 10 to 400 rounds;
 (f) the vacuum: term 6, light laid moving at every Node-clock, matter and the held count at rest, 400 rounds;
 (g) the readers' single rotations on G3's ring of 128, the merge at one Node-clock and its two neighbours: every lay
-    whole, one Pythagorean hand (a = 7, b = 1), turned by the act itself for its 64 start phases;
+    whole, one hand whose two before slots are drawn by the carry sequence, turned by the act itself for its 64 start
+    phases;
 (h) the conditional draw and the backward pass's step, the third text's (p) and (q);
 (i) one row's square up to a quarter turn and its sign, at small dials and at W on the lattices of W/6, W/16 and
     W/48 (the fourth text's mathematician's NB1, his g5v4_algebra ported);
@@ -475,8 +476,8 @@ for teeth in (6, 16, 48, 96, 384):
     print(f"    T = {teeth}: " + "; ".join(cells))
 print("    at W, each row's tooth on one of the probe's lattices of q points, r = H + j (W div q), j = 0 to q - 1:")
 print("    q = 6 is the grip's (light on every lay; every row with the plan empty), 16 the plan's kappa = W div 16,")
-print("    25 the Pythagorean kappa = 2 W div 25 of (g), 48 the joint lattice of kappa and the grip:")
-for q in (6, 16, 25, 48):
+print("    48 the joint lattice of kappa and the grip:")
+for q in (6, 16, 48):
     stride, rest = carry(W, q, 0)
     assert rest == 0
     lattice = [2 * carry(H + j * stride, W, 0)[1] + 1 - W for j in range(q)]
@@ -826,16 +827,15 @@ print(f"    light's two rows alone in Q on the old lay of (d): {len(set(flat_lig
 
 # ==== (g)
 A = N_HELD  # the hand's swing, n
-PA, PB = 7, 1  # the Pythagorean pair: W = a^2 + b^2 in units of W div 50, kappa_p = 4 b^2 in the same units
-HYP = PA * PA + PB * PB
-NEAR, NEAR_REST = carry(A * (PA * PA - PB * PB), HYP, 0)  # A (a^2 - b^2) over (a^2 + b^2), whole
-SIDE, SIDE_REST = carry(A * 2 * PA * PB, HYP, 0)  # A 2 a b over (a^2 + b^2), whole
-KAPPA_P, KP_REST = carry(4 * PB * PB * W, HYP, 0)  # 2 W div 25, whole
-assert NEAR_REST == 0 and SIDE_REST == 0 and KP_REST == 0
-HAND = ((A, NEAR), (0, -SIDE))  # re at its now and before slots, im a quarter turn behind: one uniform rotation
+# the hand, drawn, not picked (line 102): re's now slot at the swing A and im's now slot at 0; re's before slot and
+# im's before slot drawn by the probe family's own carry sequence from SEED, as g5_draw.py's (n) lays Alice's settings,
+# each within A - 1 of 0, below A: no slot is set to land at an angle or on a root
+hand_pick = generator(SEED)
+RE_BEFORE = hand_pick(A - 1)
+IM_BEFORE = hand_pick(A - 1)
+HAND = ((A, RE_BEFORE), (0, IM_BEFORE))  # re and im, each at its now and before slots
 KAPPA = carry(W, 16, 0)[0]  # the plan's kappa
 OFFSET = carry(W, 16 * N_HELD, 0)[0] + 1  # the readers' offset: kappa + OFFSET leaves W div 16's lattice by a step
-OFFSET_P = carry(W, 25 * N_HELD, 0)[0] + 1  # the same for the Pythagorean lattice of 25 points
 SEVEN = carry(2 * W + 7, 14, 0)[0]  # W div 7, rounded
 ELEVEN = carry(6 * W + 11, 22, 0)[0]  # 3 W div 11, rounded
 ROUNDS_G = 10800
@@ -922,17 +922,11 @@ def third_rule(e, h, sizes):
 print(f"(g) the readers' single rotations: G3's held hand on G3's ring of {SIZE}, the merge at Node-clock 0 and its")
 print(f"    two neighbours, re and im read, every fine tooth born at H, {ROUNDS_G} rounds. Laid alike at every")
 print("    Node-clock, the Meshes pull nothing, so the merge reads 3 times one Node-clock's sum, and the board's star")
-print("    of seven 7 times. Every lay is whole: G3's quarter lay, the readers' own-beat lays and their 64 start")
-print("    phases came from series, so one Pythagorean hand stands for them all (Big Pic's construction), and the act")
-print("    turns it:")
-print(f"    a = {PA}, b = {PB}: re laid at {A} and {NEAR} (now, before), im at 0 and {-SIDE}; the beat's two whole")
-near2, side2 = PA * PA - PB * PB, 2 * PA * PB
-print(f"    ratios {near2} over {HYP} and {side2} over {HYP}; ({near2})^2 + ({side2})^2 ="
-      f" {HYP}^2: {(PA * PA - PB * PB) ** 2 + (2 * PA * PB) ** 2 == HYP * HYP}; re^2 + im^2 the same at both slots:"
-      f" {A * A == NEAR * NEAR + SIDE * SIDE}")
-print(f"    the hand's own spring 4 b^2 W over (a^2 + b^2) = 2 W div 25 = {KAPPA_P}; at another spring the same lay")
-print("    turns on an ellipse; the norm pointer v at the merge drawn by the half-open cells, the third text's e")
-print("    beside it by its own rule, the control:")
+print("    of seven 7 times. Every lay is whole: one hand whose two before slots are drawn by the carry sequence,")
+print("    turned by the act itself for its 64 start phases (drawn, not picked: line 102):")
+print(f"    re laid at {A} and {RE_BEFORE} (now, before), im at 0 and {IM_BEFORE}, each before slot drawn within n - 1")
+print(f"    of 0 by the probe's carry sequence from its seed {SEED}; the norm pointer v at the merge drawn by the")
+print("    half-open cells, the third text's e beside it by its own rule, the control:")
 check = ring_run(HAND, KAPPA + OFFSET, 1000)
 norms0, sums0, _, _ = hand_run(HAND, KAPPA + OFFSET, 1000)
 agree = sum(int(qq == 3 * a and pp == 3 * b) for (qq, pp), a, b in zip(check, norms0, sums0, strict=True))
@@ -941,8 +935,6 @@ print(f"    the whole ring's merge against 3 times one Node-clock, at kappa + W 
 CASES = (("the plan's kappa = W div 16, on its lattice of 16 points", KAPPA),
          ("kappa + 1, one count off that lattice", KAPPA + 1),
          ("kappa + W div (16 n) + 1, the readers' off-lattice spring, at the lay's own phase", KAPPA + OFFSET),
-         ("the hand's own beat, 2 W div 25, on its lattice of 25 points", KAPPA_P),
-         ("2 W div 25 + W div (25 n) + 1, off that lattice by a step at the swing", KAPPA_P + OFFSET_P),
          ("W div 7 rounded, the mathematician's", SEVEN),
          ("3 W div 11 rounded, the mathematician's", ELEVEN))
 print(f"    W mod 7 = {carry(W, 7, 0)[1]}, W mod 11 = {carry(W, 11, 0)[1]}; gcd(W, W div 7 rounded) = {gcd(W, SEVEN)},"
@@ -974,12 +966,11 @@ def octant(re, im):
     return 2 * quad + (0 if first else 1)
 
 
-print(f"    the off-lattice springs at {STARTS} start phases: the hand laid as above, then turned by the act itself, d")
+print(f"    the off-lattice spring at {STARTS} start phases: the hand laid as above, then turned by the act itself, d")
 print("    rounds between starts at the spring, every fine tooth born again at H for each start's read; d, written")
 print("    here, takes the starts once round (their octants, counterclockwise from re's + axis, listed); per start,")
 print("    the tenths on 9, N times D_N squared and the largest z^2 of 1:1, 1:3 and 3:7:")
-for label, spring, turn_step in (("kappa + W div (16 n) + 1, the readers' spring", KAPPA + OFFSET, 602),
-                                 ("2 W div 25 + W div (25 n) + 1, the hand on its own beat", KAPPA_P + OFFSET_P, 421)):
+for label, spring, turn_step in (("kappa + W div (16 n) + 1, the readers' spring", KAPPA + OFFSET, 602),):
     re, im = (HAND[0][0], HAND[0][1], H), (HAND[1][0], HAND[1][1], H)
     rows_s, octants = [], [0] * 8
     for j in range(STARTS):

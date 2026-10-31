@@ -17,10 +17,9 @@ the draw reads v against T8 in the parts' half-open cells
     T = 384: 1: u 32 of 384, classes mod 8 [1], u div 8 32 of 48 (8 to 16 times); 2: u 48 of 384, classes mod 8 [2], u div 8 48 of 48 (1024 to 4096 times); 3: u 48 of 384, classes mod 8 [3], u div 8 48 of 48 (786432 to 1572864 times)
     at W, each row's tooth on one of the probe's lattices of q points, r = H + j (W div q), j = 0 to q - 1:
     q = 6 is the grip's (light on every lay; every row with the plan empty), 16 the plan's kappa = W div 16,
-    25 the Pythagorean kappa = 2 W div 25 of (g), 48 the joint lattice of kappa and the grip:
+    48 the joint lattice of kappa and the grip:
     q = 6: 1: 2 residues of u, 2 of v, on a lattice of W over 3; 2: 3 residues of u, 3 of v, on a lattice of W over 3; 3: 3 residues of u, 3 of v, on a lattice of W over 3
     q = 16: 1: 4 residues of u, 4 of v, on a lattice of W over 4; 2: 4 residues of u, 4 of v, on a lattice of W over 4; 3: 4 residues of u, 4 of v, on a lattice of W over 4
-    q = 25: 1: 25 residues of u, 25 of v, on a lattice of W over 25; 2: 25 residues of u, 25 of v, on a lattice of W over 25; 3: 25 residues of u, 25 of v, on a lattice of W over 25
     q = 48: 1: 8 residues of u, 8 of v, on a lattice of W over 12; 2: 12 residues of u, 12 of v, on a lattice of W over 12; 3: 12 residues of u, 12 of v, on a lattice of W over 12
 (b) the run back inside the act, term 6, 300 rounds from the old lay:
     forward: s_t = tick(s_(t-1)) for t = 1 to 300; the norm pointer and the draw at every Node-clock from
@@ -156,75 +155,52 @@ the draw reads v against T8 in the parts' half-open cells
 (g) the readers' single rotations: G3's held hand on G3's ring of 128, the merge at Node-clock 0 and its
     two neighbours, re and im read, every fine tooth born at H, 10800 rounds. Laid alike at every
     Node-clock, the Meshes pull nothing, so the merge reads 3 times one Node-clock's sum, and the board's star
-    of seven 7 times. Every lay is whole: G3's quarter lay, the readers' own-beat lays and their 64 start
-    phases came from series, so one Pythagorean hand stands for them all (Big Pic's construction), and the act
-    turns it:
-    a = 7, b = 1: re laid at 1000000 and 960000 (now, before), im at 0 and -280000; the beat's two whole
-    ratios 48 over 50 and 14 over 50; (48)^2 + (14)^2 = 50^2: True; re^2 + im^2 the same at both slots: True
-    the hand's own spring 4 b^2 W over (a^2 + b^2) = 2 W div 25 = 7278171244373946720000; at another spring the same lay
-    turns on an ellipse; the norm pointer v at the merge drawn by the half-open cells, the third text's e
-    beside it by its own rule, the control:
+    of seven 7 times. Every lay is whole: one hand whose two before slots are drawn by the carry sequence,
+    turned by the act itself for its 64 start phases (drawn, not picked: line 102):
+    re laid at 1000000 and 955176 (now, before), im at 0 and -540026, each before slot drawn within n - 1
+    of 0 by the probe's carry sequence from its seed 20261030; the norm pointer v at the merge drawn by the
+    half-open cells, the third text's e beside it by its own rule, the control:
     the whole ring's merge against 3 times one Node-clock, at kappa + W div (16 n) + 1, rounds 1 to 1000: equal at 1000 of 1000
     W mod 7 = 2, W mod 11 = 4; gcd(W, W div 7 rounded) = 2, gcd(W, 3 W div 11 rounded) = 1
     the plan's kappa = W div 16, on its lattice of 16 points: the spring 5686071284667145875000; re's fine-tooth move over W, median 312 thousandths of a turn
-      the ring's merge, Q: 4 distinct; the tenths 16202.007 on 9; D_N 250185 ppm, N times D_N squared 676000; lag-1 joint tenths 8.655 on 9; z^2 at 1:1, 1:3, 3:7: 0.480, 0.284, 1989.142
-      the ring's merge, P: 8 distinct; the tenths 9420.896 on 9; D_N 129907 ppm, N times D_N squared 182260; lag-1 joint tenths 27.066 on 25; z^2 at 1:1, 1:3, 3:7: 0.853, 5.760, 260.063
-      the board's star, Q: 4 distinct; the tenths 16202.007 on 9; D_N 250185 ppm, N times D_N squared 676000; lag-1 joint tenths 8.655 on 9; z^2 at 1:1, 1:3, 3:7: 0.480, 0.284, 1989.142
-      the board's star, P: 8 distinct; the tenths 9420.896 on 9; D_N 132222 ppm, N times D_N squared 188813; lag-1 joint tenths 27.066 on 25; z^2 at 1:1, 1:3, 3:7: 2.613, 0.000, 236.253
+      the ring's merge, Q: 4 distinct; the tenths 16213.809 on 9; D_N 251018 ppm, N times D_N squared 680511; lag-1 joint tenths 19.992 on 9; z^2 at 1:1, 1:3, 3:7: 2.803, 0.142, 1894.765
+      the ring's merge, P: 8 distinct; the tenths 9257.518 on 9; D_N 130277 ppm, N times D_N squared 183300; lag-1 joint tenths 37.153 on 25; z^2 at 1:1, 1:3, 3:7: 0.480, 0.071, 250.003
+      the board's star, Q: 4 distinct; the tenths 16213.809 on 9; D_N 251018 ppm, N times D_N squared 680511; lag-1 joint tenths 19.992 on 9; z^2 at 1:1, 1:3, 3:7: 2.803, 0.142, 1894.765
+      the board's star, P: 8 distinct; the tenths 9257.518 on 9; D_N 132407 ppm, N times D_N squared 189342; lag-1 joint tenths 37.153 on 25; z^2 at 1:1, 1:3, 3:7: 0.003, 0.024, 276.571
     kappa + 1, one count off that lattice: the spring 5686071284667145875001; re's fine-tooth move over W, median 312 thousandths of a turn
-      the ring's merge, Q: 10800 distinct; the tenths 16204.409 on 9; D_N 251481 ppm, N times D_N squared 683023; lag-1 joint tenths 9.492 on 9; z^2 at 1:1, 1:3, 3:7: 0.003, 1.090, 2051.432
-      the ring's merge, P: 10791 distinct; the tenths 9541.648 on 9; D_N 136388 ppm, N times D_N squared 200900; lag-1 joint tenths 14.980 on 25; z^2 at 1:1, 1:3, 3:7: 3.853, 1.090, 368.340
-      the board's star, Q: 10800 distinct; the tenths 16204.409 on 9; D_N 251481 ppm, N times D_N squared 683023; lag-1 joint tenths 9.492 on 9; z^2 at 1:1, 1:3, 3:7: 0.003, 1.090, 2051.432
-      the board's star, P: 10791 distinct; the tenths 9541.648 on 9; D_N 134444 ppm, N times D_N squared 195213; lag-1 joint tenths 14.980 on 25; z^2 at 1:1, 1:3, 3:7: 4.005, 5.975, 221.015
-    kappa + W div (16 n) + 1, the readers' off-lattice spring, at the lay's own phase: the spring 5686076970738430542146; re's fine-tooth move over W, median 288 thousandths of a turn
-      the ring's merge, Q: 10800 distinct; the tenths 8.148 on 9; D_N 7435 ppm, N times D_N squared 597; lag-1 joint tenths 71.551 on 81; z^2 at 1:1, 1:3, 3:7: 0.163, 0.444, 0.099
-      the ring's merge, P: 10794 distinct; the tenths 22.709 on 9; D_N 11232 ppm, N times D_N squared 1362; lag-1 joint tenths 131.988 on 81; z^2 at 1:1, 1:3, 3:7: 0.453, 4.840, 0.932
-      the board's star, Q: 10800 distinct; the tenths 5.127 on 9; D_N 8927 ppm, N times D_N squared 860; lag-1 joint tenths 76.398 on 81; z^2 at 1:1, 1:3, 3:7: 2.253, 3.004, 2.160
-      the board's star, P: 10794 distinct; the tenths 5.614 on 9; D_N 4768 ppm, N times D_N squared 245; lag-1 joint tenths 59.480 on 81; z^2 at 1:1, 1:3, 3:7: 0.355, 0.217, 0.423
-    the hand's own beat, 2 W div 25, on its lattice of 25 points: the spring 7278171244373946720000; re's fine-tooth move over W, median 280 thousandths of a turn
-      the ring's merge, Q: 25 distinct; the tenths 428.629 on 9; D_N 47685 ppm, N times D_N squared 24557; lag-1 joint tenths 90.423 on 81; z^2 at 1:1, 1:3, 3:7: 19.763, 73.578, 28.895
-      the ring's merge, P: 25 distinct; the tenths 420.294 on 9; D_N 43703 ppm, N times D_N squared 20628; lag-1 joint tenths 83.394 on 81; z^2 at 1:1, 1:3, 3:7: 18.253, 54.431, 19.075
-      the board's star, Q: 25 distinct; the tenths 443.294 on 9; D_N 43888 ppm, N times D_N squared 20803; lag-1 joint tenths 90.283 on 81; z^2 at 1:1, 1:3, 3:7: 17.440, 53.127, 23.731
-      the board's star, P: 25 distinct; the tenths 421.705 on 9; D_N 44444 ppm, N times D_N squared 21333; lag-1 joint tenths 76.996 on 81; z^2 at 1:1, 1:3, 3:7: 16.023, 68.337, 12.444
-    2 W div 25 + W div (25 n) + 1, off that lattice by a step at the swing: the spring 7278174883459568906974; re's fine-tooth move over W, median 287 thousandths of a turn
-      the ring's merge, Q: 10800 distinct; the tenths 11.272 on 9; D_N 8317 ppm, N times D_N squared 747; lag-1 joint tenths 55.662 on 81; z^2 at 1:1, 1:3, 3:7: 2.195, 0.126, 0.074
-      the ring's merge, P: 10797 distinct; the tenths 12.862 on 9; D_N 10804 ppm, N times D_N squared 1260; lag-1 joint tenths 85.293 on 81; z^2 at 1:1, 1:3, 3:7: 2.028, 1.284, 1.333
-      the board's star, Q: 10800 distinct; the tenths 7.366 on 9; D_N 9576 ppm, N times D_N squared 990; lag-1 joint tenths 75.780 on 81; z^2 at 1:1, 1:3, 3:7: 0.750, 0.676, 0.063
-      the board's star, P: 10797 distinct; the tenths 6.331 on 9; D_N 6868 ppm, N times D_N squared 509; lag-1 joint tenths 79.681 on 81; z^2 at 1:1, 1:3, 3:7: 0.148, 0.261, 0.253
+      the ring's merge, Q: 10800 distinct; the tenths 16201.179 on 9; D_N 252592 ppm, N times D_N squared 689072; lag-1 joint tenths 5.358 on 9; z^2 at 1:1, 1:3, 3:7: 0.290, 0.000, 2110.821
+      the ring's merge, P: 10799 distinct; the tenths 9468.505 on 9; D_N 128240 ppm, N times D_N squared 177613; lag-1 joint tenths 23.172 on 25; z^2 at 1:1, 1:3, 3:7: 0.453, 0.444, 269.631
+      the board's star, Q: 10800 distinct; the tenths 16201.179 on 9; D_N 252592 ppm, N times D_N squared 689071; lag-1 joint tenths 5.358 on 9; z^2 at 1:1, 1:3, 3:7: 0.290, 0.000, 2110.821
+      the board's star, P: 10799 distinct; the tenths 9468.505 on 9; D_N 126666 ppm, N times D_N squared 173279; lag-1 joint tenths 23.172 on 25; z^2 at 1:1, 1:3, 3:7: 0.023, 0.640, 288.571
+    kappa + W div (16 n) + 1, the readers' off-lattice spring, at the lay's own phase: the spring 5686076970738430542146; re's fine-tooth move over W, median 296 thousandths of a turn
+      the ring's merge, Q: 10800 distinct; the tenths 7.457 on 9; D_N 5868 ppm, N times D_N squared 371; lag-1 joint tenths 92.768 on 81; z^2 at 1:1, 1:3, 3:7: 0.018, 0.083, 0.451
+      the ring's merge, P: 10797 distinct; the tenths 6.953 on 9; D_N 7907 ppm, N times D_N squared 675; lag-1 joint tenths 104.741 on 81; z^2 at 1:1, 1:3, 3:7: 0.750, 0.031, 0.636
+      the board's star, Q: 10800 distinct; the tenths 13.175 on 9; D_N 10105 ppm, N times D_N squared 1102; lag-1 joint tenths 89.624 on 81; z^2 at 1:1, 1:3, 3:7: 0.622, 0.751, 1.640
+      the board's star, P: 10797 distinct; the tenths 7.344 on 9; D_N 9121 ppm, N times D_N squared 898; lag-1 joint tenths 80.343 on 81; z^2 at 1:1, 1:3, 3:7: 1.203, 1.387, 0.571
     W div 7 rounded, the mathematician's: the spring 12996734364953476285714; re's fine-tooth move over W, median 285 thousandths of a turn
-      the ring's merge, Q: 10800 distinct; the tenths 62.272 on 9; D_N 28743 ppm, N times D_N squared 8922; lag-1 joint tenths 96.152 on 81; z^2 at 1:1, 1:3, 3:7: 10.703, 16.901, 7.111
-      the ring's merge, P: 10795 distinct; the tenths 17987.435 on 9; D_N 147817 ppm, N times D_N squared 235980; lag-1 joint tenths 3.198 on 9; z^2 at 1:1, 1:3, 3:7: 252.083, 714.671, 785.813
-      the board's star, Q: 10800 distinct; the tenths 4675.418 on 9; D_N 161494 ppm, N times D_N squared 281669; lag-1 joint tenths 85.523 on 36; z^2 at 1:1, 1:3, 3:7: 253.920, 170.157, 1006.667
-      the board's star, P: 10795 distinct; the tenths 97200.000 on 9; D_N 999999 ppm, N times D_N squared 10799999; lag-1 joint tenths 0.000 on 0; z^2 at 1:1, 1:3, 3:7: 10800.000, 32400.000, 25200.000
+      the ring's merge, Q: 10800 distinct; the tenths 53.316 on 9; D_N 29419 ppm, N times D_N squared 9347; lag-1 joint tenths 104.404 on 81; z^2 at 1:1, 1:3, 3:7: 10.578, 27.504, 11.146
+      the ring's merge, P: 10792 distinct; the tenths 18000.625 on 9; D_N 149828 ppm, N times D_N squared 242443; lag-1 joint tenths 15.051 on 9; z^2 at 1:1, 1:3, 3:7: 232.320, 717.049, 825.142
+      the board's star, Q: 10800 distinct; the tenths 4675.387 on 9; D_N 161111 ppm, N times D_N squared 280333; lag-1 joint tenths 53.456 on 36; z^2 at 1:1, 1:3, 3:7: 265.707, 156.527, 1057.936
+      the board's star, P: 10792 distinct; the tenths 97200.000 on 9; D_N 999999 ppm, N times D_N squared 10799999; lag-1 joint tenths 0.000 on 0; z^2 at 1:1, 1:3, 3:7: 10800.000, 32400.000, 25200.000
     3 W div 11 rounded, the mathematician's: the spring 24811947424002091090909; re's fine-tooth move over W, median 272 thousandths of a turn
-      the ring's merge, Q: 10800 distinct; the tenths 24.792 on 9; D_N 13401 ppm, N times D_N squared 1939; lag-1 joint tenths 99.284 on 81; z^2 at 1:1, 1:3, 3:7: 1.001, 2.351, 1.102
-      the ring's merge, P: 10793 distinct; the tenths 7940.051 on 9; D_N 94031 ppm, N times D_N squared 95493; lag-1 joint tenths 19.319 on 25; z^2 at 1:1, 1:3, 3:7: 91.117, 34.417, 33.587
-      the board's star, Q: 10800 distinct; the tenths 11.166 on 9; D_N 10947 ppm, N times D_N squared 1294; lag-1 joint tenths 89.598 on 81; z^2 at 1:1, 1:3, 3:7: 0.044, 3.652, 1.102
-      the board's star, P: 10793 distinct; the tenths 7940.051 on 9; D_N 92803 ppm, N times D_N squared 93013; lag-1 joint tenths 19.319 on 25; z^2 at 1:1, 1:3, 3:7: 90.018, 25.000, 43.750
-    the off-lattice springs at 64 start phases: the hand laid as above, then turned by the act itself, d
+      the ring's merge, Q: 10800 distinct; the tenths 9.061 on 9; D_N 13594 ppm, N times D_N squared 1995; lag-1 joint tenths 96.953 on 81; z^2 at 1:1, 1:3, 3:7: 1.120, 3.484, 4.234
+      the ring's merge, P: 10784 distinct; the tenths 7956.718 on 9; D_N 95673 ppm, N times D_N squared 98856; lag-1 joint tenths 26.328 on 25; z^2 at 1:1, 1:3, 3:7: 87.480, 18.585, 52.784
+      the board's star, Q: 10800 distinct; the tenths 14.794 on 9; D_N 12580 ppm, N times D_N squared 1709; lag-1 joint tenths 74.481 on 81; z^2 at 1:1, 1:3, 3:7: 0.684, 0.071, 0.127
+      the board's star, P: 10784 distinct; the tenths 7956.718 on 9; D_N 95867 ppm, N times D_N squared 99257; lag-1 joint tenths 26.328 on 25; z^2 at 1:1, 1:3, 3:7: 80.773, 44.148, 25.608
+    the off-lattice spring at 64 start phases: the hand laid as above, then turned by the act itself, d
     rounds between starts at the spring, every fine tooth born again at H for each start's read; d, written
     here, takes the starts once round (their octants, counterclockwise from re's + axis, listed); per start,
     the tenths on 9, N times D_N squared and the largest z^2 of 1:1, 1:3 and 3:7:
-    kappa + W div (16 n) + 1, the readers' spring, d = 602: the 64 starts by octant [8, 9, 8, 7, 8, 9, 8, 7]
+    kappa + W div (16 n) + 1, the readers' spring, d = 602: the 64 starts by octant [5, 12, 11, 4, 5, 12, 11, 4]
       chance for independent uniform draws: the tenths past their three points in 3.200, 0.640 and 0.064 lays; N times D_N squared past 1.844 in 3.200; the largest of three z^2 past 6.635 in about 1.900
-      the ring's merge, Q: the tenths past 16.919, 21.666 and 27.877 in 4, 0 and 0 of 64; N times D_N squared past 1.844 in 6; a split's z^2 past 6.635 in 1; the largest tenths 20.220 at start 38
-        the 64 tenths, in start order: 8.148, 18.248, 18.198, 7.961, 6.522, 9.083, 9.414, 5.601, 5.211, 3.477, 9.887, 8.227, 5.962, 10.679, 5.959, 9.362, 9.075, 11.111, 7.407, 5.205, 8.431, 16.859, 14.516, 13.998, 12.777, 15.877, 13.255, 2.850, 11.533, 5.750, 6.038, 4.153, 10.477, 2.807, 6.231, 12.696, 6.677, 6.888, 20.220, 10.187, 2.920, 5.966, 2.650, 12.440, 7.614, 11.579, 17.331, 8.177, 3.650, 3.685, 4.612, 6.062, 5.437, 6.342, 7.738, 11.246, 3.157, 3.109, 13.435, 7.870, 13.253, 9.531, 8.603, 11.898
-      the ring's merge, P: the tenths past 16.919, 21.666 and 27.877 in 47, 32 and 23 of 64; N times D_N squared past 1.844 in 8; a split's z^2 past 6.635 in 1; the largest tenths 58.498 at start 30
-        the 64 tenths, in start order: 22.709, 35.970, 9.348, 22.781, 19.957, 34.720, 12.259, 21.201, 17.185, 13.922, 19.459, 47.516, 29.827, 29.370, 30.272, 9.174, 28.474, 12.888, 39.298, 45.651, 29.375, 18.033, 21.037, 18.344, 18.305, 22.968, 10.522, 27.762, 20.672, 10.250, 58.498, 39.261, 24.422, 19.335, 50.090, 19.600, 29.637, 13.968, 41.100, 22.046, 24.087, 38.090, 29.642, 6.198, 2.412, 16.805, 6.609, 21.572, 29.338, 34.124, 11.274, 27.216, 17.592, 34.888, 33.422, 4.931, 7.198, 10.711, 17.372, 31.312, 25.959, 3.446, 45.327, 21.177
-      the board's star, Q: the tenths past 16.919, 21.666 and 27.877 in 8, 0 and 0 of 64; N times D_N squared past 1.844 in 4; a split's z^2 past 6.635 in 3; the largest tenths 19.062 at start 9
-        the 64 tenths, in start order: 5.127, 8.887, 10.244, 9.742, 6.609, 8.266, 15.514, 8.738, 13.588, 19.062, 18.303, 4.770, 4.683, 8.737, 4.640, 18.748, 17.755, 7.555, 5.850, 9.227, 10.925, 3.225, 7.448, 16.020, 8.466, 9.016, 6.938, 4.194, 7.805, 11.674, 10.500, 7.422, 9.492, 6.777, 6.727, 7.805, 7.837, 8.570, 11.664, 8.981, 6.292, 5.066, 9.540, 8.529, 10.883, 17.161, 6.359, 3.722, 10.151, 12.850, 7.190, 10.437, 7.998, 18.074, 5.740, 5.585, 4.429, 18.548, 15.272, 7.222, 8.192, 16.942, 9.566, 9.850
-      the board's star, P: the tenths past 16.919, 21.666 and 27.877 in 10, 2 and 0 of 64; N times D_N squared past 1.844 in 3; a split's z^2 past 6.635 in 0; the largest tenths 26.892 at start 27
-        the 64 tenths, in start order: 5.614, 9.585, 7.094, 7.912, 16.781, 6.798, 7.538, 9.461, 10.387, 10.546, 9.268, 13.368, 19.200, 1.751, 15.940, 10.159, 10.477, 10.757, 14.129, 14.759, 10.464, 7.898, 18.277, 6.307, 6.566, 14.357, 6.692, 26.892, 11.031, 10.927, 8.698, 2.433, 8.109, 6.266, 6.353, 8.374, 10.807, 7.546, 11.453, 12.516, 26.094, 8.770, 9.731, 4.040, 6.572, 5.088, 10.811, 4.266, 14.474, 4.729, 9.103, 6.864, 5.644, 17.314, 19.320, 10.755, 8.842, 17.920, 18.040, 19.777, 2.903, 19.561, 9.472, 7.824
-    2 W div 25 + W div (25 n) + 1, the hand on its own beat, d = 421: the 64 starts by octant [9, 8, 8, 8, 8, 8, 8, 7]
-      chance for independent uniform draws: the tenths past their three points in 3.200, 0.640 and 0.064 lays; N times D_N squared past 1.844 in 3.200; the largest of three z^2 past 6.635 in about 1.900
-      the ring's merge, Q: the tenths past 16.919, 21.666 and 27.877 in 3, 1 and 0 of 64; N times D_N squared past 1.844 in 1; a split's z^2 past 6.635 in 0; the largest tenths 25.498 at start 23
-        the 64 tenths, in start order: 11.272, 15.990, 4.403, 12.257, 10.175, 4.638, 10.138, 7.264, 11.377, 18.731, 4.618, 9.161, 6.418, 6.272, 3.262, 11.066, 5.231, 6.555, 5.483, 7.237, 11.251, 8.614, 16.548, 25.498, 6.509, 5.848, 9.329, 8.837, 11.809, 10.483, 8.514, 11.624, 6.259, 7.907, 9.500, 9.862, 4.711, 4.346, 16.979, 6.292, 10.083, 5.401, 14.081, 8.640, 9.320, 12.351, 5.005, 6.788, 9.038, 10.250, 9.368, 5.274, 10.312, 5.414, 15.372, 4.120, 7.218, 6.320, 5.175, 13.657, 10.266, 6.635, 10.611, 6.598
-      the ring's merge, P: the tenths past 16.919, 21.666 and 27.877 in 3, 0 and 0 of 64; N times D_N squared past 1.844 in 2; a split's z^2 past 6.635 in 1; the largest tenths 19.979 at start 57
-        the 64 tenths, in start order: 12.862, 9.672, 10.170, 9.770, 11.177, 18.707, 10.414, 7.511, 11.266, 10.051, 12.362, 13.687, 8.351, 10.298, 13.968, 3.348, 9.394, 4.612, 9.877, 8.933, 10.003, 6.522, 9.744, 11.351, 11.370, 9.324, 8.729, 8.724, 7.951, 7.477, 5.111, 6.831, 8.116, 10.070, 7.781, 2.914, 10.274, 10.674, 11.333, 13.587, 8.920, 9.983, 5.888, 4.801, 12.075, 6.531, 17.742, 7.944, 10.025, 4.437, 13.503, 3.261, 7.851, 4.277, 10.090, 10.518, 6.209, 19.979, 9.883, 9.925, 11.050, 4.116, 7.079, 3.890
-      the board's star, Q: the tenths past 16.919, 21.666 and 27.877 in 3, 0 and 0 of 64; N times D_N squared past 1.844 in 2; a split's z^2 past 6.635 in 1; the largest tenths 21.033 at start 57
-        the 64 tenths, in start order: 7.366, 7.083, 8.914, 9.696, 14.190, 7.694, 8.094, 6.979, 7.564, 4.096, 7.016, 15.485, 2.750, 4.768, 6.903, 9.229, 9.211, 3.527, 13.551, 18.246, 9.305, 17.057, 14.114, 11.451, 8.922, 7.474, 8.292, 11.577, 14.800, 8.220, 9.250, 11.674, 13.488, 4.468, 2.046, 6.822, 8.135, 15.940, 9.059, 5.761, 15.892, 8.840, 8.161, 6.112, 7.368, 14.772, 7.012, 6.048, 5.500, 8.220, 8.418, 4.214, 15.112, 6.716, 7.503, 6.950, 5.081, 21.033, 10.572, 11.916, 8.366, 8.716, 5.014, 10.337
-      the board's star, P: the tenths past 16.919, 21.666 and 27.877 in 4, 0 and 0 of 64; N times D_N squared past 1.844 in 3; a split's z^2 past 6.635 in 4; the largest tenths 19.064 at start 51
-        the 64 tenths, in start order: 6.331, 5.007, 13.207, 7.035, 10.279, 6.344, 18.868, 12.624, 7.881, 13.464, 18.898, 6.251, 5.425, 2.231, 9.351, 2.461, 5.822, 2.405, 2.620, 3.766, 10.918, 16.959, 11.279, 8.546, 0.768, 11.774, 5.687, 3.503, 5.414, 9.385, 11.281, 7.520, 4.498, 8.735, 4.996, 3.553, 11.596, 7.044, 14.033, 13.198, 12.361, 6.483, 7.524, 10.094, 13.088, 4.574, 10.522, 4.970, 14.959, 5.737, 5.090, 19.064, 11.624, 11.796, 16.098, 4.033, 2.303, 12.609, 10.585, 8.161, 13.953, 6.072, 5.742, 10.844
+      the ring's merge, Q: the tenths past 16.919, 21.666 and 27.877 in 2, 0 and 0 of 64; N times D_N squared past 1.844 in 1; a split's z^2 past 6.635 in 1; the largest tenths 21.231 at start 17
+        the 64 tenths, in start order: 7.457, 5.344, 6.416, 11.462, 5.446, 7.735, 6.518, 2.937, 16.305, 4.746, 9.074, 6.855, 11.683, 8.888, 4.524, 5.190, 12.751, 21.231, 8.848, 16.746, 4.055, 10.312, 4.866, 9.870, 4.700, 5.061, 3.462, 3.379, 9.572, 9.600, 6.468, 6.364, 6.077, 7.146, 6.837, 9.487, 6.283, 17.900, 3.690, 2.622, 7.116, 11.318, 6.201, 2.707, 7.825, 6.472, 8.461, 10.857, 11.905, 6.548, 3.094, 9.444, 7.059, 7.937, 10.237, 6.638, 5.937, 2.053, 7.577, 8.351, 4.874, 11.470, 6.831, 5.798
+      the ring's merge, P: the tenths past 16.919, 21.666 and 27.877 in 24, 11 and 1 of 64; N times D_N squared past 1.844 in 6; a split's z^2 past 6.635 in 3; the largest tenths 28.624 at start 14
+        the 64 tenths, in start order: 6.953, 6.203, 5.235, 8.483, 8.064, 11.255, 14.472, 16.120, 17.738, 13.944, 18.251, 6.698, 18.312, 14.835, 28.624, 12.164, 11.779, 8.481, 11.424, 13.538, 24.492, 20.011, 20.994, 18.474, 10.709, 22.985, 8.988, 12.433, 22.096, 4.287, 10.329, 9.579, 9.205, 23.781, 14.072, 20.092, 19.251, 18.537, 20.725, 9.492, 13.381, 21.748, 12.625, 24.777, 6.614, 25.125, 10.279, 18.348, 13.620, 17.175, 11.220, 21.753, 11.364, 11.940, 13.768, 22.903, 20.646, 22.935, 11.083, 10.718, 11.050, 16.724, 7.722, 14.657
+      the board's star, Q: the tenths past 16.919, 21.666 and 27.877 in 3, 1 and 0 of 64; N times D_N squared past 1.844 in 2; a split's z^2 past 6.635 in 1; the largest tenths 22.400 at start 27
+        the 64 tenths, in start order: 13.175, 9.405, 14.425, 14.827, 13.061, 7.501, 7.683, 10.509, 7.524, 7.631, 16.174, 9.711, 12.003, 5.351, 8.653, 4.987, 17.755, 15.153, 8.005, 13.057, 11.320, 9.707, 11.833, 7.583, 1.653, 17.122, 11.038, 22.400, 10.522, 10.238, 9.042, 11.355, 14.714, 7.975, 7.664, 4.716, 8.151, 9.305, 3.814, 7.640, 10.996, 13.212, 6.575, 12.103, 9.172, 11.975, 6.918, 6.907, 9.090, 7.105, 3.475, 8.557, 7.981, 7.120, 7.827, 7.779, 3.779, 4.359, 5.672, 4.988, 4.922, 9.157, 16.335, 11.005
+      the board's star, P: the tenths past 16.919, 21.666 and 27.877 in 1, 0 and 0 of 64; N times D_N squared past 1.844 in 4; a split's z^2 past 6.635 in 0; the largest tenths 18.157 at start 12
+        the 64 tenths, in start order: 7.344, 4.440, 4.635, 6.359, 3.066, 8.516, 7.524, 7.424, 4.642, 3.675, 15.574, 9.003, 18.157, 5.740, 9.844, 12.455, 1.933, 5.472, 16.712, 8.862, 7.901, 13.203, 6.114, 7.037, 10.338, 10.766, 5.885, 6.111, 7.135, 8.544, 8.822, 12.374, 9.920, 6.598, 6.153, 6.581, 5.661, 3.612, 16.738, 5.020, 13.055, 6.514, 5.200, 4.257, 9.368, 12.331, 5.472, 6.198, 4.668, 12.283, 9.981, 6.746, 7.662, 5.370, 6.292, 8.146, 16.779, 10.520, 10.351, 13.668, 3.331, 9.885, 9.275, 10.633
 (h) the third text's (p): the norm pointer only at the rounds where a Node-clock's swept area
     m_re p_im - m_im p_re crosses a multiple of the key 10^10 W, p = W (a - b) + r, from s_in to s_out, on the
     old lay's run of (d):

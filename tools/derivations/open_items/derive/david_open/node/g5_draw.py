@@ -26,8 +26,8 @@ times H; e = H goes to the last part of nonzero size in that order.
 (k) the run back with a click that writes: five writes, one act for both ways of time on the mirrored state;
 (l) decision 29's dial on its own digits, r div the row's pitch, with the plan empty and in the vacuum;
 (m) the Fano factor of part 0 at 1:1 and 1:3 over windows of 10 to 400 rounds, on three lays, with its odds;
-(n) no signal with a frozen pointer: Alice's settings given by whole sizes laid by the carry sequence, Bob's share of +
-    a half at each;
+(n) the frozen pointer against Alice's far setting: Alice's settings given by whole sizes laid by the carry sequence,
+    Bob's share of + a half at each;
 (o) the frozen merges' weight: form B's deciding merges where only light crossed, on seven boards;
 (p) the draw only where a Node-clock's swept area crosses the key, the first text's test;
 (q) the dependence one Mesh and one round apart, the backward pass's step, on the main lay and seed 4;
@@ -1089,8 +1089,8 @@ def laid_setting():
 SETTING_SETS = (
     ("two settings of Alice's", (laid_setting(), laid_setting())),
     ("three settings of Alice's", (laid_setting(), laid_setting(), laid_setting())))
-print("(n) no signal with a frozen pointer: the four joint outcomes in the order ++, +-, -+, -- (Alice's sign, then"
-      " Bob's),")
+print("(n) the frozen pointer against Alice's far setting: the four joint outcomes in the order ++, +-, -+, --"
+      " (Alice's sign, then Bob's),")
 print("    sized in whole numbers per setting of Alice's, (x, y, y, x) laid by the probe's carry sequence, and drawn by the"
       " page's rule in that order, with no rank;")
 print("    Bob's analyser fixed, and in every set Bob's own share of + a half at each setting:")
