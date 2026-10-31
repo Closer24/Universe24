@@ -3,10 +3,12 @@ click world: f (h (g + u))^2 minus the two laid ties = {(2, 1, 1): 120000}  (the
   the square equals the ties plus 2 f h^2 g u exactly: True
   the square on the opposite swing u = -g: 0 (the cell holds g + u alone)
   its value with every dial at 0: 0
-mesh world: f (h (M + D L))^2 = the tie + the vertex 2 f h^2 M D L + the medium f h^2 (D L)^2 exactly: True (the vertex at h^2 = 1: 120000)
+mesh world: f (h (M + D L))^2 = the tie + the vertex 2 f h^2 M D L + an added term f h^2 (D L)^2 exactly: True (the vertex at h^2 = 1: 120000)
   its value with every dial at 0: 0
 the held spring S |k|^2: its value with every dial at 0: 0
 the hat's cell |k|^2 - n squared: its value with every dial at 0: 1 = n^2
-G3's window at its top: hat n = W div 20 = 30000000, hat = 30000000; 2 hat n = 60000000 against S = 100000000: S is at least 2 hat n, so the least of S x + hat (x - n)^2 over x = |k|^2 is at x = 0
-  the vacuum's least per Node-clock beside S: hat n^2 = 30000000 (W div 20 times n: 30000000)
-  in place of S, the hat at the unit k = (1, 0, 0, 0): hat (|k|^2 - n)^2 = 0 (0 exactly where n is 1, the norm of the 24's units: the least 0 on the rest |k|^2 = n)
+G3's measured bound for its hand with no S, 20 hat n at most W, at its top: hat n = 30000000. With the constant: the whole least is 30000000 at |k|^2 = 0; 4 hat times the continuous least is 3600000000000000 (4 hat = 120000000). Without it the two forms differ by {(0, 0, 0, 0): 30000000} alone, and the free form's weights are hat = 30000000 and S - 2 hat n = 40000000: both at or above 0, so its least is 0 at k = 0
+G3's frozen guide, 20 hat R^2 below 4 W, at its edge: hat n = 120000000. With the constant: the whole least is 100000000 at |k|^2 = 1; 4 hat times the continuous least is 38000000000000000 (4 hat = 480000000). Without it the two forms differ by {(0, 0, 0, 0): 120000000} alone, and the free form's weights are hat = 120000000 and S - 2 hat n = -140000000: the second below 0, so it is no sum of squares in |k|^2 and k
+hat n = S div 2: hat n = 50000000. With the constant: the whole least is 50000000 at |k|^2 = 0; 4 hat times the continuous least is 10000000000000000 (4 hat = 200000000). Without it the two forms differ by {(0, 0, 0, 0): 50000000} alone, and the free form's weights are hat = 50000000 and S - 2 hat n = 0: both at or above 0, so its least is 0 at k = 0
+in place of S, the hat at the unit k = (1, 0, 0, 0): hat (|k|^2 - n)^2 = 0 at n = 1 (0 where n is 1; for a general n a whole k of norm n exists by Lagrange's four squares, not checked here)
+the README's bound under the cell's vertex holds while 4 f h^2 is below the grip: at h = 20, 4 f h^2 = 96000000 against the grip 100000000: True; at h = 21, 105840000: False
