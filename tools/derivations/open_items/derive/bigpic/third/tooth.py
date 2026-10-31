@@ -35,6 +35,8 @@ Readings, 5,000 rounds unless given: the identities; L's drift; the landings (th
 balance of the landing word over every window up to 64 rounds); the record's circulation c . q against 3 W on both
 forms; the run back from the end state alone (board, edge teeth, tau); the triangle's three turns and three flips (S_3),
 with an odd one reading each edge's tooth from its other end (dial - 1 - k) and tau as G D - 1 - tau.
+The owner's guiding line (10:37 UTC): one start, several births of the triangle's tooth; the board's end and every
+line are one, the landings differ, and each run back reaches the same start.
 Pauli's exclusion in the third click: L = det(1, b, a) is odd under the exchange of any two clocks (the 2-cell's
 orientation, the sign character) and 0 when two clocks share their state; laid so, the state stays its own swap, and
 the triangle lands no third click.
@@ -264,6 +266,36 @@ def read(name, lay_a, lay_b):
           f" {alike} of 6 (200 rounds each)", flush=True)
 
 
+def paths(name, lay_a, lay_b):
+    """The owner's guiding line of 10:37 UTC: one start, several births of the triangle's tooth (the member's choice,
+    in its births by road (C)), read for the click paths apart, the lines one, the board's end one, and each run back
+    from its own end to the same start."""
+    third, _ = carry(GD, 3, 0)
+    births = [born(GD), 0, third, third + third]
+    start = (list(lay_a), list(lay_b), [0, 0, 0])
+    runs = []
+    for b0 in births:
+        log = []
+        end = run(*start, [born(D)] * 3, [born(GD)] * 3, [b0], ROUNDS, True, log)
+        lines = [[sum(ends(i)[e] * q[e] for e in range(3)) for i in range(3)] for q, _ in log]
+        runs.append((b0, end, log, lines))
+    board_one = all(r[1][:3] == runs[0][1][:3] for r in runs)
+    lines_one = all(r[3] == runs[0][3] for r in runs)
+    apart = []
+    for r in runs[1:]:
+        apart.append(sum(1 for (_, w0), (_, w1) in zip(runs[0][2], r[2]) if w0 != w1))
+    backs = 0
+    for b0, end, _, _ in runs:
+        ma, mb, ms = mirror(end[0], end[1], end[2])
+        back = run(ma, mb, ms, end[3], end[4], end[5], ROUNDS, True)
+        ba, bb, bs = mirror(back[0], back[1], back[2])
+        backs += (ba, bb, bs, back[5]) == (start[0], start[1], start[2], [b0])
+    print(f"== {name}: the lay {lay_a} now, {lay_b} before; {ROUNDS} rounds; tau born at {births}", flush=True)
+    print(f"   the board's end one for every birth: {board_one}; every clock's line one at every round: {lines_one}; the"
+          f" landings apart from the first birth's in {apart} rounds; each run back from its own end to the same start"
+          f" and its own birth: {backs} of {len(runs)}", flush=True)
+
+
 def exclusion(name, lay_a, lay_b):
     """Two clocks laid in one state: the law is turned into itself by their exchange, so the state stays its own swap,
     and the triangle's charge L(b, a) = det(1, b, a) has two equal columns."""
@@ -313,6 +345,8 @@ read("the equilateral triangle of two-leg edges, laid at rest", *AT_REST)
 read("the same, laid turning the other way (the lay's two slots swapped)", TURNING[1], TURNING[0])
 read("the same, laid turning at ten times the counts", [10 * v for v in TURNING[0]], [10 * v for v in TURNING[1]])
 read("the same, laid at rest at ten times the counts", [10 * v for v in AT_REST[0]], [10 * v for v in AT_REST[1]])
+paths("one start, four births of the triangle's tooth (the owner's guiding line: the clicks choose the path, the board"
+      " is fixed)", *TURNING)
 exclusion("two clocks in one state (Pauli's exclusion in the third click)", [40, 40, 7], [25, 25, 3])
 control("the control: the equilateral triangle of four-leg edges under the present act, laid turning", *TURNING)
 print("exit", flush=True)
