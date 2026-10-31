@@ -90,11 +90,27 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "the first line is no header",
     ),
     "no version": ([{"kind": "header"}, E], "versioned", "the header holds no version"),
-    "a version of another major": (
-        [{**H, "version": "1.4"}, E],
+    **{
+        f"a version of another major, {label}": (
+            [{**H, "version": label}, E],
+            "versioned",
+            f"the version {label} is of another major than the schema's {schema.VERSION}",
+        )
+        for label in ("1.4", "2.9")
+    },
+    "a 1.x header, its major and minor two whole numbers": (
+        [{**{k: v for k, v in H.items() if k != "version"}, "major": 1, "minor": 4}, E],
         "versioned",
         f"the version 1.4 is of another major than the schema's {schema.VERSION}",
     ),
+    **{
+        f"a version off the label's form, {label}": (
+            [{**H, "version": label}, E],
+            "versioned",
+            f"the version {label} is no label of digits, a point and digits",
+        )
+        for label in ("2", "2.x", "2.0.1", " 3.0")
+    },
     "no end": ([H, BARE], "ended", "the last line is no end"),
     "an unknown kind": (
         [H, {"kind": "chime", "round": 1, "site": 0}, E],
@@ -253,7 +269,9 @@ def test_the_record_is_read_by_its_schema_and_each_guard_refuses_its_own_broken_
     assert record.of("click")[-1 - 1]["note"] == label
     reads = [[B, {**BARE, "ends": [1]}, E], [{**B, "ends": [5]}, BARE, E], [B, BARE, {"kind": "end"}]]
     reads += [[B, *CROSS, ENDED]]  # the end's across holding the side across a Mesh the lines name
-    assert [cause_of(lines, tmp_path) for lines in reads] == ["", "", "", ""]
+    # a later minor of the schema's own major
+    reads += [[{**B, "version": schema.VERSION.partition(".")[0] + ".9"}, BARE, E]]
+    assert [cause_of(lines, tmp_path) for lines in reads] == ["", "", "", "", ""]
     sides = [10**4000, 10**4000, 1]
     cause = cause_of([{**B, "sides": sides}, *met(1, -1), E], tmp_path)
     assert cause == f"line 2 names site -1, off the board of sides {sides}"

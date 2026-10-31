@@ -8,9 +8,10 @@ from dataclasses import dataclass
 
 # The record's lines, in the order (round, site, train): Header first; then the Click lines; End last. The ledger's own
 # file holds Count lines. The other records stand inside lines. A digest is SHA-256 in hex.
-# The version, a label: its major before the point, its minor after. A minor's change is an added field or line that
-# no reader needs, or a line no run writes retired; any other is a new major, and the decoder reads its own major
-# alone. 3.0, from 2.0: the teeth out of the record (the owner's word on Q11, "out entirely"): every side and every
+# The version, a label of digits, a point and digits: its major before the point, its minor after. A minor's change is
+# an added field that no reader needs, or a line kind no run writes retired; any other is a new major, an added line
+# kind among them, as the reader refuses every kind it does not know; and the decoder reads its own major alone, a
+# label of another form or a header of another major refused by name. 3.0, from 2.0: the teeth out of the record (the owner's word on Q11, "out entirely"): every side and every
 # entry across a Mesh loses its tooth before and after, the header its birth and the end its teeth, fields a reader
 # needed (the sides' guard read their range and their sum, the page drew them), so a new major. 2.0, from 1.4: every
 # click line carries on its sides, in its site and across a Mesh, q 0 among them, and the line's tooth is retired, so
