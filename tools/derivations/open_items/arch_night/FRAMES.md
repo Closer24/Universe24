@@ -439,7 +439,8 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   pattern no longer: the form above stands on the click and mesh lays' own.
 - Writer B's re-lay, measured (the Boss, 01:4x UTC): the lump with no mode, the pulse at rest (P1, agreed by both
   readings of main's audit).
-  - Light's lump at rest: a real well, but a spreading one, 4 to 11 counts, 7 at the centre, as foreseen here (it
+  - The board's wave's lump at rest (light's train, A1 of part 2; no light named on the board, the owner's 01:4x UTC
+    word): a real well, but a spreading one, 4 to 11 counts, 7 at the centre, as foreseen here (it
     leaves its turning point at light's speed, about 0.41 Meshes a round). The well world stands on it tonight.
   - My change, the held, Mesh-less lump, measured and fallen: it made no well at all. An exact quarter-turn hand has
     v_out perpendicular to v_in, so term 5's kinetic source, sigma_in sigma_out, is 0 (the theorem of the turn, frame
@@ -604,10 +605,11 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     world (two readings: shadow_p1_record and writer C's read-only profile at 996df846f): 54 clocks of 78 meetings
     each; every place holds exactly two lines, one q = -1 and one q = +1, at 2,106 of 2,106 places (1,107 from train 3
     to train 4, 999 the reverse).
-  - The act holds no clock's own count, so 1.3 carries none (DERIVED by SHADOW's deriver, shadow_p2_act; board reading
-    only): the state per Node-clock is (a, b, r, r_d, k), two counts per gear (positions) and three bounded
-    remainders; the round is counted by the runner alone; nothing accumulates a clock's ticks. The click tooth is the
-    books' remainder, not a face: D6's 1.2 formula on it falls below 0 at 2,079 of 4,158 consecutive pairs.
+  - - The act holds no clock's own count, so 1.3 carries none (an inspection of State's arrays, SHADOW's deriver's
+    shadow_p2_act, not a theorem: SHADOW's mathematician, MINOR 2; board reading only): the state per Node-clock is
+    (a, b, r, r_d, k), two counts per gear (positions) and three bounded remainders; the round is counted by the
+    runner alone; nothing accumulates a clock's ticks. The click tooth is the books' remainder, not a face: D6's 1.2
+    formula on it falls below 0 at 2,079 of 4,158 consecutive pairs.
   - No root is needed (shadow_p4_beat): a hand's own beat counted reads N = sqrt(rest / W) by counting alone (637, 318
     and 159 half beats at W, 4 W and 16 W over 40,000 rounds, within one half beat; a spring of 4 g gives 1,274). But
     a beat is no click: it stands only in the gears' counts, a board reading under the owner's ban.
@@ -668,20 +670,23 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   scratchpad/hcr4/REPORT.md; the Boss's rulings of 00:5x UTC). The rest he found standing: the laws, the gate and the
   full check as the Boss's runs gave them, the five records as FRAMES 13's table says, and C5's four named mutants
   failing the test.
-  - BLOCKING 1, D8 on the click world (the Boss's ruling: NOT READ there). C5's SHOWN cannot fail: all 27 sites are
+  - - BLOCKING 1, D8 on the click world (the Boss's ruling: NOT READ there). C5's SHOWN cannot fail: all 27 sites are
     laid, so each line stands at a laid site, inside its cone from round 0; and the first click line comes at round
     91, the board's diameter 3 Meshes, so one laid site's cone alone would hold every line (his p1: site 0 alone laid,
     SHOWN at 4,212 of 4,212; lines no run could write, round 1 at every site, SHOWN). The rule: the reading counts the
     lines that could stand outside the lay's cone; a line at a laid site cannot, and neither can a line at or past the
-    board's diameter in rounds (the most Meshes measure.meshes gives from site 0 to a site, the board the same from
-    every site: no number beyond 0 and 1 and no new division). Where no line could, NOT READ, its cause naming why:
-    where every site is laid, "the lay's cone covers the board's 27 sites from round 0, before the first click line at
-    round 91: no line could stand outside it" (the sites and the round as the record gives them); else every line at a
-    laid site or at or past round d, the board's diameter, named so. Where some could, SHOWN or NOT SHOWN on those,
-    the cause naming how many could and how many stand outside, its opening words C5's ("the click line at round r,
-    site x stands outside the lay's cone"). The precedent is the decoder's own (measure.py:183, "no setting outside a
-    click's past cone drew two frames", and :257), and the owner's ban stands against a claim that cannot fail.
-  - BLOCKING 1's test: a ring of seven (its diameter 3), its setting laying two gears, at sites 2 (first) and 5
+    lay's own reach in rounds, the most Meshes from a site to its nearest laid site, the maximum over sites x of the
+    minimum over laid sites y of meshes(sides, y, x) (the Boss's ruling of 02:0x UTC on the fifth code reader's MINOR
+    1: the diameter left a SHOWN that cannot fail with two sites laid; the reach equals the diameter where one site is
+    laid; whole numbers, no number beyond 0 and 1, no new division). Where no line could, NOT READ, its cause naming
+    why: where every site is laid, "the lay's cone covers the board's 27 sites from round 0, before the first click
+    line at round 91: no line could stand outside it" (the sites and the round as the record gives them); else every
+    line at a laid site or at or past round R, the lay's reach, named so. Where some could, SHOWN or NOT SHOWN on
+    those, the cause naming how many could and how many stand outside, its opening words C5's ("the click line at
+    round r, site x stands outside the lay's cone"). The precedent is the decoder's own (measure.py:183, "no setting
+    outside a click's past cone drew two frames", and :257), and the owner's ban stands against a claim that cannot
+    fail.
+  - - BLOCKING 1's test: a ring of seven (its diameter 3), its setting laying two gears, at sites 2 (first) and 5
     (second), neither at site 0, site 5's laid by its tooth alone, its counts 0, and a third gear at site 6 with every
     count and tooth 0, not laid; one line at round 1, site 4, inside site 5's cone alone and exactly one Mesh from it,
     and one at round 1, site 0, outside both. The cone reads NOT SHOWN, naming round 1, site 0, one line outside of
@@ -690,7 +695,8 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     strict bound, past at > (two outside), which C5's file no longer catches once its edge record reads NOT READ;
     every gear laid, 0 or not (site 6 laid, so it reads SHOWN); and the count read alone and not the tooth (site 5
     unlaid, two outside). Beside it the yes for NOT READ: the same board with every line at a laid site or at or past
-    round 3, NOT READ with its cause; C5's reading as built, SHOWN there, fails it.
+    round 2, the lay's reach, one of them at round 2, site 0, below the diameter's 3: NOT READ with its cause; the
+    diameter's bound, which reads it SHOWN, fails it, and so does C5's reading as built.
   - MINOR 1, the missing asserts: the books' cause asserted whole on a give at round 1 and its take at round 2 at one
     site, NOT SHOWN at round 1 with the sum -1, not 0 at 2 of 2 places, so the books open only at a sum above 0 and
     the books summed per site over the whole run each fail it; the literal "NO CLICK" and the owner's phrase, "the
@@ -729,6 +735,11 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     asserts (589 to 592) stand as they are, the books NOT SHOWN at round 1, site 0 with the sum 1, the cone NOT SHOWN
     at round 1, site 2 (a line that could stand outside, at round 1 below the diameter), its opening words kept. So
     the count holds at 597.
+  - The fifth code reader (his NOT PASSED on b1a50bb33..22a12a328, scratchpad/hcr5/REPORT.md): BLOCKING, 14 of 19
+    mutants on shadow.py's new code pass all 20 decoder tests, so what the new readings print is pinned by no test
+    (among them the giver and the taker swapped in the meetings' count, and the cone's SHOWN made NOT SHOWN): writer C
+    fixes each with a test that fails on it; MINOR 1, "could stand outside" by the lay's own reach (above, the Boss's
+    ruling); all six of the fourth reader's items he found MET.
 - Where it lives: decoder/shadow.py, C5's module. C5's shadow(record) keeps its four, their keys and their order, D6
   and D7 with their mended causes, D8 and the books with the fold; the three new readings, (a), (b) and (e), stand
   beside it in click_board(record), each by its own function (meetings, clock_lines, echo), NO CLICK on all three for
@@ -818,25 +829,29 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   books) and a reading in the clicks (the physics, read twice).
 - The smallest standing Node-clock by 05:00 UTC: the act as built, no gear added, every world laid lawfully and its
   click board read in full. C6 with the fourth reader's fold (C), C5 and C6 one candidate after C6's reader; the well
-  re-laid with light's lump at rest and the pulse at rest, its well real but spreading (B, frame 11; the standing well
-  OPEN, NOT_CLOSED 36); FACE's gear standing beside the act as a probe, its pair started on its first part. Its one
-  claim of physics in the clicks: each meeting passes one whole quantum from one clock to another and the books close
-  at it, on the click world 2,106 meetings and 54 clocks of 78, read twice (C6's meetings and books; SHADOW's record
-  probe). Every other reading stays NOT READ or NO CLICK with its cause.
+  re-laid with the board's wave's lump at rest and the pulse at rest, its well real but spreading (B, frame 11; the
+  standing well OPEN, NOT_CLOSED 36); FACE's gear a board probe beside the act, not in it (both its readers NOT
+  PASSED: a fix for one-row standing clocks far above a notch, NOT_CLOSED 38). Its one claim of physics in the clicks:
+  each meeting passes one whole quantum from one clock to another and the books close at it, on the click world 2,106
+  meetings and 54 clocks of 78, read twice (C6's meetings and books; SHADOW's record probe). Every other reading stays
+  NOT READ or NO CLICK with its cause.
 - The next one: the face on the record (schema 1.4) and D6 reading a duration as a clock's own count between two of
   its meetings, with a clicking well (B: two clicking pairs at two depths of a well that stands, once a lawful steady
   source is found, NOT_CLOSED 36), so the deeper clock's slower count is read twice in the clicks; then light's-cone
-  D8 on clicks that could fall outside it. It waits on FACE's pair and, for any act change, the owner's word.
+  D8 on clicks that could fall outside it. It waits on a face that passes its pair and on Big Pic's road for the
+  click-world clock (NOT_CLOSED 38), and, for any act change, on the owner's word.
 - The pieces, each its gear on the board and its reading in the clicks:
-  - The click board. C6: no gear; the meetings and each clock's line, "the order counted, no duration" (13b). The face
-    (FACE, first part about 02:15): a count of the clock's own half beats per train and Node-clock by Rule3's carries,
-    measured on the board: 637, 318 and 159 at W, 4 W and 16 W (face^2 x depth 405769, 404496, 404496), 40,000 rounds
-    undone exactly, its mutants failing where named; in the clicks, D6 and the round trip of light's echo. Big Pic
-    (6537034824): no additional gear for time, a clock at rest counting by its face; whether the face is a gear the
-    act now lacks (SHADOW: it holds no clock's own count) or the Node-clock's own count is FACE's to settle with him.
-    The third click (THIRD, by 04:00; frame 14): a click that reads the present and pushes the before slot, a shear
-    the run back undoes; in the clicks a third line kind (law line 35 (5)), shown first by the meetings reading as a
-    place that is not one give and one take.
+  - - The click board. C6: no gear; the meetings and each clock's line, "the order counted, no duration" (13b). The
+    face (FACE, first part about 02:15): a count of the clock's own half beats per train and Node-clock by Rule3's
+    carries, measured on the board: 637, 318 and 159 at W, 4 W and 16 W (face^2 x depth 405769, 404496, 404496),
+    40,000 rounds undone exactly, its mutants failing where named; in the clicks, D6 and the round trip of light's
+    echo. Big Pic (6537034824): no additional gear for time, a clock at rest counting by its face; whether the face is
+    a gear the act now lacks (SHADOW: it holds no clock's own count) or the Node-clock's own count is FACE's to settle
+    with him. Both of FACE's readers NOT PASSED: it counts row crossings with their multiplicity, and T6 holds at
+    full_rate 10^4 only (NOT_CLOSED 38). The third click (THIRD; frame 14; both its readers NOT PASSED, the clock fix
+    sound and the physics chosen, THIRD2 back at its pair, NOT_CLOSED 33): a click that reads the present and pushes
+    the before slot, a shear the run back undoes; in the clicks a third line kind (law line 35 (5)), shown first by
+    the meetings reading as a place that is not one give and one take.
   - The escapement and its miracles (FWDBACK3, about 03:00): the dial L a first-order gear, the release carried every
     round, measured on the board: W = L^2 with no root (1000, 2252, 3999, 9047 against 1000, 2250, 4000, 9000), beta =
     1 on a line held at its ends, the same slowing for every gear exact under the whole step (833 at every g) and only
@@ -844,23 +859,25 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     two clicking clocks of different beats at one depth count the same slowing, each by its own face; the special
     theory's moving clock is a bound pair whose ticks are clicks (Big Pic), its count compared with a resting pair's
     at their meeting.
-  - The quaternion and the families (HALF, first part about 02:30; frame 12): the 48 units on the gears by kind, the
-    eight kinds (on the three half-speed ones the full turn acts as -1, the hunter's row 6), the half-speed trains as
-    signed-permutation trains of the units' own, the three hands as i, j, k with the triple product's orientation,
-    each checked by the 48 commuting with the step bit for bit. In the clicks: Pauli by the determinant with a hand
-    per quantum, two like half-speed quanta never meeting in one state at a place; an orientation alone is a sign and
-    does not cross, a click reading squares.
-  - The cone (the owner: "backward and forward from the Node-clock, like six"; Big Pic, 6537034824 item 4: one cone
+  - - The quaternion and the families (HALF; frame 12; HALF2 at its pair, NOT_CLOSED 34): the 48 units on the gears by
+    kind, the eight kinds (on the three half-speed ones the full turn acts as -1, the hunter's row 6), the half-speed
+    trains as signed-permutation trains of the units' own, the three hands as i, j, k with the triple product's
+    orientation, each checked by the 48 commuting with the step bit for bit. In the clicks: Pauli by the determinant
+    with a hand per quantum, two like half-speed quanta never meeting in one state at a place; an orientation alone is
+    a sign and does not cross, a click reading squares.
+  - - The cone (the owner: "backward and forward from the Node-clock, like six"; Big Pic, 6537034824 item 4: one cone
     each way, and it is light's). Two stand at every Node-clock. The board's, the six Spokes, one Mesh a round: it
-    bounds every cause on the board, two-sided as the run back is the act mirrored, and D8 reads it. Light's, about
-    0.41 Mesh a round, round only in long waves: the special theory's cone, and the click world's order, never the
-    round's nor the six's; in whole numbers a quadric with no root, W r^2 <= grip t^2 (6 r^2 <= t^2 in the live
-    world). The reading to add, read twice: D8 by light's quadric beside D8 by the act's cone; the board's tails
-    beyond light stay below a whole quantum at the calibre, so they never click. Tonight light's-cone D8 reads NOT
-    READ on the click world where every line is inside light's cone from the lay. From the Node-clock itself (the
-    hunter's row 12): a frame of four quaternions per Node-clock gives its own light cone, signature (1, 3) by
-    Sylvester, the escapement's W = L^2 its diagonal case; a law change (16 gears for 10 slots), its deriver started
-    by the Boss, then its pair and the owner's word.
+    bounds every cause on the board, two-sided as the run back is the act mirrored, and D8 reads it. The board's
+    wave's (the owner's 01:4x UTC word: no light is named on the board), about 0.41 Mesh a round, round only in long
+    waves, which the clicks read as light's: the special theory's cone, and the click world's order, never the round's
+    nor the six's; in whole numbers a quadric with no root, W r^2 <= grip t^2 (6 r^2 <= t^2 in the live world). The
+    reading to add, read twice: D8 by light's quadric beside D8 by the act's cone; the board's tails beyond the wave's
+    cone stay below a whole quantum at the calibre, so they never click. Tonight light's-cone D8 reads NOT READ on the
+    click world where every line is inside light's cone from the lay. From the Node-clock itself (the hunter's row
+    12): a frame of four quaternions per Node-clock gives its own light cone, signature (1, 3) by Sylvester, the
+    escapement's W = L^2 its diagonal case; a law change (16 gears for 10 slots); FRAME16, both its readers NOT
+    PASSED: (1, 3) is the reading's, by Sylvester, not the act's, W = Re(s0 s0) <= 0 at most rounds, det S crosses 0
+    freely, the flat S = I degenerate (NOT_CLOSED 39).
 - The lanes, no file shared:
   - A, the record and the decoder's structure: schema 1.4 with the face on each click line (record/schema.py, the
     runner's click line, decoder/records.py); every act change (the face, the third click, the escapement) in this one

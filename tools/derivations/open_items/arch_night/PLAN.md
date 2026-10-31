@@ -338,14 +338,15 @@ the clock deeper where the matter is.
   D6's becomes D7's own. Each a line for a line: C5's test file stays at 597, its ROOM unchanged.
 - The fourth code reader's fold (his NOT PASSED on b1a50bb33..49e97c992, scratchpad/hcr4/REPORT.md; the Boss's rulings
   of 00:5x UTC), all in C6, as FRAMES.md 13b has it: BLOCKING 1, D8 reads NOT READ where no line could stand outside
-  the lay's cone (a line at a laid site cannot, nor one at or past the board's diameter in rounds), on the click world
-  "the lay's cone covers the board's 27 sites from round 0, before the first click line at round 91: no line could
-  stand outside it", its test a ring of seven with two gears laid, neither at site 0, one line inside one cone only
-  and one outside both; MINOR 1, the missing asserts; MINOR 2, the books in row 15's order (NOT SHOWN first with the
-  gap named, then NOT READ, then SHOWN); MINOR 3, the check for a record of no click line inside each reading; MINOR
-  4, laid() reading NOT READ for a gear off the board and finding the setting file by its name; MINOR 5, the 1.2 twins
-  line labelled D7, the refusal printed only where the record holds no click of either kind, shadow.py's docstring
-  naming only what it reads.
+  the lay's cone (a line at a laid site cannot, nor one at or past the lay's own reach in rounds, the most Meshes from
+  a site to its nearest laid site: the Boss's ruling of 02:0x UTC on the fifth code reader's MINOR 1; his BLOCKING, 14
+  of 19 mutants surviving, folded by C), on the click world "the lay's cone covers the board's 27 sites from round 0,
+  before the first click line at round 91: no line could stand outside it", its test a ring of seven with two gears
+  laid, neither at site 0, one line inside one cone only and one outside both; MINOR 1, the missing asserts; MINOR 2,
+  the books in row 15's order (NOT SHOWN first with the gap named, then NOT READ, then SHOWN); MINOR 3, the check for
+  a record of no click line inside each reading; MINOR 4, laid() reading NOT READ for a gear off the board and finding
+  the setting file by its name; MINOR 5, the 1.2 twins line labelled D7, the refusal printed only where the record
+  holds no click of either kind, shadow.py's docstring naming only what it reads.
 - The test: a second click-world test file, tests/test_the_tensor24_decoder_meetings.py, with its own ROOM entry and
   its reason line (FRAMES.md 13b), the Boss's decision under decision 26, on the owner's list (M8) with C6: (a) the
   yes a place of q = -1 and q = +1, the no a place of q = -2 and +2 and one of three lines (+1, +1 and -2), their

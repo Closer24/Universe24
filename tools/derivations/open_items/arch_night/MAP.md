@@ -30,7 +30,9 @@ order of the events and each clock's count. Space is read in it only through an 
 clocks, that is on the board. To mend a meeting of clocks, you look in the clicks. The decoder needs to be built
 accordingly. Top priority to put this in ... according to everything Big Pic wrote." So the board is clocks meshing,
 and the click board their meetings; a clock's own working is mended and checked on the board, and a meeting of clocks
-in the clicks. The decoder is built accordingly: FRAMES.md 13b, PLAN C6, top priority.
+in the clicks. The decoder is built accordingly: FRAMES.md 13b, PLAN C6, top priority. No light is named on the board
+(the owner's word of 01:4x UTC): it is the board's wave there, and light only in the clicks; the older frames follow
+as they are next edited.
 
 The architect, 2026-10-30, 18:5x UTC, for the Boss. The owner's words of tonight frame it: standing code of the whole
 system by morning; what is not sure goes in as a FRAME, the Boss approving after the fact; the laws of locality,
