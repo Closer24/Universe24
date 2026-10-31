@@ -11,13 +11,12 @@ The board steps by step.act as it stands; the click pushes nothing into the gear
   a lone edge has no triangle, so nothing turns it and it carries as the first click.
 No line asks how many trains meet: the turn is the product over the triangles the edge set holds.
 
-Usage: python3 -I edgeclick.py <src> <world> <rounds> <turn: 1 or 0> [hidden unit: site edge-index]
+Usage: python3 -I edgeclick.py <src> <world> <rounds> <mode 0 to 5> [laid] [hidden unit: site edge-index]
 """
 
 import hashlib
 import json
 import sys
-import time
 from pathlib import Path
 
 sys.path.insert(0, sys.argv[1])
@@ -56,7 +55,7 @@ class Edges:
     """The edge set from the structure: every pair of trains a two-leg monomial or a tie group joins, and every
     triangle of three trains pairwise joined; per Node-clock one tooth per edge at the dial 3 key."""
 
-    def __init__(self, world, key, sites):
+    def __init__(self, world, key, sites, kinds_of=None):
         tr = world.train_of
         pairs = {tuple(sorted({tr[h] for h in lg if h != UNIT})) for _, lg in world.two}
         pairs |= {tuple(sorted((world.held_t, tr[td[0]]))) for _, td in world.groups}
@@ -71,6 +70,79 @@ class Edges:
         self.dial = carry(world_kappa_half(), 1, 0)[0] * key  # the key times 3, the split's own scale (kappa 6 / 2)
         self.born, _ = carry(self.dial - 1, 2, 0)
         self.teeth = [[self.born] * len(self.pairs) for _ in range(sites)]
+        # each edge's twin, of the other class under the reversal (flipped, as the drive's tooth is), born alike
+        self.twins = [[self.born] * len(self.pairs) for _ in range(sites)]
+        # the palindrome's shears around every triangle (the THIRD deriver's four-tooth form, carried around three):
+        # (destination, source, sign), each between a kept tooth (an edge's) and a flipped one (a twin's)
+        self.shears = []
+        for ga, ab, gb in self.triangles:
+            g1, g2, g3 = ("g", ga), ("g", ab), ("g", gb)
+            h1, h2, h3 = ("h", ga), ("h", ab), ("h", gb)
+            self.shears += [(h1, g1, 1), (g1, h1, -1), (h2, g2, 1), (g2, h1, 1), (h3, g3, 1), (g3, h2, 1), (g1, h3, 1)]
+        # SPLIT3 (the SPLIT deriver, #2187 6539135332 item 3): at a triangle whose one vertex differs in kinds from the
+        # other two (its apex, read from the structure), the apex's two edges g1, g2 and their twins t1, t2 turn in
+        # blocks the swap of the two alike vertices exchanges; the alike vertices' own edge carries unturned
+        self.split3 = []
+        self.apexes = []
+        for ga, ab, gb in self.triangles:
+            tri = sorted(set(self.pairs[ga]) | set(self.pairs[ab]) | set(self.pairs[gb]))
+            if kinds_of is None:
+                continue
+            odd = [v for v in tri if sum(1 for w in tri if kinds_of[w] == kinds_of[v]) == 1]
+            if len(odd) != 1 or len({tuple(kinds_of[v]) for v in tri}) != 2:
+                continue  # no apex the structure names: this triangle stays unturned in mode 3 (named open)
+            apex = odd[0]
+            b1, b2 = [v for v in tri if v != apex]
+            e1, e2 = self.index[tuple(sorted((apex, b1)))], self.index[tuple(sorted((apex, b2)))]
+            self.apexes.append((apex, b1, b2))
+            G1, G2, T1, T2 = ("g", e1), ("g", e2), ("h", e1), ("h", e2)
+            self.split3 += [(T1, G1, 1), (T2, G2, 1), (G1, T1, -1), (G2, T2, -1), (T1, G1, -1), (T2, G2, -1),
+                            (G1, T2, 1), (G2, T1, 1)]
+
+        # the triangle's own coupling (mode 4): K, the off-diagonal of C C^T, C each edge's sign on the boundary of
+        # every triangle it lies on (the boundary of [i, j, k] is [j, k] - [i, k] + [i, j]); two edges of one triangle
+        # couple by the product of their signs, an edge never to itself, and a lone edge, on no triangle, to nothing.
+        # Each twin gains K of the edge teeth, then each edge tooth K of the twins: two blocks of kept-flipped shears
+        # that the palindrome runs before the carries and in reverse after them. K is the structure's own: every
+        # relabelling of the trains moves it with the edges' signs, so the turn keeps the label rule; per eigenvalue
+        # kappa of K the round's linear turn has trace 2 + 4 kappa^2, and the triangle's K has 2, -1, -1, so all
+        # three edges mix (traces 18, 6, 6), the alike pair's own edge with them.
+        n = len(self.pairs)
+        cc = [[0] * n for _ in range(n)]
+        for ga, ab, gb in self.triangles:
+            sign = {ga: 1, ab: 1, gb: -1}
+            for e, se in sign.items():
+                for f, sf in sign.items():
+                    cc[e][f] += se * sf
+        # Road 3 (the THIRD deriver's, #2187 6539223290, mode 5) is the same palindrome on the diagonal of C C^T: each
+        # triangle edge with its own twin, h += g, g += h, the carries, g += h, h += g, weighted by the number of
+        # triangles the edge lies on (1 here); per edge trace 6. The two parts of C C^T are the structure's two members;
+        # their sum, C C^T itself, keeps the two directions across the boundary unturned (its eigenvalues 3, 0, 0).
+        self.cc = cc
+        self.kcoup = [[cc[e][f] * (e != f) for f in range(n)] for e in range(n)]
+        self.kdiag = [[cc[e][f] * (e == f) for f in range(n)] for e in range(n)]
+        self.tri_k = self.blocks(self.kcoup)
+        self.road3 = self.blocks(self.kdiag)
+
+    @staticmethod
+    def blocks(k):
+        """Two blocks of kept-flipped shears from one matrix: each twin gains k of the edge teeth, then each edge tooth k
+        of the twins. Within a block every shear writes one class and reads the other, so its order is free."""
+        n = len(k)
+        return ([(("h", e), ("g", f), k[e][f]) for e in range(n) for f in range(n)]
+                + [(("g", e), ("h", f), k[e][f]) for e in range(n) for f in range(n)])
+
+    def forward(self, mode):
+        return {2: self.shears, 3: self.split3, 4: self.tri_k, 5: self.road3}[mode]
+
+    def backward(self, mode):
+        return list(reversed(self.forward(mode)))
+
+    def shear_all(self, u, w, order):
+        for (dk, di), (sk, si), sign in order:
+            src = (u if sk == "g" else w)[si] - self.born
+            dst = u if dk == "g" else w
+            dst[di] = self.born + self.cen(dst[di] - self.born + sign * src)
 
     def cen(self, v):
         _, r = carry(v + self.born, self.dial, 0)
@@ -100,21 +172,44 @@ def world_kappa_half():
     return half
 
 
-def run(src, world_dir, rounds, turned, hidden=None):
+def board_lay(s, shape, world):
+    """VARY1's stand-in, labelled so: each Node-clock's hands set apart below the key by the board's own coordinates
+    (x, y, z), the loader's order unravelled: the giver's first row one count up per x, and the taker, laid at rest at
+    0 in the world file, laid at the bare unit 1 (as the held hand is) one count up per y; now and before alike, so
+    every hand starts at rest. No number is picked beyond the bare unit; no random."""
+    rows, sites = s.a.shape
+    first = {}
+    for r in range(rows):
+        first.setdefault(world.train_of[r], r)
+    giver, taker = first[world.trains[3]], first[world.trains[4]]
+    a, b = s.a.copy(), s.b.copy()
+    for n in range(sites):
+        rest, x = carry(n, shape[0], 0)
+        _, y = carry(rest, shape[1], 0)
+        a[giver, n] = a[giver, n] + x
+        a[taker, n] = 1 + y
+        b[giver, n], b[taker, n] = a[giver, n], a[taker, n]
+    return s._replace(a=a, b=b)
+
+
+def run(src, world_dir, rounds, turned, hidden=None, laid=False):
     universe, shape, held, lay, s, world = load_world(src, world_dir)
-    out = run_from(lay, s, world, rounds, turned, hidden)
+    if laid:
+        s = board_lay(s, shape, world)
+    out = run_from(lay, s, world, rounds, turned, hidden, [t["kinds"] for t in universe["trains"]])
     out.update({"world": world_dir, "shape": shape})
     return out
 
 
-def run_from(lay, s, world, rounds, turned, hidden=None):
+def run_from(lay, s, world, rounds, turned, hidden=None, kinds_of=None):
     rows, sites = s.a.shape
     key = int(lay.click.key[0, 0])
-    edges = Edges(world, key, sites)
+    edges = Edges(world, key, sites, kinds_of)
     if hidden is not None:
         site, e = hidden
         edges.teeth[site][e] = edges.born + edges.cen(edges.teeth[site][e] - edges.born + 1)
     lay_teeth = [list(u) for u in edges.teeth]
+    lay_twins_saved = [list(w) for w in edges.twins]
     lines, sides, flows = [], [], []
     books_open = places = 0
     for t in range(rounds):
@@ -126,7 +221,10 @@ def run_from(lay, s, world, rounds, turned, hidden=None):
             a1 = [int(s1.a[r, x]) for r in range(rows)]
             fl = world.split_flows(0, b, a, a1)
             u = edges.teeth[x]
-            if turned:
+            w = edges.twins[x]
+            if turned >= 2:
+                edges.shear_all(u, w, edges.forward(turned))
+            elif turned:
                 edges.turn(u)
             q = {tr_: 0 for tr_ in world.trains}
             xs = []
@@ -138,6 +236,8 @@ def run_from(lay, s, world, rounds, turned, hidden=None):
                 q[pr[1]] -= c
                 if c:
                     sides.append((t, x, e, c))
+            if turned >= 2:
+                edges.shear_all(u, w, edges.backward(turned))
             round_flows.append(xs)
             if any(q.values()):
                 places += 1
@@ -148,6 +248,22 @@ def run_from(lay, s, world, rounds, turned, hidden=None):
         flows.append(round_flows)
         s = s1
     end_teeth = [list(u) for u in edges.teeth]
+    lay_twins = lay_twins_saved
+    mirror_ok = None
+    if turned >= 2:
+        # the board's own law: the same act on the mirrored state, the twins flipped and the edge teeth kept, every
+        # passing negated, the rounds in reverse; then the mirror again; it must reach the lay
+        u_all = [list(u) for u in edges.teeth]
+        w_all = [[edges.born + edges.cen(-(v - edges.born)) for v in w] for w in edges.twins]
+        for t in range(rounds - 1, -1, -1):
+            for x in range(sites):
+                u, w = u_all[x], w_all[x]
+                edges.shear_all(u, w, edges.forward(turned))
+                for e in range(len(edges.pairs)):
+                    _, u[e] = carry(-flows[t][x][e], edges.dial, u[e])
+                edges.shear_all(u, w, edges.backward(turned))
+        w_all = [[edges.born + edges.cen(-(v - edges.born)) for v in w] for w in w_all]
+        mirror_ok = u_all == lay_teeth and w_all == lay_twins
     # the run back of the click teeth: each edge's carry with its flow negated, then the turn undone
     back = [list(u) for u in end_teeth]
     recovered = []
@@ -158,29 +274,32 @@ def run_from(lay, s, world, rounds, turned, hidden=None):
                 c, u[e] = carry(-flows[t][x][e], edges.dial, u[e])
                 if c:
                     recovered.append((t, x, e, -c))
-            if turned:
+            if turned == 1:
                 edges.unturn(u)
-    runback = back == lay_teeth and sorted(recovered) == sorted(sides)
+    runback = (back == lay_teeth and sorted(recovered) == sorted(sides)) if turned < 2 else mirror_ok
     digest = hashlib.sha256(repr((lines, sides)).encode()).hexdigest()
     return {
         "sites": sites, "trains": world.trains, "pairs": edges.pairs,
         "triangles": edges.triangles, "key": key, "dial": edges.dial, "born": edges.born, "rounds": rounds,
         "turned": turned, "lines": lines, "sides": sides, "flows": flows, "places": places,
-        "books_open": books_open, "runback": runback, "digest": digest,
+        "books_open": books_open, "runback": runback, "digest": digest, "mirror": mirror_ok,
     }
 
 
+NAMES = ["carried (first click)", "turned by the triangle M (third click)", "the 3+3 palindrome (third click)",
+         "SPLIT3 (third click, the apex's edges)", "the triangle's coupling, C C^T off its diagonal (third click)",
+         "road 3, C C^T's diagonal: each triangle edge with its own twin (third click)"]
+
 if __name__ == "__main__":
     src, world_dir, rounds, turned = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
-    hidden = (int(sys.argv[5]), int(sys.argv[6])) if len(sys.argv) > 6 else None
-    t0 = time.time()
-    out = run(src, world_dir, rounds, turned, hidden)
+    laid = len(sys.argv) > 5 and "laid" in sys.argv[5]
+    hidden = (int(sys.argv[6]), int(sys.argv[7])) if len(sys.argv) > 7 else None
+    out = run(src, world_dir, rounds, turned, hidden, laid)
     per_edge = [sum(abs(c) for (_, _, e, c) in out["sides"] if e == i) for i in range(len(out["pairs"]))]
     print(f"{world_dir}: {out['sites']} Node-clocks, trains {out['trains']}, edges {out['pairs']},"
           f" triangles {out['triangles']}, key {out['key']}, dial {out['dial']} born {out['born']};"
-          f" {rounds} rounds, {'turned (third click)' if turned else 'carried (first click)'}")
+          f" {rounds} rounds, {NAMES[turned]}{', the hands laid apart below the key (VARY1 stand-in)' if laid else ''}")
     print(f"  click places {out['places']}, the books open at {out['books_open']}; click lines {len(out['lines'])},"
           f" sides {len(out['sides'])}; quanta booked per edge {per_edge}")
-    print(f"  the click teeth run back to the lay and every side recovered: {out['runback']}; record digest"
-          f" {out['digest']}; {time.time() - t0:.0f} s")
-    json.dump({k: out[k] for k in ("lines", "sides", "digest")}, open(f"edge_{world_dir}_{rounds}_{turned}.json", "w"))
+    print(f"  the click teeth run back to the lay ({'by the same act on the mirrored state' if turned >= 2 else 'and every side recovered'}): {out['runback']}; record digest"
+          f" {out['digest']}")

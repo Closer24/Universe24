@@ -1,2 +1,3 @@
-tensor24-click, first click (carried): 24 of 24 turns give the same clicks at the turned Node-clocks over 40 rounds (1458 click lines)
-tensor24-click, third click (turned): 24 of 24 turns give the same clicks at the turned Node-clocks over 40 rounds (1458 click lines)
+tensor24-click, first click (carried): 24 of 24 turns give the same clicks at the turned Node-clocks over 20 rounds (702 click lines)
+tensor24-click, third click (turned): 24 of 24 turns give the same clicks at the turned Node-clocks over 20 rounds (702 click lines)
+tensor24-click, third click (palindrome): 24 of 24 turns give the same clicks at the turned Node-clocks over 20 rounds (702 click lines)

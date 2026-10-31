@@ -1,0 +1,12 @@
+tensor24-click first click (carried), 1000 rounds: run twice byte for byte True; books open 0 of 18036; run back True
+   edge (2, 3): booked less swept, its running sum at most 497 per mille of a dial (at the end at most 442); lag-1 correlation of the per-round gap -406 per mille
+   edge (2, 4): booked less swept, its running sum at most 497 per mille of a dial (at the end at most 197); lag-1 correlation of the per-round gap -527 per mille
+   edge (3, 4): booked less swept, its running sum at most 499 per mille of a dial (at the end at most 67); lag-1 correlation of the per-round gap -135 per mille
+tensor24-click third click (turned), 1000 rounds: run twice byte for byte True; books open 0 of 18198; run back True
+   edge (2, 3): booked less swept, its running sum at most 9564 per mille of a dial (at the end at most 3442); lag-1 correlation of the per-round gap 39 per mille
+   edge (2, 4): booked less swept, its running sum at most 11502 per mille of a dial (at the end at most 7197); lag-1 correlation of the per-round gap -23 per mille
+   edge (3, 4): booked less swept, its running sum at most 5020 per mille of a dial (at the end at most 1067); lag-1 correlation of the per-round gap -11 per mille
+tensor24-click third click (palindrome), 1000 rounds: run twice byte for byte True; books open 0 of 18144; run back True
+   edge (2, 3): booked less swept, its running sum at most 9309 per mille of a dial (at the end at most 4557); lag-1 correlation of the per-round gap -75 per mille
+   edge (2, 4): booked less swept, its running sum at most 8099 per mille of a dial (at the end at most 2802); lag-1 correlation of the per-round gap -1 per mille
+   edge (3, 4): booked less swept, its running sum at most 8544 per mille of a dial (at the end at most 8067); lag-1 correlation of the per-round gap 5 per mille

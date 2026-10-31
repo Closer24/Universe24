@@ -1,0 +1,8 @@
+tensor24-click, SPLIT3 (third click, the apex's edges): books open 0 of 4212; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 205 click lines differ, the first at round 26, at Node-clocks [0]
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 252 click lines differ, the first at round 26, at Node-clocks [0]
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+tensor24-click, the triangle's coupling, C C^T off its diagonal (third click): books open 0 of 4212; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 280 click lines differ, the first at round 11, at Node-clocks [0]
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 292 click lines differ, the first at round 6, at Node-clocks [0]
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 282 click lines differ, the first at round 11, at Node-clocks [0]

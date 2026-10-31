@@ -1,0 +1,3 @@
+tensor24-mesh: 180 Node-clocks, trains [0, 1, 2], edges [(1, 2)], triangles [], key 1, dial 3 born 1; 125 rounds, carried (first click)
+  click places 0, the books open at 0; click lines 0, sides 0; quanta booked per edge [0]
+  the click teeth run back to the lay and every side recovered: True; record digest 1391876e63685b7da0e6a923dc6c4c106590930a70cdf4665088614cae243c44; 8 s

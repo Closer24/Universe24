@@ -33,8 +33,9 @@ def turned(m, laid, held, s, shape):
     return there, site
 
 universe, shape, held, lay, s0, world = E.load_world(src, world_dir)
-for mode in (0, 1):
-    base = E.run_from(lay, s0, world, rounds, mode)
+for mode in [int(m) for m in (sys.argv[4] if len(sys.argv) > 4 else '012')]:
+    kinds_of = [t['kinds'] for t in universe['trains']]
+    base = E.run_from(lay, s0, world, rounds, mode, kinds_of=kinds_of)
     want = sorted(base["lines"])
     ok = 0; ms = []
     for m in turns():
@@ -43,8 +44,8 @@ for mode in (0, 1):
             ms.append(m)  # the turns that are symmetries of this board
     for m in ms:
         s1, site = turned(m, lay, held, s0, shape)
-        got = E.run_from(lay, s1, world, rounds, mode)
+        got = E.run_from(lay, s1, world, rounds, mode, kinds_of=kinds_of)
         moved = sorted((t, int(site[x]), tr, q) for (t, x, tr, q) in base["lines"])
         ok += sorted(got["lines"]) == moved
-    print(f"{world_dir}, {'third click (turned)' if mode else 'first click (carried)'}: {ok} of {len(ms)} turns give the"
+    print(f"{world_dir}, {E.NAMES[mode]}: {ok} of {len(ms)} turns give the"
           f" same clicks at the turned Node-clocks over {rounds} rounds ({len(want)} click lines)")

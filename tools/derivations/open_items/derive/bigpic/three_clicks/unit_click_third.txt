@@ -1,0 +1,3 @@
+tensor24-click: 27 Node-clocks, trains [0, 1, 2, 3, 4], edges [(2, 3), (2, 4), (3, 4)], triangles [(0, 2, 1)], key 50811429, dial 152434287 born 76217143; 1500 rounds, turned (third click)
+  click places 13068, the books open at 0; click lines 26136, sides 13068; quanta booked per edge [59049, 0, 0]
+  the click teeth run back to the lay and every side recovered: True; record digest 72ea13137b156f6e90c5d8aa4204bd4edfcb8fb35c2263fad59eb7e74a9a8d83; 100 s
