@@ -33,7 +33,7 @@ def turned(m, laid, held, s, shape):
     return there, site
 
 universe, shape, held, lay, s0, world = E.load_world(src, world_dir)
-for mode in [int(m) for m in (sys.argv[4] if len(sys.argv) > 4 else '012')]:
+for mode in E.modes_of(sys.argv[4] if len(sys.argv) > 4 else '012'):
     kinds_of = [t['kinds'] for t in universe['trains']]
     base = E.run_from(lay, s0, world, rounds, mode, kinds_of=kinds_of)
     want = sorted(base["lines"])
@@ -46,6 +46,7 @@ for mode in [int(m) for m in (sys.argv[4] if len(sys.argv) > 4 else '012')]:
         s1, site = turned(m, lay, held, s0, shape)
         got = E.run_from(lay, s1, world, rounds, mode, kinds_of=kinds_of)
         moved = sorted((t, int(site[x]), tr, q) for (t, x, tr, q) in base["lines"])
-        ok += sorted(got["lines"]) == moved
+        moved_sides = sorted((t, int(site[x]), e, q) for (t, x, e, q) in base["sides"])
+        ok += sorted(got["lines"]) == moved and sorted(got["sides"]) == moved_sides
     print(f"{world_dir}, {E.NAMES[mode]}: {ok} of {len(ms)} turns give the"
-          f" same clicks at the turned Node-clocks over {rounds} rounds ({len(want)} click lines)")
+          f" same clicks, lines and sides, at the turned Node-clocks over {rounds} rounds ({len(want)} click lines, {len(base['sides'])} sides)")
