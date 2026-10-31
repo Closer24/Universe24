@@ -4,7 +4,7 @@ of the edges refused by name, and read without the guard."""
 
 import json
 
-from tensor24.decoder import records
+from tensor24.decoder import records, shadow
 from tensor24.record import schema
 
 KEY = 7  # the edge key on every train card but train 3's, which holds none
@@ -129,3 +129,14 @@ def test_each_edge_closes_at_its_place_and_each_line_breaking_a_rule_of_the_side
     for events, wanted in REFUSED:
         assert read(events, tmp_path)[1] == wanted
         assert read(events, tmp_path, records.GUARDS[:-1])[1] == ""
+
+
+def test_the_books_close_each_edge_across_a_mesh_at_both_its_places(tmp_path):
+    """Yes: the place whose side across a Mesh carried, its far line beside it, closes its books, each side across
+    booked at both its places. No, read without the sides' guard: the far line's partner side dropped opens them, and
+    so does a side across cut short, booking nothing and raising nothing."""
+    unguarded = [*CROSSED[:-1], {**FAR, "across": []}], FORMLESS[-1][0]
+    found = [
+        shadow.books(read(events, tmp_path, records.GUARDS[:-1])[0]) for events in (CROSSED, *unguarded)
+    ]
+    assert [verdict["kind"] for verdict in found] == ["SHOWN", "NOT SHOWN", "NOT SHOWN"]
