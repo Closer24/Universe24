@@ -362,17 +362,21 @@ reversals.
 ## 5. Measured (floor_balance.txt, by the probe's copy)
 
 The copy (derive/david_open/node/floor_balance.py) runs Big Pic's round unchanged on node-all 9d75a4904's src, his grain
-recipe, every division the carry's; it lays the World's springs [s, s, S] in place of the click world's [0, 0, S], s a
-probe value. Beside FLOOR1's readings it prints the giver's count at the round of the taker's largest count, the mean
-held square per window, and the end counts, and it takes a pair lay: at rest (shipped), or laid opposite and moving. A
-fall is a count 20 bits past the giver's lay; every "no fall" below is over the rounds named, at the lay named. Rows at
-or below the edge say "no fall over N rounds"; "hold" is kept for s > t/2.
+recipe, every division the carry's: his file's text above his first reading, copied byte for byte into equil_round.py
+beside it, checked against his file at every run and imported, since Sofer's gate refuses exec (every row of
+floor_balance.txt reruns byte for byte through it); it lays the World's springs [s, s, S] in place of the click world's
+[0, 0, S], s a probe value. Beside FLOOR1's readings it prints the giver's count at the round of the taker's largest
+count, the mean held square per window, and the end counts, and it takes a pair lay: at rest (shipped), or laid opposite
+and moving. A fall is a count 20 bits past the giver's lay; every "no fall" below is over the rounds named, at the lay
+named. Rows at or below the edge say "no fall over N rounds"; "hold" is kept for s > t/2.
 
 Its inputs, frozen with the text by path and sum:
 - Big Pic's equil.py, tools/derivations/open_items/derive/bigpic/miracle/equil.py at bigpic-3clicks 9771a49a4, sha256
   0c4c936d3e816efd59d1d6226b6b5fd72a6c9ea53a114d302b7eb776183c2e4e;
 - node-all 9d75a4904's src, as `git archive 9d75a4904 src`, sha256
   0881d3f006498bc5aed250e538a935ca9658a7eac6e51af3e47821d99a983757 (the tree 83c9e3ebd1240d8d77daa02559bbb61f3c9bdc18);
+- equil_round.py, that copy of his round, sha256
+  05b440501a559dc4df26f8ff2058d1d6e670858856742d6a7a96b3b1160dd9b4;
 - the control's references, Big Pic's tools/derivations/open_items/derive/bigpic/miracle/split_bedge_x100_5000.txt,
   sha256 8df8487912006c91fa292955fd570cf6892f799fdadb23bded4a81a98824cd9b, and equil_5000.txt beside it, sha256
   70075548a66bde99b3307558023de904ea12acdb817c0b010cbe7b9388b22565, alike at bigpic-3clicks 2a839f25f and 9771a49a4.

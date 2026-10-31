@@ -5,10 +5,11 @@ Clock: the giver and the taker on one two-leg band t, each with its own spring s
 hand lends each c h^2 through its four-leg tie. Swinging opposite, the pair holds s - t/2 + c h^2, so the potential is
 bounded below at every h exactly when s >= t/2, and the masses alone hold the pair exactly when s > t/2.
 Algebra: the pair's form [[s + c h^2, t/2], [t/2, s + c h^2]]; the lend adds to the diagonal only.
-Board: Big Pic's round, unchanged, run from his file's text above his first reading; his World with its springs laid by
-this probe as [s, s, S] in place of the click world's [0, 0, S] (s a probe value, laid to test what the board does if the
-structure gave that mass); his grain recipe (README.md of his miracle folder): the counts times lam; W, the spring and the
-hands' tie times lam^4; the tie's factor times lam^2. Every division here is the carry's.
+Board: Big Pic's round, unchanged: his file's text above his first reading, copied byte for byte into
+equil_round.py (checked against his file at every run, then imported, since the gate refuses exec); his World with its
+springs laid by this probe as [s, s, S] in place of the click world's [0, 0, S] (s a probe value, laid to test what the
+board does if the structure gave that mass); his grain recipe (README.md of his miracle folder): the counts times lam;
+W, the spring and the hands' tie times lam^4; the tie's factor times lam^2. Every division here is the carry's.
 Clicks: none read here; the identity (E32's change = the teeth's share) is checked every round, as in his read().
 
 Usage: python3 -I floor_balance.py <src of node-all 9d75a4904> <equil.py of 9771a49a4> <lam> <num> <den> <rounds>
@@ -19,6 +20,7 @@ Usage: python3 -I floor_balance.py <src of node-all 9d75a4904> <equil.py of 9771
   "opposite:k" (the taker laid at minus the giver, the giver moving up k counts a round and the taker down k).
 """
 
+import os
 import sys
 
 src, path = sys.argv[1], sys.argv[2]
@@ -29,9 +31,14 @@ pair_lay = sys.argv[10] if len(sys.argv) > 10 else "rest"
 
 text = open(path).read()
 body = text.split('print(f"three clocks at W')[0]  # his module above his first reading: constants, World, run
+here = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(here, "equil_round.py")) as copied:
+    assert copied.read() == body.rstrip("\n") + "\n", "equil_round.py differs from his text above his first reading"
 sys.argv = [path, src, str(rounds)]
-g = {"__name__": "equil_copy"}
-exec(compile(body, path, "exec"), g)
+sys.path.insert(0, here)
+import equil_round  # noqa: E402
+
+g = vars(equil_round)
 carry = g["carry"]
 
 l2, l4 = lam * lam, lam * lam * lam * lam
