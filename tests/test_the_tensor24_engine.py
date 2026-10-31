@@ -8,6 +8,7 @@ import numpy as np
 
 from tensor24.algebra.carry import carry
 from tensor24.engine import contract, step
+from tensor24.engine.mesh import stretches
 from tensor24.engine.state import Click, Gearing, Layout, Plan, Read, State
 from tensor24.runner.rewind import rewind
 from tensor24.runner.rounds import rounds
@@ -46,7 +47,7 @@ def unclicked(terms=0, key=1, trains=1):
 
 
 def varied(rng, least=1, clocked=False, cubed=False):
-    """A layout parted at every gear, Mesh and site: the grips, the teeth at rest, s, T_k and T_d each a divisor from `least`, J's terms
+    """A layout parted at every gear, Mesh and site: the grips per row, the teeth at rest, s, T_k and T_d each a divisor from `least`, J's terms
     on the value legs (the plan) and with a difference or the force among the legs (the Mesh plan), and where clocked two drawn rows read into every other gear's teeth (the two read none) and the grips' read."""
     nb = frame.board(SHAPE)
     n, every = nb.shape[1], np.arange(ROWS, dtype=np.intp)
@@ -68,7 +69,7 @@ def varied(rng, least=1, clocked=False, cubed=False):
     legs = np.where(index == PLANES * ROWS, -1, index)  # the unit as -1, the last row of any readings
     plan = Plan(legs[:, valued], factor[valued], target[valued])
     mesh = Plan(index[:, ~valued], factor[~valued], target[~valued])
-    grip = draw(rng, -3, 4, (ROWS, len(SHAPE) * n))
+    grip = draw(rng, -3, 4, (ROWS, 1))  # laid per row: every Mesh of a row grips alike
     reads = (clock, stretch, unclicked(len(plan.factor)), empty(), mesh)  # the reads, no click, no push
     return Layout(nb, frame.spokes(len(SHAPE)), frame.meshes_of(nb), grip, gearing, plan, *reads)
 
@@ -110,10 +111,9 @@ def naive(layout, s):
     for x in itertools.product(*map(range, SHAPE)):
         i = np.ravel_multi_index(x, SHAPE)
         around = [np.ravel_multi_index(y, SHAPE) for y in frame.near(x, SHAPE)]
-        meshes = [axis * n + j for axis in axes for j in (i, around[axis + axis + 1])]
         lift = [sum(m * (a[f][i] + a[f][around[t]]) for f, m, q in grips if q == t) for t in sp]
-        ends = list(enumerate(zip(meshes, around, strict=True)))
-        force = [sum((grip[g][m] + lift[q]) * (a[g][j] - a[g][i]) for q, (m, j) in ends) for g in gs]
+        ends = list(enumerate(around))  # each Spoke and the neighbour across its Mesh
+        force = [sum((grip[g][0] + lift[q]) * (a[g][j] - a[g][i]) for q, j in ends) for g in gs]
         near = [a[g][around[q + q]] - a[g][around[q + q + 1]] for q in axes for g in gs]
         readings = [a[g][i] for g in gs] + near
         source, read = [0] * rows, readings + force + [1]  # the unit, the readings' last row
@@ -136,7 +136,7 @@ def naive(layout, s):
 def alike(nb):
     """A layout alike at every site, Mesh and gear for the frame's properties: the teeth, s and T_k, no J."""
     ones = np.ones((1, nb.shape[1]), dtype=object)
-    grip, gearing = ones.repeat(len(SHAPE), axis=1), Gearing(7 * ones, 2, 3, 1)  # the teeth, s, T_k, T_d
+    grip, gearing = ones[:, :1], Gearing(7 * ones, 2, 3, 1)  # the grip per row; the teeth, s, T_k, T_d
     reads = (frame.unclocked(), frame.unread(), unclicked(), empty(), empty())
     return Layout(nb, frame.spokes(len(SHAPE)), frame.meshes_of(nb), grip, gearing, empty(), *reads)
 
@@ -166,7 +166,7 @@ def pair(g, hands=2):
     )  # the leg's hand, the unit's 0
     click = unclicked(len(plan.factor), KEY, hands)._replace(weight=weight, train=train)
     ones, a = np.ones((1, 1), dtype=object), np.zeros((rows, 1), dtype=object)
-    gearing, grip = Gearing((1 << 20) * ones, 1, 1, 1), ones.repeat(3, axis=1)
+    gearing, grip = Gearing((1 << 20) * ones, 1, 1, 1), ones  # the grip per row
     reads = (frame.unclocked(), frame.unread(), click, empty(), empty())
     layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, *reads)
     a[0, 0] = 1 << 8
@@ -298,14 +298,16 @@ def test_the_metric_is_pushed_by_the_stretches_and_the_momenta_in_the_books_form
     layout, g = pushed(), 5
     z = np.indices(FRAME)[-1].reshape(-1)
     tent = (g * np.minimum(z, FRAME[-1] - z)).astype(object)[None, :].repeat(SQUARE, axis=0)
-    j = step.stress(layout, State(tent, tent.copy(), 0 * tent, 0 * tent, 0 * tent[:1]), 0 * tent)
+    still = State(tent, tent.copy(), 0 * tent, 0 * tent, 0 * tent[:1])
+    j = step.stress(layout, still, 0 * tent, sum(step.dials(layout, still)), stretches(layout, tent))
     slope, apex = np.ravel_multi_index((0, 0, 1), FRAME), np.ravel_multi_index((0, 0, 2), FRAME)
     assert j[:, slope].tolist() == [0] * (SQUARE - 1) + [-g * g * SQUARE - g * g * SQUARE]
     assert j[:, apex].tolist() == [0] * (SQUARE - 1) + [-g * g * SQUARE]  # one stretch squared
     k0, rest, v = layout.clock.factor[0], layout.gearing.rest[0, 0], 3
     a, b = (1 << 30) + 0 * tent, (1 << 30) - v + 0 * tent
     a[0], b[0] = 0, 0  # the 00 slot still, so every row's teeth stand at rest at both slots
-    j = step.stress(layout, State(a, b, 0 * a, 0 * a, 0 * a[:1]), 0 * a)
+    glide = State(a, b, 0 * a, 0 * a, 0 * a[:1])
+    j = step.stress(layout, glide, 0 * a, sum(step.dials(layout, glide)), stretches(layout, a))
     sigma = frame.split(2 * (rest + rest) * v, rest + rest)[0]  # the momentum in rest-dial turns
     assert (j[0] == k0 * (SQUARE - 1) * sigma * sigma).all() and not j[1:].any() and sigma == v
 

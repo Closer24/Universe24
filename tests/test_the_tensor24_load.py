@@ -9,6 +9,7 @@ import numpy as np
 
 from tensor24 import main
 from tensor24.engine import state, step
+from tensor24.engine.mesh import stretches
 from tensor24.runner import load as loading
 from tensor24.runner.board import board
 from tensor24.runner.files import held_departures, sites_of, vocabulary
@@ -167,7 +168,8 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_fam
         (zero,), b = [t.first for t in held.trains if t.square], held.state[0]  # every row gliding alike
         pushed, senses = [zero, *range(zero + 4, zero + 7)], len(laid.spokes) // len(SHAPE)  # 00, ii
         b[-1], k0 = WIDE * np.minimum(z, SHAPE[-1] - z), len(laid.spokes) * senses  # a tent along z
-        t, j = b[-1].reshape(SHAPE), step.stress(laid, state.State(b + 1, b, *held.state[2:]), 0 * b)
+        t, glide = b[-1].reshape(SHAPE), state.State(b + 1, b, *held.state[2:])
+        j = step.stress(laid, glide, 0 * b, sum(step.dials(laid, glide)), stretches(laid, b + 1))
         tent = -push * sum(np.square(np.roll(t, n, -1) - t) for n in (1, -1)).reshape(-1)  # the zz slot
         assert (j[zero] == push * k0 * (len(j) - len(pushed))).all() and (j[pushed[-1]] == tent).all()
         assert not np.delete(j, (zero, pushed[-1]), axis=0).any()  # nothing lands elsewhere

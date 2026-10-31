@@ -309,7 +309,7 @@ def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tupl
     rows = np.repeat(
         loaded.trains.gripped, loaded.trains.size.astype(np.intp)
     )  # 1 but on the held hand's rows
-    grips = np.outer(rows, np.full(len(shape) * nb.shape[1], grip, dtype=object))
+    grips = np.full((1, 1), grip, dtype=object) * rows[:, None]  # the grip per row, every Mesh alike
     weight, train, key = loaded.click
     scale, _ = carry(
         key[:1], universe["chosen"]["key"], 0

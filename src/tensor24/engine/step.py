@@ -30,10 +30,10 @@ def drive(j: Z, teeth: Z, rd: Z) -> tuple[Z, Z]:
     return carry(j, teeth, rd)
 
 
-def readings(layout: Layout, a: Z) -> tuple[Z, Z]:
+def readings(layout: Layout, a: Z, strained: Z) -> tuple[Z, Z]:
     """Every gear's force, its pull, and the readings flat: the value, the differences along each axis, the force, and the unit last."""
     nb, spokes, _, _, _, _, _, _, _, _, _ = layout
-    force = pull(layout, a)
+    force = pull(layout, a, strained)
     # each axis's + neighbour less its - neighbour: the neighbours summed with their Spokes' directions
     gradient = np.tensordot(spokes, seen(a, nb), axes=(0, 1))
     read = np.concatenate((np.expand_dims(a, 0), gradient, np.expand_dims(force, 0)))
@@ -41,25 +41,24 @@ def readings(layout: Layout, a: Z) -> tuple[Z, Z]:
     return force, np.concatenate((read.reshape(-1, a.shape[-1]), np.ones_like(a[:1], dtype=object)))
 
 
-def sources(layout: Layout, a: Z) -> tuple[Z, Z]:
+def sources(layout: Layout, a: Z, strained: Z) -> tuple[Z, Z]:
     """Every gear's force, its pull, and its source J1: the plan on the readings at the now slot, and the plan's terms with a Mesh leg on the same readings (the gradient vertex), which the drive carries and the passing reads split by the Spoke, on the Mesh's edges."""
     _, _, _, _, _, plan, _, _, _, _, mesh = layout
-    force, flat = readings(layout, a)
+    force, flat = readings(layout, a, strained)
     return force, contract(plan, flat, a) + contract(mesh, flat, a)
 
 
-def stress(layout: Layout, s: State, push: Z) -> Z:
+def stress(layout: Layout, s: State, push: Z, dial: Z, strained: Z) -> Z:
     """The metric's push J5 (term 5, the books' form): the push's plan on the Node-clock's six stretches per row (Spoke s, row r at the plane s rows + r, the Spokes in the star's order), the two momenta in whole turns of the rest dial, M_in = 2 D_in (a - b) + s at the plane Spokes rows + r and M_out = M_in + 4 push at (Spokes + 1) rows + r, each read by the centred split, and the unit last at (Spokes + 2) rows; so a hand at rest gives the 00 slot nothing, its stretches alone pushing the ii slots. M_out is read at the first push, s F + K1 with K1 the drive's quotient on J1 alone: the round's own momentum out on a row J5 does not land on, and a stride the round does not take on a row it does; so the mirror swaps and negates the momenta a plan reads, and the round runs back, only where the plan reads the momenta of no row the push lands on (hypothesis (d), which the loader's plan keeps by reading the rows on the force's path alone); a plan reading a pushed row's momenta breaks the run back."""
     _, _, _, _, gearing, _, _, _, _, plan, _ = layout
     rest, _, _, _, _ = gearing
     a, b, tooth, _, _ = s
     senses = halves(layout)
-    wa, wb = dials(layout, s)
-    m_in = senses * (wa + wb) * (a - b) + tooth
+    m_in = senses * dial * (a - b) + tooth
     m_out = m_in + senses * senses * push
     sigma_in, _ = split(m_in, senses * rest, senses)
     sigma_out, _ = split(m_out, senses * rest, senses)
-    planes = stretches(layout, a).swapaxes(0, 1).reshape(-1, a.shape[-1])
+    planes = strained.swapaxes(0, 1).reshape(-1, a.shape[-1])
     unit = np.ones_like(a[:1], dtype=object)
     return contract(plan, np.concatenate((planes, sigma_in, sigma_out, unit)), a)
 
@@ -138,15 +137,16 @@ def act(layout: Layout, s: State) -> tuple[State, Z]:
     """One round and its clicks, in one pass: the sources J1 at the now slot (the plan and the Mesh plan on the readings) give every gear its first push, whose momenta, with the six stretches per row, source the metric's push J5; the drive carries J = J1 + J5; every gear carries its momentum from the edge it reads to the next edge, whose dial reads the 00 slot's next count, the 00 row's own carry at its standing teeth, through the clocks' read; every edge side's click tooth carries its passing of the round's window at the edge key, P(t, u) = SUM_i ([leg i in t] - [leg i in u]) w_i J_i(a) (a+ - b) over the terms of J's plan on the value legs, read at the before slot, the now slot and the next count alike (on the Mesh's edges the partner's across one Mesh too; no push kept from a round to the next); the clicks are that carry's quotients, one per side, (the state reached, the clicks)."""
     nb, _, _, _, gearing, plan, clock, _, click, _, _ = layout
     a, b, tooth, rd, k = s
-    force, j1 = sources(layout, a)
+    wa, wb = dials(layout, s)  # W(a) and W(b), once a round
+    strained = stretches(layout, a)  # the six stretches, once a round: the pull's read and the push's
+    force, j1 = sources(layout, a, strained)
     _, _, _, teeth, _ = gearing
     _, _, key, _, _ = click
     first, _ = drive(j1, teeth, rd)
-    j = j1 + stress(layout, s, driven(gearing, force, kick(gearing, first)))
+    j = j1 + stress(layout, s, driven(gearing, force, kick(gearing, first)), wa + wb, strained)
     q, kept = drive(j, teeth, rd)
     kicks = kick(gearing, q)
     senses, push = halves(layout), driven(gearing, force, kicks)
-    wa, wb = dials(layout, s)
     # the counts the split gives at the edge's own dial, given first: the rows the clocks' plan reads stand at their
     # rest teeth, so each one's is its own next count, and W(a+) reads them (a one-pass D_out = 2 W(a) would break the
     # edge's dial the run back shares)

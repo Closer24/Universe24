@@ -64,7 +64,7 @@ class Layout(NamedTuple):
     nb: Z  # (6, N): +x, -x, +y, -y, +z, -z, each the other's opposite (the load makes the relation symmetric)
     spokes: Z  # (6, d): each Spoke's direction on the board's axes, a unit vector or its opposite, in nb's order
     meshes: Z  # (6, N): the Mesh each Spoke holds, its two ends paired by the load (load.geometry); a grip its own conjugate
-    grip: Z  # (rows or 1, Meshes): a gear row's grip on each Mesh, once per Mesh; a train's rows alike from 7b's load
+    grip: Z  # (rows or 1, 1): a gear row's grip at rest, laid per row as every Mesh of a row grips alike (7b's load)
     gearing: Gearing
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, the force, the unit last
     clock: Plan  # every gear's teeth: its rest and what this plan lands on its row from the counts given first, the tick's weight

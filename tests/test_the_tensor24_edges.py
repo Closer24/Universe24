@@ -8,7 +8,7 @@ from pathlib import Path
 import numpy as np
 
 from tensor24 import main
-from tensor24.engine import step
+from tensor24.engine import mesh, step
 from tensor24.engine.contract import contract
 from tensor24.engine.state import State
 from tensor24.runner import load as loading
@@ -84,7 +84,7 @@ def test_the_mesh_edges_are_the_mesh_contraction_one_coupling_at_both_ends_with_
     assert frame.same([across], [np.stack([across[x].T for x in opposite])]) and across.any()
     s, moved = start, False
     for _ in range(ROUNDS):
-        _, flat = step.readings(laid, s.a)
+        _, flat = step.readings(laid, s.a, mesh.stretches(laid, s.a))
         split = sum(across[x] @ s.a[:, laid.nb[x]] for x in range(len(across)))
         assert frame.same([split], [scale * contract(laid.mesh, flat, s.a)])
         out, q = step.act(laid, s)

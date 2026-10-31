@@ -26,9 +26,9 @@ def gripped(layout: Layout, a: Z) -> Z:
 
 
 def held(layout: Layout, a: Z) -> Z:
-    """Every Spoke's grip at every gear and site: its train's grip on the Spoke's Mesh at rest, and what the grips' read lands on it at the now slot."""
-    _, _, meshes, grip, _, _, _, _, _, _, _ = layout
-    return grip[:, meshes] + gripped(layout, a)
+    """Every Spoke's grip at every gear and site: its row's grip at rest, laid per row as every Mesh holds it alike, and what the grips' read lands on it at the now slot."""
+    _, _, _, grip, _, _, _, _, _, _, _ = layout
+    return grip[:, :, None] + gripped(layout, a)
 
 
 def stretches(layout: Layout, a: Z) -> Z:
@@ -37,6 +37,6 @@ def stretches(layout: Layout, a: Z) -> Z:
     return seen(a, nb) - a[:, None, :]
 
 
-def pull(layout: Layout, a: Z) -> Z:
-    """The Meshes' pull on every gear: its grip on each Spoke's Mesh times its stretch along the Spoke, summed over the Spokes."""
-    return (stretches(layout, a) * held(layout, a)).sum(axis=1)
+def pull(layout: Layout, a: Z, strained: Z) -> Z:
+    """The Meshes' pull on every gear: its grip on each Spoke's Mesh times its stretch along the Spoke (the round's six stretches, read once), summed over the Spokes."""
+    return (strained * held(layout, a)).sum(axis=1)
