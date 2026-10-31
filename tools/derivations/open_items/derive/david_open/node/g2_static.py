@@ -1,12 +1,14 @@
-"""G2, the static weak field on the slot form: what the clocks and light read, and the post-Newtonian beta and gamma.
+"""G2, the static weak field on the slot form: what the clocks and the board's wave read, and the post-Newtonian beta
+and gamma.
 
 Whole numbers alone, on the act (engine/step.py and engine/mesh.py at main 0df0e8385), with the loader's reads laid by
 hand: every row's teeth W = rest + the metric family's 00 slot (term 2), every Spoke's grip = the grip + its axis's ii
-slot at both ends of its Mesh (term 3). The rows: matter (one), light (one), and the metric family in the square's
-basis (00; 0x 0y 0z; xx yy zz; yz zx xy). In (a), (a2) and (b) the metric's slots are laid uniform and still.
+slot at both ends of its Mesh (term 3). The rows: the source gear (one), the board's wave (one), and the metric family
+in the square's basis (00; 0x 0y 0z; xx yy zz; yz zx xy). In (a), (a2) and (b) the metric's slots are laid uniform
+and still.
 
-(a) the clock: matter on a spring s at one Node-clock, the 00 slot laid at 0, 3 and 8 times the rest (W = rest, 4 rest
-    and 9 rest): sign changes over 4,000 rounds, 1, 1/2 and 1/3 at a small beat; the run back bit for bit;
+(a) the clock: a source gear on a spring s at one Node-clock, the 00 slot laid at 0, 3 and 8 times the rest (W = rest,
+    4 rest and 9 rest): sign changes over 4,000 rounds, 1, 1/2 and 1/3 at a small beat; the run back bit for bit;
 (a2) the reading holds at zero beat: two clocks at one depth (W = 4 rest against rest, 40,000 rounds), the slow one
      (s = rest div 400) and a fast one (s = rest div 4): N from their counts, its square N^2 as a fraction against
      rest / W = 1/4 exactly and N against 1/2 exactly; the exact reading for each, the exact linear recurrence
@@ -16,8 +18,9 @@ basis (00; 0x 0y 0z; xx yy zz; yz zx xy). In (a), (a2) and (b) the metric's slot
      reading's N^2 for each clock, and the depth each reads back, 1 / N^2 - 1, against u: both read the well deeper,
      the fast one more; how far a hundredth of the exact reading's count at 4 rest moves each clock's depth read
      back; and whether deeper than u is resolved, one count fewer at rest and one more at 4 rest still deeper;
-(b) light: a ring of 4 Node-clocks, light laid on the mode (1, 0, -1, 0), 4 sin^2 (w / 2) = 2 grip / W: the sign
-    changes at (W, grip) = (rest, g), (4 rest, g), (rest, 4 g) and (4 rest, 4 g); the same grip / W, the same count;
+(b) the board's wave: a ring of 4 Node-clocks, the board's wave laid on the mode (1, 0, -1, 0), whose step at each
+    site is x+ = 2 x - x- - (2 grip / W) x, so 2 - trace = 2 grip / W: the sign changes at (W, grip) = (rest, g),
+    (4 rest, g), (rest, 4 g) and (4 rest, 4 g); the same grip / W, the same count;
 (c) the second order on the act's own pull (mesh.pull, the grips read at both ends): on a board of 6 by 6 by 6 the 00
     slot laid at 4 S^2 (U / S + (c2 / 2) (U / S)^2) and every ii slot at -gamma g0 U with the grip 2 S g0 (so
     v = -(gamma / 2) U / S at each end), U a whole field: the pull less its first-order part, 8 S^2 g0 Lap U, is
@@ -39,11 +42,11 @@ basis (00; 0x 0y 0z; xx yy zz; yz zx xy). In (a), (a2) and (b) the metric's slot
      and how that grows from S = 10^6 to 10^9 (as S, third order, only at gamma = 1); then, arithmetic alone,
      6 q^3 (e^(u1) - (1 + u)) at Phi = -1 / q, u1 = -2 Phi, u = u1 + (gamma / 2) u1^2: the same 8 at every q only at
      gamma = 1, so there N^2 = e^(-u1) through second order and -ln N adds over the first-order wells;
-(d4) arithmetic alone, the preferred-frame parameters with no row reading the 0i slots (the hostile physicist's
-     numbers.py (C), ported): the post-Newtonian g_0i = -(1/2) B1 V_i - (1/2) B2 W_i (Will 2014) at 0 for every source,
-     both brackets 0, gives alpha_2 = -1 + zeta_1 - 2 xi and alpha_1 = -4 (1 + gamma), checked at every gamma, zeta_1
-     and xi of 0, 1 and 2; at gamma = 1 and zeta_1 = xi = 0, alpha_1 = -8 and alpha_2 = -1; general relativity's
-     brackets beside;
+(d4) arithmetic alone, g_0i's two coefficients in the act's own coordinates, with no row reading the 0i slots (the
+     hostile physicist's numbers.py (C), ported), read as if those coordinates were the standard gauge: Will 2014's
+     g_0i = -(1/2) B1 V_i - (1/2) B2 W_i at 0 for every source, both brackets 0, gives alpha_1 = -4 (1 + gamma) and,
+     in alpha_2's place, -1 + zeta_1 - 2 xi, checked at every gamma, zeta_1 and xi of 0, 1 and 2; at gamma = 1 and
+     zeta_1 = xi = 0, -8 and -1; general relativity's brackets beside;
 (e) the wrapped board: the 00 row's pull summed over every Node-clock of the board is 0 for any fields and grips; a
     source pinned at one Node-clock of a board of 4 by 4 by 4 moves the 00 row's summed momentum by exactly rounds x J,
     so the 00 slot's sum and its least grow, and no static field stands without a notch on the board's mean (term 9);
@@ -64,23 +67,19 @@ basis (00; 0x 0y 0z; xx yy zz; yz zx xy). In (a), (a2) and (b) the metric's slot
      over 4,000 rounds at W = rest, for (f)'s one gear and for a two-part train, two rows on (f)'s spring, the second
      laid at the first's state a quarter beat on, (f)'s 4,000 rounds over twice its sign changes at W = rest by carry;
 (g) general relativity's static field in isotropic radius (the lattice's own), exact ratios: the lapse N, the scale A,
-    light's coordinate speed N / A and the areal radius A r at r = G M / (2 c^2), 2 G M / c^2 and 4 G M / c^2;
-(g2) the shadows, exact ratios: the one reading (an ii slot pulled through grips that read it, gamma = 1, section 5)
-     has 1 + 2 v = x with x^2 = 1 - 4 G M / (c^2 r), the 00 slot pulled through those grips u = 1 - x, so
-     N^2 = 1 / (2 - x) and A^2 = 1 / x; light's impact parameter squared, b^2 = r^2 A^2 / N^2 = r^2 (2 - x) / x, over
-     x = 1/100 to 99/100, against general relativity's b^2 = R^3 / (R - 2) over the areal radius R = 201/100 to 10;
+    the board's wave's coordinate speed N / A and the areal radius A r at r = G M / (2 c^2), 2 G M / c^2 and
+    4 G M / c^2;
+(g2) the critical curves, exact ratios: the one reading (an ii slot pulled through grips that read it, gamma = 1,
+     section 5) has 1 + 2 v = x with x^2 = 1 - 4 G M / (c^2 r), the 00 slot pulled through those grips u = 1 - x,
+     so N^2 = 1 / (2 - x) and A^2 = 1 / x; the board's wave's impact parameter squared, b^2 = r^2 A^2 / N^2 =
+     r^2 (2 - x) / x, over x = 1/100 to 99/100, against general relativity's b^2 = R^3 / (R - 2) over the areal
+     radius R = 201/100 to 10;
      then the least by its derivative: d ln b^2 / dx times x (2 - x)(1 - x^2) is -2 (2 x - 1)(x^2 - 2 x - 1), checked
      at every x = p / q with 0 <= p <= q <= 60, where x^2 - 2 x - 1 < 0, so b^2 falls below x = 1/2 and rises above
      it; a finer scan over x = p / 10^4 for the least, and at it r = 4 / (1 - x^2) and the two least b^2's ratio;
      and the one least as polynomials (the hostile mathematician's H1, ported): the numerator of d b^2 / dx from
      b^2 = N / D multiplied out against 16 (1 - x^2) times -2 (2 x - 1)(x^2 - 2 x - 1), coefficient by coefficient,
-     and x^2 - 2 x - 1 < 0 on [0, 1] from its value at both ends and its leading sign;
-(h) the background (the hostile physicist's estimate, ported): the board's mean resting where term 9's notch holds
-    it, u0 = 3 Omega_m (L H0 / c)^2 for the notch's range L, at L = c / H0 and at L = c age / (2 pi), a swing whose
-    period is the universe's age; Planck 2018's Omega_m, H0 and age as whole ratios; and gamma / gamma0 at each by G2's
-    formula (1 + C0 / rest) / (1 + 2 Cv / g) with C0 / rest = u0 and 2 Cv / g = -u0 (the notch's one range, term 9's
-    second text; the first text's trace notch gave -(2/3) u0, printed beside), and with N2's 00 source at that depth
-    ((f2)'s (1 - u0) / (1 + u0) of its ii source) also (1 + u0) / (1 - u0).
+     and x^2 - 2 x - 1 < 0 on [0, 1] from its value at both ends and its leading sign.
 
 Usage: python3 -I g2_static.py <src of main at 0df0e8385>   (the example files are read from
 <src>/../examples/tensor24)
@@ -110,8 +109,8 @@ ex_loaded, _ = t24_load.load(ex_universe, {"version": 1, "ticks": 1, "gears": []
                              *t24_main.made(t24_load.star(len(ex_shape))))
 GRIP = int(t24_main.layout(ex_universe, ex_shape, ex_loaded).grip[0][0])  # the example's grip, read through the loader
 REST = 6 * GRIP
-# rows: matter, light, the metric's 00 slot, its xx slot (yy, zz follow)
-matter_row, light_row, slot00, slot_xx = 0, 1, 2, 6
+# rows: the source gear, the board's wave, the metric's 00 slot, its xx slot (yy, zz follow)
+gear_row, wave_row, slot00, slot_xx = 0, 1, 2, 6
 ROWS = 12
 
 
@@ -125,7 +124,7 @@ def layout(shape, spring):
                    np.ones(6, dtype=object), np.arange(6, dtype=np.intp))  # each Spoke reads its axis's ii slot
     if spring:
         plan = pushes(np.array([carry(spring, 2, 0)[0]], dtype=object),
-                      tuple(np.array([leg], dtype=np.intp) for leg in (matter_row, matter_row, -1, -1)))
+                      tuple(np.array([leg], dtype=np.intp) for leg in (gear_row, gear_row, -1, -1)))
     else:
         plan = Plan(*(np.zeros(0, dtype=np.intp),) * 3, np.zeros(0, dtype=object), np.zeros(0, dtype=np.intp))
     lay = Layout(nb, spokes, meshes, np.full((1, 3 * sites), GRIP, dtype=object),
@@ -157,8 +156,8 @@ lay_a, sites_a = layout((1, 1, 1), spring)
 counts = []
 home_all = True
 for times in (1, 4, 9):
-    s0 = state(sites_a, {matter_row: 10**6, slot00: (times - 1) * REST})
-    n, s_end = sign_changes(lay_a, s0, matter_row, 0)
+    s0 = state(sites_a, {gear_row: 10**6, slot00: (times - 1) * REST})
+    n, s_end = sign_changes(lay_a, s0, gear_row, 0)
     back = s_end
     for _ in range(4000):
         back = step.untick(lay_a, back)
@@ -189,8 +188,8 @@ zero_beat, exact_counts = [], []
 clocks = (("slow, s = rest div 400", carry(REST, 400, 0)[0]), ("fast, s = rest div 4", carry(REST, 4, 0)[0]))
 for name, clock_spring in clocks:
     lay_c, sites_c = layout((1, 1, 1), clock_spring)
-    shallow, _ = sign_changes(lay_c, state(sites_c, {matter_row: 10**6, slot00: 0}), matter_row, 0, 40000)
-    deep, _ = sign_changes(lay_c, state(sites_c, {matter_row: 10**6, slot00: 3 * REST}), matter_row, 0, 40000)
+    shallow, _ = sign_changes(lay_c, state(sites_c, {gear_row: 10**6, slot00: 0}), gear_row, 0, 40000)
+    deep, _ = sign_changes(lay_c, state(sites_c, {gear_row: 10**6, slot00: 3 * REST}), gear_row, 0, 40000)
     # the exact reading: the exact recurrence over a hundred times the rounds, its counts carried into hundredths
     rest_count = exact_changes(clock_spring, REST, 4000000)
     deep_count = exact_changes(clock_spring, 4 * REST, 4000000)
@@ -230,19 +229,19 @@ print("    at u = 3, N^2 x 10^12 by the next order (1 / (1 + u)) (1 - (s / (12 r
       f" 4 rest still read {worst[0]} (slow) and {worst[1]} (fast): deeper than u resolved:"
       f" {all(w > 3 * 10**6 for w in worst)}")
 
-# (b) light on a ring of 4
+# (b) the board's wave on a ring of 4
 lay_b, sites_b = layout((4, 1, 1), 0)
 mode = [10**6, 0, -(10**6), 0]
-light = []
+waves = []
 for w_times, g_times in ((1, 1), (4, 1), (1, 4), (4, 4)):
     ii_each_end = carry((g_times - 1) * GRIP, 2, 0)[0]
-    laid = {light_row: mode, slot00: (w_times - 1) * REST, slot_xx: ii_each_end, slot_xx + 1: ii_each_end,
+    laid = {wave_row: mode, slot00: (w_times - 1) * REST, slot_xx: ii_each_end, slot_xx + 1: ii_each_end,
             slot_xx + 2: ii_each_end}
-    n, _ = sign_changes(lay_b, state(sites_b, laid), light_row, 0)
-    light.append((w_times, g_times, n))
-print("(b) light on the mode (1, 0, -1, 0), sign changes at site 0 in 4,000 rounds, (W over rest, grip over g): "
-      + "; ".join(f"({w}, {gt}) {n}" for w, gt, n in light)
-      + f"; the same grip / W gives the same count: {light[0][2] == light[3][2]}")
+    n, _ = sign_changes(lay_b, state(sites_b, laid), wave_row, 0)
+    waves.append((w_times, g_times, n))
+print("(b) the board's wave on the mode (1, 0, -1, 0), sign changes at site 0 in 4,000 rounds, (W over rest, grip"
+      " over g): " + "; ".join(f"({w}, {gt}) {n}" for w, gt, n in waves)
+      + f"; the same grip / W gives the same count: {waves[0][2] == waves[3][2]}")
 
 # (c) the second order on the act's own pull
 nb6 = board((6, 6, 6))
@@ -395,9 +394,10 @@ print("    arithmetic alone, 6 q^3 (e^(u1) - (1 + u)) to third order at Phi = -1
       f" (there 1 + u = e^(u1) through second order: N^2 = e^(-u1), and -ln N adds over the first-order wells)")
 
 
-# (d4) arithmetic alone, the preferred-frame parameters with no row reading the 0i slots (the hostile physicist's
-# numbers.py (C), ported): the post-Newtonian g_0i = -(1/2) B1 V_i - (1/2) B2 W_i (Will 2014, Living Rev. Relativ. 17,
-# 4), and g_0i = 0 for every source sets both brackets to 0
+# (d4) arithmetic alone, g_0i's two coefficients in the act's own coordinates, with no row reading the 0i slots (the
+# hostile physicist's numbers.py (C), ported), read as if those coordinates were the standard gauge: Will 2014's
+# g_0i = -(1/2) B1 V_i - (1/2) B2 W_i (Living Rev. Relativ. 17, 4), and g_0i = 0 for every source sets both brackets
+# to 0
 def brackets(gamma, alpha1, alpha2, zeta1, xi):
     """B1 and B2 of the post-Newtonian g_0i, whole numbers."""
     return 4 * gamma + 3 + alpha1 - alpha2 + zeta1 - 2 * xi, 1 + alpha2 - zeta1 + 2 * xi
@@ -413,12 +413,13 @@ ppn_grid = [(g, z, x) for g in (0, 1, 2) for z in (0, 1, 2) for x in (0, 1, 2)]
 ppn_held = all(brackets(g, *alphas(g, z, x), z, x) == (0, 0) and alphas(g, z, x) == (-4 * (1 + g), -1 + z - 2 * x)
                for g, z, x in ppn_grid)
 alpha1_one, alpha2_one = alphas(1, 0, 0)
-print("(d4) arithmetic alone, the preferred-frame parameters with no row reading the 0i slots: the post-Newtonian"
-      " g_0i = -(1/2) B1 V_i - (1/2) B2 W_i (Will 2014), B1 = 4 gamma + 3 + alpha_1 - alpha_2 + zeta_1 - 2 xi and"
-      " B2 = 1 + alpha_2 - zeta_1 + 2 xi; g_0i = 0 for every source sets both to 0, so alpha_2 = -1 + zeta_1 - 2 xi and"
-      f" alpha_1 = -4 (1 + gamma), at every gamma, zeta_1 and xi of 0, 1 and 2: {ppn_held}; at gamma = 1 and"
-      f" zeta_1 = xi = 0: alpha_1 = {alpha1_one}, alpha_2 = {alpha2_one}; general relativity (gamma = 1, every alpha,"
-      f" zeta_1 and xi 0): B1 = {brackets(1, 0, 0, 0, 0)[0]}, B2 = {brackets(1, 0, 0, 0, 0)[1]}")
+print("(d4) arithmetic alone, g_0i's two coefficients in the act's own coordinates, with no row reading the 0i"
+      " slots, read as if those coordinates were the standard gauge: Will 2014's g_0i = -(1/2) B1 V_i - (1/2) B2 W_i,"
+      " B1 = 4 gamma + 3 + alpha_1 - alpha_2 + zeta_1 - 2 xi and B2 = 1 + alpha_2 - zeta_1 + 2 xi; g_0i = 0 for every"
+      " source sets both to 0, so alpha_1 = -4 (1 + gamma) and, in alpha_2's place, -1 + zeta_1 - 2 xi, at every"
+      f" gamma, zeta_1 and xi of 0, 1 and 2: {ppn_held}; at gamma = 1 and zeta_1 = xi = 0: alpha_1 = {alpha1_one},"
+      f" and {alpha2_one} in alpha_2's place; general relativity (gamma = 1, every alpha, zeta_1 and xi 0):"
+      f" B1 = {brackets(1, 0, 0, 0, 0)[0]}, B2 = {brackets(1, 0, 0, 0, 0)[1]}")
 
 # (e) the wrapped board
 gen_seq = 77
@@ -435,16 +436,16 @@ nb4 = board((4, 4, 4))
 sites4 = nb4.shape[1]
 spokes4, meshes4 = geometry(nb4, 3)
 grips4 = np.full((ROWS, 3 * sites4), GRIP, dtype=object)
-grips4[matter_row, :] = 0  # the matter row held still: no grip
+grips4[gear_row, :] = 0  # the source gear's row held still: no grip
 J = 3
-source = Plan(np.array([matter_row], dtype=np.intp), np.array([5 * ROWS], dtype=np.intp),
+source = Plan(np.array([gear_row], dtype=np.intp), np.array([5 * ROWS], dtype=np.intp),
               np.array([5 * ROWS], dtype=np.intp), np.array([J], dtype=object), np.array([slot00], dtype=np.intp))
 lay4 = Layout(nb4, spokes4, meshes4, grips4, Gearing(REST * np.ones((ROWS, 1), dtype=object),
               *(np.ones((ROWS, 1), dtype=object),) * 3), source, no_read,
               Read(np.array([slot_xx, slot_xx, slot_xx + 1, slot_xx + 1, slot_xx + 2, slot_xx + 2], dtype=np.intp),
                    np.ones(6, dtype=object), np.arange(6, dtype=np.intp)))
 a4 = np.zeros((ROWS, sites4), dtype=object)
-a4[matter_row, 0] = 10**22
+a4[gear_row, 0] = 10**22
 s4 = State(a4, a4.copy(), np.full((ROWS, sites4), carry(REST, 2, 0)[0], dtype=object),
            np.zeros((ROWS, sites4), dtype=object))
 
@@ -490,11 +491,11 @@ spring_t = carry(REST, 400, 0)[0]
 lay_t, sites_t = layout((1, 1, 1), spring_t)
 f_runs = {}  # each depth's run and its gear's sign changes, read again in (f4)
 for times in (1, 4):
-    st_t = state(sites_t, {matter_row: 10**6, slot00: (times - 1) * REST})
-    seq_t = [int(st_t.a[matter_row, 0])]
+    st_t = state(sites_t, {gear_row: 10**6, slot00: (times - 1) * REST})
+    seq_t = [int(st_t.a[gear_row, 0])]
     for _ in range(4000):
         st_t = step.tick(lay_t, st_t)
-        seq_t.append(int(st_t.a[matter_row, 0]))
+        seq_t.append(int(st_t.a[gear_row, 0]))
     strides = [(seq_t[t] - seq_t[t - 1]) ** 2 + (seq_t[t + 1] - seq_t[t]) ** 2 for t in range(1, len(seq_t) - 1)]
     squares = [seq_t[t] * seq_t[t] for t in range(1, len(seq_t) - 1)]
     mean_k = carry(sum(strides), len(strides), 0)[0]
@@ -525,11 +526,11 @@ for times in (1, 4):
 f2_rows, fixed_gaps, mutants, f2_by_u = [], [], [], {}
 for u_num, u_den in ((0, 1), (1, 100), (1, 16), (1, 10), (1, 8), (1, 4), (1, 2), (1, 1), (3, 1)):
     w_teeth = carry(REST * (u_den + u_num), u_den, 0)[0]
-    st_u = state(sites_t, {matter_row: 10**6, slot00: w_teeth - REST})
-    seq_u = [int(st_u.a[matter_row, 0])]
+    st_u = state(sites_t, {gear_row: 10**6, slot00: w_teeth - REST})
+    seq_u = [int(st_u.a[gear_row, 0])]
     for _ in range(24000):
         st_u = step.tick(lay_t, st_u)
-        seq_u.append(int(st_u.a[matter_row, 0]))
+        seq_u.append(int(st_u.a[gear_row, 0]))
     flips_u, kin_u, pot_u = whole_half_beats(seq_u)
     fixed = carry(10**6 * (REST * kin_u - spring_t * pot_u), spring_t * pot_u, 0)[0]  # st = rest
     own = carry(10**6 * (w_teeth * kin_u - spring_t * pot_u), spring_t * pot_u, 0)[0]  # st = W, the gear's own teeth
@@ -566,7 +567,7 @@ print("(f3) N2's 00 source against its ii source with the depth, seven of (f2)'s
 # (f4) the beat's range (the hostile physicist's j00_beat.py, ported): N2's whole 00 source per round,
 # st (sb^2 + sa^2) - kv a^2 at st = rest and kv = s, and its ii source kv a^2, least and most per mille of their means
 # over 4,000 rounds at W = rest, for (f)'s one gear and for a two-part train, two rows on (f)'s spring (the second in
-# row 1, the light row's place, as j00_beat.py lays it), the second laid at the first's state a quarter beat on
+# row 1, the board's wave's row, as j00_beat.py lays it), the second laid at the first's state a quarter beat on
 def beat_range(seqs):
     """J00 and J_ii per round, each round with a stride in and a stride out, summed over a train's parts: the least
     and the most of each, per mille of its mean."""
@@ -586,14 +587,14 @@ def beat_range(seqs):
 seq_one, turns_one = f_runs[1]
 quarter = carry(4000, 2 * turns_one, 0)[0]  # a quarter beat: (f)'s 4,000 rounds over twice its sign changes
 one_part = beat_range([[10**6] + seq_one])  # the lay's before slot, then (f)'s run at W = rest
-pair_rows = (matter_row, light_row)
+pair_rows = (gear_row, wave_row)
 pair_plans = [pushes(np.array([carry(spring_t, 2, 0)[0]], dtype=object),
                      tuple(np.array([leg], dtype=np.intp) for leg in (row, row, -1, -1))) for row in pair_rows]
 lay_pair = lay_t._replace(plan=Plan(*(np.concatenate(xs) for xs in zip(*pair_plans, strict=True))))
 a_pair = np.zeros((ROWS, sites_t), dtype=object)
 b_pair = np.zeros((ROWS, sites_t), dtype=object)
-a_pair[matter_row, 0], b_pair[matter_row, 0] = 10**6, 10**6
-a_pair[light_row, 0], b_pair[light_row, 0] = seq_one[quarter], seq_one[quarter - 1]
+a_pair[gear_row, 0], b_pair[gear_row, 0] = 10**6, 10**6
+a_pair[wave_row, 0], b_pair[wave_row, 0] = seq_one[quarter], seq_one[quarter - 1]
 s_pair = State(a_pair, b_pair, np.full((ROWS, sites_t), carry(REST, 2, 0)[0], dtype=object),
                np.zeros((ROWS, sites_t), dtype=object))
 pair_seqs = [[int(s_pair.b[row, 0]), int(s_pair.a[row, 0])] for row in pair_rows]
@@ -619,8 +620,9 @@ print("(g) general relativity's static field in isotropic radius (r in G M / c^2
       + "; where 1 + 2 v = 0 with v = gamma Phi, Phi = -1 / (2 gamma), at gamma 1 the radius 2: N / A = 48/125 there;"
       + " at r = 1/2, N = 0 and A = 4: in the act's terms W without bound and the grip g / A^2 = g/16")
 
-# (g2) the shadows: x = p / 100, r = 4 / (1 - x^2), b^2 = r^2 (2 - x) / x = 16 10^8 (200 - p) / (p (10^4 - p^2)^2);
-# general relativity: R = m / 100, b^2 = R^3 / (R - 2) = m^3 / (10^4 (m - 200)); each least found by cross-multiplying
+# (g2) the critical curves: x = p / 100, r = 4 / (1 - x^2), b^2 = r^2 (2 - x) / x = 16 10^8 (200 - p) / (p (10^4
+# - p^2)^2); general relativity: R = m / 100, b^2 = R^3 / (R - 2) = m^3 / (10^4 (m - 200)); each least found by
+# cross-multiplying
 least_one = None
 for p in range(1, 100):
     b_num, b_den = 16 * 10**8 * (200 - p), p * (10000 - p * p) ** 2
@@ -633,10 +635,10 @@ for m in range(201, 1001):
         least_gr = (m, b_num, b_den)
 p0, one_num, one_den = least_one
 m0, gr_num, gr_den = least_gr
-print(f"(g2) the shadows: the one reading's least b^2 over x = 1/100 to 99/100 at x = {p0}/100 (r = 16/3 G M / c^2),"
-      f" b^2 = 256/3 (G M / c^2)^2 exactly: {one_num * 3 == 256 * one_den}; general relativity's least b^2 ="
-      f" R^3 / (R - 2) over R = 201/100 to 10 at R = {m0}/100, b^2 = 27 exactly: {gr_num == 27 * gr_den}; the ratio"
-      " (256/3) / 27 = 256/81 = (16/9)^2: the one reading's shadow 16/9 of general relativity's")
+print(f"(g2) the critical curves: the one reading's least b^2 over x = 1/100 to 99/100 at x = {p0}/100"
+      f" (r = 16/3 G M / c^2), b^2 = 256/3 (G M / c^2)^2 exactly: {one_num * 3 == 256 * one_den}; general relativity's"
+      f" least b^2 = R^3 / (R - 2) over R = 201/100 to 10 at R = {m0}/100, b^2 = 27 exactly: {gr_num == 27 * gr_den};"
+      " the ratio (256/3) / 27 = 256/81 = (16/9)^2: the one reading's critical curve 16/9 of general relativity's")
 # the least by its derivative: d ln b^2 / dx = -1 / (2 - x) - 1 / x + 4 x / (1 - x^2); times x (2 - x)(1 - x^2), which
 # is above 0 on (0, 1), its numerator -x (1 - x^2) - (2 - x)(1 - x^2) + 4 x^2 (2 - x); at x = p / q both sides times q^3
 pairs, factored, below0, signed = 0, True, True, True
@@ -712,34 +714,3 @@ print("    the one least as polynomials: b^2 = N / D with N = 16 (2 - x) and D =
       f" so its largest on [0, 1] stands at an end: below 0 on all of [0, 1]: {below_all}; with 16 (1 - x^2) and D^2"
       " above 0 on (0, 1), d b^2 / dx has the sign of 2 x - 1 there: b^2 falls below x = 1/2 and rises above it, the"
       " one least")
-
-# (h) the background. Term 9 rests the board's mean at J_total / (2 f9) with the range L, L^2 = grip / (2 f9) in Meshes
-# squared, so u0 = J L^2 / (grip rest); the static field's own scale, grip rest Lap u = -J with u = -2 Phi, gives
-# J / (grip rest) = 8 pi G rho / c^2, and rho = Omega_m 3 H0^2 / (8 pi G): u0 = 3 Omega_m (L H0 / c)^2. The trace
-# on one range, (f9 over 3) tr^2 as term 9's second text lays it, holds each ii slot at Cv = J_ii over (2 f9) with
-# J_ii = -(g over (2 rest)) J00 (the CHOSEN strength, gamma0 = 1), so 2 Cv over g = -u0, condition (i) kept by the rest;
-# the first text's (f9 over 2) tr^2 gave -(2/3) u0. Constants and their sources:
-C_LIGHT = 299792458  # m / s, exact (the SI metre)
-AU = 149597870700  # m, exact (IAU 2012 Resolution B2); the parsec is 648000 / pi au (IAU 2015 Resolution B2)
-YEAR = 31557600  # s, the Julian year (IAU)
-H0_TENTHS = 674  # km/s per Mpc in tenths, so 674 x 100 m/s per Mpc (Planck 2018 results VI, A&A 641, A6: 674 +- 5)
-OMEGA_M = 315  # in thousandths (Planck 2018 results VI: 315 +- 7)
-AGE_MYR = 13787  # Myr (Planck 2018 results VI: 13787 +- 20)
-# L H0 / c at L = c age / (2 pi) is H0 age / (2 pi); H0 = 67400 pi / (648000 10^6 AU) per second, so pi cancels:
-# H0 age / (2 pi) = 67400 AGE_MYR 10^6 YEAR / (2 648000 10^6 AU), a whole ratio
-x_num, x_den = H0_TENTHS * 100 * AGE_MYR * YEAR, 2 * 648000 * AU
-background = []
-for name, l_num, l_den in (("L = c / H0", 1, 1), ("L = c age / (2 pi)", x_num, x_den)):
-    big_a, big_b = 3 * OMEGA_M * l_num * l_num, 1000 * l_den * l_den  # u0 = big_a / big_b
-    mpc = carry(C_LIGHT * l_num, H0_TENTHS * 100 * l_den, 0)[0]  # L in Mpc: (c / H0) (L H0 / c)
-    page = carry(10**6 * (big_b + big_a), big_b - big_a, 0)[0]  # (1 + u0) over (1 - u0)
-    with_n2 = carry(10**6 * (big_b + big_a) * (big_b + big_a), (big_b - big_a) * (big_b - big_a), 0)[0]
-    first = carry(10**6 * 3 * (big_b + big_a), 3 * big_b - 2 * big_a, 0)[0]  # the first text's trace notch
-    squared = carry(10**6 * l_num * l_num, l_den * l_den, 0)[0]
-    background.append(f"at {name} = {mpc} Mpc: (L H0 / c)^2 x 10^6 = {squared},"
-                      f" u0 x 10^6 = {carry(10**6 * big_a, big_b, 0)[0]}, gamma / gamma0 x 10^6 by G2's formula {page},"
-                      f" with N2's 00 source also {with_n2} (the first text's trace notch {first})")
-print("(h) the background, the board's mean resting where term 9's notch holds it: u0 = 3 Omega_m (L H0 / c)^2 for"
-      " the notch's range L, Omega_m = 315/1000, H0 = 674/10 km/s/Mpc, the age 13787 Myr (Planck 2018); gamma / gamma0"
-      " by G2's formula (1 + C0 / rest) / (1 + 2 Cv / g) = (1 + u0) / (1 - u0), the ii slots held by the notch's one"
-      " range, and with N2's 00 source at that depth ((f2)) times (1 + u0) / (1 - u0) again: " + "; ".join(background))

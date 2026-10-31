@@ -7,8 +7,8 @@
 (case 2) N2's source ratio with the fast clock: one gear on s = rest div 4, W = (1 + u) rest, sums over whole half beats,
       10^6 x <J00> / <J_ii> at st = rest, kv = s, against 10^6 (1 - u) / (1 + u).
 (case 3) A two-part train laid in phase: (f4)'s train with the second row laid at the first's own state (no quarter beat).
-(case 4) Frame dragging on the act as built: the 0i slots laid with a turning field, every other row run with and without
-      it for 400 rounds; a row that reads the 0i slots would differ.
+(case 4) The 0i slots' drag on the act as built: the 0i slots laid with a turning field, every other row run with and
+      without it for 400 rounds; a row that reads the 0i slots would differ.
 
 Whole numbers alone, Rule3's carry for every division; no float, root, log, circular function or search.
 Usage: python3 -I g2_cases.py <src of main at 0df0e8385>   (the example files are read from
@@ -39,7 +39,7 @@ ex_loaded, _ = t24_load.load(ex_universe, {"version": 1, "ticks": 1, "gears": []
                              *t24_main.made(t24_load.star(len(ex_shape))))
 GRIP = int(t24_main.layout(ex_universe, ex_shape, ex_loaded).grip[0][0])  # the example's grip, read through the loader
 REST = 6 * GRIP
-matter_row, light_row, slot00, slot_xx = 0, 1, 2, 6
+gear_row, wave_row, slot00, slot_xx = 0, 1, 2, 6
 slot_0x = 3  # the 0i slots: 0x, 0y, 0z
 ROWS = 12
 
@@ -54,7 +54,7 @@ def layout(shape, spring):
                    np.ones(6, dtype=object), np.arange(6, dtype=np.intp))
     if spring:
         plan = pushes(np.array([carry(spring, 2, 0)[0]], dtype=object),
-                      tuple(np.array([leg], dtype=np.intp) for leg in (matter_row, matter_row, -1, -1)))
+                      tuple(np.array([leg], dtype=np.intp) for leg in (gear_row, gear_row, -1, -1)))
     else:
         plan = Plan(*(np.zeros(0, dtype=np.intp),) * 3, np.zeros(0, dtype=object), np.zeros(0, dtype=np.intp))
     lay = Layout(nb, spokes, meshes, np.full((1, 3 * sites), GRIP, dtype=object),
@@ -114,11 +114,11 @@ for spring_div in (4, 400):
     lay_f, sites_f, _ = layout((1, 1, 1), spring)
     for u_num, u_den in ((0, 1), (1, 4), (3, 1)):
         w_teeth = carry(REST * (u_den + u_num), u_den, 0)[0]
-        st = state(sites_f, {matter_row: 10**6, slot00: w_teeth - REST})
-        run = [int(st.a[matter_row, 0])]
+        st = state(sites_f, {gear_row: 10**6, slot00: w_teeth - REST})
+        run = [int(st.a[gear_row, 0])]
         for _ in range(4000):
             st = step.tick(lay_f, st)
-            run.append(int(st.a[matter_row, 0]))
+            run.append(int(st.a[gear_row, 0]))
         flips, kin, pot = whole_half_beats(run)
         ratio = carry(10**6 * (REST * kin - spring * pot), spring * pot, 0)[0]
         model = carry(10**6 * (u_den - u_num), u_den + u_num, 0)[0]
@@ -142,14 +142,14 @@ def beat_range(seqs):
     return f"J00 from {carry(1000 * min(j00), mean, 0)[0]} to {carry(1000 * max(j00), mean, 0)[0]} per mille of its mean"
 
 
-st_one = state(sites_t, {matter_row: 10**6})
-seq_one = [int(st_one.a[matter_row, 0])]
+st_one = state(sites_t, {gear_row: 10**6})
+seq_one = [int(st_one.a[gear_row, 0])]
 for _ in range(4000):
     st_one = step.tick(lay_t, st_one)
-    seq_one.append(int(st_one.a[matter_row, 0]))
+    seq_one.append(int(st_one.a[gear_row, 0]))
 turns_one = sum(int(seq_one[t] * seq_one[t - 1] < 0) for t in range(2, len(seq_one)))
 quarter = carry(4000, 2 * turns_one, 0)[0]
-pair_rows = (matter_row, light_row)
+pair_rows = (gear_row, wave_row)
 pair_plans = [pushes(np.array([carry(spring_t, 2, 0)[0]], dtype=object),
                      tuple(np.array([leg], dtype=np.intp) for leg in (row, row, -1, -1))) for row in pair_rows]
 lay_pair = lay_t._replace(plan=Plan(*(np.concatenate(xs) for xs in zip(*pair_plans, strict=True))))
@@ -157,11 +157,11 @@ rows15 = []
 for name, offset in (("in phase", 0), ("a quarter beat apart", quarter)):
     a_pair = np.zeros((ROWS, sites_t), dtype=object)
     b_pair = np.zeros((ROWS, sites_t), dtype=object)
-    a_pair[matter_row, 0], b_pair[matter_row, 0] = 10**6, 10**6
+    a_pair[gear_row, 0], b_pair[gear_row, 0] = 10**6, 10**6
     if offset:
-        a_pair[light_row, 0], b_pair[light_row, 0] = seq_one[offset], seq_one[offset - 1]
+        a_pair[wave_row, 0], b_pair[wave_row, 0] = seq_one[offset], seq_one[offset - 1]
     else:
-        a_pair[light_row, 0], b_pair[light_row, 0] = 10**6, 10**6
+        a_pair[wave_row, 0], b_pair[wave_row, 0] = 10**6, 10**6
     s_pair = State(a_pair, b_pair, np.full((ROWS, sites_t), carry(REST, 2, 0)[0], dtype=object),
                    np.zeros((ROWS, sites_t), dtype=object))
     seqs = [[int(s_pair.b[row, 0]), int(s_pair.a[row, 0])] for row in pair_rows]
@@ -173,7 +173,7 @@ for name, offset in (("in phase", 0), ("a quarter beat apart", quarter)):
 print(f"(case 3) a two-part train on (f)'s spring at W = rest over 4,000 rounds (a quarter beat = {quarter} rounds): "
       + "; ".join(rows15) + f"; one gear alone: {beat_range([[10**6] + seq_one])}")
 
-# (case 4) frame dragging: the 0i slots laid with a turning field on a board of 4 by 4 by 4
+# (case 4) the 0i slots' drag: the 0i slots laid with a turning field on a board of 4 by 4 by 4
 lay_b, sites_b, nb_b = layout((4, 4, 4), spring_t)
 side = 4
 coords = []
@@ -181,8 +181,8 @@ for i in range(sites_b):
     rest_i, x = carry(i, side, 0)
     z, y = carry(rest_i, side, 0)
     coords.append((x, y, z))
-base = {matter_row: [10**6 * (1 + x + 2 * y + 3 * z) for x, y, z in coords],
-        light_row: [10**5 * (x - y) for x, y, z in coords],
+base = {gear_row: [10**6 * (1 + x + 2 * y + 3 * z) for x, y, z in coords],
+        wave_row: [10**5 * (x - y) for x, y, z in coords],
         slot00: [10**15 * (x + y + z) for x, y, z in coords]}
 spun = dict(base)
 spun[slot_0x] = [-10**15 * (2 * y - 3) for x, y, z in coords]  # 0x = -(y - 3/2), doubled: a turning field about z
@@ -196,6 +196,7 @@ for _ in range(400):
         same = same and all(int(p) == int(q) for p, q in zip(s_plain.a[r], s_spun.a[r], strict=True))
         same = same and all(int(p) == int(q) for p, q in zip(s_plain.r[r], s_spun.r[r], strict=True))
 moved_0i = any(int(p) != int(q) for p, q in zip(s_plain.a[slot_0x], s_spun.a[slot_0x], strict=True))
-print("(case 4) frame dragging on the act as built (every row's teeth read the 00 slot, every Spoke's grip its axis's ii"
-      " slot): a turning field on the 0x and 0y slots of a 4 by 4 by 4 board, 400 rounds with and without it: every"
-      f" other row's swing and remainder alike at every round {same}; the 0i slots themselves differ {moved_0i}")
+print("(case 4) the 0i slots' drag on the act as built (every row's teeth read the 00 slot, every Spoke's grip its"
+      " axis's ii slot): a turning field on the 0x and 0y slots of a 4 by 4 by 4 board, 400 rounds with and without"
+      f" it: every other row's swing and remainder alike at every round {same}; the 0i slots themselves differ"
+      f" {moved_0i}")
