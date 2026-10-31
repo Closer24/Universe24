@@ -5,6 +5,7 @@ import ast
 import io
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -19,15 +20,16 @@ def every_pull_request() -> list[str]:
     return [line.strip() for line in lines if line.strip() and not line.lstrip().startswith("#")]
 
 
-SECONDS = Path(__file__).with_name("test_seconds.json")
+SECONDS = Path(__file__).with_name("test_seconds.json")  # whole milliseconds per test function, no float
 # no world replays in CI (the owner's decision of 2026-09-27: the worlds recorded on the earlier
 # engine are no reference for this one); the plan is the test suite alone, its test functions in
 # equal shards (the owner's ceiling of 2026-10-02: every CI run ends under ten minutes)
 SUITE_SHARDS = 5
-UNRECORDED_SECONDS = 5.0
+UNRECORDED_MS = 5000  # a file the table holds none of: 5 seconds, in whole milliseconds
 # the suite's bound (the owner's word of 2026-10-03: a test runs under 30 seconds): a test function above
-# it fails the plan by name, on the recorded table at --plan and on the run's own junit after every pytest
-TEST_SECONDS_BOUND = 30.0
+# it fails the plan by name, on the recorded table at --plan and on the run's own junit after every pytest;
+# every time here is whole milliseconds (law line 100: no float anywhere in the system, the tools too)
+TEST_MS_BOUND = 30000
 # pytest's workers are the machine's physical cores (pytest-xdist's `auto` with psutil among the dev
 # dependencies), one test per core, so a test's seconds on the run's clock are its own and not the
 # cores' sharing
@@ -49,40 +51,40 @@ RATCHETS = [
 ]
 
 
-def balanced(seconds, count):
-    """The names split into `count` groups of about equal seconds, the longest placed first; the
-    groups from the heaviest to the lightest."""
-    groups, loads = [[] for _ in range(count)], [0.0] * count
-    for name in sorted(seconds, key=lambda n: (-seconds[n], n)):
+def balanced(ms, count):
+    """The names split into `count` groups of about equal whole milliseconds, the longest placed first;
+    the groups from the heaviest to the lightest."""
+    groups, loads = [[] for _ in range(count)], [0] * count
+    for name in sorted(ms, key=lambda n: (-ms[n], n)):
         lightest = loads.index(min(loads))
         groups[lightest].append(name)
-        loads[lightest] += seconds[name]
+        loads[lightest] += ms[name]
     return [sorted(group) for _, group in sorted(zip(loads, groups, strict=True), key=lambda x: -x[0])]
 
 
-def recorded_seconds():
-    """The test files and the table's seconds per test function the files still hold
+def recorded_ms():
+    """The test files and the table's whole milliseconds per test function the files still hold
     (`tests/<file>.py::<function>` or `::<function>[<id>]`; a name a file no longer has is left out)."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
     files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "tests").glob("test_*.py"))
     recorded = {}
     for file in files:
         text = (ROOT / file).read_text(encoding="utf-8")
-        for target, seconds in table["tests"].items():
+        for target, ms in table["tests"].items():
             function = target.partition("::")[2].partition("[")[0]  # a part's id after its function
             if target.startswith(file + "::") and f"\ndef {function}(" in text:
-                recorded[target] = seconds
+                recorded[target] = ms
     return files, recorded
 
 
 def shards():
     """The CI jobs by name, each its pytest arguments: the suite's test functions in equal parts by
-    their recorded seconds (`tests/<file>.py::<function>`, a parametrized function's parts each by id); a file runs
+    their recorded milliseconds (`tests/<file>.py::<function>`, a parametrized function's parts each by id); a file runs
     whole in the part of its longest function, less the functions placed elsewhere (`--deselect`), so
     a function the table does not hold, or holds under a name the file no longer has, runs with its
     file; the parts from the heaviest to the lightest, the lint in the last; no world job."""
-    files, recorded = recorded_seconds()
-    whole = {file: UNRECORDED_SECONDS for file in files}  # the file's own target: its other tests
+    files, recorded = recorded_ms()
+    whole = {file: UNRECORDED_MS for file in files}  # the file's own target: its other tests
     for target in sorted(recorded, key=lambda t: recorded[t]):
         whole[target.partition("::")[0]] = target  # the file stands with its longest function
     plain = {f: s for f, s in whole.items() if not isinstance(s, str)}
@@ -106,8 +108,25 @@ def shards():
     return jobs
 
 
-def seconds_of(junit):
-    """The seconds per test function read from a junit file (`tests/<file>.py::<function>`), each
+def whole_ms(time: str) -> int:
+    """A junit time attribute, seconds as pytest writes them with three decimals, read as whole milliseconds by
+    its digits alone: the seconds' digits, then the first three after the point (0 where it holds none); no float."""
+    held = re.fullmatch(r"(\d+)(?:\.(\d*))?", time.strip())
+    if not held:
+        raise ValueError(f"a junit time attribute not written in digits: {time!r}")
+    whole, thousandths = held.group(1), (held.group(2) or "") + "000"
+    return int(whole + thousandths[:3])
+
+
+def seconds(ms: int, places: int = 1) -> str:
+    """Whole milliseconds written as seconds, text built from their digits: the seconds, then `places` of the
+    thousandths after the point, cut and not rounded; no float."""
+    digits = str(ms).rjust(4, "0")
+    return digits[:-3] + ("." + digits[-3:][:places] if places else "")
+
+
+def ms_of(junit):
+    """The whole milliseconds per test function read from a junit file (`tests/<file>.py::<function>`), each
     part of a parametrized function its own target (`<function>[<id>]`, as pytest takes it), so the
     plan and the bound read a part as one unit (the Boss's 6414364173, the sixteen parts of the 48)."""
     import xml.etree.ElementTree as ElementTree
@@ -118,25 +137,25 @@ def seconds_of(junit):
         target = (
             path + "::" + case.get("name", "")
         )  # the function, or one part of a parametrized one, by its id
-        tests[target] = round(tests.get(target, 0.0) + float(case.get("time", 0)), 1)
+        tests[target] = tests.get(target, 0) + whole_ms(case.get("time", "0"))
     return tests
 
 
-def record_seconds(junit):
-    """The seconds per test function read from a junit file, written to the table."""
+def record_ms(junit):
+    """The whole milliseconds per test function read from a junit file, written to the table."""
     table = json.loads(SECONDS.read_text(encoding="utf-8"))
-    table.update(tests=dict(sorted(seconds_of(junit).items())))
+    table.update(tests=dict(sorted(ms_of(junit).items())))
     SECONDS.write_text(json.dumps(table, indent=1) + "\n", encoding="utf-8")
 
 
-def above_the_bound(seconds, clock):
+def above_the_bound(ms, clock):
     """The test functions above the suite's bound on the `clock` named, each with its seconds, the
     slowest first; the message that fails the plan by name, or None."""
-    slow = sorted(((n, s) for n, s in seconds.items() if s > TEST_SECONDS_BOUND), key=lambda x: -x[1])
+    slow = sorted(((n, s) for n, s in ms.items() if s > TEST_MS_BOUND), key=lambda x: -x[1])
     if not slow:
         return None
-    names = ", ".join(f"{name} ({seconds:.1f} s)" for name, seconds in slow)
-    return f"above the bound of {TEST_SECONDS_BOUND:.0f} seconds per test on {clock}: {names}"
+    names = ", ".join(f"{name} ({seconds(taken)} s)" for name, taken in slow)
+    return f"above the bound of {seconds(TEST_MS_BOUND, 0)} seconds per test on {clock}: {names}"
 
 
 def git(*args):
@@ -317,10 +336,10 @@ def main():
 
     args.base = released(ROOT, args.base) or args.base
     if args.record_seconds:
-        record_seconds(args.record_seconds)
+        record_ms(args.record_seconds)
         return
     if args.plan:
-        slow = above_the_bound(recorded_seconds()[1], "the recorded clock of tools/test_seconds.json")
+        slow = above_the_bound(recorded_ms()[1], "the recorded clock of tools/test_seconds.json")
         if slow:
             sys.exit(slow)
         print("shards=" + json.dumps(list(shards())))
@@ -391,7 +410,7 @@ def main():
             )
             subprocess.run(run, cwd=ROOT, env=environment, check=True)
             if command[0] == "pytest":  # the suite's bound on this run's own clock, by name
-                slow = above_the_bound(seconds_of(ROOT / "artifacts/junit.xml"), "this run's clock")
+                slow = above_the_bound(ms_of(ROOT / "artifacts/junit.xml"), "this run's clock")
                 if slow:
                     sys.exit(slow)
 
