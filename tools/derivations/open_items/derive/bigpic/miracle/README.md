@@ -112,6 +112,13 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
 
 - **So the floor comes by itself at every grain read.** Without the square, the click world fell at lambda 100: a count
   passed 32 bits at round 827 and reached 19,566 bits by round 5,000 (split_bedge_x100_5000.txt).
+- **Under the present act with the square form** (square_engine_x1_5000.txt, square_engine_x100_5000.txt): the widest
+  count is 6 bits at lambda 1 and 12 bits at lambda 100, with no count past 32 bits. The run back is exact and the 24
+  hold 24 of 24. The identity and the books are road B's, and are not read under the present act.
+- **What the readers of FLOOR1 add (David's 6542547300, (e)):** E32 is bounded below only while the held dial stays at
+  least 1, which is the carry's own law; whether the run keeps it there is OPEN. The walk also heats over long runs: at
+  lambda 10 the held square's mean climbs to about 70 over 100,000 rounds. So what stands is the potential as a sum of
+  squares, and no fall at any grain read over 5,000 rounds.
 - **At the shipped grain the teeth's share still heats the held hand.** Its gain over the run is 90,547 permille:
   106,622 by its teeth's share and -16,075 by its booked exchanges. It does not fall; this is the walk.
 - **What it does not give:** the band's own value, 96,000 in the file. The square gives each mass as half of its bands,

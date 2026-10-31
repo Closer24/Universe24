@@ -225,7 +225,9 @@ misses_identity, misses_books, widest, run_res, worst_res = 0, 0, 0, 0 * e_lay, 
 sum_share, sum_carried = 0 * e_lay, 0 * e_lay  # each clock's running teeth's share and running booked exchange
 clicks_by = np.zeros(NTR, dtype=object)
 walk, window_max, past32 = [], 0, 0  # past32: the first round a count passes 32 bits
-print(f"road B on node-all, the sides reading the step's own exchange{', every two-leg form its own square' if SQUARE else ''}:"
+print(f"{'the present act' if ENGINE else 'road B'} on node-all"
+      f"{'' if ENGINE else ', the sides reading the step' + chr(39) + 's own exchange'}"
+      f"{', every two-leg form its own square' if SQUARE else ''}:"
       f" rows {rows} (held {H.tolist()}), sites"
       f" {s.a.shape[-1]}, W {W}, the sides' key {KEY} x {half_kappa}, four-leg ties {len(XG)}", flush=True)
 for n in range(1, ROUNDS + 1):
@@ -263,11 +265,16 @@ key_e32 = 8 * W * KEY * half_kappa  # one key at a side in E32 units times kappa
 kres, _ = carry(worst_res, key_e32, 0)
 print(f"rounds {ROUNDS} ({'the present act' if ENGINE else 'road B'}); widest count {widest} bits; a count first past"
       f" 32 bits at round {past32 or 'none'}", flush=True)
-print(f"the identity (E32's change = the teeth's share) missed in {misses_identity} of {ROUNDS} rounds", flush=True)
-print(f"the books in the clicks (each clock's change = its sides' key x clicks + click teeth's change + its teeth's"
-      f" share) missed at {misses_books} of {ROUNDS * NTR * s.a.shape[-1]} clock-rounds", flush=True)
-print(f"the act's own passing beside the step's exchange: its running residual at one clock reaches {kres} keys", flush=True)
-print(f"whole clicks |q| by train: {clicks_by.tolist()}", flush=True)
+if ENGINE:
+    print("the identity, the books in the clicks and the clicks by train: not read under the present act (road B's)",
+          flush=True)
+else:
+    print(f"the identity (E32's change = the teeth's share) missed in {misses_identity} of {ROUNDS} rounds", flush=True)
+    print(f"the books in the clicks (each clock's change = its sides' key x clicks + click teeth's change + its teeth's"
+          f" share) missed at {misses_books} of {ROUNDS * NTR * s.a.shape[-1]} clock-rounds", flush=True)
+    print(f"the act's own passing beside the step's exchange: its running residual at one clock reaches {kres} keys",
+          flush=True)
+    print(f"whole clicks |q| by train: {clicks_by.tolist()}", flush=True)
 if not ENGINE:
     # what each clock's energy gained over the run, split by the identity: the booked exchanges (the clicks) and the
     # teeth's share (no click), in the clock's own energy at the lay (permille), per Node-clock 0
