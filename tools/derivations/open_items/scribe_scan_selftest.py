@@ -2106,6 +2106,41 @@ PINNED_FLOOR = "526a5666d"
 
 
 CASES += [
+    # the rule TWOSLICE: a two spelt as the length of a slice from 1 beside a one (the sixth code reader's B-1)
+    (
+        "the length of a slice from 1 against 1 in the decoder",
+        "tensor24/decoder/rows.py",
+        "def f(ends):\n    return bool(ends) and len(ends[1:]) != 1\n",
+        {"TWOSLICE": 1},
+    ),
+    (
+        "the same read the other way round in the engine",
+        NEW_STEP,
+        "def f(x):\n    return 1 == len(x[1:])\n",
+        {"TWOSLICE": 1},
+    ),
+    (
+        "the length of a slice from 1 against a name is no two",
+        "tensor24/decoder/rows.py",
+        "def f(x, n):\n    return len(x[1:]) == n\n",
+        {},
+    ),
+    (
+        "the length of a slice from 0 against 1 is no two spelt",
+        "tensor24/decoder/rows.py",
+        "def f(x):\n    return len(x[0:]) == 1\n",
+        {},
+    ),
+    (
+        "the length of a slice from 1 outside the new engine is not read",
+        ENGINE,
+        "def f(x):\n    return len(x[1:]) == 1\n",
+        {},
+    ),
+]
+
+
+CASES += [
     # the rule TWICE: a two spelt as a sum, in every module of the new engine, the runner and the decoder included
     (
         "a one added to a one in the engine",

@@ -51,5 +51,6 @@
 "KEYS|tensor24/runner/files.py|UNIVERSE.chosen.hold",
 "KEYS|tensor24/runner/files.py|UNIVERSE.chosen.tie",
 "KEYS|tensor24/runner/files.py|UNIVERSE.chosen.mesh",
+"KEYS|tensor24/runner/files.py|UNIVERSE.chosen.spring",
 "KEYS|tensor24/runner/files.py|RETIRED.couplings"
 ]

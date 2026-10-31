@@ -74,7 +74,7 @@ TOOLS = re.compile(
 )  # the new engine's tools, directly under tools/: the rules of TOOL_RULES alone
 TOOLS_SPEC = ":(glob)tools/tensor24_*.py"  # the same files as git's pathspec
 TOOL_RULES = frozenset(
-    {"NUMBER", "FLOAT", "TWICE", "ROOT", "TABLE", "ENUM", "LENGTH"}
+    {"NUMBER", "FLOAT", "TWICE", "TWOSLICE", "ROOT", "TABLE", "ENUM", "LENGTH"}
 )  # no number beyond 0 and 1, no float, no two spelt as a sum, no root and no typed table, no enumeration and no count spelt as a length, in a tool as in the code (the Boss's word of 2026-10-28, 23:4x; the owner's "Forbidden" of 2026-10-29, 12:5x; decision 41, 2026-10-30, 02:1x: no root and no table, now or later, and not outside the logic either; the owner's question of 2026-10-30, 09:0x: no number hidden behind an enum)
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parents[2]
@@ -194,6 +194,10 @@ RULES: dict[str, tuple[str, str]] = {
     "TWICE": (
         "BLOCK",
         "a two spelt as a sum: an expression added to itself (1 + 1, teeth + teeth, spokes + spokes) in any module of the new engine, the runner and the decoder included, and in tools/tensor24_*.py: the rule NUMBER counts literals, so a thing added to itself is a 2 in disguise (the owner's word of 2026-10-29, 12:5x: forbidden); the count per file and spelling may not rise",
+    ),
+    "TWOSLICE": (
+        "BLOCK",
+        "a two spelt as a slice and a one: the length of a slice from 1 compared with 1 (len(ends[1:]) != 1 is len(ends) != 2), in any module of the new engine and in tools/tensor24_*.py, as the rule TWICE reads a two spelt as a sum (the sixth code reader's B-1, 2026-10-31: a count re-spelt past TWICE)",
     ),
     "REFUSE": (
         "BLOCK",
@@ -831,6 +835,31 @@ def indicator(node: ast.AST) -> str:
     return ""
 
 
+def slice_length_beside_one(node: ast.Compare) -> bool:
+    """Whether a comparison sets the length of a slice that starts at 1 beside the literal 1: len(x[1:]) against 1, either way round, a two spelt as a slice and a one."""
+
+    def of_slice(side: ast.expr) -> bool:
+        return (
+            isinstance(side, ast.Call)
+            and isinstance(side.func, ast.Name)
+            and side.func.id == "len"
+            and len(side.args) == 1
+            and isinstance(side.args[0], ast.Subscript)
+            and isinstance(side.args[0].slice, ast.Slice)
+            and isinstance(side.args[0].slice.lower, ast.Constant)
+            and side.args[0].slice.lower.value == 1
+            and side.args[0].slice.upper is None
+        )
+
+    def one(side: ast.expr) -> bool:
+        return isinstance(side, ast.Constant) and side.value == 1 and not isinstance(side.value, bool)
+
+    sides = [node.left, *node.comparators]
+    return any(
+        of_slice(a) and one(b) or of_slice(b) and one(a) for a, b in zip(sides, sides[1:], strict=False)
+    )
+
+
 def imported_names(rel: str, node: ast.Import | ast.ImportFrom) -> list[str]:
     """The full dotted names an import brings in; a relative import is resolved from the module's own folder."""
     if isinstance(node, ast.Import):
@@ -1386,6 +1415,8 @@ def scan(rel: str, source: str) -> list[Hit]:
                 add(
                     "TWICE", node, ast.unparse(node)
                 )  # not spared to the runner or the decoder: the loader's twos are the engine's
+            if isinstance(node, ast.Compare) and slice_length_beside_one(node):
+                add("TWOSLICE", node, ast.unparse(node))
         labels = {
             statement.targets[0].id
             for statement in tree.body
