@@ -1,0 +1,3 @@
+click-k1, the triangle's coupling, C C^T off its diagonal (third click), 100 rounds, laid: 6729 lines written to /tmp/claude-0/-home-user-Universe24/f96d8c1c-1b6e-564e-9cb6-85b65f3c9d0f/scratchpad/kexp/rec_k1_tri_100.jsonl
+  the reader on the record alone: refusals {'no partner': 0, 'quotients not 0': 0, 'teeth not dial - 1': 0, 'q not the sum of its sides': 0}; click places 2346, the books open at 0
+  each edge's booked weight read from its sides by the carry's law (x = dial q + k_after - k_before), summed: {(2, 3): -9288000000, (3, 4): 10062, (2, 4): -310320000}

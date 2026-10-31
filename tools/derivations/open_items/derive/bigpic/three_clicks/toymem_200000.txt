@@ -1,0 +1,17 @@
+dial 152434287 (3 K, K the click world's key), born 76217143, m = D div 50 = 3048685; steady passings [27438165, 27438165, 36584220] on [(2, 3), (2, 4), (3, 4)]; 200000 rounds
+ no turn: the swap draw by draw fails at 0 of 200000 rounds; the same act on the mirrored state runs back to the lay: True
+   edge (2, 3): 36000 clicks; after one click the next 0 against 6480 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 820
+   edge (3, 4): 48000 clicks; after one click the next 0 against 11520 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 760
+   edge (2, 4): 36000 clicks; after one click the next 0 against 6480 independent; after two in a row a third 0 against 0; lives' variance over mean squared 7 per mille, the geometric law's 820
+ C C^T off its diagonal: the swap draw by draw fails at 0 of 200000 rounds; the same act on the mirrored state runs back to the lay: True
+   edge (2, 3): 36088 clicks; after one click the next 6549 against 6511 independent; after two in a row a third 1184 against 1181; lives' variance over mean squared 820 per mille, the geometric law's 820
+   edge (3, 4): 48285 clicks; after one click the next 11839 against 11657 independent; after two in a row a third 2868 against 2858; lives' variance over mean squared 772 per mille, the geometric law's 759
+   edge (2, 4): 36050 clicks; after one click the next 6425 against 6498 independent; after two in a row a third 1223 against 1158; lives' variance over mean squared 813 per mille, the geometric law's 820
+ road 3, C C^T's diagonal: the swap draw by draw fails at 0 of 200000 rounds; the same act on the mirrored state runs back to the lay: True
+   edge (2, 3): 35920 clicks; after one click the next 6356 against 6451 independent; after two in a row a third 1038 against 1141; lives' variance over mean squared 824 per mille, the geometric law's 821
+   edge (3, 4): 48088 clicks; after one click the next 11499 against 11562 independent; after two in a row a third 1798 against 2764; lives' variance over mean squared 792 per mille, the geometric law's 760
+   edge (2, 4): 35920 clicks; after one click the next 6356 against 6451 independent; after two in a row a third 1038 against 1141; lives' variance over mean squared 824 per mille, the geometric law's 821
+ the THIRD deriver's five blocks: the swap draw by draw fails at 0 of 200000 rounds; the same act on the mirrored state runs back to the lay: True
+   edge (2, 3): 35896 clicks; after one click the next 6457 against 6442 independent; after two in a row a third 1153 against 1158; lives' variance over mean squared 812 per mille, the geometric law's 821
+   edge (3, 4): 48013 clicks; after one click the next 11587 against 11526 independent; after two in a row a third 2926 against 2781; lives' variance over mean squared 753 per mille, the geometric law's 760
+   edge (2, 4): 35885 clicks; after one click the next 6324 against 6438 independent; after two in a row a third 1128 against 1134; lives' variance over mean squared 818 per mille, the geometric law's 821

@@ -1,0 +1,2 @@
+tensor24-click, SPLIT3 (third click, the apex's edges): 24 of 24 turns give the same clicks at the turned Node-clocks over 20 rounds (702 click lines)
+tensor24-click, the triangle's coupling, C C^T off its diagonal (third click): 24 of 24 turns give the same clicks at the turned Node-clocks over 20 rounds (702 click lines)

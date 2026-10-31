@@ -1,0 +1,12 @@
+click-k1, laid, carried (first click): books open 0 of 26355; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+click-k1, laid, SPLIT3 (third click, the apex's edges): books open 0 of 26355; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+click-k1, laid, the triangle's own coupling K (third click, every edge of it): books open 0 of 26355; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []

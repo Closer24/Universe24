@@ -1,0 +1,4 @@
+click-k1600, carried (first click), 1000 rounds: click places 24969, books open 0; quanta per edge [8801034450, 9369376500, 885]; run back True; digest 6ddfc186d6e442c2
+   one hidden unit in the giver-taker edge's tooth at Node-clock 0: 7 click lines differ, the first at round 282, at Node-clocks [0]
+click-k1600, the 3+3 palindrome (third click), 1000 rounds: click places 24957, books open 0; quanta per edge [8801034450, 9369376500, 786]; run back True; digest 7d6185bbc919e48b
+   one hidden unit in the giver-taker edge's tooth at Node-clock 0: 155 click lines differ, the first at round 90, at Node-clocks [0]

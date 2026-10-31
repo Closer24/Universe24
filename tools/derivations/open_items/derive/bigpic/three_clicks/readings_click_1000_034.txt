@@ -1,0 +1,12 @@
+tensor24-click, carried (first click), 1000 rounds: run twice byte for byte True; books open 0 of 18036; run back True
+   edge (2, 3): booked less swept, its running sum at most 497 per mille of a dial (at the end at most 442); lag-1 correlation of the per-round gap -406 per mille
+   edge (2, 4): booked less swept, its running sum at most 497 per mille of a dial (at the end at most 197); lag-1 correlation of the per-round gap -527 per mille
+   edge (3, 4): booked less swept, its running sum at most 499 per mille of a dial (at the end at most 67); lag-1 correlation of the per-round gap -135 per mille
+tensor24-click, SPLIT3 (third click, the apex's edges), 1000 rounds: run twice byte for byte True; books open 0 of 18144; run back True
+   edge (2, 3): booked less swept, its running sum at most 8674 per mille of a dial (at the end at most 3557); lag-1 correlation of the per-round gap -21 per mille
+   edge (2, 4): booked less swept, its running sum at most 10513 per mille of a dial (at the end at most 6802); lag-1 correlation of the per-round gap -13 per mille
+   edge (3, 4): booked less swept, its running sum at most 499 per mille of a dial (at the end at most 67); lag-1 correlation of the per-round gap -135 per mille
+tensor24-click, the triangle's own coupling K (third click, every edge of it), 1000 rounds: run twice byte for byte True; books open 0 of 18306; run back True
+   edge (2, 3): booked less swept, its running sum at most 8442 per mille of a dial (at the end at most 8442); lag-1 correlation of the per-round gap -7 per mille
+   edge (2, 4): booked less swept, its running sum at most 8802 per mille of a dial (at the end at most 8802); lag-1 correlation of the per-round gap 24 per mille
+   edge (3, 4): booked less swept, its running sum at most 5945 per mille of a dial (at the end at most 4932); lag-1 correlation of the per-round gap -45 per mille

@@ -1,0 +1,2 @@
+tensor24-click: key 50811429; the trains alike [3, 4]; the board itself swap-covariant over 200 rounds: True
+   road 3, C C^T's diagonal: each triangle edge with its own twin (third click): the swapped run is the original with the names swapped, draw by draw: lines True, sides True; rounds that differ 0 of 200

@@ -1,0 +1,12 @@
+click-k1, laid, carried (first click), 1000 rounds: run twice byte for byte True; books open 0 of 26355; run back True
+   edge (2, 3): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille
+   edge (2, 4): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille
+   edge (3, 4): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille
+click-k1, laid, SPLIT3 (third click, the apex's edges), 1000 rounds: run twice byte for byte True; books open 0 of 26355; run back True
+   edge (2, 3): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille
+   edge (2, 4): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille
+   edge (3, 4): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille
+click-k1, laid, the triangle's own coupling K (third click, every edge of it), 1000 rounds: run twice byte for byte True; books open 0 of 26355; run back True
+   edge (2, 3): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille
+   edge (2, 4): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille
+   edge (3, 4): booked less swept, its running sum at most 0 per mille of a dial (at the end at most 0); lag-1 correlation of the per-round gap 0 per mille

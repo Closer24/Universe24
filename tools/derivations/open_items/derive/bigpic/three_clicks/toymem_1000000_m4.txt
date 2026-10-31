@@ -1,0 +1,5 @@
+dial 152434287 (3 K, K the click world's key), born 76217143, m = D div 50 = 3048685; steady passings [27438165, 27438165, 36584220] on [(2, 3), (2, 4), (3, 4)]; 1000000 rounds
+ C C^T off its diagonal:
+   edge (2, 3): 179544 clicks; after one click the next 32440 against 32236 independent; after two in a row a third 5852 against 5824; lives' variance over mean squared 823 per mille, the geometric law's 821
+   edge (3, 4): 239825 clicks; after one click the next 57595 against 57516 independent; after two in a row a third 13830 against 13812; lives' variance over mean squared 760 per mille, the geometric law's 761
+   edge (2, 4): 179889 clicks; after one click the next 32466 against 32360 independent; after two in a row a third 5937 against 5840; lives' variance over mean squared 824 per mille, the geometric law's 821

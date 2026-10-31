@@ -1,0 +1,4 @@
+tensor24-click, road 3, C C^T's diagonal: each triangle edge with its own twin (third click), 1000 rounds: run twice byte for byte True; books open 0 of 18198; run back True
+   edge (2, 3): booked less swept, its running sum at most 5557 per mille of a dial (at the end at most 5557); lag-1 correlation of the per-round gap -14 per mille
+   edge (2, 4): booked less swept, its running sum at most 5458 per mille of a dial (at the end at most 4197); lag-1 correlation of the per-round gap -44 per mille
+   edge (3, 4): booked less swept, its running sum at most 4813 per mille of a dial (at the end at most 4067); lag-1 correlation of the per-round gap 68 per mille

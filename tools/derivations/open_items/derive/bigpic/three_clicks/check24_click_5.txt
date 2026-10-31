@@ -1,0 +1,1 @@
+tensor24-click, road 3, C C^T's diagonal: each triangle edge with its own twin (third click): 24 of 24 turns give the same clicks at the turned Node-clocks over 20 rounds (702 click lines)

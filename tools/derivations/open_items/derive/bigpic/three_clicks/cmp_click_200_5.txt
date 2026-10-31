@@ -1,0 +1,4 @@
+tensor24-click, road 3, C C^T's diagonal: each triangle edge with its own twin (third click): books open 0 of 4158; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 160 click lines differ, the first at round 20, at Node-clocks [0]
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 160 click lines differ, the first at round 87, at Node-clocks [0]
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 61 click lines differ, the first at round 79, at Node-clocks [0]

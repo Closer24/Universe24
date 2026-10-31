@@ -1,0 +1,4 @@
+click-k1, laid: key 1; the trains alike [3, 4]; the board itself swap-covariant over 200 rounds: True
+   carried (first click): the swapped run is the original with the names swapped, draw by draw: lines True, sides True; rounds that differ 0 of 200
+   SPLIT3 (third click, the apex's edges): the swapped run is the original with the names swapped, draw by draw: lines True, sides True; rounds that differ 0 of 200
+   the triangle's coupling, C C^T off its diagonal (third click): the swapped run is the original with the names swapped, draw by draw: lines True, sides True; rounds that differ 0 of 200
