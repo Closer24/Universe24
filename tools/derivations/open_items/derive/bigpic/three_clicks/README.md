@@ -9,7 +9,7 @@ Whole numbers on the board's own primitives: Rule3's carry with its tooth kept, 
 | samepast.py | the law's own reading for one clock: two lays alike in every click before, apart by one hidden unit | samepast.txt |
 | turnteeth2.py | the same with two edge teeth only (memory after two clicks in a row) | - |
 | nedges.py, order4.py | memory against the number of teeth turned together | nedges.txt |
-| pairbell.py | the pair's one hand drawn by the turned tooth, with the push-back to the first outcome: CHSH from the click counts, no signal, run back (its angle cos = 12/13 is a toy's pick, which the board must not make) | pairbell.txt |
+| pairbell.py | history, outside the whole-number rule, and no evidence for stage 4c (the HALF mathematician): the pair's one hand drawn by the turned tooth, with the push-back to the first outcome: CHSH from the click counts, no signal, run back (its angle cos = 12/13 is a toy's pick, which the board must not make) | pairbell.txt |
 
 Run: `python3 -I threeclicks.py`; `python3 -I turnteeth.py 50811429 600000 1 1250` (dial, rounds, turned 1 or 0, the passing's divisor); `python3 -I samepast.py`; `python3 -I nedges.py 4`; `python3 -I order4.py turnteeth.py`; `python3 -I pairbell.py 400000`.
 
@@ -92,29 +92,30 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
       seed rule chosen so that S comes out above 2 is a pick (the 08:4x rule).
     - OPEN beside it: the weight between the start and the end (the owner's 10:10 question), and a mark in the clicks
       that tells a law of both ends from a law of the start alone.
-  - The law has three parts, and the pair's one hand runs from the birth to both wings:
-  - (i) the hand and the fixing end are fixed together in advance, from the start and from the end (the 11:52 law):
-    the fixing end reads along its setting (+1) or across it (-1), by its own seed, one count each way, and no click
-    writes the hand (the 11:47 law);
-  - (ii) the board carries that hand from the birth to both wings, fixed from the start to the end;
+  - The law, in (C)'s form (the HALF pair's mathematician, N1; the Boss's 6543232094):
+  - (i) the hand and the fixing end are laid in advance, along or across that end's setting, one count each, and the
+    fixing end's outcome is its reading of the hand;
+  - (ii) struck: the run back of the fixing end to the birth was a click writing the board, which the 11:47 law
+    refuses;
   - (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap, which is one
     of the triangle's own squares.
-  - **Read exactly:**
+  - **Read exactly, as identities of the laid measure (checks by construction):**
     - the pair's curve E = cos 2 theta at every multiple of 30 degrees;
     - CHSH 5/2 at the triangle's settings, at every weight between the ends read (1:0, 0:1, 1:1, 1:2);
-    - 2,828 per mille on the plane's own lattice at the turn of z = 13 + 5 w, which is Tsirelson's 2 r2;
+    - 2,828 per mille on the plane's own lattice at the turn of z = 13 + 5 w, a test's lay 41 millionths below
+      Tsirelson's 2 r2, the counted law's supremum;
     - each wing's +1 share 500 per mille under every far setting: no signal.
-  - **The free-lay control** reads half of each: CHSH 1,250 and 1,414 per mille.
+  - **The free lay, a reading and not the control,** reads half of each: CHSH 1,250 and 1,414 per mille.
   - **The ruled control, a local act at the bound:** the hand born free over the same lines, and each wing's click fixed
     by the hand alone (+1 where its share along the setting is more than half). It reads CHSH 2,000 per mille exactly,
-    at the triangle's settings and at z's, with no share of exactly half.
+    at the triangle's settings and at z's. 2 is its largest over all 12^4 setting choices (the mathematician). Its
+    count of shares at exactly half is 0 by the lattice's structure, a check by construction.
   - **No signal rests on the fixing end's equal split,** one count each way. On the key's odd dial a signal of
     (5 D - 1) / (4 D^2) remains, so the board form is OPEN.
-  - The mathematician PASSED it as a counted law. Tsirelson's 2 r2 is its supremum, and z = 13 + 5 w is a lattice
-    point 41 millionths below it, a test's lay.
-  - **OPEN:** the law on the board's own act, that is, the end click leaving the hand along its setting, the run back
-    to the birth on the pair world, and the far click's share by its own seeds. Also open: the order reading both ways,
-    and the pair's reading.
+  - The mathematician PASSED it as a counted law, unchanged by the (C) form: 0 off, count for count, on 144 pairs at
+    five weights.
+  - **OPEN:** road (C)'s seeds' law, its form from the structure. Also open: the order reading both ways, and the pair's
+    reading. The end click leaving the hand along its setting is refused under the 11:47 law, not open.
 
 ## The share rule's spread relation on the settings' plane (spread.py, spread.txt; DERIVED)
 

@@ -10,10 +10,11 @@ form, road (C)'s seeds' law, is OPEN.
 
 The pair's one hand is born once at the source and carried, unchanged, to its two wings (the pair world, PICTURE.md).
 Each wing has its own setting, a direction of the triangle's own plane (the plane across the axis (1, 1, 1) of three
-clocks), at 0 or 60 degrees at wing A and 30 or 90 at wing B (twoends.py's settings). The law read here, three parts:
-  (i)   the end: one wing's click fixes the hand. Clicking +1 it leaves the hand along its setting, clicking -1 across
-        it (the setting turned a quarter in the plane); its own outcome is its own seed's, one count each way;
-  (ii)  the board runs that end back to the birth: the pair's one hand, from the source, is the hand that end left;
+clocks), at 0 or 60 degrees at wing A and 30 or 90 at wing B (twoends.py's settings). The law read here, in (C)'s
+form (the HALF pair's mathematician, N1; the Boss's 6543232094):
+  (i)   the hand and the fixing end are laid in advance, along or across that end's setting (the setting turned a
+        quarter in the plane), one count each, and the fixing end's outcome is its reading of the hand;
+  (ii)  struck: the run back of the fixing end to the birth, a click writing the board, which the 11:47 law refuses;
   (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap,
         (h . s)^2 / ((h . h)(s . s)), the triangle's own squares (1, 3/4, 1/4, 0), read from its own seed over the
         share's whole denominator.
@@ -21,11 +22,15 @@ Which end fixes the hand is weighed w_A : w_B, "by how much the board is in the 
 are taken at w_A : w_B = 1 : 0, 0 : 1, 1 : 1 and 1 : 2.
 Read exactly, per setting pair: the joint counts, the correlation E as a fraction, each wing's +1 share under each far
 setting (no signal), CHSH (A0 B30 - A0 B90 + A60 B30 + A60 B90) as a fraction; the pair's curve E against the settings'
-angle at every multiple of 30 degrees; and the free-lay control: the hand born free at the source over the plane's six
+angle at every multiple of 30 degrees; and the free lay, a reading and not the control: the hand born free at the
+source over the plane's six
 lattice directions at 30 degrees, and each wing's click taking its share by (iii), with no end fixing it; and the ruled
 control, a local act at the bound: the hand born free over the same lines, each wing's click fixed by the hand alone,
 +1 where the hand's share along its setting is more than half and -1 where it is less (a share of exactly half, read
 +1, is counted and named). No signal in the end law rests on the fixing end's equal split, one count each way.
+Checks by construction, named so: the end law's readings (the pair's curve, each wing's share of 1/2, CHSH 5/2, the
+same at every weight) are identities of the laid measure, and the local act's count of shares at exactly half is 0 by
+the lattice's structure.
 Usage: python3 -I bellend.py <src>
 """
 import sys
@@ -77,7 +82,7 @@ def end_law_on(a, b, w_a, w_b):
     a_off, b_off = across(a), across(b)
     counts = {(1, 1): 0, (1, -1): 0, (-1, 1): 0, (-1, -1): 0}
     # every branch is weighed to one common denominator, so no fraction enters: the far seeds' denominator is the same
-    # (h . h)(s . s) = 36, 12 or 4 by the lattice's lengths, so each branch's counts are scaled to their product
+    # (h . h)(s . s) = 36, 108, 12 or 4 by the lattice's lengths, so each branch's counts are scaled to their product
     branches = []
     for o_fix in (1, -1):
         h = a if o_fix == 1 else a_off
@@ -90,7 +95,8 @@ def end_law_on(a, b, w_a, w_b):
     for _, _, _, plus, minus in branches:
         total *= plus + minus
     for w, end, o_fix, plus, minus in branches:
-        scale, _ = carry(total, plus + minus, 0)
+        scale, left = carry(total, plus + minus, 0)
+        assert left == 0, "a scale's carry leaves a remainder"
         if end == "A":
             counts[(o_fix, 1)] += w * scale * plus
             counts[(o_fix, -1)] += w * scale * minus
@@ -115,8 +121,9 @@ def free_lay_on(a, b):
         pb, mb = far_click(h, b)
         # each line's two wings over their own seeds, scaled to one common denominator for every line
         common = 36 * dot(a, a) * dot(b, b)
-        sa, _ = carry(common, pa + ma, 0)
-        sb, _ = carry(common, pb + mb, 0)
+        sa, left_a = carry(common, pa + ma, 0)
+        sb, left_b = carry(common, pb + mb, 0)
+        assert left_a == 0 and left_b == 0, "a scale's carry leaves a remainder"
         counts[(1, 1)] += sa * pa * sb * pb
         counts[(1, -1)] += sa * pa * sb * mb
         counts[(-1, 1)] += sa * ma * sb * pb
@@ -181,7 +188,8 @@ def show(name, rule):
 
 for w_a, w_b in WEIGHTS:
     show(f"the end law, the ends weighed A {w_a} : B {w_b}", lambda ua, ub, w_a=w_a, w_b=w_b: end_law(ua, ub, w_a, w_b))
-show("the free-lay control: the hand born free over the plane's lines, each wing taking its share", free_lay)
+show("the free lay, a reading and not the control: the hand born free over the plane's lines, each wing taking its"
+     " share", free_lay)
 show("the ruled control, a local act at the bound: each wing's click fixed by the hand alone", local_act)
 lattice_ties = sum(local_act_on(direction(ua), direction(ub))[1] for ua, ub in SETS)
 print(f"   the local act's shares of exactly half at the triangle's settings: {lattice_ties}", flush=True)
@@ -220,7 +228,8 @@ for (ka, kb), sign in {(0, 1): 1, (0, 3): -1, (2, 1): 1, (2, 3): 1}.items():
 turn_num, turn_den = share(vecs[0], vecs[1])
 print(f"== Tsirelson on the plane's own lattice: A at z^0 and z^2, B at z and z^3, z = 13 + 5 w (the square of its turn's overlap"
       f" {turn_num} / {turn_den}); the ends weighed 1 : 1", flush=True)
-print(f"   the end law: CHSH = {per_mille(num, den)} per mille (Tsirelson's 2 r2 is 2828); the free lay:"
+print(f"   the end law: CHSH = {per_mille(num, den)} per mille (z's lay, a test's, 41 millionths below Tsirelson's"
+      f" 2 r2, the counted law's supremum); the free lay:"
       f" {per_mille(num_f, den_f)} per mille; the local act: {per_mille(num_l, den_l)} per mille ({ties_l} shares of"
       f" exactly half)", flush=True)
 print("== the pair's curve, E against the angle between the settings (A at 0, B at the angle; the ends weighed 1 : 1)",
