@@ -190,8 +190,8 @@ def turning(layout, start, end, halves, flip=True):
 
 
 def test_a_half_speed_world_laid_in_memory_turns_with_its_48_lifts_runs_back_and_pairs_by_the_dot():
-    """Yes: the two half-speed trains beside the square, the push on, at the rest 6 den Gamma^2 and at 6: every lift turns the
-    run (the teeth rounding), the run back exact; each passing pair a half-speed row with itself at 1; no gradient term on one.
+    """Yes: both half-speed trains by the square, the push on and the mesh at 3, the files' chosen strengths pending the owner's
+    word, at the rest 6 den Gamma^2 and 6: every lift turns the run, teeth rounding, back exact; the dot; no gradient term on one.
     No: at the rest 6 a gear negated with its tooth negated and not flipped, the turned run and the run turned part."""
     spins = [{"name": f"spin {n}", "kinds": k, "part": p} for n, (k, p) in enumerate((COSETS, CLASSES))]
     for integers, reach in ((None, 1 << 300), ({"den": 1, "full_rate": 1}, 1 << 8)):
@@ -248,8 +248,8 @@ def board_turnings(layout, held, start, end, shape, flip=True):
 
 
 def test_the_board_with_its_sites_turned_by_each_lifts_own_turn_turns_the_run_alike():
-    """Yes: on a cube of 2 x 2 x 2 sites, both half-speed trains beside the square, the push on, at the rest 6 den Gamma^2 and at
-    6: each lift on its trains' gears with its own turn on the sites and the square's slots turns the run alike, the teeth rounding.
+    """Yes: on a cube of 2 x 2 x 2 sites, both half-speed trains by the square, the push on (the files' chosen key, pending the
+    owner's word), at the rest 6 den Gamma^2 and 6: each lift with its own turn on the sites and the square turns the run alike.
     No: at the rest 6 a negated gear's tooth negated and not flipped, the turned run and the run turned part."""
     spins = [{"name": f"spin {n}", "kinds": k, "part": p} for n, (k, p) in enumerate((COSETS, CLASSES))]
     shape = (2, 2, 2)
