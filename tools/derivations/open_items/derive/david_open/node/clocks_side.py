@@ -3,16 +3,16 @@ Whole numbers alone, every division Rule3's carry.
 
 At every Node-clock and round the real act steps the board, and the probe books NOT_CLOSED 29's split at the rest as one
 flow per pair of trains it joins (n = 0, as section 14 rules for writer D's world), each edge carried by its pair of
-teeth at the dial K, the key times 3, born at its middle: the lower end's tooth t carries the flow x into the lower
-train, t + x = q K + r, and the higher end clicks -q (section 14's pair carry). Between the carries a turn writes the
+teeth at the dial D, the key times 3, born at its middle: the lower end's tooth t carries the flow x into the lower
+train, t + x = q D + r, and the higher end clicks -q (section 14's pair carry). Between the carries a turn writes the
 next tooth r + d at each edge, with no wrap dropped. Three turns are read:
 - none: d = 0, the first click;
 - along the circulation: d = C w, w for each triangle the centred remainder of the triangle's own circulating passing
   (the board's own number), C each edge's sign on the triangle's boundary, [j, k] - [i, k] + [i, j];
 - per edge: d_e the centred remainder of the edge's own passing, edge by edge.
-At every clock and round it checks the identity K x (the clock's booked total) = (its swept passing) + B (the teeth at
+At every clock and round it checks the identity D x (the clock's booked total) = (its swept passing) + B (the teeth at
 the birth less now) + B (every d so far), B each clock's sign on each edge (+1 at the lower end, -1 at the higher),
-and it reports each clock's largest |K booked - swept| against its teeth's range.
+and it reports each clock's largest |D booked - swept| against its teeth's range.
 
 First, from the structure alone: on n clocks pairwise joined, with all their triangles, B^T B + C C^T against n I, and
 the same on four clocks less one edge (the case where an edge lies on two triangles without the full set).
@@ -167,7 +167,7 @@ K = 3 * key
 born, _ = carry(K - 1, 2, 0)
 bc = [[sum(B[v].get(e, 0) * C[f].get(e, 0) for e in range(len(pairs))) for f in range(len(triangles))] for v in clocks]
 print(f"tensor24-click on the src given: {sites} Node-clocks, {rounds} rounds; edges {pairs}; triangles {triangles};"
-      f" the dial K = 3 x key = {K}, the birth {born}; B C at every clock and triangle: {bc}")
+      f" the dial D = 3 x key = {K}, the birth {born}; B C at every clock and triangle: {bc}")
 
 
 def centred(v):
@@ -218,7 +218,7 @@ for mode in ("none", "circulation", "per edge"):
         s = s1
     end = {v: max(abs(moved[x][v]) for x in range(sites)) for v in clocks}
     print(f"  turn {mode}: the identity off at {off} of {rounds * sites * len(clocks)} (clock, Node-clock, round) places;"
-          f" each clock's largest |K booked - swept| {widest}, against two teeth's range {2 * (K - 1)}; each clock's"
+          f" each clock's largest |D booked - swept| {widest}, against two teeth's range {2 * (K - 1)}; each clock's"
           f" largest |B (every d)| at the end {end}")
 
 if len(sys.argv) > 3:
