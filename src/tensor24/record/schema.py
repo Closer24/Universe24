@@ -25,7 +25,11 @@ ADDED = (
     " line with every edge side of its clock in the other train's order, q 0 included: that train u, the side's q, its"
     " tooth as the round's carry reads it and after, the line's q the sum of its sides'; the train card's key the edge"
     " key, every side's; the header's dial, that key, and birth, every side's tooth at its birth; the end's teeth, every"
-    " edge side's at the run's end; the line's tooth retired, read on 1.3 records alone (DECODE3, writer C's yes)",
+    " edge side's at the run's end; the line's tooth retired, read on 1.3 records alone (DECODE3, writer C's yes); the"
+    " line's across, each Mesh edge side of its clock that carried, by the partner's place and train: that train u, its"
+    " place across the Spoke, the side's q and its tooth before and after, the line's q the sum over sides and across, a"
+    " Mesh side of q 0 never listed, as listing it would chain every clock of the board into every round's lines; the"
+    " end's across, every Mesh edge side's partner place and tooth at every Node-clock (the Boss's ruling of 05:2x UTC)",
 )
 MINOR = len(ADDED)
 
@@ -84,13 +88,16 @@ class Header:
 
 @dataclass(frozen=True)
 class Click:
-    """A click line: at a round and a Node-clock, a train's click carried q whole keys, a give below 0 and a take above it; a 1.4 line holds sides and no tooth: every edge side of its clock, [u, q_tu, k_before, k_after] in u's order, q_tu 0 included, q the sum of their q, k the train's own tooth on the edge with train u, within [0, K) at the card's edge key K, k_before as the round's carry reads it (the round's start on term 11's edges; after the round's turn where one comes), so x = K q_tu + k_after - k_before is the side's passing; a 1.3 line holds tooth and no sides, its one tooth before and after."""
+    """A click line: at a round and a Node-clock, a train's click carried q whole keys, a give below 0 and a take above it; a 1.4 line holds sides and no tooth: every edge side of its clock, [u, q_tu, k_before, k_after] in u's order, q_tu 0 included, q the sum of their q, k the train's own tooth on the edge with train u, within [0, K) at the card's edge key K, k_before as the round's carry reads it (the round's start on term 11's edges; after the round's turn where one comes), so x = K q_tu + k_after - k_before is the side's passing, and across its Mesh edge sides that carried (q the sum over both); a 1.3 line holds tooth and no sides, its one tooth before and after."""
 
     round: int
     site: int
     train: int
     q: int
     sides: tuple[tuple[int, int, int, int], ...]
+    # 1.4: each Mesh edge side that carried, [u, place, q_tu, k_before, k_after] by (place, u), place u's Node-clock
+    # across the Spoke; its mirror [t, the line's site, -q_tu, K - 1 - k_before, K - 1 - k_after] in u's line there
+    across: tuple[tuple[int, int, int, int, int], ...]
     tooth: tuple[int, int]
 
 
@@ -213,6 +220,9 @@ class End:
     teeth: tuple[
         tuple[int, int, tuple[int, ...]], ...
     ]  # 1.4: per edge side (t, u), its tooth at every Node-clock at the end
+    # 1.4: per Mesh edge side (Spoke, t, u) in that order, [t, u, the partner's place across the Spoke at every
+    # Node-clock, the side's tooth at every Node-clock] at the end
+    across: tuple[tuple[int, int, tuple[int, ...], tuple[int, ...]], ...]
 
 
 @dataclass(frozen=True)

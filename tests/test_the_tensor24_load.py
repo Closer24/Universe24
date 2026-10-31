@@ -53,18 +53,13 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     held, found = loaded(TRAINS, laid := [wave, (len(rows) - 1, rows[-1] - 1, SITE, WIDE + 1, WIDE, 0)])
     a, b, r, rd, k = held.state
     assert found == [] and all(x.dtype == object for x in held.state) and not held.potential[0].any()
-    assert all(x.shape == (sum(rows), SITES) for x in (a, b, r, rd)) and k.shape == (
-        len(TRAINS) * len(TRAINS),
-        SITES,
-    )
+    sides = (1 + len(frame.spokes(len(SHAPE)))) * len(TRAINS) * len(TRAINS)  # every side at every reach
+    assert all(x.shape == (sum(rows), SITES) for x in (a, b, r, rd)) and k.shape == (sides, SITES)
     assert (a[row, SITE], b[row, SITE], r[row, SITE]) == tuple(counts)  # the wave's last row, as laid
     assert (a[-1, SITE], b[-1, SITE]) == (WIDE + 1, WIDE) and not k.any()  # the last train's last row
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1 and not rd.any()
     assert not any(np.shares_memory(*pair) for pair in itertools.combinations(held.state, 1 + 1))
-    assert (held.click[-1] == CHOSEN["key"]).all() and held.click[-1].shape == (
-        len(TRAINS) * len(TRAINS),
-        1,
-    )
+    assert (held.click[-1] == CHOSEN["key"]).all() and held.click[-1].shape == (sides, 1)
     universe, rate = {"integers": INTEGERS, "trains": TRAINS, "chosen": CHOSEN}, INTEGERS["full_rate"]
     grip, spokes = INTEGERS["den"] * rate * rate, len(frame.spokes(len(SHAPE)))  # den Gamma^2
     _, _, _, grips, (rest, *ones), *_ = loading.laid_out(universe, list(SHAPE), held)

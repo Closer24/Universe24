@@ -14,7 +14,7 @@ import numpy as np
 from tensor24.algebra.carry import Z, carry, lit
 from tensor24.runner.board import board
 from tensor24.runner.files import GEAR, entries, star, vocabulary
-from tensor24.runner.plans import edging, holding, joined, meshing, notching, pushing, tying
+from tensor24.runner.plans import crossing, edging, holding, joined, meshing, notching, pushing, tying
 
 
 class Train(NamedTuple):
@@ -180,9 +180,8 @@ def load(
         ),
         tying(trains, c, traces, chosen["tie"]),
     )
-    click = edging(
-        trains, potential, chosen["key"], senses
-    )  # term 11 on the edges, every side's key the edge key
+    # term 11 on the edges, every side's key the edge key, at its own Node-clock and across each Spoke
+    click = edging(trains, potential, chosen["key"], star(side))
     _, _, key = click
     birth, _ = carry(
         key - 1, senses, 0
@@ -268,7 +267,7 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's eleven parts: the board and its Spokes from the piece's sides, every coefficient from the universe's integers, the grips per row, den Gamma^2 on every Mesh of a row whose train is not the held hand and 0 on the held hand's rows (a site-local oscillator: its turn at every Node-clock is its own whatever its neighbours do, and its stability at every wavevector the one Node-clock's; the ii slots' read still lands on its Spokes, so a world with the held hand keeps the push at 0 or its summed grips within the window, which the runner refuses by name otherwise), J's potential, every gear's clock and the grips' read, the passing's pairs with their key, the metric's push, the plan's terms with a Mesh leg (the gradient vertex, plans.meshing); main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's eleven parts: the board and its Spokes from the piece's sides, every coefficient from the universe's integers, the grips per row, den Gamma^2 on every Mesh of a row whose train is not the held hand and 0 on the held hand's rows (a site-local oscillator: its turn at every Node-clock is its own whatever its neighbours do, and its stability at every wavevector the one Node-clock's; the ii slots' read still lands on its Spokes, so a world with the held hand keeps the push at 0 or its summed grips within the window, which the runner refuses by name otherwise), J's potential, every gear's clock and the grips' read, term 11 on the edges and across the Meshes (plans.crossing, from the Mesh plan, the board's neighbours and the edge key over the file's key, kappa / two) with the edge key, the metric's push, the plan's terms with a Mesh leg (the gradient vertex, plans.meshing); main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
     nb = board((sx, sy, sz))
     spokes, meshes = geometry(nb, len(shape))
@@ -277,6 +276,11 @@ def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tupl
         loaded.trains.gripped, loaded.trains.size.astype(np.intp)
     )  # 1 but on the held hand's rows
     grips = np.outer(rows, np.full(len(shape) * nb.shape[1], grip, dtype=object))
+    weight, train, key = loaded.click
+    scale, _ = carry(
+        key[:1], universe["chosen"]["key"], 0
+    )  # the edge key over the file's key: kappa / two
+    across, onto = crossing(loaded.trains, loaded.mesh, spokes, nb, scale)
     return (
         nb,
         spokes,
@@ -286,7 +290,7 @@ def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tupl
         loaded.potential,
         clock,
         stretch,
-        loaded.click,
+        (weight, train, key, across, onto),
         loaded.push,
         loaded.mesh,
     )

@@ -235,8 +235,8 @@ def turned_by(m, laid, held, s, shape):
 
 
 def opposed(clicks, teeth, key, trains):
-    """Every edge's two sides, (t, u) at t trains + u and (u, t): their quotients summing to 0, their teeth to key - 1."""
-    q, k = (x.reshape(trains, trains, -1) for x in (clicks, teeth))
+    """Every edge's two sides at its own Node-clock, (t, u) at t trains + u and (u, t): their quotients summing to 0, their teeth to key - 1."""
+    q, k = (x[: trains * trains].reshape(trains, trains, -1) for x in (clicks, teeth))
     return not (q + q.swapaxes(0, 1)).any() and not (k + k.swapaxes(0, 1) + 1 - key).any()
 
 

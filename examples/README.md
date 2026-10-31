@@ -145,8 +145,8 @@ writer D's run (36fbfbbde and a66674061): 5000 rounds out and back exact, 282663
 of 2106 places, the held train's lines none and its |k|^2 1) is the lay of the exact quarter turn, before the spring key,
 not rerun. The frame's prices (FRAMES.md 6): the held train holds no Mesh, so the vacuum does not propagate; its |k|^2
 is laid by the seed and picked by no law (no vacuum minimum); one beat per tied train; the room was the exact quarter
-turn, and with none laid the held train clicks and the books open (NOT_CLOSED 29); a Mesh leg's wind is booked by no
-click (NOT_CLOSED 4).
+turn, and with none laid the held train clicks and the books open (NOT_CLOSED 29); a Mesh leg's wind is counted by
+the Mesh's edges (`runner/plans.py`'s `crossing`), at the mesh 0 of this world by none.
 
 ## The mesh world
 
@@ -179,10 +179,11 @@ Measured on the act at the chosen spring (`lay.txt`, and the run's ledger and `t
 hand moves at 122 Node-clocks, where the halves pass, up to 24 counts; the held hand's |k|^2 swings between 0 and 1, as
 its own spring turns it by no quarter turn; the squares of the board's wave summed within 62 permille of the same files
 at mesh 0 (the wave's own dispersion on the ring apart: the vertex takes that much into the tied hand); on term 11's
-edges (the shared tooth for every pair of clocks, NC29b; `runner/plans.py`'s `edging`), 8884 click lines at the edge
-key 3, the key 1 times kappa / two, from round 21 at 4442 places, the held train's 4442 and the tied hand's 4442, every
-edge's books 0 at every place by the carry's law (the Mesh leg's wind, the Mesh flux, is counted by no click,
-NOT_CLOSED 4); the run back exact. Run it as the one bang: `python -I
+edges (the shared tooth for every pair of clocks, NC29b; `runner/plans.py`'s `edging`) and the Mesh's edges (term 6's
+gradient vertex split by the Spoke it reads across, `crossing`), at the edge key 3, the key 1 times kappa / two, 21589
+click lines from round 20, 14547 of them with Mesh sides that carried (27308 Mesh sides, the wave and the tied hand
+across the Meshes along the ring, a two-clock meeting each), every edge's books 0 at every place by the carry's law, at
+the held and tied hands' own Node-clock and across every Mesh; the run back exact. Run it as the one bang: `python -I
 tools/tensor24_run.py examples/tensor24-mesh/universe.json examples/tensor24-mesh/piece.json
 examples/tensor24-mesh/setting.json <record .jsonl>` (125 rounds out and back in under a minute; the ledger is about 5
-MB, three lines a Node-clock a round; 8884 click lines; the run back returns the lay bit for bit).
+MB, three lines a Node-clock a round; 21589 click lines; the run back returns the lay bit for bit).

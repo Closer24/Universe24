@@ -32,11 +32,15 @@ def empty():
     return Plan(none := np.zeros(0, dtype=np.intp), none, none, none.astype(object), none)
 
 
-def unclicked(terms=0):
-    """The click of no edge: one train, each of J's terms weighing 0 onto it, its one side's tooth carried at the key 1 from its birth, 0."""
-    return Click(
-        np.zeros((terms, 1), dtype=object), np.zeros(terms, dtype=np.intp), np.ones((1, 1), dtype=object)
+def unclicked(terms=0, key=1, trains=1):
+    """The click of no edge: each of J's terms weighing 0, no Mesh coupling, every side's tooth at every reach carried at the key."""
+    sides, spokes = trains * trains, len(frame.spokes())
+    weight, onto = (
+        np.zeros((terms, trains), dtype=object),
+        np.arange(spokes, dtype=np.intp)[:, None, None],
     )
+    keys = key + np.zeros(((1 + spokes) * sides, 1), dtype=object)
+    return Click(weight, np.zeros(terms, dtype=np.intp), keys, 0 * onto.astype(object), onto)
 
 
 def varied(rng, least=1, clocked=False, cubed=False):
@@ -69,7 +73,7 @@ def world(rng, layout, rows=ROWS):
     a[clocks], b[clocks] = (draw(rng, 0, 1 << 20, (len(clocks), size[1])) for _ in "ab")
     d = sum(step.weight(layout.gearing, layout.clock, x) for x in (a, b))
     r, rd = draw(rng, 0, 1 << 20, size) % (d + d) - d, draw(rng, 0, 1 << 20, size) % layout.gearing.drive
-    return State(a, b, r, rd, 0 * a[:1])
+    return State(a, b, r, rd, 0 * layout.click.key + 0 * a[:1])
 
 
 def naive(layout, s):
@@ -139,14 +143,13 @@ def pair(g, hands=2):
     train = (
         np.concatenate((legs // HAND, 0 * legs)).reshape(-1).astype(np.intp)
     )  # the leg's hand, the unit's 0
-    key = KEY + np.zeros((hands * hands, 1), dtype=object)
-    click = Click(weight, train, key)
+    click = unclicked(len(plan.factor), KEY, hands)._replace(weight=weight, train=train)
     ones, a = np.ones((1, 1), dtype=object), np.zeros((rows, 1), dtype=object)
     gearing, grip = Gearing((1 << 20) * ones, 1, 1, 1), ones.repeat(3, axis=1)
     reads = (frame.unread(), frame.unread(), click, empty(), empty())
     layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, *reads)
     a[0, 0] = 1 << 8
-    return layout, State(a, a.copy(), 0 * a, 0 * a, (KEY - 1) // 2 + 0 * key)
+    return layout, State(a, a.copy(), 0 * a, 0 * a, (KEY - 1) // 2 + 0 * click.key)
 
 
 def pushed(path=False):
@@ -234,7 +237,7 @@ def test_the_click_tooth_carries_the_pairs_passing_and_the_mirror_keeps_it():
     steps = list(rounds(step.act, layout, s, BEATS))
     states, clicks = [s, *(t for t, _ in steps)], [q for _, q in steps]
     hands = layout.click.weight.shape[-1]
-    diagonal = slice(None, None, hands + 1)  # the sides (t, t)
+    diagonal = slice(None, hands * hands, hands + 1)  # the sides (t, t) at their own Node-clock
     given, taken = (
         np.array([q[side] for q in clicks]) for side in (1, hands)
     )  # the sides (0, 1) and (1, 0)
@@ -311,7 +314,11 @@ def test_the_run_back_is_exact_where_every_tooth_stands_within_its_edges_dial_an
     states = [u, *(w for w, _ in rounds(step.act, tied, u, BEATS // 10))]
     half = lambda a, a1, k: carry(step.passing(tied.click, tied.plan, a, a, a1), KEY, k)[1]  # noqa: E731
     steps = list(zip(states, states[1:], strict=False))  # J(a) (a+ - a), the window's forward half alone
-    teeth = list(itertools.accumulate(steps, lambda k, w: half(w[0].a, w[1].a, k), initial=u.k))
+    teeth = list(
+        itertools.accumulate(
+            steps, lambda k, w: half(w[0].a, w[1].a, k), initial=u.k[: len(tied.click.weight[0]) ** 2]
+        )
+    )
     mirrored = [
         [step.mirror(tied, w).a for w in pair] for pair in steps
     ]  # the window run back: a, then a-

@@ -16,7 +16,7 @@ class State(NamedTuple):
     b: Z
     r: Z  # the tooth of the edge between the two slots, within [-D, D), D = W(b) + W(a): what the momentum's split leaves
     rd: Z  # the drive's fine tooth, within [0, T_d): the remainder its carry keeps, as r is the gear's
-    k: Z  # (trains x trains, sites): every edge side's click tooth, within [0, key): the remainder its carry keeps, born at (key - 1) div 2
+    k: Z  # ((1 + Spokes) x trains x trains, sites): every edge side's click tooth at every reach, within [0, key), born at (key - 1) div 2
 
 
 class Plan(NamedTuple):
@@ -40,13 +40,14 @@ class Read(NamedTuple):
 
 
 class Click(NamedTuple):
-    """Term 11 on the edges, laid at load (runner/plans.py's edging): per term of J's plan on the value legs, in the plan's order, its weight on every train, 0 on a train its monomial has no value leg in, and the train of the leg it pushes; and every edge side's key, the edge key: the universe file's CHOSEN key times kappa / two, the same for every side."""
+    """Term 11 on the edges, laid at load (runner/plans.py's edging and crossing): per term of J's plan on the value legs, in the plan's order, its weight on every train, 0 on a train its monomial has no value leg in, and the train of the leg it pushes; every edge side's key at every reach, its own Node-clock and across each Spoke, the edge key: the universe file's CHOSEN key times kappa / two, the same for every side; and the Mesh's edges, term 6's gradient vertex split by the Spoke it reads across, per pair of rows their coupling and the side it books on."""
 
     weight: Z  # (terms, trains): the leg's share of its monomial's flow, kappa (L - l) / L, onto each other train of the monomial
     train: Z  # (terms,): the train of the leg the term pushes, the side's first train
-    key: (
-        Z  # (trains x trains, 1): the key each side (t, u), at t trains + u, carries its passing at, odd
-    )
+    # ((1 + Spokes) x trains x trains, 1): the key each side (t, u) at each reach carries its passing at, odd
+    key: Z
+    across: Z  # (Spokes, rows, rows): the Mesh edge's coupling of row r here with row p across the Spoke, times kappa / two
+    onto: Z  # (Spokes, rows, rows): the side ((1 + Spoke) trains + t) trains + u that the pair books on, t r's train, u p's
 
 
 class Gearing(NamedTuple):
@@ -70,6 +71,6 @@ class Layout(NamedTuple):
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, the force, the unit last
     clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
     stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh
-    click: Click  # term 11 on the edges: each term of J's plan weighed onto the other trains of its monomial, and the edge key
+    click: Click  # term 11 on the edges: each term of J's plan weighed onto the other trains of its monomial, the Mesh's edges, the edge key
     push: Plan  # term 5, the metric's push in the books' form, every slot pushed by -dH / d slot of the act's energy H = W v_in v_out / 2 + SUM_Mesh grip Delta^2 / 2 with W = rest + k0 c00: terms on the push's readings (the six stretches per row, the momenta in and out, the unit last), k0 sigma_in sigma_out of every row on the force's path (the sourcing trains' rows and the square's 0i and jk rows) onto the 00 slot, every row's two Meshes' stretches squared at -1 onto the ii slot of their axis, nothing onto the jk and 0i slots, no strength; the drive's dial senses on the square's 00 and ii rows takes the half
-    mesh: Plan  # the plan's terms with a Mesh leg, term 6's gradient vertex V = mesh x SUM_i C_ji M_j D_i L between an A1 row L of the board's wave (a train neither the square nor the held hand) and a tied hand's rows M, on the same readings as the plan, laid by the loader as its two pushes (L's difference onto M's row, M's difference onto L's row; the factor 0 at mesh 0 or where no channel stands), and the drive alone reads them, the passing never
+    mesh: Plan  # the plan's terms with a Mesh leg, term 6's gradient vertex V = mesh x SUM_i C_ji M_j D_i L between an A1 row L of the board's wave (a train neither the square nor the held hand) and a tied hand's rows M, on the same readings as the plan, laid by the loader as its two pushes (L's difference onto M's row, M's difference onto L's row; the factor 0 at mesh 0 or where no channel stands), and the drive reads them, the passing too, split by the Spoke on the Mesh's edges

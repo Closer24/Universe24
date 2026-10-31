@@ -24,7 +24,7 @@ WRITTEN = [
 def ran(written, rounds, change, tmp_path):
     """The world's own files at the rounds, its first gear's count moved by the change: its departures, the end line, its click
     lines' count and digest (SHA-256, a line feed between two), the reader's cause; each line schema.Click's fields but the 1.3 tooth,
-    its q its sides' sum (writer C's pin), each side (t, u) beside (u, t) at its place, q negated, each tooth dial - 1 less the other."""
+    its q its sides' sum, Mesh sides too (writer C's pin), each side beside its mirror at the partner's place, q negated, teeth complementary."""
     *paths, setting = [ROOT / "examples" / written["world"] / f"{name}.json" for name in NAMES]
     held, record = json.loads(setting.read_text(encoding="utf-8")), tmp_path / f"{rounds}.{change}.jsonl"
     held["ticks"], held["gears"][0][3] = rounds, held["gears"][0][3] + change
@@ -34,18 +34,20 @@ def ran(written, rounds, change, tmp_path):
     clicks = [x for x in text if json.loads(x)["kind"] == "click"]
     lines = hashlib.sha256("\n".join(clicks).encode("utf-8")).hexdigest()
     fields = ["kind", *(f.name for f in dataclasses.fields(schema.Click) if f.name != "tooth")]
-    assert all(
-        list(line) == fields and line["q"] == sum(side[1] for side in line["sides"])
-        for line in map(json.loads, clicks)
-    )
     lined, head = [json.loads(x) for x in clicks], json.loads(text[0])
-    sides = {
-        (x["round"], x["site"], x["train"], u): (q, b, a) for x in lined for u, q, b, a in x["sides"]
-    }
     k = head["dial"] - 1  # the edge dial, every card's key, less 1: two teeth born at its half
     assert {t["key"] for t in head["trains"]} == {k + 1} and head["birth"] + head["birth"] == k
+    # q the sum over a line's own Node-clock's sides and its Mesh sides; each side beside its mirror at the partner's place
     assert all(
-        sides.get((r, x, u, t)) == (-q, k - b, k - a) for (r, x, t, u), (q, b, a) in sides.items()
+        list(x) == fields and x["q"] == sum(q for *_, q, _, _ in x["sides"] + x["across"]) for x in lined
+    )
+    met = {
+        (x["round"], x["site"], x["train"], s[0], [*s[1:-3], x["site"]][0]): s[-3:]
+        for x in lined
+        for s in x["sides"] + x["across"]
+    }
+    assert all(
+        met.get((r, p, u, t, x)) == [-q, k - b, k - a] for (r, x, t, u, p), (q, b, a) in met.items()
     )
     ends = {(t, u): ns for t, u, ns in json.loads(text[-1])["teeth"]}  # the end's teeth, complementary
     assert all(n + m == k for (t, u), ns in ends.items() for n, m in zip(ns, ends[u, t], strict=True))
