@@ -9,7 +9,8 @@ from pathlib import Path
 from tensor24.runner.files import NAMES, departures
 
 EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
-DEN = 15162856759112389  # the example's den, as its file holds it: the widest of its integers, 54 bits
+DEN = 1  # the example's den, as its file holds it, the seed's
+RATE = 1000  # the example's full_rate, as its file holds it: the widest of its integers, 10 bits
 
 
 def edits():
@@ -102,14 +103,14 @@ def edits():
         "an integer past the width": (
             "universe",
             lambda u: u["integers"].update(width=8),
-            f"universe.integers.den: the integer {DEN} takes more bits than the width, 8",
+            f"universe.integers.full_rate: the integer {RATE} takes more bits than the width, 8",
         ),
         "the width one bit short": (
             "universe",
-            lambda u: u["integers"].update(width=53),
-            f"universe.trains[0].pinion: the integer {DEN} takes more bits than the width, 53",
+            lambda u: u["integers"].update(width=9),
+            f"universe.integers.full_rate: the integer {RATE} takes more bits than the width, 9",
         ),
-        "the width at the widest integer": ("universe", lambda u: u["integers"].update(width=54), None),
+        "the width at the widest integer": ("universe", lambda u: u["integers"].update(width=10), None),
         "an integer too wide in the setting": (
             "setting",
             lambda s: s["gears"].append([0, 0, 1, 1 << 200, 0, 0]),
@@ -158,7 +159,7 @@ def edits():
         "two trains of one label": (
             "universe",
             lambda u: u["trains"].append(dict(u["trains"][0])),
-            "universe.trains: the label 'light' names two trains or more",
+            "universe.trains: the label 'wave' names two trains or more",
         ),
         "two trains of one label that is no text": (
             "universe",
