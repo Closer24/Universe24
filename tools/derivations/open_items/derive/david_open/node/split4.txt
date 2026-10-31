@@ -1,0 +1,50 @@
+(b) passing4's three lays: the held hand (k1, k2) under the hat at n = 5^10, the tie 3 to a tied train with its own spring n, four Mesh-less Node-clocks, 400 rounds; per form the windows whose books open, whose held passing is not 0, and that are odd under the window's reversal, of 1,600
+  (A) the hand at its rest (KEY, 0), the tied train swinging:
+    act: books open in 1600; held passing not 0 in 1600; odd in 1600 of 1600
+    middle: books open in 0; held passing not 0 in 1600; odd in 1600 of 1600
+    work middle: books open in 0; held passing not 0 in 1600; odd in 1600 of 1600
+    background: books open in 0; held passing not 0 in 1565; odd in 1600 of 1600
+    split: books open in 0; held passing not 0 in 1600; odd in 1600 of 1600
+    the middle form by halves equals the middle split in the work form (at one scale) in 18 of 1600 windows
+  (B) the hand's size laid off its rest:
+    act: books open in 1600; held passing not 0 in 1600; odd in 1600 of 1600
+    middle: books open in 0; held passing not 0 in 1599; odd in 1600 of 1600
+    work middle: books open in 0; held passing not 0 in 1599; odd in 1600 of 1600
+    background: books open in 0; held passing not 0 in 1582; odd in 1600 of 1600
+    split: books open in 0; held passing not 0 in 1599; odd in 1600 of 1600
+    the middle form by halves equals the middle split in the work form (at one scale) in 21 of 1600 windows
+  (C) a stiff hat 10^4, teeth 10^6 n, the hand at its rest:
+    act: books open in 1598; held passing not 0 in 1598; odd in 1600 of 1600
+    middle: books open in 0; held passing not 0 in 1598; odd in 1600 of 1600
+    work middle: books open in 0; held passing not 0 in 1598; odd in 1600 of 1600
+    background: books open in 0; held passing not 0 in 365; odd in 1600 of 1600
+    split: books open in 0; held passing not 0 in 1212; odd in 1600 of 1600
+    the middle form by halves equals the middle split in the work form (at one scale) in 1381 of 1600 windows
+(c) B4's pair world (the run test's files), the real loader and act: trains [0, 1, 2], held rows [0, 1], key 76801; monomials: own 2, two-leg between trains 6, tie groups 12 (factors [60000], each over held rows [0, 1]); n = the held hand's |k|^2 as laid, 1
+  (a) the two-leg law: the work form at kappa 2 equals the act's X in 2400 of 2400 (monomial, round) pairs over 400 rounds
+  the held hand's |k|^2 at each round's next count, rounds 1 to 56: [1]; past the room [0, 1, 2]; first not 1 at round 57, where it is 2
+  the split at kappa 6, the key times 3 (230403): books open in 0 of 400 rounds
+  the run test's 30 ticks: the act's (held, giver, taker) per round [(0, 1, -1)]; the split's [(0, 1, -1)]
+  inside the room (rounds 1 to 56) the split's clicks equal the act's in 56 of 56 rounds; summed size per train, the act [0, 56, 56], the split [0, 56, 56]; largest in a round, the act [0, 1, 1], the split [0, 1, 1]
+  past it (rounds 57 to 400): summed size per train, the act [13748, 141004, 984902], the split [1494648, 186086, 1309570]; largest in a round, the act [412, 3829, 13615], the split [23290, 5141, 18217]
+  for reference, the background form at the key 76801: books open in 0; the run test's 30 ticks [(0, 1, -1)]; in the room summed size [0, 56, 56], largest in a round [0, 1, 1], the clicks equal the act's in 56 of 56 rounds, the held train firing in 0; past it largest in a round [17440, 3829, 13615]
+  for reference, the middle as written form at the key 76801: books open in 0; the run test's 30 ticks [(0, 1, -1), (6, 1, -7), (13, 1, -14)] ...; in the room summed size [9625, 56, 9681], largest in a round [344, 1, 345], the clicks equal the act's in 1 of 56 rounds, the held train firing in 55; past it largest in a round [17850, 3830, 14022]
+(d) the energy each form books, units 96 W E; a form's miss is its cumulative held passing against the held train's energy under its own split, in permille of the held hand's own excursion
+  lay (A) site 0: background 13; middle 13; work middle 18; split 13 (the hand's own excursion 3762243608355000000000000)
+  lay (A) site 1: background 7; middle 6; work middle 6; split 7 (the hand's own excursion 97155461603280000000000000)
+  lay (A) site 2: background 3; middle 3; work middle 4; split 3 (the hand's own excursion 269703705956430000000000000)
+  lay (A) site 3: background 3; middle 2; work middle 3; split 3 (the hand's own excursion 875102627273959687500000000)
+  lay (C) site 0: background 841; middle 841; work middle 841; split 841 (the hand's own excursion 1463906400000000000000000000)
+  lay (C) site 1: background 767; middle 767; work middle 767; split 767 (the hand's own excursion 6561909144768750000000000000)
+  lay (C) site 2: background 264; middle 263; work middle 263; split 264 (the hand's own excursion 1463906400000000000000000000)
+  lay (C) site 3: background 419; middle 419; work middle 418; split 419 (the hand's own excursion 13584016034066250000000000000)
+  the decay, 3,000 rounds: the held train's booked transfer at the end, permille of its starting excess: background -44, middle -24, split -45; the split against the background differs by at most 29 (round 2206), by -4 on the mean over rounds 1,800 to 2,200; the middle against the background by at most 514
+  the free particle at x0 2,000 over a nearly still vacuum (|k|^2 - n at most 99744): the vacuum's booked energy, permille of the particle's c n x0^2, its mean over rounds 201 to 1,200 and its range: background 0 (-7 to 7); middle -249 (-500 to 4); split 0 (-5 to 5)
+  one scale, x laid at 1,000, y at rest at 0, 400 rounds: x's split energy against its passing, worst miss 9 permille of its excursion
+  one scale, x laid at 2,000, y at -500, 400 rounds: x's split energy against its passing, worst miss 2 permille of its excursion
+(e) the click tooth's run back under the split: carried forward over the windows, kept at the end as the mirror keeps it, and carried back over the reversed windows (b, a, a+) -> (a+, a, b) in reverse order
+  lay (B) site 0, key 3 x 7681: the tooth returned to its birth: True; each back round's clicks the forward's negated in 400 of 400
+  lay (B) site 1, key 3 x 7681: the tooth returned to its birth: True; each back round's clicks the forward's negated in 400 of 400
+  lay (B) site 2, key 3 x 7681: the tooth returned to its birth: True; each back round's clicks the forward's negated in 400 of 400
+  lay (B) site 3, key 3 x 7681: the tooth returned to its birth: True; each back round's clicks the forward's negated in 400 of 400
+  the pair world, 400 rounds, key 230403: the tooth returned to its birth: True; each back round's clicks the forward's negated in 400 of 400

@@ -1,43 +1,68 @@
-# The passing for four value legs: two lawful forms that close the books, and what their clicks mean (NOT_CLOSED 29)
+# The passing for four value legs: the split at the rest, and what its clicks mean (NOT_CLOSED 29)
 
-David, 2026-10-30 (the second text, 23:3x UTC), for the night's side list, NOT_CLOSED 29: "the hat needs a lawful
+David, 2026-10-31 (the third text, 00:3x UTC), for the night's side list, NOT_CLOSED 29: "the hat needs a lawful
 one-pass passing for monomials of four value legs" (the Boss's #2187 6533115084 item 1, to David and the click's
 deriver, on the architect's measure: with the held hand still under the hat, the held train books the tied spring's
 energy alone, X_held = 2 hold f (k_a . k_b)(|x_a|^2 - |x_b|^2), and B4's pair world opens its books from round 57). It
 reads the act on node-live 575973a20: step.passing (each train's X over its pairs, a J(b) - b J(a) with J the value
 legs' plan on the Node-clock's own counts, the click's form the identity) and step.act (S = X(S) + X(S+), the window's
-before, now and next). The probes are derive/david_open/node/passing4.py and pair_world.py, whole numbers alone, their
-outputs beside them. The first text (toys-5 6141992a2) went to a new hostile pair, who refused it: the mathematician on
-three items and thirteen minors, the physicist on five and nine. Both found the residual, both forms' books and every
-form's oddness standing. Big Pic's word (6535643629 item 3: the middle form is the hat's road) is folded here with
-their items (section 7); section 8 says how the text checked itself.
+before, now and next). The probes are derive/david_open/node/passing4.py, pair_world.py and split4.py, whole numbers
+alone, every division Rule3's carry, their outputs beside them.
+- **The readers.** The first text (toys-5 6141992a2) went to a new hostile pair, who refused it on three items and five.
+  The second text (toys-5 4cbece813) took the middle form as the hat's road on Big Pic's word (6535643629 item 3) and
+  went back to that pair; both refused it. Each found his own first items closed. Both found that the middle form
+  breaks the shipped click world inside the room (the mathematician's N1, the physicist's N2); the physicist added the
+  road's scale (N1), a denominator effect near the vacuum (N3) and the road's premise and its decay citation (N4).
+- **Big Pic's word** (6536112029, item 1): his word for the middle form is withdrawn. Both readers are right, and two of
+  his premises were wrong: "the tie's energy has no owner" holds for the interaction alone, and "both forms agree in a
+  decay, within 48 permille" misread a figure. The road is the split at the rest, nature's own accounting of mass; until
+  its probes stand, the background form, scoped to the worlds the loader lays.
+- **A slip of mine.** The 48 permille was the physicist's p5, each form against its own split. My 6535140258 said "both
+  new forms track the transfer within 48 permille", and the second text said "both forms agree"; that is the wording
+  Big Pic read as agreement. Against each other the two forms part by up to 514 permille (section 4).
+- **This text** derives the split's passing and runs it on every lay and world the readers broke the middle form on
+  (split4.py); section 7 folds both readers' items; section 9 says how the text checked itself.
 
-**The finding in one line:** for four value legs the act's passing leaves a residual, -f (e1 - e3), and two lawful
-forms close the books exactly; they differ only in how they split a monomial's energy between its trains, and their
-clicks mean energy where gears move many counts a round, not near the vacuum.
+**The finding in one line:** for four value legs the act's passing leaves a residual, -f (e1 - e3); the split at the
+rest closes the books exactly, local, one pass, odd and whole at one scale: a tie's value at the held hand's rest is the
+tied train's own mass and passes nothing, and only the tie's excursion from the rest is shared, two thirds to the tied
+train and one third to the held. On the shipped pair world its clicks are the act's in all 56 rounds of the room; in a
+decay and for a free particle the tied train keeps its mass; near the vacuum it misses as every form does.
 - **The residual.** For a monomial f x_1 x_2 x_3 x_4 the act's X sums over its legs to -f (e1 - e3), e1 with one leg at
   the now slot and three at the before, e3 the reverse. Two legs give e1 = e3, the bilinear identity behind COUNT5 M1;
   four legs do not, and the hat's own quartic leaves the residual inside the held train.
-- **The middle form** books every monomial by its leg count: a train holding |A| of a monomial's d value legs keeps
-  H_A + (|A| / d) V. It needs no flag, and at d = 2 it is the act's own two-leg passing, doubled. A still held hand then
-  clicks back and forth with its tied train, as the shipped giver does under the act's two-leg passing.
-- **The background form** books a monomial joining the held train to one other by the held train's own motion,
-  S_held = -2 c P(now) (Q(next) - Q(before)), S_other = -S_held. It is right in the limit of a stiff or heavy held hand,
-  with the back-reaction as its leading correction, and it picks its background by the held character, not by the
-  dynamics.
-- **Which form is the hat's road: the middle form** (Big Pic's word, 6535643629 item 3).
-  - A tie's energy has no owner, in nature too: only the whole is kept, and a passing between trains is fixed only over
-    beats and in decays, where both forms agree (the physicist's decay, within 48 permille).
-  - So the record needs a rule for the back-and-forth part, and the middle form is the one with no flag: each monomial
-    is shared by its legs, Euler's split of a homogeneous tie, one rule for every degree (2.2). At d = 2 it is the
-    act's own two-leg passing up to the key's scale, so term 11 stands unchanged.
-  - The background form is the stiff-limit reading of the same books, with the back-reaction as its leading
-    correction, and not a law.
-- **Measured:** on four Mesh-less Node-clocks the books open in 1,600, 1,600 and 1,598 of 1,600 windows under the act's
-  passing and in 0 under either form; on B4's pair world, through the real loader and act, in 146 of 400 rounds from
-  round 57 under the act's passing and in 0 under the background form. Read against the energy they split, both forms
-  track it within about 1 per cent on the lays whose gears move many counts a round, and miss it near the vacuum, where
-  the act's own integer drift is of the size of the exchange (section 4).
+- **The split at the rest** (Big Pic's road; 2.4). In the work form, a train's passing from one monomial is
+  S_A = kappa (W_A - alpha_A W): W_A the sum over the train's legs of the leg's push at the now slot times its count's
+  change over the window, W the sum over the trains, alpha_A the train's share of the monomial's energy. The act's own
+  two-leg passing is this form at kappa 2 and alpha 1/2, in 2,400 of 2,400 monomial rounds of the pair world. A tie
+  c P |k|^2 is c n P, the tied train's own (nothing passes), plus the excursion c P (|k|^2 - n), shared with the
+  excursion as one leg: alpha 2/3 to the tied train, 1/3 to the held. At kappa 6, one scale for 1/2, 2/3 and 1/3, the
+  two-leg passing is the act's times 3, and read at the key times 3, still odd, its clicks are the act's.
+- **Measured on the board** (split4.py, 7 s; section 5):
+  - on passing4's three lays the split's books open in 0 of 1,600 windows and it is odd in 1,600 of 1,600;
+  - on B4's pair world, through the real loader and act: books open in 0 of 400 rounds; in the run test's 30 ticks and
+    in all 56 rounds of the room its clicks equal the act's, (held, giver, taker) = (0, 1, -1), at the key 230,403;
+  - in the physicist's decay the split's booked held transfer stays within 29 permille of the background form's (the
+    middle form parts by up to 514), and over a free particle the vacuum books 0 on the mean, from -5 to 5 permille
+    (the middle form -249);
+  - a train holding both a tie and a two-leg spring misses its split energy by 9 and 2 permille at the one scale;
+  - near the vacuum (lay (C)) the split misses 264 to 841 permille of the held hand's own excursion, as the background
+    and the middle forms do;
+  - the click tooth, kept as the mirror keeps it, returns to its birth over the reversed windows in every run.
+- **The middle form,** applied to every four-leg monomial, breaks the shipped room (the held train up to 344 clicks a
+  round inside it, where the act fires 0) and books a tie-massed particle's energy to the vacuum (-249 permille on the
+  mean). It is refused as the road and kept as a lawful form: it is the split with the excursion shared over the k
+  rows instead.
+- **The background form** is what the act books in the room, and Big Pic's interim road; the split's probes now run on
+  the board, and it stands as the stiff-limit reading of the same books.
+- **The click world** (the owner's law; Sofer's words, 6536096436): the pair world's clicks are click lines. The act's
+  are the act's own; the split's are carried by split4.py from the board's windows, so its room and its flicker past the
+  room are MEASURED on the board until the split is built in the act and its lines read twice in the click world. The
+  energies (the decay, the free particle, the lays) are board readings: MEASURED on the board.
+- **Its debts, named:** n is the frame's constant (the hat's rest; frame 6's held count 1), read through the held
+  character as the background form reads it; the key times 3 is a change of a declared number (or of term 11's scale),
+  for the owner's word; past the room every form flickers, the split up to 23,290 clicks a round from the held train;
+  the split is not built in the act.
 
 ## 1. In clocks
 
@@ -47,9 +72,15 @@ clicks mean energy where gears move many counts a round, not near the vacuum.
 - **Why four legs break it.** A spring between two gears trades energy as a seesaw: what one gains the other loses,
   read off the two gears alone. A term of four legs is a seesaw whose pivot moves with the other legs; the act's passing
   reads each leg against the other three at the other slot, and the four readings no longer balance.
-- **Two ways to share a term.** A term of four legs belongs to no one gear. The middle form gives each train the share
-  of its legs. The background form gives it all to the moving train and treats the held hand as a stage that trades
-  only when its size moves, which is right when the hand is too stiff or too heavy to be moved by the tie.
+- **The work each gear takes.** A gear's push at the now slot times the count it moves from before to next is the work
+  the term does on it over the round. The act's two-leg passing is the work on one gear less the work on the other.
+- **Three ways to share a term.** A term of four legs belongs to no one gear. The middle form gives each train the share
+  of its legs. The background form gives it all to the train that is not held and treats the held hand as a stage that
+  trades only when its size moves. The split at the rest gives the tied train the tie's value at the hand's rest, its
+  own weight, and shares only the tie's swing about that value: two parts to the tied train's two legs, one to the hand.
+- **A hand at its rest books nothing.** Where the hand's size stands at its rest the tie's swing is 0 and its pushes on
+  the hand do no work, so the held train takes no click from the tie, whether the hand stands still or turns as frame
+  6's does.
 - **Where the clicks mean energy.** A click is a quantum of energy only where the act keeps energy well, which it does
   where gears move many counts a round. Near the vacuum, a hand moving less than a count a round keeps its motion in its
   tooth, and the counts the passing reads lose it.
@@ -65,8 +96,9 @@ clicks mean energy where gears move many counts a round, not near the vacuum.
   identity (COUNT5 M1, git baaa5353e).
 - Four legs: e1 - e3 is not 0 in general; with two legs still (x = y on them) and two moving, e1 - e3 = 2 x_1 x_2
   (y_3 y_4 - x_3 x_4).
-- On the act the books' miss equals the summed residual exactly, in every window of passing4 and in 400 of 400 rounds of
-  the pair world (the mathematician's residual_check and pw_check).
+- On the act the books' miss equals the summed residual exactly, in every window of passing4 (the mathematician's
+  p4_check) and in 400 of 400 rounds of the pair world (the physicist's r6); the mathematician's pw_check checks
+  step.passing against the monomial sum.
 
 ### 2.2 The middle form
 
@@ -79,17 +111,20 @@ clicks mean energy where gears move many counts a round, not near the vacuum.
   any weight w_d.
 - **Oddness.** Each gear's share is antisymmetric in (x, y), so S on (b, a, a+) is minus S on (a+, a, b), and the click
   tooth runs back by the same act on the mirrored state, for monomials even under the mirror (COUNT5 M1's lemma).
-- **What it books, by leg count.** At leading order in the window's differences train A's share is proportional to
-  (|A| / d - 1) SUM over A's legs of dx / x + (|A| / d) SUM over the other legs, the exchange of the split
-  E_A = H_A + (|A| / d) V. For the loader's 2 + 2 tie that is V / 2; for a 3 + 1 monomial it is 3 V / 4 and V / 4 (the
+- **What it books, by leg count:** the split E_A = H_A + (|A| / d) V. Read per leg, train A's share of a change of the
+  term moves by (|A| / d) dV less the term's work on A's own legs, SUM over A's legs of (dV / dx) dx, which asks no
+  division by a leg. For the loader's 2 + 2 tie that is V / 2; for a 3 + 1 monomial it is 3 V / 4 and V / 4 (the
   physicist's p7: V / 4 tracks the form within 9 permille against 75 for V / 2; the mathematician's B3).
 - **Why by leg count: Euler's split.** For a tie V homogeneous of degree d in the value legs, SUM over every leg of
   x dV/dx = d V. A train's share is the sum of x dV/dx over its own legs, divided by d; for a monomial each leg gives V,
-  so train A's share is |A| V / d, one rule for every degree and no flag (Big Pic's word).
-- **Its scale.** The share's prefactor is w_d times C(d - 1, d/2 - 1) d / (d - 1), which is 2 w_2, 4 w_4, 12 w_6 and 40
-  w_8. The first text's w_d = 4 / d keeps one scale, twice the act's, at d = 2 and 4 only, and is not whole beyond.
-  Whole weights at one scale for every degree present (w_d = L / K_d over a common L) are OPEN; the loader lays at most
-  four legs.
+  so train A's share is |A| V / d, one rule for every degree and no flag.
+- **Its scale.** The share's prefactor is w_d K_d, K_d = C(d - 1, d/2 - 1) d / (d - 1) = 2 C(d - 2, d/2 - 1), whole for
+  every even d: 2, 4, 12 and 40 at d = 2 to 8. So whole weights at one scale exist for every degree present: w_d =
+  L / K_d with L = 120 gives 60, 30, 10 and 3 up to d = 8 (the mathematician's m-c), at a key's size that scale sets.
+  At weight 1 the middle form runs at twice the act's scale at d = 4, so at one key it clicks about twice as often as
+  the background form (his m-b).
+- **Refused as the road** (2.4, 4): on the shipped pair world it breaks the room, and it books a tie-massed particle's
+  energy to the vacuum. It stays a lawful form.
 
 ### 2.3 The background form
 
@@ -105,53 +140,130 @@ clicks mean energy where gears move many counts a round, not near the vacuum.
   interaction belongs to neither particle, so its assignment is a convention.
 - **Its regime.** The tie pushes the held hand radially, -2 c x^2 k, so a swinging tied hand moves the held hand's size
   and the form books that motion. The held hand is a stage only where its size is stiff or heavy against the tied
-  dynamics, the back-reaction energy of order c^2 x^4 / (4 hat) its leading correction. In the first text's lay (A) the
-  hat's radial frequency equals the tied train's, and at two sites the tie overturns the hat (|k|^2 runs from 36 to
-  1.20 n and from 1 to 2.90 n): a strongly coupled lay. Only the stiff hat, lay (C), comes near the stage.
+  dynamics. In the continuum the back-reaction energy, of order c^2 x^4 / (4 hat), is its leading correction; on the act
+  the held clicks level off at the hand's count jiggle, 13 to 23 permille of the middle form's at hat 16 to 256 and 161
+  at hat 4, where omega_h = 2 omega_x (the physicist's p11). In the first text's lay (A) the hat's radial frequency
+  equals the tied train's, and at two sites the tie overturns the hat (|k|^2 runs from 36 to 1.204 n and from 1 to
+  2.897 n): a strongly coupled lay. Only the stiff hat, lay (C), comes near the stage.
 - **Its background is picked by a flag.** A heavy train of no held character can be the physical background: with a
   quartic tie c x x y y and y's teeth 10^4 times x's, the act opens the books in 400 of 400 rounds and the middle form
   books 12 times y's own energy change, where a background reading of y tracks it; the rule cannot choose y (the
-  physicist's p10).
+  physicist's p10). The loader lays no such train.
+- **In the room it is what the act books** (the mathematician's N1): the act's passing books nothing of the tie to the
+  held train there. It is Big Pic's interim road.
+
+### 2.4 The split at the rest
+
+- **The work form.** For a monomial m, at the window (b, a, a+), the push on the leg at position i is
+  J_i(a) = -f PROD over the other positions of a, and W_A = SUM over A's positions of J_i(a) (a+_g - b_g),
+  W = SUM_A W_A. The passing is S_A = kappa (W_A - alpha_A W), alpha_A the train's share of the monomial's energy,
+  SUM_A alpha_A = 1.
+- **The two-leg law.** For f x_g x_h on two trains,
+  X_g(a, b) + X_g(a+, a) = -f (a_g b_h - b_g a_h + a+_g a_h - a_g a+_h) = J_g(a) (a+_g - b_g) - J_h(a) (a+_h - b_h)
+  = W_g - W_h, which is kappa 2 at alpha 1/2. On the pair world the work form at kappa 2 equals the act's X in 2,400 of
+  2,400 monomial rounds (split4 (a)). A train's own monomial, alpha 1, passes nothing.
+- **The tie, split at the rest.** The loader's ties joining the held train to a tied train come in groups, one factor c
+  and one product P of tied legs over every held row: c P SUM_r k_r^2 = c P |k|^2 (on the pair world 12 groups at
+  60,000, P = x_t^2 for each tied row t; on passing4, c = 3 and P = x^2). Write c P |k|^2 = c n P + c P (|k|^2 - n), n
+  the held hand's rest.
+  - The value at the rest, c n P, is the tied train's own two-leg spring: alpha 1 to it, so it passes nothing.
+  - The excursion, c P (|k|^2 - n): its pushes on the held rows are the tie's own, -2 c P(a) k_r; on a tied leg l they
+    are -c (P / x_l)(a) (|k(a)|^2 - n). With the excursion as one leg, alpha_tied = 2/3 (its two legs) and
+    alpha_held = 1/3: S_held = (kappa / 3) (2 W_held - W_tied), S_tied = -S_held.
+- **The books** close monomial by monomial, since SUM_A alpha_A = 1 gives SUM_A S_A = kappa (W - W) = 0, exactly.
+- **Oddness.** Under (b, a, a+) -> (a+, a, b) the pushes J(a) stand and a+ - b changes sign, so every W and every S
+  changes sign.
+- **The click tooth's run back.** The mirror keeps the click tooth (the Boss's 6535922454 item 2 (a)). If
+  S + r = q K + r+, then -S + r+ = -q K + r with 0 <= r < K, so carry(-S, K, r+) = (-q, r): over the reversed windows
+  the tooth returns to its birth (split4 (e), on lay (B) and on the pair world). A first try that flipped the tooth to
+  K - 1 - r did not return; that is not the act's mirror.
+- **What it books.** E_held = H_held + (1/3) c P (|k|^2 - n) and E_tied = H_tied + c n P + (2/3) c P (|k|^2 - n). Where
+  |k|^2 = n the excursion is 0, and so are the tied legs' excursion pushes; where the hand also stands still, or turns a
+  quarter a round as frame 6's does (a . (a+ - b) = 0 for the quarter turn), W_held is 0. So a hand at its rest books
+  nothing from the tie, and the tied train carries its mass c n P as its own.
+- **It adds back to the middle form.** Shared over the k rows instead (legs x, x, k_r, k_r, a half each), the
+  excursion's -c n P part is the tied train's own and cancels the value at the rest, so the shares are the middle
+  split's exactly; in the work form the two passings are then one (Big Pic's check). The page's middle form by halves
+  agrees with the work form at leading order only: equal in 18, 21 and 1,381 of 1,600 windows on lays (A), (B) and
+  (C) (split4 (b)).
+- **The scale.** 1/2, 2/3 and 1/3 meet at kappa 6: the two-leg passing at kappa 6 is the act's times 3, and the
+  excursion's is 4 W_held - 2 W_tied. Read at the key times 3, still odd (230,403 for 76,801), the clicks are the act's:
+  S + r = q K + r+ gives 3 S + (3 r + 1) = q (3 K) + (3 r+ + 1), and the tooth born at (3 K - 1) / 2 is 3 (K - 1) / 2
+  + 1, so it stays 1 above a multiple of 3 and every quotient is the act's (split4 (c), 56 of 56 rounds of the room). An
+  odd key absorbs the factor 3 that kappa 6 asks; it could not absorb the middle form's 2 (the physicist's N1).
+- **n, the frame's constant.** On passing4 n is the hat's rest, 5^10. On the pair world frame 6's held hand is laid
+  (1, 0), turning a quarter a round under its own spring, the universe's hold 1: |k|^2 = 1 as laid and in every round
+  of the room (split4 (c)), so n = 1. n is read where the held character is (load.trains_of), as the background form
+  reads it (Big Pic's debt).
 
 ## 3. On the board
 
 - The loader lays J's potential as monomials from the kinds' tables, the zero entries among them at factor 0. On B4's
   pair world 532 of its 772 monomials have four value legs; 96 join the held train to one tied train, of which 24 are
   live, all at 60,000 (hold f C: a tied train's diagonal pair times a held row), and 72 at factor 0; the other 436 lie
-  at factor 0 too, so 508 of the 532 are at 0 (pair_world.py prints the count; the first text gave 96 live, a slip of
-  mine).
+  at factor 0 too, so 508 of the 532 are at 0 (pair_world.py prints the 24 and the 60,000; the 72 and the 508 follow
+  from its lines).
 - So on the worlds the loader can lay at 575973a20 every live four-leg monomial joins a held train to one other: the
-  tie's factor carries the held flag. A four-leg monomial joining two trains neither held, or three trains, or two held
-  trains, would need the middle form.
+  tie's factor carries the held flag. The 24 form 12 tie groups, (60,000; x_t, x_t) over both held rows, one for each
+  tied row t (split4 (c)): the split's grouping is the loader's own. A four-leg monomial joining two trains neither
+  held, or three trains, or two held trains, is laid by no world, and the split's grouping does not cover it.
 
 ## 4. In the clicks
 
+- **The click world** (the owner's law, the Boss's 6535922454 and 6536002736; Sofer's words, 6536096436):
+  - the pair world's per-train clicks are click lines. The act's are written by the act. The split's are carried by
+    split4.py from the board's windows: MEASURED on the board, until the split is built in the act and its lines are
+    read twice in the click world;
+  - every energy below is a board reading, from the board's counts and momenta: MEASURED on the board, not a claim of
+    physics.
 - **The energy each click carries.** Read the act's exact momentum M = 4 W (a+ - a) + s+ (M_out = M_in + 4 J exactly),
-  and its kinetic part T(M) = R (M - 2 W R) / 4 with R = round(M / 4 W), the integral of the act's integer drift over
-  the momentum (the physicist's measure; M^2 / (32 W) misses by 1,280 permille on a slow spring, T by 0). A form's
-  energy meaning is its cumulative passing against the energy it splits.
-- **Where it holds** (the physicist's p2 and the mathematician's energy_check, rerun by me byte for byte):
-  - lay (A): the background form tracks E_held = H_held within 3 to 13 permille of the held excursion, the middle form
-    its split within 1 to 9; the act's held passing misses the middle split by 2,338 to 3,784;
-  - lays (A) and (B): the background form's cumulative held passing tracks twice the held energy change within 3,212
-    and 2,567 ppm, the middle form within 5,896 and 4,767.
-- **Where it fails:** near the vacuum. In lay (C), the stiff hat, the hand's counts move in only 28 of 400 rounds at a
-  site while the tie moves its exact momentum every round; the background form misses 264 to 841 permille of the held
-  excursion, while the middle form tracks within 0 to 14, and the act's own total energy misses by 555 to 3,642
-  permille of the exchange. A lone held hand displaced 1 to 6 counts already misses its energy by 376 to 1,355 permille
-  (p4).
+  and its kinetic part T(M) = R (M - 2 W R) / 4 with R the act's half-up split, floor((M + 2 W) / (4 W)), for which T is
+  exactly the integral of the act's integer drift over the momentum (the physicist's measure; M^2 / (32 W) misses by
+  1,280 permille on a slow spring, T by 0). A form's energy meaning is its cumulative passing against the energy it
+  splits; the energy V of a term is evaluated as (V(a) + V(a+)) / 2, and 96 W E per train is whole (split4 (d)).
+- **The measure that ranks the forms** (the physicist's N3 and n8): a form's worst miss over the run, at each site, over
+  the held hand's own energy excursion (the largest change of H_held over the run), the same denominator for every form.
+  A miss over the form's own split ranks nothing: the middle split's excursion is 51 to 515 times the hand's own on lay
+  (C).
+- **Where it holds** (split4 (d); the hand's own excursion, permille):
+  - lay (A): background 13, 7, 3 and 3; middle 13, 6, 3 and 2; split 13, 7, 3 and 3 at the four sites;
+  - the mathematician's per-site figures under T(M), each over its own split: the background form 3,659 to 13,462 ppm
+    on (A) and 4,213 to 16,612 on (B), the middle form 1,915 to 9,359 and 3,535 to 24,242: about 2.5 per cent at the
+    worst site (his m-a; the second text's "3,212 and 2,567 ppm" were his first round's aggregates).
+- **Where it fails: near the vacuum, for every form.** In lay (C), the stiff hat, the hand's counts move in 28 of 400
+  rounds at site 0 (11, 103 and 142 at the others) while the tie moves its exact momentum every round. Every form misses
+  841, 767, 264 and 419 permille of the hand's own excursion at sites 0 to 3, the split as the background form and the
+  middle form within 1 of them (split4 (d); the physicist's r1). The second text's "the middle form tracks within 0
+  to 14" was over its own split, a denominator effect, and is withdrawn.
 - **The limit is the act's integer drift, for any coupling.** With every coupling bilinear the act's own energy moves
-  about 0.3 per cent over 400 rounds while its books close (bilinear_energy), and the two-leg identity misses on the act
-  in 320 of 400 rounds (p8). The first text's "for a quartic coupling the act keeps no energy exactly, so ... cannot
-  exist" is withdrawn: the books are necessary, not sufficient, and the energy meaning is measured, not argued.
-- **A decay is seen by both forms.** The held hand displaced 400 counts radially and the tied train seeded at 30: about
-  97 per cent of the hand's excess passes to the tied train by round 2,000, and both forms track it within 48 permille;
-  they differ only in the back-and-forth part (p5).
-- **The pair world past the room.** Past round 57 the one-count hand's |k|^2 flickers among 0, 1 and 2. Under the
-  background form the held train then fires up to 17,440 clicks a round (1,119,323 in summed size over 400 rounds),
-  against 13,748 under the act; inside the room every train fires at most 1 a round (p12). So the night's click world
-  holds only inside the room, as plans.holding's docstring says the books open past it; its room ends at frame 6's
-  integer resolution, not at the passing alone.
+  about 0.3 per cent over 400 rounds while its books close (bilinear_energy), and the passing as the two-round change of
+  a hand's energy, the identity term 7 uses, misses on the act in 320 of 400 rounds (p8). The books are necessary, not
+  sufficient, and the energy meaning is measured, not argued.
+- **A decay** (the physicist's p5 lay: hat 1, tie 1, no own spring, the hand displaced 400 counts radially, the tied
+  train seeded at 30, 3,000 rounds; split4 (d)):
+  - the held train's booked transfer at round 3,000, permille of the hand's starting excess: background -44, middle -24,
+    split -45;
+  - the split stays within 29 permille of the background form at every round, and -4 on the mean over rounds 1,800 to
+    2,200; the middle form parts from the background form by up to 514 (the physicist's r4);
+  - so the split books the decay as the background form does, the tied products carrying the tie's mass.
+- **A free particle over a still vacuum** (the physicist's r7 lay: hat 400, tie 1, no own spring, x0 2,000, 1,200
+  rounds, |k|^2 - n at most 99,744 of 5^10; split4 (d)): the vacuum's booked energy, permille of the particle's c n
+  x0^2, on the mean over rounds 201 to 1,200 and its range: split 0 (-5 to 5), background 0 (-7 to 7), middle -249
+  (-500 to 4). Under the middle form the vacuum books a quarter of the particle's mass, swinging through a half.
+- **One scale** (the physicist's r2 lay: two tied trains x and y, each with the tie and its own spring n, and f x y
+  between them; split4 (d)): at kappa 6 x's split energy against its passing misses 9 and 2 permille of its excursion.
+  The second text's road as written missed 672 and 710 (two scales under one key), and 12 and 2 with term 11 doubled.
+- **The pair world** (split4 (c); the readers' r3 and middle_pair):
+  - in the run test's 30 ticks and in the room (rounds 1 to 56) the act fires (held, giver, taker) = (0, 1, -1) every
+    round; the split's clicks equal the act's in 56 of 56 rounds at the key times 3, and so do the background form's at
+    the key, the held train firing in none;
+  - the middle form as the second text wrote it (the act's two-leg passing, the ties by halves at weight 1) breaks
+    them: its clicks equal the act's in 1 of 56 rounds of the room; the held train fires in 55, up to 344 in one, 9,625
+    in summed size, and the taker up to 345;
+  - past the room the one-count hand's |k|^2 flickers among 0, 1 and 2 and every form fires from the held train: up to
+    23,290 clicks a round under the split, 17,440 under the background form, 17,850 under the middle form, and 412
+    under the act (the act's summed size over the 400 rounds is 13,748; the mathematician's m-d). The room's end is
+    frame 6's integer resolution, and the night's click world holds inside it.
 
 ## 5. Measured
 
@@ -161,87 +273,134 @@ clicks mean energy where gears move many counts a round, not near the vacuum.
   | lay | books open: act / middle / background | held passing not 0: act / middle / background | windows where the size moved |
   |---|---|---|---|
   | (A) the hand laid at the hat's rest (it moves in every round) | 1,600 / 0 / 0 | 1,600 / 1,600 / 1,565 | 1,565 |
-  | (B) the size laid off its rest | 1,600 / 0 / 0 | 1,600 / 1,599 / 1,582 | 1,583 (one window with P(now) = 0) |
+  | (B) the size laid off its rest | 1,600 / 0 / 0 | 1,600 / 1,599 / 1,582 | 1,583 |
   | (C) a stiff hat 10^4, teeth 10^6 n | 1,598 / 0 / 0 | 1,598 / 1,598 / 365 | 365 |
 
   Every form is odd under the window's reversal in 1,600 of 1,600 windows of every lay. The background form's held
-  passing is non-zero exactly where the size moved, which is its definition; the mathematician checked it as sets.
+  passing is non-zero only in windows where the size moved; in (B) one such window has P(now) = 0 and books 0 (1,582 of
+  1,583; the mathematician's m-h). In (C) the hand's counts move in 199 of 400 rounds and |k|^2 - n stays within
+  37,464 in size: |k| runs from 3,119 (3,119^2 = n - 37,464) to 3,128 about its rest 3,125 (the physicist's m4).
+- **split4.py** (node-live 575973a20, 7 s, its output beside it):
+  - (b), passing4's lays under the split: books open in 0, 0 and 0 of 1,600; odd in 1,600 of 1,600 on each; the held
+    passing not 0 in 1,600, 1,599 and 1,212 (in (C) the hand sits off its rest after its first moves, so the excursion's
+    share books while the tied train swings);
+  - (a), on the pair world: the work form at kappa 2 equals the act's X in 2,400 of 2,400 monomial rounds;
+  - (c), on the pair world: n = 1; |k|^2 = 1 in every round of the room and 0, 1 and 2 past it, first 2 at round 57;
+    the split's books open in 0 of 400 rounds; the room's clicks as above;
+  - (d), the energies above;
+  - (e), the click tooth's run back under the split: on lay (B) at four sites (key 3 x 7,681) and on the pair world
+    (key 230,403), 400 rounds each, every back round's clicks the forward's negated and the tooth back at its birth.
 - **pair_world.py** (B4's pair world from tests/test_the_tensor24_run.py's own files, the real loader and act of
   node-live 575973a20): the factors above; over 400 rounds the act's passing opens the books in 146, the first at round
-  57, where |k|^2 first reaches 2 (the mathematician's pw_check prints it); the background form in 0.
+  57, where |k|^2 first reaches 2 (split4 (c) prints it); the background form in 0.
 
 ## 6. What stands, and OPEN
 
-- **Stands:** the residual; both forms whole, local, one pass, odd, with exact books; the middle form's split by leg
-  count; the background form's split, right in the stiff or heavy limit; both forms' energy meaning where gears move
-  many counts a round.
-- **The hat's road: the middle form,** on Big Pic's word: one rule for every monomial, no flag, the hat's tie of
-  degree 4 at weight 1. Its price, named:
-  - a still train books |A| / d of each change of the tie's energy, bounded by its share and returned whenever the
-    tie's energy returns; the giver held at 32 counts (the physicist's B2) is this;
-  - where one train is heavy, most of its clicks are this back-and-forth (the physicist's 12 times its own energy
-    change), so the clicks' energy meaning holds over beats and in decays, not click by click;
-  - the background form stands beside it as the stiff-limit reading of the same books.
+- **Stands, on the board:** the residual; the split at the rest, whole at kappa 6 with the key times 3, local, one
+  pass, odd, its books exact and its click tooth's run back; on the shipped pair world the room's lines; in the decay
+  and for the free particle the tied train's mass kept; the two-leg law; the middle and the background forms as lawful
+  forms, the background form as what the act books in the room.
+- **The hat's road:** the split at the rest, on Big Pic's word (6536112029 item 1); its probes run on the board. Its
+  weights: the excursion as one leg, 2/3 and 1/3; its scale kappa 6.
+- **Not in the click world:** the split is carried by the probe, not by the act. Its room and its flicker are board
+  readings until it is built in step.passing (per tie group) and its lines are read twice in the click world.
 - **OPEN:**
-  - for the stiff-limit reading, a background chosen by the dynamics (scale separation) rather than a flag;
-  - a click-by-click energy meaning where one train is heavy;
-  - whole weights at one scale for the middle form beyond d = 4;
-  - the energy meaning near the vacuum and past the room, where the act's integer drift is of the exchange's size;
-  - a monomial joining two held trains;
+  - the split built in the act, and its two click-world readings;
+  - n as a law: the hat's own constant where the hat is laid, frame 6's held count where it is not, read through the
+    held character;
+  - the key times 3: a change of a declared number, or term 11's scale times 3, for the owner's word;
+  - the energy meaning near the vacuum and past the room, where the act's integer drift is of the exchange's size, for
+    every form;
+  - a monomial joining two held trains or three trains, and a tie whose held legs are not a row squared over every held
+    row: no world lays them, and the split's grouping does not cover them;
   - a world where the hat swaps in for frame 6, read end to end by the decoder.
 
-## 7. The first text's readers, folded (the second text)
+## 7. The second text's readers, folded (the third text)
 
-**Big Pic's word** (6535643629, item 3): the middle form is the hat's road.
-- The tie's own energy has no owner, in nature too; a passing between trains is fixed only over beats and in decays,
-  where both forms agree; so the record needs a rule for the back-and-forth part, and the middle form is the one with
-  no flag, Euler's split of a homogeneous tie, at d = 2 the act's two-leg passing up to the key's scale (the finding;
-  2.2; 6).
-- The background form picks its owner by a flag, by character; the physicist's heavy train has no held character, so
-  the flag misses it, though only a background reading tracks it. It is named the stiff-limit reading of the same
-  books, with the back-reaction as its leading correction, not a law (the finding; 2.3; 6).
-- The price, named: a still train's |A| / d share of each change of the tie's energy, returned when it returns; the
-  clicks' energy meaning over beats and in decays, not click by click, where one train is heavy; degrees above 4 at
-  whole weights of one scale, OPEN (6).
-- The second text as listed; the click world's "valid inside the room" belongs on the candidate's showcase line too,
-  for the Boss (4).
+**Big Pic's word** (6536112029, item 1): his word for the middle form withdrawn; the road the split at the rest, the
+excursion as one leg (2/3 and 1/3, one scale with term 11 at 6), with the background form until its probes stand, the
+probes on the pair world, the decay and the free particle, each read twice in the click world (the finding; 2.4; 4; 6).
+
+**The mathematician's N1, and his minors:**
+1. N1, the road breaks the shipped click world inside the room, and "term 11 stands unchanged" holds for two-leg
+   monomials only: the middle form refused as the road, its room figures printed by split4 (c); the background form
+   named what the act books in the room; under the split the room's lines stand, at the key times 3 (the finding; 2.2;
+   2.3; 2.4; 4).
+2. His minors: m-a, the per-site figures under T(M), about 2.5 per cent (4); m-b, the factor 2 between the forms and
+   the key's scale (2.2); m-c, whole weights at one scale, L = 120 (2.2); m-d, 13,748 the act's summed size, 412 its
+   largest in a round (4); m-e, the lays and the measure given, and the energy measured by a probe in the tree,
+   split4.py, which states its convention (his own reading's 142 to 824 on lay (C), against 264 to 841, is the same
+   order in his convention) (4, 5); m-f, R the act's half-up split (4); m-g, p4_check and pw_check credited as they ran
+   (2.1); m-h, the window with P(now) = 0 (5); m-i, pair_world.py's docstring mended, a train's own monomials booking
+   nothing (5, 9); m-j, round 57 printed by probes in the tree: the books' first opening by pair_world.py, |k|^2 first
+   2 there by split4 (c) (5).
+
+**The physicist's four, and his minors:**
+1. N1, the road's scale: one scale at kappa 6, the odd key times 3 absorbing the factor 3; the two-scale world misses
+   9 and 2 permille (2.4; 4).
+2. N2, the road on the night's world: the split run on the pair world, its room lines the act's in 56 of 56 rounds; the
+   middle form's 344 a round named; past the room every form's flicker (the finding; 4; 5).
+3. N3, the denominator effect: every form's miss over the hand's own excursion, 264 to 841 permille near the vacuum
+   for all; "within 0 to 14" withdrawn (4).
+4. N4, the premise and the decay: the mass term the particle's own, only the excursion shared; my slip on the 48
+   permille named; the forms against each other in the decay and the free particle (the header; 4).
+5. His minors: n1, the energy measured by split4.py (4, 5); n2, "the train that is not held" (1); n3, the share per leg
+   with no division by a leg (2.2); n4, the room's floor on the act, p11 (2.3); n5, m4's pointer: lay (C)'s hand, |k|
+   from 3,119 to 3,128, now stated in section 5 beside passing4's 37,464 (5); n6, FRAMES.md 6 is the architect's
+   frames file, tools/derivations/open_items/arch_night/FRAMES.md on boss-derive, and the architect is the Boss's frame
+   writer there; n7, site 0's 28, the others 11, 103 and 142 (4); n8, the forms ranked over one denominator (4).
+
+## 8. The first text's readers, folded (the second text), as recorded
+
+The second text's record, kept; its road, the middle form, is withdrawn in section 7.
 
 **The mathematician's three, and his minors:**
 1. B1, section 3's count: 24 live of the 96, printed by pair_world.py now (3).
 2. B2, section 4's impossibility claim: struck; the energy defined and the meaning measured, with his lays' figures and
    the act's drift for bilinear couplings (4).
 3. B3, the middle form's split: by leg count, E_A = H_A + (|A| / d) V (2.2).
-4. His minors: m1, the background form's 2 (2.3); m2, the size's motion as sets (5); m3, round 57 printed by his
-   pw_check (5); m4, the residual equal to the books' miss (2.1); m5, w_d's scale and wholeness (2.2); m6, COUNT5 with
-   its commit (2.1); m7, mirror-even monomials (2.2); m8, a held train among possibly two (2.3, 3, 6); m9, the gaps
-   live in no world the loader lays (3); m10, pair_world.py's docstring (8); m11, the click's identity form (2.1); m12,
-   lay (A) named as moving (5); m13, the clicks' sum up to the teeth (1).
+4. His minors: m1, the background form's 2 (2.3); m2, the size's motion as sets (5); m3, round 57 (5); m4, the residual
+   equal to the books' miss (2.1); m5, w_d's scale and wholeness (2.2); m6, COUNT5 with its commit (2.1); m7,
+   mirror-even monomials (2.2); m8, a held train among possibly two (2.3, 3, 6); m9, the gaps live in no world the
+   loader lays (3); m10, pair_world.py's docstring (mended in the third text); m11, the click's identity form (2.1);
+   m12, lay (A) named as moving (5); m13, the clicks' sum up to the teeth (1).
 
 **The physicist's five, and his minors:**
-1. B1, the background form's regime: the stiff or heavy limit, the back-reaction, lay (A) strongly coupled, the mass
-   term and the interaction (2.3).
-2. B2, "a still hand clicks nothing": named a convention, right for a frozen background; the kept two-leg passing
-   clicks a still train; the flag against the dynamics, with his p10 (the finding, 1, 2.3).
-3. B3, the measurements: the books necessary, not sufficient; the energy meaning measured with his p2, p4, p5 and p8,
-   and its limit the act's integer drift (4).
-4. B4, the pair world past the room: the flicker and its clicks, and the click world valid inside the room (4, 5).
-5. B5, as the mathematician's B3 (2.2).
+1. B1, the background form's regime (2.3). 2. B2, "a still hand clicks nothing", a convention for a frozen background
+   (2.3). 3. B3, the measurements (4). 4. B4, the pair world past the room (4, 5). 5. B5, as the mathematician's B3
+   (2.2).
 6. His minors: m1 the 2 (2.3); m2 the count (3); m3 lay (A) moving (5); m4 lay (C)'s hand within 3,119 to 3,128 (5);
    m5 w_d (2.2); m6 one scale under one key (2.2, 6); m7 two held trains (3, 6); m8 the paths (2.1, 5); m9 the clicks
    up to the teeth (1).
 
-## 8. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
+## 9. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
-- **The probes:** passing4.py unchanged, its output byte for byte; pair_world.py with its factor line, rerun in 2 s on
-  node-live 575973a20, its other lines byte for byte.
-- **The readers' scripts, rerun by me byte for byte:** the mathematician's pw_check, energy_check, energy_total,
-  bilinear_energy, middle_check and residual_check; the physicist's p4_lone_hat, p5_decay, p6_layA, p7_middle_split,
-  p8_two_leg, p10_heavy_nonheld, p11_stiffness and p12_pair_maxima.
-- **Derived again by hand:** the middle form's split by leg count, from SUM_(S containing j) (|S n A| - |S^c n A|) =
-  C(d - 1, d/2 - 1) (d - |A|) / (d - 1) for j in A and -C(d - 1, d/2 - 1) |A| / (d - 1) for j outside, against
-  dE_A = V ((|A| / d - 1) SUM_A dx / x + (|A| / d) SUM_rest dx / x); the prefactors 2, 4, 12 and 40 at d = 2 to 8.
-- **A slip of mine, caught by the readers:** the count of live monomials (96 for 24), cited to a probe that did not
-  print it.
-- **The first text's checks:** the residual by hand and in the books; the middle form's symmetry and both forms' oddness
-  in 1,600 of 1,600 windows; the stiff hat's 365 windows; pair_world.py's first-run slip (a train's kind count for its
-  rows), mended from the firsts.
+- **The probes:**
+  - passing4.py, unchanged, rerun twice on node-live 575973a20, its output byte for byte;
+  - pair_world.py, its docstring alone mended (m-i), rerun twice, its output byte for byte;
+  - split4.py, new, run three times in about 7 s each, its outputs byte for byte; its code holds no float, no division
+    but Rule3's carry, no root, logarithm, exponential, search or circular function (a token scan: only whole powers).
+- **The readers' scripts, rerun by me byte for byte:** the physicist's r1 to r7; the mathematician's energy_T,
+  energy_T2, energy_conv, identity_check, middle_pair and past_room. split4.py reproduces their figures for the middle
+  form in the room (55 of 56 rounds, 9,625 and 344), past it (17,850), in the decay (514) and for the free particle
+  (-249), and the background form's past the room (17,440).
+- **Derived again by hand:**
+  - the two-leg law, X(a, b) + X(a+, a) = W_g - W_h (2.4);
+  - the books, SUM_A S_A = kappa (1 - SUM_A alpha_A) W = 0, and the oddness from J(a) standing;
+  - the tooth's run back, carry(-S, K, r+) = (-q, r);
+  - the key times 3: 3 S + 3 r + 1 = q (3 K) + 3 r+ + 1, the birth (3 K - 1) / 2 = 3 (K - 1) / 2 + 1;
+  - the excursion's pushes, -2 c P k_r and -c (P / x_l)(|k|^2 - n), and the energy split 1/3, 2/3 and the value at the
+    rest;
+  - the shares added back over the k rows: 1/2 c P |k|^2 each, the middle split.
+- **Cases built to break it:**
+  - lay (C), near the vacuum: the split misses 264 to 841 permille of the hand's own excursion, as every form does;
+  - past the room on the pair world: the split fires up to 23,290 clicks a round from the held train, more than the
+    background form's 17,440;
+  - the run back with the tooth flipped to K - 1 - r: it fails (the clicks negated in 283, 205, 270, 372 and 203 of 400
+    rounds), since the act's mirror keeps the click tooth; kept, it returns in every run;
+  - the page's middle form by halves against the work form: equal in 18, 21 and 1,381 of 1,600 windows, so "adds back
+    to the middle form exactly" holds for the shares and the work form, not for the halves form's every window.
+- **What the probes do not test:** the split built in step.passing; its lines read twice in the click world; a world
+  with the hat in place of frame 6; ties whose held legs are not a row squared over every held row.
+- **The text's own rules,** by a scan of every line: ASCII only; no line over 120 characters outside the table; no
+  barred word; no run of three capitals; every number printed by a probe in the tree or named to a reader's script.

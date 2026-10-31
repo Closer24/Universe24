@@ -6,8 +6,10 @@ The world: one Node-clock; the held hand (A1, A2) at part 1 laid (1, 0) turning,
 from the plan as contract.pushes lays them (four entries per monomial, the first block's target the first leg). The
 act's passing per train is step.passing's own form on the value legs' plan, X(a, b) + X(a+, a). The background form:
 each monomial joining the held train to one other train books S_held = -2 c P(a) (Q(a+) - Q(b)) and S_other = -S_held;
-a train's own monomials and two-leg monomials keep the act's form. Printed: per window of the run, the rounds whose
-passings over the trains do not sum to 0, for each form, and |k|^2 per round.
+two-leg monomials keep the act's form, and a train's own monomials book nothing (here they are the held hand's own
+two-leg springs, on which the act's form gives 0 at every window). Printed: the rounds whose passings over the trains
+do not sum to 0, for each form, and the held hand's |k|^2 over the run. The third text's split at the rest is
+measured on this world by split4.py beside it.
 
 Usage: python3 -I pair_world.py <src of node-live at 575973a20> [rounds, 400 unless given]
 """
