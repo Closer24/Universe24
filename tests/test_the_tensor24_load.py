@@ -54,12 +54,13 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     held, found = loaded(TRAINS, laid := [wave, (len(rows) - 1, rows[-1] - 1, SITE, WIDE + 1, WIDE, 0)])
     a, b, r, rd, k = held.state
     assert found == [] and all(x.dtype == object for x in held.state) and not held.potential[0].any()
-    assert all(x.shape == (sum(rows), SITES) for x in (a, b, r, rd)) and k.shape == (len(TRAINS), SITES)
+    sides = (1 + len(frame.spokes(len(SHAPE)))) * len(TRAINS) * len(TRAINS)  # every side at every reach
+    assert all(x.shape == (sum(rows), SITES) for x in (a, b, r, rd)) and k.shape == (sides, SITES)
     assert (a[row, SITE], b[row, SITE], r[row, SITE]) == tuple(counts)  # the wave's last row, as laid
     assert (a[-1, SITE], b[-1, SITE]) == (WIDE + 1, WIDE) and not k.any()  # the last train's last row
     assert (a != 0).sum() == (b != 0).sum() == len(laid) and (r != 0).sum() == 1 and not rd.any()
     assert not any(np.shares_memory(*pair) for pair in itertools.combinations(held.state, 1 + 1))
-    assert (held.click[-1] == CHOSEN["key"]).all() and held.click[-1].shape == (len(TRAINS), 1)
+    assert (held.click[-1] == CHOSEN["key"]).all() and held.click[-1].shape == (sides, 1)
     universe, rate = {"integers": INTEGERS, "trains": TRAINS, "chosen": CHOSEN}, INTEGERS["full_rate"]
     grip, spokes = INTEGERS["den"] * rate * rate, len(frame.spokes(len(SHAPE)))  # den Gamma^2
     _, _, _, grips, (rest, *ones), *_ = loading.laid_out(universe, list(SHAPE), held)
@@ -96,20 +97,31 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     assert loaded(TRAINS)[1] == [f"{named} (no room)"]
 
 
-def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_coupling_familys_frame():
-    """Yes: the passing's pairs are each train's rows, kind by kind and part by part, through its kinds' table with itself onto A1 at the table's entry (the square's at 0 by its flag), the target the train, each pair once, the key the universe's; on the click world's shape at hold 1, spring 3 and tie 1 (the files' chosen strengths, pending the owner's word) the held hand and the tied hands are found by character, the held rows' own spring the chosen spring and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, the board's wave in no monomial;
+def shared(held, senses):
+    """Term 11's weights by loops, the edges' naive model: per term of J's plan, leg by leg as contract.pushes lays them, its weight onto every train of its monomial, kappa (L - l) / L where the monomial is live with value legs in two trains or more, L its legs and l its own train's (a position one leg, a held train's positions one leg together), kappa the product of senses and of every such L, each once; and kappa / senses, the key's scale."""
+    factor, legs = held.potential
+    trains = [held.trains[n] for n in range(len(held.trains))]
+    of = {r: n for n, t in enumerate(trains) for r in range(t.first, t.first + t.rows())}
+    counted = [{} for _ in factor]
+    for m, leg in itertools.product(range(len(factor)), legs):
+        if leg[m] >= 0:
+            n = of[int(leg[m])]
+            counted[m][n] = 1 if held.trains.held[n] else counted[m].get(n, 0) + 1
+    edged = [m for m in range(len(factor)) if factor[m] and len(counted[m]) > 1]
+    kappa = int(np.prod(sorted({senses, *(sum(counted[m].values()) for m in edged)})))
+    weight = np.zeros((len(legs) * len(factor), len(trains)), dtype=object)
+    for (j, leg), m in itertools.product(enumerate(legs), edged):
+        if leg[m] >= 0:
+            total, own = sum(counted[m].values()), counted[m][of[int(leg[m])]]
+            for u in counted[m]:
+                weight[j * len(factor) + m, u] = kappa * (total - own) // total
+    return weight, kappa // senses
+
+
+def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_familys_frame():
+    """Yes: on the click world's shape at hold 1, spring 3 and tie 1 (the files' chosen strengths, pending the owner's word) the held hand and the tied hands are found by character, the held rows' own spring the chosen spring and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, the board's wave in no monomial; term 11 on the edges by its naive model (shared): each term of J's plan weighs kappa (L - l) / L onto the trains of its monomial, NC29b's 3 on the hands' tie, 4 on a tie's held legs and 2 on its tied pair at kappa 6, its leg's train beside it, every side's key the universe's times kappa / senses;
     term 5's push in the books' form: every row gliding a count a round alike pushes the 00 slot by k0 = Spokes x senses (the clock's read, from the star) times the momenta in and out of every row the push does not land on, a tent along z pushes the zz slot by minus its two z Meshes' stretches squared, nothing lands elsewhere, the drive's teeth senses on the 00 and ii rows and 1 elsewhere, in either order of the trains; the gradient vertex at mesh 3 (a chosen strength, pending the owner's word) on the board's wave and a tied (T1, T2) hand, -mesh onto each M_i's row from the wave's difference along i and +mesh onto the wave's row from M_i's, each term laid once with its other two readings the unit (one potential's two pushes, never a push laid twice or a cubic vertex), the T2 rows and the wave's second part in none.
-    No: no pair crosses two trains or two parts; the tie off the diagonal and the hands' tie the other way are 0; the two tied hands swapped in the file lay the same plan and grips; the pushed rows' own momenta push nothing, and push 0 pushes nothing; the wave with no vector hand lays no gradient vertex."""
-    held, found = loaded(trains := [*TRAINS, METRIC])
-    one, two, entry, train, key = (x.tolist() for x in held.click)
-    got = dict(zip(zip(one, two, train, strict=True), entry, strict=True))
-    wanted, a1 = {}, [name.upper() for name in MADE[0]._fields].index("A1")
-    for n, t in enumerate(held.trains[n] for n in range(len(trains))):
-        for j, (k, d) in enumerate(zip(t.kinds, t.dims, strict=True)):
-            at, m = t.first + sum(t.dims[:j]) * t.part, 1 - t.square  # the square's at 0
-            for p, x, y in itertools.product(range(t.part), range(d), range(d)):
-                wanted[at + x * t.part + p, at + y * t.part + p, n] = m * MADE[1][k, k, a1][0][x, y]
-    assert found == [] and len(got) == len(one) and got == wanted and key == [[1]] * len(trains)
+    No: the board's wave, the square and an own monomial (a spring) weigh on no edge, so the edges are the held hand and the two tied hands' triangle; the tie off the diagonal and the hands' tie the other way are 0; the two tied hands swapped in the file lay the same plan and grips; the pushed rows' own momenta push nothing, and push 0 pushes nothing; the wave with no vector hand lays no gradient vertex."""
     # term 6's frame on the board's wave, the square, the held hand (A1, A2) and two tied (T1, T2) hands, at hold 1, spring 3 and tie 1
     chosen = {**CHOSEN, "hold": 1, "spring": 3, "tie": 1}
     held, found = loaded(FIVE, chosen=chosen)
@@ -129,6 +141,22 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_cou
     assert not any(x != y and {x, y} <= set(span(giver)) for x, y, *_ in v)  # the tie off the diagonal
     assert not any(set(leg) & set(span(wave)) for leg in v)  # the wave untied
     assert set(laid.grip[list(span(hand))].ravel().tolist()) == {0}  # the held hand holds no Mesh
+    weight, train, key = held.click
+    wanted, scale = shared(held, senses := len(frame.spokes(len(SHAPE))) // len(SHAPE))
+    of = {r: n for n, t in enumerate(held.trains[n] for n in range(len(FIVE))) for r in span(t)}
+    legged = [
+        of.get(int(r), 0) for r in np.stack(legs).reshape(-1)
+    ]  # each term's leg's train, the unit's 0
+    assert (
+        frame.same([weight], [wanted])
+        and train.tolist() == legged
+        and (key == scale * chosen["key"]).all()
+    )
+    tri = [
+        n for n in range(len(FIVE)) if held.trains.held[n] + held.trains.tied[n]
+    ]  # the held and tied hands
+    edges = {(int(train[i]), u) for (i, u), w in np.ndenumerate(weight) if w and train[i] != u}
+    assert edges == {(x, y) for x in tri for y in tri if x != y}  # the triangle, each way
     assert (np.delete(laid.grip, list(span(hand)), axis=0) == laid.grip[0, 0]).all()
     swapped, _ = loaded([*FIVE[:3], *reversed(FIVE[3:])], chosen=chosen)  # the two tied hands swapped
     pot, same = (swapped.potential[0], *swapped.potential[1]), (factor, *legs)

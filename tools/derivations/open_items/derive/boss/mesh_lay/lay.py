@@ -86,7 +86,8 @@ def run(universe, shape, gears, ticks):
     seen = {"squares": [], "most": 0, "out": None, "moved": set(), "k": set(), "clicks": 0, "held": 0, "tied": 0, "largest": 0}
     s = s0
     for n in range(1, ticks + 1):
-        s, clicks = step.act(layout, s)
+        s, sides = step.act(layout, s)
+        clicks = sides.reshape(len(held.trains), len(held.trains), -1).sum(axis=1)  # each train's click, its sides' sum
         seen["squares"].append(int((s.a[lf : lf + held.trains[wave].rows()] ** 2).sum()))
         total = hold * int((s.a[tf : tf + rows] ** 2).sum(axis=0).max())
         seen["most"] = max(seen["most"], total)

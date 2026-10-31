@@ -1,7 +1,7 @@
 """Clock: the run from the three files to the record: every Node-clock steps every round, then all the rounds run back.
 Algebra: the act iterated; before each round the promise, every tooth within its edge's dial of both slots' teeth, the wave's window, the Spokes' grips within the teeth per sense, and the width, every count of both slots within the universe's width, are read; the start returns bit for bit.
 Board: the files checked and loaded, the rounds run, the rewind checked, the record and its ledger written.
-Clicks: it writes what the act gives: the record's header (schema 1.3: each kind's characters on the 24, each train's key and square flag), its click lines and its end, and the ledger beside them; a click line per train and Node-clock whose click tooth carried in a round, q the carry's quotient signed (a give below 0, a take above it) and the tooth before and after; the forward run's lines alone (the run back negates the quotients and writes none).
+Clicks: it writes what the act gives: the record's header (schema 1.4: each kind's characters on the 24, each train's key, the edge key, and its square flag), its click lines and its end, and the ledger beside them; wherever an edge side carried in a round, a click line for every train joined to it at that Node-clock, q the sum of its sides' quotients signed (a give below 0, a take above it), and every edge side of its train: the other train, the side's q, 0 included, and its tooth as the round's carry reads it and after (DECODE3), and in across each Mesh side that carried, with the partner's place; the header's dial and birth, the end's teeth and its Mesh teeth; the forward run's lines alone (the run back negates the quotients and writes none).
 """
 
 import dataclasses
@@ -111,23 +111,91 @@ def counts(round_: int, s: Any, trains: Any) -> list[dict[str, Any]]:
     ]
 
 
-def clicked(round_: int, before: Any, after: Any, clicks: Any) -> list[dict[str, Any]]:
-    """One round's Click lines of the record, in the schema's order (site, then train): per Node-clock and train whose click tooth carried, schema.Click's fields: the line's place, its q, the carry's quotient signed, and the click tooth before the round and after it."""
-    return [
-        {
-            "kind": "click",
-            **dataclasses.asdict(
-                schema.Click(
-                    round_,
-                    int(site),
-                    int(train),
-                    int(clicks[train, site]),
-                    (int(before.k[train, site]), int(after.k[train, site])),
+def joined(click: Any, trains: int) -> list[list[int]]:
+    """Each train's edges at its own Node-clock as the edge plan lays them, the other trains u, in u's order, onto which a leg of the train weighs: the pairs a monomial joins, the diagonal and a pair no monomial joins never listed."""
+    partners: list[set[int]] = [set() for _ in range(trains)]
+    for term, u in np.argwhere(click.weight != 0):
+        partners[int(click.train[term])].add(int(u))
+    return [sorted(others - {t}) for t, others in enumerate(partners)]
+
+
+def crossed(click: Any, trains: int) -> list[tuple[int, int, int]]:
+    """The Mesh's edges as the plan lays them, (Spoke, t, u) in that order: the trains a pair of rows with a coupling joins across the Spoke, t here and u across it."""
+    found: set[tuple[int, int, int]] = set()
+    for s, r, p in np.argwhere(click.across != 0):
+        spoke, t, u = np.unravel_index(click.onto[s, r, p], (len(click.across), trains, trains))
+        found.add((int(spoke), int(t), int(u)))
+    return sorted(found)
+
+
+def meeting(partners: list[list[int]]) -> list[int]:
+    """Each train's set of clocks joined to it by edges at its own Node-clock, told by its least train: the clocks that meet at a place together."""
+    least = list(range(len(partners)))
+    # every train's least reaches each train joined to it within as many passes as there are trains
+    for _ in partners:
+        least = [min([least[t], *(least[u] for u in us)]) for t, us in enumerate(partners)]
+    return least
+
+
+def clicked(
+    round_: int, before: Any, after: Any, clicks: Any, partners: list[list[int]], nb: Any
+) -> list[dict[str, Any]]:
+    """One round's Click lines of the record, in the schema's order (site, then train): wherever an edge side carried, every clock joined to it at its Node-clock writes its line, schema.Click's fields but the 1.3 tooth: the line's place; its q, the sum of all its sides'; in sides every edge side of its clock at its own Node-clock in the other train's order, q_tu 0 included (DECODE3), [u, q_tu, its tooth as the round's carry reads it, its tooth after]; and in across each of its Mesh edge sides that carried, in the order of the partner's place and train, [u, the place across the Spoke, q_tu, its tooth before, after], one tooth per side as an edge's passing is a scalar of the 24. So every listed side's mirror stands in the other clock's line, at its place; a Mesh side of q 0 is listed nowhere, as that would chain every clock of the board into every round's lines."""
+    trains, met, sites = len(partners), meeting(partners), clicks.shape[-1]
+    own = trains * trains
+    inner, outer = (
+        clicks[:own].reshape(trains, trains, sites),
+        clicks[own:].reshape(-1, trains, trains, sites),
+    )
+    held, kept = (s.k[:own].reshape(trains, trains, sites) for s in (before, after))
+    far, gone = (s.k[own:].reshape(-1, trains, trains, sites) for s in (before, after))
+    # each clock with a side that carried, at its own Node-clock or across a Spoke
+    lines, moved = [], (inner != 0).any(axis=1) | (outer != 0).any(axis=0).any(axis=1)
+    for site in (int(x) for x in np.flatnonzero(moved.any(axis=0))):
+        carried = {met[t] for t in np.flatnonzero(moved[:, site])}
+        for train in (t for t in range(trains) if met[t] in carried):
+            listed = [
+                [u, int(inner[train, u, site]), int(held[train, u, site]), int(kept[train, u, site])]
+                for u in partners[train]
+            ]
+            # each Mesh side that carried, by the partner's place and then its train
+            ends = sorted(
+                (
+                    int(nb[s, site]),
+                    int(u),
+                    int(outer[s, train, u, site]),
+                    int(far[s, train, u, site]),
+                    int(gone[s, train, u, site]),
                 )
-            ),
-        }
-        for site, train in np.argwhere(clicks.T)
-    ]
+                for s, u in np.argwhere(outer[:, train, :, site] != 0)
+            )
+            across = [[u, place, q, b, a] for place, u, q, b, a in ends]
+            q = sum(q for _, q, _, _ in listed) + sum(q for _, _, q, _, _ in across)
+            line = {
+                "kind": "click",
+                "round": round_,
+                "site": site,
+                "train": train,
+                "q": q,
+                "sides": listed,
+                "across": across,
+            }
+            lines.append(line)
+    return lines
+
+
+def teeth_of(
+    s: Any, partners: list[list[int]], edges: list[tuple[int, int, int]], nb: Any
+) -> tuple[list[list[Any]], list[list[Any]]]:
+    """The end line's teeth: per edge side (t, u) at its own Node-clock, in (t, u) order, its tooth at every Node-clock in the board's order; and per Mesh edge side (Spoke, t, u), in that order, the partner's place across the Spoke and the side's tooth at every Node-clock; the run's end teeth the record holds beside the header's birth."""
+    trains = len(partners)
+    own = trains * trains
+    inner, outer = (
+        s.k[:own].reshape(trains, trains, -1),
+        s.k[own:].reshape(-1, trains, trains, s.k.shape[-1]),
+    )
+    teeth = [[t, u, inner[t, u].tolist()] for t, us in enumerate(partners) for u in us]
+    return teeth, [[t, u, nb[x].tolist(), outer[x, t, u].tolist()] for x, t, u in edges]
 
 
 def characters(kinds: Any) -> list[list[int]]:
@@ -145,7 +213,7 @@ def header(
     loaded: Any,
     layout: Any,
 ) -> dict[str, Any]:
-    """The record's first line: the files verbatim with their digests, the board, the kinds with their characters, the trains with their windings (a train's winding the drive's dial at its first row, so the square's card reads its 00 row's, senses, while its 0i and jk rows run at 1), keys and square flags."""
+    """The record's first line: the files verbatim with their digests, the board, the kinds with their characters, the trains with their windings (a train's winding the drive's dial at its first row, so the square's card reads its 00 row's, senses, while its 0i and jk rows run at 1), the edge key and square flags."""
     labels = [train["name"] for train in universe["trains"]]
     traits = zip(kinds._fields, kinds, characters(kinds), strict=True)
     return {
@@ -169,7 +237,7 @@ def header(
                 "kinds": list(train.kinds),
                 "part": train.part,
                 "winding": layout.gearing.drive[train.first, 0],
-                "key": layout.click.key[at, 0],
+                "key": layout.click.key.reshape(len(labels), -1)[at, 0],  # the edge key, every side's
                 "square": train.square,
             }
             for at, (label, train) in enumerate(
@@ -178,6 +246,10 @@ def header(
         ],
         "operands": list(OPERANDS),
         "width": universe["integers"]["width"],
+        "dial": layout.click.key[0, 0],  # the edge dial D, every side's key
+        "birth": loaded.state[-1][
+            0, 0
+        ],  # every side's tooth at its birth, (D - 1) div senses, as the load lays it
     }
 
 
@@ -205,10 +277,11 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     if found:
         return [f"round 1: {line}" for line in found]
     events: list[dict[str, Any]] = []
+    partners, edges = joined(layout.click, len(loaded.trains)), crossed(layout.click, len(loaded.trains))
     with ledger.open("w", encoding="utf-8") as counted:
         for at, (end, clicks) in enumerate(rounds(engine.act, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))
-            events += clicked(at, read_, end, clicks)
+            events += clicked(at, read_, end, clicks, partners, layout.nb)
             read_ = end
             # the promises of the round that reads this state, read from outside: every kept tooth within its
             # teeth, the grips within the window, and every count within the width; the end state, which no round
@@ -218,10 +291,19 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
                 ledger.unlink()
                 return [f"round {at + 1}: {line}" for line in found]
     exact = int(stated(rewind(engine.untick, layout, end, ticks)) == stated(start))
+    inner, outer = teeth_of(end, partners, edges, layout.nb)
     lines = [
         header(record, files, universe, shape, kinds, loaded, layout),
         *events,
-        {"kind": "end", "rounds": ticks, "digest": digest(stated(end)), "undone": ticks, "exact": exact},
+        {
+            "kind": "end",
+            "rounds": ticks,
+            "digest": digest(stated(end)),
+            "undone": ticks,
+            "exact": exact,
+            "teeth": inner,
+            "across": outer,
+        },
     ]
     record.write_text("".join(json.dumps(line) + "\n" for line in lines), encoding="utf-8")
     return []

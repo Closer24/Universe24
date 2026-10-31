@@ -14,7 +14,8 @@ from typing import Any, NamedTuple
 
 import numpy as np
 
-from tensor24.engine.state import Plan, Read
+from tensor24.engine import kinds
+from tensor24.engine.state import Plan, Read, State
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -204,6 +205,39 @@ def undone_elsewhere(module, factory, shape, seed):
         {"module": module, "factory": factory, "shape": shape, "cut": len(state), "rows": rows}
     )
     return fresh(code, [], 0, given) == digest(s)
+
+
+def turned_by(m, laid, held, s, shape):
+    """The state turned by m: sites moved, each train's rows by its kinds' matrices block by block, its parts alike, a negated
+    row's tooth flipped on its dial, -1 - s, as the mirror flips it, every click tooth moved with its site."""
+    xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
+    site = np.ravel_multi_index(tuple((m @ xyz) % sides), shape)
+    acting = kinds.kinds(m[None, :, :])
+    turn = np.eye(len(laid.gearing.rest), dtype=object)
+    for train in held.trains:
+        blocks, before = (
+            [kinds.square(acting)[0]] if train.square else [acting[k][0] for k in train.kinds],
+            0,
+        )
+        for matrix in blocks:
+            at, before = (
+                train.first + (before + np.arange(len(matrix))) * train.part,
+                before + len(matrix),
+            )
+            for part in range(train.part):
+                turn[np.ix_(at + part, at + part)] = matrix
+    there = State(*(np.empty_like(x) for x in s))
+    for x, y in zip(there, s, strict=True):
+        x[:, site] = y
+    there.a[:, site], there.b[:, site] = turn @ s.a, turn @ s.b
+    there.r[:, site] = (turn @ (s.r + s.r + 1) - 1) // 2  # s on a kept row, -1 - s on a negated one
+    return there
+
+
+def opposed(clicks, teeth, key, trains):
+    """Every edge's two sides at its own Node-clock, (t, u) at t trains + u and (u, t): their quotients summing to 0, their teeth to key - 1."""
+    q, k = (x[: trains * trains].reshape(trains, trains, -1) for x in (clicks, teeth))
+    return not (q + q.swapaxes(0, 1)).any() and not (k + k.swapaxes(0, 1) + 1 - key).any()
 
 
 def meshes_of(nb):

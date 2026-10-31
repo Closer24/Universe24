@@ -210,13 +210,13 @@ def run_one(universe, gears, rounds, reader):
     run.py reads it (its promise "wide"), that state unread, and gives the round and the count's bits (None where it
     runs every round)."""
     held, layout, s = world(universe, ONE, gears)
-    width = universe["integers"]["width"]
+    width, trains = universe["integers"]["width"], len(held.trains)
     for n in range(1, rounds + 1):
-        s, clicks = step.act(layout, s)
+        s, sides = step.act(layout, s)
         bits = max(int(v).bit_length() for v in s.a.ravel().tolist())
         if bits > width:
             return n, bits
-        reader(n, held, s, clicks)
+        reader(n, held, s, sides.reshape(trains, trains, -1).sum(axis=1))  # each train's click, its sides' sum
     return None
 
 
