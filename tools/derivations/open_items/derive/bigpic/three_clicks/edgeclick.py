@@ -1,4 +1,4 @@
-"""Big Pic's three clicks on the real act (the owner's words of 04:0x and 04:1x UTC; #2187 6538866082), whole numbers,
+"""Big Pic's three clicks on the real act (the owner's words of 04:0x UTC; #2187 6538866082), whole numbers,
 every division Rule3's carry.
 
 The board steps by step.act as it stands; the click pushes nothing into the gears. At every Node-clock, every round:

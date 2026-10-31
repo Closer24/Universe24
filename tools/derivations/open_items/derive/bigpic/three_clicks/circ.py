@@ -1,4 +1,4 @@
-"""Mode 11, the triangle's own tooth (#2187 6539806523 item 3; THIRD7's road; the owner's word of 06:0x UTC that the
+"""Mode 11, the triangle's own tooth (#2187 6539806523 item 3; THIRD7's road; the owner's word of 05:3x UTC that the
 third click is never seen alone): the circulation lands one whole quantum around the triangle at once.
 
 - Each triangle's circulating passing is y = c . x, c the triangle's boundary (+1, +1, -1). The passing splits by the

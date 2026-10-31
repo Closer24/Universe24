@@ -23,9 +23,9 @@ The owner's words that set it: the law of the choice (a choice at the third clic
 
 ## 3. The three generations, as the owner gave them
 
-- "Look for the three generations in the click world through some mathematical miracle and the quaternion; the three generations should be seen there" (02:0x UTC).
-- "Look at it as the three families ... the third click really chooses something that was not in the past and was not in the future ... try to understand it from the geometry of triangles" (02:5x UTC).
-- "The third click is surely tied to the three generations. There are three clicks and three generations, and they are connected ... the third generation is never seen alone, because the third click, it seems, is never seen alone either" (06:0x UTC).
+- "Look for the three generations in the click world through some mathematical miracle and the quaternion; the three generations should be seen there" (01:5x UTC).
+- "Look at it as the three families ... the third click really chooses something that was not in the past and was not in the future ... try to understand it from the geometry of triangles" (01:5x UTC).
+- "The third click is surely tied to the three generations. There are three clicks and three generations, and they are connected ... the third generation is never seen alone, because the third click, it seems, is never seen alone either" (05:3x UTC).
 
 **How each is tied to a click, as the build gives it:** the first click's quantum is seen alone, an edge's own; the split click's passing is seen shared over a triangle; the third click's quantum is never seen alone, riding as the path of a passing. That the three kinds of click event are the three generations is the owner's word, OPEN, for the decoder to read in the click world; nothing on the board names a generation.
 
@@ -47,13 +47,13 @@ The owner's words that set it: the law of the choice (a choice at the third clic
 - the key: the file's own, odd; the owner's word on whether it enters the initialization tensor or the node computes it (KEY2);
 - the decoder's three-click readings, to be built from this picture (DECODE3e).
 
-## 6. The square-2 fall (the owner's question of 06:1x UTC)
+## 6. The square-2 fall (the owner's question, through the Boss's 6539861993)
 
 - **The clicks cannot hold it, by the law of the path.** The board is deterministic and no click writes into the gears, so a tied pair's fall on the square-2 lay runs alike with any click form or none: the seed test reads one end board under every form tried.
 - **The pair's shared teeth pay the exchange, not the fall.** What one clock of the pair gains on their edge, the other gives, in the same round. Both clocks' counts can still grow together into the open tie term, and the books then record the fall exactly, quantum by quantum.
 - **No kept quantity of the clicks is positive definite on the board's counts.** The books are signed counts of the passing, the circulation's totals are signed, and the teeth are bounded but hold no count.
 - **So far the confinement must be the board's own:** a term of the coupling family positive on the tied pair, or a step that keeps an energy bounded below. The edges built here read the board and write nothing back, so they do not give it.
-- **Corrected on the owner's "why not? it is not an if in the code" (06:3x UTC):** the law of the path does not rule out every click that writes into the gears. Under the third click's form, every clock's line is the same whatever path the hidden teeth choose (section 7, L2). So a push-back read from a clock's own line would be the same for every path, would keep one end board by different clicks, and would need no condition. The law of the path rules out only a push-back that reads the path. Whether such a push-back holds the square-2 fall is open: G5's road, a click writing into a tooth, never a count.
+- **Corrected on the owner's "why not? it is not an if in the code" (05:5x UTC):** the law of the path does not rule out every click that writes into the gears. Under the third click's form, every clock's line is the same whatever path the hidden teeth choose (section 7, L2). So a push-back read from a clock's own line would be the same for every path, would keep one end board by different clicks, and would need no condition. The law of the path rules out only a push-back that reads the path. Whether such a push-back holds the square-2 fall is open: G5's road, a click writing into a tooth, never a count.
 - **The owner's note, a node that runs both ways needs no doubled gears or springs:** on the clicks' side it holds. The dial 3D is odd, so the triangle's tooth and its twin are one pair with the tooth's now and before, ((tau + eta) / 2, (tau - eta) / 2) on the dial: the now and before every gear already keeps. No gear, spring or edge is doubled; one pair per triangle carries the choice.
 
 ## 7. The law of the three clicks, and its proof
