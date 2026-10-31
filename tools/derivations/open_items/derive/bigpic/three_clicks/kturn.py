@@ -138,3 +138,12 @@ for name, mode, k in (("off its diagonal", 4, ed.kcoup), ("its diagonal", 5, ed.
 cp = charpoly(ed.cc)
 print(f"  C C^T itself: det(x I - C C^T) has the coefficients {cp}, whole roots {whole_roots(cp)[0]}: its zero roots are the"
       f" directions its palindrome would keep unturned")
+# L0 of PICTURE.md section 7: the boundary of a boundary, B C = 0, in whole numbers on this structure
+trains_on = sorted({t for pr in ed.pairs for t in pr})
+Bm = [[(1 if pr[0] == v else 0) - (1 if pr[1] == v else 0) for pr in ed.pairs] for v in trains_on]
+Cm = [[0] * len(ed.triangles) for _ in range(n)]
+for f, (ga, ab, gb) in enumerate(ed.triangles):
+    Cm[ga][f], Cm[ab][f], Cm[gb][f] = 1, 1, -1
+BC = mul(Bm, Cm) if ed.triangles else []
+print(f"  B (clocks {trains_on} on edges {ed.pairs}) times C (edges on the triangles' boundaries) = {BC}:"
+      f" the boundary of a boundary is 0: {all(x == 0 for row in BC for x in row)}; C^T C = {mul([list(r) for r in zip(*Cm)], Cm) if ed.triangles else []}")
