@@ -40,7 +40,7 @@ class Trains:
     part: Z
     square: Z
     matter: Z  # 1 where the train's kinds' character is not the square's: the matter, which sources the metric's push
-    held: Z  # 1 where the character is the held hand's, the one-dimensional kinds together at part 1: its own spring 2 rest
+    held: Z  # 1 where the character is the held hand's, the one-dimensional kinds together at part 1: its own spring CHOSEN
     tied: Z  # 1 where the character is kept under the sign kind's twist and is not the held hand's: tied to the held hand
     gripped: Z  # 1 where the character is not the held hand's: its rows hold their Meshes' grips; the held hand holds none
     start: Z
@@ -178,7 +178,9 @@ def load(
     chosen, _, rest = universe["chosen"], *teeth(universe, star(side))
     potential = joined(
         notching(trains, star(side), chosen["notch"]),
-        holding(trains, c, traces, rest, chosen["hold"], universe["integers"]["full_rate"]),
+        holding(
+            trains, c, traces, rest, chosen["hold"], universe["integers"]["full_rate"], chosen["spring"]
+        ),
         tying(trains, c, traces, chosen["tie"]),
     )
     push = pushing(trains, star(side), chosen["push"])
@@ -228,9 +230,10 @@ def geared(
         even,
     )  # main.py makes them the engine's records
     # every row reads every train's first row at the factor of its square flag times Spokes x senses, a square's 00
-    # slot at k0 = 12 (one unit, the half grip, for all ten slots: GR's gamma = 1 for light needs it, the Boss's frame,
-    # NOT_CLOSED 26) and the rest at 0, less its own row: the zero test of the rows' difference cuts the 00 row's read
-    # of itself, so its teeth stand at rest and the clocks' read is acyclic (a dial is never moved by its own quotient)
+    # slot at k0 = 12 (one unit, the half grip, for all ten slots: the board's wave, its grip reading ii, needs it,
+    # gamma owed to the click world, the Boss's frame, NOT_CLOSED 26) and the rest at 0, less its own row: the zero
+    # test of the rows' difference cuts the 00 row's read of itself, so its teeth stand at rest and the clocks' read
+    # is acyclic (a dial is never moved by its own quotient)
     trained, every = len(trains), np.arange(rows, dtype=np.intp)
     read, landed = np.repeat(first.astype(np.intp), rows), np.tile(every, trained)
     clock = (
@@ -260,7 +263,7 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:
-    """The board read once from the files as the layout's eleven parts: the board and its Spokes from the piece's sides, every coefficient from the universe's integers, the grips per row, den Gamma^2 on every Mesh of a row whose train is not the held hand and 0 on the held hand's rows (a site-local oscillator: its quarter turn is exact at every Node-clock whatever its neighbours do, and its stability at every wavevector the one Node-clock's; the ii slots' read still lands on its Spokes, so a world with the held hand keeps the push at 0 or its summed grips within the window, which the runner refuses by name otherwise), J's potential, every gear's clock and the grips' read, the passing's pairs with their key, the metric's push, the plan's terms with a Mesh leg (the gradient vertex, plans.meshing); main.py, the one joint, makes them the engine's records."""
+    """The board read once from the files as the layout's eleven parts: the board and its Spokes from the piece's sides, every coefficient from the universe's integers, the grips per row, den Gamma^2 on every Mesh of a row whose train is not the held hand and 0 on the held hand's rows (a site-local oscillator: its turn at every Node-clock is its own whatever its neighbours do, and its stability at every wavevector the one Node-clock's; the ii slots' read still lands on its Spokes, so a world with the held hand keeps the push at 0 or its summed grips within the window, which the runner refuses by name otherwise), J's potential, every gear's clock and the grips' read, the passing's pairs with their key, the metric's push, the plan's terms with a Mesh leg (the gradient vertex, plans.meshing); main.py, the one joint, makes them the engine's records."""
     sx, sy, sz = shape
     nb = board((sx, sy, sz))
     spokes, meshes = geometry(nb, len(shape))

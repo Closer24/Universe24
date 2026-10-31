@@ -26,7 +26,7 @@ SQUARE, LIKE = ("A1", "T1", "A1", "E", "T2"), ("T1", "T1", "T1", "A1")  # the sq
 METRIC = {"name": "metric", "kinds": list(SQUARE), "part": 1}
 HAND, PAIR = {"name": "held", "kinds": ["A1", "A2"], "part": 1}, {"kinds": ["T1", "T2"], "part": 1}
 FIVE = [TRAINS[0], METRIC, HAND, {"name": "giver", **PAIR}, {"name": "taker", **PAIR}]  # the click world
-CHOSEN = {"key": 1, "push": 0, "notch": 0, "hold": 0, "tie": 0, "mesh": 0}  # read from the file
+CHOSEN = {"key": 1, "push": 0, "notch": 0, "hold": 0, "spring": 0, "tie": 0, "mesh": 0}  # the file's
 SITE, WIDE = 3, 1 << 70  # where the gears are laid, and their counts, past 64 bits
 MADE = main.made(loading.star(len(SHAPE)))  # the kinds, tables and square by main.py's one joint
 
@@ -96,7 +96,7 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
 
 
 def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_coupling_familys_frame():
-    """Yes: the passing's pairs are each train's rows, kind by kind and part by part, through its kinds' table with itself onto A1 at the table's entry (the square's at 0 by its flag), the target the train, each pair once, the key the universe's; on the click world's shape the held hand and the tied hands are found by character, the held rows' own spring is rest and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, light in no monomial;
+    """Yes: the passing's pairs are each train's rows, kind by kind and part by part, through its kinds' table with itself onto A1 at the table's entry (the square's at 0 by its flag), the target the train, each pair once, the key the universe's; on the click world's shape the held hand and the tied hands are found by character, the held rows' own spring the chosen spring and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, light in no monomial;
     term 5's push in the books' form: every row gliding a count a round alike pushes the 00 slot by k0 = Spokes x senses (the clock's read, from the star) times the momenta in and out of every row the push does not land on, a tent along z pushes the zz slot by minus its two z Meshes' stretches squared, nothing lands elsewhere, the drive's teeth senses on the 00 and ii rows and 1 elsewhere, in either order of the trains; the gradient vertex on light and a tied (T1, T2) hand, -mesh onto each M_i's row from light's difference along i and +mesh onto light's row from M_i's, each term laid once with its other two readings the unit (one potential's two pushes, never a push laid twice or a cubic vertex), the T2 rows and light's second part in none.
     No: no pair crosses two trains or two parts; the tie off the diagonal and the hands' tie the other way are 0; the two tied hands swapped in the file lay the same plan and grips; the pushed rows' own momenta push nothing, and push 0 pushes nothing; light with no vector hand lays no gradient vertex."""
     held, found = loaded(trains := [*TRAINS, METRIC])
@@ -109,8 +109,8 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_cou
             for p, x, y in itertools.product(range(t.part), range(d), range(d)):
                 wanted[at + x * t.part + p, at + y * t.part + p, n] = m * MADE[1][k, k, a1][0][x, y]
     assert found == [] and len(got) == len(one) and got == wanted and key == [[1]] * len(trains)
-    # term 6's frame on light, the square, the held hand (A1, A2) and two tied (T1, T2) hands, at hold 1 and tie 1
-    chosen = {**CHOSEN, "hold": 1, "tie": 1}
+    # term 6's frame on light, the square, the held hand (A1, A2) and two tied (T1, T2) hands, at hold 1, spring 3 and tie 1
+    chosen = {**CHOSEN, "hold": 1, "spring": 3, "tie": 1}
     held, found = loaded(FIVE, chosen=chosen)
     light, _, hand, giver, taker = (held.trains[n] for n in range(len(FIVE)))
     span = lambda t: range(t.first, t.first + t.rows())  # noqa: E731
@@ -118,10 +118,10 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_cou
     kept = [x[factor != 0].tolist() for x in (factor, *legs)]  # the monomials with a factor
     v = dict(zip(zip(*kept[1:], strict=True), kept[0], strict=True))
     laid = main.layout({"integers": INTEGERS, "trains": FIVE, "chosen": chosen}, list(SHAPE), held)
-    rest, f = int(laid.gearing.rest[0, 0]), int(laid.gearing.rest[0, 0]) // INTEGERS["full_rate"]
+    spring, f = chosen["spring"], int(laid.gearing.rest[0, 0]) // INTEGERS["full_rate"]
     flags = (held.trains.held.tolist(), held.trains.tied.tolist(), held.trains.gripped.tolist())
     assert flags == ([0, 0, 1, 0, 0], [0, 0, 0, 1, 1], [1, 1, 0, 1, 1])  # held, tied, gripped
-    assert found == [] and len(v) == len(kept[0]) and all(v[k, k, -1, -1] == rest for k in span(hand))
+    assert found == [] and len(v) == len(kept[0]) and all(v[k, k, -1, -1] == spring for k in span(hand))
     assert all(v[x, x, k, k] == f for x in span(giver) for k in span(hand))  # the tie, hold x f x 1
     both = list(zip(span(giver), span(taker), strict=True))  # the hands' rows, component by component
     assert all(v[x, y, -1, -1] == 1 and (y, x, -1, -1) not in v for x, y in both)  # the hands' tie, once

@@ -268,18 +268,18 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert orders_alike()
     by_place(monkeypatch)
     assert not orders_alike()
-    # the click lines on a pair world of one Node-clock inside the room for ten beats (the first hostile code reader's M3): the held hand (1, 0) with
-    # its tooth at the dial's middle (s = 0), the giver at its turning point at 14 and the taker at rest, at Gamma 1000 (the tied spring 2 hold f
-    # 12000, a lone tied hand's beat 126 rounds on the act), the hands' tie 9600 (800 permille of the tied spring; at a tenth the taker's push stays
-    # in its tooth and no click falls), the key 614401 odd (the seventh of the giver's swing of S over its first beat): over the 1260 rounds hold
-    # (|x_giver|^2 + |x_taker|^2) stays at most 196 of Gamma div 4 = 250 and the held hand's |k|^2 at 1, so keys pass with the pair's books 0 at
-    # every round and site and the held hand clicks nowhere, the run back exact
+    # the click lines on a pair world of one Node-clock (the first hostile code reader's M3): the held hand (1, 0), its before (0, -1), with its
+    # tooth at the dial's middle (s = 0) and its own spring CHOSEN at the grip at rest, den Gamma^2, the click world's rule (2 spring a third of the
+    # rest teeth, on no exact turn), the giver at its turning point at 14 and the taker at rest, at Gamma 1000, the hands' tie 9600 and the key
+    # 614401 odd: the room was the held hand's exact quarter turn, which no plan lays, so over the 1260 rounds the held hand clicks and the books
+    # open (NOT_CLOSED 29), every click line whole, the run back exact
     den = 1  # every pinion den, the seed's
     hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
     pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
     trains = [hand, {"name": "giver", **pair}, {"name": "taker", **pair}]
-    chosen = {"key": 614401, "push": 0, "notch": 0, "hold": 1, "tie": 9600, "mesh": 0}
     integers = {"den": den, "full_rate": 1000, "width": 128}
+    grip = den * integers["full_rate"] * integers["full_rate"]  # the grip at rest, the spring's rule
+    chosen = {"key": 614401, "push": 0, "notch": 0, "hold": 1, "spring": grip, "tie": 9600, "mesh": 0}
     world = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
     gears = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 0, -1, 0], [1, 0, 0, 14, 14, 0]]
     laid_ = {"version": 1, "ticks": 1260, "gears": gears}
@@ -288,8 +288,7 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
         (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")
     assert main.ran([tmp_path / f"{name}.json" for name in NAMES], tmp_path / "pair.jsonl") == []
     got, cause = records.read(str(tmp_path / "pair.jsonl"))
-    lines, counted, tied = got.of("click"), clicks.counted(got), list(range(1, len(trains)))
-    assert cause == "" and got.end["exact"] == 1 and lines and counted.nonzero == 0
+    lines, counted = got.of("click"), clicks.counted(got)
+    assert cause == "" and got.end["exact"] == 1 and lines and counted.nonzero  # the books open
     assert all(whole(x["q"]) and all(map(whole, (k, k1))) for x in lines for k, k1 in [x["tooth"]])
-    give, take = (counted.trains[n] for n in tied)  # the held hand's train has no line
-    assert sorted(counted.trains) == tied and give.given == take.taken and give.taken == take.given
+    assert counted.trains[trains.index(hand)].lines  # the held hand's train clicks, the room gone

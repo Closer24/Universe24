@@ -39,7 +39,7 @@ def edits():
         ("universe", "chosen"): "universe.chosen: a mapping, not NoneType",
         ("universe", "chosen", "key"): "universe.chosen.key: an odd whole number",
         ("universe", "chosen", "push"): "universe.chosen.push: 0 or 1",
-        **{("universe", "chosen", k): f"chosen.{k}: {low}" for k in "notch hold tie mesh".split()},
+        **{("universe", "chosen", k): f"{k}: {low}" for k in "notch hold spring tie mesh".split()},
         **{("universe", "integers", k): f"universe.integers.{k}: {whole}" for k in ("den", "full_rate")},
         ("universe", "trains", 0, "name"): f"{train}.name: a label, not None",
         ("universe", "trains", 0, "kinds"): f"{train}.kinds: a list of the kinds' labels, not None",

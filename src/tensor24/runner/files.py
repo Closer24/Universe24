@@ -1,6 +1,6 @@
 """Clock: before the first round the files say which trains every Node-clock carries, how many stand on each axis, and which gears are laid where.
 Algebra: whole numbers only, every side, part and integer at least 1, each departure refused by name; then the trains read against the engine's kinds.
-Board: the three files read and checked, then laid out as the load's arrays; the universe's chosen block names the key, the push's switch and the four strengths (the notch, the hold, the tie and the mesh), each CHOSEN by name, and nothing else is laid: no coupling, particle or mass.
+Board: the three files read and checked, then laid out as the load's arrays; the universe's chosen block names the key, the push's switch and the five strengths (the notch, the hold, the held rows' own spring, the tie and the mesh), each CHOSEN by name, and nothing else is laid: no coupling, particle or mass.
 Clicks: n/a: nothing the clicks show comes from the files.
 """
 
@@ -102,14 +102,15 @@ TRAIN = {"name": LABEL, "kinds": KINDS, "part": ONE, "pinion": None}
 UNIVERSE = {
     "version": VERSIONED,
     "integers": {"den": ONE, "full_rate": ONE, "width": ONE},
-    # the key, the push's switch and the four strengths, each CHOSEN by name: the whole click's key (G5; its value
+    # the key, the push's switch and the five strengths, each CHOSEN by name: the whole click's key (G5; its value
     # G3's), the metric's push on or off (term 5 claims no strength) and the volume's notch (G2), the held hand's tie,
-    # the hands' tie and the gradient vertex through the Mesh (G3's frame)
+    # the held rows' own spring, the hands' tie and the gradient vertex through the Mesh (G3's frame)
     "chosen": {
         "key": ODD,
         "push": SWITCH,
         "notch": NONE_BELOW,
         "hold": NONE_BELOW,
+        "spring": NONE_BELOW,
         "tie": NONE_BELOW,
         "mesh": NONE_BELOW,
     },

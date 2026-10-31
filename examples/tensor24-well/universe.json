@@ -1,7 +1,7 @@
 {
   "version": 1,
   "integers": {"den": 1, "full_rate": 1000, "width": 128},
-  "chosen": {"key": 1, "push": 1, "notch": 120000, "hold": 0, "tie": 0, "mesh": 0},
+  "chosen": {"key": 1, "push": 1, "notch": 120000, "hold": 0, "spring": 0, "tie": 0, "mesh": 0},
   "trains": [
     {"name": "light", "kinds": ["A1"], "part": 2, "pinion": 1},
     {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1, "pinion": 1},
