@@ -1586,9 +1586,47 @@ CASES += [
     ("a remainder in runner/plans.py", NEW_PLANS, fn("return a % b", "a, b"), {"OPERATION": 1}),
     ("a name added to itself in runner/plans.py", NEW_PLANS, fn("return a + a"), {"TWICE": 1}),
     (
-        "a loop in runner/files.py stays spared",
+        "a loop in a checker the format has stays spared in runner/files.py",
         "tensor24/runner/files.py",
-        fn("for x in a:\n    pass"),
+        "def numbers(a):\n    for x in a:\n        pass\n",
+        {},
+    ),
+    # code moved into the spared module from the loader or its plans is seen: a function the format does not have keeps the loader's rules
+    # (the Boss's ruling of 6543215557 item 2, on node-key's dialled moved there from plans.py)
+    (
+        "a loop in a function added to runner/files.py is bound as the loader's",
+        "tensor24/runner/files.py",
+        "def dialled(a):\n    for x in a:\n        pass\n",
+        {"LOOP": 1},
+    ),
+    (
+        "a comprehension with a comparison in a function added to runner/files.py",
+        "tensor24/runner/files.py",
+        "def dialled(a):\n    return [x for x in a if x > 1]\n",
+        {"LOOP": 1, "COMPARE": 1},
+    ),
+    (
+        "a branch in a function added to runner/files.py",
+        "tensor24/runner/files.py",
+        "def dialled(a):\n    if a:\n        return 1\n    return 0\n",
+        {"BRANCH": 1},
+    ),
+    (
+        "a ternary in a function added to runner/files.py",
+        "tensor24/runner/files.py",
+        "def dialled(a):\n    return 1 if a else 0\n",
+        {"BRANCH": 1},
+    ),
+    (
+        "a loop in a nested function of a checker the format has stays spared",
+        "tensor24/runner/files.py",
+        "def checked(a):\n    def inner(b):\n        for x in b:\n            pass\n    return inner\n",
+        {},
+    ),
+    (
+        "a comprehension at the module's own level of runner/files.py stays spared",
+        "tensor24/runner/files.py",
+        "KEYS = [x for x in 'ab']\n",
         {},
     ),
     (

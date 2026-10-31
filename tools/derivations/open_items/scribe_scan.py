@@ -414,6 +414,15 @@ BOARD_KEEPS = frozenset(
 FORMAT = (
     RUNNER + "files.py"
 )  # the files' format: the keys a universe, a piece and a setting file may hold, the checker refusing any other
+FORMAT_SPARED = frozenset(
+    "whole star axial once read numbers rows checked seed_departures universe_departures sites_of setting_departures departures vocabulary spun halved_departures held_departures entries".split()
+)  # the format's checkers as they stand on main, node-fold, node-rec and node-min: the module is spared the loader's rules for these functions alone; a function added to it is bound as load.py and plans.py are, for a rule read off the plan's edges is the loader's and not the files' format (the Boss's ruling of 6543215557 item 2, on node-key's dialled, moved there verbatim from plans.py); a hit at the module's own level stays spared, and a checker's body that grows a loop stays unseen: the named limit of this rule
+FORMAT_BOUND = frozenset(
+    {"OPERATION", "LOOP", "CLAMP", "COMPARE", "BRANCH"}
+)  # the loader's rules that a function added to the format's module keeps
+FORMAT_PASS = [
+    False
+]  # set while scan() reads the format's module the second time, with the loader's rules bound
 KEY_CALLS = frozenset(
     "tuple list set frozenset".split()
 )  # a collection made by a call of one argument holds what its argument holds
@@ -559,6 +568,8 @@ def exempt(rel: str, rule: str) -> bool:
     if rel.startswith(RUNNER):
         if rel == BOARD and rule in BOARD_KEEPS:
             return False  # the board's wrap is the carry's, imported
+        if rel == FORMAT and FORMAT_PASS[0] and rule in FORMAT_BOUND:
+            return False  # the second reading of the format's module: the functions the format does not have keep the loader's rules
         if rel in LOADERS:
             return False  # the loader is spared no rule, nor its plans' home: they build the engine's coefficients (the files' format, the driver, the rewind check and the rounds stay spared)
         return rule != "LOGREAD" or rel == REWIND  # the undo log is read by the rewind check alone
@@ -1361,6 +1372,25 @@ def layers_missing(doc: str | None) -> list[str]:
 
 
 def scan(rel: str, source: str) -> list[Hit]:
+    """Every hit of every rule in one module, the files' format read twice: as always, spared the loader's rules, and again with them bound, keeping the hits that stand in a function the format does not have (FORMAT_SPARED), so that code moved into the spared module from the loader or its plans is seen."""
+    hits = scan_pass(rel, source)
+    if rel == FORMAT:
+        FORMAT_PASS[0] = True
+        try:
+            bound = scan_pass(rel, source)
+        finally:
+            FORMAT_PASS[0] = False
+        hits += [
+            hit
+            for hit in bound
+            if hit.rule in FORMAT_BOUND
+            and hit.where != "<module>"
+            and hit.where.split(".")[0] not in FORMAT_SPARED
+        ]
+    return hits
+
+
+def scan_pass(rel: str, source: str) -> list[Hit]:
     """Every hit of every rule in one module (rel: its path inside src/event_universe, another package's under its name; a test's under tests/, the rule PIN alone; a tool's under tools/, the rules NUMBER and FLOAT alone)."""
     tree = ast.parse(source)
     if rel.startswith(TESTS + "/"):
