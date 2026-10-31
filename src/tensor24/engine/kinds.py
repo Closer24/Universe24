@@ -1,5 +1,5 @@
 """Clock: every Node-clock is made alike from its star of six Spokes: the 24 turns that leave the star the same, the five kinds by which a train's gears turn with them, and the 48 lifts of the 24, whose three half-speed kinds and two trains take the full turn, the lift -1, as -I.
-Algebra: the 24 are the matrices of three Spokes that Rule3's weight keeps, 24 of 216; A1, A2, E, T1 and T2 are built from their matrices, with no table typed; the 48 are the words u w^k z^m on the unit's axis and the Spokes', by Hamilton's product made from the star, each coordinate doubled and a pair p + q r2 of Z[x] / (x^2 - senses), read for equality alone, each product halved by Rule3's carry at senses with remainder 0; E1/2, E5/2 and G3/2 are their characters, and the 8-gear and 24-gear trains signed permutations on the cosets of C6 and on the classes +-h, read by products and carries alone.
+Algebra: the 24 are the matrices of three Spokes that Rule3's weight keeps, 24 of 216; A1, A2, E, T1 and T2 are built from their matrices, with no table typed; the 48 are the words u w^k z^m on the unit's axis and the Spokes', by Hamilton's product made from the star, each coordinate doubled and a pair p + q r2 of Z[x] / (x^2 - senses), read for equality alone, each product halved by Rule3's carry at senses with remainder 0; E1/2, E5/2 and G3/2 are their characters, the 8-gear train a signed permutation on the cosets of C6, read by products and carries alone, and the 24-gear train the half-speed hand on the three axes, the 8-gear train laid on each axis row by each lift's turn.
 Board: the same turns, kinds and lifts at every Node-clock; the four-vector's square (the 00, 0i, ii and jk slots) is the metric family's kinds; no family couples a half-speed train in this build.
 Clicks: n/a: a kind is no observable; a click names a train, whose kinds say how it turns.
 """
@@ -35,7 +35,9 @@ class Lifts(NamedTuple):
     whole: Kinds  # the five kinds on the 48 through each lift's turn, g's sandwich on the Spokes' axes (T1, one of the 24)
     halves: Halves  # the three half-speed kinds' characters
     cosets: Z  # (senses, classes, cosets, cosets): the 8-gear train, L(g) on the cosets of C6 in the heads' order
-    classes: Z  # (senses, classes, classes, classes): the 24-gear train, L(g) e_[h] = sign e_[gh], the class and sign of every product
+    # (senses, classes, gears, gears): the 24-gear train, the half-speed hand on the three axes, the 8-gear train laid on
+    # each axis row: g's turn on the rows times its L(g) on each row's cosets, its gears axis by axis, the cosets fastest
+    axes: Z
 
 
 def det(m: Z) -> Z:
@@ -173,18 +175,6 @@ def turned(c: Z, lift: Z, senses: Z) -> Z:
     return turn
 
 
-def on_classes(c: Z, lift: Z, classes: Z, senses: Z) -> Z:
-    """The 24-gear train, L(g) e_[h] = sign e_[gh] on the classes +-h in their order: g h's class is the one whose turn is its turn, each column's dot x of the two giving (x + x x) div senses, 1 where they agree and 0 elsewhere, multiplied over the columns; the sign is the doubled dot of g h with that class's word, senses^2 times the sign; every carry's remainder 0."""
-    moved = product(c, lift[..., None, :, :], classes, senses)  # g h for every class h
-    agree = np.einsum("...hij,kij->...khj", turned(c, moved, senses), turned(c, classes, senses))
-    same, _ = carry(agree + agree * agree, senses, 0)
-    p, q = np.moveaxis(moved, -1, 0)
-    r, s = np.moveaxis(classes, -1, 0)
-    dot = np.einsum("...hx,kx->...kh", p, r) + senses * np.einsum("...hx,kx->...kh", q, s)
-    sign, _ = carry(np.prod(same, axis=-1) * dot, senses * senses, 0)
-    return sign
-
-
 def on_cosets(c: Z, lift: Z, heads: Z, senses: Z) -> Z:
     """The 8-gear train, L(g) on the cosets of C6, the powers of w, in the heads' order: a coset read through its vertex, its lifts' turn of (1, ..., 1), g v in the coset of the head u whose vertex agrees with its own on every axis, Rule3's weight (s + s s) div senses on each axis's product s of the two coordinates, exact for every whole s, multiplied over the axes; the sign is lam of u* g v in C6, +1 on C6's squares and -1 elsewhere on C6: its cube's doubled unit part halved, the squares being the cube roots of 1 and w^3 = -1; every carry's remainder 0."""
     moved = product(c, lift[..., None, :, :], heads, senses)  # g v for every head v
@@ -225,5 +215,9 @@ def lifts(spokes: Z) -> Lifts:
     halves = Halves(spin, sign * spin, trace * spin)
     # u z^m, one lift in each coset of C6
     heads = listed(product(c, star[:, None], spins[None, :], senses))
-    cosets, classed = on_cosets(c, lift, heads, senses), on_classes(c, lift, classes, senses)
-    return Lifts(whole, halves, cosets, classed)
+    cosets = on_cosets(c, lift, heads, senses)
+    # the 24-gear train, the half-speed hand on the three axes: each lift's turn on the three axis rows, its L(g) on the
+    # cosets on each row
+    gears = d * cosets.shape[-1]
+    hand = np.einsum("...ab,...xy->...axby", turn, cosets).reshape(senses, -1, gears, gears)
+    return Lifts(whole, halves, cosets, hand)

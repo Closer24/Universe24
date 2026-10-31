@@ -296,7 +296,7 @@ def spun(lifted: Any) -> Spun:
     whole = np.array([int((m == p).all()) for p, m in zip(plus, minus, strict=True)], dtype=object)
     # each half-speed kind's dimension, its character at the lift 1, the + sense's first word in the lifts' layout
     dims = tuple(int(c[0, 0, 0]) for c, h in zip(characters, half, strict=True) if h)
-    trains = (lifted.cosets, lifted.classes)
+    trains = (lifted.cosets, lifted.axes)
     return Spun(
         characters,
         half,
@@ -308,7 +308,7 @@ def spun(lifted: Any) -> Spun:
 
 
 def halved_departures(where: str, train: dict[str, Any], kinds: list[int], lifts: Spun) -> list[str]:
-    """A train of a half-speed kind: admitted only as the 8-gear train on the cosets of C6 or the 24-gear train on the classes +-h, its character, its part times its kinds', with no r2 part and -I on the full turn, and every other mix refused by name; an admitted one refused too, by name, as no family couples a half-speed train in this build (test worlds only, laid in memory through load.load and the act; the refusal goes when a half-speed table from the families is built)."""
+    """A train of a half-speed kind: admitted only as the 8-gear train on the cosets of C6 or the 24-gear train, the half-speed hand on the three axes (the 8-gear train laid on each axis row), its character, its part times its kinds', with no r2 part and -I on the full turn, and every other mix refused by name; an admitted one refused too, by name, as no family couples a half-speed train in this build (test worlds only, laid in memory through load.load and the act; the refusal goes when a half-speed table from the families is built)."""
     rational, root = np.moveaxis(train["part"] * lifts.characters[kinds].sum(axis=0), -1, 0)
     plus, minus = rational
     reasons = [
@@ -324,7 +324,7 @@ def halved_departures(where: str, train: dict[str, Any], kinds: list[int], lifts
     gears = " or the ".join(f"{n}-gear train" for n in lifts.gears)
     return (
         [
-            f"{named}: no half-speed train: a half-speed kind rides only the {gears} (on the cosets of C6, on the classes +-h), its character with no r2 part and -I on the full turn; this character {', '.join(reasons)}"
+            f"{named}: no half-speed train: a half-speed kind rides only the {gears} (on the cosets of C6, and on each of the three axis rows), its character with no r2 part and -I on the full turn; this character {', '.join(reasons)}"
         ]
         if reasons
         else [f"{named}: no family couples a half-speed train in this build"]

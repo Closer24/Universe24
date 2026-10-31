@@ -145,7 +145,7 @@ def test_each_lift_turns_the_axes_by_one_of_the_24_and_the_eight_kinds_are_ortho
     held, senses, listed = built()
     d = held.whole.t1.shape[-1]
     five, _, square, joint = made(star(d))
-    parts = [(*g.whole, *g.halves, g.cosets, g.classes) for g in (joint, held)]
+    parts = [(*g.whole, *g.halves, g.cosets, g.axes) for g in (joint, held)]
     assert all((x == y).all() for x, y in zip(*parts, strict=True))  # every field of the lifts alike
     read = vocabulary(five, square, joint)[-1][-1]  # the files read these lifts' half-speed kinds
     assert (read.characters[len(five) :] == np.stack(joint.halves)).all()
@@ -168,9 +168,9 @@ def test_each_lift_turns_the_axes_by_one_of_the_24_and_the_eight_kinds_are_ortho
     assert [tuple(c[m1]) for c in chi] == turned
 
 
-def test_the_two_trains_are_the_probes_induced_ones_and_read_the_class_and_sign_of_every_product():
-    """Yes: the 24-gear train the probe's Ind_{+-1}(sign) and the 8-gear its Ind_C6(lam), up to their gears' order and senses,
-    each -I on the full turn, the half-speed kinds each by its degree and G3/2 twice; every product's class and sign read.
+def test_the_two_trains_are_the_probes_induced_ones_the_24_gear_train_the_8_gear_on_each_axis_row():
+    """Yes: the 8-gear train the probe's Ind_C6(lam), the 24-gear train it laid on each axis row by each lift's turn and the probe's
+    Ind_{+-1}(sign), up to their gears' order and senses, each gear the first's image at +1, each -I on the full turn and a train of the product, the half-speed kinds each by its degree and G3/2 twice.
     No: either train with two gears swapped on one side is no train, its product not the product's matrix."""
     held, senses, listed = built()
     index = {g: n for n, g in enumerate(listed)}
@@ -182,23 +182,29 @@ def test_the_two_trains_are_the_probes_induced_ones_and_read_the_class_and_sign_
         c6, x = [*c6, x], table[x][w]
     # lam: +1 on the squares of C6, the product table's diagonal there, -1 elsewhere on C6
     lam = {x: 1 if x in {table[y][y] for y in c6} else -1 for x in c6}
-    d, k = len(listed[0]) - 1, held.classes.shape[1]
+    d = len(listed[0]) - 1
     heads = [
         a * d * senses + m for a in range(d + 1) for m in range(senses)
     ]  # the words u z^m, u at the + sense
     assert same_train(held.cosets, heads, table, c6, lam)
-    assert same_train(held.classes, list(range(k)), table, (e, m1), {e: 1, m1: -1})
     eight = held.cosets.reshape(len(listed), len(heads), -1)
-    classes = held.classes.reshape(len(listed), k, k)
-    assert (eight[m1] == -np.eye(len(heads), dtype=object)).all()
-    assert (classes[m1] == -np.eye(k, dtype=object)).all()
+    hand, turns = (
+        held.axes.reshape(len(listed), d * len(heads), -1),
+        held.whole.t1.reshape(len(listed), d, d),
+    )
+    assert all(
+        (hand[g] == np.kron(turns[g], eight[g])).all() for g in range(len(listed))
+    )  # the 8-gear on each axis row
+    reached = [next(g for g in range(len(listed)) if hand[g][v, 0] == 1) for v in range(len(hand[0]))]
+    assert same_train(
+        held.axes, reached, table, (e, m1), {e: 1, m1: -1}
+    )  # each gear the first's image at +1
+    for train in (eight, hand):
+        assert (train[m1] == -np.eye(len(train[0]), dtype=object)).all()
+        assert (np.einsum("aij,bjk->abik", train, train) == train[table]).all()
     halves = [h.reshape(len(listed), -1) for h in held.halves]
-    for train, chi in ((classes, sum(h[e][0] * h for h in halves)), (eight, halves[-1] + halves[-1])):
+    for train, chi in ((hand, sum(h[e][0] * h for h in halves)), (eight, halves[-1] + halves[-1])):
         assert (np.einsum("gii->g", train) == chi[:, 0]).all() and not chi[:, 1].any()
-    # each lift as its sense times its class's gear
-    basis = np.concatenate((np.eye(k, dtype=object), -np.eye(k, dtype=object)))
-    assert (np.einsum("aij,bj->abi", classes, basis) == basis[table]).all()
-    assert (np.einsum("aij,bjk->abik", eight, eight) == eight[table]).all()
-    for train in (classes, eight):
+    for train in (hand, eight):
         swapped = train[:, [1, 0, *range(2, train.shape[-1])]]
         assert not (np.einsum("aij,bjk->abik", swapped, swapped) == swapped[table]).all()
