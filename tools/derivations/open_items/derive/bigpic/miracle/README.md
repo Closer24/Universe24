@@ -186,3 +186,24 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
   as the one algebra's, and any physics.
 
 Usage: python3 -I cell.py <src> [rounds]
+
+## The vacuum, read on the click world (David's 6543168386; vacuum_square_5000.txt, vacuum_engine_5000.txt)
+
+- **The lay:** click1 with every count at 0 (worlds/click1_vacuum: the held hand and the giver laid at 0, the rest
+  of the files the click world's own). Each act runs 5,000 rounds.
+- **Road B with the square form:**
+  - the widest count is 0 bits: every count is 0 at every round;
+  - the identity and the sides' books miss 0 times;
+  - the whole clicks by train are all 0, and the walk is 0;
+  - the run back is exact, and the 24 hold 24 of 24.
+- **The present act:** the widest count is 0 bits, the walk is 0, the run back is exact, and the 24 hold 24 of 24.
+- **So the board's vacuum is exactly still, and it never clicks** (MEASURED on both acts).
+  - Every term is a product of counts, so every push is 0 there.
+  - The gear's teeth stay below one carry, so no count moves.
+  - Every side's passing is 0, so no click tooth moves.
+  - This is David's (i) and (iii) read on the board: no half quantum on the dials, and E32 = 0 at the vacuum.
+- **Not read here:** the vacuum's zero as physics, and the vacuum's effects that physics reads near matter (the
+  Casimir force and the Lamb shift), which must come from the clocks themselves (David's (c)).
+
+Usage: python3 -I clicks.py <src> worlds/click1_vacuum/universe.json worlds/click1_vacuum/piece.json
+worlds/click1_vacuum/setting.json 5000 250 square (or engine)
