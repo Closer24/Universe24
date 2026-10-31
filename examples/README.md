@@ -137,7 +137,11 @@ and the lay's click readings wait for the re-lay.
 
 Run it as the one bang: `python -I tools/tensor24_run.py examples/tensor24-click/universe.json
 examples/tensor24-click/piece.json examples/tensor24-click/setting.json <record .jsonl>`: on this lay the run names the
-count past the width at round 3752, every Node-clock alike, and writes no record (307 s on the run tool). The numbers of the lay before this one, the held hand laid at
+count past the width at round 3752, every Node-clock alike, and writes no record (307 s on the run tool). That is the
+run's stop, kept and named, not hidden by fewer ticks: the shipped setting's 5000 ticks stand, and the run stops at
+round 3752, where its promise "wide" reads a count past the universe's width, the held hand's parametric drive running
+away (NOT_CLOSED 37, its road OPEN; KEY3's 6.4); the worlds test and the pages read its first rounds, short of the
+stop. The numbers of the lay before this one, the held hand laid at
 a quarter turn ((1, 0) now and (0, -1) before, aimed at 90 degrees a round, the audit's N3) at the same spring, were
 writer D's run (36fbfbbde and a66674061): 5000 rounds out and back exact, 282663 click lines, the books NOT SHOWN at
 123066 of 123795 places, the meetings NOT SHOWN, the held hand's |k|^2 climbing to 5, 100, 404 and 680 by rounds 250,

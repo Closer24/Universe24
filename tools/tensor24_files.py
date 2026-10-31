@@ -13,13 +13,13 @@ import json
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.joinpath("src")))
 
 from tensor24.main import made  # noqa: E402
 from tensor24.runner.files import NAMES, departures, held_departures, sites_of, vocabulary  # noqa: E402
 from tensor24.runner.load import load, star  # noqa: E402
 
-EXAMPLES = Path(__file__).resolve().parents[1] / "examples" / "tensor24"
+EXAMPLES = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24")
 
 
 def loaded(universe: Path, piece: Path, setting: Path) -> list[str]:
