@@ -13,7 +13,8 @@ Algebra: the room, hold |x_tied|^2 below Gamma div 4 at the held hand, read over
 squares of the board's wave summed against the same run at mesh 0 (the wave's own dispersion on the ring apart); the tied hand moves a count
 only where its momentum reaches half a count a round.
 Board: a ring along x, one Node-clock across y and z.
-Clicks: n/a: the Mesh leg's wind is counted by no click (NOT_CLOSED 4); the held hand clicks nowhere inside the room.
+Clicks: the held train's and the tied hand's click lines counted by train, with no exact quarter turn laid (NOT_CLOSED
+29); the Mesh leg's wind is counted by no click (NOT_CLOSED 4).
 
 Run: .venv/bin/python tools/derivations/open_items/derive/boss/mesh_lay/lay.py; it writes the setting beside the
 universe and the piece under examples/tensor24-mesh/, and lay.txt beside itself.
@@ -82,7 +83,7 @@ def run(universe, shape, gears, ticks):
     lf, hf, tf = (int(held.trains.first[t]) for t in (light, hand, tied))
     rows = held.trains[tied].rows()
     hold, room = universe["chosen"]["hold"], carry(universe["integers"]["full_rate"], 4, 0)[0]
-    seen = {"squares": [], "most": 0, "out": None, "moved": set(), "k": set(), "clicks": 0, "largest": 0}
+    seen = {"squares": [], "most": 0, "out": None, "moved": set(), "k": set(), "clicks": 0, "held": 0, "tied": 0, "largest": 0}
     s = s0
     for n in range(1, ticks + 1):
         s, clicks = step.act(layout, s)
@@ -93,6 +94,8 @@ def run(universe, shape, gears, ticks):
         seen["moved"] |= {int(x) for x in np.nonzero((s.a[tf : tf + rows] != 0).any(axis=0))[0]}
         seen["k"] |= {int(v) for v in (s.a[hf] ** 2 + s.a[hf + 1] ** 2).tolist()}
         seen["clicks"] += int((clicks != 0).sum())
+        seen["held"] += int((clicks[hand] != 0).sum())
+        seen["tied"] += int((clicks[tied] != 0).sum())
         seen["largest"] = max(seen["largest"], int(abs(s.a).max()))
         if seen["largest"] > 10**9:
             break
@@ -141,7 +144,7 @@ def lay():
     say(
         f"2. the run at the file's strengths, {ticks} rounds on the act: hold |x_tied|^2 at most {seen['most']} against the room's {room}"
         f" (inside it for every round: {seen['out'] is None}); the tied hand moved at {len(seen['moved'])} Node-clocks, where the pulse"
-        f" passed; the held hand's |k|^2 {sorted(seen['k'])}; {seen['clicks']} clicks (the Mesh leg's wind is counted by no click); the"
+        f" passed; the held hand's |k|^2 {sorted(seen['k'])}; {seen['clicks']} click lines, the held train's {seen['held']} and the tied hand's {seen['tied']} (the Mesh leg's wind is counted by no click); the"
         f" largest count {seen['largest']}; the squares of the board's wave summed {first} at the first round, within {min(seen['squares'])} and"
         f" {max(seen['squares'])} over the run against {min(still['squares'])} and {max(still['squares'])} at mesh 0 (the wave's own"
         f" dispersion on the ring), the two runs apart by {gap} at most, {carry(1000 * gap, first, 0)[0]} permille of the first;"

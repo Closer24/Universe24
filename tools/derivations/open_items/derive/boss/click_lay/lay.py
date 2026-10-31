@@ -11,15 +11,16 @@ the taker, the second, at 0; light and the metric at 0.
 Algebra: f = rest div Gamma, the tied spring 2 hold f; the edge moves a count only where a gear's momentum reaches half
 a count a round, and a tied hand inside the room moves at most about 0.7 of a count a round (A omega with hold A^2 below
 Gamma div 4 and omega^2 = 2 hold / Gamma), so a taker at rest is moved by the hands' tie only where the tie is a large
-part of the tied spring (at a tenth of it the taker's push stays in its tooth: no count moves and no click falls,
-measured below); the room, hold (|x_giver|^2 + |x_taker|^2) below Gamma div 4 at the held hand, read over the whole run
+part of the tied spring (at a tenth of it the taker's push stays in its tooth and no count of it moves, while the
+held train clicks, measured below); the room, hold (|x_giver|^2 + |x_taker|^2) below Gamma div 4 at the held hand, read over the whole run
 on the act; the key CHOSEN in the universe file, read against the largest swing of the giver's course of S (its
 passing, the two-round energy change) over its first beat at the key 1, where the click is S itself: its window an
 odd whole from 1 to that swing, and the lay computes no key (the audit's C7).
 Board: a cube of 3, every Node-clock laid alike, so the Meshes pull nothing between like sites and one Node-clock's
 run is every site's (the run tool's record and ledger read every site: click_lay/measure.py).
-Clicks: the giver's and the taker's lines, their q summing to 0 at every round and site (the pair's books, inside the
-room); the held train clicks nowhere while its quarter turn is exact (NOT_CLOSED 29).
+Clicks: the held train's, the giver's and the taker's lines from round 1, the books open (the pair's q not summing to
+0 at most rounds, as lay.txt reads them): with no exact quarter turn laid there is no room and the held train clicks
+(NOT_CLOSED 29); the run stops where a count passes the width (NOT_CLOSED 37).
 
 Run: .venv/bin/python tools/derivations/open_items/derive/boss/click_lay/lay.py; it writes the setting beside the
 universe and the piece under examples/tensor24-click/, and lay.txt beside itself; it writes no universe.
@@ -44,7 +45,7 @@ A = 40  # the giver's turning point: hold A^2 = 1600 of the room's Gamma div 4 =
 TICKS = 5000  # past ten tied beats (the physicist's rule)
 ONE = [1, 1, 1]  # one Node-clock: every site of the cube is laid alike
 READ = 250  # the rounds between two readings of the held hand's |k|^2 in the long run
-SEARCH = 1000  # the run's window: the rounds the lone giver is run for its beat, a fixed run and no search
+BEAT_RUN = 1000  # the run's window: the rounds the lone giver is run for its beat, a fixed run
 
 
 def files():
@@ -118,7 +119,7 @@ def lay():
             turns.append(n)
         last[0] = count
 
-    run_one(lone, gears_of(hand, giver, 1), SEARCH, beat)
+    run_one(lone, gears_of(hand, giver, 1), BEAT_RUN, beat)
     period = turns[2] - turns[0]
     say(f"2. the giver alone (the hands' tie at 0): its count changes sign at rounds {turns[:4]}, a beat of {period} rounds")
     # 3. the key: the act at the key 1, where the click is S, over the first beat with the hands' tie on
@@ -132,11 +133,13 @@ def lay():
 
     run_one(one, gears_of(hand, giver, 1), period, wind)
     key = universe["chosen"]["key"]
+    _, odd = carry(key, 2, 0)  # the key's parity by Rule3's carry
+    holds = odd == 1 and 1 <= key <= swing[0]
     say(
         f"3. the key CHOSEN in the universe file, {key}, read against the act at the key 1 over the giver's first beat, rounds"
-        f" 1..{period}, where the click is S itself: the giver's course of S swings to {swing[0]} at most, so the key's window, an odd"
-        f" whole from 1 to that swing, holds it, and about {carry(swing[0], key, 0)[0]} keys pass in that beat (a chosen unit of wind below"
-        f" the quantum, Planck's key being NOT_CLOSED 3; the lay computes no key, the audit's C7)"
+        f" 1..{period}, where the click is S itself: the giver's course of S swings to {swing[0]} at most; the key's window, an odd"
+        f" whole from 1 to that swing, holds it: {holds} (its remainder by 2, {odd}); about {carry(swing[0], key, 0)[0]} keys pass in that"
+        f" beat (a chosen unit of wind below the quantum, Planck's key being NOT_CLOSED 3; the lay computes no key, the audit's C7)"
     )
     # 4. the room over the whole run, at the key: the tied hands' squares at the held hand, |k|^2, the clicks
     seen = {"most": 0, "at": 0, "k": set(), "climb": [], "held": 0, "books": 0, "taker": 0, "course": [0, 0], "windows": []}

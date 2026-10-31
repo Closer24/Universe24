@@ -2,7 +2,8 @@
 pruner's finding that only our bang's run was guarded by a test, and the sixth code reader's minor 4): every example
 folder but our bang's, its own three files run out and back by the run tool's own function, main.ran, for PREFIX rounds,
 the click world to its first click round so that the test pins its clicks; each record's end line written as the run
-wrote it, with the world's name, its count of click lines and the no case's PREFIX rounds, to tests/tensor24_prefixes.jsonl; no digest is typed
+wrote it, with the world's name, its count of click lines and their digest, the no case's PREFIX rounds and the
+world's own digest at them, to tests/tensor24_prefixes.jsonl; no digest is typed
 anywhere.
 
 Clock: n/a: the worlds' own files, run as the run tool runs them.
@@ -14,6 +15,7 @@ search; with no click in it, the click world runs PREFIX rounds as the others do
 Run: .venv/bin/python tools/derivations/open_items/derive/boss/prefixes/write.py; it writes tests/tensor24_prefixes.jsonl.
 """
 
+import hashlib
 import json
 import sys
 import tempfile
@@ -32,7 +34,8 @@ REACH = 200  # the window of rounds in which the click world's first click is re
 
 
 def ran(world, rounds, scratch):
-    """The world's own three files run out and back for the rounds: the record's end line and its click lines."""
+    """The world's own three files run out and back for the rounds: the record's end line, its count of click lines and
+    their digest, SHA-256 of the click lines' text as the run wrote them, a line feed between two."""
     *paths, setting = [ROOT.joinpath("examples", world, f"{name}.json") for name in NAMES]
     held = json.loads(setting.read_text(encoding="utf-8"))
     held["ticks"] = rounds
@@ -40,9 +43,10 @@ def ran(world, rounds, scratch):
     short.write_text(json.dumps(held), encoding="utf-8")
     found = main.ran([*paths, short], record)
     assert not found, found
-    lines = [json.loads(x) for x in record.read_text(encoding="utf-8").splitlines()]
-    assert lines[-1]["exact"] == 1, lines[-1]
-    return lines[-1], [x for x in lines if x["kind"] == "click"]
+    text = record.read_text(encoding="utf-8").splitlines()
+    end, clicks = json.loads(text[-1]), [x for x in text if json.loads(x)["kind"] == "click"]
+    assert end["exact"] == 1, end
+    return end, clicks, hashlib.sha256("\n".join(clicks).encode("utf-8")).hexdigest()
 
 
 def write():
@@ -52,10 +56,22 @@ def write():
         for world in worlds:
             rounds = PREFIX
             if world == CLICKS:
-                _, clicks = ran(world, REACH, scratch)
-                rounds = min([x["round"] for x in clicks] or [PREFIX])
-            end, clicks = ran(world, rounds, scratch)
-            written.append(json.dumps({"world": world, "clicks": len(clicks), "no": PREFIX, **end}))
+                _, clicks, _ = ran(world, REACH, scratch)
+                rounds = min([json.loads(x)["round"] for x in clicks] or [PREFIX])
+            end, clicks, lines = ran(world, rounds, scratch)
+            no, _, _ = ran(world, PREFIX, scratch)
+            written.append(
+                json.dumps(
+                    {
+                        "world": world,
+                        "clicks": len(clicks),
+                        "lines": lines,
+                        "no": PREFIX,
+                        "own": no["digest"],
+                        **end,
+                    }
+                )
+            )
             print(written[-1], flush=True)
     ROOT.joinpath("tests", "tensor24_prefixes.jsonl").write_text(
         "\n".join(written) + "\n", encoding="utf-8"

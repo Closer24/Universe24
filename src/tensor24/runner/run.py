@@ -211,8 +211,9 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
             events += clicked(at, read_, end, clicks)
             read_ = end
             # the promises of the round that reads this state, read from outside: every kept tooth within its
-            # teeth, the grips within the window, and every count within the width
-            found = promised(engine, layout, end, width) if at < ticks else []
+            # teeth, the grips within the window, and every count within the width; the end state, which no round
+            # reads, its width alone, so that a count past the width in the last round is named too
+            found = promised(engine, layout, end, width) if at < ticks else wide(end, width)
             if found:
                 ledger.unlink()
                 return [f"round {at + 1}: {line}" for line in found]

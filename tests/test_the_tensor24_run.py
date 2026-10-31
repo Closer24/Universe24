@@ -268,11 +268,12 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert orders_alike()
     by_place(monkeypatch)
     assert not orders_alike()
-    # a pair world of one Node-clock (the first hostile code reader's M3; the seventh's ruling: the held hand at rest): the held hand (1, 0), its
-    # before its now, its tooth at the dial's middle (s = 0) and its own spring CHOSEN at the grip at rest, den Gamma^2, the click world's rule,
-    # the giver at its turning point at 14 and the taker at rest, at Gamma 1000, the hands' tie 9600 and the key 614401 odd: with no exact
-    # quarter turn laid, the held hand's square climbs and the counts leave the width, which the run's promise names at the round where they
-    # first stand past it, nothing written (an exact quarter turn, K = 2 W, keeps |k|^2 at 1 and runs the 1260 rounds to a record)
+    # a pair world of one Node-clock, kept as NOT_CLOSED 37's record (the first hostile code reader's M3; the seventh's rulings: the held
+    # hand at rest, and no assert that it runs away): the held hand (1, 0), its before its now, its tooth at the dial's middle (s = 0) and
+    # its own spring CHOSEN at the grip at rest, den Gamma^2, the click world's rule, the giver at its turning point at 14 and the taker at
+    # rest, at Gamma 1000, the hands' tie 9600 and the key 614401 odd: with no exact quarter turn laid the held hand's square climbs and
+    # tonight the counts leave the width; whichever way it falls, a departure is the width's own, named with nothing written, or the
+    # run writes its record and ledger
     den = 1  # every pinion den, the seed's
     hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
     pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
@@ -289,5 +290,31 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     pair_record = tmp_path / "pair.jsonl"
     found = main.ran([tmp_path / f"{name}.json" for name in NAMES], pair_record)
     wide = f"takes more bits than the width, {integers['width']}"
-    assert found and found[0].startswith("round ") and wide in found[0], found  # the runaway named
-    assert not pair_record.exists() and not run.ledger_of(pair_record).exists()  # nothing written
+    assert all(x.startswith("round ") and wide in x for x in found), found  # a departure the width's own
+    assert (
+        pair_record.exists() == run.ledger_of(pair_record).exists() == (not found)
+    )  # named, nothing written
+
+
+def test_the_widths_promise_names_a_count_past_the_width_in_either_slot_and_none_at_its_edge(tmp_path):
+    """Yes: counts of 2^w - 1 and -(2^w - 1) in both slots, w the universe file's width, are within it and named by none.
+    No: a count of 2^w or -2^w in either slot is named where it stands; and a free gear laid at 2^w - 1 now and 2^w - 2
+    before, Mesh-less and with no strength, crosses the width by its inertia alone in its one round, named, nothing written."""
+    width = read(PATHS[0])["integers"]["width"]
+    edge, past, zero = (1 << width) - 1, 1 << width, np.zeros((1, 1), dtype=object)
+    held = lambda a, b: state.State(zero + a, zero + b, zero, zero, zero)  # noqa: E731
+    assert run.wide(held(edge, -edge), width) == run.wide(held(-edge, edge), width) == []
+    for n in (past, -past):
+        named = [f"row 0, site 0: the count {n} takes more bits than the width, {width}"]
+        assert run.wide(held(n, 0), width) == run.wide(held(0, n), width) == named
+    universe = read(ROOT / "examples" / "tensor24-click" / "universe.json")  # a held train, Mesh-less
+    universe["chosen"].update(spring=0, hold=0, tie=0)  # no strength on it: free
+    (hand,) = [n for n, t in enumerate(universe["trains"]) if t["kinds"] == ["A1", "A2"]]
+    setting = {"version": 1, "ticks": 1, "gears": [[hand, 0, 0, edge, edge - 1, 0]]}
+    files = {"universe": universe, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": setting}
+    for name, held_ in files.items():
+        (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")
+    found = main.ran([tmp_path / f"{name}.json" for name in NAMES], tmp_path / "free.jsonl")
+    named = f"site 0: the count {past} takes more bits than the width, {width}"  # at the held train's first row
+    assert len(found) == 1 and found[0].startswith("round 2: row ") and found[0].endswith(named), found
+    assert not (tmp_path / "free.jsonl").exists() and not run.ledger_of(tmp_path / "free.jsonl").exists()
