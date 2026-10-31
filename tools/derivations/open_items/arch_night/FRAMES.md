@@ -799,3 +799,73 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 - Choice: the present-only design, because the owner says the third click has no hand from the future, and because a
   push on the before slot read from the now slots alone keeps the act a bijection; the alternative, a weight of two
   hands from the past and the future, is withdrawn by Big Pic.
+
+## 15. The standing Node-clock from Big Pic's picture [FRAME; the owner's top priority of 01:1x UTC and his rule of 01:3x UTC]
+
+- The owner (01:1x UTC, the Boss's translation): "Advance with top priority what we found about the clicks, the
+  quaternion, and the mathematical miracles, the families, into a standing Node-clock. Physics in the clicks: the
+  world of the clocks' connection. The clocks themselves: on the board. Everything from Big Pic's picture." His rule
+  (01:3x UTC): a derivation 20 minutes at most; only what builds the Node-clock, as near nature as the clicks and the
+  board allow; no needless test or blocker; above all, no fake.
+- Big Pic's picture (6536273648, 6536448148): the board four dimensions, three axes and the clock, turning by the 24;
+  the quaternion's 48 units double the 24 and give the eight kinds; the click world the board's shadow, its events the
+  clocks' meetings. So each piece is a gear on the board (the clock fix, checked on the act: the run back, the 24, the
+  books) and a reading in the clicks (the physics, read twice).
+- The smallest standing Node-clock by 05:00 UTC: the act as built, no gear added, every world laid lawfully and its
+  click board read in full. C6 with the fourth reader's fold (C), C5 and C6 one candidate after C6's reader; the well
+  re-laid with the held, Mesh-less lump and the pulse at rest (B, frame 11); FACE's gear standing beside the act as a
+  probe, its pair started on its first part. Its one claim of physics in the clicks: each meeting passes one whole
+  quantum from one clock to another and the books close at it, on the click world 2,106 meetings and 54 clocks of 78,
+  read twice (C6's meetings and books; SHADOW's record probe). Every other reading stays NOT READ or NO CLICK with its
+  cause.
+- The next one: the face on the record (schema 1.4) and D6 reading a duration as a clock's own count between two of
+  its meetings, with a clicking well (B: two clicking pairs at two depths of the held lump), so the deeper clock's
+  slower count is read twice in the clicks; then light's-cone D8 on clicks that could fall outside it. It waits on
+  FACE's pair and, for any act change, the owner's word.
+- The pieces, each its gear on the board and its reading in the clicks:
+  - The click board. C6: no gear; the meetings and each clock's line, "the order counted, no duration" (13b). The face
+    (FACE, first part about 02:15): a count of the clock's own half beats per train and Node-clock by Rule3's carries,
+    measured on the board: 637, 318 and 159 at W, 4 W and 16 W (face^2 x depth 405769, 404496, 404496), 40,000 rounds
+    undone exactly, its mutants failing where named; in the clicks, D6 and the round trip of light's echo. Big Pic
+    (6537034824): no additional gear for time, a clock at rest counting by its face; whether the face is a gear the
+    act now lacks (SHADOW: it holds no clock's own count) or the Node-clock's own count is FACE's to settle with him.
+    The third click (THIRD, by 04:00; frame 14): a click that reads the present and pushes the before slot, a shear
+    the run back undoes; in the clicks a third line kind (law line 35 (5)), shown first by the meetings reading as a
+    place that is not one give and one take.
+  - The escapement and its miracles (FWDBACK3, about 03:00): the dial L a first-order gear, the release carried every
+    round, measured on the board: W = L^2 with no root (1000, 2252, 3999, 9047 against 1000, 2250, 4000, 9000), beta =
+    1 on a line held at its ends, the same slowing for every gear exact under the whole step (833 at every g) and only
+    to leading order under the carried cure (833 to 812), the cure holding only where the clock stands. In the clicks:
+    two clicking clocks of different beats at one depth count the same slowing, each by its own face; the special
+    theory's moving clock is a bound pair whose ticks are clicks (Big Pic), its count compared with a resting pair's
+    at their meeting.
+  - The quaternion and the families (HALF, first part about 02:30; frame 12): the 48 units on the gears by kind, the
+    eight kinds (on the three half-speed ones the full turn acts as -1, the hunter's row 6), the half-speed trains as
+    signed-permutation trains of the units' own, the three hands as i, j, k with the triple product's orientation,
+    each checked by the 48 commuting with the step bit for bit. In the clicks: Pauli by the determinant with a hand
+    per quantum, two like half-speed quanta never meeting in one state at a place; an orientation alone is a sign and
+    does not cross, a click reading squares.
+  - The cone (the owner: "backward and forward from the Node-clock, like six"; Big Pic, 6537034824 item 4: one cone
+    each way, and it is light's). Two stand at every Node-clock. The board's, the six Spokes, one Mesh a round: it
+    bounds every cause on the board, two-sided as the run back is the act mirrored, and D8 reads it. Light's, about
+    0.41 Mesh a round, round only in long waves: the special theory's cone, and the click world's order, never the
+    round's nor the six's; in whole numbers a quadric with no root, W r^2 <= grip t^2 (6 r^2 <= t^2 in the live
+    world). The reading to add, read twice: D8 by light's quadric beside D8 by the act's cone; the board's tails
+    beyond light stay below a whole quantum at the calibre, so they never click. Tonight light's-cone D8 reads NOT
+    READ on the click world where every line is inside light's cone from the lay. From the Node-clock itself (the
+    hunter's row 12): a frame of four quaternions per Node-clock gives its own light cone, signature (1, 3) by
+    Sylvester, the escapement's W = L^2 its diagonal case; a law change (16 gears for 10 slots), its deriver started
+    by the Boss, then its pair and the owner's word.
+- The lanes, no file shared:
+  - A, the record and the decoder's structure: schema 1.4 with the face on each click line (record/schema.py, the
+    runner's click line, decoder/records.py); every act change (the face, the third click, the escapement) in this one
+    lane, one at a time, each on its pair and the owner's word.
+  - B, the worlds and their lays: the well's re-lay now, then the clicking well, frame 14's world (one quantum, two
+    places to land) and a world of two half-speed quanta; examples/ and tools/derivations/ alone.
+  - C, the decoder's readings: C6 now, then light's-cone D8, D6 on 1.4 and the clocks' slowing read twice, Pauli in
+    the meetings; decoder/shadow.py, tools/tensor24_decode.py and the click-world test files.
+  - Where they would collide: tools/tests_shape.py's ROOM table (each lane adds its own entry, the Boss merging); the
+    decoder test file at 597 (A's 1.4 record tests take a file and a room of their own, decision 26);
+    decoder/records.py under C's readings (C reads only the fields A's commit names); examples/README.md (B's alone).
+    Each pair starts the minute its text lands: FACE's first part at about 02:15, HALF's at 02:30, FWDBACK3's at
+    03:00, THIRD's at 04:00, each derivation in parts of 20 minutes.
