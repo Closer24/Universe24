@@ -34,6 +34,7 @@ import typing
 from collections.abc import Callable
 from typing import Any, TypeGuard
 
+from tensor24.decoder.sides import paired
 from tensor24.record import schema
 
 KINDS = ("whole", "click", "split", "rate", "books")  # the events' order within a round, the schema's
@@ -325,6 +326,7 @@ GUARDS: tuple[Guard, ...] = (
     clicked,
     booked,
     ordered,
+    paired,
 )
 
 

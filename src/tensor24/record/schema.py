@@ -86,6 +86,12 @@ class Header:
     birth: int  # 1.4: every edge side's tooth at its birth, (D - 1) div senses, as the load lays it
 
 
+# One word, two things: a 1.4 click line's "sides" are its edge sides, one per other train at its Node-clock, and
+# the header's "sides" are the board's, which the cone reads; the fields keep the names their writers give them.
+SIDE = ("u", "q", "before", "after")  # a 1.4 click line's side, [u, q_tu, k_before, k_after], in order
+ACROSS = ("u", "place", "q", "before", "after")  # a 1.4 side across a Mesh, the other clock at place
+
+
 @dataclass(frozen=True)
 class Click:
     """A click line: at a round and a Node-clock, a train's click carried q whole keys, a give below 0 and a take above it; a 1.4 line holds sides and no tooth: every edge side of its clock, [u, q_tu, k_before, k_after] in u's order, q_tu 0 included, q the sum of their q, k the train's own tooth on the edge with train u, within [0, K) at the card's edge key K, k_before as the round's carry reads it (the round's start on term 11's edges; after the round's turn where one comes), so x = K q_tu + k_after - k_before is the side's passing, and across its Mesh edge sides that carried (q the sum over both); a 1.3 line holds tooth and no sides, its one tooth before and after."""

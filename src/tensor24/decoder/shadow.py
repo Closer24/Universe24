@@ -1,5 +1,5 @@
 """Clock: the board's physics read in its shadow, the click world (the owner's law of 23:4x UTC), as the clocks' meetings (the owner's word of 00:3x UTC): each event one quantum passing from one clock to another at one place, with no time axis but the events' order and each clock's count, and space read only by light's echo; the record's header and its click lines are read, nothing of the board's state, so no claim stands on a board reading alone.
-Algebra: whole counts and sums: at every place, a round and a Node-clock with click lines, the sum of q over the trains and each line's q, a meeting one give of q -1 and one take of q +1; per clock, a site and a train, its meetings counted and its given, taken and net; the cone one Mesh a round, the Meshes the shorter way round each side by Rule3's carry (measure.meshes), the lay's reach the most of them from a site to its nearest laid site; no float, no root and no search.
+Algebra: whole counts and sums: at every place, a round and a Node-clock with click lines, the sum of q over the trains, each side across a Mesh booked at both its places, and each line's q, a meeting one give of q -1 and one take of q +1; per clock, a site and a train, its meetings counted and its given, taken and net; the cone one Mesh a round, the Meshes the shorter way round each side by Rule3's carry (measure.meshes), the lay's reach the most of them from a site to its nearest laid site; no float, no root and no search.
 Board: schema 1.3's header (its sides, its train cards, and its setting file, setting.json by its name, read for its gears, each a site on the board with its counts and its tooth, the sites laid those with a count or a tooth not 0) and its click lines, each a round, a site, a train and its q; nothing of the board's state, no slot, plan or act.
 Clicks: seven readings, each read SHOWN, or NOT SHOWN with its first counterexample named, or NOT READ with its cause named, or NO CLICK, the owner's phrase, where the record holds no click line, before any other cause: shadow's four, the books at each click (row 15's first reading on clicks.py's counts, in row 15's order), a duration as a clock's own count (D6) and the twins (D7), not read, the act holding no clock's own count and every 1.3 clock standing at its Node-clock, and the cone check by click (D8 on measure.past), not read where no line could stand outside the lay's cone; and the click board's three, the meetings, each clock's line of meetings, the order counted with no duration, and space by light's echo (reading 7), not read while no rule tells light's click lines from the others.
 """
@@ -9,6 +9,8 @@ from typing import Any
 
 from tensor24.decoder import clicks, measure, records
 from tensor24.decoder.records import Line, Record, whole
+from tensor24.decoder.sides import formed
+from tensor24.record import schema
 
 ABSENT = "NO CLICK"
 NO_LINE = "the record holds no click line: not in the click world"
@@ -64,26 +66,45 @@ def spread(counts: list[int]) -> str:
     return f"{low}" if low == high else f"{low} to {high}"
 
 
+def across(lines: list[Line]) -> tuple[dict[clicks.Place, int], int]:
+    """Each side across a Mesh (schema 1.4) booked at its far place, as its own line books it at its own place: at its round and the Node-clock it names, its own q, which its partner's q, booked there through the partner's line, closes, so each edge across a Mesh closes at both its places; and the sides so booked counted, a side off its form booking nothing (the sides' guard refuses it)."""
+    found: dict[clicks.Place, int] = {}
+    held = [(e, side) for e in lines if isinstance(e.get("across"), list) for side in e["across"]]
+    sides = [
+        (e["round"], at, q)
+        for e, side in held
+        if formed(side, schema.ACROSS)
+        for _, at, q, _, _ in [side]
+    ]
+    for round_, at, q in sides:
+        found[(round_, at)] = found.get((round_, at), 0) + q
+    return found, len(sides)
+
+
 def books(record: Record) -> Verdict:
-    """The books at each click, row 15's first reading on 1.3's click lines in row 15's order: at every place whose lines all hold q the sum of q over the trains, NOT SHOWN at the first not 0 with the first line lacking q named beside it, else NOT READ naming that line, else SHOWN; beside it, per train (every card, one with no line at 0) and per Node-clock, the lines, given, taken and net."""
+    """The books at each click, row 15's first reading on the click lines in row 15's order: at every place whose lines all hold q the sum of q over the trains, each side across a Mesh booked at both its places (its own line's q at its own, its own q at the far place it names, where its partner's closes it; the Boss's word of 06:0x UTC), so a place closes where each of its edges, in its site and across a Mesh, closes, NOT SHOWN at the first not 0 with the first line lacking q named beside it, else NOT READ naming that line, else SHOWN; beside it, per train (every card, one with no line at 0) and per Node-clock, the lines, given, taken and net."""
     if not clicks.listed(record):
         return measure.verdict(ABSENT, NO_LINE)
     held = clicks.counted(record)
     gaps, lacks = lacking(held.lines, ("q",), "its books are")
     cards = [t["index"] for t in record.header.get("trains", []) if whole(t.get("index"))]
     trains = {t: held.trains.get(t, clicks.Tally(0, 0, 0, 0)) for t in cards}
-    sums = [
-        (place, total) for place, total in sorted(clicks.summed(held.lines).items()) if place not in gaps
-    ]
+    booked, crossed = clicks.summed(held.lines), across(held.lines)
+    for place, q in crossed[0].items():
+        booked[place] = booked.get(place, 0) + q
+    sums = [(place, total) for place, total in sorted(booked.items()) if place not in gaps]
     open_ = [(place, total) for place, total in sums if total != 0]
     readings = {"trains": trains, "sites": held.sites, "places": len(sums)}
+    each = (
+        f", each of the {crossed[1]} sides across a Mesh booked at both its places" if crossed[1] else ""
+    )
     if open_:
         (round_, site), total = open_[0]
-        cause = f"the sum of q over the trains is {total} at round {round_}, site {site}: not 0 at {len(open_)} of {len(sums)} places"
+        cause = f"the sum of q over the trains is {total} at round {round_}, site {site}{each}: not 0 at {len(open_)} of {len(sums)} places"
         return measure.verdict("NOT SHOWN", f"{cause}; {lacks}" if lacks else cause, **readings)
     if lacks:
         return measure.verdict("NOT READ", lacks, **readings)
-    cause = f"the sum of q over the trains is 0 at {len(sums)} of {len(sums)} places"
+    cause = f"the sum of q over the trains is 0 at {len(sums)} of {len(sums)} places{each}"
     return measure.verdict("SHOWN", cause, **readings)
 
 

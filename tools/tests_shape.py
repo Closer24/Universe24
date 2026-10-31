@@ -60,6 +60,7 @@ TENSOR24_EDGES = "Tensor24's Mesh edges, writer B's, its room on the Boss's word
 # every test file's budget is its present lines and a fixed slack, on the owner's word of 2026-10-31, 01:2x UTC
 # ("unnecessary blockers and bureaucracy: throw them out"), in place of an exact budget; the other rules stand
 SLACK = 40
+TENSOR24_DECODER_SIDES = "Tensor24's decoder on schema 1.4's sides, writer C's, its budget on the Boss's word under decision 26 (a second file for the new tests takes its own budget) and his rulings of 2026-10-31, 04:3x and 04:4x UTC: one click line for the three clicks, one entry per edge side with its scalar tooth, each edge closing at its place (the owner's word of 03:4x UTC), on records written in memory: a place where three clocks meet read, and every rule of the sides refused by its own cause and read without the guard; on the owner's list (M8); raised to 102 by writer E for the books across a Mesh, each side booked at both its places, their yes and their no (the Boss's word of 06:0x UTC)."
 ROOM = {  # the room given by name: the test or the file, its lines and the reason
     "tests/frame.py": (237 + SLACK, TENSOR24_FRAME),
     "tests/test_the_tensor24_engine.py": (300 + SLACK, TENSOR24_ENGINE),
@@ -68,6 +69,7 @@ ROOM = {  # the room given by name: the test or the file, its lines and the reas
     "tests/test_the_tensor24_decoder_cases.py": (168 + SLACK, TENSOR24_DECODER_CASES),
     "tests/test_the_tensor24_decoder_measure.py": (21 + SLACK, TENSOR24_DECODER_MEASURE),
     "tests/test_the_tensor24_decoder_meetings.py": (158 + SLACK, TENSOR24_DECODER_MEETINGS),
+    "tests/test_the_tensor24_decoder_sides.py": (102 + SLACK, TENSOR24_DECODER_SIDES),
     "tests/test_the_tensor24_files.py": (310 + SLACK, TENSOR24_FILES),
     "tests/test_the_tensor24_run.py": (295 + SLACK, TENSOR24_RUN),
     "tests/test_the_tensor24_worlds.py": (34 + SLACK, TENSOR24_WORLDS),
