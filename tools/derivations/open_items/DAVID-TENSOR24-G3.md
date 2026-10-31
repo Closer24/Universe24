@@ -40,11 +40,12 @@ the law's four layers (Postulate 4, item (10)).
   script prints it.
 - **The end pair**, a new mathematician and a new physicist, read the fourteenth text (toys-5 817bc3018). Both
   reproduced the probes byte for byte and returned NOT PASSED: the mathematician on four items (B1, the pump's wave
-  named by half the size's beat, a factor 2 off in the text's own measure; B2, the tied train the unit spring only
-  until the hand's first step; B3, the tied train's own tongue; B4, the window at small R) with twelve minors; the
-  physicist on five (B1, a second tongue near the size's own beat; B2, words of physics for the tied spring; B3,
-  section 5's answers; B4, what the rests' shapes carry, claimed as clock facts with no probe; B5, the probe's labels
-  for row 3) with eight. The fifteenth text folds every item (section 15).
+  named by half the size's beat, a factor 2 off in the text's own measure; B2, the tied train the unit spring only until
+  the hand's first step; B3, the tied train's own tongue; B4, the window at small R) with twelve minors; the physicist
+  on five (B1, a second tongue near the size's own beat; B2, words of physics for the tied spring; B3, section 5's
+  answers; B4, what the rests' shapes carry, claimed as clock facts with no probe; B5, the probe's labels for row 3)
+  with eight. The fifteenth text folds every item (section 15); both PASSED it (toys-5 3bbe5ab73), and their notes are
+  folded at section 15's end.
 
 **The finding in one line:** a hat on the held hand's norm, V = hat (|k|^2 - n)^2, laid as three kinds of monomials of
 the vertex law, holds the hand still at every whole rest of |k|^2 = n; its angle is not free, and its tie is a declared
@@ -68,29 +69,31 @@ spring until the hand's first step.
 - **The tie reads the hand, and until the hand's first step it is the unit spring:** a tied train's spring is
   2 tie |k|^2, its beat from the hand's rest. The tie's push on the hand, -2 tie x^2 k_a, never changes sign, and the
   hand's tooth gathers it: the hand's count steps once the summed push passes W / 2, after about W / (2 tie A^2 R)
-  rounds at a Node-clock of tied amplitude A. Before that step the tied train equals the unit spring with no hand bit
-  for bit: at the probe's strengths and tied amplitudes 2, 10 and 40, in 2,000 of 2,000 rounds (the mathematician's
-  h8_tie). By the same tooth any amplitude steps the hand in a long enough run, and the tied train departs after it:
-  at 40 the hand moves from round 678 (3 (f)). So the tied spring 2 tie R^2, its strengths tie and R from the universe
-  file, is a declared spring in substance before the hand's first step, as on frame 6.
+  rounds at a Node-clock of tied amplitude A. Until that step, and in the runs for a while after it, the tied train
+  equals the unit spring with no hand bit for bit: at the probe's strengths and tied amplitudes 2, 10 and 40, in 2,000
+  of 2,000 rounds (the mathematician's h8_tie), though at 40 the hand moves from round 678. By the same tooth any
+  amplitude steps the hand in a long enough run, and in every case run the tied train departs after the step, 62 to
+  5,317 rounds after it (3 (f)). So the tied spring 2 tie R^2, its strengths tie and R from the universe file, is a
+  declared spring in substance before the hand's first step, as on frame 6.
 - **A push across k turns the hand and leaves the tied beat for slow turns only:** the turn stretches the hand by
   d / R = (Omega / omega_s)^2, omega_s the size's frequency, whose square is its beat at small beats; the tied beat
   follows (73 to 79 sign changes at turns of 25 to 200 counts a round, his h8_tie); with no damping a sustained push
   spins the hand up without bound.
 - **The same law on four rows is the quaternion:** its rests are a sphere, built here by products of whole quaternions,
-  and every loop of rests shrinks; on two rows they are a circle, round which a ring's turn count changes only through
-  the top or across one Mesh of opposite hands (section 1). What these shapes carry is owed in the click world
-  (section 12).
+  and every loop of rests shrinks; on two rows they are a circle, round which a ring's turn count changes only by
+  passing the top or a Mesh of opposite hands (section 1). What these shapes carry is owed in the click world (section
+  12).
 - **The window is the hand's whole range:** along the radius the hat's stiffness is 4 hat (3 |k|^2 - n), 8 hat n at the
   rest and 20 hat n at |k|^2 = 2 n, the far turn of a hand that rolls from the top. Mesh-less the act runs away inside
-  the eighth text's window (his h8_window), and inside the frozen bound 20 hat n < 4 W too: at 20 hat n = 3.5, 3.75
-  and 3.9 W every lay laid across the hat goes away in 10 to 77 rounds, at 3 W all four lays, at 2 W two of four, and
-  from W down every lay stays bounded over 6,000 rounds (his h9_b1 and h9_sweep, on the ninth text). The frozen bound is
-  a guide, necessary only for the linearization at the rest, and not sufficient: with the size's beat 8 hat n / W near
-  1, a swing across the hat overshoots, the step's energy not the continuum's. The window for swings that reach the top
-  is the bound measured over long runs, 20 hat n <= W, a board reading at the R measured, 244 and 3,125. At small R it
-  fails: at 20 hat n = W, from R = 4 to 40, lays off the axis go away within 20,000 rounds (the end pair's
-  mathematician's window_top, a reader's runs outside the tree). The corrected frame's lower bound on R is OPEN.
+  the eighth text's window (his h8_window), and inside the frozen bound 20 hat n < 4 W too: at 20 hat n = 3.5, 3.75 and
+  3.9 W every lay laid across the hat goes away in 10 to 77 rounds, at 3 W all four lays, at 2 W two of four, and from W
+  down every lay stays bounded over 6,000 rounds (his h9_b1 and h9_sweep, on the ninth text). The frozen bound is a
+  guide, only its form at the rest, 2 SUM_6 g + 8 hat n < 4 W, being necessary (for the linearization there), and it is
+  not sufficient: with the size's beat 8 hat n / W near 1, a swing across the hat overshoots, the step's energy not the
+  continuum's. The window for swings that reach the top is the bound measured over long runs, 20 hat n <= W, a board
+  reading at the R measured, 244 and 3,125. At small R it fails: at 20 hat n = W, from R = 4 to 40, lays off the axis go
+  away within 20,000 rounds (the end pair's mathematician's window_top, a reader's runs outside the tree). The corrected
+  frame's lower bound on R is OPEN.
 - **Its count of the size is the edge's at small swings:** at the probe's beat and R the act counts the recurrence's 40
   sign changes from about 50 counts off the rest up; below, the edge's staircase (FRAMES 1), as with no hat (his
   h8_small). The threshold is the swing's speed, not a count: d^2 x 8 hat R^2 / W of about 10 or more, inside the top
@@ -183,12 +186,12 @@ spring until the hand's first step.
     about tie d / (hat R) of 2 hat n: at first order the size pumps it only where 2 hat n lies inside its band to within
     that reach (the end pair's mathematician's tied_tongue: at hat 4 and tie 1, a reach of 25 thousandths of 2 hat n,
     the band's top wave grows at 975 to 1,010 thousandths and not at 900 or 950). At the probe's strengths (tie 3, the
-    tied grip W/100) the band on a ring runs from 6 n to 86 n: 2 hat n = 2 n lies below its foot, but the size's own
-    beat, 8 hat n, lies inside. On a ring of 256 with the held rows Mesh-less, laid alike at (R + d, 0), the tied train
-    seeded 100 at one Node-clock, its largest |x| stays within 37 to 106 over 20,000 rounds at d = 312 and 625 and
-    reaches 706 at d = 938; with tie 5, the band's foot 10 n above 8 hat n, it stays within 44 to 114 at d = 938;
-    at d = 1,250 both grow, the pumping broad; with the held grip W/6 it grows from 47 to 5,473 at d = 938 (the end
-    pair's physicist's tied_fullbeat runs, a reader's runs outside the tree).
+    tied grip W/100) the band on a ring runs from 6 n to 86 n: 2 hat n = 2 n lies below its foot, but a wave at the
+    size's own beat, its spring 8 hat n, lies inside. On a ring of 256 with the held rows Mesh-less, laid alike at (R +
+    d, 0), the tied train seeded 100 at one Node-clock, its largest |x| stays within 37 to 106 over 20,000 rounds at d =
+    312 and 625 and reaches 706 at d = 938; with tie 5, the band's foot at 10 n, 2 n above 8 hat n, it stays within 44
+    to 114 at d = 938; at d = 1,250 both grow, the pumping broad; with the held grip W/6 it grows from 47 to 5,473 at d
+    = 938 (the end pair's physicist's tied_fullbeat runs, a reader's runs outside the tree).
   - Mesh-less the push on the hand, -4 hat (|k|^2 - n) k, is along k, so the turn k_0 k_1' - k_1 k_0' is kept. The
     size's own swing, turned, solves the angle's equation exactly, and its second solution grows only linearly, with the
     turn: no tongue at any swing that keeps the hand off the top. A hand laid still at (R + d, k_1) has turn 0 and moves
@@ -290,11 +293,13 @@ of the arc.
   - the hand's |k|^2 - n within -8,303 to 7,052 ppm: the hand answers the tied wave;
   - against the unit spring (tie n; x, x, unit, unit) with no hand: the tied train departs in 1,836 of 2,000 rounds,
     first at round 161. At 1, 5 and 20 times the mode (tied amplitudes 2, 10 and 40) it departs in 0 of 2,000 (the
-    mathematician's h8_tie). That is a run length, not a room: the hand's tooth gathers the tie's push, of one sign,
-    and steps the hand after about W / (2 tie A^2 R) rounds, and the tied train departs after that step. At amplitude
-    40 the hand moves from round 678 (651 by that count); at 30, from round 1,126, the tied train departing from round
-    1,939; at 10, over 20,000 rounds, the hand moves from round 8,475 and the tied train departs from round 8,537 (the
-    end pair's mathematician's tie_room, a reader's runs outside the tree).
+    mathematician's h8_tie). That is a run length, not a room: the hand's tooth gathers the tie's push, of one sign, and
+    steps the hand after about W / (2 tie A^2 R) rounds; in every case run the tied train departs after that step, which
+    is seen, not derived. At amplitude 40 the hand moves from round 678 (651 by that count) and the tied train departs
+    from round 5,995; at 30, from round 1,126 (1,157), the tied train departing from round 1,939; at 10, over 20,000
+    rounds, the hand moves from round 8,475 (10,416 by that count, the step about a fifth early) and the tied train
+    departs from round 8,537 (the end pair's mathematician's tie_room and its physicist's reruns, readers' runs outside
+    the tree).
 - **(g) A push across k:** (f)'s lay with the hand turning, b = (R, -25): k_1 changes sign 4 times, two turns;
   |k|^2 - n within -14,933 to 72,607 ppm (the turn's outward stretch, W R Omega^2 = 8 hat n d, near 32,000 ppm in
   |k|^2 at Omega = 25 / R, and the size's swing about it); the tied train changes sign 73 times, as with the still hand.
@@ -366,9 +371,9 @@ of the arc.
   size to everything tied (tied waves to a size to angle waves); no train on the act takes it up (OPEN). Mesh-less
   neither the angle nor the size travels: each Node-clock's hand is a local gear with no waves.
 - **Four rows.** V on four rows, a quaternion hand, is symmetric under O(4). Its rests are the 3-sphere, where every
-  loop of rests shrinks. The rests of two rows are a circle, round which a ring's turn count changes only through the
-  top or across one Mesh of opposite hands, at section 1's costs; the hand of the frame is two rows (named). What
-  these shapes carry is owed in the click world (section 12).
+  loop of rests shrinks. The rests of two rows are a circle, round which a ring's turn count changes only by passing the
+  top or a Mesh of opposite hands, at section 1's costs; the hand of the frame is two rows (named). What these shapes
+  carry is owed in the click world (section 12).
 - **The anchor.** A quaternion product of the hand with two half-speed rows, Big Pic's road, would tie those rows to the
   hand's rest. The half-speed kinds are not on the act (NOT_CLOSED 8), so it is named and not built; what it would
   mean is owed in the click world (section 12).
@@ -385,10 +390,11 @@ of the arc.
   angle has no wave for the size to feed. With Meshes the angle travels, and a size swinging a little pumps it where
   the board holds a wave whose beat is near a quarter of the size's ((l), the physicist's r1; section 2).
 - **The frame's mathematician** (g3_math, through the Boss's 19:1x):
-  - item 2, the held hand bit for bit the unit spring within the room: it stands only before the hand's first step. At
-    the probe's strengths and tied amplitudes 2, 10 and 40 the tied train equals the unit spring in 2,000 of 2,000
-    rounds; the hand's tooth steps the hand after about W / (2 tie A^2 R) rounds, and the tied train departs after it
-    (probe (f); 3 (f)). A declared spring in substance before that step, the frame's first price;
+  - item 2, the held hand bit for bit the unit spring within the room: it stands until the hand's first step, and in the
+    runs a while after it. At the probe's strengths and tied amplitudes 2, 10 and 40 the tied train equals the unit
+    spring in 2,000 of 2,000 rounds; the hand's tooth steps the hand after about W / (2 tie A^2 R) rounds, and in every
+    case run the tied train departs after that step (probe (f); 3 (f)). A declared spring in substance before that step,
+    the frame's first price;
   - item 3, decision 40 (g): not met. The seed has no quadrature, phase, sense or turning tooth to set, but n = R^2 is
     CHOSEN in the universe file and the still hand's wind D is 0. For the owner's word, with NOT_CLOSED 19;
   - item 4, a push on k not along k breaking every tied beat: the push turns the hand and leaves the tied beat for slow
@@ -404,7 +410,7 @@ of the arc.
   the board's clock fact: a still hand has no swing to tie through, and its size beats at 8 hat n / W, a strength apart
   from the tied spring; its physics owed in the click world (section 12).
 - His B (a ring's winding held for one mode only): the board's clock fact: the hat's rests are a circle on two rows,
-  round which a ring's turn count changes only through the top or across one Mesh of opposite hands (section 1), and a
+  round which a ring's turn count changes only by passing the top or a Mesh of opposite hands (section 1), and a
   sphere on four, where every loop of rests shrinks; what these shapes carry is owed in the click world (section 12).
 - The physicist's A (the size's swing feeding a train's waves): the board's clock fact: a still hand holds no swing to
   give; a size swinging a little pumps angle waves with Meshes where the board holds a wave whose beat is near a
@@ -428,18 +434,18 @@ of the arc.
     every Node-clock, still, now and before alike, the tooth 0. The tie keeps its form, (hold x f x C_yz; x_y, x_z,
     k_rho, k_rho), its spring at the rest 2 hold f R^2.
   - **The passing:** NOT_CLOSED 29's road for its four-leg monomials, the tie's and the hat's own, OPEN. The middle
-    form (Big Pic's 6535643629) was refused by its pair on the shipped room and on the size's fall; the background form
-    keeps both; a split at the held hand's rest is a candidate (6536047021).
+    form (Big Pic's 6535643629) was refused by its pair on the shipped room and on booking the tied spring's energy to
+    the held train; the background form keeps both; a split at the held hand's rest is a candidate (6536047021).
   - **The held rows Mesh-less,** as built: the angle does not travel, and the size has no angle wave to feed; a seeded
     angle drifts by the edge while the size swings (a price below).
   - **Strengths, CHOSEN in the universe file:** "hat", at least 1, and "held", the hand's rest R, at least 1, the
     window's lower bound on R OPEN (below).
     - The window, for swings that reach the top: 20 hat R^2 at most W Mesh-less, measured over long runs at R = 244 and
       3,125 only; at small R it fails (from R = 4 to 40 lays off the axis go away at 20 hat R^2 = W, the end pair's
-      mathematician's window_top), so the corrected frame's lower bound on R is OPEN. The frozen bound, 20 hat R^2
-      below 4 W, is a guide, necessary only for the linearization at the rest, and not sufficient; with Meshes the
-      guide is 2 SUM_6 g_held + 20 hat R^2 below 4 W and the measured bound OPEN; or the lays bounded to small swings
-      about the rest.
+      mathematician's window_top), so the corrected frame's lower bound on R is OPEN. The frozen bound, 20 hat R^2 below
+      4 W, is a guide, only its form at the rest, 2 SUM_6 g + 8 hat n < 4 W, being necessary (for the linearization
+      there), and it is not sufficient; with Meshes the guide is 2 SUM_6 g_held + 20 hat R^2 below 4 W and the measured
+      bound OPEN; or the lays bounded to small swings about the rest.
     - The tie's factor: f = carry(rest, Gamma R^2, 0) holds the frame's tied beat exactly only where Gamma R^2 divides
       rest, and floors to 0, no tie, once Gamma R^2 exceeds it (the mathematician's m3): at the click world's den 1 and
       Gamma 10^4, R is capped at 244 (the Boss), so a fine R needs den raised.
@@ -460,15 +466,16 @@ of the arc.
     - the A2 flip with the twisted tooth commuting with the act, with a tooth laid at -D.
   - **Prices, named:**
     - decision 40 (g) unmet: the still hand holds D = 0, and R is CHOSEN (for the owner);
-    - before the hand's first step the tie is a declared spring in substance, as on frame 6; the tied train departs
-      after that step, about W / (2 tie A^2 R) rounds in;
+    - before the hand's first step the tie is a declared spring in substance, as on frame 6; the step comes after about
+      W / (2 tie A^2 R) rounds (678, 1,126 and 8,475 measured at tied amplitudes 40, 30 and 10, against 651, 1,157 and
+      10,416), and in every case run the tied train departs after it;
     - a large size swing feeds the tied train (section 2);
     - R fine against the tied waves: at R = 1 the frame's tied wave throws it off (probe (k));
     - a sustained push across k spins the hand up, with no damping;
     - Mesh-less, a seeded angle drifts while the size swings, by the edge's rounding (probe (l));
     - the still hand's 0 is term 5's form and a chosen zero: no potential energy weighs;
-    - on two rows the rests form a circle, a ring's turn count changing only through the top or across one Mesh of
-      opposite hands; on four rows a sphere, every loop of rests shrinking;
+    - on two rows the rests form a circle, a ring's turn count changing only by passing the top or a Mesh of opposite
+      hands; on four rows a sphere, every loop of rests shrinking;
     - the anchor waits on the half-speed kinds.
   - **Replaced by:** this text passing its pair; NOT_CLOSED 29's road passing its pair; the owner's word on a
     potential in the law (NOT_CLOSED 19) and on decision 40 (g).
@@ -502,9 +509,10 @@ of the arc.
   - the four rows' A2 flip, run back and kinds;
   - the edge under a sub-count angle: a seeded angle's drift Mesh-less, the count moved by the rounded velocity, of the
     kind NOT_CLOSED 23 names for the board's wave;
-  - a swinging hand's settling: with no damping, a symmetric seed off the rest swings about it for good; with Meshes and
-    any turn the size drains into angle waves where the board holds a wave whose beat is near a quarter of the size's
-    (3 (l)), and Mesh-less the act's drift moves the swing's energy into the turn (the physicist's s1);
+  - a swinging hand's settling: with no damping, a symmetric seed off the rest swings about it for good with the tied
+    train at 0, and with any tied seed a large swing feeds the tied train; with Meshes and any turn the size drains into
+    angle waves where the board holds a wave whose beat is near a quarter of the size's (3 (l)), and Mesh-less the act's
+    drift moves the swing's energy into the turn (the physicist's s1);
   - the corrected frame's lower bound on R, below which the measured window fails Mesh-less (2; 6);
   - the count's pass criterion over long runs (6).
 - **Departures:** none stated on the board. Whether these clock facts depart from nature is owed in the click world
@@ -513,7 +521,7 @@ of the arc.
 
 ## 8. The eighth text's readers, folded (the ninth text)
 
-History only, withdrawn (section 12).
+Sections 8 to 11 are history only, withdrawn (section 12).
 
 **Big Pic's re-check** (6535643629, item 4): every item of both readers stands.
 - The angle pump stands with Meshes; the Mesh-less control holds from above (Mathieu at a = 0, q = 2 d / R, stable
@@ -805,3 +813,23 @@ m7, the mean press, as the mathematician's m2 (2); m8, the tied spring 2 tie |k|
 - **What the text searched again** before section 8: every "half", "beat", "omega", "radian", "room", "mass",
   "weigh", "quantum", "vacuum", "hot", "decay", "string", "texture", "wall", "monopole", "light", "probe (l)", "wide",
   "necessary", "exact", "sqrt" and decimal.
+
+**Both end readers PASSED the fifteenth text** (toys-5 3bbe5ab73), each rerunning both probes on node-live's src at
+939fa65a7 byte for byte, the eight relabelled lines of g3_hat.txt holding the same 237 numbers. Their notes, none
+blocking, folded here:
+- the run length W / (2 tie A^2 R) a guide, with the measured rounds beside it (678, 1,126 and 8,475 against 651,
+  1,157 and 10,416), the step about a fifth early at amplitude 10 (the physicist's n1; the finding; 3 (f); 6);
+- the equality with the unit spring holding until the step and in the runs a while after it, the tied train departing
+  62 to 5,317 rounds after the step, and that departure seen in every case run, not derived (the physicist's n2, the
+  mathematician's n5; the finding; 3 (f); 5; 6);
+- the refused middle form named in the header's words, booking the tied spring's energy to the held train (the
+  physicist's n3; 6);
+- the settling row: a symmetric seed swings for good with the tied train at 0, and with any tied seed a large swing
+  feeds the tied train (the physicist's n4; 7);
+- "history only" set over sections 8 to 11 (the physicist's n5; 8);
+- the frozen bound: only its form at the rest, 2 SUM_6 g + 8 hat n < 4 W, necessary (the mathematician's n1; the
+  finding; 6);
+- a wave at the size's own beat named by its spring, 8 hat n, and the tie-5 band's foot at 10 n, 2 n above it (the
+  mathematician's n2 and n3; 2);
+- a ring's turn count changing only by passing the top or a Mesh of opposite hands, since one round's jump can pass
+  either without landing on it (the mathematician's n4; the finding; 1; 4; 5; 6).
