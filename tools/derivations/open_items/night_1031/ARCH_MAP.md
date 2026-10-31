@@ -4,7 +4,7 @@ The owner's word (06:2x UTC): "Verify with Sofer that the architecture is synced
 part of the architecture has its derivation. The derivation means: how it is explained in the clock, how it is
 explained in the algebra, and how it is in the click world." This map is read only: no repository file was edited.
 
-S below is /tmp/claude-0/-home-user-Universe24/e136d210-1915-523c-8c8e-0abbdf97855b/scratchpad.
+S below is the Boss's scratchpad folder (not in the repository).
 
 ## What was read
 
