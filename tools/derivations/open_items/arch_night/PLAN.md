@@ -65,9 +65,12 @@ ledger byte-identical to 87f88322d's; the click world exact at 996df846f (rerun 
 the held train (2) with 0 lines, the giver (3) at (2106, 1107, 999, -108) and the taker (4) at (2106, 999, 1107, 108),
 digest f351582ede39, its record and ledger byte-identical to the earlier run's; so all five worlds are measured at the
 candidate's sha. Now: the audit of main for the owner (his ask of 00:3x UTC; Sofer and an independent hostile auditor;
-the owner's list, first); C5, the basic click decoder (writer C, the owner's build order of 23:5x UTC; FRAMES.md 13),
-then its reader, as its own small candidate; then Sofer's road, the gate's own files, law line 102 and the documents,
-for the owner's separate word; Big Pic's road beyond (its section below).
+the owner's list, first); C5, the basic click decoder (writer C, the owner's build order of 23:5x UTC; FRAMES.md 13;
+built as 49e97c992), its reader NOT PASSED (the fourth hostile code reader, scratchpad/hcr4/REPORT.md: one BLOCKING,
+D8 on the click world, and five MINOR), all folded in C6 on the Boss's rulings of 00:5x UTC; C6 at the top of the
+road, top priority, the decoder built accordingly with the fold (FRAMES.md 13b); C5 with C6 as one small candidate
+after C6's reader; then Sofer's road, the gate's own files, law line 102 and the documents, for the owner's separate
+word; Big Pic's road beyond (its section below).
 
 The second hostile code reader read f72067cdf..87f88322d (scratchpad/hcr2/REPORT.md: no BLOCKING, seven MINOR). DONE:
 - A (7dcb31607): his 6, A's part, state.py's docstrings saying what the loader lays.
@@ -305,6 +308,65 @@ the clock deeper where the matter is.
   rows (which read NOT READ by name on a 1.3 record, their causes the cause lines they already have).
 - Test (decoder): the counts on the in-memory record; the tool prints them and raises nothing.
 
+### Commit C6 (C; top priority, on C5's 49e97c992, with its reader's fold): the decoder built accordingly, the click board read as meetings (FRAMES.md 13b)
+
+- The owner's word (00:3x UTC, the Boss's translation, whole): "The board is clocks that mesh with each other. The
+  click board is the clocks' meetings: each event is one quantum passing from one clock to another clock, at one
+  place. There is no time axis in it; there is only the order of the events and each clock's count. Space is read in
+  it only through an echo of light between clocks. To mend clocks, that is on the board. To mend a meeting of clocks,
+  you look in the clicks. The decoder needs to be built accordingly. Top priority to put this in ... according to
+  everything Big Pic wrote."
+- The writer: C. The change, as FRAMES.md 13b has it on SHADOW's answer (a clock is the record's (site, train); the
+  act holds no clock's own count): decoder/shadow.py keeps C5's shadow(record) and its four, their keys and their
+  order, and grows by click_board(record), three readings on the 1.3 record, each by its own function: (a) the
+  meetings (meetings), beside reading 1 and not in its place, SHOWN where every place holds one give and one take of
+  one quantum, the two clocks named, the round its order alone; (b) each clock's line of meetings (clock_lines), its
+  meetings counted and labelled "the order counted, no duration", its books beside it (given, taken, net); (e) space
+  by light's echo between clocks (echo, reading 7), computed (the Boss's overrule: no typed verdict): NO CLICK on a
+  record with no click line, otherwise NOT READ, its cause "light's echo is not read: no rule yet tells light's click
+  lines from the others (reading 7, owed)" (the light rule, by character and not by name, named for later only). C5's
+  four stand: (c) D6 reads NOT READ, its cause mended to "the act holds no clock's own count and 1.3 writes none; the
+  click tooth is the books' remainder"; (d) the twins NOT READ, their own cause "every 1.3 clock stands at its
+  Node-clock"; (f) the books beside the meetings; D8 and the books with the fourth code reader's fold (below). A
+  record with no click line reads NO CLICK on all seven, the owner's phrase, before any other cause.
+  tools/tensor24_decode.py prints the three in its click-world block after C5's four, under (b) one line per clock,
+  the refusal line staying the block's last.
+- The mend for writer C (the Boss's word with SHADOW's answer): "would need a root" struck from C5's cause, as from
+  FRAMES.md 13: in shadow.py the constant NO_CLOCK renamed NO_COUNT, its text the mended cause, and D7's cause a
+  constant of its own, AT_NODE; C5's own text that says 1.3 names no clock (shadow.py's Clicks layer, the docstrings
+  of duration and twins, the test's name and docstring) says the mended causes; C5's assertion that D7's cause holds
+  D6's becomes D7's own. Each a line for a line: C5's test file stays at 597, its ROOM unchanged.
+- The fourth code reader's fold (his NOT PASSED on b1a50bb33..49e97c992, scratchpad/hcr4/REPORT.md; the Boss's rulings
+  of 00:5x UTC), all in C6, as FRAMES.md 13b has it: BLOCKING 1, D8 reads NOT READ where no line could stand outside
+  the lay's cone (a line at a laid site cannot, nor one at or past the board's diameter in rounds), on the click world
+  "the lay's cone covers the board's 27 sites from round 0, before the first click line at round 91: no line could
+  stand outside it", its test a ring of seven with two gears laid, neither at site 0, one line inside one cone only
+  and one outside both; MINOR 1, the missing asserts; MINOR 2, the books in row 15's order (NOT SHOWN first with the
+  gap named, then NOT READ, then SHOWN); MINOR 3, the check for a record of no click line inside each reading; MINOR
+  4, laid() reading NOT READ for a gear off the board and finding the setting file by its name; MINOR 5, the 1.2 twins
+  line labelled D7, the refusal printed only where the record holds no click of either kind, shadow.py's docstring
+  naming only what it reads.
+- The test: a second click-world test file, tests/test_the_tensor24_decoder_meetings.py, with its own ROOM entry and
+  its reason line (FRAMES.md 13b), the Boss's decision under decision 26, on the owner's list (M8) with C6: (a) the
+  yes a place of q = -1 and q = +1, the no a place of q = -2 and +2 and one of three lines (+1, +1 and -2), their
+  books closing, the mutant that reads the sum alone; (b) the yes two clocks meeting at rounds 2 and 9, two meetings
+  each with the label, the no a lone line, the mutants a duration by rounds (the yes fails it) and every line counted
+  a meeting (the no fails it); (e) NOT READ with its cause on (a)'s yes record and NO CLICK with the owner's phrase on
+  a record with no click line, the mutants that show SHOWN or read NO CLICK on a record with lines; and the fold's
+  tests (FRAMES.md 13b). The mutants named in the commit message. The decoder test file stays at 597, its ROOM
+  unchanged: the fold changes C5's click-world test a line for a line (its name and docstring, the four kinds with the
+  cone NOT READ on its edge record, the causes' constants) and adds none.
+- The measure: the tool run on the five worlds' records at the head, each output against FRAMES.md 13b's table. The
+  click world: (f) the books SHOWN, 0 of 2,106 places off; (a) the meetings SHOWN, one give and one take at 2,106 of
+  2,106 places (1,107 from train 3 to train 4, 999 the reverse); (b) SHOWN, 54 clocks of 78 meetings each, "the order
+  counted, no duration", the giver's 27 each net -4 and the taker's 27 each net +4; (c) and (d) read NOT READ with
+  their causes; D8 reads NOT READ, "the lay's cone covers the board's 27 sites from round 0, before the first click
+  line at round 91: no line could stand outside it"; (e) light's echo NOT READ, no rule yet tells light's click lines
+  from the others. The four worlds of no click line NO CLICK on all, the refusal line last.
+- The checks: the gate at 0 refusals, the full check exit 0, record_code_shape on shadow.py. The reader after it: a
+  hostile code reader on C5's head..C6, the fourth reader's six items checked closed, his folds by C. The road: C5
+  does not go alone; C5 with C6 goes as one small candidate once C6's reader passes it.
+
 ### Commit C5 (C; tonight, after the code already read): the basic click decoder (FRAMES.md 13)
 
 - The owner's word (his answer 3 of 23:5x UTC, the Boss's #2187 6536002736): "Build a basic decoder on the clicks that
@@ -327,8 +389,11 @@ the clock deeper where the matter is.
   CLICK on every reading, with the refusal line.
 - The checks: the gate at 0 refusals, the full check exit 0, record_code_shape on the new module.
 - The reader after it: a hostile code reader on 996df846f..C5 (the diff, the laws, the five outputs against the
-  table); his folds by C.
+  table); his folds by C. Read: the fourth hostile code reader, NOT PASSED (scratchpad/hcr4/REPORT.md: one BLOCKING,
+  D8 on the click world cannot fail, and five MINOR), all folded in C6 on the Boss's rulings of 00:5x UTC (FRAMES.md
+  13b).
 - The road: C5 follows main's b1a50bb33 as its own small candidate once its reader passes it (the Boss, 00:1x UTC).
+  Now: not alone; C5 with C6, after C6's reader.
 
 ### Commit B3 (B; after B2 and B4): the click world, examples/tensor24-click/
 
@@ -450,8 +515,12 @@ calibre condition).
   owner's explicit word ("yes, push now") after Sofer's APPROVED of b1a50bb33 (#2187 6536221372). The owner's word
   covers M8, the ROOM at main: frame 237, engine 300, load 155, run 295, decoder 572 (files 310 unchanged). CI
   ("Python checks") is running on it; its result to follow.
-- Next on the road: C5, the basic click decoder, as its own small candidate after its reader; then Sofer's road, the
-  gate's own files, law line 102 and the documents, not in main and still for the owner's separate word.
+- Next on the road, at its top: C6, top priority on the owner's word of 00:3x UTC ("The board is clocks that mesh with
+  each other. The click board is the clocks' meetings ... The decoder needs to be built accordingly."), the decoder
+  built accordingly (FRAMES.md 13b), with the fourth code reader's fold of C5 (his NOT PASSED on 49e97c992, the Boss's
+  rulings of 00:5x UTC). C5, the basic click decoder (49e97c992), does not go alone: C5 with C6 goes as one small
+  candidate after C6's reader; then Sofer's road, the gate's own files, law line 102 and the documents, not in main
+  and still for the owner's separate word.
 - The checks at the candidate's sha: `CHECK_BASE=origin/main python tools/check.py --full` exit 0; the hook's gate 0
   refusals, its notes listed (the KEYS notes for key, push, notch, hold, tie and mesh; B2's INDICATORs; the load
   test's PINs) for Sofer; the five worlds run by the run tool, each run back exact (tensor24, live, well, click,
@@ -469,14 +538,20 @@ calibre condition).
     (SEARCH, a bracket halved: derive/david_open/node/g3_strengths.py:200 and :427, in main since 9067de20d, before
     the owner's 17:20 word) and 15 notes (LENGTH: len(WAYS) at decoder/records.py:171 and len(ADDED) at
     record/schema.py:25; INDICATOR in load.py and plans.py; PIN in the load test). Sofer and an independent hostile
-    auditor audit main now; the result to follow.
+    auditor audit main now; the result to follow. Its first result (#2187 6536864716, both readings, item 1 (c)): the
+    well world's lay builds a cosine by the Chebyshev recurrence (derive/boss/well_lay/lay.py:49 to 60), forbidden as
+    law line 102 is worded, and FRAMES.md 11's "no root and no sine" for it was false (mended); writer B re-lays the
+    lump with no mode, on a held, Mesh-less train so that it stands (FRAMES.md 11), the pulse in two variants until
+    Big Pic rules on the 20 / 49 pair, which lays the live and mesh worlds' pulses too (NOT_CLOSED 35).
   - M8 (the first hostile code reader), DONE for main: the owner's word of 00:10 UTC covers it, main at b1a50bb33.
-    With C5, open: the decoder test's ROOM 572 -> 597, a 25-line rise against main's 572. tests_shape's ROOM rises
-    against the old main, frame 230 -> 237, engine 202 -> 300, load 113 -> 155 (its ceiling, by B5), run 285 -> 295
-    (by B's fold 484fb8d72), and the decoder lowered 600 -> 572 (the files test 310 at main's 310); the figures
-    re-read at 996df846f from tools/tests_shape.py against origin/main, unchanged. ARCHITECTURE section 4 says a ROOM
-    is not raised with a code change; these stand under the Boss's ceilings of the night, named and read by Sofer, not
-    hidden, and main takes them only on the owner's word (or the writer's and Sofer's, as section 4 names them).
+    With C5, open: the decoder test's ROOM 572 -> 597, a 25-line rise against main's 572. With C6, open: the second
+    click-world test file's own ROOM (the Boss's decision under decision 26), C6's tests and the fourth code reader's
+    fold in it, the decoder test's 597 unchanged. tests_shape's ROOM rises against the old main, frame 230 -> 237,
+    engine 202 -> 300, load 113 -> 155 (its ceiling, by B5), run 285 -> 295 (by B's fold 484fb8d72), and the decoder
+    lowered 600 -> 572 (the files test 310 at main's 310); the figures re-read at 996df846f from tools/tests_shape.py
+    against origin/main, unchanged. ARCHITECTURE section 4 says a ROOM is not raised with a code change; these stand
+    under the Boss's ceilings of the night, named and read by Sofer, not hidden, and main takes them only on the
+    owner's word (or the writer's and Sofer's, as section 4 names them).
   - M11: schema.MINOR = len(ADDED) at 3, a count behind a length with no cheap reading from the schema's structure
     (ARCHITECTURE section 6 tied reading it from the schema to 1.3); writer C names it open in schema.py's Algebra
     line (9ccbc6481).

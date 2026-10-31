@@ -23,6 +23,15 @@ click world is the board's three-dimensional shadow, where a click stands at a p
 click-world reading that would check it: the clicks at their places and the squares they read, by the basic click
 decoder (FRAMES.md 13) and two independent readings.
 
+The owner's rule (00:3x UTC, the Boss's translation, #2187 6536624082 and after; Big Pic's click board, 6536448148
+items 2 and 3): "The board is clocks that mesh with each other. The click board is the clocks' meetings: each event is
+one quantum passing from one clock to another clock, at one place. There is no time axis in it; there is only the
+order of the events and each clock's count. Space is read in it only through an echo of light between clocks. To mend
+clocks, that is on the board. To mend a meeting of clocks, you look in the clicks. The decoder needs to be built
+accordingly. Top priority to put this in ... according to everything Big Pic wrote." So the board is clocks meshing,
+and the click board their meetings; a clock's own working is mended and checked on the board, and a meeting of clocks
+in the clicks. The decoder is built accordingly: FRAMES.md 13b, PLAN C6, top priority.
+
 The architect, 2026-10-30, 18:5x UTC, for the Boss. The owner's words of tonight frame it: standing code of the whole
 system by morning; what is not sure goes in as a FRAME, the Boss approving after the fact; the laws of locality,
 whole numbers and no fakes are not broken; only generic laws, one rule for every family, read from the kinds and the
@@ -84,19 +93,22 @@ CHOSEN strengths), OPEN (no lawful form tonight; the price taken is named in NOT
   (the twisted 24 in the engine's test), B2b df4fa644c (term 5 in the books' form at dial 2, k0 = 12; the well world
   re-laid, its run back 128 of 128; its price NOT_CLOSED 30), e88150989 (A: term 5's books in the engine's
   docstrings), 575973a20 (A: B1's run back under the push held by hypothesis (d), M2, M12), e8161f301 (B3, the click
-  world), 36effecd5 (A3, term 13 measured on the edge), 9ccbc6481 (C: M10, M11 and M4), 214739ddf (A: step.py's Algebra
-  line states the half once), 484fb8d72 (B: M1 and M3, M4 and M6, M7, Sofer's measure.py seam and the square card's
-  winding), 87f88322d (B5: the gradient vertex and the mesh world; M5 closed), 7dcb31607 (A: state.py's docstrings,
-  the second reader's 6), 996df846f (B: the second reader's 1, 2, 3, 5 and 6) and b1a50bb33 (B: the third hostile code
-  reader's minors, hcr3/REPORT.md 1, 2 and 3). Every planned commit is DONE but the whole; no B2c. The checks at
-  996df846f: gate5 0 refusals with the same 6 notes; the full check exit 0, 27 passed; tensor24 10 of 10, live 100 of
-  100, well 128 of 128 and mesh 125 of 125, each exact, digests 540e503cad44, cfef203d5dd5, 05586b5db17f and
-  00fd62494c9a, every record and ledger byte-identical to 87f88322d's; the click world exact at 996df846f (rerun after
-  the container restart): 5,000 of 5,000 rounds undone, 4,212 click lines at 2,106 places, the books 0 (the sum of q
-  over the trains not 0 at 0 places), the held train (2) with 0 lines, the giver (3) at (2106, 1107, 999, -108) and
-  the taker (4) at (2106, 999, 1107, 108), digest f351582ede39, its record and ledger byte-identical to the earlier
-  run's; so all five worlds are measured at the candidate's sha. Now: C5, the basic click decoder (FRAMES.md 13), and
-  its reader, as its own small candidate; then Sofer's road for the owner's separate word; Big Pic's road beyond
+  world), 36effecd5 (A3, term 13 measured on the edge), 9ccbc6481 (C: M10, M11 and M4), 214739ddf (A: step.py's
+  Algebra line states the half once), 484fb8d72 (B: M1 and M3, M4 and M6, M7, Sofer's measure.py seam and the square
+  card's winding), 87f88322d (B5: the gradient vertex and the mesh world; M5 closed), 7dcb31607 (A: state.py's
+  docstrings, the second reader's 6), 996df846f (B: the second reader's 1, 2, 3, 5 and 6) and b1a50bb33 (B: the third
+  hostile code reader's minors, hcr3/REPORT.md 1, 2 and 3). Every planned commit is DONE but the whole; no B2c. The
+  checks at 996df846f: gate5 0 refusals with the same 6 notes; the full check exit 0, 27 passed; tensor24 10 of 10,
+  live 100 of 100, well 128 of 128 and mesh 125 of 125, each exact, digests 540e503cad44, cfef203d5dd5, 05586b5db17f
+  and 00fd62494c9a, every record and ledger byte-identical to 87f88322d's; the click world exact at 996df846f (rerun
+  after the container restart): 5,000 of 5,000 rounds undone, 4,212 click lines at 2,106 places, the books 0 (the sum
+  of q over the trains not 0 at 0 places), the held train (2) with 0 lines, the giver (3) at (2106, 1107, 999, -108)
+  and the taker (4) at (2106, 999, 1107, 108), digest f351582ede39, its record and ledger byte-identical to the
+  earlier run's; so all five worlds are measured at the candidate's sha. Now: C5, the basic click decoder (FRAMES.md
+  13), built as 49e97c992; its reader, the fourth hostile code reader (scratchpad/hcr4/REPORT.md), NOT PASSED it, one
+  BLOCKING (D8 on the click world cannot fail) and five MINOR, all folded in C6 on the Boss's rulings of 00:5x UTC; so
+  C6, top priority, the decoder built accordingly with the fold (FRAMES.md 13b, the owner's rule above), and C5 with
+  C6 as one small candidate after C6's reader; then Sofer's road for the owner's separate word; Big Pic's road beyond
   (PLAN.md).
 - The second hostile code reader on f72067cdf..87f88322d (scratchpad/hcr2/REPORT.md): no BLOCKING, seven MINOR, all
   folded by 996df846f (A 7dcb31607; B 996df846f; his 4 a named price, FRAMES.md 7 and NOT_CLOSED 4; his 7 the
@@ -216,10 +228,10 @@ local first test bed, the triple product their one invariant under the 24, odd u
 | World | Status | What it shows |
 |---|---|---|
 | tensor24 | BUILT/main | the one bang: light (A1, part 2) and the metric at rest; push 0, notch 0, key 1; no vertex, no click |
-| tensor24-live | BUILT/live | the light pulse along z at 2^40 counts, c = 1 / sqrt 6 Meshes a round, the run back exact |
-| tensor24-well | BUILT/live, re-laid under the books' form in B2b (push 1, k0 12, the notch h 120000) | the held lump in whole numbers (lay.py): the clock deeper where the lump is, the well 3 parts in 10^4 of W at its deepest, the pulse lagging 0.09 Mesh, the run back 128 of 128; the pulse train climbing to 1105 permille of its first tenth at 87f88322d (NOT_CLOSED 23); the second cone 1000142 to 1000302 ppm named OPEN; the metric's self-stress unpaid at 1 ppm of the matter's (NOT_CLOSED 30) |
+| tensor24-live | BUILT/live; its pulse laid one round back by the 20 / 49 pair, Big Pic's to rule (NOT_CLOSED 35) | the light pulse along z at 2^40 counts, c = 1 / sqrt 6 Meshes a round, the run back exact |
+| tensor24-well | BUILT/live, re-laid under the books' form in B2b (push 1, k0 12, the notch h 120000); its lay's mode a cosine by recurrence (main's audit, item 1 (c)), re-laid by writer B (FRAMES.md 11), its pulse's 20 / 49 Big Pic's to rule (NOT_CLOSED 35) | the held lump in whole numbers (lay.py): the clock deeper where the lump is, the well 3 parts in 10^4 of W at its deepest, the pulse lagging 0.09 Mesh, the run back 128 of 128; the pulse train climbing to 1105 permille of its first tenth at 87f88322d (NOT_CLOSED 23); the second cone 1000142 to 1000302 ppm named OPEN; the metric's self-stress unpaid at 1 ppm of the matter's (NOT_CLOSED 30) |
 | tensor24-click | BUILT/live as FRAME (B3 e8161f301) | the pair world on a cube of 3: the held hand (A1, A2) turning at (1, 0) everywhere (the frame's own spring; the hat not tonight), two tied hands (T1, T2), the giver a line hand at (40, 0, 0) and the taker at rest, the hands' tie 96000 chosen by the act (the plan's 12000 is silent), the key 50811429: 4212 click lines, the books 0 at every round and site, the held train silent with k.k = 1, inside the room for the whole run (at most 1600 of 2500), the 24 and the run back exact; the envelope beating on two normal modes |
-| tensor24-mesh | BUILT/live as FRAME (B5 87f88322d), its integers chosen by the act (the plan's left the room) | light (A1) on a tied hand through the gradient vertex (the Mesh leg) on a ring of 180 at Gamma 10^4, hold 1, mesh 200000, 125 ticks: the tied hand moves at 106 Node-clocks where the pulse passes, hold x.x at most 900 of 2500, the held hand's k.k 1, light ending at 944 permille, the run back exact; no click line, its exchange booked by no click tonight (NOT_CLOSED 4); the no: mesh 250000 leaves the room at round 111 |
+| tensor24-mesh | BUILT/live as FRAME (B5 87f88322d), its integers chosen by the act (the plan's left the room); its pulse laid by the 20 / 49 pair, Big Pic's to rule (NOT_CLOSED 35) | light (A1) on a tied hand through the gradient vertex (the Mesh leg) on a ring of 180 at Gamma 10^4, hold 1, mesh 200000, 125 ticks: the tied hand moves at 106 Node-clocks where the pulse passes, hold x.x at most 900 of 2500, the held hand's k.k 1, light ending at 944 permille, the run back exact; no click line, its exchange booked by no click tonight (NOT_CLOSED 4); the no: mesh 250000 leaves the room at round 111 |
 
 ## 6. Where a part works for one family only (the owner's word), and its generic frame
 
