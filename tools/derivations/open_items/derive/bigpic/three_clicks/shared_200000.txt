@@ -1,0 +1,19 @@
+two triangles sharing edge 12: edges [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3)], triangles [(0, 1, 2), (1, 2, 3)]; B C = 0: True; C^T C = [[3, 1], [1, 3]]
+  K = C^T C, 200000 rounds: L3 exact at every clock True; the end alone runs back to the start True (with the hidden unit True); one hidden unit in triangle 0's twin: 0 clock lines move, 205193 sides move
+    triangle (0, 1, 2): 15754 rounds with a landing; after one the next 1256 against 1240 independent
+    triangle (1, 2, 3): 24047 rounds with a landing; after one the next 2913 against 2891 independent
+  K = 3 I, 200000 rounds: L3 exact at every clock True; the end alone runs back to the start True (with the hidden unit True); one hidden unit in triangle 0's twin: 0 clock lines move, 88980 sides move
+    triangle (0, 1, 2): 15920 rounds with a landing; after one the next 1234 against 1267 independent
+    triangle (1, 2, 3): 23990 rounds with a landing; after one the next 2794 against 2877 independent
+four clocks pairwise joined: edges [(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)], triangles [(0, 1, 2), (0, 1, 3), (0, 2, 3), (1, 2, 3)]; B C = 0: True; C^T C = [[3, 1, -1, 1], [1, 3, 1, -1], [-1, 1, 3, 1], [1, -1, 1, 3]]
+  K = C^T C, 200000 rounds: L3 exact at every clock True; the end alone runs back to the start True (with the hidden unit True); one hidden unit in triangle 0's twin: 0 clock lines move, 402640 sides move
+    triangle (0, 1, 2): 20193 rounds with a landing; after one the next 2047 against 2038 independent
+    triangle (0, 1, 3): 20193 rounds with a landing; after one the next 2047 against 2038 independent
+    triangle (0, 2, 3): 28165 rounds with a landing; after one the next 3924 against 3966 independent
+    triangle (1, 2, 3): 28165 rounds with a landing; after one the next 3924 against 3966 independent
+  K = 3 I, 200000 rounds: L3 exact at every clock True; the end alone runs back to the start True (with the hidden unit True); one hidden unit in triangle 0's twin: 0 clock lines move, 107091 sides move
+    triangle (0, 1, 2): 19885 rounds with a landing; after one the next 1984 against 1977 independent
+    triangle (0, 1, 3): 19885 rounds with a landing; after one the next 1984 against 1977 independent
+    triangle (0, 2, 3): 28013 rounds with a landing; after one the next 3951 against 3923 independent
+    triangle (1, 2, 3): 28013 rounds with a landing; after one the next 3951 against 3923 independent
+exit 0
