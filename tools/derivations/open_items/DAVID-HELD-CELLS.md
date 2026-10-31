@@ -1,6 +1,6 @@
 # The held hand's cells: one square for what it ties
 
-David, 2026-10-31, 13:0x UTC, the second text (CELLS1b), on the Boss's #2187 6542976836 item 3 ("write the short text
+David, 2026-10-31, 12:5x UTC, the second text (CELLS1b), on the Boss's #2187 6542976836 item 3 ("write the short text
 with both cells now") and his order of 6543302032 item 4 and 6543435561 item 5: CELLS1 with David's own pair first, then
 CELLS1b to the MIRACLE pair. Status: **CELLS1b, for the MIRACLE pair through the Boss.** David's own pair read CELLS1
 (toys-5 d22c7d924): the mathematician found 2 BLOCKING and 12 MINOR items, the physicist 5 BLOCKING and 9 MINOR, and
