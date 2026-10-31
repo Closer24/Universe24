@@ -123,17 +123,23 @@ class Edges:
         self.kdiag = [[cc[e][f] * (e == f) for f in range(n)] for e in range(n)]
         self.tri_k = self.blocks(self.kcoup)
         self.road3 = self.blocks(self.kdiag)
+        # the circulation's members (THIRD6's OPEN 3, #2187 6539589459 item 3): the edge teeth gain only along each
+        # triangle's circulation, g += C C^T h, so every train's booked total keeps to its swept flow (the boundary of
+        # a circulation is 0); the twins gain C C^T off its diagonal of the edge teeth (mode 7) or C C^T itself (8)
+        self.circ_k = self.blocks(self.kcoup, cc)
+        self.circ_cc = self.blocks(cc, cc)
 
     @staticmethod
-    def blocks(k):
-        """Two blocks of kept-flipped shears from one matrix: each twin gains k of the edge teeth, then each edge tooth k
-        of the twins. Within a block every shear writes one class and reads the other, so its order is free."""
+    def blocks(k, kg=None):
+        """Two blocks of kept-flipped shears: each twin gains k of the edge teeth, then each edge tooth kg (k unless
+        given) of the twins. Within a block every shear writes one class and reads the other, so its order is free."""
         n = len(k)
+        kg = k if kg is None else kg
         return ([(("h", e), ("g", f), k[e][f]) for e in range(n) for f in range(n)]
-                + [(("g", e), ("h", f), k[e][f]) for e in range(n) for f in range(n)])
+                + [(("g", e), ("h", f), kg[e][f]) for e in range(n) for f in range(n)])
 
     def forward(self, mode):
-        return {2: self.shears, 3: self.split3, 4: self.tri_k, 5: self.road3}[mode]
+        return {2: self.shears, 3: self.split3, 4: self.tri_k, 5: self.road3, 7: self.circ_k, 8: self.circ_cc}[mode]
 
     def backward(self, mode):
         return list(reversed(self.forward(mode)))
@@ -288,7 +294,10 @@ def run_from(lay, s, world, rounds, turned, hidden=None, kinds_of=None):
 
 NAMES = ["carried (first click)", "turned by the triangle M (third click)", "the 3+3 palindrome (third click)",
          "SPLIT3 (third click, the apex's edges)", "the triangle's coupling, C C^T off its diagonal (third click)",
-         "road 3, C C^T's diagonal: each triangle edge with its own twin (third click)"]
+         "road 3, C C^T's diagonal: each triangle edge with its own twin (third click)",
+         "the THIRD deriver's five blocks (third click)",
+         "the circulation: g += C C^T h, h += C C^T off its diagonal of g (third click)",
+         "the circulation: g += C C^T h, h += C C^T g (third click)"]
 
 if __name__ == "__main__":
     src, world_dir, rounds, turned = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])

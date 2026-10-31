@@ -1,0 +1,9 @@
+click-k1601-laid, 300 rounds, the triangle's coupling, C C^T off its diagonal (third click): key 1601, dial 4803, edges [(2, 3), (2, 4), (3, 4)]
+  the start seed's board 5aadda4604a1145e; the end seed's board 83fc602913bfdfd9; 11403 click sides on the way
+  from the end seed alone, run back: the board reaches the start seed: True; every tooth and twin reaches the birth: True
+  the first click from the same start: the end board is the same: True; its click sides differ from the third click's at 7014
+  one hidden unit in edge (2, 3)'s tooth at Node-clock 0: the click sides differ at 258 (at Node-clocks [0]), and the end board is the same: True
+  one hidden unit in edge (2, 4)'s tooth at Node-clock 0: the click sides differ at 223 (at Node-clocks [0]), and the end board is the same: True
+  one hidden unit in edge (3, 4)'s tooth at Node-clock 0: the click sides differ at 249 (at Node-clocks [0]), and the end board is the same: True
+the clicks differ, the end is the same, and the end runs back to the start: True
+exit 0

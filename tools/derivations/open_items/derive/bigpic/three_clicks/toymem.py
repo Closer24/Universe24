@@ -28,7 +28,8 @@ n = len(ed.pairs)
 G1, G2, G3 = ("g", ga), ("g", gb), ("g", ab)
 H1, H2, H3 = ("h", ga), ("h", gb), ("h", ab)
 FIVE = [(G1, H1, 1), (G2, H2, 1), (G1, H3, 1), (G2, H3, -1), (G3, H1, 1), (G3, H2, -1), (H1, G2, 1), (H2, G1, 1), (H3, G3, -1)]
-NAMES = {0: "no turn", 4: "C C^T off its diagonal", 5: "road 3, C C^T's diagonal", 6: "the THIRD deriver's five blocks"}
+NAMES = {0: "no turn", 4: "C C^T off its diagonal", 5: "road 3, C C^T's diagonal", 6: "the THIRD deriver's five blocks",
+         7: "the circulation, h += C C^T off its diagonal of g", 8: "the circulation, h += C C^T g"}
 
 
 def order(mode):

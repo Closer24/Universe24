@@ -12,12 +12,13 @@ the third click's two members from the structure, C C^T off its diagonal (mode 4
   in the third click exactly as in the first.
 The exit status is 0 if every law reads as it should, and 1 if one does not, named.
 
-Usage: python3 -I laws.py <src> <world> <rounds> [laid]
+Usage: python3 -I laws.py <src> <world> <rounds> [laid] [third-click modes, 45 unless given]
 """
 import sys
 
 src, world_dir, rounds = sys.argv[1], sys.argv[2], int(sys.argv[3])
 laid = len(sys.argv) > 4 and "laid" in sys.argv[4]
+thirds = [int(m) for m in (sys.argv[5] if len(sys.argv) > 5 else "45")]
 sys.path.insert(0, src)
 sys.path.insert(0, ".")
 import edgeclick as E  # noqa: E402
@@ -57,7 +58,7 @@ lone = [e for e in range(len(ed.pairs)) if not any(ed.cc[e])]
 print(f"{world_dir}{', laid' if laid else ''}, {rounds} rounds: key {int(lay.click.key[0, 0])}, dial {ed.dial}; edges {ed.pairs},"
       f" triangles {ed.triangles}, edges on no triangle {[ed.pairs[e] for e in lone]}; trains alike {alike}")
 first = None
-for mode in (0, 4, 5):
+for mode in [0] + thirds:
     a = E.run_from(lay, s0, world, rounds, mode, kinds_of=kinds_of)
     b = E.run_from(lay, s0, world, rounds, mode, kinds_of=kinds_of)
     print(f" {E.NAMES[mode]}: {a['places']} click places, {len(a['lines'])} click lines")

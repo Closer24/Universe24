@@ -12,9 +12,10 @@ birth (D - 1) div 2 and set apart by the turn itself (place 1 turned once, place
 lay is picked and no random enters. The dial is odd so the birth is the centre; the share 3/4 of it is the carry's
 quotient, so the hand's own value is read exactly from those whole weights.
 
-Usage: python3 -I pairwhole.py <src> [pairs, 400000 unless given]
+Usage: python3 -I pairwhole.py <src> [pairs, 400000 unless given] [record.jsonl: the record written, then read alone]
 """
 
+import json
 import sys
 
 sys.path.insert(0, sys.argv[1])
@@ -159,3 +160,34 @@ for t in range(PAIRS):
     first.append(2 * click(HALF, pair, 0) - 1)
     click(SAME[abs(b - a)], pair, 1)
 print(f"Alice's landings in order, lag-1 correlation: the third click {lag1(third)} per mille, the first click {lag1(first)} per mille")
+
+
+# the record names the pair event (DECODE3b, #2187 6539589459 item 7): one line per landing, each carrying the pair it
+# belongs to, A's and B's alike; then CHSH and no signal read back from the record alone, the landings joined by the
+# pair they name
+if len(sys.argv) > 3:
+    out = sys.argv[3]
+    with open(out, "w") as f:
+        for t, (a, b, sa, sb) in enumerate(rec):
+            f.write(json.dumps({"pair": t, "place": "A", "setting": a, "landing": sa}) + "\n")
+            f.write(json.dumps({"pair": t, "place": "B", "setting": b, "landing": sb}) + "\n")
+    joined = {}
+    for line in open(out):
+        ln = json.loads(line)
+        joined.setdefault(ln["pair"], {})[ln["place"]] = (ln["setting"], ln["landing"])
+    unpaired = sum(1 for v in joined.values() if set(v) != {"A", "B"})
+    num3, cnt3 = {}, {}
+    for v in joined.values():
+        (a, sa), (b, sb) = v["A"], v["B"]
+        num3[(a, b)] = num3.get((a, b), 0) + sa * sb
+        cnt3[(a, b)] = cnt3.get((a, b), 0) + 1
+    den3 = 1
+    for k in signs:
+        den3 *= cnt3[k]
+    s3 = 0
+    for k in signs:
+        q, _ = carry(den3, cnt3[k], 0)
+        s3 += signs[k] * num3[k] * q
+    s3_milli, _ = carry(1000 * s3, den3, 0)
+    print(f"the record ({out}): {2 * len(rec)} landing lines, each naming its pair; pairs joined {len(joined)}, unpaired {unpaired};"
+          f" CHSH read from the record alone {s3_milli} per mille")

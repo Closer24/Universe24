@@ -1,0 +1,9 @@
+tensor24-click, carried (first click), 1000 rounds: books open 0 of 18036; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 497 (442), (2, 4) 497 (197), (3, 4) 499 (67)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 928 (244), 3 973 (375), 4 984 (130)
+tensor24-click, the triangle's coupling, C C^T off its diagonal (third click), 1000 rounds: books open 0 of 18306; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 8442 (8442), (2, 4) 8802 (8802), (3, 4) 5945 (4932)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 17244 (17244), 3 13375 (13375), 4 6682 (3869)
+tensor24-click, the circulation: g += C C^T h, h += C C^T off its diagonal of g (third click), 1000 rounds: books open 0 of 18279; run back True
+   per edge, booked less swept at most (at the end), per mille of a dial: (2, 3) 8690 (6442), (2, 4) 16205 (15197), (3, 4) 4056 (67)
+   per train, booked less swept at most (at the end), per mille of a dial: 2 16538 (8755), 3 8737 (6375), 4 15545 (15130)

@@ -1,0 +1,13 @@
+dial 50811429 (odd, the click world's key) | pairs 40000 | the run back to the lay: True
+CHSH from the click counts: 2490 per mille | the hand's own value from its whole weights: 2499 per mille (127028568 over 50811429) | the triangle's own, 5/2: 2500 per mille | the local bound: 2000 per mille
+   settings (0, 1): pairs 9924, E 503 per mille
+   settings (0, 3): pairs 9965, E -1000 per mille
+   settings (2, 1): pairs 10108, E 494 per mille
+   settings (2, 3): pairs 10003, E 492 per mille
+   no signal: Alice's +1 share under Bob's setting 1: 500 per mille (20032)
+   no signal: Alice's +1 share under Bob's setting 3: 503 per mille (19968)
+   no signal: Bob's +1 share under Alice's setting 0: 503 per mille (19889)
+   no signal: Bob's +1 share under Alice's setting 2: 499 per mille (20111)
+the first click, the pair's teeth unturned (no draw): CHSH 2500 per mille
+Alice's landings in order, lag-1 correlation: the third click -2 per mille, the first click -1000 per mille
+the record (/tmp/claude-0/-home-user-Universe24/f96d8c1c-1b6e-564e-9cb6-85b65f3c9d0f/scratchpad/kexp/pair_record_40000.jsonl): 80000 landing lines, each naming its pair; pairs joined 40000, unpaired 0; CHSH read from the record alone 2490 per mille

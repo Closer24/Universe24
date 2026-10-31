@@ -1,0 +1,30 @@
+click-k1601, laid, 150 rounds: key 1601, dial 4803; edges [(2, 3), (2, 4), (3, 4)], triangles [(0, 2, 1)], edges on no triangle []; trains alike [(3, 4)]
+ carried (first click): 3189 click places, 8178 click lines
+   mode 0: the books close at every place: True
+   mode 0: R1, the record run twice byte for byte: True
+   mode 0: the run back to the lay: True
+   mode 0: the label rule for trains 3 and 4, draw by draw: True
+ the triangle's coupling, C C^T off its diagonal (third click): 3201 click places, 8217 click lines
+   mode 4: the books close at every place: True
+   mode 4: R1, the record run twice byte for byte: True
+   mode 4: the run back to the lay: True
+   mode 4: the label rule for trains 3 and 4, draw by draw: True
+   mode 4: one hidden unit in edge (2, 3)'s tooth at Node-clock 0 moves 195 click lines, the first at round 6, at Node-clocks [0]
+   mode 4: R2 for edge (2, 3), a later click moved, at Node-clock 0 alone: True
+   mode 4: one hidden unit in edge (2, 4)'s tooth at Node-clock 0 moves 182 click lines, the first at round 3, at Node-clocks [0]
+   mode 4: R2 for edge (2, 4), a later click moved, at Node-clock 0 alone: True
+   mode 4: one hidden unit in edge (3, 4)'s tooth at Node-clock 0 moves 187 click lines, the first at round 5, at Node-clocks [0]
+   mode 4: R2 for edge (3, 4), a later click moved, at Node-clock 0 alone: True
+ road 3, C C^T's diagonal: each triangle edge with its own twin (third click): 3195 click places, 8193 click lines
+   mode 5: the books close at every place: True
+   mode 5: R1, the record run twice byte for byte: True
+   mode 5: the run back to the lay: True
+   mode 5: the label rule for trains 3 and 4, draw by draw: True
+   mode 5: one hidden unit in edge (2, 3)'s tooth at Node-clock 0 moves 136 click lines, the first at round 5, at Node-clocks [0]
+   mode 5: R2 for edge (2, 3), a later click moved, at Node-clock 0 alone: True
+   mode 5: one hidden unit in edge (2, 4)'s tooth at Node-clock 0 moves 60 click lines, the first at round 18, at Node-clocks [0]
+   mode 5: R2 for edge (2, 4), a later click moved, at Node-clock 0 alone: True
+   mode 5: one hidden unit in edge (3, 4)'s tooth at Node-clock 0 moves 8 click lines, the first at round 89, at Node-clocks [0]
+   mode 5: R2 for edge (3, 4), a later click moved, at Node-clock 0 alone: True
+every law holds: True
+exit 0
