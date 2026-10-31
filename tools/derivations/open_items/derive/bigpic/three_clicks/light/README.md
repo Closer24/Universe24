@@ -1,4 +1,4 @@
-# Light and its echo, read in the clicks (Big Pic, the owner's ask of 07:0x UTC)
+# Light and its echo, read in the clicks (Big Pic, the owner's ask of 07:1x UTC)
 
 The records are node-edge 88b4d281c's runs of its mesh world (examples/tensor24-mesh: a ring of 180 Node-clocks, one
 bump of the wave laid at rest on Node-clocks 17 to 23, the held hand laid at 1 everywhere, the tied train at every

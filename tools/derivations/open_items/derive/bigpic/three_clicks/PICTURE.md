@@ -95,7 +95,7 @@ The owner's word (in Hebrew; in translation, without persons; the bracket is the
 
 **Owed, in order:** the face in the record (FACE2's field); light's click lines and the echo's rule; a world that lays a clock that moves (for C-c and the twins); then C-a to C-e in the decoder, each with its failing check and a pair of hostile readers.
 
-## 9. Light, its echo, the seeds and the masses (the owner's ask of 07:0x UTC)
+## 9. Light, its echo, the seeds and the masses (the owner's ask of 07:1x UTC)
 
 The owner's ask (in translation, without persons): check on my toy's code how light and its echo are told, and how other things of interest are told in the click world; what the start seed and the end seed must hold for many phenomena to show in the clicks; and the proton and the electron: what these least masses mean in the generations, and whether the masses can be derived now.
 

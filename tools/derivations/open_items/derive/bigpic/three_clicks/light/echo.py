@@ -1,4 +1,4 @@
-"""The echo's check (C-a's rule on the click lines, the owner's ask of 07:0x UTC): on the mesh world's ring, the wave
+"""The echo's check (C-a's rule on the click lines, the owner's ask of 07:1x UTC): on the mesh world's ring, the wave
 leaves its laid bump at round 0 both ways; the two halves meet on the far side and come back to the bump. Read from
 the wave's clicks across the Meshes alone: the round where the far side clicks most (the meeting), the round where
 the bump's own Node-clocks click most after the light has left them (the return), and Einstein's rule: the meeting

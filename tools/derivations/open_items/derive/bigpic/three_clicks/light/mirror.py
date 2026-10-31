@@ -1,4 +1,4 @@
-"""An echo off matter (Big Pic, the owner's ask of 07:0x UTC): two records of the mesh world compared, the plain lay and
+"""An echo off matter (Big Pic, the owner's ask of 07:1x UTC): two records of the mesh world compared, the plain lay and
 the same lay with the held hand laid at 2 instead of 1 on a patch of Node-clocks partway round the ring. The light's
 leading front reaches distance d at round 2 d (fronts.py). Read here, from the click lines alone: at each Node-clock,
 the first round where any click line of the two records differs: where the patch first answers the light, and how the

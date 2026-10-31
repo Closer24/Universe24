@@ -1,4 +1,4 @@
-"""Light and its echo read from the click lines alone (Big Pic, the owner's ask of 07:0x UTC): on the mesh world (a
+"""Light and its echo read from the click lines alone (Big Pic, the owner's ask of 07:1x UTC): on the mesh world (a
 ring of Node-clocks, one bump of the wave laid at rest), the wave's clicks across the Meshes (the record's across
 lines of train 0) are read for (a) the round of each Node-clock's first such click, against its ring distance from
 the laid bump: the fronts; (b) the clicks at the bump's own Node-clocks, round by round: the light leaving, a quiet
