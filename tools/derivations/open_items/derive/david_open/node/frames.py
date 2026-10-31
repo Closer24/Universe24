@@ -283,6 +283,10 @@ print(f"   scalar dials (the click world's) with a unit link k on their band: th
       f" positive at the other {24 - len(edge_units)}: the band reaches the dials through Re k alone, so the 24 give"
       f" {len(classes)} pair forms on scalar dials (one per value of 2 Re k)")
 
+springs = sorted({(k[0], (2 - k[0]) * f, (2 + k[0]) * f) for k in units})
+print(f"   the pair's two swings under a unit link, as (2 Re k, the together swing's spring f (2 - 2 Re k), the opposite"
+      f" swing's f (2 + 2 Re k)): {springs}; so they stand as (1 - Re k) to (1 + Re k), whole ratios from the 24")
+
 # 4. The ring run: the free swing drifts; a reversed band holds it; the write at a zero is read by the rest.
 n = sites
 A = 4000  # a test's lay, in units: the uniform opposite swing at -A, one unit a round, so through 0 at round A

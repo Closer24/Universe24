@@ -1,6 +1,6 @@
 # The clocks' frames: the superfluous freedom, and the write the rest read
 
-David, 2026-10-31, 14:2x UTC, the first text (FRAMES1), on the owner's words of 13:2x and 13:3x to the Boss and the
+David, 2026-10-31, 14:1x UTC, the first text (FRAMES1), on the owner's words of 13:2x and 13:3x to the Boss and the
 Boss's #2187 6543987912, 6544032656 and 6544072212: problems (A) and (B), worked beside Big Pic on David's own bench.
 Status: **FRAMES1, for a pair through the Boss.** Read by no pair.
 
@@ -133,7 +133,9 @@ The two problems, in the Boss's words (6543987912):
 - **Scalar dials with a unit link:** with g and u on the real axis, the cell's square is w (g^2 + u^2 - 2 Re(k) g u).
   Only Re k reaches the dials, so the 24 give five pair forms. The pair sits at the edge where Re k is 1 or -1, and
   holds at the other 22 units, its own weight w being more than half its band 2 w |Re k| (FLOOR 2.1's s > t/2). At
-  k = -1 the cell is g + u, the held hand's present cell at |h| = 1.
+  k = -1 the cell is g + u, the held hand's present cell at |h| = 1. The pair's two swings then hold the springs
+  2 w (1 - Re k) (together, g = u) and 2 w (1 + Re k) (opposite, g = -u): they stand as (1 - Re k) to (1 + Re k), 3 to
+  1 at Re k = -1/2 and 1 to 1 at Re k = 0, whole ratios from the 24 with no number laid.
 
 ### 2.5 The write (DERIVED for the frame; CANDIDATE as the third click's)
 
@@ -188,7 +190,8 @@ The two problems, in the Boss's words (6543987912):
   - the band's strength is -2 f Re k: 2 f at k = -1 (the cell's present 2 f h^2 at h^2 = 1), f at the eight units with
     Re k = -1/2, 0 at the six with Re k = 0, and of the other sign where Re k > 0; never the laid 96,000, which is 4/5
     of 2 f;
-  - the pair sits at the edge at k = 1 or -1 only, and holds at the other 22 units, with no number laid;
+  - the pair sits at the edge at k = 1 or -1 only, and holds at the other 22 units, with no number laid; its two
+    swings' springs stand as (1 - Re k) to (1 + Re k), 3 to 1 at Re k = -1/2;
   - the held hand's size is the unit's norm, 1, so its own spring S and any hat have nothing to hold;
   - the third click's write is a turn of the held hand by a unit, undone by the turn back; the rest read it wherever it
     moves Re k, and at the round its pair stands at 0 it moves no energy.
@@ -217,4 +220,4 @@ The two problems, in the Boss's words (6543987912):
 - 2.3 by the determinants: Bareiss's elimination with every division the carry's, its remainder checked 0, and no pivot
   sought, since a zero pivot of a sum of squares already shows a kernel.
 - 2.5's energy by the form's change at the write, printed exactly; section 3 by the ring at lam 1, 100 and 1,000.
-- The output, frames.txt (33 lines), holds every line cited here; the usage is in the README's row.
+- The output, frames.txt (34 lines), holds every line cited here; the usage is in the README's row.

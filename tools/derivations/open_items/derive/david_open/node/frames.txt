@@ -15,6 +15,7 @@ grain: Gamma 10000, den 1; grip 100000000, W = 6 grips 600000000, f = W div Gamm
    the frame w at clock 0 with its links moved (k_01 -> w k_01, k_20 -> k_20 w*): the form kept for 576 of 576 (frame, link) pairs on the triangle
    the triangle's holonomy k_01 k_12 k_20 = k: det 0 at 1 of 24 units, namely k = 1 only: True; the pair alone (a loopless edge) with link k: det 0 at 24 of 24
    scalar dials (the click world's) with a unit link k on their band: the pair's form is f (g^2 + u^2 - 2 Re(k) g u), det 0 at 2 of 24 units (2 Re k = [-2, 2]), positive at the other 22: the band reaches the dials through Re k alone, so the 24 give 5 pair forms on scalar dials (one per value of 2 Re k)
+   the pair's two swings under a unit link, as (2 Re k, the together swing's spring f (2 - 2 Re k), the opposite swing's f (2 + 2 Re k)): [(-2, 240000, 0), (-1, 180000, 60000), (0, 120000, 120000), (1, 60000, 180000), (2, 0, 240000)]; so they stand as (1 - Re k) to (1 + Re k), whole ratios from the 24
 4. the ring of 8 at lam 1 (counts = units x lam), 12000 rounds, the uniform opposite swing laid at -4000 units moving one unit a round:
    all plain: every push 0, the drift exact: at the end g = 8000 counts, |g - u| = 16000 at every Node-clock (1 value); E 9600000000 at the start and 9600000000 at the end
    one band reversed from the start (Node-clock 0): the widest |g - u| over the run 8123; E spread 657733 parts per million of its start
