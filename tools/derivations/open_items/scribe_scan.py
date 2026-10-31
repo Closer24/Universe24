@@ -22,10 +22,10 @@ adds or changes: a float, a true division, a root, a circular call, an import of
 division, a remainder or divmod, where the one division is Rule3's carry (DIVIDE). SEARCH (a refusal, by the owner's word of 2026-10-30, 17:20 UTC, "Sine is forbidden.", #2187 6528925479) reads the three shapes under which a probe makes a
 circular function or a root without a call that names it: a series summed by a loop, a bracket halved by its midpoint, and a function or constant named a sine,
 cosine, tangent or arctangent (David's finding of 6528139344 item 5); SINEWORD (a note) reads a word that names a circular function (cos, sine, tangent, ...) in a string or a comment of a probe, a docstring spared: the lay that stands for a cosine under no name (g5_draw (n)); SEARCHLOG (a note) reads a function or constant named artanh or ln, until the owner says
-whether his word reaches the logarithm. SEARCH reads two shapes more (the audit of main b1a50bb33, 2026-10-31, the owner's "a root in the code is forbidden ... and not outside it either"): a search that counts up (next() over a generator that runs over count(), a for over count(), a while that steps a counter by one until a product of names passes a bound) and a search over a range for a value of a form (a comprehension, or a for over a range, whose condition equates an expression that multiplies loop variables: a^2 = 2 b^2 over pairs); DECLARE reads a train card, a dict or dict() with a name, kinds and a part, in a probe; PELL (a note) reads a typed pair that solves Pell's equation, and FILEVALUE (a note) a typed copy of a number the example files hold. The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
+whether his word reaches the logarithm. SEARCH reads two shapes more (the audit of main b1a50bb33, 2026-10-31, the owner's "a root in the code is forbidden ... and not outside it either"): a search that counts up (next() over a generator that runs over count(), a for over count(), a while that steps a counter by one until a product of names passes a bound) and a search over a range for a value of a form (a comprehension, or a for over a range, whose condition equates an expression that multiplies loop variables: a^2 = 2 b^2 over pairs); DECLARE reads a train card, a dict or dict() with a name, kinds and a part, in a probe; PELL (a note) reads a typed pair that solves Pell's equation, and FILEVALUE (a note) a typed copy of a number the example files hold. SEARCH reads, too, the calls and the imports of the names it refuses to define (atan_inv(5), from cuts3h import atan_inv) and the calls of exec, eval and compile, which run text the gate does not read (the Boss's finding of #2187 6543685420 item 9 (b): DECODE3k's cuts3k.py lifts atan_inv from cuts3h.py by exec and computes Machin's series with it). The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
 scribe_scan_probes.json, read from the published branch as the ceiling is. SCRIBE-GATE-1.md, section The hidden numbers and the probes.
 
-  python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
+  python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/main)
   python scribe_scan.py TREE [--base REV]      TREE a directory or a git revision; the base a revision
   python scribe_scan.py --patch FILE           the patch applied on the base in a scratch worktree, then the same check
   python scribe_scan.py TREE --baseline FILE   the tree against the list of departures that stand (Sofer's audit of the whole)
@@ -89,7 +89,10 @@ KEYS_READ = (
 PROBES_LIST = (
     HERE / "scribe_scan_probes.json"
 )  # the probes that stand: per key the most a probe holds at a live head, frozen on the owner's yes of 2026-10-30, 09:0x UTC (the rule PROBE)
-BASES = ("origin/engine-5.0-test", "origin/main")
+BASES = (
+    "origin/main",
+    "origin/engine-5.0-test",
+)  # main first: a branch that carries main reads exactly what a push adds over it (the Boss's finding of #2187 6543685420 item 9 (a))
 FLOOR = "526a5666d"  # the engine head the list that stands was taken at: no base is older (a pull request into main is read against it)
 PUBLISHED = "origin/scribe-5"  # where the owner's approvals stand, written by Sofer alone
 # the rule DECLARE reads the files a universe or a world is declared in, besides the code
@@ -277,7 +280,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "SEARCH": (
         "BLOCK",
-        "a circular function, or a root, made by hand in a probe under tools/derivations/ that a push adds or changes, under a name that is no call of one: a loop that sums a series (a term updated by a division by an expression of the loop's counter, by // or by carry, and added to a total), a bracket halved (the midpoint of two ends, (lo + hi) // 2 with or without a one added, a shift by one or a carry of the sum by 2), and a function or constant named a sine, cosine, tangent or arctangent (sine, cosine, arctan_inverse, cos_w): the owner's word of 2026-10-30, 17:20 UTC, #2187 6528925479, on David's question whether a series used only to lay a state falls under line 102: \"Sine is forbidden.\" (law line 102: the lay of a state holds no circular function either, by a call, by a series or by any construction that finds one; decision 41: no root found by search); the count per file may not rise",
+        "a circular function, or a root, made by hand in a probe under tools/derivations/ that a push adds or changes, under a name that is no call of one: a loop that sums a series (a term updated by a division by an expression of the loop's counter, by // or by carry, and added to a total), a bracket halved (the midpoint of two ends, (lo + hi) // 2 with or without a one added, a shift by one or a carry of the sum by 2), and a function or constant named a sine, cosine, tangent or arctangent (sine, cosine, arctan_inverse, cos_w): the owner's word of 2026-10-30, 17:20 UTC, #2187 6528925479, on David's question whether a series used only to lay a state falls under line 102: \"Sine is forbidden.\" (law line 102: the lay of a state holds no circular function either, by a call, by a series or by any construction that finds one; decision 41: no root found by search); also a call or an import of a name the rule refuses to define (atan_inv(5), from cuts3h import atan_inv), and a call of exec, eval or compile, which run text the gate does not read (the Boss's finding of #2187 6543685420 item 9 (b): a series lifted from another file by exec); the count per file may not rise",
     ),
     "SEARCHLOG": (
         "WARN",
@@ -326,6 +329,9 @@ PROBE_CALLS = frozenset(
 SINE_WORDS = frozenset(
     "sin cos tan sine cosine tangent arctan arcsin arccos atan asin acos".split()
 )  # a word of a snake_case name that makes a circular function by hand (the rule SEARCH); the rule WORD reads the wider CIRCULAR_WORDS below
+LIFT_CALLS = frozenset(
+    "exec eval compile".split()
+)  # a call that runs text the gate does not read (the rule SEARCH)
 LOG_WORDS = frozenset(
     "artanh atanh arctanh arcsinh ln".split()
 )  # a word that makes a logarithm by hand (the rule SEARCHLOG): log is no word of it, a log being also a record
@@ -2724,6 +2730,9 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
         elif isinstance(node, ast.ImportFrom):
             if node.module and node.module.split(".")[0] in BAD_IMPORTS:
                 add("PROBE", node, f"import {node.module.split('.')[0]}")
+            for alias in node.names:
+                if hand_rule(alias.name):
+                    add(hand_rule(alias.name) or "SEARCH", node, f"import {alias.name}")
         elif isinstance(node, ast.Call):
             name = (
                 node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
@@ -2732,6 +2741,10 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
                 add("PROBE", node, f"call {name}")
             elif name == "divmod":
                 add("DIVIDE", node, "divmod")
+            elif name in LIFT_CALLS:
+                add("SEARCH", node, f"call {name}")
+            elif hand_rule(name):
+                add(hand_rule(name) or "SEARCH", node, f"call {name}")
             if any(k.arg == "dtype" and float_dtype(k.value) for k in node.keywords) or (
                 name == "astype" and node.args and float_dtype(node.args[0])
             ):
@@ -3028,7 +3041,7 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument(
         "--base",
-        help="the revision the merge base is taken with (default CHECK_BASE, else origin/engine-5.0-test)",
+        help="the revision the merge base is taken with (default CHECK_BASE, else origin/main)",
     )
     parser.add_argument(
         "--baseline",

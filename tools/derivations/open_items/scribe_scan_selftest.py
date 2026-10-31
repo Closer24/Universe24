@@ -3289,6 +3289,29 @@ def probe_cases() -> tuple[int, int]:
             [],
         ),
         ("a sum of a name and a number halved is no bracket", "half = (n + 1) // 2\n", []),
+        # the Boss's finding of #2187 6543685420 item 9 (b): a definition read by its name let a call of the name, and text lifted by exec, pass unread
+        ("a call of a refused name", "q = atan_inv(5)\n", ["call atan_inv"]),
+        ("a call of a refused name through a module", "q = cuts.atan_inv(5)\n", ["call atan_inv"]),
+        ("an import of a refused name", "from cuts3h import atan_inv\n", ["import atan_inv"]),
+        (
+            "an import of a refused name under another name",
+            "from cuts3h import atan_inv as inv\nq = inv(5)\n",
+            ["import atan_inv"],
+        ),
+        (
+            "Machin's series from a refused name lifted by an import",
+            "from cuts3h import atan_inv\nPI = 16 * atan_inv(5) - 4 * atan_inv(239)\n",
+            ["call atan_inv", "call atan_inv", "import atan_inv"],
+        ),
+        ("exec runs text the gate does not read", "exec(src, ns)\n", ["call exec"]),
+        ("eval runs text the gate does not read", "x = eval(text)\n", ["call eval"]),
+        (
+            "compile makes text the gate does not read",
+            "c = compile(text, 'p', 'exec')\n",
+            ["call compile"],
+        ),
+        ("a call of a name that holds no such word is no refusal", "q = counter(5)\nr = plane(3)\n", []),
+        ("exec named in a string is no call", "s = 'exec(x)'\n", []),
         ("a file that does not parse", "def (:\n", []),
     )
     for label, source, want in searches:
@@ -3401,7 +3424,13 @@ def probe_cases() -> tuple[int, int]:
             gate.example_values(Path(tmp, "nowhere")) == frozenset(),
         )
     logs = (
-        ("a logarithm constant", "LN_TWO = 2 * artanh_inverse(3)\n", ["name LN_TWO"]),
+        (
+            "a logarithm constant",
+            "LN_TWO = 2 * artanh_inverse(3)\n",
+            ["call artanh_inverse", "name LN_TWO"],
+        ),
+        ("a call of an artanh name", "x = artanh_inverse(3)\n", ["call artanh_inverse"]),
+        ("an import of an ln name", "from t import ln_two\n", ["import ln_two"]),
         ("an artanh function", "def artanh_inverse(m):\n    return m\n", ["function artanh_inverse"]),
         ("an arcsinh name", "arcsinh_k = 3\n", ["name arcsinh_k"]),
         ("a sine is no logarithm", "def sine(x):\n    return x\n", []),
@@ -3539,6 +3568,27 @@ def probe_cases() -> tuple[int, int]:
                 "a new probe with a function named sine is refused",
                 status == 1 and "REFUSED SEARCH" in text and "function sine" in text,
             )
+            status, text = read(
+                branch(
+                    "lifted_call",
+                    {
+                        folder
+                        + "c.py": "from cuts3h import atan_inv\nPI = 16 * atan_inv(5) - 4 * atan_inv(239)\n"
+                    },
+                )
+            )
+            check(
+                "a new probe that calls a refused name it imports is refused, named",
+                status == 1
+                and "REFUSED SEARCH" in text
+                and "call atan_inv" in text
+                and "import atan_inv" in text,
+            )
+            status, text = read(branch("exec_lift", {folder + "x.py": "exec(src, ns)\n"}))
+            check(
+                "a new probe that runs text by exec is refused, named",
+                status == 1 and "REFUSED SEARCH" in text and "call exec" in text,
+            )
             status, text = read(branch("bisect", {folder + "b.py": "mid = (lo + hi) // 2\n"}))
             check(
                 "a new probe with a bracket halved is refused",
@@ -3594,6 +3644,28 @@ def probe_cases() -> tuple[int, int]:
             )
             status, text = read(branch("word", {folder + "word.py": "z = a / b\n"}))
             check("a hit the owner's list holds is quiet", status == 0 and "PROBE" not in text)
+            # the default base (the Boss's finding of #2187 6543685420 item 9 (a)): main first, so that a branch that carries other work reads exactly what a push adds over main
+            engine_sha = branch("engine_side", {"engine.txt": "e\n"})
+            run("update-ref", "refs/remotes/origin/main", base)
+            run("update-ref", "refs/remotes/origin/engine-5.0-test", engine_sha)
+            run("checkout", "-q", "-B", "carries_engine", engine_sha)
+            carrying = commit({"carry.txt": "c\n"})
+            saved_base = os.environ.pop("CHECK_BASE", None)
+            try:
+                name, found_base = gate.merge_base(root, None, carrying)
+                check(
+                    "the default base is main: a branch that carries other work is read against main's merge base",
+                    name == "origin/main" and found_base == base,
+                )
+                run("update-ref", "-d", "refs/remotes/origin/main")
+                name, found_base = gate.merge_base(root, None, carrying)
+                check(
+                    "with no main the default base falls back to engine-5.0-test",
+                    name == "origin/engine-5.0-test" and found_base == engine_sha,
+                )
+            finally:
+                if saved_base is not None:
+                    os.environ["CHECK_BASE"] = saved_base
     finally:
         gate.allowance, gate.frozen = saved
     return made, parted
