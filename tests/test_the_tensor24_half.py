@@ -126,7 +126,8 @@ def test_a_half_speed_trains_rows_are_its_cosets_each_gear_on_its_cosets_row():
         laid = [
             [t, c, 0, c + 1, -c - 1, 0] for c in range(gears)
         ]  # each coset's gear, its counts its index's
-        (a, b, *_), found = loading.lay(laid, trains, sites, 0)
+        # the lay takes every edge side's birth (one side, 0, here): the test reads the counts alone
+        (a, b, *_), found = loading.lay(laid, trains, sites, np.zeros((1, 1), dtype=object))
         rows = range(trains.first[t], trains.first[t] + gears)
         assert found == [] and a[list(rows), 0].tolist() == [c + 1 for c in range(gears)]
         assert not a.sum() - a[list(rows)].sum() and (b[list(rows), 0] == -a[list(rows), 0]).all()
@@ -160,7 +161,9 @@ def drawn(held, layout, seed, reach):
     (clock,) = [t.first for t in held.trains if t.square]
     a[clock], b[clock] = (rng.integers(0, 1 << 40, n).astype(object) * (reach > 1 << 40) for _ in "ab")
     d = step.weight(layout.gearing, layout.clock, a) + step.weight(layout.gearing, layout.clock, b)
-    return state.State(a, b, frame.wide(rng, (rows, n)) % (d + d) - d, 0 * a, 0 * a[: len(held.trains)])
+    return state.State(
+        a, b, frame.wide(rng, (rows, n)) % (d + d) - d, 0 * a, 0 * layout.click.key + 0 * a[:1]
+    )
 
 
 def ran(layout, s, rounds):
@@ -216,12 +219,6 @@ def test_a_half_speed_world_laid_in_memory_turns_with_its_48_lifts_runs_back_and
         shear[0, 1] = 1
         sheared, _ = ran(layout, turned(start, (shear, still), halves), ROUNDS)
         assert not frame.same(sheared, turned(end, (shear, still), halves))
-    one, two, entry, train, _ = held.click
-    rows = {r for t in halves for r in range(t.first, t.first + t.rows())}
-    pairs = {
-        (int(x), int(y)): int(e) for x, y, e in zip(one, two, entry, strict=True) if e and int(x) in rows
-    }
-    assert pairs == {(r, r): 1 for r in rows}  # each half-speed row with itself, the dot
     held, layout = laid([CLICKS[0], CLICKS[3], *spins], {"mesh": 3})
     (reads, *_), factor, target = held.mesh
     landed = {int(r) for r in target[factor != 0]} | {

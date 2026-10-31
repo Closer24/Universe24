@@ -1,5 +1,5 @@
-"""Clock: the plans every Node-clock reads, laid once at the load from the star, the kinds' tables and the universe file's CHOSEN strengths: the metric's push (the books' form, no strength: push 1 or 0), the volume's notch, the held hand's spring and tie, the hands' tie, the gradient vertex through the Mesh and each train's passing.
-Algebra: every plan is whole factors on rows of the readings: term 5's push in the books' form, the momenta in and out of every row the push does not land on onto the 00 slot and every row's six stretches squared onto the ii slots of their axes, the monomials of J's potential (term 9's notch, term 6's own spring (spring; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), the gradient vertex's two pushes of mesh M_j D_i L, L's difference onto a tied row and the tied row's difference onto L, through the table of its kind with the axes' kind onto A1, and term 11's pairs of each train's rows through its own form onto A1, the table's entry the factor.
+"""Clock: the plans every Node-clock reads, laid once at the load from the star, the kinds' tables and the universe file's CHOSEN strengths: the metric's push (the books' form, no strength: push 1 or 0), the volume's notch, the held hand's spring and tie, the hands' tie, the gradient vertex through the Mesh, the passing on every edge between two trains and the Mesh's edges.
+Algebra: every plan is whole factors on rows of the readings: term 5's push in the books' form, the momenta in and out of every row the push does not land on onto the 00 slot and every row's six stretches squared onto the ii slots of their axes, the monomials of J's potential (term 9's notch, term 6's own spring (spring; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), the gradient vertex's two pushes of mesh M_j D_i L, L's difference onto a tied row and the tied row's difference onto L, through the table of its kind with the axes' kind onto A1, the table's entry the factor, and term 11 on the edges: each term of J's plan weighed onto every other train of its monomial, David's split as pair flows.
 Board: one plan for every Node-clock alike; a train that lacks a term takes it at the factor 0, its places wrapped, so no plan names a train: which train is held, tied or the board's wave is read off its character by the load.
 Clicks: the tied hand's beat, 2 hold f |k|^2 / W at the Node-clock, is what the clicks read as its mass, one beat per tied train (the frame's price, FRAMES 6); a plan reaches the clicks only through the act.
 """
@@ -46,10 +46,69 @@ def widening(c: Z, kept: Z) -> tuple[Z, Z]:
     return every, np.eye(kept.shape[-1], c.shape[-1], dtype=object)
 
 
-def passing(trains: Z, c: Z, traces: Z, kept: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
-    """Term 11, every train's passing as the act reads it, with its key: each pair of the train's rows through its kind's form with itself onto A1 (pairs_of: the 24's table for each of the five kinds, its kept form for a half-speed one), the entry the factor, so that the train's form over a J(b) - b J(a), the dot product for a vector hand and 1 for a scalar, is summed into the train; the key the universe file's one CHOSEN odd whole, the same for every train (an even key the files' format refuses by name); the square takes the factor 0 by its flag, as the push does, since its rows are the slots' basis and no kind's own, so pairs_of's blocks would give it a form the 24 keep at 8 turns of 24 (the first hostile code reader's M1)."""
-    one, two, entry, train = pairs_of(trains, c, traces, kept)
-    return one, two, entry * trains.sourcing[train], train, key
+def edging(trains: Z, potential: tuple[Z, tuple[Z, Z, Z, Z]], key: Z, spokes: Z) -> tuple[Z, Z, Z]:
+    """Term 11 on the edges, every passing between two trains as the act reads it, with the edge key (the owner's shared tooth for every pair of clocks, NC29b on David's split): per term of J's plan, as contract.pushes lays them (leg by leg, each leg's monomials in their order), its weight on every train and the train of the leg it pushes; and every side's key. A monomial's legs: each position one leg, a held train's positions one leg together, its excursion |k|^2 (the held spring's rest, n = 0); a leg's weight kappa (L - l) / L, L the monomial's legs and l its own train's, so a two-leg monomial weighs kappa / 2 on both legs and a tie kappa 2 / 3 on its held legs and kappa / 3 on its tied pair, David's split in the work form (NC29b's 3, 4 and 2 at kappa 6); its weight on a train u is that times 1 where the monomial has a value leg in u (one scatter of its legs' trains, lit), 0 elsewhere, so the side (t, u) passes SUM over the monomials on both trains of SUM_i ([leg i in t] - [leg i in u]) w_i W_i and the side (u, t) its negative, the diagonal, an own monomial and a pair of trains no monomial joins weighing 0; a monomial with value legs in three trains lies on the triangle's three edges, each edge passing the difference of its two trains' weighed work, the third train's legs weighing 0 there (no plan lays one; the mathematician's count on every world, NC29b's minor 1). kappa: the product of two and of every legs count a live monomial on an edge holds, each once, so that every weight is whole (6 on every world laid: the hands' tie's two legs and the tie's three); every side's key the universe file's one CHOSEN key times kappa / two, 3 there (David's OPEN, a change of a declared number, NC29b), the same for every side at every reach, its own Node-clock and across each Spoke (crossing, the Mesh's edges), odd as the key is, so a side's two teeth born at (key - 1) div senses sum to key - 1 (load.load) and stay so by the carry's law; no count typed: two the senses of an axis, read from the star, the positions the legs' own."""
+    factor, legs = potential
+    n, d = spokes.shape
+    senses, _ = carry(n, d, 0)
+    stacked = np.stack(legs)  # (positions, monomials): each monomial's legs, the unit -1
+    positions, monomials = stacked.shape
+    row, of, _, _, _ = rows_of(trains)
+    count = len(trains)
+    trained = np.full(
+        trains.size.sum() + 1, count, dtype=np.intp
+    )  # each row's train, the unit's last, past every train
+    trained[row] = of
+    train = trained[stacked]  # each leg's train
+    value = lit(train - count)  # 1 on a value leg, 0 on the unit's
+    incidence = np.full((monomials, count + 1), 0, dtype=object)
+    np.add.at(incidence, (np.arange(monomials, dtype=np.intp)[None, :] + 0 * train, train), 1)
+    positioned = incidence[:, :count]  # each monomial's positions on each train
+    present = lit(positioned)
+    own = positioned - trains.held[None, :] * (positioned - present)  # its legs on each train
+    total = own.sum(axis=1)
+    mine = np.concatenate((own, 0 * own[:, :1]), axis=1)[
+        np.arange(monomials, dtype=np.intp)[None, :], train
+    ]
+    owners = present.sum(axis=1)
+    # a live monomial with value legs in two trains or more, and the edge monomials holding each count of legs
+    edged = lit(factor) * lit(owners * owners - owners)
+    counts = np.arange(1, positions + 1, dtype=object)
+    among = (edged[:, None] * (1 - lit(total[:, None] - counts[None, :]))).sum(axis=0)
+    kappa = np.prod(1 + lit(among + 1 - lit(counts - senses)) * (counts - 1))
+    # kappa over the monomial's legs, a constant monomial reading 1
+    share, _ = carry(kappa, total + 1 - lit(total), 0)
+    weight = (share * edged)[None, :] * (total[None, :] - mine) * value
+    scale, _ = carry(kappa, senses, 0)
+    return (
+        (weight[:, :, None] * present[None, :, :]).reshape(positions * monomials, count),
+        (train * value).reshape(-1),
+        np.full(((1 + n) * count * count, 1), key * scale, dtype=object),
+    )
+
+
+def crossing(trains: Z, mesh: tuple[Z, Z, Z], spokes: Z, nb: Z, scale: Z) -> tuple[Z, Z]:
+    """Term 11 across the Meshes, the wave's edges (term 6's gradient vertex, plans.meshing, split by the Spoke it reads across; the wave's edge note, onelaw sections 1 and 3, sound by both hostile readers): per Spoke, every pair of rows, r at a Node-clock and p at the Node-clock across the Spoke, its coupling, the Mesh contraction's matrix entry: the plan's factor times the Spoke's sense along the term's axis (the term reads the difference D_i p = p(s + e_i) - p(s - e_i), the Spokes + i and - i), summed over the plan's terms by one scatter, and 0 where a Spoke and its opposite reach one Node-clock (a side of 1 or 2: there the entries summed over the Spokes that reach the same partner cancel, + f - f; the mathematician's MINOR 1), so that summed over the Spokes the edges are the Mesh contraction itself; the two ends of an edge hold the same coupling, as the plan's two halves are adjoint (J_l = F C D m, J_m = -F C D l, D antisymmetric): the coupling of (r, p) across a Spoke is that of (p, r) across its opposite; each times scale, kappa / two, each end one leg as a two-leg monomial's, so a Mesh edge counts at the edge key in the act's own units; and the side (Spoke, t, u) each pair books on, at (Spoke trains + t) trains + u, t the row's train and u the partner's, the act laying these sides after every train's own Node-clock's (the Mesh plan's terms read one difference and the unit twice, as plans.meshing lays them)."""
+    (first, *_), factor, target = mesh
+    rows, count, n = trains.size.sum(), len(trains), len(spokes)
+    plane, source = carry(
+        first, rows, 0
+    )  # the term's difference along the axis plane - 1, at the row source
+    sense = spokes[:, plane - 1]  # each Spoke's sense along the term's axis: + 1, - 1, or 0 off it
+    every = np.arange(n, dtype=np.intp)[:, None] + 0 * target[None, :]
+    coupling = np.full((n, rows, rows), 0, dtype=object)
+    np.add.at(coupling, (every, 0 * every + target, 0 * every + source), sense * factor[None, :])
+    # each Spoke's opposite by the star, and whether the two reach two Node-clocks at every Node-clock
+    turned = spokes[:, None, :] + spokes[None, :, :]
+    opposite = 1 - lit((turned * turned).sum(axis=-1))
+    gap = nb - opposite @ nb
+    apart = lit((gap * gap).sum(axis=-1))
+    row, of, _, _, _ = rows_of(trains)
+    trained = np.full(rows, 0, dtype=np.intp)
+    trained[row] = of
+    spoke = np.arange(n, dtype=np.intp)[:, None, None]
+    onto = (spoke * count + trained[None, :, None]) * count + trained[None, None, :]
+    return scale * apart[:, None, None] * coupling, onto
 
 
 def rows_of(trains: Z) -> tuple[Z, Z, Z, Z, Z]:
@@ -169,7 +228,7 @@ def pushing(trains: Z, spokes: Z, push: Z) -> tuple[Z, Z, Z]:
 
 
 def meshing(trains: Z, c: Z, traces: Z, square: Z, kept: Z, mesh: Z) -> tuple[Z, Z, Z]:
-    """Term 6's gradient vertex (FRAMES 7), the board's wave on a tied hand through the Mesh, as a plan on the plan's readings (the value, the difference along each axis, the force, the unit last): for every row of the trivial kind (A1, whose character is its own square on every turn) in a train that is no square and not the held hand (the board's wave: the held hand, Mesh-less, takes none), every row of one part of a tied train and every axis, the potential V = mesh x SUM_i C_ji M_j D_i L through the table of the tied row's kind with the kind the board's axes turn by onto A1 (found by its character, the four-vector square's on its 0i block: the dot product for T1, nothing for T2, so a pair with no such channel takes the factor 0), laid as its two pushes, (L's difference along i at L's row, unit, unit) at -mesh C_ji onto M_j's row and (M_j's difference along i at M_j's row, unit, unit) at +mesh C_ji onto L's row (the push on a gradient leg is the gradient of the other leg, one potential's two pushes; A1 x T1 has no A1 channel at the value legs, so the board's wave reaches a vector hand through the Mesh alone); mesh the strength CHOSEN in the universe file, its ground state mesh^2 below grip x 2 hold f / 2 (COUNT5 P2); the drive alone reads the plan, the passing never, so its wind, the Mesh flux, is counted by no click (NOT_CLOSED 4)."""
+    """Term 6's gradient vertex (FRAMES 7), the board's wave on a tied hand through the Mesh, as a plan on the plan's readings (the value, the difference along each axis, the force, the unit last): for every row of the trivial kind (A1, whose character is its own square on every turn) in a train that is no square and not the held hand (the board's wave: the held hand, Mesh-less, takes none), every row of one part of a tied train and every axis, the potential V = mesh x SUM_i C_ji M_j D_i L through the table of the tied row's kind with the kind the board's axes turn by onto A1 (found by its character, the four-vector square's on its 0i block: the dot product for T1, nothing for T2, so a pair with no such channel takes the factor 0), laid as its two pushes, (L's difference along i at L's row, unit, unit) at -mesh C_ji onto M_j's row and (M_j's difference along i at M_j's row, unit, unit) at +mesh C_ji onto L's row (the push on a gradient leg is the gradient of the other leg, one potential's two pushes; A1 x T1 has no A1 channel at the value legs, so the board's wave reaches a vector hand through the Mesh alone); mesh the strength CHOSEN in the universe file, its ground state mesh^2 below grip x 2 hold f / 2 (COUNT5 P2); the drive reads the plan, and the passing reads it split by the Spoke on the Mesh's edges (crossing), so its wind, the Mesh flux, is counted by their clicks."""
     side = c.shape[-1]
     gap = traces * traces - traces
     trivial = 1 - lit((gap * gap).sum(axis=-1))  # 1 at A1, the kind whose character is its own square

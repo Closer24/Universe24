@@ -1,6 +1,6 @@
 """Tensor24's whole system once, on our bang, the three example files: laid by one formula, a round the naive round,
 the trains' order and the 24's turns nothing to the act, run to a record and a ledger the decoder reads with the run
-back exact, and a departure named with nothing written, by the run and by its tool; the click lines of a pair world."""
+back exact, and a departure named with nothing written, by the run and by its tool; the edge teeth on a pair world."""
 
 import dataclasses
 import hashlib
@@ -14,12 +14,14 @@ from pathlib import Path
 import numpy as np
 
 from tensor24 import main
+from tensor24.algebra.carry import carry
 from tensor24.decoder import records
-from tensor24.engine import kinds, state, step
+from tensor24.engine import state, step
 from tensor24.record import schema
 from tensor24.runner import load as loading
 from tensor24.runner import run
 from tensor24.runner.files import NAMES, sites_of, whole
+from tensor24.runner.rewind import rewind
 from tests import frame
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +29,7 @@ PATHS = [ROOT / "examples" / "tensor24" / f"{name}.json" for name in NAMES]
 TOOTH = 1 << 127  # a tooth within the files' width and past the first train's dial
 FIELDS = ("round", "at", "site", "train", "count")  # a Count line's fields, schema.Count's
 REACH = 1 << 40  # the clock's counts are drawn below it
+ALONE = 40  # the pair world's rounds for the split alone's no, past its first open place, round 26 on this head
 HOW = {"capture_output": True, "text": True}  # a tool run, its output read
 
 
@@ -88,7 +91,7 @@ def drawn(held, laid, seed):
     a[clock], b[clock] = (rng.integers(0, REACH, n).astype(object) for _ in "ab")
     d = step.weight(laid.gearing, laid.clock, a) + step.weight(laid.gearing, laid.clock, b)
     r = frame.wide(rng, (rows, n)) % (d + d) - d
-    return state.State(a, b, r, 0 * a, 0 * a[: len(held.trains)])
+    return state.State(a, b, r, 0 * a, 0 * laid.click.key + 0 * a[:1])  # every edge side's tooth
 
 
 def naive(laid, held, s, shape):
@@ -114,26 +117,6 @@ def naive(laid, held, s, shape):
     return out
 
 
-def turned(m, laid, held, s, shape):
-    """The state turned by m: sites moved, each train's rows by its kind's matrix, a negated row's tooth flipped on its
-    dial, -1 - s, as the mirror flips it."""
-    xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
-    site = np.ravel_multi_index(tuple((m @ xyz) % sides), shape)
-    acting = kinds.kinds(m[None, :, :])
-    turn = np.eye(len(laid.gearing.rest), dtype=object)
-    for train in held.trains:
-        matrix = kinds.square(acting)[0] if train.square else acting[train.kinds[0]][0]
-        at = train.first + np.arange(len(matrix)) * train.part
-        for part in range(train.part):
-            turn[np.ix_(at + part, at + part)] = matrix
-    there = state.State(*(np.empty_like(x) for x in s))
-    for x, y in zip(there, s, strict=True):
-        x[:, site] = y
-    there.a[:, site], there.b[:, site] = turn @ s.a, turn @ s.b
-    there.r[:, site] = (turn @ (s.r + s.r + 1) - 1) // 2  # s on a kept row, -1 - s on a negated one
-    return there
-
-
 def orders_alike():
     """Our bang in every order of its trains, run its ticks: each train's rows in the layout and in the run alike."""
     runs, (universe, _, setting) = [], bang()
@@ -145,7 +128,8 @@ def orders_alike():
         place = [held.trains[n] for n in trains]
         rows = np.concatenate([np.arange(t.first, t.first + t.rows()) for t in place])
         gears = [np.broadcast_to(x, s.a.shape)[rows] for x in laid.gearing]
-        runs.append([*gears, *(x[rows] for x in s[:-1]), s.k[trains]])
+        sides = [t * len(order) + u for t, u in itertools.product(trains, trains)]  # the file's sides
+        runs.append([*gears, *(x[rows] for x in s[:-1]), s.k[sides]])
     return all(frame.same(each, runs[0]) for each in runs[1:]) and (runs[0][-len(s)] != 0).any()
 
 
@@ -171,6 +155,23 @@ def ledger(held, laid, s, setting, sites):
     return wanted
 
 
+def pair_world():
+    """A pair world of one Node-clock, NOT_CLOSED 37's (the first hostile code reader's M3; the seventh's rulings: the held hand at rest,
+    and no assert that it runs away), its three files: the held hand (1, 0), its before its now, its spring CHOSEN at the grip at rest, den
+    Gamma^2, the giver at its turning point at 14 and the taker at rest, at Gamma 1000, the hands' tie 9600 and the key 614401 odd."""
+    den = 1  # every pinion den, the seed's
+    hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
+    pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
+    trains = [hand, {"name": "giver", **pair}, {"name": "taker", **pair}]
+    integers = {"den": den, "full_rate": 1000, "width": 128}
+    grip = den * integers["full_rate"] * integers["full_rate"]  # the grip at rest, the spring's rule
+    chosen = {"key": 614401, "push": 0, "notch": 0, "hold": 1, "spring": grip, "tie": 9600, "mesh": 0}
+    world = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
+    gears = [[0, 0, 0, 1, 1, 0], [1, 0, 0, 14, 14, 0]]  # the held hand at rest, as every pulse
+    laid_ = {"version": 1, "ticks": 1260, "gears": gears}
+    return {"universe": world, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": laid_}
+
+
 def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and_runs_to_a_record_and_back(
     tmp_path, monkeypatch
 ):
@@ -186,10 +187,10 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
         assert frame.same(stepped, model) and not frame.same(blind, model)
         assert not step.act(laid, s)[1].any() and not out.k.any()  # no vertex: no passing, no click
         for m in frame.turns():
-            moved = turned(m, laid, held, out, piece["shape"])
-            assert frame.same(step.tick(laid, turned(m, laid, held, s, piece["shape"])), moved), (
-                m.tolist()
-            )
+            moved = frame.turned_by(m, laid, held, out, piece["shape"])
+            assert frame.same(
+                step.tick(laid, frame.turned_by(m, laid, held, s, piece["shape"])), moved
+            ), m.tolist()
     # the run: the files verbatim with their digests, every Node-clock in every round, the end's digest the rounds'
     # state, and 0 where the run back misses
     record, missed, reached = tmp_path / "run.jsonl", tmp_path / "missed.jsonl", {}
@@ -203,8 +204,8 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     ]
     assert got.header["sides"] == piece["shape"] and got.header["runner"] == "synchronous"
     ticks = setting["ticks"]
-    end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1)
-    assert got.end == end and got.events == []  # no rate line, and the wave alone never clicks
+    end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1, teeth=[])
+    assert got.end == {**end, "across": []} and got.events == []  # no rate line, no edge and no click
     card = {k: [t[k] for t in got.header["trains"]] for k in ("label", "winding", "key", "square")}
     assert card["label"] == [t["name"] for t in universe["trains"]] and card["square"] == [0, 1]
     assert card["winding"] == [1, len(laid.spokes) // len(piece["shape"])]  # the 00 row's dial, senses
@@ -268,32 +269,43 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert orders_alike()
     by_place(monkeypatch)
     assert not orders_alike()
-    # a pair world of one Node-clock, kept as NOT_CLOSED 37's record (the first hostile code reader's M3; the seventh's rulings: the held
-    # hand at rest, and no assert that it runs away): the held hand (1, 0), its before its now, its tooth at the dial's middle (s = 0) and
-    # its own spring CHOSEN at the grip at rest, den Gamma^2, the click world's rule, the giver at its turning point at 14 and the taker at
-    # rest, at Gamma 1000, the hands' tie 9600 and the key 614401 odd: with no exact quarter turn laid the held hand's square climbs and
-    # tonight the counts leave the width; whichever way it falls, a departure is the width's own, named with nothing written, or the
-    # run writes its record and ledger
-    den = 1  # every pinion den, the seed's
-    hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
-    pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
-    trains = [hand, {"name": "giver", **pair}, {"name": "taker", **pair}]
-    integers = {"den": den, "full_rate": 1000, "width": 128}
-    grip = den * integers["full_rate"] * integers["full_rate"]  # the grip at rest, the spring's rule
-    chosen = {"key": 614401, "push": 0, "notch": 0, "hold": 1, "spring": grip, "tie": 9600, "mesh": 0}
-    world = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
-    gears = [[0, 0, 0, 1, 1, 0], [1, 0, 0, 14, 14, 0]]  # the held hand at rest, as every pulse
-    laid_ = {"version": 1, "ticks": 1260, "gears": gears}
-    files = {"universe": world, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": laid_}
+    # the pair world, kept as NOT_CLOSED 37's record: whichever way it falls, a departure is the width's own, named with nothing
+    # written, or the run writes its record and ledger
+    files = pair_world()
     for name, held_ in files.items():
         (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")
     pair_record = tmp_path / "pair.jsonl"
     found = main.ran([tmp_path / f"{name}.json" for name in NAMES], pair_record)
-    wide = f"takes more bits than the width, {integers['width']}"
+    wide = f"takes more bits than the width, {files['universe']['integers']['width']}"
     assert all(x.startswith("round ") and wide in x for x in found), found  # a departure the width's own
     assert (
         pair_record.exists() == run.ledger_of(pair_record).exists() == (not found)
     )  # named, nothing written
+
+
+def test_the_edge_teeth_close_every_edges_books_run_back_and_turn_with_the_24_and_the_split_alone_does_not():
+    """Yes: on the pair world, three trains at one Node-clock, every edge's two sides click opposite quotients with teeth summing to
+    key - 1 in every round, run back exact; the click world's cube turned by each of the 24 steps to the round turned, clicks and teeth.
+    No: the split alone, each train's sum of its sides carried on one tooth of its own (NC29's form), opens the books there (C5's no)."""
+    held, laid, start = lay(*pair_world().values())
+    trains, key = len(held.trains), laid.click.key[0, 0]
+    s, alone, opened = start, (key - 1) // step.halves(laid) + 0 * start.a[:trains], False
+    for _ in range(ALONE):
+        out, q = step.act(laid, s)
+        assert frame.opposed(q, out.k, key, trains)
+        passed = step.passing(
+            laid.click, laid.plan, s.b, s.a, out.a
+        )  # each train's sum of its sides, alone
+        given, alone = carry(passed.reshape(trains, trains, -1).sum(axis=1), key, alone)
+        s, opened = out, opened or given.sum(axis=0).any()
+    assert opened and frame.same(rewind(step.untick, laid, s, ALONE), start)
+    click = [read(ROOT / "examples" / "tensor24-click" / f"{name}.json") for name in NAMES]
+    (held, laid, s), shape = lay(*click), click[NAMES.index("piece")]["shape"]
+    out, q = step.act(laid, s)
+    for m in frame.turns():
+        moved, p = step.act(laid, frame.turned_by(m, laid, held, s, shape))
+        sited = frame.turned_by(m, laid, held, s._replace(k=q), shape).k  # the clicks moved too
+        assert frame.same(moved, frame.turned_by(m, laid, held, out, shape)) and frame.same([p], [sited])
 
 
 def test_the_widths_promise_names_a_count_past_the_width_in_either_slot_and_none_at_its_edge(tmp_path):
