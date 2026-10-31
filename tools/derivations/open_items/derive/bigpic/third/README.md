@@ -76,14 +76,16 @@ other end, and tau as G D - 1 - tau.
 
 ## The owner's guiding line (10:37 UTC): the clicks choose the path, the board is fixed
 
-One start, the turning lay, with the triangle's tooth born at four places on its dial: the birth, 0, a third and two
-thirds. Over 5,000 rounds (tooth_5000.txt, the reading before the exchange's):
+Four starts, by the THIRD pair's ruling (one start is one start seed): the turning lay, with the triangle's tooth
+born at four places on its dial, the birth, 0, a third and two thirds. Over 5,000 rounds (tooth_5000.txt, the reading
+before the exchange's):
 - the board's end is one for every birth;
 - every clock's line is one at every round, since B C = 0 keeps the landings out of the lines;
 - the landings differ from the first birth's in 2,773, 1,384 and 1,470 rounds;
 - each run back from its own end reaches the same start and its own birth, 4 of 4.
 
-So the freedom is in the member's births, and the board, its start and its end are fixed.
+So the board's end is one against the four births. That holds by construction, since the board reads no tooth
+(B C = 0). The freedom is in the member's births.
 
 The THIRD pair's ruling (the Boss's 6542866096 item 2): one start is one start seed. So the four births are four starts,
 and the board's end fixed against them holds by construction. The guiding line's second half stays OWED until a run

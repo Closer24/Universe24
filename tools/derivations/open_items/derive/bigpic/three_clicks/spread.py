@@ -1,13 +1,18 @@
-"""The click world's uncertainty from the share rule alone (the owner's words of 11:1x UTC to Big Pic: "derive from it the
-solution to what is still open"; David's relay of 11:1x, "Check more places where the structure closes everything").
+"""The share rule's spread relation on the settings' plane (DERIVED). Renamed on the THIRD pair's physicist (B1, the
+Boss's 6543197467): it is a theorem of the share rule's formula from a known hand, read with no click and no record,
+and not the click world's uncertainty, which is OWED (many clicks of one hand along two settings, read from lines
+alone). First written on the owner's words of 11:1x UTC to Big Pic ("derive from it the solution to what is still
+open").
 The share rule is bellend.py's part (iii): a click along a setting s takes the hand h's share (h . s)^2 / ((h . h)(s . s)),
 the square of their overlap, over its own seed. Nothing else is used: no end law, no draw, no pair.
 Per click, with p the share: the reading E = 2 p - 1 and its spread 1 - E^2 = 4 p (1 - p), a whole fraction.
-The relation read: for every hand and every two settings a, b with c = (a . b)^2 / ((a . a)(b . b)), the two spreads sum
-to at least 1 - |2 c - 1|; no hand has both spreads 0 unless c is 0 or 1 (the settings along or across each other); and
-the bound is met by some hand on the lattice where one lies there.
+The relation read: for every hand of the plane and every two settings a, b with c = (a . b)^2 / ((a . a)(b . b)),
+the two spreads sum to at least 1 - |2 c - 1|; no hand has both spreads 0 unless c is 0 or 1 (the settings along or
+across each other); and the bound is met by some hand on the lattice where one lies there.
 Counted exactly over the triangle's own plane: the hands are the Eisenstein integers m + n w with |m|, |n| at most
 RANGE (not both 0), the settings the plane's six lattice lines at every 30 degrees and the powers of z = 13 + 5 w.
+The scope (the physicist's B2): the same count with each hand lifted off the plane by a common swing c (1, 1, 1),
+c = 1 to 3, where no law confines the hand; the relation is scoped to the plane by what that count shows.
 Usage: python3 -I spread.py <src> [RANGE, 8 unless given]
 """
 import sys
@@ -79,6 +84,19 @@ print(f"the two spreads sum to at least 1 - |2 c - 1| in {held} of {pairs * len(
       f" by some hand in {met} of {pairs} pairs; the smallest margin {lowest} per mille", flush=True)
 print(f"hands sharp on both settings: {sharp_both}, every one on a pair along or across each other (bound 0):"
       f" {sharp_both == sharp_both_aligned}", flush=True)
+for lift in (1, 2, 3):
+    broken = readings = 0
+    for i, a in enumerate(settings):
+        for b in settings[i + 1:]:
+            bn, bd = bound(a, b)
+            for h0 in hands:
+                h = (h0[0] + lift, h0[1] + lift, h0[2] + lift)
+                an, ad = spread(h, a)
+                cn, cd = spread(h, b)
+                readings += 1
+                broken += (an * cd + cn * ad) * bd < bn * ad * cd
+    print(f"off the plane, every hand lifted by the common swing {lift} (1, 1, 1): the bound breaks in {broken} of"
+          f" {readings} readings", flush=True)
 for k in range(4):
     bn, bd = bound(DIRS[0], DIRS[k])
     q, _ = carry(1000 * bn, bd, 0)

@@ -93,8 +93,10 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
     - OPEN beside it: the weight between the start and the end (the owner's 10:10 question), and a mark in the clicks
       that tells a law of both ends from a law of the start alone.
   - The law has three parts, and the pair's one hand runs from the birth to both wings:
-  - (i) one wing's click fixes the hand: clicking +1 it leaves the hand along its setting, clicking -1 across it;
-  - (ii) the board runs that end back to the birth;
+  - (i) the hand and the fixing end are fixed together in advance, from the start and from the end (the 11:52 law):
+    the fixing end reads along its setting (+1) or across it (-1), by its own seed, one count each way, and no click
+    writes the hand (the 11:47 law);
+  - (ii) the board carries that hand from the birth to both wings, fixed from the start to the end;
   - (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap, which is one
     of the triangle's own squares.
   - **Read exactly:**
@@ -114,15 +116,19 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
     to the birth on the pair world, and the far click's share by its own seeds. Also open: the order reading both ways,
     and the pair's reading.
 
-## The uncertainty from the share rule alone (spread.py, spread.txt)
+## The share rule's spread relation on the settings' plane (spread.py, spread.txt; DERIVED)
+
+- **Renamed on the THIRD pair's physicist** (B1, the Boss's 6543197467), from "the uncertainty from the share rule
+  alone". It is a theorem of the share rule's formula from a known hand, read with no click and no record.
+- **The uncertainty in the clicks is OWED:** many clicks of one hand along two settings, read from lines alone.
 
 - **The share rule** is bellend.py's part (iii): a click along a setting s takes the hand h's share
   p = (h . s)^2 / ((h . h)(s . s)), the square of their overlap, by its own seed.
 - **Per click:**
   - the reading is E = 2 p - 1;
   - its spread is 1 - E^2 = 4 p (1 - p).
-- **The relation (DERIVED from the share rule, by algebra on the plane):** for every hand and any two settings whose
-  own share is c, the two spreads sum to at least 1 - |2 c - 1|.
+- **The relation (DERIVED from the share rule, by algebra on the plane):** for every hand of the triangle's plane and
+  any two settings whose own share is c, the two spreads sum to at least 1 - |2 c - 1|.
   - At 30 or 60 degrees apart the bound is 1/2. Along or across each other it is 0.
   - So no hand gives two sharp readings on settings that are neither along nor across each other.
 - **MEASURED** (exactly, whole numbers and Rule3's carry), with the hands the 288 Eisenstein integers m + n w with |m|
@@ -130,13 +136,15 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
   - the relation holds in 15,840 of 15,840 hand-pair readings;
   - the bound is met exactly in 7 of the 55 pairs, where its best hand lies on the lattice;
   - every hand sharp on both settings (80 of them) sits on a pair along or across each other.
+- **Its scope is the plane** (the physicist's B2). Off the plane the bound fails: with every hand lifted by a common
+  swing c (1, 1, 1), it breaks in 464, 774 and 1,086 of 15,840 readings at c = 1, 2 and 3 (the physicist read 516 to
+  1,138 on his hands). No law confines the hand to the plane: the scope stands named, and the confinement is OPEN.
 - **What it rests on:**
   - The share rule alone: no end law, no pair, no draw beyond the click's own seed.
-  - The share rule's place on the board is a CANDIDATE, OPEN. Every click lands energy on its edge: the edge's passing
-    is the energy flowing through it, (kappa / 2) f times the pair's wedge, which is how the books close. A hand's
-    energy along a setting is the square of its overlap.
-  - So a click that lands one quantum, split between an outlet along the setting and one across it by their
-    passings, takes the share rule. That is not run.
+  - **The share rule's board form, under the 11:47 law, is a reading form** (the physicist's ruling): the passings are
+    setting-free, the setting picks the record's projection, and the seed is a birth laid at the start or the end. The
+    outlets may not depend on the setting. My first candidate, an outlet along the setting and one across it, is
+    withdrawn on this ruling. OPEN.
 - **With the share rule, Bell also needs the end law's laid measure** (parts i and ii above, in (C)'s form, its source
   OPEN). The free lay and the local act stay at or below 2.
 

@@ -11,19 +11,19 @@ W 600000000, the held spring S 100000000, the tie f 60000; the cell's band 2 f h
    the held swing: from -1 to 1, at the end 1, its step at the end 0
 == the one cell f (h (g + u))^2, the together swing laid moving: the lay (40, 0, 1) now, (39, -1, 1) before; 5000 rounds
    E32's change = the teeth's share in 5000 of 5000 rounds; widest count 15466 bits; the run back exact: True; the giver and the taker swapped, alike: True
-   the held hand's lend f h^2 reaches the rest teeth W (the explicit step's limit for the cell's together swing, 8 f h^2 / 2 W = 4) at round 2345, the held hand then at 126; a count passes 64 bits at round 2356
+   the together swing's explicit step meets its own limit (f h^2 reaches W, 8 f h^2 / 2 W = 4) at round 2345, the held hand then at 126; a count passes 64 bits at round 2356
    the opposite swing: from 40 to 40, at the end 40, its step at the end 0
    the together swing: past 64 bits (15467 bits)
    the held swing: from -383 to 383, at the end -383, its step at the end -766
 == the one cell f (h (g + u))^2, the giver at ten times its count, the held hand at its unit, at rest: the lay (400, 0, 1) now, (400, 0, 1) before; 5000 rounds
    E32's change = the teeth's share in 5000 of 5000 rounds; widest count 25352 bits; the run back exact: True; the giver and the taker swapped, alike: True
-   the held hand's lend f h^2 reaches the rest teeth W (the explicit step's limit for the cell's together swing, 8 f h^2 / 2 W = 4) at round 285, the held hand then at 135; a count passes 64 bits at round 297
+   the together swing's explicit step meets its own limit (f h^2 reaches W, 8 f h^2 / 2 W = 4) at round 285, the held hand then at 135; a count passes 64 bits at round 297
    the opposite swing: from 400 to 400, at the end 400, its step at the end 0
    the together swing: past 64 bits (25353 bits)
    the held swing: from -330 to 330, at the end 330, its step at the end 660
 == the one cell f (h (g + u))^2, every count at ten times, at rest (past the gear's grain: f h^2 outgrows the dial): the lay (400, 0, 10) now, (400, 0, 10) before; 300 rounds
    E32's change = the teeth's share in 300 of 300 rounds; widest count 1216 bits; the run back exact: True; the giver and the taker swapped, alike: True
-   the held hand's lend f h^2 reaches the rest teeth W (the explicit step's limit for the cell's together swing, 8 f h^2 / 2 W = 4) at round 43, the held hand then at 145; a count passes 64 bits at round 56
+   the together swing's explicit step meets its own limit (f h^2 reaches W, 8 f h^2 / 2 W = 4) at round 43, the held hand then at 145; a count passes 64 bits at round 56
    the opposite swing: from 400 to 400, at the end 400, its step at the end 0
    the together swing: past 64 bits (1217 bits)
    the held swing: from -266 to 266, at the end 266, its step at the end 532
@@ -44,13 +44,13 @@ W 600000000, the held spring S 100000000, the tie f 60000; the cell's band 2 f h
    the held swing: from -25 to 26, at the end 15, its step at the end -5
 == the control, the shipped triangle, the giver at ten times its count, the held hand at its unit, at rest: the lay (400, 0, 1) now, (400, 0, 1) before; 5000 rounds
    E32's change = the teeth's share in 5000 of 5000 rounds; widest count 21339 bits; the run back exact: True; the giver and the taker swapped, alike: True
-   the held hand's lend f h^2 reaches the rest teeth W (the explicit step's limit for the cell's together swing, 8 f h^2 / 2 W = 4) at round 521, the held hand then at 285; a count passes 64 bits at round 534
+   the together swing's explicit step meets its own limit (2 f h^2 + the band reaches 4 W, 2 (2 f h^2 + band) / 2 W = 4) at round 521, the held hand then at 285; a count passes 64 bits at round 534
    the opposite swing: past 64 bits (21339 bits)
    the together swing: past 64 bits (21338 bits)
    the held swing: from -382 to 382, at the end -382, its step at the end -764
 == the control, the shipped triangle, every count at ten times, at rest (past the gear's grain: f h^2 outgrows the dial): the lay (400, 0, 10) now, (400, 0, 10) before; 300 rounds
    E32's change = the teeth's share in 300 of 300 rounds; widest count 1140 bits; the run back exact: True; the giver and the taker swapped, alike: True
-   the held hand's lend f h^2 reaches the rest teeth W (the explicit step's limit for the cell's together swing, 8 f h^2 / 2 W = 4) at round 5, the held hand then at 107; a count passes 64 bits at round 23
+   the together swing's explicit step meets its own limit (2 f h^2 + the band reaches 4 W, 2 (2 f h^2 + band) / 2 W = 4) at round 7, the held hand then at 167; a count passes 64 bits at round 23
    the opposite swing: past 64 bits (1140 bits)
    the together swing: past 64 bits (1140 bits)
    the held swing: from -289 to 289, at the end 289, its step at the end 578

@@ -145,7 +145,11 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
 - **What it does not give:** the band's own value, 96,000 in the file. The square gives each mass as half of its bands,
   a relation. The value stays a named interim under the owner's "Everything from the structure. Everything."
 
-## David's one cell on the board (cell.py, cell_5000.txt; David's 6542802335 item 2)
+## David's one cell in a stand-alone three-clock model (cell.py, cell_5000.txt; David's 6542802335 item 2)
+
+The MIRACLE pair's mathematician PASSED it (the Boss's 6543197467 item 2), with Q1, Q2 and MINOR items folded below. It
+is a stand-alone three-clock model on road B's round, not the engine's board, and its identity is a check by
+construction.
 
 - **The cell:** f (h (g + u))^2, with g the giver, u the taker, h the held hand and f the tie at hold 1 (W div Gamma,
   60,000). Its square holds the click world's two four-leg ties exactly and a band of exactly 2 f h^2, so no band is
@@ -156,10 +160,12 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
 - **MEASURED, 5,000 rounds at each lay** (the control: equil.py's shipped triangle with the laid band 96,000):
   - **The books and the run back:** E32's change equals the teeth's share in 5,000 of 5,000 rounds at every lay, on
     both forms. The run back from the end state alone is exact. Swapping the giver and the taker runs alike.
-  - **The opposite swing g - u is exactly massless.** The cell depends on g + u alone, so g - u feels no push at any
-    held size.
+  - **The opposite momentum is kept exactly** (the mathematician's Q1 names it so). The cell depends on g + u alone,
+    so g - u feels no push at any held size.
     - Laid at rest, it stays at its lay: 40 at every round.
-    - Laid moving, it keeps its laid step, 2 a round, to 10,040 at round 5,000: a free swing.
+    - Laid moving, it keeps its laid step, 2 a round, to 10,040 at round 5,000: a free swing. The constant step is the
+      equal teeth's: with unequal lawful teeth it varies in 1,440 and 3,674 of 5,000 rounds (the mathematician's
+      reading).
     - In the control it walks: from -57 to 193 laid at rest, and from -250 to 270 laid moving.
   - **The click world's lay at rest (40, 0, 1):** the together swing stays within -40 to 40 and the held hand within -1
     to 1, 6 bits.
@@ -167,17 +173,22 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
     - the together swing laid moving;
     - the giver at ten times its count, with the held hand at its unit.
     - In both, the teeth's walk heats the held hand to more than 100 counts. Then its lend f h^2 reaches W (rounds
-      2,345 and 285), where the together swing's explicit step meets its limit: its leapfrog factor 8 f h^2 / 2 W
-      reaches 4.
+      2,345 and 285), where the together swing's explicit step meets its own bound f h^2 < W: its leapfrog factor
+      8 f h^2 / 2 W reaches 4.
     - A count passes 64 bits 11 and 12 rounds later.
-    - The control runs away at ten times the giver's count too (the limit at round 521, 64 bits at 534). It stays
+    - The control has its own bound, 2 f h^2 + the band < 4 W (its factor 2 (2 f h^2 + band) / 2 W). It runs away at
+      ten times the giver's count too: its bound is met at round 521, and a count passes 64 bits at 534. It stays
       within 8 bits with the together swing laid moving.
-  - **Every count at ten times, the held hand at 10,** is past the gear's grain from the start on both forms (the limit
-    at rounds 43 and 5). It is read for 300 rounds only.
+  - **Every count at ten times, the held hand at 10,** is past the gear's grain from the start on both forms (each
+    bound met at rounds 43 and 7). It is read for 300 rounds only.
 - **So:**
   - The cell lays no band and gives exactly half (DERIVED).
-  - Its opposite swing is exactly massless on the board (MEASURED): free, not falling. On a board of many Node-clocks,
-    David reads it as a wave. That reading is cited physics, not read here.
+  - Its opposite momentum is kept exactly in the model (MEASURED, with equal teeth): free, not falling. On a board of
+    many Node-clocks, David reads it as a wave. That reading is cited physics, not read here.
+  - Why only a held hand carries a cell is OPEN. First, fix from the structure which edges carry products (the ties)
+    and which carry sums (the bands), as the mathematician asks (Q2). My first reason, that the giver's and the taker's
+    cells would add g^2 u^2, is withdrawn: summed over the three vertices, the cells give the ties doubled and no
+    g^2 u^2 (the mathematician's cellcheck.py).
   - Its together swing is held by the held hand alone. At the shipped grain the held hand's one count is all rounding,
     and the teeth's walk can heat it past the step's limit. What keeps the held hand near its unit is OPEN: G3's hat,
     which needs its own polarized form (the square of k(start) k(end) - n gives the dial hat k^2 and the push
@@ -197,6 +208,9 @@ Usage: python3 -I cell.py <src> [rounds]
   - the whole clicks by train are all 0, and the walk is 0;
   - the run back is exact, and the 24 hold 24 of 24.
 - **The present act:** the widest count is 0 bits, the walk is 0, the run back is exact, and the 24 hold 24 of 24.
+- **Its premises, named** (the Boss's 6543197467 item 3): every term vanishes with its counts, since no cell holds a
+  constant (the owner's widened order); and every term is its cell's square (the square form, L1, a candidate). The
+  run reads the first on the shipped click world: no term there holds a constant.
 - **So the board's vacuum is exactly still, and it never clicks** (MEASURED on both acts).
   - Every term is a product of counts, so every push is 0 there.
   - The gear's teeth stay below one carry, so no count moves.

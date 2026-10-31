@@ -1,6 +1,9 @@
 hands: 288 Eisenstein integers of the plane, |m|, |n| at most 8; settings: 11 (the six lattice lines and five powers of z = 13 + 5 w); setting pairs: 55
 the two spreads sum to at least 1 - |2 c - 1| in 15840 of 15840 hand-pair readings; the bound met by some hand in 7 of 55 pairs; the smallest margin 0 per mille
 hands sharp on both settings: 80, every one on a pair along or across each other (bound 0): True
+off the plane, every hand lifted by the common swing 1 (1, 1, 1): the bound breaks in 464 of 15840 readings
+off the plane, every hand lifted by the common swing 2 (1, 1, 1): the bound breaks in 774 of 15840 readings
+off the plane, every hand lifted by the common swing 3 (1, 1, 1): the bound breaks in 1086 of 15840 readings
    settings 0 degrees apart: the bound 0 / 36 = 0 per mille
    settings 30 degrees apart: the bound 6 / 12 = 500 per mille
    settings 60 degrees apart: the bound 18 / 36 = 500 per mille

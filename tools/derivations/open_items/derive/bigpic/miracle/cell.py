@@ -8,8 +8,9 @@ its push -(g_in + g_out) h. The cell is quadratic in h given g and u, so the dia
 Readings, per lay, ROUNDS rounds: E32 = 32 W E against the teeth's share each round (the identity); the run back from the
 end state alone; the swap of the giver and the taker, the lay swapped against the run swapped; the widest count; the
 opposite swing g - u, the together swing g + u and the held hand, each with its range and its step at the end; the
-round at which the held hand's lend f h^2 reaches W, where the together swing's explicit step meets its limit (its
-leapfrog factor 8 f h^2 / 2 W reaches 4), and the round at which a count passes 64 bits.
+round at which the together swing's explicit step meets its own limit (its leapfrog factor reaching 4: on the cell
+8 f h^2 / 2 W, so f h^2 reaches W; on the control 2 (2 f h^2 + band) / 2 W, so 2 f h^2 + band reaches 4 W), and the
+round at which a count passes 64 bits. A stand-alone three-clock model, not the engine's board.
 The control: equil.py's click world triangle as shipped (the ties f g^2 h^2 and f u^2 h^2, the laid band 96,000 g u).
 Usage: python3 -I cell.py <src> [rounds, 5000 unless given]
 """
@@ -110,7 +111,8 @@ def read(name, w, now, before, rounds=ROUNDS):
         ranges["opposite"].append(a[0] - a[1])
         ranges["together"].append(a[0] + a[1])
         ranges["held"].append(a[2])
-        if limit is None and F * a[2] * a[2] >= W:
+        lend = F * a[2] * a[2]
+        if limit is None and (lend >= W if w.cell else lend + lend + BAND >= 4 * W):
             limit = (n, max(abs(x) for x in ranges["held"]))
         if past is None and max(abs(x) for x in a).bit_length() > 64:
             past = n
@@ -123,9 +125,10 @@ def read(name, w, now, before, rounds=ROUNDS):
     print(f"   E32's change = the teeth's share in {kept} of {rounds} rounds; widest count {widest} bits; the run back exact:"
           f" {back}; the giver and the taker swapped, alike: {swap}", flush=True)
     if limit is not None:
-        print(f"   the held hand's lend f h^2 reaches the rest teeth W (the explicit step's limit for the cell's together"
-              f" swing, 8 f h^2 / 2 W = 4) at round {limit[0]}, the held hand then at {limit[1]}; a count passes 64 bits at"
-              f" round {past}", flush=True)
+        bound = ("f h^2 reaches W, 8 f h^2 / 2 W = 4" if w.cell
+                 else "2 f h^2 + the band reaches 4 W, 2 (2 f h^2 + band) / 2 W = 4")
+        print(f"   the together swing's explicit step meets its own limit ({bound}) at round {limit[0]}, the held hand"
+              f" then at {limit[1]}; a count passes 64 bits at round {past}", flush=True)
     for key, vals in ranges.items():
         lo, hi = min(vals), max(vals)
         if max(abs(lo), abs(hi)).bit_length() > 64:

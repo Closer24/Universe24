@@ -28,8 +28,9 @@ DERIVED (the probe checks each identity at every round):
   - the edges' teeth's circulation c . f stays at its birth's value mod G D, since c . (G x - c y) = 0: one edge tooth
     is the other two's double, and tau takes its place (ALG3's count), so the third click costs no number beyond the
     first click's three;
-  - the books per clock in the clicks: half_kappa (E_u' - E_u - share_u) = 8 W SUM_e B_ue (dial q_e + k_e' - k_e), E_u
-    the clock's own energy with half of each of its edges' (E32's terms), on either form; under the triangle's tooth the
+  - the sides' books per clock, a check by construction read through the teeth (first named the books per clock in
+    the clicks): half_kappa (E_u' - E_u - share_u) = 8 W SUM_e B_ue (dial q_e + k_e' - k_e), E_u the clock's own energy
+    with half of each of its edges' (E32's terms), on either form; under the triangle's tooth the
     landings drop out of every clock's books (B C = 0), and tau's books are tau' + G D w = tau + y.
 Readings, 5,000 rounds unless given: the identities; L's drift; the landings (their count against SUM y / (G D), and the
 balance of the landing word over every window up to 64 rounds); the record's circulation c . q against 3 W on both
@@ -37,8 +38,9 @@ forms; the run back from the end state alone (board, edge teeth, tau); the trian
 with an odd one reading each edge's tooth from its other end (dial - 1 - k) and tau as G D - 1 - tau.
 The owner's guiding line (10:37 UTC): one start, several births of the triangle's tooth; the board's end and every
 line are one, the landings differ, and each run back reaches the same start.
-Pauli's exclusion in the third click: L = det(1, b, a) is odd under the exchange of any two clocks (the 2-cell's
-orientation, the sign character) and 0 when two clocks share their state; laid so, the state stays its own swap, and
+A clock fact, the charge odd under exchange (first named Pauli's exclusion; it is no exclusion, since two equal clocks
+are allowed and kept): L = det(1, b, a) is odd under the exchange of any two clocks (the 2-cell's orientation, the sign
+character) and 0 when two clocks share their state; laid so, the state stays its own swap, and
 the triangle lands no third click.
 A control: the equilateral triangle of four-leg edges (c x_u^2 x_v^2, the click world's tie factor) under the present
 act, whose torque is not 0.
@@ -296,7 +298,7 @@ def paths(name, lay_a, lay_b):
           f" and its own birth: {backs} of {len(runs)}", flush=True)
 
 
-def exclusion(name, lay_a, lay_b):
+def exchange(name, lay_a, lay_b):
     """Two clocks laid in one state: the law is turned into itself by their exchange, so the state stays its own swap,
     and the triangle's charge L(b, a) = det(1, b, a) has two equal columns."""
     a, b, s = list(lay_a), list(lay_b), [0, 0, 0]
@@ -347,6 +349,6 @@ read("the same, laid turning at ten times the counts", [10 * v for v in TURNING[
 read("the same, laid at rest at ten times the counts", [10 * v for v in AT_REST[0]], [10 * v for v in AT_REST[1]])
 paths("one start, four births of the triangle's tooth (the owner's guiding line: the clicks choose the path, the board"
       " is fixed)", *TURNING)
-exclusion("two clocks in one state (Pauli's exclusion in the third click)", [40, 40, 7], [25, 25, 3])
+exchange("two clocks in one state (a clock fact: the charge odd under exchange)", [40, 40, 7], [25, 25, 3])
 control("the control: the equilateral triangle of four-leg edges under the present act, laid turning", *TURNING)
 print("exit", flush=True)
