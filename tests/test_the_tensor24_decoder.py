@@ -334,16 +334,16 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
     tmp_path,
 ):
     """Yes: the lines list in the schema's order; per train and per Node-clock the lines, the given, the taken and the
-    net; the places where the sum of q over the trains is not 0 counted; the tool prints the list, each line's sides
-    and across, and the counts. No: a quantum across a Mesh, between two places, counts each of them not 0."""
+    net; the places whose across net is not 0 counted; the tool prints the list, each line's sides and across, and
+    the counts. Yes too: a quantum across a Mesh, between two places, counts each of them as passing a net across."""
     held = clicks.counted(read([B, GIVE, TOOK, E], tmp_path))
     assert held.lines == [GIVE, TOOK] and held.sites == {0: clicks.Tally(len(held.lines), 1, 1, 0)}
     assert held.trains == {0: clicks.Tally(1, 1, 0, -1), 1: clicks.Tally(1, 0, 1, 1)}
-    assert (held.places, held.nonzero) == (1, 0)
+    assert (held.places, held.crossed) == (1, 0)
     give = {**GIVE, "round": 6, "sides": [], "across": [[0, 1, -1, 3, 6]]}
     across = [give, {**give, "site": 1, "q": 1, "across": [[0, 0, 1, 3, 0]]}]
     more = clicks.counted(read([B, GIVE, TOOK, *across, E], tmp_path))
-    assert (more.places, more.nonzero) == (len({(e["round"], e["site"]) for e in more.lines}), 1 + 1)
+    assert (more.places, more.crossed) == (len({(e["round"], e["site"]) for e in more.lines}), 1 + 1)
     run = tool(tmp_path / "record.jsonl")  # the record read last, as read() wrote it
     assert run.returncode == 0 and run.stderr == "" and run.stdout.startswith("the ledger: ")
     lines = run.stdout.splitlines()
@@ -354,7 +354,8 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
     assert "  round 1, site 0, train 0: q -1, sides [[1, -1, 3, 6]], across []" in lines
     assert "train 0: 3 lines, given 2, taken 1, net -1" in lines
     assert "site 0: 3 lines, given 2, taken 1, net -1" in lines
-    assert "the sum of q over the trains at a round and site: not 0 at 2 of 3 places" in lines
+    net = "each place's across net, its sum of q over the trains (its own site's sides cancel there): 2 of 3 places"
+    assert f"{net} pass a net across a Mesh" in lines
 
 
 def test_the_click_world_reads_the_books_no_own_count_and_no_cone_where_none_could_be_outside(tmp_path):

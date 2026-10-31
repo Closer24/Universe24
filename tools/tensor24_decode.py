@@ -2,7 +2,7 @@
 readings printed: the ledger read or the cause it is not, and the basic part on the click lines, each with its edge
 sides in its site and across a Mesh: the lines listed in the schema's order and
 counted per train and per Node-clock (the lines, the given, the taken and the net),
-and the places (a round and a Node-clock) where the sum of q over the trains is not 0, counted; then the click world's
+and the places (a round and a Node-clock) whose across net, their sum of q over the trains, is not 0, counted; then the click world's
 block (decoder/shadow.py, the owner's law of 23:4x UTC: the physics read in the board's shadow, no claim on a board
 reading alone): the books at each click and the cone check by click, then the click board's two (the owner's word
 of 00:3x UTC: the clocks' meetings), the meetings and each clock's line of meetings, each
@@ -31,7 +31,7 @@ REFUSAL = (
 
 
 def printed(held: clicks.Counted) -> None:
-    """The click lines listed, then counted per train and per Node-clock, then the places with a sum of q not 0."""
+    """The click lines listed, then counted per train and per Node-clock, then the places whose across net is not 0, their sum of q over the trains, the sides in their site cancelling there: a count, no reading of the books."""
     print(f"the click lines: {len(held.lines)}")
     for line in held.lines:
         where = f"round {line['round']}, site {line['site']}, train {line.get('train')}"
@@ -43,8 +43,8 @@ def printed(held: clicks.Counted) -> None:
                 f"{name} {at}: {tally.lines} lines, given {tally.given}, taken {tally.taken}, net {tally.net}"
             )
     print(
-        "the sum of q over the trains at a round and site:"
-        f" not 0 at {held.nonzero} of {held.places} places"
+        "each place's across net, its sum of q over the trains (its own site's sides cancel there):"
+        f" {held.crossed} of {held.places} places pass a net across a Mesh"
     )
 
 
