@@ -1,0 +1,30 @@
+PART A: distinct rates (the Krylov rank of a drawn start) on the 24-gear train
+  R(h): a signed permutation True; kept by all 48 True; R(h) + R(h^-1) symmetric True
+  kept by all 48, draw 17: symmetric True, kept by the 24 True, by all 48 True; commutes with Q True; rates on the train 4, on 2 2, on 2' + 2'' 2
+  kept by all 48, draw 29: symmetric True, kept by the 24 True, by all 48 True; commutes with Q True; rates on the train 4, on 2 2, on 2' + 2'' 2
+  kept by the 24 alone, draw 17: symmetric True, kept by the 24 True, by all 48 False; commutes with Q True; rates on the train 6, on 2 2, on 2' + 2'' 4
+  R(h) + R(h^-1): symmetric True, kept by the 24 True, by all 48 True; commutes with Q True; rates on the train 2, on 2 2, on 2' + 2'' 2
+PART B: 2' and 2'' at every rate: tr(C^k B) for k = 0 .. 24, B the w part of SUM conj(chi_2'(g)) L(g)
+  A + B w checks: A, B whole; tr A = 96, tr B = 0
+  kept by all 48, draw 17: tr(C^k B) = 0 for every k: True
+  kept by all 48, draw 29: tr(C^k B) = 0 for every k: True
+  kept by the 24 alone, draw 17: tr(C^k B) = 0 for every k: True
+  R(h) + R(h^-1): tr(C^k B) = 0 for every k: True
+  the no: R(h) + R(h^-1) + Q (odd in Q): tr(C^k B) = 0 for every k: False (first k = 1, value -384)
+PART C: the act's own steps under R(h) + R(h^-1) (kept by all 48), the leak in counts
+  W = 5 (W divides every push), amplitude 1000, 12 rounds, laid in 2: counts the spring moved 288; the other part's largest entry x12 0 (in counts 0), its own part's largest count 10940
+  W = 5 (W divides every push), amplitude 1000, 12 rounds, laid in 2' + 2'': counts the spring moved 288; the other part's largest entry x12 0 (in counts 0), its own part's largest count 24414
+  W = 1000000 (the carry rounds), amplitude 1000, 400 rounds, laid in 2: counts the spring moved 0; the other part's largest entry x12 0 (in counts 0), its own part's largest count 7592
+  W = 1000000 (the carry rounds), amplitude 1000, 400 rounds, laid in 2' + 2'': counts the spring moved 0; the other part's largest entry x12 0 (in counts 0), its own part's largest count 13482
+  W = 3 (the carry rounds), amplitude 1000, 100 rounds, laid in 2: counts the spring moved 2398; the other part's largest entry x12 88 (in counts 7), its own part's largest count 11240
+  W = 3 (the carry rounds), amplitude 1000, 100 rounds, laid in 2' + 2'': counts the spring moved 2399; the other part's largest entry x12 66 (in counts 6), its own part's largest count 11025
+  W = 3 (the carry rounds), amplitude 1000, 400 rounds, laid in 2: counts the spring moved 9597; the other part's largest entry x12 174 (in counts 14), its own part's largest count 8906
+  W = 3 (the carry rounds), amplitude 1000, 400 rounds, laid in 2' + 2'': counts the spring moved 9600; the other part's largest entry x12 94 (in counts 8), its own part's largest count 16355
+  W = 3 (the carry rounds), amplitude 10000, 400 rounds, laid in 2: counts the spring moved 9599; the other part's largest entry x12 160 (in counts 13), its own part's largest count 134474
+  W = 3 (the carry rounds), amplitude 10000, 400 rounds, laid in 2' + 2'': counts the spring moved 9600; the other part's largest entry x12 108 (in counts 9), its own part's largest count 150473
+  W = 5 (the carry rounds), amplitude 1000, 400 rounds, laid in 2: counts the spring moved 9598; the other part's largest entry x12 182 (in counts 15), its own part's largest count 8969
+  W = 5 (the carry rounds), amplitude 1000, 400 rounds, laid in 2' + 2'': counts the spring moved 9599; the other part's largest entry x12 116 (in counts 10), its own part's largest count 15696
+  W = 6 (the carry rounds), amplitude 1000, 400 rounds, laid in 2: counts the spring moved 9593; the other part's largest entry x12 158 (in counts 13), its own part's largest count 9000
+  W = 6 (the carry rounds), amplitude 1000, 400 rounds, laid in 2' + 2'': counts the spring moved 9599; the other part's largest entry x12 118 (in counts 10), its own part's largest count 15560
+  W = 6 (the carry rounds), amplitude 10000, 400 rounds, laid in 2: counts the spring moved 9599; the other part's largest entry x12 134 (in counts 11), its own part's largest count 125630
+  W = 6 (the carry rounds), amplitude 10000, 400 rounds, laid in 2' + 2'': counts the spring moved 9600; the other part's largest entry x12 104 (in counts 9), its own part's largest count 140661
