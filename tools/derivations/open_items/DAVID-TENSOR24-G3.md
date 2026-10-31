@@ -7,6 +7,8 @@ David, 2026-10-30, 08:3x UTC, for the Boss's TENSOR24_NODE.md 4.2 (term 6: the c
 
 This page goes forward (the law's line 35, item (10)): the clock, then the algebra, then the physics. Its first results (#2187 6517738078, probe f89b76a33) went to a hostile mathematician and a hostile physicist, and both refused them; each later text went to both again, and each found more; the fourth text went to a new hostile mathematician (the earlier two readers were stopped by an interruption at 08:37), who refused it with eleven items, folded here. Section 5 lists what changed at each reading. The probes, whole numbers alone (Rule3's carry for every division, no float), stand in derive/david_open/node/ with their outputs beside them, read on the head's src (tensor24-review 9751f91c1):
 
+The page's two probes below, with their outputs, left main on the two readings of main b1a50bb33 (#2187 6536864716): two roots found by bisection, a printed sine formula and results typed from it; their record stays in git at c7b0a4bea, and the page's probe letters cite that record.
+
 - g3_strengths.py: each kind's spring through an A1 held count; lam's bound, exact and not strict, for one tied family and for several sharing the held count, each with its own g_f and lam_f; 4.2's hat against the bound; Animate's operation on the head's gear, one family and two, as single runs where every lay gives the same count and as spreads over 40 lays where it does not; the held hand's lag behind its valley; the step's edge by V's Hessian; the two beats;
 - g3_kinds_and_parts.py: an E family under four pushes; a family of two parts; the held count's own E potential, its invariant forms up to nine legs, and where each puts its least.
 
