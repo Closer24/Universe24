@@ -2985,6 +2985,7 @@ def probe_cases() -> tuple[int, int]:
     check("DIVIDE is a note", gate.RULES["DIVIDE"][0] == "WARN")
     check("SEARCH is a refusal", gate.RULES["SEARCH"][0] == "BLOCK")
     check("SEARCHLOG is a note", gate.RULES["SEARCHLOG"][0] == "WARN")
+    check("SINEWORD is a note", gate.RULES["SINEWORD"][0] == "WARN")
     NPS = "import numpy as np\n"
     probes = (
         ("a float literal", "x = 0.5\n", ["float literal"]),
@@ -3086,6 +3087,20 @@ def probe_cases() -> tuple[int, int]:
     )
     for label, source, want in logs:
         check(f"SEARCHLOG: {label}", found(source, "SEARCHLOG") == sorted(want))
+    words = (
+        ("a cosine named in a string", "label = 'cos^2'\n", ["string cos"]),
+        ("a cosine in the text of an f-string", "x = 1\nprint(f'cos 30 degrees as {x}')\n", ["string cos"]),
+        ("a cosine in a comment", "PELL = 1351  # stands for cos 30 degrees\n", ["comment cos"]),
+        ("two words in one string", "t = 'sine and tangent'\n", ["string sine", "string tangent"]),
+        ("a digit ends a word", "t = 'cos30'\n", ["string cos"]),
+        ("a docstring is spared", '"""A probe that refuses a cosine."""\n\nx = 1\n', []),
+        ("a function's docstring is spared", 'def f():\n    """no sine here"""\n    return 1\n', []),
+        ("a word inside another is none", "t = 'cosmos, single, tangential, sinew'\n", []),
+        ("a name is SEARCH's and no string", "cos_w = 24\n", []),
+        ("a file that does not parse", "def (:\n", []),
+    )
+    for label, source, want in words:
+        check(f"SINEWORD: {label}", found(source, "SINEWORD") == sorted(want))
     reads = (
         (PROBE, True),
         ("tools/derivations/pair_rides/x.py", True),
@@ -3194,6 +3209,11 @@ def probe_cases() -> tuple[int, int]:
             check(
                 "a new probe with a logarithm name is a note and no refusal",
                 status == 0 and "note    SEARCHLOG" in text and "REFUSED" not in text,
+            )
+            status, text = read(branch("sine_word", {folder + "w.py": "label = 'cos^2'\n"}))
+            check(
+                "a new probe with a cosine in a string is a note and no refusal",
+                status == 0 and "note    SINEWORD" in text and "REFUSED" not in text,
             )
             status, text = read(branch("sine_held", {folder + "old_sine.py": "def sine(x):\n    return x + 1\n"}))
             check("a changed probe that holds its sine is quiet", status == 0 and "SEARCH" not in text)

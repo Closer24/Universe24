@@ -21,7 +21,7 @@ a number behind a name: an enumeration, and a count spelt as a length. PROBE (a 
 adds or changes: a float, a true division, a root, a circular call, an import of math, random, fractions, decimal, statistics, scipy or sympy (PROBE); a floor
 division, a remainder or divmod, where the one division is Rule3's carry (DIVIDE). SEARCH (a refusal, by the owner's word of 2026-10-30, 17:20 UTC, "Sine is forbidden.", #2187 6528925479) reads the three shapes under which a probe makes a
 circular function or a root without a call that names it: a series summed by a loop, a bracket halved by its midpoint, and a function or constant named a sine,
-cosine, tangent or arctangent (David's finding of 6528139344 item 5); SEARCHLOG (a note) reads a function or constant named artanh or ln, until the owner says
+cosine, tangent or arctangent (David's finding of 6528139344 item 5); SINEWORD (a note) reads a word that names a circular function (cos, sine, tangent, ...) in a string or a comment of a probe, a docstring spared: the lay that stands for a cosine under no name (g5_draw (n)); SEARCHLOG (a note) reads a function or constant named artanh or ln, until the owner says
 whether his word reaches the logarithm. The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
 scribe_scan_probes.json, read from the published branch as the ceiling is. SCRIBE-GATE-1.md, section The hidden numbers and the probes.
 
@@ -278,6 +278,10 @@ RULES: dict[str, tuple[str, str]] = {
     "SEARCHLOG": (
         "WARN",
         "a function or constant named artanh or ln in a probe under tools/derivations/ that a push adds or changes (artanh_inverse, LN_TWO): a logarithm made by hand; a note, the count per file may not rise, until the owner says whether his word on the sine reaches the logarithm (the series that makes one is refused by SEARCH already)",
+    ),
+    "SINEWORD": (
+        "WARN",
+        "a word that names a circular function (sin, cos, tan, sine, cosine, tangent, arctan, arcsin, arccos, atan, asin, acos) in a string or a comment of a probe under tools/derivations/ that a push adds or changes, a docstring spared: a lay or a table that stands for a cosine under no name, which SEARCH reads by name and cannot see (g5_draw (n): the Pell pair PELL = (1351, 780) for cos 30 degrees and a tuple of chances by a cosine law; David's end mathematician, #2187 6535686784 item 5 B2; law line 102 bars the lay, the lays included); a note, the count per file may not rise; read each one, for a probe that refuses a cosine in a message names it too",
     ),
     "DOCLAYER": (
         "BLOCK",
@@ -2315,6 +2319,22 @@ def midpoint(node: ast.AST) -> bool:
     return len(named) >= 2 and all(isinstance(x, ast.Name | ast.Constant) for x in terms)
 
 
+def docstring_ids(tree: ast.AST) -> set[int]:
+    """The ids of the string nodes that are a docstring: the first statement of a module, a function or a class when it is a bare string."""
+    found: set[int] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Module | ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
+            first = node.body[0] if node.body else None
+            if isinstance(first, ast.Expr) and isinstance(first.value, ast.Constant) and isinstance(first.value.value, str):
+                found.add(id(first.value))
+    return found
+
+
+def sine_words(text: str) -> list[str]:
+    """The words of a text that name a circular function (the rule SINEWORD), in lower case and in order: cos in cos^2 and in cos30, none in cosmos or single."""
+    return [word for word in re.findall(r"[A-Za-z]+", text.lower()) if word in SINE_WORDS]
+
+
 def hand_rule(name: str) -> str | None:
     """The rule a name falls under by its snake_case words: SEARCH for a sine, cosine, tangent or arctangent, SEARCHLOG for artanh or ln, None for any other."""
     words = name.lower().split("_")
@@ -2326,18 +2346,23 @@ def hand_rule(name: str) -> str | None:
 
 
 def probe_hits(rel: str, source: str) -> list[Hit]:
-    """The hits of PROBE and DIVIDE in one probe: what makes a real number, a root or a circular function in a derivation (PROBE), and a
-    floor division, a remainder or divmod that is not Rule3's carry (DIVIDE); a file that does not parse holds nothing to run."""
+    """The hits of the probe rules in one probe: what makes a real number, a root or a circular function in a derivation (PROBE), a floor division, a remainder
+    or divmod that is not Rule3's carry (DIVIDE), the shapes of a circular function or a logarithm made by hand (SEARCH and SEARCHLOG), and a word that names
+    a circular function in a string or a comment (SINEWORD); a file that does not parse holds nothing to run."""
     try:
         tree = ast.parse(source)
     except (SyntaxError, ValueError):
         return []
     hits: list[Hit] = []
+    docs = docstring_ids(tree)
 
     def add(rule: str, node: ast.AST, detail: str) -> None:
         hits.append(Hit(rule, rel, getattr(node, "lineno", 0), detail, "", getattr(node, "col_offset", 0)))
 
     for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in docs:
+            for word in sine_words(node.value):
+                add("SINEWORD", node, f"string {word}")
         if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef) and hand_rule(node.name):
             add(hand_rule(node.name) or "SEARCH", node, f"function {node.name}")
         elif isinstance(node, ast.Assign | ast.AnnAssign):
@@ -2389,6 +2414,13 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
             and node.attr not in PROBE_CALLS
         ):
             add("PROBE", node, f"np.{node.attr}")
+    try:
+        for token in tokenize.generate_tokens(io.StringIO(source).readline):
+            if token.type == tokenize.COMMENT:
+                for word in sine_words(token.string):
+                    hits.append(Hit("SINEWORD", rel, token.start[0], f"comment {word}", "", token.start[1]))
+    except (tokenize.TokenError, IndentationError, SyntaxError):
+        pass
     return hits
 
 
