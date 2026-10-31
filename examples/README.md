@@ -27,7 +27,7 @@ by 3 by 40, about 8 Meshes in 20 rounds, meet at its far side, z = 30, near roun
 the metric family stands at 0, a standing clock, so the act is exact and the run back returns the start bit for bit.
 Run it as the one bang: `python -I tools/tensor24_run.py examples/tensor24-live/universe.json
 examples/tensor24-live/piece.json examples/tensor24-live/setting.json <record .jsonl>`; the ledger beside the record
-holds the light's counts at every Node-clock and round, the pulse's two halves running along z. The clocks' wells and the grips' slackening are the well world's
+holds the counts of the board's wave at every Node-clock and round, the pulse's two halves running along z. The clocks' wells and the grips' slackening are the well world's
 below (terms 5 and 9, drafted); the clicks are owed to term 11 (drafted, no vertex laid in these worlds; the click world
 below lays one); the window of the wave, the six Spokes' grips summed within [0, senses W] (2 W, the senses of an axis
 counted from the star), is read by the runner.
@@ -39,7 +39,7 @@ laid by `tools/derivations/open_items/derive/boss/well_lay/lay.py` from the univ
 a polynomial lump and the act itself, with no mode of the ring, no circular function and no construction that finds
 one, no root, no search and no table, Rule3's carry the one division (its account stands in `lay.txt` beside it): the
 board 18 by 6 by 6 at small teeth (den 1, full_rate 1000: the grip 10^6, the rest teeth 6 10^6, so that the well is a
-visible part of W), three trains. The light's first part is laid at rest (now = before, the tooth 0) as one lump about
+visible part of W), three trains. The first part of the board's wave is laid at rest (now = before, the tooth 0) as one lump about
 (0, 0, 0), the pulse's polynomial bump turned round its centre: 12000 (9 - r^2)^2 div 81 where r^2, the squared
 distance from the centre summed over the three axes around their rings, is below 9 (12000, 9481, 7259, 5333, 3703,
 2370, 1333 and 148 at r^2 = 0 to 6 and 8, at 93 Node-clocks); its second part is laid at 0. The lump is no mode of the
@@ -56,7 +56,7 @@ by k0 = Spokes x senses = 12, the factor the clock reads it at, times the moment
 does not land on, and each ii slot by minus its axis's two Meshes' stretches squared, both halved by the drive's dial 2
 on the 00 and ii rows with the remainder kept in the fine tooth; the 0i and jk slots are read by nothing and pushed by
 nothing. The push reads the momenta in whole turns of the rest dial, a count a round at the rest teeth by the centred
-split, so a row gliding below half a count a round pushes the 00 slot by nothing: here the light's strides reach 5580
+split, so a row gliding below half a count a round pushes the 00 slot by nothing: here the strides of the board's wave reach 5580
 counts a round, the pulse's 96 and the metric's own 50 (`measure.py` and `measure.txt` beside `lay.py`). The form's
 price as built: the 00 push leaves out the square's own 00 and ii rows, whose momentum out the act reads before the
 push's own kick (a pushed row's stride, which no plan may read for the mirror to swap every stride it reads), so the
@@ -88,7 +88,7 @@ board by the lump's own waves, and the ii slots -3 to -2; and the pulse through 
 laid centre at push 1 and at push 0 (the metric standing at 0) apart by at most 6 hundredths of a Mesh over the run,
 either way, below the lattice's resolution. OPEN here, by name: the 00 row's own law (the edge text's section 4,
 derive/boss/edge/EDGE2.md on the Boss's derivation branch): the 00 row's teeth stand at rest, the acyclic cut, so its
-own waves run on the rest cone while light and every other slot run on the well's, c^2 = grip / W: at the last round
+own waves run on the rest cone while the board's wave and every other slot run on the well's, c^2 = grip / W: at the last round
 every other row's dial reads 5999736 to 6000396 where the 00 row's reads 6000000, a second cone 999956 to 1000066
 parts per million of the first. OPEN on this world: term 13's frozen clock (`derive/boss/frozen_edge`, the night's
 PLAN A3), which reads a test clock's beat against a standing well; the lump spreads, so no well stands here to read it
@@ -141,11 +141,11 @@ past it the held train clicks alone and the books open (NOT_CLOSED 29); a Mesh l
 
 ## The mesh world
 
-`examples/tensor24-mesh/` is a fifth folder of the same three files, a world where light reaches matter through the
-Mesh: the gradient vertex (FRAMES.md 7), laid by `runner/plans.py`'s `meshing` at the CHOSEN mesh, V = mesh x SUM_i
-M_i D_i L between light's first part L and a tied hand's T1 rows M_i, as one potential's two pushes (each M_i's row
-pushed by -mesh D_i L and light's row by +mesh D_i M_i; A1 x T1 has no A1 channel at the value legs, so light reaches a
-vector hand through the Mesh alone, and the held hand, Mesh-less, takes none). Its setting is laid by
+`examples/tensor24-mesh/` is a fifth folder of the same three files, a world where the board's wave reaches matter through
+the Mesh: the gradient vertex (FRAMES.md 7), laid by `runner/plans.py`'s `meshing` at the CHOSEN mesh, V = mesh x SUM_i
+M_i D_i L between the first part L of the board's wave and a tied hand's T1 rows M_i, as one potential's two pushes (each M_i's row
+pushed by -mesh D_i L and the wave's row by +mesh D_i M_i; A1 x T1 has no A1 channel at the value legs, so the board's
+wave reaches a vector hand through the Mesh alone, and the held hand, Mesh-less, takes none). Its setting is laid by
 `tools/derivations/open_items/derive/boss/mesh_lay/lay.py` from the universe and the piece (its account in `lay.txt`
 beside it): a ring of 180 Node-clocks along x, one across y and z, at den 1 and full_rate 10000 (the rest teeth 6 10^8,
 the grip 10^8, f = 60000); three trains: light (A1, part 2), its first part the well world's pulse (95, 281, 439, 500,
@@ -160,11 +160,11 @@ round 25, 232 at round 125), about 10 Meshes in 25 rounds: at rounds 25, 50, 75,
 The strengths are chosen by the act, as the click world's are, so that the world stays inside the room, hold
 |x_tied|^2 below Gamma div 4 = 2500, for its whole run, and so that the tied hand moves at all: the edge moves a count
 only where a momentum reaches half a count a round, and at mesh 200000 the tied hand never moves in the 125 rounds
-(`lay.txt`, the no), so mesh is 250000. The tied hand is gripped as light is, so its waves ride with each half and it
+(`lay.txt`, the no), so mesh is 250000. The tied hand is gripped as the board's wave is, so its waves ride with each half and it
 grows by resonance along their paths, linearly in its count (hold |x|^2 4, 81, 196, 361 and 576 at rounds 25 to 125);
 it stays at most 576 over the 125 rounds and the same mesh leaves the room at round 225 (`lay.txt`, the no). Measured
 on the act (`lay.txt`): the tied hand moves at 122 Node-clocks, where the halves pass, up to 24 counts; the held hand's
-|k|^2 1 at every Node-clock and round; light's squares summed within 61 permille of the same files at mesh 0 (light's
+|k|^2 1 at every Node-clock and round; the squares of the board's wave summed within 61 permille of the same files at mesh 0 (the wave's
 own dispersion on the ring apart: the vertex takes that much into the tied hand); no click line, as the Mesh leg's
 wind, the Mesh flux, is counted by no click (NOT_CLOSED 4); the run back exact. Run it as the one bang: `python -I
 tools/tensor24_run.py examples/tensor24-mesh/universe.json examples/tensor24-mesh/piece.json

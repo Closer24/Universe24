@@ -1,14 +1,15 @@
 """The mesh world's lay, examples/tensor24-mesh/setting.json (the Boss's code writer, 2026-10-30, the night's PLAN.md
 B5, FRAMES.md 7; its pulse laid at rest on 2026-10-31, as no typed pair may set its speed): whole numbers by the act
-itself, Rule3's carry the one division, no float, no circular function, no root, no search, no table, no rounding; the universe and the piece read from their files, no train declared here (light, the held train and
-the tied train read off the loader's flags by character).
+itself, Rule3's carry the one division, no float, no circular function, no root, no search, no table, no rounding;
+the universe and the piece read from their files, no train declared here (the board's wave, the held train and the
+tied train read off the loader's flags by character).
 
-Clock: light's first part a pulse along x, the well world's pulse form, laid at rest (its before its now), so that the
-act alone sets how it moves: it splits into two halves that run apart along the ring; the held hand (A1, A2) at (1, 0) at every Node-clock with its before (0, -1) and
-every edge tooth at the dial's middle, s = 0; the tied hand (T1, T2) at rest; the gradient vertex at the universe's
-CHOSEN mesh couples light's difference to the tied hand's T1 rows and back.
-Algebra: the room, hold |x_tied|^2 below Gamma div 4 at the held hand, read over the whole run on the act; light's
-squares summed against the same run at mesh 0 (light's own dispersion on the ring apart); the tied hand moves a count
+Clock: the first part of the board's wave a pulse along x, the well world's pulse form, laid at rest (its before its
+now), so that the act alone sets how it moves: it splits into two halves that run apart along the ring; the held hand
+(A1, A2) at (1, 0) at every Node-clock with its before (0, -1) and every edge tooth at the dial's middle, s = 0; the tied hand (T1, T2) at rest; the gradient vertex at the universe's
+CHOSEN mesh couples the difference of the board's wave to the tied hand's T1 rows and back.
+Algebra: the room, hold |x_tied|^2 below Gamma div 4 at the held hand, read over the whole run on the act; the
+squares of the board's wave summed against the same run at mesh 0 (the wave's own dispersion on the ring apart); the tied hand moves a count
 only where its momentum reaches half a count a round.
 Board: a ring along x, one Node-clock across y and z.
 Clicks: n/a: the Mesh leg's wind is counted by no click (NOT_CLOSED 4); the held hand clicks nowhere inside the room.
@@ -56,7 +57,7 @@ def world(universe, shape, gears):
 
 
 def by_character(held):
-    """Light (no square, not held, not tied), the held train and the tied train, by the loader's flags."""
+    """The board's wave (no square, not held, not tied), the held train and the tied train, by the loader's flags."""
     trains = range(len(held.trains))
     (light,) = [t for t in trains if held.trains.matter[t] and held.trains.gripped[t] and not held.trains.tied[t]]
     (hand,) = [t for t in trains if held.trains.held[t]]
@@ -74,7 +75,7 @@ def gears_of(held, shape):
 
 
 def run(universe, shape, gears, ticks):
-    """The run on the act: light's squares by round, the tied hand's room and moves, |k|^2, the clicks, the run back."""
+    """The run on the act: the squares of the board's wave by round, the tied hand's room and moves, |k|^2, the clicks, the run back."""
     held, layout, s0 = world(universe, shape, gears)
     light, hand, tied = by_character(held)
     lf, hf, tf = (int(held.trains.first[t]) for t in (light, hand, tied))
@@ -115,14 +116,14 @@ def lay():
     room, _ = carry(integers["full_rate"], 4, 0)
     say(
         f"the board {shape}, {sites_of(shape)} Node-clocks along x; den {integers['den']}, Gamma {integers['full_rate']}: rest {rest}, the"
-        f" grip {grip}, f = rest div Gamma {f}; light train {light}, the held train {hand} and the tied train {tied} by character; hold"
+        f" grip {grip}, f = rest div Gamma {f}; the board's wave train {light}, the held train {hand} and the tied train {tied} by character; hold"
         f" {chosen['hold']} (the tied spring 2 hold f = {2 * chosen['hold'] * f}), tie 0, push 0, notch 0, mesh {chosen['mesh']}"
         f" (its ground state needs mesh^2 below grip x 2 hold f / 2 = {grip * chosen['hold'] * f}); the room hold |x_tied|^2 below Gamma"
         f" div 4 = {room}"
     )
     gears = gears_of(held, shape)
     say(
-        f"1. the lay: the held hand (1, 0) at every Node-clock, its before (0, -1), every edge tooth s = 0; light's first part the pulse"
+        f"1. the lay: the held hand (1, 0) at every Node-clock, its before (0, -1), every edge tooth s = 0; the first part of the board's wave the pulse"
         f" {[bump(x, shape[0]) for x in range(CENTRE - HALF, CENTRE + HALF + 1)]} about x = {CENTRE}, at rest, its before its now, so"
         f" that the act alone sets how it moves; the tied hand at rest: {len(gears)} gears; ticks {ticks}"
     )
@@ -140,8 +141,8 @@ def lay():
         f"2. the run at the file's strengths, {ticks} rounds on the act: hold |x_tied|^2 at most {seen['most']} against the room's {room}"
         f" (inside it for every round: {seen['out'] is None}); the tied hand moved at {len(seen['moved'])} Node-clocks, where the pulse"
         f" passed; the held hand's |k|^2 {sorted(seen['k'])}; {seen['clicks']} clicks (the Mesh leg's wind is counted by no click); the"
-        f" largest count {seen['largest']}; light's squares summed {first} at the first round, within {min(seen['squares'])} and"
-        f" {max(seen['squares'])} over the run against {min(still['squares'])} and {max(still['squares'])} at mesh 0 (light's own"
+        f" largest count {seen['largest']}; the squares of the board's wave summed {first} at the first round, within {min(seen['squares'])} and"
+        f" {max(seen['squares'])} over the run against {min(still['squares'])} and {max(still['squares'])} at mesh 0 (the wave's own"
         f" dispersion on the ring), the two runs apart by {gap} at most, {carry(1000 * gap, first, 0)[0]} permille of the first;"
         f" the run back exact: {exact}"
     )

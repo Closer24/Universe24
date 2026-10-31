@@ -1,10 +1,10 @@
 """The live world's lay, examples/tensor24-live/setting.json (the Boss's code writer, 2026-10-31, on both readings of
 main b1a50bb33: no script wrote this setting, and its pulse's before slot was set one round back by a typed speed):
 whole numbers by the act itself, Rule3's carry the one division, no float, no circular function, no root, no search,
-no table, no rounding; the universe and the piece read from their files, no train declared here (light read off the
-loaded trains by character, the one train that is no square).
+no table, no rounding; the universe and the piece read from their files, no train declared here (the board's wave read
+off the loaded trains by character, the one train that is no square).
 
-Clock: light's first part a pulse along z, the bump the setting held, 2^28 (64 - d^2)^2 at the distance d from its
+Clock: the first part of the board's wave a pulse along z, the bump the setting held, 2^28 (64 - d^2)^2 at the distance d from its
 centre below 8, its peak 2^40 counts (far above one notch), laid at rest (its before its now), so that the act alone
 sets how it moves: it splits into two halves that run apart along z; the metric standing at 0.
 Algebra: the pulse's halves read on the board as the place and the count of its largest count on either side of its
@@ -97,7 +97,7 @@ def lay():
         if bump(z, sz)
     ]
     say(
-        f"the board {shape}, {sites_of(shape)} Node-clocks; light train {light} by character; the pulse along z, 2^28 (64 - d^2)^2"
+        f"the board {shape}, {sites_of(shape)} Node-clocks; the board's wave train {light} by character; the pulse along z, 2^28 (64 - d^2)^2"
         f" about z = {CENTRE}, its peak {bump(CENTRE, sz)}, alike at every x and y: {[carry(bump(z, sz), SCALE, 0)[0] for z in range(sz)]}"
         f" times 2^28, at rest (its before its now): {len(gears)} gears; ticks {TICKS}"
     )

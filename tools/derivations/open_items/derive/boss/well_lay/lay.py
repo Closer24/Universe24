@@ -4,7 +4,7 @@ b1a50bb33, #2187 6536864716): no float, no circular function and no construction
 no table, no rounding; Rule3's carry the one division; the universe and the piece read from their files, no train
 declared here.
 
-Clock: the light's first part laid at rest (now = before, the tooth 0) as one lump, the polynomial bump the pulse
+Clock: the first part of the board's wave laid at rest (now = before, the tooth 0) as one lump, the polynomial bump the pulse
 already uses turned round its centre in the three axes, and its second part at 0; the lump spreads, as it is no
 mode; the metric's slots laid at the time's mean of a first run from 0, so that the metric starts near the mean the
 lump gives it and not at 0 (the Node-clock has no damping).
@@ -101,7 +101,7 @@ def world(universe, shape, gears):
 
 
 def trains_of(held):
-    """The light (two parts, no square), the square and the pulse (one part, no square) by their shapes alone."""
+    """The board's wave (two parts, no square), the square and the pulse (one part, no square) by their shapes alone."""
     square = [t for t in range(len(held.trains)) if held.trains[t].square]
     light = [
         t for t in range(len(held.trains)) if not held.trains[t].square and held.trains[t].rows() == 2
@@ -161,10 +161,10 @@ def lay():
     held, _, _ = world(universe, shape, [])
     light, square, pulse = trains_of(held)
     first = int(held.trains[light].first)
-    # 1. the light's first part at rest on the lump: a = b, the tooth 0; its second part at 0
+    # 1. the first part of the board's wave at rest on the lump: a = b, the tooth 0; its second part at 0
     rest = [[light, 0, x, f[x], f[x], 0] for x in range(sites) if f[x]]
     say(
-        f"1. the light's first part at rest on the lump, a = b and the tooth 0, at {len(rest)} Node-clocks; its second part at 0"
+        f"1. the first part of the board's wave at rest on the lump, a = b and the tooth 0, at {len(rest)} Node-clocks; its second part at 0"
     )
     # 2. the pulse along x, alike at every y and z, at rest: its before its now
     still = []
