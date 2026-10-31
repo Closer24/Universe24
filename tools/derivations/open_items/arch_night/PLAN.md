@@ -46,24 +46,28 @@ by the loader, so the owner plays with the files in the morning, not the code.
 
 ## The order (dependencies first), with each commit's change, test and probe
 
-State at 23:2x UTC (the architect who took over): pushed on origin/node-live 996df846f, the final head, in order: 0
-(f5e6486c8), C1 (b10d7d008), C2 (6b77872dc), B1 (c967980d0), A1 (d6ec46ff0), C3 (ac3085db4, the hand-per-quantum
-probe), A1b (939fa65a7), B2 (c853dee00), B4 (a9f8a440a), A2 (f72067cdf), B2b (df4fa644c), A's docstring commit
-(e88150989), A's folds of B1, M2 and M12 (575973a20), B3 (e8161f301, the click world), A3 (36effecd5, term 13 on the
-edge), C's folds (9ccbc6481: M10, M11, M4), A's Algebra line (214739ddf: term 5's half stated once), B's folds
-(484fb8d72: M1, M3, M4, M6, M7, Sofer's measure.py seam and the square card's winding), B5 (87f88322d, the gradient
-vertex and the mesh world, which closes M5), A's docstrings (7dcb31607: state.py's Plan, Layout.mesh, the Board line
-and Click, the second reader's 6, A's part) and B's last folds (996df846f: the second reader's 1, 2, 3, 5 and 6, B's
-part). Every commit of the order below is DONE but the whole; no B2c (David's hat is not tonight's: B2c below;
-FRAMES.md 6). The load test stands at 155, its ceiling. The checks at 996df846f: gate5 0 refusals with the same 6
-notes; the full check exit 0, 27 passed; tensor24 10 of 10, live 100 of 100, well 128 of 128 and mesh 125 of 125, each
-exact, digests 540e503cad44, cfef203d5dd5, 05586b5db17f and 00fd62494c9a, every record and ledger byte-identical to
-87f88322d's; the click world exact at 996df846f (rerun after the container restart): 5,000 of 5,000 rounds undone,
-4,212 click lines at 2,106 places, the books 0 (the sum of q over the trains not 0 at 0 places), the held train (2)
-with 0 lines, the giver (3) at (2106, 1107, 999, -108) and the taker (4) at (2106, 999, 1107, 108), digest
-f351582ede39, its record and ledger byte-identical to the earlier run's; so all five worlds are measured at the
-candidate's sha. Now: a third hostile code reader on 87f88322d..996df846f; C5, the basic click decoder (writer C, the
-owner's build order of 23:5x UTC; FRAMES.md 13), then its reader; then the candidate (the road to main below).
+State at 00:2x UTC (the architect who took over): main moved at 00:10 UTC from 2bcf315b6 to b1a50bb33, a fast-forward
+with no force, on the owner's explicit word ("yes, push now") after Sofer's APPROVED of b1a50bb33 (#2187 6536221372).
+Pushed on origin/node-live b1a50bb33, the head, in order: 0 (f5e6486c8), C1 (b10d7d008), C2 (6b77872dc), B1
+(c967980d0), A1 (d6ec46ff0), C3 (ac3085db4, the hand-per-quantum probe), A1b (939fa65a7), B2 (c853dee00), B4
+(a9f8a440a), A2 (f72067cdf), B2b (df4fa644c), A's docstring commit (e88150989), A's folds of B1, M2 and M12
+(575973a20), B3 (e8161f301, the click world), A3 (36effecd5, term 13 on the edge), C's folds (9ccbc6481: M10, M11,
+M4), A's Algebra line (214739ddf: term 5's half stated once), B's folds (484fb8d72: M1 and M3, M4 and M6, M7, Sofer's
+measure.py seam and the square card's winding), B5 (87f88322d, the gradient vertex and the mesh world, which closes
+M5), A's docstrings (7dcb31607: state.py's Plan, Layout.mesh, the Board line and Click, the second reader's 6, A's
+part) B's folds (996df846f: the second reader's 1, 2, 3, 5 and 6, B's part) and B's fold of the third reader's minors
+(b1a50bb33: hcr3/REPORT.md 1, 2 and 3). Every commit of the order below is DONE but the whole; no B2c (David's hat is
+not tonight's: B2c below; FRAMES.md 6). The load test stands at 155, its ceiling. The checks at 996df846f: gate5 0
+refusals with the same 6 notes; the full check exit 0, 27 passed; tensor24 10 of 10, live 100 of 100, well 128 of 128
+and mesh 125 of 125, each exact, digests 540e503cad44, cfef203d5dd5, 05586b5db17f and 00fd62494c9a, every record and
+ledger byte-identical to 87f88322d's; the click world exact at 996df846f (rerun after the container restart): 5,000 of
+5,000 rounds undone, 4,212 click lines at 2,106 places, the books 0 (the sum of q over the trains not 0 at 0 places),
+the held train (2) with 0 lines, the giver (3) at (2106, 1107, 999, -108) and the taker (4) at (2106, 999, 1107, 108),
+digest f351582ede39, its record and ledger byte-identical to the earlier run's; so all five worlds are measured at the
+candidate's sha. Now: the audit of main for the owner (his ask of 00:3x UTC; Sofer and an independent hostile auditor;
+the owner's list, first); C5, the basic click decoder (writer C, the owner's build order of 23:5x UTC; FRAMES.md 13),
+then its reader, as its own small candidate; then Sofer's road, the gate's own files, law line 102 and the documents,
+for the owner's separate word; Big Pic's road beyond (its section below).
 
 The second hostile code reader read f72067cdf..87f88322d (scratchpad/hcr2/REPORT.md: no BLOCKING, seven MINOR). DONE:
 - A (7dcb31607): his 6, A's part, state.py's docstrings saying what the loader lays.
@@ -201,8 +205,7 @@ without the fifth text's dial takes the model's 1152 as the named price; no clic
   by 0; a hand gliding alike at every site pushes the 00 slot by the read's factor times the sum over the rows but
   the 00 of sigma_in sigma_out and every ii slot by 0.
 
-### Commit B2b (B; after B1 and A1b, before B3; the one commit that replaces the earlier B2b and B6): term 5 in the
-### books' form at dial 2 (the deriver's derivation from the act's own energy, the Boss's frame of 19:2x UTC)
+### Commit B2b (B; after B1 and A1b, before B3; the one commit that replaces the earlier B2b and B6): term 5 in the books' form at dial 2 (the deriver's derivation from the act's own energy, the Boss's frame of 19:2x UTC)
 
 DONE at 21:00 UTC: pushed as df4fa644c, with one change from the text below by the Boss's ruling of 20:4x UTC: the
 00 push reads the momenta of the rows on the force's path alone (T_d = 1: the matter and the square's 0i and jk
@@ -256,7 +259,7 @@ the clock deeper where the matter is.
   that factor, and the well world's lay and README (regenerated anyway); nothing in the act (NOT_CLOSED 26). The
   load test pins the clock's factor at Spokes x senses, from the star.
 
-### B2c (the hat in place of the own spring): judged at 20:3x UTC, NOT TONIGHT; writer B goes from B2b to B3
+### B2c (the hat in place of the own spring): judged at 20:3x UTC: not tonight; writer B goes from B2b to B3
 
 - David's hat (G3's eighth text, toys-5 7791470d1) stays the named next direction (FRAMES.md 6). Not tonight because,
   with the hand still, the tie's four legs open term 11's books: on B4's own pair world with the hat swapped in, 29 of
@@ -309,23 +312,23 @@ the clock deeper where the matter is.
   checked there with the tools we know) and his answer 4 (the ban on a claim of physics standing on a board reading
   alone, and every claim checked twice in the click world, for everyone).
 - The writer: C. The change, as FRAMES.md 13 has it: decoder/shadow.py, new, with four readings on the 1.3 record (the
-  books at each click, row 15's first reading ported; D6 and D7, NOT READ on 1.3 with their causes; D8, the cone check
-  by click ported), each SHOWN, NOT SHOWN, NOT READ or NOT IN THE CLICK WORLD; tools/tensor24_decode.py printing them
-  in a block after the basic listing, and the refusal line on a record with no click line; clicks.py, books.py,
-  bangs.py and measure.py unchanged, measure.past and measure.meshes reused. Nothing new: every reading is a tool the
-  decoder holds.
+  books at each click, row 15's first reading ported; D6 and D7, each NOT READ on 1.3 with its cause; D8, the cone
+  check by click ported, the lay's cone alone), each SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK (its cause "the
+  record holds no click line: not in the click world"), a click line with no q NOT READ in the books (row 15's LACKS
+  rule ported); tools/tensor24_decode.py printing them in a block after the basic listing, and the refusal line on a
+  record with no click line; clicks.py, books.py, bangs.py and measure.py unchanged, measure.past and measure.meshes
+  reused. Nothing new: every reading is a tool the decoder holds.
 - The test: in tests/test_the_tensor24_decoder.py, each reading's yes and no, each mutant named in the commit message
-  with the test failing on it; the ROOM may rise from 572 to main's 600, and past 600 the lines go to the owner's list
-  (M8).
+  with the test failing on it; the decoder test stands at 597 lines, ROOM 597, a 25-line rise against main's 572, on
+  the owner's list (M8) with C5.
 - The measure: the tool run on the five worlds' records at 996df846f, each output against FRAMES.md 13's table, in the
   commit message: the click world's books SHOWN (0 of 2,106 places, the giver 2,106, 1,107, 999, -108, the taker
-  2,106, 999, 1,107, 108, the held train 0 lines), D8 SHOWN, D6 and D7 NOT READ; the other four NOT IN THE CLICK WORLD
-  on every reading, with the refusal line.
+  2,106, 999, 1,107, 108, the held train 0 lines), D8 reads SHOWN, D6 and D7 each read NOT READ; the other four NO
+  CLICK on every reading, with the refusal line.
 - The checks: the gate at 0 refusals, the full check exit 0, record_code_shape on the new module.
 - The reader after it: a hostile code reader on 996df846f..C5 (the diff, the laws, the five outputs against the
   table); his folds by C.
-- The road: C5 rides into the candidate after the code already read: the candidate becomes C5's head once its reader
-  passes it, the third reader's reading of 87f88322d..996df846f standing for the rest.
+- The road: C5 follows main's b1a50bb33 as its own small candidate once its reader passes it (the Boss, 00:1x UTC).
 
 ### Commit B3 (B; after B2 and B4): the click world, examples/tensor24-click/
 
@@ -441,13 +444,14 @@ calibre condition).
   Node-clock; code the document does not name (listed for the writer's mends); a docstring off the four layers.
   Findings to the Boss with file and line; the writer whose file it is folds them.
 
-## The road to main at the end (ready for the candidate)
+## The road to main at the end
 
-- The candidate: node-live's head 996df846f (the first and second readers' folds DONE; a third reader on
-  87f88322d..996df846f now, his folds if any before the sha goes), then C5, the basic click decoder, once its own
-  reader passes it (it rides in after the code already read). main has not moved since 2bcf315b6 unless the Boss says
-  so, so the candidate fast-forwards. The Boss pushes it to tensor24-review; the writer reads the sha for faking and
-  posts the approval; main moves, no force.
+- The candidate: DONE. main moved at 00:10 UTC from 2bcf315b6 to b1a50bb33, a fast-forward with no force, on the
+  owner's explicit word ("yes, push now") after Sofer's APPROVED of b1a50bb33 (#2187 6536221372). The owner's word
+  covers M8, the ROOM at main: frame 237, engine 300, load 155, run 295, decoder 572 (files 310 unchanged). CI
+  ("Python checks") is running on it; its result to follow.
+- Next on the road: C5, the basic click decoder, as its own small candidate after its reader; then Sofer's road, the
+  gate's own files, law line 102 and the documents, not in main and still for the owner's separate word.
 - The checks at the candidate's sha: `CHECK_BASE=origin/main python tools/check.py --full` exit 0; the hook's gate 0
   refusals, its notes listed (the KEYS notes for key, push, notch, hold, tie and mesh; B2's INDICATORs; the load
   test's PINs) for Sofer; the five worlds run by the run tool, each run back exact (tensor24, live, well, click,
@@ -458,13 +462,21 @@ calibre condition).
   the trains not 0 at 0 places), the held train (2) with 0 lines, the giver (3) at (2106, 1107, 999, -108) and the
   taker (4) at (2106, 999, 1107, 108), digest f351582ede39, its record and ledger byte-identical to the earlier run's;
   so all five worlds are measured at the candidate's sha.
-- For the owner's word before main, the owner's list:
-  - M8 (the first hostile code reader): tests_shape's ROOM rises against main, frame 230 -> 237, engine 202 -> 300,
-    load 113 -> 155 (its ceiling, by B5), run 285 -> 295 (by B's fold 484fb8d72), and the decoder lowered 600 -> 572
-    (the files test 310 at main's 310); the figures re-read at 996df846f from tools/tests_shape.py against
-    origin/main, unchanged. ARCHITECTURE section 4 says a ROOM is not raised with a code change; these stand under the
-    Boss's ceilings of the night, named and read by Sofer, not hidden, and main takes them only on the owner's word
-    (or the writer's and Sofer's, as section 4 names them).
+- The owner's list (his word before main, or after it where main has moved):
+  - FIRST, the night's first open item for the owner: his ask of 00:3x UTC for a confirmation that the code in main
+    has no fake (numbers only in the approved files; no sine, cosine or formula; no enum hiding a count; the writer
+    checking everything found before). A full-tree gate scan of main against the old engine base finds 2 refusals
+    (SEARCH, a bracket halved: derive/david_open/node/g3_strengths.py:200 and :427, in main since 9067de20d, before
+    the owner's 17:20 word) and 15 notes (LENGTH: len(WAYS) at decoder/records.py:171 and len(ADDED) at
+    record/schema.py:25; INDICATOR in load.py and plans.py; PIN in the load test). Sofer and an independent hostile
+    auditor audit main now; the result to follow.
+  - M8 (the first hostile code reader), DONE for main: the owner's word of 00:10 UTC covers it, main at b1a50bb33.
+    With C5, open: the decoder test's ROOM 572 -> 597, a 25-line rise against main's 572. tests_shape's ROOM rises
+    against the old main, frame 230 -> 237, engine 202 -> 300, load 113 -> 155 (its ceiling, by B5), run 285 -> 295
+    (by B's fold 484fb8d72), and the decoder lowered 600 -> 572 (the files test 310 at main's 310); the figures
+    re-read at 996df846f from tools/tests_shape.py against origin/main, unchanged. ARCHITECTURE section 4 says a ROOM
+    is not raised with a code change; these stand under the Boss's ceilings of the night, named and read by Sofer, not
+    hidden, and main takes them only on the owner's word (or the writer's and Sofer's, as section 4 names them).
   - M11: schema.MINOR = len(ADDED) at 3, a count behind a length with no cheap reading from the schema's structure
     (ARCHITECTURE section 6 tied reading it from the schema to 1.3); writer C names it open in schema.py's Algebra
     line (9ccbc6481).
@@ -475,32 +487,59 @@ calibre condition).
     worlds hold every strength at 0 with key 1 (NOT_CLOSED 11).
   - The frames and prices that need his word, from NOT_CLOSED.md: k0 confirmed as the star's unit (26); the cut and
     the moving clock's road for his morning, its moving-clock part standing and its claim on gamma fallen (2); slow
-    matter's gravity on this act's books' form, gamma 0 until the slots' own laws mix the trace (32); a potential in
-    the law, the hat's direction (19); the metric's self-stress against the two-plan road (30); the jk and 0i slots
-    pushed by nothing (6); the key at depth (3).
+    matter's gravity, in Big Pic's wording: on the board, the books' form gives slow matter the clocks' slowing and no
+    stretch of space (gamma 0), not in the click world (32); a potential in the law, the hat's direction (19); the
+    metric's self-stress against the two-plan road (30); the jk and 0i slots pushed by nothing (6); the key at depth
+    (3).
   - G5's mathematician's M7, for the owner's ruling: probe (g)'s Pythagorean lay sets the hand's before slot at 48/50
     and 14/50, a rational point of the circle from (7, 1); whether law line 102's "any construction that finds one"
-    reaches it is the owner's word (NOT_CLOSED 5).
+    reaches it is the owner's word (NOT_CLOSED 5). Big Pic's reading (#2187 6536112029): the lay (48, 14) over 50
+    holds whole numbers and no angle; the bar reaches it only if (7, 1) was picked to land at an angle (its half
+    angle's tangent 1/7).
   - Decision 40 (g), as Big Pic states it (#2187 6535643629 item 4): a hand that holds one quantum (D = 1) weighs W a
     Node-clock, and a still hand in a hat weighs 0 and holds none; no frame on this act has both (NOT_CLOSED 19).
   - The owner's own word of 23:4x UTC, for Big Pic first, not ruled: the third click, which "chooses a path that no
-    one has chosen yet" (NOT_CLOSED 33), and a family with three hands (NOT_CLOSED 34); nothing in code tonight. The
-    Boss lists them with the candidate's sha.
+    one has chosen yet" (NOT_CLOSED 33), and a family with three hands (NOT_CLOSED 34); nothing in code tonight.
+  - The Boss's decision on Sofer's question, for the owner's word: a term DERIVED on board readings keeps DERIVED, its
+    row naming "board reading only"; Sofer's words of a measure now the files' (MEASURED on the board; MEASURED in the
+    click world).
+  - The owner's own question to Big Pic: "In the gravity problem, are you looking at it in the world of the clicks?
+    Because in the clicks gravity looks different.. they are a three-dimensional space and not 4 like the board." Big
+    Pic's answer: no, every gravity word is a board reading.
+  - The owner's word of 00:0x UTC (the Boss's translation): the escapement is the road (FWDBACK, FWDBACK2: W = L^2 by
+    itself, no root); FWDBACK3 works its runaway to a cure, then a hostile pair; the cut stays in the code tonight
+    (NOT_CLOSED 2). And his principle, which Sofer enters in Solution24: a mathematical miracle usually fits the
+    solution, so a refused text holding one goes to Big Pic first and back to its deriver for the problem it names,
+    closed only by a theorem forbidding every cure. The Boss lists them with the candidate's sha.
 - The hostile reader needs: the diff against the laws and section 4; the five worlds' records; the probes' outputs
   beside their probes in derive/boss/ (term11_pass, g3_frame, term5_books, term5_edge, term9_edge, drive_mirror,
   hand_per_quantum, frozen_edge, and the lays' accounts of well_lay, click_lay and mesh_lay); FRAMES.md and
   NOT_CLOSED.md beside the candidate, so that every CHOSEN strength and every price is read as named, not hidden.
 - The writer's mends to docs/ARCHITECTURE.md (the Boss sends them): the Home, Test and Status lines of terms 1 to 4
-  and 7 on the edge; term 5 DERIVED by the method (the end's new pair reads it), its books' form at dial 2 with k0 =
-  12 and its price (hypothesis (d): the 00 push on the force's path alone); term 6's frame (plans.holding, tying; the
-  flags by character; the held train Mesh-less); the gradient vertex (plans.meshing); term 9; term 11 in the S form
-  with the kept tooth and the click line, the value legs alone in its passing (no Mesh plan, no J5); term 13
-  measured on the edge; the 24's twisted action (law line 94); the record at 1.3; the decoder's basic part
-  (clicks.py) and its refusals; runner/plans.py and the five worlds; the before slot read across the Mesh named in
-  the Node-clock's reads (COUNT4 N6); section 6 from NOT_CLOSED.md; runner/plans.py's Home and Test lines, which no
+  and 7 on the edge; term 5 DERIVED by the method, board reading only (the end's new pair reads it), its books' form
+  at dial 2 with k0 = 12 and its price (hypothesis (d): the 00 push on the force's path alone); term 6's frame
+  (plans.holding, tying; the flags by character; the held train Mesh-less); the gradient vertex (plans.meshing); term
+  9; term 11 in the S form with the kept tooth and the click line, the value legs alone in its passing (no Mesh plan,
+  no J5); term 13 measured on the edge; the 24's twisted action (law line 94); the record at 1.3; the decoder's basic
+  part (clicks.py) and its refusals; runner/plans.py and the five worlds; the before slot read across the Mesh named
+  in the Node-clock's reads (COUNT4 N6); section 6 from NOT_CLOSED.md; runner/plans.py's Home and Test lines, which no
   line of ARCHITECTURE names yet (scribe_law_check --arch: 1 departure, the first reader's M9 half and the second
   reader's note), Sofer's mend on the road to main.
 
+## Big Pic's road beyond the night (#2187 6536273648, in his order; each step with its two click-world readings)
+
+1. C5, the basic click decoder (FRAMES.md 13): the readings every later step is checked by.
+2. The clock's cure against FWDBACK3 (NOT_CLOSED 2): the release carried in every round, every gear stepping every
+   round, W = L^2 by itself; checked by two clicking clocks at two depths, each by its own count, and a wave crossing
+   a still step read by clicks.
+3. The third click on two places (FRAMES.md 14, NOT_CLOSED 33): one quantum with two places to land, its frequencies
+   against the hand's squares at the click, the push on the before slot, the books and the run back.
+4. The three-hand local choice (NOT_CLOSED 34): in one T1 train at one Node-clock a quantum leaving one row has two
+   takers, the smallest place a click must choose.
+5. The half-speed kinds laid, with the determinant weighing (NOT_CLOSED 8, 28): like half-speed quanta never two at
+   one place, read in the click world with the fringes that flip and return after two turns.
+6. Gravity's two halves (NOT_CLOSED 32): the clocks' half by two clicking clocks at two depths of a sourced well and
+   the twins; the space half by light read by clicks.
 ## Timeline (UTC)
 
 | Hour | A | B | C |
