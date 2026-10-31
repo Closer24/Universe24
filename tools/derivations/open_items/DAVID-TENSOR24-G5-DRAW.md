@@ -1,6 +1,6 @@
 # G5, the split click's draw: two clocks parting a winding, read by the norm of the meeting's fine teeth
 
-David, 2026-10-31 (the ninth text, 03:5x UTC). It answers Sofer's ask (#2187 6518975579, item 3: "the build has held
+David, 2026-10-31 (the tenth text, 04:1x UTC). It answers Sofer's ask (#2187 6518975579, item 3: "the build has held
 no beat count since G1b ... so the draw needs a source for c on the act. Which gear's tooth or sum is c is yours and
 David's to name"). It follows the owner's words:
 - of 11:1x UTC: derive what the Node-clock needs to close, everything to stand with a hostile mathematician and a
@@ -67,9 +67,12 @@ text (toys-5 d5745d134) went to the end mathematician, who found B1 and B3 mende
 later words, line 102 and "there is no light on the board"; folded here (section 13).
 
 The end mathematician PASSED the eighth text (toys-5 c99ae8f19), his notes folded at section 13's end; the end
-physicist had passed the fifth. The ninth text takes the owner's law of the choice (section 14): the pointer is a local
-reading, each place alone, so a pair of split clicks apart cannot pass Bell's 2 by it, and it is not the choice the law
-gives. Its board facts stand; the draw moves to the law's draw from the whole state.
+physicist had passed the fifth. The ninth text (toys-5 4b15b8b5b) took the owner's law of the choice and went to a
+fresh pair, the end pair being out of reach; both refused its Bell step, which rested on the pointer's reach where
+Bell's arithmetic rests on what the cells read of the settings. The tenth text folds them (section 15) and derives
+from the law's own words that the draw as built is not the choice the law gives: it is fixed before the click by what
+it reads, the pointer from the past and the frames carried back from the future (section 14). Its board facts stand;
+the law's draw, reading both settings and the pair's one hand, is THIRD6's.
 
 The probe, derive/david_open/node/g5_norm.py, came with the fourth text, and the fifth text added its sections (i) to
 (k): the fourth text's readers' cases, ported onto its own board. Its output, g5_norm.txt, sits beside it: whole numbers
@@ -94,9 +97,9 @@ text's pointer P. g5_norm's own (i) and (k) are not g5_draw's, so the text names
 - G3's g3_held_hand.py left the tree in toys-5 2927b2e63. Its figures appear here only as the third text's.
 
 **The finding in one line:** the draw's pointer is the norm of the escapement's phase at the meeting. Under the law of
-the choice it is a local reading, not the choice (section 14). It is where the hand of every clock at the Node-clock and
-its six neighbours sits between its teeth, counted from the middle and squared, read as the round takes it in and as it
-gives it out, summed, and carried once at the teeth.
+the choice the draw it decides is not the choice: it is fixed before the click by what it reads (section 14). It is
+where the hand of every clock at the Node-clock and its six neighbours sits between its teeth, counted from the middle
+and squared, read as the round takes it in and as it gives it out, summed, and carried once at the teeth.
 - The mirror turns each centred tooth to its negative, and its square stands. So the backward act reads the same
   pointer with no fold, and reads the parts in the same order: 64,800 of 64,800 draws, against a control at chance. The
   24 turns and the trains' own signed permutations leave it too, on every kind the 24 turn by signed permutations,
@@ -127,7 +130,8 @@ gives it out, summed, and carried once at the teeth.
 - A merge's draw keeps its branch on the hand, a write the run back undoes (g5_draw (k) on the third text's pointer, and
   for the norm by probe (b)). How the coupling reads it is OPEN, and until it does no outcome acts on the board.
 - OPEN: the condition on the rows' join and on fractions, and which strengths meet it; the draw where only
-  the board's wave moves; the hot board's excess; the coupling's read of the kept branch; the split click on the act.
+  the board's wave moves; the hot board's excess; the coupling's read of the kept branch; the split click on the act;
+  the law's draw, reading both settings and the pair's one hand (section 14).
 
 ## 1. In clocks
 
@@ -888,11 +892,12 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
 
 ## 6. What stands (term 12's row for the architecture document)
 
-- **Clock:** two clocks part a winding where the norm of the escapement's phase at the meeting says. The Node-clock
+- **Clock:** two clocks part a winding where the norm of the escapement's phase at the meeting says (under the law of
+  the choice that draw is not the choice, being fixed before the click by what it reads; section 14). The Node-clock
   reads where every clock's hand at it and at its six neighbours sits between its teeth, going in and coming out, each
-  from the middle and squared, summed and carried once at the teeth. The parting clocks share the dial by size, in
-  their own order, each in its half-open cell, and the one whose cell holds the pointer takes the winding. The click
-  writes nothing on the board; a merge's draw keeps its branch on the hand.
+  from the middle and squared, summed and carried once at the teeth. The parting clocks share the dial by size, in their
+  own order, each in its half-open cell, and the one whose cell holds the pointer takes the winding. The click writes
+  nothing on the board; a merge's draw keeps its branch on the hand.
 - **Board:** c(r) = 2 r + 1 - T_row; Q the sum of c(r_in)^2 + c(r_out)^2 over the seven Node-clocks' rows, every
   train's; u = Q mod T_f by one carry and v = u div 8 by another; the part the one whose half-open cell, in the parts'
   own order, holds v L against T8 = (T_f + 7) div 8, the ceiling, with no edge at any T_f; one sum held in the round.
@@ -909,14 +914,14 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   for single quanta at one port, on the board's Fano factor alone; no signal as far as the pointer is fair; the 24 in
   the frequencies. The join condition itself is algebra, DERIVED, in the row above.
 - **Home:** owed in code at G5, beside term 11's click tooth. **Status:** the pointer CHOSEN, Big Pic's candidate, not
-  derived, and under the law of the choice a local reading, not the choice (section 14); its mirror DERIVED and its
-  gears DERIVED on every kind but E, both CHECKED on the act; its fairness CHECKED on one board with term 6 at G3's
-  probe strengths, on six lays, one hot board and the cold packet's 50 seeds, with an excess over 510 hot boards, mild
-  in size, not in significance (a tail of 382 ppm); not fair where only the board's wave moves, nor where the held count
-  swings on kappa's lattice, nor on a single rotation near a fraction of small denominator. OPEN: the condition on the
-  rows' join and on fractions, and which strengths meet it; the draw where only the board's wave moves; the hot board's
-  excess; the coupling's read of the kept branch; the split click on the act; the law's draw from the whole state
-  (section 14).
+  derived; under the law of the choice its draw is fixed before the click, and the law's draw is THIRD6's (section 14);
+  its mirror DERIVED and its gears DERIVED on every kind but E, both CHECKED on the act; its fairness CHECKED on one
+  board with term 6 at G3's probe strengths, on six lays, one hot board and the cold packet's 50 seeds, with an excess
+  over 510 hot boards, mild in size, not in significance (a tail of 382 ppm); not fair where only the board's wave
+  moves, nor where the held count swings on kappa's lattice, nor on a single rotation near a fraction of small
+  denominator. OPEN: the condition on the rows' join and on fractions, and which strengths meet it; the draw where only
+  the board's wave moves; the hot board's excess; the coupling's read of the kept branch; the split click on the act;
+  the law's draw from the whole state (section 14).
 
 ## 7. OPEN
 
@@ -964,6 +969,9 @@ beside term 11's click tooth). The board's numbers above are the stand-in, not t
   (Page and Geilker).
 - **The split click on the act,** with its record; Born and the partition noise read from its records, not from the
   pointer at every Node-clock.
+- **The law's draw** (section 14; THIRD6): one draw for a pair, reading both settings and the pair's one hand from the
+  whole state; where and when the settings enter it; whether it can take up the norm as its dial; for one split click
+  with no pair, whether the pointer's second ring counts as what the clock can read before its click.
 - Open as the third text had them:
   - **the falling clock:** the mirror's identity at the rounds where the promise breaks (G2's moving-clock condition);
   - **the sizes** (G5): the forward norm and the backward share, decision 28's form on the act; the sizes as the
@@ -1315,47 +1323,103 @@ swing and at 0 (the preamble says so), which he does not read as aimed at an ang
 the drawn before slots; section 10's "the off-lattice springs over 64 phases pass" is that text's record, one such
 spring left since the eighth; section 4's comparisons with nature carry the label, as he read them.
 
-## 14. The law of the choice (the ninth text)
+## 14. The law of the choice (the ninth text, rewritten by the tenth)
 
 **The law** (the owner's word of 03:3x UTC, relayed by the Boss, 6538500636 and 6538507053, and given to David
 directly; in translation): "Yes, there is a choice for the third click, for every clock inside the universe. For the
 universe as a whole there is none: the run back is exact, and so the whole state determines everything. From here
 derive everything." With it the owner gave Big Pic's reading (6538202826): for every clock, nothing it can read before
-its click fixes the outcome, neither its past nor the future. Bell's test shows it in the clicks: no outcome fixed by
-each place's own past lets a pair pass 2, so the pair's choice is made across its two places together, and the third
-click's draw must read the pair's one hand, not each place alone. His own words to David: the determinism of the
-whole does not contradict the freedom in the clicks; entanglement is the third click's decision.
+its click fixes the outcome, neither its past nor the future; Bell's test shows the choice in the clicks; the pair's
+choice is made across its two places together, so the third click's draw must read the pair's one hand, not each place
+alone. His own words to David: the determinism of the whole does not contradict the freedom in the clicks; entanglement
+is the third click's decision.
 
-**What it gives this page (DERIVED):**
-- The pointer is a local reading. It reads the escapement's phase of the clocks at one Node-clock and its six
-  neighbours, as the round takes it in and gives it out (section 6's Board row), and the act's round at a Node-clock
-  reads that Node-clock and its six Meshes. So v is a function of the board within two Meshes of the Node-clock at
-  the round's start, and of nothing farther.
-- So at two split clicks more than four Meshes apart each outcome is fixed by its own place's board and its own
-  setting, and the two regions share only their past. If the settings are drawn independently of that past (section
-  7 names their draw OPEN), Bell's bound holds whatever the past holds: the pair cannot pass 2 (Bell, Physics 1, 195
-  (1964); Big Pic's sixteen local strategies, 6538202826). So the pointer is not the choice the law gives, and neither
-  is any pointer read at the meeting alone, the third text's P and the withdrawn held hand among them.
-- Section 4 says the draw meets the loophole-free violations only through the sizes' dependence on both far settings,
-  carried back to the birth. Under the law the pair's correlation is read as the pair's one draw (Big Pic's reading),
-  and that road is not needed.
+**The pointer's reach (DERIVED; both readers of the ninth text read it on the act at 0df0e8385):** v reads the board
+within two Meshes of its Node-clock at the round's start, the seven Node-clocks' own gears and teeth and the now slots
+of their neighbours, with T_f read at the Node-clock. Nothing global enters v; the sizes, L and the parts' order enter
+the part drawn, not v.
 
-**What stands:** the pointer's board facts, as clock facts about a reading. The mirror's backward act reads the same v
-in the same order (64,800 of 64,800); the 24 and the trains' signed permutations leave it on the kinds they turn by
-signed permutations; its fairness holds on the lays named; the condition on the rows' join and on fractions; the kept
-branch's run back.
+**What the law gives the draw as built (DERIVED, from the law's words):**
+- The part drawn is the one whose half-open cell holds v L against T8 (section 6's Board row), a function of v and of
+  the parts' sizes. Under form B a pair's parting is one draw at the birth's meeting (decision 31), its joint sizes
+  carrying both detectors' frames back to the birth along each twin's path (section 4).
+- So at each of the pair's two clicks the outcome is fixed before the click: by v at the birth's meeting, in that
+  clock's past, and by the frames carried back, the future read at the birth. The law says that nothing a clock can
+  read before its click fixes its outcome, neither its past nor the future. So the draw as G5 builds it is not the
+  choice the law gives (the route the ninth text's physicist named, his B1). No argument from Bell is needed.
+- For one split click with no pair, v reads the board within two Meshes at the round's start. Whether its second ring,
+  which reaches the Node-clock one round after the click, counts as what the clock can read before its click is the
+  law's to settle: OPEN.
 
-**What moves:** where the split click is the third click (Big Pic's pick of this draw against the takers' weights, the
-Boss's 6538471938 item 1), its draw is the law's draw from the whole state (the Boss's 6538500636 item 2; THIRD6). For
-a pair split across two places, one draw reads the pair's one hand, both places together. Such a draw needs what this
-pointer has, the run back and the 24. Whether it can take up the norm, summed over the pair's two meetings or over the
-board, is THIRD6's to derive: OPEN. The single clock's condition, that nothing the clock can read before its click
-fixes its outcome, is the law's own; this page derives no draw that meets it.
+**Bell's arithmetic on the cell rule** (algebra, a clock fact about the rule; its physics owed in the click world): a
+pair's CHSH sum passes 2 only where the draw reads both settings, through its cells or its pointer (Clauser, Horne,
+Shimony and Holt, PRL 23, 880 (1969); Fine, PRL 48, 291 (1982); after Bell, Physics 1, 195 (1964)); the bound holds on
+the mean over the draws. With each place's cells sized by its own setting alone, no shared pointer of any reach passes
+2, the norm summed over two meetings or over the board included: over 331,776 choices of whole sizes the largest
+|CHSH| is exactly 2 (the ninth text's mathematician's bell_cells), and the same over 50,625 cases of one shared pointer
+(its physicist's bell_check, case 3). With joint sizes that read both settings, form B's rule passes 2: 5/2 with Big
+Pic's face-diagonal sizes, 4 with whole sizes, and 4 with a signal where the pointer is frozen, as (n) found (both
+readers' runs, outside the tree). These read the rule on the board; no pair's clicks are read.
 
-**Not in the click world:** the law's choice is read in the clicks by Bell's test, by Big Pic's methods. This page
-reads no pair's clicks, and its no-signal lines read the local pointer alone.
+**What moves:** the law's draw for a pair reads both settings and the pair's one hand, both places together, from the
+whole state (Big Pic, 6538202826; the Boss's 6538561480 item 2; THIRD6). Section 4's road, the sizes carried back to
+the birth, meets Bell's arithmetic but not the law's condition, since it fixes the outcome before the click from the
+past and the future; denying that the settings are independent of the state is the other road, and it is the
+superdeterministic one. THIRD6's brief asks the run back exact and the 24 kept (the Boss's 6538561480), which this
+pointer has, on every kind but E and in its frequencies; whether that draw can take up the norm as its dial, and where
+and when the settings enter it, are THIRD6's to derive: OPEN.
 
-**How this section checked itself:** the pointer's reach is section 6's Board row (Q over the seven Node-clocks' rows,
-read in and out, one round), and the round's reach is the act's, one Node-clock and its six Meshes. Bell's bound needs
-only that each outcome be a function of its own setting and of a region the other setting does not reach, with the
-settings independent of the shared past. No probe moved, and no figure of the page changed.
+**What stands:** the pointer's board facts, as clock facts about a reading: the mirror's backward act reads the same v
+in the same order (64,800 of 64,800); the 24 and the trains' signed permutations leave it on every kind but E; its
+fairness CHECKED on the lays named, with the excess over 510 hot boards named and OPEN; the condition on the rows' join
+and on fractions, necessary and not sufficient; the kept branch's run back.
+
+**Not in the click world:** the law's choice is read in the clicks by Bell's test, by Big Pic's methods. This page reads
+no pair's clicks. Its no-signal and Bell lines (section 4) read the cell rule with sizes that carry both settings, not
+the pointer alone.
+
+**How this section checked itself:** the reach against section 6's Board row and the act's tick at 0df0e8385, as both
+readers read it; the law's condition applied to section 4's form B in the law's own words; the CHSH figures are the
+readers' runs, cited as theirs; no probe moved, and no figure of sections 1 to 13 changed.
+
+## 15. The ninth text's readers, folded (the tenth text)
+
+The ninth text (toys-5 4b15b8b5b) went to a fresh hostile pair, G5's end pair being out of reach. Both read the
+pointer's reach on the act and found it right, and both refused the Bell step.
+
+**The mathematician** (NOT PASSED, two blocking items, eleven minors):
+1. B1, "each outcome is fixed by its own place's board and its own setting" does not follow, since the outcome reads
+   the sizes too, and form B's sizes carry both settings; with the page's own cell rule and a fair v, joint sizes
+   1, 0, 0, 1 and 0, 1, 1, 0 give CHSH = 4 with no signal. Folded: the step withdrawn; section 14 derives "not the
+   choice" from the law's own condition and states Bell's premise on the cells (14).
+2. B2, Bell's bound does not use the pointer's reach: with each place's cells read by its own setting alone no shared
+   pointer of any reach passes 2 (his bell_cells, 331,776 choices), so the restriction named and the OPEN item were
+   wrong, and "that road is not needed" contradicts Bell. Folded: the premise put on the cells; the OPEN item is a draw
+   that reads both settings; section 4's road named as meeting Bell's arithmetic and not the law's condition (14).
+3. His minors: the no-signal line reworded (14); where and when the settings enter, OPEN (7; 14); T_f named in the
+   reach (14); CHSH 1969 cited for the bound, and the bound on the mean (14); settings independence named a
+   hypothesis on a deterministic act (14); DERIVED only on what is derived (14); the 510-hot-board excess named (14);
+   the 24 as THIRD6's brief asks it, not the law's words (14); the Status in one sense (6); the OPEN lists made one
+   (the finding; 6; 7); the header's "apart" gone (the header).
+
+**The physicist** (NOT PASSED, four blocking items, seven minors):
+1. B1, Bell misapplied: the part drawn reads v and the sizes, which under form B carry both settings to the birth; his
+   bell_check gives 5/2 and 4. Folded on his own route: the law's condition, nothing read before the click fixing the
+   outcome, applied to the pointer from the past and the frames carried back from the future (14).
+2. B2, (c) had Bell backwards: a pair passes 2 only where the outcomes read both settings, and summing the norm does
+   nothing (his case 3, 50,625 cases). Folded with the mathematician's B2 (14).
+3. B3, "the pair cannot pass 2" and "that road is not needed" were click-world claims labelled DERIVED. Folded: both
+   gone; Bell's arithmetic is labelled a reading of the rule on the board, its physics owed in the click world (14).
+4. B4, the header, the finding and the Status said more than section 14 showed, section 6's Clock row was not scoped,
+   and the OPEN lists left out the law's draw. Folded: each now says the draw is fixed before the click by what it
+   reads; the Clock row scoped; the law's draw in the finding's OPEN line, section 6's Status and section 7 (the
+   header; the finding; 6; 7).
+5. His minors: the four-Meshes condition gone with the Bell step (14); settings independence and the
+   superdeterministic road named (14); whose clicks under form B, each of the pair's two (14); CHSH 1969 and Fine 1982
+   cited beside Bell (14); the 24 on every kind but E and in frequency (14); fairness CHECKED, the join condition
+   necessary and not sufficient (14); the third text's P read the held hand's motion, and the "pointer" list goes with
+   the Bell step (14).
+
+**How the tenth text checked itself:** sections 1 to 13 unchanged but the header's paragraph, the finding's line and
+OPEN line, section 6's Clock row and Status, and section 7's new item; every claim of section 14 checked against the
+two readers' reports and section 4's own words; no probe moved.
