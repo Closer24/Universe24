@@ -8,9 +8,12 @@ loader laid: own (every value leg in one train: the held rows' own springs), two
 tie), and the tie groups (four value legs joining the held train to one tied train). Beside it, the split at the rest
 (NOT_CLOSED 29's section 2.4 at kappa 6, n = 0: writer D's world lays no hat, and its own spring and tie are least at
 k = 0), per train and as flows per pair of trains. Node-clocks reading alike are printed once, with their count.
+Then, over a longer run, at every place: the act's passing summed over the trains (the books' miss) against each
+kind's sum, and each Node-clock's running miss. With the word spring0 the universe's CHOSEN spring is read as 0
+(plans.holding: 0 lays none), in memory only, to read the world with the held rows' own spring off.
 
-Usage: python3 -I spring_round1.py <src of node-live at 1794d474b> [rounds, 2 unless given]
-(the example files are read from <src>/../examples/tensor24-click)
+Usage: python3 -I spring_round1.py <src of node-live at 1794d474b> [rounds read place by place, 2 unless given]
+[rounds summed, 200 unless given] [spring0]   (the example files are read from <src>/../examples/tensor24-click)
 """
 
 import json
@@ -44,7 +47,10 @@ def prod(xs):
 src = Path(sys.argv[1])
 ex = src.parent.joinpath("examples", "tensor24-click")
 rounds = int(sys.argv[2]) if len(sys.argv) > 2 else 2
+summed = int(sys.argv[3]) if len(sys.argv) > 3 else 200
 universe = json.loads(ex.joinpath("universe.json").read_text())
+if "spring0" in sys.argv[4:]:
+    universe["chosen"]["spring"] = 0
 shape = json.loads(ex.joinpath("piece.json").read_text())["shape"]
 setting = json.loads(ex.joinpath("setting.json").read_text())
 held, found = loading.load(universe, setting, sites_of(shape), *main.made(loading.star(len(shape))))
@@ -156,3 +162,34 @@ for t in range(1, rounds + 1):
         print(f"    the split at the rest (kappa 6, n = 0): per train {list(sp)} (summed {sum(sp)}); flows into the"
               f" first train of each pair {dict(fl)}")
     s = s1
+
+s = state_mod.State(*held.state)
+key = int(lay.click.key[0, 0])
+miss_places = 0
+kind_off = {k: 0 for k in kinds}
+equal = 0
+running = [0] * sites
+widest = 0
+for t in range(1, summed + 1):
+    s1, _ = step.act(lay, s)
+    jb, ja, ja1 = (contract(plan, step.valued(s.b), s.b), contract(plan, step.valued(s.a), s.a),
+                   contract(plan, step.valued(s1.a), s1.a))
+    moved = step.passing(click, s.a, s.b, ja, jb) + step.passing(click, s1.a, s.a, ja1, ja)
+    for x in range(sites):
+        b = [int(s.b[r, x]) for r in range(rows)]
+        a = [int(s.a[r, x]) for r in range(rows)]
+        a1 = [int(s1.a[r, x]) for r in range(rows)]
+        miss = sum(int(moved[i, x]) for i in range(ntr))
+        sums = {k: sum(act_x(a, b, v)) + sum(act_x(a1, a, v)) for k, v in kinds.items()}
+        miss_places += int(miss != 0)
+        for k in kinds:
+            kind_off[k] += int(sums[k] != 0)
+        equal += int(miss == sums["tie"])
+        running[x] += miss
+        widest = max(widest, abs(running[x]))
+    s = s1
+print(f"over {summed} rounds at {sites} Node-clocks: the act's passing summed over the trains (the books' miss) not 0 at"
+      f" {miss_places} of {summed * sites} places; each kind's sum not 0 at: " + ", ".join(f"{k} {v}" for k, v in
+      kind_off.items()) + f"; the miss equal to the tie groups' sum at {equal} of {summed * sites} places; a"
+      f" Node-clock's running miss at most {widest}, against the key {key}")
+

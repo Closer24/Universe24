@@ -1,0 +1,11 @@
+tensor24-click on the src given: 27 Node-clocks, trains 0 to 4, rows per train [2, 10, 2, 6, 6], the held train 2 on rows [12, 13]; CHOSEN spring 0, tie 96000, hold 1
+  own monomials: 0, factors [], trains joined []
+  two-leg monomials: 6, factors [96000], trains joined [(3, 4)]
+  tie monomials: 24, factors [60000], trains joined [(2, 3), (2, 4)]
+round 1, 27 Node-clocks alike: the act's passing per train [0, 0, 0, 0, 0] (summed 0), by kind: own [0, 0, 0, 0, 0]; two-leg [0, 0, 0, 0, 0]; tie [0, 0, 0, 0, 0]
+    the held hand before, now, next ((1, 0), (1, 0), (1, 0)); the giver's rows now (40, 0, 0, 0, 0, 0)
+    the split at the rest (kappa 6, n = 0): per train [0, 0, 0, 0, 0] (summed 0); flows into the first train of each pair {(2, 3): 0, (2, 4): 0, (3, 4): 0}
+round 2, 27 Node-clocks alike: the act's passing per train [0, 0, 0, -192000000, 0] (summed -192000000), by kind: own [0, 0, 0, 0, 0]; two-leg [0, 0, 0, 0, 0]; tie [0, 0, 0, -192000000, 0]
+    the held hand before, now, next ((1, 0), (1, 0), (0, 0)); the giver's rows now (40, 0, 0, 0, 0, 0)
+    the split at the rest (kappa 6, n = 0): per train [0, 0, 768000000, -768000000, 0] (summed 0); flows into the first train of each pair {(2, 3): 768000000, (2, 4): 0, (3, 4): 0}
+over 200 rounds at 27 Node-clocks: the act's passing summed over the trains (the books' miss) not 0 at 2835 of 5400 places; each kind's sum not 0 at: own 0, two-leg 0, tie 2835; the miss equal to the tie groups' sum at 5400 of 5400 places; a Node-clock's running miss at most 261120000, against the key 50811429

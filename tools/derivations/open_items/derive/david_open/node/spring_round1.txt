@@ -10,3 +10,4 @@ round 1, 27 Node-clocks alike: the act's passing per train [0, 0, 0, -192000000,
 round 2, 27 Node-clocks alike: the act's passing per train [0, 0, 0, 0, 0] (summed 0), by kind: own [0, 0, 0, 0, 0]; two-leg [0, 0, 0, 0, 0]; tie [0, 0, 0, 0, 0]
     the held hand before, now, next ((1, 0), (0, 0), (-1, 0)); the giver's rows now (40, 0, 0, 0, 0, 0)
     the split at the rest (kappa 6, n = 0): per train [0, 0, 0, 0, 0] (summed 0); flows into the first train of each pair {(2, 3): 0, (2, 4): 0, (3, 4): 0}
+over 200 rounds at 27 Node-clocks: the act's passing summed over the trains (the books' miss) not 0 at 3510 of 5400 places; each kind's sum not 0 at: own 0, two-leg 0, tie 3510; the miss equal to the tie groups' sum at 5400 of 5400 places; a Node-clock's running miss at most 708840000, against the key 50811429
