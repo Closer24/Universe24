@@ -130,7 +130,7 @@ def data_of(
         "basic": {
             "lines": len(counted.lines),
             "places": counted.places,
-            "crossed": counted.crossed,
+            "netted": counted.netted,
             "trains": plain(counted.trains),
         },
         "readings": readings(record),

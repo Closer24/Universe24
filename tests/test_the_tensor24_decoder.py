@@ -184,12 +184,12 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
     ),
     "the end's across dropped": (
         [B, *CROSS, {**E, "across": []}],
-        "crossed",
+        "end_across",
         "line 2's side across a Mesh to train 0 stands in no entry of the end's across",
     ),
     "the end's across off the board": (
         [B, *CROSS, {**E, "across": [[0, 0, [5, 0], [3, 3]]]}],
-        "crossed",
+        "end_across",
         "the end's across names place 5, off the board of sides [2, 1, 1]",
     ),
     "a side across a Mesh on a line of no train": (
@@ -356,11 +356,11 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
     held = clicks.counted(read([B, GIVE, TOOK, E], tmp_path))
     assert held.lines == [GIVE, TOOK] and held.sites == {0: clicks.Tally(len(held.lines), 1, 1, 0)}
     assert held.trains == {0: clicks.Tally(1, 1, 0, -1), 1: clicks.Tally(1, 0, 1, 1)}
-    assert (held.places, held.crossed) == (1, 0)
+    assert (held.places, held.netted) == (1, 0)
     give = {**GIVE, "round": 6, "sides": [], "across": [[0, 1, -1, 3, 6]]}
     across = [give, {**give, "site": 1, "q": 1, "across": [[0, 0, 1, 3, 0]]}]
     more = clicks.counted(read([B, GIVE, TOOK, *across, E], tmp_path))
-    assert (more.places, more.crossed) == (len({(e["round"], e["site"]) for e in more.lines}), 1 + 1)
+    assert (more.places, more.netted) == (len({(e["round"], e["site"]) for e in more.lines}), 1 + 1)
     run = tool(tmp_path / "record.jsonl")  # the record read last, as read() wrote it
     assert run.returncode == 0 and run.stderr == "" and run.stdout.startswith("the ledger: ")
     lines = run.stdout.splitlines()

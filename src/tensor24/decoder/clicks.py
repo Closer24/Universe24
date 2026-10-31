@@ -28,7 +28,7 @@ class Counted(NamedTuple):
     trains: dict[int, Tally]
     sites: dict[int, Tally]
     places: int
-    crossed: int  # the places whose clocks pass a net across a Mesh, their sum of q not 0
+    netted: int  # the places whose clocks pass a net across a Mesh, their sum of q not 0
 
 
 def listed(record: Record) -> list[Line]:
@@ -66,5 +66,5 @@ def counted(record: Record) -> Counted:
     """The basic part on one record: its click lines listed and counted, no verdict."""
     lines = listed(record)
     sums = summed(lines)
-    crossed = [place for place, total in sums.items() if total != 0]
-    return Counted(lines, by(lines, "train"), by(lines, "site"), len(sums), len(crossed))
+    netted = [place for place, total in sums.items() if total != 0]
+    return Counted(lines, by(lines, "train"), by(lines, "site"), len(sums), len(netted))

@@ -104,15 +104,13 @@ def books(record: Record) -> Verdict:
     gaps, lacks = lacking(held.lines, ("q",), "its books are")
     cards = [t["index"] for t in record.header.get("trains", []) if whole(t.get("index"))]
     trains = {t: held.trains.get(t, clicks.Tally(0, 0, 0, 0)) for t in cards}
-    booked, crossed = clicks.summed(held.lines), across(held.lines)
-    for place, q in crossed[0].items():
+    booked, far = clicks.summed(held.lines), across(held.lines)
+    for place, q in far[0].items():
         booked[place] = booked.get(place, 0) + q
     sums = [(place, total) for place, total in sorted(booked.items()) if place not in gaps]
     open_ = [(place, total) for place, total in sums if total != 0]
     readings = {"trains": trains, "sites": held.sites, "places": len(sums)}
-    each = (
-        f", each of the {crossed[1]} sides across a Mesh booked at both its places" if crossed[1] else ""
-    )
+    each = f", each of the {far[1]} sides across a Mesh booked at both its places" if far[1] else ""
     if open_:
         (round_, site), total = open_[0]
         cause = f"the sum of q over the trains is {total} at round {round_}, site {site}{each}: not 0 at {len(open_)} of {len(sums)} places"

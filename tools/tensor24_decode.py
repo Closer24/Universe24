@@ -45,7 +45,7 @@ def printed(held: clicks.Counted) -> None:
             )
     print(
         "each place's across net, its sum of q over the trains (its own site's sides cancel there):"
-        f" {held.crossed} of {held.places} places pass a net across a Mesh"
+        f" {held.netted} of {held.places} places pass a net across a Mesh"
     )
 
 
