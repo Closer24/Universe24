@@ -160,8 +160,8 @@ def test_the_lay_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and_
     (universe, piece, setting), paths = ordered(), frame.written(tmp_path / "lay", frame.strengthless())
     held, laid, start = lay(universe, piece, setting)
     assert geared_alike(held, laid)
-    # D1, the drift's infinite order (MATH4 1.5), on a test's lay that differs at a whole row, lawful as the check of a
-    # DERIVED fact (09:5x): the wave's first row a uniform drift, a = c + 1 and b = c at every site, feels no pull, so
+    # the drift's infinite order, MATH4 1.5's check, on a test's lay that differs at a whole row, lawful as the check of
+    # a DERIVED fact (09:5x): the wave's first row a uniform drift, a = c + 1 and b = c at every site, feels no pull, so
     # every round carries it one count on, each round's promise met: an orbit with no period
     c, (a, b, r) = start.a[0, 0], (x.copy() for x in start[:3])
     a[0], b[0], r[0] = c + 1, c, 0
