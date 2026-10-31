@@ -99,7 +99,12 @@ other end, and tau as G D - 1 - tau.
 - The turn makes the landings' timing follow the pair's hidden digits. Under Q10, a clock reads only its own clicks,
   and no landing ever enters a clock's line (B C = 0). So the turn hides nothing that a clock reads. The member is
   never "the choice" (the Boss's 08:1x ruling).
-- ALG3 (0e308f17) reaches the same member on its own bench: tau, one number per triangle beyond the first click's three.
+- **No new number at all (ALG3's count, MEASURED here).** The edges carry curl-free passings, c . (G x - c y) = 0, so
+  their teeth's circulation c . f stays at its birth's value mod G D at every round (5,000 of 5,000 on every lay). One
+  edge tooth is then the other two's double, and tau takes its place. So the third click is the first click's three
+  numbers, re-routed: the circulation moves out of the edges' teeth and into the triangle's one tooth.
+- **The choice (ALG3's Q1).** The tooth does not turn: the path is a plain carry of the circulation. Any choice in it
+  sits in the births, by road (C)'s seeds' law. A turned tooth would force the twin (ALG3 5.4).
 - So no check here needs the twin. The third click is one number per triangle, the 2-cochain's. It is set by the
   board's own flows, and on the equilateral triangle by its conserved charge, not by a hidden pair.
 

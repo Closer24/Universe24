@@ -1,6 +1,6 @@
 three clocks at W 600000000, spring 100000000, two-leg tie 96000, four-leg tie 60000; the edge dial D 152434287 (kappa / two 3 times the key 50811429), the triangle's G 3, its dial G D 457302861
 == the equilateral triangle of two-leg edges, laid turning: the lay [40, -20, -20] now, [20, -40, 20] before; 5000 rounds
-   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000
+   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000, edge circulation kept 5000
    L (the angular momentum about the axis) at the lay 3600, at the end 355, its range over the run [336, 3810]
    the circulation y per round in [193824000, 2186496000]; the lines (each clock's net passing): all three 0 in 2 rounds, the largest 1711008000
    the triangle's landings: 15009 (SUM y over G D, from tau's birth: 15009); the landing values [0, 1, 2, 3, 4, 5]; rounds with a landing 4867
@@ -11,7 +11,7 @@ three clocks at W 600000000, spring 100000000, two-leg tie 96000, four-leg tie 6
    the run back (the triangle tooth): the start reached True; the sides and landings back negated and reversed True
    the triangle's turns and flips: the round, its edge teeth, its sides, tau and the landings turned alike in 6 of 6 (200 rounds each)
 == the equilateral triangle of two-leg edges, laid at rest: the lay [40, 20, 1] now, [40, 20, 1] before; 5000 rounds
-   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000
+   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000, edge circulation kept 5000
    L (the angular momentum about the axis) at the lay 0, at the end -471, its range over the run [-524, 524]
    the circulation y per round in [-300672000, 300672000]; the lines (each clock's net passing): all three 0 in 0 rounds, the largest 297216000
    the triangle's landings: -127 (SUM y over G D, from tau's birth: -127); the landing values [-1, 0, 1]; rounds with a landing 1861
@@ -22,7 +22,7 @@ three clocks at W 600000000, spring 100000000, two-leg tie 96000, four-leg tie 6
    the run back (the triangle tooth): the start reached True; the sides and landings back negated and reversed True
    the triangle's turns and flips: the round, its edge teeth, its sides, tau and the landings turned alike in 6 of 6 (200 rounds each)
 == the same, laid turning the other way (the lay's two slots swapped): the lay [20, -40, 20] now, [40, -20, -20] before; 5000 rounds
-   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000
+   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000, edge circulation kept 5000
    L (the angular momentum about the axis) at the lay -3600, at the end -355, its range over the run [-3810, -336]
    the circulation y per round in [-2186496000, -193824000]; the lines (each clock's net passing): all three 0 in 2 rounds, the largest 1711008000
    the triangle's landings: -15009 (SUM y over G D, from tau's birth: -15009); the landing values [-5, -4, -3, -2, -1, 0]; rounds with a landing 4867
@@ -33,7 +33,7 @@ three clocks at W 600000000, spring 100000000, two-leg tie 96000, four-leg tie 6
    the run back (the triangle tooth): the start reached True; the sides and landings back negated and reversed True
    the triangle's turns and flips: the round, its edge teeth, its sides, tau and the landings turned alike in 6 of 6 (200 rounds each)
 == the same, laid turning at ten times the counts: the lay [400, -200, -200] now, [200, -400, 200] before; 5000 rounds
-   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000
+   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000, edge circulation kept 5000
    L (the angular momentum about the axis) at the lay 360000, at the end 385231, its range over the run [349434, 386434]
    the circulation y per round in [201487968000, 222521760000]; the lines (each clock's net passing): all three 0 in 22 rounds, the largest 20189376000
    the triangle's landings: 2315503 (SUM y over G D, from tau's birth: 2315503); the landing values [441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471, 472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487]; rounds with a landing 5000
@@ -44,7 +44,7 @@ three clocks at W 600000000, spring 100000000, two-leg tie 96000, four-leg tie 6
    the run back (the triangle tooth): the start reached True; the sides and landings back negated and reversed True
    the triangle's turns and flips: the round, its edge teeth, its sides, tau and the landings turned alike in 6 of 6 (200 rounds each)
 == the same, laid at rest at ten times the counts: the lay [400, 200, 10] now, [400, 200, 10] before; 5000 rounds
-   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000
+   identities held in rounds (of 5000; the books of 15000 clock-rounds): y 5000, lines 5000, torque 5000, zero force torque 5000, books first 15000, books tooth 15000, tau 5000, edge circulation kept 5000
    L (the angular momentum about the axis) at the lay 0, at the end 27003, its range over the run [-264, 27003]
    the circulation y per round in [-99072000, 15511104000]; the lines (each clock's net passing): all three 0 in 0 rounds, the largest 60300000000
    the triangle's landings: 83501 (SUM y over G D, from tau's birth: 83501); the landing values [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34]; rounds with a landing 4971

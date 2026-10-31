@@ -25,6 +25,9 @@ DERIVED (the probe checks each identity at every round):
     the triangle's turn): L moves by the teeth's torque alone;
   - the lines: each clock's net passing is (kappa / two) f times the triple's angular momentum across the axis, so the
     lines read its two components across the axis and y the one along it (the Hodge split of the edges' flows);
+  - the edges' teeth's circulation c . f stays at its birth's value mod G D, since c . (G x - c y) = 0: one edge tooth
+    is the other two's double, and tau takes its place (ALG3's count), so the third click costs no number beyond the
+    first click's three;
   - the books per clock in the clicks: half_kappa (E_u' - E_u - share_u) = 8 W SUM_e B_ue (dial q_e + k_e' - k_e), E_u
     the clock's own energy with half of each of its edges' (E32's terms), on either form; under the triangle's tooth the
     landings drop out of every clock's books (B C = 0), and tau's books are tau' + G D w = tau + y.
@@ -165,7 +168,9 @@ def read(name, lay_a, lay_b):
     k, f, tau = [born(D)] * 3, [born(GD)] * 3, [born(GD)]
     start = (list(a), list(b), list(s), list(k), list(f), list(tau))
     l0 = big_l(b, a)
-    ids = {"y": 0, "lines": 0, "torque": 0, "zero force torque": 0, "books first": 0, "books tooth": 0, "tau": 0}
+    ids = {"y": 0, "lines": 0, "torque": 0, "zero force torque": 0, "books first": 0, "books tooth": 0, "tau": 0,
+           "edge circulation kept": 0}
+    c_f0 = carry(sum(c * v for c, v in zip(C, f)), GD, 0)[1]
     silent, line_max, y_min, y_max = 0, 0, None, None
     landings, sum_y, cq_first, cq_tooth, word, lmax, lmin = 0, 0, [], [], [], l0, l0
     for _ in range(ROUNDS):
@@ -194,6 +199,7 @@ def read(name, lay_a, lay_b):
             ids["books first"] += HALF * (e1[i] - e0[i] - share[i]) == 8 * W * first
             ids["books tooth"] += G * HALF * (e1[i] - e0[i] - share[i]) == 8 * W * tooth
         ids["tau"] += tau[0] + GD * w == t0 + y
+        ids["edge circulation kept"] += carry(sum(c * v for c, v in zip(C, f)), GD, 0)[1] == c_f0
         landings += w
         sum_y += y
         word.append(w)
