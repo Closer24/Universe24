@@ -81,6 +81,17 @@ NAN = '{"kind": "click", "round": 1, "site": 0, "train": 0, "q": NaN}'
 # ten million deep, past any stack: 3.14.9 on CI reads a hundred thousand, 3.14.6 about forty thousand
 DEEP, NESTS = "[" * 10**7 + "]" * 10**7, "line 2 nests past the interpreter's depth"
 OFF = "line 1's sides {} make no board, a side below 1"
+# an entry of the end's across that no line names, off the board
+OFFBOARD = {**E, "across": [*ENDED["across"], [0, 1, [5, 0], [3, 3]]]}
+# the header's dial and its universe file's key, the edge 0-1 listed by the end's teeth (E's guard, the 08:5x ruling)
+FILED = {**H, "dial": 7 + 7, "files": [{"name": "u.json", "text": json.dumps({"chosen": {"key": 7}})}]}
+LISTS = {**E, "teeth": [[0, 1, [6]], [1, 0, [0]]]}  # the edge 0-1's two sides
+HALF = {**LISTS, "teeth": LISTS["teeth"][:1]}  # its side (0, 1) alone
+SWAPPED = {**E, "across": [[0, 0, [0, 1], [3, 3]]]}  # the end's places swapped at both Node-clocks
+SIDE_OFF = "line 3's side to train 0 stands on no edge the end line lists"
+ACROSS_OFF = "line 2's side across a Mesh to train 0 at place 1 stands on no edge the end line lists"
+DIAL_OFF = "the header's dial 15 is no whole multiple of the file's key 7"
+KEY_OFF = "the header's dial 14 is not the file's key 7, the end listing no edge"
 BROKEN = {  # each broken record's lines, the guard without which it would be read or would raise, and its cause
     "a line that is no JSON": ([H, "no json", E], "jsoned", NO_JSON),
     "a line with no kind": ([H, {"round": 1, "site": 0}, E], "jsoned", NO_JSON),
@@ -198,11 +209,16 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "line 2's side across a Mesh to train 0 stands in no entry of the end's across",
     ),
     "the end's across off the board": (
-        [B, *CROSS, {**E, "across": [[0, 0, [5, 0], [3, 3]]]}],
+        [B, *CROSS, OFFBOARD],
         "crossed",
         "the end's across names place 5, off the board of sides [2, 1, 1]",
     ),
     "the events out of order": ([H, *met(1 + 1), *met(), E], "ordered", ORDER),
+    "a dial off the file's key": ([{**FILED, "dial": 7 + 7 + 1}, *met(), LISTS], "paired", DIAL_OFF),
+    "a dial not the key, no edge listed": ([FILED, E], "paired", KEY_OFF),
+    "a side the end's teeth do not list": ([B, *met(), HALF], "paired", SIDE_OFF),
+    "a side across at a place the end does not list": ([B, *CROSS, SWAPPED], "paired", ACROSS_OFF),
+    "a side across, the end holding no across": ([B, *CROSS, LISTS], "paired", ACROSS_OFF),
 }
 
 
@@ -256,7 +272,9 @@ def test_the_record_is_read_by_its_schema_and_each_guard_refuses_its_own_broken_
     assert record.of("click")[-1 - 1]["note"] == label
     reads = [[B, {**BARE, "ends": [1]}, E], [{**B, "ends": [5]}, BARE, E], [B, BARE, {"kind": "end"}]]
     reads += [[B, *CROSS, ENDED]]  # the end's across holding the side across a Mesh the lines name
-    assert [cause_of(lines, tmp_path) for lines in reads] == ["", "", "", ""]
+    # the dial a whole multiple of the file's key where the end lists an edge, the key itself where it lists none
+    reads += [[FILED, *met(), LISTS], [{**FILED, "dial": 7}, E]]
+    assert [cause_of(lines, tmp_path) for lines in reads] == [""] * len(reads)
     sides = [10**4000, 10**4000, 1]
     cause = cause_of([{**B, "sides": sides}, *met(1, -1), E], tmp_path)
     assert cause == f"line 2 names site -1, off the board of sides {sides}"
