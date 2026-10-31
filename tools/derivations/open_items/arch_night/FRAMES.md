@@ -33,12 +33,13 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 
 - Form: every row's teeth read the square's 00 slot but the 00 row's own, whose dial is 2 rest (load.geared: the
   factor times lit of the rows' difference); W(a+) is the 00 row's own carry, given first.
-- Question: the 00 row's waves run on a second cone, 1039 to 1055 permille of light's on the well world (EDGE2
-  sec. 4; the README names it OPEN). timegear/notes_01 and _02: a one-carry act on two slots and a tooth forces a
-  constant dial for the 00 row (the cut); every escape carries a register (the carried dial D_out = 4 W(a) - D, an
-  involution, undamped), a twin (a doubled 00 row), or a root (the symmetric form, nature's, forbidden by decision 41).
-- Test: the speed of the 00 wave against light's on a well (probe M-8's measure: 1202 permille at W / rest 1200
-  under the cut; 1000 would close it).
+- Question: the 00 row's waves run on a second cone, 1039 to 1055 permille of the board wave's on the well world
+  (EDGE2 sec. 4; the README names it OPEN). timegear/notes_01 and _02: a one-carry act on two slots and a tooth forces
+  a constant dial for the 00 row (the cut); every escape carries a register (the carried dial D_out = 4 W(a) - D, an
+  involution, undamped), a twin (a doubled 00 row), or a root (the symmetric form, nature's, forbidden by decision
+  41).
+- Test: the speed of the 00 wave against the board wave's on a well (probe M-8's measure: 1202 permille at W / rest
+  1200 under the cut; 1000 would close it).
 - Replaced by: the escapement, the road by the owner's word of 00:0x UTC (NOT_CLOSED 2: FWDBACK and FWDBACK2, W = L^2
   by itself with no root, refused by both their readers; FWDBACK3, its deriver, works the runaway where neighbouring
   Node-clocks release on different rounds to a cure, then a hostile pair), the cut standing in the code tonight. Big
@@ -63,9 +64,10 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   the factor is 1; the universe's "push" is 1 (gravity) or 0 (none), held at load since 996df846f (files.SWITCH
   refuses any other push by name: "0 or 1, the metric's push off or on: term 5 claims no strength"; the second hostile
   code reader's 2). The read's factor k0 is 1 as built (the S^2 the fourth text put in the push belongs to the 00
-  slot's read); GR's gamma = 1 for light needs k0 = Spokes x senses = 12 (light's h_ii / h_00 144 at 1, 1 at 12,
-  measured 132 and 0.92): BUILT in B2b (df4fa644c) on the Boss's yes of 19:2x UTC; Big Pic reads k0 = 12 as the star's
-  unit, derived and not a strength, for the owner to confirm as a unit and not to choose as a value (NOT_CLOSED 26).
+  slot's read); GR's gamma = 1 for the board's wave needs k0 = Spokes x senses = 12 (the board wave's h_ii / h_00 144
+  at 1, 1 at 12, measured 132 and 0.92): BUILT in B2b (df4fa644c) on the Boss's yes of 19:2x UTC; Big Pic reads k0 =
+  12 as the star's unit, derived and not a strength, for the owner to confirm as a unit and not to choose as a value
+  (NOT_CLOSED 26).
 - Why this form: the final physicist's two blocking items (the built form adds -eta (v.v); the books open by 588 f
   at every integer strength, 1152 f on the 2K-plan) are both answered by the one derivation from the act's energy,
   with no strength to choose; line 35's "the books fix it" is met. Measured by the deriver on the live act (probe_f):
@@ -74,13 +76,13 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   owner's, NOT_CLOSED 6); free fast matter closes the books to 1133 (tent) and 1041 (bump) permille at k0 = 1 and to
   1064 and 1020 at k0 = 12 on the built loader (B2b's probe), the discrete pairing now x next being not local in one
   Mesh (OPEN, NOT_CLOSED 27); the sign read on the well world by B2b's probe: the clock deepens where the matter is
-  (the 00 slot 22 at the crests against 0 in the void after one round, 141 against 29 after five); light's h_xx / h_00
-  1043 permille at k0 = 12 on the built loader; gamma on slow matter waits on term 6's spring; the 0i block's unit
-  stays OPEN; the second order in u and the 00 wave in a well as before (frame 2); J5 enters no train's passing, so
-  the matter's exchange with the metric is booked by no click (frame 5; NOT_CLOSED 31). NOT CLOSED, in Big Pic's
-  wording (#2187 6536112029; NOT_CLOSED 32): on the board, the books' form gives slow matter the clocks' slowing and
-  no stretch of space (gamma 0); not in the click world; gamma = 1 needs the slots' own laws to mix the trace (GR's
-  conformal mode), so slow matter's gamma waits on term 6, as TERM5_FIFTH said; the -6 Phi_2 of N2 is refused by
+  (the 00 slot 22 at the crests against 0 in the void after one round, 141 against 29 after five); the board wave's
+  h_xx / h_00 1043 permille at k0 = 12 on the built loader; gamma on slow matter waits on term 6's spring; the 0i
+  block's unit stays OPEN; the second order in u and the 00 wave in a well as before (frame 2); J5 enters no train's
+  passing, so the matter's exchange with the metric is booked by no click (frame 5; NOT_CLOSED 31). NOT CLOSED, in Big
+  Pic's wording (#2187 6536112029; NOT_CLOSED 32): on the board, the books' form gives slow matter the clocks' slowing
+  and no stretch of space (gamma 0); not in the click world; gamma = 1 needs the slots' own laws to mix the trace
+  (GR's conformal mode), so slow matter's gamma waits on term 6, as TERM5_FIFTH said; the -6 Phi_2 of N2 is refused by
   nature.
 - The run back under the push, and B2b's price (the first hostile code reader's B1; the Boss's decision of 20:4x UTC;
   NOT_CLOSED 30): the run back under term 5's push holds only while no plan reads a pushed row's momenta (the mirror
@@ -124,10 +126,10 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   mirror keeps k; the run back is the same act on the mirrored state and returns -q; the record writes the forward
   lines alone. The key one odd whole per board, CHOSEN ("key"), about twice the one-round key, so that the shared
   birth (key - 1) div 2 closes the books of a pair (COUNT5 sec. M1; EDGE2 sec. 2).
-- Question: the key at depth (Planck at the rest teeth alone, P1: the forms (a) the area, (b) the decoder's
-  squares, (c) the wind over the hand's turn are the owner's); light on matter (the Mesh-leg branch, P2: who books
-  the flux, frame 5); the spread take (P3, term 12); S against G (the board-exact alternative); J against the kick
-  at T_d > 1.
+- Question: the key at depth (Planck at the rest teeth alone, P1: the forms (a) the area, (b) the decoder's squares,
+  (c) the wind over the hand's turn are the owner's); the board's wave on matter (the Mesh-leg branch, P2: who books
+  the flux, frame 5); the spread take (P3, term 12); S against G (the board-exact alternative); J against the kick at
+  T_d > 1.
 - Test: the pair at one Node-clock: q_L + q_M = 0 in every round, k_L + k_M = key - 1 kept, the run back 6,000 of
   6,000 with -q (A1's test and probe); on the click world the record's lines with the books 0 at every round and
   site (B3's measure); the no: the tooth flipped breaks the run back at round back 1 (struck in A1 on an identity
@@ -161,7 +163,7 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   Reading the neighbours' produced counts in the act would break locality and is not done. J5 meets the same wall:
   its terms read the six stretches (the neighbours' counts) and the momenta in and out, so J5(a+) would need the
   next round's stretches and momenta, which one pass does not have.
-- Test: on the mesh world, light's squares summed stand (the ground state) and no click line is written by the Mesh
+- Test: on the mesh world, the wave's squares summed stand (the ground state) and no click line is written by the Mesh
   leg; on the click world the lines appear and the books close.
 - Replaced by: a lawful one-pass form of the two-round passing for a Mesh leg, or the flux booked at the Mesh by a
   rule the pair passes (Big Pic asked; NOT_CLOSED 4); the same for J5's terms (NOT_CLOSED 31).
@@ -173,18 +175,17 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 - Form: the held train, found by its character chi_A1 + chi_A2 at part 1, carries its own spring 2 rest as the
   monomial (rest; rho, rho, 1, 1) on each row (the theorem of the turn: K = 2 W turns the hand with its Gaussian
   square still) and holds no grip at rest on its Meshes: the loader lays its rows' grips at 0 by the same character
-  flag, so it is a site-local oscillator: the quarter turn (re, im) -> (-im, re) is exact at every Node-clock
-  whatever its neighbours do, |k|^2 = 1 and D = 1 to the bit (G3 p1; the physicist's q1, q6 i, q7 SOUND), and its
-  stability at every wavevector is the single Node-clock's, with 2 W of margin in the step's window. The seed lays
-  (1, 0) at every Node-clock. A tied train, found by its character kept under A2's twist (chi x chi_A2 = chi:
-  (T1, T2) and (A1, A2) and (E, E)) and not the held one (lit of the gap to the held character: no |k|^4 term), ties
-  through the held hand's square by (hold x f x C_yz; x_y, x_z, k_rho, k_rho), C the row of K x K -> A1, f = rest
-  div Gamma (the clock's one notch, CHOSEN with its reason, G3 2.4), so its beat is 4 sin^2(omega / 2) = 2 hold f
-  |k|^2 / W; light (A1, A1) and the square are untied by the same test; two tied trains exchange through the hands'
-  tie (tie x C_yz; x_y, y_z, 1, 1), one strength for every pair with a channel. Strengths: "hold" (1 the unit),
-  "tie"; f and the own factor from den and Gamma; 0 on the shipped worlds but the frame's own showcase, the click
-  world (hold 1, tie 96000, valid inside the room; the mesh world ships hold 1 for frame 7's), each a named exception
-  on the owner's list
+  flag, so it is a site-local oscillator: the quarter turn (re, im) -> (-im, re) is exact at every Node-clock whatever
+  its neighbours do, |k|^2 = 1 and D = 1 to the bit (G3 p1; the physicist's q1, q6 i, q7 SOUND), and its stability at
+  every wavevector is the single Node-clock's, with 2 W of margin in the step's window. The seed lays (1, 0) at every
+  Node-clock. A tied train, found by its character kept under A2's twist (chi x chi_A2 = chi: (T1, T2) and (A1, A2)
+  and (E, E)) and not the held one (lit of the gap to the held character: no |k|^4 term), ties through the held hand's
+  square by (hold x f x C_yz; x_y, x_z, k_rho, k_rho), C the row of K x K -> A1, f = rest div Gamma (the clock's one
+  notch, CHOSEN with its reason, G3 2.4), so its beat is 4 sin^2(omega / 2) = 2 hold f |k|^2 / W; the board's wave
+  (A1, A1) and the square are untied by the same test; two tied trains exchange through the hands' tie (tie x C_yz;
+  x_y, y_z, 1, 1), one strength for every pair with a channel. Strengths: "hold" (1 the unit), "tie"; f and the own
+  factor from den and Gamma; 0 on the shipped worlds but the frame's own showcase, the click world (hold 1, tie 96000,
+  valid inside the room; the mesh world ships hold 1 for frame 7's), each a named exception on the owner's list
   (PLAN.md's road to main) to "a frame's strengths are 0 in the shipped worlds".
 - Why this form (the physicist's item 1): with its grip the held hand's own spring 2 W plus the six Meshes' 2 W on a
   checkerboard reach 4 W, the window's top, and the vacuum runs away on every board (rounds 196 to 510 with no
@@ -218,39 +219,40 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   the run test's pair world is laid inside the room for ten beats since 484fb8d72 (the code reader's M3: Gamma 1000,
   the giver at 14, the hands' tie 9600, the key 614401, 1260 rounds); plans.holding's docstring names the limit (a
   docstring line, no code).
-- Test: on the click world, the held hand's quarter turn exact and |k|^2 = 1 at every site over ten tied beats
-  (5,000 rounds), the largest count read from outside at 10^9 (no runaway); the tied hand's period by zero crossings
-  against 2 hold f / W; a checkerboard seed on a TIED hand at small amplitude bounded past ten beats (its own spring
-  plus its Meshes' 2 W stays below 4 W); light standing untied; the run back exact; the 24 (B2's probe, B3's measure).
-- The click world as built (B3, e8161f301; examples/tensor24-click/, derive/boss/click_lay/ lay.py, lay.txt, measure.py,
-  measure.txt): a cube of 3 at den 1 and Gamma 10^4, push 0, notch 0, hold 1, mesh 0, 5,000 ticks; the held hand at
-  (1, 0) with its before (0, -1) and every edge tooth at s = 0; the giver a line hand at its turning point (40, 0, 0),
-  the taker at rest. The tie and A were chosen by the act: at the plan's first tie, 12,000 (a tenth of the tied spring),
-  the taker's push stays in its tooth and the world is silent (no count moves, no click falls in 5,000 rounds: the
-  no in lay.txt), so the tie is 96,000, 800 permille of the tied spring 120,000 (the pair's stiffness 24,000
-  positive); A = 40 stays inside the room over the whole run (hold (|x_giver|^2 + |x_taker|^2) at the held hand at
-  most 1,600 of Gamma div 4 = 2,500), where at A 46 and 48 the act leaves the room and the held train clicks; the key
-  50,811,429 (odd, about seven keys a beat). Measured: 4,212 click lines; the pair's books 0 at every round and
-  Node-clock where a line stands; the held train silent and |k|^2 = 1 at every Node-clock and round; the 24 at 24 of
-  24 turns under the twisted action, the clicks included; the run back exact; the largest count 40. The envelope is
-  not constant: the strong tie beats on the pair's two normal modes (each beat's most falling from 1,600 to about
-  1,000), the frame's "constant envelope" withdrawn for a tie this strong.
+- Test: on the click world, the held hand's quarter turn exact and |k|^2 = 1 at every site over ten tied beats (5,000
+  rounds), the largest count read from outside at 10^9 (no runaway); the tied hand's period by zero crossings against
+  2 hold f / W; a checkerboard seed on a TIED hand at small amplitude bounded past ten beats (its own spring plus its
+  Meshes' 2 W stays below 4 W); the board's wave standing untied; the run back exact; the 24 (B2's probe, B3's
+  measure).
+- The click world as built (B3, e8161f301; examples/tensor24-click/, derive/boss/click_lay/ lay.py, lay.txt,
+  measure.py, measure.txt): a cube of 3 at den 1 and Gamma 10^4, push 0, notch 0, hold 1, mesh 0, 5,000 ticks; the
+  held hand at (1, 0) with its before (0, -1) and every edge tooth at s = 0; the giver a line hand at its turning
+  point (40, 0, 0), the taker at rest. The tie and A were chosen by the act: at the plan's first tie, 12,000 (a tenth
+  of the tied spring), the taker's push stays in its tooth and the world is silent (no count moves, no click falls in
+  5,000 rounds: the no in lay.txt), so the tie is 96,000, 800 permille of the tied spring 120,000 (the pair's
+  stiffness 24,000 positive); A = 40 stays inside the room over the whole run (hold (|x_giver|^2 + |x_taker|^2) at the
+  held hand at most 1,600 of Gamma div 4 = 2,500), where at A 46 and 48 the act leaves the room and the held train
+  clicks; the key 50,811,429 (odd, about seven keys a beat). Measured: 4,212 click lines; the pair's books 0 at every
+  round and Node-clock where a line stands; the held train silent and |k|^2 = 1 at every Node-clock and round; the 24
+  at 24 of 24 turns under the twisted action, the clicks included; the run back exact; the largest count 40. The
+  envelope is not constant: the strong tie beats on the pair's two normal modes (each beat's most falling from 1,600
+  to about 1,000), the frame's "constant envelope" withdrawn for a tie this strong.
 - The hostile mathematician's verdict, NOT PASSED, four blocking (g3_math/REPORT.md), folded: (1) the whole-speed
-  plan's J is one norm of the tied rows' vector, kept by 200 of 200 random signed permutations of the tied rows
-  ACROSS trains: it tells no kind and no train, so which train is held, which ties and which is light must come from
-  a loader rule on the files' shapes; the flags by character above are that rule (as trains_of derives the square),
-  and they exempt the held hand from tying to its own square by the same test, not by hand; (2) within the room the
-  held hand is bit for bit the unit spring (hold x f x k.k x C; y, z, 1, 1) with no held hand (0 of 3,000 rounds
-  differ in seven cases): a declared mass in substance, the frame's FIRST PRICE, named as such; (3) decision 40 (g)
-  is not met: the seed sets k.k, the quadrature, the phase, the sense and the tooth (NOT_CLOSED 19), and the room
-  exists only for a held tooth born at the dial's middle (3b: on the edge that is s = 0, the format's default, the
-  old act's r = W div 2; the probe runs the no at s = -D); (4) the whole-speed and half-speed ties share k, and a
-  push on k not along k breaks the quadrature and every tied beat wanders: no half-speed tie is built tonight, and
-  the frame's results hold where no half-speed matter stands; (5) the step's window is strict, 0 < K / W < 4; (6)
-  the 24 commute on the full act only with the twisted action (frame 1); (7) the held turn is exact iff -rest / 4
-  <= c00 < rest / 2, so worlds with the held hand keep push 0 (and the own factor is the loader's rest, not W: a
-  deeper clock's turn lives on the floor's slack); (12) one mass for everything tied (NOT_CLOSED 21); (13) at T_d =
-  1 the drive is the identity, q_d = J and r_d = 0 always, so term 7's DERIVED rests on a no-op until B6's dial.
+  plan's J is one norm of the tied rows' vector, kept by 200 of 200 random signed permutations of the tied rows ACROSS
+  trains: it tells no kind and no train, so which train is held, which ties and which is the board's wave must come
+  from a loader rule on the files' shapes; the flags by character above are that rule (as trains_of derives the
+  square), and they exempt the held hand from tying to its own square by the same test, not by hand; (2) within the
+  room the held hand is bit for bit the unit spring (hold x f x k.k x C; y, z, 1, 1) with no held hand (0 of 3,000
+  rounds differ in seven cases): a declared mass in substance, the frame's FIRST PRICE, named as such; (3) decision 40
+  (g) is not met: the seed sets k.k, the quadrature, the phase, the sense and the tooth (NOT_CLOSED 19), and the room
+  exists only for a held tooth born at the dial's middle (3b: on the edge that is s = 0, the format's default, the old
+  act's r = W div 2; the probe runs the no at s = -D); (4) the whole-speed and half-speed ties share k, and a push on
+  k not along k breaks the quadrature and every tied beat wanders: no half-speed tie is built tonight, and the frame's
+  results hold where no half-speed matter stands; (5) the step's window is strict, 0 < K / W < 4; (6) the 24 commute
+  on the full act only with the twisted action (frame 1); (7) the held turn is exact iff -rest / 4 <= c00 < rest / 2,
+  so worlds with the held hand keep push 0 (and the own factor is the loader's rest, not W: a deeper clock's turn
+  lives on the floor's slack); (12) one mass for everything tied (NOT_CLOSED 21); (13) at T_d = 1 the drive is the
+  identity, q_d = J and r_d = 0 always, so term 7's DERIVED rests on a no-op until B6's dial.
 - **David's hat, judged at 20:3x UTC: not tonight; the named next direction** (G3's eighth text, toys-5 7791470d1,
   its probe node/g3_hat.py and g3_hat.txt; #2187 6532279905), against both readers, the night and the laws.
   - Its form: plans.holding lays V = hat (|k|^2 - R^2)^2 on the held rows in place of the own spring, (hat; a, a, a,
@@ -317,9 +319,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     as built. The hat's corrected frame goes on Sofer's morning page: the held rows Mesh-less, the window 20 hat R^2
     below 4 W, the test at 50 counts or more, the prices named. On this act the size is not nature's Higgs either way:
     with Meshes one uneaten angle gives an invisible width of about 0.32 GeV, 78 times the standard model's whole
-    width, and Mesh-less the size does not travel; the cause is the act's missing gauge field, which light's exemption
-    also needs. For the owner, decision 40 (g): a hand that holds one quantum (D = 1) weighs W a Node-clock, and a
-    still hand in a hat weighs 0 and holds none; no frame on this act has both.
+    width, and Mesh-less the size does not travel; the cause is the act's missing gauge field, which the wave's
+    exemption also needs. For the owner, decision 40 (g): a hand that holds one quantum (D = 1) weighs W a Node-clock,
+    and a still hand in a hat weighs 0 and holds none; no frame on this act has both.
 - Replaced by: G3's next text answering both readers (the physicist's six items, the mathematician's four); the hat,
   once NOT_CLOSED 29 is derived and the eighth text passes its pair; the half-speed gear for the spinor tie; the
   owner's word on items 2 and 3 of each.
@@ -327,7 +329,7 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   exact at every site by G3's own theorem, measured SOUND; the character test, because it names no train and reads
   the kinds; the own spring over the hat tonight, because the hat opens term 11's books (measured above) where the
   frame's are exact within the room; alternatives: K = W (an untested modulation), the tie laid by name in a file
-  (forbidden), (A1) x 2 as the held shape (not told from light by character), the hat (next, above).
+  (forbidden), (A1) x 2 as the held shape (not told from the board's wave by character), the hat (next, above).
 
 - The owner's ruling on line 102 (01:2x UTC, the Boss's translation, whole): "In my view it is forbidden. Only if it
   comes out of the families and their coupling. In code it is forbidden. A Node-clock does a simple and generic act.
@@ -354,39 +356,39 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   along i, unit, unit) at -mesh C onto M_j's row and (M_j's difference along i, unit, unit) at +mesh C onto L's row
   (the push on a gradient leg is the gradient of the other leg); L every row of the trivial kind (A1, found by its
   character) in a train that is no square and not the held hand; M_j every row of one part of a tied train; C the
-  table of the tied row's kind with the kind the board's axes turn by onto A1 (found by its character, the
-  four-vector square's on its 0i block): the dot product for T1, nothing for T2; a pair with no channel at the factor
-  0; no loop, branch or comparison. The tables select it: A1 x T1 has no A1 channel at the value legs, so light
-  reaches a vector hand through the Mesh alone. The held hand, Mesh-less, takes no gradient vertex (an early draft that
-  read its A1 row as a scalar broke its turn). Strength "mesh", read since B5 (the first hostile code reader's M5
-  closed); its ground state mesh^2 below grip x (2 hold f) / 2 (COUNT5 P2's condition).
-- Question: the wind it passes is the Mesh flux, counted by no click (frame 5; NOT_CLOSED 4); which trains are light
-  and which matter is the kinds' (A1 against T1), no name.
-- The mesh world (examples/tensor24-mesh/, derive/boss/mesh_lay/lay.py and lay.txt), its integers chosen by the act
-  as the click world's, since the plan's first integers (Gamma 1000, mesh 1,000 to 3,000) either move nothing or leave
-  the room and run away: a ring of 180 Node-clocks along x at den 1 and Gamma 10^4; light's first part the well
-  world's pulse, passing each Node-clock once; the held hand at (1, 0), its tooth at the dial's middle; a tied hand
-  at rest; hold 1, tie 0, push 0, notch 0, mesh 200,000 (mesh^2 4 10^10 below grip x 2 hold f / 2 = 6 10^12); 125
-  ticks. Measured: inside the room at every round (hold |x_tied|^2 at most 900 of Gamma div 4 = 2,500, growing
-  linearly by the tied hand's resonance with the pulse); the tied hand moving at 106 Node-clocks where the pulse
-  passes; the held hand's |k|^2 = 1; no click line; light ending at 944 permille of its start, within 71 permille of
-  the same files at mesh 0; the run back exact (125 of 125). The no: the same mesh reaches the room's edge at round
-  247, and mesh 250,000 leaves it at round 111.
+  table of the tied row's kind with the kind the board's axes turn by onto A1 (found by its character, the four-vector
+  square's on its 0i block): the dot product for T1, nothing for T2; a pair with no channel at the factor 0; no loop,
+  branch or comparison. The tables select it: A1 x T1 has no A1 channel at the value legs, so the board's wave reaches
+  a vector hand through the Mesh alone. The held hand, Mesh-less, takes no gradient vertex (an early draft that read
+  its A1 row as a scalar broke its turn). Strength "mesh", read since B5 (the first hostile code reader's M5 closed);
+  its ground state mesh^2 below grip x (2 hold f) / 2 (COUNT5 P2's condition).
+- Question: the wind it passes is the Mesh flux, counted by no click (frame 5; NOT_CLOSED 4); which trains are the
+  board's wave and which matter is the kinds' (A1 against T1), no name.
+- The mesh world (examples/tensor24-mesh/, derive/boss/mesh_lay/lay.py and lay.txt), its integers chosen by the act as
+  the click world's, since the plan's first integers (Gamma 1000, mesh 1,000 to 3,000) either move nothing or leave
+  the room and run away: a ring of 180 Node-clocks along x at den 1 and Gamma 10^4; the wave's first part the well
+  world's pulse, passing each Node-clock once; the held hand at (1, 0), its tooth at the dial's middle; a tied hand at
+  rest; hold 1, tie 0, push 0, notch 0, mesh 200,000 (mesh^2 4 10^10 below grip x 2 hold f / 2 = 6 10^12); 125 ticks.
+  Measured: inside the room at every round (hold |x_tied|^2 at most 900 of Gamma div 4 = 2,500, growing linearly by
+  the tied hand's resonance with the pulse); the tied hand moving at 106 Node-clocks where the pulse passes; the held
+  hand's |k|^2 = 1; no click line; the wave ending at 944 permille of its start, within 71 permille of the same files
+  at mesh 0; the run back exact (125 of 125). The no: the same mesh reaches the room's edge at round 247, and mesh
+  250,000 leaves it at round 111.
 - Price, named: the vertex's terms are laid at the factor 0 in every world that holds no pair for it, and cost 10 to
   30 per cent a round (the well 0.50 to 0.55 s, the click 0.066 to 0.079 s, the live 0.17 to 0.23 s), changing no
   record; the mesh world is inside the room only for 125 rounds at this mesh. And a role read by place (the second
-  hostile code reader's 4; plans.py:175 and :177): the vertex pairs L and M by part index, so light, of part 2, couples
-  by its first part alone and its second part passes matter untouched in every world (the plan lands on light's row 0
-  alone; the mesh world lays its pulse on the coupled part). The alternative, not tonight: the vertex laid for every
-  part of L against every part of M (NOT_CLOSED 4).
+  hostile code reader's 4; plans.py:175 and :177): the vertex pairs L and M by part index, so the board's wave, of
+  part 2, couples by its first part alone and its second part passes matter untouched in every world (the plan lands
+  on the wave's row 0 alone; the mesh world lays its pulse on the coupled part). The alternative, not tonight: the
+  vertex laid for every part of L against every part of M (NOT_CLOSED 4).
 - Test: the load test's mesh plan within its room of 155: each term's factor and target, and since 996df846f its
   second and third readings the unit, so the two pushes are one potential's (the second hostile code reader's 1: his
-  two mutants, a cubic vertex and the third reading set to the first, passed it before and fail it now); light with
-  no vector hand lays nothing; the unit laid as -1, the readings' last row, as the other plans lay it (his 5, no
-  record moving); the mesh world's run back and its measure above.
+  two mutants, a cubic vertex and the third reading set to the first, passed it before and fail it now); the board's
+  wave with no vector hand lays nothing; the unit laid as -1, the readings' last row, as the other plans lay it (his
+  5, no record moving); the mesh world's run back and its measure above.
 - Replaced by: the Mesh-leg count (frame 5) and G3's plan.
-- Choice: the gradient form, because it is the one stable light-matter vertex the readers found and the one the
-  tables allow; alternative: a value vertex light-matter (tachyonic, refused).
+- Choice: the gradient form, because it is the one stable wave-matter vertex the readers found and the one the
+  tables allow; alternative: a value vertex wave-matter (tachyonic, refused).
 
 ## 8. Term 9, the volume's notch [DERIVED, board reading only: both its pairs passed it (David's 6535035694; Sofer's item 8); "notch" CHOSEN]
 
@@ -426,10 +428,11 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   cosine, forbidden as law line 102 is worded. The lay's docstring ("no circular function") and examples/README.md's
   "by the lattice's own modes" fall with it, for writer B's re-lay to rewrite.
 - A second finding beside it, mine (the night's read of main): the pulse's before slot one round back at NUM, DEN =
-  20, 49, a Pell pair (49^2 - 6 x 20^2 = 1) landing on light's c = 1 / sqrt 6 Meshes a round (the auditor's reading),
-  lays three worlds, not the well alone: the well's (lay.py:42), the mesh world's (mesh_lay/lay.py:38, "as the well
-  world has it") and the live world's (its setting: before = ((49 - 20) now + 20 next) div 49 at 16 of 16 sites, as
-  examples/README.md says, "c about 20 / 49"). Big Pic's ruling on the pair reaches all three (NOT_CLOSED 35).
+  20, 49, a Pell pair (49^2 - 6 x 20^2 = 1) landing on the board wave's c = 1 / sqrt 6 Meshes a round (the auditor's
+  reading), lays three worlds, not the well alone: the well's (lay.py:42), the mesh world's (mesh_lay/lay.py:38, "as
+  the well world has it") and the live world's (its setting: before = ((49 - 20) now + 20 next) div 49 at 16 of 16
+  sites, as examples/README.md says, "c about 20 / 49"). Big Pic's ruling on the pair reaches all three (NOT_CLOSED
+  35).
 - What the well world is for (its lay's own words and its readers): a steady source for the metric, so that the well
   stands rather than swinging about its rest. On it stand: term 5's sign, the clock deeper where the lump is (B2b's
   probe; the README: N^2 = rest / W at 999714 ppm on the crests and 999830 in the void); the well, 3 parts in 10^4 of
@@ -439,9 +442,10 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   pattern no longer: the form above stands on the click and mesh lays' own.
 - Writer B's re-lay, measured (the Boss, 01:4x UTC): the lump with no mode, the pulse at rest (P1, agreed by both
   readings of main's audit).
-  - The board's wave's lump at rest (light's train, A1 of part 2; no light named on the board, the owner's 01:4x UTC
-    word): a real well, but a spreading one, 4 to 11 counts, 7 at the centre, as foreseen here (it
-    leaves its turning point at light's speed, about 0.41 Meshes a round). The well world stands on it tonight.
+  - The board's wave's lump at rest (the train the worlds' files label "light", A1 of part 2; no light named on the
+    board, the owner's 01:4x UTC word): a real well, but a spreading one, 4 to 11 counts, 7 at the centre, as foreseen
+    here (it leaves its turning point at the board wave's speed, about 0.41 Meshes a round). The well world stands on
+    it tonight.
   - My change, the held, Mesh-less lump, measured and fallen: it made no well at all. An exact quarter-turn hand has
     v_out perpendicular to v_in, so term 5's kinetic source, sigma_in sigma_out, is 0 (the theorem of the turn, frame
     6, now under line 102 itself).
@@ -462,7 +466,7 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   sum; the board is unchanged, the parts' hands moved by the act summing to the family's hand to the teeth (the
   carry's rounding); each click reads its own row locally (term 11 per train); a pair of like clicks is weighed by
   the determinant of their rows for a half-speed family and by the permanent for a whole-speed one, so one mode
-  twice weighs 0 (the exchange hole at one place), two go to an orbital, a third weighs 0, and light bunches. This
+  twice weighs 0 (the exchange hole at one place), two go to an orbital, a third weighs 0, and the wave bunches. This
   is FAMILIES4's theorem taken by its first escape: a second hand per quantum over the whole board, read in the
   modes' overlap, with no threshold, no stored hand and no cap.
 - What stands in the files and the loader tonight: a hand per quantum is one train per quantum; the files already
@@ -497,9 +501,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   with their characters, the train cards with key and square flag), its click lines {round, site, train, q, tooth} and
   its end (rounds, digest, undone, exact); and, where one is given, the ledger's Count lines, which carry no reading
   tonight (D6 says why). Nothing of the board's state: no gear's count, no slot, no plan and no act are read.
-- Its verdicts, one per reading: SHOWN; or NOT SHOWN, its first counterexample named; or NOT READ, the record unable to
-  carry the reading, its cause named; NO CLICK, the record holding no click line, so the reading has nothing to stand
-  on, its cause carrying the owner's phrase whole, "the record holds no click line: not in the click world" (the
+- Its verdicts, one per reading: SHOWN; or NOT SHOWN, its first counterexample named; or NOT READ, the record unable
+  to carry the reading, its cause named; NO CLICK, the record holding no click line, so the reading has nothing to
+  stand on, its cause carrying the owner's phrase whole, "the record holds no click line: not in the click world" (the
   Boss's ruling: a run of three capitalised words is refused by the documents' gate (4), and a hyphenated token would
   be a way round it). A record with no click line reads NO CLICK on every reading, before any other cause.
 - The readings:
@@ -551,11 +555,11 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     whose sums cancel across the sites, so the mutant that sums per round fails it;
   - the cone SHOWN for a click exactly t Meshes from the lay (the mutant with a strict bound fails it), and NOT SHOWN
     for one outside it;
-  - D6 and D7 each NOT READ with its cause (the mutant that shows either fails it); a record with no click line NO CLICK
-    on all four, its cause the owner's phrase, with the refusal line. Each mutant is named in the commit message with
-    the test failing on it, as the decoder's tests have been, and no mutant table stands in the file. The room: C5's
-    decoder test stands at 597 lines, ROOM 597, a 25-line rise against main's 572 (main at b1a50bb33 since 00:10 UTC),
-    on the owner's list (M8) with C5 (the Boss's ruling).
+  - D6 and D7 each NOT READ with its cause (the mutant that shows either fails it); a record with no click line NO
+    CLICK on all four, its cause the owner's phrase, with the refusal line. Each mutant is named in the commit message
+    with the test failing on it, as the decoder's tests have been, and no mutant table stands in the file. The room:
+    C5's decoder test stands at 597 lines, ROOM 597, a 25-line rise against main's 572 (main at b1a50bb33 since 00:10
+    UTC), on the owner's list (M8) with C5 (the Boss's ruling).
 - The laws it keeps: whole numbers; Rule3's carry the one division (measure.meshes uses it); no float, root, sine or
   search; no number beyond 0 and 1 in src (the verdict words and the claims' names are strings); paths by joinpath;
   ASCII; the gate at 0 refusals and the full check exit 0.
@@ -655,13 +659,13 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     that cannot fail, claiming what the decoder never reads of any world, is a typed verdict, and no typed verdict is
     a law both audits of main hold): NO CLICK, the owner's phrase, on a record with no click line; otherwise NOT READ,
     the cause "light's echo is not read: no rule yet tells light's click lines from the others (reading 7, owed)". The
-    rule for later only: light, every train of the trivial kind alone (its kinds' characters 1 on every turn of the
-    24) that is no square, read off the header's cards (the loader's own test for the gradient vertex's L), which in
-    the well world takes the pulse too, by character and not by name; built then, it would read the in-memory tests'
-    trains (the kind A1, characters 1 on all 24, no square) as light, so their records would card the clicking trains
-    with a kind that is not trivial. Its tool: shadow.echo. Its test: NOT READ with this cause on (a)'s yes record,
-    and NO CLICK with the owner's phrase on a record with no click line; the mutant that shows SHOWN, and the mutant
-    that reads NO CLICK on a record with lines, each fail it.
+    rule for later only: light in the clicks, every train of the trivial kind alone (its kinds' characters 1 on every
+    turn of the 24) that is no square, read off the header's cards (the loader's own test for the gradient vertex's
+    L), which in the well world takes the pulse too, by character and not by name; built then, it would read the
+    in-memory tests' trains (the kind A1, characters 1 on all 24, no square) as light, so their records would card the
+    clicking trains with a kind that is not trivial. Its tool: shadow.echo. Its test: NOT READ with this cause on
+    (a)'s yes record, and NO CLICK with the owner's phrase on a record with no click line; the mutant that shows
+    SHOWN, and the mutant that reads NO CLICK on a record with lines, each fail it.
   - (f) The books at each meeting: C5's reading 1 (shadow.books), beside the meetings, its test standing, in row 15's
     order and with its own check for a record of no click line by the fold (MINOR 2 and 3 below).
 - C5's cone check by click (D8): the lay's cone alone until the third click acts (NOT_CLOSED 33), and NOT READ where
@@ -837,9 +841,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   NOT READ or NO CLICK with its cause.
 - The next one: the face on the record (schema 1.4) and D6 reading a duration as a clock's own count between two of
   its meetings, with a clicking well (B: two clicking pairs at two depths of a well that stands, once a lawful steady
-  source is found, NOT_CLOSED 36), so the deeper clock's slower count is read twice in the clicks; then light's-cone
-  D8 on clicks that could fall outside it. It waits on a face that passes its pair and on Big Pic's road for the
-  click-world clock (NOT_CLOSED 38), and, for any act change, on the owner's word.
+  source is found, NOT_CLOSED 36), so the deeper clock's slower count is read twice in the clicks; then the board
+  wave's cone D8 on clicks that could fall outside it. It waits on a face that passes its pair and on Big Pic's road
+  for the click-world clock (NOT_CLOSED 38), and, for any act change, on the owner's word.
 - The pieces, each its gear on the board and its reading in the clicks:
   - - The click board. C6: no gear; the meetings and each clock's line, "the order counted, no duration" (13b). The
     face (FACE, first part about 02:15): a count of the clock's own half beats per train and Node-clock by Rule3's
@@ -871,21 +875,21 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     wave's (the owner's 01:4x UTC word: no light is named on the board), about 0.41 Mesh a round, round only in long
     waves, which the clicks read as light's: the special theory's cone, and the click world's order, never the round's
     nor the six's; in whole numbers a quadric with no root, W r^2 <= grip t^2 (6 r^2 <= t^2 in the live world). The
-    reading to add, read twice: D8 by light's quadric beside D8 by the act's cone; the board's tails beyond the wave's
-    cone stay below a whole quantum at the calibre, so they never click. Tonight light's-cone D8 reads NOT READ on the
-    click world where every line is inside light's cone from the lay. From the Node-clock itself (the hunter's row
-    12): a frame of four quaternions per Node-clock gives its own light cone, signature (1, 3) by Sylvester, the
-    escapement's W = L^2 its diagonal case; a law change (16 gears for 10 slots); FRAME16, both its readers NOT
-    PASSED: (1, 3) is the reading's, by Sylvester, not the act's, W = Re(s0 s0) <= 0 at most rounds, det S crosses 0
-    freely, the flat S = I degenerate (NOT_CLOSED 39).
+    reading to add, read twice: the board wave's cone D8, its quadric, beside D8 by the act's cone; the board's tails
+    beyond the wave's cone stay below a whole quantum at the calibre, so they never click. Tonight the board wave's
+    cone D8 reads NOT READ on the click world where every line is inside the wave's cone from the lay. From the
+    Node-clock itself (the hunter's row 12): a frame of four quaternions per Node-clock gives its own wave cone,
+    signature (1, 3) by Sylvester, the escapement's W = L^2 its diagonal case; a law change (16 gears for 10 slots);
+    FRAME16, both its readers NOT PASSED: (1, 3) is the reading's, by Sylvester, not the act's, W = Re(s0 s0) <= 0 at
+    most rounds, det S crosses 0 freely, the flat S = I degenerate (NOT_CLOSED 39).
 - The lanes, no file shared:
   - A, the record and the decoder's structure: schema 1.4 with the face on each click line (record/schema.py, the
     runner's click line, decoder/records.py); every act change (the face, the third click, the escapement) in this one
     lane, one at a time, each on its pair and the owner's word.
   - B, the worlds and their lays: the well's re-lay now, then the clicking well, frame 14's world (one quantum, two
     places to land) and a world of two half-speed quanta; examples/ and tools/derivations/ alone.
-  - C, the decoder's readings: C6 now, then light's-cone D8, D6 on 1.4 and the clocks' slowing read twice, Pauli in
-    the meetings; decoder/shadow.py, tools/tensor24_decode.py and the click-world test files.
+  - C, the decoder's readings: C6 now, then the board wave's cone D8, D6 on 1.4 and the clocks' slowing read twice,
+    Pauli in the meetings; decoder/shadow.py, tools/tensor24_decode.py and the click-world test files.
   - Where they would collide: tools/tests_shape.py's ROOM table (each lane adds its own entry, the Boss merging); the
     decoder test file at 597 (A's 1.4 record tests take a file and a room of their own, decision 26);
     decoder/records.py under C's readings (C reads only the fields A's commit names); examples/README.md (B's alone).
