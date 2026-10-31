@@ -348,7 +348,7 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
     steady and a growing mode: both worlds re-laid, and they may not click.
   - The same exact quarter turn is why the held lump made no well (frame 11).
 
-## 7. The gradient vertex, light on matter through the Mesh [FRAME; BUILT/live as B5 87f88322d]
+## 7. The gradient vertex, the board's wave on matter through the Mesh (read in the clicks as light on matter) [FRAME; BUILT/live as B5 87f88322d]
 
 - Form, as built (plans.meshing): V = mesh x SUM_i C_ji M_j D_i L laid as one potential's two pushes, (L's difference
   along i, unit, unit) at -mesh C onto M_j's row and (M_j's difference along i, unit, unit) at +mesh C onto L's row
@@ -416,9 +416,9 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 ## 11. The worlds' lays [FRAME worlds: click, mesh; its line mended on main's audit, 01:0x UTC; the well world's re-lay judged]
 
 - Form: whole numbers by the act itself, Rule3's carry the one division, and no lattice mode: the giver a line hand at
-  its turning point (a = b), no root and no sine (the click world's lay); light a polynomial bump, (H^2 - u^2)^2
-  scaled in whole numbers (the mesh world's lay, its pulse's speed below); the key and the strengths CHOSEN in the
-  universe file with their windows in lay.txt.
+  its turning point (a = b), no root and no sine (the click world's lay); the board's wave a polynomial bump, (H^2 -
+  u^2)^2 scaled in whole numbers (the mesh world's lay, its pulse's speed below); the key and the strengths CHOSEN in
+  the universe file with their windows in lay.txt.
 - The line mended (main's audit, both readings, #2187 6536864716 item 1 (c); the Boss, 01:0x UTC). It read "whole
   numbers by the lattice's own modes and the act itself (the well's lay.py pattern) ... no root and no sine", which is
   false of the well's lay: its mode (derive/boss/well_lay/lay.py:49 to 60) builds the ring's standing mode by the
