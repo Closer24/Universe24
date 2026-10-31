@@ -225,22 +225,16 @@
       M = 200, 54 windows: 0.854 at 1:1 (z^2 0.574, below 3.84), 0.795 at 1:3 (z^2 1.135, below 3.84)
       M = 400, 27 windows: 1.094 at 1:1 (z^2 0.120, below 3.84), 0.709 at 1:3 (z^2 1.143, below 3.84)
 (n) no signal with a frozen pointer: the four joint outcomes in the order ++, +-, -+, -- (Alice's sign, then Bob's),
-    sized by their quantum chances in whole numbers and drawn by the page's rule in that order, with no rank;
-    Bob's analyser fixed and Alice's at an angle from it, the angle the only setting the sizes read:
-    the polarization singlet, chances (1 - cos^2) over 2 for ++ and --, cos^2 over 2 for +- and -+:
-      at 30 degrees, cos^2 = 3 over 4: sizes 1, 3, 3, 1
-      at 60 degrees, cos^2 = 1 over 4: sizes 3, 1, 1, 3
-      e fixed at 3 tenths of H, at 30, 60 degrees: the joint outcome +-, ++; Bob draws -, +
+    sized in whole numbers per setting of Alice's and drawn by the page's rule in that order, with no rank;
+    Bob's analyser fixed, and in every set Bob's own share of + a half at each setting:
+    two settings of Alice's, sizes 1, 3, 3, 1; 3, 1, 1, 3:
+      e fixed at 3 tenths of H: the joint outcome +-, ++; Bob draws -, +
       e spread evenly, 6240 pointers: Bob + in 3120, 3120 of 6240
       e as the act spreads it, (b)'s 86400 draws: Bob + in 43063 (z^2 0.868), 43126 (z^2 0.253) of 86400
-    the spin singlet, chances (1 - cos) over 4 for ++ and --, (1 + cos) over 4 for +- and -+,
-      cos 30 degrees taken as 1351 over 1560, where 1351^2 - 3 x 780^2 = 1:
-      at 30 degrees, cos = 1351 over 1560: sizes 209, 2911, 2911, 209
-      at 60 degrees, cos = 1 over 2: sizes 1, 3, 3, 1
-      at 120 degrees, cos = -1 over 2: sizes 3, 1, 1, 3
-      e fixed at 3 tenths of H, at 30, 60, 120 degrees: the joint outcome +-, +-, ++; Bob draws -, -, +
+    three settings of Alice's, sizes 1, 3, 3, 1; 1, 1, 1, 1; 3, 1, 1, 3:
+      e fixed at 3 tenths of H: the joint outcome +-, +-, ++; Bob draws -, -, +
       e spread evenly, 6240 pointers: Bob + in 3120, 3120, 3120 of 6240
-      e as the act spreads it, (b)'s 86400 draws: Bob + in 43296 (z^2 0.426), 43063 (z^2 0.868), 43126 (z^2 0.253) of 86400
+      e as the act spreads it, (b)'s 86400 draws: Bob + in 43063 (z^2 0.868), 43028 (z^2 1.369), 43126 (z^2 0.253) of 86400
 (o) the frozen merges' weight: form B's deciding merges, CLICKS-CLOSED section 13's backward pass on
     spread_quantum.py's tree, rebuilt in whole numbers (its probe left the tree at 1b6ca0bf9); a Node-clock's
     parent its first neighbour, +x -x +y -y +z -z, one Mesh nearer the source; a merge decides where two or

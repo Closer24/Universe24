@@ -26,7 +26,7 @@ times H; e = H goes to the last part of nonzero size in that order.
 (k) the run back with a click that writes: five writes, one act for both ways of time on the mirrored state;
 (l) decision 29's dial on its own digits, r div the row's pitch, with the plan empty and in the vacuum;
 (m) the Fano factor of part 0 at 1:1 and 1:3 over windows of 10 to 400 rounds, on three lays, with its odds;
-(n) no signal with a frozen pointer: the polarization and the spin singlet, Bob's marginal at Alice's settings;
+(n) no signal with a frozen pointer: Alice's settings given by whole sizes alone, Bob's share of + a half at each;
 (o) the frozen merges' weight: form B's deciding merges where only light crossed, on seven boards;
 (p) the draw only where a Node-clock's swept area crosses the key, the first text's test;
 (q) the dependence one Mesh and one round apart, the backward pass's step, on the main lay and seed 4;
@@ -1057,38 +1057,31 @@ assert TENTHS_LEFT == 0
 SPREAD = 6240  # pointers spread evenly, each the floor of (2 k + 1) H over 2 SPREAD: a multiple of every total below
 evenly = [carry((2 * k + 1) * H, 2 * SPREAD, 0)[0] for k in range(SPREAD)]
 JOINT = ("++", "+-", "-+", "--")  # Alice's sign, then Bob's
-PELL = (1351, 780)  # 1351^2 - 3 x 780^2 = 1, so 1351 over 1560 stands for cos 30 degrees within 1 in 3 x 10^6
 
 
 def bob_plus(pointer_list, sizes):
     return sum(int(JOINT[drawn(e, H, sizes)][1] == "+") for e in pointer_list)
 
 
-SINGLETS = (
-    ("the polarization singlet, chances (1 - cos^2) over 2 for ++ and --, cos^2 over 2 for +- and -+",
-     ((30, 3, 4), (60, 1, 4)), lambda num, den: [den - num, num, num, den - num], "cos^2"),
-    (f"the spin singlet, chances (1 - cos) over 4 for ++ and --, (1 + cos) over 4 for +- and -+,\n      cos 30"
-     f" degrees taken as {PELL[0]} over {2 * PELL[1]}, where {PELL[0]}^2 - 3 x {PELL[1]}^2 ="
-     f" {PELL[0] ** 2 - 3 * PELL[1] ** 2}", ((30, PELL[0], 2 * PELL[1]), (60, 1, 2), (120, -1, 2)),
-     lambda num, den: [den - num, den + num, den + num, den - num], "cos"))
+# Alice's settings, each given by the whole sizes of the four joint outcomes alone, with no angle and no law that maps
+# a setting to sizes; in every set Bob's own share of + is a half at each setting, so a fair pointer signals nothing
+SETTING_SETS = (
+    ("two settings of Alice's", ((1, 3, 3, 1), (3, 1, 1, 3))),
+    ("three settings of Alice's", ((1, 3, 3, 1), (1, 1, 1, 1), (3, 1, 1, 3))))
 print("(n) no signal with a frozen pointer: the four joint outcomes in the order ++, +-, -+, -- (Alice's sign, then"
       " Bob's),")
-print("    sized by their quantum chances in whole numbers and drawn by the page's rule in that order, with no"
-      " rank;")
-print("    Bob's analyser fixed and Alice's at an angle from it, the angle the only setting the sizes read:")
+print("    sized in whole numbers per setting of Alice's and drawn by the page's rule in that order, with no rank;")
+print("    Bob's analyser fixed, and in every set Bob's own share of + a half at each setting:")
 act_e = [e for e, _ in flat_b]
-for title, angles, sized, trig in SINGLETS:
-    print(f"    {title}:")
+for title, settings in SETTING_SETS:
+    print(f"    {title}, sizes " + "; ".join(", ".join(str(v) for v in sizes) for sizes in settings) + ":")
     frozen_bob, even_bob, act_bob = [], [], []
-    for angle, num, den in angles:
-        sizes = sized(num, den)
-        print(f"      at {angle} degrees, {trig} = {num} over {den}: sizes {', '.join(str(v) for v in sizes)}")
-        frozen_bob.append(JOINT[drawn(E_FROZEN, H, sizes)])
-        even_bob.append(str(bob_plus(evenly, sizes)))
-        count = bob_plus(act_e, sizes)
+    for sizes in settings:
+        frozen_bob.append(JOINT[drawn(E_FROZEN, H, list(sizes))])
+        even_bob.append(str(bob_plus(evenly, list(sizes))))
+        count = bob_plus(act_e, list(sizes))
         act_bob.append(f"{count} (z^2 {shown(z2_fixed(count, N, 1, 1))})")
-    degrees = ", ".join(str(angle) for angle, _, _ in angles)
-    print(f"      e fixed at 3 tenths of H, at {degrees} degrees: the joint outcome {', '.join(frozen_bob)}; Bob draws"
+    print(f"      e fixed at 3 tenths of H: the joint outcome {', '.join(frozen_bob)}; Bob draws"
           f" {', '.join(j[1] for j in frozen_bob)}")
     print(f"      e spread evenly, {SPREAD} pointers: Bob + in {', '.join(even_bob)} of {SPREAD}")
     print(f"      e as the act spreads it, (b)'s {N} draws: Bob + in {', '.join(act_bob)} of {N}")
