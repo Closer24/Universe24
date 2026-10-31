@@ -75,7 +75,7 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
 
 - **Stage 3, the record for the decoder** (`record14.py`): the three clicks in schema 1.4's sides shape, both ends of every edge, k_before the tooth the carry reads and k_after the tooth it leaves, read back on the record alone (partner, quotients summing to 0, teeth summing to the dial less one, q the sum of its sides) with each side's weight by the carry's own law, x = dial q + k_after - k_before. The twins are written nowhere. Records: record14_click_road3_100.txt, record14_k1_tri_100.txt, every refusal at 0.
 - **Stage 4, the pair in whole numbers** (`pairwhole.py`, gate clean): the triangle's own settings (sides 0 and 60 degrees, heights 30 and 90), every weight the triangle's own squares (the height's 3 and the half side's 1 over the side's 4); CHSH from the click counts 2,501 per mille against the hand's own 2,499 and the triangle's 5/2, no signal, the run back, and the first click with no draw beside it (2,499 too: Bell reads the pair's hand), with the order of the landings (lag-1 -1 per mille in the third click, -1,000 in the first).
-- **Stage 4b, the pair world's two ends, road (C)** (`twoends.py`, gate clean; PICTURE.md section 11): the free end, each wing's end laid apart and kept where the two copies run back to one birth, reads at most 2 (the sign rule 1,981 to 2,021 per mille over eight births against the exact 2,000, every hand value giving +2; the member's landing read back from its end tooth 818 to 879 against 849, the run back exact at 50,000 of 50,000); (B) forward reads the same; the timelike case 2,490 to 2,517 against 2,499; no signal (at most 9 per mille between a wing's two far-setting shares); the order at lags 1 and 2 within -9 to 10 per mille. Two seeds' laws that pick nothing: the end at the middle reads the sign rule at 388 of 388; one birth with one death keeps one hand value per setting pair and reads 2 with a signal (A's share 917 against 752). Records: twoends_200000.txt, twoends_200000_runs8.txt.
+- **Stage 4b, the pair world's two ends, road (C)** (`twoends.py`, gate clean; PICTURE.md section 11): the free end, each wing's end laid apart and kept where the two copies run back to one birth, reads at most 2 (the sign rule 1,981 to 2,021 per mille over eight births against the exact 2,000, every hand value giving +2; the member's landing read back from its end tooth 818 to 879 against 849, the run back exact at 50,000 of 50,000); (B) forward reads the same; the timelike case 2,490 to 2,517 against 2,499 (wing A's setting and landing carried on to wing B: refused under the owner's 11:47 and 11:52 laws, and kept only as a control of what the law forbids); no signal (at most 9 per mille between a wing's two far-setting shares); the order at lags 1 and 2 within -9 to 10 per mille. Two seeds' laws that pick nothing: the end at the middle reads the sign rule at 388 of 388; one birth with one death keeps one hand value per setting pair and reads 2 with a signal (A's share 917 against 752). Records: twoends_200000.txt, twoends_200000_runs8.txt.
 - **Stage 4c, Bell from the end** (`bellend.py`, bellend.txt; the owner's words of 09:33 and 10:10 UTC, David's
   meeting's weight). The probe counts every seed, so every reading is an exact fraction: no draw and no stand-in
   stream.
@@ -92,23 +92,27 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
       seed rule chosen so that S comes out above 2 is a pick (the 08:4x rule).
     - OPEN beside it: the weight between the start and the end (the owner's 10:10 question), and a mark in the clicks
       that tells a law of both ends from a law of the start alone.
-  - The law, in (C)'s form (the HALF pair's mathematician, N1; the Boss's 6543232094):
-  - (i) the hand and the fixing end are laid in advance, along or across that end's setting, one count each, and the
-    fixing end's outcome is its reading of the hand;
-  - (ii) struck: the run back of the fixing end to the birth was a click writing the board, which the 11:47 law
-    refuses;
-  - (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap, which is one
-    of the triangle's own squares.
-  - **Read exactly, as identities of the laid measure (checks by construction):**
+  - The law, in (C)'s form and in the HALF pair's words (its mathematician's N1 and physicist's B1; the Boss's
+    6543232094 and 6543239757):
+  - (i) the hand and the fixing wing's setting and outcome are fixed together by the start and the end, the hand along
+    the setting where that outcome is +1 and across it where it is -1, one count each way;
+  - (ii) each wing's copy is laid with them, and no click and no passing carries it;
+  - (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap: at
+    multiples of 30 degrees one of the triangle's own squares, and 147 / 172 at z's lay.
+  - **The weight between the ends** is w_A : w_B, and no click reads it in this law. On the key's odd dial the signal
+    (5 D - 1) / (4 D^2) holds with one end alone, and half of it at 1 : 1.
+  - **DERIVED, as identities of the laid measure (checks by construction):**
     - the pair's curve E = cos 2 theta at every multiple of 30 degrees;
     - CHSH 5/2 at the triangle's settings, at every weight between the ends read (1:0, 0:1, 1:1, 1:2);
     - 2,828 per mille on the plane's own lattice at the turn of z = 13 + 5 w, a test's lay 41 millionths below
       Tsirelson's 2 r2, the counted law's supremum;
     - each wing's +1 share 500 per mille under every far setting: no signal.
   - **The free lay, a reading and not the control,** reads half of each: CHSH 1,250 and 1,414 per mille.
-  - **The ruled control, a local act at the bound:** the hand born free over the same lines, and each wing's click fixed
-    by the hand alone (+1 where its share along the setting is more than half). It reads CHSH 2,000 per mille exactly,
-    at the triangle's settings and at z's. 2 is its largest over all 12^4 setting choices (the mathematician). Its
+  - **The ruled controls at the bound:**
+    - the local act: each wing's copy laid free over the same lines, and each wing's click fixed by it alone (+1 where
+      its share along the setting is more than half);
+    - beside it, stage 4b's member born at the middle, which reads the sign rule at 388 of 388 (twoends.py).
+  - The local act reads CHSH 2,000 per mille exactly, at the triangle's settings and at z's. 2 is its largest over all 12^4 setting choices (the mathematician). Its
     count of shares at exactly half is 0 by the lattice's structure, a check by construction.
   - **No signal rests on the fixing end's equal split,** one count each way. On the key's odd dial a signal of
     (5 D - 1) / (4 D^2) remains, so the board form is OPEN.

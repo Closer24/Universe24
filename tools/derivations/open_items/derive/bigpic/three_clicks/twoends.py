@@ -19,7 +19,9 @@ for a free hand.
        landing (the run back exact) at every kept pair. The choosers and members turn at each kept end: they are apart
        from the copies, so the keeping reads none of them;
   (T)  the timelike case: wing A's setting and landing carried on to wing B, inside its cone, and B's own member
-       landing at Malus's share for the two settings (pairwhole's rule).
+       landing at Malus's share for the two settings (pairwhole's rule). Refused under the owner's 11:47 and 11:52
+       laws (a click writes nothing on the board; the connection comes from the start and the end), and kept only as
+       a control of what the law forbids.
 Each sampled reading is CHSH per mille, each wing's +1 share under the far setting (no signal), and the order of each
 wing's landings (its landing times the landing one and two pairs later, per mille), twice.
 

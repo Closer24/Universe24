@@ -38,7 +38,7 @@
    no signal, A at 0 and B at 90: A's +1 share 500 per mille, B's 500 per mille
    no signal, A at 60 and B at 30: A's +1 share 500 per mille, B's 500 per mille
    no signal, A at 60 and B at 90: A's +1 share 500 per mille, B's 500 per mille
-== the free lay, a reading and not the control: the hand born free over the plane's lines, each wing taking its share
+== the free lay, a reading: each wing's copy laid free over the plane's lines, each wing taking its share
    A at 0, B at 30: E = 559872 / 2239488 = 250 per mille
    A at 0, B at 90: E = -1119744 / 2239488 = -500 per mille
    A at 60, B at 30: E = 559872 / 2239488 = 250 per mille

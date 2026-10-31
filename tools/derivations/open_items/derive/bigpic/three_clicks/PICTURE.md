@@ -151,7 +151,7 @@ The owner chose (C): the settings and the hand meet through the seeds. `twoends.
 **Read, 200,000 pairs forward and 50,000 kept at the free end, over eight births:**
 - (B) forward: the sign rule 1,985 to 2,003; the member's landing 841 to 858.
 - (C0) the free end, each wing's end laid apart and kept where the two copies run back to one birth: the sign rule 1,981 to 2,021; the member's landing, read back from its end tooth, 818 to 879; the run back exact at 50,000 of 50,000 every time; each hand value kept 440 to 572 times.
-- (T) the timelike case, A's landing carried inside the cone to B: 2,490 to 2,517 (local, and no Bell test).
+- (T) the timelike case, A's landing carried inside the cone to B: 2,490 to 2,517 (local, and no Bell test). Refused under the owner's 11:47 and 11:52 laws, and kept only as a control of what the law forbids.
 - No signal: a wing's two shares under the far settings differ by at most 9 per mille over 80 pairs of shares.
 - The order: each wing's landing times its landing one and two pairs later reads -9 to 10 per mille over 160 readings, so the landings carry no order from pair to pair.
 

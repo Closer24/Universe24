@@ -8,24 +8,26 @@ fixing end's setting is a laid measure. Under the owner's law of 11:52 UTC ("The
 for certain, from the start and from the end"), its source is the start and the end fixed together in advance; its
 form, road (C)'s seeds' law, is OPEN.
 
-The pair's one hand is born once at the source and carried, unchanged, to its two wings (the pair world, PICTURE.md).
-Each wing has its own setting, a direction of the triangle's own plane (the plane across the axis (1, 1, 1) of three
-clocks), at 0 or 60 degrees at wing A and 30 or 90 at wing B (twoends.py's settings). The law read here, in (C)'s
-form (the HALF pair's mathematician, N1; the Boss's 6543232094):
-  (i)   the hand and the fixing end are laid in advance, along or across that end's setting (the setting turned a
-        quarter in the plane), one count each, and the fixing end's outcome is its reading of the hand;
-  (ii)  struck: the run back of the fixing end to the birth, a click writing the board, which the 11:47 law refuses;
+Each wing's copy of the pair's hand is laid with the start and the end (the owner's 11:52 law), alike for the end
+law, the free lay and the local act; no click and no passing carries it. Each wing has its own setting, a direction
+of the triangle's own plane (the plane across the axis (1, 1, 1) of three clocks), at 0 or 60 degrees at wing A and 30
+or 90 at wing B (twoends.py's settings). The law read here, in (C)'s
+form, in the HALF pair's words (its mathematician's N1 and physicist's B1; the Boss's 6543232094 and 6543239757):
+  (i)   the hand and the fixing wing's setting and outcome are fixed together by the start and the end, the hand along
+        the setting where that outcome is +1 and across it (the setting turned a quarter in the plane) where it is -1,
+        one count each way;
+  (ii)  each wing's copy is laid with them, and no click and no passing carries it;
   (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap,
-        (h . s)^2 / ((h . h)(s . s)), the triangle's own squares (1, 3/4, 1/4, 0), read from its own seed over the
-        share's whole denominator.
-Which end fixes the hand is weighed w_A : w_B, "by how much the board is in the future or in the past"; the readings
-are taken at w_A : w_B = 1 : 0, 0 : 1, 1 : 1 and 1 : 2.
-Read exactly, per setting pair: the joint counts, the correlation E as a fraction, each wing's +1 share under each far
+        (h . s)^2 / ((h . h)(s . s)), at multiples of 30 degrees the triangle's own squares (1, 3/4, 1/4, 0), and 147 /
+        172 at z's lay, read from its own seed over the share's whole denominator.
+Which end fixes the hand is weighed w_A : w_B, "by how much the board is in the future or in the past"; no click reads
+the weight in this law. The readings are taken at w_A : w_B = 1 : 0, 0 : 1, 1 : 1 and 1 : 2. On the key's odd dial the
+signal (5 D - 1) / (4 D^2) holds with one end alone, and half of it at 1 : 1.
+DERIVED, per setting pair: the joint counts, the correlation E as a fraction, each wing's +1 share under each far
 setting (no signal), CHSH (A0 B30 - A0 B90 + A60 B30 + A60 B90) as a fraction; the pair's curve E against the settings'
-angle at every multiple of 30 degrees; and the free lay, a reading and not the control: the hand born free at the
-source over the plane's six
+angle at every multiple of 30 degrees; and the free lay, a reading: each wing's copy laid free over the plane's six
 lattice directions at 30 degrees, and each wing's click taking its share by (iii), with no end fixing it; and the ruled
-control, a local act at the bound: the hand born free over the same lines, each wing's click fixed by the hand alone,
+control, a local act at the bound: each wing's copy laid free over the same lines, each wing's click fixed by it alone,
 +1 where the hand's share along its setting is more than half and -1 where it is less (a share of exactly half, read
 +1, is counted and named). No signal in the end law rests on the fixing end's equal split, one count each way.
 Checks by construction, named so: the end law's readings (the pair's curve, each wing's share of 1/2, CHSH 5/2, the
@@ -107,8 +109,8 @@ def end_law_on(a, b, w_a, w_b):
 
 
 def free_lay(a_units, b_units):
-    """Joint counts with the hand born free over the plane's six lattice lines (each with both signs) and each wing
-    taking its share by (iii): no end fixes the hand."""
+    """Joint counts with each wing's copy laid free over the plane's six lattice lines (each with both signs) and each
+    wing taking its share by (iii): no end fixes the hand."""
     return free_lay_on(direction(a_units), direction(b_units))
 
 
@@ -132,8 +134,8 @@ def free_lay_on(a, b):
 
 
 def local_act_on(a, b):
-    """Joint counts with the hand born free over the plane's six lattice lines (each with both signs) and each wing's
-    click fixed by the hand alone: +1 where twice the share's numerator passes its denominator or meets it, else -1."""
+    """Joint counts with each wing's copy laid free over the plane's six lattice lines (each with both signs) and each
+    wing's click fixed by it alone: +1 where twice the share's numerator passes its denominator or meets it, else -1."""
     counts = {(1, 1): 0, (1, -1): 0, (-1, 1): 0, (-1, -1): 0}
     ties = 0
     for k in range(12):
@@ -188,12 +190,11 @@ def show(name, rule):
 
 for w_a, w_b in WEIGHTS:
     show(f"the end law, the ends weighed A {w_a} : B {w_b}", lambda ua, ub, w_a=w_a, w_b=w_b: end_law(ua, ub, w_a, w_b))
-show("the free lay, a reading and not the control: the hand born free over the plane's lines, each wing taking its"
-     " share", free_lay)
+show("the free lay, a reading: each wing's copy laid free over the plane's lines, each wing taking its share", free_lay)
 show("the ruled control, a local act at the bound: each wing's click fixed by the hand alone", local_act)
 lattice_ties = sum(local_act_on(direction(ua), direction(ub))[1] for ua, ub in SETS)
 print(f"   the local act's shares of exactly half at the triangle's settings: {lattice_ties}", flush=True)
-Z = (13, 5)  # an Eisenstein integer of the plane, a + b w at 22.4 degrees: its powers turn by the same angle exactly
+Z = (13, 5)  # a test's lay: an Eisenstein integer of the plane at 22.4 degrees, whose powers turn by that angle
 
 
 def eis_mul(p, r):
