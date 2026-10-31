@@ -1,0 +1,123 @@
+# The keeper's audit of main at b1a50bb33 (the owner's first order of 2026-10-31)
+
+The owner's order of 00:1x UTC, relayed in the Boss's 6536381881, in translation: "First confirm that the writer and the current code have no fakes, that numbers exist only in the files we approved, and that there is no cosine, no sines, no formulas; that the files are clean, that there is no fake in the files. The writer needs to check all the things we once found. Enums that hide things. Confirm that you understood."
+
+The Boss's brief: the keeper reads main b1a50bb33 against everything once found (every rule of the gate over the whole tree, the past audits SCRIBE-AUDIT-97E5B3F-1, SCRIBE-GATE-1, SCRIBE-LAW-AUDIT-1 and -2, and the disguised forms the rules read by name only), every hit with its file:line and a verdict; the Boss's hostile auditor reads the same tree with the same list; the two readings are compared item by item and only what both agree goes to the owner.
+
+**The verdict words.** *Fake*: a number, a verdict or a formula that stands in the code under another name, or cannot fail; the owner's own definition (his words of 2026-10-30, 09:0x and 11:0x UTC: "There are no numbers hidden behind enums and such, right, because that is a fake") makes a count that is the labels of a tuple or the length of a list a fake. *Forbidden*: a construction the law forbids by name (a root by search, a circular function by any construction, an expected result typed in). *Named-open*: stands named with its reason, on the owner's list, or waiting on his ruling or on a fix on a branch. *Lawful*: with its reason.
+
+## 1. What was read, and how
+
+The tree is `git archive` of main b1a50bb33 (src 27 files, tools 8, tests 12, tools/derivations 73 Python files, examples 15 JSON files; the five worlds).
+
+1. **The gate, whole tree** (`scribe_scan.py TREE --all`, the keeper's current version with the new note SINEWORD, not diff-based): every rule over src, tests and the engine's tools: ENUM, LENGTH, INDICATOR, PIN, KEYS, DECLARE, DOCLAYER; exit 0, 61 notes and 9 listed refusals (section 3).
+2. **The gate's probe rules over every file under tools/derivations** (`probe_hits` on each of the 73 files): DIVIDE 127, SEARCH 2, SINEWORD 64 occurrences (1 in David's probe, 63 in the keeper's own tools, which name the words they hunt), PROBE 0, SEARCHLOG 0.
+3. **Twelve scans by the syntax tree** (scratch, audit_scan.py; its twelve outputs are the evidence): the probe rules; every numeric literal; every operator; every import; every display and every `len`; every circular word in a string, a comment or a docstring; shapes of a Pell pair, a rational point and a sum of two squares; shapes of a root by search; every assert against integers; every typed table; every key and number in the example files; every typed decimal.
+4. **Reading by eye:** every file of src that the scans touched (the whole of the act, the carry, the loader, the runner, the record schema and the decoder's verdict constructors); the three lay scripts of the example worlds, whole; g3_strengths.py around both searches; the keys of all 15 example files; the six sites that spell a count as a length.
+5. **The past audits as a list:** the old engine's E1 to E19 (SCRIBE-AUDIT-97E5B3F-1) and the gate's rules (SCRIBE-GATE-1) checked name by name against main; the law's own contradictions (SCRIBE-LAW-AUDIT-1 and -2) are the law's and stand outside this tree.
+6. **The keeper's own tools are in the tree and were read as any other file** (scribe_scan.py, its self-test, scribe_code_census.py, scribe_law_check.py, SOFER-ODD-TEETH-1_PROBE.py).
+
+What this audit did **not** do is in section 6.
+
+## 2. The answer, in short
+
+1. **Numbers only in the files we approved.** In src: 27 files, **0 numeric literals beyond 0 and 1** (by the syntax tree, Python 3.14, every file parsed), no arithmetic on literals (no `1 + 1`), no slice by a number beyond 0, 1 and -1, **one division** (Rule3's carry, `src/tensor24/algebra/carry.py:15`, floor division and remainder). In the example files: the three files' own keys only, 0 floats, no result, verdict or expected-value field. **Not clean outside src:** the probes and lays type their own numbers (1,879 literals beyond 0 and 1 in 61 probe files, 233 in 7 other derivation scripts, 667 in the 12 test files, 60 in the 8 engine tools, the ROOM budgets of tools/tests_shape.py among them), and several probes hold a second copy of a number the files hold (C6); and six counts hide behind label tuples (B).
+2. **No cosine, no sine, no formula.** No call, import or series of a circular function anywhere in main; no root in src; **two roots by search in David's probe g3_strengths.py (A1, A2), one printed line that reads the beat by a sine formula with pi and typed results (A3, A4: the SINEWORD hit on main), and one lay that builds the integer cosine at 60-degree steps by a recurrence (A5).**
+3. **No fake in the code.** The act, the loader, the runner and the decoder hold **no typed verdict that cannot fail** (the decoder's verdicts are built from two readings each); **but the owner's own definition of a fake is met by six counts spelt as the length of a label tuple (B1 to B6)**, known and named in the document since 10-30, their fixes written on the Boss's code writer's branch and held until the Node-clock was done; it is in main now.
+4. **Enums that hide things.** The ENUM rule finds none (0 members of an enum counted anywhere). What hides is the length of a tuple: B1 to B6, the whole list; the gate's LENGTH note carries them.
+
+**So the keeper cannot give the owner the confirmation as asked:** the code and the files hold no cosine, no sine call and no hidden verdict, but they hold six small counts behind tuples, two roots by search and a printed sine formula in David's probe (which David has already named for removal), and a recurrence in the well world's lay that the law's own wording reaches. None is in the act.
+
+## 3. The findings, each with file:line and verdict
+
+### A. Forbidden (the law forbids it by name)
+
+| # | Where | What | Verdict and reason |
+| --- | --- | --- | --- |
+| A1 | tools/derivations/open_items/derive/david_open/node/g3_strengths.py:196-205, the gate's hit :200 (`reach`) | the largest c the kept energy allows, found by doubling `hi` and halving the bracket with `carry(lo + hi, 2, 0)` | **Forbidden**: a root of an inequality found by search (decision 41, the owner's "There is no root in the code", and the gate's rule SEARCH, by his "Sine is forbidden." of 17:20 UTC). In main since 9067de20d at 13:42 UTC on 10-30, before the rule; a diff-only gate never read it again. David's own audit (6536738713): "both leave main". |
+| A2 | the same file :423-433, the gate's hit :427 (`edge_swing`) | the least swing where the Hessian passes 4 W, the same search | **Forbidden**, as A1. |
+| A3 | the same file :497-498 | a printed line: "4 sin^2 (omega / 2) = spring / W gives 4,000 omega / pi = 63.7 and 319.2" | **Forbidden** (the SINEWORD hit on main): a circular function and pi in a printed reading, with its results typed (the law: "no expected result typed in"). Text, not a call; no code path reads it. |
+| A4 | the same file :21, :291, :332, :393 ("the mass 63.7"); g3_kinds_and_parts.py:88 ("spring g n gives 63.7, 3 g n 110.3") | beats read off the sine formula by hand and typed into labels | **Forbidden**, as A3 (David's own finding: "a verdict typed into a label ... not computed"). Both files left toys-5's tree at 17:53 on 10-30 (2927b2e63) and stay in main only because toys-5 has not reached main; David: both leave main, not rebuilt for the night. |
+| A5 | tools/derivations/open_items/derive/boss/well_lay/lay.py:49-60 (`mode`), used at :67-77 and by the well world's setting.json (4,106 numbers) | the ring's whole standing mode by the recurrence c(x + 1) = c(x) - c(x - 1) from (2, 1): 2, 1, -1, -2, -1, 1 (period 6), the board's mode f = c(x) + c(y) + c(z) | **Forbidden as the law's line 102 is worded** ("the lay of a state holds no circular function either, by a call, by a series or by any construction that finds one"): this sequence is exactly 2 cos(pi x / 3), the integer cosine at 60-degree steps by a Chebyshev recurrence, the class of E3 in SCRIBE-AUDIT-97E5B3F-1 (a (cos, sin) circle by a Chebyshev recurrence). The gate cannot see it (it reads names). **For the owner's ruling, the same question as M7:** any whole standing mode of a ring is a cosine at some angle (the lay's own comment: the only whole modes are this one, 1, 0, -1, 0, the constant and the alternating one), so the clause as worded forbids every lattice-mode lay, which his question to David may not have meant. The Boss's writer built it openly ("the lattice's own modes", README, The well world) and believed it lawful. |
+
+### B. Fakes by the owner's own definition: a number behind the length of a label tuple
+
+Each is the count of the members of a tuple spelt as `len`, the number being a number of the world or of the format. The document has listed them since 10-30 (docs/ARCHITECTURE.md, the debt line after G5): the code writer's fixes ("read from the structure", 9a461bcdf and 834a4ffb7) were held with the infrastructure candidate until the Node-clock was done.
+
+| # | Where | What | Verdict |
+| --- | --- | --- | --- |
+| B1 | src/tensor24/decoder/records.py:41 and :171 | `len(sides) * len(WAYS)`, WAYS = ("+", "-"): the Spokes' count, a 2 behind a tuple | **Fake, named**; fix written, held. |
+| B2 | src/tensor24/decoder/records.py:214 | `len(lines) < len(("header", "end"))`: a 2 behind a literal tuple | **Fake, named**; fix written, held. |
+| B3 | src/tensor24/decoder/records.py:40 and :306 | `len(ends) != len(ENDS)`, ENDS = ("near", "far"): a 2 behind a tuple | **Fake, named**; fix written, held. |
+| B4 | tools/tensor24_files.py:39 | `len(given) not in (0, len(NAMES))`: the three files' count behind a tuple of names | **Fake, named**; fix written, held. |
+| B5 | src/tensor24/runner/files.py:32 and :84 | `len(v) == len(AXES)`, AXES = ("x", "y", "z"): the engine's dimension, a 3 behind a tuple | **Named-open, for the owner** (the document: a note of the gate "until their reasons are written and the owner has them"): the run already takes the dimension from the piece's own `shape` (`star(len(shape))`, src/tensor24/runner/run.py:181), so the constant serves only the format's check that a piece names exactly three sides. |
+| B6 | src/tensor24/record/schema.py:25 | `MINOR = len(ADDED)`: the schema's minor version, a 3 behind a tuple of changes | **Named-open, for the owner** (the code reader's M11; the owner's "yes, push now" of 00:10 UTC covered the candidate with this named). |
+
+### C. Named-open (stands named; on the owner's list, frozen, or waiting on a ruling)
+
+| # | Where | What | Verdict and reason |
+| --- | --- | --- | --- |
+| C1 | tests/test_the_tensor24_files.py:187, :192, :197; derive/david_open/ladder/l2_ladder_on_the_act.py:37, :38 | the gate's DECLARE, five hits (refusal-test trains; coupling rows) | **Named-open**: on the owner's list (scribe_scan_allowed.json), each with his authority quoted. |
+| C2 | src/tensor24/decoder/bangs.py:1, books.py:1, measure.py:1, records.py:1 | the gate's DOCLAYER, four hits (the four layers in the module's docstring) | **Named-open**: on the owner's list, authority quoted; C5's shadow.py holds the four layers. |
+| C3 | 127 sites in the probes under tools/derivations (floor division and remainder outside Rule3's carry) | the gate's DIVIDE | **Named-open**: frozen by the owner's "Yes." (the frozen list, 45 entries); any new one is refused. |
+| C4 | tests/test_the_tensor24_load.py:73, :76 | the gate's PIN: asserts against a typed set ({1}) and a typed list ([0, 3, 6]) | **Named-open** (note): the test's own chosen numbers, not a verdict the code wrote. |
+| C5 | the three lays: well_lay/lay.py:39-46 (AMPLITUDE 2000, PULSE 500, HALF 4, CENTRE 9, NUM 20, DEN 49, TICKS 128, WINDOW 64, SLOTS (0, 4, 5, 6), PERIOD 6); mesh_lay/lay.py:37-40 (PULSE 500, HALF 4, CENTRE 20, NUM 20, DEN 49, SCAN, TICKS 125); click_lay/lay.py:43-47 (A 40, TICKS 5000, SEVENTH 7, SEARCH 1000) | a lay types its own inputs and writes them into the setting file; SLOTS types the square train's component indices that the same lay derives elsewhere as `1 + len(shape) + i` (well_lay/lay.py:209) | **Named-open**: the numbers end in the setting files (laid states); but the law says a probe's constant standing for a count is a fake, and no rule of the gate counts a lay's typed numbers. For the owner: may a lay type its inputs when they land in the setting file, and the index of a train's component? |
+| C6 | derive/david_open/node/g5_draw.py:40, c1_quantum_per_mode.py:19, c2_held_by_the_clock.py:16 (and g3_strengths.py:103, g3_kinds_and_parts.py:32, which leave with g3); mesh_lay/lay.py:39 (the mesh 200000 typed in SCAN); tests/test_the_tensor24_files.py:12 (a test's fixture) | a second copy of a number the approved files hold: the example's den 15162856759112389 (times its full rate squared in the probes) and the mesh strength | **Named-open**: David's own finding (6536738713 item 1); his mend is that each probe reads the number from the file it names, on toys-5 with each next text and for main with the road; the test's copy is a fixture (Lawful as a test input). |
+| C7 | click_lay/lay.py:45 and :141-143 | the universe's `key` (50811429) chosen by the lay from a run: the nearest odd whole to the seventh (a typed 7) of the giver's largest swing at key 1 | **Named-open**: the key stands in the universe file as CHOSEN (the loader reads it; "Planck's key being NOT_CLOSED 3"); the typed seventh is the lay's rule for it, and no clause of the law says how a chosen strength is picked. For the owner beside C5. |
+| C8 | tools/check.py:121 and its 5.0, 30.0 and 0.0; tools/documents_gates.py:143, :144; derive/G/g0_lane.py:18 and :24 | `round(... float(...))` on the CI's test seconds (check.py); `round(float(v), digits)` in the documents' derived-number gate (documents_gates.py); `time.time()` and a `:.0f` seconds in an old lane driver (g0_lane.py) | **Named-open**: floats and a wall clock in tools, against the law's "no float anywhere ... the tools" by its letter; none feeds the engine, a record or a verdict of the system. For the owner: the CI's timing report and the documents' gate may keep floats, or compare integers. |
+| C9 | g3_strengths.py:190 and :225, :257, :310, :450 | `CAP = 10**60`, a typed runaway guard | **Named-open**, leaves with g3_strengths.py. |
+| C10 | derive/david_open/node/g3_kinds_and_parts.py:248 (`p * p - p * q + q * q == size`) | an exhaustive grid of the hexagonal lattice's points of a given norm, to pick lays | **Named-open** in M7's class (a lay picked by its angle; a grid, not a bracket search); leaves with g3. On toys-5, David's m7: the rebuilt G5 (n) lays settings at 30 and 60 degree sizes, for the owner beside M7. |
+| C11 | examples/tensor24-live, -well, -click, -mesh (12 files) | the four new world folders and their setting files (live 146 numbers, well 4,106, click 83, mesh 370) | **Named-open**: Boss-approved frames covered by the owner's "yes, push now"; the numbers are laid states; the live setting's profile is the quartic bump (H^2 - u^2)^2 at H = 8 and the peak 2^40, and **no script in main writes the live setting** (the README describes it). The owner has not seen a list of the folders by name (the owner's page, item 11). |
+| C12 | tools/tests_shape.py:40-42 and the ROOM table | the tests' budgets (600, 8, 3, ...), each equal to its file's lines | **Named-open**: the owner's M8 word ("yes, push now") covered the ROOM at main. |
+| C13 | tools/derivations/open_items/SOFER-ODD-TEETH-1_PROBE.py (34 sites) and scribe_law_check.py:113, :119 | the keeper's own floor division and remainder: a parity of marker counts | **Named-open** (C3's class, frozen). |
+
+### D. Lawful, with the reason
+
+| # | Where | Reason |
+| --- | --- | --- |
+| D1 | src/tensor24, 27 files | 0 literals beyond 0 and 1; one division, Rule3's carry (carry.py:15); no float, complex, root or circular call; no import of math, cmath, random, time, datetime, fractions, decimal, statistics, scipy; no module-level cache, no `id()` key, no global; the only module-level tables are the file format's own key names (runner/files.py: RETIRED, TRAIN, UNIVERSE, PIECE, SETTING); the decoder reads its record file and holds no state. The old engine's names (sine_rim, largest_below, cosine_count, rim_point, raised_cosine, standard_angle, a Chebyshev recurrence, a quarter table, an integer root) stand **nowhere in src**; src/event_universe left main at 4cb5359ce. |
+| D2 | the gate's INDICATOR, 12 sites: src/tensor24/algebra/carry.py:26; runner/load.py:64, :78, :80, :89, :93, :94, :107, :110, :112; runner/plans.py:92, :96 | each a "whether" or a sign test written as Rule3's carry (`carry(1, x * x + 1, 0)` and kin: the quotient 1 only at 0), the law's one division; the loader's and the plan's decisions, not the act's. An `if` by another name in the letter of the word, branch-free by the carry in the law's way. |
+| D3 | the gate's KEYS, 41 sites | the file format's own literal keys, read by the gate. |
+| D4 | tests, 12 files | 667 literals beyond 0 and 1 are test inputs; seeded generators for property tests (tests/frame.py:164, :194; test_the_tensor24_algebra.py:10, seed 20261028; test_the_tensor24_engine.py:184-210; test_the_tensor24_run.py:85) feed the engine's inputs and enter no act; the word "sine" at tests/test_the_tensor24_files.py:200 and :203 is a refusal test of an unknown key. |
+| D5 | the example files, 15 | the keys of the three files only (version, ticks, gears; shape; den, full_rate, width, chosen: hold, key, mesh, notch, push, tie; trains: name, kinds, part, pinion); 0 floats; no result, verdict or expected field; the setting numbers are laid states; each world's universe holds den 1 or 15162856759112389 and full_rate 1000 or 10000. |
+| D6 | derive/boss/frozen_edge/probe.py:1, term9_edge/probe.py:1 | a docstring that quotes "sin" in the law of the beat; no call. |
+| D7 | the keeper's tools: scribe_code_census.py:13, scribe_scan.py rule tables, scribe_scan_selftest.py (63 SINEWORD occurrences) | they name the words they hunt; no PROBE hit in any of them. |
+| D8 | derive/boss/term11_act/probe.py:40 and ANIMATE-CLICK/click.py:44 (`functools.cache`) | a memo of a pure function in a probe; no effect on a result; the law's "no state" is the engine's. |
+| D9 | the lays' `bump` (well_lay/lay.py:79-87, mesh_lay/lay.py:43-51) | the quartic profile (H^2 - u^2)^2, a polynomial, in whole numbers by Rule3's carry; `inside = int(-HALF < u < HALF)` is a comparison in a lay, a tool. |
+| D10 | derive/boss/g3_frame/probe.py and the other Boss probes | no float, no root, no search, no circular word beyond D6; DIVIDE only where frozen. |
+
+### E. The writer's own work (the owner asks first about "the writer")
+
+| # | Where | State |
+| --- | --- | --- |
+| E1 | the keeper's tools: scribe_scan.py, scribe_scan_selftest.py, scribe_code_census.py, scribe_law_check.py, SOFER-ODD-TEETH-1_PROBE.py | no hit of the rule PROBE (no float, true division, root, circular call or banned import); the floor divisions and remainders are C13; the circular words are D7 (the tools name what they hunt); no typed verdict (the self-test's cases are the tool's own inputs with the counts they must give). **Lawful**, with the limit that the gate reads names and shapes, so A5, C5 and C6 pass it. |
+| E2 | the keeper's documents (the law, the architecture file, the owner's words, the ledger, the owner's page) on scribe-5 | the law keeps its 1,960 lines; the law check shows no new finding; the documents' six gates hold; every entry quotes the owner's words by their stamp. **Lawful.** |
+| E3 | the document's statements of physics (light, the well, gamma, the beat, the books, every measured number) | **Not yet clean by the owner's own ban** (law line 35 item 16, entered at 23:46 UTC): each stands as a board reading, and only part carries the word "board reading", its two click-world readings or "not in the click world"; the words MEASURED stand "on the board" by the rule of the words. The keeper's final pass (03:00 to 04:00 UTC) marks every claim; until then the writer's own lines are not each under the ban. **Named-open, the keeper's own debt.** |
+
+## 4. The past audits against main
+
+- **SCRIBE-AUDIT-97E5B3F-1 (E1 to E19, the old engine):** the old engine is out of main (4cb5359ce); none of its names stands in src; E3's class (a circle by a Chebyshev recurrence) is **the one disguised form that stands in main outside src: A5**.
+- **SCRIBE-GATE-1:** all twelve rules were run over the whole tree (section 1); what they cannot see is in A5 (a recurrence), C5 (a lay's typed inputs) and C6 (copies of a file's value).
+- **SCRIBE-LAW-AUDIT-1 and -2:** about the law's text; 22 lines in 7 checks stand, 1 in the law's core (P13); unchanged by this audit; the law is the keeper's branch, not main.
+- **Not found again on main:** a state held outside a Node-clock; a table in src; a wall clock in a record (the old engine's `time.monotonic_ns`); a pseudo-random draw from fine teeth; a closed form of a result; a typed verdict in the decoder.
+
+## 5. For the comparison with the Boss's auditor
+
+Items to compare, by their names above: **A1 to A5** (forbidden); **B1 to B6** (the six counts behind tuples: the keeper's verdict is fake for B1 to B4, named-open for B5 and B6); **C1 to C13** (named-open), above all **C5, C6, C7 and C8** (typed lay inputs, copies of a file's value, the lay's choice of a universe key, floats in tools), which no rule of the gate counts. The keeper expects a part on **A5** (the Boss's writer built it as lattice mode), on **B5 and B6** (fake or named-open), and on **C8** (a float in a tool).
+
+## 6. What this audit did not reach
+
+- **Not every probe was read line by line.** 73 derivation files hold 2,290 literals beyond 0 and 1 (2,112 in the probes and scripts, 178 in the keeper's four tools); they were classified by the gate's rules and twelve scans, and read by eye only where a scan pointed (g3_strengths.py, g3_kinds_and_parts.py, the three lays). David is reading his other eleven probes in main, with a second hostile reading (his 6536738713); the Boss's auditor reads all.
+- **No probe was rerun** on this audit; the probes' outputs are as their authors and readers left them.
+- **The decoder's verdicts were read for a typed answer and found none (each is built from two readings), but were not mutated by the keeper**; the three hostile code readers ran their mutants on them (the ledger).
+- **The docstrings' formulas in src** (the act's algebra, N = 2 (D_in (a - b) + ...)) were read as the act's own and Lawful; the keeper did not re-derive them.
+- **The law's text and the documents** are outside this tree (the keeper's branch); their own standing contradictions are SCRIBE-LAW-AUDIT-2's.
+- **Main's gate files are older than the keeper's** (no SINEWORD in main; the refusal of circular functions in the keeper's gate): the gate's notes above are the keeper's current gate run on main's tree.
+
+## 7. What mends what (proposals, none enters without the owner's word or the Boss's road)
+
+1. **A1 to A4, C9, C10:** remove g3_strengths.py and g3_kinds_and_parts.py from main (David's own word; their record stays in git at c7b0a4bea), with the README rows that name them; no rebuild tonight.
+2. **B1 to B4:** land the code writer's fixes now that the Node-clock is in main (the counts read from the structure: the record's header names the spokes and the ends; the two lines of a record's frame counted by the decoder's own cut; the files' names counted from the format's own table of files).
+3. **B5, B6, A5, C5, C7, C8** are the owner's: a ruling on whether the dimension and the schema's minor may stand as counts of a tuple named in the format; whether a lattice's own whole mode is a circular function (A5 and M7 are one question: the bar either reaches a lay chosen by its angle or it does not); whether a lay may type its inputs and choose a universe key by a typed rule; whether tools may hold a float.
+4. **C6:** each probe reads the number from the file it names (David's mend), main with the road.
+5. **The gate:** a rule that counts a lay's typed numbers and the copies of a file's value would close C5 and C6 for the future; the keeper can build it on the owner's word (the keeper's recommendation: yes, as a note, not a refusal, until C5 is ruled).
