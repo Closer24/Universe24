@@ -26,7 +26,6 @@
 {"count": 2, "detail": "remainder", "file": "tools/derivations/open_items/derive/MB_verify/v_time_gear.py", "rule": "DIVIDE"},
 {"count": 1, "detail": "floor division", "file": "tools/derivations/open_items/derive/boss/n2/n2_lib.py", "rule": "DIVIDE"},
 {"count": 2, "detail": "remainder", "file": "tools/derivations/open_items/derive/boss/n2/n2_lib.py", "rule": "DIVIDE"},
-{"count": 1, "detail": "remainder", "file": "tools/derivations/open_items/derive/david_open/ladder/l2_ladder_on_the_act.py", "rule": "DIVIDE"},
 {"count": 9, "detail": "floor division", "file": "tools/derivations/open_items/derive/david_open/mass/m3_beat.py", "rule": "DIVIDE"},
 {"count": 2, "detail": "remainder", "file": "tools/derivations/open_items/derive/david_open/mass/m3_beat.py", "rule": "DIVIDE"},
 {"count": 1, "detail": "floor division", "file": "tools/derivations/open_items/derive/david_open/node/t5_trace.py", "rule": "DIVIDE"},
