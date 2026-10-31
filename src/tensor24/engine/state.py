@@ -66,7 +66,7 @@ class Layout(NamedTuple):
     grip: Z  # (rows or 1, Meshes): a gear row's grip on each Mesh, once per Mesh; a train's rows alike from 7b's load
     gearing: Gearing
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, the force, the unit last
-    clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
+    clock: Plan  # every gear's teeth: its rest and what this plan lands on its row from the counts given first, the tick's weight
     stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh
     click: Click  # every train's passing as its pairs' form over a J(b) - b J(a), and its key
     push: Plan  # term 5, the metric's push in the books' form, every slot pushed by -dH / d slot of the act's energy H = W v_in v_out / 2 + SUM_Mesh grip Delta^2 / 2 with W = rest + k0 c00: terms on the push's readings (the six stretches per row, the momenta in and out, the unit last), k0 sigma_in sigma_out of every row on the force's path (the sourcing trains' rows and the square's 0i and jk rows) onto the 00 slot, every row's two Meshes' stretches squared at -1 onto the ii slot of their axis, nothing onto the jk and 0i slots, no strength; the drive's dial senses on the square's 00 and ii rows takes the half

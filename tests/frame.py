@@ -14,7 +14,7 @@ from typing import Any, NamedTuple
 
 import numpy as np
 
-from tensor24.engine.state import Read
+from tensor24.engine.state import Plan, Read
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -230,8 +230,15 @@ def unread():
     return Read(none, none.astype(object), none)
 
 
+def unclocked():
+    """The clocks' plan of no term: every gear's teeth its rest."""
+    none = np.zeros(0, dtype=np.intp)
+    return Plan(np.zeros((1, 0), dtype=np.intp), none.astype(object), none)
+
+
 def dense(read, rows, landed):
-    """A read as the matrix of its whole factors, per row it lands on and row it reads, the factors summed."""
+    """A linear read, a Read or a plan of one-leg terms, as the matrix of its whole factors, per row it lands on and row it reads, the factors summed."""
+    (first,) = read.legs if isinstance(read, Plan) else (read.first,)
     m = np.zeros((landed, rows), dtype=object)
-    np.add.at(m, (read.target, read.first), read.factor)
+    np.add.at(m, (read.target, first), read.factor)
     return m

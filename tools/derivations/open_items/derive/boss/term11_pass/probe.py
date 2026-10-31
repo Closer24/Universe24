@@ -104,8 +104,9 @@ def node(g, key):
     none = np.zeros(0, dtype=np.intp)
     unread = Read(none, none.astype(object), none)
     empty = Plan(np.zeros((3, 0), dtype=np.intp), none.astype(object), none)
+    unclocked = Plan(np.zeros((1, 0), dtype=np.intp), none.astype(object), none)
     ones = np.ones((1, 1), dtype=object)
-    reads = (unread, unread, clicking(key), empty, empty)
+    reads = (unclocked, unread, clicking(key), empty, empty)
     return Layout(
         nb,
         loading.star(3),
@@ -226,7 +227,7 @@ def cube(g):
         grip,
         gearing,
         plan(potential(g)),
-        unread,
+        Plan(np.zeros((1, 0), dtype=np.intp), none.astype(object), none),
         unread,
         clicking(1),
         empty,

@@ -31,7 +31,7 @@ def typed(parts: tuple[Any, ...]) -> state.Layout:
     records = (
         state.Gearing(*gearing),
         contract.pushes(*potential),
-        state.Read(*clock),
+        state.Plan(*clock),
         state.Read(*stretch),
         state.Click(*click),
         state.Plan(*push),

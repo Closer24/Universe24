@@ -237,7 +237,9 @@ def geared(
     trained, every = len(trains), np.arange(rows, dtype=np.intp)
     read, landed = np.repeat(first.astype(np.intp), rows), np.tile(every, trained)
     clock = (
-        read,
+        read[
+            None, :
+        ],  # one leg: the clocks' plan reads one count today, its rows the given-first step's
         np.repeat(trains.square * scale, rows).astype(object) * lit((read - landed).astype(object)),
         landed,
     )
