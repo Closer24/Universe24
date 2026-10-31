@@ -646,8 +646,8 @@ print(f"  the free particle at x0 2,000 over a nearly still vacuum (|k|^2 - n at
       f" energy, permille of the particle's c n x0^2, its mean over rounds 201 to 1,200 and its range: "
       + "; ".join(f"{k} {ppm(tot[k], energy * cnt)} ({ppm(lo[k], energy)} to {ppm(hi[k], energy)})" for k in cum))
 
-# the same free tied train with n off every square, n = 5^10 + 1, the hand still laid at (5^5, 0): no lay aimed at a
-# root (the end mathematician's free_offroot, the eighth text)
+# the same free tied train with n off every square, n = 5^10 + 1, the hand still laid at (5^5, 0), one count below its
+# rest, so the reading does not rest on an exact aim (the end mathematician's free_offroot, the eighth text)
 N1 = N + 1
 W21 = 2000 * N1
 f1terms = hat_terms(HELD, 400, N1) + [(1, (2, 2, r, r)) for r in HELD]
@@ -671,8 +671,8 @@ for nr, rnd in enumerate(f1hist):
             tot[k] += booked
     if nr + 1 > 200:
         cnt += 1
-print("  the same free tied train at n = 5^10 + 1, off every square, the hand still at (5^5, 0), so no lay is aimed at"
-      " a root: the held train's booked energy, permille of c n x0^2, its mean over rounds 201 to 1,200 and its range: "
+print("  the same free tied train at n = 5^10 + 1, off every square, the hand still at (5^5, 0), one count below its"
+      " rest: the held train's booked energy, permille of c n x0^2, its mean over rounds 201 to 1,200 and its range: "
       + "; ".join(f"{k} {ppm(tot[k], energy1 * cnt)} ({ppm(lo[k], energy1)} to {ppm(hi[k], energy1)})" for k in cum))
 
 # a train holding both the tie and a two-leg spring: x (row 2) and y (row 3), each with the tie and its own spring n,
