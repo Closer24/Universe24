@@ -15,6 +15,6 @@
   "tests/test_the_tensor24_files.py::test_the_examples_hold_each_rule_refuses_its_own_broken_file_by_name_and_its_edge_holds": 800,
   "tests/test_the_tensor24_kinds.py::test_the_24_its_kinds_their_square_and_tables_keep_their_laws_and_each_mutant_breaks_its_own": 1400,
   "tests/test_the_tensor24_load.py::test_the_load_lays_every_gear_on_its_trains_rows_or_names_each_refusal_and_raises_none": 400,
-  "tests/test_the_tensor24_run.py::test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and_runs_to_a_record_and_back": 3300
+  "tests/test_the_tensor24_run.py::test_the_lay_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and_runs_to_a_record_and_back": 3300
  }
 }
