@@ -183,9 +183,9 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "line 2 names train 5, which no train card names",
     ),
     "q 0 on a line of no side": (
-        [H, {**BARE, "q": 0}, E],
-        "clicked",
-        "line 2 holds q 0 and no side, a line that carried nothing",
+        [H, {**GIVE, "q": 0, "sides": []}, E],
+        "paired",
+        "line 2 holds a tooth beside its sides, or no sides",
     ),
     "a line at an earlier line's place": (
         [H, GIVE, GIVE, TOOK, E],
