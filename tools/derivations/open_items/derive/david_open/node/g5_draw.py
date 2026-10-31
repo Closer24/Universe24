@@ -26,7 +26,8 @@ times H; e = H goes to the last part of nonzero size in that order.
 (k) the run back with a click that writes: five writes, one act for both ways of time on the mirrored state;
 (l) decision 29's dial on its own digits, r div the row's pitch, with the plan empty and in the vacuum;
 (m) the Fano factor of part 0 at 1:1 and 1:3 over windows of 10 to 400 rounds, on three lays, with its odds;
-(n) no signal with a frozen pointer: Alice's settings given by whole sizes alone, Bob's share of + a half at each;
+(n) no signal with a frozen pointer: Alice's settings given by whole sizes laid by the carry sequence, Bob's share of +
+    a half at each;
 (o) the frozen merges' weight: form B's deciding merges where only light crossed, on seven boards;
 (p) the draw only where a Node-clock's swept area crosses the key, the first text's test;
 (q) the dependence one Mesh and one round apart, the backward pass's step, on the main lay and seed 4;
@@ -1063,8 +1064,7 @@ for line in fano_lines:
     print(line)
 
 # ==== (n)
-E_FROZEN, TENTHS_LEFT = carry(3 * H, 10, 0)  # e at three tenths of H, exactly
-assert TENTHS_LEFT == 0
+FROZEN = [carry((2 * k + 1) * H, 20, 0)[0] for k in range(10)]  # e frozen at the middle of each tenth of H
 SPREAD = 6240  # pointers spread evenly, each the floor of (2 k + 1) H over 2 SPREAD: a multiple of every total below
 evenly = [carry((2 * k + 1) * H, 2 * SPREAD, 0)[0] for k in range(SPREAD)]
 JOINT = ("++", "+-", "-+", "--")  # Alice's sign, then Bob's
@@ -1074,26 +1074,38 @@ def bob_plus(pointer_list, sizes):
     return sum(int(JOINT[drawn(e, H, sizes)][1] == "+") for e in pointer_list)
 
 
-# Alice's settings, each given by the whole sizes of the four joint outcomes alone, with no angle and no law that maps
-# a setting to sizes; in every set Bob's own share of + is a half at each setting, so a fair pointer signals nothing
+# Alice's settings, each given by the whole sizes of the four joint outcomes, (x, y, y, x), x and y laid by the probe's
+# generic carry sequence, so no setting is picked to land at an angle or on a law of angles (law line 102, the owner's
+# answer: a value is lawful by chance or from the families); in every set Bob's own share of + is a half at each
+# setting, so a fair pointer signals nothing
+setting_pick = generator(SEED)
+
+
+def laid_setting():
+    x, y = setting_pick(4) + 5, setting_pick(4) + 5
+    return (x, y, y, x)
+
+
 SETTING_SETS = (
-    ("two settings of Alice's", ((1, 3, 3, 1), (3, 1, 1, 3))),
-    ("three settings of Alice's", ((1, 3, 3, 1), (1, 1, 1, 1), (3, 1, 1, 3))))
+    ("two settings of Alice's", (laid_setting(), laid_setting())),
+    ("three settings of Alice's", (laid_setting(), laid_setting(), laid_setting())))
 print("(n) no signal with a frozen pointer: the four joint outcomes in the order ++, +-, -+, -- (Alice's sign, then"
       " Bob's),")
-print("    sized in whole numbers per setting of Alice's and drawn by the page's rule in that order, with no rank;")
+print("    sized in whole numbers per setting of Alice's, (x, y, y, x) laid by the probe's carry sequence, and drawn by the"
+      " page's rule in that order, with no rank;")
 print("    Bob's analyser fixed, and in every set Bob's own share of + a half at each setting:")
 act_e = [e for e, _ in flat_b]
 for title, settings in SETTING_SETS:
     print(f"    {title}, sizes " + "; ".join(", ".join(str(v) for v in sizes) for sizes in settings) + ":")
-    frozen_bob, even_bob, act_bob = [], [], []
+    even_bob, act_bob = [], []
     for sizes in settings:
-        frozen_bob.append(JOINT[drawn(E_FROZEN, H, list(sizes))])
         even_bob.append(str(bob_plus(evenly, list(sizes))))
         count = bob_plus(act_e, list(sizes))
         act_bob.append(f"{count} (z^2 {shown(z2_fixed(count, N, 1, 1))})")
-    print(f"      e fixed at 3 tenths of H: the joint outcome {', '.join(frozen_bob)}; Bob draws"
-          f" {', '.join(j[1] for j in frozen_bob)}")
+    per_tenth = ["".join(JOINT[drawn(e, H, list(sizes))][1] for sizes in settings) for e in FROZEN]
+    moved = [k for k, bob in enumerate(per_tenth) if len(set(bob)) > 1]
+    print(f"      e frozen at the middle of each tenth of H, Bob's draw at each setting: {', '.join(per_tenth)};"
+          f" the far setting moves Bob's draw at {len(moved)} of 10 frozen values (tenths {moved})")
     print(f"      e spread evenly, {SPREAD} pointers: Bob + in {', '.join(even_bob)} of {SPREAD}")
     print(f"      e as the act spreads it, (b)'s {N} draws: Bob + in {', '.join(act_bob)} of {N}")
 
