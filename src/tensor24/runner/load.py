@@ -156,10 +156,10 @@ class Loaded(NamedTuple):
         Z, Z, Z, Z, Z
     ]  # the whole click's passing: per term a pair of a train's rows through its form onto A1, the entry, its train; the keys
     push: tuple[
-        Z, Z, Z, Z, Z
-    ]  # term 5's plan: per term its three readings (the unit for a leg it lacks), its factor and the slot row it lands on
+        Z, Z, Z
+    ]  # term 5's plan: per term its readings, a row each (the unit for a leg it lacks), its factor and the slot row it lands on
     mesh: tuple[
-        Z, Z, Z, Z, Z
+        Z, Z, Z
     ]  # the gradient vertex: per term its readings on the plan's planes, its factor, its row
 
 

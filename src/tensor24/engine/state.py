@@ -20,11 +20,9 @@ class State(NamedTuple):
 
 
 class Plan(NamedTuple):
-    """J's terms over the kinds' tables, laid at load: per term its three readings, the unit where it reads fewer, its whole factor, its target; the loader lays three: the plan on the value legs (term 9's notch, term 6's held spring and its tie, the hands' tie), the metric's push (term 5) and the Mesh plan (term 6's gradient vertex), a train that lacks a term taking it at the factor 0."""
+    """J's terms over the kinds' tables, laid at load: per term the rows of the readings it multiplies, any number of them, the unit where it reads fewer, its whole factor, its target; the loader lays three: the plan on the value legs (term 9's notch, term 6's held spring and its tie, the hands' tie), the metric's push (term 5) and the Mesh plan (term 6's gradient vertex), a train that lacks a term taking it at the factor 0."""
 
-    first: Z  # (terms,): the row of the readings that enters first
-    second: Z  # (terms,): the row that enters second
-    third: Z  # (terms,): the row that enters third: the unit, the readings' last row, where a term reads two or fewer
+    legs: Z  # (readings, terms): each term's rows of the readings, one row of legs per reading it multiplies; the unit, the readings' last row, where a term reads fewer
     factor: (
         Z  # (terms,): the strength times the table's entry, Python integers, so that no product wraps
     )

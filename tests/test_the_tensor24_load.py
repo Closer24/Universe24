@@ -147,9 +147,9 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_cou
         assert set(laid.clock.factor.tolist()) == {0, k0}  # the clock's read at k0
     strength, pair = 3, [TRAINS[0], {"name": "tied", **PAIR}]  # the board's wave and a tied hand
     held, _ = loaded(pair, chosen={**CHOSEN, "mesh": strength})
-    (one, two, three, factor, target), rows, hand = held.mesh, len(held.state[0]), held.trains[1].first
+    ((one, two, three), factor, target), rows, hand = held.mesh, len(held.state[0]), held.trains[1].first
     terms = sorted((int(f), int(t), int(v)) for f, t, v in zip(one, target, factor, strict=True) if v)
     wanted = [((1 + i) * rows, hand + i, -strength) for i in range(len(SHAPE))]  # M_i by L's difference
     wanted += [((1 + i) * rows + hand + i, 0, strength) for i in range(len(SHAPE))]  # L by M_i's
-    _, _, _, alone, _ = loaded([TRAINS[0]], chosen={**CHOSEN, "mesh": strength})[0].mesh  # wave alone
+    _, alone, _ = loaded([TRAINS[0]], chosen={**CHOSEN, "mesh": strength})[0].mesh  # the wave alone
     assert terms == sorted(wanted) and {*two.tolist(), *three.tolist()} == {-1} and not alone.any()
