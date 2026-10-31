@@ -1,6 +1,6 @@
-"""Clock: every Node-clock is made alike from its star of six Spokes: the 24 turns that leave the star the same, and the five kinds by which a train's gears turn with them.
-Algebra: the 24 are the matrices of three Spokes that Rule3's weight keeps, 24 of 216; A1, A2, E, T1 and T2 are built from their matrices, with no table typed.
-Board: the same turns and kinds at every Node-clock; the four-vector's square (the 00, 0i, ii and jk slots) is the metric family's kinds.
+"""Clock: every Node-clock is made alike from its star of six Spokes: the 24 turns that leave the star the same, the five kinds by which a train's gears turn with them, and the 48 lifts of the 24, whose three half-speed kinds and two trains take the full turn, the lift -1, as -I.
+Algebra: the 24 are the matrices of three Spokes that Rule3's weight keeps, 24 of 216; A1, A2, E, T1 and T2 are built from their matrices, with no table typed; the 48 are the words u w^k z^m on the unit's axis and the Spokes', by Hamilton's product made from the star, each coordinate doubled and a pair p + q r2 of Z[x] / (x^2 - senses), read for equality alone, each product halved by Rule3's carry at senses with remainder 0; E1/2, E5/2 and G3/2 are their characters, and the 8-gear and 24-gear trains signed permutations on the cosets of C6 and on the classes +-h, read by products and carries alone.
+Board: the same turns, kinds and lifts at every Node-clock; the four-vector's square (the 00, 0i, ii and jk slots) is the metric family's kinds; no family couples a half-speed train in this build.
 Clicks: n/a: a kind is no observable; a click names a train, whose kinds say how it turns.
 """
 
@@ -21,12 +21,32 @@ class Kinds(NamedTuple):
     t2: Z  # (candidates, 3, 3): A2 times T1
 
 
+class Halves(NamedTuple):
+    """The three half-speed kinds' characters on each of the 48 in the lifts' (sign, class) layout, each value a pair (p, q), p + q r2."""
+
+    e1_2: Z  # (senses, classes, 2): 2 Re g, the doubled lift's unit part, g's trace as an SU(2) matrix
+    e5_2: Z  # (senses, classes, 2): A2 times E1/2
+    g3_2: Z  # (senses, classes, 2): E1/2 times E's character
+
+
+class Lifts(NamedTuple):
+    """The 48 lifts of the board's 24 in the (sign, class) layout: the classes +-h are (u up to sign, k, m), each held by its word whose u has the + sense."""
+
+    lift: Z  # (senses, classes, d + 1, 2): 2 g on the unit's axis and the Spokes', each coordinate a pair (p, q), p + q r2
+    turn: Z  # (senses, classes, d, d): g's sandwich on the Spokes' axes, one of the 24, the same at both signs
+    whole: Kinds  # the five kinds on the 48 through each lift's turn
+    halves: Halves  # the three half-speed kinds' characters
+    heads: Z  # (cosets, d + 1, 2): one lift in each coset of C6, the words u z^m with u at the + sense, doubled
+    cosets: Z  # (senses, classes, cosets, cosets): the 8-gear train, L(g) on the cosets of C6 in the heads' order
+    classes: Z  # (senses, classes, classes, classes): the 24-gear train, L(g) e_[h] = sign e_[gh], the class and sign of every product
+
+
 def det(m: Z) -> Z:
-    """Each matrix's determinant, the triple product of its three rows."""
-    a, b, c = np.moveaxis(m, 1, 0)
-    a0, a1, a2 = a.T
-    b0, b1, b2 = b.T
-    c0, c1, c2 = c.T
+    """Each matrix's determinant, the triple product of its three rows, on a stack of any shape."""
+    a, b, c = np.einsum("...ij->i...j", m)
+    a0, a1, a2 = np.moveaxis(a, -1, 0)
+    b0, b1, b2 = np.moveaxis(b, -1, 0)
+    c0, c1, c2 = np.moveaxis(c, -1, 0)
     return a0 * (b1 * c2 - b2 * c1) - a1 * (b0 * c2 - b2 * c0) + a2 * (b0 * c1 - b1 * c0)
 
 
@@ -54,13 +74,13 @@ def turns(spokes: Z) -> tuple[Z, Z]:
 
 
 def kinds(matrix: Z) -> Kinds:
-    """The five kinds on each matrix, from the Spokes alone: T1 the turn, A2 and E from the axes it permutes."""
+    """The five kinds on each matrix of a stack of any shape, from the Spokes alone: T1 the turn, A2 and E from the axes it permutes."""
     e1, e2, e3 = axes(matrix.shape[-1])
     permutation = matrix * matrix
-    sign = det(permutation)[:, None, None]
+    sign = det(permutation)[..., None, None]
     plane = np.stack((e1 - e2, e2 - e3), axis=1)
     reading = np.stack((e1, e1 + e2))
-    e = np.einsum("ij,gjk,kl->gil", reading, permutation, plane)
+    e = np.einsum("ij,...jk,kl->...il", reading, permutation, plane)
     return Kinds(0 * sign + 1, sign, e, matrix, sign * matrix)
 
 
@@ -97,3 +117,113 @@ def stacked(held: Kinds) -> Z:
     return np.stack(
         (placed(a1, side), placed(a2, side), placed(e, side), placed(t1, side), placed(t2, side))
     )
+
+
+def pair(p: Z, q: Z) -> Z:
+    """Whole numbers set as pairs (p, q) on a last axis, each standing for p + q r2 in Z[x] / (x^2 - senses)."""
+    return np.stack((p, q), axis=-1)
+
+
+def listed(words: Z) -> Z:
+    """A stack of lifts with its leading axes read as one, each coordinate's pair kept."""
+    p, q = np.moveaxis(words, -1, 0)
+    return pair(p.reshape(-1, p.shape[-1]), q.reshape(-1, q.shape[-1]))
+
+
+def hamilton(d: int) -> Z:
+    """Hamilton's product on the unit's axis and the d Spokes' axes as pure units, made from the star, c[x, y, z] the z part of x y: the unit keeps every axis, a pure axis squares to the unit's opposite, and two pure axes make the third by the triple product of the three, det of the axes as rows."""
+    unit = np.eye(1, d + 1, dtype=object)  # the unit's axis, ahead of the Spokes'
+    pure = np.eye(d, d + 1, 1, dtype=object)  # each Spoke's axis as a pure unit
+    matrix, _ = turns(axes(d))
+    triple = det(matrix).reshape(d, d, d)
+    kept = np.einsum("ux,yz->xyz", unit, axes(d + 1)) + np.einsum("ix,uy,iz->xyz", pure, unit, pure)
+    squared = np.einsum("ix,iy,uz->xyz", pure, pure, unit)  # a pure axis times itself
+    return kept - squared + np.einsum("ix,jy,kz,ijk->xyz", pure, pure, pure, triple)
+
+
+def spread(c: Z, x: Z, y: Z) -> Z:
+    """Hamilton's product of two stacks of whole coordinates."""
+    return np.einsum("xyz,...x,...y->...z", c, x, y)
+
+
+def times(c: Z, left: Z, right: Z, senses: Z) -> Z:
+    """Hamilton's product of two stacks of pairs, not halved: (p + q r2)(r + s r2) = p r + senses q s + (p s + q r) r2 on every two coordinates."""
+    p, q = np.moveaxis(left, -1, 0)
+    r, s = np.moveaxis(right, -1, 0)
+    return pair(spread(c, p, r) + senses * spread(c, q, s), spread(c, p, s) + spread(c, q, r))
+
+
+def product(c: Z, left: Z, right: Z, senses: Z) -> Z:
+    """Hamilton's product of two doubled lifts halved once by Rule3 at senses, itself a doubled lift: (2 g)(2 h) = senses 2 g h, the remainder 0."""
+    whole, _ = carry(times(c, left, right, senses), senses, 0)
+    return whole
+
+
+def conjugate(c: Z, lift: Z) -> Z:
+    """Each lift's conjugate, its inverse: every axis times its own square's unit part, + on the unit's axis and - on each pure one."""
+    unit = np.eye(1, c.shape[-1], dtype=object)
+    return np.einsum("xxz,uz,...xp->...xp", c, unit, lift)
+
+
+def turned(c: Z, lift: Z, senses: Z) -> Z:
+    """Each doubled lift's turn, its sandwich g v g* on every Spoke's axis v as a column: whole, (2 g) v (2 g)* being senses^2 times it, read by one carry with remainder 0 and no r2 part."""
+    d = c.shape[-1] - 1
+    pure = np.eye(d, d + 1, 1, dtype=object)
+    g = lift[..., None, :, :]
+    sandwich = times(c, times(c, g, pair(pure, 0 * pure), senses), conjugate(c, g), senses)
+    rational, _ = np.moveaxis(sandwich, -1, 0)
+    turn, _ = carry(np.einsum("...yx,ix->...iy", rational, pure), senses * senses, 0)
+    return turn
+
+
+def on_classes(c: Z, lift: Z, classes: Z, senses: Z) -> Z:
+    """The 24-gear train, L(g) e_[h] = sign e_[gh] on the classes +-h in their order: g h's class is the one whose turn is its turn, each column's dot x of the two giving (x + x x) div senses, 1 where they agree and 0 elsewhere, multiplied over the columns; the sign is the doubled dot of g h with that class's word, senses^2 times the sign; every carry's remainder 0."""
+    moved = product(c, lift[..., None, :, :], classes, senses)  # g h for every class h
+    agree = np.einsum("...hij,kij->...khj", turned(c, moved, senses), turned(c, classes, senses))
+    same, _ = carry(agree + agree * agree, senses, 0)
+    p, q = np.moveaxis(moved, -1, 0)
+    r, s = np.moveaxis(classes, -1, 0)
+    dot = np.einsum("...hx,kx->...kh", p, r) + senses * np.einsum("...hx,kx->...kh", q, s)
+    sign, _ = carry(np.prod(same, axis=-1) * dot, senses * senses, 0)
+    return sign
+
+
+def on_cosets(c: Z, lift: Z, heads: Z, senses: Z) -> Z:
+    """The 8-gear train, L(g) on the cosets of C6, the powers of w, in the heads' order: a coset read through its vertex, its lifts' turn of (1, ..., 1), g v in the coset of the head u whose vertex agrees with its own on every axis, (1 + x y) div senses multiplied over the axes; the sign is lam of u* g v in C6, +1 on C6's squares and -1 elsewhere on C6: its cube's doubled unit part halved, the squares being the cube roots of 1 and w^3 = -1; every carry's remainder 0."""
+    moved = product(c, lift[..., None, :, :], heads, senses)  # g v for every head v
+    vertex = np.einsum("...ij->...i", turned(c, moved, senses))
+    agree = np.einsum("...vi,ui->...uvi", vertex, np.einsum("uij->ui", turned(c, heads, senses)))
+    same, _ = carry(1 + agree, senses, 0)
+    # u* g v for every two heads
+    h = product(c, conjugate(c, heads)[:, None], moved[..., None, :, :, :], senses)
+    cube = product(c, product(c, h, h, senses), h, senses)
+    real, _ = np.moveaxis(np.einsum("...xp,ux->...p", cube, np.eye(1, c.shape[-1], dtype=object)), -1, 0)
+    lam, _ = carry(real, senses, 0)
+    return np.prod(same, axis=-1) * lam
+
+
+def lifts(spokes: Z) -> Lifts:
+    """The 48 lifts of the board's 24 from the Node-clock's own star, each one word u w^k z^m: u one of the 4D star's 8 units, the unit and the Spokes' axes as pure units at both senses; w = (1 + i + j + k) / 2, the unit plus the three + Spokes halved, k below the axes' count; z = (1 + i) / r2, the unit plus a Spoke over r2, m below senses; two Hamilton products a word, each halved by Rule3 at senses with remainder 0: no search, no closure, no weight."""
+    n, d = spokes.shape
+    senses, _ = carry(n, d, 0)  # the Spokes along one axis, its + and its -
+    c = hamilton(d)
+    unit, first, second, third = axes(d + 1)  # the unit's axis, then the Spokes' axes as pure units
+    zero = 0 * unit
+    one = pair(senses * unit, zero)  # 1, doubled
+    w = pair(unit + first + second + third, zero)  # (1 + i + j + k) / 2, doubled
+    z = pair(zero, unit + first)  # (1 + i) / r2, doubled: r2 + r2 i
+    star = pair(senses * axes(d + 1), 0 * axes(d + 1))  # the 4D star's units at the + sense, doubled
+    powers = np.stack((one, w, product(c, w, w, senses)))  # w^k, k below the axes' count
+    spins = np.stack((one, z))  # z^m, m below senses
+    words = product(c, star[:, None, None], powers[None, :, None], senses)  # u w^k
+    classes = listed(product(c, words, spins[None, None, :], senses))  # u w^k z^m at the + sense
+    lift = np.stack((classes, -classes))  # the - sense of u negates its word
+    turn = turned(c, lift, senses)
+    whole = kinds(turn)
+    _, a2, e, _, _ = whole
+    spin = np.einsum("...xp,x->...p", lift, unit)  # 2 Re g
+    sign, trace = np.einsum("...ii->...", a2)[..., None], np.einsum("...ii->...", e)[..., None]
+    halves = Halves(spin, sign * spin, trace * spin)
+    heads = listed(product(c, star[:, None], spins[None, :], senses))  # u z^m
+    cosets, classed = on_cosets(c, lift, heads, senses), on_classes(c, lift, classes, senses)
+    return Lifts(lift, turn, whole, halves, heads, cosets, classed)
