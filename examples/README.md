@@ -130,7 +130,10 @@ wave, so its square, and the giver's spring 2 hold f |k|^2 with it, swings, a pa
 (NOT_CLOSED 37): a finer notch first, then the held pair laid above it with the hat's own spring. The lay's no, the
 hands' tie at a tenth of the tied spring (12000) at the key 1: no count of the taker moves in 5000 rounds, its push in
 its tooth, at most 1128528000 of the dial's half 1200000000, while the held train's 5187 clicks fall, and no count
-passes the width.
+passes the width. These click readings, and the key's window read at the key 1, are the per-train passing's, measured
+before term 11 was laid on the edges; on the edges (`runner/plans.py`'s `edging`, the edge key 3 times the key) every
+edge's books are 0 at every place by the carry's law, the counts are the board's as before (the click pushes no gear),
+and the lay's click readings wait for the re-lay.
 
 Run it as the one bang: `python -I tools/tensor24_run.py examples/tensor24-click/universe.json
 examples/tensor24-click/piece.json examples/tensor24-click/setting.json <record .jsonl>`: on this lay the run names the
@@ -175,10 +178,11 @@ it stays at most 576 over the 125 rounds and the same mesh leaves the room at ro
 Measured on the act at the chosen spring (`lay.txt`, and the run's ledger and `tools/tensor24_decode.py`): the tied
 hand moves at 122 Node-clocks, where the halves pass, up to 24 counts; the held hand's |k|^2 swings between 0 and 1, as
 its own spring turns it by no quarter turn; the squares of the board's wave summed within 62 permille of the same files
-at mesh 0 (the wave's own dispersion on the ring apart: the vertex takes that much into the tied hand); 7592 click
-lines at the key 1 from round 20, the held train's 4302 and the tied hand's 3290, the books open at 5942 of their 6018
-places (no exact quarter turn: the room is gone, NOT_CLOSED 29; the Mesh leg's wind, the Mesh flux, is counted by no
-click, NOT_CLOSED 4); the run back exact. Run it as the one bang: `python -I
+at mesh 0 (the wave's own dispersion on the ring apart: the vertex takes that much into the tied hand); on term 11's
+edges (the shared tooth for every pair of clocks, NC29b; `runner/plans.py`'s `edging`), 8884 click lines at the edge
+key 3, the key 1 times kappa / two, from round 21 at 4442 places, the held train's 4442 and the tied hand's 4442, every
+edge's books 0 at every place by the carry's law (the Mesh leg's wind, the Mesh flux, is counted by no click,
+NOT_CLOSED 4); the run back exact. Run it as the one bang: `python -I
 tools/tensor24_run.py examples/tensor24-mesh/universe.json examples/tensor24-mesh/piece.json
 examples/tensor24-mesh/setting.json <record .jsonl>` (125 rounds out and back in under a minute; the ledger is about 5
-MB, three lines a Node-clock a round; 7592 click lines; the run back returns the lay bit for bit).
+MB, three lines a Node-clock a round; 8884 click lines; the run back returns the lay bit for bit).

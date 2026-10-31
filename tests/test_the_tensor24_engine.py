@@ -32,9 +32,11 @@ def empty():
     return Plan(none := np.zeros(0, dtype=np.intp), none, none, none.astype(object), none)
 
 
-def unclicked():
-    """The click of no term: one train whose passing is 0, its tooth carried at the key 1 from its birth, 0."""
-    return Click(*(e := empty())[:2], e.factor, e.target, np.ones((1, 1), dtype=object))
+def unclicked(terms=0):
+    """The click of no edge: one train, each of J's terms weighing 0 onto it, its one side's tooth carried at the key 1 from its birth, 0."""
+    return Click(
+        np.zeros((terms, 1), dtype=object), np.zeros(terms, dtype=np.intp), np.ones((1, 1), dtype=object)
+    )
 
 
 def varied(rng, least=1, clocked=False, cubed=False):
@@ -56,7 +58,7 @@ def varied(rng, least=1, clocked=False, cubed=False):
     plan = Plan(*legs[:, valued], factor[valued], target[valued])
     mesh = Plan(*index[:, ~valued], factor[~valued], target[~valued])
     grip = draw(rng, -3, 4, (ROWS, len(SHAPE) * n))
-    reads = (clock, stretch, unclicked(), empty(), mesh)  # the reads, no click, no push
+    reads = (clock, stretch, unclicked(len(plan.factor)), empty(), mesh)  # the reads, no click, no push
     return Layout(nb, frame.spokes(len(SHAPE)), frame.meshes_of(nb), grip, gearing, plan, *reads)
 
 
@@ -124,14 +126,21 @@ def engine():
 
 
 def pair(g, hands=2):
-    """One Node-clock, its own neighbour through every Spoke, and its state: T1 hands of six rows, the spring on every row and the vertex g between matching rows as monomials, the pairs each row with itself; the giver a line hand."""
+    """One Node-clock, its own neighbour through every Spoke, and its state: T1 hands of six rows, the spring on every row and the vertex g between matching rows as monomials, each leg of a vertex weighing 1 onto the other hand and a spring's nothing; the giver a line hand."""
     rows, nb = HAND * hands, np.zeros((6, 1), dtype=np.intp)
     one = np.concatenate((np.arange(rows), np.arange(HAND * (hands > 1))))
     two = np.concatenate((np.arange(rows), np.arange(HAND, HAND + HAND * (hands > 1))))
     factor = np.array([1 << 10] * rows + [g] * (HAND * (hands > 1)), dtype=object)
     plan = contract.pushes(factor, (one, two, 0 * one - 1, 0 * one - 1))
-    train, key = np.repeat(np.arange(hands), HAND), KEY + np.zeros((hands, 1), dtype=object)
-    click = Click(np.arange(rows), np.arange(rows), np.ones(rows, dtype=object), train, key)
+    legs = np.stack((one, two))  # the vertex's legs, row by row: hand 0's, then hand 1's
+    weight = np.zeros((len(plan.factor), hands), dtype=object)
+    vertex = np.arange(rows, len(factor))  # the vertex's monomials, after the springs
+    weight[vertex, hands - 1], weight[len(factor) + vertex, 0] = 1, 1  # each leg onto the other hand
+    train = (
+        np.concatenate((legs // HAND, 0 * legs)).reshape(-1).astype(np.intp)
+    )  # the leg's hand, the unit's 0
+    key = KEY + np.zeros((hands * hands, 1), dtype=object)
+    click = Click(weight, train, key)
     ones, a = np.ones((1, 1), dtype=object), np.zeros((rows, 1), dtype=object)
     gearing, grip = Gearing((1 << 20) * ones, 1, 1, 1), ones.repeat(3, axis=1)
     reads = (frame.unread(), frame.unread(), click, empty(), empty())
@@ -153,7 +162,8 @@ def pushed(path=False):
     clock = Read(0 * rows[1:], k0 + 0 * rows[1:].astype(object), rows[1:])
     plan = contract.pushes(np.full(SQUARE, 1 << 10, dtype=object), (rows, rows, unit, unit))
     layout = alike(frame.board(FRAME))
-    return layout._replace(gearing=layout.gearing._replace(drive=7), plan=plan, clock=clock, push=push)
+    gearing, click = layout.gearing._replace(drive=7), unclicked(len(plan.factor))
+    return layout._replace(gearing=gearing, plan=plan, clock=clock, click=click, push=push)
 
 
 def twisted(layout, s, m, flipped=True):
@@ -218,13 +228,21 @@ def test_the_act_is_its_naive_model_on_the_edge_local_pure_and_turned_by_the_24(
 
 
 def test_the_click_tooth_carries_the_pairs_passing_and_the_mirror_keeps_it():
-    """Yes: a line hand and a hand at rest tied at one Node-clock click with their quotients summing to 0 and their teeth to key - 1 in
-    every round, run back by the same act on the mirrored state with the quotients negated. No: a lone hand with its spring clicks nowhere, its tooth at its birth; and the click tooth flipped under the mirror instead of kept does not return the teeth (FRAMES 4's no, which A1 struck on an identity that fails: -n + (d - 1 - r') is not -q d + (d - 1 - r) in general)."""
+    """Yes: a line hand and a hand at rest tied at one Node-clock click on their edge's two sides with quotients summing to 0 and teeth to
+    key - 1 in every round, the diagonal's never, run back by the same act on the mirrored state with the quotients negated. No: a lone hand with its spring clicks nowhere, its tooth at its birth; and the click tooth flipped under the mirror instead of kept does not return the teeth (FRAMES 4's no, which A1 struck on an identity that fails: -n + (d - 1 - r') is not -q d + (d - 1 - r) in general)."""
     layout, s = pair(1 << 10)
     steps = list(rounds(step.act, layout, s, BEATS))
     states, clicks = [s, *(t for t, _ in steps)], [q for _, q in steps]
-    assert any(q.any() for q in clicks) and all(int(q.sum()) == 0 for q in clicks)
-    assert all(int(t.k.sum()) == KEY - 1 for t in states)
+    hands = layout.click.weight.shape[-1]
+    diagonal = slice(None, None, hands + 1)  # the sides (t, t)
+    given, taken = (
+        np.array([q[side] for q in clicks]) for side in (1, hands)
+    )  # the sides (0, 1) and (1, 0)
+    assert given.any() and frame.same([given], [-taken]) and not any(q[diagonal].any() for q in clicks)
+    assert all(
+        int((t.k[1] + t.k[hands]).sum()) == KEY - 1 and frame.same([t.k[diagonal]], [s.k[diagonal]])
+        for t in states
+    )
     backs = [step.act(layout, step.mirror(layout, s1)) for s1 in states[1:]]
     assert all(frame.same(step.mirror(layout, m), t) for (m, _), t in zip(backs, states, strict=False))
     assert all(frame.same([q], [-r]) for (_, q), r in zip(backs, clicks, strict=True))
@@ -291,10 +309,13 @@ def test_the_run_back_is_exact_where_every_tooth_stands_within_its_edges_dial_an
     assert not frame.same(step.mirror(layout, step.tick(layout, kept)), s)
     tied, u = pair(1 << 10)
     states = [u, *(w for w, _ in rounds(step.act, tied, u, BEATS // 10))]
-    j = lambda x: contract.contract(tied.plan, step.valued(x), x)  # noqa: E731
-    half = lambda w, k: carry(step.passing(tied.click, w.a, w.b, j(w.a), j(w.b)), KEY, k)[1]  # noqa: E731
-    teeth = list(itertools.accumulate(states[:-1], lambda k, w: half(w, k), initial=u.k))  # X(S) alone
-    backs = [half(step.mirror(tied, w), k) for w, k in zip(states[1:], teeth[1:], strict=True)]
+    half = lambda a, a1, k: carry(step.passing(tied.click, tied.plan, a, a, a1), KEY, k)[1]  # noqa: E731
+    steps = list(zip(states, states[1:], strict=False))  # J(a) (a+ - a), the window's forward half alone
+    teeth = list(itertools.accumulate(steps, lambda k, w: half(w[0].a, w[1].a, k), initial=u.k))
+    mirrored = [
+        [step.mirror(tied, w).a for w in pair] for pair in steps
+    ]  # the window run back: a, then a-
+    backs = [half(a, back, k) for (back, a), k in zip(mirrored, teeth[1:], strict=True)]
     assert not all(frame.same([b], [k]) for b, k in zip(backs, teeth[:-1], strict=True))
     # the second and third reviews (227cde2fe, 81521e0f4): a hidden log, a queue and a memo passed the run back
     assert holding(["bijectivity"]) and frame.undone_elsewhere(__name__, "engine", FRAME, 0)

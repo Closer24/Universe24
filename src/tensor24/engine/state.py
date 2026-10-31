@@ -1,6 +1,6 @@
-"""Clock: what a Node-clock holds: each gear's count now and before, the tooth of the edge between them, its drive's fine tooth, and each train's click tooth.
+"""Clock: what a Node-clock holds: each gear's count now and before, the tooth of the edge between them, its drive's fine tooth, and the click tooth of every side of an edge between two trains.
 Algebra: whole-number arrays a, b, r, r_d and k, and the layout's coefficients and plans, read once at load.
-Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan on the value legs, the clocks' read, the click's passing with its key, the metric's push, term 5's plan on the stretches and the momenta, and the plan's terms with a Mesh leg, the gradient vertex, each laid by the loader.
+Board: the state of every Node-clock at one round, and the layout every round reads: the neighbours, the Meshes, the grips, J's plan on the value legs, the clocks' read, term 11 on the edges with the edge key, the metric's push, term 5's plan on the stretches and the momenta, and the plan's terms with a Mesh leg, the gradient vertex, each laid by the loader.
 Clicks: n/a: these hold the board, not its shadow.
 """
 
@@ -10,13 +10,13 @@ from tensor24.algebra.carry import Z
 
 
 class State(NamedTuple):
-    """Per gear its now and before slots, the tooth of the edge between them and its drive's fine tooth; per train its click tooth."""
+    """Per gear its now and before slots, the tooth of the edge between them and its drive's fine tooth; per side of every edge between two trains its click tooth."""
 
     a: Z
     b: Z
     r: Z  # the tooth of the edge between the two slots, within [-D, D), D = W(b) + W(a): what the momentum's split leaves
     rd: Z  # the drive's fine tooth, within [0, T_d): the remainder its carry keeps, as r is the gear's
-    k: Z  # (trains, sites): the click tooth, within [0, key): the remainder the train's click keeps, born at (key - 1) div 2
+    k: Z  # (trains x trains, sites): every edge side's click tooth, within [0, key): the remainder its carry keeps, born at (key - 1) div 2
 
 
 class Plan(NamedTuple):
@@ -40,13 +40,13 @@ class Read(NamedTuple):
 
 
 class Click(NamedTuple):
-    """The whole click's passing, laid at load: per term a pair of a train's rows through its kinds' table with itself onto A1 (the loader's pairs, each through the train's own form), the form's entry, the train the passing moves into; and every train's key, CHOSEN in the universe file."""
+    """Term 11 on the edges, laid at load (runner/plans.py's edging): per term of J's plan on the value legs, in the plan's order, its weight on every train, 0 on a train its monomial has no value leg in, and the train of the leg it pushes; and every edge side's key, the edge key: the universe file's CHOSEN key times kappa / two, the same for every side."""
 
-    first: Z  # (terms,): the pair's first row, whose count the term reads
-    second: Z  # (terms,): the pair's second row, whose push the term reads
-    factor: Z  # (terms,): the form's entry, Python integers
-    target: Z  # (terms,): the train whose passing the term moves
-    key: Z  # (trains, 1): the key each train's click tooth carries at, at least 1
+    weight: Z  # (terms, trains): the leg's share of its monomial's flow, kappa (L - l) / L, onto each other train of the monomial
+    train: Z  # (terms,): the train of the leg the term pushes, the side's first train
+    key: (
+        Z  # (trains x trains, 1): the key each side (t, u), at t trains + u, carries its passing at, odd
+    )
 
 
 class Gearing(NamedTuple):
@@ -70,6 +70,6 @@ class Layout(NamedTuple):
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, the force, the unit last
     clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
     stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh
-    click: Click  # every train's passing as its pairs' form over a J(b) - b J(a), and its key
+    click: Click  # term 11 on the edges: each term of J's plan weighed onto the other trains of its monomial, and the edge key
     push: Plan  # term 5, the metric's push in the books' form, every slot pushed by -dH / d slot of the act's energy H = W v_in v_out / 2 + SUM_Mesh grip Delta^2 / 2 with W = rest + k0 c00: terms on the push's readings (the six stretches per row, the momenta in and out, the unit last), k0 sigma_in sigma_out of every row on the force's path (the sourcing trains' rows and the square's 0i and jk rows) onto the 00 slot, every row's two Meshes' stretches squared at -1 onto the ii slot of their axis, nothing onto the jk and 0i slots, no strength; the drive's dial senses on the square's 00 and ii rows takes the half
     mesh: Plan  # the plan's terms with a Mesh leg, term 6's gradient vertex V = mesh x SUM_i C_ji M_j D_i L between an A1 row L of the board's wave (a train neither the square nor the held hand) and a tied hand's rows M, on the same readings as the plan, laid by the loader as its two pushes (L's difference onto M's row, M's difference onto L's row; the factor 0 at mesh 0 or where no channel stands), and the drive alone reads them, the passing never

@@ -1,7 +1,7 @@
 """Clock: the run from the three files to the record: every Node-clock steps every round, then all the rounds run back.
 Algebra: the act iterated; before each round the promise, every tooth within its edge's dial of both slots' teeth, the wave's window, the Spokes' grips within the teeth per sense, and the width, every count of both slots within the universe's width, are read; the start returns bit for bit.
 Board: the files checked and loaded, the rounds run, the rewind checked, the record and its ledger written.
-Clicks: it writes what the act gives: the record's header (schema 1.3: each kind's characters on the 24, each train's key and square flag), its click lines and its end, and the ledger beside them; a click line per train and Node-clock whose click tooth carried in a round, q the carry's quotient signed (a give below 0, a take above it) and the tooth before and after; the forward run's lines alone (the run back negates the quotients and writes none).
+Clicks: it writes what the act gives: the record's header (schema 1.4: each kind's characters on the 24, each train's key, the edge key, and its square flag), its click lines and its end, and the ledger beside them; a click line per train and Node-clock with an edge side that carried in a round, q the sum of its sides' quotients signed (a give below 0, a take above it), and each side that carried: the other train, the side's q and its tooth before and after; the forward run's lines alone (the run back negates the quotients and writes none).
 """
 
 import dataclasses
@@ -111,23 +111,28 @@ def counts(round_: int, s: Any, trains: Any) -> list[dict[str, Any]]:
     ]
 
 
-def clicked(round_: int, before: Any, after: Any, clicks: Any) -> list[dict[str, Any]]:
-    """One round's Click lines of the record, in the schema's order (site, then train): per Node-clock and train whose click tooth carried, schema.Click's fields: the line's place, its q, the carry's quotient signed, and the click tooth before the round and after it."""
-    return [
-        {
-            "kind": "click",
-            **dataclasses.asdict(
-                schema.Click(
-                    round_,
-                    int(site),
-                    int(train),
-                    int(clicks[train, site]),
-                    (int(before.k[train, site]), int(after.k[train, site])),
-                )
-            ),
-        }
-        for site, train in np.argwhere(clicks.T)
-    ]
+def clicked(round_: int, before: Any, after: Any, clicks: Any, trains: int) -> list[dict[str, Any]]:
+    """One round's Click lines of the record, in the schema's order (site, then train): per Node-clock and train with an edge side that carried, schema.Click's fields but the 1.3 tooth: the line's place, its q, the sum of its sides', and each side that carried in the other train's order, [u, q_tu, its tooth before the round, its tooth after it], one tooth per side as term 11's edge passing is a scalar of the 24; a line whose sides cancel holds q 0, as every side that carried stands beside its other side."""
+    sides = clicks.reshape(trains, trains, -1)
+    held, kept = (s.k.reshape(trains, trains, -1) for s in (before, after))
+    lines = []
+    for site, train in np.argwhere((sides != 0).any(axis=1).T):
+        carried = [
+            [int(u), int(sides[train, u, site]), int(held[train, u, site]), int(kept[train, u, site])]
+            for u in np.flatnonzero(sides[train, :, site] != 0)
+        ]
+        q = sum(side[1] for side in carried)
+        lines.append(
+            {
+                "kind": "click",
+                "round": round_,
+                "site": int(site),
+                "train": int(train),
+                "q": q,
+                "sides": carried,
+            }
+        )
+    return lines
 
 
 def characters(kinds: Any) -> list[list[int]]:
@@ -145,7 +150,7 @@ def header(
     loaded: Any,
     layout: Any,
 ) -> dict[str, Any]:
-    """The record's first line: the files verbatim with their digests, the board, the kinds with their characters, the trains with their windings (a train's winding the drive's dial at its first row, so the square's card reads its 00 row's, senses, while its 0i and jk rows run at 1), keys and square flags."""
+    """The record's first line: the files verbatim with their digests, the board, the kinds with their characters, the trains with their windings (a train's winding the drive's dial at its first row, so the square's card reads its 00 row's, senses, while its 0i and jk rows run at 1), the edge key and square flags."""
     labels = [train["name"] for train in universe["trains"]]
     traits = zip(kinds._fields, kinds, characters(kinds), strict=True)
     return {
@@ -169,7 +174,7 @@ def header(
                 "kinds": list(train.kinds),
                 "part": train.part,
                 "winding": layout.gearing.drive[train.first, 0],
-                "key": layout.click.key[at, 0],
+                "key": layout.click.key.reshape(len(labels), -1)[at, 0],  # the edge key, every side's
                 "square": train.square,
             }
             for at, (label, train) in enumerate(
@@ -208,7 +213,7 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     with ledger.open("w", encoding="utf-8") as counted:
         for at, (end, clicks) in enumerate(rounds(engine.act, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))
-            events += clicked(at, read_, end, clicks)
+            events += clicked(at, read_, end, clicks, len(loaded.trains))
             read_ = end
             # the promises of the round that reads this state, read from outside: every kept tooth within its
             # teeth, the grips within the window, and every count within the width; the end state, which no round

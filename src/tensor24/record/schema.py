@@ -1,7 +1,7 @@
 """Clock: the boundary between the board and the clicks: only the readers read it.
-Algebra: schema 1.3: JSON Lines of whole numbers of any width and labels, each line's kind its record's name in lower case; its minor, MINOR = len(ADDED), is the count of its changes spelt as a length, which ARCHITECTURE section 6 left to be read from the schema with 1.3: not yet read from the schema's structure, it is named here, open for the owner (the first hostile code reader's M11).
-Board: the header (the files and their digests, the sides, each kind's characters on the 24, each train's kinds, part, winding, key and square flag), the click lines the run writes (a round, a Node-clock, a train, its q and its click tooth before and after), the end (the rounds, the digest, the run back exact or not) and the ledger's Count lines beside them.
-Clicks: its click lines name a train, a Node-clock and a round and carry q, the click tooth's carry signed, a give below 0 and a take above it; nothing is computed in it.
+Algebra: schema 1.4: JSON Lines of whole numbers of any width and labels, each line's kind its record's name in lower case; its minor, MINOR = len(ADDED), is the count of its changes spelt as a length, which ARCHITECTURE section 6 left to be read from the schema with 1.3: not yet read from the schema's structure, it is named here, open for the owner (the first hostile code reader's M11).
+Board: the header (the files and their digests, the sides, each kind's characters on the 24, each train's kinds, part, winding, key and square flag), the click lines the run writes (a round, a Node-clock, a train, its q and each edge side that carried, the other train, the side's q and its tooth before and after), the end (the rounds, the digest, the run back exact or not) and the ledger's Count lines beside them.
+Clicks: its click lines name a train, a Node-clock and a round and carry q, the sum of its sides' carries signed, a give below 0 and a take above it; nothing is computed in it.
 """
 
 from dataclasses import dataclass
@@ -21,6 +21,9 @@ ADDED = (
     " (a give below 0, a take above it) and its tooth before and after; the train card's key and square flag and the"
     " kind card's characters, its trace on each of the 24 turns; the couplings, the classes, the draw and the kind"
     " card's T T retired, no run writing them",
+    "the click line's sides, one per edge side of its train that carried at the round and Node-clock, in the other train's"
+    " order: that train u, the side's q and its tooth before and after, the line's q the sum of its sides'; the train"
+    " card's key the edge key, every side's; the line's tooth retired, read on 1.3 records alone",
 )
 MINOR = len(ADDED)
 
@@ -77,12 +80,13 @@ class Header:
 
 @dataclass(frozen=True)
 class Click:
-    """A click line: at a round and a Node-clock, a train's click tooth carried q whole keys, a give below 0 and a take above it, its tooth before and after."""
+    """A click line: at a round and a Node-clock, a train's click carried q whole keys, a give below 0 and a take above it; a 1.4 line holds sides and no tooth: each edge side that carried, [u, q_tu, k_before, k_after] in u's order, q the sum of their q, k the train's own tooth on the edge with train u, within [0, K) at the card's edge key K; a 1.3 line holds tooth and no sides, its one tooth before and after."""
 
     round: int
     site: int
     train: int
     q: int
+    sides: tuple[tuple[int, int, int, int], ...]
     tooth: tuple[int, int]
 
 

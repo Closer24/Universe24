@@ -1,5 +1,5 @@
-"""Clock: the plans every Node-clock reads, laid once at the load from the star, the kinds' tables and the universe file's CHOSEN strengths: the metric's push (the books' form, no strength: push 1 or 0), the volume's notch, the held hand's spring and tie, the hands' tie, the gradient vertex through the Mesh and each train's passing.
-Algebra: every plan is whole factors on rows of the readings: term 5's push in the books' form, the momenta in and out of every row the push does not land on onto the 00 slot and every row's six stretches squared onto the ii slots of their axes, the monomials of J's potential (term 9's notch, term 6's own spring (spring; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), the gradient vertex's two pushes of mesh M_j D_i L, L's difference onto a tied row and the tied row's difference onto L, through the table of its kind with the axes' kind onto A1, and term 11's pairs of each train's rows through its own form onto A1, the table's entry the factor.
+"""Clock: the plans every Node-clock reads, laid once at the load from the star, the kinds' tables and the universe file's CHOSEN strengths: the metric's push (the books' form, no strength: push 1 or 0), the volume's notch, the held hand's spring and tie, the hands' tie, the gradient vertex through the Mesh and the passing on every edge between two trains.
+Algebra: every plan is whole factors on rows of the readings: term 5's push in the books' form, the momenta in and out of every row the push does not land on onto the 00 slot and every row's six stretches squared onto the ii slots of their axes, the monomials of J's potential (term 9's notch, term 6's own spring (spring; rho, rho, 1, 1), tie (hold f C_yz; x_y, x_z, k_rho, k_rho) and hands' tie (tie C_yz; x_y, y_z, 1, 1) through K x K -> A1), the gradient vertex's two pushes of mesh M_j D_i L, L's difference onto a tied row and the tied row's difference onto L, through the table of its kind with the axes' kind onto A1, the table's entry the factor, and term 11 on the edges: each term of J's plan weighed onto every other train of its monomial, David's split as pair flows.
 Board: one plan for every Node-clock alike; a train that lacks a term takes it at the factor 0, its places wrapped, so no plan names a train: which train is held, tied or the board's wave is read off its character by the load.
 Clicks: the tied hand's beat, 2 hold f |k|^2 / W at the Node-clock, is what the clicks read as its mass, one beat per tied train (the frame's price, FRAMES 6); a plan reaches the clicks only through the act.
 """
@@ -32,10 +32,49 @@ def pairs_of(trains: Z, c: Z, traces: Z) -> tuple[Z, Z, Z, Z]:
     return one.astype(np.intp), two.astype(np.intp), form[kind[entry], x, i][each], train[each]
 
 
-def passing(trains: Z, c: Z, traces: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
-    """Term 11, every train's passing as the act reads it, with its key: each pair of the train's rows through its kinds' table with itself onto A1 (pairs_of), the entry the factor, so that the train's form over a J(b) - b J(a), the dot product for a vector hand and 1 for a scalar, is summed into the train; the key the universe file's one CHOSEN odd whole, the same for every train (an even key the files' format refuses by name); the square takes the factor 0 by its flag, as the push does, since its rows are the slots' basis and no kind's own, so pairs_of's blocks would give it a form the 24 keep at 8 turns of 24 (the first hostile code reader's M1)."""
-    one, two, entry, train = pairs_of(trains, c, traces)
-    return one, two, entry * trains.sourcing[train], train, key
+def edging(trains: Z, potential: tuple[Z, tuple[Z, Z, Z, Z]], key: Z, senses: Z) -> tuple[Z, Z, Z]:
+    """Term 11 on the edges, every passing between two trains as the act reads it, with the edge key (the owner's shared tooth for every pair of clocks, NC29b on David's split): per term of J's plan, as contract.pushes lays them (leg by leg, each leg's monomials in their order), its weight on every train and the train of the leg it pushes; and every side's key. A monomial's legs: each position one leg, a held train's positions one leg together, its excursion |k|^2 (the held spring's rest, n = 0); a leg's weight kappa (L - l) / L, L the monomial's legs and l its own train's, so a two-leg monomial weighs kappa / 2 on both legs and a tie kappa 2 / 3 on its held legs and kappa / 3 on its tied pair, David's split in the work form (NC29b's 3, 4 and 2 at kappa 6); its weight on a train u is that times 1 where the monomial has a value leg in u (one scatter of its legs' trains, lit), 0 elsewhere, so the side (t, u) passes SUM over the monomials on both trains of SUM_i ([leg i in t] - [leg i in u]) w_i W_i and the side (u, t) its negative, the diagonal, an own monomial and a pair of trains no monomial joins weighing 0; a monomial with value legs in three trains lies on the triangle's three edges, each edge passing the difference of its two trains' weighed work, the third train's legs weighing 0 there (no plan lays one; the mathematician's count on every world, NC29b's minor 1). kappa: the product of two and of every legs count a live monomial on an edge holds, each once, so that every weight is whole (6 on every world laid: the hands' tie's two legs and the tie's three); every side's key the universe file's one CHOSEN key times kappa / two, 3 there (David's OPEN, a change of a declared number, NC29b), the same for every side, odd as the key is, so a side's two teeth born at (key - 1) div senses sum to key - 1 (load.load) and stay so by the carry's law; no count typed: two the senses of an axis, the positions the legs' own."""
+    factor, legs = potential
+    stacked = np.stack(legs)  # (positions, monomials): each monomial's legs, the unit -1
+    positions, monomials = stacked.shape
+    row, of, _, _, _ = rows_of(trains)
+    count = len(trains)
+    trained = np.full(
+        trains.size.sum() + 1, count, dtype=np.intp
+    )  # each row's train, the unit's last, past every train
+    trained[row] = of
+    train = trained[stacked]  # each leg's train
+    value = lit(train - count)  # 1 on a value leg, 0 on the unit's
+    incidence = np.full((monomials, count + 1), 0, dtype=object)
+    np.add.at(incidence, (np.arange(monomials, dtype=np.intp)[None, :] + 0 * train, train), 1)
+    positioned = incidence[:, :count]  # each monomial's positions on each train
+    present = lit(positioned)
+    own = positioned - trains.held[None, :] * (positioned - present)  # its legs on each train
+    total = own.sum(axis=1)
+    mine = np.concatenate((own, 0 * own[:, :1]), axis=1)[
+        np.arange(monomials, dtype=np.intp)[None, :], train
+    ]
+    owners = present.sum(axis=1)
+    edged = lit(factor) * lit(
+        owners * owners - owners
+    )  # a live monomial with value legs in two trains or more
+    counts = np.arange(
+        1, positions + 1, dtype=object
+    )  # every count of legs a monomial of these positions holds
+    among = (edged[:, None] * (1 - lit(total[:, None] - counts[None, :]))).sum(
+        axis=0
+    )  # edge monomials per count
+    kappa = np.prod(1 + lit(among + 1 - lit(counts - senses)) * (counts - 1))
+    share, _ = carry(
+        kappa, total + 1 - lit(total), 0
+    )  # kappa over the monomial's legs; a constant monomial reads 1
+    weight = (share * edged)[None, :] * (total[None, :] - mine) * value
+    scale, _ = carry(kappa, senses, 0)
+    return (
+        (weight[:, :, None] * present[None, :, :]).reshape(positions * monomials, count),
+        (train * value).reshape(-1),
+        np.full((count * count, 1), key * scale, dtype=object),
+    )
 
 
 def rows_of(trains: Z) -> tuple[Z, Z, Z, Z, Z]:
