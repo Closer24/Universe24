@@ -1,6 +1,6 @@
 # G2, the static field on the slot form: gamma = 1 from Postulate 6, and beta = 2 - gamma for test bodies
 
-David, 2026-10-31 (the eleventh text, 03:0x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
+David, 2026-10-31 (the twelfth text, 03:1x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
 close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's terms
 2, 3, 5 and 13 and for Postulate 6. It reads the act as built on main (0df0e8385), N2's source for term 5 (the Boss's
 draft, derive/boss/n2), and term 9's and term 13's texts at toys-5 55cc9b567 (their earlier readings cited by their own
@@ -171,8 +171,8 @@ conditions of section 2.
   - The slow clock's excess is resolved: a hundredth of a count moves its depth by 251 x 10^-6, below its 628, and one
     count fewer at rest and one more at 4 rest still read 3,000,251 (probe (a2)).
   - **A clock-dependent fractional rate difference between depths.** At first order in the depth N^2 = 1 - u (1 + s /
-    (12 rest)), so a clock's fractional rate difference between depths is larger than the zero beat's by s / (12 rest),
-    near omega^2 / 12 for a clock beating omega radians a round.
+    (12 rest)), so a clock's fractional rate difference between depths is larger in size than the zero beat's, by the
+    fraction s / (12 rest), near omega^2 / 12 for a clock beating omega radians a round.
     - Two clocks of springs s1 and s2 at one place part by (s1 - s2) / (12 rest) of the fractional rate difference
       between depths: the board's two clocks disagree about the well, named with its size.
     - Its size at first order is 1/4800 of the fractional rate difference between depths for the probe's slow clock and
@@ -542,10 +542,10 @@ keeps only its board side, a clock fact.
 - **Clocks.** On the board the square of a clock's rate goes as rest / W, so two clocks at W_A and W_B part by
   delta nu / nu = -(1 / 2) delta W / W (a rate read as 1 / W would double it). In the clicks a clock is compared with
   another through a resonance or a count of beats, and that reading is owed (17).
-  - **Departure, named:** the fractional rate difference between depths depends on the clock's beat, larger by s / (12
-    rest) at first order in the depth (2): the board's two clocks disagree about the well, by 1/4800 of the fractional
-    rate difference between depths for the probe's slow clock and 1/48 for its fast one, and near omega^2 / 12 for a
-    clock beating omega radians a round.
+  - **Departure, named:** the fractional rate difference between depths depends on the clock's beat, larger in size, by
+    the fraction s / (12 rest), at first order in the depth (2): the board's two clocks disagree about the well, by
+    1/4800 of the fractional rate difference between depths for the probe's slow clock and 1/48 for its fast one, and
+    near omega^2 / 12 for a clock beating omega radians a round.
   - OPEN (the first physicist's item 7): N^2 = rest / W is shown for a spring clock. A clock bound through gradient
     readings (term 1) reads the same depth only if those readings scale with the depth as the pull does; otherwise it
     departs at first order in Phi: the board's two clocks disagree about the well, and gears so bound fall apart from
@@ -1271,6 +1271,12 @@ relativity's" read on the ratio gives 19/10, above 1, which no deeper clock read
 size is meant and where only the dependence is named. A wording of mine, from his ninth-text minor; section 18's record
 keeps the tenth text's words.
 
-**How the eleventh text checked itself:** no probe moved; by hand at u = 1/10, gamma = 1: N = 19/20, the fractional
-difference 1/20, 1/4800 of it 1/96,000, and (1 + 3 gamma) / 2 of general relativity's 1/20 is 1/10, a ratio of 9/10;
-the text searched again every "rate ratio" before section 9: none is left.
+**How the eleventh text checked itself:** no probe moved; by hand at first order, u = 1/10, gamma = 1: N = 19/20, the
+fractional difference 1/20, 1/4800 of it 1/96,000, and (1 + 3 gamma) / 2 of general relativity's 1/20 is 1/10, a ratio
+of 9/10; the text searched again every "rate ratio" before section 9: none is left.
+
+**The eleventh text's verdict** (its mathematician, on 1facd5105): PASSED, B4 folded in all 14 places, no old term left
+before section 9 with lines joined. His three wordings folded in the twelfth text: section 19's case "at first order";
+"larger in size than the zero beat's, by the fraction s / (12 rest)", the difference being negative (2; 4); at the
+beat's share of the difference nearby lines give the exact size, so nothing moves there. The physicist of this pair
+passed the fifth text; both have now passed, and a new pair reads at the end.

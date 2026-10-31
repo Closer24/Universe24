@@ -1,6 +1,6 @@
 # G3, the coupling family: the held hand still at the bottom of a hat, and the ties it holds
 
-David, 2026-10-31 (the thirteenth text, 02:5x UTC), on the Boss's word of 19:1x UTC (#2187 6531422713, item 3): "your
+David, 2026-10-31 (the fourteenth text, 03:1x UTC), on the Boss's word of 19:1x UTC (#2187 6531422713, item 3): "your
 hat is that quartic", the quartic the night's frame's hostile mathematician names as the direction for its item 3, "a
 whole-number quartic on k with the unit". It keeps what the Boss decided for the night's frame (6531004963, decision 2;
 NOT_CLOSED 10): the held hand is the train of character (A1, A2) at part 1, told from the board's wave train, (A1, A1),
@@ -10,30 +10,33 @@ a hat on the hand's norm. It takes Big Pic's quaternion lead (6530683608, item 1
 needs; every derivation to stand with a hostile mathematician and a hostile physicist) and his words of the night:
 generic laws for every family, "and also with this quaternion"; no root; a frame where the derivation is not closed,
 approved by the Boss after the fact. It reads the act the night builds, node-live at 939fa65a7 (the edge's split), in
-the law's four layers (Postulate 4, item (10)). - **The readers.** The eighth text (toys-5 7791470d1) went to the pair
-that read the sixth and seventh texts. Both refused it: the physicist on one new item, the mathematician on five; their
-seventh-text items stood answered. - **Big Pic's re-check** (6535643629, item 4): every item of both readers stands, and
-three of his own words of 6532742328 item 2 were too wide. For the night, frame 6 as built; the hat's corrected frame,
-with its measured pair, goes on Sofer's morning page; decision 40 (g) is the owner's. - **The Boss's word** (6533115084,
-item 1): the hat does not replace frame 6 for the night. Its tie is a monomial of four value legs, and with a still hand
-the act's passing opens the books (NOT_CLOSED 29); frame 6 keeps the hat as its named next direction, its form kept.
-NOT_CLOSED 29's page (the passing for four value legs) took the middle form as the hat's road on Big Pic's word
-(6535643629, item 3); its second text (toys-5 4cbece813) was refused by both its readers, the middle form breaking the
-shipped room and booking a tie-borne mass to the vacuum, and the road is with Big Pic again (6536047021). - **The ninth
-text** (toys-5 634c8007f) folded them (section 8; section 9 says how it checked itself) and went back to that pair. The
-physicist PASSED it with four minors. The mathematician found his B3 to B5 mended and returned NOT PASSED on two items:
-B1, the window necessary and not sufficient, a hand swung across the hat running away inside the frozen bound (his h9_b1
-and h9_sweep); B2, the count test laid by a count where the swing's speed decides (his h9_b2). Both readers caught a
-slip of mine in section 9's arithmetic of the top. - **Big Pic's word** (6536901666, item 4): B1 and B2 stand. The text
-states the measured bound from the top, 20 hat n <= W, or keeps the lays to small swings; the count test is laid by the
-swing's speed, inside the top. He checked my slip: in thousandths of q the check is s^2 + 4,000 s against 4 x 10^6,
-3,997,584 at 828 and 4,003,241 at 829, so q^2 + 4 q < 4 and q lies below 2 (sqrt 2 - 1) = 0.828, the top of his
-6536221174 item 5, and B2's d below 0.41 R is the same top, (sqrt 2 - 1) R. His "neutral, not stable" goes in with them.
-- **The tenth text** folded them (section 10) and said there how it checked itself; the eleventh and twelfth texts fold
-their reader's items (sections 11 and 12). The probes are derive/david_open/node/g3_hat.py (about 2 minutes) and
-derive/david_open/node/g3_pump.py (about 25 s), both unchanged since the ninth text, their outputs beside them, whole
-numbers alone, every division Rule3's carry, with no root, logarithm, search or function of the turn's arc. A number the
-probes do not print is named to the reader whose script prints it.
+the law's four layers (Postulate 4, item (10)).
+- **The readers.** The eighth text (toys-5 7791470d1) went to the pair that read the sixth and seventh texts. Both
+  refused it: the physicist on one new item, the mathematician on five; their seventh-text items stood answered.
+- **Big Pic's re-check** (6535643629, item 4): every item of both readers stands, and three of his own words of
+  6532742328 item 2 were too wide. For the night, frame 6 as built; the hat's corrected frame, with its measured pair,
+  goes on Sofer's morning page; decision 40 (g) is the owner's.
+- **The Boss's word** (6533115084, item 1): the hat does not replace frame 6 for the night. Its tie is a monomial of
+  four value legs, and with a still hand the act's passing opens the books (NOT_CLOSED 29); frame 6 keeps the hat as
+  its named next direction, its form kept. NOT_CLOSED 29's page (the passing for four value legs) took the middle form
+  as the hat's road on Big Pic's word (6535643629, item 3); its second text (toys-5 4cbece813) was refused by both its
+  readers, the middle form breaking the shipped room and booking a tie-borne mass to the vacuum, and the road is with
+  Big Pic again (6536047021).
+- **The ninth text** (toys-5 634c8007f) folded them (section 8; section 9 says how it checked itself) and went back to
+  that pair. The physicist PASSED it with four minors. The mathematician found his B3 to B5 mended and returned NOT
+  PASSED on two items: B1, the window necessary and not sufficient, a hand swung across the hat running away inside the
+  frozen bound (his h9_b1 and h9_sweep); B2, the count test laid by a count where the swing's speed decides (his h9_b2).
+  Both readers caught a slip of mine in section 9's arithmetic of the top.
+- **Big Pic's word** (6536901666, item 4): B1 and B2 stand. The text states the measured bound from the top, 20 hat n <=
+  W, or keeps the lays to small swings; the count test is laid by the swing's speed, inside the top. He checked my slip:
+  in thousandths of q the check is s^2 + 4,000 s against 4 x 10^6, 3,997,584 at 828 and 4,003,241 at 829, so q^2 + 4 q <
+  4 and q lies below 2 (sqrt 2 - 1) = 0.828, the top of his 6536221174 item 5, and B2's d below 0.41 R is the same top,
+  (sqrt 2 - 1) R. His "neutral, not stable" goes in with them.
+- **The tenth text** folded them (section 10) and said there how it checked itself; the eleventh to fourteenth texts
+  fold their reader's items (sections 11 to 14). The probes are derive/david_open/node/g3_hat.py (about 2 minutes) and
+  derive/david_open/node/g3_pump.py (about 25 s), both unchanged since the ninth text, their outputs beside them, whole
+  numbers alone, every division Rule3's carry, with no root, logarithm, search or function of the turn's arc. A number
+  the probes do not print is named to the reader whose script prints it.
 
 **The finding in one line:** a hat on the held hand's norm, V = hat (|k|^2 - n)^2, laid as three kinds of monomials of
 the vertex law, holds the hand still at every whole rest of |k|^2 = n; its angle is not free, and its tie is a declared
@@ -134,17 +137,19 @@ mass inside the room.
     the rest, and the push it lands on the hand is -2 tie x^2 k_a, along k.
 - **The angle about a swinging size** (the physicist's item 1). About (R + d, k_1) the push on the angle row is
   -4 hat (2 R d + d^2 + k_1^2) k_1, at first order -8 hat R d(t) k_1: a spring on the angle that beats with the size.
-  - With Meshes an angle wave of beat omega_q sees a spring of zero mean at the size's beat omega_s, Mathieu's form
-    with eps = 4 d / R, and grows where omega_q is near omega_s / 2, the primary resonance; the size gives up what the
-    wave takes (probe (l), the physicist's r1). On the act the board must hold such a wave: omega_s / 2 must lie inside
-    the angle's band, whose top on a ring is 4 g in the act's units, so 2 hat n at most 4 g, and a finite board must
-    hold one of its waves near it. The ring of 256 at the probe's strengths holds one (probe (l): three waves round the
-    ring). The ring of 48 is shorter than one such wave and holds none: its largest |k_1| drifts from 67 to 419 over
-    10,000 rounds with no sign change round the ring, the uniform turn drifting, against 67 to 189 with the size at
-    rest. At weak grips, W / 6,000, the band's top lies below 2 hat n on a ring of any length: from 100 to 186 over
-    2,500 rounds on the ring of 256, again with no sign change (the end mathematician's h12_ring, a reader's runs
-    outside the tree). A tied train's band runs from its own spring to that spring plus 4 g on a ring, and the size
-    pumps it only where 2 hat n lies inside.
+  - With Meshes an angle wave of beat omega_q sees a spring of zero mean at the size's beat omega_s, Mathieu's form with
+    eps = 4 d / R, and grows where omega_q is near omega_s / 2, the primary resonance; the size gives up what the wave
+    takes (probe (l), the physicist's r1). On the act the board must hold such a wave: omega_s / 2 must lie inside the
+    angle's band to within Mathieu's tongue, about 2 d / R of 2 hat n wide, the band's top on a ring 4 g in the act's
+    units, so 2 hat n at most about 4 g, to within that width (the end mathematician's h13_top: with 4 g at 9/10 of 2
+    hat n and 2 d / R near 2/10 the band's top wave grows from 100 to 610 by round 1,000, and at 7/10 it stays within 53
+    to 129), and a finite board must hold one of its waves near it. The ring of 256 at the probe's strengths holds one
+    (probe (l): three waves round the ring). The ring of 48 is shorter than one such wave and holds none: its largest
+    |k_1| drifts from 67 to 419 over 10,000 rounds with no sign change round the ring at the end of the run, the uniform
+    turn drifting, against 67 to 189 with the size at rest. At weak grips, W / 6,000, the band's top lies below 2 hat n
+    on a ring of any length: from 100 to 186 over 2,500 rounds on the ring of 256, again with none at the end (the end
+    mathematician's h12_ring, a reader's runs outside the tree). A tied train's band runs from its own spring to that
+    spring plus 4 times its own grip on a ring, and the size pumps it only where 2 hat n lies inside.
   - Mesh-less the push on the hand, -4 hat (|k|^2 - n) k, is along k, so the turn k_0 k_1' - k_1 k_0' is kept. The
     size's own swing, turned, solves the angle's equation exactly, and its second solution grows only linearly, with the
     turn: no tongue at any swing that keeps the hand off the top. A hand laid still at (R + d, k_1) has turn 0 and moves
@@ -289,10 +294,10 @@ of the arc.
   not the top of the hat and not a string's core (hat n^2 at one Node-clock; the physicist's item 3).
 - **No feeding from a still hand.** The seventh text's two readers found the turning hand's size beat at twice the tied
   beat, so the turning hand fed the tied train. A still hand holds no swing to feed. With Meshes a swinging size pumps a
-  train's waves only where the board holds a wave near half its beat (section 2): the angle's where 2 hat n is at most 4
-  g on a ring and the board holds a wave there; the tied train's where 2 hat n lies inside its band, at least the tied
-  spring (8 hat n at least 4 times it) and at most the tied spring plus 4 g on a ring; the probe's strengths sit below
-  the tied band's foot.
+  train's waves only where the board holds a wave near half its beat (section 2): the angle's where 2 hat n is at most
+  about 4 g on a ring, to within the tongue's width (section 2), and the board holds a wave there; the tied train's
+  where 2 hat n lies inside its band to within that width, from the tied spring (8 hat n at least 4 times it) to the
+  tied spring plus 4 times the tied train's own grip on a ring; the probe's strengths sit below the tied band's foot.
 - **The tied spring from the hand.** The tied train's spring, 2 tie n, is the hand's rest read through the tie. The tie
   lands its push along k, so past the room the size answers the tied wave (probe (f)). Within the room the tied train
   beats as the unit spring, so its mass is declared in substance, tie and R both from the universe file, as on frame 6.
@@ -339,8 +344,8 @@ of the arc.
 - The physicist's A (the held boson's stimulated decay): a still hand holds no swing to give; a swinging size pumps
   angle waves with Meshes where the board holds a wave near half its beat (sections 2 and 4).
 - His B (the weight): 0 on term 5's form (probe (d)).
-- His C (the norm reaches vector-like pairs only): the anchor, a quaternion product, is the chiral road, named and not
-  built (section 4).
+- His C (the norm reaches vector-like pairs only): the anchor, a quaternion product, is the half-speed road, named and
+  not built (section 4).
 - Big Pic's: the turning hand stays withdrawn; this text holds the hand still.
 
 ## 6. The frame
@@ -411,7 +416,7 @@ of the arc.
 - **OPEN:**
   - the norm's count R: the law gives one rest, the file gives its count;
   - the angle with Meshes: no train on the act takes it up (its physics owed in the click world, section 12);
-  - the anchor and the chiral pairs (the half-speed kinds);
+  - the anchor and the half-speed rows it would tie (the half-speed kinds);
   - one tie per pair, so one mass for everything tied at one tie (NOT_CLOSED 21);
   - the hat's passing: NOT_CLOSED 29's road, with Big Pic (6536047021);
   - the four rows' A2 flip, run back and kinds;
@@ -629,3 +634,17 @@ records; the header's time; section 12's invisible-width line names what it asks
 **How the thirteenth text checked itself:** no probe moved (g3_hat.py and g3_pump.py unchanged since 634c8007f, their
 outputs with them); his h12_ring figures are a reader's runs outside the tree, cited as his; the text searched again
 every "half its beat", "at every", "pumps", "drains", "vacuum" and "psi".
+
+## 14. The thirteenth text's reader, folded (the fourteenth text)
+
+The thirteenth text (toys-5 5df40435c) went back to its mathematician, who PASSED it (M1 mended, his twelfth-reading
+minors folded, no number of nature before section 8) with four minors, folded here: the band's edge stated to within
+Mathieu's tongue, about 2 d / R of 2 hat n, since a finite swing widens it (his h13_top), and the tied band's top named
+by the tied train's own grip (2; 4); "the chiral road" and "the chiral pairs" in clock words (5; 7); the header's
+bullets restored, which the thirteenth text's reflow had run into one paragraph, with sections 13 and 14 named; the ring
+of 48's sign changes counted at the end of the run (2). The physicist PASSED the ninth text; both of the pair have now
+passed, and a new pair reads at the end.
+
+**How the fourteenth text checked itself:** no probe moved (g3_hat.py and g3_pump.py unchanged since 634c8007f); his
+h13_top figures are a reader's runs outside the tree, cited as his; the header's words checked against the twelfth
+text's, word for word but the text's line and its pointer.

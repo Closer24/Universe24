@@ -396,11 +396,12 @@ moves spread it where the third text's sum froze. What it cannot leave is the la
     needed delta X beyond about W / q.
   - The norm reads c^2: the lattice's term squares onto up to q^2 points, and the spread comes from 4 delta^2 X^2 mod
     W. So it needs (delta X)^2 beyond about W / q^2.
-  - For q coprime to W the account is exact (the end mathematician's M4). With s = (a W - e) / q, a whole number,
-    q c = q + 2 e X (mod W), so q^2 c^2 = (q + 2 e X)^2 (mod W): at 43,200 of 43,200 teeth at W/7 (e = 2) and at
-    3W/11 (e = 1), in his g5r_fractions. So Q sits within about 4 (delta X)^2 of the lattice of W/q^2, delta = e / q,
-    the threshold above. Laid alike, the star reads 7 times one Node-clock's sum, and 7 times W/49 is W/7: so at W/7
-    the star sits near 7 points against the ring's 49, the tenths 4,675.387 against 53.316 (probe (g)).
+  - For q coprime to W the account is exact (the end mathematician's M4). With s = (a W - e) / q, a whole number, q c =
+    q + 2 e X (mod W), so q^2 c^2 = (q + 2 e X)^2 (mod W): at 43,200 of 43,200 teeth at W/7 (e = 2) and at 3W/11 (e =
+    1), in his g5r_fractions, and on the drawn hand alike (his g8_fractions_drawn). So Q sits within about 4 (delta X)^2
+    of the lattice of W/q^2, delta = e / q, the threshold above. Laid alike, the star reads 7 times one Node-clock's
+    sum, and 7 times W/49 is W/7: so at W/7 the star sits near 7 points against the ring's 49, the tenths 4,675.387
+    against 53.316 (probe (g)).
   - For q dividing W the lattice term lands on W/q, q points, q/4 when 4 divides q, not on q^2, and the threshold is
     about W/(4 q), above W/q^2: the condition there is weaker, and still necessary.
   - X, the hand's sweep, swings. Which X the condition reads, its range over the run or its value at each draw, is not
@@ -417,9 +418,10 @@ moves spread it where the third text's sum froze. What it cannot leave is the la
   - for every q up to the resolution the shares need, dividing W or not, the spring's distance delta to the nearest
     a W / q, times the hand's sweep X, squared, must exceed about W / q^2, by a margin;
   - below it the norm sits near up to q^2 points and fails, as kappa + 1 and W/7 do. At 3W/11 it sits near all 121
-    points (g5r_fractions, on the star), and the battery at 10,800 draws barely reaches that: on the drawn hand the
-    ring's tenths pass (9.061) while N D_N^2 1.995 and one split's z^2 4.234 sit past their 5 per cent points, and the
-    star passes, the tenths 14.794, N D_N^2 1.709 and z^2 at most 0.684 (the end mathematician's M4);
+    points (g5r_fractions, on the star; on the drawn hand alike, his g8_fractions_drawn), and the battery at 10,800
+    draws barely reaches that: on the drawn hand the ring's tenths pass (9.061) while N D_N^2 1.995 and one split's z^2
+    4.234 sit past their 5 per cent points, and the star passes, the tenths 14.794, N D_N^2 1.709 and z^2 at most 0.684
+    (the end mathematician's M4);
   - meeting it is not shown to suffice. The 64 phases at the readers' spring are a record, not a proof: on the drawn
     hand the board's star puts 3 of 64 phases past the 5 per cent point and the ring 2, against chance's 3.200;
   - it reads the rows together, as the lattices do (the rows together, above): rotations near different fractions
@@ -1297,3 +1299,10 @@ NOT PASSED on two items, both from the owner's words given after that text was w
 - **What the text searched again:** every "Pythagorean", "48/50", "2 W div 25", "by themselves", "phys_signal",
   "1, 0 or -1", "mild" and "24,444". Each one left names the withdrawal or the scope the reader asked, or stands in a
   record of an earlier text or reading (the preamble's history; sections 8 to 12).
+
+**The end mathematician's verdict on the eighth text** (on c99ae8f19): PASSED, both probes rerun byte for byte on main's
+src at 0df0e8385, every count the page quotes matched. His notes folded: the fractions' identity cited on the drawn hand
+too (his g8_fractions_drawn, 43,200 of 43,200 teeth) (2; 3). Named, not changed: the hand's now slots are laid at the
+swing and at 0 (the preamble says so), which he does not read as aimed at an angle, the step and the orbit coming from
+the drawn before slots; section 10's "the off-lattice springs over 64 phases pass" is that text's record, one such
+spring left since the eighth; section 4's comparisons with nature carry the label, as he read them.
