@@ -192,7 +192,7 @@ The engine is five modules (engine/): step.py, mesh.py, contract.py, kinds.py an
 
 - **Clock:** it counts the rounds from outside, since no Node-clock holds a count. It gives every Node-clock its turn in every round, then runs all the rounds back to see the start return.
 - **Algebra:** the act iterated; the start returns bit for bit.
-- **Board:** before each round it reads the promise, from outside: both slots' teeth at least 1 (a tooth below 1 named as a tooth) and every tooth within its edge's dial, -D <= s < D with D = W(b) + W(a), and the wave's window (the Spokes' grips summed within [0, W] per sense), and names each departure where it stands, the run and its tool writing nothing then. After the rounds it rewinds by the act's run back alone. The end's digest is the state reached.
+- **Board:** before each round it reads the promise, from outside: both slots' teeth at least 1 (a tooth below 1 named as a tooth), every tooth within its edge's dial, -D <= s < D with D = W(b) + W(a), the wave's window (the Spokes' grips summed within [0, W] per sense) and the width (every count of both slots within the universe's width, a runaway named at the round where its counts first pass it), and names each departure where it stands, the run and its tool writing nothing then. After the rounds it rewinds by the act's run back alone. The end's digest is the state reached.
 - **Clicks:** it writes what the act gives: the record's header and end, the click lines of schema 1.3 (one per round, Node-clock and train whose click tooth carried, a9f8a440a) and the ledger beside them.
 - **Home:** runner/run.py, runner/rounds.py, runner/rewind.py; tools/tensor24_run.py. **Test:** test_the_tensor24_run.py. **Status:** BUILT.
 
