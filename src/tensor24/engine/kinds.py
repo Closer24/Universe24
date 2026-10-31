@@ -32,11 +32,8 @@ class Halves(NamedTuple):
 class Lifts(NamedTuple):
     """The 48 lifts of the board's 24 in the (sign, class) layout: the classes +-h are (u up to sign, k, m), each held by its word whose u has the + sense."""
 
-    lift: Z  # (senses, classes, d + 1, 2): 2 g on the unit's axis and the Spokes', each coordinate a pair (p, q), p + q r2
-    turn: Z  # (senses, classes, d, d): g's sandwich on the Spokes' axes, one of the 24, the same at both signs
-    whole: Kinds  # the five kinds on the 48 through each lift's turn
+    whole: Kinds  # the five kinds on the 48 through each lift's turn, g's sandwich on the Spokes' axes (T1, one of the 24)
     halves: Halves  # the three half-speed kinds' characters
-    heads: Z  # (cosets, d + 1, 2): one lift in each coset of C6, the words u z^m with u at the + sense, doubled
     cosets: Z  # (senses, classes, cosets, cosets): the 8-gear train, L(g) on the cosets of C6 in the heads' order
     classes: Z  # (senses, classes, classes, classes): the 24-gear train, L(g) e_[h] = sign e_[gh], the class and sign of every product
 
@@ -226,6 +223,7 @@ def lifts(spokes: Z) -> Lifts:
     spin = np.einsum("...xp,x->...p", lift, unit)  # 2 Re g
     sign, trace = np.einsum("...ii->...", a2)[..., None], np.einsum("...ii->...", e)[..., None]
     halves = Halves(spin, sign * spin, trace * spin)
-    heads = listed(product(c, star[:, None], spins[None, :], senses))  # u z^m
+    # u z^m, one lift in each coset of C6
+    heads = listed(product(c, star[:, None], spins[None, :], senses))
     cosets, classed = on_cosets(c, lift, heads, senses), on_classes(c, lift, classes, senses)
-    return Lifts(lift, turn, whole, halves, heads, cosets, classed)
+    return Lifts(whole, halves, cosets, classed)

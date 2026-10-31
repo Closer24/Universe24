@@ -43,11 +43,6 @@ class Trains:
     held: Z  # 1 where the character is the held hand's, the one-dimensional kinds together at part 1: its own spring CHOSEN
     tied: Z  # 1 where the character is kept under the sign kind's twist and is not the held hand's: tied to the held hand
     gripped: Z  # 1 where the character is not the held hand's: its rows hold their Meshes' grips; the held hand holds none
-    # 1 where the train's kinds are half-speed (-I on the full turn, files.Spun): no square, not the held hand and untied
-    # (NOT_CLOSED 8), gripped by the Mesh, its rows on the force's path (T_d = 1), the metric's push sourced by its
-    # momenta as by every gripped clock that is no square (the tooth's flip sends -m - 1 to -sigma, so a negated gear
-    # pushes alike); its rows its train's gears, the cosets of C6 or the classes +-h, and no half-speed table is built
-    half: Z
     start: Z
     count: Z
     kind: Z
@@ -118,8 +113,11 @@ def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z,
     held, _ = carry(1, apart + 1, 0)
     twisted = character * twist[None, :] - character
     kept, _ = carry(1, (twisted * twisted).sum(axis=-1) + 1, 0)
-    whole = lit(member.T @ lifts.whole[kind])  # 1 where the train holds a whole-speed kind
-    half = lit(member.T @ lifts.half[kind])  # 1 where it holds a half-speed kind
+    # 1 where the train holds a whole-speed kind; a half-speed train (-I on the full turn, files.Spun) holds none: no
+    # square, not the held hand and untied (NOT_CLOSED 8), gripped by the Mesh, its rows on the force's path (T_d = 1),
+    # the metric's push sourced by its momenta as by every gripped clock that is no square (the tooth's flip sends
+    # -m - 1 to -sigma, so a negated gear pushes alike); its rows its train's gears, the cosets of C6 or the classes +-h
+    whole = lit(member.T @ lifts.whole[kind])
     return Trains(
         np.cumsum(size) - size,
         size,
@@ -129,7 +127,6 @@ def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z,
         held,
         kept * lit(apart) * whole,
         lit(apart),
-        half,
         np.cumsum(count) - count,
         count,
         kind,
@@ -187,6 +184,7 @@ def load(
     labels, dims, reads = vocabulary(kinds, square, lifted)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
     traces, *_ = reads
+    kept = kept_forms(lifted)  # each half-speed kind's form onto A1, the dot derived
     side = c.shape[-1]  # the axes' cube the tables stand in: the board's axes
     senses, _ = carry(len(star(side)), side, 0)  # the Spokes along one axis, its + and its -
     key = np.full((len(trains), 1), universe["chosen"]["key"], dtype=object)  # one key for the board
@@ -196,13 +194,28 @@ def load(
     potential = joined(
         notching(trains, star(side), chosen["notch"]),
         holding(
-            trains, c, traces, rest, chosen["hold"], universe["integers"]["full_rate"], chosen["spring"]
+            trains,
+            c,
+            traces,
+            kept,
+            rest,
+            chosen["hold"],
+            universe["integers"]["full_rate"],
+            chosen["spring"],
         ),
-        tying(trains, c, traces, chosen["tie"]),
+        tying(trains, c, traces, kept, chosen["tie"]),
     )
     push = pushing(trains, star(side), chosen["push"])
-    mesh = meshing(trains, c, traces, square, chosen["mesh"])
-    return Loaded(trains, potential, state, passing(trains, c, traces, key), push, mesh), laid
+    mesh = meshing(trains, c, traces, square, kept, chosen["mesh"])
+    return Loaded(trains, potential, state, passing(trains, c, traces, kept, key), push, mesh), laid
+
+
+def kept_forms(lifted: Any) -> Z:
+    """Each half-speed kind's form onto A1, its kept form, from kinds.lifts as main.made passes them: SUM L^T L over the 48 lifts' L(g) on the 24-gear train, which holds every half-speed kind, divided by the lifts' count by Rule3's carry with remainder 0, the identity on its gears as each L(g) is a signed permutation (the 8-gear train's the same on its gears), one for each half-speed kind."""
+    side = lifted.classes.shape[-1]  # the 24-gear train's gears
+    train = lifted.classes.reshape(-1, side, side)
+    form, _ = carry(np.einsum("gji,gjk->ik", train, train), len(train), 0)
+    return np.broadcast_to(form, (len(lifted.halves), *form.shape))
 
 
 def teeth(universe: dict[str, Any], spokes: Z) -> tuple[Z, Z]:

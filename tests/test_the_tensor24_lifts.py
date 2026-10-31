@@ -18,11 +18,25 @@ WRITTEN = "000+ 110- 220- 330- 011+ 101+ 231+ 321- 022+ 132- 202+ 312+ 033+ 123+
 TABLE = [(int(x), int(y), int(z), int(sign + "1")) for x, y, z, sign in WRITTEN.split()]
 
 
+def letters(senses, d):
+    """The star's units at the + sense, w = (1 + i + j + k) / 2 and z = (1 + i) / r2, doubled and written out."""
+    units = [tuple((senses * (x == y), 0) for y in range(d + 1)) for x in range(d + 1)]
+    return units, ((1, 0),) * (d + 1), ((0, 1), (0, 1)) + ((0, 0),) * (d - 1)
+
+
 def built():
-    """The lifts from the piece's own star, its senses, and the 48 listed in their order, each a tuple of pairs."""
+    """The lifts from the piece's own star, its senses, and the 48 words u w^k z^m by the written-out product in the lifts'
+    layout, both senses and each u, k, m in turn, each a tuple of pairs."""
     spokes = star(len(json.loads(PIECE.read_text(encoding="utf-8"))["shape"]))
-    held, (senses, _) = kinds.lifts(spokes), carry(*spokes.shape, 0)
-    return held, senses, [tuple(map(tuple, g)) for g in held.lift.reshape(-1, *held.lift.shape[-2:])]
+    held, (senses, _), d = kinds.lifts(spokes), carry(*spokes.shape, 0), spokes.shape[-1]
+    units, w, z = letters(senses, d)
+    words = []
+    for sense, u, k, m in itertools.product((1, -1), units, range(d), range(senses)):
+        g = tuple((sense * x, sense * y) for x, y in u)
+        for h in (w,) * k + (z,) * m:
+            g, _ = mul(g, h, senses)
+        words.append(g)
+    return held, senses, words
 
 
 def ring(x, y, senses):
@@ -83,7 +97,7 @@ def test_the_48_are_the_words_each_once_of_norm_senses_squared_and_the_probes_cl
     of doubled norm senses^2, w^d = -1 and z^senses = i, every carry exact, every product a lift, the closure of z and w the 48.
     No: with no z, the closure of w and the star's units stops at Hurwitz's 24, the words with m = 0."""
     held, senses, listed = built()
-    d = held.turn.shape[-1]
+    d = held.whole.t1.shape[-1]
     written = np.zeros((d + 1, d + 1, d + 1), dtype=object)
     for x, y, z, sign in TABLE:
         written[x, y, z] = sign
@@ -91,16 +105,14 @@ def test_the_48_are_the_words_each_once_of_norm_senses_squared_and_the_probes_cl
     assert (
         len(set(listed)) == len(listed) == senses * int(kinds.turns(star(d))[1].sum())
     )  # two lifts a turn
-    flat = held.lift.reshape(len(listed), d + 1, -1)
+    flat = np.array(listed, dtype=object)
     p, q = np.moveaxis(flat, -1, 0)
     norm = (p * p + senses * q * q).sum(axis=-1), (p * q).sum(axis=-1)
     assert (norm[0] == senses * senses).all() and not norm[1].any()
     _, rest = carry(kinds.times(written, flat[:, None], flat[None, :], senses), senses, 0)
     products = kinds.product(written, flat[:, None], flat[None, :], senses).reshape(-1, *flat.shape[1:])
     assert not rest.any() and {tuple(map(tuple, g)) for g in products} == set(listed)
-    units = [tuple((senses * (x == y), 0) for y in range(d + 1)) for x in range(d + 1)]
-    one, i, j, _ = units
-    w, z = ((1, 0),) * (d + 1), ((0, 1), (0, 1)) + ((0, 0),) * (d - 1)
+    (one, i, j, _), w, z = letters(senses, d)
     assert (listed[0], listed[1], listed[senses]) == (one, z, w)  # the words 1, z and w
     cube, square = (np.array(one, dtype=object),) * 2  # the stacks' lengths read off the structure
     for _ in range(d):
@@ -108,19 +120,12 @@ def test_the_48_are_the_words_each_once_of_norm_senses_squared_and_the_probes_cl
     for _ in range(senses):
         square = kinds.product(written, square, np.array(z, dtype=object), senses)
     assert (cube == -np.array(one, dtype=object)).all() and (square == np.array(i, dtype=object)).all()
-    words = []  # each lift its word u w^k z^m by the written-out product, at both senses in the layout's order
-    for sense, u, k, m in itertools.product((1, -1), units, range(d), range(senses)):
-        g = tuple((sense * x, sense * y) for x, y in u)
-        for h in (w,) * k + (z,) * m:
-            g, _ = mul(g, h, senses)
-        words.append(g)
-    assert words == listed
+    # each lift's doubled unit part, 2 Re g, its word's, at both senses in the layout's order
+    assert [tuple(x) for x in held.halves.e1_2.reshape(len(listed), -1)] == [g[0] for g in listed]
     assert closed((z, w), one, senses) == set(listed)
     assert all(mul(g, h, senses)[1] for g in listed for h in listed)
     hurwitz = closed((i, j, w), one, senses)
     assert hurwitz == set(listed[::senses]) and senses * len(hurwitz) == len(listed)
-    heads = [listed[a * d * senses + m] for a in range(d + 1) for m in range(senses)]
-    assert [tuple(map(tuple, h)) for h in held.heads] == heads
     rests = []  # every carry the lifts make, product, turned, on_classes and on_cosets among them
 
     def kept(n, teeth, r):
@@ -138,19 +143,18 @@ def test_each_lift_turns_the_axes_by_one_of_the_24_and_the_eight_kinds_are_ortho
     turn, each of the 24 once a sense; the eight kinds orthonormal on the 48 exactly, the full turn +1 on five, -1 on three.
     No: no lift's turn is a reflection or a flat candidate, each weighed 0 by kinds.turns."""
     held, senses, listed = built()
-    d = held.turn.shape[-1]
+    d = held.whole.t1.shape[-1]
     five, _, square, joint = made(star(d))
-    parts = [(*g[:2], *g.whole, *g.halves, g.heads, g.cosets, g.classes) for g in (joint, held)]
+    parts = [(*g.whole, *g.halves, g.cosets, g.classes) for g in (joint, held)]
     assert all((x == y).all() for x, y in zip(*parts, strict=True))  # every field of the lifts alike
     read = vocabulary(five, square, joint)[-1][-1]  # the files read these lifts' half-speed kinds
     assert (read.characters[len(five) :] == np.stack(joint.halves)).all()
-    turns = held.turn.reshape(-1, d, d)
+    turns = held.whole.t1.reshape(-1, d, d)  # T1 on the 48, each lift's turn its sandwich
     assert all((t == sandwich(g, senses)).all() for t, g in zip(turns, listed, strict=True))
-    assert (held.whole.t1 == held.turn).all()  # T1 on the 48 each lift's turn
     weighed = list(zip(*kinds.turns(star(d)), strict=True))
     kept, left = ({tuple(m.flat) for m, w in weighed if w == on} for on in (1, 0))
-    assert [{tuple(t.flat) for t in sense} for sense in held.turn] == [kept] * senses
-    assert len(held.turn[0]) == len(kept) and (held.turn[0] == held.turn[-1]).all()
+    assert [{tuple(t.flat) for t in sense} for sense in held.whole.t1] == [kept] * senses
+    assert len(held.whole.t1[0]) == len(kept) and (held.whole.t1[0] == held.whole.t1[-1]).all()
     assert not left & {tuple(t.flat) for t in turns}
     traces = [np.einsum("...ii->...", k).reshape(-1) for k in held.whole]
     halves = [h.reshape(len(listed), -1) for h in held.halves]
@@ -178,7 +182,10 @@ def test_the_two_trains_are_the_probes_induced_ones_and_read_the_class_and_sign_
         c6, x = [*c6, x], table[x][w]
     # lam: +1 on the squares of C6, the product table's diagonal there, -1 elsewhere on C6
     lam = {x: 1 if x in {table[y][y] for y in c6} else -1 for x in c6}
-    heads, k = [index[tuple(map(tuple, h))] for h in held.heads], held.lift.shape[1]
+    d, k = len(listed[0]) - 1, held.classes.shape[1]
+    heads = [
+        a * d * senses + m for a in range(d + 1) for m in range(senses)
+    ]  # the words u z^m, u at the + sense
     assert same_train(held.cosets, heads, table, c6, lam)
     assert same_train(held.classes, list(range(k)), table, (e, m1), {e: 1, m1: -1})
     eight = held.cosets.reshape(len(listed), len(heads), -1)

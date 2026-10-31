@@ -25,7 +25,7 @@ COSETS, CLASSES = (
 )  # the two half-speed trains: kinds, part
 UNIT = "no family couples a half-speed train in this build"
 ROUNDS = 2  # the rounds a world in memory runs
-LIFTS = MADE[-1].lift[..., 0, 0].size  # the 48
+LIFTS = MADE[-1].halves.e1_2[..., 0].size  # the 48
 CLICKS = [  # the click world's clocks: a scalar clock at part 2, the square, the held hand and two tied hands
     {"name": "scalar", "kinds": ["A1"], "part": 2},
     {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1},
@@ -49,7 +49,7 @@ def test_the_files_admit_the_two_half_speed_trains_alone_and_refuse_both_in_a_fi
     lifts = read[-1]
     assert labels[-len(lifts.dims) :] == ("E1/2", "E5/2", "G3/2")
     one = lifts.characters[:, 0, 0, 0]  # every kind's character at the lift 1, the + sense's first word
-    senses, classes = MADE[-1].lift.shape[:2]
+    senses, classes = MADE[-1].halves.e1_2.shape[:2]
     assert list(dims) == one.tolist() and sum(d * d for d in dims) == senses * classes  # the 48
     rows = [part * sum(dims[labels.index(k)] for k in kinds) for kinds, part in (COSETS, CLASSES)]
     assert rows == list(lifts.gears)  # each train's rows its gears
@@ -90,13 +90,12 @@ def test_a_half_speed_train_is_no_square_nor_held_untied_gripped_and_driven_on_t
     labels, dims, reads = vocabulary(MADE[0], *MADE[-2:])
     lifts, spins = reads[-1], [{"name": "spin", "kinds": k, "part": p} for k, p in (COSETS, CLASSES)]
     trains = loading.trains_of(*entries([*CLICKS, *spins], labels), dims, reads)
-    flags = [getattr(trains, flag).tolist() for flag in ("square", "held", "tied", "gripped", "half")]
+    flags = [getattr(trains, flag).tolist() for flag in ("square", "held", "tied", "gripped")]
     assert flags == [
         [0, 1, 0, 0, 0, 0, 0],
         [0, 0, 1, 0, 0, 0, 0],
         [0, 0, 0, 1, 1, 0, 0],
         [1, 1, 0, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 1, 1],
     ]
     assert trains.size[-len(spins) :].tolist() == list(lifts.gears)  # each one's rows its gears
     universe = json.loads(PATHS[0].read_text(encoding="utf-8"))
@@ -190,9 +189,9 @@ def turning(layout, start, end, halves, flip=True):
 
 
 def test_a_half_speed_world_laid_in_memory_turns_with_its_48_lifts_runs_back_and_pairs_by_the_dot():
-    """Yes: both half-speed trains by the square, the push on and the mesh at 3, the files' chosen strengths pending the owner's
-    word, at the rest 6 den Gamma^2 and 6: every lift turns the run, teeth rounding, back exact; the dot; no gradient term on one.
-    No: at the rest 6 a gear negated with its tooth negated and not flipped, the turned run and the run turned part."""
+    """Yes: both half-speed trains by the square, the push on and the mesh at 3, the files' chosen strengths pending the owner's word, at
+    the rest 6 den Gamma^2 and 6: every lift turns the run, back exact, which checks the carry's flip under signed permutations (each turns it here); the dot; no gradient term on one.
+    No: at 6 a gear's tooth negated, not flipped; at both a shear, no signed permutation: the turned run and the run turned part."""
     spins = [{"name": f"spin {n}", "kinds": k, "part": p} for n, (k, p) in enumerate((COSETS, CLASSES))]
     for integers, reach in ((None, 1 << 300), ({"den": 1, "full_rate": 1}, 1 << 8)):
         held, layout = laid([CLICKS[1], *spins], {"push": 1}, integers)
@@ -204,6 +203,11 @@ def test_a_half_speed_world_laid_in_memory_turns_with_its_48_lifts_runs_back_and
         assert moved and turning(layout, start, end, halves) == LIFTS and frame.same(back, start)
         # the no, at the rest 6: a negated gear's tooth negated, not flipped
         assert integers is None or turning(layout, start, end, halves, False) < LIFTS
+        # the no at both: a shear of the 8-gear train's first two gears, a whole matrix that is no signed permutation
+        shear, still = np.eye(halves[0].rows(), dtype=object), np.eye(halves[1].rows(), dtype=object)
+        shear[0, 1] = 1
+        sheared, _ = ran(layout, turned(start, (shear, still), halves), ROUNDS)
+        assert not frame.same(sheared, turned(end, (shear, still), halves))
     one, two, entry, train, _ = held.click
     rows = {r for t in halves for r in range(t.first, t.first + t.rows())}
     pairs = {
@@ -223,7 +227,7 @@ def boarded(s, held, g, shape, flip=True):
     """The state turned by the lift g: the sites by its own turn, the square's slots by that turn's square, each half-speed
     train's gears by its own L(g), a negated gear's tooth flipped, -1 - s (or, with flip off, negated: the no)."""
     lifts = MADE[-1]
-    m = lifts.turn.reshape(-1, AXES, AXES)[g]
+    m = lifts.whole.t1.reshape(-1, AXES, AXES)[g]  # T1 on the 48, each lift's turn
     xyz, sides = np.indices(shape).reshape(AXES, -1), np.array(shape)[:, None]
     site = np.ravel_multi_index(tuple(((m @ xyz) % sides).astype(int)), shape)
     (square,) = [n for n in range(len(held.trains)) if held.trains[n].square]
@@ -248,7 +252,7 @@ def board_turnings(layout, held, start, end, shape, flip=True):
 
 
 def test_the_board_with_its_sites_turned_by_each_lifts_own_turn_turns_the_run_alike():
-    """Yes: on a cube of 2 x 2 x 2 sites, both half-speed trains by the square, the push on (the files' chosen key, pending the
+    """Yes: on a cube of 2 x 2 x 2 sites, both half-speed trains by the square, the push on (the files' chosen push, pending the
     owner's word), at the rest 6 den Gamma^2 and 6: each lift with its own turn on the sites and the square turns the run alike.
     No: at the rest 6 a negated gear's tooth negated and not flipped, the turned run and the run turned part."""
     spins = [{"name": f"spin {n}", "kinds": k, "part": p} for n, (k, p) in enumerate((COSETS, CLASSES))]
