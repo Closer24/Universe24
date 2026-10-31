@@ -36,11 +36,15 @@ def read(events, tmp_path, guards=records.GUARDS):
 # a place where three clocks meet: the edges 0-1 and 0-2 carried, each pair of teeth summing to the key less 1
 GIVE = line(0, (1, -1, 3, 6), (2, -1, 2, 5))
 TAKE = [line(1, (0, 1, 3, 0)), line(2, (0, 1, 4, 1))]
-OFF = "line 2's sides have not the form [u, q, tooth before, tooth after]"
+# a side cut short: refused by the schema's own shape where it types the sides (writer B's 1.4 line), else here
+OFF = (
+    "line 2's sides have not the form [u, q, tooth before, tooth after]",
+    "line 2's sides has not its shape in the schema",
+)
+CUT = [{**GIVE, "sides": [[1, -1, 3]]}, *TAKE]
 REFUSED = [
     ([{**GIVE, "tooth": [3, 6]}, *TAKE], "line 2 holds a tooth beside its sides, or no sides"),
     ([{**GIVE, "sides": []}, *TAKE], "line 2 holds a tooth beside its sides, or no sides"),
-    ([{**GIVE, "sides": [[1, -1, 3]]}, *TAKE], OFF),
     ([line(0, (0, -1, 3, 6))], "line 2's side names its own train 0"),
     ([line(0, (5, -1, 3, 6))], "line 2's side names train 5, which no train card names"),
     (
@@ -73,8 +77,8 @@ def test_each_edge_closes_at_its_place_and_each_line_breaking_a_rule_of_the_side
     tmp_path,
 ):
     """Yes: a place where three clocks meet, its giver's line and its two takers' with their teeth, reads in order, and
-    so does one with a side at q 0 beside its partner. No: each record of REFUSED by its own cause, and none without
-    the guard."""
+    so does one with a side at q 0 beside its partner. No: a side cut short, by the guard that owns the side's form,
+    and each record of REFUSED by its own cause, none refused without the sides' guard."""
     record, cause = read([GIVE, *TAKE], tmp_path)
     assert cause == "" and record is not None and record.of("click") == [GIVE, *TAKE]
     # the edge 0-2 listed at q 0, not carried, beside the edges 0-1 and 2-1 that carried
@@ -83,7 +87,7 @@ def test_each_edge_closes_at_its_place_and_each_line_breaking_a_rule_of_the_side
         line(1, (0, 1, 3, 0), (2, 1, 1, 4)),
         line(2, (0, 0, 4, 4), (1, -1, 5, 2)),
     ]
-    assert read(still, tmp_path)[1] == ""
+    assert read(still, tmp_path)[1] == "" and read(CUT, tmp_path)[1] in OFF
     for events, wanted in REFUSED:
         assert read(events, tmp_path)[1] == wanted
         assert read(events, tmp_path, records.GUARDS[:-1])[1] == ""
