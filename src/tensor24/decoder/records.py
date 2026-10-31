@@ -37,8 +37,6 @@ from tensor24.record import schema
 
 KINDS = ("whole", "click", "split", "rate", "books")  # the events' order within a round, the schema's
 PLACE = ("round", "site")
-ENDS = ("near", "far")  # a whole click's two ends, where it takes at both
-WAYS = ("+", "-")  # the two ways along each of the board's sides, a Spoke each
 BOOKED = ("taken", "laid")  # where a whole click and each of its ends book their holdings
 AT = ("step", "clicks")  # a ledger line's place in its round: after the step, or after the clicks
 ENTRY = ("round", "train")  # a ledger line's place beside its at
@@ -161,14 +159,16 @@ def off(line: Line, rounds: Any, made: tuple[Any, Any, Any], fields: dict[str, A
 
 
 def board(header: Any) -> tuple[Any, Any, Any]:
-    """The board the header's sides make: the sides, its sites (their product) and its Spokes (two a side), or none."""
+    """The board the header's sides make: the sides, its sites (their product) and its Spokes, the star of its axes read on the decoder's side as the files lay it (each Spoke's direction, the + and the - of every axis in turn, the order of the Spokes a whole click's end names), or none."""
     sides = header.get("sides") if isinstance(header, dict) else None
     if not (isinstance(sides, list) and sides):
         return None, None, None
     sites = 1
     for side in sides:
         sites = sites * side
-    return sides, sites, len(sides) * len(WAYS)
+    # the Spokes: the decoder's own star, each axis's unit and its opposite, as the files lay them
+    units = [[int(axis == other) for other in range(len(sides))] for axis in range(len(sides))]
+    return sides, sites, len([way for unit in units for way in (unit, [-entry for entry in unit])])
 
 
 def carded(header: Line) -> str:
@@ -211,7 +211,7 @@ def jsoned(lines: Lines) -> str:
 
 
 def framed(lines: Lines) -> str:
-    return "the record holds no header and end" if len(lines) < len(("header", "end")) else ""
+    return "the record holds no header and end" if not lines[1:] else ""  # no line after the first
 
 
 def headed(lines: Lines) -> str:
@@ -303,7 +303,7 @@ def booked(lines: Lines) -> str:
         ends = click.get("ends")
         if ends and (click.get("taken") or click.get("laid")):
             return f"line {n}'s whole click books at the click and again at its ends"
-        if ends and len(ends) != len(ENDS):
+        if ends and len(ends[1:]) != 1:  # both ends: its first and the one other end of its Mesh
             return (
                 f"line {n}'s whole click's ends number {len(ends)}, where the schema holds both or none"
             )

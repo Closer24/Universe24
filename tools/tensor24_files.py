@@ -32,13 +32,15 @@ def loaded(universe: Path, piece: Path, setting: Path) -> list[str]:
 def main(argv: list[str]) -> int:
     """Check and load the files, print each departure or that they hold, and return 1 on a departure."""
     parser = argparse.ArgumentParser(description="Tensor24's three files checked and loaded.")
-    parser.add_argument(
-        "files", nargs="*", type=Path, help=f"{' '.join(NAMES)}, or none for the examples"
-    )
-    given = parser.parse_args(argv).files
-    if len(given) not in (0, len(NAMES)):
+    for name in NAMES:
+        parser.add_argument(
+            name, nargs="?", type=Path, help=f"the {name} file, or none of the three for the examples"
+        )
+    held = vars(parser.parse_args(argv))
+    given = [held[name] for name in NAMES]
+    if any(given) and not all(given):
         parser.error("the three files, or none for the examples")
-    files = given or [EXAMPLES / f"{name}.json" for name in NAMES]
+    files = [path or EXAMPLES / f"{name}.json" for name, path in zip(NAMES, given, strict=True)]
     found = departures(*files)
     found = found or loaded(*files)
     print(
