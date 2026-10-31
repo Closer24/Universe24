@@ -541,8 +541,10 @@ calibre condition).
     auditor audit main now; the result to follow. Its first result (#2187 6536864716, both readings, item 1 (c)): the
     well world's lay builds a cosine by the Chebyshev recurrence (derive/boss/well_lay/lay.py:49 to 60), forbidden as
     law line 102 is worded, and FRAMES.md 11's "no root and no sine" for it was false (mended); writer B re-lays the
-    lump with no mode, on a held, Mesh-less train so that it stands (FRAMES.md 11), the pulse in two variants until
-    Big Pic rules on the 20 / 49 pair, which lays the live and mesh worlds' pulses too (NOT_CLOSED 35).
+    lump with no mode, light at rest, its well real but spreading (the held lump made none), the standing well OPEN
+    (FRAMES.md 11, NOT_CLOSED 36), and the pulse at rest (P1, agreed by both readings); the 20 / 49 pair still lays
+    the live and mesh worlds' pulses (NOT_CLOSED 35). The owner's ruling on line 102 (01:2x UTC) reaches frame 6's
+    held spring (FRAMES.md 6, NOT_CLOSED 37).
   - M8 (the first hostile code reader), DONE for main: the owner's word of 00:10 UTC covers it, main at b1a50bb33.
     With C5, open: the decoder test's ROOM 572 -> 597, a 25-line rise against main's 572. With C6, open: the second
     click-world test file's own ROOM (the Boss's decision under decision 26), C6's tests and the fourth code reader's

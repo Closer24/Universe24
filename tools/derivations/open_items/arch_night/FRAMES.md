@@ -329,6 +329,25 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   frame's are exact within the room; alternatives: K = W (an untested modulation), the tie laid by name in a file
   (forbidden), (A1) x 2 as the held shape (not told from light by character), the hat (next, above).
 
+- The owner's ruling on line 102 (01:2x UTC, the Boss's translation, whole): "In my view it is forbidden. Only if it
+  comes out of the families and their coupling. In code it is forbidden. A Node-clock does a simple and generic act.
+  It does an initialization. If it comes out by chance, that is fine." It reaches this frame: plans.holding
+  (src/tensor24/runner/plans.py:59 to 80) lays the held rows' own spring at 2 rest, K = 2 W, so that the hand turns
+  exactly a quarter a round (the theorem of the turn): chosen in code to land at 90 degrees. Big Pic is asked whether
+  it comes out of the coupling family. The smallest compliant change, on either road: the own spring's block leaves
+  plans.holding (its spread of rest x held, and the docstring's theorem of the turn), the hold tie and the hands' tie
+  standing; then one road, decided by one probe on the click and mesh worlds (their clicks, their books, the run back;
+  NOT_CLOSED 37):
+  - (a) The held train kept, its spring from the family where a law gives it (the hat's rest, David's eighth text) or
+    the generic act alone, its turn whatever comes out. Price: the quarter turn is no longer exact, so the hold tie's
+    four legs enter the passing and the books open (NOT_CLOSED 29, as measured for the hat above), and the room,
+    load-bearing (SHADOW's reader: the giver at 51 opens the books from round 1), is a bound no more.
+  - (b) The held train dropped from the click and mesh worlds. Price: the four-leg tie leaves with it and the books
+    are the hands' tie's, exact at any amplitude, but a tied hand's beat, 2 hold f |k|^2 / W, came from the held
+    hand's square, so the pair must beat on the generic act alone, and a tie with no spring under it splits into a
+    steady and a growing mode: both worlds re-laid, and they may not click.
+  - The same exact quarter turn is why the held lump made no well (frame 11).
+
 ## 7. The gradient vertex, light on matter through the Mesh [FRAME; BUILT/live as B5 87f88322d]
 
 - Form, as built (plans.meshing): V = mesh x SUM_i C_ji M_j D_i L laid as one potential's two pushes, (L's difference
@@ -418,32 +437,18 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   at every Node-clock of the re-laid well (A3's probe, NOT_CLOSED 7); the second cone's 1000142 to 1000302 ppm
   (NOT_CLOSED 2); and, on any lay, the run back 128 of 128 and B2b's price at 1 ppm (NOT_CLOSED 30). It is frame 11's
   pattern no longer: the form above stands on the click and mesh lays' own.
-- Writer B's re-lay (the lump with no mode, the pulse's polynomial bump (H^2 - u^2)^2 at rest; the pulse in two
-  variants): my answer, on what the world is for.
-  - Light's lump at rest: no. A light bump at a = b is at its turning point and leaves it at light's speed, about 0.41
-    Meshes a round, half each way along each axis it varies on; within the 128 rounds it runs round the ring of 18
-    more than twice, so the metric's slots laid at the mean of the last 64 rounds hold no well that stands where the
-    lump is. Such a lump serves frame 11's form (no mode, no root and no sine) but not the world's purpose: the clock
-    deeper where the lump is, the well's depth, the pulse's lag through it and term 13's frozen clock on it lose their
-    ground; the run back, the price and the second cone stand on any lay.
-  - My change: the lump on a held train, Mesh-less by character (B2's flag; the held hand of the click and mesh
-    worlds), its amplitude the bump as a product b(x) b(y) b(z) of the pulse's (H^2 - u^2)^2, so that no distance
-    needs a root, its hand turning in place as the click world's held hand is laid at (1, 0): its first row A b now
-    and 0 before, its second 0 now and -A b before, A b the bump's count at the site. With no Mesh it has no neighbour
-    pull, so its shape cannot spread: it stands by construction, with no mode. Such matter slows the clocks: Big Pic's
-    word on slow matter (NOT_CLOSED 32), "on the board, the books' form gives slow matter the clocks' slowing and no
-    stretch of space (gamma 0)"; and B2b's probe read a held bump's books at 1000 permille, the matter's loss against
-    the metric's gain. Its conditions: inside the held hand's window (0 < 2 hold k.k / Gamma < 4, G3 2.4, NOT_CLOSED
-    11), which bounds the bump's peak by Gamma and hold; its integers chosen by the act, as B3's and B5's were, so
-    that the well is a visible part of W, at least a count. Its price: the well becomes slow matter's, gamma 0 by that
-    word, not light's; the pulse's lag through it is the clocks' slowing alone; the README's numbers move.
-  - If the window leaves no visible well, the held lump fails as the light one does, and the world does not serve its
-    purpose tonight: its measures stand as readings of the moded lay, named so, and the world waits (the Boss's call,
-    and the owner's, whether it leaves main).
-  - The pulse: the variant at rest keeps the form (the act sets its speed, half each way, both halves crossing the
-    well, the lag read by each half's arrival against the void); the variant as now carries the 20 / 49 pair until Big
-    Pic rules. Build both, as writer B does; the README names which one stands. The live and mesh worlds' pulses wait
-    on the same ruling (NOT_CLOSED 35).
+- Writer B's re-lay, measured (the Boss, 01:4x UTC): the lump with no mode, the pulse at rest (P1, agreed by both
+  readings of main's audit).
+  - Light's lump at rest: a real well, but a spreading one, 4 to 11 counts, 7 at the centre, as foreseen here (it
+    leaves its turning point at light's speed, about 0.41 Meshes a round). The well world stands on it tonight.
+  - My change, the held, Mesh-less lump, measured and fallen: it made no well at all. An exact quarter-turn hand has
+    v_out perpendicular to v_in, so term 5's kinetic source, sigma_in sigma_out, is 0 (the theorem of the turn, frame
+    6, now under line 102 itself).
+  - The standing well is OPEN: a lawful steady source is owed (NOT_CLOSED 36). Until it stands, the well's measures
+    are a spreading well's: the clock deeper where the lump is, read while it is there; the pulse's lag and term 13's
+    frozen clock re-read on it, not carried over.
+  - The pulse at rest keeps the form: the act sets its speed, half each way, both halves crossing the well. The live
+    and mesh worlds' pulses stay on the 20 / 49 pair until Big Pic rules (NOT_CLOSED 35).
   - Re-read on the new lay, not carried over: term 13's frozen clock (A3's probe rerun; NOT_CLOSED 7's figures), the
     second cone (NOT_CLOSED 2), the price (NOT_CLOSED 30), the README's well and lag.
 - Test: the measures of PLAN B3 and B5 on the runner's record and ledger; for the well world's re-lay, its lay.txt
@@ -813,15 +818,15 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
   books) and a reading in the clicks (the physics, read twice).
 - The smallest standing Node-clock by 05:00 UTC: the act as built, no gear added, every world laid lawfully and its
   click board read in full. C6 with the fourth reader's fold (C), C5 and C6 one candidate after C6's reader; the well
-  re-laid with the held, Mesh-less lump and the pulse at rest (B, frame 11); FACE's gear standing beside the act as a
-  probe, its pair started on its first part. Its one claim of physics in the clicks: each meeting passes one whole
-  quantum from one clock to another and the books close at it, on the click world 2,106 meetings and 54 clocks of 78,
-  read twice (C6's meetings and books; SHADOW's record probe). Every other reading stays NOT READ or NO CLICK with its
-  cause.
+  re-laid with light's lump at rest and the pulse at rest, its well real but spreading (B, frame 11; the standing well
+  OPEN, NOT_CLOSED 36); FACE's gear standing beside the act as a probe, its pair started on its first part. Its one
+  claim of physics in the clicks: each meeting passes one whole quantum from one clock to another and the books close
+  at it, on the click world 2,106 meetings and 54 clocks of 78, read twice (C6's meetings and books; SHADOW's record
+  probe). Every other reading stays NOT READ or NO CLICK with its cause.
 - The next one: the face on the record (schema 1.4) and D6 reading a duration as a clock's own count between two of
-  its meetings, with a clicking well (B: two clicking pairs at two depths of the held lump), so the deeper clock's
-  slower count is read twice in the clicks; then light's-cone D8 on clicks that could fall outside it. It waits on
-  FACE's pair and, for any act change, the owner's word.
+  its meetings, with a clicking well (B: two clicking pairs at two depths of a well that stands, once a lawful steady
+  source is found, NOT_CLOSED 36), so the deeper clock's slower count is read twice in the clicks; then light's-cone
+  D8 on clicks that could fall outside it. It waits on FACE's pair and, for any act change, the owner's word.
 - The pieces, each its gear on the board and its reading in the clicks:
   - The click board. C6: no gear; the meetings and each clock's line, "the order counted, no duration" (13b). The face
     (FACE, first part about 02:15): a count of the clock's own half beats per train and Node-clock by Rule3's carries,
