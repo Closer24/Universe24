@@ -20,7 +20,8 @@ for a free hand.
        from the copies, so the keeping reads none of them;
   (T)  the timelike case: wing A's setting and landing carried on to wing B, inside its cone, and B's own member
        landing at Malus's share for the two settings (pairwhole's rule).
-Each sampled reading is CHSH per mille and each wing's +1 share under the far setting (no signal), twice.
+Each sampled reading is CHSH per mille, each wing's +1 share under the far setting (no signal), and the order of each
+wing's landings (its landing times the landing one and two pairs later, per mille), twice.
 
 Usage: python3 -I twoends.py <src> [pairs, 200000 unless given; the free end keeps a quarter of them] [runs, 2 unless
 given, each from its own births]
@@ -127,6 +128,15 @@ def signal(rec):
     return out
 
 
+def order(rec):  # each wing's landing times its landing one and two pairs later, per mille: A's lags 1, 2, then B's
+    out = []
+    for w in (2, 3):
+        for lag in (1, 2):
+            n = len(rec) - lag
+            out.append(carry(1000 * sum(rec[t][w] * rec[t + lag][w] for t in range(n)), n, 0)[0])
+    return out
+
+
 # (X) exact, over the hand's H values
 per_hand = {}
 sign_sum = 0
@@ -134,12 +144,14 @@ for lam in range(H):
     s = sum(sg * sign_rule(lam, a) * sign_rule(lam, b) for (a, b), sg in SETS.items())
     per_hand[s] = per_hand.get(s, 0) + 1
     sign_sum += s
-member_num = sum(sg * (2 * share(lam, a) - D) * (2 * share(lam, b) - D) for (a, b), sg in SETS.items() for lam in range(H))
+member_num = sum(sg * (2 * share(lam, a) - D) * (2 * share(lam, b) - D)
+                 for (a, b), sg in SETS.items() for lam in range(H))
 print(f"(X) exact, over the hand's {H} values:", flush=True)
 print(f"  the sign rule's CHSH at each hand value (CHSH: hand values): {sorted(per_hand.items())};"
       f" any measure of the hand that does not read the settings averages these, at most 2", flush=True)
 print(f"  over an even hand: the sign rule {carry(1000 * sign_sum, H, 0)[0]} per mille, the member rule"
-      f" {carry(1000 * member_num, H * D * D, 0)[0]}, the timelike rule {carry(1000 * (3 * (2 * SAME[1] - D) + D), D, 0)[0]}",
+      f" {carry(1000 * member_num, H * D * D, 0)[0]}, the timelike rule"
+      f" {carry(1000 * (3 * (2 * SAME[1] - D) + D), D, 0)[0]}",
       flush=True)
 
 # the end at the middle: each member's landing read back from an end tooth at the middle (0 about the middle)
@@ -190,11 +202,16 @@ for run in range(1, RUNS + 1):
             rec_em.append((a, b, xa, xb))
     print(f"run {run}, {PAIRS} pairs forward, {KEEP} kept at the free end:", flush=True)
     print(f"  (B) the sign rule, forward: CHSH {chsh(rec_sign)} per mille; the +1 shares under the far setting"
-          f" {signal(rec_sign)}", flush=True)
-    print(f"  (B) the member's landing, forward: CHSH {chsh(rec_member)} per mille; {signal(rec_member)}", flush=True)
+          f" {signal(rec_sign)}; the order {order(rec_sign)}", flush=True)
+    print(f"  (B) the member's landing, forward: CHSH {chsh(rec_member)} per mille; {signal(rec_member)};"
+          f" the order {order(rec_member)}",
+          flush=True)
     print(f"  (C0) the free end ({KEEP} kept of {tried} laid; each hand value kept {min(kept)} to {max(kept)} times):",
           flush=True)
-    print(f"       the sign rule: CHSH {chsh(rec_es)} per mille; {signal(rec_es)}", flush=True)
+    print(f"       the sign rule: CHSH {chsh(rec_es)} per mille; {signal(rec_es)}; the order {order(rec_es)}",
+          flush=True)
     print(f"       the member's landing read back from its end tooth: CHSH {chsh(rec_em)} per mille; {signal(rec_em)};"
-          f" the run back exact at {exact} of {KEEP}", flush=True)
-    print(f"  (T) the timelike case, A's landing carried to B: CHSH {chsh(rec_t)} per mille; {signal(rec_t)}", flush=True)
+          f" the order {order(rec_em)}; the run back exact at {exact} of {KEEP}", flush=True)
+    print(f"  (T) the timelike case, A's landing carried to B: CHSH {chsh(rec_t)} per mille; {signal(rec_t)};"
+          f" the order {order(rec_t)}",
+          flush=True)
