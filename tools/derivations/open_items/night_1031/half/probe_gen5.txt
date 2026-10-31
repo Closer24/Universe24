@@ -1,0 +1,22 @@
+PART A: the toy plane x + y + z = 0 (one hand on the three axes)
+  W is w's turn, whole: [[0, 1, 0], [0, 0, 1], [1, 0, 0]]; J = 2 W + I: J J = -3 on the plane: True
+  three carried shears, teeth kept, undone by the same shears at -t: 20000 of 20000 exact
+  the shears' product = Qd^2 x [[c, -3 s], [s, c]] x DEN: True (c = 13/19, s = 8/19)
+PART B: the toy plane's turn laid on the 8-gear train on the three axes (R_axes x I_8)
+  R_axes whole over 57: orthogonal True; commutes with W True
+  kept by 6 of the 24 whole units (the lifts of w's three turns); the 24 keep it: False
+  the turns that keep it: 3 (the identity and w's two)
+PART C: the turn in the 24's own plane on the 24-gear train
+  T whole over 456: orthogonal True; kept by the 24 True; each r2 lift turns it back True; identity on 2: True
+  tr((456 T)^k B), k = 0 .. 8: [0, -36864, -23003136, -6688604160, 609491091456, 1771124035682304, 978446258672762880, 242270017928168472576, -52277710056202495328256]: the turn parts 2' from 2'' (nonzero from k = 1)
+  the round spring-then-turn (rr a - b, then T on both slots): tr(M^k (B + B)), k = 0 .. 8, first not 0 at k = 4 (-1218982182912): parted True; the round with no turn: all 0 True: parted False
+PART D: the obstruction to carried shears kept by the 24
+  the 24's orbit of a vector of 2' + 2'' spans rank 8; with Q applied, rank 8: the orbit's span is Q-invariant: True
+  (Q is a sum of L(g), so every space the 24 keep is Q-invariant: a complex subspace, never one line of a pair (u, J u))
+  and a shear kept by the 24 commutes with Q: the uniform turn would need such shears
+  (c + s r(-3))^4 x DEN^4 = -129263 + -9568 r(-3), against DEN^4 = 130321: the uniform turn's complex determinant on the 4 copies is 1: False
+PART E: the power road R^sigma (the toy plane, R over DEN)
+  sigma = 1: R^sigma = N / 19^1, its largest numerator 5 bits; the act's width 128
+  sigma = 10: R^sigma = N / 19^10, its largest numerator 44 bits; the act's width 128
+  sigma = 100: R^sigma = N / 19^100, its largest numerator 425 bits; the act's width 128
+  sigma = 1000: R^sigma = N / 19^1000, its largest numerator 4248 bits; the act's width 128

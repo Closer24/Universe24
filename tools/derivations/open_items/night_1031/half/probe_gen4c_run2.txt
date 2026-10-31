@@ -1,0 +1,11 @@
+PART 1: chi(g) / dim on the third-turn lifts w (order 3) and -w (order 6)
+  A1: order 3: (1 + 0 r2) / 1; order 6: (1 + 0 r2) / 1
+  T1: order 3: (0 + 0 r2) / 3; order 6: (0 + 0 r2) / 3
+  E1/2: order 3: (-1 + 0 r2) / 2; order 6: (1 + 0 r2) / 2
+  E5/2: order 3: (-1 + 0 r2) / 2; order 6: (1 + 0 r2) / 2
+  G3/2: order 3: (1 + 0 r2) / 4; order 6: (-1 + 0 r2) / 4
+PART 2: the Koide circle on the median s' = s'' (pairs p + q r2, all over 6)
+  6 (s_2 + 2 s') = 6 + 0 r2: the shares sum to 1: True
+  36 SUM s^2 = 24 + 0 r2; 3 x 36 SUM s^2 / 36 = 2 remainder 0: SUM s^2 = 2/3: True
+  36 |s - centre|^2 = 12 + 0 r2: = 36 / 3: True
+  the median's other meeting, s' = (2 + r2) / 6 and s_2 = (2 + -2 r2) / 6: sums to 1 True, 36 SUM s^2 = 24 + 0 r2 (on the circle: True); its sign is an order claim, DERIVED on paper, not here

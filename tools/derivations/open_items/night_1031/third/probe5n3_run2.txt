@@ -1,0 +1,11 @@
+world3: 3 takers; the giver's rows [2, 3, 4, 5, 6, 7]; the takers' rows [[8, 9, 10, 11, 12, 13], [14, 15, 16, 17, 18, 19], [20, 21, 22, 23, 24, 25]]
+run back: 206 rounds moving a quantum in 2000 from the warm board; the one-round run back fails at 0, first at None; the window exact 1; the largest |lam| 1
+each taker's landings against its present square's share (SUM s_i / L, in thousandths, over the rounds a quantum moves): landed [54, 34, 124], expected [54, 33, 118]
+the 24 over 200 rounds at 24 of 24 turns, the gears, the clicks and every tooth
+C5 books, true: 1,500 rounds from the lay, 321 lines: SHOWN: the sum of q over the trains is 0 at 155 of 155 places; per train (lines, given, taken, net) {0: (0, 0, 0, 0), 1: (155, 188, 0, -188), 2: (45, 0, 56, 56), 3: (23, 0, 24, 24), 4: (98, 0, 108, 108)}
+C5 books, no_take: 1,500 rounds from the lay, 156 lines: NOT SHOWN: the sum of q over the trains is -1 at round 13, site 0: not 0 at 156 of 156 places; per train (lines, given, taken, net) {0: (0, 0, 0, 0), 1: (156, 194, 0, -194), 2: (0, 0, 0, 0), 3: (0, 0, 0, 0), 4: (0, 0, 0, 0)}
+C5 books, no_give: 1,500 rounds from the lay, 167 lines: NOT SHOWN: the sum of q over the trains is 1 at round 13, site 0: not 0 at 156 of 156 places; per train (lines, given, taken, net) {0: (0, 0, 0, 0), 1: (0, 0, 0, 0), 2: (45, 0, 55, 55), 3: (25, 0, 28, 28), 4: (97, 0, 106, 106)}
+C5 books, double: 1,500 rounds from the lay, 325 lines: NOT SHOWN: the sum of q over the trains is 1 at round 13, site 0: not 0 at 159 of 159 places; per train (lines, given, taken, net) {0: (0, 0, 0, 0), 1: (159, 180, 0, -180), 2: (45, 0, 102, 102), 3: (23, 0, 50, 50), 4: (98, 0, 208, 208)}
+C5 books, gear_lost: 1,500 rounds from the lay, 156 lines: NOT SHOWN: the sum of q over the trains is -1 at round 13, site 0: not 0 at 156 of 156 places; per train (lines, given, taken, net) {0: (0, 0, 0, 0), 1: (156, 194, 0, -194), 2: (0, 0, 0, 0), 3: (0, 0, 0, 0), 4: (0, 0, 0, 0)}
+C5 books, unapplied: 1,500 rounds from the lay, 0 lines: NO CLICK: the record holds no click line: not in the click world; per train (lines, given, taken, net) {}
+done

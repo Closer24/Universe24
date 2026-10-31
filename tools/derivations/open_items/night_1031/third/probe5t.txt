@@ -1,0 +1,10 @@
+triangle: the carry's identity, D SUM lam_i = SUM source_i + r_i(start) - r_i(end), on the x row over 2000 rounds: net landed [0, 0], (SUM source + r0 - r_end) div D = [0, 0] with remainder [0, 0]; landings per taker [68, 52]
+triangle: 119 rounds moving a quantum in 2000 from the warm board; the one-round run back fails at 0 rounds, first at None; the window exact 1; rounds where a kept share tooth stands outside its round's dial: 0; the first taker landed 68 of 119, against SUM s_1 / L = 68
+triangle: the 24 over 200 rounds at 24 of 24 turns (the gears and the clicks; the share teeth turned at their dial)
+triangle true: 1,500 rounds from the lay, 184 lines; C5 books: SHOWN: the sum of q over the trains is 0 at 90 of 90 places
+triangle no_take: 1,500 rounds from the lay, 89 lines; C5 books: NOT SHOWN: the sum of q over the trains is -1 at round 13, site 0: not 0 at 89 of 89 places
+triangle no_give: 1,500 rounds from the lay, 94 lines; C5 books: NOT SHOWN: the sum of q over the trains is 1 at round 13, site 0: not 0 at 91 of 91 places
+triangle double: 1,500 rounds from the lay, 186 lines; C5 books: NOT SHOWN: the sum of q over the trains is 1 at round 13, site 0: not 0 at 91 of 91 places
+triangle gear_lost: 1,500 rounds from the lay, 89 lines; C5 books: NOT SHOWN: the sum of q over the trains is -1 at round 13, site 0: not 0 at 89 of 89 places
+triangle unapplied: 1,500 rounds from the lay, 0 lines; C5 books: NO CLICK: the record holds no click line: not in the click world
+done

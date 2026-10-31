@@ -1,0 +1,11 @@
+PART 1: R(h) + R(h^-1)
+  (R(h) + R(h^-1))^2 = 2 I (senses x I): True
+PART 2: chi(g) / dim on a quarter turn's two lifts, h = (1 + i) / r2 and -h, as p + q r2
+  A1: on h (1 + 0 r2) / 1, on -h (1 + 0 r2) / 1
+  T1: on h (1 + 0 r2) / 3, on -h (1 + 0 r2) / 3
+  E1/2: on h (0 + 1 r2) / 2, on -h (0 + -1 r2) / 2
+  E5/2: on h (0 + -1 r2) / 2, on -h (0 + 1 r2) / 2
+  G3/2: on h (0 + 0 r2) / 4, on -h (0 + 0 r2) / 4
+PART 3: probe_gen4 part C's two dials, labelled by the counts the spring moved
+  W = 1000000, 400 rounds: counts the spring moved 0: EMPTY: the spring moved no count
+  W = 3, 400 rounds: counts the spring moved 9584: the carry rounds

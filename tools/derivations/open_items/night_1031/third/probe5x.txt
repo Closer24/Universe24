@@ -1,0 +1,9 @@
+(a) the shear mutant (the push written into the stored before slot), from the warm board: the one-round run back fails at 119 of 2000 rounds, first at 11
+(b) the largest |lam_i| over 24,000 rounds from the lay: 1 (the regime condition k max|a_giver| max s_i < D)
+(c/d) rec5x_third.jsonl: 2925 lines; C5 books: SHOWN: the sum of q over the trains is 0 at 1449 of 1449 places; cone: SHOWN
+(c/d) rec5x_term11.jsonl: 1002 lines; C5 books: NOT SHOWN: the sum of q over the trains is -1 at round 91, site 0: not 0 at 964 of 982 places; cone: SHOWN
+(c) from the lines alone: takes per taker {2: 830, 3: 646}; places 1449; places where both takers take 27; successive places taken by the same taker or takers 708 of 1448; the places' residues mod 8 [0, 1, 2, 3, 4, 5, 6, 7]; the gaps from 1 to 195 rounds
+(d) term 11 with the triangle acting, in event order: SUM q over the window 0, the running sum within [-1, 1]
+(e) 2E' of the three hands about its start over 24,000 rounds, in ppm: with the triangle -6036 / +562; the plain act -186 / +130
+(f) the first landing round per taker from the lay (the first taker laid empty): {2: 282, 3: 13}
+done

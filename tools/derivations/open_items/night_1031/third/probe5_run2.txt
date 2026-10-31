@@ -1,0 +1,17 @@
+chosen: 88 rounds moving a quantum in 2000 from the warm board; the one-round run back fails at 0 rounds, first at None; the window exact 1; rounds where a kept share tooth stands outside its round's dial: 0; the first taker landed 44 of 88, against SUM s_1 / L = 36
+chosen: the 24 over 200 rounds at 24 of 24 turns (the gears and the clicks; the share teeth turned at their dial)
+chosen true: 1,500 rounds from the lay, 154 lines; C5 books: SHOWN: the sum of q over the trains is 0 at 77 of 77 places
+chosen no_take: 1,500 rounds from the lay, 77 lines; C5 books: NOT SHOWN: the sum of q over the trains is -1 at round 9, site 0: not 0 at 77 of 77 places
+chosen no_give: 1,500 rounds from the lay, 77 lines; C5 books: NOT SHOWN: the sum of q over the trains is 1 at round 9, site 0: not 0 at 77 of 77 places
+chosen double: 1,500 rounds from the lay, 154 lines; C5 books: NOT SHOWN: the sum of q over the trains is 1 at round 9, site 0: not 0 at 77 of 77 places
+chosen gear_lost: 1,500 rounds from the lay, 77 lines; C5 books: NOT SHOWN: the sum of q over the trains is -1 at round 9, site 0: not 0 at 77 of 77 places
+chosen unapplied: 1,500 rounds from the lay, 0 lines; C5 books: NO CLICK: the record holds no click line: not in the click world
+squares: 88 rounds moving a quantum in 2000 from the warm board; the one-round run back fails at 12 rounds, first at 103; the window exact 0; rounds where a kept share tooth stands outside its round's dial: 12; the first taker landed 43 of 88, against SUM s_1 / L = 36
+squares: the 24 over 200 rounds at 3 of 24 turns (the gears and the clicks; the share teeth turned at their dial)
+squares true: 1,500 rounds from the lay, 154 lines; C5 books: SHOWN: the sum of q over the trains is 0 at 77 of 77 places
+squares no_take: 1,500 rounds from the lay, 77 lines; C5 books: NOT SHOWN: the sum of q over the trains is -1 at round 9, site 0: not 0 at 77 of 77 places
+squares no_give: 1,500 rounds from the lay, 77 lines; C5 books: NOT SHOWN: the sum of q over the trains is 1 at round 9, site 0: not 0 at 77 of 77 places
+squares double: 1,500 rounds from the lay, 154 lines; C5 books: NOT SHOWN: the sum of q over the trains is 1 at round 9, site 0: not 0 at 77 of 77 places
+squares gear_lost: 1,500 rounds from the lay, 77 lines; C5 books: NOT SHOWN: the sum of q over the trains is -1 at round 9, site 0: not 0 at 77 of 77 places
+squares unapplied: 1,500 rounds from the lay, 0 lines; C5 books: NO CLICK: the record holds no click line: not in the click world
+done
