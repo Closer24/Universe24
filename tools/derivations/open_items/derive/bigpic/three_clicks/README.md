@@ -141,3 +141,33 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
   OPEN). The free lay and the local act stay at or below 2.
 
 Usage: python3 -I spread.py <src> [RANGE]
+
+## The form of the 11:52 law, a first reading: one cell joins the two ends (onecell.py, onecell.txt)
+
+- **The owner's law of 11:52 UTC:** "The connection between two places comes, for certain, from the start and from the
+  end." Its form is first on the order of work (the Boss's 6543120369 item 4).
+- **Read under the square form with David's cell rule** (a held hand carries one cell, h times the sum of what it ties):
+  - the pair's source ties the two ends, so it carries one cell: the sum over its two states e_k of the plane of
+    (a . e_k)(e_k . b), with a and b the two ends' readings (each its setting, along or across);
+  - the joint weight is that cell's square, over the source's equal split.
+- **The cell holds no hand** (DERIVED, checked exactly): the sum over the source's two states, each over (e_k . e_k), is
+  a . b, the plane's own unit form between the two ends. It holds in 13,824 of 13,824 lattice cases. So the connection
+  is the start's split and the two ends' readings, and nothing else.
+- **It is the end law exactly,** as the algebra says:
+  - the joint counts are alike as fractions in 8 of 8 setting pairs, at the triangle's settings and at z's;
+  - CHSH is 2,500 and 2,828 per mille;
+  - each wing's +1 share is exactly half in 8 of 8.
+- **One cell per state is the local act.** Squaring each state's cell apart means the hand is born along e_k or across
+  it, and each end takes its own share. It reads at most 1,750 and 1,420 per mille over the six bases.
+- **So the 11:52 law's form, as a candidate:** the pair's two clicks weigh as the square of one cell joining the two
+  ends through the start.
+  - It is David's cell rule again: one cell over what a source ties. Its cross term is the band at the held hand, and
+    the correlation here.
+  - A cell per part gives no band there, and the local bound here.
+  - CANDIDATE.
+- **OPEN:**
+  - why one cell (shared with the cell rule);
+  - the board form: how the board carries the joining cell, with no click writing on it;
+  - the weight between the start and the end, idle here, since the form is symmetric in the two ends.
+
+Usage: python3 -I onecell.py <src>

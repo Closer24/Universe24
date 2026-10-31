@@ -1,0 +1,7 @@
+== onecell.py
+the identity, the sum over the source's two states of (a . e_k)(e_k . b) over (e_k . e_k) = a . b: 13824 of 13824 (lattice a, b with |m|, |n| at most 3; the six bases of lattice lines)
+the one cell against the end law (the ends weighed 1 : 1), joint counts alike as fractions: 8 of 8 setting pairs
+the triangle's settings: CHSH under the one cell 2500 per mille; under one cell per state, the largest over the six bases 1750 per mille (2 is 2000)
+the powers of z: CHSH under the one cell 2828 per mille; under one cell per state, the largest over the six bases 1420 per mille (2 is 2000)
+each wing's +1 share exactly half under the one cell: 8 of 8 setting pairs (no signal)
+exit
