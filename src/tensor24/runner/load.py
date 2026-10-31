@@ -33,13 +33,13 @@ class Train(NamedTuple):
 
 @dataclass(frozen=True, eq=False)
 class Trains:
-    """Every train's rows as arrays: per train its first row, its rows, its part, 1 where it is the four-vector's square and 1 where it is not (the matter), its first kind's entry and its kinds' count; per kind of a train, in the file's order, its index and dimension."""
+    """Every train's rows as arrays: per train its first row, its rows, its part, 1 where it is the four-vector's square and 1 where it is not (a clock train that sources the metric's push), its first kind's entry and its kinds' count; per kind of a train, in the file's order, its index and dimension."""
 
     first: Z
     size: Z
     part: Z
     square: Z
-    matter: Z  # 1 where the train's kinds' character is not the square's: the matter, which sources the metric's push
+    sourcing: Z  # 1 where the kinds' character is not the square's: its rows source the metric's push
     held: Z  # 1 where the character is the held hand's, the one-dimensional kinds together at part 1: its own spring CHOSEN
     tied: Z  # 1 where the character is kept under the sign kind's twist and is not the held hand's: tied to the held hand
     gripped: Z  # 1 where the character is not the held hand's: its rows hold their Meshes' grips; the held hand holds none
@@ -96,7 +96,7 @@ def tables(held: Z, inverse: Z, weight: Z) -> Z:
 
 
 def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z, Z, Z, Z]) -> Trains:
-    """Each train's rows from its kinds and part, and its character, its kinds' traces summed times its part, against the characters the files read off the kinds, 1 where the gap is 0 on every turn by Rule3's quotient of 1 by gap^2 + 1 and lit of the gap where it is not: the four-vector's square's (square: its rows that square's basis, its first 00; matter the rest), the held hand's, the one-dimensional kinds together (held, A1 + A2 at part 1; gripped the rest), and its own under the twist, the sign kind's character (tied where kept and not the held hand's: a train of the kinds K and the twist's K, light and the square untied)."""
+    """Each train's rows from its kinds and part, and its character, its kinds' traces summed times its part, against the characters the files read off the kinds, 1 where the gap is 0 on every turn by Rule3's quotient of 1 by gap^2 + 1 and lit of the gap where it is not: the four-vector's square's (square: its rows that square's basis, its first 00; sourcing the rest), the held hand's, the one-dimensional kinds together (held, A1 + A2 at part 1; gripped the rest), and its own under the twist, the sign kind's character (tied where kept and not the held hand's: a train of the kinds K and the twist's K, the board's wave and the square untied)."""
     traces, _, squared, hand, twist = reads
     member = np.eye(len(part), dtype=object)[of]  # each kind's train, one of each row
     dim = np.array(dims, dtype=object)[kind]

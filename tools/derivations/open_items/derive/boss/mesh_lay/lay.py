@@ -60,7 +60,7 @@ def world(universe, shape, gears):
 def by_character(held):
     """The board's wave (no square, not held, not tied), the held train and the tied train, by the loader's flags."""
     trains = range(len(held.trains))
-    (light,) = [t for t in trains if held.trains.matter[t] and held.trains.gripped[t] and not held.trains.tied[t]]
+    (light,) = [t for t in trains if held.trains.sourcing[t] and held.trains.gripped[t] and not held.trains.tied[t]]
     (hand,) = [t for t in trains if held.trains.held[t]]
     (tied,) = [t for t in trains if held.trains.tied[t]]
     return light, hand, tied

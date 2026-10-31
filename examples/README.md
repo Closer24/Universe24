@@ -17,7 +17,7 @@ examples/tensor24/setting.json <record .jsonl>`. Read the record: `python -I too
 
 ## The live world
 
-`examples/tensor24-live/` is a second folder of the same three files, a world that shows something: the light train's
+`examples/tensor24-live/` is a second folder of the same three files, a world that shows something: the A1 train's
 first component laid as a pulse along z by `tools/derivations/open_items/derive/boss/live_lay/lay.py` from the universe
 and the piece (its account in `lay.txt` beside it), 2^28 (64 - d^2)^2 at the distance d below 8 from z = 10, its peak
 at 2^40 counts (far above one notch), laid at rest, its before its now, so that the act alone sets how it moves: it
@@ -51,7 +51,7 @@ The metric family is pushed by term 5 in the books' form at push 1, the books cl
 value would open the books by that factor, and the files' format refuses it by name): each slot read by a gear is
 pushed by minus the act's own energy's derivative by it, taken at fixed momentum, the momentum being what a clock keeps
 as its teeth move (dH / dW = -v^2 / 2 there, so the 00 slot is pushed by + k0 v^2 / 2, a deeper and slower clock where
-the matter moves; at fixed velocity the derivative would read + v^2 / 2 and push the wrong way). The 00 slot is pushed
+the sourcing trains' rows move; at fixed velocity the derivative would read + v^2 / 2 and push the wrong way). The 00 slot is pushed
 by k0 = Spokes x senses = 12, the factor the clock reads it at, times the momenta in and out of every row the push
 does not land on, and each ii slot by minus its axis's two Meshes' stretches squared, both halved by the drive's dial 2
 on the 00 and ii rows with the remainder kept in the fine tooth; the 0i and jk slots are read by nothing and pushed by
@@ -61,7 +61,7 @@ counts a round, the pulse's 96 and the metric's own 50 (`measure.py` and `measur
 price as built: the 00 push leaves out the square's own 00 and ii rows, whose momentum out the act reads before the
 push's own kick (a pushed row's stride, which no plan may read for the mirror to swap every stride it reads), so the
 metric's own kinetic share of the books, its self-stress (OPEN in G2), is not paid into the 00 slot: over the run the
-ii rows' momenta in and out sum to 446149 against the matter's 19388914470, 23 parts per million (`lay.txt`). The
+ii rows' momenta in and out sum to 446149 against the sourcing rows' 19388914470, 23 parts per million (`lay.txt`). The
 metric is held by term 9's notch at the CHOSEN h 120000, twice the 60000 it was at the dial 1, as the notch's
 monomials on the 00 and ii rows ride the same dial (the board's mean swings about its rest with a beat of about 31
 rounds); its 00, xx, yy and zz slots, read from the piece's shape, are laid at the mean (Rule3's carry) of a first run
@@ -80,7 +80,7 @@ count the pulse.
 Its readings are a spreading lump's, read on the board (`measure.txt`), and none of them is a standing well's: term
 5's sign, read from 0 with the metric's gears taken out, the 00 slot's mean over the lump's laid support against the
 void's, 1 and 0 at round 2, 11 and 0 at round 4, 25 and 3 at round 8 and 17 and 11 at round 16: the clock deepens
-first where the lump's matter moves, before its waves spread it; the depth, in time's mean over rounds 65 to 128 of
+first where the lump's rows move, before its waves spread it; the depth, in time's mean over rounds 65 to 128 of
 the laid world, the 00 slot 7 at the lump's centre, 4 over its laid support and 5 over the void, 4 to 12 over the
 board (along x through (y, z) = (0, 0): 7, 6, 5, 5, 6, 7, 8, 8, 7, 6, 7, 8, 8, 7, 6, 5, 5, 6), so N^2 = rest / W is
 999986 parts per million at the centre and 999990 over the void, a well that is real but spread nearly flat over the
@@ -101,7 +101,7 @@ a lawful steady source.
 family in its frame (the held train found by its character and Mesh-less, the tied trains found by theirs) and term
 11's whole click, on a cube of 3 at den 1 and full_rate 10000 (the rest teeth 6 10^8, f = rest div Gamma = 60000).
 Its setting is laid by `tools/derivations/open_items/derive/boss/click_lay/lay.py` from the universe and the piece, in
-whole numbers by the act itself (its account in `lay.txt` beside it). Five trains: light (A1, part 2) and the metric
+whole numbers by the act itself (its account in `lay.txt` beside it). Five trains: the A1 train (part 2, the board's wave) and the metric
 at 0, push 0 and notch 0; the held hand (A1, A2) laid at rest at (1, 0) at every Node-clock, its before its now, no
 angle aimed (the sixth code reader's minor 1, the audit's N3), every edge tooth at the dial's middle, s = 0, the
 format's default, and its own spring CHOSEN at 10^8 by the rule: the grip at rest, den Gamma^2, the Mesh's own
@@ -147,14 +147,14 @@ click (NOT_CLOSED 4).
 
 ## The mesh world
 
-`examples/tensor24-mesh/` is a fifth folder of the same three files, a world where the board's wave reaches matter through
+`examples/tensor24-mesh/` is a fifth folder of the same three files, a world where the board's wave reaches a tied hand through
 the Mesh: the gradient vertex (FRAMES.md 7), laid by `runner/plans.py`'s `meshing` at the CHOSEN mesh, V = mesh x SUM_i
 M_i D_i L between the first part L of the board's wave and a tied hand's T1 rows M_i, as one potential's two pushes (each M_i's row
 pushed by -mesh D_i L and the wave's row by +mesh D_i M_i; A1 x T1 has no A1 channel at the value legs, so the board's
 wave reaches a vector hand through the Mesh alone, and the held hand, Mesh-less, takes none). Its setting is laid by
 `tools/derivations/open_items/derive/boss/mesh_lay/lay.py` from the universe and the piece (its account in `lay.txt`
 beside it): a ring of 180 Node-clocks along x, one across y and z, at den 1 and full_rate 10000 (the rest teeth 6 10^8,
-the grip 10^8, f = 60000); three trains: light (A1, part 2), its first part the well world's pulse (95, 281, 439, 500,
+the grip 10^8, f = 60000); three trains: the A1 train (part 2, the board's wave), its first part the well world's pulse (95, 281, 439, 500,
 439, 281, 95 about x = 20), laid at rest, its before its now, so that the act alone sets how it moves; the held hand
 (A1, A2) at rest at (1, 0), its before its now (no angle aimed; the sixth code reader's minor 1, the audit's N3), every
 edge tooth at the dial's middle, its own spring CHOSEN at 10^8 by the click world's rule, the grip at rest (the world's

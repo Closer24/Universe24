@@ -1,7 +1,7 @@
 """Clock: each neighbour tugs a gear toward its own count through their Mesh.
 Algebra: F is the sum over the six Spokes of grip (neighbour - own); a Mesh's grip is its rest plus the ii slots read at both its ends.
 Board: a Node-clock reads its six neighbours' gears at the now slot, and each Mesh grips alike from both ends.
-Clicks: waves and light travelling, as the clicks will read them.
+Clicks: the board's waves travelling, as the clicks will read them.
 """
 
 import numpy as np

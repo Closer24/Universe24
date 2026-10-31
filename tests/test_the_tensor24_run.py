@@ -24,7 +24,7 @@ from tests import frame
 
 ROOT = Path(__file__).resolve().parents[1]
 PATHS = [ROOT / "examples" / "tensor24" / f"{name}.json" for name in NAMES]
-TOOTH = 1 << 127  # a tooth within the files' width and past light's dial
+TOOTH = 1 << 127  # a tooth within the files' width and past the first train's dial
 FIELDS = ("round", "at", "site", "train", "count")  # a Count line's fields, schema.Count's
 REACH = 1 << 40  # the clock's counts are drawn below it
 HOW = {"capture_output": True, "text": True}  # a tool run, its output read
@@ -204,7 +204,7 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert got.header["sides"] == piece["shape"] and got.header["runner"] == "synchronous"
     ticks = setting["ticks"]
     end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1)
-    assert got.end == end and got.events == []  # no rate line, and light alone never clicks
+    assert got.end == end and got.events == []  # no rate line, and the wave alone never clicks
     card = {k: [t[k] for t in got.header["trains"]] for k in ("label", "winding", "key", "square")}
     assert card["label"] == [t["name"] for t in universe["trains"]] and card["square"] == [0, 1]
     assert card["winding"] == [1, len(laid.spokes) // len(piece["shape"])]  # the 00 row's dial, senses
