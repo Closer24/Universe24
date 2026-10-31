@@ -276,7 +276,9 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     if found:
         return [f"round 1: {line}" for line in found]
     events: list[dict[str, Any]] = []
-    partners, edges = joined(layout.click, len(loaded.trains)), crossed(layout.click, len(loaded.trains))
+    # the edges the structure lays, a chosen 0 their factor alone (MIN1's (c)): the Mesh's by its plan at strength 1
+    built = engine.layout(universe, shape, loaded._replace(mesh=loaded.meshed)).click
+    partners, edges = joined(layout.click, len(loaded.trains)), crossed(built, len(loaded.trains))
     with ledger.open("w", encoding="utf-8") as counted:
         for at, (end, clicks) in enumerate(rounds(engine.act, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))

@@ -46,9 +46,11 @@ def widening(c: Z, kept: Z) -> tuple[Z, Z]:
     return every, np.eye(kept.shape[-1], c.shape[-1], dtype=object)
 
 
-def edging(trains: Z, potential: tuple[Z, tuple[Z, Z, Z, Z]], key: Z, spokes: Z) -> tuple[Z, Z, Z]:
+def edging(
+    trains: Z, potential: tuple[Z, tuple[Z, Z, Z, Z]], structure: Z, key: Z, spokes: Z
+) -> tuple[Z, Z, Z]:
     """Term 11 on the edges, every passing between two trains as the act reads it, with the edge key (the owner's shared tooth for every pair of clocks, NC29b on David's split): per term of J's plan, as contract.pushes lays them (leg by leg, each leg's monomials in their order), its weight on every train and the train of the leg it pushes; and every side's key. A monomial's legs: each position one leg, a held train's positions one leg together, its excursion |k|^2 (the held spring's rest, n = 0); a leg's weight kappa (L - l) / L, L the monomial's legs and l its own train's, so a two-leg monomial weighs kappa / 2 on both legs and a tie kappa 2 / 3 on its held legs and kappa / 3 on its tied pair, David's split in the work form (NC29b's 3, 4 and 2 at kappa 6); its weight on a train u is that times 1 where the monomial has a value leg in u (one scatter of its legs' trains, lit), 0 elsewhere, so the side (t, u) passes SUM over the monomials on both trains of SUM_i ([leg i in t] - [leg i in u]) w_i W_i and the side (u, t) its negative, the diagonal, an own monomial and a pair of trains no monomial joins weighing 0; a monomial with value legs in three trains lies on the triangle's three edges, each edge passing the difference of its two trains' weighed work, the third train's legs weighing 0 there (no plan lays one; the mathematician's count on every world, NC29b's minor 1). kappa: the product of two and of every legs count a live monomial on an edge holds, each once, so that every weight is whole (6 on every world laid: the hands' tie's two legs and the tie's three); every side's key the universe file's one CHOSEN key times kappa / two, 3 there (David's OPEN, a change of a declared number, NC29b), the same for every side at every reach, its own Node-clock and across each Spoke (crossing, the Mesh's edges), odd as the key is, so a side's two teeth born at (key - 1) div senses sum to key - 1 (load.load) and stay so by the carry's law; no count typed: two the senses of an axis, read from the star, the positions the legs' own."""
-    factor, legs = potential
+    _, legs = potential
     n, d = spokes.shape
     senses, _ = carry(n, d, 0)
     stacked = np.stack(legs)  # (positions, monomials): each monomial's legs, the unit -1
@@ -71,8 +73,9 @@ def edging(trains: Z, potential: tuple[Z, tuple[Z, Z, Z, Z]], key: Z, spokes: Z)
         np.arange(monomials, dtype=np.intp)[None, :], train
     ]
     owners = present.sum(axis=1)
-    # a live monomial with value legs in two trains or more, and the edge monomials holding each count of legs
-    edged = lit(factor) * lit(owners * owners - owners)
+    # a monomial the structure lays (its factor with every chosen strength at 1) with value legs in two trains or
+    # more, and the edge monomials holding each count of legs: a chosen 0 enters as the factor alone (MIN1's (c))
+    edged = lit(structure) * lit(owners * owners - owners)
     counts = np.arange(1, positions + 1, dtype=object)
     among = (edged[:, None] * (1 - lit(total[:, None] - counts[None, :]))).sum(axis=0)
     kappa = np.prod(1 + lit(among + 1 - lit(counts - senses)) * (counts - 1))

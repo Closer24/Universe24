@@ -170,6 +170,7 @@ class Loaded(NamedTuple):
     mesh: tuple[
         Z, Z, Z
     ]  # the gradient vertex: per term its readings on the plan's planes, its factor, its row
+    meshed: tuple[Z, Z, Z]  # the gradient vertex's structure, its strength at 1: which Mesh edges exist
 
 
 def load(
@@ -189,22 +190,21 @@ def load(
     side = c.shape[-1]  # the axes' cube the tables stand in: the board's axes
     senses, _ = carry(len(star(side)), side, 0)  # the Spokes along one axis, its + and its -
     chosen, _, rest = universe["chosen"], *teeth(universe, star(side))
-    potential = joined(
-        notching(trains, star(side), chosen["notch"]),
-        holding(
-            trains,
-            c,
-            traces,
-            kept,
-            rest,
-            chosen["hold"],
-            universe["integers"]["full_rate"],
-            chosen["spring"],
-        ),
-        tying(trains, c, traces, kept, chosen["tie"]),
-    )
+
+    def potential_at(notch: Z, hold: Z, spring: Z, tie: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
+        """J's potential at the strengths given: the notch, the hold, the held hand's own spring and the hands' tie."""
+        rate = universe["integers"]["full_rate"]
+        return joined(
+            notching(trains, star(side), notch),
+            holding(trains, c, traces, kept, rest, hold, rate, spring),
+            tying(trains, c, traces, kept, tie),
+        )
+
+    potential = potential_at(chosen["notch"], chosen["hold"], chosen["spring"], chosen["tie"])
+    # the structure's factors, every chosen strength at 1: an edge exists by the structure alone, a chosen 0 its factor
+    structure, _ = potential_at(1, 1, 1, 1)
     # term 11 on the edges, every side's key the edge key, at its own Node-clock and across each Spoke
-    click = edging(trains, potential, chosen["key"], star(side))
+    click = edging(trains, potential, structure, chosen["key"], star(side))
     _, _, key = click
     birth, _ = carry(
         key - 1, senses, 0
@@ -212,7 +212,8 @@ def load(
     state, laid = lay(setting.get("gears", []), trains, sites, birth)
     push = pushing(trains, star(side), chosen["push"])
     mesh = meshing(trains, c, traces, square, kept, chosen["mesh"])
-    return Loaded(trains, potential, state, click, push, mesh), laid
+    meshed = meshing(trains, c, traces, square, kept, 1)  # the Mesh plan's structure, its strength at 1
+    return Loaded(trains, potential, state, click, push, mesh, meshed), laid
 
 
 def kept_forms(lifted: Any, half: Z) -> Z:
