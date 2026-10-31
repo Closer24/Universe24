@@ -214,3 +214,46 @@ Usage: python3 -I tooth.py <node-all src> <the click world's universe.json> [rou
   - any physics.
 
 Usage: python3 -I turns.py <node-all src> <the click world's universe.json> [rounds]
+
+## The third click's cone, a first stand-alone model (cone.py, cone_5000.txt)
+
+- **The owner's word of 12:4x UTC to Big Pic** (in Hebrew; in my translation): "... and check whether the cone is
+  needed on the board... of the third click... is it a cone to the past and to the future?"
+- **The model** (a test's lay in a stand-alone model, not the engine's board):
+  - turns.py's three like hands on a triangle of bands, laid turning, with its write at tau's landings;
+  - each hand also banded to one hub clock, and the hub at the end of a chain of 6 bands, each band its own square at
+    the click world's hands' tie, with no own spring laid;
+  - the rest of the board reads the three hands only through the hub, alike, so the turn is a symmetry of the whole
+    round;
+  - the far clock laid apart by amplitudes.py's top swing, 163,840.
+- **By construction:** the round reads a clock's own state and its neighbours' counts alone. So nothing reaches farther
+  than one edge per round, and the run back is the same round, so the same holds in the other sense of time.
+- **MEASURED, 5,000 rounds, tau born at two places:**
+  - E32's change equals the teeth's share in 5,000 of 5,000 rounds, the turns included; the widest count is 12 bits.
+  - **The past cone.** Two starts apart at the far clock alone. No clock's count comes apart sooner than its
+    distance: the chain at rounds 1, 9, 40, 84 and 135 (distances 1 to 5), the hub at 190 (distance 6), and the
+    hands at 208 to 213 (distance 7). Tau's landings first come apart at round 216 and 219.
+  - **The future cone.** Two ends apart at the far clock alone, each run back from its end state alone (the run back
+    exact). Counted back from the end, the same holds: 1, 9, 40, 84, 135 and 190, and the hands at 193 to 198.
+  - The reach is far inside the cone: the cone is a bound, and the bands' own speed is far below it.
+  - **The write's own reach.** With the writes and without, the hub's and the chain's lines are the unwritten path's
+    at every round. The hands' own lines come apart at round 1, tau's first landing.
+- **So, as a reading:**
+  - no cone needs laying on the board: the round's own reach is the cone, one edge per round, the same both ways in
+    time;
+  - the third click's write is local to its triangle, and, with the rest reading its like hands alike, nothing
+    outside sees it: here the write's future cone outside the triangle is empty;
+  - the choice at the triangle at round n is fixed by the start within its past cone (the start's clocks within n
+    edges) and, the run back exact, by the end within its future cone (the end's clocks within N - n edges): a double
+    cone, to the past and to the future;
+  - for a pair (bellend.py), the two wings' past cones meet at the source, and their future cones meet where the two
+    readings are joined. That is where the 11:52 law's connection, from the start and from the end, can run with no
+    reach beyond the cones. CANDIDATE, not run.
+- **Not shown:**
+  - a write that others read: it must tell the like hands apart, and then the turn is no symmetry of the round, so
+    the energy is not kept under it (OPEN, for 12:28);
+  - the cone on the engine's act and on the click world's own triangle;
+  - the pair run with the double cone;
+  - any physics.
+
+Usage: python3 -I cone.py <node-all src> <the click world's universe.json> [rounds] [chain]

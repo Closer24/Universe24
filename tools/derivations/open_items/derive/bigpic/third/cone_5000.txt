@@ -1,0 +1,10 @@
+== three like hands on a triangle of bands (laid turning, turns.py's lay), each banded to one hub, the hub at the end of a chain of 6 bands; 5000 rounds; the hands' tie 96000, W 600000000, the triangle's dial G D 457302861; the far clock 9, the hands 7 edges from it; the test's swing at the far clock 163840
+   tau born at 228651430: E32's change = the teeth's share in 5000 of 5000 rounds; widest count 12 bits; landings net 22414
+      the past cone: each clock's first round apart (the hands first, the hub, the chain to the far clock) [208, 213, 209, 190, 135, 84, 40, 9, 1, 1]; none sooner than its distance: True; tau's landings first apart at round 216
+      the future cone: the run back exact True; each clock's first round apart, counted back from the end, [193, 194, 198, 190, 135, 84, 40, 9, 1, 1]; none sooner than its distance: True
+      the write's own reach: the hub's and the chain's lines the unwritten path's at every round: True; the hands' own lines first apart at round 1; tau's first landing at round 1
+   tau born at 0: E32's change = the teeth's share in 5000 of 5000 rounds; widest count 12 bits; landings net 22414
+      the past cone: each clock's first round apart (the hands first, the hub, the chain to the far clock) [213, 210, 208, 190, 135, 84, 40, 9, 1, 1]; none sooner than its distance: True; tau's landings first apart at round 219
+      the future cone: the run back exact True; each clock's first round apart, counted back from the end, [197, 194, 193, 190, 135, 84, 40, 9, 1, 1]; none sooner than its distance: True
+      the write's own reach: the hub's and the chain's lines the unwritten path's at every round: True; the hands' own lines first apart at round 1; tau's first landing at round 1
+exit

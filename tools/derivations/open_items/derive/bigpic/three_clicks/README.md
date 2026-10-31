@@ -184,3 +184,58 @@ Usage: python3 -I spread.py <src> [RANGE]
   - the weight between the start and the end, idle here, since the form is symmetric in the two ends.
 
 Usage: python3 -I onecell.py <src>
+
+## The amplitudes in the clicks, a first stand-alone model (amplitudes.py, amplitudes_24.txt)
+
+- **The owner's word of 12:4x UTC to Big Pic** (in Hebrew; in my translation): "Make sure that in the clicks one sees
+  the amplitudes of the probabilities seen in nature... it will close everything for you. And check whether the cone
+  is needed on the board... of the third click... is it a cone to the past and to the future?" The cone is read in
+  third/README.md.
+- **The model** (a test's lay in a stand-alone model, not the engine's board):
+  - two driver clocks and one detector clock, each with the click world's own spring, on the engine's gear form;
+  - the detector joined to each driver by one two-leg edge at the click world's hands' tie, and no edge between the
+    drivers: two paths into one place;
+  - each edge carries the board's own passing (tooth.py's form) into its first-click tooth on the edge dial D;
+  - the board reads no tooth, so it runs once per lay, and every birth of a grid of 256 across the dial is counted on
+    the same passings by Rule3's carry;
+  - the detector's clicks are its net landings over a window of 24 rounds, summed over its two edges and totalled
+    over the births: the lay's expected count of clicks, times the births.
+- **MEASURED:**
+  - **The grain.** At the click world's own swing of 40 the detector at rest never moves, and no click lands. So it
+    stays up to a swing of 1,280. From 2,560 it moves: the widest count is 10, and the clicks are 155,190. Above the
+    grain each doubling of the swing multiplies the clicks by 3,799 to 4,361 per mille, and by 4,004 at the top
+    (163,840). The clicks go as the square of the swing.
+  - **The phases** (the top swing, a test's lay; driver 2 laid where its own free swing stands k rounds later). The
+    interference term (the clicks of both less the clicks of each alone) against the two swings' own overlap (the
+    lone swing's energy form, polar), per mille of the two alone, for k = 0 to 11:
+    - 992 / 1,000; 821 / 833; 325 / 389; -257 / -185; -725 / -698; -978 / -977;
+    - -929 / -931; -536 / -575; 48 / -27; 575 / 530; 911 / 910; 983 / 987.
+    - The two stand within 75 per mille at every phase.
+  - **The destructive zero.** Driver 2 laid as the round's exact mirror of driver 1: the detector stays at 0 at every
+    round, and no click lands. In phase, both give 3,983 per mille of driver 1 alone (four times, the square of two);
+    near half a swing (k = 5), 44 per mille.
+  - **The parallelogram law** of a square, clicks(1 + 2) + clicks(1 - 2) = 2 clicks(1) + 2 clicks(2), holds within 4
+    per mille at every phase.
+  - **The share along a setting.** A hand h = (m, n), |m| and |n| at most 4, is laid in phase on the two drivers. The
+    detector's two equal ties read the setting s = (1, 1); the hand (m, -n) on the same ties reads (1, -1), the same
+    count as a tie of the opposite sign.
+    - The clicks' share along (1, 1) equals the share rule's (h . s)^2 / ((h . h)(s . s)) within 323 per million, in
+      every one of the 40 hands.
+    - The two settings' clicks sum to twice the hand's own squares' clicks within 4 per mille: Pythagoras.
+    - The mirrored hand clicks alike, exactly.
+- **So, as a candidate:**
+  - in this model the clicks count the square of the summed amplitudes: a clock's swing is the amplitude, the
+    detector's ties are the setting, and the click count is the energy passed into the detector, its own square, in
+    units of the dial;
+  - the share rule, bellend.py's part (iii), laid there as a rule, is read here from the clicks' own counts;
+  - the two settings' sum is the hand's own square: the invariant, by Pythagoras (the owner's word to David of 12:3x
+    UTC).
+- **Not shown:**
+  - the one-click regime, a click or none per birth at a share below one: it does not arise on a detector at rest
+    here, since below the grain nothing passes, and at the grain each birth lands about 606 times;
+  - the click world's own clicks at its own swing of 40, which is below the grain here;
+  - the engine's act;
+  - the pair under the 11:52 law with these clicks;
+  - any physics.
+
+Usage: python3 -I amplitudes.py <node-all src> <the click world's universe.json> [rounds] [births] [doublings]
