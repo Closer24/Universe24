@@ -265,7 +265,7 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     if found:
         return found
     loaded, found = load(universe, setting, sites_of(shape), kinds, tables, square, lifted)
-    # the load's departures: the lay's, and a broken scale or an even edge dial (plans.dialled); nothing runs
+    # the load's departures: the lay's, and a broken scale or an even edge dial (files.dialled); nothing runs
     if found:
         return found
     layout = engine.layout(universe, shape, loaded)
