@@ -4,8 +4,15 @@ David, 2026-10-30, 15:xx UTC, for the architecture document's families (the Alge
 David's (board2mass 7.2; OPEN ...)"), on Sofer's statuses (6523641446, item 3: its probe m2 left the tree on the owner's
 word, so the line stands as OPEN until a whole-number probe and a new pair of readers stand) and the owner's word of
 11:1x UTC (everything to stand with a hostile mathematician and a hostile physicist). It rebuilds board2mass 7.2's
-checks in whole numbers alone, in the law's four layers (Postulate 4, item (10)). The probe is
+checks in whole numbers alone, in the law's four layers (Postulate 4, item (10)). The probe was
 derive/david_open/node/koide_whole.py, its output koide_whole.txt beside it, about 1 s.
+
+**Its probe left the tree** (2026-10-31, 02:1x UTC; its record stays in git at toys-5 c8c8adbba). The owner's law
+bars a root in the code and a root by search, and Sofer's gate now reads a search over a range for a value of a form:
+the probe took whole square roots by Newton's steps (its root(), in (d) and (f)) and counted whole solutions of forms
+by running over ranges ((b), (d) and (e)). The page's numbers below are that record's, read once, until a probe with no
+root and no search stands; the parity argument of (c), the Eisenstein norm's even power of 2, needs neither. The
+page is paused with its line (OPEN).
 
 **The finding in one line:** read as the roots of three masses, a held spring's three values on the diagonal (an A1
 part and an E part) never give Koide's ratio 2/3 with whole counts, since 2 / 3 asks an Eisenstein norm to carry an odd

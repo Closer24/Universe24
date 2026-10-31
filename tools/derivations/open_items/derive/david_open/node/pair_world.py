@@ -14,7 +14,9 @@ measured on this world by split4.py beside it.
 Usage: python3 -I pair_world.py <src of node-live at 575973a20> [rounds, 400 unless given]
 """
 
+import ast
 import sys
+from pathlib import Path
 
 import numpy as np
 
@@ -26,15 +28,44 @@ from tensor24.engine.contract import contract  # noqa: E402
 from tensor24.runner import load as loading  # noqa: E402
 from tensor24.runner.files import sites_of  # noqa: E402
 
+
+def b4_world(src):
+    """B4's pair world as the engine's run test lays it (tests/test_the_tensor24_run.py beside the src), read from the
+    test's own statements from its den to its gears, so this probe types no train: the test's world and its gears."""
+    tree = ast.parse(Path(src).parent.joinpath("tests", "test_the_tensor24_run.py").read_text(encoding="utf-8"))
+
+    def named(node, name):
+        return isinstance(node, ast.Assign) and [getattr(t, "id", None) for t in node.targets] == [name]
+
+    body = next(f.body for f in ast.walk(tree) if isinstance(f, ast.FunctionDef) and any(named(a, "hand") for a in f.body))
+    at = next(i for i, a in enumerate(body) if named(a, "hand"))
+    start = max(i for i in range(at) if named(body[i], "den"))
+    end = next(i for i in range(at, len(body)) if named(body[i], "gears"))
+    names = {}
+
+    def value(node):
+        if isinstance(node, ast.Constant):
+            return node.value
+        if isinstance(node, ast.Name):
+            return names[node.id]
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub):
+            return -value(node.operand)
+        if isinstance(node, ast.List):
+            return [value(e) for e in node.elts]
+        if isinstance(node, ast.Dict):
+            out = {}
+            for k, v in zip(node.keys, node.values, strict=True):
+                out.update(value(v) if k is None else {value(k): value(v)})
+            return out
+        raise ValueError(f"not a plain value in the test's world: {ast.dump(node)}")
+
+    for a in body[start : end + 1]:
+        if isinstance(a, ast.Assign):
+            names[a.targets[0].id] = value(a.value)
+    return names["world"], names["gears"]
+
 ROUNDS = int(sys.argv[2]) if len(sys.argv) > 2 else 400
-den = 1
-hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
-pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
-trains_f = [hand, {"name": "giver", **pair}, {"name": "taker", **pair}]
-chosen = {"key": 76801, "push": 0, "notch": 0, "hold": 1, "tie": 1200, "mesh": 0}
-integers = {"den": den, "full_rate": 10000, "width": 128}
-universe = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains_f}
-gears = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 0, -1, 0], [1, 0, 0, 32, 32, 0], [2, 0, 0, 0, -1, 0]]
+universe, gears = b4_world(sys.argv[1])  # B4's world and gears, read from the run test that lays them
 setting = {"version": 1, "ticks": ROUNDS, "gears": gears}
 shape = [1, 1, 1]
 

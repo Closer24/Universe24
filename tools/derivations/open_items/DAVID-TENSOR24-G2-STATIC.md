@@ -1,6 +1,6 @@
 # G2, the static field on the slot form: gamma = 1 from Postulate 6, and beta = 2 - gamma for test bodies
 
-David, 2026-10-31 (the sixth text, 00:2x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
+David, 2026-10-31 (the seventh text, 02:0x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
 close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's terms
 2, 3, 5 and 13 and for Postulate 6. It reads the act as built on main (0df0e8385), N2's source for term 5 (the Boss's
 draft, derive/boss/n2), and term 9's and term 13's texts at toys-5 55cc9b567 (their earlier readings cited by their own
@@ -29,11 +29,24 @@ behind the clicks).
 - **The fifth text** (toys-5 d3bcef1ae) folded them (section 12) and went back to that pair. The physicist PASSED it,
   with four minors. The mathematician found his N1 leftovers and N2 mended and one new item blocking, his N3: the
   page's own two-body rule refuses st = W too.
-- **Big Pic's word** (6536112029, item 2): N3 stands. The target is general relativity's own: J00 = J_ii (1 - u / 2)
-  is the ii source times the lapse at first order, since the static lapse law carries the lapse in its own source;
-  reading N exactly is a root, so the act's form of it is a debt. The minors stand.
-- **This text** folds them (section 13); section 14 says how it checked itself (the owner's word of 16:2x UTC,
-  6527238774).
+- **Big Pic's word** (6536112029, item 2): N3 stands. The target is general relativity's own: J00 = J_ii (1 - u / 2) is
+  the ii source times the lapse at first order, since the static lapse law carries the lapse in its own source; reading
+  N exactly is a root, so the act's form of it is a debt. The minors stand. (His 6536901666 withdraws the phrase;
+  below.)
+- **The sixth text** (toys-5 f6270c649) folded them (section 13; section 14 says how it checked itself, the owner's word
+  of 16:2x UTC, 6527238774) and went back to that mathematician, the physicist having passed the fifth. He refused it on
+  two items. N5, the target's wording: its two clauses read together give J00 = n (1 - u / 2)^2, which is n (1 - u) at
+  first order, k00 = 1, -4 Phi_2 in g_00 (zeta_2 = -1, refused) and a split of 2 |E_grav| / (M c^2), while read with
+  J_ii as the count Phi_2 is met and the split stays. N4: section 7's verdicts against nature unlabelled. His minor: the
+  lapse law's Laplacian is the spatial covariant one, whose weight decides k00.
+- **Big Pic's word** (6536901666, item 3): N5 and N4 stand. N5 corrects his own word: his 6536112029 phrase, J00 = J_ii
+  (1 - u / 2), the ii source times the lapse, is the phrase that splits the mass; only J00 = J_ii = n (1 - u / 2), both
+  pushes the count times the lapse, meets Phi_2 and keeps one mass, which is general relativity's (one mass for the 00
+  row and the ii rows), and the mathematician's one form replaces his phrase. N4: section 7 becomes "What stands on the
+  board", each verdict marked "not in the click world".
+- **This text** folds them (section 15) and says there how it checked itself. The miracle hunt's row 8 names its
+  result, Postulate 6 fixing gamma = 1 with beta = 2 - gamma, as a candidate (the Boss's 6536909238); nothing of it goes
+  to the owner as solved before this page passes its pair.
 - **The probe** is derive/david_open/node/g2_static.py, its output g2_static.txt beside it, whole numbers alone, about
   75 s (72 to 77 s on this machine). Cases built to break this text are in g2_cases.py beside it, its output
   g2_cases.txt (section 14). A number the probe does not print is named to the reader whose script prints it, or to its
@@ -45,8 +58,8 @@ bodies; for clocks in the wells of given sources Postulate 6 is beta = 1, and on
 compose by their product at first post-Newtonian order at gamma = 1 and only there, so at zero background Postulate 6
 fixes gamma = 1 (DERIVED), with beta = 1 for test bodies around sources at rest on an open board, under the two
 conditions of section 2.
-- **Refused by name:** the exponential of the 00 count, which gives beta = 1 - gamma and Mercury 4/3 of its advance.
-  It is the law's older clause, not Postulate 6.
+- **Refused by name:** the exponential of the 00 count, which gives beta = 1 - gamma and Mercury 4/3 of its advance
+  (a board reading set against nature, not in the click world). It is the law's older clause, not Postulate 6.
 - **The background** (the physicist's N1, N2 and N3; Big Pic): at term 9's rest a strength fixed in lattice counts
   fails Postulate 6 (gamma_obs = 11/9 and beta_obs = 7/9 at u_c = 1/10), and N2's teeth factor moves G at first order.
   A push in the Node-clock's own units, at its teeth and grip, would meet Postulate 6 at every rest, but no law of the
@@ -59,18 +72,19 @@ conditions of section 2.
   must carry; the act's own slot laws do not give it, since the books' form gives slow matter gamma 0, and the trace
   mixing that would derive it is term 6's (OPEN; Big Pic, as the Boss's TERM5_FIFTH said,
   derive/boss/g2/term5_third/TERM5_FIFTH.md on boss-derive).
-- **Two masses, REFUSED by nature on the PPN reading** (the mathematician's N1, N2 and N3; Big Pic): for two masses
-  that pull each other, N2's source lowers each body's 00 mass by 2 u1 of the other at its place. General relativity
-  has such a cross part too, the sources' mutual energy (Phi_2), and N2's misses it by -6 Phi_2 in g_00 at the
-  conserved density (by -12 at the rest-mass density): PPN's zeta_2 = -3, zeta_2's part of Nordtvedt's eta 1, against
-  lunar laser ranging's few times 10^-4, and the binary pulsar bounds zeta_2 near 4 x 10^-5. st = W and case B, whose
-  cross part is 0, miss by +2 and -4 (zeta_2 = +1 or -2), refused alike unless the counts' density is rho* (1 - U).
-  The target is general relativity's own, J00 = J_ii (1 - u / 2) at the conserved density with J_ii falling alike,
-  the ii source times the lapse; its form on the act is a debt (OPEN). Board readings set against nature: not in the
-  click world.
+- **Two masses, REFUSED by nature on the PPN reading** (the mathematician's N1, N2 and N3; Big Pic): for two masses that
+  pull each other, N2's source lowers each body's 00 mass by 2 u1 of the other at its place. General relativity has such
+  a cross part too, the sources' mutual energy (Phi_2), and N2's misses it by -6 Phi_2 in g_00 at the conserved density
+  (by -12 at the rest-mass density): PPN's zeta_2 = -3, zeta_2's part of Nordtvedt's eta 1, against lunar laser
+  ranging's few times 10^-4, and the binary pulsar bounds zeta_2 near 4 x 10^-5. st = W and case B, whose cross part is
+  0, miss by +2 and -4 (zeta_2 = +1 or -2), refused alike unless the counts' density is rho* (1 - U). The target is
+  general relativity's own, at the conserved density J00 = J_ii = n (1 - u / 2), n the count's push at a fixed swing
+  (N2's J_ii, which does not move with the teeth): both pushes the count times the lapse at first order, so J00 / J_ii =
+  1; its form on the act is a debt (OPEN). Board readings set against nature: not in the click world.
 - **The source moves with the teeth:** N2's 00 source falls as J00 = J_ii (1 - 2 u) in a well, so a body's two exterior
   masses part and gamma_ext moves up: about +2 x 10^-5 for the Sun on the mathematician's figure, its self-energy part
-  alone about +3 x 10^-5 on the physicist's, at Cassini's 2.3 x 10^-5. The strides weighed at the gear's own teeth
+  alone about +3 x 10^-5 on the physicist's, at Cassini's 2.3 x 10^-5 (a board reading set against nature, not in the
+  click world). The strides weighed at the gear's own teeth
   (st = W) would keep one mass, but its two-body cross part is refused (above); the target keeps one mass with the
   lapse's factor (above).
 - **The background in fixed units:** gamma = 1 holds at zero background. With the push fixed in lattice counts term
@@ -79,7 +93,7 @@ conditions of section 2.
   OPEN. On the cut, the 00 row's teeth at rest, the law above does not hold (term 9's two readers, with Big Pic for his
   re-check): it needs a 00 law that keeps one cone.
 - **Light** reads beta only at second order, beside g_ii's own second order, epsilon, which is OPEN.
-- **Refused beside it:**
+- **Refused beside it** (board readings set against nature, not in the click world):
   - the self-push onto the ii slots at strength 0, by the Event Horizon Telescope, so the strength is not 0 and the
     strong field is OPEN;
   - frame dragging, 0 on the act as built, by Gravity Probe B until term 10;
@@ -239,7 +253,7 @@ conditions of section 2.
     and so one exterior mass: the edge's dial read for the sources (Big Pic, 6527540022 item 8). But its two-body cross
     part is 0, which misses general relativity's Phi_2 by +2 at the conserved density and by -4 at the rest-mass
     density, refused on the PPN reading (below; the mathematician's N3). The split stays a departure, named with its
-    size, and the target, J00 = J_ii (1 - u / 2) with J_ii alike, keeps one mass and Phi_2 both (below).
+    size, and the target, J00 = J_ii = n (1 - u / 2), keeps one mass and Phi_2 both (below).
 - **Pressure, condition (ii)** (the first physicist's item 3). N2's matter source puts rho + 3 p on the 00 slot and
   rho - p on each ii slot, in the metric's terms.
   - Outside a body at rest the two 1 / r terms then carry M + 3 P and M - P, P the volume integral of the pressure, and
@@ -447,12 +461,20 @@ conditions of section 2.
       cross part is 0, so by the same rule they miss by +2 at the conserved density (zeta_2 = +1, eta's part -1/3) and
       by -4 at the rest-mass density (zeta_2 = -2, eta's part 2/3), refused unless the counts' density is rho* (1 - U).
       They remove the split but stop the binding energy gravitating.
-    - **The target is general relativity's own** (the mathematician's N3; Big Pic, 6536112029 item 2). A source that
-      mends both the split and Phi_2 has, at the conserved density, J00 = J_ii (1 - u / 2), with J_ii falling alike to
-      keep one exterior mass (r5_cands: k = 1/2 misses by 0 at the conserved density). That is the ii source times the
-      lapse at first order (N^2 = 1 / (1 + u)): in general relativity the static lapse law, div grad N = 4 pi G N
-      (rho + 3 p), carries the lapse in its own source, so the 00 slot's source is the matter's energy read on the local
-      clock. Reading N exactly is a root, so the act's form of it is a debt (OPEN).
+    - **The target is general relativity's own** (the mathematician's N3 and N5; Big Pic, 6536112029 item 2, his phrase
+      withdrawn by his 6536901666 item 3). A source that mends both the split and Phi_2 has, at the conserved density,
+      J00 = J_ii = n (1 - u / 2), n the count's push at a fixed swing (N2's J_ii, which does not move with the teeth):
+      both pushes the count times the lapse at first order, so J00 / J_ii = 1 (r5_cands: k = 1/2 misses by 0 at the
+      conserved density; r6_target: of three readings of the words, only this one meets Phi_2 and keeps one exterior
+      mass). Read with both clauses as the sixth text wrote them, J00 = n (1 - u / 2)^2 is n (1 - u) at first order, k00
+      = 1, -4 Phi_2 in g_00 (zeta_2 = -1, refused) and a split of 2 |E_grav| / (M c^2); read with J_ii as the count,
+      Phi_2 is met and the split stays (the mathematician). The form is the lapse at first order (N^2 = 1 / (1 + u)): in
+      general relativity the static lapse law, D^i D_i N = 4 pi G N (rho + 3 p) with D^i D_i the spatial covariant
+      Laplacian, whose weight decides k00, carries the lapse in its own source. In isotropic radius D^i D_i N = A^-3 d_i
+      (A d_i N), so d_i (A d_i N) = 4 pi G N rho* with rho* = rho A^3; with N = (1 + u)^(-1/2) and A = 1 + U the weight
+      A (1 + u)^(-3/2) is 1 - 2 U at first order, the slot form's grip factor 1 + 2 v at gamma = 1, so the 00 push is
+      rho* (1 - u / 2) and k00 = 1/2 (the mathematician, by hand). Reading N exactly is a root, so the act's form of it
+      is a debt (OPEN).
   - The principle the first mathematician named, each slot pushed by minus the derivative of matter's energy with
     respect to it, gives gamma near 0 for slow matter (his estimate), and exactly 0 for a gear laid alike on the act's
     tick (the physicist's N3): Postulate 6 and Cassini refuse it. Term 5's books' form is this principle with the act's
@@ -749,7 +771,11 @@ of rounds is refused by name (D7). No slot ever reaches the record.
 - **(h)** The background: u0 x 10^6 = 945,000 at L = c / H0, where gamma_obs / gamma x 10^6 is 35,363,636 by the
   readings and 1,250,586,776 with N2's source; u0 x 10^6 = 21,619 at 672 Mpc, where it is 1,044,193 and 1,090,340.
 
-## 7. What stands (rows for the architecture document)
+## 7. What stands on the board (rows for the architecture document)
+
+Each row below is a board statement; the verdicts against nature in it (Cassini, Mercury, the PPN refusals, the Event
+Horizon Telescope) are board readings set against nature, not in the click world, until two click-world readings
+stand (the owner's law; the mathematician's N4).
 
 - **Term 2, the teeth:** clocks read N^2 = rest / W at zero beat, the teeth going as -g^00 (the undensitized inverse
   metric), with the next order (s / (12 rest)) u / (1 + u). A clock beating fast reads the well deeper: a redshift that
@@ -759,12 +785,13 @@ of rounds is refused by name (D7). No slot ever reaches the record.
   (CHECKED on the act).
 - **Term 5's strengths per slot:** DERIVED from Postulate 6 at zero background. Each slot is pushed in the unit its
   reading uses, the ii slots at -1 / 12 of the 00 slot's, the one strength at which two given wells compose by their
-  product on the act's pull (the wells CHECKED, probe (d3)): gamma = 1, with Cassini its test. At term 9's rest that
+  product on the act's pull (the wells CHECKED, probe (d3)): gamma = 1 on the board, with Cassini its test (a board
+  reading set against nature, not in the click world). At term 9's rest that
   strength fails Postulate 6; a push in the Node-clock's own units would meet it at every rest, and no law of the act
   gives one: term 5's books' form carries the teeth factor and gives slow matter gamma 0 (the physicist's N3; Big
-  Pic). Case B and st = W remove the teeth factor and are refused for two masses on the PPN reading; the target is
-  J00 = J_ii (1 - u / 2), the ii source times the lapse, its act form a debt. N2's draft's +1 gives gamma = -12,
-  refused.
+  Pic). Case B and st = W remove the teeth factor and are refused for two masses on the PPN reading (not in the click
+  world); the target is J00 = J_ii = n (1 - u / 2), both pushes the count times the lapse, its act form a debt. N2's
+  draft's +1 gives gamma = -12, refused on the board's own rule.
   - Then beta = 1, the postulate's own content for given wells, for test bodies around sources at rest on an open board
     at zero background, under condition (i) (v1 = -(gamma / 2) u1 at every Node-clock) and condition (ii) (the field's
     own stress balances pressure: OPEN, N2's self-push not 0); on the act's wrapped board with term 9's one range, to
@@ -777,11 +804,12 @@ of rounds is refused by name (D7). No slot ever reaches the record.
   - The static source is that of a train whose source does not beat.
 - **Postulate 6:** for clocks in given wells it is beta = 1; the slot form meets it at gamma = 1 at zero background. For
   two masses N2's cross part misses general relativity's Phi_2 by -6 at the conserved density: REFUSED by nature on N2's
-  source, on the PPN reading (zeta_2 = -3); st = W and case B miss by +2, refused alike. The exponential of the 00
-  count, the law's older clause The rates compose, gives beta = 1 - gamma, beta = 0 at gamma = 1: REFUSED by Mercury, by
-  name.
+  source, on the PPN reading (zeta_2 = -3), not in the click world; st = W and case B miss by +2, refused alike. The
+  exponential of the 00 count, the law's older clause The rates compose, gives beta = 1 - gamma, beta = 0 at gamma =
+  1: REFUSED by Mercury, by name, not in the click world.
 - **Term 13:** the one reading, the act with N2's self-push onto the ii slots at strength 0, has a critical curve 16/9
-  of general relativity's in b, (16/9)^2 in b^2, and is excluded by the Event Horizon Telescope. The strength cannot
+  of general relativity's in b, (16/9)^2 in b^2, and is excluded by the Event Horizon Telescope (not in the click
+  world). The strength cannot
   be 0, and the strong field is OPEN at the strength condition (ii) needs. Its throat lies at r = 5 G M / c^2. The
   target is W without bound at the isotropic radius G M / (2 c^2) with the grip g/16; term 13's second text carries the
   rest.
@@ -803,10 +831,11 @@ of rounds is refused by name (D7). No slot ever reaches the record.
   Cassini lift waits on this law.
 - **Condition (ii):** N2's self-push onto the ii slots, its strength not 0 (section 5), balancing pressure as von
   Laue's theorem does.
-- **One exterior mass and Phi_2 together:** the target J00 = J_ii (1 - u / 2), with J_ii falling alike, the ii source
-  times the lapse at first order (Big Pic, 6536112029 item 2); its form on the act, which cannot read N exactly with
-  no root, is the debt. st = W keeps one mass and is refused for two (2). Until it stands, the split of section 2 is a
-  departure.
+- **One exterior mass and Phi_2 together:** the target J00 = J_ii = n (1 - u / 2), n the count's push at a fixed swing
+  (N2's J_ii, which does not move with the teeth): both pushes the count times the lapse at first order, so J00 / J_ii =
+  1 (the mathematician's N5; Big Pic's 6536901666 item 3, which withdrew his 6536112029 phrase); its form on the act,
+  which cannot read N exactly with no root, is the debt. st = W keeps one mass and is refused for two (2). Until it
+  stands, the split of section 2 is a departure.
 - **epsilon**, g_ii's own second order, which light reads at second order: 4 at self-push 0 against general
   relativity's 1, and the bracket there 8/5 of general relativity's.
 - **The sign in code:** N2's draft pushes the ii slots with the 00 slot's sign; the zero-background strength is -1/12
@@ -1052,8 +1081,10 @@ The fourth text's record. Its density road, taken on Big Pic's 6534774141, is wi
 - st = W's two-body coefficient is 0; on the page's own rule it misses by +2 at the conserved density (zeta_2 = +1,
   eta's part -1/3) and by -4 at the rest-mass density, so both are refused on the PPN reading, as N2's -6 is.
 - The target is general relativity's own: J00 = J_ii (1 - u / 2) is the ii source times the lapse at first order, since
-  N^2 = 1 / (1 + u), and in general relativity the static lapse law, div grad N = 4 pi G N (rho + 3 p), carries the
-  lapse in its own source. Reading N exactly is a root, so the act's form of it is the debt.
+  N^2 = 1 / (1 + u), and in general relativity the static lapse law, D^i D_i N = 4 pi G N (rho + 3 p), carries the lapse
+  in its own source. Reading N exactly is a root, so the act's form of it is the debt. (Big Pic's 6536901666 item 3
+  withdrew this phrase, which splits the mass read as the ii source times the lapse; the one form is J00 = J_ii = n (1 -
+  u / 2), the mathematician's N5, folded in the seventh text, section 15.)
 - The minors stand: "refused by nature" holds on the PPN reading; C^2 = m^4 A B^3 is general relativity's relation,
   quoted, not derived on the act.
 
@@ -1086,7 +1117,7 @@ checked and how. The cases are in g2_cases.py beside the probe, its output g2_ca
     conserved density;
   - by hand: N = (1 + u)^(-1/2) is 1 - u / 2 at first order, so J00 = J_ii (1 - u / 2) is J_ii times the lapse there;
     k = 1/2 in J00 = J_ii (1 - k u) gives the coefficient -4 k = -2, which is general relativity's at the conserved
-    density;
+    density, read with J_ii the count (the phrase Big Pic withdrew, which splits the mass; the one form, section 15);
   - by hand: the beat's term in free fall, 1/48 - 1/4800 = 99/4800 between the probe's fast and slow clocks.
 - **The fifth text's checks** (no probe changed):
   - g2_static.py rerun in 61 s and g2_cases.py in 5 s on main's src at 0df0e8385, each byte for byte against its saved
@@ -1192,3 +1223,39 @@ checked and how. The cases are in g2_cases.py beside the probe, its output g2_ca
   - The fifth text: the density road's gamma = 1, taken on Big Pic's word in the fourth text, falls on the act (the
     physicist's N3, Big Pic's own check), and each place now says so; the volume page's note is scoped to the wells of
     given sources (2).
+
+## 15. The sixth text's reader, folded (the seventh text)
+
+The sixth text (toys-5 f6270c649) went back to the mathematician of the second pair (the physicist passed the fifth
+text). He found N3 mended and returned NOT PASSED on two items. His report went to Big Pic first (David's 6536738713,
+item 5).
+
+**Big Pic's word** (6536901666, item 3): N5 and N4 stand.
+- N5: only J00 = J_ii = n (1 - u / 2), both pushes the count times the lapse, meets Phi_2 and keeps one mass, which is
+  general relativity's (one mass for the 00 row and the ii rows).
+- This corrects his own word: his 6536112029 item 2 gave the target as "J00 = J_ii (1 - u / 2)", the ii source times
+  the lapse, which is the phrase that splits the mass. The mathematician's one form replaces it.
+- N4: section 7 becomes "What stands on the board", each verdict marked "not in the click world".
+
+**The mathematician's two, and his minor:**
+1. N5, the target's form: the header, the finding, sections 2, 7, 8 and 13 give J00 = J_ii = n (1 - u / 2), n the
+   count's push at a fixed swing (N2's J_ii, which does not move with the teeth), with his three readings of the words
+   (r6_target): the page's words read literally give k00 = 1, -4 Phi_2 (zeta_2 = -1, refused) and a split of 2 |E_grav|
+   / (M c^2); J_ii read as the count meets Phi_2 and splits the masses; only the one form does both (2).
+2. N4: section 7 is retitled "What stands on the board", with a preamble, and each verdict against nature in it
+   (Cassini, Mercury, the PPN refusals, the Event Horizon Telescope) and in the finding is labelled a board reading set
+   against nature, not in the click world (the finding; 7).
+3. His minor: the static lapse law is D^i D_i N = 4 pi G N (rho + 3 p) with D^i D_i the spatial covariant Laplacian, and
+   its weight decides k00: in isotropic radius D^i D_i N = A^-3 d_i (A d_i N), so d_i (A d_i N) = 4 pi G N rho* with
+   rho* = rho A^3, and with N = (1 + u)^(-1/2) and A = 1 + U the weight A (1 + u)^(-3/2) is 1 - 2 U at first order, so
+   the 00 push is rho* (1 - u / 2) and k00 = 1/2 (2; 13).
+
+**How the seventh text checked itself:**
+- **No probe moved:** g2_static.py and g2_cases.py are unchanged since the sixth text, their outputs with them.
+- **The reader's r6_target rerun by me** on main's src at 0df0e8385, byte for byte: (1 - u/2)^2 x 4 = 4 - 4 u + u^2,
+  first order k = 1; the three readings' k00, kii, Phi_2 misses and splits as stated (2).
+- **Derived again by hand:** the covariant Laplacian, (1 / sqrt g) d_i (sqrt g g^ij d_j N) with g_ij = A^2 delta_ij,
+  sqrt g = A^3 and g^ij = A^-2 delta_ij, is A^-3 d_i (A d_i N); d_i N = -(1/2) (1 + u)^(-3/2) d_i u; with u = 2 U at
+  first order, (1 + U)(1 - 3 U) = 1 - 2 U; the 00 push rho* N = rho* (1 - u / 2), k00 = 1/2.
+- **What the text searched again:** every "J00 = J_ii (1 - u / 2)", "6536112029", "refused", "Cassini", "Mercury",
+  "Event Horizon" and "div grad": each now carries the one form, his correction, or its label.

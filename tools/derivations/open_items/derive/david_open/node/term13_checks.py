@@ -197,3 +197,46 @@ print(f"12. 4 r (R - 2 M) = (2 r - M)^2 on a grid: {ok12}")
 # 13. the double pulsar: the excess 3/7 and 3/4 against 0.0034 and 0.0084, rounded down
 print(f"13. 3/7 over 0.0034: {carry(3 * 10000, 7 * 34, 0)[0]}; 3/4 over 0.0034: {carry(3 * 10000, 4 * 34, 0)[0]};"
       f" 3/7 over 0.0084: {carry(3 * 10000, 7 * 84, 0)[0]}; 3/4 over 0.0084: {carry(3 * 10000, 4 * 84, 0)[0]}")
+
+# 14. the pair bound's general form (Big Pic, 6536901666 item 1), the seventh text's check. Each spherical body with a
+#     source at or above 0 holds w = 2 m / r outside it, the fields add, and the contact point of two touching bodies
+#     must keep w at or below 1 / (2 gamma): 4 gamma (m1 s2 + m2 s1) <= s1 s2. Then d = s1 + s2 meets the bound
+#     d >= 4 gamma (sqrt m1 + sqrt m2)^2, written with no root: with D = d / (4 gamma), D >= M and (D - M)^2 >= 4 m1 m2.
+def pair_bound(m1, m2, s1, s2, gamma):
+    d, big = s1 + s2, m1 + m2
+    lawful = 4 * gamma * (m1 * s2 + m2 * s1) <= s1 * s2
+    held = d >= 4 * gamma * big and (d - 4 * gamma * big) ** 2 >= 16 * gamma * gamma * 4 * m1 * m2
+    exact = d >= 4 * gamma * big and (d - 4 * gamma * big) ** 2 == 16 * gamma * gamma * 4 * m1 * m2
+    return lawful, held, exact
+
+
+lays = broken = 0
+for gamma in (1, 2):
+    for m1, m2 in ((1, 1), (2, 1), (3, 2), (10, 1), (49, 1), (36, 29)):
+        for s1 in range(1, 701):
+            for s2 in range(1, 701):
+                lawful, held, _ = pair_bound(m1, m2, s1, s2, gamma)
+                lays += lawful
+                broken += lawful and not held
+w49 = add(red(2 * 49, 224), red(2 * 1, 32))
+w10 = add(red(2 * 10, 53), red(2 * 1, 17))
+w11 = add(red(2 * 1, 8), red(2 * 1, 8))
+wrong = add(red(2 * 49, 128), red(2 * 1, 128))
+k_rows = [ratio_text(red(4 * (k + 1) ** 2, k * k + 1)) for k in (1, 7, 1000)]
+# 10:1, the bound over M between 6.299 and 6.300: D = 6.299 x 11 / 4 lies below it, 6.300 x 11 / 4 on or above it
+low10 = (6299 * 11 - 4000 * 11) ** 2 < 4 * 10 * 1 * 4000 ** 2
+high10 = (6300 * 11 - 4000 * 11) ** 2 >= 4 * 10 * 1 * 4000 ** 2
+# 36:29, D in thousandths of the mass unit between 129.621 and 129.622, and in metres at 70 solar masses (413455 / 65 m
+# a unit)
+low36 = (129621 - 65000) ** 2 < 4 * 36 * 29 * 1000 ** 2
+high36 = (129622 - 65000) ** 2 >= 4 * 36 * 29 * 1000 ** 2
+km_low, km_high = carry(129621 * 413455, 65 * 1000, 0)[0], carry(129622 * 413455, 65 * 1000, 0)[0]
+print(f"14. the pair bound's general form, (D - M)^2 >= 4 m1 m2 with D = d / (4 gamma) >= M, on every pair of touching"
+      f" shells of whole radii 1 to 700 whose contact keeps w at or below 1 / (2 gamma), gamma 1 and 2, masses 1:1, 2:1,"
+      f" 3:2, 10:1, 49:1 and 36:29: {lays} lays, {broken} below the bound; reached at 49:1 by radii 224 and 32"
+      f" (contact w {ratio_text(w49)}, {pair_bound(49, 1, 224, 32, 1)[2]}) and at 1:1 by 8 and 8 (contact w"
+      f" {ratio_text(w11)}, {pair_bound(1, 1, 8, 8, 1)[2]}); 10:1 at 53 and 17, contact w {ratio_text(w10)}, above the"
+      f" bound, which lies between 6.299 and 6.300 M: {low10 and high10}; 49:1 at 128 and 128 breaks the ceiling (contact"
+      f" w {ratio_text(wrong)}); the bound over M at k^2:1 for k = 1, 7, 1000: {k_rows}, falling toward 4; at 36:29 D lies"
+      f" between 129.621 and 129.622 of the mass unit: {low36 and high36}, d between {km_low} and {km_high + 1} m at 70"
+      f" solar masses")

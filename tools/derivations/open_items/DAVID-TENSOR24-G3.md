@@ -1,10 +1,10 @@
 # G3, the coupling family: the held hand still at the bottom of a hat, and the ties it holds
 
-David, 2026-10-31 (the ninth text, 00:0x UTC), on the Boss's word of 19:1x UTC (#2187 6531422713, item 3): "your hat
-is that quartic", the quartic the night's frame's hostile mathematician names as the direction for its item 3, "a
-whole-number quartic on k with the unit". It keeps what the Boss decided for the night's frame (6531004963, decision
-2; NOT_CLOSED 10): the held hand is the train of character (A1, A2) at part 1, told from light, (A1, A1), by character.
-It replaces only the hand's own spring of 2 rest, which turns the hand a quarter a round (FRAMES.md 6), by a hat on the
+David, 2026-10-31 (the tenth text, 02:0x UTC), on the Boss's word of 19:1x UTC (#2187 6531422713, item 3): "your hat is
+that quartic", the quartic the night's frame's hostile mathematician names as the direction for its item 3, "a
+whole-number quartic on k with the unit". It keeps what the Boss decided for the night's frame (6531004963, decision 2;
+NOT_CLOSED 10): the held hand is the train of character (A1, A2) at part 1, told from light, (A1, A1), by character. It
+replaces only the hand's own spring of 2 rest, which turns the hand a quarter a round (FRAMES.md 6), by a hat on the
 hand's norm. It takes Big Pic's quaternion lead (6530683608, item 11) and his re-check of the seventh text (6530163632,
 item 3: the turning hand withdrawn as nature's vacuum). It answers the owner's word of 11:1x UTC (derive what the
 Node-clock needs; every derivation to stand with a hostile mathematician and a hostile physicist) and his words of the
@@ -22,10 +22,21 @@ split), in the law's four layers (Postulate 4, item (10)).
   as the hat's road on Big Pic's word (6535643629, item 3); its second text (toys-5 4cbece813) was refused by both its
   readers, the middle form breaking the shipped room and booking a tie-borne mass to the vacuum, and the road is with
   Big Pic again (6536047021).
-- **This text** folds them (section 8); section 9 says how it checked itself. The probes are
-  derive/david_open/node/g3_hat.py (about 2 minutes), unchanged, and derive/david_open/node/g3_pump.py (about 25 s),
-  new, their outputs beside them, whole numbers alone, every division Rule3's carry, with no root, logarithm, search or
-  function of the turn's arc. A number the probes do not print is named to the reader whose script prints it.
+- **The ninth text** (toys-5 634c8007f) folded them (section 8; section 9 says how it checked itself) and went back to
+  that pair. The physicist PASSED it with four minors. The mathematician found his B3 to B5 mended and returned NOT
+  PASSED on two items: B1, the window necessary and not sufficient, a hand swung across the hat running away inside the
+  frozen bound (his h9_b1 and h9_sweep); B2, the count test laid by a count where the swing's speed decides (his h9_b2).
+  Both readers caught a slip of mine in section 9's arithmetic of the top.
+- **Big Pic's word** (6536901666, item 4): B1 and B2 stand. The text states the measured bound from the top, 20 hat n <=
+  W, or keeps the lays to small swings; the count test is laid by the swing's speed, inside the top. He checked my slip:
+  in thousandths of q the check is s^2 + 4,000 s against 4 x 10^6, 3,997,584 at 828 and 4,003,241 at 829, so q^2 + 4 q <
+  4 and q lies below 2 (sqrt 2 - 1) = 0.828, the top of his 6536221174 item 5, and B2's d below 0.41 R is the same top,
+  (sqrt 2 - 1) R. His "neutral, not stable" goes in with them.
+- **This text** folds them (section 10) and says there how it checked itself. The probes are
+  derive/david_open/node/g3_hat.py (about 2 minutes) and derive/david_open/node/g3_pump.py (about 25 s), both unchanged
+  since the ninth text, their outputs beside them, whole numbers alone, every division Rule3's carry, with no root,
+  logarithm, search or function of the turn's arc. A number the probes do not print is named to the reader whose script
+  prints it.
 
 **The finding in one line:** a hat on the held hand's norm, V = hat (|k|^2 - n)^2, laid as three kinds of monomials of
 the vertex law, holds the hand still at every whole rest of |k|^2 = n; its angle is not free, its tie is a declared mass
@@ -53,9 +64,16 @@ inside the room, and its size is not nature's Higgs on this act.
   no wall, string or monopole, and textures on a three-dimensional board (pi_3 of the sphere is the integers).
 - **The window is the hand's whole range:** along the radius the hat's stiffness is 4 hat (3 |k|^2 - n), 8 hat n at the
   rest and 20 hat n at |k|^2 = 2 n, the far turn of a hand that rolls from the top. Mesh-less the act runs away inside
-  the eighth text's window (his h8_window).
-- **Its count of the size is the edge's at small swings:** the act counts the recurrence's 40 sign changes from about 50
-  counts off the rest up; below, the edge's staircase (FRAMES 1), as with no hat (his h8_small).
+  the eighth text's window (his h8_window), and inside the frozen bound 20 hat n < 4 W too: at 20 hat n = 3.5, 3.75
+  and 3.9 W every lay laid across the hat goes away in 10 to 59 rounds, at 3 W all four lays, at 2 W two of four, and
+  from W down every lay stays bounded over 6,000 rounds (his h9_b1 and h9_sweep, on the ninth text). The frozen bound is
+  necessary, not sufficient: with the size's beat near a radian a round, a swing across the hat overshoots, the step's
+  energy not the continuum's. The window for swings that reach the top is the bound measured over long runs, 20 hat n
+  <= W, a board reading.
+- **Its count of the size is the edge's at small swings:** at the probe's beat and R the act counts the recurrence's 40
+  sign changes from about 50 counts off the rest up; below, the edge's staircase (FRAMES 1), as with no hat (his
+  h8_small). The threshold is the swing's speed, not a count: d^2 x 8 hat R^2 / W of about 10 or more, inside the top
+  (his B2 on the ninth text).
 - **Decision 40 (g) is not met:** a still hand's wind is D = R^2 - R x R = 0, and R is CHOSEN. Frame 6's turning hand
   holds D = 1 and weighs W a Node-clock; no frame on this act has both (the owner's word).
 - **For the night:** frame 6 as built; the hat's corrected frame (section 6) for Sofer's morning page.
@@ -118,17 +136,22 @@ inside the room, and its size is not nature's Higgs on this act.
     turn: no tongue at any swing that keeps the hand off the top. A hand laid still at (R + d, k_1) has turn 0 and moves
     along its own line, its angle in proportion to its size.
   - The top bounds that: laid still at R + d, the hand's inner turn is at |k|^2 = 2 n - (R + d)^2, which reaches the
-    top where (R + d)^2 = 2 n, at d near 0.414 R. Big Pic's Mathieu at a = 0 with q = 2 d / R, stable below q of about
-    0.91, is the first-order form of the same; its tongue lies past the top, which is at q near 0.83.
+    top where (R + d)^2 = 2 n, at d near 0.414 R. Big Pic's Mathieu at a = 0 with q = 2 d / R is the first-order form
+    of the same; its tongue lies past the top, which is at q near 0.83. Big Pic's word (6536221174 item 5): Mesh-less
+    there is no exponential pump, and the angle is neutral, not stable, with the free turn's linear drift and the edge's
+    rounding drift, named a price (board readings).
   - On the act the counts are whole, so a hand leaves its line through the middle, the turn walks off 0, and a seeded
     angle drifts by it while the size swings; the drift is the edge's, irregular in the swing (probe (l)). A row laid at
     0 stays at 0, since the push on it is in proportion to it.
 - **The window.** The step's window is strict, 0 < K / W < 4 (the frame's mathematician, item 5), K the stiffness the
   step meets. Along the radius the hat's stiffness is d/dr of 4 hat (r^2 - n) r, which is 4 hat (3 |k|^2 - n): 8 hat n
   at the rest, 20 hat n at |k|^2 = 2 n, the far turn of a hand that rolls from the top (the mathematician's B1).
-  - So the window must hold over the hand's whole range: 2 SUM_6 g + 4 hat (3 |k|^2_max - n) < 4 W, and for a hand
-    whose energy reaches the top's, 2 SUM_6 g + 20 hat n < 4 W; otherwise the lays are bounded. On the probe,
-    SUM_6 g = W and 20 hat n = W / 100.
+  - So the frozen window must hold over the hand's whole range: 2 SUM_6 g + 4 hat (3 |k|^2_max - n) < 4 W, and for a
+    hand whose energy reaches the top's, 2 SUM_6 g + 20 hat n < 4 W. It is necessary, not sufficient (the
+    mathematician's B1 on the ninth text): Mesh-less, a hand laid across the hat runs away inside it at 20 hat n of 2 to
+    3.9 W, and the bound measured over long runs from the top is 20 hat n <= W (his h9_b1 and h9_sweep, board
+    readings); with Meshes the measured bound is OPEN. Otherwise the lays are bounded to small swings about the rest,
+    under the rest's frozen bound 2 SUM_6 g + 8 hat n < 4 W. On the probe, SUM_6 g = W and 20 hat n = W / 100.
   - Along the angle the stiffness is 0 at every rest, and inside the circle the radial one is below 0: the strict lower
     side is the condition for a beat, and the angle's zero mode has none. It drifts as a free count does (probe (g)'s
     turn).
@@ -228,7 +251,9 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
     d = 312, and grows from 100 to 1,352 at d = 100, from 243 to 1,343 at d = 625, from 191 to 3,807 at d = 1,250 and
     from 344 to 2,349 at d = -1,250. Laid at or past the top's side (d = 1,294, 1,300, 1,406, 1,875 and the near-top
     -3,000), it turns by thousands of counts, the hand passing near the middle. The hand's turn, 0 at the lay, reaches
-    300 at d = -50 and 2,034 to 6,209 elsewhere: the edge's rounding, irregular in d, with no tongue below the top.
+    300 at d = -50 and 2,034 to 6,209 elsewhere: the edge's rounding, irregular in d, with no tongue below the top. Its
+    size (the physicist's s1): the turn jumps to about R times one count a round, 2,000 to 3,200 counts^2, within
+    1,000 rounds and then holds, so the angle row grows about linearly at a rate the count sets, not a resonance.
 
 ## 4. In the clicks (the physics, last)
 
@@ -248,9 +273,9 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
     width on two rows and 185 times on four, BR(invisible) above 0.984 against ATLAS's below 0.107, and a visible signal
     strength below 0.016 against CMS's 1.002 +- 0.057 (the physicist's r2); about 0.32 GeV by hand, 78 times (Big Pic).
   - Mesh-less the width goes, and so does a travelling size: each Node-clock's size is a local gear with no waves.
-  - So on this act the size is not nature's Higgs either way. The cause is the act's missing gauge field, which in
-    nature eats the angles into the W and the Z, the structure light's exemption also needs (Big Pic, 6532742328
-    item 2).
+  - So on this act the size is not nature's Higgs either way, for two causes. With Meshes, the act's missing gauge
+    field, which in nature eats the angles into the W and the Z, the structure light's exemption also needs (Big Pic,
+    6532742328 item 2); Mesh-less, the size does not travel, which no gauge field would cure (the physicist).
 - **A vacuum that weighs nothing, on term 5's form.** At the bottom of the hat V = 0 with the constant restored, and a
   still field has no kinetic part, so the vacuum sources nothing. The 0 is term 5's books' form, which reads momenta and
   stretches and no potential, plus the chosen zero of the dropped constant; under that form no potential energy weighs,
@@ -329,8 +354,9 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
   - **The held rows Mesh-less,** as built: the angle does not travel, and the size has no angle wave to feed; a seeded
     angle drifts by the edge while the size swings (a price below).
   - **Strengths, CHOSEN in the universe file:** "hat", at least 1, and "held", the hand's rest R, at least 1.
-    - The window: 20 hat R^2 below 4 W, strict, Mesh-less; with Meshes 2 SUM_6 g_held + 20 hat R^2 below 4 W; or the
-      lays bounded.
+    - The window, for swings that reach the top: 20 hat R^2 at most W Mesh-less, measured over long runs (the frozen
+      bound, 20 hat R^2 below 4 W, is necessary and not sufficient); with Meshes 2 SUM_6 g_held + 20 hat R^2 below 4 W
+      is necessary and the measured bound OPEN; or the lays bounded to small swings about the rest.
     - The tie's factor: f = carry(rest, Gamma R^2, 0) holds the frame's tied beat exactly only where Gamma R^2 divides
       rest, and floors to 0, no tie, once Gamma R^2 exceeds it (the mathematician's m3): at the click world's den 1 and
       Gamma 10^4, R is capped at 244 (the Boss), so a fine R needs den raised.
@@ -338,7 +364,10 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
       tied amplitude.
   - **The test,** on the click world:
     - the hand still bit for bit at every Node-clock with the tied train at 0;
-    - the size laid 50 counts or more off its rest, the angle at 0, its sign changes against 8 hat R^2 / W's recurrence;
+    - the size laid by the swing's speed, d^2 x 8 hat R^2 / W of about 10 or more (several counts a round), inside the
+      top (d below 0.41 R), the angle at 0, its sign changes against the exact nonlinear recurrence (the mathematician's
+      B2: at the click world's cap R = 244 no lay of 50 counts or more is both fast and small, and at a ten times
+      slower beat 50 counts is still the edge's staircase, 34 against the recurrence's 40);
     - the tied train's beat against its spring's recurrence, with the hand's |k|^2 moving with it past the room;
     - the run back exact;
     - the A2 flip with the twisted tooth commuting with the act, with a tooth laid at -D.
@@ -380,7 +409,9 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
   - the four rows' A2 flip, run back and kinds;
   - the edge under a sub-count angle: a seeded angle's drift Mesh-less, the count moved by the rounded velocity, of the
     kind NOT_CLOSED 23 names for light;
-  - a hot vacuum's settling: with no damping, a seed off the rest swings about it for good.
+  - a hot vacuum's settling: with no damping, a symmetric seed off the rest swings about it for good; with Meshes and
+    any turn the size drains into angle waves (3 (l)), and Mesh-less the act's drift moves the swing's energy into the
+    turn (the physicist's s1).
 - **Departures:** the size's fall into angle pairs with Meshes; no potential energy weighs; strings on two rows and
   textures on four; no damping of a symmetric size; a seeded angle's drift by the edge Mesh-less.
 
@@ -389,7 +420,8 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
 **Big Pic's re-check** (6535643629, item 4): every item of both readers stands.
 - The angle pump stands with Meshes; the Mesh-less control holds from above (Mathieu at a = 0, q = 2 d / R, stable
   below q of about 0.91): section 2 gives the exact form (the turn kept, the tongue past the top) and probe (l) the
-  act's drift (2, 3 (l)).
+  act's drift (2, 3 (l)). His 6536221174 item 5 withdrew "stable" in kind and the 0.91 in number: neutral, the tongue
+  at q near 0.83, the printed swing peak to peak.
 - The invisible width stands, about 0.32 GeV by hand, 78 times the standard model's whole width; Mesh-less the width
   goes and so does a travelling size, so the size is not nature's Higgs either way (4).
 - The mathematician's five stand (below), and three of his own words of 6532742328 item 2 were too wide: "the angle is
@@ -445,8 +477,10 @@ quartic are monomials of four value legs, whose passing is NOT_CLOSED 29's road,
     linear equation W y'' = -4 hat (r^2 - n) y, so its second solution is r(t) times the integral of 1 / r^2, which
     grows linearly: no exponential growth while r stays above 0;
   - the top: laid still at R + d, equal heights put the inner turn at |k|^2 = 2 n - (R + d)^2, so the top is reached
-    where (R + d)^2 = 2 n, q = 2 d / R near 0.83 there (between 0.828 and 0.829, since 828^2 + 2 x 828 x 1000 lies below
-    10^6 and 829's above), against Big Pic's tongue near 0.91;
+    where (R + d)^2 = 2 n, q = 2 d / R near 0.83 there: in thousandths of q, s, the top is where s^2 + 4,000 s reaches
+    4 x 10^6, which 828 leaves below (3,997,584) and 829 passes (4,003,241); so q lies between 0.828 and 0.829, against
+    Big Pic's tongue near 0.91 (the ninth text's "828^2 + 2 x 828 x 1000 lies below 10^6" was wrong as written, a slip
+    of mine both readers caught);
   - the stretch: W R Omega^2 = 8 hat n d, so d / R = W Omega^2 / (8 hat n) = (Omega / omega_s)^2;
   - the width: the coupling (h / v)(dG)^2, the amplitude 2 (p1 . p2) / v = m_h^2 / v, and with the half for two like
     quanta Gamma = m_h^3 / (32 pi v^2); by the potential's 4 lambda v h G^2 with m_h^2 = 8 lambda v^2 the same;
@@ -463,3 +497,48 @@ quartic are monomials of four value legs, whose passing is NOT_CLOSED 29's road,
   - the plain A2 flip (i), which departs only at the half-open edge, met in the mathematician's case.
 - **What the check found, and the text now carries:** the eighth text's "the angle stands" Mesh-less holds for a size
   at rest or an angle laid at 0; with a seeded angle and a swinging size the act's edge moves it (probe (l), (B')).
+
+## 10. The ninth text's readers, folded (the tenth text)
+
+The ninth text (toys-5 634c8007f) went back to the pair that read the sixth to eighth texts. Both reports went to Big
+Pic first (David's 6536738713, item 6).
+
+**Big Pic's word** (6536901666, item 4): B1 and B2 stand.
+- B1: the window is necessary, not sufficient. Inside it a swing across the hat runs away in the act's own steps, so
+  the text states the measured bound from the top (20 hat n <= W) or keeps the lays to small swings.
+- B2: the count test is laid by the swing's speed, inside the top.
+- My slip, checked by him: as written, 828^2 + 2 x 828 x 1000 is 2,341,584, not below 10^6; in thousandths of q the
+  check is s^2 + 4,000 s against 4 x 10^6, 3,997,584 at 828 and 4,003,241 at 829, so q^2 + 4 q < 4, q below 2 (sqrt 2 -
+  1) = 0.828, the top of his 6536221174 item 5; B2's "d below 0.41 R" is the same top, (sqrt 2 - 1) R.
+- His "neutral, not stable" (6536221174 item 5) goes in: Mesh-less there is no exponential pump, and the angle is
+  neutral, with the free turn's linear drift and the edge's rounding drift (2; 8).
+
+**The mathematician's two:**
+1. B1, the window: the frozen bound 2 SUM_6 g + 20 hat n < 4 W named necessary and not sufficient; Mesh-less a hand laid
+   across the hat runs away inside it at 20 hat n of 2 to 3.9 W, and the bound measured over long runs from the top is
+   20 hat n <= W (his h9_b1 and h9_sweep, board readings); with Meshes the measured bound is OPEN; otherwise the lays
+   are bounded to small swings about the rest (the finding; 2; 6).
+2. B2, the count test: laid by the swing's speed, d^2 x 8 hat R^2 / W of about 10 or more, inside the top (d below
+   0.41 R), against the exact nonlinear recurrence; at the click world's cap R = 244 no lay of 50 counts or more is both
+   fast and small, and at a ten times slower beat 50 counts is still the edge's staircase, 34 against 40 (his h9_b2)
+   (the finding; 6).
+
+**The physicist's four minors (he PASSED the ninth text):**
+1. The top's arithmetic, my slip, as above (9).
+2. The hot vacuum's settling qualified: a symmetric seed swings for good; with Meshes and any turn the size drains into
+   angle waves, and Mesh-less the act's drift moves the swing's energy into the turn (his s1) (7).
+3. "Not nature's Higgs" for two causes: with Meshes the missing gauge field; Mesh-less the size does not travel, which
+   no gauge field would cure (4).
+4. The drift's size: the turn jumps to about R times one count a round, 2,000 to 3,200 counts^2, within 1,000 rounds
+   and then holds, so the angle row grows about linearly at a rate the count sets, not a resonance (his s1) (3 (l)).
+
+**How the tenth text checked itself:**
+- **No probe moved:** g3_hat.py and g3_pump.py are unchanged since the ninth text, their outputs with them.
+- **The readers' scripts rerun by me byte for byte** on node-live's src at 939fa65a7: the mathematician's h9_b1, h9_b2
+  and h9_sweep.
+- **Derived again by hand:** the top, (R + d)^2 = 2 R^2, is d = (sqrt 2 - 1) R, so q = 2 d / R solves q^2 + 4 q = 4; in
+  thousandths, 828^2 + 4,000 x 828 = 685,584 + 3,312,000 = 3,997,584 below 4 x 10^6, and 829^2 + 4,000 x 829 = 687,241
+  + 3,316,000 = 4,003,241 above; the radial stiffness 4 hat (3 |k|^2 - n) is 8 hat n at the rest and 20 hat n at
+  |k|^2 = 2 n.
+- **What the text searched again:** every "window", "4 W", "50 counts", "stable", "0.91" and "828": each now carries
+  its scope, the measured bound or Big Pic's correction.
