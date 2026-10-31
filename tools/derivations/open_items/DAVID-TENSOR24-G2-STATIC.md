@@ -1,6 +1,6 @@
 # G2, the static field on the slot form: gamma = 1 from Postulate 6, and beta = 2 - gamma for test bodies
 
-David, 2026-10-31 (the tenth text, 02:5x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
+David, 2026-10-31 (the eleventh text, 03:0x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
 close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's terms
 2, 3, 5 and 13 and for Postulate 6. It reads the act as built on main (0df0e8385), N2's source for term 5 (the Boss's
 draft, derive/boss/n2), and term 9's and term 13's texts at toys-5 55cc9b567 (their earlier readings cited by their own
@@ -93,8 +93,8 @@ conditions of section 2.
     strong field is OPEN;
   - the 0i slots' drag is 0 until term 10;
   - a moving source has alpha_1 = -8 and alpha_2 = -1.
-- **Named:** a rate ratio between depths that depends on the clock's beat; a one-part gear's beating source as a source
-  of waves.
+- **Named:** a fractional rate difference between depths that depends on the clock's beat; a one-part gear's beating
+  source as a source of waves.
 - **The physics** of each reading above is owed in the click world, by Big Pic's methods (section 17): on the board
   every line is a clock fact.
 
@@ -104,8 +104,8 @@ conditions of section 2.
   those teeth, so a deeper 00 slot slows every clock at that Node-clock alike, to first order. The square of a clock's
   beat goes as its spring over its teeth when it beats slowly against them.
 - **A clock's own beat.** A clock beating fast against its teeth reads the well slightly deeper than a slow one, and so
-  slows a little more. Two clocks at one place then disagree about the well, by a part of the rate ratio between depths
-  near a twelfth of the difference of the squares of their beats in one round (2, 4).
+  slows a little more. Two clocks at one place then disagree about the well, by a part of the fractional rate difference
+  between depths near a twelfth of the difference of the squares of their beats in one round (2, 4).
 - **The grips are length.** A Mesh's grip is the rest grip plus the ii slot of its axis at both of its ends. The square
   of the board's wave's beat goes as the grip over the teeth for long waves, so the board's wave crosses a slack Mesh
   more slowly.
@@ -170,26 +170,26 @@ conditions of section 2.
     10^-6) 0.8 per cent below the zero beat's 1/2: deeper, not short, as the second text had it.
   - The slow clock's excess is resolved: a hundredth of a count moves its depth by 251 x 10^-6, below its 628, and one
     count fewer at rest and one more at 4 rest still read 3,000,251 (probe (a2)).
-  - **A clock-dependent rate ratio between depths.** At first order in the depth N^2 = 1 - u (1 + s / (12 rest)), so a
-    clock's rate ratio between depths is larger than the zero beat's by s / (12 rest), near omega^2 / 12 for a clock
-    beating omega radians a round.
-    - Two clocks of springs s1 and s2 at one place part by (s1 - s2) / (12 rest) of the rate ratio between depths: the
-      board's two clocks disagree about the well, named with its size.
-    - Its size at first order is 1/4800 of the rate ratio between depths for the probe's slow clock and 1/48 for its
-      fast one.
+  - **A clock-dependent fractional rate difference between depths.** At first order in the depth N^2 = 1 - u (1 + s /
+    (12 rest)), so a clock's fractional rate difference between depths is larger than the zero beat's by s / (12 rest),
+    near omega^2 / 12 for a clock beating omega radians a round.
+    - Two clocks of springs s1 and s2 at one place part by (s1 - s2) / (12 rest) of the fractional rate difference
+      between depths: the board's two clocks disagree about the well, named with its size.
+    - Its size at first order is 1/4800 of the fractional rate difference between depths for the probe's slow clock and
+      1/48 for its fast one.
     - Two clocks at one depth differ at order beat^2 times u, so reading beta needs beat^2 far below |Phi|.
 - **The dictionary** (the physicist's item 9). The act reads its slots as the undensitized inverse metric.
   - The clocks read N^2 = rest / W, and g^00 = -1 / N^2, so W goes as -g^00. The board's wave reads grip / W, so the
     grip goes as g^ii.
   - Densitized, each slot weighed by the volume element N A^3, the teeth would go as A^3 / N, and a clock of fixed
-    spring read against the lapse that the densities imply would read a rate ratio between depths (1 + 3 gamma) / 2
-    times general relativity's (the physicist; 2 at gamma = 1, Big Pic's check). Such matter does not fall by that
-    lapse: on the edge a gear's beat, its square C / A, sets both its rate and its fall, so the gear's rate ratio
-    between depths and its fall agree at first order whatever the spring does (Big Pic, 6535643629 item 1). So the
-    clock's reading is no separate debt of the density reading, at leading order in the beat; what it owes is gamma
-    (below). At the next order the beat-dependent rate ratio between depths below, s / (12 rest), would make the board's
-    gears fall apart if a gear falls by its own beat: by 99/4800 of g between the probe's slow and fast clocks, named a
-    departure (the physicist's minor 2).
+    spring read against the lapse that the densities imply would read a fractional rate difference between depths (1 + 3
+    gamma) / 2 times general relativity's (the physicist; 2 at gamma = 1, Big Pic's check). Such matter does not fall by
+    that lapse: on the edge a gear's beat, its square C / A, sets both its rate and its fall, so the gear's fractional
+    rate difference between depths and its fall agree at first order whatever the spring does (Big Pic, 6535643629 item
+    1). So the clock's reading is no separate debt of the density reading, at leading order in the beat; what it owes is
+    gamma (below). At the next order the beat-dependent fractional rate difference between depths below, s / (12 rest),
+    would make the board's gears fall apart if a gear falls by its own beat: by 99/4800 of g between the probe's slow
+    and fast clocks, named a departure (the physicist's minor 2).
   - Decision 41's wording, "the ten metric gears hold the densitized inverse metric", is flagged for Sofer: the act as
     built holds the undensitized one.
 - **The slots in the post-Newtonian form.** Write u = c00 / rest for the 00 slot and v for the ii slot over the grip g
@@ -542,10 +542,10 @@ keeps only its board side, a clock fact.
 - **Clocks.** On the board the square of a clock's rate goes as rest / W, so two clocks at W_A and W_B part by
   delta nu / nu = -(1 / 2) delta W / W (a rate read as 1 / W would double it). In the clicks a clock is compared with
   another through a resonance or a count of beats, and that reading is owed (17).
-  - **Departure, named:** the rate ratio between depths depends on the clock's beat, larger by s / (12 rest) at first
-    order in the depth (2): the board's two clocks disagree about the well, by 1/4800 of the rate ratio between depths
-    for the probe's slow clock and 1/48 for its fast one, and near omega^2 / 12 for a clock beating omega radians a
-    round.
+  - **Departure, named:** the fractional rate difference between depths depends on the clock's beat, larger by s / (12
+    rest) at first order in the depth (2): the board's two clocks disagree about the well, by 1/4800 of the fractional
+    rate difference between depths for the probe's slow clock and 1/48 for its fast one, and near omega^2 / 12 for a
+    clock beating omega radians a round.
   - OPEN (the first physicist's item 7): N^2 = rest / W is shown for a spring clock. A clock bound through gradient
     readings (term 1) reads the same depth only if those readings scale with the depth as the pull does; otherwise it
     departs at first order in Phi: the board's two clocks disagree about the well, and gears so bound fall apart from
@@ -586,13 +586,13 @@ keeps only its board side, a clock fact.
 - **Departures, named:** at Postulate 6's gamma = 1, for test bodies around sources at rest on an open board at zero
   background, under conditions (i) and (ii):
   - the exterior masses split by the source's teeth: gamma_ext - 1 = +8 |E_grav| / (M c^2);
-  - a rate ratio between depths that depends on the clock's beat, by s / (12 rest);
+  - a fractional rate difference between depths that depends on the clock's beat, by s / (12 rest);
   - the board's wave's second order, with epsilon OPEN.
   - **The two-body cross part:** N2's, -6 Phi_2 in g_00 against general relativity's at the conserved density, and
     st = W's and case B's, +2 (2).
-  - **A clock's beat in free fall:** the beat-dependent rate ratio between depths, if a gear falls by its own beat,
-    makes the board's gears of springs s1 and s2 fall apart by (s1 - s2) / (12 rest) of g, 99/4800 between the probe's
-    two clocks (2).
+  - **A clock's beat in free fall:** the beat-dependent fractional rate difference between depths, if a gear falls by
+    its own beat, makes the board's gears of springs s1 and s2 fall apart by (s1 - s2) / (12 rest) of g, 99/4800 between
+    the probe's two clocks (2).
   - **Named apart:** pressure without condition (ii); the background (on the act as built a strength fixed in lattice
     counts fails Postulate 6 at term 9's rest and N2's teeth factor moves G; a push in the Node-clock's own units would
     do neither, and no law of the act gives it, 2); the shift (term 10: the 0i slots' drag 0, and alpha_1 = -8 and
@@ -701,9 +701,9 @@ Each row below is a board statement, a clock fact and never physics: the physics
 world, by Big Pic's methods (section 17; the owner's law, and his word of 02:0x).
 
 - **Term 2, the teeth:** clocks read N^2 = rest / W at zero beat, the teeth going as -g^00 (the undensitized inverse
-  metric), with the next order (s / (12 rest)) u / (1 + u). A clock beating fast reads the well deeper: a rate ratio
-  between depths that depends on the clock's beat, named (CHECKED on the act, for a spring clock; a clock bound through
-  gradient readings OPEN with G3).
+  metric), with the next order (s / (12 rest)) u / (1 + u). A clock beating fast reads the well deeper: a fractional
+  rate difference between depths that depends on the clock's beat, named (CHECKED on the act, for a spring clock; a
+  clock bound through gradient readings OPEN with G3).
 - **Term 3, the grips:** the board's wave reads grip / W at zero wave number, the grip at both ends of a Mesh, going as
   g^ii (CHECKED on the act).
 - **Term 5's strengths per slot:** DERIVED from Postulate 6 at zero background. Each slot is pushed in the unit its
@@ -1259,3 +1259,18 @@ neither names a click-world reading for a clock fact; the records keep their wor
 **How the tenth text checked itself:** no probe moved (g2_static.py and g2_cases.py unchanged since a2e085602, their
 outputs with them); the text searched again every "fall alike", "H0", "672 Mpc", "redshift" and "frame dragging"
 before section 9.
+
+## 19. The tenth text's reader, folded (the eleventh text)
+
+The tenth text (toys-5 5df40435c) went back to its mathematician. He found B3 and the pointers folded, and returned NOT
+PASSED on B4: where "redshift" meant a size, the tenth text's "the rate ratio between depths" was wrong, since the size
+is the ratio's departure from 1, the fractional shift. At first order with u = 1/10 and gamma = 1 the ratio is 19/20 and
+the shift 1/20: "1/4800 of the ratio" gives 19/96,000 where 1/96,000 was meant, and "(1 + 3 gamma) / 2 times general
+relativity's" read on the ratio gives 19/10, above 1, which no deeper clock reads. Every one of the 14 places now reads
+"the fractional rate difference between depths", section 4's delta nu / nu = -(1/2) delta W / W, which is right where a
+size is meant and where only the dependence is named. A wording of mine, from his ninth-text minor; section 18's record
+keeps the tenth text's words.
+
+**How the eleventh text checked itself:** no probe moved; by hand at u = 1/10, gamma = 1: N = 19/20, the fractional
+difference 1/20, 1/4800 of it 1/96,000, and (1 + 3 gamma) / 2 of general relativity's 1/20 is 1/10, a ratio of 9/10;
+the text searched again every "rate ratio" before section 9: none is left.
