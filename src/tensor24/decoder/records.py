@@ -2,7 +2,7 @@
 
 # The schema's rules are its guards, checked in order as it reads (Animate): the file reads; every line is a JSON
 # object with its kind, a label, each key once; the record holds a header and an end; the header comes first, with a
-# whole major version that is known; the end comes last; every event is of a known kind and stands at a whole round
+# version, a label, of the schema's own major; the end comes last; every event is of a known kind and stands at a whole round
 # and site; every field a line holds has its shape in the schema's record of its kind, a whole number, a label, a row
 # of them or a record of the schema, and a field the schema does not name holds whole numbers and labels alone,
 # through its rows and mappings (the schema's first line), so a float, a truth value, NaN or null, or a row of
@@ -200,12 +200,17 @@ def headed(lines: Lines) -> str:
     )
 
 
-def majored(lines: Lines) -> str:
+def versioned(lines: Lines) -> str:
     first = lines[0]
-    major = first.get("major") if isinstance(first, dict) else None
-    if not whole(major):
-        return "the header holds no major version"
-    return f"the major version {major} is unknown" if major != schema.MAJOR else ""
+    version = first.get("version") if isinstance(first, dict) else None
+    if not isinstance(version, str):
+        return "the header holds no version"
+    other = version.partition(".")[0] != schema.VERSION.partition(".")[0]
+    return (
+        f"the version {ascii(version)[1:-1]} is of another major than the schema's {schema.VERSION}"
+        if other
+        else ""
+    )
 
 
 def ended(lines: Lines) -> str:
@@ -255,21 +260,16 @@ def valued(lines: Lines) -> str:
 
 
 def clicked(lines: Lines) -> str:
-    """The first click line off the train cards: a train no card names, q 0, a tooth below 0 or not below its card's key, or an earlier click line's round, site and train."""
+    """The first click line off the train cards: a train no card names, q 0 on a line of no side in its site or across a Mesh, or an earlier click line's round, site and train."""
     header = lines[0] if isinstance(lines[0], dict) else {}
     keys = {t["index"]: t.get("key") for t in header.get("trains", []) if whole(t.get("index"))}
     seen: set[tuple[int, int, int, int]] = set()
     for n, e in [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]:
-        train, key, teeth = e.get("train"), keys.get(e.get("train")), e.get("tooth", [])
-        low, high = [k for k in teeth if k < 0], [k for k in teeth if whole(key) and k >= key]
+        train = e.get("train")
         if whole(train) and train not in keys:
             return f"line {n} names train {train}, which no train card names"
-        if e.get("q") == 0 and "sides" not in e:
-            return f"line {n} holds the click's q 0, a tooth that carried no key"
-        if low:
-            return f"line {n} holds the tooth {low[0]}, below 0"
-        if high:
-            return f"line {n} holds the tooth {high[0]}, not below train {train}'s key {key}"
+        if e.get("q") == 0 and not (e.get("sides") or e.get("across")):
+            return f"line {n} holds q 0 and no side, a line that carried nothing"
         if place(e) in seen:
             return f"line {n} stands at the round, the site and the train of an earlier click line"
         seen.add(place(e))
@@ -285,7 +285,7 @@ GUARDS: tuple[Guard, ...] = (
     jsoned,
     framed,
     headed,
-    majored,
+    versioned,
     ended,
     kinded,
     placed,

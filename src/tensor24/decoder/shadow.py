@@ -1,6 +1,6 @@
 """Clock: the board's physics read in its shadow, the click world (the owner's law of 23:4x UTC), as the clocks' meetings (the owner's word of 00:3x UTC): each event one quantum passing from one clock to another at one place, with no time axis but the events' order and each clock's count, and space read only by light's echo; the record's header and its click lines are read, nothing of the board's state, so no claim stands on a board reading alone.
-Algebra: whole counts and sums: at every place, a round and a Node-clock with click lines, the sum of q over the trains, each side across a Mesh booked at both its places, and each line's q, a meeting one give of q -1 and one take of q +1, on schema 1.4 on one edge, a side and its mirror, the lines of q 0 that carried on no side dropped; per clock, a site and a train, its meetings counted and its given, taken and net; the cone one Mesh a round, the Meshes the shorter way round each side by Rule3's carry (measure.meshes), the lay's reach the most of them from a site to its nearest laid site; no float, no root and no search.
-Board: the record's header (its sides, its train cards, and its setting file, setting.json by its name, read for its gears, each a site on the board with its counts and its tooth, the sites laid those with a count or a tooth not 0) and its click lines, each a round, a site, a train and its q, on schema 1.4 with its edge sides in its site and across a Mesh (on 1.3 its tooth); nothing of the board's state, no slot, plan or act.
+Algebra: whole counts and sums: at every place, a round and a Node-clock with click lines, the sum of q over the trains, each side across a Mesh booked at both its places, and each line's q, a meeting one give of q -1 and one take of q +1 on one edge, a side and its mirror, the lines of q 0 that carried on no side dropped; per clock, a site and a train, its meetings counted and its given, taken and net; the cone one Mesh a round, the Meshes the shorter way round each side by Rule3's carry (measure.meshes), the lay's reach the most of them from a site to its nearest laid site; no float, no root and no search.
+Board: the record's header (its sides, its train cards, and its setting file, setting.json by its name, read for its gears, each a site on the board with its counts and its tooth, the sites laid those with a count or a tooth not 0) and its click lines, each a round, a site, a train and its q, with its edge sides in its site and across a Mesh; nothing of the board's state, no slot, plan or act.
 Clicks: seven readings, each read SHOWN, or NOT SHOWN with its first counterexample named, or NOT READ with its cause named, or NO CLICK, the owner's phrase, where the record holds no click line, before any other cause: shadow's four, the books at each click (row 15's first reading on clicks.py's counts, in row 15's order), a duration as a clock's own count (D6) and the twins (D7), not read, the act holding no clock's own count and every clock standing at its Node-clock, and the cone check by click (D8 on measure.past), not read where no line could stand outside the lay's cone; and the click board's three, the meetings, each clock's line of meetings, the order counted with no duration, and space by light's echo (reading 7), not read while no rule tells light's click lines from the others.
 """
 
@@ -54,13 +54,13 @@ def placed(lines: list[Line], gaps: set[clicks.Place]) -> dict[clicks.Place, lis
 
 
 def carried(line: Line) -> list[Any]:
-    """The edge sides a click line's clock carried on (schema 1.4): the other train of each side in its site whose q is not 0, then each side across a Mesh by its place and train; none on a 1.3 line, which carries on its own tooth."""
+    """The edge sides a click line's clock carried on: the other train of each side in its site whose q is not 0, then each side across a Mesh by its place and train; none on a line of no side."""
     sides = [u for u, q, *_ in line.get("sides", []) if q]
     return sides + [(at, u) for u, at, *_ in line.get("across", [])]
 
 
 def silent(line: Line) -> bool:
-    """A click line of q 0 whose clock carried on no side: on schema 1.4 a clock listed as joined to a side that carried, no click of its own."""
+    """A click line of q 0 whose clock carried on no side: a clock listed as joined to a side that carried, no click of its own."""
     return line.get("q") == 0 and not carried(line)
 
 
@@ -70,12 +70,12 @@ def pair(held: list[Line]) -> list[Line]:
 
 
 def edged(line: Line, other: Line) -> bool:
-    """A line carried on one edge alone, its side to the other's train in its site (schema 1.4); a 1.3 line carries on its own tooth."""
-    return not ("sides" in line or "across" in line) or carried(line) == [other["train"]]
+    """A line carried on one edge alone, its side to the other's train in its site."""
+    return carried(line) == [other["train"]]
 
 
 def met(held: list[Line]) -> bool:
-    """Whether the click lines at one place are a meeting: one give and one take of one quantum, q -1 and q +1, two clocks, as the record's guard holds each train once at a place, the silent lines dropped; on schema 1.4 an edge side and its mirror, the giver's one side that carried the taker's and the taker's the giver's, and no other side carried there."""
+    """Whether the click lines at one place are a meeting: one give and one take of one quantum, q -1 and q +1, two clocks, as the record's guard holds each train once at a place, the silent lines dropped, an edge side and its mirror: the giver's one side that carried the taker's and the taker's the giver's, and no other side carried there."""
     lines = pair(held)
     if sorted(line["q"] for line in lines) != [-1, 1]:
         return False

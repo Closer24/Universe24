@@ -1,6 +1,6 @@
 """Clock: the click lines listed and counted, nothing read into them: the basic part, on which the click world's readings (shadow.py) stand.
 Algebra: whole counts and sums: per train and per Node-clock its lines, what it gave (its q below 0, negated), what it took (its q above 0) and the net, their difference; at each round and Node-clock with a line the sum of q over the trains, and the places where that sum is not 0 counted.
-Board: the click lines as the record holds them, in the schema's order (round, site, train), each with its q, the sum of its clock's carries: on schema 1.4 over its edge sides in its site and across a Mesh, a clock joined to a side that carried listed at q 0; on 1.3 its click tooth's, before and after.
+Board: the click lines as the record holds them, in the schema's order (round, site, train), each with its q, the sum of its clock's carries over its edge sides in its site and across a Mesh, a clock joined to a side that carried listed at q 0.
 Clicks: the list and the counts alone, no verdict: every reading of the click world is shadow.py's.
 """
 

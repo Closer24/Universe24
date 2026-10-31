@@ -219,8 +219,7 @@ def header(
     return {
         "kind": "header",
         "record": record.name,
-        "major": schema.MAJOR,
-        "minor": schema.MINOR,
+        "version": schema.VERSION,
         "engine": "tensor24",
         "runner": "synchronous",
         "files": [{"name": path.name, "text": text, "digest": digest(text)} for path, text in files],

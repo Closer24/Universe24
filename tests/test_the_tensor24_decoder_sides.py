@@ -14,7 +14,7 @@ CARDS = [
 ]
 CARDS += [{k: v for k, v in CARDS[0].items() if k != "key"} | {"index": 3, "label": "train 3"}]
 KIND = {"index": 0, "label": "A1", "dimension": 1, "characters": [1] * 24}
-HEADER = {"kind": "header", "record": "tensor24", "major": 1, "minor": schema.MINOR, "sides": [2, 1, 1]}
+HEADER = {"kind": "header", "record": "tensor24", "version": schema.VERSION, "sides": [2, 1, 1]}
 # a board of two Node-clocks and two rounds, so a partner at another Node-clock or round is no partner
 HEAD, END = (
     HEADER | {"kinds": [KIND], "trains": CARDS},

@@ -1,6 +1,6 @@
 """The decoder's tool (Animate's): one record of the schema read, with its ledger beside it where one is named, and its
 readings printed: the ledger read or the cause it is not, and the basic part on the click lines, each with its edge
-sides in its site and across a Mesh (schema 1.4) or its tooth (1.3): the lines listed in the schema's order and
+sides in its site and across a Mesh: the lines listed in the schema's order and
 counted per train and per Node-clock (the lines, the given, the taken and the net),
 and the places (a round and a Node-clock) where the sum of q over the trains is not 0, counted; then the click world's
 block (decoder/shadow.py, the owner's law of 23:4x UTC: the physics read in the board's shadow, no claim on a board
@@ -35,11 +35,7 @@ def printed(held: clicks.Counted) -> None:
     print(f"the click lines: {len(held.lines)}")
     for line in held.lines:
         where = f"round {line['round']}, site {line['site']}, train {line.get('train')}"
-        carry = (
-            f"sides {line.get('sides', [])}, across {line.get('across', [])}"
-            if "sides" in line or "across" in line
-            else f"tooth {line.get('tooth')}"
-        )
+        carry = f"sides {line.get('sides', [])}, across {line.get('across', [])}"
         print(f"  {where}: q {line.get('q')}, {carry}")
     for name, tallies in (("train", held.trains), ("site", held.sites)):
         for at, tally in tallies.items():

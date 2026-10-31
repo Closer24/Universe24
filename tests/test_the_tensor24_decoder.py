@@ -19,8 +19,7 @@ CARDS = [{"index": t, "label": f"train {t}", **CARD} for t in (0, 1)]
 H = {
     "kind": "header",
     "record": "tensor24",
-    "major": 1,
-    "minor": schema.MINOR,
+    "version": schema.VERSION,
     "kinds": [KIND],
     "trains": CARDS,
 }
@@ -79,12 +78,16 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
     "a line nested past the interpreter's depth": ([H, DEEP, E], "jsoned", NESTS),
     "an empty file": ([], "framed", "the record holds no header and end"),
     "a first line that is no header": (
-        [{**GIVE, "major": 1}, E],
+        [{**GIVE, "version": schema.VERSION}, E],
         "headed",
         "the first line is no header",
     ),
-    "no major": ([{"kind": "header"}, E], "majored", "the header holds no major version"),
-    "an unknown major": ([{**H, "major": 1 + 1}, E], "majored", "the major version 2 is unknown"),
+    "no version": ([{"kind": "header"}, E], "versioned", "the header holds no version"),
+    "a version of another major": (
+        [{**H, "version": "1.4"}, E],
+        "versioned",
+        f"the version 1.4 is of another major than the schema's {schema.VERSION}",
+    ),
     "no end": ([H, BARE], "ended", "the last line is no end"),
     "an unknown kind": (
         [H, {"kind": "chime", "round": 1, "site": 0}, E],
@@ -110,7 +113,7 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         SHAPE.format("train"),
     ),
     "NaN for a whole number": ([H, NAN, E], "shaped", SHAPE.format("q")),
-    "a float in the header": ([{**H, "minor": 0.5}, E], "shaped", LINE1.format("minor")),
+    "a float in the header": ([{**H, "width": 0.5}, E], "shaped", LINE1.format("width")),
     "a label that is no label": ([{**H, "engine": [1]}, E], "shaped", LINE1.format("engine")),
     "a kind card's characters off its shape": (
         [{**H, "kinds": [{**KIND, "characters": [0.5]}]}, E],
@@ -172,17 +175,7 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
     "q 0 on a line of no side": (
         [H, {**BARE, "q": 0}, E],
         "clicked",
-        "line 2 holds the click's q 0, a tooth that carried no key",
-    ),
-    "a tooth below 0": (
-        [H, {**BARE, "tooth": [-1, 0]}, E],
-        "clicked",
-        "line 2 holds the tooth -1, below 0",
-    ),
-    "a tooth not below its key": (
-        [H, {**BARE, "tooth": [0, 7]}, E],
-        "clicked",
-        "line 2 holds the tooth 7, not below train 0's key 7",
+        "line 2 holds q 0 and no side, a line that carried nothing",
     ),
     "a line at an earlier line's place": (
         [H, GIVE, GIVE, TOOK, E],
@@ -225,7 +218,7 @@ def test_the_record_is_read_by_its_schema_and_each_guard_refuses_its_own_broken_
         kept = tuple(g for g in records.GUARDS if g.__name__ != guard)
         assert not unread(str(tmp_path / "record.jsonl"), kept), name
     assert cause_of([H], tmp_path) == "the record holds no header and end"
-    assert cause_of([{**H, "major": True}, E], tmp_path) == "the header holds no major version"
+    assert cause_of([{**H, "version": 1 + 1}, E], tmp_path) == "the header holds no version"
     assert cause_of([H, {"kind": 1, "round": 1, "site": 0}, E], tmp_path) == NO_JSON  # a kind no label
     absent, nul = records.read(str(tmp_path / "absent.jsonl")), records.read(str(tmp_path) + "/a\x00b")
     assert absent == (None, "the record's file is absent") and nul == (
