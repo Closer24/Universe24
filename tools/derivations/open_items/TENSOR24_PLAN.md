@@ -1,4 +1,4 @@
-# Tensor24: the plan for the new engine, in short
+# Tensor24: the plan for the new engine, in short (superseded for the code by docs/ARCHITECTURE.md: its sections 11 to 13 describe an earlier design, engine/click.py with click_whole and click_split, carry.py's nonneg, choose and home, the Gaussian integers in algebra/, readings/, a state of eight arrays, an undo log read by rewind.py and the asynchronous runner; the engine as built is the five modules and the state a, b, r, rd and k that ARCHITECTURE.md describes)
 
 For the owner and for everyone on the work, in English on the owner's word (2026-10-28, 15:2x UTC): "the plan in English, in a file, at once, that everyone can read". It goes to the owner at 16:00 UTC, 18:00 in Israel, and he approves it if it is good (his word of 13:09 UTC). The full plan is TENSOR24.md beside this file; the derivations' board is derive/INDEX.md; the architect's approved design is derive/architecture/ARCHITECTURE.md. Where this summary and TENSOR24.md differ, TENSOR24.md stands.
 
