@@ -1,0 +1,35 @@
+== one clock with no tooth: a_(n+1) = (2 - k) a_n - a_(n-1)
+   k 0: the energy kept at every round from every start: True; the powers up to 12 at which the step is the identity: []
+   k 1: the energy kept at every round from every start: True; the powers up to 12 at which the step is the identity: [6, 12]
+   k 2: the energy kept at every round from every start: True; the powers up to 12 at which the step is the identity: [4, 8, 12]
+   k 3: the energy kept at every round from every start: True; the powers up to 12 at which the step is the identity: [3, 6, 9, 12]
+   k 4: the energy kept at every round from every start: True; the powers up to 12 at which the step is the identity: []
+   k 5: the energy kept at every round from every start: True; the powers up to 12 at which the step is the identity: []
+== the 24 units of the whole quaternions, doubled coordinates
+   units: 24
+   doubled real part -2: 1 units; the powers up to 12 at which each is 1: [(2, 4, 6, 8, 10, 12)]
+   doubled real part -1: 8 units; the powers up to 12 at which each is 1: [(3, 6, 9, 12)]
+   doubled real part 0: 6 units; the powers up to 12 at which each is 1: [(4, 8, 12)]
+   doubled real part 1: 8 units; the powers up to 12 at which each is 1: [(6, 12)]
+   doubled real part 2: 1 units; the powers up to 12 at which each is 1: [(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)]
+   left multiplication by every unit keeps the norm of every whole quaternion on the grid: 8088 of 8088
+   the order-3 unit w = (-1 + i + j + k) / 2 turns i, j, k to [(0, 0, 0, 2), (0, 2, 0, 0), (0, 0, 2, 0)] (doubled): i to j, j to k, k to i
+== two clocks with no tooth, K = [[k1, c], [c, k2]]
+   k1 1, k2 2, c -1: returns with the great period 10; the polynomial [1, -3, 1]
+   k1 1, k2 2, c 1: returns with the great period 10; the polynomial [1, -3, 1]
+   k1 1, k2 3, c -1: returns with the great period 8; the polynomial [1, -4, 2]
+   k1 1, k2 3, c 1: returns with the great period 8; the polynomial [1, -4, 2]
+   k1 2, k2 2, c -1: returns with the great period 6; the polynomial [1, -4, 3]
+   k1 2, k2 2, c 1: returns with the great period 6; the polynomial [1, -4, 3]
+   k1 2, k2 3, c -1: returns with the great period 5; the polynomial [1, -5, 5]
+   k1 2, k2 3, c 1: returns with the great period 5; the polynomial [1, -5, 5]
+== three like hands with no tooth, K = [[s, b, b], [b, s, b], [b, b, s]], b not 0
+   those that return: []
+== the click world's triangle with the coupling family inside, K = [[s, b, t], [b, s, t], [t, t, h]], b and t not 0
+   the giver's and the taker's spring 2, the held hand's 1, the band 1, the tie -1: the great period 12; the polynomial [1, -5, 5, -1]; the opposite swing held at 1, returning every 6 rounds; the other two swings x^2 - 4 x + 1, returning every 12 rounds; 4 I - K with the tie's sign turned among the solutions: True
+   the giver's and the taker's spring 2, the held hand's 1, the band 1, the tie 1: the great period 12; the polynomial [1, -5, 5, -1]; the opposite swing held at 1, returning every 6 rounds; the other two swings x^2 - 4 x + 1, returning every 12 rounds; 4 I - K with the tie's sign turned among the solutions: True
+   the giver's and the taker's spring 2, the held hand's 3, the band -1, the tie -1: the great period 12; the polynomial [1, -7, 13, -3]; the opposite swing held at 3, returning every 3 rounds; the other two swings x^2 - 4 x + 1, returning every 12 rounds; 4 I - K with the tie's sign turned among the solutions: True
+   the giver's and the taker's spring 2, the held hand's 3, the band -1, the tie 1: the great period 12; the polynomial [1, -7, 13, -3]; the opposite swing held at 3, returning every 3 rounds; the other two swings x^2 - 4 x + 1, returning every 12 rounds; 4 I - K with the tie's sign turned among the solutions: True
+   solutions: 4 of 1600
+   the search holds every candidate: a returning step has every eigenvalue of K inside (0, 4), so each diagonal entry is 1, 2 or 3 and, by the interlacing of every 2 x 2 block, each off-diagonal entry is -1, 0 or 1 (DERIVED)
+exit

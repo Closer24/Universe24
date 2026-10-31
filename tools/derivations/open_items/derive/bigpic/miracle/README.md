@@ -126,7 +126,7 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
 
 - **No count passed 32 bits in 5,000 rounds at any grain read.** Without the square, the click world fell at lambda 100:
   a count passed 32 bits at round 827 and reached 19,566 bits by round 5,000 (split_bedge_x100_5000.txt).
-- **But this is the floor's edge, read in a 5,000-round window, not a floor that holds** (FLOOR1, NOT PASSED by both of
+- **But this is the floor's edge, read in a 5,000-round window, not a floor that holds** (FLOOR1, the verdict NOT PASSED by both of
   its pairs; the Boss's 6542602796; David's 6542547300 and 6542620339).
   - On the click world's single giver-taker band, the square gives each hand exactly half the band. The opposite swing
     then has no spring of its own and is held only by the held hand's lend.
@@ -228,3 +228,62 @@ Usage: python3 -I cell.py <src> [rounds]
 
 Usage: python3 -I clicks.py <src> worlds/click1_vacuum/universe.json worlds/click1_vacuum/piece.json
 worlds/click1_vacuum/setting.json 5000 250 square (or engine)
+
+## What a giant clock needs: exact clocks, and one solution on the click world's triangle (giant.py, giant.txt)
+
+- **The owner's words to Big Pic, 13:5x UTC** (in Hebrew; in my translation): "But the third click always happens with
+  another click, no? Look for the one solution of the system, through the algebra, the clocks, the quaternion... with
+  no degrees of freedom. Think about what a giant clock like the universe needs... Look for a mathematical miracle."
+- **The exact clock, DERIVED** (a stand-alone reading, not the engine's board):
+  - A clock with no tooth steps a_(n+1) = 2 a_n - a_(n-1) - K a_n, with K whole in the gear's own unit: 2 S / W for a
+    spring S, TIE2 / W for a tie or a band.
+  - It keeps its energy exactly.
+  - A whole step that keeps a positive whole energy permutes the finitely many states below any energy, so it has a
+    finite order: every start returns, with one great period.
+  - A swing with no spring (an eigenvalue 0 of K) drifts for ever, and an eigenvalue 4 sits at the step's own edge and
+    grows. So a returning clock holds every swing: no free play.
+  - The one-gear case is the owner's D above (orders 1, 2, 3, 4 and 6, and no slow motion). What is new here is the
+    reading on two and three clocks, and the triangle's one solution.
+- **MEASURED:**
+  - **One clock:** the step returns at k = 1, 2 and 3 every 6, 4 and 3 rounds, and at k = 0 (no spring), 4 and 5
+    never. The energy is kept from every start.
+  - **The 24 units of the whole quaternions:**
+    - orders 1 (one unit), 2 (one), 3 (eight), 4 (six) and 6 (eight): the exact clock's returns at k = 3, 2 and 1;
+    - left multiplication by every unit keeps every norm, 8,088 of 8,088 (Euler's four squares);
+    - the order-3 unit w = (-1 + i + j + k) / 2 turns i to j to k.
+  - **Two clocks** return only with the tie at 1 or -1 and the springs (1, 2), (1, 3), (2, 2) or (2, 3), with great
+    periods 10, 8, 6 and 5.
+  - **Three like hands with a band:** none returns.
+  - **The click world's triangle with the coupling family inside** (the giver and the taker alike, the held hand, the
+    band b between the giver and the taker and the tie t from the held hand to each, b and t not 0):
+    - 4 of 1,600 return;
+    - the search holds every candidate (DERIVED): a returning K has every eigenvalue inside (0, 4), so each diagonal
+      entry is 1, 2 or 3 and, by the interlacing of every 2 x 2 block, each off-diagonal entry is -1, 0 or 1;
+    - the four are one clock, up to the tie's sign (the held hand's sign) and up to K -> 4 I - K (the same step read
+      through a_n -> (-1)^n a_n);
+    - that clock: the giver's and the taker's spring 2 (S = W), the held hand's 1 (S = W / 2), the band 1 and the tie
+      1 (TIE2 = W);
+    - its great period is 12: the opposite swing is held, returning every 6 rounds (every 3 in its partner), and the
+      other two swings, x^2 - 4 x + 1, every 12 rounds.
+- **So, as a reading (CANDIDATE):**
+  - with no tooth, the click world's triangle with the coupling family inside has one solution, up to its own
+    symmetries, and every number in it is the gear's own rest W or its half: no laid strength;
+  - in it the opposite swing, free as laid, is held: no free play;
+  - its great period, 12, is the exponent of the 24, the least common multiple of their orders 1, 2, 3, 4 and 6;
+  - its beats stand in whole ratios, 1 : 2 : 5 twelfths of a turn (1 : 4 : 5 in its partner);
+  - a triangle of like hands cannot be an exact clock: the coupling family's unlike hand is needed;
+  - the tooth is the freedom that lets a spring be laid at any value; struck, the structure fixes them. It is a
+    candidate for the owner's superfluous degree of freedom (13:2x).
+- **The owner's question, "the third click always happens with another click, no?":** yes, in the member form
+  (tooth.py, DERIVED and checked at every round there). Each quantum w that the triangle's tooth lands is booked c_e w
+  on its three edges. So a third click never lands alone: it comes with a first click on each of its edges, which
+  together move no clock's books (B C = 0).
+- **Not shown:**
+  - the click world as laid, whose spring (W / 6) and tie (W / 6,250) hold with teeth and beat slowly; the exact
+    solution beats fast, a twelfth of a turn a round;
+  - slow beats, which need many clocks, since an exact step of larger order needs a larger K: the giant clock's size;
+  - the third click's write on the exact clock;
+  - the masses in the clicks;
+  - any physics.
+
+Usage: python3 -I giant.py <node-all src>
