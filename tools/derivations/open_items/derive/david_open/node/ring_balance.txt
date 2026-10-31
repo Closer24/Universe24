@@ -1,0 +1,17 @@
+ring, parity, band reversed: det(A + 2I), lowest eigenvalue -2; det(A + I), -1 an eigenvalue
+ 3 odd  none: det(A + 2I) =    4, lowest -2: False (parity and reversal agree: False); det(A + I) =    0, -1: True
+ 3 odd  one : det(A + 2I) =    0, lowest -2: True (parity and reversal agree: True); det(A + I) =   -4, -1: False
+ 4 even none: det(A + 2I) =    0, lowest -2: True (parity and reversal agree: True); det(A + I) =   -3, -1: False
+ 4 even one : det(A + 2I) =    4, lowest -2: False (parity and reversal agree: False); det(A + I) =    1, -1: False
+ 5 odd  none: det(A + 2I) =    4, lowest -2: False (parity and reversal agree: False); det(A + I) =    3, -1: False
+ 5 odd  one : det(A + 2I) =    0, lowest -2: True (parity and reversal agree: True); det(A + I) =   -1, -1: False
+ 6 even none: det(A + 2I) =    0, lowest -2: True (parity and reversal agree: True); det(A + I) =    0, -1: True
+ 6 even one : det(A + 2I) =    4, lowest -2: False (parity and reversal agree: False); det(A + I) =    4, -1: False
+ 7 odd  none: det(A + 2I) =    4, lowest -2: False (parity and reversal agree: False); det(A + I) =    3, -1: False
+ 7 odd  one : det(A + 2I) =    0, lowest -2: True (parity and reversal agree: True); det(A + I) =   -1, -1: False
+ 8 even none: det(A + 2I) =    0, lowest -2: True (parity and reversal agree: True); det(A + I) =   -3, -1: False
+ 8 even one : det(A + 2I) =    4, lowest -2: False (parity and reversal agree: False); det(A + I) =    1, -1: False
+ 9 odd  none: det(A + 2I) =    4, lowest -2: False (parity and reversal agree: False); det(A + I) =    0, -1: True
+ 9 odd  one : det(A + 2I) =    0, lowest -2: True (parity and reversal agree: True); det(A + I) =   -4, -1: False
+10 even none: det(A + 2I) =    0, lowest -2: True (parity and reversal agree: True); det(A + I) =   -3, -1: False
+10 even one : det(A + 2I) =    4, lowest -2: False (parity and reversal agree: False); det(A + I) =    1, -1: False
