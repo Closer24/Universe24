@@ -189,11 +189,11 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     files = [(path, path.read_text(encoding="utf-8")) for path in paths]
     universe, piece, setting = (json.loads(text) for _, text in files)
     shape = piece["shape"]
-    kinds, tables, square = engine.made(star(len(shape)))
-    found = held_departures(universe, setting, vocabulary(kinds, square))
+    kinds, tables, square, lifted = engine.made(star(len(shape)))
+    found = held_departures(universe, setting, vocabulary(kinds, square, lifted))
     if found:
         return found
-    loaded, found = load(universe, setting, sites_of(shape), kinds, tables, square)
+    loaded, found = load(universe, setting, sites_of(shape), kinds, tables, square, lifted)
     if found:
         return found
     layout = engine.layout(universe, shape, loaded)

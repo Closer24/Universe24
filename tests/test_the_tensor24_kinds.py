@@ -77,7 +77,7 @@ def test_the_24_are_the_stars_turns_the_kinds_their_representations_and_the_tabl
     fixed = np.einsum("gii->i", kinds.square(held)[keep]) == order  # the rows every turn fixes: 00 alone
     assert squared(matrix, keep, held, d) and fixed[0] and fixed.sum() == 1
     # the eighth review (927071a14): main.made passing the turns as their own inverses survived every test
-    turned, made_c, square = joint(spokes)
+    turned, made_c, square, _ = joint(spokes)
     w = weight[:, None, None]
     assert all((x == w * y).all() for x, y in zip(turned, held, strict=True)) and (made_c == c).all()
     assert (square == w * kinds.square(held)).all()

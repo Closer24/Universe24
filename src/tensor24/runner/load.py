@@ -95,9 +95,9 @@ def tables(held: Z, inverse: Z, weight: Z) -> Z:
     return ((up - down)[..., None] * u).reshape(kinds, kinds, kinds, side, side, side)
 
 
-def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z, Z, Z, Z]) -> Trains:
+def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z, Z, Z, Z, Z]) -> Trains:
     """Each train's rows from its kinds and part, and its character, its kinds' traces summed times its part, against the characters the files read off the kinds, 1 where the gap is 0 on every turn by Rule3's quotient of 1 by gap^2 + 1 and lit of the gap where it is not: the four-vector's square's (square: its rows that square's basis, its first 00; sourcing the rest), the held hand's, the one-dimensional kinds together (held, A1 + A2 at part 1; gripped the rest), and its own under the twist, the sign kind's character (tied where kept and not the held hand's: a train of the kinds K and the twist's K, the board's wave and the square untied)."""
-    traces, _, squared, hand, twist = reads
+    traces, _, squared, hand, twist, _ = reads
     member = np.eye(len(part), dtype=object)[of]  # each kind's train, one of each row
     dim = np.array(dims, dtype=object)[kind]
     size, count = part * (dim @ member), member.sum(axis=0)
@@ -164,10 +164,16 @@ class Loaded(NamedTuple):
 
 
 def load(
-    universe: dict[str, Any], setting: dict[str, Any], sites: int, kinds: Any, c: Z, square: Z
+    universe: dict[str, Any],
+    setting: dict[str, Any],
+    sites: int,
+    kinds: Any,
+    c: Z,
+    square: Z,
+    lifted: Any,
 ) -> tuple[Loaded, list[str]]:
-    """The held files loaded on the engine's kinds on the 24 and the four-vector's square, the lay's departures named; J's potential holds the notch's monomials, the held hand's own spring and tie and the hands' tie, laid from the 24's tables c and the file's CHOSEN strengths, as no file declares a coupling; every train's key the universe file's one CHOSEN integer, its click tooth born at (key - 1) div 2, its passing the pairs of its rows through its form; the metric's push and the notch laid at the file's CHOSEN strengths."""
-    labels, dims, reads = vocabulary(kinds, square)
+    """The held files loaded on the engine's kinds on the 24, the four-vector's square and the 48 lifts with their half-speed kinds and trains, as main.made passes them, the lay's departures named; J's potential holds the notch's monomials, the held hand's own spring and tie and the hands' tie, laid from the 24's tables c and the file's CHOSEN strengths, as no file declares a coupling; every train's key the universe file's one CHOSEN integer, its click tooth born at (key - 1) div 2, its passing the pairs of its rows through its form; the metric's push and the notch laid at the file's CHOSEN strengths."""
+    labels, dims, reads = vocabulary(kinds, square, lifted)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
     traces, *_ = reads
     side = c.shape[-1]  # the axes' cube the tables stand in: the board's axes

@@ -33,11 +33,11 @@ MADE = main.made(loading.star(len(SHAPE)))  # the kinds, tables and square by ma
 
 def loaded(trains, gears=(), chosen=CHOSEN, sites=SITES):
     """The files held against the engine's kinds, then loaded, as the run does: the departures, or the loaded and none."""
-    kinds, c, square = MADE
+    kinds, c, square, lifted = MADE
     universe = {"integers": INTEGERS, "trains": [dict(t) for t in trains], "chosen": dict(chosen)}
     setting = {"gears": [list(g) for g in gears]}
-    found = held_departures(universe, setting, vocabulary(kinds, square))
-    held, found = (None, found) if found else loading.load(universe, setting, sites, kinds, c, square)
+    found = held_departures(universe, setting, vocabulary(kinds, square, lifted))
+    held, found = (None, found) if found else loading.load(universe, setting, sites, *MADE)
     return (None if found else held), found
 
 
@@ -47,7 +47,7 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     spokes, meshes = loading.geometry(nb := board(SHAPE), len(SHAPE))
     assert (nb == frame.board(SHAPE)).all() and (spokes == frame.spokes(len(SHAPE))).all()
     assert (meshes == frame.meshes_of(nb)).all()
-    labels, dims, _ = vocabulary(MADE[0], MADE[-1])
+    labels, dims, _ = vocabulary(MADE[0], *MADE[2:])
     rows = [sum(dims[labels.index(k)] for k in t["kinds"]) * t["part"] for t in TRAINS]
     _, row, _, *counts = wave = (0, rows[0] - 1, SITE, WIDE, WIDE + 1, WIDE + 2)
     held, found = loaded(TRAINS, laid := [wave, (len(rows) - 1, rows[-1] - 1, SITE, WIDE + 1, WIDE, 0)])

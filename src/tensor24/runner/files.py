@@ -259,9 +259,9 @@ def departures(universe: Path, piece: Path, setting: Path) -> list[str]:
 
 
 def vocabulary(
-    kinds: Any, square: Any
-) -> tuple[tuple[str, ...], tuple[int, ...], tuple[Any, Any, Any, Any, Any]]:
-    """The engine's kinds as the files are read against them: their labels and dimensions, each one's character on the 24, 1 where its basis is whole, the four-vector's square's character, the held hand's (the one-dimensional kinds together, whose trace squared is the unit's: A1 + A2) and the twist's (the held hand's less the unit's: the sign kind's); every kind 0 off the 24."""
+    kinds: Any, square: Any, lifted: Any
+) -> tuple[tuple[str, ...], tuple[int, ...], tuple[Any, Any, Any, Any, Any, Any]]:
+    """The engine's kinds as the files are read against them: their labels and dimensions, each one's character on the 24, 1 where its basis is whole, the four-vector's square's character, the held hand's (the one-dimensional kinds together, whose trace squared is the unit's: A1 + A2) and the twist's (the held hand's less the unit's: the sign kind's), every kind 0 off the 24; and the 48 lifts of the 24 with their half-speed kinds and trains, as main.made passes them."""
     labels = tuple(name.upper() for name in kinds._fields)
     dims = tuple(k.shape[-1] for k in kinds)
     traces = np.stack([np.einsum("gii->g", k) for k in kinds])
@@ -272,7 +272,7 @@ def vocabulary(
         trace for trace in traces if (trace * trace == trace).all()
     ]  # the trivial kind's, 1 on the 24
     hand = sum(trace for trace in traces if (trace * trace == unit).all())  # the one-dimensional kinds'
-    return labels, dims, (traces, wholes, np.einsum("gii->g", square), hand, hand - unit)
+    return labels, dims, (traces, wholes, np.einsum("gii->g", square), hand, hand - unit, lifted)
 
 
 def held_departures(
