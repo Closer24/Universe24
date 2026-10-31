@@ -1,7 +1,7 @@
 """Clock: the board's physics read in its shadow, the click world (the owner's law of 23:4x UTC), as the clocks' meetings (the owner's word of 00:3x UTC): each event one quantum passing from one clock to another at one place, with no time axis but the events' order and each clock's count, and space read only by light's echo; the record's header and its click lines are read, nothing of the board's state, so no claim stands on a board reading alone.
 Algebra: whole counts and sums: at every place, a round and a Node-clock with click lines, the sum of q over the trains, each side across a Mesh booked at both its places, and each line's q, a meeting one give of q -1 and one take of q +1 on one edge, a side and its mirror, the lines of q 0 that carried on no side dropped; per clock, a site and a train, its meetings counted and its given, taken and net; the cone one Mesh a round, the Meshes the shorter way round each side by Rule3's carry (measure.meshes), the lay's reach the most of them from a site to its nearest laid site; no float, no root and no search.
 Board: the record's header (its sides, its train cards, and its setting file, the last of its files in the run's order, read for its gears, each a site on the board with its counts and its tooth, the sites laid those with a count or a tooth not 0) and its click lines, each a round, a site, a train and its q, with its edge sides in its site and across a Mesh; nothing of the board's state, no slot, plan or act.
-Clicks: four readings, each read SHOWN, or NOT SHOWN with its first counterexample named, or NOT READ with its cause named, or NO CLICK, the owner's phrase, where the record holds no click line, before any other cause: the books at each click (row 15's first reading on clicks.py's counts, in row 15's order) and the cone check by click (D8 on measure.past), not read where no line could stand outside the lay's cone; and the click board's two, the meetings and each clock's line of meetings, the order counted with no duration. Owed and not built, so no verdict is typed for them: a duration as a clock's own count (D6) and the twins (D7), the act holding no clock's own count, and space by light's echo (reading 7), no rule yet telling light's click lines from the others.
+Clicks: three readings, each read SHOWN, or NOT SHOWN with its first counterexample named, or NOT READ with its cause named, or NO CLICK, the owner's phrase, where the record holds no click line, before any other cause: the cone check by click (D8 on measure.past), not read where no line could stand outside the lay's cone, and the click board's two, the meetings and each clock's line of meetings, the order counted with no duration; and beside them one code check, the edges' consistency check (row 15's books on clicks.py's counts, in row 15's order), which holds by construction on every record the guards read, every edge's two sides closing at their place (sides.paired), so it reads HOLDS, by construction, and never SHOWN, or FAILS where a record read without the sides' guard opens an edge (the Boss's rulings of 07:5x, 09:59 and 11:02 UTC, on AUDIT2's A4 and the 08:5x ruling: the edges' consistency check, the record's own consistency, the mates closing, its faithfulness to the act not read, and no law found in the clicks). Owed and not built, so no verdict is typed for them: a duration as a clock's own count (D6) and the twins (D7), the act holding no clock's own count, and space by light's echo (reading 7), no rule yet telling light's click lines from the others.
 """
 
 import json
@@ -15,7 +15,8 @@ from tensor24.record import schema
 ABSENT = "NO CLICK"
 NO_LINE = "the record holds no click line: not in the click world"
 ORDER = "the order counted, no duration"
-BOOKS = "the books at each click"
+CONSISTENCY = "the edges' consistency check"
+HOLDS, FAILS = "HOLDS", "FAILS"  # a code check's two kinds, never SHOWN or NOT SHOWN
 CONE = "the cone check by click (D8)"
 MEETINGS = "the meetings"
 LINES = "each clock's line of meetings"
@@ -96,30 +97,28 @@ def across(lines: list[Line]) -> tuple[dict[clicks.Place, int], int]:
 
 
 def books(record: Record) -> Verdict:
-    """The books at each click, row 15's first reading on the click lines in row 15's order: at every place whose lines all hold q the sum of q over the trains, each side across a Mesh booked at both its places (its own line's q at its own, its own q at the far place it names, where its partner's closes it; the Boss's word of 06:0x UTC), so a place closes where each of its edges, in its site and across a Mesh, closes, NOT SHOWN at the first not 0 with the first line lacking q named beside it, else NOT READ naming that line, else SHOWN; beside it, per train (every card, one with no line at 0) and per Node-clock, the lines, given, taken and net."""
+    """The edges' consistency check, row 15's books on the click lines in row 15's order: at every place whose lines all hold q the sum of q over the trains, each side across a Mesh booked at both its places (its own line's q at its own, its own q at the far place it names, where its partner's closes it; the Boss's word of 06:0x UTC), so a place closes where each of its edges, in its site and across a Mesh, closes; a code check of the record's own consistency, the mates closing, its faithfulness to the act not read (the 08:5x ruling: a record with two sites swapped in every line and every side across a Mesh still closes, though its sides across a Mesh then join clocks that are no Mesh's neighbours; the Boss's ruling of 11:02 UTC), which holds by construction on every record the guards read, as the sides' guard closes every edge at its place, so HOLDS, by construction, never SHOWN (a verdict that cannot fail is a fake; the Boss's rulings of 07:5x and 09:59 UTC), its cause naming no count of places, which the across net counts (clicks.counted); FAILS at the first place not 0, the first line lacking q named beside it, else NOT READ naming that line; beside it, per train (every card, one with no line at 0) and per Node-clock, the lines, given, taken and net."""
     if not clicks.listed(record):
         return measure.verdict(ABSENT, NO_LINE)
     held = clicks.counted(record)
     gaps, lacks = lacking(held.lines, ("q",), "its books are")
     cards = [t["index"] for t in record.header.get("trains", []) if whole(t.get("index"))]
     trains = {t: held.trains.get(t, clicks.Tally(0, 0, 0, 0)) for t in cards}
-    booked, crossed = clicks.summed(held.lines), across(held.lines)
-    for place, q in crossed[0].items():
+    booked, far = clicks.summed(held.lines), across(held.lines)
+    for place, q in far[0].items():
         booked[place] = booked.get(place, 0) + q
     sums = [(place, total) for place, total in sorted(booked.items()) if place not in gaps]
     open_ = [(place, total) for place, total in sums if total != 0]
     readings = {"trains": trains, "sites": held.sites, "places": len(sums)}
-    each = (
-        f", each of the {crossed[1]} sides across a Mesh booked at both its places" if crossed[1] else ""
-    )
+    each = f", each of the {far[1]} sides across a Mesh booked at both its places" if far[1] else ""
     if open_:
         (round_, site), total = open_[0]
         cause = f"the sum of q over the trains is {total} at round {round_}, site {site}{each}: not 0 at {len(open_)} of {len(sums)} places"
-        return measure.verdict("NOT SHOWN", f"{cause}; {lacks}" if lacks else cause, **readings)
+        return measure.verdict(FAILS, f"{cause}; {lacks}" if lacks else cause, **readings)
     if lacks:
         return measure.verdict("NOT READ", lacks, **readings)
-    cause = f"the sum of q over the trains is 0 at {len(sums)} of {len(sums)} places{each}"
-    return measure.verdict("SHOWN", cause, **readings)
+    cause = f"by construction, every edge's two sides close at their place, in its site and across a Mesh{each}: the record's own consistency, the mates closing; its faithfulness to the act is not read"
+    return measure.verdict(HOLDS, cause, **readings)
 
 
 def meetings(record: Record) -> Verdict:
@@ -252,8 +251,8 @@ def cone(record: Record) -> Verdict:
 
 
 def shadow(record: Record) -> dict[str, Verdict]:
-    """The click world's two readings on the record, the books and the cone, each its verdict, NO CLICK in each on a record that holds no click line."""
-    return {BOOKS: books(record), CONE: cone(record)}
+    """The click world's two on the record, the edges' consistency check and the cone, each its verdict, NO CLICK in each on a record that holds no click line."""
+    return {CONSISTENCY: books(record), CONE: cone(record)}
 
 
 def click_board(record: Record) -> dict[str, Verdict]:

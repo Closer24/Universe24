@@ -138,4 +138,4 @@ def test_the_books_close_each_edge_across_a_mesh_at_both_its_places(tmp_path):
     unguarded, bare = [*CROSSED[:-1], {**FAR, "across": []}], FORMLESS[-1][0]
     loose = tuple(guard for guard in records.GUARDS[:-1] if guard is not records.shaped)
     found = [shadow.books(read(events, tmp_path, loose)[0]) for events in (CROSSED, unguarded, bare)]
-    assert [verdict["kind"] for verdict in found] == ["SHOWN", "NOT SHOWN", "NOT SHOWN"]
+    assert [verdict["kind"] for verdict in found] == [shadow.HOLDS, shadow.FAILS, shadow.FAILS]

@@ -853,7 +853,7 @@ footer { font-size: 0.8rem; color: var(--muted); max-width: 80ch; }
   // the readings, one row each, block by block
   (function readings() {
     var holder = $("readings");
-    var kinds = { "SHOWN": "ok", "NOT SHOWN": "no", "NOT READ": "unread", "NO CLICK": "unread", "READ": "read" };
+    var kinds = { "SHOWN": "ok", "NOT SHOWN": "no", "NOT READ": "unread", "NO CLICK": "unread", "READ": "read", "HOLDS": "read", "FAILS": "no" };
     function flat(v, path, out) {
       if (v !== null && typeof v === "object") {
         Object.keys(v).forEach(function (k) { flat(v[k], path ? path + " " + k : k, out); });
@@ -895,7 +895,7 @@ footer { font-size: 0.8rem; color: var(--muted); max-width: 80ch; }
       block.appendChild(el("h3", null, "The click lines counted"));
       block.appendChild(el("p", { "class": "source" }, "decoder/clicks.py, counted: the basic part, no verdict"));
       block.appendChild(el("p", { "class": "data" }, b.lines + " click lines; each place's across net, its sum of q over the trains (its own site's sides cancel there): " +
-        b.crossed + " of " + b.places + " places pass a net across a Mesh"));
+        b.netted + " of " + b.places + " places pass a net across a Mesh"));
       var labelled = {};
       Object.keys(b.trains || {}).forEach(function (t) { labelled[t + " " + trainName(Number(t))] = b.trains[t]; });
       if (Object.keys(labelled).length) { block.appendChild(more({ "per train": labelled })); }

@@ -11,7 +11,7 @@ from tensor24 import main
 from tensor24.engine import state, step
 from tensor24.engine.mesh import stretches
 from tensor24.runner import load as loading
-from tensor24.runner import run
+from tensor24.runner import plans, run
 from tensor24.runner.board import board
 from tensor24.runner.files import NAMES as FILES
 from tensor24.runner.files import held_departures, sites_of, vocabulary
@@ -19,6 +19,7 @@ from tensor24.runner.run import promises
 from tests import frame
 
 UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
+CLICK = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24-click")
 INTEGERS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["integers"]
 SHAPE = (3, 4, 5)  # a board of sides that differ, so no two axes are taken for each other
 SITES = sites_of(SHAPE)
@@ -45,9 +46,7 @@ def loaded(trains, gears=(), chosen=CHOSEN, sites=SITES):
     return (None if found else held), found
 
 
-def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_each_refusal(
-    monkeypatch, tmp_path
-):
+def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_each_refusal(monkeypatch):
     """Yes: the board and its Meshes as numpy wraps them, every gear on its train's rows past 64 bits, the square by its kinds' character in every order with its 0i rows odd, the chosen key and the notch at 3 read (a chosen strength, pending the owner's word), no term of J but the notch's.
     No: each refusal named with nothing loaded and no raise (the reviews' gear off a later train, its tooth, its b at every site, a bound read on train 0, 64-bit arrays, the MemoryError dropped from the lay's guard, each passed every test once); a tooth at or below its dial named by the promise; an even edge key named by the run (D1's pair law)."""
     spokes, meshes = loading.geometry(nb := board(SHAPE), len(SHAPE))
@@ -58,14 +57,9 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     _, row, _, *counts = wave = (0, rows[0] - 1, SITE, WIDE, WIDE + 1, WIDE + 2)
     held, found = loaded(TRAINS, laid := [wave, (len(rows) - 1, rows[-1] - 1, SITE, WIDE + 1, WIDE, 0)])
     a, b, r, rd, k = held.state
-    assert (
-        found == []
-        and all(x.dtype == object for x in held.state)
-        and not any(f.any() for f, _ in held.potential)
-    )
-    sides = (
-        (1 + len(SHAPE)) * len(TRAINS) * len(TRAINS)
-    )  # every side at every reach, a Mesh edge's at its + end
+    assert found == [] and all(x.dtype == object for x in held.state)
+    assert not any(f.any() for f, _ in held.potential)  # no term of J but at the factor 0
+    sides = (1 + len(SHAPE)) * len(TRAINS) * len(TRAINS)  # every side, a Mesh edge's at its + end
     assert all(x.shape == (sum(rows), SITES) for x in (a, b, r, rd)) and k.shape == (sides, SITES)
     assert (a[row, SITE], b[row, SITE], r[row, SITE]) == tuple(counts)  # the wave's last row, as laid
     assert (a[-1, SITE], b[-1, SITE]) == (WIDE + 1, WIDE) and not k.any()  # the last train's last row
@@ -87,12 +81,8 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     (factor, (one, two)), _ = held.potential  # the notch, in the two-leg block
     named = set(one[factor != 0].tolist()) | set(two[factor != 0].tolist())  # the square's legs alone
     assert sorted(set(factor.tolist())) == [0, 3, 6] and named <= set(range(zero, zero + 10))
-    lit = [
-        tuple(sorted(x)) for x in zip(one[factor != 0].tolist(), two[factor != 0].tolist(), strict=True)
-    ]
-    assert len(set(lit)) == len(
-        lit
-    )  # each pair of slots once, at both its orders' factor summed (MIN2's S1)
+    pairs = {tuple(sorted(x)) for x in zip(one[factor != 0].tolist(), two[factor != 0], strict=True)}
+    assert len(pairs) == (factor != 0).sum()  # each pair of slots once, its orders summed (MIN2's S1)
     for trains, gears, named in [
         ([{**TRAINS[1], "kinds": ["E3/2"]}], [], "'E3/2' is none of the kinds"),
         ([{**TRAINS[1], "kinds": ["E"]}], [], "'E' has no whole basis the 24 permute"),
@@ -107,11 +97,11 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     held = state.State(w + 1, w, np.array([[d - 1, off[1], off[2]]], dtype=object), 0 * w, 0 * w)
     dial = f"not within the edge's dial [-{d}, {d}) of the teeth {WIDE} and {WIDE}"
     assert promises(held, w, w) == [f"row 0, site {x}: the tooth {t} {dial}" for x, t in off.items()]
-    # D1's hypothesis where it is used: the click world's edge key laid one up, even, named by the run, nothing written
-    edged, paths = loading.edging, [UNIVERSE.parents[1] / "tensor24-click" / f"{n}.json" for n in FILES]
+    # D1's hypothesis where it is used: the click world's edge key laid one up, even, named by the run before any
+    # round, so nothing is written (its record's folder stands nowhere: a write would raise)
+    edged, paths = loading.edging, [CLICK / f"{n}.json" for n in FILES]
     monkeypatch.setattr(loading, "edging", lambda *a: (*edged(*a)[:2], edged(*a)[2] + 1))
-    assert run.run(main.ENGINE, paths, tmp_path / "even.jsonl") == [EVEN] and not any(tmp_path.iterdir())
-    monkeypatch.setattr(loading, "edging", edged)
+    assert run.run(main.ENGINE, paths, CLICK / "nowhere" / "even.jsonl") == [EVEN]
     _, found = loaded(TRAINS, sites=1 << 64)
     assert len(found) == 1 and found[0].startswith(f"piece.shape: {sum(rows)} rows at")
     monkeypatch.setattr(np, "zeros", lambda *a, **k: (_ for _ in ()).throw(MemoryError("no room")))
@@ -121,27 +111,16 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
 
 def monomials(held):
     """J's potential's monomials, block by block (the two-leg block, then the four-leg), each one's factor and its legs."""
-    return [
-        (f, tuple(legs))
-        for fs, block in held.potential
-        for f, legs in zip(fs, block.T.tolist(), strict=True)
-    ]
+    return [(f, tuple(x)) for fs, b in held.potential for f, x in zip(fs, b.T.tolist(), strict=True)]
 
 
 def shared(held, senses):
     """Term 11's weights by loops, the edges' naive model: per term of J's plan, block by block and leg by leg as contract.pushes lays them, its weight onto every train of its monomial, kappa (L - l) / L where the monomial is live with value legs in two trains or more, L its legs and l its own train's (a position one leg, a held train's positions one leg together), kappa the product of senses and of every such L, each once; and kappa / senses, the key's scale."""
     trains, listed = [held.trains[n] for n in range(len(held.trains))], monomials(held)
     of = {r: n for n, t in enumerate(trains) for r in range(t.first, t.first + t.rows())}
-    sizes = [
-        0,
-        *itertools.accumulate(len(fs) for fs, _ in held.potential),
-    ]  # each block's first monomial
-    terms = [
-        (at + m, j)
-        for (fs, block), at in zip(held.potential, sizes, strict=False)
-        for j in range(len(block))
-        for m in range(len(fs))
-    ]
+    terms, at = [], 0  # each term's monomial and leg, block by block, leg by leg
+    for fs, b in held.potential:
+        terms, at = terms + [(at + m, j) for j in range(len(b)) for m in range(len(fs))], at + len(fs)
     counted = [{} for _ in listed]
     for (_, legs), count in zip(listed, counted, strict=True):
         for n in (of[leg] for leg in legs):
@@ -183,14 +162,9 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_fam
     legged = [
         of[int(r)] for _, block in held.potential for r in block.reshape(-1)
     ]  # each term's leg's train
-    assert (
-        frame.same([weight], [wanted])
-        and train.tolist() == legged
-        and (key == scale * chosen["key"]).all()
-    )
-    tri = [
-        n for n in range(len(FIVE)) if held.trains.held[n] + held.trains.tied[n]
-    ]  # the held and tied hands
+    assert frame.same([weight], [wanted]) and train.tolist() == legged
+    assert (key == scale * chosen["key"]).all()
+    tri = [n for n in range(len(FIVE)) if held.trains.held[n] + held.trains.tied[n]]  # held and tied
     edges = {(int(train[i]), u) for (i, u), w in np.ndenumerate(weight) if w and train[i] != u}
     assert edges == {(x, y) for x in tri for y in tri if x != y}  # the triangle, each way
     assert (np.delete(laid.grip, list(span(hand)), axis=0) == laid.grip[0, 0]).all()
@@ -219,3 +193,31 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_fam
     wanted += [((1 + i) * rows + hand + i, 0, strength) for i in range(len(SHAPE))]  # L by M_i's
     _, alone, _ = loaded([TRAINS[0]], chosen={**CHOSEN, "mesh": strength})[0].mesh  # the wave alone
     assert terms == sorted(wanted) and {*two.tolist(), *three.tolist()} == {-1} and not alone.any()
+
+
+def test_an_edge_exists_by_the_structure_alone_a_chosen_0_its_factor():
+    """Yes: the click world's files at hold 0 lay term 11 on the edges as at every strength 1, its weights, legs' trains
+    and edge key (152434287), its own edges the held and tied hands' triangle each way (the 08:1x ruling). No: laid from
+    lit of the chosen factor, the edge the tied hands' alone and the key the file's own (50811429), kappa two."""
+    universe, piece, setting = (json.loads(CLICK.joinpath(f"{n}.json").read_bytes()) for n in FILES)
+    chosen, sites = universe["chosen"], sites_of(piece["shape"])
+    made = main.made(spokes := loading.star(len(piece["shape"])))
+
+    def laid(strengths):
+        """The click world's files loaded at the strengths given, the others the file's: the loaded and its departures."""
+        return loading.load(universe | {"chosen": chosen | strengths}, setting, sites, *made)
+
+    def edges(click):
+        """The own edges term 11 lays, (t, u) where a leg of train t weighs onto train u."""
+        weight, train, _ = click
+        return {(int(train[i]), u) for (i, u), w in np.ndenumerate(weight) if w and train[i] != u}
+
+    (held, found), (ones, none) = laid({"hold": 0}), laid(dict.fromkeys(chosen.keys() - {"key"}, 1))
+    hands = [n for n in range(len(held.trains)) if held.trains.held[n] + held.trains.tied[n]]
+    tied = [n for n in hands if held.trains.tied[n]]
+    assert found == none == [] and edges(held.click) == {(x, y) for x in hands for y in hands if x != y}
+    assert all(np.array_equal(x, y) for x, y in zip(held.click, ones.click, strict=True))
+    chosen_factors = tuple(f for f, _ in held.potential)  # each block's factors as the file chose them
+    factored = plans.edging(held.trains, held.potential, chosen_factors, chosen["key"], spokes)
+    assert edges(factored) == {(x, y) for x in tied for y in tied if x != y}  # the hands' tie alone
+    assert (factored[-1] == chosen["key"]).all() and not (factored[-1] == held.click[-1]).any()

@@ -8,11 +8,15 @@
 # through its rows and mappings (the schema's first line), so a float, a truth value, NaN or null, or a row of
 # another length, is seen (Sofer's G1 and G2); the header's sides make a board, each side 1 or more; the header's
 # train cards name each train once, each card's winding 1 or more; an event's round stands from 1 to the end's rounds
-# and its site on the board (the digests are the runner's, which the decoder never reads); a click line's train has a
-# card, a line of no side holds no q 0, and a line stands once at its round, site and train (the first hostile code
-# reader's M10); the events keep the schema's order (round, site, train); and every click line's sides, in its site and
-# across a Mesh, close against their partners (sides.paired). A field may stand absent where its writer lacks it: a
-# reading that needs it reads not read, the cause named. A record that breaks a rule is not read, and the cause is
+# and its site on the board (the digests are the runner's, which the decoder never reads); a click line stands once
+# at its round, site and train (the first hostile code reader's M10); the events keep the schema's order (round, site,
+# train); the end's across, where the end holds one, names places on the board and an entry for every side across a
+# Mesh a click line of a whole train names; and every click line holds its sides, as the schema gives every click line
+# its sides (the Boss's Q3 of 09:59 UTC), its train on a card with a whole key and its q their sum, and they close, in
+# its site and across a Mesh, against their partners (sides.paired), whose guard alone refuses a line of no side,
+# whatever its q, q 0 among them, and a line of a train no card names. A field may stand absent where its writer
+# lacks it, but a click line's sides, train and q: a reading that needs it reads not read, the cause named. A record
+# that breaks a rule is not read, and the cause is
 # named in ASCII: a field's name and a kind as Python's ascii() writes them, so a line feed or a lone surrogate in a
 # name stands escaped, and a board by its sides, never their product, which may pass the interpreter's digits;
 # nothing is raised. The lines are split at the line feed alone, so U+2028, U+0085 and their kin stand inside a label
@@ -260,16 +264,9 @@ def valued(lines: Lines) -> str:
 
 
 def clicked(lines: Lines) -> str:
-    """The first click line off the train cards: a train no card names, q 0 on a line of no side in its site or across a Mesh, or an earlier click line's round, site and train."""
-    header = lines[0] if isinstance(lines[0], dict) else {}
-    keys = {t["index"]: t.get("key") for t in header.get("trains", []) if whole(t.get("index"))}
+    """The first click line at an earlier click line's round, site and train; a line of no side, in its site or across a Mesh, q 0 among them, and a line naming a train no card names, or no train whose card holds a whole key, are the sides' guard's alone, which holds every click line (sides.sided: "holds a tooth beside its sides, or no sides", "names train T, which no train card names" and "names no train whose card holds a whole key"; the ninth code reader's MINOR 10 on node-fold and MINOR 5 on node-fold-fix, the Boss's Q3)."""
     seen: set[tuple[int, int, int, int]] = set()
     for n, e in [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]:
-        train = e.get("train")
-        if whole(train) and train not in keys:
-            return f"line {n} names train {train}, which no train card names"
-        if e.get("q") == 0 and not (e.get("sides") or e.get("across")):
-            return f"line {n} holds q 0 and no side, a line that carried nothing"
         if place(e) in seen:
             return f"line {n} stands at the round, the site and the train of an earlier click line"
         seen.add(place(e))
@@ -281,8 +278,8 @@ def ordered(lines: Lines) -> str:
     return "the events stand out of the schema's order" if places != sorted(places) else ""
 
 
-def crossed(lines: Lines) -> str:
-    """The end's across against the record, where the end holds one: every place it names on the board, and every side across a Mesh a click line names standing among its entries (a writer's line, the ninth code reader's REPORT1 MINOR 2)."""
+def end_across(lines: Lines) -> str:
+    """The end's across against the record, where the end holds one: every place it names on the board, and every side across a Mesh a click line names standing among its entries (a writer's line, the ninth code reader's REPORT1 MINOR 2); a click line naming no whole train is the sides' guard's to name (sides.paired), so it is read here by its train alone where it holds one, and nothing is raised (the ninth code reader's B1 on node-fold). Its reach, named until the fuller guard queued for the round after node-fold (the Boss's ruling of 08:5x UTC; the ninth code reader's MINOR 1 on node-fold): an end with no across key skips it, so a record whose click lines carry sides across a Mesh reads with its end's across deleted; and it reads only that each side across a Mesh has an entry for its pair of trains (t, u), never the partner place that entry lists per Node-clock, so a record with two sites swapped in every line and every side across a Mesh reads, though each side moved then joins two clocks that are no Mesh's neighbours."""
     end = lines[-1] if isinstance(lines[-1], dict) else {}
     if "across" not in end:
         return ""
@@ -291,7 +288,7 @@ def crossed(lines: Lines) -> str:
     if far:
         return f"the end's across names place {far[0]}, off the board of sides {sides}"
     held = {(t, u) for t, u, _, _ in end["across"]}
-    clicks = [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]
+    clicks = [(n, e) for n, e in numbered(lines) if e["kind"] == "click" and whole(e.get("train"))]
     named = [(n, u) for n, e in clicks for u, *_ in e.get("across", []) if (e["train"], u) not in held]
     if named:
         return f"line {named[0][0]}'s side across a Mesh to train {named[0][-1]} stands in no entry of the end's across"
@@ -310,7 +307,7 @@ GUARDS: tuple[Guard, ...] = (
     valued,
     clicked,
     ordered,
-    crossed,
+    end_across,
     paired,
 )
 

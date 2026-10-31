@@ -4,11 +4,12 @@ sides in its site and across a Mesh: the lines listed in the schema's order and
 counted per train and per Node-clock (the lines, the given, the taken and the net),
 and the places (a round and a Node-clock) whose across net, their sum of q over the trains, is not 0, counted; then the click world's
 block (decoder/shadow.py, the owner's law of 23:4x UTC: the physics read in the board's shadow, no claim on a board
-reading alone): the books at each click and the cone check by click, then the click board's two (the owner's word
-of 00:3x UTC: the clocks' meetings), the meetings and each clock's line of meetings, each
-read SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK where the record holds no click line, with its cause, every train
-card's lines, given, taken and net beside the books, every clock's meetings counted with no duration and its books
-beside its line, and one refusal line where the record holds no click line. Nothing is raised: a record or a
+reading alone): the edges' consistency check, a code check that holds by construction, read HOLDS and never
+SHOWN, and the cone check by click, then the click board's two (the owner's word of 00:3x UTC: the clocks'
+meetings), the meetings and each clock's line of meetings, each read SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK
+where the record holds no click line, with its cause, every train card's lines, given, taken and net beside the
+consistency check, every clock's meetings counted with no duration and its books beside its line, and one refusal
+line where the record holds no click line. Nothing is raised: a record or a
 ledger that is not read is named with its cause. The interpreter's bound on a whole number's digits is lifted, since
 the schema's numbers are whole numbers of any width.
 
@@ -44,12 +45,12 @@ def printed(held: clicks.Counted) -> None:
             )
     print(
         "each place's across net, its sum of q over the trains (its own site's sides cancel there):"
-        f" {held.crossed} of {held.places} places pass a net across a Mesh"
+        f" {held.netted} of {held.places} places pass a net across a Mesh"
     )
 
 
 def world(record: records.Record) -> None:
-    """The click world's block: shadow's four verdicts and the click board's three with their causes, every train card's counts under the books (the Node-clocks' stand in the listing above), every clock's under its line of meetings, and the refusal line where the record holds no click of either kind."""
+    """The click world's block: shadow's two, the edges' consistency check and the cone, and the click board's two, each with its kind and cause, every train card's counts under the consistency check (the Node-clocks' stand in the listing above), every clock's under its line of meetings, and the refusal line where the record holds no click line."""
     print("the click world (the owner's law of 23:4x UTC):")
     labels = {t.get("index"): t.get("label") for t in record.header.get("trains", [])}
     for name, verdict in (shadow.shadow(record) | shadow.click_board(record)).items():

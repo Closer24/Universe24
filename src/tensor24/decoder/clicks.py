@@ -1,5 +1,5 @@
 """Clock: the click lines listed and counted, nothing read into them: the basic part, on which the click world's readings (shadow.py) stand.
-Algebra: whole counts and sums: per train and per Node-clock its lines, what it gave (its q below 0, negated), what it took (its q above 0) and the net, their difference; at each round and Node-clock with a line the sum of q over the trains, which is the place's across net (each side in its site meets its mirror there and they cancel, so the sum is what its sides across a Mesh carried, DERIVED by both NATURE1 readers), and the places whose clocks pass a net across a Mesh counted: no reading of the books, which shadow.books reads with each side across a Mesh booked at both its places.
+Algebra: whole counts and sums: per train and per Node-clock its lines, what it gave (its q below 0, negated), what it took (its q above 0) and the net, their difference; at each round and Node-clock with a line the sum of q over the trains, which is the place's across net (each side in its site meets its mirror there and they cancel, so the sum is what its sides across a Mesh carried, DERIVED by both NATURE1 readers), and the places whose clocks pass a net across a Mesh counted: no reading of the books, which the edges' consistency check (shadow.books) reads with each side across a Mesh booked at both its places.
 Board: the click lines as the record holds them, in the schema's order (round, site, train), each with its q, the sum of its clock's carries over its edge sides in its site and across a Mesh, a clock joined to a side that carried listed at q 0.
 Clicks: the list and the counts alone, no verdict: every reading of the click world is shadow.py's.
 """
@@ -28,7 +28,7 @@ class Counted(NamedTuple):
     trains: dict[int, Tally]
     sites: dict[int, Tally]
     places: int
-    crossed: int  # the places whose clocks pass a net across a Mesh, their sum of q not 0
+    netted: int  # the places whose clocks pass a net across a Mesh, their sum of q not 0
 
 
 def listed(record: Record) -> list[Line]:
@@ -66,5 +66,5 @@ def counted(record: Record) -> Counted:
     """The basic part on one record: its click lines listed and counted, no verdict."""
     lines = listed(record)
     sums = summed(lines)
-    crossed = [place for place, total in sums.items() if total != 0]
-    return Counted(lines, by(lines, "train"), by(lines, "site"), len(sums), len(crossed))
+    netted = [place for place, total in sums.items() if total != 0]
+    return Counted(lines, by(lines, "train"), by(lines, "site"), len(sums), len(netted))
