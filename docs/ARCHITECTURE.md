@@ -105,16 +105,16 @@ The method is Solution24 and the ladder of statuses above; these are the roles t
 |---|---|---|---|
 | World | three files of whole numbers: the universe, the piece, the setting | examples/tensor24/ | BUILT |
 | Loader | the Node-clock's initialization: lays the clocks from the three files | runner/files.py, board.py, load.py | BUILT |
-| **Node-clock** | the one act at every Node-clock, every round: the core | engine/, algebra/carry.py | BUILT at a standing W (section 6); terms 5, 9 and 11 DERIVED, terms 12 and 13 DRAFTED, term 10 OPEN, and the strengths of 6 to 8 DRAFTED (G2 to G5) |
+| **Node-clock** | the one act at every Node-clock, every round: the core | engine/, algebra/carry.py | BUILT at a standing W (section 6); terms 5, 7, 9 and 11 DERIVED, terms 6, 12 and 13 DRAFTED, term 10 OPEN (G2 to G5) |
 | Runner | the rounds, counted from outside, and the run back | runner/run.py, rounds.py, rewind.py | BUILT |
-| Record | the boundary between the board and the clicks | record/schema.py | BUILT at schema 1.2 |
-| Decoder | reads the record's clicks against what nature shows (the Boss's) | decoder/ | built; no further build before the Node-clock stands; every row not read until G5 |
+| Record | the boundary between the board and the clicks | record/schema.py | BUILT at schema 1.3 |
+| Decoder | reads the record's clicks against what nature shows (the Boss's) | decoder/ | built: the click world's block of seven readings (C5, C6), each SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK, with its cause; the record's reading and the basic part stand |
 | Visualizer | draws what the decoder reads (the Boss's) | owed | owed |
 | Guards | the law, the gate, the tests, the documents' gates | docs/ALGEBRA.md, tools/, tests/ | BUILT |
 
 ## 2. How they work together: one round
 
-The loader lays the board from the three files. The runner gives every Node-clock its turn in every round: each one reads itself and its six Meshes at the now slot, steps every gear once through Rule3's carry, and writes only its own state; nothing is queued or sent between Node-clocks, and the order of work is no law. A click, a train's own click tooth carrying its swept area to a whole key, is term 11's, DRAFTED: no click is computed or written before G5. The runner writes the record and the decoder reads it. The run back is, round by round, the act on the mirrored state, mirrored (n rounds by n unticks), and returns the start bit for bit while every fine tooth stands within its teeth; under a moving W one mirror about the n rounds does not return the start (section 6). main.py passes the Node-clock's functions to the runner, so the two never import each other.
+The loader lays the board from the three files. The runner gives every Node-clock its turn in every round: each one reads itself and its six Meshes at the now slot, steps every gear once through Rule3's carry, and writes only its own state; nothing is queued or sent between Node-clocks, and the order of work is no law. A click, a train's own click tooth carrying its swept area to a whole key, is term 11's, DERIVED for the pair at one Node-clock: the runner writes it as a click line of schema 1.3, one per round, Node-clock and train whose click tooth carried. The runner writes the record and the decoder reads it. The run back is, round by round, the act on the mirrored state, mirrored (n rounds by n unticks), and returns the start bit for bit while every fine tooth stands within its teeth; under a moving W one mirror about the n rounds does not return the start (section 6). main.py passes the Node-clock's functions to the runner, so the two never import each other.
 
 ## 3. The parts
 
