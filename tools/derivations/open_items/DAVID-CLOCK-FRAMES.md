@@ -2,7 +2,8 @@
 
 David, 2026-10-31, 14:1x UTC, the first text (FRAMES1), on the owner's words of 13:2x and 13:3x to the Boss and the
 Boss's #2187 6543987912, 6544032656 and 6544072212: problems (A) and (B), worked beside Big Pic on David's own bench.
-Status: **FRAMES1, for a pair through the Boss.** Read by no pair.
+Status: **FRAMES1, for a pair through the Boss.** Read by no pair; one claim corrected before any pair read it
+(David's 6544566560 item 3), and the write's run back by the same act added (section 3).
 
 The owner's words, in the Boss's translation, all to the Boss: "3, the structure: everything must come from the
 structure. Maybe there is a superfluous degree of freedom in the structure.." (13:2x); "Use David to try, in parallel,
@@ -33,19 +34,22 @@ The two problems, in the Boss's words (6543987912):
   connected group holds exactly when some loop's parity is odd. On a group with no loop no strength holds the free
   swing, and on a meshed board whose bands all have one sign, as the click world is laid, none does either. One band of
   the other sign makes the loops through it odd, and then nothing is free.
-- **(A), the write (DERIVED for its frame-free change; MEASURED on a stand-alone ring; CANDIDATE as the third
-  click's):** a band's sign written on a group with no loop is a frame turn of one of its clocks, a relabelling, which
-  no frame-free reading sees. Written on a loop it changes the loop's parity, which no frame turn reaches: the free
-  swing goes, and the rest read it. Its energy moves by -4 w g u at the write, exactly 0 at the round its pair stands at
-  0, and it is its own inverse. On a ring of 8 Node-clocks at the click world's grain, the write at the zero holds the
-  free drift (the widest |g - u| 283 units after it, against 16,000 unwritten), and every other Node-clock parts from
-  the unwritten run, about two rounds a Node-clock away.
+- **(A), the write (DERIVED for its frame-free change and its run back; MEASURED on a stand-alone ring; CANDIDATE as
+  the third click's):** a band's sign laid for a whole run on a group with no loop carries nothing, but a sign written
+  during the run, the counts kept, reflects one clock's state, and the rest read it; on a loop it also changes the
+  loop's parity, which no frame turn reaches, and the free swing goes. Written when both clocks of its pair stand at 0,
+  it moves no energy, and that round's pushes are the same under either sign, so the same act's run back meets the same
+  state and turns the sign back. On a ring of 8 Node-clocks at the click world's grain, on the engine's mirrored gear,
+  the write holds the free drift (the widest |g - u| 283 units after it, against 16,000 unwritten), every other
+  Node-clock parts from the unwritten run about two rounds a Node-clock away, and the run back by the same act returns
+  the counts, the teeth and the signs exactly: read by the rest, the books kept, the run back exact.
 - **The quaternion and the coupling family (DERIVED for the algebra; CANDIDATE for the held hand):** with quaternion
   hands the cell g - k u squares to |g|^2 + |u|^2 - 2 Re(g* k u): the band has twice the tie's weight in one cell, at
   every unit, with no ratio laid. The frame turns keep the form on all 576 (frame, link) pairs of a triangle, and a loop
   holds exactly when its holonomy is not 1. If the held hand is the band's link, a whole unit k, then on the click
   world's scalar dials only Re k reaches the band: the pair sits at the edge at k = 1 or -1 (k = -1 gives the present
-  cell g + u) and holds at the other 22 units, with no number laid.
+  cell g + u) and holds at the other 22 units, with no number laid. At the eight units of order 3 (Re k = -1/2), at the
+  weight W, the pair is the pair of Big Pic's one exact clock (giant.py).
 
 ## 1. In clocks
 
@@ -66,9 +70,10 @@ The two problems, in the Boss's words (6543987912):
   it odd, and nothing is free.
 - **The free swing weighs.** It moves, and term 5 carries each clock's momentum, so it weighs and it is read. What
   nothing reads is which frame calls it opposite.
-- **The write.** Turning a band's sign where no loop passes is a frame turn of one of its clocks: the rest see nothing.
-  Turning it on a loop changes the loop's parity: the free swing goes, and the rest see the change. Made at the round
-  its pair stands at 0, the turn moves no energy, and a second turn undoes it.
+- **The write.** A band's sign laid for a whole run on a pair carries nothing. Turned during the run, with the counts
+  kept, it reflects one clock's state, and the rest see that; on a loop it also changes the loop's parity, and the free
+  swing goes. Made at the round both clocks of its pair stand at 0, the turn moves no energy, that round pushes alike
+  either way, and the same act run back turns it back.
 - **Quaternion hands.** The frame is a whole unit of the 24, and a band carries a link k, the taker read in the giver's
   frame. A loop's holonomy, the product of its links, is what no frame turn changes, and a loop holds exactly when its
   holonomy is not 1.
@@ -136,19 +141,35 @@ The two problems, in the Boss's words (6543987912):
   k = -1 the cell is g + u, the held hand's present cell at |h| = 1. The pair's two swings then hold the springs
   2 w (1 - Re k) (together, g = u) and 2 w (1 + Re k) (opposite, g = -u): they stand as (1 - Re k) to (1 + Re k), 3 to
   1 at Re k = -1/2 and 1 to 1 at Re k = 0, whole ratios from the 24 with no number laid.
+- **The order-3 units:** a unit k = cos t + n sin t has k^3 = 1 exactly when cos t = -1/2, so the eight units with
+  Re k = -1/2 are the eight of order 3 (the 24's orders, 6543464830), the Boss's lead (a)'s w among them. At the weight
+  w = W the pair's block in the gear's own unit (2 S / W for a spring, TIE2 / W for a band) is [[2, 1], [1, 2]]: each
+  hand 2, the band 1. That is the pair of Big Pic's one exact clock with no tooth (giant.py, his 6544388194 item 3),
+  where the cell alone gives [[1, 1], [1, 1]] at h^2 = Gamma / 2, the edge. His held hand is a third clock with its own
+  spring and two ties, the link here is the band's: the pair agrees, the held hand's part does not.
 
 ### 2.5 The write (DERIVED for the frame; CANDIDATE as the third click's)
 
-- **On a group with no loop,** turning one band's sign equals turning one of its clocks' frames, so every frame-free
-  reading is unchanged. A write that is a frame turn is unread, as a write that is a symmetry of the round is: the THIRD
-  pair found turns.py's write a relabelling (both readers; the Boss's 6543768769 and 6543794891).
-- **On a loop,** turning one band's sign multiplies that loop's parity by -1, which no frame turn reaches: the kernel
-  goes or comes (2.3), and the rest read it. With quaternion links a write k -> k w on one band of a loop moves its
+- **A band's sign as a law, and as a write.** On a group with no loop, a band's sign laid for the whole run is
+  superfluous: the two signs give one run in two frames (2.1). A sign written during the run, with the counts kept, is
+  no frame turn: in the frame where the band keeps its old sign, it is one clock's whole state reflected, its count and
+  its momentum, so the rest read it unless that clock stands at rest at 0. A write that turns the counts and the bands
+  together is a frame turn, and is unread, as a write that is a symmetry of the round is: the THIRD pair found
+  turns.py's write a relabelling (both readers; the Boss's 6543768769 and 6543794891).
+- **On a loop,** turning one band's sign also multiplies that loop's parity by -1, a frame-free change of the law
+  itself: the kernel goes or comes (2.3). With quaternion links a write k -> k w on one band of a loop moves its
   holonomy likewise.
 - **Its energy:** the band's square moves from w (g + u)^2 to w (g - u)^2, by -4 w g u. That is exactly 0 where
-  g u = 0. So a write at the round its pair stands at 0, where 1 - lit(g u) = 1 by one carry (node-all's
-  algebra/carry.py), moves no energy, and each clock's books stand with no passing. Anywhere else it moves 4 w g u,
-  which a passing would have to carry (OPEN).
+  g u = 0. So a write at the round its pair stands at 0 moves no energy, and each clock's books stand with no passing.
+  Anywhere else it moves 4 w g u, which a passing would have to carry (OPEN).
+- **Its run back by the same act** (DERIVED; Big Pic's condition, 6544249799 item 2): with both clocks of the pair at
+  0, where 1 - lit(g^2 + u^2) = 1 by one carry (node-all's algebra/carry.py), the band's cell is 0 under either sign,
+  so that round's pushes are the same either way. The write commutes with that round and with no later one, since the
+  later rounds read the new sign. On the engine's mirrored gear the run back meets the same state at the same round,
+  the trigger fires again, and the sign turns back before the push it does not change. Big Pic's condition (a local
+  write between rounds is undone by the same act only when it commutes with the round, and is then unread) holds for a
+  write of the state; this write is of the law's sign, it commutes with the one round it is made at, and the rest read
+  it through the rounds after.
 - **Its inverse:** turned twice the sign is back, so the write is its own inverse, a whole number in the state.
 - **The fixed end** (a CANDIDATE reading of the owner's 12:28 and 13:0x words): each loop's parity at the end is its
   parity at the start times -1 for each write on it. So the third clicks' summed choices meet a fixed end exactly when
@@ -177,6 +198,12 @@ The two problems, in the Boss's words (6543987912):
   stencil's one edge a round.
 - **The same turn at round 3,000,** with the pair at -1,000 and 1,000 units, would move the potential by
   4 f g^2 = 240,000,000,000 at lam 1: the write moves no energy only at the zero.
+- **The run back by the same act** (frames.py, part 5): the engine's gear as Big Pic's round writes it (the momentum
+  2 D (a - b) + 4 push + s split at 2 D from the dial's half, D = 2 W) with its mirror (b, a, -1 - s), and the write a
+  term of the act, firing wherever both clocks of the pair at Node-clock 0 stand at 0. At lam 1,000 over 12,000 rounds
+  it fires once, at round 4,000; the widest |g - u| after it is 283.1 units; each Node-clock parts from the unwritten
+  act at rounds 4,003 to 4,010 as above. Mirrored and run 12,000 rounds back by the same act, the write fires again at
+  round 4,000, and the run returns to the start exactly: the counts, the teeth and the signs.
 
 ## 4. Toward the clicks, and toward one solution
 
@@ -204,13 +231,14 @@ The two problems, in the Boss's words (6543987912):
 ## 5. What it does not show (OPEN)
 
 - the passing for a write away from its pair's zero, and whether the third click writes only at zeros;
-- the write's act form: 1 - lit(g u) is one carry, but no click's law is given;
+- the write's act form as a click's law: its trigger 1 - lit(g^2 + u^2) is one carry, but which click carries it is
+  not given, nor how often both clocks stand at 0 on a board that is not laid for it;
 - the write read through the first and the split clicks' records on node-all, not only through the dials;
 - the fixed end: which end, fixed apart from the start's image, and whether the summed writes meet it (the Boss's
   6544032656 item 3);
 - the held hand as the band's link on node-all, and whether the act's held hand can be a unit;
 - whether the stand-alone ring's hold survives the held hand's swing, the clicks and the Mesh's other trains;
-- the run back of the stand-alone step, whose carry is not node-all's mirrored one;
+- the run back on node-all's act itself, with the held hand, the clicks and the key;
 - any physics, and any reading of nature, from these.
 
 ## 6. How this text checked itself
@@ -219,5 +247,6 @@ The two problems, in the Boss's words (6543987912):
   exactly; nothing searched and no table typed.
 - 2.3 by the determinants: Bareiss's elimination with every division the carry's, its remainder checked 0, and no pivot
   sought, since a zero pivot of a sum of squares already shows a kernel.
-- 2.5's energy by the form's change at the write, printed exactly; section 3 by the ring at lam 1, 100 and 1,000.
-- The output, frames.txt (34 lines), holds every line cited here; the usage is in the README's row.
+- 2.5's energy by the form's change at the write, printed exactly; section 3 by the ring at lam 1, 100 and 1,000, and
+  the run back by the same act on the mirrored gear at lam 1,000.
+- The output, frames.txt (35 lines), holds every line cited here; the usage is in the README's row.

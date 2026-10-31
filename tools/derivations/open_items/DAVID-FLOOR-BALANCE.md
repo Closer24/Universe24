@@ -64,9 +64,10 @@ Letters, as on Big Pic's equil.py (bigpic-3clicks 9771a49a4, the click world's o
 A clock's potential terms are s x^2, t x_i x_j and c x_i^2 x_j^2, as his pushes -2 s a_i, -t a_j and -2 c a_i a_j^2 say,
 and a swing's beat squared is 2 s / W. **Interims:** under the strengths line (law line 1,970: every strength from the
 structure, none laid, searched or chosen) the band 96,000, hold 1 and the key 50,811,429 are named interims. A candidate
-route for the band is the one cell's 2 f h^2 (CELLS1, a first text that my pair did not pass; CELLS1b is with the
-MIRACLE pair), and the move from 96,000 to it is a change of the act, the owner's (the Boss's 12:2x ruling); f = W div
-Gamma is a rule of the grain. Every number here that rests on the band is interim too (section 2.2).
+route for the band is the one cell's 2 f h^2 (CELLS1, a first text that my pair did not pass; CELLS1b NOT PASSED by the
+MIRACLE pair on one sentence, its mathematician passing it), and the move from 96,000 to it is a change of the act, the
+owner's (the Boss's 12:2x ruling); f = W div Gamma is a rule of the grain. Every number here that rests on the band is
+interim too (section 2.2).
 
 **The finding in one line:** on the click world's triangle the band adds t/2 to the giver's and the taker's together
 swing and takes t/2 from their opposite swing, and under the two laid ties the held hand lends both c h^2. So, with
@@ -301,11 +302,11 @@ reversals.
   the third click choosing the path (the owner's 12:23 word, "Only the third click writes to the board and chooses", and
   the Boss's ruling on it). This text reads the first half alone: every row is the board's run with no click writing,
   "the path without the choices" of the owner's 12:28 word, and no click is read (the probe's own line). The second
-  half, what the clicks read at the edge and above, is OPEN and Big Pic's.
+  half, what the clicks read at the edge and above, is OPEN and both benches' (the owner's 13:2x and 13:3x words).
 - **The floor that keeps the run** (the owner's 12:25 word, his 12:27 confirming the Boss's reading of it): the board's
   own form gives the click world's free swing no lasting hold under the two laid ties, and none at all under the cell
-  (2.1, 2.5). So the floor that keeps the run is the clicks' own structure's to give, the third click's triangle: Big
-  Pic's check, OPEN. Until it is made, the floor line is the board's floor, not the clicks'.
+  (2.1, 2.5). So the floor that keeps the run is the clicks' own structure's to give, the third click's triangle: both
+  benches' check, OPEN. Until it is made, the floor line is the board's floor, not the clicks'.
 - **The passing at the edge, by grain** (section 5, the giver's count at the round of the taker's largest count):
   - lambda 1000: whole, the taker at 40.164 units (round 2,227) while the giver is at 0.138;
   - lambda 100: partial, the taker at 46.77 (round 4,537) with the giver at -7.02. The 46 above the lay's 40 is the
@@ -452,11 +453,11 @@ guide ... at its edge" (hat n = W / 5) is a point inside 2.5's window at the res
   and both forms: DERIVED given the springs; that the structure gives them rests on the square form, a candidate law
   line once its pair passes it and the owner approves.
 - **OPEN:**
-  - which own springs and bands the one algebra gives, and so which case holds where: Big Pic's check (under the square
-    form a single band gives the edge and an odd loop of plain bands more than half);
-  - whether the third click's triangle gives the floor that keeps the run (the owner's 12:25 and 12:27 words): Big Pic's
-    check;
-  - what the clicks read at the edge and above, the guiding line's second half: Big Pic's;
+  - which own springs and bands the one algebra gives, and so which case holds where: both benches' check (under the
+    square form a single band gives the edge and an odd loop of plain bands more than half);
+  - whether the third click's triangle gives the floor that keeps the run (the owner's 12:25 and 12:27 words): both
+    benches' check;
+  - what the clicks read at the edge and above, the guiding line's second half: both benches';
   - whether the run keeps every held dial >= 0 and its swings resolved, and the walk (section 3);
   - which window would bind a hat on road B, where the held hand is dialed, should a hat return (2.5): Big Pic's;
   - whether node-all's tied trains meet 2.3's scope: on the signed-permutation kinds the lend is diagonal by Schur's

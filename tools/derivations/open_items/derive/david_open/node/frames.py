@@ -375,3 +375,65 @@ for lam in grains:
 early = A - 1000
 print(f"   the same turn at round {early}, the pair at {early - A} and {A - early} units, would move the potential by"
       f" 4 f g^2 = {4 * f * (A - early) ** 2} at lam 1: the write moves no energy only where g u = 0")
+
+# 5. The run back by the same act: the engine's gear as Big Pic's round writes it (equil.py's split and gear: the
+# momentum 2 D (a - b) + 4 push + s split at 2 D from the dial's half, D = 2 W), its mirror (b, a, -1 - s), and the
+# write as a term of the act: the band's sign at Node-clock 0 turned at every round where both clocks of its pair stand
+# at 0, read from the now slot, 1 - lit(g^2 + u^2) by one carry.
+D = W + W
+
+
+def split(n_, d):
+    q, r = carry(n_ + d, d + d, 0)
+    return q, r - d
+
+
+def act(a, b, s, signs, writing=1):
+    g, u = a[:n], a[n:]
+    flip = writing * (1 - lit(g[0] * g[0] + u[0] * u[0]))
+    signs = [signs[0] * (1 - 2 * flip)] + signs[1:]
+    fg, fu = forces(g, u, signs)
+    push = fg + fu
+    a1, s1 = [], []
+    for i in range(2 * n):
+        q, kept = split(D * (a[i] - b[i]) + D * (a[i] - b[i]) + 4 * push[i] + s[i], D)
+        a1.append(a[i] + q)
+        s1.append(kept)
+    return a1, list(a), s1, signs, flip
+
+
+def mirror(a, b, s):
+    return list(b), list(a), [-1 - x for x in s]
+
+
+for lam in grains[-1:]:
+    a0 = [-A * lam] * n + [A * lam] * n
+    b0 = [-A * lam - lam] * n + [A * lam + lam] * n
+    s0, signs0 = [0] * (2 * n), [plain] * n
+    a, b, s, signs = list(a0), list(b0), list(s0), list(signs0)
+    ua, ub, us, usigns = list(a0), list(b0), list(s0), list(signs0)
+    writes, wide, after_write, parted = [], 0, False, [None] * n
+    for r in range(rounds):
+        a, b, s, signs, flip = act(a, b, s, signs)
+        ua, ub, us, usigns, _ = act(ua, ub, us, usigns, 0)
+        for x in range(n):
+            if parted[x] is None and (a[x], a[n + x]) != (ua[x], ua[n + x]):
+                parted[x] = r + 1
+        if flip:
+            writes.append(r)
+            after_write = True
+        if after_write:
+            wide = max([wide] + [abs(a[x] - a[n + x]) for x in range(n)])
+    a, b, s = mirror(a, b, s)
+    back_writes = []
+    for r in range(rounds):
+        a, b, s, signs, flip = act(a, b, s, signs)
+        if flip:
+            back_writes.append(rounds - 1 - r)
+    a, b, s = mirror(a, b, s)
+    exact_back = (a, b, s, signs) == (a0, b0, s0, signs0)
+    print(f"5. the engine's gear with its mirror at lam {lam}, the write a term of the act (both clocks of the pair at 0):"
+          f" {rounds} rounds forward, writes at rounds {writes}; after the first the widest |g - u| {wide}, and each"
+          f" Node-clock parts from the unwritten act at rounds {parted}; mirrored and"
+          f" run {rounds} rounds back by the same act, the writes undone at rounds {sorted(back_writes)}: back to the"
+          f" start exactly, the counts, the teeth and the signs: {exact_back}")
