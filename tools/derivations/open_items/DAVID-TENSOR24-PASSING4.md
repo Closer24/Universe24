@@ -1,6 +1,6 @@
 # The passing for four value legs: the split at the rest, and what its clicks mean (NOT_CLOSED 29)
 
-David, 2026-10-31 (the fourth text, 02:0x UTC), for the night's side list, NOT_CLOSED 29: "the hat needs a lawful
+David, 2026-10-31 (the fifth text, 02:3x UTC), for the night's side list, NOT_CLOSED 29: "the hat needs a lawful
 one-pass passing for monomials of four value legs" (the Boss's #2187 6533115084 item 1, to David and the click's
 deriver, on the architect's measure: with the held hand still under the hat, the held train books the tied spring's
 energy alone, X_held = 2 hold f (k_a . k_b)(|x_a|^2 - |x_b|^2), and B4's pair world opens its books from round 57). It
@@ -30,12 +30,16 @@ alone, every division Rule3's carry, their outputs beside them.
 - **Big Pic's word** (6536901666, item 5): N2 and T1 stand, and both correct words of his own (6536112029 item 1). "A
   decay's products carry their mass" was his word for a world with many Node-clocks, and it is wrong on this one: it is
   an exchange that returns. "Nature's own accounting" holds only where a law picks the rest, the hat's constant, which
-  no world lays; on frame 6 the split is a board reading of the seed (21 of 21 rounds with n from the board, 1 of 21
-  with n = 1). The road stands as the hat's road. Its next step is mine: the split built in the passing, per tie group,
-  with its room and its exchange read twice in the click world, as the owner's newest word asks. The factor 3 at kappa
-  6 is the owner's; from above, the key is CHOSEN and stays odd at 230,403, while term 11's scale is DERIVED, and he
-  would not move a DERIVED scale for a road that is OPEN.
-- **This text** folds them (section 10) and says there how it checked itself.
+  no world lays through the loader; on frame 6 the split is a board reading of the seed (21 of 21 rounds with n from the
+  board, 1 of 21 with n = 1). The road stands as the hat's road. Its next step is mine: the split built in the passing,
+  per tie group, with its room and its exchange read twice in the click world, as the owner's newest word asks. The
+  factor 3 at kappa 6 is the owner's; from above, the key is CHOSEN and stays odd at 230,403, while term 11's scale is
+  DERIVED, and he would not move a DERIVED scale for a road that is OPEN.
+- **The fourth text** (toys-5 d5745d134) folded them (section 10) and went back to that pair, and both PASSED it, with
+  minors and with the lines that rest on frame 6's exact quarter turn named. K = 2 W leaves code by Big Pic's ruling
+  (the Boss's 6537340494), and writer D re-lays the held rows' spring off an exact turn.
+- **This text** folds their minors (section 11). Its end pair reads after that re-lay, since the room this page reads
+  rests on the exact turn (section 11).
 
 **The finding in one line:** for four value legs the act's passing leaves a residual, -f (e1 - e3); the split at the
 rest closes the books exactly, local, one pass, odd and whole at one scale: a tie's value at the held hand's rest is the
@@ -68,8 +72,8 @@ a free particle the tied train keeps its mass on the board; near the vacuum it m
   - the click tooth, kept as the mirror keeps it, returns to its birth over the reversed windows in every run.
 - **The middle form,** applied to every four-leg monomial, breaks the shipped room (the held train up to 344 clicks a
   round inside it, where the act fires 0) and books a tie-massed particle's energy to the vacuum (-249 permille on the
-  mean). It is refused as the road and kept as a lawful form: it is the split with the excursion shared over the k
-  rows instead.
+  mean). It is refused as the road and kept as a lawful form: in the work form it is the split with the excursion shared
+  over the k rows instead.
 - **The background form** is what the act books in the room, and Big Pic's interim road; the split's probes now run on
   the board, and it stands as the stiff-limit reading of the same books.
 - **The click world** (the owner's law; Sofer's words, 6536096436): the pair world's clicks are click lines. The act's
@@ -88,9 +92,9 @@ a free particle the tied train keeps its mass on the board; near the vacuum it m
 
 ## 1. In clocks
 
-- **What the passing counts.** Each round a train's click tooth carries the train's two-round energy change, read on
-  the window before, now and next; summed over the trains the passings are 0 (the books), so over a run the clicks
-  only move quanta from one train to another, up to what the teeth hold.
+- **What the passing counts.** Each round a train's click tooth carries the train's two-round energy change (an energy
+  meaning read on the board), read on the window before, now and next; summed over the trains the passings are 0 (the
+  books), so over a run the clicks only move quanta from one train to another, up to what the teeth hold.
 - **Why four legs break it.** A spring between two gears trades energy as a seesaw: what one gains the other loses,
   read off the two gears alone. A term of four legs is a seesaw whose pivot moves with the other legs; the act's passing
   reads each leg against the other three at the other slot, and the four readings no longer balance.
@@ -188,11 +192,11 @@ a free particle the tied train keeps its mass on the board; near the vacuum it m
 - **The tie, split at the rest.** The loader's ties joining the held train to a tied train come in groups, one factor c
   and one product P of tied legs over every held row: c P SUM_r k_r^2 = c P |k|^2 (on the pair world 12 groups at
   60,000, P = x_t^2 for each tied row t; on passing4, c = 3 and P = x^2). Write c P |k|^2 = c n P + c P (|k|^2 - n), n
-  the held hand's rest.
+  the hat's rest, or frame 6's seed (below).
   - The value at the rest, c n P, is the tied train's own two-leg spring: alpha 1 to it, so it passes nothing.
   - The excursion, c P (|k|^2 - n): its pushes on the held rows are the tie's own, -2 c P(a) k_r; on a tied leg l they
-    are -c (P / x_l)(a) (|k(a)|^2 - n). With the excursion as one leg, alpha_tied = 2/3 (its two legs) and
-    alpha_held = 1/3: S_held = (kappa / 3) (2 W_held - W_tied), S_tied = -S_held.
+    are -c (P / x_l)(a) (|k(a)|^2 - n). With the excursion as one leg, a convention for the interaction, alpha_tied =
+2/3 (its two legs) and alpha_held = 1/3: S_held = (kappa / 3) (2 W_held - W_tied), S_tied = -S_held.
 - **The books** close monomial by monomial, since SUM_A alpha_A = 1 gives SUM_A S_A = kappa (W - W) = 0, exactly.
 - **Oddness.** Under (b, a, a+) -> (a+, a, b) the pushes J(a) stand and a+ - b changes sign, so every W and every S
   changes sign.
@@ -343,8 +347,8 @@ a free particle the tied train keeps its mass on the board; near the vacuum it m
   returns and for the free particle the tied train's mass kept on the board; the two-leg law; the middle and the
   background forms as lawful forms, the background form as what the act books in the room.
 - **The hat's road:** the split at the rest, on Big Pic's word (6536112029 item 1), standing as the hat's road
-  (6536901666 item 5); its probes run on the board. Its weights: the excursion as one leg, 2/3 and 1/3; its scale kappa
-  6.
+  (6536901666 item 5); its probes run on the board. Its weights: the excursion as one leg, 2/3 and 1/3, a convention for
+  the interaction; its scale kappa 6.
 - **Not in the click world:** the split is carried by the probe, not by the act. Its room and its flicker are board
   readings until it is built in step.passing (per tie group) and its lines are read twice in the click world.
 - **OPEN:**
@@ -449,7 +453,8 @@ The second text's record, kept; its road, the middle form, is withdrawn in secti
 - **What the probes do not test:** the split built in step.passing; its lines read twice in the click world; a world
   with the hat in place of frame 6; ties whose held legs are not a row squared over every held row.
 - **The text's own rules,** by a scan of every line: ASCII only; no line over 120 characters outside the table; no
-  barred word; no run of three capitals; every number printed by a probe in the tree or named to a reader's script.
+  barred word; no run of three capitals; every number printed by a probe in the tree or named to a reader's script, but
+  the five scratch-run figures of the run back with the tooth flipped (283 to 203), named as such (5).
 
 ## 10. The third text's readers, folded (the fourth text)
 
@@ -461,8 +466,8 @@ both reports went to Big Pic first (David's 6536738713, item 7).
   2,000, back to -19 by round 3,000). "A decay's products carry their mass" was his word for a world with many
   Node-clocks, wrong on this one: it is an exchange that returns.
 - T1: frame 6 has no vacuum minimum (NOT_CLOSED 19), so its rest is the seed's |k|^2. "Nature's own accounting" holds
-  only where a law picks the rest, the hat's constant, which no world lays. On frame 6 the split is a board reading of
-  the seed (21 of 21 rounds with n from the board, 1 of 21 with n = 1).
+  only where a law picks the rest, the hat's constant, which no world lays through the loader. On frame 6 the split is a
+  board reading of the seed (21 of 21 rounds with n from the board, 1 of 21 with n = 1).
 - The road stands as the hat's road. Its next step is mine: the split built in the passing, per tie group, with its
   room and its exchange read twice in the click world, as the owner's newest word asks.
 - The factor 3 at kappa 6 is the owner's. From above, the key is CHOSEN and stays odd at 230,403, while term 11's scale
@@ -496,9 +501,39 @@ both reports went to Big Pic first (David's 6536738713, item 7).
   passing4 there byte for byte at the third text (his 6537033664 item 3).
 - **The readers' runs rerun by me byte for byte:** the mathematician's decay_trace and movecount, and the physicist's
   t1_seed, each on node-live's src at 575973a20.
-- **Derived again by hand:** frame 6's quarter turn keeps |k|^2 exactly (a . (a+ - b) = 0), so n read from the board is
-  the seed's |k|^2 at every round of the room; with the seed at (1, 1) and before (1, -1), |k|^2 = 2, and n = 1 leaves
-  c P (|k|^2 - 1) = c P as an excursion the act does not book, so the held train fires where the act does not.
+- **Derived again by hand:** frame 6's quarter turn keeps |k|^2 exactly, being a rotation (a . (a+ - b) = 0 is why
+  W_held is 0), so n read from the board is the seed's |k|^2 at every round of the room; with the seed at (1, 1) and
+  before (1, -1), |k|^2 = 2, and n = 1 leaves c P (|k|^2 - 1) = c P as an excursion the act does not book, so the held
+  train fires where the act does not.
 - **What the text searched again:** every "decay" outside the records of the earlier texts, "nature's own accounting",
   "the frame's constant", "held count 1", "mass" for the vacuum's share and "the night's click world": each now names
   the exchange, the seed's |k|^2, the energy, or the 30 ticks.
+
+## 11. The fourth text's readers, folded (the fifth text)
+
+The fourth text (toys-5 d5745d134) went back to the pair, and both PASSED it. Each reran passing4, pair_world and split4
+on node-live 575973a20 (src and tests side by side) byte for byte. The physicist's f1 and f2 reproduce the exchange
+(-974 permille by round 2,000, -19 by round 3,000; the background form flat at -1,044 over rounds 1,914 to 1,925 and
+ending at -44), and the mathematician's t1_seed and movecount reproduce independently.
+
+**What rests on frame 6's exact quarter turn** (both readers): the room's identity, the split's clicks equal to the
+act's in 56 of 56 rounds at the key times 3; n as the seed's |k|^2 in every round of the room; the act booking nothing
+of the tie to the held train in the room (k_a . k_b = 0); the quarter turn's W_held = 0; t1_seed's 21 of 21; the room's
+end at round 57 and the flicker past it; section 1's "frame 6 turns exactly". K = 2 W leaves code by Big Pic's ruling
+(the Boss's 6537340494): writer D re-lays the held rows' own spring as a CHOSEN key off an exact turn, so |k|^2 is no
+longer held exactly and each of these is re-read on that world, reported as it comes. This page's end pair reads after
+it.
+
+**Their minors, folded:** 1. The physicist's: "a convention for the interaction" at 2.4 and section 6 as in the finding
+(2.4; 6); the click tooth's energy meaning a board reading (1); the hat's constant laid "through the loader" in no
+world, since passing4 and split4 lay it on their own lays (the header; 10); n "the hat's rest, or frame 6's seed" before
+n's bullet (2); |k|^2 kept because the quarter turn is a rotation, a . (a+ - b) = 0 the reason W_held is 0 (10); the
+probes' usage lines name the run test (the probes). 2. The mathematician's: the world reader refuses any statement in
+the test's slice that is not a plain assignment, asks for exactly one function laying the hand, and names its file in
+the usage line (the probes); "in the exchange" in the README row; the scratch-run figures named in section 9's rule (9);
+"in the work form" in the finding's middle form (the finding).
+
+**How the fifth text checked itself:** pair_world.py and split4.py, their reader hardened, rerun on 575973a20 byte for
+byte; passing4.py unchanged; on a copy of the run test with "den += 1" added inside the slice, the reader stops with an
+error naming the statement. The text searched again every "no world lays", "convention", "the held hand's rest" and "(a
+. (a+ - b) = 0)".

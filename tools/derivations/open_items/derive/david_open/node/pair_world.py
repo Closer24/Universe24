@@ -12,6 +12,7 @@ do not sum to 0, for each form, and the held hand's |k|^2 over the run. The thir
 measured on this world by split4.py beside it.
 
 Usage: python3 -I pair_world.py <src of node-live at 575973a20> [rounds, 400 unless given]
+(B4's world is read from the run test, <src>/../tests/test_the_tensor24_run.py, at the same commit)
 """
 
 import ast
@@ -37,7 +38,10 @@ def b4_world(src):
     def named(node, name):
         return isinstance(node, ast.Assign) and [getattr(t, "id", None) for t in node.targets] == [name]
 
-    body = next(f.body for f in ast.walk(tree) if isinstance(f, ast.FunctionDef) and any(named(a, "hand") for a in f.body))
+    laying = [f for f in ast.walk(tree) if isinstance(f, ast.FunctionDef) and any(named(a, "hand") for a in f.body)]
+    if len(laying) != 1:
+        raise ValueError(f"the run test lays the held hand in {len(laying)} functions, not one")
+    body = laying[0].body
     at = next(i for i, a in enumerate(body) if named(a, "hand"))
     start = max(i for i in range(at) if named(body[i], "den"))
     end = next(i for i in range(at, len(body)) if named(body[i], "gears"))
@@ -60,8 +64,9 @@ def b4_world(src):
         raise ValueError(f"not a plain value in the test's world: {ast.dump(node)}")
 
     for a in body[start : end + 1]:
-        if isinstance(a, ast.Assign):
-            names[a.targets[0].id] = value(a.value)
+        if not (isinstance(a, ast.Assign) and len(a.targets) == 1 and isinstance(a.targets[0], ast.Name)):
+            raise ValueError(f"not a plain assignment in the test's world: {ast.unparse(a)}")
+        names[a.targets[0].id] = value(a.value)
     return names["world"], names["gears"]
 
 ROUNDS = int(sys.argv[2]) if len(sys.argv) > 2 else 400
