@@ -194,6 +194,8 @@ def test_the_lay_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and_
         for path, text in zip(paths, texts, strict=True)
     ]
     assert got.header["sides"] == piece["shape"] and got.header["runner"] == "synchronous"
+    # the header's keys, the schema's fields: no birth, and nothing beside them
+    assert [*got.header] == ["kind", *(f.name for f in dataclasses.fields(schema.Header))]
     ticks = setting["ticks"]
     end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1, edges=[])
     # the end's keys, its own edges as pairs and its Mesh edges: no edge, so no click, and no tooth written
