@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 
 from tensor24 import main
-from tensor24.decoder import clicks, records
+from tensor24.decoder import records
 from tensor24.engine import kinds, state, step
 from tensor24.record import schema
 from tensor24.runner import load as loading
@@ -268,11 +268,11 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     assert orders_alike()
     by_place(monkeypatch)
     assert not orders_alike()
-    # the click lines on a pair world of one Node-clock (the first hostile code reader's M3): the held hand (1, 0), its before (0, -1), with its
-    # tooth at the dial's middle (s = 0) and its own spring CHOSEN at the grip at rest, den Gamma^2, the click world's rule (2 spring a third of the
-    # rest teeth, on no exact turn), the giver at its turning point at 14 and the taker at rest, at Gamma 1000, the hands' tie 9600 and the key
-    # 614401 odd: the room was the held hand's exact quarter turn, which no plan lays, so over the 1260 rounds the held hand clicks and the books
-    # open (NOT_CLOSED 29), every click line whole, the run back exact
+    # a pair world of one Node-clock (the first hostile code reader's M3; the seventh's ruling: the held hand at rest): the held hand (1, 0), its
+    # before its now, its tooth at the dial's middle (s = 0) and its own spring CHOSEN at the grip at rest, den Gamma^2, the click world's rule,
+    # the giver at its turning point at 14 and the taker at rest, at Gamma 1000, the hands' tie 9600 and the key 614401 odd: with no exact
+    # quarter turn laid, the held hand's square climbs and the counts leave the width, which the run's promise names at the round where they
+    # first stand past it, nothing written (an exact quarter turn, K = 2 W, keeps |k|^2 at 1 and runs the 1260 rounds to a record)
     den = 1  # every pinion den, the seed's
     hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
     pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
@@ -281,14 +281,13 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     grip = den * integers["full_rate"] * integers["full_rate"]  # the grip at rest, the spring's rule
     chosen = {"key": 614401, "push": 0, "notch": 0, "hold": 1, "spring": grip, "tie": 9600, "mesh": 0}
     world = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
-    gears = [[0, 0, 0, 1, 0, 0], [0, 1, 0, 0, -1, 0], [1, 0, 0, 14, 14, 0]]
+    gears = [[0, 0, 0, 1, 1, 0], [1, 0, 0, 14, 14, 0]]  # the held hand at rest, as every pulse
     laid_ = {"version": 1, "ticks": 1260, "gears": gears}
     files = {"universe": world, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": laid_}
     for name, held_ in files.items():
         (tmp_path / f"{name}.json").write_text(json.dumps(held_), encoding="utf-8")
-    assert main.ran([tmp_path / f"{name}.json" for name in NAMES], tmp_path / "pair.jsonl") == []
-    got, cause = records.read(str(tmp_path / "pair.jsonl"))
-    lines, counted = got.of("click"), clicks.counted(got)
-    assert cause == "" and got.end["exact"] == 1 and lines and counted.nonzero  # the books open
-    assert all(whole(x["q"]) and all(map(whole, (k, k1))) for x in lines for k, k1 in [x["tooth"]])
-    assert counted.trains[trains.index(hand)].lines  # the held hand's train clicks, the room gone
+    pair_record = tmp_path / "pair.jsonl"
+    found = main.ran([tmp_path / f"{name}.json" for name in NAMES], pair_record)
+    wide = f"takes more bits than the width, {integers['width']}"
+    assert found and found[0].startswith("round ") and wide in found[0], found  # the runaway named
+    assert not pair_record.exists() and not run.ledger_of(pair_record).exists()  # nothing written

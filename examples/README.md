@@ -135,8 +135,9 @@ about 14 minutes; the ledger is about 54 MB, five lines a Node-clock a round). A
 108162 and the taker's 100521, every Node-clock alike; the books NOT SHOWN, the q summed over the trains not 0 at
 123066 of the 123795 places with a line, the first at round 1; the meetings NOT SHOWN, one give and one take of one
 quantum at 540 places alone; each clock's line NOT SHOWN, 81 of 81 clocks clicking outside a meeting; D6, D7, D8 and
-the echo NOT READ by their causes; the held hand's |k|^2 from 0 to 680, its largest count 22, the tied hands' largest
-counts 48 and 50, no runaway; the run back exact. The account of `click_lay/measure.py` in `measure.txt` (4212 click
+the echo NOT READ by their causes; the held hand's |k|^2 climbs through the run (its most 5 by round 250, 100 by 2500,
+404 by 4250 and 680 by 5000, its largest count 22), the tied hands' largest counts 48 and 50, so no runaway holds only
+for the 5000 rounds read; the run back exact. The account of `click_lay/measure.py` in `measure.txt` (4212 click
 lines, the books 0 at 2106 of 2106 places, the held train's lines none and its |k|^2 1, the 24 of 24 turns alike over
 the first 100 rounds) is the quarter turn's record, not rerun. The frame's prices (FRAMES.md 6): the held train holds
 no Mesh, so the vacuum does not propagate; its |k|^2 is laid by the seed and picked by no law (no vacuum minimum); one

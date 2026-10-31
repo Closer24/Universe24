@@ -1,5 +1,5 @@
 """Clock: the run from the three files to the record: every Node-clock steps every round, then all the rounds run back.
-Algebra: the act iterated; before each round the promise, every tooth within its edge's dial of both slots' teeth, and the wave's window, the Spokes' grips within the teeth per sense, are read; the start returns bit for bit.
+Algebra: the act iterated; before each round the promise, every tooth within its edge's dial of both slots' teeth, the wave's window, the Spokes' grips within the teeth per sense, and the width, every count of both slots within the universe's width, are read; the start returns bit for bit.
 Board: the files checked and loaded, the rounds run, the rewind checked, the record and its ledger written.
 Clicks: it writes what the act gives: the record's header (schema 1.3: each kind's characters on the 24, each train's key and square flag), its click lines and its end, and the ledger beside them; a click line per train and Node-clock whose click tooth carried in a round, q the carry's quotient signed (a give below 0, a take above it) and the tooth before and after; the forward run's lines alone (the run back negates the quotients and writes none).
 """
@@ -62,10 +62,21 @@ def window(held: Any, w: Any, spokes: Any) -> list[str]:
     ]
 
 
-def promised(engine: Engine, layout: Any, s: Any) -> list[str]:
-    """Both promises of the round that reads a state, read from outside: every tooth within its edge's dial, and the wave's window at the now slot's teeth."""
+def wide(s: Any, width: int) -> list[str]:
+    """The width's promise on the state the round reads, read from outside, each departure named where it stands: every count of both slots within the universe's width, as the files' every integer is, so that a run whose counts leave it (a runaway, whatever its cause) is named at the round it first stands there, and not left to raise in the ledger's text."""
+    a, b, _, _, _ = s
+    return [
+        f"row {g}, site {x}: the count {n} takes more bits than the width, {width}"
+        for slot in (a, b)
+        for (g, x), n in np.ndenumerate(slot)
+        if int(n).bit_length() > width
+    ]
+
+
+def promised(engine: Engine, layout: Any, s: Any, width: int) -> list[str]:
+    """The promises of the round that reads a state, read from outside: every tooth within its edge's dial, the wave's window at the now slot's teeth, and every count within the width."""
     wa, wb = engine.dials(layout, s)
-    return promises(s, wa, wb) + window(engine.grips(layout, s), wa, layout.spokes)
+    return promises(s, wa, wb) + window(engine.grips(layout, s), wa, layout.spokes) + wide(s, width)
 
 
 def digest(text: str) -> str:
@@ -189,7 +200,8 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     start = engine.state(*loaded.state)
     ticks, end, read_, ledger = setting["ticks"], start, start, ledger_of(record)
     # every promise is the round's that reads the state: none where no round runs
-    found = promised(engine, layout, start) if ticks else []
+    width = universe["integers"]["width"]
+    found = promised(engine, layout, start, width) if ticks else []
     if found:
         return [f"round 1: {line}" for line in found]
     events: list[dict[str, Any]] = []
@@ -199,8 +211,8 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
             events += clicked(at, read_, end, clicks)
             read_ = end
             # the promises of the round that reads this state, read from outside: every kept tooth within its
-            # teeth, and the grips within the window
-            found = promised(engine, layout, end) if at < ticks else []
+            # teeth, the grips within the window, and every count within the width
+            found = promised(engine, layout, end, width) if at < ticks else []
             if found:
                 ledger.unlink()
                 return [f"round {at + 1}: {line}" for line in found]

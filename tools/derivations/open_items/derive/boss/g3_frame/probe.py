@@ -1,4 +1,8 @@
-"""Term 6's frame on the engine's act through the real loader (the Boss's code writer, 2026-10-30; the night's PLAN.md B2,
+"""The record of the K = 2 W frame, not rerun at HEAD: the plan laid the held rows' own spring at 2 rest then, and HEAD
+lays it at the universe's CHOSEN spring, which this probe's universe does not name (law line 102, #2187 6537222053
+item 4); its probe.txt stands as that frame's record.
+
+Term 6's frame on the engine's act through the real loader (the Boss's code writer, 2026-10-30; the night's PLAN.md B2,
 FRAMES.md 6): the Mesh-less held hand (A1, A2) at (1, 0) with its edge tooth at the dial's middle, s = 0, the format's
 default, on a cube of 3 with Meshes and on a cube of 4, a tied (T1, T2) hand beside it, light beside both, for ten tied
 beats; whole numbers and Rule3's carry alone, the runaway read from outside at 10^9 (the coupling family's physicist's
