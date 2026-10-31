@@ -8,9 +8,9 @@ reading alone): the books at each click, D6 and D7, and the cone check by click,
 owner's word of 00:3x UTC: the clocks' meetings), the meetings, each clock's line of meetings and light's echo, each
 read SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK where the record holds no click line, with its cause, every train
 card's lines, given, taken and net beside the books, every clock's meetings counted with no duration and its books
-beside its line, and one refusal line where the record holds no click of either kind, no click line and no whole
-click. Nothing is raised: a record or a ledger that is not read is named with its cause. The interpreter's bound on a
-whole number's digits is lifted, since the schema's numbers are whole numbers of any width.
+beside its line, and one refusal line where the record holds no click line. Nothing is raised: a record or a
+ledger that is not read is named with its cause. The interpreter's bound on a whole number's digits is lifted, since
+the schema's numbers are whole numbers of any width.
 
 Usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]
 """
@@ -68,7 +68,7 @@ def world(record: records.Record) -> None:
                 f"    clock at site {site}, train {train} ({labels.get(train)}): {met} meetings, {shadow.ORDER};"
                 f" given {tally.given}, taken {tally.taken}, net {tally.net}"
             )
-    if not (clicks.listed(record) or record.of("whole")):
+    if not clicks.listed(record):
         print(f"  {REFUSAL}")
 
 

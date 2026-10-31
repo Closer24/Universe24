@@ -261,7 +261,7 @@ def cone(record: Record) -> Verdict:
     sides = record.header.get("sides")
     if not (isinstance(sides, list) and sides and all(whole(s) and s >= 1 for s in sides)):
         return measure.verdict("NOT READ", "the header's sides make no board")
-    _, size, _ = records.board(record.header)
+    _, size = records.board(record.header)
     lay, unread = laid(record, sides, size)
     if unread:
         return measure.verdict("NOT READ", unread)

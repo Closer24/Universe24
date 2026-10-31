@@ -6,12 +6,9 @@ Clicks: its click lines name a train, a Node-clock and a round and carry q, the 
 
 from dataclasses import dataclass
 
-# The record's lines, in the order (round, kind, site, train): Header first; then Whole, Click, Split, Rate and Books;
-# End last. The run writes Click lines; no run writes a Whole, Split, Rate or Books line, every Node-clock stepping in
-# every round and the clicks standing in the Click line, and their records stay for the records read before. The
-# ledger's own file holds Ledger and Count lines, a Count line told by its site, which a Ledger line lacks. The other
-# records stand inside lines. A digest is SHA-256 in hex.
-MAJOR = 1  # a breaking change; the decoder upcasts an older major and refuses an unknown one
+# The record's lines, in the order (round, site, train): Header first; then the Click lines; End last. The ledger's own
+# file holds Count lines. The other records stand inside lines. A digest is SHA-256 in hex.
+MAJOR = 1  # a breaking change; the decoder refuses a record of another major
 # each minor version's change in order: an added field or line that no reader needs, or a line no run writes retired
 ADDED = (
     "the operands named, the coupling row's twelve fields",
@@ -30,6 +27,9 @@ ADDED = (
     " place across the Spoke, the side's q and its tooth before and after, the line's q the sum over sides and across, a"
     " Mesh side of q 0 never listed, as listing it would chain every clock of the board into every round's lines; the"
     " end's across, every Mesh edge side's partner place and tooth at every Node-clock (the Boss's ruling of 05:2x UTC)",
+    "the old engine's nine records retired, the whole, split, rate and books lines with the holdings, takings,"
+    " children and readings inside them, and the ledger's line of winds, no run writing any of them since 1.2; the"
+    " reader refuses their kinds as it refuses any kind the schema holds not",
 )
 MINOR = len(ADDED)
 
@@ -108,114 +108,6 @@ class Click:
 
 
 @dataclass(frozen=True)
-class Holding:
-    """One train's holding at a click: its windings and its remainder, each before and after."""
-
-    train: int
-    windings: tuple[int, int]
-    kept: tuple[int, int]
-
-
-@dataclass(frozen=True)
-class Taking:
-    """One end of a whole click that takes at both, a reading of its own one-ended act: site, Spoke, books, push."""
-
-    site: int
-    spoke: int  # the Spoke's index in the board's six, +x, -x, +y, -y, +z, -z, toward the other end
-    taken: tuple[Holding, ...]
-    laid: tuple[Holding, ...]
-    push: tuple[int, int, int]
-
-
-@dataclass(frozen=True)
-class Child:
-    """A part a whole click laid: its train, its Node-clock, its sweep after the lay, its push and moment at it."""
-
-    train: int
-    site: int
-    sweep: int
-    push: tuple[int, int, int]
-    moment: tuple[int, int, int]
-
-
-@dataclass(frozen=True)
-class Reading:
-    """A twin pair's reading in the axis form: its train, rho and the spin's three integers."""
-
-    train: int
-    rho: int
-    spin: tuple[int, int, int]
-
-
-@dataclass(frozen=True)
-class Whole:
-    """A whole click (law 5): q windings left a train at a Node-clock, with the books and the parts it laid, the books in ends alone where both take."""
-
-    round: int
-    site: int
-    count: int  # the count the Node-clock's beat reached, its first beat being 1 (the asynchronous runner's; G3 names it)
-    dial: int  # its rate dial after the beat (the asynchronous runner's)
-    train: int
-    q: int
-    winding: int
-    tooth: tuple[int, int]
-    wind: tuple[int, int]
-    sweep: int
-    push: tuple[int, int, int]
-    moment: tuple[int, int, int]
-    taken: tuple[Holding, ...]
-    laid: tuple[Holding, ...]
-    ends: tuple[
-        Taking, ...
-    ]  # both ends where both take, each its own one-ended act, taken and laid above then empty; none where one end takes
-    children: tuple[Child, ...]
-    lead: int
-    twist: int
-
-
-@dataclass(frozen=True)
-class Split:
-    """A split click (law 6 on the composite clock), its count and dial as a whole click's (the asynchronous runner's): c over room."""
-
-    round: int
-    site: int
-    count: int
-    dial: int
-    train: int
-    sizes: tuple[int, ...]
-    kinds: tuple[int, ...]
-    c: int
-    room: int
-    drawn: int
-    q: int
-    tooth: tuple[int, int]
-    wind: tuple[int, int]
-    detector: Reading
-    written: Reading
-
-
-@dataclass(frozen=True)
-class Rate:
-    """A Node-clock's k at its first beat and at each beat whose k differs from its last beat's, with the beat's count: the asynchronous runner's line, which no run writes since G1b."""
-
-    round: int
-    site: int
-    count: int  # the count the beat reached, the first beat being 1
-    dial: int
-    k: int  # a bit, 1 where the beat ticked
-
-
-@dataclass(frozen=True)
-class Books:
-    """A remainder booked at a Node-clock, signed (law 8's books)."""
-
-    round: int
-    site: int
-    train: int
-    kept: int
-
-
-@dataclass(frozen=True)
 class End:
     """The last line: the rounds, the state's digest, the rounds the rewind undid, and 1 where it came back exact."""
 
@@ -240,17 +132,3 @@ class Count:
     site: int
     train: int
     count: tuple[int, ...]
-
-
-@dataclass(frozen=True)
-class Ledger:
-    """A line of the ledger's own file, per round and train, at "step" (after the step) or "clicks" (after them)."""
-
-    round: int
-    at: str
-    train: int
-    wind: int
-    sweep: int
-    push: tuple[int, int, int]
-    moment: tuple[int, int, int]
-    windings: int

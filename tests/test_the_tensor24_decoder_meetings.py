@@ -23,10 +23,6 @@ ECHO = (
     "light's echo is not read: no rule yet tells light's click lines from the others (reading 7, owed)"
 )
 REFUSAL = "the record holds no click line, so no claim"  # the tool's refusal line, its opening
-# a whole click of train 1 at round 1, three windings and one kept laid as four of train 0, and no click line
-WHOLE = {"kind": "whole", "round": 1, "site": 0, "count": 1, "train": 1, "ends": []}
-WHOLE |= {"taken": [{"train": 1, "windings": [7, 4], "kept": [3, 2]}]}
-WHOLE |= {"laid": [{"train": 0, "windings": [0, 4], "kept": [0, 0]}]}
 
 
 def head(sides=(5, 1, 1), gears=((0, 0, 0, 1, 0, 0),), text=None, name="setting.json"):
@@ -169,7 +165,7 @@ def test_the_cone_reads_the_lines_that_could_stand_outside_it_and_the_setting_by
 def test_the_books_read_in_row_15_order_and_the_tool_refuses_only_a_record_of_no_click(tmp_path):
     """No: a give at round 1, its take at round 2, NOT SHOWN at round 1, the trains' tallies (one of no line) in the reading
     and the tool, no refusal line; a lone give before a line with no q and a take, NOT SHOWN with the gap beside it, the
-    meetings so; a line with no train first, NOT READ, the tool too. Yes: a whole click, no click line, no refusal line."""
+    meetings so; a line with no train first, NOT READ, the tool too."""
     held = shadow.books(read(tmp_path, click(1, 0, 0, -1), click(2, 0, 1, 1)))
     opened = "the sum of q over the trains is -1 at round 1, site 0: not 0 at 2 of 2 places"
     assert (held["kind"], held["cause"]) == ("NOT SHOWN", opened)
@@ -193,6 +189,3 @@ def test_the_books_read_in_row_15_order_and_the_tool_refuses_only_a_record_of_no
     for reading in (shadow.meetings, shadow.clock_lines):
         assert (reading(record)["kind"], reading(record)["cause"]) == unread
     assert f"  the meetings: {unread[0]}: {unread[1]}" in tool(tmp_path).splitlines()
-    assert read(tmp_path, WHOLE, header=head() | {"minor": 1}).of("whole") == [WHOLE]
-    out = tool(tmp_path)
-    assert "  the books at each click: NO CLICK" in out and REFUSAL not in out
