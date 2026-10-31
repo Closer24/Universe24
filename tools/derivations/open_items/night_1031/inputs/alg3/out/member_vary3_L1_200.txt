@@ -1,0 +1,5 @@
+MEMBER on vary3_L1 , 200 rounds, 27 Node-clocks; edge dial D 152434287 ; 3D 457302861
+  the member's state per triangle: Big Pic's three edge teeth on 3D, tau on 3D, twin on 3D (THIRD9: on D); the small member: two edge teeth and tau on 3D, the twin on D, four numbers
+  checks: {'c.g not 0 mod 3D (site-rounds)': 0, 'quanta apart (edge-site-rounds)': 0, 'landings apart (site-rounds)': 0} ; landings 2695 ; side quanta not 0 5487
+  the small member's run back from its end alone reaches the birth at 27 of 27 Node-clocks
+END

@@ -1,0 +1,15 @@
+WORLD click_swap rounds 200 edge key K 152434287 birth B 76217143 trains 5 rows 26 sites 27
+COMPLEX per place: own edges [(2, 3), (2, 4), (3, 4)] ; Mesh edges (+ end) [(0, 0, 3), (0, 0, 4), (0, 3, 0), (0, 4, 0), (2, 0, 3), (2, 0, 4), (2, 3, 0), (2, 4, 0), (4, 0, 3), (4, 0, 4), (4, 3, 0), (4, 4, 0)] ; triangles [(2, 3, 4)]
+MONOMIALS: laid 2416 ; structural 42 ; live 32 ; canonical (each multiset once) 39 (merged 3 )
+STATE per Node-clock: node-all 279 ; cochain 97 (a, b, r 26 each; rd 4 ; own edge teeth 3 ; Mesh edge teeth 12 )
+TERMS per Node-clock per round: node-all {'J plan': 9664, 'Mesh plan': 4056, 'push plan': 910, 'clock plan (x5 reads)': 130, 'passing terms': 9664, 'crossing pairs': 4056, 'teeth carries': 175}
+                                cochain (structural) {'J plan': 126, 'Mesh plan': 12, 'push plan': 178, 'clock plan (x5 reads)': 25, 'passing terms': 108, 'crossing pairs': 12, 'teeth carries': 15}
+                                live at the world's strengths {'J plan': 112, 'Mesh plan': 0, 'push plan': 0, 'clock plan (x5 reads)': 25}
+PRODUCTS per Node-clock per round, MIN2's rule (3 a J, Mesh-plan or push term; 4 + T a passing term, on the complex 4 + its edges; 5 a clock-read term; 1 a grips'-read term; 3 a crossing entry; 45 R per-row): node-all 144884 ; cochain 2849 ; grips'-read terms 30
+PRODUCTS per Node-clock per round (MIN1's count): node-all about 144984 ; cochain about 1899
+ROUND BY ROUND entries off (engine vs cochain read back): {'a': 0, 'b': 0, 'r': 0, 'rd': 0, 'k': 0, 'clicks': 0, 'lines': 0} ; click entries not 0: 12852 ; record click lines: 9639
+PLACE IDENTITY, site-rounds: {'own sides not cancelling': 0, "across net != the star's coboundary": 0, 'sites with across net != 0': 0}
+END teeth line equal: True ; end digest (state read back) equal: True
+cochain teeth off the birth at the end (cells x places): 54
+RUN BACK on the complex from its end alone, 200 rounds: start reached exactly: True
+END

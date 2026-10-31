@@ -755,3 +755,311 @@ label; the labels stay as the sections' names, since rulings and texts cite them
 of the sections in this file is the true order. The times in my posts on #2187 were right. Three commit messages on
 boss-derive carry wrong times: 04b7385dd says 09:4x (made 09:21 UTC), 9967a224b says 10:1x (made 09:27 UTC) and
 9b4407b5f says 09:5x (made 09:41 UTC); their history is not rewritten, and INDEX.md names them.
+
+## The Boss's rulings, 09:49 UTC (the runner's cut; the owner's word to Sofer; from 6541888909)
+
+The owner to Sofer, about 09:4x UTC: "The runner feels huge; it must be shortened and be generic and clear." Sofer's
+count (6541854273): the runner holds 1,011 active lines on node-fold c360851c2 (49% of src/tensor24), the Node-clock
+338. In force:
+- RUNNER-CUT is an OPEN item of the Runner part: three files in, the one act in rounds, the record out; no function
+  per term (one builder for every coupling, reading its clocks and edges from the files; one call in load.py).
+- Its check can fail: every shipped world's record equal line for line before and after, except what node-rec takes
+  out on purpose; the pinned full check; a code reader; Sofer's count.
+- Its target: the runner no larger than the Node-clock it runs, by Sofer's count on the same head. No line is packed
+  to meet it; if it cannot be met clearly, the writer names what stands in the way.
+- Its writer: a fresh writer, from the merge of node-rec and node-min, once both are pushed on clean pinned checks.
+- ALG2's cochain act is not in it: it changes the act, and enters the engine only when settled and ruled by Big Pic.
+- A gate bound on the runner's lines changes the gate's files and goes to the owner; until then the target is the
+  writer's, read by Sofer's count.
+
+## The Boss's rulings, 09:52 UTC (from KEY4's physicist: PASSED, as the key's machinery)
+
+KEY4's physicist (S/key4_phys/REPORT.md): PASSED as the key's machinery, no BLOCKING item, nine MINOR. The key's
+value is not passed: it is Big Pic's (his item 6, the key's origin). His three questions:
+- Q1, is the key a strength under the owner's strengths law (09:30 UTC, item 3)? It is the click world's unit, and
+  the law binds it all the same: no choice for the whole universe as a settled form. The law's other branch, laid
+  once per clock, is closed on physics (a per-clock key lays a dilation by hand and gives a place's books more than
+  one unit; MEASURED). So its lawful form is one value per world from the structure, Big Pic's. The laid middle stays
+  only as the named interim, the file's own value today, OPEN, with no claim made on it.
+- Q2, should the key's origin carry the grain condition? It goes to Big Pic as a stake beside the origin, under the
+  owner's law of 09:04 UTC (the click world works by the uncertainty principle, and it comes from the clicks): a D
+  that divides every passing makes the clicks copy the board's passing (the mesh world, D = 3: no tooth leaves its
+  birth in 30 rounds, 0 of 11,340; MEASURED). The origin must say how its D avoids that, or why it need not.
+- Q3, should the settled build take only the origin-free machinery? Yes, once KEY4's mathematician also passes it:
+  load.dial as K's one input; edging's scale and its remainder; dialled's two refusals (an even D, a broken scale);
+  laid_out's scale from the load; carded; chosen.key retired; setting.middle named the interim source of K. With it:
+  the click lay's run_one slices the own sides before its reshape (as run.py's teeth_of does: m8), and the migration
+  is two worlds (click, mesh) with 6 records once node-rec takes the silent worlds out (m3); node-all's "paired"
+  becomes a board code check, and carded is the record's one-key check (m2).
+- Its writer: the fresh writer of RUNNER-CUT builds it first, on the merge of node-rec and node-min, before the cut;
+  the cut's records are then read against the KEY4 head.
+- The nine MINOR items go with the report to Big Pic as inputs; no KEY5 unless Big Pic asks (the owner's 09:05 word).
+
+## The owner's word, 09:52 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "Are you advancing the code of everything except what is open, which Big Pic does?"
+> "No."
+
+- The "No" answers the Boss's question of 09:5x (the batch's item 22): the gate holds no bound on the runner's lines.
+  RUNNER-CUT's target stays the writer's, read by Sofer's count at each push.
+- The question is an order in force: every settled item is advanced in code now, beside Big Pic's open items. So a
+  third writer, J, starts now beside H (node-min) and I (node-rec): he prepares the runner's cut and its check, ports
+  KEY4's machinery onto node-fold as node-key once KEY4's mathematician passes it, and cuts the runner on node-short
+  from the merge of node-rec, node-min and node-key.
+
+## The owner's word, 09:56 UTC (in Hebrew; the Boss's translation)
+
+> "Yes."
+
+It confirms the Boss's reading of his "No" of 09:52: the gate holds no bound on the runner's lines.
+
+## The Boss's rulings, 09:59 UTC (from the ninth code reader on node-fold, David's 6541854539 and Sofer's 6541877707)
+
+The ninth code reader (S/hcr9/REPORT_FOLD.md): node-fold NOT PASSED on two BLOCKING items, each a few lines; nine
+commits and the merge PASSED; every claim of the writer MEASURED at both ends. His questions:
+- Q1: yes, a test of the 08:1x ruling is a condition for node-fold to pass: the owner's rule, one small test per
+  generic part with its yes and its no. The click world's files with hold 0 lay the edge key 152434287 and six own
+  edges; lit of the chosen factor lays 50811429 (B2).
+- Q2: the books' line is named now as the edges' consistency check, holding by construction (the 07:5x ruling and
+  AUDIT2 A4's fix). It prints no SHOWN: a verdict that cannot fail is one of Sofer's nine forms of a fake. Its
+  repeat of the across-net count goes.
+- Q3: a click line with no "sides" field is refused: the schema says every line carries its sides. BARE moves from
+  the lawful rows to BROKEN.
+- Q4: an added line kind is a new major, so the reader keeps refusing unknown kinds; the label's form is read
+  strictly (digits, a point, digits), and a header of another major is refused as another major. These go with
+  schema 3.0 on node-rec.
+- Routing: writer K fixes node-fold now (B1, B2, Q2, Q3, MINOR 1, 8, 10, 11, and the decoder's name collisions of
+  MINOR 12); writer I takes MINOR 4, 5 and 6 with schema 3.0 on node-rec; writer H takes MINOR 7's three words on
+  node-min; writer J takes MINOR 9 and the runner's name collisions into the runner's cut, and his merge takes
+  node-fold's new head. The reader re-reads K's commits; then node-fold is pushed on a pinned full check, and the
+  page waits for that.
+
+David (6541854539, item 4), on the lead passed to Big Pic at 09:3x: on the click world no monomial joins three
+clocks; the tie's residual sits on the (held, giver) edge; it is a miss in the sum over the clocks (5,400 of 5,400
+places), and since eps B = 0 and eps B C = 0 no tooth booked through an edge or a triangle changes that sum. So the
+lead as passed cannot be the residual booked by a 2-cell's tooth; it can be the step itself, the miracle, with the
+triangle's tooth as the state that step keeps. Restating it is Big Pic's. ALG3 tests the two facts first.
+David (item 3) confirms MIN1's one number per edge from NOT_CLOSED 29 section 14: D1's ground on node-min.
+
+Sofer (6541877707): the owner to Sofer, about 09:5x UTC: "The decoder also feels too long." Sofer's count on
+node-fold: decoder/ 605 active lines (records.py 254, shadow.py 205, sides.py 92, clicks.py 39, measure.py 15).
+In force:
+- DECODER-CUT is an OPEN item of the Decoder part, with the runner's: one guard by the schema's own fields (no rule
+  per key), the click world's readings each read from q alone after node-rec.
+- Its check can fail: every shipped world's decoded printout equal line for line before and after, except what
+  node-rec and the Q2 naming change on purpose; the decoder's tests; the pinned full check; a code reader; Sofer's
+  count.
+- Its target: the decoder no larger than the Node-clock it decodes, by Sofer's count on the same head. No line is
+  packed to meet it. A new reading (DECODE3g's settled rules, LIGHT3's rule L and the per-clock cone) enters only
+  within the target or with a reading cut of its size.
+- No gate bound: the owner's "No" of 09:52, read the same for the decoder; the target is the writer's.
+- Its writer: writer K, once node-rec lands, from the merge J makes, beside J's runner cut.
+
+## The Boss's routing, 10:03 UTC (the owner's question on Bell from both ends; David 6541948938, 6541964934)
+
+The owner to David, 09:4x to 09:5x UTC: "Bell: is it not possible to say that it is from the past and also from the
+future?"; at 09:58: "Pass it to the Boss too." David reads it as road (C)'s start and end held together, with the
+meeting's square as the weight (at the triangle's settings 3/4, 1/4 and 0); Big Pic's bench read the simplest
+two-ended law at 2 with a signal. Routed: to Big Pic as input to (C), beside the owner's word of 09:33 (the end form
+first); the weight's law is OPEN and his. DECODE3h's readers check that R4 reads any law that writes clicks, from
+the start, the end or both. MATH4 stays as frozen and passed; no new text unless Big Pic asks.
+
+## The Boss's rulings, 10:06 UTC (from KEY4's mathematician: PASSED, as the key's machinery; KEY4 settled)
+
+KEY4's mathematician (S/key4_math/REPORT.md): PASSED as the key's machinery on node-all 9d75a4904; no BLOCKING item;
+two conditions of the build and eleven MINOR. With its physicist's PASSED, KEY4's machinery is settled; its number is
+not (Big Pic's item 6). Rulings:
+- Q1, the key's form: one value per world from the structure (Big Pic's item 6); setting.middle the named interim;
+  laying it per clock is closed by the 05:5x dilation ruling and R2, R3 (as for the physicist's Q1).
+- Q2, the port: writer J ports it onto node-fold as node-key now (C1: six hunks fail on c360851c2; K replaces
+  chosen["key"] beside the structure; edging returns the scale with its remainder), reruns U and the mutants there,
+  and again on node-rec's teeth-free record when he merges.
+- Q3: the header keeps the dial and the cards' keys under node-rec, so carded stays the record's one-key guard.
+- Q4: the number Big Pic's item 6 gives is K, the click's unit; D follows from the structure; the middle is only how
+  an odd K is written (MINOR 6: K = 2 middle + 1 is a definition, not a derivation).
+- Q5: yes, the even-D refusal takes MINOR 1's words (on an even D the births are not each other's complement, so an
+  edge's books can be one quantum off; the triangle's pair needs the odd dial for its flip).
+- R7's count cannot show the breach on that lay (MINOR 2), and R8 is a code check by construction (MINOR 3): both
+  named so. carded's words "off the record's one dial" (MINOR 5); it is the 07:5x one key per record (MINOR 7).
+- MINOR 10, the freeze: KEY4's tree_all lacks tests/tensor24_prefixes.jsonl and six tools .jsonl files; a frozen
+  text's tree is carried whole, or the archive's sha256 named (the 09:1x ruling). Noted in the inputs.
+- The MINOR items go with both reports to Big Pic as inputs, beside the key's origin: C7, THIRD7's period rule (now
+  by the 3-adic valuation), and the mesh world's lossless D = 3.
+
+## The owner's words, 10:05 to 10:11 UTC (in Hebrew; the Boss's translation; Sofer enters them whole)
+
+- 10:05: "Do you need me, or is everything clear for the solutions?"
+- 10:07: "Are the families closed in the code so as to bring the mass ratios observed in nature?" (The Boss's answer:
+  no; masses are read only in clicks; the strengths are open and must come from the structure; the families hang on
+  the third click; Koide's 2/3 a test of the spring's form, OPEN; to Big Pic, after the third click.)
+- 10:10: "The uncertainty is in the click world because the third click does not come alone, like the third
+  generation, no?" / "What is the key?" / "Bell's weight is by how much the board is in the future or in the past,
+  maybe." / "Why do the clicks stop? Is a law missing? The reversal of the clocks' turning, maybe?"
+- 10:11: "There is no floor in the law."
+
+In force: there is no floor in the law. STOP1's stop is not a law line, and no term or line of the law sets a floor
+(beside the standing ruling: a floor or a bound is an if). The shipped click world's fall at round 3,752 is solved,
+if at all, by the law as it is and the lay: Big Pic's road (his 6541977181 item 4: the equilateral triangle of
+two-leg edges keeps its potential bounded by the springs' own strengths, with no dial and no order), or the owner's
+lead of the clocks' turning reversed, as a term of the law and never an if. Both are Big Pic's. The owner's other
+three leads go to Big Pic as inputs: the uncertainty from the third click never seen alone (ALG3, as corrected at 10:24 UTC by its physicist:
+the lines fix only the first click's part of each triangle's circulation, mod 3; the third click's landings are
+invisible to them, even mod 3); Bell's weight from the past's share and the future's (David's product form);
+the families' mass ratios after the third click and the strengths from the structure.
+
+## The Boss's rulings, 10:13 UTC (Sofer's 6541979903 and 6542051011; DECODE3h's physicist; ALG3)
+
+- Law lines (Sofer): the owner's Q10 and the strengths law stand as law lines of their own, in the words of
+  6541741909: "A clock reads only its own clicks. Its sides and the board are not 'what a clock can read'." and
+  "Every strength comes from the structure, or is laid once at the start for each clock; never searched, and never one
+  choice for the whole universe." The owner's "There is no floor in the law." enters whole beside them.
+- The half-speed machinery (Sofer; the owner's "Good." at about 09:55): out of the build, kept in git as node-half
+  until a world needs it: 162 active lines in src (kinds 78, files 50, load 21, plans 13) and 423 in tests. Writer J
+  takes it out in RUNNER-CUT's first commit on node-short.
+- DECODE3h's physicist (S/decode3h_phys/REPORT.md): NOT PASSED on two BLOCKING items. His questions:
+  - Q1: yes, R4 reads the order both ways: lags ahead at 1, 2, 4 and 8 and a joint-future ladder, counted in N_T, so
+    that it reads a law from the start, the end or both (the owner's law of the choice; his question to David).
+  - Q2: yes, R3 and R3 beside (c) leave the decoder for the run tool as board checks reading the board's own state;
+    the pair record carries no passing (the owner's Q11: the record holds q alone).
+  - Q3: yes, under Q10 R2 on the clock's own lines is the per-clock form, built now; the per-side R2 is renamed the
+    decoder's reading of a side.
+  - Q4: yes, "the law named in the initialization" reads "where it is laid: the start, the end or both" (the 08:4x
+    ruling; the owner's word of 09:33).
+  - DECODE3i folds both readers once the mathematician hands back.
+- ALG3 (frozen 0e308f17, 475 lines, 100 files): to the ALG pair (ALG2's readers) and to Big Pic as input. Lead (a) is
+  overturned on a third bench (with Big Pic's and David's): the 2-cell carries the sign character and the residual is
+  S_3-even. The third click's member (as corrected at 10:23 UTC by ALG3's mathematician: in ALG3's count one edge tooth is read
+  back from the other two, tau takes its place, and the one number beyond the first click's three is the twin): two
+  edge teeth and tau on 3D, and the twin on D, OPEN.
+
+## The owner's word, 10:14 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "The floor comes out by itself.."
+
+In force beside "There is no floor in the law.": the floor is not laid; it comes out by itself, from the law as it
+is and the structure, as on Big Pic's equilateral triangle of two-leg edges (6541977181 item 4), where the books, the
+run back, the floor and the whole of S_3 come with no dial and no order. The Boss's reading for Big Pic: nothing is
+added so that the world holds; David's (a), an own spring on the giver and the taker, stands only if that spring
+comes out of the structure by itself, not laid so that the floor holds (the miracle principle: a result that comes
+by itself usually fits the solution). Big Pic's to weigh.
+
+## The Boss's rulings, 10:16 UTC (from DECODE3h's mathematician, with its physicist: both NOT PASSED on one point)
+
+Both readers (S/decode3h_math/REPORT.md, S/decode3h_phys/REPORT.md) find R4 reading the order from the past side only:
+an outcome fixed by the place's own later setting (two or four events ahead, or the parity of the next two) passes
+every click part. The owner's law of the choice ("not its past and not the future") and his question to David
+("from the past and also from the future") name both sides. Rulings:
+- R4 reads the order both ways, in the mathematician's smaller form, which suits DECODER-CUT: per place and per half,
+  three sums of the lag z^2 (the outcome against its own settings at lags -8 to -1 and 1 to 8, on 16 degrees; against
+  its own outcomes at lags 1 to 8, on 8; against the far place's settings at lags -8 to 8 but 0, on 16), each cut at
+  the chi-square on its degrees from the readings file; and a joint future beside the joint past (the same function
+  on the reversed record), which the physicist measured refusing the parity form the lag sums alone would pass. All
+  counted in N_T. Both readers' future forms must be refused, and the toy's third click must still pass.
+- The NOT READ: R4's click parts can first read SHOWN between 2,000 and 3,000 events a half (the summed gate opens
+  there); the text names that length, calls R4 "refusing only" below it, and cites its rate where it is read (37 per
+  1,000 at 3,000 events a half, MEASURED). On the worlds we have, no world hosts Bell, so R4 reads NOT READ by name.
+- R3 and R3 beside (c) leave the decoder for the run tool's board checks, reading the board's own state; the pair
+  record carries no passing (both readers; the owner's Q11).
+- Under Q10, R2 on the clock's own lines is the per-clock form, built now; the per-side R2 is renamed the decoder's
+  reading of a side (the physicist's Q3).
+- "The law named in the initialization" reads "where it is laid: the start, the end or both" (the physicist's Q4).
+- DECODER-CUT: the precedence (worst, halves), one key per record and the readings file enter now; D4 is a test of
+  the decoder's code (its static check reads every arithmetic node over a round or face field, its no including the
+  negated mutant); R2 waits on a cut of its size; R3 goes to the board checks; R4 and its record parse hold until the
+  seeds' law and this fold; the interval rule holds (no caller yet).
+- The pin: nl.sha256 pins the sources only (no __pycache__), and every run uses -B, so that no run writes into a
+  frozen tree. The free-lay control names its shared past (one member's W, alike births: the strongest local case),
+  and that it serves an end-form law too (the exact run back).
+- DECODE3i folds both readers, its writer the DECODE writer.
+
+## The owner's word on Pauli, 10:1x UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "Maybe the reversal of the clocks by family gives Pauli in the clicks too. I mean Pauli's exclusion principle: it
+> follows from the antisymmetry of the total wave function of identical fermions: exchanging the two particles flips
+> its sign: Psi(2,1) = -Psi(1,2). Flipping the sign of the probability amplitude is equivalent to a phase shift of 180
+> degrees; the amplitude's size does not change. These are two descriptions of the same operation."
+
+Routed to Big Pic as a lead (OPEN): on the board a hand is a Gaussian whole number, so a half turn is the product by
+-1, size kept, counts whole, no division. The Boss's reading, for him to weigh: in nature the floor of matter is
+Pauli's (identical fermions are not pushed into one state, so many bodies do not collapse), so the reversal by family
+may give Pauli and the floor by itself together. The half-speed machinery stays in git as node-half; if Big Pic's road
+needs it, he says so before writer J's RUNNER-CUT commit, and it stays in the build.
+
+## The owner's words, 10:18 UTC (in Hebrew; the Boss's translation; Sofer enters them whole)
+
+> "Let him bring the solution also from the project's big algebra, because everything must connect.."
+> "By the way, the masses are not a floor in the same way; they come out of the structure in the clicks..."
+
+In force: Big Pic's solution of Pauli and of the floor comes from the project's one algebra, and everything connects
+(the third click, the families, Pauli, the floor and the masses). The masses are not laid and are not a floor: they
+come out of the structure, read in the clicks (as the code's rule already holds: a pinion off den is a mass laid by
+hand, and masses are measured only in clicks). The half-speed machinery's removal is held until Big Pic weighs the
+owner's Pauli lead: its 48 lifts are where a hand's sign under one full turn lives; writer J does the rest of
+RUNNER-CUT first.
+
+## The owner's order, 10:20 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "Reach a general picture, closed and structured, that Big Pic runs. Clear from the clocks. Clear tensorially.
+> Clear in the click world, which is the shadow. And then put it into the code. And one clean main."
+
+In force, as the order of work:
+1. The picture: one closed, structured picture, run on Big Pic's bench (bigpic-3clicks), each part clear in three
+   views: the clocks (the board's clocks and gears), the tensor (the one algebra), and the click world (the shadow,
+   what the clicks show). What is OPEN in it stays named until it closes.
+2. Then the code: the writers put the closed picture into the engine, as one generic act.
+3. Then one clean main.
+Until the picture is closed and read by its pairs, no new physics enters the engine. The settled cleanup goes on
+(node-min, node-rec, node-key, RUNNER-CUT, DECODER-CUT, node-fold's fixes): it prepares the one clean main.
+
+## The owner's word, 10:21 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "What remains of it is a condition: if the masses that come out of the structure give the giver and the taker a
+> spring stronger than half the band between them, the floor in this triangle comes out by itself. Big Pic checks
+> whether the project's one algebra gives that. This is the breakthrough."
+
+In force: the floor's condition (David 6542160901 item 2): whatever spring the structure gives the giver and the
+taker, their pair keeps a floor at every size of the held hand exactly when that spring is above half their hands'
+tie (t/2, 48,000 in the click world file's units). Nothing is laid for it: the spring is each clock's mass, and the
+masses come out of the structure. Big Pic checks, first on his bench by the owner's word "the breakthrough", whether
+the one algebra gives the giver and the taker such masses. The held hand's swing alone gives no clean floor (David's
+windows, MEASURED, a reading).
+
+## The Boss's rulings, 10:23 UTC (from ALG3's mathematician: PASSED)
+
+ALG3's mathematician (S/alg3_math/REPORT.md): PASSED, no BLOCKING item, six MINOR; every output reruns byte for byte.
+- My summary of 10:13 counted the member Big Pic's way; ALG3's count stands as corrected above (two edge teeth and tau
+  on 3D, the twin on D). Posted as a correction on #2187.
+- His Q1, which form Big Pic builds, is Big Pic's: the open choice is now precise. Either the triangle's tooth turns,
+  and then a twin is forced (ALG3 5.4, under a linear turn run back by the same act on the mirrored state, tau kept);
+  or it does not turn, and then the path is a plain carry of the circulation (THIRD7's unturned control), its choice
+  only in the births by road (C)'s seeds' law. Big Pic's "one tooth per triangle and no second number" holds for the
+  second form, or for a turn outside ALG3 5.4's premises.
+- His Q2: yes, on the click world as laid the twin's necessity is cited from THIRD7 section 5's line argument; S_3's
+  characters hold on the equilateral triangle (MINOR 1).
+- The other MINOR items (credit to THIRD7's OPEN 5; the mod-3 link's condition, each clock's sides its triangle's own
+  edges only; the freeze to carry circ.py or its sha256 a12ce8d9; order3's arguments 40 12; "MEASURED 0 on this lay;
+  not an identity") go with the report to Big Pic as inputs.
+
+## The Boss's rulings, 10:24 UTC (from ALG3's physicist: PASSED; ALG3 passed by both)
+
+ALG3's physicist (S/alg3_phys/REPORT.md): PASSED, no BLOCKING item, eleven MINOR. With its mathematician's PASSED,
+ALG3 is passed by both: an input for Big Pic, not a build item.
+- Q1, the 10:11 routing's parenthesis: corrected above. DERIVED and MEASURED (6,561 of 6,561): a third-click landing w
+  adds c w to the sides, moves no line (B c = 0) and moves the circulation by 3w (c . c = 3), so the lines' residue
+  mod 3 is the first click's own (c . Q mod 3), and the third click is invisible to every line, even mod 3. That is an
+  exact, total hiddenness, not a trade-off; whether it becomes an uncertainty relation is OPEN and Big Pic's. ALG3's
+  measured circulations are first-click records (node-all has no third click). "Complementarity" is the wrong word:
+  the lines' part and the circulations' part form a direct sum, both sharp at once (M2).
+- Q2, the member: ALG3's reading goes to the owner's batch, as corrected at the mathematician's ruling: tau is the
+  circulation part of the three edge teeth, re-dialled to 3D; the twin the one number beyond, DERIVED necessary for
+  the linear turn THIRD7 runs back; OPEN only whether a clean form drops it.
+- Q3, the end form's end round N: Big Pic's, with the stake named: N is the setting's ticks, a number the world-maker
+  sets, and the shipped click world stops at round 3,751 of 5,000, so its end seed is not reached (M7).
+- Q4: yes, when the member comes to the owner, the batch carries the twin and the re-dial to 3D together: four numbers
+  per triangle, (3D)^3 x D states against D^3, a factor 27D (M4). The owner has not approved two new numbers as they
+  stand; the item waits on Big Pic's form.
+- The other MINOR items go with the report to Big Pic: the twin's newness by the mirror's parity, which holds for every
+  triangle (M5); no signal's reason is the law of the path, not locality (M6); a degree-2 term adds no residual and
+  degree 3 or more adds one, so the equilateral triangle of two-leg edges adds none (M8); the toy's numbers named as
+  the toy's (M9); circ.py's commit and sha256 (M10); one replacement text for ALG2's line (M11).
+

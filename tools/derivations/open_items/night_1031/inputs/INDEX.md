@@ -1,4 +1,4 @@
-# Inputs for Big Pic's bench (night_1031/inputs/, the Boss, 2026-10-31, 09:4x UTC by the clock)
+# Inputs for Big Pic's bench (night_1031/inputs/, the Boss, 2026-10-31, 10:2x UTC by the clock)
 
 The owner's word of about 09:05 UTC: Big Pic solves every open item in the code on his own bench, as he solved the
 clicks; our writers implement what is settled; the team only helps. Big Pic asked (6541571347) for each finished text
@@ -32,9 +32,11 @@ One text per line: folder/text, sha256 prefix, standing.
 - onelaw4/ONELAW4.md 9fed9f89: no readers; stopped by Big Pic's word (u waits on the miracle's step). Its finding: on (a, b, r) no exact round carries the velocity-reading cross terms; one new whole count per cross-slotted gear, u (the now slot's velocity, u+ = senses (a+ - a) - u, mirror u -> tau (u - senses (a - b))), closes the run back exactly.
 - stop1/STOP1.md 45fbe9b8: no readers; an input on the miracle's path: the stop is no law of the one law; no number is picked, but the term is a law line no file or text gives, and its four choices (the pairing, the held hand's own square, the factor, the reach) decide the worlds' outcomes; at hold f the click world falls at round 892 on the engine.
 - decode3g/DECODE3g.md 083032b0: mathematician NOT PASSED; physicist NOT PASSED.
-- key4/KEY4.md c169c30c: with both its readers now (KEY3's pair); the key's machinery, its value Big Pic's by the strengths law.
+- key4/KEY4.md c169c30c: mathematician PASSED; physicist PASSED; settled as the key's machinery; its number K is Big Pic's item 6; writer J ports it onto node-fold as node-key.
+- alg3/ALG3.md 0e308f17: mathematician PASSED; physicist PASSED; passed by both, an input for Big Pic: lead (a) overturned; the member two edge teeth and tau on 3D and the twin on D, OPEN whether a clean form drops the twin; the third click invisible to every line, even mod 3 (its physicist M1).
+- decode3h/DECODE3h.md 7f7d3d63: mathematician NOT PASSED; physicist NOT PASSED; both on one point: R4 read the order from the past side only; DECODE3i reads it both ways, and R3 leaves the decoder for the board checks.
 
-BRIEF_PAIRS.md is the pairs' brief with every ruling to the Boss's correction of 09:4x UTC, the owner's
+BRIEF_PAIRS.md is the pairs' brief with every ruling to the Boss's correction of 10:2x UTC, the owner's
 answers of 09:30 UTC and his word of about 09:05. From 09:15 to 09:40 UTC the Boss labelled nine of its sections, and
 the notes on eighteen readers' reports, with times ahead of the clock; each such header and note now carries its true
 time beside its label, and the labels stay as the sections' names, since rulings and texts cite them. Three commit
@@ -54,9 +56,14 @@ no longer matches its line in FROZEN.sha256; the files changed are:
 - alg1/ALG1.md
 - alg2/ALG2.md
 - alg2/alg2_phys_REPORT.md
+- alg3/ALG3.md
 - decode3f/decode3f_phys_REPORT.md
 - decode3g/decode3g_math_REPORT.md
 - decode3g/decode3g_phys_REPORT.md
+- decode3h/decode3h_math_REPORT.md
+- decode3h/decode3h_phys_REPORT.md
+- key4/key4_math_REPORT.md
+- key4/key4_phys_REPORT.md
 - key4/pytest_tree_key4.txt
 - light3/light3_math_REPORT.md
 - light3/light3_phys_REPORT.md

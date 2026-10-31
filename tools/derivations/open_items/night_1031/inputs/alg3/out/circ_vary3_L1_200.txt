@@ -1,0 +1,13 @@
+WORLD vary3_L1 rounds 200 edge key K 152434287 birth B 76217143 trains 5 rows 26 sites 27
+COMPLEX per place: own edges [(2, 3), (2, 4), (3, 4)] ; Mesh edges (+ end) [(0, 0, 3), (0, 0, 4), (0, 3, 0), (0, 4, 0), (2, 0, 3), (2, 0, 4), (2, 3, 0), (2, 4, 0), (4, 0, 3), (4, 0, 4), (4, 3, 0), (4, 4, 0)] ; triangles [(2, 3, 4)]
+MONOMIALS: laid 2416 ; structural 42 ; live 32 ; canonical (each multiset once) 39 (merged 3 )
+STATE per Node-clock: node-all 279 ; cochain 97 (a, b, r 26 each; rd 4 ; own edge teeth 3 ; Mesh edge teeth 12 )
+TERMS per Node-clock per round: node-all {'J plan': 9664, 'Mesh plan': 4056, 'push plan': 910, 'clock plan (x5 reads)': 130, 'passing terms': 9664, 'crossing pairs': 4056, 'teeth carries': 175}
+                                cochain (structural) {'J plan': 126, 'Mesh plan': 12, 'push plan': 178, 'clock plan (x5 reads)': 25, 'passing terms': 108, 'crossing pairs': 12, 'teeth carries': 15}
+                                live at the world's strengths {'J plan': 112, 'Mesh plan': 0, 'push plan': 0, 'clock plan (x5 reads)': 25}
+PRODUCTS per Node-clock per round, MIN2's rule (3 a J, Mesh-plan or push term; 4 + T a passing term, on the complex 4 + its edges; 5 a clock-read term; 1 a grips'-read term; 3 a crossing entry; 45 R per-row): node-all 144884 ; cochain 2849 ; grips'-read terms 30
+PRODUCTS per Node-clock per round (MIN1's count): node-all about 144984 ; cochain about 1899
+CIRC: the tie monomials' clock sets [(2, 3), (2, 4)] ; every tie monomial on [2] clocks
+CIRC over 200 rounds: {'site-rounds': 5400, 'y != 0': 4201, 'c.q != 0': 3164, 'c.q - (L_j - L_i) not 0 mod 3': 0, 'c.q - 3 q_ij - (L_j - L_i) != 0': 0, "P(i,j) != P(i,k) (the swap's images)": 4201, 'P(j,k) != 0': 0}
+  peaks: {'|y|': 13885440000, '|SUM D tie| at a Node-clock': 10023720000, '|c.q|': 91} ; the tie's SUM D at the end, by edge, site 0: {'(2, 3)': 1458960000, '(2, 4)': 0}
+END
