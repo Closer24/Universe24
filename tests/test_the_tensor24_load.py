@@ -10,12 +10,15 @@ import numpy as np
 from tensor24 import main
 from tensor24.engine import state, step
 from tensor24.runner import load as loading
+from tensor24.runner import plans
 from tensor24.runner.board import board
+from tensor24.runner.files import NAMES as FILES
 from tensor24.runner.files import held_departures, sites_of, vocabulary
 from tensor24.runner.run import promises
 from tests import frame
 
 UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
+CLICK = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24-click")
 INTEGERS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["integers"]
 SHAPE = (3, 4, 5)  # a board of sides that differ, so no two axes are taken for each other
 SITES = sites_of(SHAPE)
@@ -181,3 +184,30 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_fam
     wanted += [((1 + i) * rows + hand + i, 0, strength) for i in range(len(SHAPE))]  # L by M_i's
     _, alone, _ = loaded([TRAINS[0]], chosen={**CHOSEN, "mesh": strength})[0].mesh  # the wave alone
     assert terms == sorted(wanted) and {*two.tolist(), *three.tolist()} == {-1} and not alone.any()
+
+
+def test_an_edge_exists_by_the_structure_alone_a_chosen_0_its_factor():
+    """Yes: the click world's files at hold 0 lay term 11 on the edges as at every strength 1, its weights, legs' trains
+    and edge key (152434287), its own edges the held and tied hands' triangle each way (the 08:1x ruling). No: laid from
+    lit of the chosen factor, the edge the tied hands' alone and the key the file's own (50811429), kappa two."""
+    universe, piece, setting = (json.loads(CLICK.joinpath(f"{n}.json").read_bytes()) for n in FILES)
+    chosen, sites = universe["chosen"], sites_of(piece["shape"])
+    made = main.made(spokes := loading.star(len(piece["shape"])))
+
+    def laid(strengths):
+        """The click world's files loaded at the strengths given, the others the file's: the loaded and its departures."""
+        return loading.load(universe | {"chosen": chosen | strengths}, setting, sites, *made)
+
+    def edges(click):
+        """The own edges term 11 lays, (t, u) where a leg of train t weighs onto train u."""
+        weight, train, _ = click
+        return {(int(train[i]), u) for (i, u), w in np.ndenumerate(weight) if w and train[i] != u}
+
+    (held, found), (ones, none) = laid({"hold": 0}), laid(dict.fromkeys(chosen.keys() - {"key"}, 1))
+    hands = [n for n in range(len(held.trains)) if held.trains.held[n] + held.trains.tied[n]]
+    tied = [n for n in hands if held.trains.tied[n]]
+    assert found == none == [] and edges(held.click) == {(x, y) for x in hands for y in hands if x != y}
+    assert all(np.array_equal(x, y) for x, y in zip(held.click, ones.click, strict=True))
+    factored = plans.edging(held.trains, held.potential, held.potential[0], chosen["key"], spokes)
+    assert edges(factored) == {(x, y) for x in tied for y in tied if x != y}  # the hands' tie alone
+    assert (factored[-1] == chosen["key"]).all() and not (factored[-1] == held.click[-1]).any()
