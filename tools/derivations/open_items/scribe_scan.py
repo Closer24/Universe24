@@ -225,7 +225,7 @@ RULES: dict[str, tuple[str, str]] = {
     ),
     "INDICATOR": (
         "WARN",
-        "a quotient spelt as a mask or a cap (the quotient of a bit, 1 div x; 1 minus a quotient; the sign test x div (x x + 1)): an indicator that zeroes a term above a bound is a bound spelt as a quotient, and a floor or a bound is an if (law: A floor or a bound is an if, and the Node-clock has none); read each note for a mask (the count per file may not rise)",
+        "a quotient spelt as a mask or a cap (the quotient of a bit, 1 div x; 1 minus a quotient; the sign test x div (x x + 1); the agreement (x + x x) div k, 1 where two columns agree and 0 elsewhere, multiplied into a mask): an indicator that zeroes a term above a bound is a bound spelt as a quotient, and a floor or a bound is an if (law: A floor or a bound is an if, and the Node-clock has none); read each note for a mask (the count per file may not rise)",
     ),
     "BOUND": (
         "WARN",
@@ -819,11 +819,27 @@ def sign_test(node: ast.AST) -> bool:
     )
 
 
+def agreement(node: ast.AST) -> bool:
+    """(x + x x) div k: the quotient that reads whether x is its top value, 1 where a dot of two unit columns agrees and 0 elsewhere."""
+    parts = quotient_parts(node)
+    dividend = parts[0] if parts else None
+    return (
+        isinstance(dividend, ast.BinOp)
+        and isinstance(dividend.op, ast.Add)
+        and any(
+            isinstance(square, ast.BinOp)
+            and isinstance(square.op, ast.Mult)
+            and ast.dump(square.left) == ast.dump(square.right) == ast.dump(plain)
+            for plain, square in ((dividend.left, dividend.right), (dividend.right, dividend.left))
+        )
+    )
+
+
 def indicator(node: ast.AST) -> str:
-    """What makes a quotient a mask or a cap: the quotient of a bit, the sign test, 1 minus a quotient; '' where it is none."""
+    """What makes a quotient a mask or a cap: the quotient of a bit, the sign test, the agreement, 1 minus a quotient; '' where it is none."""
     parts = quotient_parts(node)
     if parts is not None:
-        return "bit div" if is_bit(parts[0]) else "sign test" if sign_test(node) else ""
+        return "bit div" if is_bit(parts[0]) else "sign test" if sign_test(node) else "agreement" if agreement(node) else ""
     if (
         isinstance(node, ast.BinOp)
         and isinstance(node.op, ast.Sub)
