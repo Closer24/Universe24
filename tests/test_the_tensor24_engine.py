@@ -36,13 +36,13 @@ def empty():
 
 
 def unclicked(terms=0, key=1, trains=1):
-    """The click of no edge: each of J's terms weighing 0, no Mesh coupling, every side's tooth at every reach carried at the key."""
-    sides, spokes = trains * trains, len(frame.spokes())
+    """The click of no edge: each of J's terms weighing 0, no Mesh coupling, every side's tooth at every reach carried at the key, each Mesh edge's at its + end (D1)."""
+    sides, axes = trains * trains, frame.spokes().shape[-1]
     weight, onto = (
         np.zeros((terms, trains), dtype=object),
-        np.arange(spokes, dtype=np.intp)[:, None, None],
+        np.arange(axes, dtype=np.intp)[:, None, None],
     )
-    keys = key + np.zeros(((1 + spokes) * sides, 1), dtype=object)
+    keys = key + np.zeros(((1 + axes) * sides, 1), dtype=object)
     return Click(weight, np.zeros(terms, dtype=np.intp), keys, 0 * onto.astype(object), onto)
 
 

@@ -94,7 +94,7 @@ def passing(click: Click, plan: Plan, b: Z, a: Z, a1: Z) -> Z:
 
 
 def crossing(click: Click, nb: Z, b: Z, a: Z, a1: Z) -> Z:
-    """Every Mesh edge side's passing, the side (t, u) across each Spoke, at (Spoke trains + t) trains + u: term 11's own form on the edge, P(x, y) = c (x_r y_p - y_r x_p) and S = P(a, b) + P(a+, a) = c (a_p (a+_r - b_r) - a_r (a+_p - b_p)), r a row here, p a row at the Node-clock across the Spoke and c the edge's coupling (runner/plans.py's crossing), summed into the side of r's train and p's; the far end reads the same coupling across the opposite Spoke and passes the negative, exactly; a gather across the Spokes as the pull reads the neighbours, a product, a scattered sum. A record as the passing is: it reads the gears and moves none, its partner's counts at the before slot, the now slot and the next, across one Mesh."""
+    """Every Mesh edge side's passing, the side (t, u) across the + Spoke of each axis, at (axis trains + t) trains + u (D1: each Mesh edge held at its + end alone, nb the + Spokes' neighbours): term 11's own form on the edge, P(x, y) = c (x_r y_p - y_r x_p) and S = P(a, b) + P(a+, a) = c (a_p (a+_r - b_r) - a_r (a+_p - b_p)), r a row here, p a row at the Node-clock across the Spoke and c the edge's coupling (runner/plans.py's crossing), summed into the side of r's train and p's; the far end, across the opposite Spoke, would read the same coupling transposed and pass the negative, exactly, so its side is the partner's: its tooth D - 1 - k and its quotient -q by the carry's law, which the record's writer reads back (runner/run.py's faced); a gather across the Spokes as the pull reads the neighbours, a product, a scattered sum. A record as the passing is: it reads the gears and moves none, its partner's counts at the before slot, the now slot and the next, across one Mesh."""
     weight, _, _, across, onto = click
     trains, moved = weight.shape[-1], a1 - b
     far, gone = seen(a, nb).swapaxes(0, 1), seen(moved, nb).swapaxes(0, 1)  # each row across each Spoke
@@ -152,8 +152,9 @@ def act(layout: Layout, s: State) -> tuple[State, Z]:
     # edge's dial the run back shares)
     first, _, _ = gear(a, b, tooth, wa + wb, wa + wb, push, senses)
     a1, b1, s1 = gear(a, b, tooth, wa + wb, wa + weight(gearing, clock, first), push, senses)
-    # every edge side's passing of the window (b, a, a+), at its own Node-clock and across each Spoke, at the edge key
-    passed = np.concatenate((passing(click, plan, b, a, a1), crossing(click, nb, b, a, a1)))
+    # every edge side's passing of the window (b, a, a+), at its own Node-clock and across the + Spoke of each axis, the
+    # star's every senses-th Spoke from the first (D1: each Mesh edge at its + end alone, the far end the partner), at the edge key
+    passed = np.concatenate((passing(click, plan, b, a, a1), crossing(click, nb[::senses], b, a, a1)))
     clicks, k1 = carry(passed, key, k)
     return State(a1, b1, s1, kept, k1), clicks
 

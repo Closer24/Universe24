@@ -119,13 +119,30 @@ def joined(click: Any, trains: int) -> list[list[int]]:
     return [sorted(others - {t}) for t, others in enumerate(partners)]
 
 
-def crossed(click: Any, trains: int) -> list[tuple[int, int, int]]:
-    """The Mesh's edges as the plan lays them, (Spoke, t, u) in that order: the trains a pair of rows with a coupling joins across the Spoke, t here and u across it."""
+def crossed(click: Any, trains: int, senses: int) -> list[tuple[int, int, int]]:
+    """The Mesh's edges as the plan lays them, (Spoke, t, u) in that order: the trains a pair of rows with a coupling joins across the Spoke, t here and u across it, each edge laid at its + end (D1) and listed at both: across the + Spoke of each axis, and across its opposite, the next in the star's order, the trains swapped."""
     found: set[tuple[int, int, int]] = set()
     for s, r, p in np.argwhere(click.across != 0):
-        spoke, t, u = np.unravel_index(click.onto[s, r, p], (len(click.across), trains, trains))
-        found.add((int(spoke), int(t), int(u)))
+        axis, t, u = np.unravel_index(click.onto[s, r, p], (len(click.across), trains, trains))
+        found |= {(int(axis) * senses, int(t), int(u)), (int(axis) * senses + 1, int(u), int(t))}
     return sorted(found)
+
+
+def faced(layout: Any, x: Any, far: Callable[[Any], Any]) -> Any:
+    """Every edge side at every reach read back from the sides the act holds (D1), in the shape of every Spoke's: the own Node-clock's and each axis's + Spoke's as held, and its - Spoke's, the next in the star's order, its partner's, the + side with the trains swapped at the Node-clock across the - Spoke, by far: D - 1 - k for a tooth, -q for a click (the pair law, by the carry from the two births)."""
+    trains, (n, d) = layout.click.weight.shape[-1], layout.spokes.shape
+    senses, _ = carry(n, d, 0)
+    own, sites = trains * trains, x.shape[-1]
+    plus = x[own:].reshape(d, trains, trains, sites)
+    swapped = np.einsum("jtux->jutx", plus)  # each + side with its two trains swapped, the partner's
+    back = far(np.take_along_axis(swapped, layout.nb[1::senses][:, None, None, :], axis=-1))
+    return np.concatenate((x[:own], np.stack((plus, back), axis=1).reshape(-1, sites)))
+
+
+def sided(layout: Any, s: Any) -> Any:
+    """The state with every edge side at every reach read back (faced), the far end's tooth D - 1 - k: the state the record's lines and its digest read."""
+    key = layout.click.key[0, 0]
+    return s._replace(k=faced(layout, s.k, lambda k: key - 1 - k))
 
 
 def meeting(partners: list[list[int]]) -> list[int]:
@@ -269,6 +286,13 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
         return found
     layout = engine.layout(universe, shape, loaded)
     start = engine.state(*loaded.state)
+    # D1's hypothesis where it is used: an odd edge key, so an edge's two teeth, each born at (key - 1) div senses, sum
+    # to key - 1 and the far end, read back as D - 1 - k with the quotient -q, is the partner (the pair law)
+    key, (n, d) = layout.click.key[0, 0], layout.spokes.shape
+    if not carry(key, carry(n, d, 0)[0], 0)[1]:
+        return [
+            f"the edge key {key} is even: an edge's two click teeth born at its half sum to key - 2, no pair (D1)"
+        ]
     ticks, end, read_, ledger = setting["ticks"], start, start, ledger_of(record)
     # every promise is the round's that reads the state: none where no round runs
     width = universe["integers"]["width"]
@@ -278,12 +302,18 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     events: list[dict[str, Any]] = []
     # the edges the structure lays, a chosen 0 their factor alone (MIN1's (c)): the Mesh's by its plan at strength 1
     built = engine.layout(universe, shape, loaded._replace(mesh=loaded.meshed)).click
-    partners, edges = joined(layout.click, len(loaded.trains)), crossed(built, len(loaded.trains))
+    senses, _ = carry(len(layout.spokes), layout.spokes.shape[-1], 0)
+    partners, edges = (
+        joined(layout.click, len(loaded.trains)),
+        crossed(built, len(loaded.trains), senses),
+    )
+    read_ = sided(layout, start)  # every side read back (D1), the record's
     with ledger.open("w", encoding="utf-8") as counted:
         for at, (end, clicks) in enumerate(rounds(engine.act, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))
-            events += clicked(at, read_, end, clicks, partners, layout.nb)
-            read_ = end
+            whole = sided(layout, end)
+            events += clicked(at, read_, whole, faced(layout, clicks, np.negative), partners, layout.nb)
+            read_ = whole
             # the promises of the round that reads this state, read from outside: every kept tooth within its
             # teeth, the grips within the window, and every count within the width; the end state, which no round
             # reads, its width alone, so that a count past the width in the last round is named too
@@ -291,15 +321,16 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
             if found:
                 ledger.unlink()
                 return [f"round {at + 1}: {line}" for line in found]
+    # the run back from the end the act holds alone, nothing saved; the record's teeth and digest on every side read back
     exact = int(stated(rewind(engine.untick, layout, end, ticks)) == stated(start))
-    inner, outer = teeth_of(end, partners, edges, layout.nb)
+    inner, outer = teeth_of(sided(layout, end), partners, edges, layout.nb)
     lines = [
         header(record, files, universe, shape, kinds, loaded, layout),
         *events,
         {
             "kind": "end",
             "rounds": ticks,
-            "digest": digest(stated(end)),
+            "digest": digest(stated(sided(layout, end))),
             "undone": ticks,
             "exact": exact,
             "teeth": inner,

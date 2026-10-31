@@ -11,7 +11,9 @@ from tensor24 import main
 from tensor24.engine import state, step
 from tensor24.engine.mesh import stretches
 from tensor24.runner import load as loading
+from tensor24.runner import run
 from tensor24.runner.board import board
+from tensor24.runner.files import NAMES as FILES
 from tensor24.runner.files import held_departures, sites_of, vocabulary
 from tensor24.runner.run import promises
 from tests import frame
@@ -30,6 +32,7 @@ FIVE = [TRAINS[0], METRIC, HAND, {"name": "giver", **PAIR}, {"name": "taker", **
 CHOSEN = {"key": 1, "push": 0, "notch": 0, "hold": 0, "spring": 0, "tie": 0, "mesh": 0}  # the file's
 SITE, WIDE = 3, 1 << 70  # where the gears are laid, and their counts, past 64 bits
 MADE = main.made(loading.star(len(SHAPE)))  # the kinds, tables and square by main.py's one joint
+EVEN = "the edge key 152434288 is even: an edge's two click teeth born at its half sum to key - 2, no pair (D1)"
 
 
 def loaded(trains, gears=(), chosen=CHOSEN, sites=SITES):
@@ -42,9 +45,11 @@ def loaded(trains, gears=(), chosen=CHOSEN, sites=SITES):
     return (None if found else held), found
 
 
-def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_each_refusal(monkeypatch):
+def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_each_refusal(
+    monkeypatch, tmp_path
+):
     """Yes: the board and its Meshes as numpy wraps them, every gear on its train's rows past 64 bits, the square by its kinds' character in every order with its 0i rows odd, the chosen key and the notch at 3 read (a chosen strength, pending the owner's word), no term of J but the notch's.
-    No: each refusal named with nothing loaded and no raise (the reviews' gear off a later train, its tooth, its b at every site, a bound read on train 0, 64-bit arrays, the MemoryError dropped from the lay's guard, each passed every test once); a tooth at or below its dial named by the promise."""
+    No: each refusal named with nothing loaded and no raise (the reviews' gear off a later train, its tooth, its b at every site, a bound read on train 0, 64-bit arrays, the MemoryError dropped from the lay's guard, each passed every test once); a tooth at or below its dial named by the promise; an even edge key named by the run (D1's pair law)."""
     spokes, meshes = loading.geometry(nb := board(SHAPE), len(SHAPE))
     assert (nb == frame.board(SHAPE)).all() and (spokes == frame.spokes(len(SHAPE))).all()
     assert (meshes == frame.meshes_of(nb)).all()
@@ -58,7 +63,9 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
         and all(x.dtype == object for x in held.state)
         and not any(f.any() for f, _ in held.potential)
     )
-    sides = (1 + len(frame.spokes(len(SHAPE)))) * len(TRAINS) * len(TRAINS)  # every side at every reach
+    sides = (
+        (1 + len(SHAPE)) * len(TRAINS) * len(TRAINS)
+    )  # every side at every reach, a Mesh edge's at its + end
     assert all(x.shape == (sum(rows), SITES) for x in (a, b, r, rd)) and k.shape == (sides, SITES)
     assert (a[row, SITE], b[row, SITE], r[row, SITE]) == tuple(counts)  # the wave's last row, as laid
     assert (a[-1, SITE], b[-1, SITE]) == (WIDE + 1, WIDE) and not k.any()  # the last train's last row
@@ -100,6 +107,11 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     held = state.State(w + 1, w, np.array([[d - 1, off[1], off[2]]], dtype=object), 0 * w, 0 * w)
     dial = f"not within the edge's dial [-{d}, {d}) of the teeth {WIDE} and {WIDE}"
     assert promises(held, w, w) == [f"row 0, site {x}: the tooth {t} {dial}" for x, t in off.items()]
+    # D1's hypothesis where it is used: the click world's edge key laid one up, even, named by the run, nothing written
+    edged, paths = loading.edging, [UNIVERSE.parents[1] / "tensor24-click" / f"{n}.json" for n in FILES]
+    monkeypatch.setattr(loading, "edging", lambda *a: (*edged(*a)[:2], edged(*a)[2] + 1))
+    assert run.run(main.ENGINE, paths, tmp_path / "even.jsonl") == [EVEN] and not any(tmp_path.iterdir())
+    monkeypatch.setattr(loading, "edging", edged)
     _, found = loaded(TRAINS, sites=1 << 64)
     assert len(found) == 1 and found[0].startswith(f"piece.shape: {sum(rows)} rows at")
     monkeypatch.setattr(np, "zeros", lambda *a, **k: (_ for _ in ()).throw(MemoryError("no room")))

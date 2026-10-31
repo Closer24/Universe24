@@ -16,7 +16,7 @@ class State(NamedTuple):
     b: Z
     r: Z  # the tooth of the edge between the two slots, within [-D, D), D = W(b) + W(a): what the momentum's split leaves
     rd: Z  # the drive's fine tooth, within [0, T_d): the remainder its carry keeps, as r is the gear's
-    k: Z  # ((1 + Spokes) x trains x trains, sites): every edge side's click tooth at every reach, within [0, key), born at (key - 1) div 2
+    k: Z  # ((1 + axes) x trains x trains, sites): every edge side's click tooth, its own Node-clock's and each Mesh edge's at its + end, across the + Spoke of each axis (D1: the far end's D - 1 - k), within [0, key), born at (key - 1) div 2
 
 
 class Plan(NamedTuple):
@@ -38,14 +38,14 @@ class Read(NamedTuple):
 
 
 class Click(NamedTuple):
-    """Term 11 on the edges, laid at load (runner/plans.py's edging and crossing): per term of J's plan on the value legs, in the plan's order, its weight on every train, 0 on a train its monomial has no value leg in, and the train of the leg it pushes; every edge side's key at every reach, its own Node-clock and across each Spoke, the edge key: the universe file's CHOSEN key times kappa / two, the same for every side; and the Mesh's edges, term 6's gradient vertex split by the Spoke it reads across, per pair of rows their coupling and the side it books on."""
+    """Term 11 on the edges, laid at load (runner/plans.py's edging and crossing): per term of J's plan on the value legs, in the plan's order, its weight on every train, 0 on a train its monomial has no value leg in, and the train of the leg it pushes; every edge side's key at every reach, its own Node-clock and across the + Spoke of each axis (each Mesh edge held at its + end: D1), the edge key: the universe file's CHOSEN key times kappa / two, the same for every side; and the Mesh's edges, term 6's gradient vertex split by the Spoke it reads across, per pair of rows their coupling and the side it books on, at the + Spoke of each axis."""
 
     weight: Z  # (terms, trains): the leg's share of its monomial's flow, kappa (L - l) / L, onto each other train of the monomial
     train: Z  # (terms,): the train of the leg the term pushes, the side's first train
-    # ((1 + Spokes) x trains x trains, 1): the key each side (t, u) at each reach carries its passing at, odd
+    # ((1 + axes) x trains x trains, 1): the key each side (t, u) at each reach carries its passing at, odd
     key: Z
-    across: Z  # (Spokes, rows, rows): the Mesh edge's coupling of row r here with row p across the Spoke, times kappa / two
-    onto: Z  # (Spokes, rows, rows): the side (Spoke trains + t) trains + u that the pair books on, t r's train, u p's
+    across: Z  # (axes, rows, rows): the Mesh edge's coupling of row r here with row p across the axis's + Spoke, times kappa / two
+    onto: Z  # (axes, rows, rows): the side (axis trains + t) trains + u that the pair books on, t r's train, u p's
 
 
 class Gearing(NamedTuple):

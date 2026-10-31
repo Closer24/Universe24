@@ -12,6 +12,7 @@ from tensor24.engine import mesh, step
 from tensor24.engine.contract import contract
 from tensor24.engine.state import State
 from tensor24.runner import load as loading
+from tensor24.runner import run
 from tensor24.runner.files import NAMES, sites_of
 from tensor24.runner.rewind import rewind
 from tests import frame
@@ -54,50 +55,48 @@ def faces(laid, held):
     return (lambda x: x[trains * trains :].reshape(len(spokes), trains, trains, -1)), opposite
 
 
-def closed(laid, held, q, k):
-    """Every Mesh edge's two ends, (Spoke, t, u) at a site and (its opposite, u, t) across it: q negated, the teeth summing to key - 1."""
-    view, opposite = faces(laid, held)
+def back(laid, s, far=None):
+    """The state with every side read back at every Spoke, as the record's writer reads it (run.sided; D1 holds each Mesh edge at its + end), or by far."""
+    return s._replace(k=run.faced(laid, s.k, far)) if far else run.sided(laid, s)
+
+
+def closed(laid, held, q, s, far=None):
+    """Every Mesh edge's two ends read back, (Spoke, t, u) at a site and (its opposite, u, t) across it: q negated, the teeth summing to key - 1."""
+    (view, opposite), q, k = faces(laid, held), run.faced(laid, q, np.negative), back(laid, s, far).k
     far = np.take_along_axis(view(q)[opposite].swapaxes(1, 2), laid.nb[:, None, None, :], axis=-1)
     teeth = np.take_along_axis(view(k)[opposite].swapaxes(1, 2), laid.nb[:, None, None, :], axis=-1)
     return not (view(q) + far).any() and not (view(k) + teeth + 1 - laid.click.key[0, 0]).any()
 
 
-def spun(m, laid, held, s, shape):
-    """The state turned by m (frame.turned_by), every Mesh tooth moved on to the turned Spoke with its site."""
-    there, (view, _) = frame.turned_by(m, laid, held, s, shape), faces(laid, held)
-    to = [
-        laid.spokes.tolist().index((m @ np.array(e, dtype=object)).tolist())
-        for e in laid.spokes.tolist()
-    ]
-    moved = there.k.copy()
+def spun(m, laid, held, s, shape, far=None):
+    """The state turned by m (frame.turned_by), every Mesh tooth read back, moved on to the turned Spoke with its site and held again at the
+    + Spoke of each axis (D1: where m sends a + Spoke to a - one, the trains swapped and the tooth flipped, or a click negated by far)."""
+    there, (view, _) = frame.turned_by(m, laid, held, back(laid, s, far), shape), faces(laid, held)
+    to = [laid.spokes.tolist().index((m @ np.array(e)).tolist()) for e in laid.spokes.tolist()]
+    moved, own = there.k.copy(), len(held.trains) ** 2
     view(moved)[to] = view(there.k)
-    return there._replace(k=moved)
+    return there._replace(k=np.concatenate((moved[:own], view(moved)[::2].reshape(-1, moved.shape[-1]))))
 
 
 def test_the_mesh_edges_are_the_mesh_contraction_one_coupling_at_both_ends_with_every_edges_books_closed():
     """Yes: across every Spoke the edges sum to the engine's Mesh contraction, 0 entries missed, kappa / two times it; each edge's two
     ends hold one coupling; every edge's books close in every round; the rounds run back exact, the teeth carried. No: a run back
-    restarted at the teeth's birth misses, and one tooth born one past its complement opens the books."""
+    restarted at the teeth's birth misses, and the far end read back unflipped (D1's mutant) opens the books."""
     held, laid, start, _ = world()
     _, _, key, across, _ = laid.click
-    scale, (_, opposite) = key[0, 0] // KEY, faces(laid, held)
-    assert frame.same([across], [np.stack([across[x].T for x in opposite])]) and across.any()
-    s, moved = start, False
+    scale, own, s, moved, nb = key[0, 0] // KEY, len(held.trains) ** 2, start, False, laid.nb
+    assert across.any()
     for _ in range(ROUNDS):
         _, flat = step.readings(laid, s.a, mesh.stretches(laid, s.a))
-        split = sum(across[x] @ s.a[:, laid.nb[x]] for x in range(len(across)))
+        # each edge laid at its + end (D1), its far end the same coupling transposed across the opposite Spoke
+        split = sum(c @ s.a[:, nb[x + x]] + c.T @ s.a[:, nb[x + x + 1]] for x, c in enumerate(across))
         assert frame.same([split], [scale * contract(laid.mesh, flat, s.a)])
         out, q = step.act(laid, s)
-        assert closed(laid, held, q, out.k)
-        s, moved = out, moved or faces(laid, held)[0](q).any()
+        assert closed(laid, held, q, out)
+        s, moved = out, moved or q[own:].any()
     assert moved and frame.same(rewind(step.untick, laid, s, ROUNDS), start)
     assert not frame.same(rewind(step.untick, laid, s._replace(k=start.k), ROUNDS), start)
-    off = start.k.copy()
-    faces(laid, held)[0](off)[0] += (
-        1  # every Mesh side across the first Spoke born one past its complement
-    )
-    out, q = step.act(laid, s._replace(k=off))
-    assert not closed(laid, held, q, out.k)
+    assert not closed(laid, held, q, out, lambda k: k)  # the far end read back unflipped, D1's mutant
 
 
 def test_the_mesh_edges_turn_with_the_lines_8_turns_and_a_cubes_24():
@@ -109,12 +108,11 @@ def test_the_mesh_edges_turn_with_the_lines_8_turns_and_a_cubes_24():
         for _ in range(ROUNDS):
             s, q = step.act(laid, s)
         out, q = step.act(laid, s)
-        assert faces(laid, held)[0](q).any()  # the Mesh edges carry in the turned round
+        own = len(held.trains) * len(held.trains)
+        assert q[own:].any()  # the Mesh edges carry in the turned round
         for m in [m for m in frame.turns() if kept(m)]:
             moved, p = step.act(laid, spun(m, laid, held, s, shape))
             assert frame.same(moved, spun(m, laid, held, out, shape))
-            assert frame.same([p], [spun(m, laid, held, s._replace(k=q), shape).k])
-    stayed = frame.turned_by(next(m for m in frame.turns() if abs(m[0, 0]) != 1), laid, held, out, shape)
-    assert not frame.same(
-        stayed, spun(next(m for m in frame.turns() if abs(m[0, 0]) != 1), laid, held, out, shape)
-    )
+            assert frame.same([p], [spun(m, laid, held, s._replace(k=q), shape, np.negative).k])
+    m = next(m for m in frame.turns() if abs(m[0, 0]) != 1)
+    assert not frame.same(frame.turned_by(m, laid, held, out, shape), spun(m, laid, held, out, shape))

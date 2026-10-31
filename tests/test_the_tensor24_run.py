@@ -217,7 +217,7 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
         return s  # a run back that undoes nothing
 
     assert run.run(main.ENGINE._replace(untick=kept), PATHS, missed) == []
-    assert read(record)[-1]["digest"] == run.digest(run.stated(reached["end"]))
+    assert read(record)[-1]["digest"] == run.digest(run.stated(run.sided(laid, reached["end"])))
     assert read(missed)[-1]["exact"] == 0 and read(missed)[-1]["digest"] == read(record)[-1]["digest"]
     # the ledger: every train's counts as the rounds reach them, the metric family at rest, the schema's fields
     lines, fields = read(run.ledger_of(record)), [f.name for f in dataclasses.fields(schema.Count)]
