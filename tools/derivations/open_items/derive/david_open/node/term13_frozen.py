@@ -51,9 +51,11 @@ slot (term 2), every Spoke's grip = the grip + its axis's ii slot at both ends o
           3125 gamma^4; the most compact body the exterior can hold, G M / (c^2 R) = 5^(-5/4) / gamma, against the
           compactness of two neutron stars read by NICER under general relativity's metric; R and the bound between
           stated endpoints checked by fourth powers;
-     (c6) the surface where the grips vanish is never part of a static field: (1 - gamma u)^2 = 1 - 2 gamma w, so
-          w <= 1 / (2 gamma) for every real u; a ball with a uniform w-source, w = a - b r^2 inside and 2 / r outside,
-          has w(0) = 3 M / s, so it stands only for s >= 6 gamma M;
+     (c6) where the static field ends: (1 - gamma u)^2 = 1 - 2 gamma w, so w <= 1 / (2 gamma) for every real u, on
+          either branch; a ball with a uniform w-source, w = a - b r^2 inside and 2 / r outside, has w(0) = 3 M / s,
+          so it stands only for s >= 6 gamma M; the marginal thin shell of mass M at s = 4 gamma M holds
+          w = 1 / (2 gamma) on and inside it, every grip there 0, u = 1 / gamma and N^2 = gamma / (1 + gamma): the
+          surface of vanishing grip in a static field, its clocks running;
      (c7) light's critical impact parameter, b = A r / N at its turning point: the slot form's least b^2 = 256/3 at
           r = 16/3 and general relativity's 27 at the areal R = 3, each by a factorization; the numbers the page
           quotes, root(256/3), root 27 and 5^(5/4), between stated endpoints checked by squares and fourth powers;
@@ -68,13 +70,15 @@ slot (term 2), every Spoke's grip = the grip + its axis's ii slot at both ends o
      is a ratio, the uneven gaps in r folded into the grips and the teeth, every number a ratio rounded down by a
      carry: a pulse from near x = 3/5 runs to the zero grip; the share near it and its round, the round from which
      that slope holds below 2 per cent again, and the share the line keeps;
-(e)  the inspiral, read in separations, no frequency computed: two equal static slot-form bodies of 70 solar masses in
-     all, touching, their surfaces at the lattice radius 4, the throat's lattice radius 5 and its areal radius 5^(5/4)
-     in G m / c^2, so their centres d = k G M / c^2 apart: d exact in metres and in km at k = 4 and 5, each digit by a
-     carry with its remainder shown, and at the areal radius, d^4 = 5^5 (G M / c^2)^4, between stated endpoints in
-     tenths of a km checked by fourth powers; against the separation LIGO and Virgo state for GW150914, equal Newtonian
-     point masses about 350 km apart at its 75 Hz orbit (PRL 116, 061102 (2016)), that separation in G M / c^2 by
-     carry, which of the touching separations are wider than it, and each one's ratio to it.
+(e)  two bodies, read in separations, no frequency computed: the 00 law is linear in w, so two static bodies' w add;
+     two equal spherical bodies of 70 solar masses in all, each of mass m = M / 2 and lattice radius s, centres d
+     apart: at body 1's facing point w = 2 m d / (s (d - s)) >= 8 m / d, since d^2 - 4 s (d - s) = (d - 2 s)^2, so a
+     static pair needs d >= 8 gamma G M / c^2, the bound held by two touching thin shells; at the contact point of two
+     bodies touching at each one's own surface of vanishing grip, or at the throat's 5, 1 - 2 gamma w falls below 0;
+     any two bodies with a source at or above 0 inside two touching balls, by Newton's spherical mean,
+     d >= (16/3) gamma G M / c^2; each d in metres and in km, each digit by a carry with its remainder shown; against
+     the separation LIGO and Virgo state for GW150914, equal Newtonian point masses about 350 km apart at its 75 Hz
+     orbit (PRL 116, 061102 (2016)), that separation in G M / c^2 by carry, and each bound's ratio to it.
 
 Usage: python3 -I term13_frozen.py <src of main at 0df0e8385>
 """
@@ -698,7 +702,7 @@ print("(c5) arithmetic alone, r^5 - 3125 gamma^4 (r - 4 gamma) = (r - 5 gamma)^2
       " global; R and the bound between stated endpoints, checked by fourth powers, no root found: " + "; ".join(rows_f)
       + "; the bound G M / (c^2 R) = 5^(-5/4) / gamma: " + "; ".join(rows_b))
 
-# (c6) the surface of vanishing grip is never part of a static field
+# (c6) where the static field ends, and the marginal thin shell that holds the surface of vanishing grip
 rows_c6 = []
 for gamma in (1, 2, 3, 5):
     # 2 w = 2 u - gamma u^2, so 1 - 2 gamma w = 1 - gamma (2 u - gamma u^2)
@@ -711,13 +715,23 @@ for radius in (5, 6, 7):
     side = "above" if below((1, 2), a_s) else ("at" if a_s == (1, 2) else "below")
     rows_ball.append(f"s = {radius}: b = {show(b_s)}, w(0) = a = {show(a_s)}, {side} 1/2, 1 - 2 w(0) ="
                      f" {show(rsub((1, 1), rmul((2, 1), a_s)))}, at the surface w = {show(red(2, radius))}")
-print("(c6) arithmetic alone, the surface of vanishing grip is never part of a static field: (1 - gamma u)^2 ="
-      " 1 - 2 gamma w with w = u - (gamma / 2) u^2, as polynomials in u, coefficient by coefficient: "
-      + "; ".join(rows_c6) + ", so 1 - 2 gamma w >= 0 and w <= 1 / (2 gamma) for every real u, on either branch:"
-      " inside r = 4 gamma, where w = 2 / r passes 1 / (2 gamma), no real u stands at all; a ball of radius s with a"
-      " uniform w-source (M = 1, gamma = 1), w = a - b r^2 inside matched to 2 / r at r = s: " + "; ".join(rows_ball)
-      + ": the field is largest at the centre, w(0) = 3 M / s, so such a ball stands only for s >= 6 gamma M, and"
-      " outside it w < 1 / (2 gamma): every grip there stands above 0")
+rows_shell = []
+for gamma in (1, 2, 3):
+    # a thin shell of mass 1 at s = 4 gamma: w = 2 / s on and inside it; the grips' branch there, u = (1 - x) / gamma
+    w_in = red(2, 4 * gamma)
+    x2 = rsub((1, 1), rmul((2 * gamma, 1), w_in))  # (grip / g)^2 = 1 - 2 gamma w
+    u_in = red(1, gamma)
+    rows_shell.append(f"gamma {gamma}: w = {show(w_in)}, at the ceiling 1 / (2 gamma): {w_in == red(1, 2 * gamma)};"
+                      f" (grip / g)^2 = {show(x2)}; u = {show(u_in)}; N^2 = {show(rdiv((1, 1), radd((1, 1), u_in)))}")
+print("(c6) arithmetic alone, where the static field ends: (1 - gamma u)^2 = 1 - 2 gamma w with w = u - (gamma / 2)"
+      " u^2, as polynomials in u, coefficient by coefficient: " + "; ".join(rows_c6) + ", so 1 - 2 gamma w >= 0 and"
+      " w <= 1 / (2 gamma) for every real u, on either branch: around a point source, inside r = 4 gamma, where"
+      " w = 2 / r passes 1 / (2 gamma), no real u stands at all; a ball of radius s with a uniform w-source (M = 1,"
+      " gamma = 1), w = a - b r^2 inside matched to 2 / r at r = s: " + "; ".join(rows_ball) + ": the field is"
+      " largest at the centre, w(0) = 3 M / s, so such a ball stands only for s >= 6 gamma M, and outside it"
+      " w < 1 / (2 gamma): every grip there stands above 0; the marginal thin shell of mass 1 at s = 4 gamma, w = 2 / s"
+      " on and inside it: " + "; ".join(rows_shell) + ": it holds the surface of vanishing grip in a static field,"
+      " every grip on and inside it 0 and its clocks running")
 
 # (c7) light's critical impact parameter, b = A r / N at the turning point
 r_x, u_x = tied(1)
@@ -918,8 +932,8 @@ print(f"(d) (B) the slot form's exterior itself at gamma = 1, laid with no root,
       f" zero grip in a finite board time and is turned back")
 
 
-# (e) the inspiral, read in separations, no frequency computed: two equal static slot-form bodies touching, their
-# centres d = k G M / c^2 apart, against the separation LIGO and Virgo state for GW150914 at its 75 Hz orbit
+# (e) two bodies, read in separations, no frequency computed: the 00 law is linear in w, so two static bodies' w add;
+# against the separation LIGO and Virgo state for GW150914 at its 75 Hz orbit
 def in_digits(x, scale):
     """A ratio pair rounded down to the digits of scale, a power of 10, each digit by a carry (a whole number at scale
     1), and the remainder Rule3's carry leaves on num x scale over den: 0 where the digits are exact."""
@@ -930,31 +944,46 @@ def in_digits(x, scale):
 L_M = red(70 * 1476625, 1000)  # G M / c^2 for 70 solar masses, in m
 GW_KM = 350  # GW150914: equal Newtonian point masses orbiting at 75 Hz would be about 350 km apart (PRL 116, 061102)
 gw = (GW_KM * 1000, 1)  # in m
+# d^2 - 4 s (d - s) = (d - 2 s)^2 as polynomials in s, coefficient by coefficient, at whole d
+square_ok = all(trim([d * d, -4 * d, 4]) == pmul([d, -2], [d, -2]) for d in range(1, 10))
+TOUCH = ((4, "each one's own surface of vanishing grip"), (5, "the throat's 5"), (8, "two thin shells at the bound"))
+rows_touch = []
+for gamma in (1, 2):
+    cells = []
+    for k, name in TOUCH:
+        s = (k * gamma, 1)  # in G m / c^2, m = 1 each, touching: d = 2 s
+        w = radd(rdiv((2, 1), s), rdiv((2, 1), rsub(rmul((2, 1), s), s)))  # 2 m / s + 2 m / (d - s)
+        cells.append(f"s = {k} gamma m ({name}): 1 - 2 gamma w = {show(rsub((1, 1), rmul((2 * gamma, 1), w)))}")
+    rows_touch.append(f"gamma {gamma}: " + "; ".join(cells))
+# the spherical mean: over ball 1 of radius d / 2 the mean of 1 / |x - y| is at least 2 / d for y inside it, and the
+# other body's w is harmonic in ball 1, its mean the value at ball 1's centre, at least 2 m / (3 d / 2)
+mean_ok = radd(rdiv((2, 2), (1, 2)), rdiv((2, 2), (3, 2))) == rdiv((16, 2), (3, 1))  # at m = 1/2, d = 1: 8/3
 rows_e, wide = [], []
-# per row the digits shown: d in m, d in km, and d over GW150914's separation
-for k, name, at_m, at_km, at_ratio in ((4, "the lattice radius 4, where the grips vanish", 1, 1000, 10**4),
-                                       (5, "the throat's lattice radius 5", 100, 10**5, 10**6)):
-    d = rmul((k, 1), L_M)  # in m
+for (num, den), name, at_m, at_km, at_ratio in (((8, 1), "the pair bound for spherical bodies, d = 8 G M / c^2",
+                                                 1, 100, 10**4),
+                                                ((16, 3), "the bound for any bodies with a source at or above 0 inside"
+                                                 " two touching balls, d = (16/3) G M / c^2", 100, 1000, 1000)):
+    d = rmul((num, den), L_M)  # in m
     (m_text, m_left), (km_text, km_left) = in_digits(d, at_m), in_digits(rdiv(d, (1000, 1)), at_km)
     ratio, left = in_digits(rdiv(d, gw), at_ratio)
-    rows_e.append(f"at {name}, d = {k} G M / c^2 = {m_text} m = {km_text} km (the carries' remainders {m_left} and"
-                  f" {km_left})")
-    wide.append((below(gw, d), f"at {name.split(',')[0]}, by a ratio of {ratio} (the carry's remainder {left})"))
-# at the areal radius, d^4 = 5^5 (G M / c^2)^4: d's stated ends in tenths of a km and its ratio's to GW150914's
-# separation in thousandths, checked by fourth powers, no root found
-d_low, d_high, q_low, q_high = 7728, 7729, 2208, 2209
-d_ends = within(fourth, d_low, d_high, 3125 * fourth(L_M[0]), fourth(100 * L_M[1]))
-q_ends = within(fourth, q_low, q_high, 3125 * fourth(1000 * L_M[0]), fourth(gw[0] * L_M[1]))
-wide.append((fourth(gw[0] * L_M[1]) < 3125 * fourth(L_M[0]), f"at its areal radius, by a ratio"
-             f" {between(q_low, q_high, 1000)} ({q_low}^4 x {gw[0] * L_M[1]}^4 <= 3125 x {1000 * L_M[0]}^4 <"
-             f" {q_high}^4 x {gw[0] * L_M[1]}^4: {q_ends})"))
-print(f"(e) arithmetic alone, the inspiral, read in separations, no frequency computed: two equal static slot-form"
-      f" bodies of 70 solar masses in all (G M / c^2 = 70 x {sun_text} m = {decimal(L_M[0], L_M[1], 100)} m), touching"
-      f" at d = k G M / c^2 with their surfaces at k G m / c^2 (m = M / 2): " + "; ".join(rows_e) + f"; at its areal"
-      f" radius 5^(5/4), d^4 = 5^5 (G M / c^2)^4, d {between(d_low, d_high, 10)} km ({d_low}^4 x {100 * L_M[1]}^4 <="
-      f" 3125 x {L_M[0]}^4 < {d_high}^4 x {100 * L_M[1]}^4: {d_ends}), the endpoints stated and checked by fourth"
-      f" powers, no root found; against GW150914 as LIGO and Virgo state it (PRL 116, 061102 (2016)): equal Newtonian"
-      f" point masses orbiting at 75 Hz, half the waves' frequency, would be only about {GW_KM} km apart,"
-      f" {decimal(gw[0] * L_M[1], L_M[0], 1000)} G M / c^2 (rounded down, each digit by a carry); the touching"
-      f" separations wider than GW150914's: " + "; ".join(text for wider, text in wide if wider) + "; narrower: "
+    rows_e.append(f"{name} = {m_text} m = {km_text} km (the carries' remainders {m_left} and {km_left})")
+    wide.append((below(gw, d), f"{name.split(',')[0]}, by a ratio of {ratio} (the carry's remainder {left})"))
+rows_old = []
+for k, name in ((4, "at each one's own surface of vanishing grip"), (5, "at the throat's 5")):
+    d = rmul((k, 1), L_M)
+    rows_old.append(f"{name}, d = {k} G M / c^2 = {in_digits(d, 100)[0]} m")
+print(f"(e) arithmetic alone, two bodies, read in separations, no frequency computed: the 00 law is linear in w, so two"
+      f" static bodies' w add; two equal spherical bodies of 70 solar masses in all (G M / c^2 = 70 x {sun_text} m ="
+      f" {decimal(L_M[0], L_M[1], 100)} m), each of mass m = M / 2 and lattice radius s, centres d apart: at body 1's"
+      f" facing point w = 2 m / s + 2 m / (d - s) = 2 m d / (s (d - s)) >= 8 m / d, since d^2 - 4 s (d - s) ="
+      f" (d - 2 s)^2 (as polynomials in s, coefficient by coefficient, d = 1 to 9: {square_ok}), so a static pair needs"
+      f" 8 m / d <= 1 / (2 gamma), d >= 16 gamma m = 8 gamma G M / c^2; at the contact point of two bodies touching"
+      f" (d = 2 s, m = 1): " + "; ".join(rows_touch) + "; any two bodies with a source at or above 0 inside two"
+      f" touching balls of diameter d: the mean of w over ball 1 is at least 2 m / (d / 2) from its own mass and"
+      f" 2 m / (3 d / 2) from the other's, at m = 1/2 and d = 1 the sum 8/3 = 16 m / (3 d): {mean_ok}, so"
+      f" d >= (16/3) gamma G M / c^2; at gamma 1 and 70 solar masses: " + "; ".join(rows_e) + "; touching "
+      + " and ".join(rows_old) + ", no static pair; against GW150914 as LIGO and Virgo state it (PRL 116, 061102"
+      f" (2016)): equal Newtonian point masses orbiting at 75 Hz, half the waves' frequency, would be only about"
+      f" {GW_KM} km apart, {decimal(gw[0] * L_M[1], L_M[0], 1000)} G M / c^2 (rounded down, each digit by a carry);"
+      f" wider than it: " + "; ".join(text for wider, text in wide if wider) + "; narrower: "
       + ("; ".join(text for wider, text in wide if not wider) or "none"))
