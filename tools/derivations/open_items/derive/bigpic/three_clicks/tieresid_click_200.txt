@@ -1,0 +1,4 @@
+tensor24-click, 200 rounds, 27 Node-clocks, 6 two-leg terms and 12 tie groups a Node-clock; the edge dial 152434287
+two-leg terms: their summed work over the rounds is - (F at the end - F at the start) exactly at 27 of 27 Node-clocks
+the tie groups: the largest summed work at any round, 909840000 (5 edge keys), at Node-clock 0; at the end -909840000 (5 keys) against the tie's own potential's change 313740000
+exit 0
