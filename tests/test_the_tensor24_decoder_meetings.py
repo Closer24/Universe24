@@ -31,11 +31,11 @@ def head(sides=(5, 1, 1), gears=((0, 0, 0, 1, 0, 0),), text=None, name="setting.
 
 def edges(round_, site, *passed):
     """The click lines of a place whose edges passed quanta, (giver, taker, quanta) each: every train's line a side per
-    edge it stands on, [the other train, its q, tooth before, after], its q their sum, every tooth 3 at the key 7."""
+    edge it stands on, [the other train, its q], its q their sum."""
     at: dict[int, list[list[int]]] = {}
     for giver, taker, n in passed:
-        at.setdefault(giver, []).append([taker, -n, 3, 3])
-        at.setdefault(taker, []).append([giver, n, 3, 3])
+        at.setdefault(giver, []).append([taker, -n])
+        at.setdefault(taker, []).append([giver, n])
     line = dict(kind="click", round=round_, site=site)
     return [dict(line, train=t, q=sum(s[1] for s in z), sides=sorted(z)) for t, z in sorted(at.items())]
 
@@ -43,8 +43,8 @@ def edges(round_, site, *passed):
 def across(round_, give, take):
     """A quantum passed across a Mesh at a round, from a clock (site, train) to another, each line its side across."""
     (s, t), (z, u) = give, take
-    line = dict(kind="click", round=round_, site=s, train=t, q=-1, sides=[], across=[[u, z, -1, 3, 3]])
-    far = {**line, "site": z, "train": u, "q": 1, "across": [[t, s, 1, 3, 3]]}
+    line = dict(kind="click", round=round_, site=s, train=t, q=-1, sides=[], across=[[u, z, -1]])
+    far = {**line, "site": z, "train": u, "q": 1, "across": [[t, s, 1]]}
     return sorted([line, far], key=lambda e: e["site"])
 
 
@@ -112,9 +112,9 @@ def test_a_meeting_is_an_edge_side_and_its_mirror_the_silent_clock_aside(tmp_pat
     assert [shadow.meetings(record)[k] for k in ("kind", "ways")] == ["SHOWN", {(0, 1): 1}]
     lines = shadow.clock_lines(record)
     assert lines["kind"] == "SHOWN" and sorted(lines["clocks"]) == [(0, 0), (0, 1)]
-    assert "train 2: q 0, sides [[0, 0, 3, 3], [1, 0, 3, 3]], across []" in tool(tmp_path)
+    assert "train 2: q 0, sides [[0, 0], [1, 0]], across []" in tool(tmp_path)
     give, take = edges(1, 0, (0, 1, 1 + 1))
-    near = [give | {"q": -1, "across": [[0, 1, 1, 3, 3]]}, take | {"q": 1, "across": [[1, 1, -1, 3, 3]]}]
+    near = [give | {"q": -1, "across": [[0, 1, 1]]}, take | {"q": 1, "across": [[1, 1, -1]]}]
     far = across(1, (1, 0), (0, 0))[1], across(1, (0, 1), (1, 1))[1]  # each pair's line at site 1
     for held, n in (edges(1, 0, (0, 1 + 1, 1), (1 + 1, 1, 1), (0, 1, 0)), 1), ([*near, *far], 1 + 1):
         verdict, lines = shadow.meetings(record := read(tmp_path, *held)), shadow.clock_lines(record)

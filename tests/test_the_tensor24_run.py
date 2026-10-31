@@ -195,8 +195,8 @@ def test_the_lay_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and_
     ]
     assert got.header["sides"] == piece["shape"] and got.header["runner"] == "synchronous"
     ticks = setting["ticks"]
-    end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1, teeth=[])
-    assert got.end == {**end, "across": []} and got.events == []  # no rate line, no edge and no click
+    end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1, across=[])
+    assert got.end == end and got.events == []  # no edge, so no click and no Mesh edge; no tooth written
     card = {k: [t[k] for t in got.header["trains"]] for k in ("label", "winding", "key", "square")}
     assert card["label"] == [t["name"] for t in universe["trains"]] and card["square"] == [0, 1]
     assert card["winding"] == [1, len(laid.spokes) // len(piece["shape"])]  # the 00 row's dial, senses

@@ -1,7 +1,7 @@
 """Clock: n/a: the decoder's guard on the edges between clocks, read from the record alone.
-Algebra: per line holding sides, its sides' q, in its site and across a Mesh, summed to its q; per edge, at its place in the site or across the Mesh, its two sides' q summing to 0 and their teeth to the key less 1, before and after (the owner's word of 03:4x UTC: every transfer between two clocks carried on one pair of complementary teeth, each edge closing, so the place closes).
-Board: n/a: no board is read; the key is the train card's, the edge key, and the teeth are the edge's, as written.
-Clicks: a click line of schema 1.4 holds its sides, one per edge side of its train at its round and Node-clock once any side there carries, q 0 among them (DECODE3's rule, writer B's line), in the other trains' order, [u, q, tooth before, tooth after]: the other train, the side's q and its tooth, the far end's the key less 1 less it; and its sides across a Mesh that carried (the Boss's ruling of 05:2x UTC, writer B's field), in their places' order, [u, place, q, tooth before, tooth after], the far end the other train's line at that place, which names this line's site; one line serves the three clicks, told apart by the sides a place holds and never by a label; a line that breaks a rule of the edges is refused, its cause named.
+Algebra: per line holding sides, its sides' q, in its site and across a Mesh, summed to its q; per edge, at its place in the site or across the Mesh, its two sides' q summing to 0 (the owner's word of 03:4x UTC: every transfer between two clocks carried on one pair of complementary teeth, each edge closing, so the place closes; the teeth are the board's and stand in no record, the owner's word on Q11).
+Board: n/a: no board is read; the key is the train card's, the edge key.
+Clicks: a click line of schema 3.0 holds its sides, one per edge side of its train at its round and Node-clock once any side there carries, q 0 among them (DECODE3's rule, writer B's line), in the other trains' order, [u, q]: the other train and the side's q, the far end's its negative; and its sides across a Mesh that carried (the Boss's ruling of 05:2x UTC, writer B's field), in their places' order, [u, place, q], the far end the other train's line at that place, which names this line's site; one line serves the three clicks, told apart by the sides a place holds and never by a label; a line that breaks a rule of the edges is refused, its cause named.
 """
 
 from typing import Any
@@ -10,9 +10,7 @@ from tensor24.record import schema
 
 Line = dict[str, Any]
 Lines = list[Line | str]
-Side = tuple[
-    Any, Any, Any, Any, Any
-]  # the other clock's site and train, q, tooth before and tooth after
+Side = tuple[Any, Any, Any]  # the other clock's site and train, and q
 Place = tuple[
     Any, Any, Any, Any, Any
 ]  # a side's round, site and train, and the other clock's site and train
@@ -29,31 +27,29 @@ def formed(side: Any, fields: tuple[str, ...] = schema.SIDE) -> bool:
 
 
 def edged(e: Line) -> list[Side]:
-    """Each side of a formed click line as the other clock's site and train, q, tooth before and after: its sides in its own site, then its sides across a Mesh at their places."""
-    within = [(e["site"], u, q, before, after) for u, q, before, after in e.get("sides", [])]
-    return within + [(at, u, q, before, after) for u, at, q, before, after in e.get("across", [])]
+    """Each side of a formed click line as the other clock's site and train, and q: its sides in its own site, then its sides across a Mesh at their places."""
+    within = [(e["site"], u, q) for u, q in e.get("sides", [])]
+    return within + [(at, u, q) for u, at, q in e.get("across", [])]
 
 
 def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
-    """The first rule of its own one line's sides break: a tooth beside them or none, one off its form, a line naming no train whose card holds a whole key, one naming the line's own train or a train no card names, their trains, or across a Mesh their places and trains, out of order or one twice, their q not summing to the line's, or a tooth outside [0, K)."""
+    """The first rule of its own one line's sides break: no sides, one off its form, a line naming no train whose card holds a whole key, one naming the line's own train or a train no card names, their trains, or across a Mesh their places and trains, out of order or one twice, or their q not summing to the line's."""
     t, key = e.get("train"), keys.get(e.get("train"))
     sides, across = e.get("sides", []), e.get("across", [])
-    if "tooth" in e or not (isinstance(sides, list) and isinstance(across, list)) or not sides + across:
-        return f"line {n} holds a tooth beside its sides, or no sides"
+    if not (isinstance(sides, list) and isinstance(across, list)) or not sides + across:
+        return f"line {n} holds no sides"
     if not all(map(formed, sides)):
-        return f"line {n}'s sides have not the form [u, q, tooth before, tooth after]"
+        return f"line {n}'s sides have not the form [u, q]"
     if not all(formed(side, schema.ACROSS) for side in across):
-        return (
-            f"line {n}'s sides across a Mesh have not the form [u, place, q, tooth before, tooth after]"
-        )
+        return f"line {n}'s sides across a Mesh have not the form [u, place, q]"
     if not (whole(t) and whole(key)):
         return f"line {n} names no train whose card holds a whole key"
-    us, total = [u for u, _, _, _ in sides], sum(q for _, _, q, _, _ in edged(e))
-    places = [(at, u) for u, at, _, _, _ in across]
+    us, total = [u for u, _ in sides], sum(q for _, _, q in edged(e))
+    places = [(at, u) for u, at, _ in across]
     found = [f"line {n}'s side names its own train {t}"] if t in us else []
     found += [
         f"line {n}'s side names train {u}, which no train card names"
-        for _, u, _, _, _ in edged(e)
+        for _, u, _ in edged(e)
         if u not in keys
     ]
     found += (
@@ -67,31 +63,23 @@ def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
         else []
     )
     found += [f"line {n}'s sides sum to {total}, not its q {e.get('q')}"] if total != e.get("q") else []
-    found += (
-        [f"line {n} holds a side's tooth outside [0, {key})"]
-        if any(k < 0 or k >= key for *_, before, after in edged(e) for k in (before, after))
-        else []
-    )
     return found[0] if found else ""
 
 
-def mirrored(n: int, e: Line, sides: dict[Place, Side], keys: dict[Any, Any]) -> str:
-    """The first rule its sides break against their partners at their place, in its site or across a Mesh: a partner absent, the two q not summing to 0, or the two teeth not summing to the key less 1, before or after."""
-    key = keys.get(e["train"], 0)  # the edge key, the train card's
-    for at, u, q, before, after in edged(e):
+def mirrored(n: int, e: Line, sides: dict[Place, Side]) -> str:
+    """The first rule its sides break against their partners at their place, in its site or across a Mesh: a partner absent, or the two q not summing to 0."""
+    for at, u, q in edged(e):
         partner = sides.get((e["round"], at, u, e["site"], e["train"]))
         if partner is None:
             return f"line {n}'s side to train {u} has no partner at its place"
-        _, _, far, far_before, far_after = partner
+        _, _, far = partner
         if q + far != 0:
             return f"line {n}'s side to train {u} and its partner hold q {q} and {far}, not 0 summed"
-        if before + far_before != key - 1 or after + far_after != key - 1:
-            return f"line {n}'s side to train {u} and its partner hold teeth not summing to the key less 1, {key - 1}"
     return ""
 
 
 def paired(lines: Lines) -> str:
-    """The first click line of the record whose sides break a rule of the edges, its own or against its partners', named: the decoder's guard on schema 1.4's sides, in the site and across a Mesh."""
+    """The first click line of the record whose sides break a rule of the edges, its own or against its partners', named: the decoder's guard on schema 3.0's sides, in the site and across a Mesh."""
     header = lines[0] if lines and isinstance(lines[0], dict) else {}
     keys = {
         card.get("index"): card.get("key") for card in header.get("trains", []) if isinstance(card, dict)
@@ -107,12 +95,10 @@ def paired(lines: Lines) -> str:
         if cause:
             return cause
     sides = {
-        (e["round"], e["site"], e["train"], at, u): (at, u, q, before, after)
-        for _, e in held
-        for at, u, q, before, after in edged(e)
+        (e["round"], e["site"], e["train"], at, u): (at, u, q) for _, e in held for at, u, q in edged(e)
     }
     for n, e in held:
-        cause = mirrored(n, e, sides, keys)
+        cause = mirrored(n, e, sides)
         if cause:
             return cause
     return ""

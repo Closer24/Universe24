@@ -28,16 +28,16 @@ E = {"kind": "end", "rounds": 6, "undone": 0, "exact": 1}
 
 
 def met(round_=1, site=0):
-    """A meeting at a round and a Node-clock: train 0 gives one quantum to train 1 on their edge, the teeth born at 3."""
+    """A meeting at a round and a Node-clock: train 0 gives one quantum to train 1 on their edge."""
     give = {
         "kind": "click",
         "round": round_,
         "site": site,
         "train": 0,
         "q": -1,
-        "sides": [[1, -1, 3, 6]],
+        "sides": [[1, -1]],
     }
-    return [give, {**give, "train": 1, "q": 1, "sides": [[0, 1, 3, 0]]}]
+    return [give, {**give, "train": 1, "q": 1, "sides": [[0, 1]]}]
 
 
 def without(line, key):
@@ -60,13 +60,10 @@ BARE = {
 SENT = {
     **GIVE,
     "sides": [],
-    "across": [[0, 1, -1, 3, 6]],
+    "across": [[0, 1, -1]],
 }  # train 0 gives across a Mesh, site 0 to site 1
-CROSS = [SENT, {**SENT, "site": 1, "q": 1, "across": [[0, 0, 1, 3, 0]]}]
-ENDED = {
-    **E,
-    "across": [[0, 0, [1, 0], [3, 3]]],
-}  # the end's across: the side (0, 0), its places and teeth
+CROSS = [SENT, {**SENT, "site": 1, "q": 1, "across": [[0, 0, 1]]}]
+ENDED = {**E, "across": [[0, 0, [1, 0]]]}  # the end's across: the side (0, 0) and its places
 NO_JSON, ORDER = "line 2 is no JSON object with its kind", "the events stand out of the schema's order"
 SHAPE, LINE1 = (
     "line 2's {} has not its shape in the schema",
@@ -198,7 +195,7 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "line 2's side across a Mesh to train 0 stands in no entry of the end's across",
     ),
     "the end's across off the board": (
-        [B, *CROSS, {**E, "across": [[0, 0, [5, 0], [3, 3]]]}],
+        [B, *CROSS, {**E, "across": [[0, 0, [5, 0]]]}],
         "crossed",
         "the end's across names place 5, off the board of sides [2, 1, 1]",
     ),
@@ -361,8 +358,8 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
     assert held.lines == [GIVE, TOOK] and held.sites == {0: clicks.Tally(len(held.lines), 1, 1, 0)}
     assert held.trains == {0: clicks.Tally(1, 1, 0, -1), 1: clicks.Tally(1, 0, 1, 1)}
     assert (held.places, held.crossed) == (1, 0)
-    give = {**GIVE, "round": 6, "sides": [], "across": [[0, 1, -1, 3, 6]]}
-    across = [give, {**give, "site": 1, "q": 1, "across": [[0, 0, 1, 3, 0]]}]
+    give = {**GIVE, "round": 6, "sides": [], "across": [[0, 1, -1]]}
+    across = [give, {**give, "site": 1, "q": 1, "across": [[0, 0, 1]]}]
     more = clicks.counted(read([B, GIVE, TOOK, *across, E], tmp_path))
     assert (more.places, more.crossed) == (len({(e["round"], e["site"]) for e in more.lines}), 1 + 1)
     run = tool(tmp_path / "record.jsonl")  # the record read last, as read() wrote it
@@ -370,9 +367,9 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
     lines = run.stdout.splitlines()
     assert (
         "the click lines: 4" in lines
-        and "  round 6, site 0, train 0: q -1, sides [], across [[0, 1, -1, 3, 6]]" in lines
+        and "  round 6, site 0, train 0: q -1, sides [], across [[0, 1, -1]]" in lines
     )
-    assert "  round 1, site 0, train 0: q -1, sides [[1, -1, 3, 6]], across []" in lines
+    assert "  round 1, site 0, train 0: q -1, sides [[1, -1]], across []" in lines
     assert "train 0: 3 lines, given 2, taken 1, net -1" in lines
     assert "site 0: 3 lines, given 2, taken 1, net -1" in lines
     net = "each place's across net, its sum of q over the trains (its own site's sides cancel there): 2 of 3 places"
@@ -388,10 +385,10 @@ def test_the_click_world_reads_the_books_no_own_count_and_no_cone_where_none_cou
     ring = {**H, "sides": [5, 1, 1], "files": [{"name": "setting.json", "text": lay}]}
     world = shadow.shadow(read([ring, *met(1 + 1, 1 + 1), E], tmp_path))  # two Meshes from the lay
     assert [v["kind"] for v in world.values()] == ["SHOWN", "NOT READ"]
-    give = {**TOOK, "sides": [], "across": [[0, 1 + 1, 1, 3, 0]]}
+    give = {**TOOK, "sides": [], "across": [[0, 1 + 1, 1]]}
     apart = [
         give,
-        {**GIVE, "site": 1 + 1, "sides": [], "across": [[1, 0, -1, 3, 6]]},
+        {**GIVE, "site": 1 + 1, "sides": [], "across": [[1, 0, -1]]},
     ]  # two sites of one round
     world = shadow.shadow(read([ring, *apart, E], tmp_path))
     held, far = world[shadow.BOOKS], world[shadow.CONE]["cause"]

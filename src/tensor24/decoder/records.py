@@ -287,10 +287,10 @@ def crossed(lines: Lines) -> str:
     if "across" not in end:
         return ""
     sides, size = board(lines[0])
-    far = [p for _, _, places, _ in end["across"] for p in places if whole(size) and not 0 <= p < size]
+    far = [p for _, _, places in end["across"] for p in places if whole(size) and not 0 <= p < size]
     if far:
         return f"the end's across names place {far[0]}, off the board of sides {sides}"
-    held = {(t, u) for t, u, _, _ in end["across"]}
+    held = {(t, u) for t, u, _ in end["across"]}
     clicks = [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]
     named = [(n, u) for n, e in clicks for u, *_ in e.get("across", []) if (e["train"], u) not in held]
     if named:

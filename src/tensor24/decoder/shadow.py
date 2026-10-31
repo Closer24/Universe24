@@ -81,14 +81,11 @@ def spread(counts: list[int]) -> str:
 
 
 def across(lines: list[Line]) -> tuple[dict[clicks.Place, int], int]:
-    """Each side across a Mesh (schema 1.4) booked at its far place, as its own line books it at its own place: at its round and the Node-clock it names, its own q, which its partner's q, booked there through the partner's line, closes, so each edge across a Mesh closes at both its places; and the sides so booked counted, a side off its form booking nothing (the sides' guard refuses it)."""
+    """Each side across a Mesh (schema 3.0) booked at its far place, as its own line books it at its own place: at its round and the Node-clock it names, its own q, which its partner's q, booked there through the partner's line, closes, so each edge across a Mesh closes at both its places; and the sides so booked counted, a side off its form booking nothing (the sides' guard refuses it)."""
     found: dict[clicks.Place, int] = {}
     held = [(e, side) for e in lines if isinstance(e.get("across"), list) for side in e["across"]]
     sides = [
-        (e["round"], at, q)
-        for e, side in held
-        if formed(side, schema.ACROSS)
-        for _, at, q, _, _ in [side]
+        (e["round"], at, q) for e, side in held if formed(side, schema.ACROSS) for _, at, q in [side]
     ]
     for round_, at, q in sides:
         found[(round_, at)] = found.get((round_, at), 0) + q

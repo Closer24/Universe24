@@ -443,7 +443,7 @@ footer { font-size: 0.8rem; color: var(--muted); max-width: 80ch; }
     fact("Rounds", String(DATA.rounds));
     fact("The run back", end.exact === 1 ? "exact, " + end.undone + " rounds undone" : "not exact (" + end.exact + ")");
     fact("Trains, by their cards", trains.map(function (t) { return t.index + " " + t.label; }).join(", ") || "none");
-    fact("The dial", "D " + header.dial + ", birth " + header.birth + ", width " + header.width);
+    fact("The dial", "D " + header.dial + ", width " + header.width);
     fact("Record", (header.record || "-") + ", schema " + header.version + ", " + header.engine + ", " + header.runner);
     fact("The end's digest", end.digest || "-");
     fact("The ledger", DATA.ledger || "-");
@@ -792,16 +792,6 @@ footer { font-size: 0.8rem; color: var(--muted); max-width: 80ch; }
         box.appendChild(el("p", { "class": "data" }, t + " " + trainName(t) + ": " + (c ? c.join(" ") : "-")));
       });
     }
-    var mine = linesOf(r).filter(function (line) { return line[0] === chosen; });
-    box.appendChild(el("p", { "class": "eyebrow" }, "The click tooth on each side, before and after the round (board fields)"));
-    if (!mine.length) {
-      box.appendChild(el("p", { "class": "data" }, "No click line here in this round."));
-    }
-    mine.forEach(function (line) {
-      var own = (line[3] || []).map(function (s) { return "with " + s[0] + ": " + s[2] + " to " + s[3]; });
-      var far = (line[4] || []).map(function (s) { return "with " + s[0] + " at site " + s[1] + ": " + s[3] + " to " + s[4]; });
-      box.appendChild(el("p", { "class": "data" }, line[1] + " " + trainName(line[1]) + ": " + own.concat(far).join("; ")));
-    });
   }
 
   // the strip of click lines per round
