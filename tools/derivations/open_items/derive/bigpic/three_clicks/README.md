@@ -77,8 +77,14 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
 - **Stage 4, the pair in whole numbers** (`pairwhole.py`, gate clean): the triangle's own settings (sides 0 and 60 degrees, heights 30 and 90), every weight the triangle's own squares (the height's 3 and the half side's 1 over the side's 4); CHSH from the click counts 2,501 per mille against the hand's own 2,499 and the triangle's 5/2, no signal, the run back, and the first click with no draw beside it (2,499 too: Bell reads the pair's hand), with the order of the landings (lag-1 -1 per mille in the third click, -1,000 in the first).
 - **Stage 4b, the pair world's two ends, road (C)** (`twoends.py`, gate clean; PICTURE.md section 11): the free end, each wing's end laid apart and kept where the two copies run back to one birth, reads at most 2 (the sign rule 1,981 to 2,021 per mille over eight births against the exact 2,000, every hand value giving +2; the member's landing read back from its end tooth 818 to 879 against 849, the run back exact at 50,000 of 50,000); (B) forward reads the same; the timelike case 2,490 to 2,517 against 2,499; no signal (at most 9 per mille between a wing's two far-setting shares); the order at lags 1 and 2 within -9 to 10 per mille. Two seeds' laws that pick nothing: the end at the middle reads the sign rule at 388 of 388; one birth with one death keeps one hand value per setting pair and reads 2 with a signal (A's share 917 against 752). Records: twoends_200000.txt, twoends_200000_runs8.txt.
 - **Stage 4c, Bell from the end** (`bellend.py`, bellend.txt; the owner's words of 09:33 and 10:10 UTC, David's
-  meeting's weight). The probe counts every seed, so every reading is an exact fraction: no draw, no stand-in stream,
-  nothing picked. The law has three parts, and the pair's one hand runs from the birth to both wings:
+  meeting's weight). The probe counts every seed, so every reading is an exact fraction: no draw and no stand-in
+  stream.
+  - **In (C)'s form** (the HALF pair: NOT PASSED; the Boss's rulings, 6542866096 item 2): the hand and the fixing end
+    are fixed in advance, and the far click chooses by its own seeds.
+  - **The hand's dependence on the fixing end's setting is a laid measure, with its source OPEN.** As first stated, the
+    end click wrote the board's hand, against the law of the path (the physicist's B1). Read lawfully, the dependence
+    is laid by statement, and its start twin writes the same joint law.
+  - The law has three parts, and the pair's one hand runs from the birth to both wings:
   - (i) one wing's click fixes the hand: clicking +1 it leaves the hand along its setting, clicking -1 across it;
   - (ii) the board runs that end back to the birth;
   - (iii) the other wing's click takes the hand's share along its own setting, the square of their overlap, which is one
@@ -89,6 +95,13 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
     - 2,828 per mille on the plane's own lattice at the turn of z = 13 + 5 w, which is Tsirelson's 2 r2;
     - each wing's +1 share 500 per mille under every far setting: no signal.
   - **The free-lay control** reads half of each: CHSH 1,250 and 1,414 per mille.
+  - **The ruled control, a local act at the bound:** the hand born free over the same lines, and each wing's click fixed
+    by the hand alone (+1 where its share along the setting is more than half). It reads CHSH 2,000 per mille exactly,
+    at the triangle's settings and at z's, with no share of exactly half.
+  - **No signal rests on the fixing end's equal split,** one count each way. On the key's odd dial a signal of
+    (5 D - 1) / (4 D^2) remains, so the board form is OPEN.
+  - The mathematician PASSED it as a counted law. Tsirelson's 2 r2 is its supremum, and z = 13 + 5 w is a lattice
+    point 41 millionths below it, a test's lay.
   - **OPEN:** the law on the board's own act, that is, the end click leaving the hand along its setting, the run back
     to the birth on the pair world, and the far click's share by its own seeds. Also open: the order reading both ways,
     and the pair's reading.
@@ -116,7 +129,7 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
     energy along a setting is the square of its overlap.
   - So a click that lands one quantum, split between an outlet along the setting and one across it by their
     passings, takes the share rule. That is not run.
-- **With the share rule, Bell needs only the end law** (parts i and ii above), and the free-lay control stays at or below
-  2.
+- **With the share rule, Bell also needs the end law's laid measure** (parts i and ii above, in (C)'s form, its source
+  OPEN). The free lay and the local act stay at or below 2.
 
 Usage: python3 -I spread.py <src> [RANGE]

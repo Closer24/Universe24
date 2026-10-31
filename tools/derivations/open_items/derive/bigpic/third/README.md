@@ -46,7 +46,8 @@ tooth.py checks each identity below at every round.
 ## MEASURED (tooth_5000.txt, 5,000 rounds each)
 
 Every identity above held at every round on every lay: y, the lines, the torque, the zero force torque, tau's books,
-and the books per clock in the clicks on both forms (15,000 of 15,000 clock-rounds each). On every lay the run back
+and the sides' books per clock on both forms, a check by construction read through the teeth (15,000 of 15,000
+clock-rounds each; first named "the books in the clicks"). On every lay the run back
 from the end state alone is exact on both forms, and S_3 holds in 6 of 6. An odd turn reads each edge's tooth from its
 other end, and tau as G D - 1 - tau.
 
@@ -57,7 +58,7 @@ other end, and tau as G D - 1 - tau.
 | turning the other way (the slots swapped) | -3,600; -355; [-3,810, -336] | -15,009 | the mirror image |
 | turning at ten times the counts | 360,000; 385,231; [349,434, 386,434] | 2,315,503 | 2.0e10 against 2.0e11 to 2.2e11 |
 | at rest at ten times the counts | 0; 27,003; [-264, 27,003] | 83,501 | 6.0e10 against -1e8 to 1.6e10 |
-| two clocks in one state: (40, 40, 7); (25, 25, 3) | 0 at every round | 0 | (the exclusion, below) |
+| two clocks in one state: (40, 40, 7); (25, 25, 3) | 0 at every round | 0 | (the exchange, below) |
 
 - **The charge is kept up to the teeth's torque.** At the shipped grain the teeth's torque wears it away, from 3,600 to
   355 over 5,000 rounds. At ten times the counts it stays within 7 percent. From rest, the teeth's torque builds it,
@@ -76,7 +77,7 @@ other end, and tau as G D - 1 - tau.
 ## The owner's guiding line (10:37 UTC): the clicks choose the path, the board is fixed
 
 One start, the turning lay, with the triangle's tooth born at four places on its dial: the birth, 0, a third and two
-thirds. Over 5,000 rounds (tooth_5000.txt, the reading before the exclusion):
+thirds. Over 5,000 rounds (tooth_5000.txt, the reading before the exchange's):
 - the board's end is one for every birth;
 - every clock's line is one at every round, since B C = 0 keeps the landings out of the lines;
 - the landings differ from the first birth's in 2,773, 1,384 and 1,470 rounds;
@@ -84,7 +85,15 @@ thirds. Over 5,000 rounds (tooth_5000.txt, the reading before the exclusion):
 
 So the freedom is in the member's births, and the board, its start and its end are fixed.
 
-## Pauli's exclusion in the third click (the owner's lead of 10:15 UTC: "the reversal of the clocks by family")
+The THIRD pair's ruling (the Boss's 6542866096 item 2): one start is one start seed. So the four births are four starts,
+and the board's end fixed against them holds by construction. The guiding line's second half stays OWED until a run
+with one start seed shows the clicks choosing the path to one end. Its law, (C), stays OPEN.
+
+## Clock facts: the charge is odd under exchange (the owner's Pauli lead of 10:15 UTC stays OPEN)
+
+Renamed on the THIRD pair's physicist (B1, the Boss's 6542866096 item 2). The determinant is an exchange-odd reading,
+not exclusion: two equal clocks are allowed and stay so. The owner's lead, "the reversal of the clocks by family", stays
+OPEN.
 
 - **The charge is a determinant.** L(b, a) = det(1, b, a), the three clocks' counts at the two slots under a row of ones.
 - **So it is odd under the exchange of any two clocks.** The exchange is the 2-cell's orientation, the sign character
@@ -96,7 +105,7 @@ So the freedom is in the member's births, and the board, its start and its end a
   (DERIVED).
 - **MEASURED** (the last reading but one of tooth_5000.txt): clocks 0 and 1 laid in one state, (40, 40, 7) now and
   (25, 25, 3) before. Over 5,000 rounds they stay in one state, counts and teeth. L and y are 0 at every round, and
-  the triangle lands no third click.
+  the triangle lands no third click. The state is allowed and kept, so this is no exclusion.
 - **The click world's open direction** (miracle/README.md) is the exchange-odd mode of its two like hands, the giver
   and the taker. Their pair form [[c h^2, t/2], [t/2, c h^2]] has its lower value, c h^2 - t/2, on (1, -1) (DERIVED).
 
@@ -123,7 +132,7 @@ So the freedom is in the member's births, and the board, its start and its end a
 ## The twin and the turn, read against the one tooth
 
 - With one tooth, every check that THIRD9 read with its pair holds on the equilateral triangle:
-  - the books in the clicks, per clock;
+  - the sides' books per clock, by construction;
   - the triangle's own books, tau' + G D w = tau + y;
   - the run back from the end state alone, with tau kept by the carry's sign law;
   - the whole of S_3.
@@ -141,6 +150,11 @@ So the freedom is in the member's births, and the board, its start and its end a
 
 ## OPEN
 
+- **The third click is not seen in the clicks** (the THIRD pair's B2). With the teeth out of the record, no click
+  reading tells it from the first click. A click reading that the first click's record fails is a condition of the
+  closed picture. Which edge tooth is read back is this form's to name, with no pick by order.
+- **The count, read by the THIRD pair's mathematician:** no new number, but (3 D)^3 states against D^3, a factor 27.
+  The charge needs equal springs, equal ties and one gear dial.
 - **The click world's own triangle** has four-leg giver-held and taker-held edges and a two-leg giver-taker edge. Its
   potential is not turned into itself about any axis, so its circulation is no conserved charge. Its landings follow
   the flows.

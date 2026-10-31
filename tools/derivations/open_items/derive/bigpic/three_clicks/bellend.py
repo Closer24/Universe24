@@ -2,7 +2,9 @@
 David of 09:4x to 09:5x, "is it not possible to say that it is from the past and also from the future?"; the owner's
 10:10 word to the Boss, "Bell's weight is by how much the board is in the future or in the past, maybe"; David's
 meeting's weight, 6541948938). Road (C)'s end form, read exactly in whole numbers and Rule3's carry, by counting every
-seed: no draw, no stand-in stream, nothing picked.
+seed: no draw and no stand-in stream. In (C)'s form (the Boss's ruling on the HALF pair, 6542866096 item 2): the hand
+and the fixing end are fixed in advance, and the far click chooses by its own seeds. The hand's dependence on the
+fixing end's setting is a laid measure, with its source OPEN.
 
 The pair's one hand is born once at the source and carried, unchanged, to its two wings (the pair world, PICTURE.md).
 Each wing has its own setting, a direction of the triangle's own plane (the plane across the axis (1, 1, 1) of three
@@ -18,7 +20,10 @@ are taken at w_A : w_B = 1 : 0, 0 : 1, 1 : 1 and 1 : 2.
 Read exactly, per setting pair: the joint counts, the correlation E as a fraction, each wing's +1 share under each far
 setting (no signal), CHSH (A0 B30 - A0 B90 + A60 B30 + A60 B90) as a fraction; the pair's curve E against the settings'
 angle at every multiple of 30 degrees; and the free-lay control: the hand born free at the source over the plane's six
-lattice directions at 30 degrees, and each wing's click taking its share by (iii), with no end fixing it.
+lattice directions at 30 degrees, and each wing's click taking its share by (iii), with no end fixing it; and the ruled
+control, a local act at the bound: the hand born free over the same lines, each wing's click fixed by the hand alone,
++1 where the hand's share along its setting is more than half and -1 where it is less (a share of exactly half, read
++1, is counted and named). No signal in the end law rests on the fixing end's equal split, one count each way.
 Usage: python3 -I bellend.py <src>
 """
 import sys
@@ -117,6 +122,26 @@ def free_lay_on(a, b):
     return counts
 
 
+def local_act_on(a, b):
+    """Joint counts with the hand born free over the plane's six lattice lines (each with both signs) and each wing's
+    click fixed by the hand alone: +1 where twice the share's numerator passes its denominator or meets it, else -1."""
+    counts = {(1, 1): 0, (1, -1): 0, (-1, 1): 0, (-1, -1): 0}
+    ties = 0
+    for k in range(12):
+        h = direction(k)
+        outs = []
+        for s in (a, b):
+            n, d = share(h, s)
+            ties += n + n == d
+            outs.append(1 if n + n >= d else -1)
+        counts[(outs[0], outs[1])] += 1
+    return counts, ties
+
+
+def local_act(a_units, b_units):
+    return local_act_on(direction(a_units), direction(b_units))[0]
+
+
 def corr(counts):
     """E as a whole numerator over a whole denominator: (same - different) / all."""
     same = counts[(1, 1)] + counts[(-1, -1)]
@@ -155,6 +180,9 @@ def show(name, rule):
 for w_a, w_b in WEIGHTS:
     show(f"the end law, the ends weighed A {w_a} : B {w_b}", lambda ua, ub, w_a=w_a, w_b=w_b: end_law(ua, ub, w_a, w_b))
 show("the free-lay control: the hand born free over the plane's lines, each wing taking its share", free_lay)
+show("the ruled control, a local act at the bound: each wing's click fixed by the hand alone", local_act)
+lattice_ties = sum(local_act_on(direction(ua), direction(ub))[1] for ua, ub in SETS)
+print(f"   the local act's shares of exactly half at the triangle's settings: {lattice_ties}", flush=True)
 Z = (13, 5)  # an Eisenstein integer of the plane, a + b w at 22.4 degrees: its powers turn by the same angle exactly
 
 
@@ -177,7 +205,12 @@ for _ in range(3):
 vecs = [eis_vec(p) for p in powers]
 num, den = 0, 1
 num_f, den_f = 0, 1
+num_l, den_l, ties_l = 0, 1, 0
 for (ka, kb), sign in {(0, 1): 1, (0, 3): -1, (2, 1): 1, (2, 3): 1}.items():
+    counts_l, t = local_act_on(vecs[ka], vecs[kb])
+    ties_l += t
+    n, d = corr(counts_l)
+    num_l, den_l = num_l * d + sign * n * den_l, den_l * d
     n, d = corr(end_law_on(vecs[ka], vecs[kb], 1, 1))
     num, den = num * d + sign * n * den, den * d
     n, d = corr(free_lay_on(vecs[ka], vecs[kb]))
@@ -186,7 +219,8 @@ turn_num, turn_den = share(vecs[0], vecs[1])
 print(f"== Tsirelson on the plane's own lattice: A at z^0 and z^2, B at z and z^3, z = 13 + 5 w (the square of its turn's overlap"
       f" {turn_num} / {turn_den}); the ends weighed 1 : 1", flush=True)
 print(f"   the end law: CHSH = {per_mille(num, den)} per mille (Tsirelson's 2 r2 is 2828); the free lay:"
-      f" {per_mille(num_f, den_f)} per mille", flush=True)
+      f" {per_mille(num_f, den_f)} per mille; the local act: {per_mille(num_l, den_l)} per mille ({ties_l} shares of"
+      f" exactly half)", flush=True)
 print("== the pair's curve, E against the angle between the settings (A at 0, B at the angle; the ends weighed 1 : 1)",
       flush=True)
 for k in range(7):

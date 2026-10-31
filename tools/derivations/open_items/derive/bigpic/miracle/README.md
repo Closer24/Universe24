@@ -18,8 +18,10 @@ python3 -I; node-all 9d75a4904's tree as the act (a worktree of origin/node-all)
 - **Read on the click world's one Node-clock** (click1: the shipped universe, shape 1 x 1 x 1, the held hand at 1 and
   the giver at 40 at rest, each of the 27 running its course), 5,000 rounds:
   - the identity (E32's change = the teeth's share) in 5,000 of 5,000 rounds, a check by construction;
-  - **the books in the clicks:** each clock's change of energy equals what its sides carried (the key times its
-    clicks, plus its click teeth's change) plus its own teeth's share, at 0 misses of 25,000 clock-rounds;
+  - **the sides' books,** a check by construction read through the teeth (renamed on the MIRACLE pair's B1; first
+    named "the books in the clicks"): each clock's change of energy equals what its sides carried (the key times its
+    clicks, plus its click teeth's change) plus its own teeth's share, at 0 misses of 25,000 clock-rounds. The held
+    clock's gain is 94 percent the gear teeth's share, which no click carries;
   - the act's own passing on the same window would leave a running residual of 2,384 keys at one clock;
   - the run back from the end state alone over 5,000 rounds, board and click teeth: exact;
   - the 24: the round and its clicks turned alike in 24 of 24 turns (node-all's own tests/frame.py).
@@ -49,7 +51,9 @@ split_bedge_x100_5000.txt), the held square in the unit's terms (counts squared 
   one) does not.
 - So the walk is what keeps the shipped click world from the files' open direction (CONF1's mechanism): the rounding
   heats the held hand above the threshold. Without it, the open direction falls, as STOP1 and MIRACLE_B 6.4 read.
-  The bound needs the floor, which is STOP1's law line, for the owner.
+  WITHDRAWN on the MIRACLE pair's B2: "the bound needs the floor, STOP1's law line". The walk is no floor: it is a
+  grain-dependent hold that falls at lambda 100. What stands: term 11 reads P, the run back is exact, and the order
+  comes from the structure (the odd-cycle obstruction, DERIVED).
 - A held hand laid turning (its two rows a quarter turn apart, 10 and 0 now, 7 and -7 before, at lambda 10) is no
   floor: its square grows faster than the swinging lay's (5,641 against 1,936 counts squared by round 3,250;
   split_bedge_x10_turning_5000.txt).
@@ -104,7 +108,7 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
 - **MEASURED on the whole click world**, road B, 5,000 rounds each (square_x1_5000.txt, square_x10_5000.txt,
   square_x100_5000.txt):
 
-| grain | widest count | a count past 32 bits | the identity | the books in the clicks | the run back | the 24 | the largest held square, of the unit |
+| grain | widest count | a count past 32 bits | the identity | the sides' books, by construction | the run back | the 24 | the largest held square, of the unit |
 |---|---|---|---|---|---|---|---|
 | lambda 1 | 7 bits | none | 0 misses of 5,000 | 0 misses of 25,000 clock-rounds | exact | 24 of 24 | 4 at round 250, up to 484 by round 4,500 |
 | lambda 10 | 9 bits | none | 0 misses | 0 misses | exact | 24 of 24 | between 0.36 and 1.96 |

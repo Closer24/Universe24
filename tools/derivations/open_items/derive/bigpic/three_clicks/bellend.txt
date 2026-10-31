@@ -48,8 +48,19 @@
    no signal, A at 0 and B at 90: A's +1 share 500 per mille, B's 500 per mille
    no signal, A at 60 and B at 30: A's +1 share 500 per mille, B's 500 per mille
    no signal, A at 60 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+== the ruled control, a local act at the bound: each wing's click fixed by the hand alone
+   A at 0, B at 30: E = 4 / 12 = 333 per mille
+   A at 0, B at 90: E = -12 / 12 = -1000 per mille
+   A at 60, B at 30: E = 4 / 12 = 333 per mille
+   A at 60, B at 90: E = 4 / 12 = 333 per mille
+   CHSH = 41472 / 20736 = 2000 per mille (2 is 2000)
+   no signal, A at 0 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 0 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 30: A's +1 share 500 per mille, B's 500 per mille
+   no signal, A at 60 and B at 90: A's +1 share 500 per mille, B's 500 per mille
+   the local act's shares of exactly half at the triangle's settings: 0
 == Tsirelson on the plane's own lattice: A at z^0 and z^2, B at z and z^3, z = 13 + 5 w (the square of its turn's overlap 3969 / 4644); the ends weighed 1 : 1
-   the end law: CHSH = 2828 per mille (Tsirelson's 2 r2 is 2828); the free lay: 1414 per mille
+   the end law: CHSH = 2828 per mille (Tsirelson's 2 r2 is 2828); the free lay: 1414 per mille; the local act: 2000 per mille (0 shares of exactly half)
 == the pair's curve, E against the angle between the settings (A at 0, B at the angle; the ends weighed 1 : 1)
    0 degrees: the end law 1000 per mille; the free lay 500 per mille
    30 degrees: the end law 500 per mille; the free lay 250 per mille
