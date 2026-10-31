@@ -18,13 +18,16 @@ examples/tensor24/setting.json <record .jsonl>`. Read the record: `python -I too
 ## The live world
 
 `examples/tensor24-live/` is a second folder of the same three files, a world that shows something: the light train's
-first component laid as a pulse along z, its peak at 2^40 counts (far above one notch), its before slot one round back
-by the lattice's own speed (c^2 = grip / W = 1 / 6 per axis at the loader's rest, c about 20 / 49 Meshes a round), so
-the pulse travels toward +z and crosses the board of 3 by 3 by 40 in its 100 rounds; the metric family stands at 0, a
-standing clock, so the act is exact and the run back returns the start bit for bit. Run it as the one bang:
-`python -I tools/tensor24_run.py examples/tensor24-live/universe.json examples/tensor24-live/piece.json
-examples/tensor24-live/setting.json <record .jsonl>`; the ledger beside the record holds the light's counts at every
-Node-clock and round, the pulse's peak moving along z. The clocks' wells and the grips' slackening are the well world's
+first component laid as a pulse along z by `tools/derivations/open_items/derive/boss/live_lay/lay.py` from the universe
+and the piece (its account in `lay.txt` beside it), 2^28 (64 - d^2)^2 at the distance d below 8 from z = 10, its peak
+at 2^40 counts (far above one notch), laid at rest, its before its now, so that the act alone sets how it moves: it
+splits into two halves of about half its peak (499 permille each at round 20) that run apart along z on the board of 3
+by 3 by 40, about 8 Meshes in 20 rounds, meet at its far side, z = 30, near round 50, and meet again at z = 10 at round
+100, where the pair makes 967 permille of the laid peak (a board reading off the run's ledger, no claim of physics);
+the metric family stands at 0, a standing clock, so the act is exact and the run back returns the start bit for bit.
+Run it as the one bang: `python -I tools/tensor24_run.py examples/tensor24-live/universe.json
+examples/tensor24-live/piece.json examples/tensor24-live/setting.json <record .jsonl>`; the ledger beside the record
+holds the light's counts at every Node-clock and round, the pulse's two halves running along z. The clocks' wells and the grips' slackening are the well world's
 below (terms 5 and 9, drafted); the clicks are owed to term 11 (drafted, no vertex laid in these worlds; the click world
 below lays one); the window of the wave, the six Spokes' grips summed within [0, senses W] (2 W, the senses of an axis
 counted from the star), is read by the runner.
