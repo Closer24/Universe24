@@ -1,0 +1,7 @@
+world mesh: shape [180, 1, 1], trains ['wave', 'held', 'tied'], rows 10, monomials 360
+  own monomials of held: 2 (no edge: a monomial within one train passes nothing between clocks)
+  edge ('held', 'tied'): 12 monomials with a factor not 0
+  wave: 0 edges, no edge
+  held: 1 edges, one edge: whole takes only
+  tied: 1 edges, one edge: whole takes only
+  monomials joining three trains or more: 0

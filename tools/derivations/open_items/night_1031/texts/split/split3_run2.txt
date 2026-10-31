@@ -1,0 +1,22 @@
+(0) step() on THIRD's shears [(2, 0, 1), (0, 2, -1), (3, 1, 1), (1, 2, 1), (0, 3, 1)] equals mirror6.py's step4 at 20000 of 20000 rounds
+(1) THIRD's half-turn H on (g1, g2, t1, t2): [[0, 1, -1, 1], [1, 1, 1, 0], [1, 0, 1, 0], [0, 1, 0, 1]]
+    P (t1 with t2) H P (t1 with t2)^-1 = [[1, 1, 0, 1], [1, 0, 1, -1], [1, 0, 1, 0], [0, 1, 0, 1]]; equal to H: False
+    P' (t1 with -t2) H P' (t1 with -t2)^-1 = [[1, 1, 0, -1], [1, 0, -1, 1], [-1, 0, 1, 0], [0, -1, 0, 1]]; equal to H: False
+    the round against P, squares 16 and 16, 10 lays of 50,000: agree at 0 of 500000; first round apart per lay [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; totals swapped exactly in 0 of 10
+    the round against P', squares 16 and 16, 10 lays of 50,000: agree at 0 of 500000; first round apart per lay [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; totals swapped exactly in 0 of 10
+(2) palindromes of 2 to 4 swap-symmetric blocks, classes alternating, no kept direction, both swap blocks hyperbolic: 144; the swap P maps each half-turn to itself at 144 of them
+    2 blocks ['t+=g (t1 g1, t2 g2)', 'g+=t (g1 t1, g2 t2)']: L [[3, 0, 4, 0], [0, 3, 0, 4], [2, 0, 3, 0], [0, 2, 0, 3]], largest entry 4, traces even 6 odd 6, det(L-I) 16 det(L+I) 64
+    2 blocks ["t+=g' (t1 g2, t2 g1)", "g+=t' (g1 t2, g2 t1)"]: L [[3, 0, 0, 4], [0, 3, 4, 0], [0, 2, 3, 0], [2, 0, 0, 3]], largest entry 4, traces even 6 odd 6, det(L-I) 16 det(L+I) 64
+    2 blocks ['g+=t (g1 t1, g2 t2)', 't+=g (t1 g1, t2 g2)']: L [[3, 0, 2, 0], [0, 3, 0, 2], [4, 0, 3, 0], [0, 4, 0, 3]], largest entry 4, traces even 6 odd 6, det(L-I) 16 det(L+I) 64
+    2 blocks ["g+=t' (g1 t2, g2 t1)", "t+=g' (t1 g2, t2 g1)"]: L [[3, 0, 0, 2], [0, 3, 2, 0], [0, 4, 3, 0], [4, 0, 0, 3]], largest entry 4, traces even 6 odd 6, det(L-I) 16 det(L+I) 64
+    the first, run below: shears [(2, 0, 1), (3, 1, 1), (0, 2, 1), (1, 3, 1)]
+    its half-turn H = [[2, 0, 1, 0], [0, 2, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1]]; P H P^-1 equal to H: True; P' H P'^-1 equal to H: False
+    the round against P, passings 16 k and 16 k: agree at 500000 of 500000; first round apart [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; totals swapped exactly in 10 of 10
+    the round against P, passings 9 k and 16 k: agree at 500000 of 500000; first round apart [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; totals swapped exactly in 10 of 10
+    the round against P', passings 16 k and 16 k: agree at 0 of 500000; first round apart [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; totals swapped exactly in 0 of 10
+    the round against P', passings 9 k and 16 k: agree at 0 of 500000; first round apart [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; totals swapped exactly in 0 of 10
+    100,000 rounds at 9 k and 16 k: the one-round run back by the same act on the mirrored state fails at 0; the window back to the lay exact 1; the flip fails at 0; downward crossings 0; takes 742 : 1243, the first's share 373 thousandths against 360
+    R2, two lays one unit apart in t1, the same click past: a later click differs in 200 of 200; an empty taker clicks 0 times in 100,000 rounds
+(3) THIRD's palindrome, squares 16 and 16, 20 lays of 100,000: pooled 25418 : 25542, z^2 301 thousandths; the lays' z^2 summed 17023 thousandths against chance's 20,000; past 3,841: 1; per lay 1254:1245 1302:1310 1263:1339 1285:1307 1241:1268 1285:1265 1285:1295 1230:1249 1315:1270 1263:1244 1221:1324 1287:1268 1287:1272 1276:1221 1244:1170 1239:1336 1252:1275 1316:1282 1284:1269 1289:1333
+(3) the symmetric palindrome, squares 16 and 16, 20 lays of 100,000: pooled 25644 : 25762, z^2 270 thousandths; the lays' z^2 summed 18428 thousandths against chance's 20,000; past 3,841: 1; per lay 1326:1320 1255:1270 1270:1232 1297:1383 1303:1245 1309:1299 1323:1299 1295:1276 1242:1324 1281:1290 1267:1323 1281:1254 1289:1315 1283:1275 1208:1289 1303:1294 1227:1254 1286:1278 1317:1207 1282:1335
+(3) Big Pic's triangle (turnteeth.py), the same lays' sequence: pooled 25675 : 25479, z^2 750; the lays' z^2 summed 8089 thousandths against 20,000; past 3,841: 0

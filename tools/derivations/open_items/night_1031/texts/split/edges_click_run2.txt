@@ -1,0 +1,11 @@
+world click: shape [3, 3, 3], trains ['wave', 'metric', 'held', 'giver', 'taker'], rows 26, monomials 2416
+  own monomials of held: 2 (no edge: a monomial within one train passes nothing between clocks)
+  edge ('held', 'giver'): 12 monomials with a factor not 0
+  edge ('held', 'taker'): 12 monomials with a factor not 0
+  edge ('giver', 'taker'): 6 monomials with a factor not 0
+  wave: 0 edges, no edge
+  metric: 0 edges, no edge
+  held: 2 edges, a split take's end (two edges or more)
+  giver: 2 edges, a split take's end (two edges or more)
+  taker: 2 edges, a split take's end (two edges or more)
+  monomials joining three trains or more: 0

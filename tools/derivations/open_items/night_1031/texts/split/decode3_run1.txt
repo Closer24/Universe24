@@ -1,0 +1,16 @@
+R1, one lay run twice, one record: this run's digests against Big Pic's stage 1 (edge_click_first.txt, edge_click_third.txt): first True, third True
+(first) the edges' clocks read from the places where one edge carried alone: {0: (2, 3), 2: (3, 4), 1: (2, 4)} (each read one way at {0: 1, 2: 1} such pairs)
+    the sites by (clocks met, edges carried): [((3, 3), 27)]
+    (1) the books: 4212 places; a place's lines not summing to 0: 0; a line's q not its sides' sum: 0; sides on an unread edge: 0
+(third) the edges' clocks read from the places where one edge carried alone: {0: (2, 3), 2: (3, 4), 1: (2, 4)} (each read one way at {0: 1, 2: 1} such pairs)
+    the sites by (clocks met, edges carried): [((3, 3), 27)]
+    (1) the books: 4158 places; a place's lines not summing to 0: 0; a line's q not its sides' sum: 0; sides on an unread edge: 0
+(3) windows of 5 rounds (1080 per edge): the third click's quanta less the first's, var over the quanta passed, per edge {(2, 3): 171, (2, 4): 43, (3, 4): 979} thousandths (independent landings about 1,000, a carried form 0); the held clock's two edges' differences: cov +, r^2 41 thousandths
+(3) windows of 10 rounds (540 per edge): the third click's quanta less the first's, var over the quanta passed, per edge {(2, 3): 484, (2, 4): 572, (3, 4): 1504} thousandths (independent landings about 1,000, a carried form 0); the held clock's two edges' differences: cov -, r^2 5 thousandths
+(3) windows of 20 rounds (270 per edge): the third click's quanta less the first's, var over the quanta passed, per edge {(2, 3): 464, (2, 4): 500, (3, 4): 736} thousandths (independent landings about 1,000, a carried form 0); the held clock's two edges' differences: cov -, r^2 214 thousandths
+(3) windows of 40 rounds (135 per edge): the third click's quanta less the first's, var over the quanta passed, per edge {(2, 3): 1911, (2, 4): 1142, (3, 4): 290} thousandths (independent landings about 1,000, a carried form 0); the held clock's two edges' differences: cov -, r^2 65 thousandths
+(3) lives, first: per edge (gaps, mean gap in thousandths of a round, var over mean^2 in thousandths; the exponential law about 1,000): [((2, 3), (4023, 1335, 124)), ((2, 4), (2349, 1218, 114)), ((3, 4), (270, 7000, 69))]
+(3) lives, third: per edge (gaps, mean gap in thousandths of a round, var over mean^2 in thousandths; the exponential law about 1,000): [((2, 3), (4023, 1335, 124)), ((2, 4), (2403, 1235, 132)), ((3, 4), (351, 5153, 931))]
+(3) the swapped files' edges, read from their own record: {1: (2, 4), 2: (3, 4), 0: (2, 3)}
+    first: the swapped record relabelled back equals the original at 10827 of 10827 lines (10827 in the swapped); first round apart None; rounds apart 0
+    third: the swapped record relabelled back equals the original at 7317 of 10719 lines (10800 in the swapped); first round apart 8; rounds apart 65

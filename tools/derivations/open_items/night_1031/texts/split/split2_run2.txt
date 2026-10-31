@@ -1,0 +1,28 @@
+turnteeth.py: dial D 50811429, birth c 25405714, k = D div 1250 = 40649; 20 stand-in lays of 100000 rounds each
+(a) squares 16 and 16, turned: takes per lay 1283:1306 1275:1261 1342:1282 1278:1243 1274:1295 1257:1278 1262:1269 1274:1254 1272:1278 1315:1266 1316:1288 1307:1292 1257:1266 1269:1254 1264:1240 1240:1215 1329:1319 1251:1331 1314:1290 1296:1252
+    pooled 25675 : 25479, z^2 750 thousandths against the binomial's half; the sum of the 20 lays' z^2 8089 thousandths (chance's mean 20 000); lays past 3,841: 0 (chance 1 of 20)
+(a) squares 16 and 16, carried (no turn): takes per lay 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280 1280:1280
+    pooled 25600 : 25600, z^2 0 thousandths against the binomial's half; the sum of the 20 lays' z^2 0 thousandths (chance's mean 20 000); lays past 3,841: 0 (chance 1 of 20)
+(a) the toy's squares 9 and 16, turned: pooled 14435 : 25704, the first's share 359 thousandths against 9/25 = 360; z^2 24 thousandths
+(b) the turn's matrix T on (giver-a, a-b, giver-b): [[2, 1, -1], [1, 1, 0], [-1, -1, 1]]; the swap P: [[0, 0, 1], [0, -1, 0], [1, 0, 0]]
+    P T P = [[1, 1, -1], [0, 1, -1], [-1, -1, 2]]; equal to T: False; equal to T's inverse [[1, 0, 1], [-1, 1, -1], [0, 1, 1]]: False
+(b) squares 16 and 16, turned: the swapped run equals the original run swapped at 475301 of 500000 rounds (10 lays of 50000); first round apart per lay (0: never): 64 43 31 2 32 1 1 41 27 46; totals swapped exactly in 0 of 10 lays; pooled original 6434 : 6269, swapped 6209 : 6421
+(b) squares 16 and 16, carried (no turn): the swapped run equals the original run swapped at 500000 of 500000 rounds (10 lays of 50000); first round apart per lay (0: never): 0 0 0 0 0 0 0 0 0 0; totals swapped exactly in 10 of 10 lays; pooled original 6400 : 6400, swapped 6400 : 6400
+(b) squares 9 and 16, turned: the swapped run equals the original run swapped at 480289 of 500000 rounds (10 lays of 50000); first round apart per lay (0: never): 9 53 20 2 25 1 24 5 13 24; totals swapped exactly in 0 of 10 lays; pooled original 3616 : 6253, swapped 6597 : 3611
+(b) squares 9 and 16, carried (no turn): the swapped run equals the original run swapped at 500000 of 500000 rounds (10 lays of 50000); first round apart per lay (0: never): 0 0 0 0 0 0 0 0 0 0; totals swapped exactly in 10 of 10 lays; pooled original 3600 : 6400, swapped 6400 : 3600
+(c) threeclicks.py's turn, 10 stand-in lays of 50000 rounds: squares 4 and 1: 1673 : 412, the first's share 802 thousandths against 4/5 = 800, z^2 74 thousandths
+    five takers of square 1: [433, 381, 419, 402, 385]; the first four together 1635 of 2020, share 809 thousandths against 800, z^2 1116; each alone against 1/5: [2602, 1636, 696, 12, 1116] thousandths
+    the takes per round per unit of square: two takers 834, five takers 808 millionths of a take (k / D = 799 millionths)
+(d) the hand (1, 1): its square 2; classes of Z[i] modulo 1 + 1 i: 2 (remainder 0)
+(d) the hand (2, 1): its square 5; classes of Z[i] modulo 2 + 1 i: 5 (remainder 0)
+(d) the hand (1, 2): its square 5; classes of Z[i] modulo 1 + 2 i: 5 (remainder 0)
+(d) the hand (2, 2): its square 8; classes of Z[i] modulo 2 + 2 i: 8 (remainder 0)
+(d) the hand (3, 2): its square 13; classes of Z[i] modulo 3 + 2 i: 13 (remainder 0)
+(d) the hand (4, 3): its square 25; classes of Z[i] modulo 4 + 3 i: 25 (remainder 0)
+(d) the hand (5, 0): its square 25; classes of Z[i] modulo 5 + 0 i: 25 (remainder 0)
+(d) one row of count 2: classes of Z modulo 2: 2, against its square 4
+(d) one row of count 3: classes of Z modulo 3: 3, against its square 9
+(d) one row of count 5: classes of Z modulo 5: 5, against its square 25
+(d') 1000 stand-in whole quaternion hands with a vector part, rows within [-20, 20]: q q = t q - n by Hamilton's product at 1000; q q's coefficients on (1, q) read from the product, beta = t and alpha = -n, at 1000: the index of q Z[q] in Z[q], |alpha|, is the square n
+(d') squares 1 to 64 that no three-row hand holds (Legendre: 4^a (8 b + 7)): [7, 15, 23, 28, 31, 39, 47, 55, 60, 63]; that no four-row hand holds (Lagrange): []
+(e) the 24 turns (24 of 216 candidates), 4 T1 hands: the sum of squares kept at 96 of 96, the sum of absolute rows kept at 96 of 96; (3, 0, 0) and (2, 2, 1): squares 9 and 9, absolute sums 3 and 5

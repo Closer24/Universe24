@@ -1,0 +1,13 @@
+world: shape [180, 1, 1], ticks 125, rows 10, sites 180; the wave train (A1 alone, not held): card 0; key 1 (the universe file's); tooth born 0, partner 0
+edges of the vertex: 360; with both ends' coefficients equal (books close on the edge): 360 of 360; edges with a wave end: 360; partner trains: [2]
+the decomposition against the engine's Mesh contraction, on both slots of every round: 0 entries missed; the partner's quotient and tooth against the complement: 0 missed
+click lines on the edges: 25312 (the wave's end 12656, the partner's 12656); books per edge and round: q + (-q) = 0 by the pair; sum of q over all lines 0
+the wave's lines: total |q| 443703000000, rounds with a line 121, places 108, sites 0..179
+first wave line per place (place: round), every 8th: 0: 55, 8: 31, 16: 7, 24: 5, 32: 20, 40: 36, 48: 52, 56: 68, 64: 84, 72: 100, 80: 116, 160: 116, 168: 94, 176: 67
+lines more than 40 rounds after their place's first: 5888
+places whose wave lines stop and start again (a quiet gap, the return an echo would need): 135 gaps
+the longest quiet gap at any place: 7 rounds; places with a gap over 20 rounds: 0; the lay's places 16..23, lines after round 60: 941; places with lines: 108 of 180
+run back: the mirrored end run 125 rounds; its edge quotients against the forward ones negated in reverse: 0 missed of 45000; the state back to the lay: 1
+the half turn about z: edge quotients against the original's on the image edge: 0 missed of 45000 (the tied x row negated, the Spoke reversed: the passing kept, no tooth complemented)
+the 24 on this board: 8 turns keep it (x -> +-x); lines against the original moved: 0 of 8 differ; edge by edge 0 quotients missed; turns that would need the teeth complemented: 0
+digest 0e24f4d25cdc29d8

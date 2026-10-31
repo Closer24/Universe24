@@ -1,0 +1,16 @@
+four-tooth palindromes of k 4 or 5 shears moving every tooth, keeping no direction (det(L - I) and det(L + I) not 0): 20672
+  k 4 |trace| 0 shears ('t1+=g1', 'g2+=t1', 'g1+=t2', 't2-=g2') L [[1, -2, 0, 2], [2, -1, 2, 2], [2, -2, 1, 2], [-2, 0, -2, -1]] det 1 det(L-I) 16 det(L+I) 16
+  k 4 |trace| 0 shears ('t1+=g1', 'g2+=t1', 'g1-=t2', 't2+=g2') L [[1, -2, 0, -2], [2, -1, 2, -2], [2, -2, 1, -2], [2, 0, 2, -1]] det 1 det(L-I) 16 det(L+I) 16
+  k 4 |trace| 0 shears ('t1+=g1', 'g2+=t1', 't2+=g2', 'g1-=t2') L [[-1, -2, -2, 0], [2, 1, 2, -2], [2, 0, 1, -2], [2, 2, 2, -1]] det 1 det(L-I) 16 det(L+I) 16
+  k 4 |trace| 0 shears ('t1+=g1', 'g2+=t1', 't2-=g2', 'g1+=t2') L [[-1, -2, -2, 0], [2, 1, 2, 2], [2, 0, 1, 2], [-2, -2, -2, -1]] det 1 det(L-I) 16 det(L+I) 16
+  k 4 |trace| 0 shears ('t1+=g1', 'g2-=t1', 'g1+=t2', 't2+=g2') L [[1, 2, 0, 2], [-2, -1, -2, -2], [2, 2, 1, 2], [-2, 0, -2, -1]] det 1 det(L-I) 16 det(L+I) 16
+  k 4 |trace| 0 shears ('t1+=g1', 'g2-=t1', 'g1-=t2', 't2-=g2') L [[1, 2, 0, -2], [-2, -1, -2, 2], [2, 2, 1, -2], [2, 0, 2, -1]] det 1 det(L-I) 16 det(L+I) 16
+  k 4 |trace| 0 shears ('t1+=g1', 'g2-=t1', 't2+=g2', 'g1+=t2') L [[-1, 2, -2, 0], [-2, 1, -2, -2], [2, 0, 1, 2], [-2, 2, -2, -1]] det 1 det(L-I) 16 det(L+I) 16
+  k 4 |trace| 0 shears ('t1+=g1', 'g2-=t1', 't2-=g2', 'g1-=t2') L [[-1, 2, -2, 0], [-2, 1, -2, 2], [2, 0, 1, -2], [2, -2, 2, -1]] det 1 det(L-I) 16 det(L+I) 16
+both pairs hyperbolic (x + 1/x = y, y^2 - tr y + (b - 2) = 0, both |y| > 2): 2688
+  k 5 largest entry 2 trace 0 b -18 shears ('t1+=g1', 'g1-=t1', 't2+=g2', 'g2+=t1', 'g1+=t2') L [[-1, 2, 2, 0], [2, 1, 0, 2], [2, 0, -1, 2], [0, 2, 2, 1]]
+  k 5 largest entry 2 trace 0 b -18 shears ('t1+=g1', 'g1-=t1', 't2+=g2', 'g2-=t1', 'g1-=t2') L [[-1, -2, 2, 0], [-2, 1, 0, 2], [2, 0, -1, -2], [0, 2, -2, 1]]
+  k 5 largest entry 2 trace 0 b -18 shears ('t1+=g1', 'g1-=t1', 't2+=g2', 'g1+=t2', 'g2+=t1') L [[-1, 2, 2, 0], [2, 1, 0, 2], [2, 0, -1, 2], [0, 2, 2, 1]]
+  k 5 largest entry 2 trace 0 b -18 shears ('t1+=g1', 'g1-=t1', 't2+=g2', 'g1-=t2', 'g2-=t1') L [[-1, -2, 2, 0], [-2, 1, 0, 2], [2, 0, -1, -2], [0, 2, -2, 1]]
+  k 5 largest entry 2 trace 0 b -18 shears ('t1+=g1', 'g1-=t1', 't2-=g2', 'g2+=t1', 'g1-=t2') L [[-1, 2, 2, 0], [2, 1, 0, -2], [2, 0, -1, -2], [0, -2, -2, 1]]
+  k 5 largest entry 2 trace 0 b -18 shears ('t1+=g1', 'g1-=t1', 't2-=g2', 'g2-=t1', 'g1+=t2') L [[-1, -2, 2, 0], [-2, 1, 0, -2], [2, 0, -1, 2], [0, -2, 2, 1]]

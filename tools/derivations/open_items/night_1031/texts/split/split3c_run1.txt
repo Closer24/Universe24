@@ -1,0 +1,16 @@
+(a) Big Pic's triangle, 20 lays of 100,000 at 16 k and 16 k: Fano a 584 and b 581 thousandths (independent takes about 1,000); cov +, r^2 133 thousandths; var(a - b) 946260 against independent takes' 2557700
+(b) Big Pic's triangle, one record of 2,000,000 rounds in 200 blocks of 10,000: all blocks: Fano a 907 and b 970 thousandths (independent takes about 1,000); cov +, r^2 16 thousandths; var(a - b) 211059 against independent takes' 257425
+    blocks 1 to 100: Fano a 837 and b 978 thousandths (independent takes about 1,000); cov +, r^2 18 thousandths; var(a - b) 201605 against independent takes' 257210
+    blocks 101 to 200: Fano a 972 and b 960 thousandths (independent takes about 1,000); cov +, r^2 14 thousandths; var(a - b) 218650 against independent takes' 257640
+(a) the THIRD palindrome, 20 lays of 100,000 at 16 k and 16 k: Fano a 556 and b 1289 thousandths (independent takes about 1,000); cov +, r^2 10 thousandths; var(a - b) 2128160 against independent takes' 2548000
+(b) the THIRD palindrome, one record of 2,000,000 rounds in 200 blocks of 10,000: all blocks: Fano a 831 and b 1039 thousandths (independent takes about 1,000); cov +, r^2 0 thousandths; var(a - b) 241124 against independent takes' 258615
+    blocks 1 to 100: Fano a 874 and b 1059 thousandths (independent takes about 1,000); cov +, r^2 1 thousandths; var(a - b) 238895 against independent takes' 257920
+    blocks 101 to 200: Fano a 789 and b 1009 thousandths (independent takes about 1,000); cov -, r^2 1 thousandths; var(a - b) 241169 against independent takes' 259310
+(a) the symmetric palindrome split per taker, 20 lays of 100,000 at 16 k and 16 k: Fano a 706 and b 1179 thousandths (independent takes about 1,000); cov +, r^2 1 thousandths; var(a - b) 2327990 against independent takes' 2570300
+(b) the symmetric palindrome split per taker, one record of 2,000,000 rounds in 200 blocks of 10,000: all blocks: Fano a 905 and b 897 thousandths (independent takes about 1,000); cov +, r^2 12 thousandths; var(a - b) 205086 against independent takes' 255755
+    blocks 1 to 100: Fano a 885 and b 746 thousandths (independent takes about 1,000); cov +, r^2 2 thousandths; var(a - b) 196817 against independent takes' 253300
+    blocks 101 to 200: Fano a 876 and b 1040 thousandths (independent takes about 1,000); cov +, r^2 21 thousandths; var(a - b) 211087 against independent takes' 258210
+(a) the coupled symmetric palindrome, 20 lays of 100,000 at 16 k and 16 k: Fano a 1018 and b 349 thousandths (independent takes about 1,000); cov -, r^2 12 thousandths; var(a - b) 1920947 against independent takes' 2563650
+(b) the coupled symmetric palindrome, one record of 2,000,000 rounds in 200 blocks of 10,000: all blocks: Fano a 972 and b 1093 thousandths (independent takes about 1,000); cov -, r^2 7 thousandths; var(a - b) 287150 against independent takes' 255330
+    blocks 1 to 100: Fano a 969 and b 1196 thousandths (independent takes about 1,000); cov -, r^2 39 thousandths; var(a - b) 328689 against independent takes' 253570
+    blocks 101 to 200: Fano a 965 and b 978 thousandths (independent takes about 1,000); cov +, r^2 0 thousandths; var(a - b) 245577 against independent takes' 257090

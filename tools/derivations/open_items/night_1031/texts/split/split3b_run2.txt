@@ -1,0 +1,13 @@
+swap-symmetric palindromes, 2 to 4 blocks, no kept direction, both swap parts hyperbolic: 144; their L joining all four teeth: 96; splitting into one pair of teeth per taker: 48
+  coupled: 4 blocks ['t+=g', 'g-=t', 't-=g', "g+=t'"], L [[-1, 4, 4, -2], [4, -1, -2, 4], [4, 0, -1, 4], [0, 4, 4, -1]], traces even 6 odd -10
+  coupled: 4 blocks ['t+=g', 'g-=t', 't-=g', "g-=t'"], L [[-1, -4, 4, 2], [-4, -1, 2, 4], [4, 0, -1, -4], [0, 4, -4, -1]], traces even -10 odd 6
+  coupled: 4 blocks ["t+=g'", "g-=t'", "t-=g'", 'g+=t'], L [[-1, 4, -2, 4], [4, -1, 4, -2], [0, 4, -1, 4], [4, 0, 4, -1]], traces even 6 odd -10
+  the split one (SPLIT3's first): [(2, 0, 1), (3, 1, 1), (0, 2, 1), (1, 3, 1)]; the coupled one read below: [(2, 0, 1), (3, 1, 1), (0, 2, -1), (1, 3, -1), (2, 0, -1), (3, 1, -1), (0, 3, 1), (1, 2, 1)]
+(i) the coupled one against the swap, 9 k and 16 k, 10 lays of 50,000: agree at 500000 of 500000; totals swapped exactly in 10 of 10
+(ii) 100,000 rounds at 9 k and 16 k: the run back by the same act on the mirrored state fails at 0; the window exact 1; the flip fails at 0; takes 763 : 1314, the first's share 367 thousandths against 360; R2 differs in 200 of 200; an empty taker clicks 0 times
+(iii) THIRD's palindrome, 16 k and 16 k, 20 lays of 100,000: pooled 25418 : 25542, z^2 301; the lays' z^2 summed 17023 against 20,000; past 3,841: 1
+(iv) THIRD's palindrome, 9 and 16 times D div 50, 400,000 rounds: a take after two in a row, the first taker 2301 of 12853 (independent 2307), the second 12902 of 40476 (independent 12899)
+(iii) the split symmetric, 16 k and 16 k, 20 lays of 100,000: pooled 25644 : 25762, z^2 270; the lays' z^2 summed 18428 against 20,000; past 3,841: 1
+(iv) the split symmetric, 9 and 16 times D div 50, 400,000 rounds: a take after two in a row, the first taker 2129 of 12824 (independent 2298), the second 12091 of 41023 (independent 13140)
+(iii) the coupled symmetric, 16 k and 16 k, 20 lays of 100,000: pooled 25587 : 25686, z^2 191; the lays' z^2 summed 15228 against 20,000; past 3,841: 0
+(iv) the coupled symmetric, 9 and 16 times D div 50, 400,000 rounds: a take after two in a row, the first taker 2191 of 12583 (independent 2251), the second 13126 of 41090 (independent 13177)
