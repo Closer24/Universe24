@@ -20,8 +20,8 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(ROOT / "tools"))
+sys.path.insert(0, str(ROOT.joinpath("src")))
+sys.path.insert(0, str(ROOT.joinpath("tools")))
 
 import tensor24_decode  # noqa: E402, I001
 from tensor24.decoder import clicks, records, shadow  # noqa: E402

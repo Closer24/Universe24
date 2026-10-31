@@ -41,7 +41,7 @@ def main(argv: list[str]) -> int:
     given = [held[name] for name in NAMES]
     if any(given) and not all(given):
         parser.error("the three files, or none for the examples")
-    files = [path or EXAMPLES / f"{name}.json" for name, path in zip(NAMES, given, strict=True)]
+    files = [path or EXAMPLES.joinpath(f"{name}.json") for name, path in zip(NAMES, given, strict=True)]
     found = departures(*files)
     found = found or loaded(*files)
     print(
