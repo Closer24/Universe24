@@ -23,10 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 class Engine(NamedTuple):
     """An engine as the properties see it: its step and run back on a board, and its worlds."""
 
-    step: Callable[
-        ..., Any
-    ]  # step(nb, s) -> (s', out), s a tuple of arrays: a row per train, or one row
-    unstep: Callable[..., Any]  # unstep(nb, s', out) -> s
+    step: Callable[..., Any]  # step(nb, s) -> s', s a tuple of arrays: a row per train, or one row
+    unstep: Callable[..., Any]  # unstep(nb, s') -> s
     world: Callable[..., Any]  # world(rng, shape, trains) -> s
 
 
@@ -42,10 +40,9 @@ def near(x, shape):
     return [tuple((x[i] + d * (i == j)) % shape[i] for i in range(3)) for j in range(3) for d in (1, -1)]
 
 
-def flat(result):
-    """A step's new state and its out as one row of arrays."""
-    state, out = result
-    return [*state, *out]
+def flat(state):
+    """A step's new state as one row of arrays."""
+    return [*state]
 
 
 def wide(rng, size):
@@ -133,14 +130,14 @@ def turned(make, shape, rng, trains=2):
 
 
 def bijective(make, shape, rng):
-    """A fresh engine runs back another's steps of two worlds, in their order; a step with no out undoes its run back."""
+    """A fresh engine runs back another's steps of two worlds, in their order, and a step undoes its run back."""
     nb, (s, t) = board(shape), [make().world(rng, shape, 2) for _ in range(2)]
     e = make()
-    (s1, o1), (t1, p1) = e.step(nb, s), e.step(nb, t)
+    s1, t1 = e.step(nb, s), e.step(nb, t)
     back = make().unstep
-    undone = same(back(nb, s1, o1), s) and same(back(nb, t1, p1), t)
-    # the third review (81521e0f4): a now slot doubled and halved back passed the rewind alone, and fails forth
-    forth = bool(o1) or same(flat(make().step(nb, make().unstep(nb, s, o1))), [*s])
+    undone = same(back(nb, s1), s) and same(back(nb, t1), t)
+    # a now slot doubled and halved back passes the rewind alone, and fails forth
+    forth = same(flat(make().step(nb, make().unstep(nb, s))), [*s])
     return undone and forth
 
 
@@ -190,20 +187,17 @@ def unseeded(module, factory, shape):
 
 
 def undone_elsewhere(module, factory, shape, seed):
-    """The run back in a fresh interpreter that never stepped, from the stepped state and the out alone."""
+    """The run back in a fresh interpreter that never stepped, from the stepped state alone."""
     e, nb = getattr(importlib.import_module(module), factory)(), board(shape)
     s = e.world(np.random.default_rng(seed), shape, 2)
-    state, out = e.step(nb, s)
-    rows = [x.tolist() for x in (*state, *out)]
+    rows = [x.tolist() for x in e.step(nb, s)]
     code = (
         "import importlib, json, sys; import numpy as np; from tests.frame import board, digest; "
         "d = json.loads(sys.stdin.read()); e = getattr(importlib.import_module(d['module']), d['factory'])(); "
         "rows = [np.array(x, dtype=object) for x in d['rows']]; "
-        "print(digest(e.unstep(board(tuple(d['shape'])), tuple(rows[:d['cut']]), tuple(rows[d['cut']:]))))"
+        "print(digest(e.unstep(board(tuple(d['shape'])), tuple(rows))))"
     )
-    given = json.dumps(
-        {"module": module, "factory": factory, "shape": shape, "cut": len(state), "rows": rows}
-    )
+    given = json.dumps({"module": module, "factory": factory, "shape": shape, "rows": rows})
     return fresh(code, [], 0, given) == digest(s)
 
 

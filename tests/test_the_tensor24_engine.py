@@ -142,10 +142,10 @@ def alike(nb):
 
 
 def engine():
-    """The act in every round at a layout alike everywhere, with no out: its run back and its worlds."""
+    """The act in every round at a layout alike everywhere: its run back and its worlds."""
     return frame.Engine(
-        lambda nb, s: (step.tick(alike(nb), State(*s)), ()),
-        lambda nb, s, out: step.untick(alike(nb), State(*s)),
+        lambda nb, s: step.tick(alike(nb), State(*s)),
+        lambda nb, s: step.untick(alike(nb), State(*s)),
         lambda rng, shape, rows: world(rng, alike(frame.board(shape)), rows),
     )
 
