@@ -10,16 +10,18 @@ from tensor24.algebra.carry import Z, carry, lit
 
 
 def pairs_of(trains: Z, c: Z, traces: Z, kept: Z) -> tuple[Z, Z, Z, Z]:
-    """Every pair of rows of each train (the load's Trains) through its kind's form with itself onto A1, one form for every kind (selves), one pair per entry of the form and part: (the first row, the second row, the entry, the train), the parts running fastest within a component as the load lays them."""
+    """Every pair of rows of each train (the load's Trains) through its kind's form with itself onto A1, one form for every kind (selves), each unordered pair of a kind's components once (MIN2's S1), its entry the form's at both orders summed (the diagonal's once), and one per part: (the first row, the second row, the entry, the train), the parts running fastest within a component as the load lays them."""
     form = selves(c, traces, kept)
     kind, dim, part = trains.kind, trains.dim.astype(np.intp), trains.part.astype(np.intp)
     of = np.repeat(np.arange(len(trains), dtype=np.intp), trains.count.astype(np.intp))
     before = np.cumsum(dim) - dim
     within = before - before[trains.start.astype(np.intp)][of]
-    squares = dim * dim
-    entry = np.repeat(np.arange(len(dim), dtype=np.intp), squares)
-    place = np.arange(squares.sum(), dtype=np.intp) - np.repeat(np.cumsum(squares) - squares, squares)
-    x, i = carry(place, np.repeat(dim, squares), 0)
+    # each kind's component x and every component i from it on: its pairs (x, i), i at x or after it
+    lead = np.repeat(np.arange(len(dim), dtype=np.intp), dim)
+    at = np.arange(dim.sum(), dtype=np.intp) - np.repeat(np.cumsum(dim) - dim, dim)
+    later = dim[lead] - at
+    entry, x = np.repeat(lead, later), np.repeat(at, later)
+    i = x + np.arange(later.sum(), dtype=np.intp) - np.repeat(np.cumsum(later) - later, later)
     train = of[entry]
     # each entry once per part of its train, the part's offset counted within the entry's run
     parts = part[train]
@@ -27,7 +29,7 @@ def pairs_of(trains: Z, c: Z, traces: Z, kept: Z) -> tuple[Z, Z, Z, Z]:
     offset = np.arange(parts.sum(), dtype=np.intp) - np.repeat(np.cumsum(parts) - parts, parts)
     first = (trains.first[train] + within[entry] * part[train])[each]
     one, two = first + x[each] * parts[each] + offset, first + i[each] * parts[each] + offset
-    factor = form[kind[entry], x, i]
+    factor = form[kind[entry], x, i] + lit(i - x) * form[kind[entry], i, x]
     return one.astype(np.intp), two.astype(np.intp), factor[each], train[each]
 
 
@@ -159,7 +161,7 @@ def holding(
 
 
 def tying(trains: Z, c: Z, traces: Z, kept: Z, tie: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
-    """Term 6's frame, the hands' tie: for every two distinct tied trains X and Y, each unordered pair once, (tie x C_yz; x_y, y_z, 1, 1) over their rows of one part through the kinds' table of X's kind with Y's onto A1, the kind whose character is its own square (the dot product for T1 with T1 and T2 with T2, 1 for A1 with A1 and A2 with A2, 0 across two kinds); tie the strength CHOSEN in the universe file (a ground state below 2 hold f); a pair with no channel, two rows of different parts, an untied train and a train with itself take the factor 0."""
+    """Term 6's frame, the hands' tie: for every two distinct tied trains X and Y, each unordered pair once (MIN2's S1: X the earlier in the file, no pair laid twice or a train with itself), (tie x C_yz; x_y, y_z, 1, 1) over their rows of one part through the kinds' table of X's kind with Y's onto A1, the kind whose character is its own square (the dot product for T1 with T1 and T2 with T2, 1 for A1 with A1 and A2 with A2, 0 across two kinds); tie the strength CHOSEN in the universe file (a ground state below 2 hold f); a pair with no channel, two rows of different parts and an untied train take the factor 0."""
     gap = traces * traces - traces
     trivial = 1 - lit((gap * gap).sum(axis=-1))
     form = np.einsum(
@@ -169,22 +171,21 @@ def tying(trains: Z, c: Z, traces: Z, kept: Z, tie: Z) -> tuple[Z, tuple[Z, Z, Z
     wide = np.einsum("Jj,Kk,jkxi->JKxi", every, every, form)
     form = np.einsum("JKai,bi->JKab", np.einsum("ax,JKxi->JKai", put, wide), put)
     row, of, kind, component, offset = rows_of(trains)
-    later = of[None, :] - of[:, None]  # how far the second row's train stands after the first's
-    down, _ = carry(
-        -later, later * later + 1, 0
-    )  # -1 where it stands after, 0 where it does not: the sign test
-    gap = offset[:, None] - offset[None, :]
+    # every two distinct trains once, the earlier X and the later Y (MIN2's S1), each row of X with each row of Y, the
+    # rows laid train by train from each train's first
+    x, y = np.triu_indices(len(trains), 1)
+    size, start = trains.size.astype(np.intp), trains.first.astype(np.intp)
+    block = size[x] * size[y]
+    pair = np.repeat(np.arange(len(x), dtype=np.intp), block)
+    rank = np.arange(block.sum(), dtype=np.intp) - np.repeat(np.cumsum(block) - block, block)
+    one, two = carry(rank, size[y][pair], 0)
+    p, q = start[x][pair] + one, start[y][pair] + two
+    gap = offset[p] - offset[q]
     same, _ = carry(1, gap * gap + 1, 0)  # 1 where the two rows are of one part
-    channel = form[kind[:, None], kind[None, :], component[:, None], component[None, :]]
-    factor = tie * trains.tied[of][:, None] * trains.tied[of][None, :] * -down * same * channel
-    unit = 0 * row[:, None] - 1
-    first, second, third, fourth, factor = spread(row[:, None], row[None, :], unit, unit, factor)
-    return factor, (
-        first.astype(np.intp),
-        second.astype(np.intp),
-        third.astype(np.intp),
-        fourth.astype(np.intp),
-    )
+    channel = form[kind[p], kind[q], component[p], component[q]]
+    factor = tie * trains.tied[of[p]] * trains.tied[of[q]] * same * channel
+    unit = 0 * p - 1
+    return factor, (row[p].astype(np.intp), row[q].astype(np.intp), unit, unit)
 
 
 def joined(*potentials: tuple[Z, tuple[Z, Z, Z, Z]]) -> tuple[Z, tuple[Z, Z, Z, Z]]:
@@ -263,15 +264,18 @@ def meshing(trains: Z, c: Z, traces: Z, square: Z, kept: Z, mesh: Z) -> tuple[Z,
 
 
 def notching(trains: Z, spokes: Z, strength: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
-    """Term 9, the volume's notch, as the monomials of J's potential: for every square train, 2 h c00 c00 and h c_ii c_jj over every ordered pair of its ii slots (h tr^2), h the strength CHOSEN in the universe file and the 2 the senses of an axis, so that the vertex law pushes the 00 slot back by -4 h c00 and each ii slot by -2 h tr while the E part and the shears get none; a train that is no square takes its monomials at the factor 0, its places wrapped."""
+    """Term 9, the volume's notch, as the monomials of J's potential: for every square train, 2 h c00 c00 and h c_ii c_jj over every ordered pair of its ii slots (h tr^2), each unordered pair laid once at 2 h for its two orders and each slot squared at h (MIN2's S1), h the strength CHOSEN in the universe file and the 2 of 2 h c00 c00 the senses of an axis, so that the vertex law pushes the 00 slot back by -4 h c00 and each ii slot by -2 h tr while the E part and the shears get none; a train that is no square takes its monomials at the factor 0, its places wrapped."""
     n, d = spokes.shape
     senses, _ = carry(n, d, 0)
     rows, axis = trains.size.sum(), np.arange(d, dtype=np.intp)
     first, flag = trains.first.astype(np.intp), trains.square.astype(object) * strength
     _, qii = carry(first[:, None] + 1 + d + axis[None, :], rows, 0)
-    one, two = np.broadcast_arrays(qii[:, :, None], qii[:, None, :])
-    legs_one = np.concatenate((first, one.reshape(-1).astype(np.intp)))
-    legs_two = np.concatenate((first, two.reshape(-1).astype(np.intp)))
-    factor = np.concatenate((senses * flag, np.repeat(flag, d * d)))
+    one, two = np.triu_indices(
+        d
+    )  # each unordered pair of ii slots once, the diagonal among them (MIN2's S1)
+    legs_one = np.concatenate((first, qii[:, one].reshape(-1))).astype(np.intp)
+    legs_two = np.concatenate((first, qii[:, two].reshape(-1))).astype(np.intp)
+    orders = 1 + lit(two - one)  # the pair's orders: one on the diagonal, and the other order off it
+    factor = np.concatenate((senses * flag, (flag[:, None] * orders[None, :]).reshape(-1)))
     unit = 0 * legs_one - 1
     return factor, (legs_one, legs_two, unit, unit)

@@ -76,6 +76,12 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     factor, (one, two, *_) = held.potential
     named = set(one[factor != 0].tolist()) | set(two[factor != 0].tolist())  # the square's legs alone
     assert sorted(set(factor.tolist())) == [0, 3, 6] and named <= set(range(zero, zero + 10))
+    lit = [
+        tuple(sorted(x)) for x in zip(one[factor != 0].tolist(), two[factor != 0].tolist(), strict=True)
+    ]
+    assert len(set(lit)) == len(
+        lit
+    )  # each pair of slots once, at both its orders' factor summed (MIN2's S1)
     for trains, gears, named in [
         ([{**TRAINS[1], "kinds": ["E3/2"]}], [], "'E3/2' is none of the kinds"),
         ([{**TRAINS[1], "kinds": ["E"]}], [], "'E' has no whole basis the 24 permute"),
