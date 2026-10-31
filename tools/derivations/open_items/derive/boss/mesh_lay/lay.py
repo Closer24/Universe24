@@ -1,10 +1,10 @@
 """The mesh world's lay, examples/tensor24-mesh/setting.json (the Boss's code writer, 2026-10-30, the night's PLAN.md
-B5, FRAMES.md 7): whole numbers by the act itself, Rule3's carry the one division, no float, no circular function, no
-root, no rounding; the universe and the piece read from their files, no train declared here (light, the held train and
+B5, FRAMES.md 7; its pulse laid at rest on 2026-10-31, as no typed pair may set its speed): whole numbers by the act
+itself, Rule3's carry the one division, no float, no circular function, no root, no search, no table, no rounding; the universe and the piece read from their files, no train declared here (light, the held train and
 the tied train read off the loader's flags by character).
 
-Clock: light's first part a pulse along x, the well world's pulse form, travelling toward +x over a ring long enough
-that it passes each Node-clock once; the held hand (A1, A2) at (1, 0) at every Node-clock with its before (0, -1) and
+Clock: light's first part a pulse along x, the well world's pulse form, laid at rest (its before its now), so that the
+act alone sets how it moves: it splits into two halves that run apart along the ring; the held hand (A1, A2) at (1, 0) at every Node-clock with its before (0, -1) and
 every edge tooth at the dial's middle, s = 0; the tied hand (T1, T2) at rest; the gradient vertex at the universe's
 CHOSEN mesh couples light's difference to the tied hand's T1 rows and back.
 Algebra: the room, hold |x_tied|^2 below Gamma div 4 at the held hand, read over the whole run on the act; light's
@@ -35,8 +35,7 @@ from tensor24.runner.files import sites_of  # noqa: E402
 
 WORLD = ROOT.joinpath("examples", "tensor24-mesh")
 PULSE, HALF, CENTRE = 500, 4, 20  # the pulse's peak, half-width and centre along x
-NUM, DEN = 20, 49  # the pulse's speed, about 20 / 49 Meshes a round, as the well world has it
-SCAN = ((200000, 250), (250000, 125))  # the no: (mesh, rounds), the file's own run on and a stronger vertex
+SCAN = ((250000, 250), (200000, 125))  # the no: (mesh, rounds), the file's own run on and a weaker vertex
 TICKS = 125  # the setting's ticks: inside the room at the file's mesh, measured below
 
 
@@ -70,13 +69,8 @@ def gears_of(held, shape):
     sx = shape[0]
     sites = sites_of(shape)
     turning = [[hand, 0, x, 1, 0, 0] for x in range(sites)] + [[hand, 1, x, 0, -1, 0] for x in range(sites)]
-    moving = []
-    for x in range(sx):
-        now = bump(x, sx)
-        before, _ = carry((DEN - NUM) * now + NUM * bump(x + 1, sx), DEN, 0)
-        if now or before:
-            moving.append([light, 0, x, now, before, 0])
-    return turning + moving
+    still = [[light, 0, x, bump(x, sx), bump(x, sx), 0] for x in range(sx) if bump(x, sx)]  # at rest: before = now
+    return turning + still
 
 
 def run(universe, shape, gears, ticks):
@@ -129,8 +123,8 @@ def lay():
     gears = gears_of(held, shape)
     say(
         f"1. the lay: the held hand (1, 0) at every Node-clock, its before (0, -1), every edge tooth s = 0; light's first part the pulse"
-        f" {[bump(x, shape[0]) for x in range(CENTRE - HALF, CENTRE + HALF + 1)]} about x = {CENTRE}, its before (({DEN} - {NUM}) now +"
-        f" {NUM} next) div {DEN}; the tied hand at rest: {len(gears)} gears; ticks {ticks}"
+        f" {[bump(x, shape[0]) for x in range(CENTRE - HALF, CENTRE + HALF + 1)]} about x = {CENTRE}, at rest, its before its now, so"
+        f" that the act alone sets how it moves; the tied hand at rest: {len(gears)} gears; ticks {ticks}"
     )
     flat = json.loads(json.dumps(universe))
     flat["chosen"]["mesh"] = 0

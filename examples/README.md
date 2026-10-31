@@ -146,23 +146,24 @@ vector hand through the Mesh alone, and the held hand, Mesh-less, takes none). I
 `tools/derivations/open_items/derive/boss/mesh_lay/lay.py` from the universe and the piece (its account in `lay.txt`
 beside it): a ring of 180 Node-clocks along x, one across y and z, at den 1 and full_rate 10000 (the rest teeth 6 10^8,
 the grip 10^8, f = 60000); three trains: light (A1, part 2), its first part the well world's pulse (95, 281, 439, 500,
-439, 281, 95 about x = 20, its before one round back at about 20 / 49 Meshes a round), travelling toward +x so that it
-passes each Node-clock once in the run; the held hand (A1, A2) at (1, 0), its before (0, -1) and every edge tooth at
-the dial's middle; and a tied hand (T1, T2) at rest at every Node-clock, tied to the held hand's square at hold 1 (the
-tied spring 120000); push 0, notch 0, tie 0, mesh 200000 (its ground state needs mesh^2 below grip x 2 hold f / 2 = 6
-10^12, and it is 4 10^10), 125 ticks.
+439, 281, 95 about x = 20), laid at rest, its before its now, so that the act alone sets how it moves; the held hand
+(A1, A2) at (1, 0), its before (0, -1) and every edge tooth at the dial's middle; and a tied hand (T1, T2) at rest at
+every Node-clock, tied to the held hand's square at hold 1 (the tied spring 120000); push 0, notch 0, tie 0, mesh
+250000 (its ground state needs mesh^2 below grip x 2 hold f / 2 = 6 10^12, and it is 625 10^8), 125 ticks.
 
+The pulse laid at rest splits into two halves that run apart along the ring, each about half its peak (254 of 500 at
+round 25, 232 at round 125), about 10 Meshes in 25 rounds: at rounds 25, 50, 75, 100 and 125 at x = 30, 40, 50, 60 and
+70 ahead and at x = 10, 0, 170, 160 and 150 behind (read off the run's ledger; a board reading, no claim of physics).
 The strengths are chosen by the act, as the click world's are, so that the world stays inside the room, hold
-|x_tied|^2 below Gamma div 4 = 2500, for its whole run. The tied hand is gripped as light is, so its waves ride with the
-pulse and it grows by resonance along the pulse's path, linearly in the rounds (hold |x|^2 64, 225, 400, 625 and 900 at
-rounds 25 to 125); at mesh 200000 it stays at most 900 over the 125 rounds and reaches the room's edge only at round 247
-(`lay.txt`, the no); at mesh 250000 it leaves the room at round 111; and at the plan's first integers (Gamma 1000, mesh
-1000 to 3000, 400 rounds) the tied hand either never moves (the edge moves a count only where a momentum reaches half a
-count a round) or leaves the room and runs away with the held hand. Measured on the act (`lay.txt`): the tied hand moves
-at 106 Node-clocks, where the pulse passes, up to 30 counts; the held hand's |k|^2 1 at every Node-clock and round;
-light's squares summed within 71 permille of the same files at mesh 0 (light's own dispersion on the ring apart: the
-vertex takes that much into the tied hand), no tachyon; no click line, as the Mesh leg's wind, the Mesh flux, is counted
-by no click tonight (NOT_CLOSED 4); the run back exact. Run it as the one bang: `python -I tools/tensor24_run.py
-examples/tensor24-mesh/universe.json examples/tensor24-mesh/piece.json examples/tensor24-mesh/setting.json <record
-.jsonl>` (125 rounds out and back in under a minute; the ledger is about 5 MB, three lines a Node-clock a round; no
-click line; the run back returns the lay bit for bit).
+|x_tied|^2 below Gamma div 4 = 2500, for its whole run, and so that the tied hand moves at all: the edge moves a count
+only where a momentum reaches half a count a round, and at mesh 200000 the tied hand never moves in the 125 rounds
+(`lay.txt`, the no), so mesh is 250000. The tied hand is gripped as light is, so its waves ride with each half and it
+grows by resonance along their paths, linearly in its count (hold |x|^2 4, 81, 196, 361 and 576 at rounds 25 to 125);
+it stays at most 576 over the 125 rounds and the same mesh leaves the room at round 225 (`lay.txt`, the no). Measured
+on the act (`lay.txt`): the tied hand moves at 122 Node-clocks, where the halves pass, up to 24 counts; the held hand's
+|k|^2 1 at every Node-clock and round; light's squares summed within 61 permille of the same files at mesh 0 (light's
+own dispersion on the ring apart: the vertex takes that much into the tied hand); no click line, as the Mesh leg's
+wind, the Mesh flux, is counted by no click (NOT_CLOSED 4); the run back exact. Run it as the one bang: `python -I
+tools/tensor24_run.py examples/tensor24-mesh/universe.json examples/tensor24-mesh/piece.json
+examples/tensor24-mesh/setting.json <record .jsonl>` (125 rounds out and back in under a minute; the ledger is about 5
+MB, three lines a Node-clock a round; no click line; the run back returns the lay bit for bit).
