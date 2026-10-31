@@ -1063,3 +1063,1043 @@ ALG3 is passed by both: an input for Big Pic, not a build item.
   degree 3 or more adds one, so the equilateral triangle of two-leg edges adds none (M8); the toy's numbers named as
   the toy's (M9); circ.py's commit and sha256 (M10); one replacement text for ALG2's line (M11).
 
+## The owner's word, 10:32 UTC (in Hebrew; the Boss's translation; Sofer enters it whole), and the breakthrough
+
+> "As David found how everything follows from the structure, Big Pic is to go on with everything that is open in
+> the same way ... this delicate balance and the miracles are what will bring the full solution ... the clocks, the
+> algebra, and the click world, which is the physics."
+
+The breakthrough (David 6542212052, 6542240895; the owner to David, 10:28: "This is the breakthrough, pass it to
+everyone."): no floor is laid and no law line sets one; it comes out by itself when the structure gives two clocks
+joined by a two-leg band of strength t each a mass s of at least half the band, s >= t/2 (for unequal masses
+s_1 s_2 >= (t/2)^2); on the click world s_min = t/2 = 48,000 in the file's units against the band's 96,000. DERIVED
+from the pair's quadratic form; MEASURED on Big Pic's equil.py (scratch, unread by a pair). In force, as the method
+for every open item on Big Pic's bench: derive from the structure the balance each part needs (a condition between
+numbers of the one algebra, never a value laid), then check that the one algebra meets it; each part in the three
+views, the clocks, the algebra and the click world, which is the physics.
+- 10:33: the Boss names a hostile pair on David's derivation: David writes FLOOR1 (short, the three views, the probe
+  frozen), the ALG pair reads it.
+- The strengths law's second clause ("or is laid once at the start for each clock"), under the owner's "In my
+  opinion everything is from the structure.." (to David, 10:26): put to the owner as one yes or no.
+
+## The owner's word, 10:34 UTC (in Hebrew; the Boss's translation; Sofer enters it whole), and the floor law
+
+> "Everything from the structure. Everything."
+
+In force, replacing the strengths law's line: "Every strength comes from the structure: the masses, the bands and the
+ties alike. None is laid, not even once at the start for a clock; none is searched; none is chosen." Today's files
+still carry laid numbers (the click world's band 96,000 and tie factor 60,000, hold f, the key's middle, the mesh
+world's searched 250,000): each is the named interim, OPEN until Big Pic derives it from the one algebra; no cut
+changes them and no new value is laid.
+
+The floor law (the owner to David, 10:3x UTC: "Search for all the solutions in these balances, and pass the above law
+to the writer."; David 6542281701): a law line of its own, in the words the owner answered: "No floor is laid, and no
+law line sets one. It comes out by itself when the structure gives two clocks joined by a band each a mass of at
+least half the band. If the algebra gives exactly half, the floor comes with nothing added." It sits beside "There is
+no floor in the law." and the strengths law, and agrees with both. Its general form (DERIVED, to the ALG pair in
+FLOOR1): the clocks' form holds each mass on its diagonal and half of each band off it; a held hand's lend adds only
+to the diagonal, so the floor comes by itself or not at all; for equal masses and bands on a network with adjacency
+A, s >= -lambda_min(A) t/2, a whole-number balance exactly when lambda_min(A) is whole (half the band on complete
+groups; the whole band on line networks and those in E8; none on odd rings longer than three).
+
+## The owner's word, 10:37 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "And put it into the laws, and check that the runs work this way: nature in fact wants, and can choose where it
+> wants to go, but the start point and the end are fixed in advance. That is, the freedom is given, but in the end
+> everything is fixed in advance. The runs must show this, and it is a line that guides us. And this, by the way, is
+> understood from the board itself: the clicks decide the path, but the board is fixed."
+
+In force: it enters the law beside the law of the path (the owner to Sofer, 05:56: "the board is deterministic but the
+clicks' path is not. One reaches an identical end result but with different clicks."), as a guiding line: the
+freedom is given and everything is fixed in advance; the start and the end are fixed, and the clicks choose the path.
+The check the runs must show, in two halves:
+1. The board is fixed: from the start the board's end is one, and the run back from the end reaches the start
+   exactly. MEASURED today on every shipped world's run back; it stays a test of the code.
+2. The clicks choose the path: one start, several click paths, one board end. The choice lives in the third click
+   (MATH1 3.1 and 3.2: on a lay the first click is fixed by its side's past), so this half is OWED until the third
+   click's member runs: on Big Pic's bench first, as a part of the closed picture, then in the code.
+
+## The Boss's rulings, 10:42 UTC (from DECODE3i's physicist: NOT PASSED, one BLOCKING item)
+
+DECODE3i's physicist (S/decode3i_phys/REPORT.md): every DECODE3h item met; one BLOCKING item: R4 reads the past and
+the future each alone, not both together, and an outcome fixed by one earlier and one later event ("one back and one
+ahead", "two back and two ahead") passes every click part (MEASURED). That is what a law laid at both ends writes,
+the owner's guiding line of 10:37 (the start and the end fixed in advance). His questions:
+- Q1: yes, R4 adds the two-sided joint ladder (the last L and the next L settings and outcomes with the present
+  setting, at L = 1, 2 and 4), with the same summed gate, counted in N_T; line 195's "any dependence ... both ways"
+  is corrected. On his candidate it refuses both two-sided forms and the parity of the next two, and passes the toy's
+  third click.
+- Q2: yes, the pair parse reads a pair by the meeting that joins it, before, after or both, at any round (a start-form
+  pair's bearing meeting comes before its outcomes, an end-form pair's tie after them).
+- Q3: yes, R2 per clock is read on the reversed lines too, the same function.
+- Q4: yes, "the strongest local case" reads "the most shared past".
+- MINOR 3: the DECODER-CUT sizes are named estimates of the build; "one key per record" is 0 new lines if KEY4's
+  carded already holds it; the cut that makes room for the precedence is named.
+- DECODE3j folds both readers once the mathematician hands back.
+
+## The Boss's rulings, 11:02 UTC (from the ninth code reader on node-fold-fix: PASSED)
+
+The ninth code reader (S/hcr9/REPORT_FOLDFIX.md): node-fold-fix 29a308802 PASSED; B1 and B2 fixed and measured; five
+MINOR, three notes. His questions:
+- Q1: the HOLDS cause takes the 08:5x ruling's words, not the 07:5x's: "the record's own consistency, the mates
+  closing; its faithfulness to the act is not read". The swapped-sites record (its Mesh sides joining clocks that are
+  not Mesh neighbours) prints the old sentence, so "faithfulness to the act" overclaims.
+- Q2: yes, before node-fold is pushed, writer K adds, with Q1's words: one assert that the cause opens "by
+  construction" and holds no count of places (MINOR 2); a BROKEN row of a Mesh line holding its across and no sides
+  field (MINOR 3); a page test holding the key "netted" (MINOR 4); the train-card cause naming the train again
+  (MINOR 5). The reader's mutants K2b, K4 and K9 must then die. Note 2 (paths reachable only on loose reads) goes to
+  DECODER-CUT. Then the pinned full check, the reader's short verify, and the push.
+
+## The Boss's rulings, 11:06 UTC (from DECODE3i's mathematician, with its physicist: both NOT PASSED; FLOOR1's mathematician)
+
+DECODE3i's mathematician (S/decode3i_math/REPORT.md): NOT PASSED, one BLOCKING item: R4 reads one side and one place
+at a time; an outcome fixed from both sides at once, or by the far place's settings jointly (a delayed signal), passes
+every click part (four exact laws, MEASURED). The 10:42 ruling's two-sided ladder meets its first half. His questions:
+- Q1: R4 adds the joint of both places both ways (per place, the L events before and after, each with its own setting,
+  outcome and the far setting, with the present settings; L = 1 and 2; the same summed gate), beside the two-sided
+  ladder, counted in N_T (66 or 90): a delayed signal is refused, by the law of the path (a click-setting causes
+  nothing on the board). The reach beyond these windows is named.
+- Q2: yes, "refusing only" is read per record, from the gate on the record's own counts; 2,500 a half (one source,
+  fair) and 5,000 (two sources) are named as cases, with the skewed case's early opening and its rate.
+- Q3: yes, D4 in the whitelist form over every parameter kind (own()'s first argument a lines parameter, its second
+  a round parameter, positional or r=; every other name refused).
+- Q4: R2 per clock for a q of three or more values is named not built (DECODER-CUT); the text carries the failing
+  rows of R2 per clock where it reads (the refractory and the periodic draws).
+- DECODE3j folds both readers: both BLOCKING items (the two-sided ladder; the joint of both places both ways) and
+  every MINOR, with the sizes as estimates including their helpers, and the strengths line of 10:34 in section 0.
+
+FLOOR1's mathematician (S/floor1_math/REPORT.md): NOT PASSED, one BLOCKING item: at exactly s = t/2 the potential is
+bounded below but the run is free along the balance's kernel wherever nothing lends: with the held hand at 0, or on
+the equilateral two-leg triangle with no held hand, the giver drifts one count a round (MEASURED, 20,000 rounds, the
+identity and the run back exact); at 11/10 of t/2 the run is bounded; on the shipped lay the held hand's lend holds it.
+Bounded below exactly when s >= t/2; holding the run exactly when s > t/2 (with S > 0). His Q1 (does the floor law's
+"exactly half" mean a potential bounded below, or runs that do not fall?) goes to the owner once FLOOR1's physicist
+and David's pair have reported, with Big Pic's square form beside it (exactly half on a single band, held there by
+the held hand's lend; above half on odd groups such as the equilateral triangle).
+
+## The Boss's rulings, 11:07 UTC (from FLOOR1's physicist, with its mathematician: both NOT PASSED on one point)
+
+FLOOR1's physicist (S/floor1_phys/REPORT.md) and mathematician agree: at exactly s = t/2 the potential is bounded
+below, but the opposite swing is massless, held only by the held hand's swing, which the run can drain. MEASURED at
+lam 100 on a lay the files allow: with the held hand swinging and the pair's difference moving, the run at the balance
+falls at round 106,411 (E4); at lam 10 the held swing drains to 0 by round 60,000 and the pair then drifts for good
+(E6c); at 11/10 of t/2 and at twice it the same lays hold. So the balance is the floor's edge; a floor that holds by
+the masses alone needs s > t/2 (for unequal masses s_1 s_2 > (t/2)^2, each positive), with S > 0.
+- Their shared question (the owner's law line says "at least half ... If the algebra gives exactly half, the floor
+  comes with nothing added"; and "Why do the clicks stop?" asks for runs that do not fall): put to the owner as one
+  question, with both readers' recommendation, "more than half", and its cost named: Big Pic's square form gives
+  exactly half on the click world's single band, and more than half on odd groups such as the equilateral triangle.
+- The physicist's Q3: yes, on the board the word is "spring"; "mass" is the clicks' reading of its rest beat (the
+  03:2x arrangement); the owner's words stay whole in the law line, with the views named.
+- His Q4: the click-world reading of the floor (each clock's own lines bounded, its rest beat read from the clicks)
+  is OWED, Big Pic's, inside the closed picture.
+- The MINOR items of both reports go to David for FLOOR2 once the owner answers, and to Big Pic as inputs.
+
+## The owner's words, 11:08 and 11:10 UTC (in Hebrew; the Boss's translation; Sofer enters them whole)
+
+> 11:08: "Is the band's value a number that brings the mass seen in the clicks?"
+> 11:10: "Why does the law change anything if the numbers come from the structure alone?"
+
+The Boss's answer to 11:08: yes, under Big Pic's square form each band gives each of its two clocks a spring of half
+its value, and the clicks read a spring's rest beat as the clock's mass; the band 96,000 is still a named interim, and
+the mass's click reading is OWED. To 11:10, in force: the law does not choose the numbers; the structure gives them,
+and the floor line states a fact, not a demand. The question put to him at 11:0x ("more than half"?) is withdrawn as a
+choice. The floor line reads as both cases, the structure deciding which holds: at exactly half the band the potential
+is bounded below and one swing is free, held only by a held hand's swing (the floor's edge); above half the clocks are
+held by their springs alone. Under the square form, a single band (an even structure) gives the edge, and an odd loop,
+a triangle first, gives more (David 6542620339: by Harary's balance, a structure holds by itself exactly when some
+loop's parity and reversal disagree). Which the one algebra gives the click world is Big Pic's check.
+
+## The Boss's rulings, 11:15 UTC (from the THIRD pair's physicist on Big Pic's third click: NOT PASSED)
+
+The THIRD pair's physicist (S/bp_third_phys/REPORT.md): the form is sound as a board fact (its identities exact at
+every round, the run back exact, S_3 in 6 of 6, no turn, no twin); two BLOCKING items as the third click of the closed
+picture: (B1) "Pauli's exclusion" is the oddness of one axial reading under exchange and its zero on equal columns; the
+coincident state is allowed and persists, and near coincidence nothing is excluded (MEASURED); (B2) the third click is
+not seen in the clicks: the books read the teeth (a board check by construction), and with the teeth out no clock
+reads a landing (B C = 0), so no click reading tells this form from the first click. His questions:
+- Q1: yes, the bench's section is renamed as clock facts (the turn charge's oddness under the exchange of two clocks,
+  and its zero on the swap-invariant states, DERIVED invariant); the owner's lead (Pauli by the reversal of the clocks
+  by family) stays OPEN, Big Pic's, with its two roads named: half-speed clocks (node-half's -I), or a law of the births
+  under which coincident births carry no weight (a law, never a pick).
+- Q2: yes, a click reading that the first click's record fails (the 08:4x rule; the owner's 03:5x "one sees the three
+  clicks in the worlds we have, through the decoder"), with the teeth out of the record, is a condition of the closed
+  picture before anything of the third click is built.
+- Q3: where the triangle's choice reaches an outcome when no landing enters a line is Big Pic's, OPEN, named beside
+  Bell under (C).
+- Q4: yes, when the member comes to the owner, the batch carries the lines' re-timing (each triangle clock's line
+  moved in 3,716 of 5,000 rounds, by at most 2, totals equal) beside the side passing and the re-dial to G D.
+- The guiding line's run (m1) is named a test's lay of four births, each a full start under the start seed; its half 2,
+  "the clicks choose the path", stays OWED in the clicks; its law, (C), stays OPEN.
+
+
+## The Boss's rulings, 11:2x UTC [written 11:25 UTC] (node-fold pushed; the THIRD mathematician; the MIRACLE pair; the HALF mathematician on Bell; writer H's node-min)
+
+**node-fold.** The ninth reader's verify of dafe8ed3e (S/hcr9/REPORT_FOLDFIX2.md): PASSED, nothing blocking. Pushed as
+origin/node-fold at 11:19 UTC (c360851c2..dafe8ed3e, a fast-forward, through the gate, 0 refusals; the gate's six files
+identical to main's, and the 11 commits touch decoder/, tests/ and tools/ only). His one note: Q1's words are held by no
+assert (his K4b survives). The one-line assert rides writer K's next push that touches that test.
+
+**The THIRD pair on Big Pic's third click** (S/bp_third_phys/REPORT.md, S/bp_third_math/REPORT.md). The physicist: NOT
+PASSED (B1, B2, ruled at 11:15). The mathematician: PASSED as the bench's part (the unturned 2-cochain on the
+equilateral triangle of two-leg edges), no BLOCKING, eight MINOR. The pair's verdict: NOT PASSED. His questions:
+- Q1: yes. The batch's item 23 carries the states beside "no new number": (3D)^3 against D^3, a factor 27, for the
+  unturned form (two edge teeth and tau, no twin); 27D with the twin, for a turning tooth.
+- Q2: which edge tooth is read back is Big Pic's form to name, with no pick by order (MIN1's rule); no build before.
+- Q3: the name "Pauli" waits for a reading on two clocks' own lines (the 11:15 Q1 and Q2). L = det(1, b, a) is a clock
+  fact: odd under exchange and 0 on two equal clocks. The state staying its own swap needs the whole law (springs,
+  ties and births) to commute with the exchange (his MINOR 4: edge (1, 2)'s tie doubled breaks it, 851 landings).
+- Q4: one start is one start seed: the board's start and every tooth at its birth. The four births are four starts (a
+  test's lay of four starts, the 11:15 m1). The board's end fixed against the births is a check by construction (the
+  board's round reads no record tooth): named so, never a verdict. The guiding line's half 2 (one start seed, the
+  clicks' choice along the path, one end) waits on road C, the seeds' law, OPEN, Big Pic's.
+- To Big Pic as stakes: MINOR 2 (the charge needs equal springs, equal ties and one gear dial for the three clocks);
+  MINOR 6 (the identities are checks by construction; what could fail and did not: the run back, S_3, L's drift, the
+  landings, the control's blow-up); MINOR 7 (kappa / two typed; on this plan D = K; W, TIE4 and the star a test's lay).
+- MINOR 8: miracle/equil.py is in the freeze (derive/bigpic/miracle/equil.py, sum 0c4c936d); the bench cites it by
+  that path.
+
+**The MIRACLE pair on Big Pic's miracle** (S/bp_miracle_phys/REPORT.md, S/bp_miracle_math/REPORT.md): both NOT PASSED,
+on the same two BLOCKING items. The build stands as a board step: term 11 reads the step's own exchange P, the run back
+is exact, the family order comes from the structure (the odd-cycle obstruction DERIVED within road B's class).
+- B1 (both): "the books in the clicks" read the click teeth and hold by construction (K q plus the teeth's change is
+  the passing, by the carry's law, and P is the held leg's change of edge energy). Renamed: the sides' books, a check
+  by construction read through the teeth, a board check. The click content is stated as the readers measured it: with
+  P as term 11's passing, K times each clock's clicks books its sides' passing to within its sides' teeth (less than
+  one key per side, never growing); with the act's own passing the residual reaches 2,384 keys and grows; the held
+  clock's gain is 94 percent the gear teeth's share (512,965 of 543,666 per mille), which no click carries. The owner's
+  D of 09:0x stands: no conservation of energy is shown in the clicks.
+- B2 (both): "The bound needs the floor, which is STOP1's law line" is withdrawn (the owner's 10:11 and 10:14 words; the
+  floor law of 10:34). The walk is named no floor: a grain-dependent hold, the rounding's heat at the shipped grain,
+  which falls at lambda = 100 (a count past 32 bits at round 827). It goes to the batch (D) so named.
+- The road (the physicist's Q1): yes, to Big Pic. The square form (each clock's own spring half its bands, from the
+  structure, no laid number) holds the click world's triangle within 7, 9 and 13 bits at lambda = 1, 10 and 100, where
+  the triangle as laid has fallen to 19,566 bits at lambda = 100; the step stays exact (DERIVED: constant own springs
+  on the explicit side; MEASURED on equil.py's model). On node-all's own act it is OWED: the floor law's half-band case.
+- The physicist's Q2: yes, B1's rename comes with Big Pic's next bench, before the build goes on.
+- Q3 and the mathematician's MINOR 3: the Boss froze 9d75a4904's tests/frame.py beside the bench, as an addendum with
+  its own sums (S/bigpic_2a839f25f_frozen_add, sum 98862bc3); the 149 stay as they are.
+- The other MINOR items go to Big Pic with the reports: item 4 reaches one gear only (for many gears finite order
+  allows long periods); "booked, not kept" for the coupled act rests on Theorem A's candidate, not passed; equil.py is a
+  stand-alone model whose floor is laid; the swinging lay's largest square by round 3,250 is 1,521; the selecting form
+  is the one that ran; the grain worlds are test lays; classing monomials by their as-laid factor is case (c), not
+  lawful for a build; the fall at lambda = 100 is read to round 850 only.
+
+**The HALF pair's mathematician on Big Pic's Bell from the end** (S/bp_bell_math/REPORT.md): PASSED as a counted law,
+no BLOCKING, seven MINOR; the physicist still reads. His questions:
+- Q1: yes. Tsirelson's line reads "a lattice point 41 millionths below 2 sqrt 2, the law's supremum".
+- Q2: Big Pic's, with the key's origin (his item 6), as a stake: the fair end needs an exact half and the far shares 4 |
+  D, but the key is odd. The origin says which comes first, or the end comes by another act. OPEN.
+- Q3: the weight is named idle in this law (DERIVED: every weight gives one law, so no pair reading tells the end, the
+  weight, or a direct far transfer apart). Whether the board's act gives it a reading is OPEN, with stage 4c's act. The
+  owner's question of 10:10 on Bell's weight gets this answer.
+- Q4: DECODE3j names the far outcome's reach: no order part reads the far outcome, so a late hand passes them all. The
+  far-outcome lag sum goes beside it as a named candidate with its reach (it refuses E3 and passes E4), not as a rule.
+- MINOR 3 to Big Pic: exact no signal holds on the counting, not on the key's fixed dial (a signal of (5D - 1) / (4D^2)).
+
+**Writer H's node-min** (S/nodeall_h/MIN_HANDBACK.md): six commits on c360851c2, local; every shipped world byte for
+byte; items 3 and 4 held.
+- Items 3 and 4's (b) and D3 parts: the hold stands. Laying only the live terms is a selection (a mask, or a repeat by
+  a 0/1 count), which the laws refuse. The dead terms stay, named as cause (b)'s cost: dead by a flag read off the
+  trains' characters or a zero of the 24's tables, not by the shape.
+- Item 4's (a) part, the own diagonal from the shape: built now (the owner's 09:52 order). D1's own-edge half stays Big
+  Pic's form and lands with his stage; the own block changing twice is accepted.
+- H merges origin/node-fold dafe8ed3e into node-min with a merge commit, the worlds read against dafe8ed3e. Then the
+  pinned full check, the push, and a code reader.
+- The fold's "left for later" list gets no branch of its own. It rides the two cuts: J's node-short takes the runner's
+  and the loader's items, K's DECODER-CUT the decoder's, and item 10 is node-key's. Each writer names each item done or
+  left. DECODE3f's question (is a quantum across a Mesh a meeting) stays OPEN.
+
+**Writer K:** phase 2, DECODER-CUT, starts from the merge J makes (the 09:59 ruling). He writes its plan now, and makes
+no commit before that base.
+
+## The Boss's rulings, 11:3x UTC [written 11:33 UTC] (the HALF pair on Bell; a correction; the owner's words to David; the floor line; David's survey; Sofer's questions; the routing)
+
+**A correction to the 11:2x ruling** (the MIRACLE pair, "the road"). On the click world the square form gives the giver and the
+taker each exactly half their one band: the floor's edge, read in a 5,000-round window, not a floor that holds (Big Pic's
+own correction, bigpic-3clicks 9e6a10205; FLOOR1's fall at round 106,411 when only the held hand's swing holds the free
+swing). The 7, 9 and 13 bits stand as a window's reading. A hold by the structure alone needs a frustrated loop (Harary's
+balance: three like hands on a plain triangle of bands, Big Pic's 004ee4197, MEASURED over 20,000 rounds), or a held
+hand held steadily at its rest (David's 6542652630, DERIVED for a still hand, OPEN on the board).
+
+**The HALF pair on Big Pic's Bell from the end** (S/bp_bell_phys/REPORT.md, S/bp_bell_math/REPORT.md). The physicist: NOT
+PASSED (B1). The mathematician: PASSED as a counted law. The pair's verdict: NOT PASSED. Both agree on every number: E =
+cos 2 theta, CHSH 5/2, Tsirelson approached and never reached, no signal on the counting, the weight idle. B1: as stated,
+the end click writes the board's hand, against the law of the path (08:4x: "A click-setting causes nothing on the board").
+Read lawfully, the law is the dependence itself, laid by statement, and its start twin writes the same joint law, so
+nothing in it is from the end. His questions:
+- Q1: the law of the path stands. The end law is restated in (C)'s form: the hand and the fixing end, its setting among
+  them, fixed in advance, and the far click choosing by its own seeds. The dependence is named a laid measure, the
+  target pattern's own, with its source OPEN (the seeds' law). "Nothing picked" is struck for the law. A click that
+  leaves the hand on the board would amend the law of the path, and that is not asked.
+- Q2: the owner's 10:10 question gets this answer: in this law no click reads the weight (DERIVED by both readers). A
+  law that weighs the ends must leave a mark in the clicks that a start law does not write: a condition for any end
+  law, Big Pic's, OPEN.
+- Q3: z = 13 + 5w is a test's lay, named so, and the figure reads "a lattice point 41 millionths below 2 sqrt 2".
+- Q4: one name, one control. The ruled control (the ruled member born at the middle, with a local act at the bound, S
+  = 2 exactly) goes into bellend.py; the free lay is named a reading (half the curve), not the control.
+- His MINOR 2: no signal rests on the laid equal split of the fixing outcome; the text says so.
+
+**The owner's words to David, 11:1x to 11:2x UTC** (in Hebrew; David's translation; Sofer enters them whole): "Maybe it's
+exactly half then..?"; "Why a law when the number follows from the structure?"; "Urgent, to everyone. This is strong.
+Check more places where the structure closes everything."; "Update everyone and go for it."
+- In force, as the owner's: a law line that only restates what the structure gives is no law line. The numbers the
+  structure gives are derived results, each entered with its derivation and its standing.
+
+**The floor line 1,974** (David's two asks, 6542652630 and 6542665198): both accepted.
+- It leaves the law's lines and enters the derived results, as a consequence of the structure: "The floor comes out of
+  the structure's own masses and bands: exactly half the band gives the edge, and more than half the hold. At the edge
+  one swing is free, held only by what a held hand lends: by its swing, or steadily by its rest when the hand is held
+  still at the bottom of its hat." Its standing: FLOOR1 refused by both pairs on one point; FLOOR1b (toys-5 4441901f5)
+  to the ALG pair now; the steady rest DERIVED for a still hand, OPEN on the board.
+- The law keeps "There is no floor in the law." and the strengths line.
+- The square form, the structural line it follows from, is a candidate law line once its pair passes it and the owner
+  approves.
+
+**David's survey** (6542707165), read against today's readers. What closes and what does not:
+- The floor and the masses: DERIVED (FLOOR1b), its pair next.
+- The stop and the 0.8 threshold: they follow the floor. On the shipped click world the walk is no floor (both MIRACLE
+  readers), and the square form there is the edge.
+- The third click's twin: the count closes (no new number, the THIRD mathematician), but the states grow 27-fold and the
+  third click is not yet seen in the clicks (the THIRD physicist); the pair is NOT PASSED.
+- Bell's weight: idle in the counted law (both HALF readers); the board form is OPEN.
+- "An energy kept exactly in whole numbers is impossible": it does not close. The MIRACLE mathematician's MINOR 1 holds:
+  right for integer-linear steps of one gear; for many gears finite order allows long periods, the act is not linear,
+  and "booked, not kept" for the coupled act rests on Theorem A's candidate, not passed. OPEN.
+- The turns 1, 2, 3, 4 and 6, and Harary's ring rule: DERIVED.
+- (a) The triangle's mass ratio 2 : 1 : 1 under the square form, free of the band's value (stiffness 2t once and t/2
+  twice): DERIVED by David and Sofer's recheck. The MIRACLE pair reads it with Big Pic's three like hands, which give
+  the same swings. Nothing of nature follows from it.
+- (b) The held hand's rest n = 1, and (c) the generations as the triangle's swings: Big Pic's, OPEN.
+
+**Sofer's questions** (6542758778, 6542770776):
+- The full pass: all 364 paragraphs, the lines written since the 10-30 re-cut first, each named rule, consequence or
+  measured value with its line number. The Boss rules which lines move; none moves before.
+- Lines 352, 358 and 436, titled "derived": each moves to the derived results with its derivation cited; a line whose
+  derivation is not found is named so for the Boss's ruling.
+- spring = den x Gamma^2 (the grip at rest): the loader gives it and the files drop it, with every record equal line for
+  line except the header's files field. Writer J takes it into node-short.
+- Gamma and den are the board's grain, the one scale, not a strength: the equations scale with it, and only the
+  rounding's share changes (the MIRACLE mathematician's derivation). How fine the grain is stays OPEN, with the key's
+  origin (Big Pic's item 6). The width is the record's promise bound, not a strength.
+- Big Pic's table against the 29-part frame: Big Pic says which of rows 1, 2, 4 to 8, 10 to 14, 16, 17, 19 and 22 his
+  picture owns. The rest stay the writers' and enter the closed picture through Sofer's three views, drawn from the code.
+- Line 1,976's status clause: Big Pic's run on the equilateral triangle (four births, one board end) is a test's lay of
+  four starts, read by the THIRD pair. The board's end, fixed against the births, holds by construction. The second half
+  stays OWED until a run with one start seed shows the clicks choosing the path to one end; its law (C) stays OPEN.
+- His note on node-rec (the sides guard no longer refuses a top-level tooth field on a click line) goes to the tenth
+  reader.
+
+**Routing:**
+- FLOOR1b, frozen at S/floor1b_frozen (toys-5 4441901f5, six files; the sums match David's), goes to the ALG pair.
+- Big Pic's breakthrough check (bigpic-3clicks bf52bd882 to 004ee4197, frozen at S/bigpic_004ee4197_frozen, 157 files)
+  goes to the MIRACLE pair: the square form on the whole click world (road B, three grains, and the present act), and
+  the three like hands.
+- node-key (writer J, bb70e9ced): the pinned full check runs now; then the push; then a code reader.
+- Writer J begins node-short's merge locally (dafe8ed3e, node-rec bde5e3ba5, node-key), and takes node-min when it lands.
+  No cut commit comes before node-min is in.
+
+## The Boss's rulings, 11:3x UTC, continued [written 11:37 UTC] (David's cell h(g + u); Sofer's audit of numbers outside the files)
+
+- David's cell h(g + u) (6542802335) is a candidate for Big Pic's one algebra. Its square f (h (g + u))^2 gives the two
+  four-leg ties exactly and a band of exactly 2 f h^2 (120,000 at h^2 = 1; the laid 96,000 is 0.8 of it), with the
+  masses at exactly half and the opposite swing massless at every held size. Not shown: road B and NOT_CLOSED 29's split
+  for a four-leg monomial over three trains, the board's run, and the massless swing's passing. The electroweak reading
+  is cited, not derived, and no physics follows from it. It goes to Big Pic's bench, then to a pair.
+- Sofer's audit (6542837239), on the owner's order to him:
+  - src/tensor24 holds 0 hits on node-fold and node-rec, and tools/tensor24_*.py 0.
+  - The page tool's two display constants (the page's byte bound and 2**53 - 1) are the medium's, not the law's. Each is
+    named so in one comment line.
+  - In the tests, a number is spelt plainly as a named test lay's number, never hidden as a formula: `1 + 1` becomes the
+    number it is; `1 << k` and `10 ** k` stand where they name a width or an overflow. One commit, on the clean main's
+    list, after the cuts.
+  - His L0 to L2 wait for David's words. L1 (the square form) stays a candidate until its pair and the owner.
+
+## The Boss's ruling, 11:4x UTC [written 11:38 UTC] (Sofer's 6542862532: his gate refuses 4 places on node-key)
+
+Sofer's gate (scribe-5's files) refuses 4 places in node-key bb70e9ced's runner/plans.py (dialled: COMPARE and LOOP at
+line 96, BRANCH and LOOP at line 100) and notes 1 (KEYS SETTING.middle). The push hook's gate (main's older files)
+passed them; the difference is the gate's reach, not the tree. The owner's rule is no loop and no if in the engine's
+modules. Ruled: Sofer's first way. Writer J carries both refusals with no comprehension, ternary or compare, in a lawful
+form (Sofer's: the carry's remainder carry(key - 1, senses, 0)[1] for the even dial, the same form on the spare for the
+broken scale), and with no selection spelt as arithmetic. He reads the head with Sofer's newest gate files from
+scribe-5 until it shows 0 refusals. If no lawful form exists, he names what stands in the way, and only then does it go
+to the owner for his word (Sofer's second way). The fix is a commit on node-key, followed by the pinned full check, the
+push, and the ninth reader's reading of it. SETTING.middle's note is Sofer's to read, as the KEYS rule says.
+
+## The Boss's rulings, 11:4x UTC [written 11:45 UTC] (FLOOR1b's physicist: NOT PASSED; writer K's DECODER-CUT plan)
+
+**FLOOR1b's physicist** (S/floor1b_phys/REPORT.md): NOT PASSED on one BLOCKING item; the mathematician still reads.
+- B1: the steady rest needs 2 hat n > S + c (g^2 + u^2), and G3's window (20 hat n <= W) excludes it on the click world's
+  numbers (W/10 = 60,000,000 below S = 100,000,000; both scale alike, so at every grain). MEASURED: 0 of 40 rests beside
+  S, with or without the shipped lend.
+- A correction to the 11:3x floor line. The steady-rest clause leaves the line, and the edge clause reads as the
+  physicist's M1 has it. The line, for Sofer: "The floor comes out of the structure's own masses and bands: exactly
+  half the band gives the edge, and more than half the hold. At the edge one swing is free, held only while a held
+  hand's swing lends." The steady rest stays in FLOOR1b's text as OPEN, with its condition and G3's window, and is
+  named as excluded on the click world's numbers inside that window (his Q1).
+- Q2: a hat in place of the held hand's own spring changes one of the structure's own terms, not a lay. It is Big Pic's
+  one algebra to weigh, and a change of the act comes to the owner with the closed picture. Not now.
+- Q3: by the rules David's survey states (W = 6 Gamma^2, the six Spokes' grips; S = Gamma^2, the grip at rest; den 1),
+  W/S = 6 is the structure's count, not an interim. So the exclusion would stand on every world of this structure
+  while G3's window stands. The ALG mathematician and David confirm or correct this.
+- His MINOR items go with the report: "no fall over N rounds" for every row at or below the edge, with "hold" kept for
+  s > t/2; G3's window named; spring, not mass, in board sentences, with the owner's words kept whole; the interims
+  named; both halves of the guiding line named; the clock fact in place of "two fermions making a boson"; the freeze
+  lacking node-all's src and equil.py (FLOOR1's freeze carries them); a slow-fast average, not "Born-Oppenheimer".
+
+**Writer K's DECODER-CUT plan** (S/writerK/CUTPLAN.md, S/writerK/CUTPLAN_HANDBACK.md). His seven questions:
+1. Yes, per line kind: every field the schema names for a kind is required, and an absent field is refused by name. The
+   rule that a field may stand absent goes. The version label moves as the schema's own rule gives; Sofer names it.
+2. Yes: the relations are declared as annotations in record/schema.py, counted openly beside the decoder's count.
+3. Yes: the lay's cone goes, the one reading beyond q, and its NOT READ line leaves the printout on purpose (named in
+   the comparator's expected differences). LIGHT3's per-clock cone enters within the spare, as the 09:59 terms allow.
+4. Yes: the consistency check's line is printed from the guard's pass, in the same words, named a check by
+   construction.
+5. Yes: "q alone" reads as "no tooth", so the meetings keep reading the sides' q.
+6. Yes: worst(), halves() and the readings file enter with their first caller (R2), not before.
+7. Yes: the ledger reader stays.
+- B12 (tests_shape's uncalled) goes on the clean main's list, with the tests' plain numbers: one commit after the cuts.
+- The three merge points go to writer J, who settles them in node-short and names each answer: node-min's listing
+  reading the end's teeth, which schema 3.0 no longer writes; node-min's dialed reading the retired chosen key; and the
+  same lines edited on three branches. K's cut takes J's answers as its base.
+
+## The Boss's rulings, 11:5x UTC [written 11:46 UTC] (the MIRACLE pair's mathematician on Big Pic's breakthrough check)
+
+The mathematician (S/bp_break_math/REPORT.md): NOT PASSED on one BLOCKING item, a mechanical one. The 11:2x words are
+not in the bench: the column and printout "the books in the clicks", and README's "The bound needs the floor, which is
+STOP1's law line". The mathematics holds: the square form's Gram algebra and masses; Harary's rule with its convention
+and components; the three hands' swings (2t, t/2, t/2); "the fewest" as a theorem under the square form with bands
+alone; David's K_n spectrum and the 2 : 1 : 1 (whole beats only at n = 3). Every rerun is byte for byte. The physicist
+still reads. His questions:
+- Q1: yes. Big Pic carries the 11:2x words into the bench now, before the square form goes on: the sides' books, a
+  check by construction read through the teeth, a board check; the walk named no floor, with the STOP1 sentence
+  withdrawn.
+- Q2: yes. As a candidate law line, the square form states its sign convention (a band of sign s gives
+  (x_r - s x_p)^2, so a positive band is a sum square), with the sign from the structure under the strengths law. It
+  states Harary's rule as he gives it: the bands hold a floor by themselves iff every connected component of the band
+  graph holds a frustrated loop, and every clock lies on a band of such a component.
+- His MINOR items go to Big Pic:
+  - the square form adds own springs, so it is named a candidate law line, not a re-reading;
+  - "non-negative on every structure" holds only for non-negative bands;
+  - "the whole click world" means click1 (the 27 sites' run is DERIVED by the alike lay, not run);
+  - frustration.py is a test's lay in a stand-alone model (W typed, 2W spelt as a sum);
+  - the square option is laid per term with case (c) and a typed 2; a build lays it generically, by structure;
+  - his earlier MINOR 1, 2, 7 and 8 stand.
+
+## The owner's words, 11:47 UTC (in Hebrew; the Boss's translation; Sofer enters them whole)
+
+> "A click is forbidden to write on the board."
+> "And the structure, that the numbers come out of the structure: try to do it on the whole board. And then in fact we
+> are left with no numbers at all on the board."
+
+The Boss's rulings on them:
+- **The first is the owner's law, in force.** The law of the path (08:4x) stands as his word: a click writes nothing
+  on the board; a click-setting only chooses which reading of a place's record is that place's outcome. The 11:3x Q1
+  ruling on Bell from the end stands under it: the end law is restated in (C)'s form. Every bench and every build is
+  read against this line. A click that writes the board's state, directly or through a birth, is refused.
+- **The second is the owner's order, in force: no laid number on the board.** Every number of the board's law is tried
+  by the structural move (find the cell whose square gives it), on the whole board.
+  - One table of the board's numbers. Sofer keeps it, from his lists and David's audit, in his section "Derived from
+    the structure". Each number gets its source today, its structural candidate, and its standing: from the structure
+    and passed by its pair; a candidate; or laid, OPEN.
+  - Who does what:
+    - Big Pic's one algebra owns the cells (the band, through David's cell h(g + u); the mesh's cell; hold; the key's
+      origin; the grain Gamma and den, with the width).
+    - David brings each closing to a pair through the Boss.
+    - Each pair reads it.
+    - A writer takes a number out of the files only when its closing is settled, as with spring.
+  - The Boss reads "the board's numbers" as the universe file's strengths and units. The lay (the piece's shape, the
+    ticks, the start's counts) is the start, which the 10:37 guiding line fixes in advance, not a number of the law. It
+    is named so in the table; the owner may say otherwise.
+
+## The owner's word to David, 11:3x UTC, and the Boss's ruling [written 11:48 UTC] (David's 6542967229)
+
+> "Pass this to everyone, and find, search more places, so that it is not in the code at all, so that everything is
+> derived from the structures. Pass it to everyone." (David's translation; "this" is his cell h(g + u).)
+
+- It stands with the owner's 11:47 order to the Boss (no laid number on the board). David's map of every number the
+  worlds lay (6542967229 item 5) is the first draft of Sofer's table.
+- David's next item (c), a short text with both cells (h(g + u) for the band, h(M_i + D_i L) for the mesh vertex) and
+  the cell rule as a candidate, is written now. It goes to a pair as soon as it is frozen, in parallel with Big Pic's
+  weighing: whether the 24's structure gives the cell rule is Big Pic's one algebra, and it waits for no one. The text
+  names what it does not show: either cell's run on the board, road B and the split for a four-leg monomial over three
+  trains, the massless swing's passing, and the key.
+- His withdrawal of "an energy kept exactly in whole numbers is impossible" from what the structure closes is noted.
+
+## The owner's law, 11:52 UTC (in Hebrew; the Boss's translation; Sofer enters it whole, as a law line)
+
+> "The connection between two places comes, for certain, from the start and from the end. Put it as a law."
+
+It follows his 11:51 question ("Is this a correct law?") and the Boss's answer naming the price of 11:47: under "A click
+is forbidden to write on the board", the dependence between two places must come from the start and the end fixed
+together.
+
+The Boss's rulings on it:
+- **It is a law line, the owner's, in force.** Sofer enters it as a law, not as a derived result. It names the source
+  of every connection between two places: the start and the end, fixed together in advance. Never a click, and never
+  a passing between the two places within the run.
+- **What it binds:**
+  - **Bell from the end** (Big Pic's stage 4c) is restated under it. The hand and the fixing end are fixed together from
+    the start and the end, and each click only chooses its place's reading (the 11:47 law). What was "the dependence
+    laid by statement" becomes the law's own source.
+  - **Its form is still owed: the seeds' law, road (C).** How the start and the end fix the connection is Big Pic's to
+    give from the structure. The 08:4x rule stands beside it: a seed rule chosen so that S comes out above 2 is a pick
+    for an outcome, so the form comes from the structure, not from the target.
+  - **The act stays local.** Each clock reads its own neighbours, and nothing is declared. The connection lives in the
+    start and the end, not in a passing that skips places.
+  - **Two OPEN items stay as named:**
+    - the owner's 10:10 question of the weight between the start and the end;
+    - the HALF physicist's mark in the clicks that tells a law of both ends from a law of the start alone. In the
+      counted law no pair reading tells them apart.
+
+## The owner's word, 11:5x UTC [written 11:57 UTC] (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "All the numbers in the system from the structure... from a mathematical miracle and from the algebra of the springs
+> and the whole numbers, everywhere.."
+
+The Boss's rulings on it:
+- **The 11:47 order is widened, as the owner's.** The target is every number in the system, everywhere, not only the
+  universe file's strengths and units. The Boss's 11:47 reading, which set the lay apart, is withdrawn.
+- **The table covers every number.** Sofer's table of numbers covers:
+  - the files' strengths and units;
+  - the lay: the piece's shape, the start's counts, and the ticks (the reading's window);
+  - every number in the code and the tools: src and tools/tensor24_*.py are already at 0, and the page tool's two
+    display constants are named the medium's;
+  - the tests' lays.
+- **Each number's route.** Each row names its route from the structure, or stands OPEN:
+  - a mathematical miracle: an identity exact in whole numbers, such as the leapfrog kept exact by Rule3's carry, or
+    the triangle's 2 : 1 : 1;
+  - the algebra of the springs: the square form and its cells;
+  - the whole numbers: the 24, Rule3's carry, the Gaussian ring.
+- **The start's counts go with the law of 11:52.** The start and the end are fixed together. So their counts' route is
+  the seeds' law (C), Big Pic's, OPEN.
+
+## The Boss's rulings, 12:0x UTC [written 12:02 UTC] (the tenth code reader on node-rec: NOT PASSED; node-key and node-min pushed)
+
+**Pushed:** origin/node-key a8bfbbe4a (J's gate fix; Sofer's newest gate 0 refusals; pinned check 45 passed) and
+origin/node-min be24b5e58 (H's nine commits with the merge of dafe8ed3e and item 4(a); pinned check 46 passed; the gate's
+files at H's 87ec8c094 equal scribe-5's). The ninth reader reads node-key, then node-min.
+
+**The tenth reader on node-rec bde5e3ba5** (S/hcr10rec/REPORT.md): NOT PASSED on one BLOCKING item, small; three
+commits PASSED.
+- B1: term 5's push value lost its only test when the well went. Its negation (X1) and its doubling (X9) pass all 43
+  tests. The fix: the naive model with term 5. The naive model's layout gets a push plan in plans.pushing's form, with
+  J5 by plain integers in naive(). X1 and X9 must die. A sign check alone would not catch the doubling (his Q3).
+  Writer I, on node-rec.
+- MINOR items:
+  - M1: the version guard reads the pair only when major is 1, with one BROKEN row. Writer I.
+  - M2: one assert that the header's keys are "kind" plus schema.Header's fields. Writer I.
+  - M3: the test names that the Mesh half of the end-teeth law is held by the edges test's closed(), and, after
+    node-min's D1, by construction. Writer I.
+  - M4: the stale references to the removed bang folder (README.md, llms.txt, docs/ARCHITECTURE.md, ALGEBRA.md) are
+    Sofer's, with node-rec's merge; the README first, as the front door.
+  - M5: the run test's "D1" (the drift's infinite order) takes another name before the merge. Writer I.
+  - M6: frame.py (312 of 312) and the edges test (120 of 120) are full. Noted for writer J's cut.
+  - The two record-writer mutants caught only by the pins (R1, R2: a consistent swap) are inputs to RUNNER-CUT: a law
+    test that catches a consistent swap.
+- Sofer's note on a top-level tooth: it reads by the 09:59 rule that a minor's added field reads, and it is inert, since
+  no reader reads a field of that name, and every reading is the same as on the clean record. It is named so; no rule
+  per key is added.
+- His questions:
+  - Q1: yes. 3.0's end keeps the own edges as [t, u] pairs, with no tooth, decided now inside 3.0, before 3.0 ships.
+    Writer I adds it on node-rec; H's listing reads it in J's merge.
+  - Q2: yes, the drop is intended. The teeth's range holds by the carry's construction (0 <= r' < d), so a board read
+    of it would be a check by construction. It is named so in the text.
+  - Q3: the naive model with term 5.
+  - Q4: confirmed. The header's files keep the setting verbatim, the lay, as the record's provenance. The lay's cone,
+    which reads r, goes with DECODER-CUT (11:4x).
+- The order: writer I's commits on node-rec, then the pinned check, the push, and the tenth reader's verify. Writer J
+  takes node-rec's new head into node-short.
+
+## The Boss's rulings, 12:1x UTC [written 12:06 UTC] (DECODE3j's mathematician: NOT PASSED; the physicist still reads)
+
+The mathematician (S/decode3j_math/REPORT.md): NOT PASSED on one BLOCKING item. The rest is sound: the cuts, the gates,
+N_T, his DECODE3i B1 met, and E1 to E4 reproduced.
+- B1: the pair parse joins by order, and it cannot refuse. A both-form pair's tie becomes the next pair's bearing, a
+  tie with two outcomes waiting keeps the last (a pick by order), and an outcome no meeting joins vanishes without a
+  word. MEASURED: the writing alone changes the verdict (both at every event: NOT READ 20 of 20; alternating: SHOWN 20
+  of 20). Under the owner's 11:52 law, it presumes a joining meeting next to the outcomes within the run.
+- Q1: yes. The record names each join (the meeting names its outcomes' pair, or the outcome line names its meeting).
+  The parse reads those names, never the order. A meeting that joins no outcome, an outcome joined by none, or two
+  outcomes of one place joined by one meeting is refused by name. The schema field enters with the settled rule, as
+  the writers' part of DECODER-CUT, inside the record's major as its own rule gives.
+- Q2: yes. Under 11:52 the far-outcome sum becomes a rule (one sum per half on 16 degrees, N_T + 2). A start-and-end
+  law is where a cross-event coupling through the outcomes would be laid, and no order part reads that path.
+- Q3: yes. D4 allows a leading docstring and annotations, and names where Mult stands.
+- Q4: yes. The test writers are named stand-ins (each connects the two places by a click within the run: lawful as a
+  test record, unlawful as an act under 11:47 and 11:52). E1 and E2 are written in the restated (C) form.
+- His other MINOR items go to the next text:
+  - E4's fall to (e) at B is chance, and the curve is its reading;
+  - "refusing only" names what it reads;
+  - the size rows count 47 lines twice;
+  - the limit and R2's reversed reading have no row where their no shows.
+- DECODE3k follows when the physicist hands back, by the same writer, to the same pair.
+
+## The Boss's rulings, 12:1x UTC, continued [written 12:09 UTC] (DECODE3j's physicist: NOT PASSED; the pair's verdict)
+
+The physicist (S/decode3j_phys/REPORT.md): NOT PASSED on one BLOCKING item, the same parse; his DECODE3i B1 is met. The
+pair's verdict on DECODE3j: NOT PASSED, both on the pair parse.
+- B1: the parse pairs by order. It misjoins a pair in flight at one place (39,999 pairs, none right, and a right record
+  refused). It reads one pair when the meetings are laid at the run's start or end. And it presumes a meeting within
+  the run that reaches both places, a passing between them, which the 11:52 law excludes.
+- His Q1 (what names a pair under 11:52), with the mathematician's Q1:
+  - The record names each pair by what the start and the end fix: the pair's name as the start's lay gives it, carried
+    on each outcome line, with the end listing the same pairs.
+  - The parse reads those names, never the order and never a meeting within the run.
+  - It counts and refuses by name every outcome with no pair, two pairs, or a pair that the start and the end do not
+    both hold. It drops none.
+  - It is measured on the formats both readers built.
+  - The schema field enters with the settled rule, as the writers' part of DECODER-CUT.
+- Q2: yes. Under 11:52 a start-and-end law that fixed an outcome with the far place's settings at other pair events is
+  lawful in form. The joint of both places refuses it as nature's pattern, by the constraint section 1 names for Big
+  Pic. The text says so.
+- Q3: the reversed reading of R2 is named empty for a two-valued q (DERIVED: |f - r| <= 1) and is not built for it. It
+  stays in the text with the many-valued form, which is named not built.
+- Q4: yes, with the mathematician's Q4. The test records and controls are named stand-ins, and their lawful twins (each
+  place reading its own copy laid at the start) are written beside them; the twins write the same joint law.
+- His MINOR items go to DECODE3k:
+  - "on its path" is replaced by the informative line;
+  - E4's (e) at B is one draw's;
+  - the two phrases that presume a connection from a click (lines 168 and 202) read "both outcomes read one hand that
+    the start and the end fixed";
+  - the "900 a half" is measured or cited.
+- DECODE3k: the same writer folds both reports and these rulings, and it goes to the same pair.
+
+## The Boss's rulings, 12:2x UTC [written 12:10 UTC] (the THIRD physicist on f729099e6: the mends; spread.py NOT PASSED)
+
+The physicist (S/bp_spread_phys/REPORT.md). The mathematician still reads.
+- **The third click's mends.** His B1 and B2 are met in third/README.md, with residues: tooth.py's docstring, its
+  printed label and tooth_5000.txt line 59 still say "Pauli's exclusion" and "the books per clock in the clicks". His
+  m1 is met in substance, but README lines 79 and 86 still say "One start" and "its start ... fixed", against the
+  paragraph between them. Of his MINOR items, m3, m5, m7 and m8 are not met, m2 and m6 in part, and m4 is not in the
+  text.
+- **spread.py: NOT PASSED** on two BLOCKING items. Its algebra on the plane is sound (DERIVED).
+  - B1: a board check is named "the click world's uncertainty". It is a theorem of the share rule's formula, from a
+    hand that is known; it makes no click and reads no record. By the owner's 09:05 law, the uncertainty must come from
+    the clicks.
+  - B2: "for every hand" fails off the triangle's plane. MEASURED: hands with a common swing, t = 1 to 3, break the
+    bound in 516 to 1,138 readings, and 52 hands are sharp on both settings of a pair whose bound is not 0.
+- **His questions:**
+  - Q1: yes. It is named "the share rule's spread relation on the settings' plane (DERIVED)". "Uncertainty" stays for
+    two click observables read from the clicks (08:5x); the uncertainty in the clicks is OWED.
+  - Q2: no law confines the hand to the triangle's plane today. The scope says so, and off the plane the relation fails
+    (MEASURED). A confinement, or the relation for settings out of the plane, is Big Pic's to give.
+  - Q3: yes. Under 11:47 the share rule's board form is a reading form: the act's passings are setting-free, the setting
+    picks which projection of the record is the outcome, and the outcome's seed is a birth laid at the start or the end
+    (11:52). The outlets may not depend on the setting. It is Big Pic's to give.
+  - Q4: yes. The README's Bell part (i) ("one wing's click fixes the hand") takes the 11:47 restatement in (C)'s form,
+    as bellend.py already does.
+  - Q5: yes. tooth.py's label and docstring are renamed with the README, with the rerun moving line 59 of
+    tooth_5000.txt alone.
+- **His MINOR items go to Big Pic:**
+  - the identity's count is named a check by construction;
+  - RANGE 8, the six directions and z are named a test's lay in spread.py;
+  - README lines 79 and 86 agree with the four starts;
+  - his unmet third-click MINOR items.
+
+## The Boss's rulings, 12:2x UTC, continued [written 12:11 UTC] (the MIRACLE mathematician on f729099e6: PASSED)
+
+The mathematician (S/bp_cell_math/REPORT.md): PASSED, with no BLOCKING item. His B1 is met in 739bffbd2 and f729099e6.
+David's cell holds:
+- the band 2 f h^2 from the ties' own structure, each own spring half the band (the floor's edge, DERIVED);
+- the opposite momentum kept exactly at every lay (DERIVED);
+- the together swing's runaway as the explicit step's own stability bound f h^2 < W, named so;
+- the identity and the run back exact at every lay.
+The physicist still reads. His questions:
+- Q1: yes. "Massless" is stated for the opposite momentum, which is kept exactly. The constant opposite step is named
+  the equal teeth's. MEASURED: with unequal lawful teeth the step varies in 1,440 and 3,674 of 5,000 rounds.
+- Q2: yes. For the cell rule as a candidate, the edges that carry products (the ties, h x) and those that carry sums
+  (the bands, x_u + x_v) are fixed from the structure first. Only then is "why only a held hand carries a cell"
+  weighed. The reason "the squares would add g^2 u^2" is withdrawn as not following: summed over all three vertices,
+  the cells give the ties doubled and no g^2 u^2 (his cellcheck.py).
+- His MINOR items go to Big Pic:
+  - the control gets its own step bound (near f h^2 = 2W - BAND/2), and the held dial's sign is read through the
+    runaways;
+  - cell.py is a stand-alone three-clock model, so not "on the board", with its typed numbers and its 2W spelt as a sum
+    named, and its numbers from the grain under the 11:5x order;
+  - the cell section's identity is named a check by construction;
+  - the items still standing from the earlier benches.
+
+## The Boss's rulings, 12:3x UTC [written 12:12 UTC] (the THIRD mathematician on f729099e6; the pair's verdicts)
+
+The mathematician (S/bp_spread_math/REPORT.md):
+- **The THIRD mends: NOT MET as a whole, on a mechanical BLOCKING item** (the 11:5x standard: the ruled words reach the
+  probe and its printout). "Pauli's exclusion" stands in tooth.py lines 40 and 350 and in tooth_5000.txt line 59. The
+  guiding line keeps its old words beside the ruling (README 77, 79 and 86; printout line 57). The books keep their
+  old names in the probe. With the physicist's residues, the pair's verify is NOT MET until Big Pic carries the words
+  into tooth.py and regenerates tooth_5000.txt (his Q2: yes, before the pair re-reads).
+- **spread.py: PASSED as algebra on the share rule.** The bound is DERIVED, right and sharp, with its equality cases.
+  With the physicist's NOT PASSED (B1, the name; B2, off the plane), the pair's verdict on spread.py is NOT PASSED.
+  What stands is "the share rule's spread relation on the settings' plane (DERIVED)".
+- **His questions:**
+  - Q1: yes, the closed picture carries it, as a condition on the one seeds' law, Big Pic's, OPEN. As a click reading
+    the relation needs each setting to read the same hand distribution (measurement independence at a place), while
+    Bell's 5/2 under (C) needs the hand to depend on the fixing end. One seeds' law must give both, or say which fails.
+  - Q2: yes, as above.
+  - Q3: the share rule stays bellend's part (iii), a CANDIDATE, until its board form is given as a reading form (11:47)
+    and read by a pair. Only then is it a candidate law line, for the owner. It is Big Pic's bench item (3).
+- **His MINOR items go to Big Pic:**
+  - "MEASURED" becomes a check of the DERIVED bound;
+  - spread.txt names the gap of the pairs that are not met;
+  - the candidate's five unshown points;
+  - the relation named as the share rule's own (the real great circle's sum-of-variances bound).
+
+## The Boss's rulings, 12:3x UTC, continued [written 12:13 UTC] (the ninth code reader on node-key: NOT PASSED)
+
+The ninth reader (S/hcr9/REPORT_KEY.md): node-key NOT PASSED on one BLOCKING item. The seven items of the 09:52 list
+are built and nothing beyond them; the worlds hold (the header's files field alone moves); the engine's laws hold.
+- B1: no test holds dialled's two refusals or carded's one-dial check. Mutants N4 to N7 (each refusal cut; the load
+  naming no dial departure; carded's check cut) pass all 45 tests. By the 09:59 Q1 rule (one small test per generic
+  part, with its yes and its no), it blocks. The fix:
+  - a load test that joins a four-leg monomial to J's potential and reads the even-D departure;
+  - a load test that reads the broken-scale departure;
+  - a decoder BROKEN row: a train card off the header's dial.
+- Q1, the gate fix a8bfbbe4a: it does not meet the 11:4x ruling. It moved dialled verbatim from plans.py into files.py,
+  where the set comprehension with its if, the sorted call, the ternary and the list comprehension all stand
+  (files.py:372-387). Sofer's newest gate passes it only because it spares the format's module, and its own comment
+  names that pattern: code moved to escape the rules plans.py is bound by.
+  - dialled's whethers are the loader's rule, not the files' format. The even dial is read off the plan's edges, the
+    structure, and not off a file's field. Moving it to the spared module goes round the gate, which the standing
+    order forbids ("Do not weaken or go round this gate").
+  - So the rewrite in a lawful form is still owed, as 11:4x ruled: no comprehension, ternary or compare, and no
+    selection spelt as arithmetic.
+  - One lawful shape, for the writer to weigh: the load returns the two remainders as counts, in a fixed order with
+    fixed names. run.py's one refusal reads their sum and, when it is not 0, refuses with every name and its count.
+    Nothing is selected.
+  - If no lawful form exists, writer J names what stands in the way, and only then does it go to the owner.
+- Q2: the tests and the rewrite land on node-key now, before node-short's merge takes it. Then the pinned check, the
+  push, and the ninth reader's verify. J's merge takes node-key's new head.
+- The MINOR items:
+  - m3_beat stops on main.made's four values, at node-fold too; the note is corrected;
+  - the ledger guard is re-pinned on a remaining world in phase 3, as J named;
+  - N10 is equivalent.
+
+## The Boss's rulings, 12:4x UTC [written 12:14 UTC] (FLOOR1b's mathematician: PASSED; the pair's verdict; the floor line scoped)
+
+The mathematician (S/floor1b_math/REPORT.md): PASSED, with no BLOCKING item and nine MINOR. The algebra is right and
+complete, every measured line reruns byte for byte, and the ALG pair's cited rows rerun on FLOOR1b's own probe. With
+the physicist's NOT PASSED (B1, the steady rest), the pair's verdict on FLOOR1b is NOT PASSED. FLOOR1c follows (David),
+to the same pair.
+- **A correction to the 11:4x Q3, on his Q3.**
+  - Confirmed: with the hat beside S the rest needs 2 hat n > S + c(g^2 + u^2), grain-free, and W = 6 Gamma^2, S =
+    Gamma^2.
+  - Corrected: G3's window is "20 hat R^2 below 4W", not "20 hat n <= W", so it is four times less strict. Under it a
+    rest exists at the pair's rest for S/2 < hat n < 6S/5, and it closes as the pair widens (about 41 to 48 units on
+    the click world).
+  - So "excluded on every world of this structure" does not follow from W/S = 6, and it is withdrawn. What follows is a
+    narrow window that gives only a local hold, below the hat's height (his MINOR 3).
+  - Which window binds a hat on road B, where the held hand is dialed, is Big Pic's. Under "no hat" (Big Pic's item 7)
+    the question rests.
+  - The steady-rest clause stays out of the floor line, now on the local hold's grounds.
+- **Q1 and Q2: the floor line, scoped, for Sofer** (it replaces the 11:4x wording; it is a derived result):
+  "The floor comes out of the structure's own masses and bands: DERIVED given the masses; that the structure gives
+  them rests on the square form, a candidate. On one band (the click world's giver and taker), exactly half the band
+  gives the edge, and more than half holds the form. On any structure the edge is at -lambda_min(A) t/2. Under the
+  square form a connected group holds by its springs alone exactly when some loop is frustrated; otherwise it sits at
+  the edge with one free swing, held only while a held hand's swing lends. On the board the run's hold is MEASURED on
+  its lays and windows, within the step's law."
+- **His MINOR items go to FLOOR1c:**
+  - a wide held hand fells the run even at s = t (MEASURED);
+  - 2.5's "held exactly while that lend stays positive" is wrong (E4, E6c);
+  - the header's DERIVED is conditional;
+  - "a frustrated loop: an odd loop of plain bands" (MINOR 6);
+  - the account of the fall at rounds 818 to 824;
+  - each mathematician named by his pair;
+  - his FLOOR1 MINOR 6 is in part and MINOR 7 is not met: the freeze names equil.py and node-all's src by path and sum.
+
+## The Boss's rulings, 12:4x UTC, continued [written 12:14 UTC] (the HALF mathematician on the Bell mend: NOT MET IN FULL)
+
+The mathematician (S/bp_bell2_math/REPORT.md): the counted law is unchanged and stays PASSED. The restated (C) form
+keeps it exact, with the same joint law (MEASURED: 0 off on 144 pairs at five weights; DERIVED: the same products
+relabelled). Of his seven MINOR items, two are met, four in part and one not. The physicist still reads.
+- N1: parts (i) and (ii) still state the refused form. README lines 96 and 97 and bellend.py lines 14 to 16 and 20
+  read "one wing's click fixes the hand", and the board "runs that end back to the birth". README line 113 lists that
+  act as OPEN. Under 11:47 it is refused, not open.
+- Q1: yes, in one commit with the THIRD residues (tooth.py):
+  - (i) reads "the hand and the fixing end are laid in advance, along or across that end's setting, one count each,
+    and the fixing end's outcome is its reading of the hand";
+  - (ii) is struck;
+  - the OPEN line reads "road (C)'s seeds' law, its form from the structure";
+  - the free lay is renamed a reading in README line 105, bellend.py lines 24 and 184 and bellend.txt line 41;
+  - Tsirelson's residues are mended in README line 103 and bellend.py line 223;
+  - the scales' comment names 108, and an assert holds that the scales' carries leave 0.
+- Q2: yes. The end law's readings (E = cos 2 theta, the shares of 1/2, CHSH 5/2, the same at every weight) are identities
+  of the laid measure, named checks by construction. So are the local act's shares of exactly half, 0 by structure.
+- pairbell.py (his MINOR 7) is named history, outside the whole-number rule; it is no evidence for stage 4c.
+
+## The Boss's rulings, 12:5x UTC [written 12:15 UTC] (the HALF physicist on the Bell mend: NOT PASSED; the pair's verdict)
+
+The physicist (S/bp_bell2_phys/REPORT.md): NOT PASSED. B1 is met only in the preamble, and parts (i) and (ii) and the
+OPEN line keep the refused form. What the mend adds is sound and exact: (C)'s form, the measure's source (11:52), the
+local act at exactly 2, and the equal split's role. The pair's verdict on the Bell mend is NOT MET.
+- **A correction of the Boss's 12:2x Q4.** Its premise "as bellend.py already does" was wrong: bellend.py's part (i)
+  is the same sentence the THIRD physicist flagged in the README.
+- **His questions:**
+  - Q1: yes. Parts (i) and (ii) are restated in place, in his words:
+    - (i) "the hand and the fixing wing's setting and outcome are fixed together by the start and the end, the hand
+      along the setting where that outcome is +1 and across it where it is -1, one count each way";
+    - (ii) "each wing's copy is laid with them, and no click and no passing carries it";
+    - (iii) stays.
+    The OPEN line names the seeds' law, never an act in which the end click leaves the hand.
+  - Q2: yes. Under 11:52, "one hand born at the source and carried to both wings" (bellend.py 11, 24, 26, 104, 128 and
+    184; README 95 and 106) is restated as each wing's copy laid with the start and the end. This holds for the end
+    law, the free lay and the local act alike. The lawful twins write the same joint law.
+  - Q3: yes. Stage 4b's timelike case (wing A's setting and landing carried on to wing B: twoends.py 21, PICTURE.md
+    154, README 78) is named refused under 11:47 and 11:52, kept only as a control of what the law forbids.
+  - Q4: yes, as 11:3x Q4 ruled. The free lay drops the name "control", and the ruled member born at the middle goes in
+    beside the local act.
+- **Also:**
+  - "no click reads the weight in this law" is said (11:3x Q2);
+  - the dial's signal names the weight it holds at, one end alone;
+  - part (iii)'s "the triangle's own squares" is scoped to multiples of 30 degrees, since at z the share is 147/172;
+  - the comment on Z names it a test's lay;
+  - "Read exactly" becomes DERIVED.
+- **One commit carries all of this,** with the mathematician's N1 and the THIRD residues. Then both pairs re-read.
+
+## The owner's question, 12:2x UTC, and the Boss's rulings on Sofer's 6543285922 [written 12:22 UTC]
+
+> "Where do we have a problem now? Does the third click change the board, or will the boards run the same?"
+
+- **The Boss's answer:** the boards run the same. The board's round reads no record tooth (the 11:47 law). The THIRD
+  mathematician MEASURED it: tau born D off leaves the board's end alike and the lines alike in every round, and moves
+  only the landings. Because the third click moves nothing a clock reads (B C = 0), it is not yet seen in the clicks:
+  that is open problem 2 below. The open problems, in order:
+  1. Bell's source: the seeds' law, the form of the 11:52 law, with its condition (measurement independence at a place
+     for the uncertainty, the dependence on the fixing end for Bell);
+  2. the third click seen in the clicks;
+  3. the grain and the key, where the algebra gives ratios and no unit, and the held hand's heating at the shipped
+     grain;
+  4. the floor on the click world: one band, at the edge;
+  5. the code's fixes, then the merge and the cuts.
+- **Sofer's questions:**
+  - Q, line 1,978: confirmed. "A click is forbidden to write on the board" is the owner's law line (11:47), beside 1,980.
+  - The well world's notch (2 f at its own Gamma 1,000 is 12,000, against the laid 120,000): David confirms or corrects.
+  - The tooling's bounds (EXPECTED_LINES, ceilings, the check's pinned counts, the 30 s per-test bound): named in the
+    table as the tooling's own counts of the repository, not numbers of the system's law. They are not derived from
+    the structure, and each states its source.
+  - The gate's hole: Sofer's fix stands on scribe-5. The format module stays spared for the functions that stand on
+    node-fold, as a named set; every function added to it is bound as load.py and plans.py are; a selftest holds it.
+    Readers and writers read with it. The push hook's six files are main's, and they move only on the owner's word. The
+    Boss puts it to him.
+
+## The owner's word, 12:23 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "Only the third click writes to the board and chooses... it is the important one."
+
+It answers the Boss's 12:2x answer: the boards run the same, and the third click is not seen in the clicks.
+
+The Boss's reading and rulings, in force unless the owner corrects them:
+- **His 11:47 law is narrowed by his own word.** The first click and the split click write nothing on the board; they
+  only read. The third click alone writes on the board and chooses. Sofer's line 1,978 reads: "A click is forbidden to
+  write on the board, except the third click: it alone writes on the board and chooses." The guiding line's "the
+  clicks choose the path" reads "the third click chooses the path".
+- **What stands beside it, as conditions of the build:**
+  - the 11:52 law: the connection between two places comes from the start and the end, so the third click's writing
+    is local, on its own triangle, never a passing between places;
+  - the start and the end are fixed in advance (10:37), so the choice is of the path between them;
+  - every number from the structure (11:5x): the choice's rule is the seeds' law, from the structure, with no pick for
+    an outcome (08:4x);
+  - the board's run back stays exact, the third click's writes being part of the state run back, or the cost is named.
+- **What it answers.** Open problem 2: the third click becomes visible by what it writes on the board. The guiding
+  line's half 2: the choice along the path is the third click's. The owner's Pauli lead of 10:15 may meet it there,
+  OPEN.
+- **Whose:** Big Pic's bench, first in his order of work, beside the seeds' law, which now includes the third click's
+  choice. Bell's end law stays in (C)'s form: its wing clicks are not third clicks.
+
+## The Boss's rulings, 12:2x UTC, the MIRACLE physicist [written 12:24 UTC] (the breakthrough check; David's cell: the pair PASSED)
+
+The physicist (S/bp_break_phys/REPORT.md, S/bp_cell_phys/REPORT.md):
+- **The breakthrough check.** It was NOT PASSED at 004ee4197 (B1's rename not made; B2's sentence carried). At
+  f729099e6 both are met, except README:68, "(road B's identity, now carried by the clicks)", which he rates MINOR.
+  With that phrase struck, it passes as the bench's part. The physics of the new parts is SOUND. With the
+  mathematician (B1 met at f729099e6), the pair's verdict is PASSED once README:68 is struck.
+- **David's cell (cell.py): PASSED** as the bench's part, a stand-alone model. With the mathematician's PASSED, the
+  pair's verdict is PASSED.
+  - Finding (i): at the click world's own lay the cell stays quiet for 200,000 rounds (|h| <= 1, 6 bits; the least
+    held dial exactly 2W + S).
+  - On node-all's own act under road B, the shipped triangle as laid falls: a count passes 32 bits at round 9,582,
+    past the setting's 5,000 ticks. MEASURED on the act; the model equals the act in 38 of 38 windows.
+  - Finding (ii): at the ten-times-giver lay a finer grain does not keep the held hand (runaways at rounds 16,273 and
+    11,158).
+- **His questions, all yes:**
+  - README:68's phrase is struck with the next mend.
+  - FLOOR1's 106,411 is named with its lay and form as FLOOR1's test lay.
+  - His long readings enter as MEASURED on a model equal to the act over 5,000 rounds.
+  - "Mass" means a clock's own square's coefficient, and David's 2 : 1 : 1 is "the swings' frequency ratio". On the
+    board the free swing is "springless"; "massless" is kept only in the floor line's ruled sense.
+  - A node-all world with three tied hands, a test's lay, is read on the act. That is Big Pic's, beside the owner's
+    12:2x word on the third click.
+  - The batch's walk line (D) adds "and on node-all's act under road B, the shipped triangle falls at round 9,582, past
+    its 5,000 ticks".
+  - The floor line's derived result names its form. Under the two laid ties the held hand lends c h^2 to the opposite
+    swing; under David's cell it lends it nothing, and the swing is free at its laid step.
+  - The README's OPEN line says that a finer grain does not keep the ten-times lay.
+  - The control's runaway is read as its held dial's fall at round 521.
+  - The band's move from 96,000 to 2 f h^2 is named a change of the act, the owner's.
+
+## The owner's word, 12:25 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "The clicks' floor, from their structure alone..."
+
+The Boss's reading, the working direction until the owner corrects it:
+- **The reading.** It follows his 12:23 word ("Only the third click writes to the board and chooses... it is the
+  important one"). The floor that keeps the run comes from the clicks' own structure alone: the third click's
+  triangle. It does not come from a laid number or a spring from outside.
+- **What stands to build on (DERIVED by the pairs):**
+  - On the click world's one band, the board sits at the floor's edge.
+  - Under the square form, a plain triangle of bands, a frustrated loop, holds a floor by itself, and three like hands
+    are the fewest that do (Harary).
+  - Under David's cell the opposite swing is springless, free, and no band holds it.
+  - The third click lives on the triangle, and under 12:23 it alone writes on the board and chooses.
+- **Big Pic's check, first beside the 12:23 item:** does the third click's own structure, writing on its triangle,
+  give the floor by itself? It must do so with no laid number, the start and the end fixed (11:52), and the run back
+  exact. And what does it hold: the edge's free swing, the held hand's heating at the shipped grain, or the fall at
+  round 9,582 on node-all's act?
+
+## The owner's words, 12:27 UTC (in Hebrew; the Boss's translation; Sofer enters them whole)
+
+> "That is what I meant."
+> "And yes, update."
+
+- **The first confirms the Boss's 12:25 reading, now the owner's.** The clicks' floor comes from their own structure
+  alone, the third click's triangle, with no laid number and no spring from outside. Big Pic's check of 12:25 stands
+  first, beside the 12:23 item.
+- **The second answers the Boss's question on the gate (his recommendation: yes).** The push hook's gate takes
+  Sofer's fix: the format module stays spared for the functions that stand on node-fold, as a named set; every
+  function added to it is bound as load.py and plans.py are; a selftest holds it.
+  - The hook runs S/t24b's scribe_scan.py. Once Sofer's commit with the fix is on origin/scribe-5, the Boss adopts the
+    six files blob for blob into S/t24b, as one local commit naming that commit and this word. He then runs the
+    gate's selftest and the gate on the active heads (node-key, node-rec, node-min, node-short), and posts the
+    result.
+
+## The owner's question, 12:28 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "In fact the first 2 clicks represent the initial conditions of the universe; the third, the choices that change
+> the universe from the path without the choices... Does that make sense?"
+
+The Boss's answer: yes, it fits his laws together, as a reading of the structure for Big Pic to build:
+- **The path without the choices** is the board's run from its start, as today: the board reads no record tooth, so
+  every board runs the same from one start.
+- **The first click and the split click only read** (12:23). Their records are fixed by the start (the births, the
+  start's lay) and by that path. So they carry the initial conditions and the unchosen path.
+- **The third click alone writes and chooses** (12:23). Every change from the unchosen path is its own.
+- **The start and the end are fixed together** (10:37, 11:52). So the choices change the path between them, never the
+  end.
+- **What it adds, a condition for Big Pic's build:**
+  - the third click's choices leave the fixed end where it is: the path changes, the end does not;
+  - the board's run back from the end needs the choices as part of the state;
+  - the record of the third click's landings is the one place the choices can be read, since the end alone cannot
+    tell them.
+  - It is OPEN, and it goes to the seeds' law with the 12:23 and 12:25 items.
+
+## The owner's word, 12:30 UTC (in Hebrew; the Boss's translation; Sofer enters it whole)
+
+> "Exactly, and this closes Bell and his friends: it is not really a draw, because everything is connected... and
+> influences..."
+
+The Boss's reading and rulings:
+- **The direction stands, as the owner's.** Under the 11:52 law the outcomes at two places are not a draw. The start
+  and the end fix them together, and nothing passes between the places within the run. Bell's theorem forbids this only
+  when the settings are independent of everything else, which in the owner's picture they are not. So Bell's
+  correlations, and those of his friends (the other no-go readings of the same kind), are read as fixed by the start
+  and the end.
+- **It is not yet closed in the build. Three conditions belong to the one seeds' law (Big Pic's, OPEN):**
+  - (a) from the structure, it gives the pattern (5/2 on the triangle's settings, Tsirelson's 2 sqrt 2 as its
+    supremum) without being set to the target (08:4x);
+  - (b) no signal: one place's setting does not change the far place's own readings. Today that rests on a laid equal
+    split, and it must come from the law;
+  - (c) the uncertainty at a place: each setting reads the same distribution of hands, while Bell needs the dependence
+    on the fixing end (the THIRD mathematician's Q1).
+- **"Influences" is read inside the laws.** Only the third click writes on the board, locally on its triangle (12:23).
+  Nothing passes between distant places within the run (11:52). The connection is in the start and the end.
+
+## The gate adopted, and Sofer's two older lines [written 12:32 UTC]
+
+- **The push hook's gate** (S/t24b, the hook's script) took Sofer's six files blob for blob from scribe-5 39952d928, as
+  one local commit on gather, 3a68b8a84, on the owner's word of 12:27. It brings the fix, the rules since main, and the
+  pruned rows. The selftest reads 1,404 cases, 0 parted. Against origin/main:
+  - node-key a8bfbbe4a: 4 refusals, all in dialled, the hole, which writer J rewrites;
+  - node-rec bde5e3ba5: 0 refusals, 14 notes;
+  - node-min be24b5e58: 0 refusals, 16 notes;
+  - node-fold dafe8ed3e: 0 refusals, 14 notes.
+- **Sofer's 6543375260 item 5, after the owner's 12:23 word:**
+  - Line 1,964, the law of the path, reads: "The first click and the split click write nothing into the gears; the
+    third click alone writes, locally on its triangle, and chooses (1,978)."
+  - Line 1,966 ("never seen alone in any clock's line") becomes a status clause, not a law: "In today's build the third
+    click is seen in no clock's line (B C = 0); under the owner's 12:23 word it writes on the board and is seen by what
+    it writes, OPEN, Big Pic's."
+
+## The Boss's rulings, 12:3x UTC [written 12:38 UTC] (FLOOR1c's physicist: PASSED; the mathematician still reads)
+
+The physicist (S/floor1c_phys/REPORT.md): PASSED, with no BLOCKING item and six MINOR. His FLOOR1b B1 is met, and so
+are his eight FLOOR1b MINOR items but one sentence; 37 of 37 comparable lines rerun byte for byte. The pair's verdict
+waits on the mathematician.
+- **Q1, yes: the floor line's edge clause names its form** (the 12:24 ruling). The floor line, for Sofer (it replaces
+  the 12:4x wording; a derived result):
+  "The floor comes out of the structure's own masses and bands: DERIVED given the masses; that the structure gives
+  them rests on the square form, a candidate. On one band (the click world's giver and taker), exactly half the band
+  gives the edge, and more than half holds the form. On any structure the edge is at -lambda_min(A) t/2. Under the
+  square form a connected group holds by its springs alone exactly when some loop is frustrated; otherwise it sits at
+  the edge with one free swing. Under the two laid ties a held hand's swing lends that swing c h^2, and holds it only
+  while it lends, not for good; under David's cell it lends nothing, and the swing is free at its laid step. On the
+  board the run's hold is MEASURED on its lays and windows, within the step's law."
+  - So on the click world the board's own form gives the free swing no lasting hold, and under the cell none at all.
+  - Whether the third click's triangle gives the floor is OPEN, Big Pic's check of 12:25. FLOOR1d says so in those
+    words and claims no more.
+- **Q2, yes:** section 4 reads the guiding line's second half in the 12:23 words, "the third click chooses the path".
+- **His MINOR items go to FLOOR1d (David), with the mathematician's:**
+  - M1: 2.4's "held by the lend alone" reads "free, held only while the held hand's swing lends, and not for good
+    (2.5)";
+  - M2: the form named beside the edge clause, as in Q1;
+  - M3: the owner's words since FLOOR1b cited: 12:23 (Q2); 12:25 with 12:27 (the board's own form gives no lasting
+    hold, and the third click's triangle is Big Pic's check, OPEN); 12:28 (every row is the board's run with no click
+    writing, "the path without the choices");
+  - M4: held_cells.py and its output cited in sections 5 and 7;
+  - M5: section 3's fall rounds by fall bits come from a frozen output of David's own probe (the physicist's rerun
+    gives 8 bits at round 824; 10, 12 and 14 at 825; 16 and 18 at 826; 20 at 827);
+  - M6: the key's value (50,811,429, set from a run) joins the interims, under the strengths line (Big Pic's item 6).
+    The title's "masses" stands in the ruled sense of 12:24, a clock's own square's coefficient, named once under the
+    title, as the floor line uses it.
+
+## The Boss's rulings, 12:4x UTC [written 12:46 UTC] (FLOOR1c's mathematician: PASSED; the pair's verdict PASSED; the floor line's scope; the rest's window corrected)
+
+The mathematician (S/floor1c_math/REPORT.md): PASSED, with no BLOCKING item and nine MINOR; all 58 measured lines rerun
+byte for byte. With the physicist's PASSED (12:3x), **the pair's verdict on FLOOR1c is PASSED.** David folds both
+readers' MINOR items into FLOOR1d, a mend, which the same pair checks item by item.
+- **Q1, yes: the floor line takes its scope words.** The floor line, for Sofer (it replaces the 12:3x wording; a
+  derived result):
+  "The floor comes out of the structure's own masses and bands: DERIVED given the masses; that the structure gives
+  them rests on the square form, a candidate. On one band with equal springs (the click world's giver and taker),
+  exactly half the band gives the edge, and more than half holds the form. On any structure with equal springs and
+  equal bands the edge is at -lambda_min(A) t/2. Under the square form a connected group holds by its springs alone
+  exactly when some loop is frustrated; otherwise it sits at the edge with one free swing. Under the two laid ties a
+  held hand's swing lends that swing c h^2, and holds it only while it lends, not for good; under David's cell it lends
+  it nothing, and the swing is free at its laid step. On the board the run's hold is MEASURED on its lays and windows,
+  within the step's law."
+  - Outside that scope, FLOOR1d states each case in its place: on one band with unequal springs the edge is s1 s2 =
+    (t/2)^2 and the hold s1 s2 > (t/2)^2 with s1, s2 > 0; a band to a held hand is bounded at every s >= 0.
+- **Q2, yes: the 12:4x correction on the steady rest is itself corrected.**
+  - With A = S + c (g^2 + u^2), the rest is at h^2 = n - A/(2 hat), and its stiffness is 4 (2 hat n - A). G3's
+    guide, in its form at the rest, gives A < 2 hat n < A + W; at the pair's rest, S/2 < hat n < 7S/2. The window does
+    not close as the pair widens: both ends rise with A.
+  - G3's measured bound (20 hat n <= W) is the window for swings that reach the top, measured Mesh-less; it does not
+    bind a hand held still at its rest. So "no rest exists beside S on the click world" goes.
+  - What stands: a rest beside S holds the free swing only locally, below its height (2 hat n - A)^2/(4 hat). None of
+    this binds road B's dialed held hand, and under "no hat" (Big Pic's item 7) the question rests. The steady-rest
+    clause stays out of the floor line.
+  - The 12:4x line "a rest exists at the pair's rest for S/2 < hat n < 6S/5, and it closes as the pair widens (about
+    41 to 48 units on the click world)" is withdrawn.
+- **Q3, yes: his nine items go to FLOOR1d with the physicist's six**, the overlaps merged (his 1 with the physicist's
+  M2, his 4 with M3). Among them:
+  - the band's route through CELLS1 reads "a candidate route": CELLS1 has not passed a pair, and the move from 96,000
+    to 2 f h^2 is a change of the act, the owner's;
+  - S's route: on node-all the click world's file chooses it; the loader's route is node-short's;
+  - 2.4's reversed loops read "with one band reversed";
+  - the fall account's sentence at round 818 (51.13 units there, 371.97 from round 824);
+  - node-all's falls named beside the triangle's: the shipped runner's round 3,752; round 9,582 under road B on
+    node-all's act; FLOOR1c's own control at round 9,581 (27 bits) and 9,582 (32 bits), one fall read at two widths.
+    Whether node-all's tied trains meet 2.3's scope is OPEN;
+  - the control's references by path (S/bigpic_2a839f25f_frozen, its miracle folder);
+  - the small items: S/floor1b_math; "the lays read" for "held lays from 90 up"; the README's floor row; section 7
+    names the owed two (his FLOOR1b MINOR 2 and 3).

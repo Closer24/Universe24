@@ -1,0 +1,6 @@
+a47952b02f9b6cf3f3c33814d7426c0322cd49b1443cba29f360b0952153506c  ./tools/derivations/open_items/DAVID-FLOOR-BALANCE.md
+63f32198342f468dfbe17def6a21a9a83c54a49537d98484838f5b43c86970ff  ./tools/derivations/open_items/derive/david_open/README.md
+6b57b724a9f217ed9adf177b89d51319e4501e99e7a41076c3a8a32fcebf9f8a  ./tools/derivations/open_items/derive/david_open/node/floor_balance.py
+e9aeed9d99d2304a9db573b67fab4f0edbb68796fdd3453928843064ab12a365  ./tools/derivations/open_items/derive/david_open/node/floor_balance.txt
+08ca35c9e58003146ec115b150f697c0136be4aec42ee385e6ee0ea45a6db20f  ./tools/derivations/open_items/derive/david_open/node/ring_balance.py
+a4bcf1d9998efad0bc9fd78fc1505bdfd2cb138a376191a8c2131dd7dd11cc02  ./tools/derivations/open_items/derive/david_open/node/ring_balance.txt

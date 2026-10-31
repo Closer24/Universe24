@@ -1,0 +1,26 @@
+The far outcome's reach: bellend's end law written as records, 40000 pair events (20,000 a half), the dial 50811429; R4 in DECODE3j's form, and the far-outcome lag sum beside it as a candidate:
+  E1, the A end every pair event: mates read; pairs 40000; N_T 66; S [2543, 2502]; parts not SHOWN {}; the click parts SHOWN; refusing only False
+    the largest of the six lag sums per half [(24479, 'A far settings'), (18408, 'B far settings')]
+    the ladders' verdicts per half, at A then B: {'(e)': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint past': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint future': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the two-sided joint': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint of both places': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']]}
+    (e) per half, at A then B (verdict, lag-1 count, z against CUT_FW 11343): [[('SHOWN', 8, 1591), ('SHOWN', 3, 286)], [('SHOWN', -2, 76), ('SHOWN', 10, 2048)]]
+    the candidate, the far-outcome lag sum per half [12978, 15554], against the cut 40082: SHOWN
+  E2, the end by the pair's own tooth (about 1 : 1): mates read; pairs 40000; N_T 66; S [2519, 2486]; parts not SHOWN {}; the click parts SHOWN; refusing only False
+    the largest of the six lag sums per half [(18453, 'A own settings'), (25035, 'A own settings')]
+    the ladders' verdicts per half, at A then B: {'(e)': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint past': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint future': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the two-sided joint': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint of both places': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']]}
+    (e) per half, at A then B (verdict, lag-1 count, z against CUT_FW 11343): [[('SHOWN', 2, 97), ('SHOWN', -5, 398)], [('SHOWN', 4, 468), ('SHOWN', -11, 2323)]]
+    the candidate, the far-outcome lag sum per half [13540, 12362], against the cut 40082: SHOWN
+  E3, a late hand: B reads the previous pair event's hand: mates read; pairs 40000; N_T 66; S [-37, 23]; parts not SHOWN {'(a)': 'NOT SHOWN', 'the curve': 'NOT SHOWN'}; the click parts NOT SHOWN; refusing only False
+    the largest of the six lag sums per half [(16453, 'B own settings'), (15051, 'A far settings')]
+    the ladders' verdicts per half, at A then B: {'(e)': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint past': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint future': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the two-sided joint': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint of both places': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']]}
+    (e) per half, at A then B (verdict, lag-1 count, z against CUT_FW 11343): [[('SHOWN', 8, 1591), ('SHOWN', -3, 122)], [('SHOWN', -2, 76), ('SHOWN', 9, 1686)]]
+    the candidate, the far-outcome lag sum per half [329134, 281287], against the cut 40082: NOT SHOWN
+  E4, the late hand at 1 pair event in 10: mates read; pairs 40000; N_T 66; S [2257, 2271]; parts not SHOWN {'the curve': 'NOT SHOWN', '(c)': 'NOT READ', '(e)': 'NOT SHOWN'}; the click parts NOT SHOWN; refusing only False
+    the largest of the six lag sums per half [(16307, 'A own settings'), (25842, 'A far settings')]
+    the ladders' verdicts per half, at A then B: {'(e)': [['SHOWN', 'SHOWN'], ['SHOWN', 'NOT SHOWN']], 'the joint past': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint future': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the two-sided joint': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint of both places': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']]}
+    (e) per half, at A then B (verdict, lag-1 count, z against CUT_FW 11343): [[('SHOWN', 8, 1591), ('SHOWN', 16, 5139)], [('SHOWN', -2, 76), ('NOT SHOWN', 23, 11471)]]
+    the candidate, the far-outcome lag sum per half [19235, 24312], against the cut 40082: SHOWN
+  the toy's third click (a format and reading test): mates read; pairs 40000; N_T 66; S [2456, 2522]; parts not SHOWN {}; the click parts SHOWN; refusing only False
+    the largest of the six lag sums per half [(18512, 'B own settings'), (17494, 'A own settings')]
+    the ladders' verdicts per half, at A then B: {'(e)': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint past': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint future': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the two-sided joint': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']], 'the joint of both places': [['SHOWN', 'SHOWN'], ['SHOWN', 'SHOWN']]}
+    (e) per half, at A then B (verdict, lag-1 count, z against CUT_FW 11343): [[('SHOWN', -3, 151), ('SHOWN', -10, 1723)], [('SHOWN', -1, 0), ('SHOWN', -2, 31)]]
+    the candidate, the far-outcome lag sum per half [8381, 12875], against the cut 40082: SHOWN
