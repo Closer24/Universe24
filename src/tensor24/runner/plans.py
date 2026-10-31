@@ -29,7 +29,20 @@ def pairs_of(trains: Z, c: Z, traces: Z) -> tuple[Z, Z, Z, Z]:
     offset = np.arange(parts.sum(), dtype=np.intp) - np.repeat(np.cumsum(parts) - parts, parts)
     first = (trains.first[train] + within[entry] * part[train])[each]
     one, two = first + x[each] * parts[each] + offset, first + i[each] * parts[each] + offset
-    return one.astype(np.intp), two.astype(np.intp), form[kind[entry], x, i][each], train[each]
+    # a kind with no table pairs its rows by the dot: a half-speed train's form onto A1 is its kept form, SUM L^T L over
+    # the 48 lifts, 48 I for its signed permutations, whose primitive row is the dot
+    k, has, lacks = tabled(kind[entry], form)
+    (_, at), (_, to) = carry(x, form.shape[-1], 0), carry(i, form.shape[-1], 0)
+    dot = 1 - lit((x - i).astype(object))  # 1 where the two rows are one
+    factor = form[k, at.astype(np.intp), to.astype(np.intp)] * has + dot * lacks
+    return one.astype(np.intp), two.astype(np.intp), factor[each], train[each]
+
+
+def tabled(kind: Z, tables: Z) -> tuple[Z, Z, Z]:
+    """Each kind's place among the tables' kinds, wrapped by Rule3's remainder, with 1 where it has a table and 1 where it has none: a kind past the tables, a half-speed one (no half-speed table is built in this build), wraps at the factor 0 its lack gives it, its places wrapped as a train that lacks a term."""
+    _, k = carry(kind, len(tables), 0)
+    gap = (kind - k).astype(object)
+    return k.astype(np.intp), 1 - lit(gap), lit(gap)
 
 
 def passing(trains: Z, c: Z, traces: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
@@ -96,7 +109,9 @@ def tying(trains: Z, c: Z, traces: Z, tie: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
     )  # -1 where it stands after, 0 where it does not: the sign test
     gap = offset[:, None] - offset[None, :]
     same, _ = carry(1, gap * gap + 1, 0)  # 1 where the two rows are of one part
-    channel = form[kind[:, None], kind[None, :], component[:, None], component[None, :]]
+    k, _, _ = tabled(kind, form)  # an untied row's places wrapped, a half-speed one's among them
+    _, at = carry(component, form.shape[-1], 0)
+    channel = form[k[:, None], k[None, :], at[:, None], at[None, :]]
     factor = tie * trains.tied[of][:, None] * trains.tied[of][None, :] * -down * same * channel
     unit = 0 * row[:, None] - 1
     first, second, third, fourth, factor = spread(row[:, None], row[None, :], unit, unit, factor)
@@ -170,9 +185,14 @@ def meshing(trains: Z, c: Z, traces: Z, square: Z, mesh: Z) -> tuple[Z, Z, Z, Z,
     form = np.einsum("m,a,kamyxi->kxi", trivial, turning, c)  # each kind with the axes' kind onto A1
     row, of, kind, component, offset = rows_of(trains)
     rows, axis = trains.size.sum(), np.arange(side, dtype=np.intp)
-    scalar = trivial[kind] * trains.sourcing[of] * trains.gripped[of]  # a trivial row of the wave
+    # a half-speed row has no table: no trivial row, and no M row, as its train is untied; an odd count of half-speed
+    # legs has no A1 channel, so it lays no term
+    k, has, _ = tabled(kind, form)
+    _, at = carry(component, form.shape[-1], 0)
+    # a trivial row of the wave, its kind with a table
+    scalar = trivial[k] * has * trains.sourcing[of] * trains.gripped[of]
     same = 1 - lit(offset[:, None] - offset[None, :])  # 1 where the two rows are of one part
-    channel = form[kind[None, :, None], component[None, :, None], axis[None, None, :]]
+    channel = form[k[None, :, None], at[None, :, None], axis[None, None, :]]
     factor = mesh * (scalar[:, None] * trains.tied[of][None, :] * same)[:, :, None] * channel
     lrow = np.broadcast_to(row[:, None, None], factor.shape)
     mrow = np.broadcast_to(row[None, :, None], factor.shape)

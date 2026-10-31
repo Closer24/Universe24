@@ -5,9 +5,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+import numpy as np
+
 from tensor24 import main
+from tensor24.engine import state, step
 from tensor24.runner import load as loading
-from tensor24.runner.files import NAMES, entries, held_departures, star, vocabulary
+from tensor24.runner.files import NAMES, entries, held_departures, sites_of, star, vocabulary
+from tests import frame
 
 ROOT = Path(__file__).resolve().parents[1]
 PATHS = [ROOT / "examples" / "tensor24" / f"{name}.json" for name in NAMES]
@@ -18,6 +22,8 @@ COSETS, CLASSES = (
     (["E1/2", "E5/2", "G3/2", "G3/2"], 2),
 )  # the two half-speed trains: kinds, part
 UNIT = "no family couples a half-speed train in this build"
+ROUNDS = 2  # the rounds a world in memory runs
+LIFTS = MADE[-1].lift[..., 0, 0].size  # the 48
 CLICKS = [  # the click world's clocks: a scalar clock at part 2, the square, the held hand and two tied hands
     {"name": "scalar", "kinds": ["A1"], "part": 2},
     {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1},
@@ -125,3 +131,87 @@ def test_a_half_speed_trains_rows_are_its_cosets_each_gear_on_its_cosets_row():
             -1:
         ]
         assert line == f"setting.gears[0]: component {gears} off train {t}'s {gears} rows"
+
+
+def laid(trains, chosen, integers=None, shape=(2, 1, 1)):
+    """A test world in memory, laid through load.load as the run lays it, at the example universe's integers or others."""
+    universe = json.loads(PATHS[0].read_text(encoding="utf-8"))
+    integers = {**universe["integers"], **(integers or {})}
+    universe = {
+        **universe,
+        "integers": integers,
+        "trains": trains,
+        "chosen": {**universe["chosen"], **chosen},
+    }
+    held, found = loading.load(universe, {"gears": []}, sites_of(list(shape)), *MADE)
+    assert found == []
+    return held, main.layout(universe, list(shape), held)
+
+
+def drawn(held, layout, seed, reach):
+    """A state on the layout, every gear below reach either side of 0 but the square's 00 slot, at 0 or past it below
+    2**40, each tooth within its dial."""
+    rng, rows, n = np.random.default_rng(seed), layout.gearing.rest.shape[0], layout.nb.shape[1]
+    a, b = (frame.wide(rng, (rows, n)) % (reach + reach) - reach for _ in "ab")
+    (clock,) = [t.first for t in held.trains if t.square]
+    a[clock], b[clock] = (rng.integers(0, 1 << 40, n).astype(object) * (reach > 1 << 40) for _ in "ab")
+    d = step.weight(layout.gearing, layout.clock, a) + step.weight(layout.gearing, layout.clock, b)
+    return state.State(a, b, frame.wide(rng, (rows, n)) % (d + d) - d, 0 * a, 0 * a[: len(held.trains)])
+
+
+def ran(layout, s, rounds):
+    """The state the act reaches in so many rounds, and how many teeth moved on the way."""
+    moved = 0
+    for _ in range(rounds):
+        out, _ = step.act(layout, s)
+        moved, s = moved + int((out.r != s.r).sum()), out
+    return s, moved
+
+
+def turned(s, lifts, trains, flip=True):
+    """The state turned by one lift on each half-speed train's rows, its own L(g), every other row kept: a negated gear's
+    tooth flipped on its dial, -1 - s, as the mirror flips it (or, with flip off, negated: the no)."""
+    turn = np.eye(len(s.a), dtype=object)
+    for t, m in zip(trains, lifts, strict=True):
+        turn[t.first : t.first + t.rows(), t.first : t.first + t.rows()] = m
+    tooth = (turn @ (s.r + s.r + 1) - 1) // 2 if flip else turn @ s.r
+    return state.State(turn @ s.a, turn @ s.b, tooth, s.rd, s.k)
+
+
+def turning(layout, start, end, halves, flip=True):
+    """How many of the 48 lifts turn the run alike: the turned start run to the end turned, each train by its own L(g)."""
+    lifts, alike = MADE[-1], 0
+    for g in zip(*(x.reshape(-1, *x.shape[-2:]) for x in (lifts.cosets, lifts.classes)), strict=True):
+        moved, _ = ran(layout, turned(start, g, halves, flip), ROUNDS)
+        alike += frame.same(moved, turned(end, g, halves, flip))
+    return alike
+
+
+def test_a_half_speed_world_laid_in_memory_turns_with_its_48_lifts_runs_back_and_pairs_by_the_dot():
+    """Yes: the two half-speed trains beside the square, the push on, at the rest 6 den Gamma^2 and at 6: every lift turns the
+    run (the teeth rounding), the run back exact; each passing pair a half-speed row with itself at 1; no gradient term on one.
+    No: at the rest 6 a gear negated with its tooth negated and not flipped, the turned run and the run turned part."""
+    spins = [{"name": f"spin {n}", "kinds": k, "part": p} for n, (k, p) in enumerate((COSETS, CLASSES))]
+    for integers, reach in ((None, 1 << 300), ({"den": 1, "full_rate": 1}, 1 << 8)):
+        held, layout = laid([CLICKS[1], *spins], {"push": 1}, integers)
+        halves, start = [held.trains[n] for n in (1, 2)], drawn(held, layout, 7, reach)
+        end, moved = ran(layout, start, ROUNDS)
+        back = end
+        for _ in range(ROUNDS):
+            back = step.untick(layout, back)
+        assert moved and turning(layout, start, end, halves) == LIFTS and frame.same(back, start)
+        # the no, at the rest 6: a negated gear's tooth negated, not flipped
+        assert integers is None or turning(layout, start, end, halves, False) < LIFTS
+    one, two, entry, train, _ = held.click
+    rows = {r for t in halves for r in range(t.first, t.first + t.rows())}
+    pairs = {
+        (int(x), int(y)): int(e) for x, y, e in zip(one, two, entry, strict=True) if e and int(x) in rows
+    }
+    assert pairs == {(r, r): 1 for r in rows}  # each half-speed row with itself, the dot
+    held, layout = laid([CLICKS[0], CLICKS[3], *spins], {"mesh": 3})
+    reads, *_, factor, target = held.mesh
+    landed = {int(r) for r in target[factor != 0]} | {
+        int(r) % len(held.state[0]) for r in reads[factor != 0]
+    }
+    halves = [held.trains[n] for n in (2, 3)]
+    assert factor.any() and not landed & {r for t in halves for r in range(t.first, t.first + t.rows())}
