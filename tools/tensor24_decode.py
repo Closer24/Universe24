@@ -4,9 +4,12 @@ not, the measurement's rules (the cone check by click and the twin reading), and
 lines: the lines listed in the schema's order and counted per train and per Node-clock (the lines, the given, the
 taken and the net), and the places (a round and a Node-clock) where the sum of q over the trains is not 0, counted;
 then the click world's block (decoder/shadow.py, the owner's law of 23:4x UTC: the physics read in the board's shadow,
-no claim on a board reading alone): the books at each click, D6 and D7, and the cone check by click, each read SHOWN,
-or NOT SHOWN, or NOT READ, or NO CLICK where the record holds no click line, with its cause, every train card's lines,
-given, taken and net beside the books, and one refusal line where the record holds no click line.
+no claim on a board reading alone): the books at each click, D6 and D7, and the cone check by click, then the click
+board's three (the owner's word of 00:3x UTC: the clocks' meetings), the meetings, each clock's line of meetings and
+light's echo, each read SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK where the record holds no click line, with its
+cause, every train card's lines, given, taken and net beside the books, every clock's meetings counted with no
+duration and its books beside its line, and one refusal line where the record holds no click of either kind, no click
+line and no whole click.
 Nothing is raised: a record or a ledger that is not read is named with its cause, and the rows that need it read NOT
 READ. The interpreter's bound on a whole number's digits is lifted, since the schema's numbers are whole numbers of
 any width.
@@ -47,18 +50,22 @@ def printed(held: clicks.Counted) -> None:
 
 
 def world(record: records.Record) -> None:
-    """The click world's block: the four verdicts with their causes, every train card's counts under the books (the Node-clocks' stand in the listing above), and the refusal line where the record holds no click line."""
+    """The click world's block: shadow's four verdicts and the click board's three with their causes, every train card's counts under the books (the Node-clocks' stand in the listing above), every clock's under its line of meetings, and the refusal line where the record holds no click of either kind."""
     print("the click world (the owner's law of 23:4x UTC):")
     labels = {t.get("index"): t.get("label") for t in record.header.get("trains", [])}
-    held = shadow.shadow(record)
-    for name, verdict in held.items():
+    for name, verdict in (shadow.shadow(record) | shadow.click_board(record)).items():
         print(f"  {name}: {verdict['kind']}: {verdict['cause']}")
         for at, tally in verdict.get("trains", {}).items():
             print(
                 f"    train {at} ({labels.get(at)}): {tally.lines} lines, given {tally.given}, taken {tally.taken},"
                 f" net {tally.net}"
             )
-    if held[shadow.BOOKS]["kind"] == shadow.ABSENT:
+        for (site, train), (met, tally) in verdict.get("clocks", {}).items():
+            print(
+                f"    clock at site {site}, train {train} ({labels.get(train)}): {met} meetings, {shadow.ORDER};"
+                f" given {tally.given}, taken {tally.taken}, net {tally.net}"
+            )
+    if not (clicks.listed(record) or record.of("whole")):
         print(f"  {REFUSAL}")
 
 
@@ -80,7 +87,7 @@ def main(argv: list[str]) -> int:
     print(f"row 46: {bangs.row_46(record, ledger, why)}")
     print(f"the ledger: {why if ledger is None else f'read, {len(ledger)} lines'}")
     print(f"the cone check (D8): {measure.cone_check(record)}")
-    print(f"the twin reading (D6): {measure.twins(record)}")
+    print(f"the twin reading (D7): {measure.twins(record)}")
     printed(clicks.counted(record))
     world(record)
     return 0

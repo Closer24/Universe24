@@ -572,18 +572,18 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
     assert "the sum of q over the trains at a round and site: not 0 at 1 of 2 places" in lines
 
 
-def test_the_click_world_reads_the_books_the_cone_and_no_clock_and_refuses_a_world_of_no_click(tmp_path):
-    """Yes: q summing to 0 at every place, the books SHOWN; lines exactly t Meshes from the lay, the cone SHOWN; D6 and D7
-    not read, no clock on 1.3. No: two places of one round cancelling, the books NOT SHOWN, and a line with no q not read;
-    a line past the lay's cone NOT SHOWN; a record of no click line NO CLICK on all four, the tool's refusal line last."""
+def test_the_click_world_reads_the_books_no_own_count_and_no_cone_where_none_could_be_outside(tmp_path):
+    """Yes: q summing to 0 at every place, the books SHOWN; D6 and D7 not read, the act holding no clock's own count and
+    every 1.3 clock at its Node-clock; at round 2, the ring's diameter, no line could stand outside the cone, not read.
+    No: a round's two places cancelling, books NOT SHOWN; no q, not read; cone NOT SHOWN; no click line: NO CLICK, refusal last."""
     # a ring of five sites, its setting laying one gear, at site 0
     lay = json.dumps({"version": 1, "ticks": 6, "gears": [[0, 0, 0, 1, 0, 0]]})
     ring = {**THIRTEEN, "sides": [5, 1, 1], "files": [{"name": "setting.json", "text": lay}]}
     edge = [clicked(2, 2, 0, -1, (3, 6)), clicked(2, 2, 1, 1, (3, 0))]  # t Meshes from the lay
     world = shadow.shadow(read([ring, *edge, E], tmp_path))
     d6, d7 = world[shadow.DURATION]["cause"], world[shadow.TWINS]["cause"]
-    assert [v["kind"] for v in world.values()] == ["SHOWN", "NOT READ", "NOT READ", "SHOWN"]
-    assert d6 == shadow.NO_CLOCK and shadow.NO_CLOCK in d7
+    assert [v["kind"] for v in world.values()] == ["SHOWN", "NOT READ", "NOT READ", "NOT READ"]
+    assert d6 == shadow.NO_COUNT and d7 == shadow.AT_NODE
     apart = [clicked(1, 0, 1, 1, (3, 0)), clicked(1, 2, 0, -1, (3, 6))]  # two sites of one round
     world = shadow.shadow(read([ring, *apart, E], tmp_path))
     held, far = world[shadow.BOOKS]["cause"], world[shadow.CONE]["cause"]

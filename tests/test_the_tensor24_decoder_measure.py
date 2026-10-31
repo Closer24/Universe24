@@ -185,7 +185,7 @@ def test_the_ledger_and_the_tool_hold_the_measurements_rules(tmp_path):
     found = subprocess.run(
         [sys.executable, "-I", str(TOOL), str(path)], capture_output=True, text=True, check=True
     )
-    for rule in ("the cone check (D8)", "the twin reading (D6)"):
+    for rule in ("the cone check (D8)", "the twin reading (D7)"):
         assert f"{rule}: {{'kind': 'SHOWN'" in found.stdout
     broken = tmp_path / "measure.ledger.jsonl"
     broken.write_text("no ledger\n", encoding="utf-8")
