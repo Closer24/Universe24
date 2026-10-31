@@ -202,6 +202,11 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "crossed",
         "the end's across names place 5, off the board of sides [2, 1, 1]",
     ),
+    "a side across a Mesh on a line of no train": (
+        [B, without(SENT, "train"), CROSS[1], ENDED],
+        "paired",
+        "line 2 names no train whose card holds a whole key",
+    ),
     "the events out of order": ([H, *met(1 + 1), *met(), E], "ordered", ORDER),
 }
 

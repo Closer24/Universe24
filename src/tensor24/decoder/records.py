@@ -282,7 +282,7 @@ def ordered(lines: Lines) -> str:
 
 
 def crossed(lines: Lines) -> str:
-    """The end's across against the record, where the end holds one: every place it names on the board, and every side across a Mesh a click line names standing among its entries (a writer's line, the ninth code reader's REPORT1 MINOR 2)."""
+    """The end's across against the record, where the end holds one: every place it names on the board, and every side across a Mesh a click line names standing among its entries (a writer's line, the ninth code reader's REPORT1 MINOR 2); a click line naming no whole train is the sides' guard's to name (sides.paired), so it is read here by its train alone where it holds one, and nothing is raised (the ninth code reader's B1 on node-fold)."""
     end = lines[-1] if isinstance(lines[-1], dict) else {}
     if "across" not in end:
         return ""
@@ -291,7 +291,7 @@ def crossed(lines: Lines) -> str:
     if far:
         return f"the end's across names place {far[0]}, off the board of sides {sides}"
     held = {(t, u) for t, u, _, _ in end["across"]}
-    clicks = [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]
+    clicks = [(n, e) for n, e in numbered(lines) if e["kind"] == "click" and whole(e.get("train"))]
     named = [(n, u) for n, e in clicks for u, *_ in e.get("across", []) if (e["train"], u) not in held]
     if named:
         return f"line {named[0][0]}'s side across a Mesh to train {named[0][-1]} stands in no entry of the end's across"
