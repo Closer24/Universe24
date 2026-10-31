@@ -1,0 +1,12 @@
+click-k1601, laid, carried (first click): books open 0 of 11826; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 0 click lines differ, the first at round None, at Node-clocks []
+click-k1601, laid, the triangle's coupling, C C^T off its diagonal (third click): books open 0 of 11820; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 871 click lines differ, the first at round 6, at Node-clocks [0]
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 844 click lines differ, the first at round 3, at Node-clocks [0]
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 910 click lines differ, the first at round 5, at Node-clocks [0]
+click-k1601, laid, road 3, C C^T's diagonal: each triangle edge with its own twin (third click): books open 0 of 11802; run back True
+   one hidden unit in edge (2, 3)'s tooth at Node-clock 0: 511 click lines differ, the first at round 5, at Node-clocks [0]
+   one hidden unit in edge (2, 4)'s tooth at Node-clock 0: 379 click lines differ, the first at round 18, at Node-clocks [0]
+   one hidden unit in edge (3, 4)'s tooth at Node-clock 0: 108 click lines differ, the first at round 89, at Node-clocks [0]

@@ -1,0 +1,17 @@
+tensor24-mesh, 125 rounds: key 1, dial 3; edges [(1, 2)], triangles [], edges on no triangle [(1, 2)]; trains alike []
+ carried (first click): 4442 click places, 8884 click lines
+   mode 0: the books close at every place: True
+   mode 0: R1, the record run twice byte for byte: True
+   mode 0: the run back to the lay: True
+ the triangle's coupling, C C^T off its diagonal (third click): 4442 click places, 8884 click lines
+   mode 4: the books close at every place: True
+   mode 4: R1, the record run twice byte for byte: True
+   mode 4: the run back to the lay: True
+   mode 4: edge (1, 2), on no triangle, carries as the first click: True
+ road 3, C C^T's diagonal: each triangle edge with its own twin (third click): 4442 click places, 8884 click lines
+   mode 5: the books close at every place: True
+   mode 5: R1, the record run twice byte for byte: True
+   mode 5: the run back to the lay: True
+   mode 5: edge (1, 2), on no triangle, carries as the first click: True
+every law holds: True
+exit 0

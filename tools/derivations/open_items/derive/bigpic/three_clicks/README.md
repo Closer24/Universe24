@@ -32,27 +32,41 @@ Run: `python3 -I edgeclick.py <src> tensor24-click 200 1`; `python3 -I cmp.py <s
 
 `edgeclick.py <src> <world> <rounds> <mode> [laid]`; every turn is whole shears about the birth, read by the carry.
 
-| mode | the turn | the board's run back (the same act on the mirrored state) | the label rule (P L = L P) | every edge of the triangle turned |
-|---|---|---|---|---|
-| 0 | none: the first click | by the carry's own inverse | yes | none |
-| 1 | the triangle M | by M's inverse only | no | yes |
-| 2 | the 3+3 palindrome (THIRD deriver, carried around three) | yes | no | yes |
-| 3 | SPLIT3 at the apex (the SPLIT deriver) | yes | yes | no: the alike pair's edge stays unturned, det(L - I) = 0 |
-| 4 | C C^T off its diagonal: the triangle's edges coupled by their boundary signs | yes | yes | yes, traces 18, 6, 6 |
-| 5 | road 3 (THIRD deriver), C C^T's diagonal: each triangle edge with its own twin | yes | yes | yes, trace 6 each |
+| mode | the turn | the board's run back (the same act on the mirrored state) | the label rule (P L = L P) | every edge of the triangle turned | memory in the toy (toymem.py) |
+|---|---|---|---|---|---|
+| 0 | none: the first click | by the carry's own inverse | yes | none | never two clicks in a row: a fixed order |
+| 1 | the triangle M | by M's inverse only | no | yes | - |
+| 2 | the 3+3 palindrome (THIRD deriver, carried around three) | yes | no | yes | - |
+| 3 | SPLIT3 at the apex (the SPLIT deriver) | yes | yes | no: the alike pair's edge stays unturned, det(L - I) = 0 | - |
+| **4** | **C C^T off its diagonal: the triangle's edges coupled by their boundary signs, no edge to itself** | **yes** | **yes** | **yes, traces 18, 6, 6** | **none over 1,000,000 rounds** |
+| 5 | road 3 (THIRD deriver, withdrawn), C C^T's diagonal: each triangle edge with its own twin | yes | yes | yes, trace 6 each | remembers: after two in a row on ab a third 1,798 against 2,764 |
 
-C is each edge's sign on the boundary of every triangle it lies on (the boundary of [i, j, k] is [j, k] - [i, k] + [i, j]). Modes 4 and 5 are the two parts of C C^T, each a palindrome of two blocks (each twin gains K of the edge teeth, then each edge tooth K of the twins; the carries; the blocks again in reverse), so the round's turn is L = [[I + 2 K^2, 2 K], [2 K + 2 K^3, I + 2 K^2]], a pair of trace 2 + 4 kappa^2 per eigenvalue kappa of K. A lone edge lies on no triangle, so K gives it nothing and it carries as the first click, with no condition; C C^T itself has the roots 3, 0, 0, so its palindrome would keep two directions unturned. Every edge tooth is kept by the mirror and every twin flipped about the birth, which an odd dial makes its own complement: the click lay makes every key odd, and so the full-picture world takes key 1.
+C is each edge's sign on the boundary of every triangle it lies on (the boundary of [i, j, k] is [j, k] - [i, k] + [i, j]). Modes 4 and 5 are the two parts of C C^T, each a palindrome of two blocks (each twin gains K of the edge teeth, then each edge tooth K of the twins; the carries; the blocks again in reverse), so the round's turn is L = [[I + 2 K^2, 2 K], [2 K + 2 K^3, I + 2 K^2]], a pair of trace 2 + 4 kappa^2 per eigenvalue kappa of K. A lone edge lies on no triangle, so K gives it nothing and it carries as the first click, with no condition: the structure chooses between the first click and the third. C C^T itself has the roots 3, 0, 0, so its palindrome would keep two directions unturned. Every edge tooth is kept by the mirror and every twin flipped about the birth, which an odd dial makes its own complement: the click lay makes every key odd.
+
+**Mode 4 is the turn this stage proposes:** it keeps the label rule draw by draw, runs back by the board's own law, turns every edge of the triangle, shows no memory in the Boss's toy over 1,000,000 rounds, and needs no rule to pick it from a family.
 
 | record | what it reads |
 |---|---|
 | kturn_click.txt | the laws on the structure alone, in whole numbers: the mirror R L R L = I, the label rule P L = L P, det(L - I) and det(L + I), and K's spectrum by its characteristic polynomial's whole roots |
-| swap_click_200.txt | the label rule draw by draw on the click world, every mode |
-| cmp_click_200_34.txt, cmp_click_200_5.txt | R2 for each edge's hidden unit at Node-clock 0 |
+| toymem_200000.txt, toymem_1000000_m4.txt, toymem_1000000_m6.txt | the Boss's toy (one triangle, steady passings 9m, 9m, 12m): after one click the next and after two in a row a third against independent draws, the lives against the geometric law, the swap and the mirror's run back |
+| swap_click_200.txt | the label rule draw by draw on the click world, every mode: 0 of 200 rounds differ for modes 0, 3, 4 and 5, 65 for M, 75 for the 3+3 palindrome |
+| cmp_click_200_34.txt, cmp_click_200_5.txt | R2 for each edge's hidden unit at Node-clock 0: mode 4 moves 280, 292 and 282 lines, all at that Node-clock |
+| check24_click_34.txt, check24_click_5.txt | the 24: 24 of 24 for modes 3, 4 and 5 |
+| readings_click_1000_034.txt, readings_click_1000_5.txt | 1,000 rounds: R1, the books, the run back; booked less swept within one dial for the first click (lag-1 -406, -527, -135 per mille), wandering for the third (mode 4: lag-1 -7, 24, -45) |
+| cross_click_1000.txt | the board's lives per edge and the edges' gap correlations: the turn adds no correlation between edges (at most 4 per mille) against the flows' shared 508 |
+| laws_click_150.txt, laws_mesh_125.txt | `laws.py`: every law in one run, exit status 0 when all hold; on the mesh world, its one edge on no triangle carries in modes 4 and 5 exactly as in the first click |
 
-The earlier `varied` option set each Node-clock's teeth by turning the birth, which the turn leaves at the birth: it changed nothing and is removed.
+The earlier `varied` option set each Node-clock's teeth by turning the birth, which the turn leaves at the birth: it changed nothing and is removed (fullpicture_k1600.txt, rerun without it, reads the same digests).
+
+## The full-picture worlds and the key
+
+Every coupling at its table's entry 1; copy a world into `examples/` to run.
+
+- `worlds/click-k1`, key 1: every passing is whole dials (the split's two-leg flows carry KAPPA / 2 = 3, the dial at key 1), so no tooth moves and no turn shows a choice: every gap 0 and R2 0 lines at every edge in every mode (readings_k1_laid_1000.txt, cmp_k1_laid_1000.txt).
+- `worlds/click-k1600`, key 40^2: an even dial, whose birth is one short of its complement, so a swap of the alike pair shifts their edge's tooth and the label rule fails in a mixing turn (swap_k1600_laid_200.txt: mode 4 at 1 of 200 rounds).
+- `worlds/click-k1601-laid`, key 1601, the whole lay's norm (the held hand's 1 and the giver's 1,600), odd: the label rule, R2 and the readings in the k1601 records. Its setting.json is VARY1's stand-in written by `laywrite.py` into the world's own file (the taker at the bare unit 1 and each hand's count one up per a board coordinate), and its record is byte for byte the run that lays it in memory (`laid`).
 
 ## Stage 3 and 4
 
-- **The full-picture worlds:** `worlds/click-k1` (every coupling at its table's entry 1, the key 1) and `worlds/click-k1600` (the key 40^2, an even dial, whose birth is one short of its complement); copy one into `examples/` to run, with `laid` (VARY1's stand-in, labelled so: the taker at the bare unit 1 and each hand's count set apart by the board's own coordinates).
-- **Stage 3, the record for the decoder** (`record14.py`): the three clicks in schema 1.4's sides shape, both ends of every edge, k_before the tooth the carry reads and k_after the tooth it leaves, read back on the record alone (partner, quotients summing to 0, teeth summing to the dial less one, q the sum of its sides) with each side's weight by the carry's own law, x = dial q + k_after - k_before. The twins are written nowhere.
-- **Stage 4, the pair in whole numbers** (`pairwhole.py`, gate clean): the triangle's own settings (sides 0 and 60 degrees, heights 30 and 90), every weight the triangle's own squares (the height's 3 and the half side's 1 over the side's 4); CHSH from the click counts, no signal, the run back, and the first click with no draw beside it, with the order of the landings.
+- **Stage 3, the record for the decoder** (`record14.py`): the three clicks in schema 1.4's sides shape, both ends of every edge, k_before the tooth the carry reads and k_after the tooth it leaves, read back on the record alone (partner, quotients summing to 0, teeth summing to the dial less one, q the sum of its sides) with each side's weight by the carry's own law, x = dial q + k_after - k_before. The twins are written nowhere. Records: record14_click_road3_100.txt, record14_k1_tri_100.txt, every refusal at 0.
+- **Stage 4, the pair in whole numbers** (`pairwhole.py`, gate clean): the triangle's own settings (sides 0 and 60 degrees, heights 30 and 90), every weight the triangle's own squares (the height's 3 and the half side's 1 over the side's 4); CHSH from the click counts 2,501 per mille against the hand's own 2,499 and the triangle's 5/2, no signal, the run back, and the first click with no draw beside it (2,499 too: Bell reads the pair's hand), with the order of the landings (lag-1 -1 per mille in the third click, -1,000 in the first).

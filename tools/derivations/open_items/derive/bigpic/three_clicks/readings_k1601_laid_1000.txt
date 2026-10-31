@@ -1,0 +1,12 @@
+click-k1601, laid, carried (first click), 1000 rounds: run twice byte for byte True; books open 0 of 24972; run back True
+   edge (2, 3): booked less swept, its running sum at most 499 per mille of a dial (at the end at most 479); lag-1 correlation of the per-round gap -407 per mille
+   edge (2, 4): booked less swept, its running sum at most 499 per mille of a dial (at the end at most 489); lag-1 correlation of the per-round gap -392 per mille
+   edge (3, 4): booked less swept, its running sum at most 499 per mille of a dial (at the end at most 460); lag-1 correlation of the per-round gap -123 per mille
+click-k1601, laid, the triangle's coupling, C C^T off its diagonal (third click), 1000 rounds: run twice byte for byte True; books open 0 of 24972; run back True
+   edge (2, 3): booked less swept, its running sum at most 24058 per mille of a dial (at the end at most 21526); lag-1 correlation of the per-round gap 5 per mille
+   edge (2, 4): booked less swept, its running sum at most 16689 per mille of a dial (at the end at most 15342); lag-1 correlation of the per-round gap -5 per mille
+   edge (3, 4): booked less swept, its running sum at most 13400 per mille of a dial (at the end at most 12987); lag-1 correlation of the per-round gap -27 per mille
+click-k1601, laid, road 3, C C^T's diagonal: each triangle edge with its own twin (third click), 1000 rounds: run twice byte for byte True; books open 0 of 24951; run back True
+   edge (2, 3): booked less swept, its running sum at most 31499 per mille of a dial (at the end at most 27627); lag-1 correlation of the per-round gap 8 per mille
+   edge (2, 4): booked less swept, its running sum at most 30703 per mille of a dial (at the end at most 25342); lag-1 correlation of the per-round gap 5 per mille
+   edge (3, 4): booked less swept, its running sum at most 10217 per mille of a dial (at the end at most 10108); lag-1 correlation of the per-round gap -15 per mille

@@ -1,0 +1,21 @@
+click-k1601, laid, carried (first click), 1000 rounds: books open 0 of 24972; run back True
+   edge (2, 3): 23199 lives, their mean 1161 per mille of a round, variance over mean squared 161 per mille
+   edge (2, 4): 21573 lives, their mean 1249 per mille of a round, variance over mean squared 512 per mille
+   edge (3, 4): 858 lives, their mean 21958 per mille of a round, variance over mean squared 3489 per mille
+   edges (2, 3) and (2, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+   edges (2, 3) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' -1 per mille
+   edges (2, 4) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+click-k1601, laid, the triangle's coupling, C C^T off its diagonal (third click), 1000 rounds: books open 0 of 24972; run back True
+   edge (2, 3): 23199 lives, their mean 1161 per mille of a round, variance over mean squared 161 per mille
+   edge (2, 4): 21573 lives, their mean 1249 per mille of a round, variance over mean squared 512 per mille
+   edge (3, 4): 762 lives, their mean 31082 per mille of a round, variance over mean squared 1291 per mille
+   edges (2, 3) and (2, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+   edges (2, 3) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' -1 per mille
+   edges (2, 4) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+click-k1601, laid, road 3, C C^T's diagonal: each triangle edge with its own twin (third click), 1000 rounds: books open 0 of 24951; run back True
+   edge (2, 3): 23199 lives, their mean 1161 per mille of a round, variance over mean squared 161 per mille
+   edge (2, 4): 21573 lives, their mean 1249 per mille of a round, variance over mean squared 512 per mille
+   edge (3, 4): 696 lives, their mean 33021 per mille of a round, variance over mean squared 1405 per mille
+   edges (2, 3) and (2, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+   edges (2, 3) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' -1 per mille
+   edges (2, 4) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille

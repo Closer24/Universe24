@@ -3,4 +3,5 @@ tensor24-click: key 50811429; the trains alike [3, 4]; the board itself swap-cov
    turned by the triangle M (third click): the swapped run is the original with the names swapped, draw by draw: lines False, sides False; rounds that differ 65 of 200
    the 3+3 palindrome (third click): the swapped run is the original with the names swapped, draw by draw: lines False, sides False; rounds that differ 75 of 200
    SPLIT3 (third click, the apex's edges): the swapped run is the original with the names swapped, draw by draw: lines True, sides True; rounds that differ 0 of 200
-   the triangle's own coupling K (third click, every edge of it): the swapped run is the original with the names swapped, draw by draw: lines True, sides True; rounds that differ 0 of 200
+   the triangle's coupling, C C^T off its diagonal (third click): the swapped run is the original with the names swapped, draw by draw: lines True, sides True; rounds that differ 0 of 200
+   road 3, C C^T's diagonal: each triangle edge with its own twin (third click): the swapped run is the original with the names swapped, draw by draw: lines True, sides True; rounds that differ 0 of 200

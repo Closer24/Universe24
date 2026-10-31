@@ -1,0 +1,28 @@
+tensor24-click, carried (first click), 1000 rounds: books open 0 of 18036; run back True
+   edge (2, 3): 14823 lives, their mean 1817 per mille of a round, variance over mean squared 21137 per mille
+   edge (2, 4): 15039 lives, their mean 1624 per mille of a round, variance over mean squared 1349 per mille
+   edge (3, 4): 729 lives, their mean 28370 per mille of a round, variance over mean squared 2950 per mille
+   edges (2, 3) and (2, 4): the gaps' signed squared correlation 36 per mille, the flows' 508 per mille
+   edges (2, 3) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+   edges (2, 4) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+tensor24-click, SPLIT3 (third click, the apex's edges), 1000 rounds: books open 0 of 18144; run back True
+   edge (2, 3): 16632 lives, their mean 1620 per mille of a round, variance over mean squared 810 per mille
+   edge (2, 4): 13176 lives, their mean 1856 per mille of a round, variance over mean squared 1059 per mille
+   edge (3, 4): 729 lives, their mean 28370 per mille of a round, variance over mean squared 2950 per mille
+   edges (2, 3) and (2, 4): the gaps' signed squared correlation 0 per mille, the flows' 508 per mille
+   edges (2, 3) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+   edges (2, 4) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+tensor24-click, the triangle's coupling, C C^T off its diagonal (third click), 1000 rounds: books open 0 of 18306; run back True
+   edge (2, 3): 16605 lives, their mean 1622 per mille of a round, variance over mean squared 749 per mille
+   edge (2, 4): 13122 lives, their mean 1882 per mille of a round, variance over mean squared 1150 per mille
+   edge (3, 4): 702 lives, their mean 28923 per mille of a round, variance over mean squared 3542 per mille
+   edges (2, 3) and (2, 4): the gaps' signed squared correlation 0 per mille, the flows' 508 per mille
+   edges (2, 3) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
+   edges (2, 4) and (3, 4): the gaps' signed squared correlation 2 per mille, the flows' 0 per mille
+tensor24-click, road 3, C C^T's diagonal: each triangle edge with its own twin (third click), 1000 rounds: books open 0 of 18198; run back True
+   edge (2, 3): 16767 lives, their mean 1607 per mille of a round, variance over mean squared 588 per mille
+   edge (2, 4): 13068 lives, their mean 1884 per mille of a round, variance over mean squared 1104 per mille
+   edge (3, 4): 675 lives, their mean 29920 per mille of a round, variance over mean squared 2712 per mille
+   edges (2, 3) and (2, 4): the gaps' signed squared correlation 4 per mille, the flows' 508 per mille
+   edges (2, 3) and (3, 4): the gaps' signed squared correlation -2 per mille, the flows' 0 per mille
+   edges (2, 4) and (3, 4): the gaps' signed squared correlation 0 per mille, the flows' 0 per mille
