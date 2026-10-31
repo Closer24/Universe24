@@ -24,8 +24,8 @@ A1, Sofer's form 4 list; the Boss's ruling of 07:5x UTC); until he rules none mo
   125 rounds, at 350000 it moves at 128 Node-clocks, so 250000 was taken), a value found by search, Forbidden by the
   law and OPEN;
 - the click world's key, 50811429, laid as the setting's middle 25405714: set from a run (the code-clean auditor's
-  C7), its window an odd whole up to the giver's swing over its first beat read at the key 1, about 13 keys in that
-  beat, the file's own value until the key is derived from the structure, OPEN;
+  C7), its window an odd whole up to the giver's swing over its first beat read at the key 1, about 17 keys in that
+  beat (`lay.txt`), the file's own value until the key is derived from the structure, OPEN;
 - the click world's tie, 96000: the rule first tried (it runs away, the run's stop at round 3752 below), OPEN;
 - the well world's notch, 120000: twice the 60000 it was at the dial 1, picked so the notch rides the same dial, OPEN;
 - the springs of the click and the mesh worlds, 10^8: the file's den Gamma^2 by a stated rule (the grip at rest, the
@@ -138,12 +138,13 @@ Node-clock, and the taker at 0. Every Node-clock is laid alike, so the Meshes pu
 runs as the one Node-clock the generator reads. The key stands in the setting as its middle, 25405714, the click's unit 50811429 (OPEN, above), and
 the lay computes none (the audit's C7): its window is an odd whole from 1 to the largest swing of the giver's course of S (its passing,
 the two-round energy change) over its first beat, read off the act at the key 1, where the click is S itself, on this
-lay a swing of 687744000, so that about 13 keys pass in that beat (the swing over the key, a clock fact; the key's value the
+lay a swing of 888384000, so that about 17 keys pass in that beat (the swing over the key, a clock fact; the key's value the
 file's own, OPEN; Planck's key is NOT_CLOSED 3).
 
 What the act does with this lay, as it falls (`lay.txt`, on one Node-clock, every site of the cube alike; no tick count
-and no strength picked to avoid it): the first click falls at round 1, the held train clicking (596 of its clicks
-before the run stops); the giver's and the taker's q do not sum to 0 at 2490 rounds, so the books are open; the held
+and no strength picked to avoid it): the first click falls at round 1, the held train clicking (2547 of its clicks
+before the run stops); the giver's and the taker's q do not sum to 0 at the same 2547 rounds, the held train's sides
+taking what theirs leave (the three trains' q sum to 0 at every round, each edge's two sides cancelling); the held
 hand's |k|^2, read every 250 rounds, is 1, 1, 1, 1, 1, 1, 0, 9, 9, 1, 4, 1, 1 and 4 to round 3500 and a number of 69 digits at round 3750, and the tied hands'
 squares summed at the held hand, hold (|x_giver|^2 + |x_taker|^2), leave the room, Gamma div 4 = 2500, within the first
 beat (their most 6829 there); then the counts climb, and after round 3751 a count takes 339 bits against the universe's
@@ -153,11 +154,13 @@ read on this lay. Its cause, in Big Pic's words (#2187 6538018966 item 4): a hel
 wave, so its square, and the giver's spring 2 hold f |k|^2 with it, swings, a parametric drive. The road is OPEN
 (NOT_CLOSED 37): a finer notch first, then the held pair laid above it with the hat's own spring. The lay's no, the
 hands' tie at a tenth of the tied spring (12000) at the key 1: no count of the taker moves in 5000 rounds, its push in
-its tooth, at most 1128528000 of the dial's half 1200000000, while the held train's 5187 clicks fall, and no count
-passes the width. These click readings, and the key's window read at the key 1, are the per-train passing's, measured
-before term 11 was laid on the edges; on the edges (`runner/plans.py`'s `edging`, the edge dial 3 times the click's unit) every
-edge's books are 0 at every place by the carry's law, the counts are the board's as before (the click pushes no gear),
-and the lay's click readings wait for the re-lay.
+its tooth, at most 1128528000 of the dial's half 1200000000, while the held train's 7144 clicks fall, and no count
+passes the width. These click readings, and the key's window read at the key 1, are read on term 11's edges
+(`runner/plans.py`'s `edging`, the edge dial 3 times the click's unit), each train's click the sum of its sides at its own
+Node-clock (`lay.py`'s run_one, its reshape fixed by KEY4's readers: before the fix it summed Mesh sides, which carry
+nothing on one Node-clock; before term 11 the per-train passing read a swing of 687744000, 13 keys, 596 and 2490 and
+5187); every edge's books are 0 at every place by the carry's law, and the counts are the board's as before (the click
+pushes no gear).
 
 Run it as the one bang: `python -I tools/tensor24_run.py examples/tensor24-click/universe.json
 examples/tensor24-click/piece.json examples/tensor24-click/setting.json <record .jsonl>`: on this lay the run names the

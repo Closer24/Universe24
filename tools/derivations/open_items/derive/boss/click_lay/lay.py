@@ -222,7 +222,8 @@ def run_one(universe, gears, rounds, reader, middle=MIDDLE):
         bits = max(int(v).bit_length() for v in s.a.ravel().tolist())
         if bits > width:
             return n, bits
-        reader(n, held, s, sides.reshape(trains, trains, -1).sum(axis=1))  # each train's click, its sides' sum
+        own = sides[: trains * trains]  # its own Node-clock's sides, the Mesh sides after them (run.py's teeth_of)
+        reader(n, held, s, own.reshape(trains, trains, -1).sum(axis=1))  # each train's click, its sides' sum
     return None
 
 
