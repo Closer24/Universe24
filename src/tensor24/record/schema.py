@@ -75,6 +75,8 @@ class Header:
     width: int
 
 
+# One word, two things: a 1.4 click line's "sides" are its edge sides, one per other train at its Node-clock, and
+# the header's "sides" are the board's, which the cone reads; the fields keep the names their writers give them.
 SIDE = ("u", "q", "before", "after")  # a 1.4 click line's side, [u, q_tu, k_before, k_after], in order
 
 

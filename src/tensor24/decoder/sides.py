@@ -25,12 +25,14 @@ def formed(side: Any) -> bool:
 
 
 def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
-    """The first rule of its own one line's sides break: a tooth beside them or none, one off its form, one naming the line's own train or a train no card names, their trains out of order or one twice, their q not summing to the line's, or a tooth outside [0, K)."""
+    """The first rule of its own one line's sides break: a tooth beside them or none, one off its form, a line naming no train whose card holds a whole key, one naming the line's own train or a train no card names, their trains out of order or one twice, their q not summing to the line's, or a tooth outside [0, K)."""
     t, sides, key = e.get("train"), e["sides"], keys.get(e.get("train"))
     if "tooth" in e or not isinstance(sides, list) or not sides:
         return f"line {n} holds a tooth beside its sides, or no sides"
     if not all(map(formed, sides)):
         return f"line {n}'s sides have not the form [u, q, tooth before, tooth after]"
+    if not (whole(t) and whole(key)):
+        return f"line {n} names no train whose card holds a whole key"
     us, total = [side[0] for side in sides], sum(side[1] for side in sides)
     found = [f"line {n}'s side names its own train {t}"] if t in us else []
     found += [f"line {n}'s side names train {u}, which no train card names" for u in us if u not in keys]

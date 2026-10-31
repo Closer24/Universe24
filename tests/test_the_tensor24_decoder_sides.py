@@ -7,16 +7,18 @@ import json
 from tensor24.decoder import records
 from tensor24.record import schema
 
-KEY = 7  # the edge key on every train card
+KEY = 7  # the edge key on every train card but train 3's, which holds none
 CARDS = [
     {"index": t, "label": f"train {t}", "kinds": [0], "part": 1, "winding": 1, "key": KEY, "square": 0}
     for t in (0, 1, 2)
 ]
+CARDS += [{k: v for k, v in CARDS[0].items() if k != "key"} | {"index": 3, "label": "train 3"}]
 KIND = {"index": 0, "label": "A1", "dimension": 1, "characters": [1] * 24}
-HEADER = {"kind": "header", "record": "tensor24", "major": 1, "minor": schema.MINOR, "sides": [1, 1, 1]}
+HEADER = {"kind": "header", "record": "tensor24", "major": 1, "minor": schema.MINOR, "sides": [2, 1, 1]}
+# a board of two Node-clocks and two rounds, so a partner at another Node-clock or round is no partner
 HEAD, END = (
     HEADER | {"kinds": [KIND], "trains": CARDS},
-    {"kind": "end", "rounds": 1, "undone": 0, "exact": 1},
+    {"kind": "end", "rounds": 2, "undone": 0, "exact": 1},
 )
 
 
@@ -36,15 +38,27 @@ def read(events, tmp_path, guards=records.GUARDS):
 # a place where three clocks meet: the edges 0-1 and 0-2 carried, each pair of teeth summing to the key less 1
 GIVE = line(0, (1, -1, 3, 6), (2, -1, 2, 5))
 TAKE = [line(1, (0, 1, 3, 0)), line(2, (0, 1, 4, 1))]
-# a side cut short: refused by the schema's own shape where it types the sides (writer B's 1.4 line), else here
-OFF = (
-    "line 2's sides have not the form [u, q, tooth before, tooth after]",
+# sides off their form: refused by the schema's own shape where it types the sides (writer B's 1.4 line), else here
+SHAPE, OFF = (
     "line 2's sides has not its shape in the schema",
+    "line 2's sides have not the form [u, q, tooth before, tooth after]",
 )
-CUT = [{**GIVE, "sides": [[1, -1, 3]]}, *TAKE]
+BARE = "line 2 holds a tooth beside its sides, or no sides"
+FORMLESS = [
+    ([{**GIVE, "sides": [[1, -1, 3]]}, *TAKE], OFF),
+    ([line(0, (1, -1, 3, 6, 0), (2, -1, 2, 5)), *TAKE], OFF),
+    ([line(0, (1, -1, "3", 6), (2, -1, 2, 5)), *TAKE], OFF),
+    ([{**GIVE, "sides": 5}, *TAKE], BARE),
+]
+KEYLESS, APART = (
+    "line 2 names no train whose card holds a whole key",
+    "line 2's side to train 1 has no partner at its place",
+)
 REFUSED = [
-    ([{**GIVE, "tooth": [3, 6]}, *TAKE], "line 2 holds a tooth beside its sides, or no sides"),
-    ([{**GIVE, "sides": []}, *TAKE], "line 2 holds a tooth beside its sides, or no sides"),
+    ([{**GIVE, "tooth": [3, 6]}, *TAKE], BARE),
+    ([{**GIVE, "sides": []}, *TAKE], BARE),
+    ([{k: v for k, v in GIVE.items() if k != "train"}, *TAKE], KEYLESS),
+    ([line(3, (0, -1, 3, 6))], KEYLESS),
     ([line(0, (0, -1, 3, 6))], "line 2's side names its own train 0"),
     ([line(0, (5, -1, 3, 6))], "line 2's side names train 5, which no train card names"),
     (
@@ -57,7 +71,10 @@ REFUSED = [
     ),
     ([{**GIVE, "q": -1}, *TAKE], "line 2's sides sum to -2, not its q -1"),
     ([line(0, (1, -1, 3, KEY), (2, -1, 2, 5)), *TAKE], "line 2 holds a side's tooth outside [0, 7)"),
+    ([line(0, (1, -1, -1, 6), (2, -1, 2, 5)), *TAKE], "line 2 holds a side's tooth outside [0, 7)"),
     ([GIVE, TAKE[0]], "line 2's side to train 2 has no partner at its place"),
+    ([GIVE, TAKE[1], {**TAKE[0], "site": 1}], APART),
+    ([GIVE, TAKE[1], {**TAKE[0], "round": 2}], APART),
     (
         [GIVE, line(1, (0, 2, 3, 0)), TAKE[1]],
         "line 2's side to train 1 and its partner hold q -1 and 2, not 0 summed",
@@ -77,7 +94,7 @@ def test_each_edge_closes_at_its_place_and_each_line_breaking_a_rule_of_the_side
     tmp_path,
 ):
     """Yes: a place where three clocks meet, its giver's line and its two takers' with their teeth, reads in order, and
-    so does one with a side at q 0 beside its partner. No: a side cut short, by the guard that owns the side's form,
+    so does one with a side at q 0 beside its partner. No: each of FORMLESS by the guard that owns the side's form,
     and each record of REFUSED by its own cause, none refused without the sides' guard."""
     record, cause = read([GIVE, *TAKE], tmp_path)
     assert cause == "" and record is not None and record.of("click") == [GIVE, *TAKE]
@@ -87,7 +104,9 @@ def test_each_edge_closes_at_its_place_and_each_line_breaking_a_rule_of_the_side
         line(1, (0, 1, 3, 0), (2, 1, 1, 4)),
         line(2, (0, 0, 4, 4), (1, -1, 5, 2)),
     ]
-    assert read(still, tmp_path)[1] == "" and read(CUT, tmp_path)[1] in OFF
+    assert read(still, tmp_path)[1] == ""
+    for events, wanted in FORMLESS:
+        assert read(events, tmp_path)[1] in (wanted, SHAPE)
     for events, wanted in REFUSED:
         assert read(events, tmp_path)[1] == wanted
         assert read(events, tmp_path, records.GUARDS[:-1])[1] == ""
