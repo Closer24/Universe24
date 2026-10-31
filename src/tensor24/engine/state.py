@@ -34,7 +34,7 @@ class Read(NamedTuple):
 
     first: Z  # (terms,): the row read
     factor: Z  # (terms,): its whole factor
-    target: Z  # (terms,): the gear's row whose teeth it lands in (the clock's), or the Spoke whose grip (the grips')
+    target: Z  # (terms,): the Spoke whose grip it lands on
 
 
 class Click(NamedTuple):

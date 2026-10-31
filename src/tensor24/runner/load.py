@@ -268,7 +268,7 @@ def geared(
     # every row reads every train's first row at the factor of its square flag times Spokes x senses, a square's 00
     # slot at k0 = 12 (one unit, the half grip, for all ten slots: the board's wave, its grip reading ii, needs it,
     # gamma owed to the click world, the Boss's frame, NOT_CLOSED 26) and the rest at 0, less its own row: the zero
-    # test of the rows' difference cuts the 00 row's read of itself, so its teeth stand at rest and the clocks' read
+    # test of the rows' difference cuts the 00 row's read of itself, so its teeth stand at rest and the clocks' plan
     # is acyclic (a dial is never moved by its own quotient)
     trained, every = len(trains), np.arange(rows, dtype=np.intp)
     read, landed = np.repeat(first.astype(np.intp), rows), np.tile(every, trained)
