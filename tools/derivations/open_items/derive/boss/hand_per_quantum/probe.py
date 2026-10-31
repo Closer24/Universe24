@@ -2,7 +2,10 @@
 quantum for Pauli, on the owner's word to him, "Try a hand per quantum"): on a cube of 3 with the example universe's
 integers, two whole-speed hands of one kind, T1 at one part (three gears a site), X and Y, each on its own spring and
 with no tie between them, against one hand Z laid as their sum at every gear and site; then X and Y tied, against
-themselves untied.
+themselves untied. The world's trains stand in the universe file beside the probe, universe.json (the three hands and
+the metric family at the example's integers, every train's pinion at den, the seed's), read through the loader, and the
+hands are the trains the loader finds no square, in the file's order (the audit of main b1a50bb33, F6 part one: they
+stood declared in code before, the metric found by its kinds' count).
 
 Clock: a hand is a train of gears, and a quantum per hand is one train laid by the files, which the loader accepts in
 any number of one whole-speed kind. The push on a gear is linear in the hands (the pull, the spring, the kick at T_d = 1),
@@ -31,7 +34,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[6]
-sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT.joinpath("src")))
 
 from tensor24 import main  # noqa: E402
 from tensor24.algebra.carry import carry  # noqa: E402
@@ -43,9 +46,8 @@ from tensor24.runner.files import sites_of  # noqa: E402
 SHAPE = [3, 3, 3]
 ROUNDS = 1000
 CHECKPOINTS = (1, 10, 100, 1000)
-UNIVERSE = json.loads((ROOT / "examples" / "tensor24" / "universe.json").read_text(encoding="utf-8"))
-HANDS = ("x", "y", "z")  # the two hands and their sum, three trains of one kind; the metric family the fourth train
-X, Y, Z = 0, 1, 2
+HERE = Path(__file__).resolve().parent
+UNIVERSE = json.loads(HERE.joinpath("universe.json").read_text(encoding="utf-8"))  # the hands and the metric family
 UNIT = -1  # the unit, the readings' last row, as contract.pushes lays it
 
 
@@ -64,13 +66,11 @@ def drawn(src, low, high):
     return low + x
 
 
-def universe():
-    """The example universe with its trains replaced: three hands of one kind, T1 at one part, and its metric family; the strengths the loader reads at 0 but the key, and the coupling family's keys at 0 where a loader reads them."""
-    held = json.loads(json.dumps(UNIVERSE))
-    metric = [t for t in held["trains"] if len(t["kinds"]) > 1]
-    held["trains"] = [{"name": name, "kinds": ["T1"], "part": 1} for name in HANDS] + metric
-    held["chosen"] = {**held["chosen"], "push": 0, "notch": 0, "hold": 0, "tie": 0, "mesh": 0}
-    return held
+def hands(held):
+    """The three hands by the loader's flags: the trains that are not the four-vector's square, in the file's order, X, Y and
+    Z = X + Y."""
+    x, y, z = [t for t in range(len(held.trains)) if not int(held.trains.square[t])]
+    return x, y, z
 
 
 def table(made):
@@ -90,6 +90,7 @@ def rows(held, h):
 def potential(held, made, f, g):
     """V = f SUM over the hands of H . H + g X . Y, as whole factors on their legs: the springs, and the tie where g is not 0."""
     entries = table(made)
+    X, Y, Z = hands(held)
     own = [(f * e, (rows(held, h)[j], rows(held, h)[i])) for h in (X, Y, Z) for e, j, i in entries]
     tie = [(g * e, (rows(held, X)[j], rows(held, Y)[i])) for e, j, i in entries] if g else []
     return own, tie
@@ -111,11 +112,12 @@ def plan(monomials):
 
 def world(seed=6):
     """The hands laid by the loader on the cube: X and Y drawn, Z their sum at every gear and site, the metric at 0, every edge tooth 0; the loaded trains, the layout as the loader lays it (its plan the notch's, empty at 0), and the state."""
-    held_universe = universe()
+    held_universe = UNIVERSE
     sites = sites_of(SHAPE)
     made = main.made(loading.star(len(SHAPE)))
     empty, found = loading.load(held_universe, {"version": 1, "gears": []}, sites, *made)
     assert not found, found
+    X, Y, Z = hands(empty)
     src = recurrence(seed)
     drawn_hands = {}
     for h in (X, Y):
@@ -152,7 +154,7 @@ def biggest(values):
 def gaps(held, layout, s):
     """Per component of the hands, the largest gap over the sites between Z and X + Y: of the momentum (the tooth's unit) and of the count."""
     p = momentum(layout, s)
-    rx, ry, rz = (rows(held, h) for h in (X, Y, Z))
+    rx, ry, rz = (rows(held, h) for h in hands(held))
     gap_p = p[rz] - p[rx] - p[ry]
     gap_a = s.a[rz] - s.a[rx] - s.a[ry]
     return [biggest(row) for row in gap_p.tolist()], [biggest(row) for row in gap_a.tolist()]
@@ -172,7 +174,7 @@ def report():
     own, tie = potential(held, made, f, g)
     springs = laid._replace(plan=plan(own))
     tied = laid._replace(plan=plan(own + tie))
-    rx, ry, rz = (rows(held, h) for h in (X, Y, Z))
+    rx, ry, rz = (rows(held, h) for h in hands(held))
     sites = s0.a.shape[1]
     gears = len(rz) * sites
     say(

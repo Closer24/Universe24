@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "integers": {"den": 15162856759112389, "full_rate": 1000, "width": 128},
+  "chosen": {"key": 1, "push": 0, "notch": 0, "hold": 0, "tie": 0, "mesh": 0},
+  "trains": [
+    {"name": "x", "kinds": ["T1"], "part": 1, "pinion": 15162856759112389},
+    {"name": "y", "kinds": ["T1"], "part": 1, "pinion": 15162856759112389},
+    {"name": "z", "kinds": ["T1"], "part": 1, "pinion": 15162856759112389},
+    {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1, "pinion": 15162856759112389}
+  ]
+}
