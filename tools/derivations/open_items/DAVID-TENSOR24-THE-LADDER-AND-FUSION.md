@@ -2,9 +2,9 @@
 
 David, 2026-10-29, 05:0x UTC. It closes steps 2 and 3 of the open steps in my 6488233005, by the owner's word to David of 04:1x UTC (in Hebrew; in translation): "Close every open step. Let it enter the engine if corrections are needed, through the Boss."
 
-Each claim is marked PROVED, CHECKED or OPEN. The probes and their outputs stand in derive/david_open/ladder/:
+Each claim is marked PROVED, CHECKED or OPEN. The probes and their outputs stood in derive/david_open/ladder/; none is in the tree now (l1, f1 and f2 left at 1b6ca0bf9, l2 at the audit of main b1a50bb33):
 - l1_ladder_characters.py (.txt): the 24's characters against 7a's 125 tables;
-- l2_ladder_on_the_act.py (.txt): the ladder run on 7a's act, turned by the 24, and run back;
+- l2_ladder_on_the_act.py (.txt): the ladder run on 7a's act, turned by the 24, and run back; deleted with its output at the audit of main b1a50bb33 (P2, agreed by both readings), as it declared its three trains and two coupling rows in code on 7a's API, which main no longer has, so section 2 stands as measured on 7a and no probe in the tree reproduces it;
 - f1_fusion_split.py (.txt): the joint dial split by 7a's tables, and the composite's whole numbers;
 - f2_fusion_on_the_act.py (.txt): two hands bound by coupling rows, run as one clock.
 
@@ -45,7 +45,7 @@ Every probe runs on 7a's engine at tensor24-review 298bec5d8 (its src copied, un
 
    For example, T1 x T1 -> A1 is the dot, T1 x T1 -> T1 the cross (6 entries), and E x E -> A2 the determinant. T1 x T2 -> A2 is a dot as well, since 7a holds T2 as A2 x T1, each shear on its vector's index.
 
-## 2. The ladder on 7a's act (CHECKED, l2)
+## 2. The ladder on 7a's act (CHECKED on 7a by l2, whose probe left the tree at the audit of b1a50bb33)
 
 1. **The world:**
    - three trains, a (A1, one gear), t (T2, three gears) and p (A2, one gear), on a board of 5 x 5 x 5;
@@ -112,7 +112,7 @@ Every probe runs on 7a's engine at tensor24-review 298bec5d8 (its src copied, un
 1. **Stage 6's tables:** nothing new, since 7a's tables are the 24's intertwiners exactly (1.4). One test: l1's four checks, and the parity of equal parts (3.1 item 3).
 2. **The load (7b or 7c):** the composite trains a universe can form, derived at load from its parts' trains and coupling rows, with no key in any file, booked at the parts' teeth (3.3 item 4).
 3. **Stage 9:** the fusion click: the shares n_K read once at load from the tables, the draw, the write into the composite's slot, and its books.
-4. **The tests,** to the Boss with the proposal: l2's ladder (the kinds' first ticks, the 24, the run back), and f2's pair (the modes, the composite's turn, the odd kind of equal hands at 0, the fill, the written composite's turn, the run back).
+4. **The tests,** to the Boss with the proposal: l2's ladder (the kinds' first ticks, the 24, the run back; its probe since deleted, so such a test would lay its world from files), and f2's pair (the modes, the composite's turn, the odd kind of equal hands at 0, the fill, the written composite's turn, the run back).
 
 ## 5. OPEN
 1. **The twin kinds** (E1/2, E5/2 and G3/2 of the 24 with the twin's sign) and their multiplicities above one: G3/2 x G3/2 holds T1 twice. This is OPEN 3, as 7a's load names it ("twin kinds wait on OPEN 3").
