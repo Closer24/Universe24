@@ -11,10 +11,13 @@
       it for 400 rounds; a row that reads the 0i slots would differ.
 
 Whole numbers alone, Rule3's carry for every division; no float, root, log, circular function or search.
-Usage: python3 -I g2_cases.py <src of main at 0df0e8385>
+Usage: python3 -I g2_cases.py <src of main at 0df0e8385>   (the example files are read from
+<src>/../examples/tensor24)
 """
 
+import json
 import sys
+from pathlib import Path
 
 import numpy as np
 
@@ -25,8 +28,16 @@ from tensor24.engine.contract import pushes  # noqa: E402
 from tensor24.engine.state import Gearing, Layout, Plan, Read, State  # noqa: E402
 from tensor24.runner.board import board  # noqa: E402
 from tensor24.runner.load import geometry  # noqa: E402
+from tensor24 import main as t24_main  # noqa: E402
+from tensor24.runner import load as t24_load  # noqa: E402
+from tensor24.runner.files import sites_of as t24_sites  # noqa: E402
 
-GRIP = 15162856759112389 * 1000 * 1000
+ex_dir = Path(sys.argv[1]).parent.joinpath("examples", "tensor24")
+ex_universe = json.loads(ex_dir.joinpath("universe.json").read_text())
+ex_shape = json.loads(ex_dir.joinpath("piece.json").read_text())["shape"]
+ex_loaded, _ = t24_load.load(ex_universe, {"version": 1, "ticks": 1, "gears": []}, t24_sites(ex_shape),
+                             *t24_main.made(t24_load.star(len(ex_shape))))
+GRIP = int(t24_main.layout(ex_universe, ex_shape, ex_loaded).grip[0][0])  # the example's grip, read through the loader
 REST = 6 * GRIP
 matter_row, light_row, slot00, slot_xx = 0, 1, 2, 6
 slot_0x = 3  # the 0i slots: 0x, 0y, 0z
