@@ -11,7 +11,7 @@ from tensor24 import main
 from tensor24.engine import state, step
 from tensor24.runner import load as loading
 from tensor24.runner.board import board
-from tensor24.runner.files import AXES, held_departures, sites_of, vocabulary
+from tensor24.runner.files import held_departures, sites_of, vocabulary
 from tensor24.runner.run import promises
 from tests import frame
 
@@ -28,7 +28,7 @@ HAND, PAIR = {"name": "held", "kinds": ["A1", "A2"], "part": 1}, {"kinds": ["T1"
 FIVE = [TRAINS[0], METRIC, HAND, {"name": "giver", **PAIR}, {"name": "taker", **PAIR}]  # the click world
 CHOSEN = {"key": 1, "push": 0, "notch": 0, "hold": 0, "tie": 0, "mesh": 0}  # read from the file
 SITE, WIDE = 3, 1 << 70  # where the gears are laid, and their counts, past 64 bits
-MADE = main.made(loading.star(len(AXES)))  # the kinds, tables and square by main.py's one joint
+MADE = main.made(loading.star(len(SHAPE)))  # the kinds, tables and square by main.py's one joint
 
 
 def loaded(trains, gears=(), chosen=CHOSEN, sites=SITES):

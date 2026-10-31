@@ -1,13 +1,16 @@
 """Tensor24's kinds and tables: the 24 from the Node-clock's star, the five kinds its representations, C its channels."""
 
 import itertools
+import json
+from pathlib import Path
 
 import numpy as np
 
 from tensor24.engine import kinds
 from tensor24.main import made as joint
-from tensor24.runner.files import AXES
 from tensor24.runner.load import star, tables
+
+PIECE = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24", "piece.json")
 
 
 def forms(held, matrix, keep):
@@ -38,7 +41,7 @@ def test_the_24_are_the_stars_turns_the_kinds_their_representations_and_the_tabl
     """Yes: the turns a group, each kind a representation, the five orthonormal and all of them, T1 the turn itself,
     the tables kept by the 24 on exactly the channels, the square the four-vector's, the joint the same.
     No: the reflections and the flat candidates weigh 0, and no table stands where no channel does."""
-    d = len(AXES)
+    d = len(json.loads(PIECE.read_text(encoding="utf-8"))["shape"])  # the piece's own sides
     spokes = star(d)
     matrix, weight = kinds.turns(spokes)
     held, inverse = kinds.kinds(matrix), kinds.kinds(kinds.inverse(matrix))

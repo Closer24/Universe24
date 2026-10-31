@@ -13,6 +13,7 @@ from typing import Any, NamedTuple, TypeGuard
 import numpy as np
 
 from tensor24.algebra.carry import carry
+from tensor24.runner.board import board
 
 # A kind among the 24's, a kind's whole basis and a gear's component within its train's rows are read against the
 # engine's kinds once they are made (held_departures). The fine tooth within its teeth is the round's promise, read by
@@ -29,7 +30,6 @@ OPERANDS = (
     "after",
 )  # the readings, in order, as the record's header names them
 GEAR = ("train", "component", "site", "a", "b", "r")
-AXES = ("x", "y", "z")
 # the keys a file may leave out; the pinion's key is its own rule's
 OPTIONAL = ("gears",)
 # the keys that left the format, each refused with the reason it left
@@ -75,13 +75,25 @@ ODD = Rule(
 SWITCH = Rule(
     lambda v: whole(v) and v * v == v, "0 or 1, the metric's push off or on: term 5 claims no strength"
 )
+
+
+def axial(sides: Any) -> bool:
+    """Whether the sides are one per axis of the board: a board of as many sides of 1 is made, as runner/board.py reads its axes by name, the dimension's own source the piece's shape, which the run reads (no count typed beside it)."""
+    ones: Any = tuple(1 for _ in sides)  # the board unpacks its axes by name
+    try:
+        board(ones)
+    except ValueError:
+        return False
+    return True
+
+
 LABEL = Rule(lambda v: isinstance(v, str) and v != "", "a label")
 KINDS = Rule(
     lambda v: isinstance(v, list) and v != [] and all(map(LABEL.test, v)), "a list of the kinds' labels"
 )
 VERSIONED = Rule(lambda v: whole(v) and v == VERSION, f"{VERSION}")
 SIDES = Rule(
-    lambda v: isinstance(v, list) and len(v) == len(AXES) and all(map(ONE.test, v)),
+    lambda v: isinstance(v, list) and all(map(ONE.test, v)) and axial(v),
     "one side per axis, each a whole number of at least 1",
 )
 # Each file's keys and what each holds: a rule, a mapping, a list of one train or more, or rows of the fields named.
