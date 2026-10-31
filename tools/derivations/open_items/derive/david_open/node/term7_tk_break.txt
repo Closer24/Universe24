@@ -1,0 +1,16 @@
+2.5's reduction with one hypothesis broken at a time (the first line keeps them all, as t7_tk's first case):
+  all kept: W 6000, grips 300, s 2, T_k 3, T_d 7, spring 73: the counts of A and R differ in 0 of 5000 rounds (first None)
+  T_k not dividing the grips: grips 301 in A, 100 in R: the counts of A and R differ in 5000 of 5000 rounds (first 1)
+  the edge tooth s T_k e1 + 1 in A: the counts of A and R differ in 0 of 5000 rounds (first None)
+  the edge tooth s T_k e1 + 2 in A: the counts of A and R differ in 0 of 5000 rounds (first None)
+  s T_k not dividing W: W 6004 in A, 1000 in R: the counts of A and R differ in 5000 of 5000 rounds (first 1)
+The edge tooth's offset c in A, s T_k e1 + c, at the residue 0 (e1 + 2 W1 a multiple of 4): the window 0 <= c <= 4 s T_k - 1 = 23 by 2.5's argument, and one step beyond each end:
+  c = 23, seed 151: the counts of A and R differ in 0 of 5000 rounds (first None)
+  c = 23, seed 152: the counts of A and R differ in 0 of 5000 rounds (first None)
+  c = 23, seed 153: the counts of A and R differ in 0 of 5000 rounds (first None)
+  c = 24, seed 151: the counts of A and R differ in 4995 of 5000 rounds (first 5)
+  c = 24, seed 152: the counts of A and R differ in 4997 of 5000 rounds (first 3)
+  c = 24, seed 153: the counts of A and R differ in 4917 of 5000 rounds (first 84)
+  c = -1, seed 151: the counts of A and R differ in 4957 of 5000 rounds (first 44)
+  c = -1, seed 152: the counts of A and R differ in 4982 of 5000 rounds (first 19)
+  c = -1, seed 153: the counts of A and R differ in 4994 of 5000 rounds (first 7)

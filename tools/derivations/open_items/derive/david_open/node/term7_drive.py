@@ -12,8 +12,8 @@ K = s T_k q_d; the push s F + K; the momentum P = 2 D_in (a - b) + tooth, which 
 (c) the run back: rounds out and the same number back by untick (the mirror, the act, the mirror), bit for bit, on
     even rows and an odd row, at T_d = 1, 2 and 7;
 (d) the mirror by parity against its mutants: the odd row's drive tooth flipped, and the even rows' kept;
-(e) the drive as the books' dial: at T_k = 1 and T_d = 2 the push over the run is half the source's, to within one
-    tooth, the remainder kept;
+(e) the drive as the books' dial: at T_k = 1 and T_d = 2 and 7 the push over the run is the source's over T_d, to
+    within one tooth, the remainder kept;
 (f) the dial in the beat: Mesh-less Node-clocks, each its own oscillator, the drive at T_d 7 against the same equation
     carried by teeth seven times larger at T_d 1 and by the linear recurrence at the scale 10^30, between the springs
     on each side; (f2) the two acts count for count, the teeth act's edge tooth T_d s + 4 r_d, with the edge tooth laid
@@ -23,7 +23,7 @@ K = s T_k q_d; the push s F + K; the momentum P = 2 D_in (a - b) + tooth, which 
     drive on J1 alone; the run back holds at every T_d when J5 reads no row it pushes (the mirror theorem's hypothesis
     (d)), and fails at every T_d, T_d 1 included, when it does: the condition is the act's, not the drive's.
 
-Usage: python3 -I term7_drive.py <src of node-live at f72067cdf> (about 50 s)
+Usage: python3 -I term7_drive.py <src of node-live at f72067cdf> (about 90 s)
 """
 
 import sys
@@ -185,7 +185,7 @@ print("(d) the mirror by parity against its mutants, T_d 7, 400 rounds out and b
 print(f"  the law's mirror (even rows' drive tooth flipped, the odd row's kept): {run_back(7, 400, 31)}")
 print(f"  the odd row's drive tooth flipped too: {run_back(7, 400, 31, mirror_with(True, False))}")
 print(f"  the even rows' drive tooth kept: {run_back(7, 400, 31, mirror_with(False, True))}")
-print("(e) the drive as the books' dial: T_k 1 against T_k = T_d, the kicks summed over 200 rounds at every gear of row 0:")
+print("(e) the drive as the books' dial at T_k 1: the kicks summed over 200 rounds at every gear of row 0:")
 for t_d in (2, 7):
     _, _, _, _, sum_j, sum_k, s, r0 = books((3, 3, 3), t_d, 1, 200, 41)
     gap = [int(t_d * k - j) for k, j in zip(sum_k[0].tolist(), sum_j[0].tolist())]

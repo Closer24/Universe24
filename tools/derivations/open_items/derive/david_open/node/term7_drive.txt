@@ -17,7 +17,7 @@ the act's layout: three rows at the teeth W = 6000000, every Mesh at 1000000, ro
   the law's mirror (even rows' drive tooth flipped, the odd row's kept): True
   the odd row's drive tooth flipped too: False
   the even rows' drive tooth kept: False
-(e) the drive as the books' dial: T_k 1 against T_k = T_d, the kicks summed over 200 rounds at every gear of row 0:
+(e) the drive as the books' dial at T_k 1: the kicks summed over 200 rounds at every gear of row 0:
   T_d 2, T_k 1: T_d SUM K - SUM J at row 0's gears within -1 to 1, against the bound -(T_d - 1) to T_d - 1; the push carried is SUM J / T_d to within one tooth of the drive
   T_d 7, T_k 1: T_d SUM K - SUM J at row 0's gears within -6 to 6, against the bound -(T_d - 1) to T_d - 1; the push carried is SUM J / T_d to within one tooth of the drive
 (f) the dial in the beat: 27 Mesh-less Node-clocks, one even row, each its own oscillator, 10,000 rounds, the sign

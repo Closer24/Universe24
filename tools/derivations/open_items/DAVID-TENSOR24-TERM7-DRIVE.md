@@ -1,6 +1,6 @@
 # Term 7, the drive: one carry of the source at the drive's teeth, forced by the books, a finer dial for the source
 
-David, 2026-10-30 (the second text, 23:3x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
+David, 2026-10-31 (the third text, 00:2x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
 close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's term 7
 ("the drive: one wheel carries the coupling's push for every row; q_d, r_d+ = carry(J, T_d, r_d); none of its own: the
 clicks do not come from the drive; Rule3's carry at T_d; BUILT at T_d = 1; DERIVED (G3), to confirm under the owner's
@@ -10,19 +10,23 @@ moving. It reads the act on node-live f72067cdf: engine/step.py's drive, kick, a
 State.rd within [0, T_d), the drive's teeth Gearing.drive and the kick's Gearing.kick per row. The probe is
 derive/david_open/node/term7_drive.py (about 90 s), its output beside it, whole numbers alone, every division Rule3's
 carry. The first text (toys-5 3175fdeca) went to a new hostile pair, who refused it: the mathematician on three items
-and twelve minors, the physicist on two and eleven. Both found the form, the books, the three identities and the mirror
-by parity standing. Big Pic's word (6535643629: the fold stands, and the key's inertia across rows is the canonical
-one) is folded here with their items (section 7); section 8 says how the text checked itself.
+and twelve minors, the physicist on two and eleven; their items and Big Pic's word (6535643629) are folded in section 8.
+The second text (toys-5 4cbece813) went back to them: the physicist PASSED it with nine minors, and the mathematician
+refused it on one clause, the measure of 2.7's crossing in the back tick, with eleven minors. Big Pic's word
+(6536221174 item 4: the fold stands; the clause is the exact form of the condition, and the drive still adds none) is
+folded here with their items (section 7); section 9 says how the text checked itself. The text has no click-world
+reading (section 4).
 
 **The finding in one line:** the drive is Rule3's carry of the row's source at the drive's teeth, and nothing else could
 be: the books and Rule3's range for the tooth force it.
 - **Forced:** J + r_d = T_d q_d + r_d+ (nothing lost, nothing made) with 0 <= r_d+ < T_d (Rule3's range) fixes q_d and
-  r_d+ uniquely, by the uniqueness of the whole division. A tooth bounded to any other window of T_d values gives
-  Rule3's drive up to a shift of the tooth; the range [0, T_d) is the law's convention (docs/ALGEBRA.md line 35).
-- **Its books, read from outside with the tooth moving:** at T_d / T_k = 1/1, 2/2, 7/7, 2/1 and 7/1 the quotient is
-  whole in 200 of 200 rounds, the kick read off the gear's momentum is T_k q_d in 200 of 200, and over the run T_d SUM K
-  = T_k (SUM J + r_d(0) - r_d(end)) at every gear: the drive's part of the momentum stays within 4 T_k counts of the
-  exact fraction at every round and never drifts.
+  r_d+ uniquely, by the uniqueness of the whole division. A tooth bounded to any other window of exactly T_d values
+  gives Rule3's drive up to a shift of the tooth, and a wider window admits two drives; the range [0, T_d) is the law's
+  convention (docs/ALGEBRA.md line 35).
+- **Its books, read from outside:** at T_d / T_k = 1/1, 2/2, 7/7, 2/1 and 7/1 (the tooth moving at T_d 2 and 7, standing
+  at T_d 1) the quotient is whole in 200 of 200 rounds, the kick read off the gear's momentum is T_k q_d in 200 of 200,
+  and over the run T_d SUM K = T_k (SUM J + r_d(0) - r_d(end)) at every gear: the drive's part of the momentum stays
+  within 4 T_k counts of the exact fraction at every round and never drifts.
 - **The run back:** the mirror by parity is the carry's own, two identities: an even row's tooth flips, T_d - 1 - r_d,
   and an odd row's is kept, because the odd row's source changes sign under time's reversal. 400 rounds out and back,
   bit for bit, at T_d 1, 2 and 7; flipping the odd row's tooth too fails, and so does keeping the even rows'.
@@ -33,10 +37,12 @@ be: the books and Rule3's range for the tooth force it.
   3 with c = -21 and -18; c = -22 parts. So the drive divides the source's strength by T_d against the gear's inertia
   and its grips, exactly in the counts, not on average.
 - **No condition of its own:** inside the act's two passes (a first drive on J1 alone feeds the metric's push J5) the
-  drive's run back holds at every T_d when J5 reads no row it pushes and J5's parity under the mirror is its target
-  row's, the act's own hypotheses. When J5 reads a row it pushes, the run back fails only in a tick where the share
-  the first kick misses carries a read momentum across a turn of the rest dial, at T_d = 1 as at any other; a drive
-  above 1 makes that share smaller.
+  drive's run back holds at every T_d when J5 reads the momenta of no row it pushes and J5's parity under the mirror
+  is its target row's, the act's own hypotheses. When J5 reads a row it pushes, the run back fails only in a tick
+  where the momentum J5 reads after the first kick lies in another turn of the rest dial than an exact run's: in a
+  forward tick the round's momentum out, in a back tick the mirror of the forward round's incoming momentum (the
+  mathematician's clause; 10,206 of 10,206 site trials). This holds at T_d = 1 as at any other, and a drive above 1
+  makes the share the first kick misses smaller.
 - **Not claimed:** the value of T_d on any row. Each strength's own term sets it, as term 5's books do for B6's dial on
   the square's rows. The drive clicks nothing.
 
@@ -72,13 +78,14 @@ be: the books and Rule3's range for the tooth force it.
   -T and T, so q = q' and r+ = r+'. Existence is Rule3's carry.
 - **So** the drive's form is not a choice: the books (the source neither lost nor made) and a bounded tooth give it, and
   Rule3's range [0, T_d) is the law's convention for a remainder (docs/ALGEBRA.md line 35: the carry, n + r = q d + r'
-  with 0 <= r' < d). A bounded tooth alone fixes the drive up to a shift of the window: any window of T_d tooth values
-  gives a unique drive. The law's line 100 writes a centred carry, as step.split's edge tooth is centred; the drive's
-  tooth takes Rule3's range.
+  with 0 <= r' < d). A tooth confined to a window of exactly T_d values fixes the drive up to a shift of the window, by
+  the same proof; a wider window does not (two drives in 1,452 of the mathematician's cases). The law's line 100 writes
+  a centred carry, as step.split's edge tooth is centred; the drive's tooth takes Rule3's range.
 - **One drive per row,** carrying the row's whole source J = J1 + J5 (decision 40 (d); step.act): a drive per term
   would keep a tooth per term, and the sum of their quotients differs from the quotient of the sum by up to the number
-  of terms (less one with every tooth at 0), more state for no gain. One drive per row scales every term on the row
-  alike (the physicist; 575973a20's loader notes the notch rides the same dial).
+  of terms (less one with every tooth at 0). Its gain would be a dial per term, where one drive per row scales every
+  term on the row alike (the physicist; 575973a20's loader notes the notch rides the same dial, so B2b's notch is
+  halved along with term 5's push); the act keeps one drive per row, at the price of that one dial.
 
 ### 2.2 The books over a run
 
@@ -118,7 +125,8 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   carry(J, T, r+) is not (q, T - 1 - r) in general.
 - **Probe (c):** 400 rounds out and 400 back by untick on the cube of 3, the start returned bit for bit at T_d 1, 2 and
   7 (every tooth moving at T_d 7; at T_d 1 none moves, and at T_d 2 the odd row's does not). **Probe (d),** at T_d 7:
-  the law's mirror True; the odd row's tooth flipped too, False; the even rows' tooth kept, False.
+  the law's mirror True; the odd row's tooth flipped too, False; the even rows' tooth kept, False. The probe's odd row
+  is free; a coupled odd row runs back exactly too (the physicist's p4b).
 
 ### 2.4 The 24's turns on the drive's tooth
 
@@ -139,10 +147,14 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   s' = T_d s + 4 r_d + c. Let rho0 = (s + 2 W) mod 4. If c lies within [-T_d rho0, 3 - T_d rho0], the two take the
   same count at every round, and s'+ = T_d s+ + 4 r_d+ + c. At rest s = 0 and W = 6 den Gamma^2 is even, so rho0 = 0
   and c = 0 serves.
-- **Its hypothesis: the same source.** J must be the same in both acts. A source that reads no pull is: the value legs'
-  plan and the metric's push read counts and momenta, which the two acts share. A source that reads the Mesh plan's
-  force reads T_d F in the teeth act and F in the drive act, and the two part at round 1 (the mathematician's grips-on
-  runs).
+- **Its hypothesis: the same source.** J must be the same in both acts. A source that reads no pull is. The value legs'
+  plan reads counts, which the two acts share. The metric's push reads momenta, which they do not share, M' = T_d M +
+  4 r_d + c; it reads them in turns, each act at its own rest dial (4 W and 4 T_d W), and the turns agree by the same
+  window as the proof below: M_out' = T_d M_out + 4 r1+ + c, r1+ the first pass's tooth (the mathematician's n2; the
+  physicist's p7 (a), 0 of 2,000 rounds differing; the mathematician's t7_finer3 and t7_finer3b, J5 reading three
+  rows' momenta, 6 runs, 0 rounds differing). A source that reads the Mesh plan's force reads T_d F in the teeth act and
+  F in the drive act, and the two part at round 1 (the mathematician's grips-on runs). The grips' read, layout.stretch,
+  which the loader lays on the ii slots, must be empty or scaled with the grips (the mathematician's n3).
 - **The residue is kept.** At standing teeth the gear's numerator is n = 4 W (a - b) + 4 push + s, so n = s modulo 4,
   and the split at the dial's half (step.split) gives s+ = ((n + 2 W) mod 4 W) - 2 W, so s+ + 2 W = n + 2 W modulo 4:
   the residue rho0 never changes, every push entering the momentum four times.
@@ -156,11 +168,27 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
 - **The mirror.** The mirror sends s to -1 - s, so a tooth of residue rho0 = 0 goes to rho0 = 3; c = 3 - 3 T_d, the top
   of the residue-3 window, is the mirror's image of c = 0 (the physicist's p6, 18,720 of 18,720 cases). So the offset
   form covers the time-reversed states, which the first text's c = 0 did not.
-- **Where they part.** With c outside the window the finer dial carries a count at the dial's edge a round apart: at
-  the residue 3, c = -22 parts at round 2,507 (probe (f2)). At c = 0 the window holds 0 only while T_d rho0 <= 3, so
-  the residue 1 at T_d 2 or 3 does not part (the mathematician's m6). With the kick's teeth above 1 the teeth row needs
-  the source T_k J, and the bound above holds only at T_k = 1; the physicist measured count for count wherever s T_k
-  divides W and the grips (his p1, up to T_k = W / 6 with Meshes on), which this page does not derive.
+- **Where they part.** With c outside the window the two can part, when a lay reaches the window's broken edge, and
+  need not: at the residue 3, c = -22 parts at round 2,507 (probe (f2)); one step beyond either end, 23 of 24 of the
+  mathematician's runs part, first between rounds 1 and 111, and the 24th ran away (his t7_finer3). At c = 0 the window
+  holds 0 only while T_d rho0 <= 3, so the residue 1 at T_d 2 or 3 does not part (the mathematician's m6).
+- **The stretch and the kick's teeth above 1: an exact reduction** (the mathematician's n4). Let s T_k divide W and T_k
+  divide the grips g, write W1 = W / (s T_k), and lay the edge tooth s T_k e1 + c with rho1 = (e1 + 2 W1) mod 4 and c
+  within [-s T_k rho1, s T_k (4 - rho1) - 1]. Then, for a source that reads no pull, the act at (W, g, s, T_k, T_d) is,
+  count for count, the act at (W1, g / T_k, 1, 1, T_d) with the edge tooth e1 and the same drive tooth, and by the
+  statement above that is the act at (T_d W1, T_d g / T_k, 1, 1, 1).
+  - **Proof.** The push is s (F + T_k q_d), F whole in the grips, so the numerator is n = s T_k m + c, m the reduced
+    act's. With m + 2 W1 = 4 W1 q + rho, rho = rho1 modulo 4 by the numerator's form (as above), so rho1 <= rho <=
+    4 W1 - 4 + rho1: n + 2 W = 4 W q + (s T_k rho + c), and 0 <= s T_k rho + c < 4 W for every such rho exactly when c
+    lies in the window. So both acts step by q and the edge tooth goes to s T_k e1+ + c; by induction at every round.
+    The source is the same: the counts are the same, and the momenta, s T_k M1 + c against the reduced act's M1, read
+    at s T_k times its rest dial, fall in the same turns by the same window.
+  - **Measured:** 0 of 5,000 rounds differ in 3 of 3 cases at c = 0 (the mathematician's t7_tk); the physicist's p2 and
+    p2b, up to T_k = W / 6 with Meshes on, the edge tooth born on the 4 s T_k lattice; my node/term7_tk_break.py at s
+    T_k = 6, residue 0: c = 1, 2 and 23 keep every count (0 of 5,000), c = 24 and c = -1 part by round 84 in 3 of 3
+    lays, grips 301 at T_k 3 and W 6,004 at s T_k 6 part at round 1.
+  - Against "the teeth row with the source T_k J" no offset works: the window is empty for T_k and T_d of 2 or more
+    (the mathematician).
 - **Probe (f2):** the drive at the teeth 6,000 and T_d 7 against the teeth 42,000 at T_d 1, spring 73 on both, one lay
   on 27 Node-clocks, 10,000 rounds:
   - the edge tooth laid a multiple of 4, c = 0: some count differs in 0 rounds, and the teeth row's tooth is
@@ -196,8 +224,9 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
 - **The act drives twice** from one tooth (step.act): a first drive on J1 alone gives a first kick, whose momenta, M_in
   = 2 D_in (a - b) + s and M_out = M_in + 4 (s F + K1), the metric's push J5 reads in the books' form (each read by the
   centred split at the rest dial, in whole turns of 4 rest); then the drive carries J = J1 + J5 from the same r_d.
-- **Claim 1, J5 reads no row it pushes.** The drive's run back holds at every T_d when J5's parity under the mirror is
-  its target row's: J5 kept on an even target row, negated on an odd one.
+- **Claim 1, J5 reads the momenta of no row it pushes.** The drive's run back holds at every T_d when J5's parity under
+  the mirror is its target row's: J5 kept on an even target row, negated on an odd one. B2b's strain term reads the
+  stretches of the rows it pushes, which is harmless (the mathematician's n5).
 - **Proof.** On a row J5 reads and does not push, J = J1, so the first drive is the second: the first kick is the
   round's kick and M_out is the round's momentum.
   - An even read row: the mirror maps its momentum M to -M - 1 (the slots swapped, the edge tooth s -> -1 - s), and the
@@ -206,21 +235,44 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   - An odd read row: the mirror swaps its slots and negates them, so its momenta swap with no negation, M_in -> M_out
     and M_out -> M_in, and the back round reads its two splits swapped (the mathematician).
   - So J5 comes back as its parity under that map says, and the target row's drive returns by the flip on an even row
-    (J5 kept) and by the sign on an odd row (J5 negated), as section 2.3 has it for J. A J5 of the wrong parity fails
-    at every T_d with no crossing: J5 = 11 sigma_in(0) sigma_out(0) on an odd row, reading an even row, is kept by the
+    (J5 kept) and by the sign on an odd row (J5 negated), as section 2.3 has it for J. A J5 of the wrong parity fails at
+    every T_d with no crossing wherever it is not 0 along the run, the odd target row's tooth or quotient coming back
+    off by 2 J5 (the physicist): J5 = 11 sigma_in(0) sigma_out(0) on an odd row, reading an even row, is kept by the
     swap and does not come back (the mathematician's O3); with the right parity his O1, O2 and K3 return.
-- **Claim 2, J5 reads a row it pushes.** The run back fails only in a tick where the share the first kick misses carries
-  a read momentum across a turn of the rest dial, in the forward tick or the back one.
-- **Proof.** The first kick misses J5's share of the quotient, so the M_out J5 reads differs from the round's momentum
-  by 4 s T_k (q_d - q1). J5 reads it through the split at 4 rest, so J5 differs from its value on the round's momentum
-  only where that difference carries M_out across a turn of the dial. Where no tick crosses, J5 reads the same split
-  forward and back, and Claim 1's argument returns the state.
-- **Measured** (the mathematician's t7_twopass and t7_twopass2): the probe's mutant at factor 1 on a lay of small
-  counts returns bit for bit at T_d (7, 7), (1, 1) and (2, 3), 9 of 9, J5 not 0 in 400 of 400 rounds, with no
-  crossing; over 24 lays the run back returns exactly when no tick crosses, in 48 of 48 runs at factor 1 and 54 of 54
-  at the probe's factor 11; 22 of 24 lays return at T_d 7 against 14 of 24 at T_d 1, the missed share about T_d times
-  smaller. Probe (g)'s two failures cross in every round, the missed share about 18 turns of the rest dial. The
-  physicist's run returns at T_d 10^6.
+- **Claim 2, J5 reads the momentum of a row it pushes.** The run back fails only in a tick where the momentum M_out
+  J5 reads after the first kick lies in another turn of the rest dial than an exact run's: in the forward tick, the
+  round's momentum out; in the back tick, the mirror of the incoming momentum of the forward round it undoes, -M_in - 1
+  on an even read row and M_in on an odd one (the mathematician's clause, on the second text).
+- **Proof.** In the forward tick the first kick misses J5's share of the quotient, so the M_out J5 reads differs from
+  the round's momentum out by 4 s T_k (q_d - q1); J5 reads it through the split at 4 rest, so where the two lie in
+  one turn J5 takes its value on the round's momenta. An exact run back reads, in the back tick, the forward round's
+  momenta mirrored: its incoming momentum is the forward round's momentum out, mirrored, and its momentum out is the
+  forward round's incoming momentum, mirrored (Claim 1's two cases). Where the back tick's M_out lies in the turn of
+  the latter, J5 reads the forward round's two splits swapped (and negated on an even read row), so J5 comes back by
+  its parity and Claim 1's argument returns the state.
+- **The back tick's own momentum is no measure** (the mathematician). A back tick whose M_out lies a turn from the
+  exact run's reads a wrong J5, and its own momentum out lands in the same wrong turn, so by its own momentum it shows
+  no crossing. His case (t7_claim2_one): one Node-clock, W 6,000, T_d 1, J5 = 11 (sigma_in(0) sigma_out(1) +
+  sigma_out(0) sigma_in(1)), rows 0 and 1 laid (49, 47, -11789, 0) and (13, 73, 9656, 0) as (a, b, s, r_d). The
+  forward tick does not cross, and J5 reads -1,980. In the back tick row 0's M_out, -28,292, and its own momentum
+  out, -33,572, lie in one turn of 4 W = 24,000, the exact run's, -36,212, in the next; J5 reads -1,320, and row 0
+  comes back as (49, 48, 9571, 0).
+- **Measured, site by site** (the mathematician's t7_claim2): on Mesh-less boards of 9 x 9 x 9, each Node-clock an
+  independent trial, one round out and one back, J5 = c (sigma_in(0) sigma_out(1) + sigma_out(0) sigma_in(1)):
+  - against the exact run's momentum, the run back returns exactly when no tick crosses, in 10,206 of 10,206 trials:
+    8,748 on the dial W 6,000 at T_d (1, 1), (7, 1) and (3, 2), and 1,458 at the probe's teeth 6 x 10^6, where
+    nothing crosses;
+  - against each tick's own momentum out, 17 of the 8,748 fail with no crossing (9 at T_d (1, 1), 1 at (7, 1) and 7
+    at (3, 2)).
+- **Measured, run by run** (the mathematician's t7_twopass and t7_twopass2): the probe's mutant at factor 1 on a lay
+  of small counts returns bit for bit at T_d (7, 7), (1, 1) and (2, 3), 9 of 9, J5 not 0 in 400 of 400 rounds, with no
+  crossing. Over 24 lays at factor 1 the run back returns exactly when no tick crosses, 48 of 48 runs, 22 of 24 lays
+  returning at T_d 7 against 14 of 24 at T_d 1, the missed share about T_d times smaller. At the probe's factor 11, 54
+  runs (3 drives, 6 lays, 3 lengths, not the 24 lays) all cross, and none returns. Probe (g)'s two failures cross in
+  every forward tick, 400 of 400 at T_d (7, 7) and (1, 1) (the physicist's p7 (b)), and at T_d (7, 7) in 399 of 400
+  back ticks (the mathematician); the missed share there has median 0.89, mean 1.65 and largest 19.8 turns of the rest
+  dial at T_d 7, and 6.58, 11.78 and 131.6 at T_d 1 (the physicist's p7 (b); the second text's "about 18 turns" was
+  the mathematician's largest at T_d 7, given for both). The physicist's run returns at T_d 10^6.
 - **So** both conditions are the act's own: the mirror theorem's hypothesis (d), B2b's price (the 00 push reads only
   rows on the force's path, which J5 does not push; NOT_CLOSED 30), and J's parity under the mirror, which the act's own
   run back needs. The drive adds none: B6 may lay T_d above 1 on a row J5 reads, or on a row it pushes, so long as no
@@ -254,33 +306,43 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   quotient. So the passing's books, summed over the trains, stand at any T_d.
 - **What the clicks read of it: the strength.** At s = T_k = 1 a spring f at the drive T_d beats as the spring f on T_d
   times the teeth, count for count (section 2.5), so the rest beat the clicks read as a mass, through many clicks of one
-  clock, is that of the strength f / T_d; at s T_k above 1 it is s T_k f / T_d where the physicist's measured count for
-  count holds (s T_k dividing W and the grips). The drive is the strength's dial in ratios of whole numbers, exact to
-  one tooth.
+  clock, is that of the strength f / T_d; at s T_k above 1 it is s T_k f / T_d wherever s T_k divides W and T_k the
+  grips, by 2.5's reduction. The drive is the strength's dial in ratios of whole numbers, exact to one tooth.
 - **The boundary with term 11, as built** (the physicist's B1; his p3 and p3b).
   - The passing is exactly the two-round change of each hand's energy weighted by its drive. From the drive act's books
     at standing teeth (s = T_k = 1, no Mesh), with e(t) = T_d W v(t+1) v(t) - a(t) J(a(t)) and S(t) the round's
-    passing, 4 e(t+1) - 4 e(t-1) = 4 S(t) plus the drive tooth's rounding terms. So one quantum of the passing is
-    s T_k / T_d of a quantum of the gear's own energy: the first text had the ratio inverted, a slip of mine.
+    passing, 4 e(t+1) - 4 e(t-1) = 4 S(t) plus the rounding terms of s' = T_d s + 4 r_d, the edge tooth and the drive
+    tooth together, exact only as read at W' = T_d W (the mathematician's n10). So one quantum of the passing is
+    s T_k / T_d of a quantum of the gear's own energy, derived at s = T_k = 1 and carried by 2.5's reduction wherever
+    s T_k divides W and T_k the grips (the counts are the reduced act's, and the passing reads counts alone): the
+    first text had the ratio inverted, a slip of mine.
   - The books close at unequal drives. A giver row at T_d 1 and a taker row at T_d 7, 27 Mesh-less clocks, 6,000
     rounds: S_giver + S_taker = 0 in 162,000 of 162,000 site-rounds; the identity holds in 161,892 of 161,892
-    site-rounds for each hand at W' = T_d W; the T_d-weighted energy, the one the act conserves, spreads 8,122 ppm over
-    the run, while the gears' own energy spreads 860,252 ppm.
+    site-rounds for each hand at W' = T_d W; the T_d-weighted energy, the one the act conserves to the edge's rounding,
+    spreads 8,122 ppm over the run, while the gears' own energy spreads 860,252 ppm.
   - The two remedies the first text named both break the books at unequal drives, and are withdrawn. The key read
     against the ratio leaves the clicks unbalanced in 1,845 site-rounds, the taker clicking 320 times against the
     giver's 2,165. The passing read on the kick fails the books in 161,664 of 161,973 site-rounds, and even at a
     uniform drive it loses the passing's exact antisymmetry (161,855 of 161,973 at T_d 7 on both rows).
 - **The key's inertia across rows: the canonical one** (Big Pic's word, 6535643629 item 2).
-  - The act keeps the T_d-weighted energy (8,122 ppm against the gears' own 860,252), so T_d is each row's inertia in
-    the books.
+  - The act keeps the T_d-weighted energy to the edge's rounding (8,122 ppm against the gears' own 860,252), so T_d is
+    each row's inertia in the books of the value legs' plan, which is all the key needs. On B2b's square rows T_d = 2 is
+    term 5's half of a source laid doubled, and term 5's books, where they close, count those rows in their own units
+    (the physicist).
   - A key passed between rows is then one quantum of that energy, since the passing closes in it at every site-round,
     and both remedies open the books at unequal drives. So the books force the choice.
-  - Read in a gear's own energy, one key is s T_k / T_d of the gear's quantum (the physicist's ratio), and a vertex
-    across rows reads c over the geometric mean of the two rows' drives (the physicist's 1e, his p5), as nature reads
-    couplings on canonically normalized fields.
+  - Read in a gear's own energy, one key is s T_k / T_d of the gear's quantum (the physicist's ratio), and a two-leg
+    vertex across rows at equal rest teeth reads c over the geometric mean of the two rows' drives (the physicist's 1e,
+    his p5), as nature reads couplings on canonically normalized fields (a board reading set beside nature, not in the
+    click world); a vertex of k legs reads c over the square root of the product of its legs' T_d W (the physicist).
   - It is a reading, not a step: the act keeps each gear's counts and its whole c, with no root.
   - The night's clicking worlds lay their trains at T_d = 1 (B4's pair world); B6's dial sits on the square's rows,
     which do not click. So the reading is read on the books (p3, p3b), and on no clicking world's clicks (section 6).
+- **The click world** (the owner's law; the Boss's 6535922454 item 4 and 6536002736 item 4): this text has no
+  click-world reading. The strength's dial (2.5, 2.6), the passing's books at unequal drives and the key's canonical
+  inertia (this section) are board readings only, and the two lines that set the board beside nature (the canonically
+  normalized fields above; the magnetic field in section 8) are board readings, not claims of physics. A click-world
+  reading would lay a clicking world at unequal drives (section 6), read twice, by two independent readings.
 
 ## 5. What stands (term 7's row for the architecture document, when its readers agree)
 
@@ -289,17 +351,18 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   time the wheel turns back with its tooth flipped on an even row and kept on an odd one.
 - **Board:** q_d, r_d+ = carry(J, T_d, r_d) at every gear row and Node-clock, J = J1 + J5, one pass, the tooth in the
   state; K = s T_k q_d.
-- **Clicks:** none of its own; at s = T_k = 1 the strength the clicks read is f / T_d of the source, exact to one tooth;
-  the passing counts the T_d-weighted energy the act conserves, its books exact at unequal drives, one quantum of it
-  s T_k / T_d of the gear's own; the key's inertia across rows is the canonical one, the T_d-weighted energy's,
-  forced by the books, a reading and not a step.
+- **Clicks:** none of its own, and no click-world reading (board readings only); at s = T_k = 1 the strength the clicks
+  read is f / T_d of the source, exact to one tooth; the passing counts the T_d-weighted energy the act conserves to the
+  edge's rounding, its books exact at unequal drives, one quantum of it s T_k / T_d of the gear's own; the key's inertia
+  across rows is the canonical one, the T_d-weighted energy's, forced by the books, a reading and not a step.
 - **Algebra:** Rule3's carry, forced by the books and the tooth's range; T_d SUM K = s T_k (SUM J + r_d(0) - r_d(end));
   the flip, the sign and the negation identities give the mirror by parity and the 24's twisted action; at standing
   teeth the act at T_d with the kick at 1 is the act at T_d W and T_d g with the drive at 1, count for count, for a
-  source that reads no pull, the edge tooth T_d s + 4 r_d + c with c within [-T_d rho0, 3 - T_d rho0]; inside the two
-  passes the run back needs the act's own hypotheses alone. **Home:** engine/step.py (drive, kick, act, mirror).
-  **Status:** DERIVED, with the tooth moving on the act (node/term7_drive.py); the value of T_d on a row is its
-  strength's term's.
+  source that reads no pull, the edge tooth T_d s + 4 r_d + c with c within [-T_d rho0, 3 - T_d rho0], and at s T_k
+  above 1, where s T_k divides W and T_k the grips, the act reduces to s = T_k = 1 exactly; inside the two passes the
+  run back needs the act's own hypotheses alone. **Home:** engine/step.py (drive, kick, act, mirror).
+  **Status:** DERIVED, board reading only (no click-world reading), with the tooth moving on the act
+  (node/term7_drive.py); the value of T_d on a row is its strength's term's.
 
 ## 6. OPEN
 
@@ -307,28 +370,61 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   rows; the coupling family's strengths, G3).
 - **A clicking world at unequal drives:** none is laid, so the canonical reading of the key (section 4) is read on
   the books, not on a world's clicks.
-- **The finer dial at s T_k above 1:** measured where s T_k divides W and the grips (the physicist's p1), not derived.
+- **The finer dial at s T_k above 1 where s T_k does not divide W, or T_k the grips:** neither derived nor measured;
+  where they divide, 2.5's reduction derives it.
 - **A moving clock.** At teeth that move with the 00 slot the edge's dial changes between the two edges, and the
   residue of section 2.5 is kept modulo 2 only, so the finer dial's count-for-count reading holds at standing teeth;
   the books and the run back hold at moving teeth as at standing ones (the identities do not read the teeth W).
-- **J5 reading a row it pushes:** the run back fails where the missed share crosses a turn of the rest dial; B2b keeps
-  no row both read and pushed.
+- **J5 reading a row it pushes:** the run back can fail only in a tick where J5 reads a momentum in another turn than
+  an exact run's, the back tick's measured against the mirror of the forward round's incoming momentum (2.7 proves the
+  crossing necessary for a failure, not sufficient); B2b keeps no row both read and pushed.
 
-## 7. The first text's readers, folded (the second text)
+## 7. The second text's readers, folded (the third text)
+
+**Big Pic's word** (6536221174, item 4): the fold stands. The mathematician's clause is the exact form of the
+condition: the back tick's read is compared with the mirror of the forward round's momentum (10,206 of 10,206), and
+the drive still adds no condition.
+
+**The mathematician: NOT PASSED on one item, his first B2 and B3 closed, eleven minors.**
+1. B1 re-read, Claim 2 false as written: in the back tick the tick's own momentum out is no measure. Claim 2 and its
+   proof now measure the back tick's M_out against the mirror of the forward round's incoming momentum, -M_in - 1 on an
+   even read row and M_in on an odd one, with his case and his site counts (2.7); the same in the finding, section 6
+   and section 8's two lines. The wording was his first report's, which the second text adopted.
+2. His minors: n1, a window of exactly T_d values (the finding; 2.1); n2, the two acts share counts, not momenta, and
+   J5's turns agree by the window (2.5); n3, the grips' read empty or scaled (2.5); n4, "can part", and the exact
+   reduction at s T_k above 1, derived here with its offset window (2.5, 4, 5, 6); n5, "the momenta of no row it
+   pushes" (the finding; 2.7); n6, the wrong parity failing where J5 is not 0 (2.7); n7, 2.7's measured lines (2.7);
+   n8, the summary's tooth moving at T_d 2 and 7 only (the finding); n9, the probe's (e) label, mended and rerun
+   (term7_drive.py); n10, section 4's identity exact as read at W' = T_d W, and the energy conserved to the edge's
+   rounding (4, 5); n11, section 9's untested list (9).
+
+**The physicist: PASSED, nine minors, folded:** n1, T_d as inertia in the value legs' plan's books, B2b's square rows
+counted in term 5's units (4); n2, a two-leg vertex at equal rest teeth, and k legs over the root of the product of
+their T_d W (4); n3, the missed share's size (2.7); n4, his p2 and p2b, the 4 s T_k lattice (2.5); n5, the rounding
+terms of s' = T_d s + 4 r_d, and the identity derived at s = T_k = 1 (4); n6, a per-term drive's gain, a dial per
+term (2.1); n7, J5 shared by the two acts, his p7 (a) (2.5, 9); n8, a coupled odd row, his p4b (2.3, 9); n9, section
+6's crossing as necessary only (6).
+
+**The owner's law on the click world:** section 4 says the text has no click-world reading and names its readings
+board readings; section 5's status says so.
+
+## 8. The first text's readers, folded (the second text)
 
 **Big Pic's word** (6535643629, item 2): the fold stands.
 - 2.7 as the crossing condition: a kick whose source reads the momenta it pushes is undone exactly only while that
-  read stands, so the run back can break only in a tick that carries a read momentum across a turn of the rest dial,
-  at T_d = 1 as at any other; the condition is the act's, and the drive adds none.
+  read stands, so the run back can break only in a tick whose read momentum lies in another turn than an exact run's
+  (the measure as the third text mends it, section 7), at T_d = 1 as at any other; the condition is the act's, and
+  the drive adds none.
 - The odd rows: J5's mirror parity must match its target row's, any source's condition for a run back. Nature has it
-  too: a force that reads velocities keeps time's reversal only if its field flips as well (the magnetic field). The
-  odd read row's case is proved in 2.7.
+  too: a force that reads velocities keeps time's reversal only if its field flips as well (the magnetic field; a board
+  reading set beside nature, section 4). The odd read row's case is proved in 2.7.
 - 2.5: the hypothesis stated, a J that reads no pull, with the grips-on runs and the offset c.
 - Section 4: the key's inertia across rows is the canonical one, forced by the books, a reading and not a step.
 
 **The mathematician's three, and his minors:**
 1. B1, "fails at every T_d, T_d = 1 included": false. Rewritten as Claim 2 of section 2.7, the crossing condition,
-   with his counterexample and his mechanism over 48 and 54 runs (the finding; 2.7).
+   with his counterexample and his mechanism over 48 and 54 runs (the finding; 2.7); its measure in the back tick
+   mended in the third text (section 7).
 2. B2, the odd rows: Claim 1 names J5's parity as its target row's, with the odd read row's swap without negation, his
    O3 failing and his O1, O2 and K3 returning (the finding; 2.7). Probe (g) lays two even rows; the odd rows' cases are
    his.
@@ -353,8 +449,21 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
    m7, the teeth moving (2.3); m8, a coupled odd row (his p4b returns); m9, grips, coupled rows, large T_d and a weak
    source (2.5); m10, COUNT5 (4); m11, beats cannot see a pump (2.6).
 
-## 8. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
+## 9. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
+- **The third text's probe:** term7_drive.py with (e)'s label and docstring mended (it runs T_k 1 alone), rerun in 83 s
+  on node-live f72067cdf, its output byte for byte against the second text's but for that label's line.
+- **The readers' scripts, rerun by me byte for byte on f72067cdf:** the mathematician's t7_claim2_one, t7_claim2,
+  t7_claim2_site and t7_tk; the physicist's p7_second.
+- **Re-derived by hand:** Claim 2's measure, from untick = mirror . tick . mirror: an exact back tick must end at the
+  forward round's incoming momentum mirrored, so its first-kick momentum is set against that, and the mathematician's
+  case by its turns at 4 W = 24,000 (-28,292 + 12,000 and -33,572 + 12,000 in the turn -1, -36,212 + 12,000 in the turn
+  -2); the reduction at s T_k above 1 and its offset window, n = s T_k m + c, by 2.5's argument; the momenta's turns in
+  the finer dial by 2.5's window.
+- **Cases built to break it** (my term7_tk_break.py, on f72067cdf, about 65 s): the reduction with each hypothesis
+  broken in turn. The grips 301 at T_k 3 and the teeth 6,004 at s T_k 6 part at round 1; the edge tooth off the multiple
+  of s T_k by 1 and 2 did not part, which led to the offset window, whose ends 0 and 23 keep every count and whose
+  neighbours -1 and 24 part in 3 of 3 lays.
 - **The second text's probe:** term7_drive.py extended in (f2) with Meshes and the offset c, rerun in 91 s on node-live
   f72067cdf, its lines byte for byte against the first text's output but for (f2)'s four new lines.
 - **The readers' scripts, rerun by me byte for byte:** the mathematician's t7_twopass2 (on f72067cdf) and t7_b2b (on
@@ -377,5 +486,10 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
     any run back can be read; the probe reads the cross form at the factor 11 and stops any run whose count passes
     10^12.
 - **What the probe does not test:** a moving clock (the 00 slot read into the teeth), the drive at T_k above 1 against
-  the teeth row, the odd rows inside the two passes (the mathematician's cases), and the key of a clicking train with
-  T_d above 1 (section 4).
+  the teeth row, the odd rows inside the two passes (the mathematician's cases), the key of a clicking train with T_d
+  above 1 (section 4), a coupled odd row (the probe's odd row is free; the physicist's p4b runs a coupled one back
+  exactly), 2.5's J5 shared by the drive act and the finer-dial act (the physicist's p7 (a): 0 of 2,000 rounds differ,
+  with J5 reading row 1 only and with the mutant reading the row it pushes), Claim 2's condition (the readers'
+  t7_twopass, t7_twopass2 and t7_claim2), J5 in the finer dial (the mathematician's t7_finer3 and t7_finer3b), the
+  offset window at the residues 1 and 2, or with Meshes away from the residue 0 and c = 0 (the physicist's p1, the
+  mathematician's t7_finer3), and the reduction at s T_k above 1 (the mathematician's t7_tk, my term7_tk_break.py).
