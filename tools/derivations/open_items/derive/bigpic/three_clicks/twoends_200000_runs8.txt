@@ -1,0 +1,61 @@
+(X) exact, over the hand's 97 values:
+  the sign rule's CHSH at each hand value (CHSH: hand values): [(2, 97)]; any measure of the hand that does not read the settings averages these, at most 2
+  over an even hand: the sign rule 2000 per mille, the member rule 849, the timelike rule 2499
+  the end at the middle: the landing read back is the sign rule at 388 of 388 (hand value, setting); so it reads at most 2, and 2000 per mille over an even hand
+  one birth and one death: the hand values kept per setting pair {(0, 1): [4], (0, 3): [12], (2, 1): [12], (2, 3): [20]}, each pair's two landings one landing, so CHSH 2000 per mille; A's +1 share in per mille under B's settings 1 and 3 at A's setting 0: [917] and [752], a signal
+run 1, 200000 pairs forward, 50000 kept at the free end:
+  (B) the sign rule, forward: CHSH 2003 per mille; the +1 shares under the far setting [506, 505, 504, 506]
+  (B) the member's landing, forward: CHSH 844 per mille; [501, 499, 501, 500]
+  (C0) the free end (50000 kept of 4856182 laid; each hand value kept 461 to 570 times):
+       the sign rule: CHSH 2014 per mille; [504, 501, 509, 506]
+       the member's landing read back from its end tooth: CHSH 818 per mille; [500, 496, 502, 500]; the run back exact at 50000 of 50000
+  (T) the timelike case, A's landing carried to B: CHSH 2497 per mille; [499, 500, 500, 498]
+run 2, 200000 pairs forward, 50000 kept at the free end:
+  (B) the sign rule, forward: CHSH 1991 per mille; the +1 shares under the far setting [503, 506, 503, 503]
+  (B) the member's landing, forward: CHSH 843 per mille; [499, 501, 500, 499]
+  (C0) the free end (50000 kept of 4852850 laid; each hand value kept 469 to 562 times):
+       the sign rule: CHSH 2016 per mille; [502, 502, 506, 505]
+       the member's landing read back from its end tooth: CHSH 879 per mille; [499, 500, 499, 493]; the run back exact at 50000 of 50000
+  (T) the timelike case, A's landing carried to B: CHSH 2505 per mille; [499, 500, 500, 501]
+run 3, 200000 pairs forward, 50000 kept at the free end:
+  (B) the sign rule, forward: CHSH 1996 per mille; the +1 shares under the far setting [505, 505, 505, 504]
+  (B) the member's landing, forward: CHSH 843 per mille; [502, 502, 499, 497]
+  (C0) the free end (50000 kept of 4863317 laid; each hand value kept 462 to 572 times):
+       the sign rule: CHSH 1989 per mille; [502, 508, 502, 505]
+       the member's landing read back from its end tooth: CHSH 850 per mille; [502, 505, 497, 505]; the run back exact at 50000 of 50000
+  (T) the timelike case, A's landing carried to B: CHSH 2517 per mille; [500, 502, 498, 502]
+run 4, 200000 pairs forward, 50000 kept at the free end:
+  (B) the sign rule, forward: CHSH 2003 per mille; the +1 shares under the far setting [507, 506, 504, 505]
+  (B) the member's landing, forward: CHSH 858 per mille; [501, 500, 499, 500]
+  (C0) the free end (50000 kept of 4857533 laid; each hand value kept 440 to 563 times):
+       the sign rule: CHSH 1981 per mille; [510, 506, 504, 508]
+       the member's landing read back from its end tooth: CHSH 860 per mille; [499, 505, 500, 501]; the run back exact at 50000 of 50000
+  (T) the timelike case, A's landing carried to B: CHSH 2499 per mille; [500, 500, 499, 501]
+run 5, 200000 pairs forward, 50000 kept at the free end:
+  (B) the sign rule, forward: CHSH 2000 per mille; the +1 shares under the far setting [505, 504, 506, 504]
+  (B) the member's landing, forward: CHSH 841 per mille; [502, 499, 500, 501]
+  (C0) the free end (50000 kept of 4832059 laid; each hand value kept 461 to 568 times):
+       the sign rule: CHSH 2014 per mille; [504, 500, 506, 503]
+       the member's landing read back from its end tooth: CHSH 852 per mille; [501, 497, 500, 497]; the run back exact at 50000 of 50000
+  (T) the timelike case, A's landing carried to B: CHSH 2494 per mille; [503, 501, 500, 502]
+run 6, 200000 pairs forward, 50000 kept at the free end:
+  (B) the sign rule, forward: CHSH 1985 per mille; the +1 shares under the far setting [507, 504, 508, 505]
+  (B) the member's landing, forward: CHSH 845 per mille; [502, 499, 505, 499]
+  (C0) the free end (50000 kept of 4848351 laid; each hand value kept 467 to 559 times):
+       the sign rule: CHSH 1999 per mille; [507, 505, 500, 508]
+       the member's landing read back from its end tooth: CHSH 823 per mille; [505, 503, 500, 502]; the run back exact at 50000 of 50000
+  (T) the timelike case, A's landing carried to B: CHSH 2493 per mille; [499, 502, 498, 499]
+run 7, 200000 pairs forward, 50000 kept at the free end:
+  (B) the sign rule, forward: CHSH 2003 per mille; the +1 shares under the far setting [505, 503, 502, 505]
+  (B) the member's landing, forward: CHSH 846 per mille; [502, 499, 499, 501]
+  (C0) the free end (50000 kept of 4849004 laid; each hand value kept 469 to 560 times):
+       the sign rule: CHSH 2000 per mille; [506, 508, 508, 501]
+       the member's landing read back from its end tooth: CHSH 858 per mille; [500, 500, 502, 493]; the run back exact at 50000 of 50000
+  (T) the timelike case, A's landing carried to B: CHSH 2498 per mille; [501, 499, 503, 500]
+run 8, 200000 pairs forward, 50000 kept at the free end:
+  (B) the sign rule, forward: CHSH 1998 per mille; the +1 shares under the far setting [504, 504, 504, 503]
+  (B) the member's landing, forward: CHSH 855 per mille; [499, 497, 501, 497]
+  (C0) the free end (50000 kept of 4871415 laid; each hand value kept 462 to 557 times):
+       the sign rule: CHSH 2021 per mille; [508, 505, 509, 505]
+       the member's landing read back from its end tooth: CHSH 846 per mille; [498, 501, 495, 499]; the run back exact at 50000 of 50000
+  (T) the timelike case, A's landing carried to B: CHSH 2490 per mille; [499, 499, 501, 496]

@@ -139,3 +139,30 @@ The Boss's direction for ALG1 (6540720252 item 1): every coupling a cell joining
 - **The third click's twin.** One number per cell would leave a triangle its tooth alone, and the choice goes with the twin; THIRD8's batch holds two entries per triangle. In ALG1's terms that is one gear per cell, with its now and its before (section 6).
 - **A coupling of four distinct trains**, a 3-cell: closed by ALG1's derivation until its pair rules (the Boss's 6541083468 item 1). A 3-cell holds no tooth and no twin, since its quanta reach no side and no line (C d_3 = 0), so the record shows three kinds of click by the cell's dimension, and no fourth. On the bench (fourth.py): no shipped world has four clocks pairwise joined, no live term joins more than two trains, and on the four-clock toy the 3-cell's boundary books 0 on all six edges and on all four clocks' lines.
 - **The dynamics:** the square-2 stop (STOP1; lumps above 64 run away, light/lumps.txt), the runaway's step, the key from the structure (KEY3, and with it LIGHT2's quiet), light's lines (LIGHT2), the third click's memory (THIRD8), the term that parts the doublets (the three generations' masses), and the strengths chosen in the files. ALG1 is the books' algebra; none of these is bookkeeping.
+
+## 11. The pair world's two ends, road (C) (the owner's word of 08:2x UTC)
+
+The owner chose (C): the settings and the hand meet through the seeds. `twoends.py` builds the pair world with its two ends and its controls, in whole numbers and Rule3's carry: a hand born at a source, a copy at each wing, each wing reading only its own copy, its own setting (the triangle's own, 0 and 60 degrees at A, 30 and 90 at B, drawn by its own late-chooser teeth) and its own member; every group of teeth born apart and turned apart on the click world's key, nothing chosen for an outcome (twoends_200000.txt; eight births in twoends_200000_runs8.txt).
+
+**Exact, over the hand's 97 values:**
+- Under the sign rule every hand value gives CHSH +2 at the triangle's settings, so any measure of the hand that does not read the settings gives at most 2 (Bell's count).
+- Over an even hand: the sign rule 2,000 per mille, the member's landing 849, the timelike rule 2,499.
+
+**Read, 200,000 pairs forward and 50,000 kept at the free end, over eight births:**
+- (B) forward: the sign rule 1,985 to 2,003; the member's landing 841 to 858.
+- (C0) the free end, each wing's end laid apart and kept where the two copies run back to one birth: the sign rule 1,981 to 2,021; the member's landing, read back from its end tooth, 818 to 879; the run back exact at 50,000 of 50,000 every time; each hand value kept 440 to 572 times.
+- (T) the timelike case, A's landing carried inside the cone to B: 2,490 to 2,517 (local, and no Bell test).
+- No signal: a wing's two shares under the far settings differ by at most 9 per mille over 80 pairs of shares.
+
+**Two seeds' laws that pick nothing, read exactly:**
+- **The end at the middle**, each member's end tooth at its dial's middle (the birth's time mirror): the landing read back is the sign rule at 388 of 388 (hand value, setting), so at most 2.
+- **One birth with one death**, the two members' teeth born as one tooth and ending as one: only the hand value equidistant from the two settings is kept, the strongest dependence of the hand on the settings. The two landings are then one landing, so CHSH 2, and A's +1 share moves with B's setting (917 against 752 per mille), a signal.
+- So measurement dependence alone does not pass 2.
+
+**What follows for the law (C) needs (derived).** Let each wing's act be one-to-one on that wing's own state (its copy, its chooser's teeth, its member's teeth), and let a law weigh each whole history by the product of the two wings' own counts, held to one birth. Then the share of pairs landing x, y under settings a, b is the sum over hand values h of N_A(h, a, x) N_B(h, b, y), over the sum of n_A(h, a) n_B(h, b), where N_A(h, a, x) counts A's states with copy h, setting a and landing x, and n_A(h, a) is its sum over x.
+- Where a wing's chooser teeth are apart from its copy, n_A(h, a) is the same for every h, so the hand's weight reads no setting, and CHSH is at most 2. The free start, the free end and the end at the middle are this case.
+- So a product law passes 2 only where a wing's count of chooser states reading a setting depends on its copy: the chooser's teeth share the copy's past at that wing, before the setting is read.
+- A law that is not a product ties the two wings' ends. One death is the natural one, and it reads 2 and signals.
+- The shares nature shows at the triangle's settings (equal landings at 3/4 of pairs 30 degrees apart and at none 90 degrees apart, each wing's +1 share one half under every far setting, CHSH 5/2) are the triangle's own squares, the height's 3 over the side's 4, as pairwhole.py lays them, so the law needs no picked number for them. What it must supply is the dependence itself, in one of these two forms, with no signal. OPEN.
+
+Two faults were found and fixed on the bench before these readings. The turn on the hand's dial 97 alone repeats every 76,056 rounds, so the free end's kept hand values were uneven (528 to 3,178 times each); the copy is now read on the click world's key as the place of its tooth. And the timelike case read B's landing from the hand's next tooth, which A's draw had moved, so B's share moved with A's setting (376 against 251 per mille); B's own member now lands (496 to 503).
