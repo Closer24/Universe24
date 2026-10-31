@@ -264,7 +264,7 @@ def valued(lines: Lines) -> str:
 
 
 def clicked(lines: Lines) -> str:
-    """The first click line at an earlier click line's round, site and train; a line of no side, in its site or across a Mesh, q 0 among them, and a line naming no train whose card holds a whole key, a train no card names among them, are the sides' guard's alone, which holds every click line (sides.sided: "holds a tooth beside its sides, or no sides" and "names no train whose card holds a whole key"; the ninth code reader's MINOR 10 and the Boss's Q3)."""
+    """The first click line at an earlier click line's round, site and train; a line of no side, in its site or across a Mesh, q 0 among them, and a line naming a train no card names, or no train whose card holds a whole key, are the sides' guard's alone, which holds every click line (sides.sided: "holds a tooth beside its sides, or no sides", "names train T, which no train card names" and "names no train whose card holds a whole key"; the ninth code reader's MINOR 10 on node-fold and MINOR 5 on node-fold-fix, the Boss's Q3)."""
     seen: set[tuple[int, int, int, int]] = set()
     for n, e in [(n, e) for n, e in numbered(lines) if e["kind"] == "click"]:
         if place(e) in seen:

@@ -35,7 +35,7 @@ def edged(e: Line) -> list[Side]:
 
 
 def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
-    """The first rule of its own one line's sides break: a tooth beside them or none, one off its form, a line naming no train whose card holds a whole key, one naming the line's own train or a train no card names, their trains, or across a Mesh their places and trains, out of order or one twice, their q not summing to the line's, or a tooth outside [0, K)."""
+    """The first rule of its own one line's sides break: a tooth beside them or none, one off its form, a line naming a train no card names, named by its train (the ninth code reader's MINOR 5 on node-fold-fix), or else no train whose card holds a whole key, a side naming the line's own train or a train no card names, their trains, or across a Mesh their places and trains, out of order or one twice, their q not summing to the line's, or a tooth outside [0, K)."""
     t, key = e.get("train"), keys.get(e.get("train"))
     sides, across = e.get("sides"), e.get("across", [])  # no default: every click line carries its sides
     if "tooth" in e or not (isinstance(sides, list) and isinstance(across, list)) or not sides + across:
@@ -46,6 +46,8 @@ def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
         return (
             f"line {n}'s sides across a Mesh have not the form [u, place, q, tooth before, tooth after]"
         )
+    if whole(t) and t not in keys:
+        return f"line {n} names train {t}, which no train card names"
     if not (whole(t) and whole(key)):
         return f"line {n} names no train whose card holds a whole key"
     us, total = [u for u, _, _, _ in sides], sum(q for _, _, q, _, _ in edged(e))

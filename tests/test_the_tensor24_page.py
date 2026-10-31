@@ -35,6 +35,7 @@ def test_the_page_holds_its_records_click_lines_and_says_so_where_the_record_hol
     drawn, empty = pages
     assert clicks and f'id="summary">{clicks} click lines in the run\'s 2 rounds' in drawn
     assert f'"total":{clicks},' in drawn and '"kind":"HOLDS"' in drawn
+    assert '"netted":' in drawn and "b.netted" in drawn  # the key the page's script reads
     assert "<title>w running</title>" in drawn
     assert 'id="summary">The record holds no click line: not in the click world.' in empty
     assert '"total":0,' in empty and '"kind":"NO CLICK"' in empty

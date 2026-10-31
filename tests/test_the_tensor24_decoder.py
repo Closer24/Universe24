@@ -87,6 +87,7 @@ KEYED = '{"kind": "click", "round": 1, "round": 1, "site": 0}'
 NAN = '{"kind": "end", "rounds": 6, "undone": NaN, "exact": 1}'
 SIDELESS = "line 2 holds a tooth beside its sides, or no sides"
 KEYLESS = "line 2 names no train whose card holds a whole key"
+UNCARDED = "line 2 names train 5, which no train card names"
 # ten million deep, past any stack: 3.14.9 on CI reads a hundred thousand, 3.14.6 about forty thousand
 DEEP, NESTS = "[" * 10**7 + "]" * 10**7, "line 2 nests past the interpreter's depth"
 OFF = "line 1's sides {} make no board, a side below 1"
@@ -174,7 +175,7 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "valued",
         "line 1's train cards name the train 0 twice",
     ),
-    "a train no card names": ([H, {**GIVE, "train": 5}, E], "paired", KEYLESS),
+    "a train no card names": ([H, {**GIVE, "train": 5}, E], "paired", UNCARDED),
     "q 0 on a line of no side": ([H, {**GIVE, "q": 0, "sides": []}, E], "paired", SIDELESS),
     "a click line with no sides field": ([H, BARE, E], "paired", SIDELESS),
     "a line at an earlier line's place": (
@@ -192,11 +193,8 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         "end_across",
         "the end's across names place 5, off the board of sides [2, 1, 1]",
     ),
-    "a side across a Mesh on a line of no train": (
-        [B, without(SENT, "train"), CROSS[1], ENDED],
-        "paired",
-        KEYLESS,
-    ),
+    "a Mesh line of no train": ([B, without(SENT, "train"), CROSS[1], ENDED], "paired", KEYLESS),
+    "a Mesh line of no sides field": ([B, without(SENT, "sides"), CROSS[1], ENDED], "paired", SIDELESS),
     "the events out of order": ([H, *met(1 + 1), *met(), E], "ordered", ORDER),
 }
 
