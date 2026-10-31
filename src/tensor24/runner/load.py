@@ -1,5 +1,5 @@
 """Clock: every Node-clock made alike: the 24's tables, each train's rows, every gear's teeth and every Mesh's grip, the held hand's spring and the ties of the coupling family, every edge side's click tooth at its birth, and the setting's gears laid.
-Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s and T_k at 1, T_d senses on the square's 00 and ii rows and 1 elsewhere, the clock's read at Spokes x senses; the click's unit K the node's own at its initialization, senses middle + 1 from the setting's one middle (the key's middle, laid once for the world: the interim source of K, the file's own value, OPEN; KEY4), the edge dial D = (kappa div senses) K, kappa read from the plan's structure (runner/plans.py's edging; a scale with a remainder and an even D named by files.dialled), every side's click tooth born at (D - 1) div senses, D's middle, the Spokes along one axis the count, read as the pair's two ends.
+Algebra: a channel's table is the primitive row u of its group sum c u u^T, its sign by Rule3's sign test; the teeth at rest 6 den Gamma^2, the grips den Gamma^2, s and T_k at 1, T_d senses on the square's 00 and ii rows and 1 elsewhere, the clock's read at Spokes x senses; the click's unit K the node's own at its initialization, senses middle + 1 from the setting's one middle (the key's middle, laid once for the world: the interim source of K, the file's own value, OPEN; KEY4), the edge dial D = (kappa div senses) K, kappa read from the plan's structure (runner/plans.py's edging; what its scale's carry leaves and the sides at an even D counted, which the run refuses: run.dialled), every side's click tooth born at (D - 1) div senses, D's middle, the Spokes along one axis the count, read as the pair's two ends.
 Board: the metric family found by its kinds' character: its 00 slot read into every other row's teeth at k0 = Spokes x senses, its own at rest (the acyclic cut), its ii slots into each axis's grips, its 0i slots odd under the mirror, its 00 and ii rows driven at the dial senses; the held hand found by its character, the one-dimensional kinds together, its rows' grips 0 (a site-local oscillator), the tied trains by their character kept under the sign kind's twist; the plans (runner/plans.py) laid from the kinds' tables at the universe file's CHOSEN strengths: the momenta of every row on the force's path onto the square's 00 slot and every row's stretches onto its ii slots (the metric's push in the books' form), the monomials of the notch, the held hand's spring and tie and the hands' tie, the gradient vertex through the Mesh at the CHOSEN mesh, and term 11 on the edges, each term of J's plan weighed onto every other train of its monomial.
 Clicks: n/a: no number of the load reaches the clicks except through the act.
 """
@@ -13,7 +13,7 @@ import numpy as np
 
 from tensor24.algebra.carry import Z, carry, lit
 from tensor24.runner.board import board
-from tensor24.runner.files import GEAR, dialled, entries, star, vocabulary
+from tensor24.runner.files import GEAR, entries, star, vocabulary
 from tensor24.runner.plans import crossing, edging, holding, joined, meshing, notching, pushing, tying
 
 
@@ -154,7 +154,7 @@ def lay(gears: list[list[int]], trains: Trains, sites: int, birth: Z) -> tuple[t
 
 
 class Loaded(NamedTuple):
-    """What the load makes of the universe and the setting: the trains' rows, J's potential, the state laid, term 11 on the edges with the edge dial, the metric's push, the gradient vertex's plan and its structure, and edging's scale, kappa / two: every edge dial over the click's unit, the Mesh edges' factor."""
+    """What the load makes of the universe and the setting: the trains' rows, J's potential, the state laid, term 11 on the edges with the edge dial, the metric's push, the gradient vertex's plan and its structure, and edging's scale, kappa / two: every edge dial over the click's unit, the Mesh edges' factor; and the edge dials' two counts, in their fixed order, which the run refuses on where their sum is not 0 (run.dialled): what the scale's carry leaves and the sides at an even D."""
 
     trains: Trains
     potential: tuple[
@@ -172,10 +172,12 @@ class Loaded(NamedTuple):
     ]  # the gradient vertex: per term its readings on the plan's planes, its factor, its row
     meshed: tuple[Z, Z, Z]  # the gradient vertex's structure, its strength at 1: which Mesh edges exist
     scale: Z  # kappa div senses, edging's own: every edge dial over the click's unit, the Mesh edges' factor
+    spare: Z  # what kappa's carry by senses leaves, edging's: 0 as kappa is formed, a broken scale where not
+    even: Z  # the sides at an even edge dial D, (D - 1) div senses leaving 1: none while kappa div senses is odd
 
 
 def dial(ends: Z, middle: Z) -> Z:
-    """The click's unit K at the node's initialization from the world's one key, its middle laid once for the world (the interim source of K: the file's own value, OPEN, until the key is derived from the structure; KEY4): K = ends middle + 1, ends the pair's two ends, so that the middle is K's own complement, K - 1 - middle; an odd unit written by its middle, a definition, so no parity is read; K's one input, so that a structural origin replaces the middle and touches no dial, birth or refusal (files.dialled)."""
+    """The click's unit K at the node's initialization from the world's one key, its middle laid once for the world (the interim source of K: the file's own value, OPEN, until the key is derived from the structure; KEY4): K = ends middle + 1, ends the pair's two ends, so that the middle is K's own complement, K - 1 - middle; an odd unit written by its middle, a definition, so no parity is read; K's one input, so that a structural origin replaces the middle and touches no dial, birth or refusal (run.dialled)."""
     return ends * middle + 1
 
 
@@ -188,7 +190,7 @@ def load(
     square: Z,
     lifted: Any,
 ) -> tuple[Loaded, list[str]]:
-    """The held files loaded on the engine's kinds on the 24, the four-vector's square and the 48 lifts with their half-speed kinds and trains, as main.made passes them, the lay's departures named; J's potential holds the notch's monomials, the held hand's own spring and tie and the hands' tie, laid from the 24's tables c and the file's CHOSEN strengths, as no file declares a coupling; term 11 on the edges laid from J's potential, every side's key the edge dial D = (kappa div senses) K, kappa read from the structure, K the click's unit the node computes at its initialization from the setting's one middle (dial), its click tooth born at (D - 1) div senses, D's own middle, a scale with a remainder and an even D named by files.dialled beside the lay's departures, so that the run runs nothing; the metric's push and the notch laid at the file's CHOSEN strengths."""
+    """The held files loaded on the engine's kinds on the 24, the four-vector's square and the 48 lifts with their half-speed kinds and trains, as main.made passes them, the lay's departures named; J's potential holds the notch's monomials, the held hand's own spring and tie and the hands' tie, laid from the 24's tables c and the file's CHOSEN strengths, as no file declares a coupling; term 11 on the edges laid from J's potential, every side's key the edge dial D = (kappa div senses) K, kappa read from the structure, K the click's unit the node computes at its initialization from the setting's one middle (dial), its click tooth born at (D - 1) div senses, D's own middle, what the scale's carry leaves and the sides at an even D counted beside the lay's departures, which the run refuses (run.dialled), so that it runs nothing; the metric's push and the notch laid at the file's CHOSEN strengths."""
     labels, dims, reads = vocabulary(kinds, square, lifted)
     trains = trains_of(*entries(universe["trains"], labels), dims, reads)
     traces, *_, spun = reads
@@ -214,13 +216,13 @@ def load(
     # each Spoke, with the scale kappa / two and what its carry leaves
     click, scale, spare = edging(trains, potential, structure, unit, star(side))
     _, _, key = click
-    uneven = dialled(key, senses, spare)  # a broken scale or an even D, each named by its rule
-    birth, _ = carry(key - 1, senses, 0)  # every side's click tooth at its birth, D's middle
+    # every side's click tooth at its birth, D's middle, and the remainder 1 at an even D
+    birth, even = carry(key - 1, senses, 0)
     state, laid = lay(setting.get("gears", []), trains, sites, birth)
     push = pushing(trains, star(side), chosen["push"])
     mesh = meshing(trains, c, traces, square, kept, chosen["mesh"])
     meshed = meshing(trains, c, traces, square, kept, 1)  # the Mesh plan's structure, its strength at 1
-    return Loaded(trains, potential, state, click, push, mesh, meshed, scale), uneven + laid
+    return Loaded(trains, potential, state, click, push, mesh, meshed, scale, spare, even.sum()), laid
 
 
 def kept_forms(lifted: Any, half: Z) -> Z:

@@ -79,6 +79,24 @@ def promised(engine: Engine, layout: Any, s: Any, width: int) -> list[str]:
     return promises(s, wa, wb) + window(engine.grips(layout, s), wa, layout.spokes) + wide(s, width)
 
 
+# the edge dials' two counts, in load.Loaded's order (spare, even): the run's one refusal on them names each with its
+# count where their sum is not 0, nothing selected (dialled)
+DIALS = (
+    "the edge dials' broken scale, what kappa's carry by senses leaves: {} (0 on a lawful plan, so that every dial and"
+    " every Mesh edge's factor is kappa / two)",
+    "the edge dials' even sides, at a dial D whose two click teeth born at (D - 1) div senses are not each other's"
+    " complement: {} (none on a lawful plan; a monomial on an edge holding four legs makes every D even)",
+)
+
+
+def dialled(loaded: Any) -> list[str]:
+    """The run's one refusal on the edge dials, read from the load's two counts: where their sum is not 0, every name with its count, nothing selected (the Boss's 12:3x ruling on the ninth code reader's Q1 on node-key): what kappa's carry by senses leaves, a broken scale (a code check by construction, kappa being a product of senses and of legs counts, so that only a change of its form leaves one; KEY4's mathematician, MINOR 3), and the sides at an even dial D, K being odd by construction, so that D = (kappa div senses) K is even only where kappa div senses is, as a monomial on an edge holding four legs makes it: there a side's two click teeth born at (D - 1) div senses are not each other's complement, an edge's two quotients can sum to -1, not 0, and the triangle's pair needs an odd dial for its flip (the Boss's 09:4x ruling; KEY4's mathematician, MINOR 1)."""
+    spare, even = DIALS
+    if loaded.spare + loaded.even:
+        return [spare.format(loaded.spare), even.format(loaded.even)]
+    return []
+
+
 def digest(text: str) -> str:
     """SHA-256 in hex, the record's digest."""
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
@@ -265,7 +283,8 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
     if found:
         return found
     loaded, found = load(universe, setting, sites_of(shape), kinds, tables, square, lifted)
-    # the load's departures: the lay's, and a broken scale or an even edge dial (files.dialled); nothing runs
+    # the edge dials refused on the load's two counts, then the lay's departures: nothing runs
+    found = dialled(loaded) + found
     if found:
         return found
     layout = engine.layout(universe, shape, loaded)

@@ -12,7 +12,6 @@ from typing import Any, NamedTuple, TypeGuard
 
 import numpy as np
 
-from tensor24.algebra.carry import carry
 from tensor24.runner.board import board
 
 # A kind among the 24's, a kind's whole basis and a gear's component within its train's rows are read against the
@@ -60,8 +59,8 @@ SENSES = len(star(1))  # the Spokes along one axis, its + and its -: the star of
 # the world's one key as the initialization lays it, the key's middle, once for the world: the interim source of the
 # click's unit K (the file's own value, OPEN, until the key is derived from the structure; KEY4), read by load.dial
 # alone, K = senses middle + 1, an odd unit written by its middle (a definition); the node computes from it every edge
-# side's dial D = (kappa div senses) K and its tooth's birth (D - 1) div senses, and names an even D and a broken scale
-# (dialled, below); no parity is read here
+# side's dial D = (kappa div senses) K and its tooth's birth (D - 1) div senses, and counts the sides at an even D
+# and what a broken scale leaves, which the run refuses (run.dialled); no parity is read here
 MIDDLE = Rule(
     lambda v: whole(v) and v >= 0,
     f"a whole number of at least 0, the key's middle laid once for the world, the click's unit {SENSES} middle + 1",
@@ -367,20 +366,3 @@ def entries(trains: list[dict[str, Any]], labels: tuple[str, ...]) -> tuple[Any,
     pairs = [(labels.index(label), at) for at, train in enumerate(trains) for label in train["kinds"]]
     kind, of = np.array(pairs, dtype=np.intp).T  # every train holds a kind or more, as the format has it
     return kind, of, np.array([train["part"] for train in trains], dtype=object)
-
-
-def dialled(key: Any, senses: Any, spare: Any) -> list[str]:
-    """The load's two refusals on the edge dial D = (kappa div senses) K that plans.edging lays, each named here, beside the format's every departure by its rule (the gate binds the loader and its plans' home to the engine's rules, so neither holds a whether), each test the carry's remainder, so that load.load calls this once and returns what it names beside the lay's departures, and the run runs nothing: a broken scale, kappa over senses leaving a remainder (spare, edging's carry's: a code check by construction, kappa being a product of senses and of legs counts and so a multiple of senses on any file, so that only a change of kappa's form leaves one; KEY4's mathematician, MINOR 3); and an even D, (D - 1) div senses leaving a remainder. K is odd for every middle, and D is odd while kappa div senses is, as on every plan laid today (kappa 2, or 6 where a tie's three legs lie on an edge); a monomial on an edge holding four legs makes kappa div senses 4 or 12 and D even for every middle. On an even D a side's two teeth born at (D - 1) div senses are not each other's complement, so an edge's books can be one quantum off (the running sum of its two quotients 0 or -1), and the triangle's pair needs the odd dial for its flip about the birth (the Boss's 09:4x ruling; KEY4's mathematician, MINOR 1)."""
-    _, half = carry(key - 1, senses, 0)  # the remainder 1 where D is even
-    pairs = zip(key.ravel().tolist(), half.ravel().tolist(), strict=True)
-    even = sorted({int(d) for d, r in pairs if r})
-    broken = [
-        f"the edge dials' scale: kappa over senses leaves {spare}, so no dial and no Mesh edge's factor is kappa / two"
-    ]
-    return (broken if spare else []) + [
-        f"the edge dial {d}: even, so a side's two click teeth born at (D - 1) div senses are not each other's"
-        " complement and an edge's two quotients can sum to -1, not 0, and the triangle's pair needs an odd dial for its"
-        " flip; K being odd by construction, D = (kappa div senses) K is even only where kappa div senses is, as a"
-        " monomial on an edge holding four legs makes it"
-        for d in even
-    ]

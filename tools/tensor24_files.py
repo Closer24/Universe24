@@ -1,7 +1,7 @@
 """Tensor24's three files checked and loaded: whole numbers alone, the integers and the sides at least 1, each train,
 kind, part and site referred to there, and no coupling; then each refusal of the load by name (a kind none of the
 eight, a kind with no whole basis outside the four-vector's square, a train of a half-speed kind, admitted or not, a
-component off its train's rows).
+component off its train's rows), and the edge dials the run refuses on the load's two counts (run.dialled).
 
 Usage: `python tools/tensor24_files.py [universe piece setting]` prints every departure (the examples by default)
 and exits 1 if there is one; files that are not three are argparse's usage error. The fine tooth within its teeth is
@@ -18,6 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent.joinpath("src")))
 from tensor24.main import made  # noqa: E402
 from tensor24.runner.files import NAMES, departures, held_departures, sites_of, vocabulary  # noqa: E402
 from tensor24.runner.load import load, star  # noqa: E402
+from tensor24.runner.run import dialled  # noqa: E402
 
 EXAMPLES = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24")
 
@@ -27,7 +28,10 @@ def loaded(universe: Path, piece: Path, setting: Path) -> list[str]:
     u, p, s = (json.loads(path.read_text(encoding="utf-8")) for path in (universe, piece, setting))
     kinds, tables, square, lifted = made(star(len(p["shape"])))
     held = held_departures(u, s, vocabulary(kinds, square, lifted))
-    return held or load(u, s, sites_of(p["shape"]), kinds, tables, square, lifted)[1]
+    if held:
+        return held
+    laid, found = load(u, s, sites_of(p["shape"]), kinds, tables, square, lifted)
+    return dialled(laid) + found  # the edge dials as the run refuses them, then the lay's departures
 
 
 def main(argv: list[str]) -> int:
