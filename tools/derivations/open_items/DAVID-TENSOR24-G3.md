@@ -1,15 +1,15 @@
 # G3, the coupling family: the held hand still at the bottom of a hat, and the ties it holds
 
-David, 2026-10-31 (the tenth text, 02:0x UTC), on the Boss's word of 19:1x UTC (#2187 6531422713, item 3): "your hat is
-that quartic", the quartic the night's frame's hostile mathematician names as the direction for its item 3, "a
+David, 2026-10-31 (the eleventh text, 02:3x UTC), on the Boss's word of 19:1x UTC (#2187 6531422713, item 3): "your hat
+is that quartic", the quartic the night's frame's hostile mathematician names as the direction for its item 3, "a
 whole-number quartic on k with the unit". It keeps what the Boss decided for the night's frame (6531004963, decision 2;
-NOT_CLOSED 10): the held hand is the train of character (A1, A2) at part 1, told from light, (A1, A1), by character. It
-replaces only the hand's own spring of 2 rest, which turns the hand a quarter a round (FRAMES.md 6), by a hat on the
-hand's norm. It takes Big Pic's quaternion lead (6530683608, item 11) and his re-check of the seventh text (6530163632,
-item 3: the turning hand withdrawn as nature's vacuum). It answers the owner's word of 11:1x UTC (derive what the
-Node-clock needs; every derivation to stand with a hostile mathematician and a hostile physicist) and his words of the
-night: generic laws for every family, "and also with this quaternion"; no root; a frame where the derivation is not
-closed, approved by the Boss after the fact. It reads the act the night builds, node-live at 939fa65a7 (the edge's
+NOT_CLOSED 10): the held hand is the train of character (A1, A2) at part 1, told from the board's wave train, (A1, A1),
+by character. It replaces only the hand's own spring of 2 rest, which turns the hand a quarter a round (FRAMES.md 6), by
+a hat on the hand's norm. It takes Big Pic's quaternion lead (6530683608, item 11) and his re-check of the seventh text
+(6530163632, item 3: the turning hand withdrawn as nature's vacuum). It answers the owner's word of 11:1x UTC (derive
+what the Node-clock needs; every derivation to stand with a hostile mathematician and a hostile physicist) and his words
+of the night: generic laws for every family, "and also with this quaternion"; no root; a frame where the derivation is
+not closed, approved by the Boss after the fact. It reads the act the night builds, node-live at 939fa65a7 (the edge's
 split), in the law's four layers (Postulate 4, item (10)).
 - **The readers.** The eighth text (toys-5 7791470d1) went to the pair that read the sixth and seventh texts. Both
   refused it: the physicist on one new item, the mathematician on five; their seventh-text items stood answered.
@@ -65,7 +65,7 @@ inside the room, and its size is not nature's Higgs on this act.
 - **The window is the hand's whole range:** along the radius the hat's stiffness is 4 hat (3 |k|^2 - n), 8 hat n at the
   rest and 20 hat n at |k|^2 = 2 n, the far turn of a hand that rolls from the top. Mesh-less the act runs away inside
   the eighth text's window (his h8_window), and inside the frozen bound 20 hat n < 4 W too: at 20 hat n = 3.5, 3.75
-  and 3.9 W every lay laid across the hat goes away in 10 to 59 rounds, at 3 W all four lays, at 2 W two of four, and
+  and 3.9 W every lay laid across the hat goes away in 10 to 77 rounds, at 3 W all four lays, at 2 W two of four, and
   from W down every lay stays bounded over 6,000 rounds (his h9_b1 and h9_sweep, on the ninth text). The frozen bound is
   necessary, not sufficient: with the size's beat near a radian a round, a swing across the hat overshoots, the step's
   energy not the continuum's. The window for swings that reach the top is the bound measured over long runs, 20 hat n
@@ -73,7 +73,11 @@ inside the room, and its size is not nature's Higgs on this act.
 - **Its count of the size is the edge's at small swings:** at the probe's beat and R the act counts the recurrence's 40
   sign changes from about 50 counts off the rest up; below, the edge's staircase (FRAMES 1), as with no hat (his
   h8_small). The threshold is the swing's speed, not a count: d^2 x 8 hat R^2 / W of about 10 or more, inside the top
-  (his B2 on the ninth text).
+  (his B2 on the ninth text). Even above it the act's count is the edge's reading of the recurrence's beat, not equal
+  to it: at a speed of 10 to 36 inside the top, R = 244 and W = 2,000 n, 5 of 8 lays miss the recurrence by one sign
+  change in 2,000 rounds (38 against 39, 37 against 36), and the miss grows with the run (343 against 355 over 20,000
+  rounds at d = 75; 400 against 403 at R = 3,125, d = 50) (his h10_speed and h10_long, on the tenth text). So the count
+  reads the size's beat to about one sign change in 40 over 2,000 rounds, a board reading with that error.
 - **Decision 40 (g) is not met:** a still hand's wind is D = R^2 - R x R = 0, and R is CHOSEN. Frame 6's turning hand
   holds D = 1 and weighs W a Node-clock; no frame on this act has both (the owner's word).
 - **For the night:** frame 6 as built; the hat's corrected frame (section 6) for Sofer's morning page.
@@ -151,7 +155,11 @@ inside the room, and its size is not nature's Higgs on this act.
     mathematician's B1 on the ninth text): Mesh-less, a hand laid across the hat runs away inside it at 20 hat n of 2 to
     3.9 W, and the bound measured over long runs from the top is 20 hat n <= W (his h9_b1 and h9_sweep, board
     readings); with Meshes the measured bound is OPEN. Otherwise the lays are bounded to small swings about the rest,
-    under the rest's frozen bound 2 SUM_6 g + 8 hat n < 4 W. On the probe, SUM_6 g = W and 20 hat n = W / 100.
+    the frozen bound met over the swing's whole range, which the rest's own 2 SUM_6 g + 8 hat n < 4 W does not give
+    alone: at 8 hat n = 3.5 W a swing of 150 counts, 4.8 per cent of R, runs away at round 332 (his h8_window). On the
+    act the far turn reaches 2.08 n at R = 3,125 and 2.58 n at R = 244, the step's energy not the continuum's, so the
+    frozen bound taken at 2 n undercounts at small R (his h10_bound). At 20 hat n of W, 0.9 W and 0.5 W, 22 lays at
+    each of R = 3,125 and 244 stay over 50,000 rounds (h10_bound). On the probe, SUM_6 g = W and 20 hat n = W / 100.
   - Along the angle the stiffness is 0 at every rest, and inside the circle the radial one is below 0: the strict lower
     side is the condition for a beat, and the angle's zero mode has none. It drifts as a free count does (probe (g)'s
     turn).
@@ -180,17 +188,18 @@ inside the room, and its size is not nature's Higgs on this act.
 
 The probe's strengths, CHOSEN: key R = 3,125 = 5^5, n = R^2 = 9,765,625, hat 1, W = 2,000 n (the size's beat 8 hat n /
 W = 1/250), tie 3 (the tied spring 2 tie n / W = 3/1,000), the held rows' grip W/6 on each Mesh where they have Meshes,
-the tied train's W/100, light's W/6. Every count is a whole number and every lay is whole, with no function of the arc.
+the tied train's W/100, the board's wave's W/6. Every count is a whole number and every lay is whole, with no function
+of the arc.
 
 - **(a) The law:** J from contract equals -4 hat (|k|^2 - n) k_a on 2 of 2 rows and on 4 of 4 rows at 216 whole points,
   and is 0 on every row at 216 whole rests.
-- **(b) The rest,** 6 by 6 by 6, the tied train and light at 0, 2,000 rounds:
+- **(b) The rest,** 6 by 6 by 6, the tied train and the board's wave train at 0, 2,000 rounds:
   - laid alike at (R, 0), with Meshes: no count and no tooth moved in any of 2,000 rounds;
   - scattered over the 44 rests, Mesh-less: none moved in any round;
   - scattered, with Meshes: every round moves, and the hand leaves the circle: |k|^2 - n up to 8.02 n, the largest held
     count 8,480 (2.71 R); at a stiffer hat, 40, up to 9.43 n and 10,091 (3.23 R). A lay of random angles holds gradient
     energy far above the hat's depth (a Mesh's grip W/6 = 333 n against hat), a hot lay of the angle, bounded, no
-    runaway; the tied train and light stayed at 0 in every case.
+    runaway; the tied train and the board's wave train stayed at 0 in every case.
 - **(c) The norm the law gives,** laid alike, 2,000 rounds:
   - at (R + 31, 0) with the hat: |k|^2 / n within 979,624 to 1,019,938 ppm; k_0 - R changes sign 41 times, against 40
     by the exact linear recurrence at 10^40 its size. The exact nonlinear recurrence, the hat's full push at 10^20, also
@@ -223,8 +232,9 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
   Faster turns move the tied beat (the mathematician's h8_tie): b = (R, -v) at v = 50, 100, 150 and 200 gives 74, 75,
   77 and 79 sign changes, |k|^2 rising to 1.22, 1.64, 2.11 and 2.60 n; the recurrence at the stretched spring gives 74
   at 1.15 n and 78 at 1.6 n.
-- **(h) The run back,** 6 by 6 by 6, the hand scattered over the rests with small momenta, the tied train and light
-  laid moving, every Mesh, the hat and the tie, 500 rounds out and 500 back: the start returns bit for bit.
+- **(h) The run back,** 6 by 6 by 6, the hand scattered over the rests with small momenta, the tied train and
+  the board's wave train laid moving, every Mesh, the hat and the tie, 500 rounds out and 500 back: the start returns
+  bit for bit.
 - **(i) The 24's A2 sign,** (h)'s lay, 300 rounds: tick of the flipped state equals the flip of the ticked state at 300
   of 300 rounds with the twisted tooth, and at 300 of 300 with the plain one, so no tooth of the A2 row met -D in this
   run (the mathematician's h8_flip meets it, section 2).
@@ -274,8 +284,9 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
     strength below 0.016 against CMS's 1.002 +- 0.057 (the physicist's r2); about 0.32 GeV by hand, 78 times (Big Pic).
   - Mesh-less the width goes, and so does a travelling size: each Node-clock's size is a local gear with no waves.
   - So on this act the size is not nature's Higgs either way, for two causes. With Meshes, the act's missing gauge
-    field, which in nature eats the angles into the W and the Z, the structure light's exemption also needs (Big Pic,
-    6532742328 item 2); Mesh-less, the size does not travel, which no gauge field would cure (the physicist).
+    field, which in nature eats the angles into the W and the Z, the structure that the board's wave's exemption also
+    needs (owed in the click world; Big Pic, 6532742328 item 2); Mesh-less, the size does not travel, which no gauge
+    field would cure (the physicist).
 - **A vacuum that weighs nothing, on term 5's form.** At the bottom of the hat V = 0 with the constant restored, and a
   still field has no kinetic part, so the vacuum sources nothing. The 0 is term 5's books' form, which reads momenta and
   stretches and no potential, plus the chosen zero of the dropped constant; under that form no potential energy weighs,
@@ -285,7 +296,7 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
 - **No stimulated decay of a still vacuum.** The seventh text's two readers found the turning hand's size mode at the
   threshold of two tied quanta, so the turning vacuum fed them. A still vacuum holds no energy to feed. An excited size
   quantum falls into two angle quanta at every size mass with Meshes, and into two tied quanta where 8 hat n exceeds 4
-  times the tied spring, as nature's Higgs falls into lighter pairs; the probe's strengths sit below the second.
+  times the tied spring, as nature's Higgs falls into less massive pairs; the probe's strengths sit below the second.
 - **Mass from the hand.** The tied train's mass squared, 2 tie n, is the hand's rest read through the tie, the portal
   form lambda_p |Phi|^2 x^2, whose couplings to the size are nature's form (the physicist). The tie lands its push along
   k, so past the room the size answers the tied wave (probe (f)). Within the room the tied train beats as the unit
@@ -367,7 +378,9 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
     - the size laid by the swing's speed, d^2 x 8 hat R^2 / W of about 10 or more (several counts a round), inside the
       top (d below 0.41 R), the angle at 0, its sign changes against the exact nonlinear recurrence (the mathematician's
       B2: at the click world's cap R = 244 no lay of 50 counts or more is both fast and small, and at a ten times
-      slower beat 50 counts is still the edge's staircase, 34 against the recurrence's 40);
+      slower beat 50 counts is still the edge's staircase, 34 against the recurrence's 40), read as the edge's count of
+      the recurrence's beat with its error, about one sign change in 40 over 2,000 rounds and growing with the run (his
+      h10 checks), not as an equality;
     - the tied train's beat against its spring's recurrence, with the hand's |k|^2 moving with it past the room;
     - the run back exact;
     - the A2 flip with the twisted tooth commuting with the act, with a tooth laid at -D.
@@ -408,7 +421,7 @@ the tied train's W/100, light's W/6. Every count is a whole number and every lay
   - the hat's passing: NOT_CLOSED 29's road, with Big Pic (6536047021);
   - the four rows' A2 flip, run back and kinds;
   - the edge under a sub-count angle: a seeded angle's drift Mesh-less, the count moved by the rounded velocity, of the
-    kind NOT_CLOSED 23 names for light;
+    kind NOT_CLOSED 23 names for the board's wave;
   - a hot vacuum's settling: with no damping, a symmetric seed off the rest swings about it for good; with Meshes and
     any turn the size drains into angle waves (3 (l)), and Mesh-less the act's drift moves the swing's energy into the
     turn (the physicist's s1).
@@ -542,3 +555,24 @@ Pic first (David's 6536738713, item 6).
   |k|^2 = 2 n.
 - **What the text searched again:** every "window", "4 W", "50 counts", "stable", "0.91" and "828": each now carries
   its scope, the measured bound or Big Pic's correction.
+
+## 11. The tenth text's reader, folded (the eleventh text)
+
+The tenth text (toys-5 d5745d134) went back to its mathematician (the physicist passed the ninth). He found B1 mended,
+tested as stated (22 lays at each of three settings and two R, none going away over 50,000 rounds), and returned NOT
+PASSED on B2: lays that meet every condition of the speed test still miscount on the act, and the test set no run
+length and no tolerance.
+
+**His B2, and how it is folded:** the count is named what it is, the edge's reading of the recurrence's beat with its
+measured error, about one sign change in 40 over 2,000 rounds at R = 244, growing with the run, not an equality with the
+recurrence (the finding; 6). A claim's scope narrowed to what the act shows, under the owner's pace (the Boss's
+6537101472): no word of Big Pic's is needed for it.
+
+**His minors:** the runaway's range, 10 to 77 rounds over all seven of h9_b1's lays (the finding); small swings must
+meet the frozen bound over their whole range, with his h8_window case (2); the far turn's 2.08 n and 2.58 n on the act,
+so the frozen bound at 2 n undercounts at small R (2); the board's wave named so, never light, under the owner's word
+(the sweep, throughout).
+
+**How the eleventh text checked itself:** no probe moved (g3_hat.py and g3_pump.py unchanged since 634c8007f); his
+h10_checks figures are a reader's runs outside the tree, cited as his; the text searched again every "10 to 59",
+"against the exact nonlinear recurrence", "small swings" and "light".

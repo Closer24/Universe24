@@ -21,10 +21,12 @@ K = s T_k q_d; the push s F + K; the momentum P = 2 D_in (a - b) + tooth, which 
     momentum four times), Mesh-less and with Meshes (the grip against T_d times it), and at 3 modulo 4, where c = 0
     splits a count earlier at the dial's top, c = -21 and -18 (the window's ends) keep every count and c = -22 parts;
 (g) the drive inside the act's two passes: the metric's push J5 (the books' form) reads a row's momenta after a first
-    drive on J1 alone; the run back holds at every T_d when J5 reads the momenta of no row it pushes (the mirror
-    theorem's hypothesis (d)); when J5 reads the row it pushes it can fail only in a tick where the momentum J5 reads
-    lies in another turn than an exact run's, at T_d 1 as at any other, and here it fails at T_d 7 and at T_d 1: the
-    condition is the act's, not the drive's.
+    drive on J1 alone; the run back holds at every T_d when J5 reads the momenta of no row it pushes and J5's parity
+    under the mirror is its target row's (the mirror theorem's hypotheses); when J5 reads the row it pushes, its parity
+    still its target row's, the back tick of a round, run from the exact mirrored state, can fail only if that round's
+    forward tick or the back tick itself crosses (the momentum J5 reads lies in another turn of the rest dial than an
+    exact run's), at T_d 1 as at any other; here the two runs that read the pushed row cross and fail, at T_d 7 and at
+    T_d 1: the condition is the act's, not the drive's.
 
 Usage: python3 -I term7_drive.py <src of node-live at f72067cdf> (about 90 s)
 """

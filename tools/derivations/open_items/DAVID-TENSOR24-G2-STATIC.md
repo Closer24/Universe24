@@ -1,6 +1,6 @@
 # G2, the static field on the slot form: gamma = 1 from Postulate 6, and beta = 2 - gamma for test bodies
 
-David, 2026-10-31 (the seventh text, 02:0x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
+David, 2026-10-31 (the eighth text, 02:3x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
 close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's terms
 2, 3, 5 and 13 and for Postulate 6. It reads the act as built on main (0df0e8385), N2's source for term 5 (the Boss's
 draft, derive/boss/n2), and term 9's and term 13's texts at toys-5 55cc9b567 (their earlier readings cited by their own
@@ -92,7 +92,7 @@ conditions of section 2.
   above in Big Pic's form the static rest would be a change of coordinates and move nothing, and what moves in time is
   OPEN. On the cut, the 00 row's teeth at rest, the law above does not hold (term 9's two readers, with Big Pic for his
   re-check): it needs a 00 law that keeps one cone.
-- **Light** reads beta only at second order, beside g_ii's own second order, epsilon, which is OPEN.
+- **The board's wave** reads beta only at second order, beside g_ii's own second order, epsilon, which is OPEN.
 - **Refused beside it** (board readings set against nature, not in the click world):
   - the self-push onto the ii slots at strength 0, by the Event Horizon Telescope, so the strength is not 0 and the
     strong field is OPEN;
@@ -109,21 +109,23 @@ conditions of section 2.
   so slows a little more. Two clocks at one place then disagree about the well, by a part of the redshift near a
   twelfth of the difference of the squares of their beats in one round: a break of local position invariance (2, 4).
 - **The grips are length.** A Mesh's grip is the rest grip plus the ii slot of its axis at both of its ends. The square
-  of light's beat goes as the grip over the teeth for long waves, so light crosses a slack Mesh more slowly.
+  of the board's wave's beat goes as the grip over the teeth for long waves, so the board's wave crosses a slack Mesh
+  more slowly.
 - **Near a mass** the 00 slot rises and the ii slots fall, each by the mass's push in its own unit: the clocks there run
-  slow and the Meshes slacken, and light passing by is slowed by both.
+  slow and the Meshes slacken, and the board's wave passing by is slowed by both.
 - **Two causes, one product.** When two given masses slow a clock, Postulate 6 asks the slowdowns to multiply. On the
   act they do, at first post-Newtonian order and at zero background, only when matter pushes the grips' slots a
   twelfth as hard as the 00 slot and the other way, as general relativity's are pushed. So the push is no longer a
-  choice: Postulate 6 sets it, and Cassini tests it (2). Where every clock rests at term 9's depth, a push fixed in
-  lattice counts no longer composes; a push in the Node-clock's own units, at its own teeth and grip, would compose at
-  every depth, but no law of the act gives those units (2). Two masses that pull each other carry a cross part of
-  their own, as general relativity's do, but of another size, which the Moon's orbit and the binary pulsars refuse (2).
+  choice: Postulate 6 sets it, and Cassini tests it (a board reading set against nature, not in the click world; owed
+  there) (2). Where every clock rests at term 9's depth, a push fixed in lattice counts no longer composes; a push in
+  the Node-clock's own units, at its own teeth and grip, would compose at every depth, but no law of the act gives those
+  units (2). Two masses that pull each other carry a cross part of their own, as general relativity's do, but of another
+  size, which the Moon's orbit and the binary pulsars refuse (2).
 - **The field's own weight.** The 00 slot is itself pulled through those grips. Where the Meshes slacken, the 00
   slot's pull weakens, so it rises a little more. That extra rise is second order. With the ii slots pushed as
   Postulate 6 sets them, it slows the clocks by just what general relativity asks, together with the clock's own
-  reading of its teeth, so test bodies fall as general relativity has them at that order. Light also reads the grips'
-  own second order, which this page does not derive (2).
+  reading of its teeth, so test bodies fall as general relativity has them at that order. The board's wave also reads
+  the grips' own second order, which this page does not derive (2).
 - **A body's own depth.** A gear deep in a well beats slower, and on N2's draft its push on the 00 slot falls with the
   depth while its push on the grips does not. So a body's own binding lowers the mass its clocks read and leaves the
   mass its grips read: the two part, by a few parts in 10^5 for the Sun (2, 4).
@@ -135,18 +137,18 @@ conditions of section 2.
   A standing field needs the notch (term 9) to hold the board's mean.
 - **The rest every clock carries.** Held by the notch, every clock rests at one depth, set by the matter within the
   notch's range, and every rod is short by it. On the slot form, with matter's push fixed in lattice counts, the clicks
-  read a well against that rest, so how far light bends against how far clocks slow moves with it; pushed in the
-  Node-clock's own units, at its own teeth and grip, the rest would move neither, and those units are owed (2). Under
-  the law above, a uniform rest that stands still is a change of coordinates and moves nothing; what moves in time is
-  still read (2, 4). On the cut,
-  where the 00 row's teeth stand at rest, it is not: the 00 slot's own beat keeps its pace at every depth while every
-  other clock slows, so a uniform rest changes the ratio of two beats (2, 8).
+  read a well against that rest, so how far the board's wave bends against how far clocks slow moves with it (a board
+  reading set against nature, not in the click world; owed there); pushed in the Node-clock's own units, at its own
+  teeth and grip, the rest would move neither, and those units are owed (2). Under the law above, a uniform rest that
+  stands still is a change of coordinates and moves nothing; what moves in time is still read (2, 4). On the cut, where
+  the 00 row's teeth stand at rest, it is not: the 00 slot's own beat keeps its pace at every depth while every other
+  clock slows, so a uniform rest changes the ratio of two beats (2, 8).
 - **A board at rest.** The board has a frame of its own. This page reads masses at rest on it. A mass moving across it,
   or spinning, pushes the 0i slots, and on the act as built no row reads them: a spinning Earth drags no gyroscope,
   which Gravity Probe B refuses until term 10 (4).
-- **Clocks that click.** The clocks and the light of the probes are one-part gears: they read the board, and a one-part
-  gear never clicks (term 11). A clock is read in the clicks only as a two-part train that clicks, compared with another
-  through a resonance or a count of beats (4).
+- **Clocks that click.** The clocks and the board's wave of the probes are one-part gears: they read the board, and a
+  one-part gear never clicks (term 11). A clock is read in the clicks only as a two-part train that clicks, compared
+  with another through a resonance or a count of beats (4).
 
 ## 2. In the algebra
 
@@ -155,8 +157,8 @@ conditions of section 2.
     near s / W while s is small against W. A clock's rate against a clock at the rest
     teeth is read exactly as the exact linear recurrence's count (probe (a2)), and to the next order
     N^2 = (1 / (1 + u)) (1 - (s / (12 rest)) u / (1 + u)), u = c00 / rest: N^2 = rest / W holds at zero beat.
-  - Light on the lattice follows W (x+ - 2 x + x-) = grip (x_east - 2 x + x_west) along an axis, so for long waves its
-    beat squared over its wave number squared is grip / W.
+  - The board's wave on the lattice follows W (x+ - 2 x + x-) = grip (x_east - 2 x + x_west) along an axis, so for long
+    waves its beat squared over its wave number squared is grip / W.
 - **The next order, and its sign** (the mathematician's item 5, the physicist's item 4; probe (a2)).
   - The readers' figures. Against the exact recurrence's zero crossings, each placed between its rounds by carry, the
     next order's residual in N^2 (1 + u) at u = 3 is -335,729,803, -20,499,788 and -1,274,167 x 10^-12 at s = rest / 4,
@@ -179,8 +181,8 @@ conditions of section 2.
     - Its size at first order is 1/4800 of the redshift for the probe's slow clock and 1/48 for its fast one.
     - Two clocks at one depth differ at order beat^2 times u, so reading beta needs beat^2 far below |Phi|.
 - **The dictionary** (the physicist's item 9). The act reads its slots as the undensitized inverse metric.
-  - The clocks read N^2 = rest / W, and g^00 = -1 / N^2, so W goes as -g^00. Light reads grip / W, so the grip goes as
-    g^ii.
+  - The clocks read N^2 = rest / W, and g^00 = -1 / N^2, so W goes as -g^00. The board's wave reads grip / W, so the
+    grip goes as g^ii.
   - Densitized, each slot weighed by the volume element N A^3, the teeth would go as A^3 / N, and a clock of fixed
     spring read against the lapse that the densities imply would read a redshift (1 + 3 gamma) / 2 times general
     relativity's (the physicist; 2 at gamma = 1, Big Pic's check). Such matter does not fall by that lapse: on the
@@ -194,7 +196,8 @@ conditions of section 2.
     built holds the undensitized one.
 - **The slots in the post-Newtonian form.** Write u = c00 / rest for the 00 slot and v for the ii slot over the grip g
   at each end, so a Mesh's grip is g (1 + v_i + v_j), g (1 + 2 v) where the field is smooth.
-  - The clocks read N^2 = 1 / (1 + u); light reads the coordinate speed N / A with A^2 = (rest / g) / (1 + 2 v).
+  - The clocks read N^2 = 1 / (1 + u); the board's wave reads the coordinate speed N / A with
+    A^2 = (rest / g) / (1 + 2 v).
   - In the post-Newtonian form, -g00 = 1 + 2 Phi + 2 beta Phi^2 and g_ii = 1 - 2 gamma Phi, with Phi the Newtonian
     potential (below 0 near a mass): u = -2 Phi at first order, and v = gamma Phi at first order. That last line is
     what gamma is, read in the slots.
@@ -209,7 +212,7 @@ conditions of section 2.
     Phi^2 to third order (psi enters Phi^2 only as Phi^2 times its shift: the mathematician's g2b_series.py (S2)), so
     N^2 = 1 + 2 Phi + (4 - 2 gamma) Phi^2: **beta = 2 - gamma, for test bodies.** The clock's reading of its teeth gives
     the +4 Phi^2 and the field's weight the -2 gamma Phi^2; general relativity's +2 Phi^2 is their sum at gamma = 1.
-    Light reads beta only at second order, beside epsilon (below).
+    The board's wave reads beta only at second order, beside epsilon (below).
   - **What (c) is** (the mathematician's item 6). Probe (c) is an identity of mesh.pull for any laid field: the static
     equation's second order on the act's operator, not a field that settles.
     - With the 00 slot laid at u1 + (gamma / 2) u1^2 and the ii slots at -(gamma / 2) u1, for a whole field U, the pull
@@ -246,8 +249,9 @@ conditions of section 2.
     - The self-energy part alone, +8 E_g / (M c^2): +2.88 x 10^-5 on Will's figure, about +3 x 10^-5 (the physicist's
       numbers.py (B)). It is six times the pressure's part and of the other sign, and condition (ii) does not balance
       it (the mathematician).
-    - The second text had about -4 x 10^-6, the other sign. This sits at Cassini's 2.3 x 10^-5 (4). For a neutron star
-      the shift is of order one (the physicist).
+    - The second text had about -4 x 10^-6, the other sign. This sits at Cassini's 2.3 x 10^-5 (a board reading set
+      against nature, not in the click world; owed there) (4). For a neutron star the shift is of order one (the
+      physicist).
   - **A third condition, refused for two masses.** The strides weighed at the gear's own teeth (st = W) keep the ratio
     between 999,904 and 1,000,093 x 10^-6 at the depths probes (f2) and (f3) read (the mathematician; their mutant),
     and so one exterior mass: the edge's dial read for the sources (Big Pic, 6527540022 item 8). But its two-body cross
@@ -300,8 +304,9 @@ conditions of section 2.
       1.044, 1.090 with N2's source.
     - Cassini needs a range of at most 15 Mpc (term9_window (c); between 10.9 and 11.0 Mpc with N2's source), and the
       growth of structure one of at least 445 Mpc (term 9's text): on the slot form, with a strength fixed in lattice
-      counts, no strength serves for a present at the rest. In the Node-clock's own units Postulate 6 would fix
-      gamma_obs = 1 at every rest and meet Cassini at any range (below); those units are owed.
+      counts, no strength serves for a present at the rest (a board reading set against nature, not in the click world;
+      owed there). In the Node-clock's own units Postulate 6 would fix gamma_obs = 1 at every rest and meet Cassini at
+      any range (a board reading set against nature, not in the click world; owed there) (below); those units are owed.
   - **The background formulas** (the mathematician's item 1). Take uniform backgrounds C0 on the 00 slot and Cv on each
     ii slot, c = C0 / rest, with N2's push ratio moving as (1 + c) / (1 - c).
     - A reading taken against the teeth rest + C0 and the grip g + 2 Cv gives, at the zero-background strength,
@@ -316,17 +321,18 @@ conditions of section 2.
     neighbours; a uniform, static frame has none between them, so it is a change of coordinates, and a uniform mode
     that moves in time, the expansion, is not.
     - Under it the static rest reads as term9_window's mutant (a2), gamma_obs = gamma at every u_c, and Cassini no
-      longer bars it, once N2's teeth factor is removed (st = W, or the target below) as well as a 00 law keeps one
-      cone. With N2's factor kept,
+      longer bars it (a board reading set against nature, not in the click world; owed there), once N2's teeth factor is
+      removed (st = W, or the target below) as well as a 00 law keeps one cone. With N2's factor kept,
       gamma_obs = (1 + u_c) / (1 - u_c) under it, and Cassini holds at 15 Mpc and fails at 16 (the physicist's
-      phys3_numbers (2)).
+      phys3_numbers (2)) (a board reading set against nature, not in the click world; owed there).
     - What moves in time stays OPEN: the swing at the present epoch, against lunar laser ranging (4), and the rest's
       motion with the universe's matter.
     - The frame reading itself is this page's open item (8).
     - On the cut it does not hold, by term 9's two readers, who refused its second text on it; both are with Big Pic for
       his re-check.
       - The physicist: on the cut, with the rest held static, three waves laid together on one mode change sign 746, 738
-        and 710 times (light and the E part) against 746 every time for the 00 slot, at U = 0, rest / 50 and rest / 10.
+        and 710 times (the board's wave and the E part) against 746 every time for the 00 slot, at U = 0, rest / 50 and
+        rest / 10.
       - The mathematician: the notch's own beat, the 00 slot's, keeps 1,415 sign changes in 400,000 rounds at u_c = 0,
         1/50 and 1/10, while the trace's and a clock's fall to 1,401 and 1,349, as (1 + u_c)^(-1/2). On the loader's
         reads, the 00 row's teeth reading its own slot, all three fall alike, and there the first-order run back fails.
@@ -360,9 +366,10 @@ conditions of section 2.
     799,825 x 10^-6 at u = 1/10 and 1/4, against 1 / (1 + u) = 909,090 and 800,000 (the physicist). So it carries a
     teeth factor of N2's kind, and is not in the Node-clock's own units by construction.
   - **On the density reading** (Big Pic; checked by hand at first order, section 13). On the edge a gear's beat squared
-    is C / A and light's speed squared is B / A, so gamma = 1 needs light to feel twice what slow matter feels.
-    - With the spring C fixed, the books' form pushes the 00 density alone for slow matter; light and slow matter then
-      both read 1 / A, and gamma = 0.
+    is C / A and the board's wave's speed squared is B / A, so gamma = 1 needs the board's wave to feel twice what slow
+    matter feels.
+    - With the spring C fixed, the books' form pushes the 00 density alone for slow matter; the board's wave and slow
+      matter then both read 1 / A, and gamma = 0.
     - With the spring tied to the densities as general relativity couples matter, C^2 = m^4 A B_x B_y B_z (general
       relativity's relation, quoted by Big Pic and not derived on the act), the books'
       form is the trace-reversed stress and pushes the grips too: gamma = (1 - r) / (1 + 3 r), r the grips' give under
@@ -417,7 +424,8 @@ conditions of section 2.
     byte). A clock with N^2 = 1 + 2 Phi + 2 beta Phi^2 composes two given wells by the product at second order exactly
     when beta = 1, the defect being 4 (beta - 1) a b. gamma is what each clock form makes of it: the slot form's
     beta = 2 - gamma gives gamma = 1, and the head's law's beta = -gamma would give gamma = -1. So Mercury tests the
-    postulate, and Cassini the slot form's link, with the split.
+    postulate, and Cassini the slot form's link, with the split (a board reading set against nature, not in the click
+    world; owed there).
   - Probe (d3) is that test on the act's pull.
     - On (c)'s board, grips and laying, two sources' first-order wells Ua and Ub, and Ua + Ub for both, each stand to
       third order. The teeth W = R + c00 read N^2 = R / W, so the rates multiply exactly where the defect D, which is
@@ -431,10 +439,10 @@ conditions of section 2.
     There 1 + u = e^(u1) through second order (6 q^3 (e^(u1) - (1 + u)) = 8 at every q only at gamma 1, probe (d3)), so
     N^2 = e^(-u1), and -ln N adds over the first-order wells: Postulate 6's "what adds up there is the logarithm of
     the rate".
-  - **gamma = 1, DERIVED from Postulate 6 at zero background**, with Cassini its test: the ii slots pushed at -1 / 12
-    of the 00 slot's, each slot in the unit its reading uses. It is no longer CHOSEN. beta = 1 is the postulate's own
-    content for given wells, here for test bodies around sources at rest on an open board, under conditions (i) and
-    (ii).
+  - **gamma = 1, DERIVED from Postulate 6 at zero background**, with Cassini its test (a board reading set against
+    nature, not in the click world; owed there): the ii slots pushed at -1 / 12 of the 00 slot's, each slot in the unit
+    its reading uses. It is no longer CHOSEN. beta = 1 is the postulate's own content for given wells, here for test
+    bodies around sources at rest on an open board, under conditions (i) and (ii).
   - **Its scope: given wells** (the mathematician's N1; Big Pic). (d3) lays the wells of given sources, and there
     Postulate 6 holds. For two masses that pull each other N2's J00 = J_ii (1 - 2 u) lowers each body's 00 mass by 2 u1
     of the other at its place, so 1 + u gains -2 u1b(A) u1a(x) - 2 u1a(B) u1b(x) at second order (his r3_p6 (P4)).
@@ -471,19 +479,20 @@ conditions of section 2.
       Phi_2 is met and the split stays (the mathematician). The form is the lapse at first order (N^2 = 1 / (1 + u)): in
       general relativity the static lapse law, D^i D_i N = 4 pi G N (rho + 3 p) with D^i D_i the spatial covariant
       Laplacian, whose weight decides k00, carries the lapse in its own source. In isotropic radius D^i D_i N = A^-3 d_i
-      (A d_i N), so d_i (A d_i N) = 4 pi G N rho* with rho* = rho A^3; with N = (1 + u)^(-1/2) and A = 1 + U the weight
-      A (1 + u)^(-3/2) is 1 - 2 U at first order, the slot form's grip factor 1 + 2 v at gamma = 1, so the 00 push is
-      rho* (1 - u / 2) and k00 = 1/2 (the mathematician, by hand). Reading N exactly is a root, so the act's form of it
-      is a debt (OPEN).
+      (A d_i N), so for the part without pressure d_i (A d_i N) = 4 pi G N rho* with rho* = rho A^3 (the 3 p belongs to
+      PPN's Phi_4, the page's condition (ii)); with N = (1 + u)^(-1/2) and A = 1 + U the weight A (1 + u)^(-3/2) is 1 -
+      2 U at first order, the slot form's grip factor 1 + 2 v at gamma = 1, so the 00 push is rho* (1 - u / 2) and k00 =
+      1/2 (the mathematician, by hand). Reading N exactly is a root, so the act's form of it is a debt (OPEN).
   - The principle the first mathematician named, each slot pushed by minus the derivative of matter's energy with
     respect to it, gives gamma near 0 for slow matter (his estimate), and exactly 0 for a gear laid alike on the act's
-    tick (the physicist's N3): Postulate 6 and Cassini refuse it. Term 5's books' form is this principle with the act's
-    own energy, so the density road meets the same refusal (above); N2's source escapes it only by its declared trace
-    reversal.
+    tick (the physicist's N3): Postulate 6 and Cassini refuse it (a board reading set against nature, not in the click
+    world; owed there). Term 5's books' form is this principle with the act's own energy, so the density road meets the
+    same refusal (above); N2's source escapes it only by its declared trace reversal.
   - N2's draft pushes the ii slots with the 00 slot's sign, +1 (n2_lib.py, potential()): gamma = -12 and beta = 14,
-    light bent away from a mass, refused since 1919 (Dyson, Eddington and Davidson 1920, Phil. Trans. R. Soc. Lond.
-    A 220, 291). Main lays no metric push at all (load.py: "J's potential holds no monomial"), so the second text's
-    "the act as built ... gives gamma = -12" was N2's draft's (the physicist's item 8).
+    the board's wave bent away from a mass, refused since 1919 (Dyson, Eddington and Davidson 1920, Phil. Trans. R. Soc.
+    Lond. A 220, 291) (a board reading set against nature, not in the click world; owed there). Main lays no metric push
+    at all (load.py: "J's potential holds no monomial"), so the second text's "the act as built ... gives gamma = -12"
+    was N2's draft's (the physicist's item 8).
 - **The exponential of the 00 count: REFUSED, by name** (CHECKED by arithmetic, probe (d2); the physicist's item 1).
   - The architecture document kept N^2 = e^(-u) beside the slot form until the test. The grips act on every row alike,
     the 00 row's included (main's loader, load.geared: every Spoke's grip reads its axis's ii slot at both ends of its
@@ -500,9 +509,9 @@ conditions of section 2.
     For the wells of given sources at gamma = 1 they add, in -ln N, through second order; only the 00 counts do not,
     since u2 is their cross term. For two masses that pull each other they do not add: with N2's cross part
     -ln N^2 = u1 - 8 Phi_2 (the mathematician's N1). The note there is mended to say so.
-- **Light at second order** (the mathematician's item 3; his g2b_series.py (S4) to (S6)).
-  - beta = 2 - gamma is for test bodies. Light reads beta only at second order, where g_ii's own second order enters:
-    g_ii = 1 + 2 gamma y + (3/2) epsilon y^2, y = G M / (c^2 r), and the bending's second-order bracket is
+- **The board's wave at second order** (the mathematician's item 3; his g2b_series.py (S4) to (S6)).
+  - beta = 2 - gamma is for test bodies. The board's wave reads beta only at second order, where g_ii's own second order
+    enters: g_ii = 1 + 2 gamma y + (3/2) epsilon y^2, y = G M / (c^2 r), and the bending's second-order bracket is
     2 (1 + gamma) - beta + (3/4) epsilon (Epstein and Shapiro 1980, Phys. Rev. D 22, 2947).
   - Under condition (ii) epsilon is not derived: OPEN.
   - At self-push 0 (the one reading, section 5) g_ii = 1 + 2 y + 6 y^2, so epsilon = 4, against general relativity's 1
@@ -529,7 +538,7 @@ What the event board's counts do, read on the act (g2_static.txt).
   linear recurrence's count over 4,000,000 rounds, to hundredths, gives 499,960 and 495,994. At u = 3 the depth each
   reads back is 3,000,628 and 3,064,871 x 10^-6 against 3,000,000: both read the well deeper, the slow by 209 and the
   fast by 21,623 parts per million of u.
-- **Light** (probe (b)): on a ring of 4, the mode (1, 0, -1, 0) makes 746, 369, 1,568 and 746 sign changes at
+- **The board's wave** (probe (b)): on a ring of 4, the mode (1, 0, -1, 0) makes 746, 369, 1,568 and 746 sign changes at
   (W, grip) = (rest, g), (4 rest, g), (rest, 4 g) and (4 rest, 4 g): only grip / W counts.
 - **The act's own pull** (probe (c)): the second order above, at all 216 Node-clocks of a board of 6 by 6 by 6, for a
   laid field; the mutant's residual 133,791,308,000,000 at S = 10^6 for gamma 0, a thousand times that at 10^9. An ii
@@ -592,9 +601,10 @@ of rounds is refused by name (D7). No slot ever reaches the record.
   - Cassini (Bertotti, Iess and Tortora 2003, Nature 425, 374): gamma - 1 = (2.1 +- 2.3) x 10^-5, the test of
     Postulate 6's gamma = 1. The split of the Sun's exterior masses, gamma_ext - 1 of +2 to +3 x 10^-5 (2), sits at its
     error.
-  - At second order light reads 2 (1 + gamma) - beta + (3/4) epsilon, with epsilon OPEN (2). At self-push 0 the
-    bending's second order is 6 pi against general relativity's 15 pi / 4 in (G M / (c^2 b))^2, 17.515 against 10.947
-    microarcseconds at the Sun's limb (term 13's probe (c8)), unmeasured so far.
+  - At second order the board's wave reads 2 (1 + gamma) - beta + (3/4) epsilon, with epsilon OPEN (2). At self-push 0
+    the bending's second order is 6 pi against general relativity's 15 pi / 4 in (G M / (c^2 b))^2, 17.515 against
+    10.947 microarcseconds at the Sun's limb (term 13's probe (c8)), unmeasured so far (a board reading set against
+    nature, not in the click world; owed there).
 - **Orbits.** A perihelion advances by gamma times general relativity's when beta = 2 - gamma in a fully conservative
   frame. Park and others 2017 (AJ 153, 121), with MESSENGER's ranging: beta - 1 = (-2.7 +- 3.9) x 10^-5, with gamma
   taken from Cassini and the Sun's J2 = (2.25 +- 0.09) x 10^-7. The exponential of the 00 count gives beta = 0 and
@@ -658,7 +668,7 @@ of rounds is refused by name (D7). No slot ever reaches the record.
   - the exterior masses split by the source's teeth: gamma_ext - 1 = +8 |E_grav| / (M c^2), about +3 x 10^-5 for the
     Sun, at Cassini's 2.3 x 10^-5, and of order one for a neutron star;
   - a redshift that depends on the clock's beat, by s / (12 rest);
-  - light's second order, with epsilon OPEN.
+  - the board's wave's second order, with epsilon OPEN.
   - **REFUSED by nature, on the PPN reading:** N2's two-body cross part, -6 Phi_2 in g_00 against general relativity's
     at the conserved density (zeta_2 = -3, zeta_2's part of Nordtvedt's eta 1), and st = W's and case B's, +2 (zeta_2 =
     +1), by lunar laser ranging and the binary pulsar (2).
@@ -676,8 +686,8 @@ of rounds is refused by name (D7). No slot ever reaches the record.
 - A clock freezes where its teeth grow without bound: N^2 = 1 / (1 + u) goes to 0 only as u does to infinity. Term
   13's second text (toys-5 d94169dc3) carries the strong field on the act as built: no static clock freezes, the static
   field ending first inside a body. This section keeps what G2 reads there.
-- **Where the grips vanish**, 1 + 2 v = 0, light's coordinate speed is 0. With v = gamma Phi at first order that is at
-  Phi = -1 / (2 gamma): for one mass, at the lattice's radius 2 gamma G M / c^2.
+- **Where the grips vanish**, 1 + 2 v = 0, the board's wave's coordinate speed is 0. With v = gamma Phi at first order
+  that is at Phi = -1 / (2 gamma): for one mass, at the lattice's radius 2 gamma G M / c^2.
 - **The one reading is the self-push at strength 0** (the mathematician's item 2).
   - With v on the same pull (an ii slot pulled through grips that read it, probe (c)) and no source on the ii rows
     outside the matter, g c + c^2 is harmonic outside the matter. So outside a point source 1 + 2 v, whose square is
@@ -693,23 +703,25 @@ of rounds is refused by name (D7). No slot ever reaches the record.
 - **This is not general relativity's horizon** (the first mathematician's item 6, the first physicist's item 8). The
   lattice's radius is isotropic: its spatial metric is A^2 times the flat one.
   - In isotropic radius general relativity's horizon lies at G M / (2 c^2), where N = 0 and A = 4 (the areal radius
-    2 G M / c^2); at 2 G M / c^2 its light runs at N / A = 48/125, and at 4 G M / c^2 at 448/729 (probe (g)).
-  - On the lattice, outside a point source, light stops because A grows without bound (the grips vanish and the areal
-    radius A r diverges); at general relativity's horizon A is finite and N goes to 0. The lattice's surface is where
-    the spatial metric blows up, a different surface.
+    2 G M / c^2); at 2 G M / c^2 the board's wave on general relativity's metric runs at N / A = 48/125, and at
+    4 G M / c^2 at 448/729 (probe (g)).
+  - On the lattice, outside a point source, the board's wave stops because A grows without bound (the grips vanish and
+    the areal radius A r diverges); at general relativity's horizon A is finite and N goes to 0. The lattice's surface
+    is where the spatial metric blows up, a different surface.
 - **The strength 0 is excluded.** At gamma = 1 the one reading has u = 1 - x, with x = 1 + 2 v and
   x^2 = 1 - 4 G M / (c^2 r), so N^2 = 1 / (2 - x) and A^2 = 1 / x.
-  - Light's least impact parameter is then b^2 = 256/3 (G M / c^2)^2, at r = 16/3 G M / c^2, against general
-    relativity's 27 at R = 3 (probe (g2), exact ratios). The least is unique: probe (g2) prints the derivative's
-    numerator, -2 (2 x - 1)(x^2 - 2 x - 1), with x^2 - 2 x - 1 < 0 on [0, 1].
+  - The board's wave's least impact parameter is then b^2 = 256/3 (G M / c^2)^2, at r = 16/3 G M / c^2, against general
+    relativity's 27 at R = 3 (probe (g2), exact ratios) (a board reading set against nature, not in the click world;
+    owed there). The least is unique: probe (g2) prints the derivative's numerator, -2 (2 x - 1)(x^2 - 2 x - 1), with
+    x^2 - 2 x - 1 < 0 on [0, 1].
   - The critical curve is 16/9 of general relativity's in b, (16/9)^2 = 256/81 in b^2: b between 9.2376 and 9.2377
     G M / c^2 against between 5.1961 and 5.1962 (each bracket by squaring: 9.2376^2 < 256/3 < 9.2377^2 and
-    5.1961^2 < 27 < 5.1962^2).
+    5.1961^2 < 27 < 5.1962^2) (a board reading set against nature, not in the click world; owed there).
   - The Event Horizon Telescope finds Sagittarius A*'s within about 10 per cent of general relativity's (ApJL 930, L17
     (2022)), and M87*'s within 17 on the stellar-dynamics mass (Psaltis and others 2020, PRL 125, 141104; term 13's
-    second text, section 4).
-  - So the self-push at strength 0 is excluded at gamma = 1. The strength cannot be 0, and the strong field is OPEN at
-    the strength condition (ii) needs.
+    second text, section 4) (a board reading set against nature, not in the click world; owed there).
+  - So the self-push at strength 0 is excluded at gamma = 1 (a board reading set against nature, not in the click world;
+    owed there). The strength cannot be 0, and the strong field is OPEN at the strength condition (ii) needs.
 - **The throat** (the mathematician's g2b_shadow.py (H4); term 13's probe (c5)).
   - The one reading's areal radius r A has (r A)^4 = r^5 / (r - 4) in units of G M / c^2. It is least at
     r = 5 G M / c^2, where (r A)^4 = 3,125: a throat.
@@ -717,16 +729,18 @@ of rounds is refused by name (D7). No slot ever reaches the record.
     mathematician's figure). So a point source's surface r0 lies at infinite area beyond the throat, and the critical
     orbit, at r = 16/3, lies outside the throat.
   - Calling the region inside the critical curve a shadow presumes that the surface within it, a body's or a point
-    source's, absorbs light. Term 13's physicist finds light that reaches a point source's surface turned back (his
-    run hp2, standing as his), and Sagittarius A*'s Paper VI bounds a surface's emission (term 13's second text,
-    section 4).
-  - The critical impact parameter, b^2 = 256/3, which the ring measures, stands either way.
+    source's, absorbs the board's wave. Term 13's physicist finds the board's wave that reaches a point source's surface
+    turned back (his run hp2, standing as his), and Sagittarius A*'s Paper VI bounds a surface's emission (term 13's
+    second text, section 4) (a board reading set against nature, not in the click world; owed there).
+  - The critical impact parameter, b^2 = 256/3, which the ring measures, stands either way (a board reading set against
+    nature, not in the click world; owed there).
 - **The target, in the act's terms:** general relativity's horizon is a clock frozen at a finite grip: W without bound
   at the isotropic radius G M / (2 c^2), with the grip g / A^2 = g/16 there (probe (g)).
   - Whether the act's strong field reaches it is OPEN, at the strength condition (ii) needs; G2's 00 equation owes
-    general relativity's light ring with no clock frozen (Big Pic, through term 13's second text).
+    the board's wave's ring as general relativity has it, with no clock frozen (Big Pic, through term 13's second text)
+    (a board reading set against nature, not in the click world; owed there).
   - The tests it must meet are named: the critical curves above, and GW250114's ringdown and area law (PRL 135, 111403
-    (2025)).
+    (2025)) (a board reading set against nature, not in the click world; owed there).
 - No hold and no restore: whatever freezes is the act's own result, as the architecture document's term 13 says.
   Postulate 4 (no Node-clock frozen for ever) is a condition the strong field must meet.
 
@@ -740,8 +754,8 @@ of rounds is refused by name (D7). No slot ever reaches the record.
   - the depth read back at u = 3, 3,000,628 and 3,064,871 x 10^-6: both deeper than u, the slow by 209 and the fast by
     21,623 parts per million of u; a hundredth of a count moves the slow clock's by 251, below its 628, so its excess is
     resolved.
-- **(b)** Light on the ring's mode at (W, grip) = (rest, g), (4 rest, g), (rest, 4 g) and (4 rest, 4 g): 746, 369,
-  1,568 and 746 sign changes; the same grip / W, the same count.
+- **(b)** The board's wave on the ring's mode at (W, grip) = (rest, g), (4 rest, g), (rest, 4 g) and (4 rest, 4 g): 746,
+  369, 1,568 and 746 sign changes; the same grip / W, the same count.
 - **(c)** The act's pull on a laid field, u1 + (gamma / 2) u1^2 on the 00 slot and -(gamma / 2) u1 on the ii slots: the
   residual exactly third order at all 216 Node-clocks, for gamma 0, 1 and 2 at two scales; the mutant's second order;
   an ii slot's pull F = g Laplacian c + Laplacian c^2 exactly.
@@ -766,8 +780,9 @@ of rounds is refused by name (D7). No slot ever reaches the record.
 - **(g)** General relativity in isotropic radius: N / A = 0 at G M / (2 c^2), 48/125 at 2 G M / c^2 and 448/729 at
   4 G M / c^2; the grip g/16 at the horizon.
 - **(g2)** The critical curves: the one reading's least b^2 = 256/3 at r = 16/3, against general relativity's 27 at
-  R = 3, the ratio (16/9)^2 in b^2; the derivative's numerator -2 (2 x - 1)(x^2 - 2 x - 1) at 1,890 pairs, with
-  x^2 - 2 x - 1 < 0 at all of them; a scan of 9,999 points, its least at p = 5,000.
+  R = 3, the ratio (16/9)^2 in b^2 (a board reading set against nature, not in the click world; owed there); the
+  derivative's numerator -2 (2 x - 1)(x^2 - 2 x - 1) at 1,890 pairs, with x^2 - 2 x - 1 < 0 at all of them; a scan of
+  9,999 points, its least at p = 5,000.
 - **(h)** The background: u0 x 10^6 = 945,000 at L = c / H0, where gamma_obs / gamma x 10^6 is 35,363,636 by the
   readings and 1,250,586,776 with N2's source; u0 x 10^6 = 21,619 at 672 Mpc, where it is 1,044,193 and 1,090,340.
 
@@ -781,8 +796,8 @@ stand (the owner's law; the mathematician's N4).
   metric), with the next order (s / (12 rest)) u / (1 + u). A clock beating fast reads the well deeper: a redshift that
   depends on the clock's beat, named (CHECKED on the act, for a spring clock; a clock bound through gradient readings
   OPEN with G3).
-- **Term 3, the grips:** light reads grip / W at zero wave number, the grip at both ends of a Mesh, going as g^ii
-  (CHECKED on the act).
+- **Term 3, the grips:** the board's wave reads grip / W at zero wave number, the grip at both ends of a Mesh, going as
+  g^ii (CHECKED on the act).
 - **Term 5's strengths per slot:** DERIVED from Postulate 6 at zero background. Each slot is pushed in the unit its
   reading uses, the ii slots at -1 / 12 of the 00 slot's, the one strength at which two given wells compose by their
   product on the act's pull (the wells CHECKED, probe (d3)): gamma = 1 on the board, with Cassini its test (a board
@@ -799,8 +814,8 @@ stand (the owner's law; the mathematician's N4).
     act gives: with the strength fixed at -1/12, beta_obs = 7/9 at u_c = 1/10 (the physicist's N1).
   - N2's 00 source moves with the teeth, J00 = J_ii (1 - 2 u): the exterior masses split, a departure named with its
     size; its teeth factor moves G at the rest, the slot reading's price, which every reading the act has carries. The
-    strides weighed at the gear's own teeth keep one mass and are refused for two masses on the PPN reading; the target,
-    the ii source times the lapse, owes its act form.
+    strides weighed at the gear's own teeth keep one mass and are refused for two masses on the PPN reading (not in the
+    click world); the target, J00 = J_ii = n (1 - u / 2), both pushes the count times the lapse, owes its act form.
   - The static source is that of a train whose source does not beat.
 - **Postulate 6:** for clocks in given wells it is beta = 1; the slot form meets it at gamma = 1 at zero background. For
   two masses N2's cross part misses general relativity's Phi_2 by -6 at the conserved density: REFUSED by nature on N2's
@@ -828,7 +843,7 @@ stand (the owner's law; the mathematician's N4).
 - **The 00 row's own law** (Big Pic, 6528097443 item 3 A): it must keep one cone, be a bijection on the state and write
   nothing, and neither the cut nor the order meets all three. The cut, the 00 row's teeth at rest, serves meanwhile,
   with its second cone named OPEN (below). On the cut the law above does not hold, by term 9's two readers (2), so the
-  Cassini lift waits on this law.
+  Cassini lift waits on this law (a board reading set against nature, not in the click world; owed there).
 - **Condition (ii):** N2's self-push onto the ii slots, its strength not 0 (section 5), balancing pressure as von
   Laue's theorem does.
 - **One exterior mass and Phi_2 together:** the target J00 = J_ii = n (1 - u / 2), n the count's push at a fixed swing
@@ -836,8 +851,9 @@ stand (the owner's law; the mathematician's N4).
   1 (the mathematician's N5; Big Pic's 6536901666 item 3, which withdrew his 6536112029 phrase); its form on the act,
   which cannot read N exactly with no root, is the debt. st = W keeps one mass and is refused for two (2). Until it
   stands, the split of section 2 is a departure.
-- **epsilon**, g_ii's own second order, which light reads at second order: 4 at self-push 0 against general
-  relativity's 1, and the bracket there 8/5 of general relativity's.
+- **epsilon**, g_ii's own second order, which the board's wave reads at second order: 4 at self-push 0 against general
+  relativity's 1, and the bracket there 8/5 of general relativity's (a board reading set against nature, not in the
+  click world; owed there).
 - **The sign in code:** N2's draft pushes the ii slots with the 00 slot's sign; the zero-background strength is -1/12
   of the 00 slot's push.
 - **The source's own second order** as general relativity's: N2's psi is -8 |E_grav| on the 00 slot only. With it
@@ -851,7 +867,8 @@ stand (the owner's law; the mathematician's N4).
 - **The Sun's annual term,** through N2's teeth factor on the slot reading: 253 mm in the lunar distance over the year,
   about two orders above lunar laser ranging's millimetre ranging (the physicist): its sizing is owed.
 - **The strong field and term 13**, at the strength condition (ii) needs (section 5; term 13's second text): G2's 00
-  equation owes general relativity's light ring with no clock frozen (Big Pic).
+  equation owes the board's wave's ring as general relativity has it, with no clock frozen (Big Pic) (a board reading
+  set against nature, not in the click world; owed there).
 - **The shift and the shears** (the 0i and jk slots, term 10, G4): a source moving on the board (alpha_1 = -8,
   alpha_2 = -1), frame dragging (refused by Gravity Probe B on the act as built), and the preferred-frame parameters,
   which eta and the perihelion also read.
@@ -873,10 +890,10 @@ stand (the owner's law; the mathematician's N4).
   - GW170814 (PRL 119, 141101 (2017)) compared pure tensor modes against pure vector and pure scalar ones: it tests
     pure modes only, not a mixture like the act's.
   - **The second cone.** With the 00 row's teeth held at the rest (N2's loader change, every row but the 00 row reading
-    the 00 slot, and the cut that serves meanwhile), the 00 waves outrun light in a well, their speed's square 1 + u
-    times light's: a second cone, named OPEN. On main the 00 row reads its own slot as teeth (load.geared), and its
-    waves slow with light's; on the first-order form a row whose teeth read its own count has no inverse (N2's M4, term
-    9's second text).
+    the 00 slot, and the cut that serves meanwhile), the 00 waves outrun the board's wave in a well, their speed's
+    square 1 + u times the board's wave's: a second cone, named OPEN. On main the 00 row reads its own slot as teeth
+    (load.geared), and its waves slow with the board's wave's; on the first-order form a row whose teeth read its own
+    count has no inverse (N2's M4, term 9's second text).
   - GW170817's bound on the speed (within about 10^-15; Abbott and others 2017, ApJL 848, L13) holds for the tensor
     rows.
 
@@ -896,9 +913,10 @@ reports stands, and no reader is wrong. His words carried here:
 **What this text changes:**
 - gamma is DERIVED from Postulate 6, no longer CHOSEN; the exponential of the 00 count is refused by name, and
   Postulate 6 stands (the finding, 2, 7).
-- N2's 00 source moves with the teeth: the exterior masses split, a departure with its size at Cassini's window; the
-  background formulas' coefficients 3 and -3; a third condition named as a candidate (2, 4).
-- beta = 2 - gamma for test bodies only; light's epsilon OPEN (2, 4, 8).
+- N2's 00 source moves with the teeth: the exterior masses split, a departure with its size at Cassini's window (a board
+  reading set against nature, not in the click world; owed there); the background formulas' coefficients 3 and -3; a
+  third condition named as a candidate (2, 4).
+- beta = 2 - gamma for test bodies only; the board's wave's epsilon OPEN (2, 4, 8).
 - The one reading named the self-push at strength 0, and excluded; the strength not 0; the throat named (5).
 - The fast clock reads the well deeper; a redshift that depends on the clock's beat, named (1, 2, 3, 4).
 - The background: gamma_obs on the slot form, a change of coordinates under the law above, what moves in time OPEN; on
@@ -922,19 +940,21 @@ reports stands, and no reader is wrong. His words carried here:
      cut mid beat (2, 3).
    - Named as a departure with its size: the exterior masses split, M (1 - 2 <u1>) on the 00 slot and M on the ii
      slots; gamma_ext = 1 + (20/3) |E_grav| / (M c^2), about +2 x 10^-5 for the Sun, beside the physicist's self-energy
-     part +8 E_g / (M c^2), about +3 x 10^-5, at Cassini's 2.3 x 10^-5; the pressure that is not hydrostatic (2, 4).
+     part +8 E_g / (M c^2), about +3 x 10^-5, at Cassini's 2.3 x 10^-5 (a board reading set against nature, not in the
+     click world; owed there); the pressure that is not hydrostatic (2, 4).
    - The background formulas' first-order coefficients 3 and -3; G in lattice counts at fixed J (2).
    - psi = -8 |E_grav| on the 00 slot only, carried on the eta item (2, 4, 8).
    - His mend, the strides weighed at the gear's own teeth, named a candidate to measure, not derived (Big Pic)
      (2, 7, 8).
 2. **The one reading is the act with N2's self-push onto the ii slots at strength 0.**
-   - Named so; the Event Horizon Telescope excludes that strength; the strength cannot be 0; the strong field OPEN at
-     the strength condition (ii) needs; section 7's term 13 row says the same (5, 7, 8).
+   - Named so; the Event Horizon Telescope excludes that strength (a board reading set against nature, not in the click
+     world; owed there); the strength cannot be 0; the strong field OPEN at the strength condition (ii) needs; section
+     7's term 13 row says the same (5, 7, 8).
    - The throat at r = 5 G M / c^2; a point source's surface at infinite area, its radius inside every static body,
-     which holds no such surface; "shadow" a presumption that the surface absorbs light; the critical impact
+     which holds no such surface; "shadow" a presumption that the surface absorbs the board's wave; the critical impact
      parameter standing either way (5).
-3. **Light reads beta only at second order.** beta = 2 - gamma limited to test bodies; epsilon OPEN, 4 at self-push 0
-   against general relativity's 1, the bracket 8/5 of general relativity's there (the finding, 2, 4, 8).
+3. **The board's wave reads beta only at second order.** beta = 2 - gamma limited to test bodies; epsilon OPEN, 4 at
+   self-push 0 against general relativity's 1, the bracket 8/5 of general relativity's there (the finding, 2, 4, 8).
 4. **The notch relation.** Mended by term 9's (f9 / 3) tr^2, one range for both slots; the dv term named; the logarithm
    added, (1/2) mu r^2 ln(1 / (mu r^2)), still negligible (2).
 5. **The fast clock reads the well deeper.** "Short" corrected to deeper, N 0.8 per cent low; the next order given in
@@ -1028,8 +1048,9 @@ The fourth text's record. Its density road, taken on Big Pic's 6534774141, is wi
      rest Postulate 6 itself asks for that strength, read in local units: a scope for term 9's page, through the Boss.
 2. N2, N2's teeth factor: carried into G as the clicks read it, 1 / (1 + u)^2 at gamma = 1, with its drift if the rest
    dilutes, and into the case under the law above, where gamma_obs = (1 + u_c) / (1 - u_c) and Cassini holds at 15 Mpc
-   and not at 16. The reopened window is conditioned on N2's source mended as well as on a 00 law that keeps one cone.
-   The factor is named the slot reading's price, which does not arise in local units (2, 4, 7).
+   and not at 16 (a board reading set against nature, not in the click world; owed there). The reopened window is
+   conditioned on N2's source mended as well as on a 00 law that keeps one cone. The factor is named the slot reading's
+   price, which does not arise in local units (2, 4, 7).
 3. His notes:
    - the st = W range, as the mathematician's;
    - "Departures, named" now says what the rest does on the act as built (4);
@@ -1048,9 +1069,9 @@ The fourth text's record. Its density road, taken on Big Pic's 6534774141, is wi
   act's slot laws lack.
 - "In the Node-clock's own units by construction" (the same item): the books' 00 push is half the stride squared, and
   it falls as 1 / W at a fixed swing.
-- "Light's c^2 = B / A = 1 + 4 Phi gives the Sun's gamma = 1 with no term 6" (6534141348 item 1): on the density
-  reading too gamma = (1 - r) / (1 + 3 r), and gamma = 1 needs the grips to stand under their own push, the trace
-  mixing in the slots' own laws; so slow matter's gamma waits on term 6.
+- "[The board's wave's] c^2 = B / A = 1 + 4 Phi gives the Sun's gamma = 1 with no term 6" (6534141348 item 1): on the
+  density reading too gamma = (1 - r) / (1 + 3 r), and gamma = 1 needs the grips to stand under their own push, the
+  trace mixing in the slots' own laws; so slow matter's gamma waits on term 6.
 - The clock is no separate debt: a gear's beat sets its rate and its fall alike, so the redshift and free fall agree at
   first order, which is what Pound and Snider compare.
 - The -6 Phi_2 is refused by nature on N2's source, unless the counts' density is rho* (1 + 3 U).
@@ -1130,8 +1151,8 @@ checked and how. The cases are in g2_cases.py beside the probe, its output g2_ca
   - by hand: PPN's g_00 coefficient of Phi_2, 2 (3 gamma - 2 beta + 1 + zeta_2 + xi), is 4 + 2 zeta_2 at
     beta = gamma = 1 and xi = 0, so -6 is zeta_2 = -3, and eta = 4 beta - gamma - 3 - zeta_2 / 3 = 1 with the other
     parameters 0;
-  - by hand, Big Pic's density reading at first order: with A = 1 + a, B = 1 + b and C = 1 + c, light's B / A and a
-    gear's C / A give 1 + gamma = (b - a) / (c - a); C fixed with b = 0 gives gamma = 0; C^2 = m^4 A B^3 gives
+  - by hand, Big Pic's density reading at first order: with A = 1 + a, B = 1 + b and C = 1 + c, the board's wave's B / A
+    and a gear's C / A give 1 + gamma = (b - a) / (c - a); C fixed with b = 0 gives gamma = 0; C^2 = m^4 A B^3 gives
     2 c = a + 3 b, and b = -r a gives gamma = (1 - r) / (1 + 3 r), 0 at r = 1 and 1 at r = 0.
 - **The fourth text's checks** (no probe changed):
   - g2_static.py rerun in 61 s and g2_cases.py in 4 s on main's src at 0df0e8385, each byte for byte against its
@@ -1188,7 +1209,7 @@ checked and how. The cases are in g2_cases.py beside the probe, its output g2_ca
     - At gamma = 1 its largest grows by 1,000,001 from S = 10^6 to 10^9, as S^2: second order, so it is refused, as the
       postulate asks.
     - At gamma = -1 its largest grows by 1,000, as S: third order. So it composes by the product only at gamma = -1,
-      where light is not bent at all.
+      where the board's wave is not bent at all.
   - **"J00 = J_ii (1 - 2 u)", read with the fast clock** (g2_cases (case 2), 4,000 rounds over whole half beats):
     - s = rest div 4: 999,777, 600,624 and -499,914 at u = 0, 1/4 and 3, against 1,000,000, 600,000 and -500,000;
     - the slow clock beside it: 1,000,005, 600,350 and -500,122;
@@ -1246,16 +1267,40 @@ item 5).
    (Cassini, Mercury, the PPN refusals, the Event Horizon Telescope) and in the finding is labelled a board reading set
    against nature, not in the click world (the finding; 7).
 3. His minor: the static lapse law is D^i D_i N = 4 pi G N (rho + 3 p) with D^i D_i the spatial covariant Laplacian, and
-   its weight decides k00: in isotropic radius D^i D_i N = A^-3 d_i (A d_i N), so d_i (A d_i N) = 4 pi G N rho* with
-   rho* = rho A^3, and with N = (1 + u)^(-1/2) and A = 1 + U the weight A (1 + u)^(-3/2) is 1 - 2 U at first order, so
-   the 00 push is rho* (1 - u / 2) and k00 = 1/2 (2; 13).
+   its weight decides k00: in isotropic radius D^i D_i N = A^-3 d_i (A d_i N), so for the part without pressure d_i (A
+   d_i N) = 4 pi G N rho* with rho* = rho A^3, and with N = (1 + u)^(-1/2) and A = 1 + U the weight A (1 + u)^(-3/2) is
+   1 - 2 U at first order, so the 00 push is rho* (1 - u / 2) and k00 = 1/2 (2; 13).
 
 **How the seventh text checked itself:**
 - **No probe moved:** g2_static.py and g2_cases.py are unchanged since the sixth text, their outputs with them.
 - **The reader's r6_target rerun by me** on main's src at 0df0e8385, byte for byte: (1 - u/2)^2 x 4 = 4 - 4 u + u^2,
   first order k = 1; the three readings' k00, kii, Phi_2 misses and splits as stated (2).
-- **Derived again by hand:** the covariant Laplacian, (1 / sqrt g) d_i (sqrt g g^ij d_j N) with g_ij = A^2 delta_ij,
-  sqrt g = A^3 and g^ij = A^-2 delta_ij, is A^-3 d_i (A d_i N); d_i N = -(1/2) (1 + u)^(-3/2) d_i u; with u = 2 U at
-  first order, (1 + U)(1 - 3 U) = 1 - 2 U; the 00 push rho* N = rho* (1 - u / 2), k00 = 1/2.
+- **Derived again by hand:** the covariant Laplacian, (1 / sqrt h) d_i (sqrt h h^ij d_j N) with the spatial metric
+  h_ij = A^2 delta_ij (h, not the grip g), sqrt h = A^3 and h^ij = A^-2 delta_ij, is A^-3 d_i (A d_i N); d_i N = -(1/2)
+  (1 + u)^(-3/2) d_i u; with u = 2 U at first order, (1 + U)(1 - 3 U) = 1 - 2 U - 3 U^2, which is 1 - 2 U at first
+  order; the 00 push rho* N = rho* (1 - u / 2), k00 = 1/2.
 - **What the text searched again:** every "J00 = J_ii (1 - u / 2)", "6536112029", "refused", "Cassini", "Mercury",
   "Event Horizon" and "div grad": each now carries the one form, his correction, or its label.
+
+## 16. The seventh text's reader, folded (the eighth text)
+
+The seventh text (toys-5 d5745d134) went back to its mathematician. He found N5 and N4 mended everywhere but one
+sentence, his minor mended and the covariant Laplacian's derivation correct as stated (his r7_lapse, whole numbers), and
+returned NOT PASSED on that sentence.
+
+**His B1:** section 7's sentence "the target, the ii source times the lapse, owes its act form" kept the phrase Big Pic
+withdrew (read as the 00 push it is r6_target's (T3), which splits the masses), and its refusal had no click-world
+label; section 15's search keyed on "J00 = J_ii (1 - u / 2)", not on the words. It now gives the one form, J00 = J_ii =
+n (1 - u / 2), both pushes the count times the lapse, and the label (7). A clause, under the owner's pace (the Boss's
+6537101472).
+
+**His minors:** the pressure term, "for the part without pressure", the 3 p PPN's Phi_4 under condition (ii) (2; 15); (1
++ U)(1 - 3 U) = 1 - 2 U - 3 U^2, 1 - 2 U at first order (15); the spatial metric named h, not g, which is the grip (15).
+The board's wave named so, never light, under the owner's word (the sweep, throughout: 41 places renamed, and the
+four kept name the click world's own light); every line that sets the board beside nature carries the label (28
+places), section 15's record that each "Cassini" and "Event Horizon" already carried one corrected, since some did
+not.
+
+**How the eighth text checked itself:** no probe moved (g2_static.py and g2_cases.py read the grip through the loader
+since a2e085602, their outputs byte for byte); the text searched again every "the ii source times the lapse", "times the
+lapse", "4 pi G N rho*", "sqrt g" and "light".
