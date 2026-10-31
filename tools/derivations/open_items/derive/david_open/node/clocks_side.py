@@ -14,6 +14,9 @@ At every clock and round it checks the identity K x (the clock's booked total) =
 the birth less now) + B (every d so far), B each clock's sign on each edge (+1 at the lower end, -1 at the higher),
 and it reports each clock's largest |K booked - swept| against its teeth's range.
 
+First, from the structure alone: on n clocks pairwise joined, with all their triangles, B^T B + C C^T against n I, and
+the same on four clocks less one edge (the case where an edge lies on two triangles without the full set).
+
 With Big Pic's three_clicks folder given (bigpic-3clicks, mode 11 in circ.py), it also compares the clocks' lines of
 his first click (mode 0) and his triangle's own tooth (mode 11), and of mode 11 with one hidden unit in the triangle's
 twin at Node-clock 0, through his own code.
@@ -97,6 +100,39 @@ class World:
             out[(t1, t2)] = out.get((t1, t2), 0) + (s_held if t1 == self.held_t else -s_held)
         return out
 
+
+def incidence(n, edges):
+    """B (clocks by edges, +1 at the lower end) and C (edges by triangles, [j, k] - [i, k] + [i, j]) of a place."""
+    index = {e: i for i, e in enumerate(edges)}
+    tri = [(i, j, k) for i in range(n) for j in range(n) for k in range(n)
+           if i < j < k and (i, j) in index and (i, k) in index and (j, k) in index]
+    b = [[(1 if e[0] == v else -1 if e[1] == v else 0) for e in edges] for v in range(n)]
+    c = [[0] * len(tri) for _ in edges]
+    for f, (i, j, k) in enumerate(tri):
+        c[index[(j, k)]][f] += 1
+        c[index[(i, k)]][f] -= 1
+        c[index[(i, j)]][f] += 1
+    return tri, b, c
+
+
+def hodge(n, edges):
+    tri, b, c = incidence(n, edges)
+    m = len(edges)
+    return tri, [[sum(b[v][x] * b[v][y] for v in range(n)) + sum(c[x][f] * c[y][f] for f in range(len(tri)))
+                  for y in range(m)] for x in range(m)]
+
+
+n = 3
+while n < 8:
+    full = [(i, j) for i in range(n) for j in range(n) if i < j]
+    tri, h = hodge(n, full)
+    scalar = all(h[x][y] == (n if x == y else 0) for x in range(len(full)) for y in range(len(full)))
+    print(f"structure: {n} clocks pairwise joined, {len(full)} edges, {len(tri)} triangles: B^T B + C C^T = {n} I:"
+          f" {scalar}")
+    n += 1
+less = [(i, j) for i in range(4) for j in range(4) if i < j and (i, j) != (2, 3)]
+tri, h = hodge(4, less)
+print(f"structure: four clocks less the edge (2, 3), triangles {tri}, edge (0, 1) on both: B^T B + C C^T rows {h}")
 
 src = Path(sys.argv[1])
 rounds = int(sys.argv[2]) if len(sys.argv) > 2 else 200

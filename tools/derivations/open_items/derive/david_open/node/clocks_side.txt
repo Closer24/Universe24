@@ -1,3 +1,9 @@
+structure: 3 clocks pairwise joined, 3 edges, 1 triangles: B^T B + C C^T = 3 I: True
+structure: 4 clocks pairwise joined, 6 edges, 4 triangles: B^T B + C C^T = 4 I: True
+structure: 5 clocks pairwise joined, 10 edges, 10 triangles: B^T B + C C^T = 5 I: True
+structure: 6 clocks pairwise joined, 15 edges, 20 triangles: B^T B + C C^T = 6 I: True
+structure: 7 clocks pairwise joined, 21 edges, 35 triangles: B^T B + C C^T = 7 I: True
+structure: four clocks less the edge (2, 3), triangles [(0, 1, 2), (0, 1, 3)], edge (0, 1) on both: B^T B + C C^T rows [[4, 0, 0, 0, 0], [0, 3, 1, 0, 0], [0, 1, 3, 0, 0], [0, 0, 0, 3, 1], [0, 0, 0, 1, 3]]
 tensor24-click on the src given: 27 Node-clocks, 200 rounds; edges [(2, 3), (2, 4), (3, 4)]; triangles [(2, 3, 4)]; the dial K = 3 x key = 152434287, the birth 76217143; B C at every clock and triangle: [[0], [0], [0]]
   turn none: the identity off at 0 of 16200 (clock, Node-clock, round) places; each clock's largest |K booked - swept| 150089166, against two teeth's range 304868572; each clock's largest |B (every d)| at the end {2: 0, 3: 0, 4: 0}
   turn circulation: the identity off at 0 of 16200 (clock, Node-clock, round) places; each clock's largest |K booked - swept| 141805722, against two teeth's range 304868572; each clock's largest |B (every d)| at the end {2: 0, 3: 0, 4: 0}

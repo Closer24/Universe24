@@ -12,7 +12,9 @@ plus every d at its ends. So a clock's books hold within its teeth exactly when 
 wraps counted. Any move of C times anything does that, since B C = 0, the boundary of a boundary; on one triangle the
 circulation is the only such move. Under mode 11 a clock's line is made by its own edges' carries alone, the same
 whatever the triangle's tooth and twin hold, and over any run it books its passing within its teeth; round by round it
-is neither one carry of its passing nor the first click's line.
+is neither one carry of its passing nor the first click's line. Read from the clocks, the split click gives each edge
+the difference of its two clocks' passings and each triangle its circulation, since B^T B + C C^T = 3 I on a triangle;
+on n clocks all pairwise joined it is n I, so the split extends with no division and no pick where n is odd.
 
 ## 1. In clocks
 
@@ -70,6 +72,31 @@ x_e is the flow into edge e's lower end and t_e its lower end's tooth; the highe
   their shares alone, the same whatever path the third click takes, and over any run it books its own passing within
   its teeth.
 
+## 2a. The split click, read from the clocks
+
+- **On one triangle, B^T B + C C^T = 3 I (DERIVED; CHECKED).** So Big Pic's split, 3 x = (3 x - C C^T x) + C C^T x, is
+  3 x = B^T B x + C C^T x. With P = B x, each clock's own passing, the edge's own share is (B^T B x)_e = P_lower -
+  P_higher: each edge carries the difference of its two clocks' passings, and the triangle carries the rest, its
+  circulation c (c . x). So on each edge the split click reads only its two clocks' own passings, and B (B^T B x) =
+  (B B^T) P = 3 P - (sum of P) = 3 P, the clocks' passings summing to 0.
+- **On n clocks all pairwise joined, with all their triangles, B^T B + C C^T = n I (DERIVED; CHECKED for n = 3 to 7).**
+  On the diagonal, 2 (an edge's two ends) plus n - 2 (the triangles it lies on). Off it, two edges at one clock lie on
+  exactly one triangle together, and by B C = 0 at that clock their boundary signs' product is minus their incidences'
+  product, so the two matrices cancel; two edges with no clock in common share neither. So n x = B^T B x + C C^T x,
+  with no division and no pick: each triangle's own tooth carries c_f . x, each edge the difference of its two clocks'
+  passings at the dial n D, and B C = 0 keeps every clock's line its edges' alone, booking n P within the teeth. A lone
+  edge there carries n x_e from the birth n B + (n - 1) / 2, and for odd n its quotients are the first click's at D,
+  as in Big Pic's L5 (n r + (n - 1) / 2 < n D for every remainder r below D).
+- **Two limits, OPEN:**
+  - for even n the dial n D is even, against the label rule's odd dial (Big Pic's 6539416690 item 4);
+  - where a place's joined clocks are not all pairwise joined, an edge can lie on two triangles without the full set,
+    and B^T B + C C^T is no multiple of I there (four clocks less one edge: rows 4; 3, 1; 1, 3; 3, 1; 1, 3), so the
+    split's form there is open.
+- **For the law's case** (Sofer's 6540070751 item 3 (b)): Big Pic's proof as written covers each edge on at most one
+  triangle. The split and the clocks' books extend to every place whose joined clocks are pairwise joined and odd in
+  number. The third click's turn there, with several triangles sharing edges (C^T C no longer 3 I), and its run back
+  and memory, are THIRD7's to derive and measure.
+
 ## 3. On the board
 
 The probe is derive/david_open/node/clocks_side.py, its output clocks_side.txt beside it: tensor24-click as node-live
@@ -93,7 +120,9 @@ circ.py for the lines.
 
 ## 5. Measured (clocks_side.txt)
 
-- B C = 0 at every clock of the triangle.
+- From the structure alone: B^T B + C C^T = n I on n clocks pairwise joined, for n = 3 to 7 (1, 4, 10, 20 and 35
+  triangles); four clocks less one edge: rows 4; 3, 1; 1, 3; 3, 1; 1, 3, no multiple of I.
+- B C = 0 at every clock of the click world's triangle.
 - **The identity:** off at 0 of the 16,200 (clock, Node-clock, round) places, under every turn.
 - **Each clock's largest |K booked - swept| over the run,** against two teeth's range, 304,868,572:
   - no turn: 150,089,166;
@@ -110,9 +139,11 @@ circ.py for the lines.
 
 - **Stands (DERIVED, CHECKED on the board):** the identity for any turn; B C = 0; on one triangle the circulation is
   the only move that keeps every clock's books; under mode 11 each clock's line is made by its own edges' carries
-  alone, the same whatever path the third click takes, booking its passing within its teeth over any run.
-- **OPEN:** an edge on two triangles (C^T C's own form); the memory of mode 11's per-clock lines on the board, THIRD7's
-  rows; which turn the act takes, THIRD7's.
+  alone, the same whatever path the third click takes, booking its passing within its teeth over any run; the split
+  click as each edge's difference of its two clocks' passings plus the triangles' circulations, B^T B + C C^T = n I
+  on n clocks all pairwise joined.
+- **OPEN:** even n; a place whose joined clocks are not all pairwise joined; the turn with several triangles sharing
+  edges; the memory of mode 11's per-clock lines on the board, THIRD7's rows; which turn the act takes, THIRD7's.
 
 ## 7. How this text checked itself
 
