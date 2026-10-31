@@ -132,9 +132,8 @@ def clock_lines(record: Record) -> Verdict:
         at: (len([e for e in held if (e["round"], e["site"]) in meeting]), clicks.tallied(held))
         for at, held in owned
     }
-    astray = [
-        (at, e) for at, held in owned for e in held if (e["round"], e["site"]) in places.keys() - meeting
-    ]
+    apart = places.keys() - meeting  # the places read and no meeting, once
+    astray = [(at, e) for at, held in owned for e in held if (e["round"], e["site"]) in apart]
     if astray:
         (site, train), line = astray[0]
         cause = f"the clock at site {site}, train {train} clicks at round {line['round']} in no meeting: {len({at for at, _ in astray})} of {len(clocks)} clocks click outside one"

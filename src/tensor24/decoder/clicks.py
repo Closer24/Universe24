@@ -46,8 +46,10 @@ def tallied(lines: list[Line]) -> Tally:
 
 def by(lines: list[Line], key: str) -> dict[int, Tally]:
     """The counts per value of one field of a click line, its train or its site, in the values' order; a line with no whole value there stands under none."""
-    places = sorted({line[key] for line in lines if whole(line.get(key))})
-    return {at: tallied([line for line in lines if line.get(key) == at]) for at in places}
+    held: dict[int, list[Line]] = {}
+    for line in [line for line in lines if whole(line.get(key))]:  # one pass, the lines in their order
+        held.setdefault(line[key], []).append(line)
+    return {at: tallied(held[at]) for at in sorted(held)}
 
 
 def summed(lines: list[Line]) -> dict[Place, int]:
