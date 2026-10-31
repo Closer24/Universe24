@@ -129,7 +129,7 @@ OPEN.
   - three hands on a plain triangle: the largest count at most 88 over the run;
   - the identity and the run back exact in both.
 - **The mathematician's reading:** "three like hands are the fewest that hold by themselves" is a theorem under the square
-  form with bands alone, and David's 2 : 1 : 1 gives whole beats only at n = 3.
+  form with bands alone, and David's 2 : 1 : 1, the swings' frequency ratio, is whole only at n = 3.
 - **So three like hands are the fewest whose floor holds by itself,** and their bands are the equilateral triangle of
   two-leg edges, on which the third click's charge is kept (above). Whether the structure lays a third tied hand is
   OPEN: the click world as laid has two.

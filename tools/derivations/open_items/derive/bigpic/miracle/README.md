@@ -65,7 +65,7 @@ split_bedge_x100_5000.txt), the held square in the unit's terms (counts squared 
   integer matrices keeping a positive definite form are a discrete part of a compact group. For one gear its order is
   1, 2, 3, 4 or 6 (the matrices of whole entries of finite order), so every motion would repeat within 6 rounds and
   no slow motion is possible (DERIVED).
-- So on this board the energy is booked to the unit (road B's identity, now carried by the clicks), not kept.
+- So on this board the energy is booked to the unit, not kept.
 
 ## The equilateral triangle (the owner's word of about 09:30 UTC), equil.py
 
@@ -112,7 +112,8 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
     band graph holds a frustrated loop and every clock lies on a band of such a component. The mathematician's
     determinants: a triangle 4; a triangle with a separate band 0; a triangle with a bandless clock 0.
   - **The square option** is laid here per term with case (c); a build lays it by structure.
-- **The mass it gives:** each clock gets half the sum of its bands. So the giver and the taker each get exactly half
+- **The mass it gives** (mass here is a clock's own square's coefficient, the MIRACLE pair's ruling): each clock gets
+  half the sum of its bands. So the giver and the taker each get exactly half
   their band, which is David's s_min (6542212052; FLOOR1).
 - **MEASURED on click1** (the click world's one Node-clock), road B, 5,000 rounds each (square_x1_5000.txt,
   square_x10_5000.txt, square_x100_5000.txt):
@@ -129,7 +130,7 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
   its pairs; the Boss's 6542602796; David's 6542547300 and 6542620339).
   - On the click world's single giver-taker band, the square gives each hand exactly half the band. The opposite swing
     then has no spring of its own and is held only by the held hand's lend.
-  - Over longer runs it drifts, or falls: at round 106,411 at lambda 100 on a lay the files allow.
+  - Over longer runs it drifts, or falls: at round 106,411 at lambda 100 on FLOOR1's test lay, one the files allow.
   - Under the square form the floor holds by itself exactly on a structure with a frustrated loop, a loop whose parity
     and reversal disagree (Harary's balance; DERIVED). The plain triangle of bands is the smallest. A single band, or an
     even ring, sits at the edge.
@@ -183,8 +184,14 @@ construction.
     bound met at rounds 43 and 7). It is read for 300 rounds only.
 - **So:**
   - The cell lays no band and gives exactly half (DERIVED).
-  - Its opposite momentum is kept exactly in the model (MEASURED, with equal teeth): free, not falling. On a board of
-    many Node-clocks, David reads it as a wave. That reading is cited physics, not read here.
+  - Its opposite momentum is kept exactly in the model (MEASURED, with equal teeth): the free swing is springless,
+    free and not falling, and the held hand lends it nothing. On a board of many Node-clocks, David reads it as a
+    wave. That reading is cited physics, not read here.
+  - **The MIRACLE pair: PASSED by both readers** as the bench's part, a stand-alone model (the Boss's 6543327690). The
+    physicist adds two findings: at the click world's own lay the cell stays quiet for 200,000 rounds, while node-all's
+    shipped triangle as laid falls on the act under road B, a count passing 32 bits at round 9,582, past its 5,000
+    ticks (the model equal to the act in 38 of 38 windows); and at the ten-times-giver lay a finer grain does not keep
+    the held hand.
   - Why only a held hand carries a cell is OPEN. First, fix from the structure which edges carry products (the ties)
     and which carry sums (the bands), as the mathematician asks (Q2). My first reason, that the giver's and the taker's
     cells would add g^2 u^2, is withdrawn: summed over the three vertices, the cells give the ties doubled and no
