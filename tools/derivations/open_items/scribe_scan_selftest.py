@@ -2159,7 +2159,9 @@ def without_git_variables() -> Iterator[None]:
 
 
 def counts(rel: str, source: str) -> dict[str, int]:
-    return dict(Counter(hit.rule for hit in gate.scan(rel, source) if hit.rule != "DOCLAYER"))  # DOCLAYER reads a module's docstring: its own cases (layer_cases)
+    return dict(
+        Counter(hit.rule for hit in gate.scan(rel, source) if hit.rule != "DOCLAYER")
+    )  # DOCLAYER reads a module's docstring: its own cases (layer_cases)
 
 
 TOOL_NAMES = (
@@ -2610,6 +2612,46 @@ def declare_cases() -> tuple[int, int]:
             f"in a Python file, {label}",
             {h.detail for h in gate.declared_in("tests/test_w.py", source)} == want,
         )
+    PROBE_FILE = "tools/derivations/open_items/derive/p/x.py"
+    cards = (
+        (
+            "a train card in a probe",
+            'u = {"name": "x", "kinds": ["T1"], "part": 1}\n',
+            PROBE_FILE,
+            {"train card kinds ['T1'] part 1"},
+        ),
+        (
+            "a card made by dict() in a probe",
+            'u = dict(name="x", kinds=["T1"], part=1)\n',
+            PROBE_FILE,
+            {"train card kinds ['T1'] part 1"},
+        ),
+        (
+            "a card with a variable kinds and part",
+            'u = {"name": n, "kinds": k, "part": p}\n',
+            PROBE_FILE,
+            {"train card kinds k part p"},
+        ),
+        (
+            "a card in a test is a world's, quiet",
+            'u = {"name": "x", "kinds": ["T1"], "part": 1}\n',
+            "tests/test_w.py",
+            set(),
+        ),
+        (
+            "a dict with a name and kinds alone is no card",
+            'u = {"name": "x", "kinds": ["T1"]}\n',
+            PROBE_FILE,
+            set(),
+        ),
+        ("a dict with no name is no card", 'u = {"kinds": ["T1"], "part": 1}\n', PROBE_FILE, set()),
+    )
+    for label, source, rel, want in cards:
+        check(
+            f"a train card, {label}",
+            {h.detail for h in gate.declared_in(rel, source) if h.detail.startswith("train card")}
+            == want,
+        )
     reads = (
         ("examples/w/universe.json", True),
         ("reader/worlds/universe_toy.json", True),
@@ -2938,11 +2980,36 @@ def layer_cases() -> tuple[int, int]:
     cases = (
         ("the four layers, one the general flag", NEW_STEP, FOUR, []),
         ("no docstring", NEW_STEP, "x = 0\n", ["missing: Clock, Algebra, Board, Clicks"]),
-        ("a one-line docstring", NEW_STEP, '"""The Node-clock\'s step."""\n', ["missing: Clock, Algebra, Board, Clicks"]),
-        ("a layer missing", NEW_STEP, '"""A part.\n\nClock: a.\nAlgebra: b.\nClicks: c.\n"""\n', ["missing: Board"]),
-        ("a label with no text", NEW_STEP, '"""A part.\n\nClock:\nAlgebra: b.\nBoard: c.\nClicks: d.\n"""\n', ["missing: Clock"]),
-        ("labels inside a sentence", NEW_STEP, '"""The Clock: a. Algebra: b. Board: c. Clicks: d."""\n', ["missing: Clock, Algebra, Board, Clicks"]),
-        ("indented labels", NEW_STEP, '"""A part.\n\n    Clock: a.\n    Algebra: b.\n    Board: c.\n    Clicks: n/a\n"""\n', []),
+        (
+            "a one-line docstring",
+            NEW_STEP,
+            '"""The Node-clock\'s step."""\n',
+            ["missing: Clock, Algebra, Board, Clicks"],
+        ),
+        (
+            "a layer missing",
+            NEW_STEP,
+            '"""A part.\n\nClock: a.\nAlgebra: b.\nClicks: c.\n"""\n',
+            ["missing: Board"],
+        ),
+        (
+            "a label with no text",
+            NEW_STEP,
+            '"""A part.\n\nClock:\nAlgebra: b.\nBoard: c.\nClicks: d.\n"""\n',
+            ["missing: Clock"],
+        ),
+        (
+            "labels inside a sentence",
+            NEW_STEP,
+            '"""The Clock: a. Algebra: b. Board: c. Clicks: d."""\n',
+            ["missing: Clock, Algebra, Board, Clicks"],
+        ),
+        (
+            "indented labels",
+            NEW_STEP,
+            '"""A part.\n\n    Clock: a.\n    Algebra: b.\n    Board: c.\n    Clicks: n/a\n"""\n',
+            [],
+        ),
         ("a package's init is not read", NEW_ROOT, "x = 0\n", []),
         ("the runner is read", NEW_RUNNER, "x = 0\n", ["missing: Clock, Algebra, Board, Clicks"]),
         ("the decoder is read", NEW_DECODER, FOUR, []),
@@ -3051,9 +3118,17 @@ def probe_cases() -> tuple[int, int]:
             "    term, _ = carry(term * x, k * k, 0)\n",
             ["series summed by a loop"],
         ),
-        ("a series counted up in a while loop", "k = 1\nwhile k < 9:\n    total += term\n    term = term * x // k\n    k += 1\n", ["series summed by a loop"]),
+        (
+            "a series counted up in a while loop",
+            "k = 1\nwhile k < 9:\n    total += term\n    term = term * x // k\n    k += 1\n",
+            ["series summed by a loop"],
+        ),
         ("a logarithm constant is no sine (SEARCHLOG reads it)", "LN_TWO = 2 * artanh_inverse(3)\n", []),
-        ("an arctangent function", "def arctan_inverse(m):\n    return m\n", ["function arctan_inverse"]),
+        (
+            "an arctangent function",
+            "def arctan_inverse(m):\n    return m\n",
+            ["function arctan_inverse"],
+        ),
         ("a tangent name", "def tangent_of(m):\n    return m\n", ["function tangent_of"]),
         ("a cosine function", "def cosine(m):\n    return m\n", ["function cosine"]),
         ("a cosine kept under a name", "cos_w = 24\nsin_w = 7\n", ["name cos_w", "name sin_w"]),
@@ -3064,19 +3139,142 @@ def probe_cases() -> tuple[int, int]:
             ["bracket halved"],
         ),
         ("a midpoint by a shift", "mid = (lo + hi) >> 1\n", ["bracket halved"]),
-        ("a midpoint by Rule3's carry", "from tensor24.algebra.carry import carry\n\nmid, _ = carry(lo + hi, 2, 0)\n", ["bracket halved"]),
+        (
+            "a midpoint by Rule3's carry",
+            "from tensor24.algebra.carry import carry\n\nmid, _ = carry(lo + hi, 2, 0)\n",
+            ["bracket halved"],
+        ),
         ("a sum of squares is no series", "total = sum(k * k for k in range(10))\n", []),
         ("a loop that only adds is no series", "for i in range(3):\n    total += i\n", []),
-        ("a loop that divides by its counter and sums nothing is no series", "for k in range(1, 5):\n    q = n // k\n    last = q\n", []),
+        (
+            "a loop that divides by its counter and sums nothing is no series",
+            "for k in range(1, 5):\n    q = n // k\n    last = q\n",
+            [],
+        ),
         ("half of one number is no bracket", "half = n // 2\n", []),
         ("a log is a record, no logarithm", "log = []\nlog.append(x)\nlogs = 3\n", []),
-        ("the wider words of the rule WORD are no sine", "quaternion_gear = 1\nplanck_key = 3\nangle_count = 2\ncircle_rows = 4\ntheta_n = 5\n", []),
-        ("a name of a root or a sum is no sine", "def isqrt_rows(a):\n    return a\n\ntotal_sum = 3\n", []),
+        (
+            "the wider words of the rule WORD are no sine",
+            "quaternion_gear = 1\nplanck_key = 3\nangle_count = 2\ncircle_rows = 4\ntheta_n = 5\n",
+            [],
+        ),
+        (
+            "a name of a root or a sum is no sine",
+            "def isqrt_rows(a):\n    return a\n\ntotal_sum = 3\n",
+            [],
+        ),
         ("a sum of a name and a number halved is no bracket", "half = (n + 1) // 2\n", []),
         ("a file that does not parse", "def (:\n", []),
     )
     for label, source, want in searches:
         check(f"SEARCH: {label}", found(source, "SEARCH") == sorted(want))
+    shapes = (
+        (
+            "next over a counter",
+            "g = next(g for g in itertools.count(1) if 2 * g * g * (2 * gamma - 1) > wall)\n",
+            ["search that counts up"],
+        ),
+        (
+            "next over a bare count",
+            "from itertools import count\ng = next(g for g in count(1) if g * g > n)\n",
+            ["search that counts up"],
+        ),
+        (
+            "a for over count",
+            "import itertools\nfor g in itertools.count(1):\n    if g * g > n:\n        break\n",
+            ["search that counts up"],
+        ),
+        ("a next over a range is no counter", "g = next(g for g in range(1, 99) if g > n)\n", []),
+        ("a list's count method is no counter", "k = items.count(3)\n", []),
+        (
+            "a counter stepped until a square passes",
+            "x = 1\nwhile x * x <= n:\n    x += 1\n",
+            ["counter stepped to a bound"],
+        ),
+        ("a while that steps a counter with no product", "x = 0\nwhile x < n:\n    x += 1\n", []),
+        ("a while whose product has a constant", "x = 0\nwhile x * 2 < n:\n    x += 1\n", []),
+        (
+            "a search over pairs for a rational root of two",
+            "both = [(a, b) for a in range(1, 200) for b in range(1, 200) if a * a == 2 * b * b]\n",
+            ["search over a range for a form"],
+        ),
+        (
+            "the points of a hexagonal norm",
+            "pts = [(p, q) for p in range(9) for q in range(9) if p * p - p * q + q * q == size]\n",
+            ["search over a range for a form"],
+        ),
+        (
+            "a for over a range with an if on a square",
+            "for a in range(1, 99):\n    if a * a == m:\n        root = a\n",
+            ["search over a range for a form"],
+        ),
+        (
+            "a selection by a value read from a table is no form",
+            "crests = [x for x in f if f[x] * f[x] == 36]\n",
+            [],
+        ),
+        ("a comprehension without an equality", "big = [a for a in range(9) if a * a > 20]\n", []),
+        ("a product of constants in an equality", "ok = [a for a in range(9) if 2 * 3 == a]\n", []),
+        (
+            "an all() of an identity is a check, no search",
+            "ok = all(a * a + 2 * a + 1 == (a + 1) * (a + 1) for a in range(9))\n",
+            [],
+        ),
+    )
+    for label, source, want in shapes:
+        check(
+            f"SEARCH (the counting and the range shapes): {label}",
+            found(source, "SEARCH") == sorted(want),
+        )
+    check("PELL is a note", gate.RULES["PELL"][0] == "WARN")
+    check("FILEVALUE is a note", gate.RULES["FILEVALUE"][0] == "WARN")
+    pells = (
+        ("the pulse's speed pair", "NUM, DEN = 20, 49\n", ["pair 49 20 d 6"]),
+        ("a pair in either order", "pair = (20, 49)\n", ["pair 49 20 d 6"]),
+        ("a pair that solves minus one", "pair = (41, 29)\n", ["pair 41 29 d 2"]),
+        ("an ordinary pair", "size = (13, 7)\n", []),
+        ("small numbers are spared", "pair = (3, 2)\n", []),
+        ("a smaller b is spared", "pair = (17, 4)\n", []),
+        ("a triple is no pair", "t = (49, 20, 6)\n", []),
+        ("a pair with a name", "t = (49, n)\n", []),
+        ("a pair of strings", "t = ('49', '20')\n", []),
+    )
+    for label, source, want in pells:
+        check(f"PELL: {label}", found(source, "PELL") == sorted(want))
+    saved = gate.FILE_VALUES
+    gate.FILE_VALUES = frozenset({15162856759112389, 200000})
+    values = (
+        (
+            "the example's den typed",
+            "W = 15162856759112389 * 1000 * 1000\n",
+            ["file value 15162856759112389"],
+        ),
+        ("the example's mesh typed", "SCAN = ((200000, 250),)\n", ["file value 200000"]),
+        ("a number the files do not hold", "n = 15162856759112390\n", []),
+        ("a small number is spared", "n = 1000\n", []),
+        ("a string is no number", "label = '15162856759112389'\n", []),
+        ("a float is no whole number", "x = 200000.5\n", []),
+    )
+    for label, source, want in values:
+        check(f"FILEVALUE: {label}", found(source, "FILEVALUE") == sorted(want))
+    gate.FILE_VALUES = saved
+    with tempfile.TemporaryDirectory() as tmp:
+        world = Path(tmp, "examples", "w")
+        world.mkdir(parents=True)
+        world.joinpath("universe.json").write_text(
+            '{"integers": {"den": 15162856759112389, "full_rate": 1000000, "width": 128}, "chosen": {"key": 50811429}}',
+            encoding="utf-8",
+        )
+        world.joinpath("piece.json").write_text('{"shape": [3, 3, 3]}', encoding="utf-8")
+        world.joinpath("setting.json").write_text('{"ticks": 123456789, "gears": []}', encoding="utf-8")
+        check(
+            "the example values: the den and the key, no power of ten, no small number, no setting",
+            gate.example_values(Path(tmp)) == frozenset({15162856759112389, 50811429}),
+        )
+        check(
+            "an absent examples folder holds none",
+            gate.example_values(Path(tmp, "nowhere")) == frozenset(),
+        )
     logs = (
         ("a logarithm constant", "LN_TWO = 2 * artanh_inverse(3)\n", ["name LN_TWO"]),
         ("an artanh function", "def artanh_inverse(m):\n    return m\n", ["function artanh_inverse"]),
@@ -3089,7 +3287,11 @@ def probe_cases() -> tuple[int, int]:
         check(f"SEARCHLOG: {label}", found(source, "SEARCHLOG") == sorted(want))
     words = (
         ("a cosine named in a string", "label = 'cos^2'\n", ["string cos"]),
-        ("a cosine in the text of an f-string", "x = 1\nprint(f'cos 30 degrees as {x}')\n", ["string cos"]),
+        (
+            "a cosine in the text of an f-string",
+            "x = 1\nprint(f'cos 30 degrees as {x}')\n",
+            ["string cos"],
+        ),
         ("a cosine in a comment", "PELL = 1351  # stands for cos 30 degrees\n", ["comment cos"]),
         ("two words in one string", "t = 'sine and tangent'\n", ["string sine", "string tangent"]),
         ("a digit ends a word", "t = 'cos30'\n", ["string cos"]),
@@ -3195,16 +3397,28 @@ def probe_cases() -> tuple[int, int]:
                 status == 0 and "note    DIVIDE" in text and "REFUSED" not in text,
             )
             status, text = read(
-                branch("series", {folder + "s.py": "k = 1\nwhile k < 9:\n    total += term\n    term = term * x // k\n    k += 1\n"})
+                branch(
+                    "series",
+                    {
+                        folder
+                        + "s.py": "k = 1\nwhile k < 9:\n    total += term\n    term = term * x // k\n    k += 1\n"
+                    },
+                )
             )
             check(
                 "a new probe with a series is refused, named",
                 status == 1 and "REFUSED SEARCH" in text and "series summed by a loop" in text,
             )
             status, text = read(branch("sine_name", {folder + "n.py": "def sine(x):\n    return x\n"}))
-            check("a new probe with a function named sine is refused", status == 1 and "REFUSED SEARCH" in text and "function sine" in text)
+            check(
+                "a new probe with a function named sine is refused",
+                status == 1 and "REFUSED SEARCH" in text and "function sine" in text,
+            )
             status, text = read(branch("bisect", {folder + "b.py": "mid = (lo + hi) // 2\n"}))
-            check("a new probe with a bracket halved is refused", status == 1 and "REFUSED SEARCH" in text and "bracket halved" in text)
+            check(
+                "a new probe with a bracket halved is refused",
+                status == 1 and "REFUSED SEARCH" in text and "bracket halved" in text,
+            )
             status, text = read(branch("log_name", {folder + "l.py": "LN_TWO = 3\n"}))
             check(
                 "a new probe with a logarithm name is a note and no refusal",
@@ -3215,10 +3429,18 @@ def probe_cases() -> tuple[int, int]:
                 "a new probe with a cosine in a string is a note and no refusal",
                 status == 0 and "note    SINEWORD" in text and "REFUSED" not in text,
             )
-            status, text = read(branch("sine_held", {folder + "old_sine.py": "def sine(x):\n    return x + 1\n"}))
+            status, text = read(
+                branch("sine_held", {folder + "old_sine.py": "def sine(x):\n    return x + 1\n"})
+            )
             check("a changed probe that holds its sine is quiet", status == 0 and "SEARCH" not in text)
             status, text = read(
-                branch("sine_raised", {folder + "old_sine.py": "def sine(x):\n    return x\n\n\ndef cosine(x):\n    return x\n"})
+                branch(
+                    "sine_raised",
+                    {
+                        folder
+                        + "old_sine.py": "def sine(x):\n    return x\n\n\ndef cosine(x):\n    return x\n"
+                    },
+                )
             )
             check(
                 "a changed probe that adds a cosine to its sine is refused",

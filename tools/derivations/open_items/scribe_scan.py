@@ -22,7 +22,7 @@ adds or changes: a float, a true division, a root, a circular call, an import of
 division, a remainder or divmod, where the one division is Rule3's carry (DIVIDE). SEARCH (a refusal, by the owner's word of 2026-10-30, 17:20 UTC, "Sine is forbidden.", #2187 6528925479) reads the three shapes under which a probe makes a
 circular function or a root without a call that names it: a series summed by a loop, a bracket halved by its midpoint, and a function or constant named a sine,
 cosine, tangent or arctangent (David's finding of 6528139344 item 5); SINEWORD (a note) reads a word that names a circular function (cos, sine, tangent, ...) in a string or a comment of a probe, a docstring spared: the lay that stands for a cosine under no name (g5_draw (n)); SEARCHLOG (a note) reads a function or constant named artanh or ln, until the owner says
-whether his word reaches the logarithm. The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
+whether his word reaches the logarithm. SEARCH reads two shapes more (the audit of main b1a50bb33, 2026-10-31, the owner's "a root in the code is forbidden ... and not outside it either"): a search that counts up (next() over a generator that runs over count(), a for over count(), a while that steps a counter by one until a product of names passes a bound) and a search over a range for a value of a form (a comprehension, or a for over a range, whose condition equates an expression that multiplies loop variables: a^2 = 2 b^2 over pairs); DECLARE reads a train card, a dict or dict() with a name, kinds and a part, in a probe; PELL (a note) reads a typed pair that solves Pell's equation, and FILEVALUE (a note) a typed copy of a number the example files hold. The probes that stood at the live heads of 2026-10-30, 09:5x UTC are frozen in
 scribe_scan_probes.json, read from the published branch as the ceiling is. SCRIBE-GATE-1.md, section The hidden numbers and the probes.
 
   python scribe_scan.py                        the working tree against its merge base (CHECK_BASE, else origin/engine-5.0-test)
@@ -283,16 +283,37 @@ RULES: dict[str, tuple[str, str]] = {
         "WARN",
         "a word that names a circular function (sin, cos, tan, sine, cosine, tangent, arctan, arcsin, arccos, atan, asin, acos) in a string or a comment of a probe under tools/derivations/ that a push adds or changes, a docstring spared: a lay or a table that stands for a cosine under no name, which SEARCH reads by name and cannot see (g5_draw (n): the Pell pair PELL = (1351, 780) for cos 30 degrees and a tuple of chances by a cosine law; David's end mathematician, #2187 6535686784 item 5 B2; law line 102 bars the lay, the lays included); a note, the count per file may not rise; read each one, for a probe that refuses a cosine in a message names it too",
     ),
+    "PELL": (
+        "WARN",
+        "a pair of whole numbers typed together in a probe under tools/derivations/ that a push adds or changes, both at least 5 and the larger at least 10, that solves a^2 - d b^2 = 1 or -1 for a d that is no square (49, 20 for d = 6: 20 / 49 is the best ratio for 1 / sqrt 6): a root laid as a ratio picked to land on it, a construction that finds one (law line 102: the lay of a state holds no circular function or root by any construction that finds one; Big Pic's reading of 6536945106: a ratio picked to land on a root); a note, the count per file may not rise, until the owner rules the bar (the audit of main b1a50bb33, A6)",
+    ),
+    "FILEVALUE": (
+        "WARN",
+        "a whole number typed in a probe under tools/derivations/ that a push adds or changes, of at least 100000 and no power of ten, that an example world's universe or piece file holds (the den, the key, the mesh, the notch): a second copy of a number the approved files hold, where a probe reads it through the loader from the file it names (the owner's word that numbers live only in the approved files; David's finding of 6536738713 item 3 and the audit's C6); a note, the count per file may not rise",
+    ),
     "DOCLAYER": (
         "BLOCK",
         "a module of the new engine whose docstring lacks the four layers, Clock:, Algebra:, Board: and Clicks:, each at the start of a line and carrying a text or the one general flag n/a: a part is told in the clock, the algebra, the event board and the physics behind the clicks (law: item (10) (e) of the principle, line 35; the owner's word of 2026-10-30, 11:0x UTC); the standing modules convert and the count only falls",
-    ),}
+    ),
+}
 
 BAD_IMPORTS = frozenset("math cmath statistics random fractions decimal scipy sympy mpmath".split())
 NUMPY_NAMES = frozenset({"np", "numpy"})
-DISPLAY_NODES = (ast.Tuple, ast.List, ast.Set, ast.Dict)  # a label tuple, a list, a set or a dict written out
-LAYERS = ("Clock", "Algebra", "Board", "Clicks")  # the four layers a part of the new engine states in its docstring (the rule DOCLAYER)
-ENUM_NAMES = frozenset("Enum IntEnum StrEnum Flag IntFlag ReprEnum auto".split())  # the standard library's enumerations: a number behind a name
+DISPLAY_NODES = (
+    ast.Tuple,
+    ast.List,
+    ast.Set,
+    ast.Dict,
+)  # a label tuple, a list, a set or a dict written out
+LAYERS = (
+    "Clock",
+    "Algebra",
+    "Board",
+    "Clicks",
+)  # the four layers a part of the new engine states in its docstring (the rule DOCLAYER)
+ENUM_NAMES = frozenset(
+    "Enum IntEnum StrEnum Flag IntFlag ReprEnum auto".split()
+)  # the standard library's enumerations: a number behind a name
 PROBES = "tools/derivations/"  # the probes (the derivations, toys and hands under it): the rules PROBE and DIVIDE read the files a push adds or changes
 PROBE_CALLS = frozenset(
     "sqrt isqrt cbrt exp expm1 log log1p log2 log10 sin cos tan asin acos atan atan2 arcsin arccos arctan arctan2 sinh cosh tanh "
@@ -301,12 +322,24 @@ PROBE_CALLS = frozenset(
 SINE_WORDS = frozenset(
     "sin cos tan sine cosine tangent arctan arcsin arccos atan asin acos".split()
 )  # a word of a snake_case name that makes a circular function by hand (the rule SEARCH); the rule WORD reads the wider CIRCULAR_WORDS below
-LOG_WORDS = frozenset("artanh atanh arctanh arcsinh ln".split())  # a word that makes a logarithm by hand (the rule SEARCHLOG): log is no word of it, a log being also a record
+LOG_WORDS = frozenset(
+    "artanh atanh arctanh arcsinh ln".split()
+)  # a word that makes a logarithm by hand (the rule SEARCHLOG): log is no word of it, a log being also a record
 PROBE_DTYPES = frozenset(
     "float complex float16 float32 float64 float128 float_ double longdouble complex64 complex128 complex256".split()
 )  # a dtype that holds a real number
 PATHISH = (
-    "path", "root", "dir", "here", "repo", "folder", "tmp", "parent", "examples", "output", "work",
+    "path",
+    "root",
+    "dir",
+    "here",
+    "repo",
+    "folder",
+    "tmp",
+    "parent",
+    "examples",
+    "output",
+    "work",
 )  # a name that holds a path: its / is a join, the left side of a division in a probe that this spares
 NP_FLOAT = frozenset(
     "sqrt cbrt exp expm1 log log2 log10 log1p mean average median std var linspace logspace fft linalg random e inf nan "
@@ -1328,7 +1361,9 @@ def scan(rel: str, source: str) -> list[Hit]:
                 "ISOLATE", tree, f"unlisted path {rel}"
             )  # the architect's table names the folders: no wall covers another
         if parts[-1] != "__init__.py" and (missing := layers_missing(ast.get_docstring(tree))):
-            hits.append(Hit("DOCLAYER", rel, 1, "the four layers", "missing: " + ", ".join(missing)))  # one hit per module, its key constant
+            hits.append(
+                Hit("DOCLAYER", rel, 1, "the four layers", "missing: " + ", ".join(missing))
+            )  # one hit per module, its key constant
     numpy = set(NUMPY_NAMES)
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
@@ -2123,6 +2158,17 @@ def declared_python(rel: str, text: str) -> list[Hit]:
             fields = {kw.arg: kw.value for kw in node.keywords if kw.arg}
         else:
             continue
+        if rel.startswith(PROBES) and {"name", "kinds", "part"} <= fields.keys():
+            found.append(
+                Hit(
+                    "DECLARE",
+                    rel,
+                    node.lineno,
+                    f"train card kinds {ast.unparse(fields['kinds'])} part {ast.unparse(fields['part'])}",
+                    "",
+                    node.col_offset,
+                )
+            )
         name = fields.get("name")
         if isinstance(name, ast.Constant) and isinstance(name.value, str) and "pinion" in fields:
             number = ast.unparse(fields["pinion"])
@@ -2282,13 +2328,21 @@ def series_loop(loop: ast.For | ast.While) -> bool:
         counters |= names_in(loop.target)
     body = [n for stmt in loop.body for n in ast.walk(stmt)]
     for n in body:
-        if isinstance(n, ast.AugAssign) and isinstance(n.op, ast.Add) and isinstance(n.value, ast.Constant):
+        if (
+            isinstance(n, ast.AugAssign)
+            and isinstance(n.op, ast.Add)
+            and isinstance(n.value, ast.Constant)
+        ):
             counters |= names_in(n.target)
     divides = any(
-        (d := divisor_of(n)) is not None and counters & names_in(d) for n in body if isinstance(n, ast.BinOp | ast.Call)
+        (d := divisor_of(n)) is not None and counters & names_in(d)
+        for n in body
+        if isinstance(n, ast.BinOp | ast.Call)
     )
     adds = any(
-        isinstance(n, ast.AugAssign) and isinstance(n.op, ast.Add | ast.Sub) and isinstance(n.value, ast.Name)
+        isinstance(n, ast.AugAssign)
+        and isinstance(n.op, ast.Add | ast.Sub)
+        and isinstance(n.value, ast.Name)
         for n in body
     )
     return divides and adds
@@ -2299,7 +2353,9 @@ def midpoint(node: ast.AST) -> bool:
     whole: ast.AST | None = None
     if isinstance(node, ast.BinOp) and isinstance(node.op, ast.FloorDiv | ast.RShift):
         half = node.right
-        if isinstance(half, ast.Constant) and half.value == (2 if isinstance(node.op, ast.FloorDiv) else 1):
+        if isinstance(half, ast.Constant) and half.value == (
+            2 if isinstance(node.op, ast.FloorDiv) else 1
+        ):
             whole = node.left
     elif isinstance(node, ast.Call) and divisor_of(node) is not None:
         half = divisor_of(node)
@@ -2319,13 +2375,180 @@ def midpoint(node: ast.AST) -> bool:
     return len(named) >= 2 and all(isinstance(x, ast.Name | ast.Constant) for x in terms)
 
 
+def is_count(node: ast.AST) -> bool:
+    """Whether a node is a call of count, itertools.count or any attribute named count that is called with arguments: the counter that counts up."""
+    return isinstance(node, ast.Call) and (
+        getattr(node.func, "attr", None) == "count" or getattr(node.func, "id", None) == "count"
+    )
+
+
+def counts_up(node: ast.AST) -> bool:
+    """Whether a node searches by a counter that counts up with no bound: next() over a generator that runs over count(), or a for loop over count()."""
+    if isinstance(node, ast.For):
+        return is_count(node.iter)
+    if (
+        isinstance(node, ast.Call)
+        and getattr(node.func, "id", None) == "next"
+        and node.args
+        and isinstance(node.args[0], ast.GeneratorExp)
+    ):
+        return any(is_count(g.iter) for g in node.args[0].generators)
+    return False
+
+
+def plain(expr: ast.AST) -> bool:
+    """Whether an expression is built of names, constants and arithmetic alone: no subscript, call or attribute (a value read from a table is no loop variable's form)."""
+    return all(
+        isinstance(
+            n,
+            ast.Name
+            | ast.Constant
+            | ast.BinOp
+            | ast.UnaryOp
+            | ast.operator
+            | ast.unaryop
+            | ast.expr_context,
+        )
+        for n in ast.walk(expr)
+    )
+
+
+def form_of(expr: ast.AST, names: set[str]) -> bool:
+    """Whether an expression multiplies two plain parts that both hold one of the names, or squares a plain part that holds one: a square, a product of two loop variables, a form of the pair."""
+    for part in ast.walk(expr):
+        if (
+            isinstance(part, ast.BinOp)
+            and isinstance(part.op, ast.Mult)
+            and plain(part.left)
+            and plain(part.right)
+            and names_in(part.left) & names
+            and names_in(part.right) & names
+        ):
+            return True
+        if (
+            isinstance(part, ast.BinOp)
+            and isinstance(part.op, ast.Pow)
+            and isinstance(part.right, ast.Constant)
+            and part.right.value == 2
+            and plain(part.left)
+            and names_in(part.left) & names
+        ):
+            return True
+    return False
+
+
+def equates_form(test: ast.AST, names: set[str]) -> bool:
+    """Whether a condition holds one equality whose sides multiply loop variables."""
+    return any(
+        isinstance(c, ast.Compare)
+        and len(c.ops) == 1
+        and isinstance(c.ops[0], ast.Eq)
+        and form_of(c, names)
+        for c in ast.walk(test)
+    )
+
+
+def range_search(node: ast.AST) -> bool:
+    """Whether a node searches a range for the values of a form that equal something: a comprehension whose condition, or a for over a range whose if, equates an expression that multiplies its loop variables."""
+    if isinstance(node, ast.ListComp | ast.SetComp | ast.GeneratorExp | ast.DictComp):
+        names = {n for g in node.generators for n in names_in(g.target)}
+        return any(equates_form(cond, names) for g in node.generators for cond in g.ifs)
+    if (
+        isinstance(node, ast.For)
+        and isinstance(node.iter, ast.Call)
+        and getattr(node.iter.func, "id", None) == "range"
+    ):
+        names = names_in(node.target)
+        return any(
+            isinstance(n, ast.If) and equates_form(n.test, names)
+            for stmt in node.body
+            for n in ast.walk(stmt)
+        )
+    return False
+
+
+def stepped_to_bound(node: ast.AST) -> bool:
+    """Whether a while loop steps a counter by one until a product of names passes a bound: the least x with x * x past n found by counting up."""
+    if not isinstance(node, ast.While):
+        return False
+    names = names_in(node.test)
+    if not form_of(node.test, names):
+        return False
+    return any(
+        isinstance(p, ast.AugAssign)
+        and isinstance(p.op, ast.Add)
+        and isinstance(p.target, ast.Name)
+        and p.target.id in names
+        and isinstance(p.value, ast.Constant)
+        and p.value.value == 1
+        for stmt in node.body
+        for p in ast.walk(stmt)
+    )
+
+
+SQUARES = frozenset(k * k for k in range(1, 15))
+NON_SQUARES = tuple(d for d in range(2, 201) if d not in SQUARES)
+
+
+def pell_pair(node: ast.AST) -> tuple[int, int, int] | None:
+    """The pair (a, b, d) a typed two-element tuple of whole numbers solves a^2 - d b^2 = 1 or -1 with, a at least 10 and b at least 5, d no square up to 200; none otherwise."""
+    if not (isinstance(node, ast.Tuple) and len(node.elts) == 2):
+        return None
+    pair = [
+        e.value
+        for e in node.elts
+        if isinstance(e, ast.Constant) and isinstance(e.value, int) and not isinstance(e.value, bool)
+    ]
+    if len(pair) != 2:
+        return None
+    a, b = max(pair), min(pair)
+    if a < 10 or b < 5:
+        return None
+    for d in NON_SQUARES:
+        if a * a - d * b * b in (1, -1):
+            return a, b, d
+    return None
+
+
+def example_values(root: Path) -> frozenset[int]:
+    """The whole numbers of at least 100000, no power of ten, that the example worlds' universe and piece files hold under a root: read once, empty where there are none."""
+    found: set[int] = set()
+
+    def walk(x: Any) -> None:
+        if isinstance(x, dict):
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+        elif isinstance(x, int) and not isinstance(x, bool) and x >= 100000 and str(x).strip("0") != "1":
+            found.add(x)
+
+    for name in ("universe.json", "piece.json"):
+        for path in sorted(root.joinpath("examples").glob(f"*/{name}")):
+            try:
+                walk(json.loads(path.read_text(encoding="utf-8")))
+            except OSError, ValueError:
+                continue
+    return frozenset(found)
+
+
+FILE_VALUES: frozenset[int] = example_values(
+    Path(__file__).resolve().parents[3]
+)  # the repository the gate stands in; a test sets it
+
+
 def docstring_ids(tree: ast.AST) -> set[int]:
     """The ids of the string nodes that are a docstring: the first statement of a module, a function or a class when it is a bare string."""
     found: set[int] = set()
     for node in ast.walk(tree):
         if isinstance(node, ast.Module | ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef):
             first = node.body[0] if node.body else None
-            if isinstance(first, ast.Expr) and isinstance(first.value, ast.Constant) and isinstance(first.value.value, str):
+            if (
+                isinstance(first, ast.Expr)
+                and isinstance(first.value, ast.Constant)
+                and isinstance(first.value.value, str)
+            ):
                 found.add(id(first.value))
     return found
 
@@ -2351,13 +2574,15 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
     a circular function in a string or a comment (SINEWORD); a file that does not parse holds nothing to run."""
     try:
         tree = ast.parse(source)
-    except (SyntaxError, ValueError):
+    except SyntaxError, ValueError:
         return []
     hits: list[Hit] = []
     docs = docstring_ids(tree)
 
     def add(rule: str, node: ast.AST, detail: str) -> None:
-        hits.append(Hit(rule, rel, getattr(node, "lineno", 0), detail, "", getattr(node, "col_offset", 0)))
+        hits.append(
+            Hit(rule, rel, getattr(node, "lineno", 0), detail, "", getattr(node, "col_offset", 0))
+        )
 
     for node in ast.walk(tree):
         if isinstance(node, ast.Constant) and isinstance(node.value, str) and id(node) not in docs:
@@ -2374,6 +2599,22 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
             add("SEARCH", node, "series summed by a loop")
         if midpoint(node):
             add("SEARCH", node, "bracket halved")
+        if counts_up(node):
+            add("SEARCH", node, "search that counts up")
+        if stepped_to_bound(node):
+            add("SEARCH", node, "counter stepped to a bound")
+        if range_search(node):
+            add("SEARCH", node, "search over a range for a form")
+        pell = pell_pair(node)
+        if pell:
+            add("PELL", node, f"pair {pell[0]} {pell[1]} d {pell[2]}")
+        if (
+            isinstance(node, ast.Constant)
+            and isinstance(node.value, int)
+            and not isinstance(node.value, bool)
+            and node.value in FILE_VALUES
+        ):
+            add("FILEVALUE", node, f"file value {node.value}")
         if isinstance(node, ast.Constant) and isinstance(node.value, float | complex):
             add("PROBE", node, "float literal")
         elif isinstance(node, ast.BinOp | ast.AugAssign):
@@ -2385,9 +2626,16 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
             elif isinstance(node.op, ast.FloorDiv):
                 add("DIVIDE", node, "floor division")
             elif isinstance(node.op, ast.Mod):
-                if not (isinstance(left, ast.JoinedStr) or (isinstance(left, ast.Constant) and isinstance(left.value, str))):
+                if not (
+                    isinstance(left, ast.JoinedStr)
+                    or (isinstance(left, ast.Constant) and isinstance(left.value, str))
+                ):
                     add("DIVIDE", node, "remainder")
-            elif isinstance(node.op, ast.Pow) and isinstance(right, ast.UnaryOp) and isinstance(right.op, ast.USub):
+            elif (
+                isinstance(node.op, ast.Pow)
+                and isinstance(right, ast.UnaryOp)
+                and isinstance(right.op, ast.USub)
+            ):
                 add("PROBE", node, "negative power")
         elif isinstance(node, ast.Import):
             for alias in node.names:
@@ -2397,7 +2645,9 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
             if node.module and node.module.split(".")[0] in BAD_IMPORTS:
                 add("PROBE", node, f"import {node.module.split('.')[0]}")
         elif isinstance(node, ast.Call):
-            name = node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
+            name = (
+                node.func.attr if isinstance(node.func, ast.Attribute) else getattr(node.func, "id", "")
+            )
             if name in PROBE_CALLS:
                 add("PROBE", node, f"call {name}")
             elif name == "divmod":
@@ -2418,8 +2668,10 @@ def probe_hits(rel: str, source: str) -> list[Hit]:
         for token in tokenize.generate_tokens(io.StringIO(source).readline):
             if token.type == tokenize.COMMENT:
                 for word in sine_words(token.string):
-                    hits.append(Hit("SINEWORD", rel, token.start[0], f"comment {word}", "", token.start[1]))
-    except (tokenize.TokenError, IndentationError, SyntaxError):
+                    hits.append(
+                        Hit("SINEWORD", rel, token.start[0], f"comment {word}", "", token.start[1])
+                    )
+    except tokenize.TokenError, IndentationError, SyntaxError:
         pass
     return hits
 
