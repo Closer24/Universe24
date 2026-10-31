@@ -3,8 +3,8 @@ the same lay with the held hand laid at 2 instead of 1 on a patch of Node-clocks
 leading front reaches distance d at round 2 d (fronts.py). Read here, from the click lines alone: at each Node-clock,
 the first round where any click line of the two records differs: where the patch first answers the light, and how the
 answer travels back to the bump. Einstein's rule on it: the patch's distance from the bump is a quarter of the round
-the answer reaches the bump, at the front's half a Mesh a round. Rounds as order and as a stand-in for a clock's own
-count (FACE2 not in the record); whole numbers alone.
+the answer reaches the bump, at the front's half a Mesh a round. Rounds as order and as a board check in place of each
+clock's own lines; the medium's own clicks, not light's lines by LIGHT2's rule; whole numbers alone.
 
 Usage: python3 -I mirror.py <src> <plain.jsonl> <variant.jsonl> <ring> <centre> <rounds>
 """

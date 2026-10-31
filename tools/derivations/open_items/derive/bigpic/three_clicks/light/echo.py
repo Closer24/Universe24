@@ -3,7 +3,8 @@ leaves its laid bump at round 0 both ways; the two halves meet on the far side a
 the wave's clicks across the Meshes alone: the round where the far side clicks most (the meeting), the round where
 the bump's own Node-clocks click most after the light has left them (the return), and Einstein's rule: the meeting
 should sit at the midpoint of the laying and the return. Also the leading front's law, first click at distance d.
-Rounds as order and as a stand-in for a clock's own count (FACE2 not in the record); whole numbers alone.
+Rounds as order and as a board check in place of each clock's own lines; the medium's own clicks, not light's lines by
+LIGHT2's rule; whole numbers alone.
 
 Usage: python3 -I echo.py <src> <record.jsonl> <ring> <centre> <rounds after which the return is sought>
 """

@@ -3,8 +3,8 @@ ring of Node-clocks, one bump of the wave laid at rest), the wave's clicks acros
 lines of train 0) are read for (a) the round of each Node-clock's first such click, against its ring distance from
 the laid bump: the fronts; (b) the clicks at the bump's own Node-clocks, round by round: the light leaving, a quiet
 span, and its return around the ring: the echo; (c) the far side of the ring, where the two fronts meet. Rounds are
-read only as order here, and as a stand-in for a clock's own count, which the record does not hold (FACE2): on this
-world every clock is laid alike. Whole numbers and Rule3's carry alone.
+read only as order here, and as a board check in place of each clock's own lines (every clock here is laid alike);
+these are the medium's own clicks, not light's lines by LIGHT2's rule. Whole numbers and Rule3's carry alone.
 
 Usage: python3 -I fronts.py <src> <record.jsonl> <ring size> <the bump's centre site> [rounds per printed row]
 """

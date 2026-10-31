@@ -20,5 +20,7 @@ Commands, from a checkout of node-edge 88b4d281c (`S` the folder of these files)
     python3 -I S/echo.py src mesh_560.jsonl 180 20 300
     python3 -I S/mirror.py src mesh_560.jsonl heldpatch_300.jsonl 180 20 300
 
-Rounds are read as order, and as a stand-in for a clock's own count, which the record does not hold (FACE2); on this
-world every clock is laid alike, so the stand-in is a board check, not a click reading.
+Rounds are read as order and, in place of each clock's own lines between two of its meetings, as a board check
+(every clock here is laid alike). These clicks are the medium's own: by LIGHT2's rule (A's quiet, the relay linkage)
+no shipped world shows light's lines, since at this key every move clicks (#2187 6540720252 item 4). The readings
+are the numbers a lawful light reading must meet once the key comes from the structure.
