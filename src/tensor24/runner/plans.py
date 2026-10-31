@@ -9,11 +9,9 @@ import numpy as np
 from tensor24.algebra.carry import Z, carry, lit
 
 
-def pairs_of(trains: Z, c: Z, traces: Z) -> tuple[Z, Z, Z, Z]:
-    """Every pair of rows of each train (the load's Trains) through its kinds' table with itself onto A1, the kind whose character is its own square on every turn, one pair per entry of the table and part: (the first row, the second row, the entry, the train), the parts running fastest within a component as the load lays them."""
-    gap = traces * traces - traces
-    trivial = 1 - lit((gap * gap).sum(axis=-1))
-    form = np.einsum("m,jjmyxi->jxi", trivial, c)
+def pairs_of(trains: Z, c: Z, traces: Z, kept: Z) -> tuple[Z, Z, Z, Z]:
+    """Every pair of rows of each train (the load's Trains) through its kind's form with itself onto A1, one form for every kind (selves), one pair per entry of the form and part: (the first row, the second row, the entry, the train), the parts running fastest within a component as the load lays them."""
+    form = selves(c, traces, kept)
     kind, dim, part = trains.kind, trains.dim.astype(np.intp), trains.part.astype(np.intp)
     of = np.repeat(np.arange(len(trains), dtype=np.intp), trains.count.astype(np.intp))
     before = np.cumsum(dim) - dim
@@ -29,12 +27,28 @@ def pairs_of(trains: Z, c: Z, traces: Z) -> tuple[Z, Z, Z, Z]:
     offset = np.arange(parts.sum(), dtype=np.intp) - np.repeat(np.cumsum(parts) - parts, parts)
     first = (trains.first[train] + within[entry] * part[train])[each]
     one, two = first + x[each] * parts[each] + offset, first + i[each] * parts[each] + offset
-    return one.astype(np.intp), two.astype(np.intp), form[kind[entry], x, i][each], train[each]
+    factor = form[kind[entry], x, i]
+    return one.astype(np.intp), two.astype(np.intp), factor[each], train[each]
 
 
-def passing(trains: Z, c: Z, traces: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
-    """Term 11, every train's passing as the act reads it, with its key: each pair of the train's rows through its kinds' table with itself onto A1 (pairs_of), the entry the factor, so that the train's form over a J(b) - b J(a), the dot product for a vector hand and 1 for a scalar, is summed into the train; the key the universe file's one CHOSEN odd whole, the same for every train (an even key the files' format refuses by name); the square takes the factor 0 by its flag, as the push does, since its rows are the slots' basis and no kind's own, so pairs_of's blocks would give it a form the 24 keep at 8 turns of 24 (the first hostile code reader's M1)."""
-    one, two, entry, train = pairs_of(trains, c, traces)
+def selves(c: Z, traces: Z, kept: Z) -> Z:
+    """Every kind's form with itself onto A1, one array for every kind in the vocabulary's order (files.vocabulary): the five's from the 24's tables, A1 the kind whose character is its own square on every turn, each set in the kept forms' side, then each half-speed kind's kept form (load.kept_forms, SUM L^T L over the 48 lifts by their count), the dot derived."""
+    gap = traces * traces - traces
+    trivial = 1 - lit((gap * gap).sum(axis=-1))
+    _, put = widening(c, kept)
+    own = np.einsum("m,jjmyxi->jxi", trivial, c)
+    return np.concatenate((np.einsum("ax,jxi,bi->jab", put, own, put), kept))
+
+
+def widening(c: Z, kept: Z) -> tuple[Z, Z]:
+    """The 24's tables set among every kind and in the kept forms' side: the five kinds' places first, as files.vocabulary lists them, then one per half-speed kind, which no table holds (0: no half-speed table is built in this build); and the axes' cube at the first rows of the kept forms' side."""
+    every = np.eye(len(c) + len(kept), len(c), dtype=object)
+    return every, np.eye(kept.shape[-1], c.shape[-1], dtype=object)
+
+
+def passing(trains: Z, c: Z, traces: Z, kept: Z, key: Z) -> tuple[Z, Z, Z, Z, Z]:
+    """Term 11, every train's passing as the act reads it, with its key: each pair of the train's rows through its kind's form with itself onto A1 (pairs_of: the 24's table for each of the five kinds, its kept form for a half-speed one), the entry the factor, so that the train's form over a J(b) - b J(a), the dot product for a vector hand and 1 for a scalar, is summed into the train; the key the universe file's one CHOSEN odd whole, the same for every train (an even key the files' format refuses by name); the square takes the factor 0 by its flag, as the push does, since its rows are the slots' basis and no kind's own, so pairs_of's blocks would give it a form the 24 keep at 8 turns of 24 (the first hostile code reader's M1)."""
+    one, two, entry, train = pairs_of(trains, c, traces, kept)
     return one, two, entry * trains.sourcing[train], train, key
 
 
@@ -57,14 +71,14 @@ def rows_of(trains: Z) -> tuple[Z, Z, Z, Z, Z]:
 
 
 def holding(
-    trains: Z, c: Z, traces: Z, rest: Z, hold: Z, gamma: Z, spring: Z
+    trains: Z, c: Z, traces: Z, kept: Z, rest: Z, hold: Z, gamma: Z, spring: Z
 ) -> tuple[Z, tuple[Z, Z, Z, Z]]:
     """Term 6's frame, the held hand's monomials of J's potential: every held row's own spring (spring; rho, rho, 1, 1), spring the strength CHOSEN in the universe file, which pushes the row by -2 spring rho as the leg stands twice (its window 0 < 2 spring < 4 W, W the rest teeth, is not checked as such: a run that leaves it, as any runaway, is named by the run's promise of the width, runner/run.py's wide; 0 lays none), and every tied train's tie to the held hand's square, (hold x f x C_yz; x_y, x_z, k_rho, k_rho) for each pair of the train's rows through its form onto A1 (pairs_of's entry) and each held row, f = rest div Gamma the clock's one notch (CHOSEN with its reason, G3 2.4), so that a tied hand beats at 2 hold f |k|^2 / W in the dispersion's measure; hold the strength CHOSEN in the universe file, 1 the unit; a row that is not held and a train that is not tied take the factor 0. The tie is a monomial of four value legs: it enters no train's passing only while the held hand's turn is an exact quarter (now orthogonal to before, the norm exact: the room), which no plan lays; past the room the held train clicks alone and the books open (NOT_CLOSED 29)."""
     f, _ = carry(rest, gamma, 0)
     row, of, _, _, _ = rows_of(trains)
     held = trains.held[of]  # 1 at the held hand's rows
     unit = 0 * row - 1
-    one, two, entry, train = pairs_of(trains, c, traces)
+    one, two, entry, train = pairs_of(trains, c, traces, kept)
     tie = hold * f * (entry * trains.tied[train])[:, None] * held[None, :]
     blocks = np.concatenate(
         (
@@ -82,13 +96,16 @@ def holding(
     )
 
 
-def tying(trains: Z, c: Z, traces: Z, tie: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
+def tying(trains: Z, c: Z, traces: Z, kept: Z, tie: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
     """Term 6's frame, the hands' tie: for every two distinct tied trains X and Y, each unordered pair once, (tie x C_yz; x_y, y_z, 1, 1) over their rows of one part through the kinds' table of X's kind with Y's onto A1, the kind whose character is its own square (the dot product for T1 with T1 and T2 with T2, 1 for A1 with A1 and A2 with A2, 0 across two kinds); tie the strength CHOSEN in the universe file (a ground state below 2 hold f); a pair with no channel, two rows of different parts, an untied train and a train with itself take the factor 0."""
     gap = traces * traces - traces
     trivial = 1 - lit((gap * gap).sum(axis=-1))
     form = np.einsum(
         "m,jkmyxi->jkxi", trivial, c
     )  # each kind with each kind onto A1, component by component
+    every, put = widening(c, kept)  # every kind, a half-speed one's places 0, its train untied
+    wide = np.einsum("Jj,Kk,jkxi->JKxi", every, every, form)
+    form = np.einsum("JKai,bi->JKab", np.einsum("ax,JKxi->JKai", put, wide), put)
     row, of, kind, component, offset = rows_of(trains)
     later = of[None, :] - of[:, None]  # how far the second row's train stands after the first's
     down, _ = carry(
@@ -157,7 +174,7 @@ def pushing(trains: Z, spokes: Z, push: Z) -> tuple[Z, Z, Z, Z, Z]:
     )
 
 
-def meshing(trains: Z, c: Z, traces: Z, square: Z, mesh: Z) -> tuple[Z, Z, Z, Z, Z]:
+def meshing(trains: Z, c: Z, traces: Z, square: Z, kept: Z, mesh: Z) -> tuple[Z, Z, Z, Z, Z]:
     """Term 6's gradient vertex (FRAMES 7), the board's wave on a tied hand through the Mesh, as a plan on the plan's readings (the value, the difference along each axis, the force, the unit last): for every row of the trivial kind (A1, whose character is its own square on every turn) in a train that is no square and not the held hand (the board's wave: the held hand, Mesh-less, takes none), every row of one part of a tied train and every axis, the potential V = mesh x SUM_i C_ji M_j D_i L through the table of the tied row's kind with the kind the board's axes turn by onto A1 (found by its character, the four-vector square's on its 0i block: the dot product for T1, nothing for T2, so a pair with no such channel takes the factor 0), laid as its two pushes, (L's difference along i at L's row, unit, unit) at -mesh C_ji onto M_j's row and (M_j's difference along i at M_j's row, unit, unit) at +mesh C_ji onto L's row (the push on a gradient leg is the gradient of the other leg, one potential's two pushes; A1 x T1 has no A1 channel at the value legs, so the board's wave reaches a vector hand through the Mesh alone); mesh the strength CHOSEN in the universe file, its ground state mesh^2 below grip x 2 hold f / 2 (COUNT5 P2); the drive alone reads the plan, the passing never, so its wind, the Mesh flux, is counted by no click (NOT_CLOSED 4)."""
     side = c.shape[-1]
     gap = traces * traces - traces
@@ -168,9 +185,14 @@ def meshing(trains: Z, c: Z, traces: Z, square: Z, mesh: Z) -> tuple[Z, Z, Z, Z,
     off = traces - axes[None, :]
     turning = 1 - lit((off * off).sum(axis=-1))  # 1 at the kind the board's axes turn by
     form = np.einsum("m,a,kamyxi->kxi", trivial, turning, c)  # each kind with the axes' kind onto A1
+    # every kind: a half-speed row has no table, so it is no trivial row and, its train untied, no M row; an odd count
+    # of half-speed legs has no A1 channel, so it lays no term
+    every, put = widening(c, kept)
+    form, trivial = np.einsum("Kk,ax,kxi->Kai", every, put, form), every @ trivial
     row, of, kind, component, offset = rows_of(trains)
     rows, axis = trains.size.sum(), np.arange(side, dtype=np.intp)
-    scalar = trivial[kind] * trains.sourcing[of] * trains.gripped[of]  # a trivial row of the wave
+    # a gripped clock's trivial row, no square's
+    scalar = trivial[kind] * trains.sourcing[of] * trains.gripped[of]
     same = 1 - lit(offset[:, None] - offset[None, :])  # 1 where the two rows are of one part
     channel = form[kind[None, :, None], component[None, :, None], axis[None, None, :]]
     factor = mesh * (scalar[:, None] * trains.tied[of][None, :] * same)[:, :, None] * channel

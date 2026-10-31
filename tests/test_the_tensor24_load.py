@@ -33,21 +33,21 @@ MADE = main.made(loading.star(len(SHAPE)))  # the kinds, tables and square by ma
 
 def loaded(trains, gears=(), chosen=CHOSEN, sites=SITES):
     """The files held against the engine's kinds, then loaded, as the run does: the departures, or the loaded and none."""
-    kinds, c, square = MADE
+    kinds, c, square, lifted = MADE
     universe = {"integers": INTEGERS, "trains": [dict(t) for t in trains], "chosen": dict(chosen)}
     setting = {"gears": [list(g) for g in gears]}
-    found = held_departures(universe, setting, vocabulary(kinds, square))
-    held, found = (None, found) if found else loading.load(universe, setting, sites, kinds, c, square)
+    found = held_departures(universe, setting, vocabulary(kinds, square, lifted))
+    held, found = (None, found) if found else loading.load(universe, setting, sites, *MADE)
     return (None if found else held), found
 
 
 def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_each_refusal(monkeypatch):
-    """Yes: the board and its Meshes as numpy wraps them, every gear on its train's rows past 64 bits, the square by its kinds' character in every order with its 0i rows odd, the chosen key and notch read, no term of J but the notch's.
+    """Yes: the board and its Meshes as numpy wraps them, every gear on its train's rows past 64 bits, the square by its kinds' character in every order with its 0i rows odd, the chosen key and the notch at 3 read (a chosen strength, pending the owner's word), no term of J but the notch's.
     No: each refusal named with nothing loaded and no raise (the reviews' gear off a later train, its tooth, its b at every site, a bound read on train 0, 64-bit arrays, the MemoryError dropped from the lay's guard, each passed every test once); a tooth at or below its dial named by the promise."""
     spokes, meshes = loading.geometry(nb := board(SHAPE), len(SHAPE))
     assert (nb == frame.board(SHAPE)).all() and (spokes == frame.spokes(len(SHAPE))).all()
     assert (meshes == frame.meshes_of(nb)).all()
-    labels, dims, _ = vocabulary(MADE[0], MADE[-1])
+    labels, dims, _ = vocabulary(MADE[0], *MADE[2:])
     rows = [sum(dims[labels.index(k)] for k in t["kinds"]) * t["part"] for t in TRAINS]
     _, row, _, *counts = wave = (0, rows[0] - 1, SITE, WIDE, WIDE + 1, WIDE + 2)
     held, found = loaded(TRAINS, laid := [wave, (len(rows) - 1, rows[-1] - 1, SITE, WIDE + 1, WIDE, 0)])
@@ -75,7 +75,7 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     named = set(one[factor != 0].tolist()) | set(two[factor != 0].tolist())  # the square's legs alone
     assert sorted(set(factor.tolist())) == [0, 3, 6] and named <= set(range(zero, zero + 10))
     for trains, gears, named in [
-        ([{**TRAINS[1], "kinds": ["E1/2"]}], [], "'E1/2' is none of the 24's kinds"),
+        ([{**TRAINS[1], "kinds": ["E3/2"]}], [], "'E3/2' is none of the kinds"),
         ([{**TRAINS[1], "kinds": ["E"]}], [], "'E' has no whole basis the 24 permute"),
         ([{**TRAINS[1], "kinds": list(SQUARE), "part": 2}], [], "'E' has no whole basis the 24 permute"),
         ([TRAINS[0]], [(0, rows[0], 0, 1, 0, 0)], f"component {rows[0]} off train 0's {rows[0]} rows"),
@@ -96,8 +96,8 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
 
 
 def test_the_plans_are_laid_from_the_kinds_tables_the_passings_pairs_and_the_coupling_familys_frame():
-    """Yes: the passing's pairs are each train's rows, kind by kind and part by part, through its kinds' table with itself onto A1 at the table's entry (the square's at 0 by its flag), the target the train, each pair once, the key the universe's; on the click world's shape the held hand and the tied hands are found by character, the held rows' own spring the chosen spring and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, the board's wave in no monomial;
-    term 5's push in the books' form: every row gliding a count a round alike pushes the 00 slot by k0 = Spokes x senses (the clock's read, from the star) times the momenta in and out of every row the push does not land on, a tent along z pushes the zz slot by minus its two z Meshes' stretches squared, nothing lands elsewhere, the drive's teeth senses on the 00 and ii rows and 1 elsewhere, in either order of the trains; the gradient vertex on the board's wave and a tied (T1, T2) hand, -mesh onto each M_i's row from the wave's difference along i and +mesh onto the wave's row from M_i's, each term laid once with its other two readings the unit (one potential's two pushes, never a push laid twice or a cubic vertex), the T2 rows and the wave's second part in none.
+    """Yes: the passing's pairs are each train's rows, kind by kind and part by part, through its kinds' table with itself onto A1 at the table's entry (the square's at 0 by its flag), the target the train, each pair once, the key the universe's; on the click world's shape at hold 1, spring 3 and tie 1 (the files' chosen strengths, pending the owner's word) the held hand and the tied hands are found by character, the held rows' own spring the chosen spring and their grips 0, the tie hold f on the dot product's diagonal, the hands' tie tie on it once, the board's wave in no monomial;
+    term 5's push in the books' form: every row gliding a count a round alike pushes the 00 slot by k0 = Spokes x senses (the clock's read, from the star) times the momenta in and out of every row the push does not land on, a tent along z pushes the zz slot by minus its two z Meshes' stretches squared, nothing lands elsewhere, the drive's teeth senses on the 00 and ii rows and 1 elsewhere, in either order of the trains; the gradient vertex at mesh 3 (a chosen strength, pending the owner's word) on the board's wave and a tied (T1, T2) hand, -mesh onto each M_i's row from the wave's difference along i and +mesh onto the wave's row from M_i's, each term laid once with its other two readings the unit (one potential's two pushes, never a push laid twice or a cubic vertex), the T2 rows and the wave's second part in none.
     No: no pair crosses two trains or two parts; the tie off the diagonal and the hands' tie the other way are 0; the two tied hands swapped in the file lay the same plan and grips; the pushed rows' own momenta push nothing, and push 0 pushes nothing; the wave with no vector hand lays no gradient vertex."""
     held, found = loaded(trains := [*TRAINS, METRIC])
     one, two, entry, train, key = (x.tolist() for x in held.click)
