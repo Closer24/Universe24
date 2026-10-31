@@ -3,18 +3,18 @@ angle's drift on the act.
 
 On the act the night builds (node-live 939fa65a7, engine/step.tick), the law on two held rows, V = hat (|k|^2 - n)^2
 laid as its three monomials (hat 1, n = R^2 with R = 5^5, W = 2,000 n). The hat's push on the angle row,
--4 hat (|k|^2 - n) k_1, beats with the size: with Meshes (grip W/6) a size off its rest pumps the angle's waves at half
-its beat (the physicist's r1, Mathieu's primary resonance). With the held rows Mesh-less (grip 0), as the frame lays
-them, the angle has no wave to fall into.
+-4 hat (|k|^2 - n) k_1, beats with the size: with Meshes (grip W/6) a size off its rest pumps the angle's waves whose
+beat is near a quarter of its own, half its frequency (the physicist's r1, Mathieu's primary resonance). With the held
+rows Mesh-less (grip 0), as the frame lays them, the angle has no wave to fall into.
 
 (A') a ring of 256, every Node-clock laid still at (R + 312, 0), the size off its rest by a tenth of R, the angle
      seeded k_1 = 100 at one Node-clock, and at every Node-clock; per 250 rounds over 3,000, the largest |k_1| over the
      ring and the size's swing at Node-clock 128 (its most less its least of |k|^2 - n over the window, in ppm of n).
 (B') Mesh-less, each Node-clock its own hand: Node-clock i laid still at (R + d_i, 100), d_i from -3,000 (g3_hat's
-     near-top lay) to 1,875, past the top at (sqrt 2 - 1) R, near 1,294; per 1,000 rounds over 6,000 the largest |k_1|,
-     the range of |k|^2 - n, and the largest turn |k_0 b_1 - k_1 b_0|, now against before, 0 at the lay. The hat's
-     push is along k, so in the continuum the turn is kept and a still lay's angle stays in proportion to its size; on
-     the act the edge rounds the counts the hat reads.
+     near-top lay) to 1,875, past the top where (R + d)^2 = 2 n, near 1,294; per 1,000 rounds over 6,000 the largest
+     |k_1|, the range of |k|^2 - n, and the largest turn |k_0 b_1 - k_1 b_0|, now against before, 0 at the lay. The
+     hat's push is along k, so in the continuum the turn is kept and a still lay's angle stays in proportion to its
+     size; on the act the edge rounds the counts the hat reads.
 
 Whole numbers only: every division Rule3's carry; no float, root, logarithm, exponential, circular function or search.
 Usage: python3 -I g3_pump.py <src of node-live at 939fa65a7>

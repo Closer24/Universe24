@@ -21,10 +21,11 @@ CHOSEN: key 3125 = 5^5, hat 1, W = 2,000 n (the size's beat, 8 hat n / W = 1/250
 (c) the norm the law picks: laid off its rest the hand swings about it at the size's beat (counted against the exact
     linear recurrence); laid near the top it swings about n too; with no hat it stands where the seed laid it;
 (d) the weight: the still hand's energy, kinetic and potential, at every Node-clock;
-(e) the angle: a small turn laid along a ring travels as a massless wave with the Meshes, and stands without them;
+(e) the angle: a small turn laid along a ring travels with the Meshes as a wave with no own spring, and stands
+    without them;
 (f) the tie: the tied train's beat from the hand's rest; the hand answers it; against the unit spring with no hand;
 (g) a push across k: the hand laid turning; the tied beat beside (f)'s;
-(h) the run back: 500 rounds out and back with the hat, the tie, light and every Mesh, bit for bit;
+(h) the run back: 500 rounds out and back with the hat, the tie, the board's wave train and every Mesh, bit for bit;
 (i) the 24's A2 sign: the act and the odd turn's flip of the A2 row, every round, the twisted and the plain tooth;
 (j) the same law on four rows, the quaternion: rests by products of whole quaternions, the size, three angles;
 (k) the frame's unit key: n = 1, the hand at (1, 0) under the same tied wave at the same beats.
@@ -217,8 +218,8 @@ print(f"  the circle's whole points: {len(circle_points())} (r_2(5^10) = 4 (10 +
       f" {all(x * x + y * y == N for x, y in circle_points())}")
 
 # ---- (b) the rest
-print("(b) the rest: the held hand (rows 0, 1) laid still at whole rests, a tied train (row 2) and light (row 3) at 0,"
-      " 6 by 6 by 6, 2,000 rounds:")
+print("(b) the rest: the held hand (rows 0, 1) laid still at whole rests, a tied train (row 2) and the board's wave"
+      " train (row 3) at 0, 6 by 6 by 6, 2,000 rounds:")
 GH, GX, GL = carry(W, 6, 0)[0], carry(W, 100, 0)[0], carry(W, 6, 0)[0]
 terms = hat_terms((0, 1), HAT, N) + tie_terms((2,), (0, 1), TIE)
 for label, gh, scatter, hat in (("alike, with Meshes", GH, False, HAT), ("scattered, Mesh-less", 0, True, HAT),
@@ -241,8 +242,8 @@ for label, gh, scatter, hat in (("alike, with Meshes", GH, False, HAT), ("scatte
         biggest = max(biggest, int(max(abs(x) for x in s1.a[:2].ravel().tolist())))
         s = s1
     print(f"  {label}: rounds in which any count or tooth moved {moved} of 2000; |k|^2 - n at most {worst}"
-          f" ({ppm(worst, N)} ppm of n); the largest held count {biggest}; the tied train and light stayed at 0:"
-          f" {bool((s.a[2:] == 0).all())}")
+          f" ({ppm(worst, N)} ppm of n); the largest held count {biggest}; the tied train and the board's wave"
+          f" train stayed at 0: {bool((s.a[2:] == 0).all())}")
 
 # ---- (c) the norm the law picks
 print("(c) the norm the law picks: the hand laid alike at every Node-clock, off its rest, 2,000 rounds:")
@@ -295,8 +296,8 @@ for label, gh in (("with Meshes, grip W/6", GH), ("Mesh-less", 0)):
         size = max(size, int(max(abs(x) for x in (norm(s.a, (0, 1)) - N).tolist())))
     print(f"  {label}: sign changes of k_1 at Node-clock 0: {flips(trace)}; k_1 there within {min(trace)} to"
           f" {max(trace)}; |k|^2 - n at most {size} ({ppm(size, N)} ppm)")
-print(f"  the massless recurrence W (p+ - 2 p + p-) = -(W/6) p from 100: {recurrence(100, GH, W, 600)} sign changes in"
-      f" 600 rounds")
+print(f"  the recurrence with no own spring W (p+ - 2 p + p-) = -(W/6) p from 100: {recurrence(100, GH, W, 600)} sign"
+      f" changes in 600 rounds")
 
 # ---- (f) the tie
 print("(f) the tie: on the ring, the hand at (key, 0) with Meshes, the tied train x = 50 times the mode, grip W/100,"
@@ -343,8 +344,8 @@ print(f"  the hand's k_1 changed sign {turns} times (half turns); |k|^2 - n with
       f" still hand above")
 
 # ---- (h) the run back
-print("(h) the run back: 6 by 6 by 6, the hand scattered over the circle, the tied train and light laid moving, every"
-      " Mesh, 500 rounds out and 500 back:")
+print("(h) the run back: 6 by 6 by 6, the hand scattered over the circle, the tied train and the board's wave train"
+      " laid moving, every Mesh, 500 rounds out and 500 back:")
 lay_h, sites = layout((6, 6, 6), [GH, GH, GX, GL], terms)
 pick = generator(5)
 pts = circle_points()
@@ -417,8 +418,8 @@ for _ in range(600):
     for r in (1, 2, 3):
         traces[r].append(int(s.a[r, 0]))
 print(f"  three angles laid on the ring with Meshes, each the mode shifted: sign changes {flips(traces[1])},"
-      f" {flips(traces[2])}, {flips(traces[3])} in 600 rounds; the massless recurrence from the lay's own value at"
-      f" Node-clock 0: {recurrence(50 * MODE[2], GH, W, 600)}, {recurrence(50 * MODE[4], GH, W, 600)},"
+      f" {flips(traces[2])}, {flips(traces[3])} in 600 rounds; the recurrence with no own spring from the lay's own"
+      f" value at Node-clock 0: {recurrence(50 * MODE[2], GH, W, 600)}, {recurrence(50 * MODE[4], GH, W, 600)},"
       f" {recurrence(50 * MODE[0], GH, W, 600)}")
 
 # ---- (k) the unit key
