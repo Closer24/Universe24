@@ -27,13 +27,13 @@ Python 3.14 or later is required (`pyproject.toml`, `requires-python = ">=3.14"`
 
 ```bash
 python3.14 -m venv .venv && source .venv/bin/activate && python -m pip install -e .   # the environment
-python -I tools/tensor24_files.py                         # the three example files in examples/tensor24, checked: every departure named, exit 1 on one
-python -I tools/tensor24_run.py examples/tensor24/universe.json examples/tensor24/piece.json examples/tensor24/setting.json record.jsonl   # the run: a record and its ledger
+python -I tools/tensor24_files.py                         # every example world's three files in examples/, checked: every departure named, exit 1 on one
+python -I tools/tensor24_run.py examples/tensor24-mesh/universe.json examples/tensor24-mesh/piece.json examples/tensor24-mesh/setting.json record.jsonl   # the run: a record and its ledger
 python -I tools/tensor24_decode.py record.jsonl            # the decoder's reading of a record (a ledger beside it may be named)
 python tools/check.py                                      # the gates and the affected tests; --full runs the whole suite
 ```
 
-A world is three files (`examples/tensor24/`): the universe (the integers den, full_rate and width, the free strengths CHOSEN by name as whole numbers, key, push, notch, hold, spring, tie and mesh, and the families: a name, its kinds, its part, its pinion), the piece (the board's three sides) and the setting (the gears laid, one row each, and the number of ticks); no file declares a particle, a mass or a coupling by name, since which trains are held or tied is found by their character. Five worlds ship in `examples/`, each laid by a generator kept in the repo (the bang, the board's wave laid at rest, a lump making a well, a click world and a mesh world).
+A world is three files (for example `examples/tensor24-mesh/`): the universe (the integers den, full_rate and width, the free strengths CHOSEN by name as whole numbers, key, push, notch, hold, spring, tie and mesh, and the families: a name, its kinds, its part, its pinion), the piece (the board's three sides) and the setting (the gears laid, one row each, and the number of ticks); no file declares a particle, a mass or a coupling by name, since which trains are held or tied is found by their character. Two worlds ship in `examples/`, each laid by a generator kept in the repo (a click world and a mesh world); our bang, the lay with every strength 0, is a test's lay in `tests/`.
 
 ## The documents
 
