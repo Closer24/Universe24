@@ -1,4 +1,5 @@
-"""Tensor24's half-speed trains in the runner: the files' eight kinds and the two trains they admit, refused in a file run."""
+"""Tensor24's half-speed trains in the runner: the files' eight kinds and the two trains they admit, refused in a file run;
+the load's reading of them, their rows their cosets, and a test world in memory turned by the lifts and the board's turns."""
 
 import json
 import subprocess
@@ -8,6 +9,7 @@ from pathlib import Path
 import numpy as np
 
 from tensor24 import main
+from tensor24.engine import kinds as engine
 from tensor24.engine import state, step
 from tensor24.runner import load as loading
 from tensor24.runner.files import NAMES, entries, held_departures, sites_of, star, vocabulary
@@ -215,3 +217,46 @@ def test_a_half_speed_world_laid_in_memory_turns_with_its_48_lifts_runs_back_and
     }
     halves = [held.trains[n] for n in (2, 3)]
     assert factor.any() and not landed & {r for t in halves for r in range(t.first, t.first + t.rows())}
+
+
+def boarded(s, held, g, shape, flip=True):
+    """The state turned by the lift g: the sites by its own turn, the square's slots by that turn's square, each half-speed
+    train's gears by its own L(g), a negated gear's tooth flipped, -1 - s (or, with flip off, negated: the no)."""
+    lifts = MADE[-1]
+    m = lifts.turn.reshape(-1, AXES, AXES)[g]
+    xyz, sides = np.indices(shape).reshape(AXES, -1), np.array(shape)[:, None]
+    site = np.ravel_multi_index(tuple(((m @ xyz) % sides).astype(int)), shape)
+    (square,) = [n for n in range(len(held.trains)) if held.trains[n].square]
+    blocks = [(square, engine.square(engine.kinds(m[None]))[0])]
+    blocks += [(n, x.reshape(-1, *x.shape[-2:])[g]) for n, x in ((1, lifts.cosets), (2, lifts.classes))]
+    turn = np.eye(len(s.a), dtype=object)
+    for n, block in blocks:
+        first, rows = held.trains[n].first, held.trains[n].rows()
+        turn[first : first + rows, first : first + rows] = block
+    tooth = (turn @ (s.r + s.r + 1) - 1) // 2 if flip else turn @ s.r
+    there = [np.empty_like(x) for x in s]
+    for x, y in zip(there, (turn @ s.a, turn @ s.b, tooth, (turn * turn) @ s.rd, s.k), strict=True):
+        x[:, site] = y
+    return state.State(*there)
+
+
+def board_turnings(layout, held, start, end, shape, flip=True):
+    """For each of the 48 lifts, each with its own turn on the sites, whether it turns the run of a round alike."""
+    for g in range(LIFTS):
+        moved, _ = ran(layout, boarded(start, held, g, shape, flip), 1)
+        yield frame.same(moved, boarded(end, held, g, shape, flip))
+
+
+def test_the_board_with_its_sites_turned_by_each_lifts_own_turn_turns_the_run_alike():
+    """Yes: on a cube of 2 x 2 x 2 sites, both half-speed trains beside the square, the push on, at the rest 6 den Gamma^2 and at
+    6: each lift on its trains' gears with its own turn on the sites and the square's slots turns the run alike, the teeth rounding.
+    No: at the rest 6 a negated gear's tooth negated and not flipped, the turned run and the run turned part."""
+    spins = [{"name": f"spin {n}", "kinds": k, "part": p} for n, (k, p) in enumerate((COSETS, CLASSES))]
+    shape = (2, 2, 2)
+    for integers, reach in ((None, 1 << 300), ({"den": 1, "full_rate": 1}, 1 << 8)):
+        held, layout = laid([CLICKS[1], *spins], {"push": 1}, integers, shape)
+        start = drawn(held, layout, 11, reach)
+        end, moved = ran(layout, start, 1)
+        assert moved and all(board_turnings(layout, held, start, end, shape))
+        # the no, at the rest 6: a negated gear's tooth negated, not flipped
+        assert integers is None or not all(board_turnings(layout, held, start, end, shape, False))
