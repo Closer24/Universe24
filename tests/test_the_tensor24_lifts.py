@@ -78,9 +78,9 @@ def same_train(train, heads, table, members, lam):
     return bool((abs(turn).sum(axis=0) == 1).all() and (flat == turn @ probe @ turn.T).all())
 
 
-def test_the_48_are_the_words_each_once_of_norm_senses_squared_and_the_probes_closure():
-    """Yes: Hamilton's product from the star the written-out table, the 48 words each once of doubled norm senses^2, every
-    product of two a lift with remainder 0, the probe's closure of z and w the same 48, the heads the words with no w.
+def test_the_48_are_the_words_each_once_of_norm_senses_squared_and_the_probes_closure(monkeypatch):
+    """Yes: Hamilton's product from the star the written-out table, the 48 the words u w^k z^m in their layout, each once,
+    of doubled norm senses^2, w^d = -1 and z^senses = i, every carry exact, every product a lift, the closure of z and w the 48.
     No: with no z, the closure of w and the star's units stops at Hurwitz's 24, the words with m = 0."""
     held, senses, listed = built()
     d = held.turn.shape[-1]
@@ -88,7 +88,9 @@ def test_the_48_are_the_words_each_once_of_norm_senses_squared_and_the_probes_cl
     for x, y, z, sign in TABLE:
         written[x, y, z] = sign
     assert (kinds.hamilton(d) == written).all()
-    assert len(set(listed)) == len(listed) == senses * senses * d * (d + 1)
+    assert (
+        len(set(listed)) == len(listed) == senses * int(kinds.turns(star(d))[1].sum())
+    )  # two lifts a turn
     flat = held.lift.reshape(len(listed), d + 1, -1)
     p, q = np.moveaxis(flat, -1, 0)
     norm = (p * p + senses * q * q).sum(axis=-1), (p * q).sum(axis=-1)
@@ -96,15 +98,39 @@ def test_the_48_are_the_words_each_once_of_norm_senses_squared_and_the_probes_cl
     _, rest = carry(kinds.times(written, flat[:, None], flat[None, :], senses), senses, 0)
     products = kinds.product(written, flat[:, None], flat[None, :], senses).reshape(-1, *flat.shape[1:])
     assert not rest.any() and {tuple(map(tuple, g)) for g in products} == set(listed)
-    one, i, j, _ = (tuple((senses * (x == y), 0) for y in range(d + 1)) for x in range(d + 1))
+    units = [tuple((senses * (x == y), 0) for y in range(d + 1)) for x in range(d + 1)]
+    one, i, j, _ = units
     w, z = ((1, 0),) * (d + 1), ((0, 1), (0, 1)) + ((0, 0),) * (d - 1)
     assert (listed[0], listed[1], listed[senses]) == (one, z, w)  # the words 1, z and w
+    cube, square = (np.array(one, dtype=object),) * 2  # the stacks' lengths read off the structure
+    for _ in range(d):
+        cube = kinds.product(written, cube, np.array(w, dtype=object), senses)
+    for _ in range(senses):
+        square = kinds.product(written, square, np.array(z, dtype=object), senses)
+    assert (cube == -np.array(one, dtype=object)).all() and (square == np.array(i, dtype=object)).all()
+    words = []  # each lift its word u w^k z^m by the written-out product, at both senses in the layout's order
+    for sense, u, k, m in itertools.product((1, -1), units, range(d), range(senses)):
+        g = tuple((sense * x, sense * y) for x, y in u)
+        for h in (w,) * k + (z,) * m:
+            g, _ = mul(g, h, senses)
+        words.append(g)
+    assert words == listed
     assert closed((z, w), one, senses) == set(listed)
     assert all(mul(g, h, senses)[1] for g in listed for h in listed)
     hurwitz = closed((i, j, w), one, senses)
     assert hurwitz == set(listed[::senses]) and senses * len(hurwitz) == len(listed)
     heads = [listed[a * d * senses + m] for a in range(d + 1) for m in range(senses)]
     assert [tuple(map(tuple, h)) for h in held.heads] == heads
+    rests = []  # every carry the lifts make, product, turned, on_classes and on_cosets among them
+
+    def kept(n, teeth, r):
+        whole, rest = carry(n, teeth, r)
+        rests.append(rest)
+        return whole, rest
+
+    monkeypatch.setattr(kinds, "carry", kept)
+    kinds.lifts(star(d))
+    assert rests and not any(np.any(rest) for rest in rests)  # each exact, its remainder 0
 
 
 def test_each_lift_turns_the_axes_by_one_of_the_24_and_the_eight_kinds_are_orthonormal_on_the_48():
@@ -120,6 +146,7 @@ def test_each_lift_turns_the_axes_by_one_of_the_24_and_the_eight_kinds_are_ortho
     assert (read.characters[len(five) :] == np.stack(joint.halves)).all()
     turns = held.turn.reshape(-1, d, d)
     assert all((t == sandwich(g, senses)).all() for t, g in zip(turns, listed, strict=True))
+    assert (held.whole.t1 == held.turn).all()  # T1 on the 48 each lift's turn
     weighed = list(zip(*kinds.turns(star(d)), strict=True))
     kept, left = ({tuple(m.flat) for m, w in weighed if w == on} for on in (1, 0))
     assert [{tuple(t.flat) for t in sense} for sense in held.turn] == [kept] * senses

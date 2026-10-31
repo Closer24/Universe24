@@ -189,11 +189,11 @@ def on_classes(c: Z, lift: Z, classes: Z, senses: Z) -> Z:
 
 
 def on_cosets(c: Z, lift: Z, heads: Z, senses: Z) -> Z:
-    """The 8-gear train, L(g) on the cosets of C6, the powers of w, in the heads' order: a coset read through its vertex, its lifts' turn of (1, ..., 1), g v in the coset of the head u whose vertex agrees with its own on every axis, (1 + x y) div senses multiplied over the axes; the sign is lam of u* g v in C6, +1 on C6's squares and -1 elsewhere on C6: its cube's doubled unit part halved, the squares being the cube roots of 1 and w^3 = -1; every carry's remainder 0."""
+    """The 8-gear train, L(g) on the cosets of C6, the powers of w, in the heads' order: a coset read through its vertex, its lifts' turn of (1, ..., 1), g v in the coset of the head u whose vertex agrees with its own on every axis, Rule3's weight (s + s s) div senses on each axis's product s of the two coordinates, exact for every whole s, multiplied over the axes; the sign is lam of u* g v in C6, +1 on C6's squares and -1 elsewhere on C6: its cube's doubled unit part halved, the squares being the cube roots of 1 and w^3 = -1; every carry's remainder 0."""
     moved = product(c, lift[..., None, :, :], heads, senses)  # g v for every head v
     vertex = np.einsum("...ij->...i", turned(c, moved, senses))
     agree = np.einsum("...vi,ui->...uvi", vertex, np.einsum("uij->ui", turned(c, heads, senses)))
-    same, _ = carry(1 + agree, senses, 0)
+    same, _ = carry(agree + agree * agree, senses, 0)
     # u* g v for every two heads
     h = product(c, conjugate(c, heads)[:, None], moved[..., None, :, :, :], senses)
     cube = product(c, product(c, h, h, senses), h, senses)
@@ -213,6 +213,8 @@ def lifts(spokes: Z) -> Lifts:
     w = pair(unit + first + second + third, zero)  # (1 + i + j + k) / 2, doubled
     z = pair(zero, unit + first)  # (1 + i) / r2, doubled: r2 + r2 i
     star = pair(senses * axes(d + 1), 0 * axes(d + 1))  # the 4D star's units at the + sense, doubled
+    # the powers written out: Hamilton's product stands on the unit's axis and three Spokes' alone, where w^3 = -1
+    # and z^2 = i, a word with no z (the tests read both by kinds.product)
     powers = np.stack((one, w, product(c, w, w, senses)))  # w^k, k below the axes' count
     spins = np.stack((one, z))  # z^m, m below senses
     words = product(c, star[:, None, None], powers[None, :, None], senses)  # u w^k
