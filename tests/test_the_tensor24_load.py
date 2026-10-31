@@ -75,7 +75,7 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     named = set(one[factor != 0].tolist()) | set(two[factor != 0].tolist())  # the square's legs alone
     assert sorted(set(factor.tolist())) == [0, 3, 6] and named <= set(range(zero, zero + 10))
     for trains, gears, named in [
-        ([{**TRAINS[1], "kinds": ["E1/2"]}], [], "'E1/2' is none of the 24's kinds"),
+        ([{**TRAINS[1], "kinds": ["E3/2"]}], [], "'E3/2' is none of the kinds"),
         ([{**TRAINS[1], "kinds": ["E"]}], [], "'E' has no whole basis the 24 permute"),
         ([{**TRAINS[1], "kinds": list(SQUARE), "part": 2}], [], "'E' has no whole basis the 24 permute"),
         ([TRAINS[0]], [(0, rows[0], 0, 1, 0, 0)], f"component {rows[0]} off train 0's {rows[0]} rows"),

@@ -1,6 +1,7 @@
 """Tensor24's three files checked and loaded: whole numbers alone, the integers and the sides at least 1, each train,
-kind, part and site referred to there, and no coupling; then each refusal of the load by name (a kind the 24's five do
-not hold, a kind with no whole basis outside the four-vector's square, a component off its train's rows).
+kind, part and site referred to there, and no coupling; then each refusal of the load by name (a kind none of the
+eight, a kind with no whole basis outside the four-vector's square, a train of a half-speed kind, admitted or not, a
+component off its train's rows).
 
 Usage: `python tools/tensor24_files.py [universe piece setting]` prints every departure (the examples by default)
 and exits 1 if there is one; files that are not three are argparse's usage error. The fine tooth within its teeth is

@@ -261,9 +261,10 @@ def departures(universe: Path, piece: Path, setting: Path) -> list[str]:
 def vocabulary(
     kinds: Any, square: Any, lifted: Any
 ) -> tuple[tuple[str, ...], tuple[int, ...], tuple[Any, Any, Any, Any, Any, Any]]:
-    """The engine's kinds as the files are read against them: their labels and dimensions, each one's character on the 24, 1 where its basis is whole, the four-vector's square's character, the held hand's (the one-dimensional kinds together, whose trace squared is the unit's: A1 + A2) and the twist's (the held hand's less the unit's: the sign kind's), every kind 0 off the 24; and the 48 lifts of the 24 with their half-speed kinds and trains, as main.made passes them."""
-    labels = tuple(name.upper() for name in kinds._fields)
-    dims = tuple(k.shape[-1] for k in kinds)
+    """The engine's kinds as the files are read against them: the eight labels, the five of the 24 and the three half-speed kinds of their 48 lifts (each field's name, its _ read as /), their dimensions, each of the five's character on the 24, 1 where its basis is whole, the four-vector's square's character, the held hand's (the one-dimensional kinds together, whose trace squared is the unit's: A1 + A2) and the twist's (the held hand's less the unit's: the sign kind's), every kind 0 off the 24; and the 48 lifts as the files read them (spun)."""
+    read = spun(lifted)
+    labels = tuple(name.upper().replace("_", "/") for name in (*kinds._fields, *lifted.halves._fields))
+    dims = tuple(k.shape[-1] for k in kinds) + read.dims
     traces = np.stack([np.einsum("gii->g", k) for k in kinds])
     # whole: each row one Spoke's sign on the 24, its squares summing to 1 there and to 0 off them
     sums = [np.einsum("gij,gij->gi", k, k) for k in kinds]
@@ -272,30 +273,88 @@ def vocabulary(
         trace for trace in traces if (trace * trace == trace).all()
     ]  # the trivial kind's, 1 on the 24
     hand = sum(trace for trace in traces if (trace * trace == unit).all())  # the one-dimensional kinds'
-    return labels, dims, (traces, wholes, np.einsum("gii->g", square), hand, hand - unit, lifted)
+    return labels, dims, (traces, wholes, np.einsum("gii->g", square), hand, hand - unit, read)
+
+
+class Spun(NamedTuple):
+    """The 48 lifts as the files read them: each of the eight kinds' character on them, pairs (p, q) for p + q r2 in the lifts' (sign, class) layout, the five through each lift's turn; 1 where a kind is half-speed, -I on the full turn; the half-speed kinds' dimensions; and the two half-speed trains' characters with their gears."""
+
+    characters: Any  # (kinds, senses, classes, 2)
+    half: Any  # (kinds,): 1 on E1/2, E5/2 and G3/2, 0 on the five
+    dims: tuple[int, ...]  # each half-speed kind's character at the lift 1, 2 Re g senses there alone
+    trains: Any  # (trains, senses, classes): the 8-gear train's character and the 24-gear's
+    gears: tuple[int, ...]  # the two trains' gears
+
+
+def spun(lifted: Any) -> Spun:
+    """The 48 lifts as the files read them (Spun), from kinds.lifts as main.made passes them."""
+    whole = np.stack([np.einsum("...ii->...", k) for k in lifted.whole])
+    characters = np.concatenate((np.stack((whole, 0 * whole), axis=-1), np.stack(lifted.halves)))
+    plus, minus = np.moveaxis(characters, 1, 0)  # every class's word at the + sense and at the -
+    half = np.array([int((m == -p).all()) for p, m in zip(plus, minus, strict=True)], dtype=object)
+    spin = lifted.halves.e1_2[..., 0]
+    one = np.unravel_index(np.argmax(spin), spin.shape)  # the lift 1
+    dims = tuple(int(c[one][0]) for c, h in zip(characters, half, strict=True) if h)
+    trains = (lifted.cosets, lifted.classes)
+    return Spun(
+        characters,
+        half,
+        dims,
+        np.stack([np.einsum("...ii->...", t) for t in trains]),
+        tuple(t.shape[-1] for t in trains),
+    )
+
+
+def halved_departures(where: str, train: dict[str, Any], kinds: list[int], lifts: Spun) -> list[str]:
+    """A train of a half-speed kind: admitted only as the 8-gear train on the cosets of C6 or the 24-gear train on the classes +-h, its character, its part times its kinds', with no r2 part and -I on the full turn, and every other mix refused by name; an admitted one refused too, by name, as no family couples a half-speed train in this build (test worlds only, laid in memory through load.load and the act; the refusal goes when a half-speed table from the families is built)."""
+    rational, root = np.moveaxis(train["part"] * lifts.characters[kinds].sum(axis=0), -1, 0)
+    plus, minus = rational
+    reasons = [
+        reason
+        for reason, held in (
+            ("has an r2 part", not root.any()),
+            ("is not -I on the full turn", (minus == -plus).all()),
+            ("is neither train's", any((rational == t).all() for t in lifts.trains)),
+        )
+        if not held
+    ]
+    named = f"{where}.kinds: {train['kinds']} at part {train['part']}"
+    gears = " or the ".join(f"{n}-gear train" for n in lifts.gears)
+    return (
+        [
+            f"{named}: no half-speed train: a half-speed kind rides only the {gears} (on the cosets of C6, on the classes +-h), its character with no r2 part and -I on the full turn; this character {', '.join(reasons)}"
+        ]
+        if reasons
+        else [f"{named}: no family couples a half-speed train in this build"]
+    )
 
 
 def held_departures(
     universe: Any, setting: Any, read: tuple[tuple[str, ...], tuple[int, ...], Any]
 ) -> list[str]:
-    """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the 24's, a kind with no whole basis outside the four-vector's square, the square in two trains or more (every row's teeth read every square's 00 slot but its own, so two squares would read each other and no dial would be its own), a gear's component off its train's rows."""
-    labels, dims, (traces, wholes, squared, *_) = read
+    """Every way the checked files ask what the engine's kinds cannot hold: a kind none of the eight, a kind with no whole basis outside the four-vector's square, the square in two trains or more (every row's teeth read every square's 00 slot but its own, so two squares would read each other and no dial would be its own), a train of a half-speed kind (halved_departures), a gear's component off its train's rows, a half-speed gear's component its coset's index."""
+    labels, dims, (traces, wholes, squared, *_, lifts) = read
     found, sizes, squares = [], [], []
     for at, train in enumerate(universe["trains"]):
         where = f"universe.trains[{at}]"
         found += [
-            f"{where}.kinds[{j}]: {label!r} is none of the 24's kinds {labels}"
+            f"{where}.kinds[{j}]: {label!r} is none of the kinds {labels}"
             for j, label in enumerate(train["kinds"])
             if label not in labels
         ]
         kinds = [labels.index(label) for label in train["kinds"] if label in labels]
-        square = bool((train["part"] * traces[kinds].sum(axis=0) == squared).all())
+        halved = [k for k in kinds if lifts.half[k]]  # the half-speed kinds, read apart
+        tabled = [k for k in kinds if not lifts.half[k]]
+        square = not halved and bool((train["part"] * traces[tabled].sum(axis=0) == squared).all())
         squares += [repr(train["name"])] if square else []
         found += [
             f"{where}.kinds[{j}]: {label!r} has no whole basis the 24 permute, so it stands only in the four-vector's square, whose basis is whole"
             for j, label in enumerate(train["kinds"])
-            if label in labels and not (square or wholes[labels.index(label)])
+            if label in labels
+            and labels.index(label) in tabled
+            and not (square or wholes[labels.index(label)])
         ]
+        found += halved_departures(where, train, kinds, lifts) if halved else []
         sizes.append(train["part"] * sum(dims[k] for k in kinds))
     if len(squares) > 1:
         found.append(

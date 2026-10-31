@@ -108,7 +108,7 @@ def test_the_48_are_the_words_each_once_of_norm_senses_squared_and_the_probes_cl
 
 
 def test_each_lift_turns_the_axes_by_one_of_the_24_and_the_eight_kinds_are_orthonormal_on_the_48():
-    """Yes: main.made passes these lifts, the files' vocabulary hands them on; each lift's turn its sandwich, g and -g on one
+    """Yes: main.made passes these lifts, the files' vocabulary reads them; each lift's turn its sandwich, g and -g on one
     turn, each of the 24 once a sense; the eight kinds orthonormal on the 48 exactly, the full turn +1 on five, -1 on three.
     No: no lift's turn is a reflection or a flat candidate, each weighed 0 by kinds.turns."""
     held, senses, listed = built()
@@ -116,7 +116,8 @@ def test_each_lift_turns_the_axes_by_one_of_the_24_and_the_eight_kinds_are_ortho
     five, _, square, joint = made(star(d))
     parts = [(*g[:2], *g.whole, *g.halves, g.heads, g.cosets, g.classes) for g in (joint, held)]
     assert all((x == y).all() for x, y in zip(*parts, strict=True))  # every field of the lifts alike
-    assert vocabulary(five, square, joint)[-1][-1] is joint
+    read = vocabulary(five, square, joint)[-1][-1]  # the files read these lifts' half-speed kinds
+    assert (read.characters[len(five) :] == np.stack(joint.halves)).all()
     turns = held.turn.reshape(-1, d, d)
     assert all((t == sandwich(g, senses)).all() for t, g in zip(turns, listed, strict=True))
     weighed = list(zip(*kinds.turns(star(d)), strict=True))
