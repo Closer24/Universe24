@@ -1,0 +1,5 @@
+world tensor24-click | rounds 200 | (Node-clock, round, train) lines with a click, either form: 10935
+the third click's form against the first click: 4644 lines differ round by round
+each clock's total over the run: 81 clocks, the most any differs: 0
+one hidden unit in the twin at Node-clock 0: 0 lines move, 162 sides move
+exit 0

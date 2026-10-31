@@ -9,7 +9,8 @@ third click is never seen alone): the circulation lands one whole quantum around
   Each round they turn by the palindrome at K = C^T C = 3 (eta += 3 tau, tau += 3 eta; the carries; tau += 3 eta,
   eta += 3 tau), and tau carries y. Each quantum W it lands books c_e W on every edge e of the triangle in the same
   round: +W, +W and -W along the boundary.
-- So each clock's line is the carry of its own passing alone: Sum_e B_ie (3 x_e - c_e y) = 3 Sum_e B_ie x_e, as B c = 0,
+- So each clock's line is made by its own edges' carries of their shares alone, shares that sum to its own passing:
+  Sum_e B_ie (3 x_e - c_e y) = 3 Sum_e B_ie x_e, as B c = 0,
   and the circulation's quantum cancels in every clock's line: no clock sees it alone. An idle triangle (y = 0) lands
   none. The choice is the path: which way round each quantum goes, read in the sides.
 
