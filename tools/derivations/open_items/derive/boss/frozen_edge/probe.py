@@ -80,9 +80,9 @@ def clocked(layout, rows, row, g):
     grip[row] = 0 * grip[row]
     leg = np.array([row], dtype=np.intp)
     spring = contract.pushes(np.array([g], dtype=object), (leg, leg, 0 * leg - 1, 0 * leg - 1))
-    plan = Plan(*(np.concatenate((x, y)) for x, y in zip(layout.plan, spring, strict=True)))
-    _, one = carry(layout.push.first.astype(object), rows, 0)
-    _, two = carry(layout.push.second.astype(object), rows, 0)
+    plan = Plan(*(np.concatenate((x, y), axis=-1) for x, y in zip(layout.plan, spring, strict=True)))
+    _, one = carry(layout.push.legs[0].astype(object), rows, 0)
+    _, two = carry(layout.push.legs[1].astype(object), rows, 0)
     deaf = [int(x != row and y != row) for x, y in zip(one.tolist(), two.tolist(), strict=True)]
     push = layout.push._replace(factor=layout.push.factor * np.array(deaf, dtype=object))
     return layout._replace(grip=grip, plan=plan, push=push)

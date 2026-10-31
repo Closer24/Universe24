@@ -223,7 +223,7 @@ def test_a_half_speed_world_laid_in_memory_turns_with_its_48_lifts_runs_back_and
     }
     assert pairs == {(r, r): 1 for r in rows}  # each half-speed row with itself, the dot
     held, layout = laid([CLICKS[0], CLICKS[3], *spins], {"mesh": 3})
-    reads, *_, factor, target = held.mesh
+    (reads, *_), factor, target = held.mesh
     landed = {int(r) for r in target[factor != 0]} | {
         int(r) % len(held.state[0]) for r in reads[factor != 0]
     }

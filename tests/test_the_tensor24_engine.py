@@ -16,7 +16,7 @@ from tests import frame
 SHAPE, FRAME = (3, 4, 5), (5, 5, 5)  # the drawn layouts' board, and the cube of the frame and the 24
 ROWS, TERMS, ROUNDS = 4, 30, 4  # the gears per site, J's terms, and the rounds run back
 PLANES = 1 + len(SHAPE) + 1  # the readings: the value, a difference along each axis, and the force
-LEGS = len(Plan._fields) - 1  # a monomial's legs: the readings a term reads and the gear it lands on
+LEGS = 4  # a drawn monomial's legs: the readings a term reads and the gear it lands on
 READINGS = LEGS - 1  # the readings a term of J reads, the unit where it reads fewer
 PROPERTIES = ("locality", "purity", "rename", "images")
 SQUARE, SEEDS, J_SEEDS = 7, range(3), range(40, 43)  # the square's rows laid: 00, 0i, ii; the seeds
@@ -29,12 +29,15 @@ def draw(rng, low, high, size):
 
 def empty():
     """The plan of no term: J unsourced, no push."""
-    return Plan(none := np.zeros(0, dtype=np.intp), none, none, none.astype(object), none)
+    return Plan(
+        np.zeros((READINGS, 0), dtype=np.intp), np.zeros(0, dtype=object), np.zeros(0, dtype=np.intp)
+    )
 
 
 def unclicked():
     """The click of no term: one train whose passing is 0, its tooth carried at the key 1 from its birth, 0."""
-    return Click(*(e := empty())[:2], e.factor, e.target, np.ones((1, 1), dtype=object))
+    none = np.zeros(0, dtype=np.intp)
+    return Click(none, none, none.astype(object), none, np.ones((1, 1), dtype=object))
 
 
 def varied(rng, least=1, clocked=False, cubed=False):
@@ -45,16 +48,21 @@ def varied(rng, least=1, clocked=False, cubed=False):
     teeth, s = draw(rng, least, 20, (ROWS, n)), draw(rng, -3, 4, (ROWS, n))
     gearing = Gearing(teeth, s, *draw(rng, least, 9, (2, ROWS, 1)))  # T_k and T_d; every row even
     o = np.setdiff1d(every, two := rng.permutation(ROWS)[:2])
-    clock = Read(np.repeat(two, len(o)), draw(rng, 1, 4, len(two) * len(o)), np.tile(o, len(two)))
+    # each of the two read alone, then with the other
+    pair = np.stack((np.repeat(two, len(o)), np.repeat(two[::-1], len(o))))
+    legs = np.concatenate((pair * np.array([[1], [0]]) - np.array([[0], [1]]), pair), axis=1)
+    clock = Plan(
+        legs, draw(rng, 1, 4, legs.shape[1]), np.tile(o, len(two) + len(two))
+    )  # into every other gear's teeth
     held = Read(rng.integers(0, ROWS, 4), draw(rng, -3, 4, 4), rng.integers(0, len(nb), 4))
-    clock, stretch = (clock, held) if clocked else (frame.unread(), frame.unread())
+    clock, stretch = (clock, held) if clocked else (frame.unclocked(), frame.unread())
     index = np.array([rng.integers(0, PLANES * ROWS + 1, size=TERMS) for _ in range(READINGS)])
     index[-1] = index[-1] if cubed else 0 * index[-1] + PLANES * ROWS  # three readings only where cubed
     factor, target = draw(rng, -9, 10, TERMS), rng.integers(0, ROWS, size=TERMS)
     valued = ((index < ROWS) | (index == PLANES * ROWS)).all(axis=0)
     legs = np.where(index == PLANES * ROWS, -1, index)  # the unit as -1, the last row of any readings
-    plan = Plan(*legs[:, valued], factor[valued], target[valued])
-    mesh = Plan(*index[:, ~valued], factor[~valued], target[~valued])
+    plan = Plan(legs[:, valued], factor[valued], target[valued])
+    mesh = Plan(index[:, ~valued], factor[~valued], target[~valued])
     grip = draw(rng, -3, 4, (ROWS, len(SHAPE) * n))
     reads = (clock, stretch, unclicked(), empty(), mesh)  # the reads, no click, no push
     return Layout(nb, frame.spokes(len(SHAPE)), frame.meshes_of(nb), grip, gearing, plan, *reads)
@@ -63,7 +71,7 @@ def varied(rng, least=1, clocked=False, cubed=False):
 def world(rng, layout, rows=ROWS):
     """A state the act may meet: gears across 2**256, the clocks' rows in [0, 2**20), each tooth in its dial and T_d."""
     a, b = (frame.wide(rng, size := (rows, layout.nb.shape[1])) for _ in "ab")
-    clocks = np.unique(layout.clock.first)
+    clocks = np.unique(layout.clock.legs[layout.clock.legs >= 0])
     a[clocks], b[clocks] = (draw(rng, 0, 1 << 20, (len(clocks), size[1])) for _ in "ab")
     d = sum(step.weight(layout.gearing, layout.clock, x) for x in (a, b))
     r, rd = draw(rng, 0, 1 << 20, size) % (d + d) - d, draw(rng, 0, 1 << 20, size) % layout.gearing.drive
@@ -74,11 +82,24 @@ def naive(layout, s):
     """The act site by site with loops and plain integers: the readings, J term by term from both plans, the drive, the push, the momentum on the edge split at the next edge's dial, the 00 count first; the click of no term keeps its tooth."""
     nb, _, _, grip, gearing, plan, clock, stretch, _, _, mesh = layout
     rest, s_, kick, drive, _ = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
-    monomials = [t for p in (plan, mesh) for t in zip(*(x.tolist() for x in p), strict=True)]
+    monomials = [
+        t
+        for p in (plan, mesh)
+        for t in zip(p.legs.T.tolist(), *(x.tolist() for x in p[1:]), strict=True)
+    ]
     a, b, r, rd, k = (x.tolist() for x in s)
     rows, n, axes, gs, sp = len(a), len(a[0]), range(len(SHAPE)), range(len(a)), range(len(nb))
-    terms = list(zip(*(x.tolist() for x in clock), strict=True))  # the clocks' read, into the teeth
-    w, wb = ((np.array(rest, dtype=object) + frame.dense(clock, rows, rows) @ x).tolist() for x in s[:2])
+    terms = list(zip(clock.legs.T.tolist(), clock.factor.tolist(), clock.target.tolist(), strict=True))
+
+    def teeth(
+        x, g, i
+    ):  # a gear's teeth at the counts x: its rest and the clocks' plan, its legs multiplied
+        held = [x[f][i] for f in range(len(x))] + [1]  # the unit last
+        return rest[g][i] + sum(
+            m * int(np.prod([held[f] for f in legs], dtype=object)) for legs, m, t in terms if t == g
+        )
+
+    w, wb = ([[teeth(x, g, i) for i in range(len(a[0]))] for g in range(len(a))] for x in (a, b))
     grips = list(zip(*(x.tolist() for x in stretch), strict=True))  # the grips' read, at both ends
     new = [[row[:] for row in x] for x in (a, b, r, rd, k)]
     for x in itertools.product(*map(range, SHAPE)):
@@ -91,16 +112,17 @@ def naive(layout, s):
         near = [a[g][around[q + q]] - a[g][around[q + q + 1]] for q in axes for g in gs]
         readings = [a[g][i] for g in gs] + near
         source, read = [0] * rows, readings + force + [1]  # the unit, the readings' last row
-        for first, second, third, factor, target in monomials:
-            source[target] += factor * read[first] * read[second] * read[third]
+        for legs, factor, target in monomials:
+            source[target] += factor * int(np.prod([read[leg] for leg in legs], dtype=object))
         moment, count = [0] * rows, [0] * rows
         for g in gs:
             q, new[3][g][i] = divmod(source[g] + rd[g][i], drive[g][i])
             push = s_[g][i] * (force[g] + kick[g][i] * q)
             moment[g] = 2 * ((w[g][i] + wb[g][i]) * (a[g][i] - b[g][i]) + 2 * push) + r[g][i]
             count[g] = frame.split(moment[g], w[g][i] + wb[g][i])[0]  # the count at the edge's own dial
-        for g in gs:  # the next edge's dial: the clocks' next counts, each given first at its own dial
-            wa1 = rest[g][i] + sum(m * (a[f][i] + count[f]) for f, m, t in terms if t == g)
+        ahead = [[a[f][j] + count[f] if j == i else 0 for j in range(n)] for f in gs]  # given first
+        for g in gs:  # the next edge's dial: the clocks' plan on the counts given first
+            wa1 = teeth(ahead, g, i)
             v, new[2][g][i] = frame.split(moment[g], w[g][i] + wa1)
             new[0][g][i], new[1][g][i] = a[g][i] + v, a[g][i]
     return State(*(np.array(x, dtype=object) for x in new))
@@ -110,7 +132,7 @@ def alike(nb):
     """A layout alike at every site, Mesh and gear for the frame's properties: the teeth, s and T_k, no J."""
     ones = np.ones((1, nb.shape[1]), dtype=object)
     grip, gearing = ones.repeat(len(SHAPE), axis=1), Gearing(7 * ones, 2, 3, 1)  # the teeth, s, T_k, T_d
-    reads = (frame.unread(), frame.unread(), unclicked(), empty(), empty())
+    reads = (frame.unclocked(), frame.unread(), unclicked(), empty(), empty())
     return Layout(nb, frame.spokes(len(SHAPE)), frame.meshes_of(nb), grip, gearing, empty(), *reads)
 
 
@@ -134,7 +156,7 @@ def pair(g, hands=2):
     click = Click(np.arange(rows), np.arange(rows), np.ones(rows, dtype=object), train, key)
     ones, a = np.ones((1, 1), dtype=object), np.zeros((rows, 1), dtype=object)
     gearing, grip = Gearing((1 << 20) * ones, 1, 1, 1), ones.repeat(3, axis=1)
-    reads = (frame.unread(), frame.unread(), click, empty(), empty())
+    reads = (frame.unclocked(), frame.unread(), click, empty(), empty())
     layout = Layout(nb, frame.spokes(), frame.meshes_of(nb), grip, gearing, plan, *reads)
     a[0, 0] = 1 << 8
     return layout, State(a, a.copy(), 0 * a, 0 * a, (KEY - 1) // 2 + 0 * key)
@@ -149,8 +171,8 @@ def pushed(path=False):
     second = np.concatenate((stretch, (spokes + 1) * SQUARE + read))
     factor = np.array([-1] * len(stretch) + [k0] * len(read), dtype=object)
     target = np.concatenate((np.repeat(np.repeat(rows[-len(SHAPE) :], 2), SQUARE), 0 * read))
-    push = Plan(first, second, 0 * first + (spokes + 2) * SQUARE, factor, target)
-    clock = Read(0 * rows[1:], k0 + 0 * rows[1:].astype(object), rows[1:])
+    push = Plan(np.stack((first, second, 0 * first + (spokes + 2) * SQUARE)), factor, target)
+    clock = Plan((0 * rows[1:])[None, :], k0 + 0 * rows[1:].astype(object), rows[1:])
     plan = contract.pushes(np.full(SQUARE, 1 << 10, dtype=object), (rows, rows, unit, unit))
     layout = alike(frame.board(FRAME))
     return layout._replace(gearing=layout.gearing._replace(drive=7), plan=plan, clock=clock, push=push)
@@ -185,6 +207,21 @@ def conserved(seed):
     energy = lambda y: (factor[:, None] * np.prod([step.valued(y)[leg] for leg in legs], axis=0)).sum()  # noqa: E731
     v = [energy(x + t * d) for t in (-2, -1, 1, 2)]
     return -12 * (vertex(factor, legs, x) * d).sum() == 8 * (v[2] - v[1]) - (v[3] - v[0])
+
+
+def test_a_monomial_of_any_number_of_legs_pushes_each_leg_by_minus_its_factor_times_the_others():
+    """Yes: monomials of 1 to 11 legs (the cross terms' 11 the most) among the gears' values and the unit, past 64 bits, each leg's row
+    pushed by minus the factor times the other legs' product, a loop over each term's legs alike. No: a term read at three legs
+    alone, or with its own leg read in place of the unit, misses it (the two mutants); a push on the unit lands on no gear."""
+    rng = np.random.default_rng(0)
+    for count in range(1, 12):
+        legs = tuple(rng.integers(-1, ROWS, size=TERMS).astype(np.intp) for _ in range(count))
+        factor, x = draw(rng, -9, 10, TERMS), draw(rng, -50, 51, (ROWS, 7)) * (1 << 70)
+        read, naive = step.valued(x), np.zeros((ROWS + 1, 7), dtype=object)
+        for n, j in itertools.product(range(TERMS), range(count)):
+            others = [read[legs[i][n]] for i in range(count) if i != j]
+            naive[legs[j][n]] -= factor[n] * np.prod([read[-1], *others], axis=0)
+        assert (vertex(factor, legs, x) == naive[:-1]).all(), count
 
 
 def holding(laws):

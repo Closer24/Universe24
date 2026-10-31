@@ -71,7 +71,7 @@ def plan(monomials: list[tuple[int, tuple[int, ...]]]) -> Plan:
             terms.append(((*legs[:p], *legs[p + 1 :], UNIT, UNIT, UNIT)[:3], -factor, leg))
     readings, factor, target = zip(*terms, strict=True)
     return Plan(
-        *(np.array(x, dtype=np.intp) for x in zip(*readings, strict=True)),
+        np.array(list(zip(*readings, strict=True)), dtype=np.intp),
         np.array(factor, dtype=object),
         np.array(target, dtype=np.intp),
     )

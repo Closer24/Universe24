@@ -20,11 +20,9 @@ class State(NamedTuple):
 
 
 class Plan(NamedTuple):
-    """J's terms over the kinds' tables, laid at load: per term its three readings, the unit where it reads fewer, its whole factor, its target; the loader lays three: the plan on the value legs (term 9's notch, term 6's held spring and its tie, the hands' tie), the metric's push (term 5) and the Mesh plan (term 6's gradient vertex), a train that lacks a term taking it at the factor 0."""
+    """J's terms over the kinds' tables, laid at load: per term the rows of the readings it multiplies, any number of them, the unit where it reads fewer, its whole factor, its target; the loader lays three: the plan on the value legs (term 9's notch, term 6's held spring and its tie, the hands' tie), the metric's push (term 5) and the Mesh plan (term 6's gradient vertex), a train that lacks a term taking it at the factor 0."""
 
-    first: Z  # (terms,): the row of the readings that enters first
-    second: Z  # (terms,): the row that enters second
-    third: Z  # (terms,): the row that enters third: the unit, the readings' last row, where a term reads two or fewer
+    legs: Z  # (readings, terms): each term's rows of the readings, one row of legs per reading it multiplies; the unit, the readings' last row, where a term reads fewer
     factor: (
         Z  # (terms,): the strength times the table's entry, Python integers, so that no product wraps
     )
@@ -68,7 +66,7 @@ class Layout(NamedTuple):
     grip: Z  # (rows or 1, Meshes): a gear row's grip on each Mesh, once per Mesh; a train's rows alike from 7b's load
     gearing: Gearing
     plan: Plan  # J's terms on the readings: the value, the centred difference along each axis, the force, the unit last
-    clock: Read  # every gear's teeth: its rest and what this read lands on its row, the tick's weight
+    clock: Plan  # every gear's teeth: its rest and what this plan lands on its row from the counts given first, the tick's weight
     stretch: Read  # every Spoke's grip: its rest and what this read lands on the Spoke, a row read at both ends of its Mesh
     click: Click  # every train's passing as its pairs' form over a J(b) - b J(a), and its key
     push: Plan  # term 5, the metric's push in the books' form, every slot pushed by -dH / d slot of the act's energy H = W v_in v_out / 2 + SUM_Mesh grip Delta^2 / 2 with W = rest + k0 c00: terms on the push's readings (the six stretches per row, the momenta in and out, the unit last), k0 sigma_in sigma_out of every row on the force's path (the sourcing trains' rows and the square's 0i and jk rows) onto the 00 slot, every row's two Meshes' stretches squared at -1 onto the ii slot of their axis, nothing onto the jk and 0i slots, no strength; the drive's dial senses on the square's 00 and ii rows takes the half

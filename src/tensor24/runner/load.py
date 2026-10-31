@@ -165,10 +165,10 @@ class Loaded(NamedTuple):
         Z, Z, Z, Z, Z
     ]  # the whole click's passing: per term a pair of a train's rows through its form onto A1, the entry, its train; the keys
     push: tuple[
-        Z, Z, Z, Z, Z
-    ]  # term 5's plan: per term its three readings (the unit for a leg it lacks), its factor and the slot row it lands on
+        Z, Z, Z
+    ]  # term 5's plan: per term its readings, a row each (the unit for a leg it lacks), its factor and the slot row it lands on
     mesh: tuple[
-        Z, Z, Z, Z, Z
+        Z, Z, Z
     ]  # the gradient vertex: per term its readings on the plan's planes, its factor, its row
 
 
@@ -268,7 +268,9 @@ def geared(
     trained, every = len(trains), np.arange(rows, dtype=np.intp)
     read, landed = np.repeat(first.astype(np.intp), rows), np.tile(every, trained)
     clock = (
-        read,
+        read[
+            None, :
+        ],  # one leg: the clocks' plan reads one count today, its rows the given-first step's
         np.repeat(trains.square * scale, rows).astype(object) * lit((read - landed).astype(object)),
         landed,
     )
@@ -291,6 +293,32 @@ def geometry(nb: Z, axes: int) -> tuple[Z, Z]:
     _, minus = np.moveaxis(nb.reshape(axes, -1, n), 1, 0)
     meshes = np.stack((offsets + np.arange(n, dtype=np.intp), offsets + minus), axis=1).reshape(-1, n)
     return star(axes), meshes
+
+
+def scaled(
+    parts: tuple[Any, ...], state: tuple[Z, ...], lam: Z
+) -> tuple[tuple[Any, ...], tuple[Z, ...]]:
+    """ONELAW3 4A's units, the machinery alone: the layout's eleven parts and the state laid, the whole action times one whole factor lam of at least 1: the teeth at rest and the clocks' read, every grip and the grips' read, the three plans' factors, the kick's teeth T_k, the drive's teeth T_d and the click's key, each times lam, and the state's edge tooth, the drive's fine tooth and the click tooth with them; the gear is homogeneous, split(lam n, lam D) = (q, lam r) on every carry of the act, so the counts and the clicks move bit for bit as at lam 1, every tooth lam times, the tooth's quantum 1 / lam of the dial at lam 1 (4A.1); the run back is the scaled act's own, exact by the engine's mirror, its -1 one quantum of the finer tooth (4A.3); a scalar commutes with every turn of the 24 (4A.4). OPEN, so no run scales and no file names a unit (the owner's word of 03:5x UTC, choosing a strength is forbidden): the flat, rest / grip = (gt0 L0^2)^2, a square that today's 6 is not, its ratio picked by nothing the structure fixes alone (4, 9, any square); and the units lam, gam and u, Lam = gam^3 lam^4 u^2, which no integer of the files names (den and the grips fix grip0 = den Gamma^2 and rest = Spokes grip0, whose ratio is no square, so no unit follows from them)."""
+    nb, spokes, meshes, grips, gearing, potential, clock, stretch, click, push, mesh = parts
+    rest, s, kick, drive, even = gearing
+    factor, legs = potential
+    (read, at, landed), (diagonal, by, spoke) = clock, stretch
+    first, second, entry, train, key = click
+    (pushed, pushes, onto), (meshed, meshes_at, into) = push, mesh
+    a, b, tooth, fine, k = state
+    return (
+        nb,
+        spokes,
+        meshes,
+        lam * grips,
+        (lam * rest, s, lam * kick, lam * drive, even),
+        (lam * factor, legs),
+        (read, lam * at, landed),
+        (diagonal, lam * by, spoke),
+        (first, second, entry, train, lam * key),
+        (pushed, lam * pushes, onto),
+        (meshed, lam * meshes_at, into),
+    ), (a, b, lam * tooth, lam * fine, lam * k)
 
 
 def laid_out(universe: dict[str, Any], shape: list[int], loaded: Loaded) -> tuple[Any, ...]:

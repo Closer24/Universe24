@@ -22,19 +22,22 @@ def made(spokes: Any) -> tuple[kinds.Kinds, dict[Any, Any], Any, kinds.Lifts]:
 
 def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> state.Layout:
     """The layout the load reads from the three files, in the engine's records."""
-    nb, spokes, meshes, grip, gearing, potential, clock, stretch, click, push, mesh = load.laid_out(
-        universe, shape, loaded
-    )
-    typed = (
+    return typed(load.laid_out(universe, shape, loaded))
+
+
+def typed(parts: tuple[Any, ...]) -> state.Layout:
+    """The load's eleven parts in the engine's records."""
+    nb, spokes, meshes, grip, gearing, potential, clock, stretch, click, push, mesh = parts
+    records = (
         state.Gearing(*gearing),
         contract.pushes(*potential),
-        state.Read(*clock),
+        state.Plan(*clock),
         state.Read(*stretch),
         state.Click(*click),
         state.Plan(*push),
         state.Plan(*mesh),
     )
-    return state.Layout(nb, spokes, meshes, grip, *typed)
+    return state.Layout(nb, spokes, meshes, grip, *records)
 
 
 ENGINE = run.Engine(made, layout, step.act, step.untick, state.State, step.dials, step.grips)

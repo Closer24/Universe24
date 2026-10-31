@@ -103,9 +103,10 @@ def node(g, key):
     meshes, _ = carry(np.arange(6), 2, 0)
     none = np.zeros(0, dtype=np.intp)
     unread = Read(none, none.astype(object), none)
-    empty = Plan(none, none, none, none.astype(object), none)
+    empty = Plan(np.zeros((3, 0), dtype=np.intp), none.astype(object), none)
+    unclocked = Plan(np.zeros((1, 0), dtype=np.intp), none.astype(object), none)
     ones = np.ones((1, 1), dtype=object)
-    reads = (unread, unread, clicking(key), empty, empty)
+    reads = (unclocked, unread, clicking(key), empty, empty)
     return Layout(
         nb,
         loading.star(3),
@@ -214,7 +215,7 @@ def cube(g):
     n, ones = nb.shape[1], np.ones((1, 1), dtype=object)
     none = np.zeros(0, dtype=np.intp)
     unread = Read(none, none.astype(object), none)
-    empty = Plan(none, none, none, none.astype(object), none)
+    empty = Plan(np.zeros((3, 0), dtype=np.intp), none.astype(object), none)
     src = recurrence(SEED)
     a = np.array([[drawn(src, -SPAN, SPAN) for _ in range(n)] for _ in range(ROWS)], dtype=object)
     b = np.array([[drawn(src, -SPAN, SPAN) for _ in range(n)] for _ in range(ROWS)], dtype=object)
@@ -226,7 +227,7 @@ def cube(g):
         grip,
         gearing,
         plan(potential(g)),
-        unread,
+        Plan(np.zeros((1, 0), dtype=np.intp), none.astype(object), none),
         unread,
         clicking(1),
         empty,

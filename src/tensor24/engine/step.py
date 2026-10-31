@@ -1,15 +1,15 @@
 """Clock: every round every gear moves once: its neighbours pull it, the coupling pushes it, and its momentum, the velocity's whole count with the tooth kept on the edge between its two slots, is carried to the next edge and split there in one dial of both slots' teeth; the drive carries the coupling's push the same way, the metric's slots taking what the rows that read them give up (term 5, the books' form), and each train's click tooth carries the passing of the round's window, the before, the now and the next, the train's two-round energy change (COUNT5's S).
 Algebra: D_in = W(b) + W(a); N = 2 (D_in (a - b) + 2 (s F + K)) + s; q, s+ = split(N, 2 D_out), D_out = W(a) + W(a+), n = q 2D + s with -D <= s < D by one carry from the dial's half; a+ = a + q; b+ = a; J = J1 + J5, J1 the plan and the Mesh plan on the now slot's readings and J5 the metric's push on the six stretches per row, the momenta M_in = 2 D_in (a - b) + s and M_out = M_in + 4 (s F + K1) read in whole turns of the rest dial, and the unit, every slot pushed by -dH / d slot, H = W v_in v_out / 2 + SUM_Mesh grip Delta^2 / 2 with W = rest + k0 c00 and grip = grip_rest + ii at both ends: the 00 slot by k0 SUM sigma_in sigma_out over the rows on the force's path and each ii slot by -SUM over the rows of its two Meshes' stretches squared, the plan's factors k0 and -1, the half in -dH / d slot taken once, by the drive's dial T_d = 2 on those rows with the remainder kept in r_d, and the jk and 0i slots by nothing; q_d, r_d+ = carry(J, T_d, r_d); K = s T_k q_d; X(x, y) = SUM over the train's pairs (one, two) of entry (x_one J_two(y) - y_one J_two(x)), J the value legs' plan on the Node-clock's own counts; S = X(a, b) + X(a+, a); q_c, k+ = carry(S, key, k); the mirror is (b, a, -1 - s) on an even row, the law's (iii) on the dial 2D, and (-b, -a, s) on an odd one, the click tooth kept, and the run back is the tick on the mirrored state, mirrored, where the push reads the momenta of no row it lands on (hypothesis (d)).
-Board: one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot, and its own counts alone at the before slot and the next for the passing; W is the rest plus the clocks' read of the metric family's 00 slot here, k0 c00 with k0 = Spokes x senses as the loader lays it, the 00 row's own teeth at rest, so W(a+) is the 00 row's own carry, given first; the 2 is the two senses of an axis, read from the star; the drive's teeth T_d are senses on the square's 00 and ii rows, where the push lands, and 1 on the force's path, as the loader lays them; the click pushes nothing into a, b, s or r_d; the next count's push J(a+) is read from the count the round produces, no push kept from a round to the next; the passing reads the value legs' plan alone, so neither the Mesh plan nor the metric's push J5 enters any train's X: the Mesh flux and the sourcing trains' exchange with the metric are booked by no click (open).
+Board: one pass at every Node-clock alike, reading only its own gears and its six Meshes at the now slot, and its own counts alone at the before slot and the next for the passing; W is the rest plus the clocks' plan on this Node-clock's own counts, monomials of any number of legs (today the metric family's 00 slot alone, k0 c00 with k0 = Spokes x senses as the loader lays it), every row the plan reads standing at its rest teeth, so W(a+) reads those rows' own carries, given first (the widened step: ONELAW3 3.4's seven gears for det(gt) L^4, ten with the cross terms, against today's one 00 row); the 2 is the two senses of an axis, read from the star; the drive's teeth T_d are senses on the square's 00 and ii rows, where the push lands, and 1 on the force's path, as the loader lays them; the click pushes nothing into a, b, s or r_d; the next count's push J(a+) is read from the count the round produces, no push kept from a round to the next; the passing reads the value legs' plan alone, so neither the Mesh plan nor the metric's push J5 enters any train's X: the Mesh flux and the sourcing trains' exchange with the metric are booked by no click (open).
 Clicks: a whole click is the click tooth's quotient, one quantum taken (+1) or given back (-1), left for the record; the passing is odd under the window's reversal, so the mirror keeps the tooth and the run back is the same act on the mirrored state, its quotients negated (COUNT5, item M1); a deeper 00 slot is a slower clock, read in the clicks as proper time: the sourcing trains' momenta deepen it and their stretches slacken the grips about it, their books and the metric's closed with no strength (gravity; gamma owed to the click world, the board's wave read at the clocks' read factor k0 = Spokes x senses, the loader's frame), and the momentum W (a - b), not the velocity, is what a clock keeps as its teeth move.
 """
 
 import numpy as np
 
 from tensor24.algebra.carry import Z, carry, flip
-from tensor24.engine.contract import contract, read
+from tensor24.engine.contract import contract
 from tensor24.engine.mesh import held, pull, seen, stretches
-from tensor24.engine.state import Click, Gearing, Layout, Read, State
+from tensor24.engine.state import Click, Gearing, Layout, Plan, State
 
 
 def split(n: Z, d: Z, senses: Z) -> tuple[Z, Z]:
@@ -92,10 +92,10 @@ def passing(click: Click, x: Z, y: Z, jx: Z, jy: Z) -> Z:
 # The tooth lives on the edge between the two slots and is read on the edge it was kept on, so a change of the teeth
 # moves no tooth: a round runs back exactly wherever both slots' teeth are at least 1, the clock rising or falling,
 # and d_t (W d_t a) = F holds with W on the edge, the momentum kept and the velocity re-split as the teeth move.
-def weight(gearing: Gearing, clock: Read, a: Z) -> Z:
-    """Every gear's teeth W = W+: its rest and what the clocks' read lands on it at the now slot, by no table and with no bound on the read."""
+def weight(gearing: Gearing, clock: Plan, a: Z) -> Z:
+    """Every gear's teeth W = W+: its rest and what the clocks' plan lands on it from the counts a, monomials of any number of legs on the value legs (the 3+1 split's dial det(gt) L^4 among them, ONELAW3 3.2: OPEN until the flat and the units are ruled, so the loader lays today's one-leg read), by no table and with no bound on the read."""
     rest, _, _, _, _ = gearing
-    return rest + read(clock, a)
+    return rest + contract(clock, valued(a), a)
 
 
 def halves(layout: Layout) -> Z:
@@ -131,7 +131,9 @@ def act(layout: Layout, s: State) -> tuple[State, Z]:
     kicks = kick(gearing, q)
     senses, push = halves(layout), driven(gearing, force, kicks)
     wa, wb = dials(layout, s)
-    # the count the split gives at the edge's own dial: the 00 row's, whose teeth read no row, so its dial is its own
+    # the counts the split gives at the edge's own dial, given first: the rows the clocks' plan reads stand at their
+    # rest teeth, so each one's is its own next count, and W(a+) reads them (a one-pass D_out = 2 W(a) would break the
+    # edge's dial the run back shares)
     first, _, _ = gear(a, b, tooth, wa + wb, wa + wb, push, senses)
     a1, b1, s1 = gear(a, b, tooth, wa + wb, wa + weight(gearing, clock, first), push, senses)
     jb, ja, ja1 = (
