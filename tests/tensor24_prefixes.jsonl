@@ -1,0 +1,4 @@
+{"world": "tensor24-click", "kind": "end", "rounds": 4, "digest": "be183e34d0485720f0038b85b9b8997cefdd4fe5210ab85db6224d5f698f4b10", "undone": 4, "exact": 1}
+{"world": "tensor24-live", "kind": "end", "rounds": 4, "digest": "95bf6efd15a93651abea5a661d3073dabaab033592b615d3a370f2e4a3d0d5e3", "undone": 4, "exact": 1}
+{"world": "tensor24-mesh", "kind": "end", "rounds": 4, "digest": "f84815b48bf74b8c3aea54c5567cb17121d096a79e932a64c0f894acb45bf807", "undone": 4, "exact": 1}
+{"world": "tensor24-well", "kind": "end", "rounds": 4, "digest": "7ed5ba949701b05f131426790bdd7b9f8469c26446df448abd9a8106a989598c", "undone": 4, "exact": 1}
