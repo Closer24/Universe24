@@ -36,8 +36,9 @@ Readings, 5,000 rounds unless given: the identities; L's drift; the landings (th
 balance of the landing word over every window up to 64 rounds); the record's circulation c . q against 3 W on both
 forms; the run back from the end state alone (board, edge teeth, tau); the triangle's three turns and three flips (S_3),
 with an odd one reading each edge's tooth from its other end (dial - 1 - k) and tau as G D - 1 - tau.
-The owner's guiding line (10:37 UTC): one start, several births of the triangle's tooth; the board's end and every
-line are one, the landings differ, and each run back reaches the same start.
+The owner's guiding line (10:37 UTC), read on four starts (one start is one start seed, the THIRD pair's ruling): one
+lay with the triangle's tooth born at four places; the board's end and every line are one, which holds by
+construction, the landings differ, and each run back reaches its own start. The clicks choosing the path stays OWED.
 A clock fact, the charge odd under exchange (first named Pauli's exclusion; it is no exclusion, since two equal clocks
 are allowed and kept): L = det(1, b, a) is odd under the exchange of any two clocks (the 2-cell's orientation, the sign
 character) and 0 when two clocks share their state; laid so, the state stays its own swap, and
@@ -172,7 +173,8 @@ def read(name, lay_a, lay_b):
     k, f, tau = [born(D)] * 3, [born(GD)] * 3, [born(GD)]
     start = (list(a), list(b), list(s), list(k), list(f), list(tau))
     l0 = big_l(b, a)
-    ids = {"y": 0, "lines": 0, "torque": 0, "zero force torque": 0, "books first": 0, "books tooth": 0, "tau": 0,
+    ids = {"y": 0, "lines": 0, "torque": 0, "zero force torque": 0, "sides' books first": 0, "sides' books tooth": 0,
+           "tau": 0,
            "edge circulation kept": 0}
     c_f0 = carry(sum(c * v for c, v in zip(C, f)), GD, 0)[1]
     silent, line_max, y_min, y_max = 0, 0, None, None
@@ -200,8 +202,8 @@ def read(name, lay_a, lay_b):
             bi = ends(i)
             first = sum(bi[e] * (D * q1[e] + k[e] - k0[e]) for e in range(3))
             tooth = sum(bi[e] * (GD * qm[e] + f[e] - f0[e]) for e in range(3))
-            ids["books first"] += HALF * (e1[i] - e0[i] - share[i]) == 8 * W * first
-            ids["books tooth"] += G * HALF * (e1[i] - e0[i] - share[i]) == 8 * W * tooth
+            ids["sides' books first"] += HALF * (e1[i] - e0[i] - share[i]) == 8 * W * first
+            ids["sides' books tooth"] += G * HALF * (e1[i] - e0[i] - share[i]) == 8 * W * tooth
         ids["tau"] += tau[0] + GD * w == t0 + y
         ids["edge circulation kept"] += carry(sum(c * v for c, v in zip(C, f)), GD, 0)[1] == c_f0
         landings += w
@@ -212,7 +214,8 @@ def read(name, lay_a, lay_b):
         a, b, s = a1, a, s1
         lmax, lmin = max(lmax, big_l(b, a)), min(lmin, big_l(b, a))
     print(f"== {name}: the lay {lay_a} now, {lay_b} before; {ROUNDS} rounds", flush=True)
-    print("   identities held in rounds (of " + str(ROUNDS) + "; the books of " + str(3 * ROUNDS) + " clock-rounds): "
+    print("   identities held in rounds (of " + str(ROUNDS) + "; the sides' books, by construction, of " + str(3 * ROUNDS)
+          + " clock-rounds): "
           + ", ".join(f"{key} {val}" for key, val in ids.items()), flush=True)
     print(f"   L (the angular momentum about the axis) at the lay {l0}, at the end {big_l(b, a)}, its range over the run"
           f" [{lmin}, {lmax}]", flush=True)
@@ -269,9 +272,9 @@ def read(name, lay_a, lay_b):
 
 
 def paths(name, lay_a, lay_b):
-    """The owner's guiding line of 10:37 UTC: one start, several births of the triangle's tooth (the member's choice,
-    in its births by road (C)), read for the click paths apart, the lines one, the board's end one, and each run back
-    from its own end to the same start."""
+    """The owner's guiding line of 10:37 UTC, read on several starts: one lay with several births of the triangle's
+    tooth (the member's choice, in its births by road (C)), read for the click paths apart, the lines one, the board's
+    end one (by construction), and each run back from its own end to its own start."""
     third, _ = carry(GD, 3, 0)
     births = [born(GD), 0, third, third + third]
     start = (list(lay_a), list(lay_b), [0, 0, 0])
@@ -347,8 +350,8 @@ read("the equilateral triangle of two-leg edges, laid at rest", *AT_REST)
 read("the same, laid turning the other way (the lay's two slots swapped)", TURNING[1], TURNING[0])
 read("the same, laid turning at ten times the counts", [10 * v for v in TURNING[0]], [10 * v for v in TURNING[1]])
 read("the same, laid at rest at ten times the counts", [10 * v for v in AT_REST[0]], [10 * v for v in AT_REST[1]])
-paths("one start, four births of the triangle's tooth (the owner's guiding line: the clicks choose the path, the board"
-      " is fixed)", *TURNING)
+paths("four starts: one lay, the triangle's tooth born at four places (the owner's guiding line read on four starts;"
+      " the clicks choosing the path OWED)", *TURNING)
 exchange("two clocks in one state (a clock fact: the charge odd under exchange)", [40, 40, 7], [25, 25, 3])
 control("the control: the equilateral triangle of four-leg edges under the present act, laid turning", *TURNING)
 print("exit", flush=True)

@@ -74,7 +74,7 @@ other end, and tau as G D - 1 - tau.
   charge is in the sides on either form, as the Boss's ruling says. A click reading that tells the two forms apart
   with the teeth out is OPEN.
 
-## The owner's guiding line (10:37 UTC): the clicks choose the path, the board is fixed
+## The owner's guiding line (10:37 UTC), read on four starts: the board's end against the tooth's births
 
 Four starts, by the THIRD pair's ruling (one start is one start seed): the turning lay, with the triangle's tooth
 born at four places on its dial, the birth, 0, a third and two thirds. Over 5,000 rounds (tooth_5000.txt, the reading
@@ -82,7 +82,7 @@ before the exchange's):
 - the board's end is one for every birth;
 - every clock's line is one at every round, since B C = 0 keeps the landings out of the lines;
 - the landings differ from the first birth's in 2,773, 1,384 and 1,470 rounds;
-- each run back from its own end reaches the same start and its own birth, 4 of 4.
+- each run back from its own end reaches its own start, the lay and its own birth, 4 of 4.
 
 So the board's end is one against the four births. That holds by construction, since the board reads no tooth
 (B C = 0). The freedom is in the member's births.
