@@ -1,0 +1,6 @@
+mesh_560.jsonl: 560 rounds
+the leading front: the first click at distance d is at round 2 d, both ways, for 76 of the 76 distances 12 to 87
+halfway out (distance 43 to 47) the light clicks most at round 560: 9506750000
+the far side (distance 87 to 90) clicks most at round 227: 11199500000
+the bump's own Node-clocks, after round 300, click most at round 450: 16938250000 (before round 300 at most 90000000)
+Einstein's rule: laid at round 0, back at round 450, so the far event at round 450 / 2; the far side's own peak is at round 227, so 2 x 227 = 454 against 450

@@ -1,0 +1,7 @@
+tied1 (11 Node-clocks, 60 to 70, laid at rest), 120 rounds: tied1_120.jsonl: written
+tied4 (11 Node-clocks, 60 to 70, laid at rest), 120 rounds: tied4_120.jsonl: written
+tied16 (11 Node-clocks, 60 to 70, laid at rest), 120 rounds: tied16_120.jsonl: written
+tied64 (11 Node-clocks, 60 to 70, laid at rest), 120 rounds: tied64_120.jsonl: written
+tied256 (11 Node-clocks, 60 to 70, laid at rest), 120 rounds: round 8: row 2, site 61: the count -262697774354641225349195372740466079378840646906023163728740917078146912151544308302
+tiedpatch (laid at 500), 300 rounds: round 7: row 2, site 60: the count -2096589711539731482291301997499783711108258 takes more bits than the width, 128
+heldpatch (the held hand at 2), 300 rounds: heldpatch_300.jsonl: written

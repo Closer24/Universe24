@@ -94,3 +94,32 @@ The owner's word (in Hebrew; in translation, without persons; the bracket is the
 **And the three clicks.** Light's lines would be first clicks on Mesh edges (a candidate from a post, not a text: a Mesh edge joins two Node-clocks and lies on no triangle), and a clock's own count is a board count. No click writes into the gears (the law of the path), so every observer's times and distances read alike under every path of the third click. The choice lives in the sides at one Node-clock, and the conversion to three dimensions is one for all paths.
 
 **Owed, in order:** the face in the record (FACE2's field); light's click lines and the echo's rule; a world that lays a clock that moves (for C-c and the twins); then C-a to C-e in the decoder, each with its failing check and a pair of hostile readers.
+
+## 9. Light, its echo, the seeds and the masses (the owner's ask of 07:0x UTC)
+
+The owner's ask (in translation, without persons): check on my toy's code how light and its echo are told, and how other things of interest are told in the click world; what the start seed and the end seed must hold for many phenomena to show in the clicks; and the proton and the electron: what these least masses mean in the generations, and whether the masses can be derived now.
+
+**Light, read in the clicks** (light/, on node-edge 88b4d281c's mesh world: a ring of 180 Node-clocks, one bump of the wave laid at rest, the tied train at every Node-clock; read from the wave's clicks across the Meshes alone):
+- **The fronts:** the first click across a Mesh at distance d falls at round 2 d, both ways, at all 76 distances from 12 to 87. The light's leading edge runs at half a Mesh a round, half the board's cone; its bulk runs at about 0.4.
+- **Two lights meeting:** the two halves meet on the far side of the ring, where the clicks peak at round 227.
+- **The echo around the ring:** the bump's own Node-clocks, below 90,000,000 a round before round 300, click most at round 450 (16,938,250,000): the light back from around the ring. Einstein's rule: laid at round 0 and back at 450, so the far event sits at 225; the far side's own peak is at 227 (2 x 227 = 454 against 450).
+- **The echo off matter** (two records compared; the held hand laid at 2 instead of 1 on Node-clocks 60 to 70, 40 to 50 Meshes out): the first click that differs is at the patch's near edge at round 84, 4 rounds after the light's front reaches it (2 x 40 = 80). The difference travels back and reaches the bump at round 204. Einstein's rule puts the reflection at round 102, inside the rounds the patch answers (84 at its near edge, 104 at its far edge), and at distance 41 to 51 by the bulk's and the front's paces; the patch lies at 40 to 50. At the bump the clicks then run above the plain world's, by 73 per cent over rounds 281 to 300.
+- **What these stand on:** rounds read as order, and as a stand-in for a clock's own count, which the record does not hold (FACE2); on this world every clock is laid alike, so the stand-in is a board check. The echo off matter reads two records; in one record the wave's wake hides it, since the tied train clicks wherever the light passes.
+- **Matter's window** (light/lumps.txt): the tied train laid at rest on the patch holds at 1, 4, 16 and 64 over 120 rounds, and runs away at 256 (a count past the width at round 8) and at 500 (round 7). Which gear first leaves its bound is not traced here; holding heavy matter is the open road of the tied pair's own stop (STOP1).
+
+**The seeds, for many phenomena in the clicks:**
+- The start seed is the lay, and the end seed is the run's: by the law of the path one fixes the other. To put a thing in the end seed, lay its mirror in the start, or lay the end and run it back; light then converges onto its source.
+- What the start seed must lay, phenomenon by phenomenon:
+  - light: a bump of the wave at rest, which sends fronts both ways, and a ring for its echo around;
+  - an echo off matter: a patch laid unlike its surroundings (the held hand at 2 reflects);
+  - a clean echo in one record: light that clicks only at matter, so the tied train laid only where the matter is: OPEN, as the files lay every train at every Node-clock;
+  - matter: a tied lump small enough to hold (64 held over 120 rounds, 256 ran away);
+  - the third click and its choice: three clocks pairwise joined (the click world's three trains);
+  - a pair for Bell: one birth's two clicks at two places (pairwhole.py's pair);
+  - the redshift: a well and two clocks at two depths (the well world), read with FACE2;
+  - motion and the twins: a lump laid moving, its now unlike its before, read with FACE2.
+- One world that lays them all together is OPEN: it needs FACE2 in the record, and STOP1's stop for heavy matter.
+
+**The masses:**
+- **Not derivable now.** The mass reading is a clock's own beat in its own count between two light links (the document's decoder row 8 and its Koide paragraph). The light links can now be read (above), but the record holds no clock's own count (FACE2). The strengths that set every beat (hold, spring, tie, mesh) are chosen in the files, so a mass read now would be a chosen number's consequence. And heavy bound matter runs away above a size. The old engine's 1,836 was a caption rule over its lattice points, a look and no law (ALGEBRA.md line 324), not a derivation.
+- **The least masses in the generations, the owner's picture (OPEN):** the electron and the proton are the lightest of their designs, so their lines end in nothing lighter and they are seen alone, while a heavier generation's line ends in lighter ones. In the three clicks, the first click is the one seen alone, and the third is never seen alone. The proton's shape, three bound members pairwise joined, is a triangle's, where the split click and the third click live; whether its mass is a triangle's own beat is OPEN.

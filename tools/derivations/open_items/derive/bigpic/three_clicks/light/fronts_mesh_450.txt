@@ -1,0 +1,46 @@
+record mesh_450.jsonl: 450 rounds, ring of 180 Node-clocks, the bump at 20
+(a) the fronts: the first click across a Mesh at each ring distance, both ways
+   distance   0: first click at round 39 going one way, 39 the other
+   distance  10: first click at round 21 going one way, 21 the other
+   distance  20: first click at round 40 going one way, 40 the other
+   distance  30: first click at round 60 going one way, 60 the other
+   distance  40: first click at round 80 going one way, 80 the other
+   distance  50: first click at round 100 going one way, 100 the other
+   distance  60: first click at round 120 going one way, 120 the other
+   distance  70: first click at round 140 going one way, 140 the other
+   distance  80: first click at round 160 going one way, 160 the other
+   distance  90: first click at round - going one way, 180 the other
+   the front's pace from distance 10 to 80: 70 Meshes in 139 rounds, 503 per mille of a Mesh a round (the board's cone: 1,000)
+(b) the clicks at the bump's own Node-clocks (within 3 of it), summed size, every 25 rounds
+   rounds   1 to  25: 0
+   rounds  26 to  50: 241000000
+   rounds  51 to  75: 469000000
+   rounds  76 to 100: 486000000
+   rounds 101 to 125: 372500000
+   rounds 126 to 150: 647000000
+   rounds 151 to 175: 626000000
+   rounds 176 to 200: 707000000
+   rounds 201 to 225: 911500000
+   rounds 226 to 250: 1150500000
+   rounds 251 to 275: 1303000000
+   rounds 276 to 300: 1148500000
+   rounds 301 to 325: 1195000000
+   rounds 326 to 350: 2055000000
+   rounds 351 to 375: 2290000000
+   rounds 376 to 400: 1817000000
+   rounds 401 to 425: 5428750000
+   rounds 426 to 450: 134127250000
+(c) the far side of the ring (within 3 of the antipode): its first click, and the summed size every 25 rounds
+   first click there at round 174
+   rounds 151 to 175: 13500000
+   rounds 176 to 200: 1587500000
+   rounds 201 to 225: 58845000000
+   rounds 226 to 250: 142699000000
+   rounds 251 to 275: 13156000000
+   rounds 276 to 300: 4121000000
+   rounds 301 to 325: 4158000000
+   rounds 326 to 350: 3920500000
+   rounds 351 to 375: 3104000000
+   rounds 376 to 400: 2654500000
+   rounds 401 to 425: 1772000000
+   rounds 426 to 450: 2543000000

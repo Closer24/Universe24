@@ -1,0 +1,19 @@
+mesh_560.jsonl against heldpatch_300.jsonl, rounds 1 to 300: 156 Node-clocks where a click line differs
+   the first: Node-clock 60 (distance 40) at round 84
+   the first: Node-clock 61 (distance 41) at round 85
+   the first: Node-clock 62 (distance 42) at round 87
+   distance  52: the first difference at round 128
+   distance  50: the first difference at round 104
+   distance  45: the first difference at round 94
+   distance  40: the first difference at round 84
+   distance  38: the first difference at round 106
+   distance  35: the first difference at round 114
+   distance  30: the first difference at round 126
+   distance  25: the first difference at round 138
+   distance  20: the first difference at round 150
+   distance  15: the first difference at round 164
+   distance  10: the first difference at round 176
+   distance   5: the first difference at round 193
+   distance   3: the first difference at round 198
+   distance   0: the first difference at round 204
+Einstein's rule from the bump: the answer reaches it at round 204, so the answer came from distance 204 / 4, about 51; the patch lies at distances 40 to 50
