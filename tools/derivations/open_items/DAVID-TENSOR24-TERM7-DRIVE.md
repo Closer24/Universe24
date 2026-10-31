@@ -1,21 +1,23 @@
 # Term 7, the drive: one carry of the source at the drive's teeth, forced by the books, a finer dial for the source
 
-David, 2026-10-31 (the third text, 00:2x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
-close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's term 7
-("the drive: one wheel carries the coupling's push for every row; q_d, r_d+ = carry(J, T_d, r_d); none of its own: the
-clicks do not come from the drive; Rule3's carry at T_d; BUILT at T_d = 1; DERIVED (G3), to confirm under the owner's
-rule of 13:0x (section 6)") and for the night's side list, NOT_CLOSED 14: at T_d = 1 the drive is the identity, q_d = J
-and r_d = 0 always, so term 7's DERIVED rested on a no-op (g3_math item 13), and what closes it is a probe with r_d
-moving. It reads the act on node-live f72067cdf: engine/step.py's drive, kick, act and mirror, the drive's tooth
-State.rd within [0, T_d), the drive's teeth Gearing.drive and the kick's Gearing.kick per row. The probe is
-derive/david_open/node/term7_drive.py (about 90 s), its output beside it, whole numbers alone, every division Rule3's
-carry. The first text (toys-5 3175fdeca) went to a new hostile pair, who refused it: the mathematician on three items
-and twelve minors, the physicist on two and eleven; their items and Big Pic's word (6535643629) are folded in section 8.
-The second text (toys-5 4cbece813) went back to them: the physicist PASSED it with nine minors, and the mathematician
-refused it on one clause, the measure of 2.7's crossing in the back tick, with eleven minors. Big Pic's word
-(6536221174 item 4: the fold stands; the clause is the exact form of the condition, and the drive still adds none) is
-folded here with their items (section 7); section 9 says how the text checked itself. The text has no click-world
-reading (section 4).
+David, 2026-10-31 (the third text, 00:2x UTC, its passing reader's minors folded at 00:5x), on the owner's word of 11:1x
+UTC (derive what the Node-clock needs to close; everything to stand with a hostile mathematician and a hostile
+physicist), for the architecture document's term 7 ("the drive: one wheel carries the coupling's push for every row;
+q_d, r_d+ = carry(J, T_d, r_d); none of its own: the clicks do not come from the drive; Rule3's carry at T_d; BUILT at
+T_d = 1; DERIVED (G3), to confirm under the owner's rule of 13:0x (section 6)") and for the night's side list,
+NOT_CLOSED 14: at T_d = 1 the drive is the identity, q_d = J and r_d = 0 always, so term 7's DERIVED rested on a no-op
+(g3_math item 13), and what closes it is a probe with r_d moving. It reads the act on node-live f72067cdf:
+engine/step.py's drive, kick, act and mirror, the drive's tooth State.rd within [0, T_d), the drive's teeth
+Gearing.drive and the kick's Gearing.kick per row. The probe is derive/david_open/node/term7_drive.py (about 90 s), its
+output beside it, whole numbers alone, every division Rule3's carry. The first text (toys-5 3175fdeca) went to a new
+hostile pair, who refused it: the mathematician on three items and twelve minors, the physicist on two and eleven; their
+items and Big Pic's word (6535643629) are folded in section 8. The second text (toys-5 4cbece813) went back to them: the
+physicist PASSED it with nine minors, and the mathematician refused it on one clause, the measure of 2.7's crossing in
+the back tick, with eleven minors. Big Pic's word (6536221174 item 4: the fold stands; the clause is the exact form of
+the condition, and the drive still adds none) is folded here with their items (section 7); section 9 says how the text
+checked itself. The text has no click-world reading (section 4). The third text (toys-5 003eec498) went back to the
+mathematician, who PASSED it with four minors, folded here (section 7); both readers have now passed, and a new pair
+reads at the end.
 
 **The finding in one line:** the drive is Rule3's carry of the row's source at the drive's teeth, and nothing else could
 be: the books and Rule3's range for the tooth force it.
@@ -270,9 +272,10 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   returning at T_d 7 against 14 of 24 at T_d 1, the missed share about T_d times smaller. At the probe's factor 11, 54
   runs (3 drives, 6 lays, 3 lengths, not the 24 lays) all cross, and none returns. Probe (g)'s two failures cross in
   every forward tick, 400 of 400 at T_d (7, 7) and (1, 1) (the physicist's p7 (b)), and at T_d (7, 7) in 399 of 400
-  back ticks (the mathematician); the missed share there has median 0.89, mean 1.65 and largest 19.8 turns of the rest
-  dial at T_d 7, and 6.58, 11.78 and 131.6 at T_d 1 (the physicist's p7 (b); the second text's "about 18 turns" was
-  the mathematician's largest at T_d 7, given for both). The physicist's run returns at T_d 10^6.
+  back ticks (the mathematician); the missed share there, read in hundredths of a turn of the rest dial (100 times the
+  share carried by 4 W, the quotient kept and its remainder dropped), has median 89, mean 165 and largest 1,978 at
+  T_d 7, and 658, 1,178 and 13,164 at T_d 1 (the physicist's p7 (b); the second text's "about 18 turns" was the
+  mathematician's largest at T_d 7, given for both). The physicist's run returns at T_d 10^6.
 - **So** both conditions are the act's own: the mirror theorem's hypothesis (d), B2b's price (the 00 push reads only
   rows on the force's path, which J5 does not push; NOT_CLOSED 30), and J's parity under the mirror, which the act's own
   run back needs. The drive adds none: B6 may lay T_d above 1 on a row J5 reads, or on a row it pushes, so long as no
@@ -359,8 +362,9 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   the flip, the sign and the negation identities give the mirror by parity and the 24's twisted action; at standing
   teeth the act at T_d with the kick at 1 is the act at T_d W and T_d g with the drive at 1, count for count, for a
   source that reads no pull, the edge tooth T_d s + 4 r_d + c with c within [-T_d rho0, 3 - T_d rho0], and at s T_k
-  above 1, where s T_k divides W and T_k the grips, the act reduces to s = T_k = 1 exactly; inside the two passes the
-  run back needs the act's own hypotheses alone. **Home:** engine/step.py (drive, kick, act, mirror).
+  above 1, for a source that reads no pull, where s T_k divides W and T_k the grips and the edge tooth's offset lies in
+  its window, the act reduces to s = T_k = 1 exactly; inside the two passes the run back needs the act's own
+  hypotheses alone. **Home:** engine/step.py (drive, kick, act, mirror).
   **Status:** DERIVED, board reading only (no click-world reading), with the tooth moving on the act
   (node/term7_drive.py); the value of T_d on a row is its strength's term's.
 
@@ -370,7 +374,8 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   rows; the coupling family's strengths, G3).
 - **A clicking world at unequal drives:** none is laid, so the canonical reading of the key (section 4) is read on
   the books, not on a world's clicks.
-- **The finer dial at s T_k above 1 where s T_k does not divide W, or T_k the grips:** neither derived nor measured;
+- **The finer dial at s T_k above 1 where s T_k does not divide W, or T_k the grips:** the reduction parts there at
+  round 1 (term7_tk_break: the grips 301 at T_k 3, the teeth 6,004 at s T_k 6), and no other equivalence is derived;
   where they divide, 2.5's reduction derives it.
 - **A moving clock.** At teeth that move with the 00 slot the edge's dial changes between the two edges, and the
   residue of section 2.5 is kept modulo 2 only, so the finer dial's count-for-count reading holds at standing teeth;
@@ -380,6 +385,17 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   crossing necessary for a failure, not sufficient); B2b keeps no row both read and pushed.
 
 ## 7. The second text's readers, folded (the third text)
+
+**The third text's reader: the mathematician PASSED it,** his B1 closed; he tested the odd read row's branch, which
+no earlier run covered (his t7_claim2_odd: by the clause, the run back returns exactly when nothing crosses in 11,664
+of 11,664 site trials, the 800 failures among them; against the wrong mirror the rule holds in 1,557 of 5,832, so the
+test discriminates), and re-derived the reduction's window (his t7_tk2: two coupled rows with their own s, T_k and T_d,
+Meshes on, 8 of 8 runs count for count inside the window and 8 of 8 parting one step beyond, 4 of 4 alike with J5).
+His four minors, folded: p1, the probe's docstring for (g) still carried the refuted "fails at every T_d", and (f2)'s
+omitted its Meshes and offsets (term7_drive.py, mended; 9); p2, section 5's reduction with its two hypotheses, a
+source that reads no pull and the offset in its window (5); p3, the missed share's sizes as quotients, in hundredths
+of a turn (2.7); p4, section 6's "neither derived nor measured": the reduction's parting is measured, another
+equivalence is open (6).
 
 **Big Pic's word** (6536221174, item 4): the fold stands. The mathematician's clause is the exact form of the
 condition: the back tick's read is compared with the mirror of the forward round's momentum (10,206 of 10,206), and
@@ -451,8 +467,9 @@ board readings; section 5's status says so.
 
 ## 9. How this text checked itself (the owner's word of 16:2x UTC, 6527238774)
 
-- **The third text's probe:** term7_drive.py with (e)'s label and docstring mended (it runs T_k 1 alone), rerun in 83 s
-  on node-live f72067cdf, its output byte for byte against the second text's but for that label's line.
+- **The third text's probe:** term7_drive.py with (e)'s label and docstring mended (it runs T_k 1 alone), and its
+  docstring's (f2) and (g) mended on the mathematician's p1 (the output unchanged), rerun in 83 s on node-live
+  f72067cdf, its output byte for byte against the second text's but for that label's line.
 - **The readers' scripts, rerun by me byte for byte on f72067cdf:** the mathematician's t7_claim2_one, t7_claim2,
   t7_claim2_site and t7_tk; the physicist's p7_second.
 - **Re-derived by hand:** Claim 2's measure, from untick = mirror . tick . mirror: an exact back tick must end at the

@@ -16,12 +16,15 @@ K = s T_k q_d; the push s F + K; the momentum P = 2 D_in (a - b) + tooth, which 
     within one tooth, the remainder kept;
 (f) the dial in the beat: Mesh-less Node-clocks, each its own oscillator, the drive at T_d 7 against the same equation
     carried by teeth seven times larger at T_d 1 and by the linear recurrence at the scale 10^30, between the springs
-    on each side; (f2) the two acts count for count, the teeth act's edge tooth T_d s + 4 r_d, with the edge tooth laid
-    a multiple of 4 (the act keeps its residue modulo 4 at standing teeth, every push entering the momentum four times)
-    and, for the no, at 3 modulo 4, where the finer dial splits a count earlier at the dial's top;
+    on each side; (f2) the two acts count for count, the teeth act's edge tooth T_d s + 4 r_d + c, with the edge tooth
+    laid a multiple of 4 at c = 0 (the act keeps its residue modulo 4 at standing teeth, every push entering the
+    momentum four times), Mesh-less and with Meshes (the grip against T_d times it), and at 3 modulo 4, where c = 0
+    splits a count earlier at the dial's top, c = -21 and -18 (the window's ends) keep every count and c = -22 parts;
 (g) the drive inside the act's two passes: the metric's push J5 (the books' form) reads a row's momenta after a first
-    drive on J1 alone; the run back holds at every T_d when J5 reads no row it pushes (the mirror theorem's hypothesis
-    (d)), and fails at every T_d, T_d 1 included, when it does: the condition is the act's, not the drive's.
+    drive on J1 alone; the run back holds at every T_d when J5 reads the momenta of no row it pushes (the mirror
+    theorem's hypothesis (d)); when J5 reads the row it pushes it can fail only in a tick where the momentum J5 reads
+    lies in another turn than an exact run's, at T_d 1 as at any other, and here it fails at T_d 7 and at T_d 1: the
+    condition is the act's, not the drive's.
 
 Usage: python3 -I term7_drive.py <src of node-live at f72067cdf> (about 90 s)
 """
