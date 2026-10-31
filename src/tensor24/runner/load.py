@@ -43,6 +43,11 @@ class Trains:
     held: Z  # 1 where the character is the held hand's, the one-dimensional kinds together at part 1: its own spring CHOSEN
     tied: Z  # 1 where the character is kept under the sign kind's twist and is not the held hand's: tied to the held hand
     gripped: Z  # 1 where the character is not the held hand's: its rows hold their Meshes' grips; the held hand holds none
+    # 1 where the train's kinds are half-speed (-I on the full turn, files.Spun): no square, not the held hand and untied
+    # (NOT_CLOSED 8), gripped by the Mesh, its rows on the force's path (T_d = 1), the metric's push sourced by its
+    # momenta as by every gripped clock that is no square (the tooth's flip sends -m - 1 to -sigma, so a negated gear
+    # pushes alike); its rows its train's gears, the cosets of C6 or the classes +-h, and no half-speed table is built
+    half: Z
     start: Z
     count: Z
     kind: Z
@@ -97,11 +102,14 @@ def tables(held: Z, inverse: Z, weight: Z) -> Z:
 
 def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z, Z, Z, Z, Z]) -> Trains:
     """Each train's rows from its kinds and part, and its character, its kinds' traces summed times its part, against the characters the files read off the kinds, 1 where the gap is 0 on every turn by Rule3's quotient of 1 by gap^2 + 1 and lit of the gap where it is not: the four-vector's square's (square: its rows that square's basis, its first 00; sourcing the rest), the held hand's, the one-dimensional kinds together (held, A1 + A2 at part 1; gripped the rest), and its own under the twist, the sign kind's character (tied where kept and not the held hand's: a train of the kinds K and the twist's K, the board's wave and the square untied)."""
-    traces, _, squared, hand, twist, _ = reads
+    traces, _, squared, hand, twist, lifts = reads
     member = np.eye(len(part), dtype=object)[of]  # each kind's train, one of each row
     dim = np.array(dims, dtype=object)[kind]
     size, count = part * (dim @ member), member.sum(axis=0)
-    character = part[:, None] * (member.T @ traces[kind])
+    # a half-speed kind has no character on the 24, its own the 48's: its place among the 24's kinds wrapped, at the
+    # factor 0 its whole speed gives it
+    _, tabled = carry(kind, len(traces), 0)
+    character = part[:, None] * (member.T @ (lifts.whole[kind][:, None] * traces[tabled]))
     gap = character - squared
     away = (gap * gap).sum(axis=-1)
     square, _ = carry(1, away + 1, 0)
@@ -110,6 +118,8 @@ def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z,
     held, _ = carry(1, apart + 1, 0)
     twisted = character * twist[None, :] - character
     kept, _ = carry(1, (twisted * twisted).sum(axis=-1) + 1, 0)
+    whole = lit(member.T @ lifts.whole[kind])  # 1 where the train holds a whole-speed kind
+    half = lit(member.T @ lifts.half[kind])  # 1 where it holds a half-speed kind
     return Trains(
         np.cumsum(size) - size,
         size,
@@ -117,8 +127,9 @@ def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z,
         square,
         lit(away),
         held,
-        kept * lit(apart),
+        kept * lit(apart) * whole,
         lit(apart),
+        half,
         np.cumsum(count) - count,
         count,
         kind,

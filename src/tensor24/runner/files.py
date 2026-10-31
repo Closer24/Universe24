@@ -281,6 +281,7 @@ class Spun(NamedTuple):
 
     characters: Any  # (kinds, senses, classes, 2)
     half: Any  # (kinds,): 1 on E1/2, E5/2 and G3/2, 0 on the five
+    whole: Any  # (kinds,): 1 where a kind is kept on the full turn, the five
     dims: tuple[int, ...]  # each half-speed kind's character at the lift 1, 2 Re g senses there alone
     trains: Any  # (trains, senses, classes): the 8-gear train's character and the 24-gear's
     gears: tuple[int, ...]  # the two trains' gears
@@ -292,6 +293,7 @@ def spun(lifted: Any) -> Spun:
     characters = np.concatenate((np.stack((whole, 0 * whole), axis=-1), np.stack(lifted.halves)))
     plus, minus = np.moveaxis(characters, 1, 0)  # every class's word at the + sense and at the -
     half = np.array([int((m == -p).all()) for p, m in zip(plus, minus, strict=True)], dtype=object)
+    whole = np.array([int((m == p).all()) for p, m in zip(plus, minus, strict=True)], dtype=object)
     spin = lifted.halves.e1_2[..., 0]
     one = np.unravel_index(np.argmax(spin), spin.shape)  # the lift 1
     dims = tuple(int(c[one][0]) for c, h in zip(characters, half, strict=True) if h)
@@ -299,6 +301,7 @@ def spun(lifted: Any) -> Spun:
     return Spun(
         characters,
         half,
+        whole,
         dims,
         np.stack([np.einsum("...ii->...", t) for t in trains]),
         tuple(t.shape[-1] for t in trains),

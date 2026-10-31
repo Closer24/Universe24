@@ -6,16 +6,25 @@ import sys
 from pathlib import Path
 
 from tensor24 import main
-from tensor24.runner.files import NAMES, held_departures, star, vocabulary
+from tensor24.runner import load as loading
+from tensor24.runner.files import NAMES, entries, held_departures, star, vocabulary
 
 ROOT = Path(__file__).resolve().parents[1]
 PATHS = [ROOT / "examples" / "tensor24" / f"{name}.json" for name in NAMES]
-MADE = main.made(star(len(json.loads(PATHS[1].read_text(encoding="utf-8"))["shape"])))
+AXES = len(json.loads(PATHS[1].read_text(encoding="utf-8"))["shape"])  # the piece's board
+MADE = main.made(star(AXES))
 COSETS, CLASSES = (
     (["G3/2"], 2),
     (["E1/2", "E5/2", "G3/2", "G3/2"], 2),
 )  # the two half-speed trains: kinds, part
 UNIT = "no family couples a half-speed train in this build"
+CLICKS = [  # the click world's clocks: a scalar clock at part 2, the square, the held hand and two tied hands
+    {"name": "scalar", "kinds": ["A1"], "part": 2},
+    {"name": "metric", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1},
+    {"name": "held", "kinds": ["A1", "A2"], "part": 1},
+    {"name": "giver", "kinds": ["T1", "T2"], "part": 1},
+    {"name": "taker", "kinds": ["T1", "T2"], "part": 1},
+]
 
 
 def held(kinds, part):
@@ -64,3 +73,33 @@ def test_the_files_admit_the_two_half_speed_trains_alone_and_refuse_both_in_a_fi
     tool = [sys.executable, "-I", str(ROOT / "tools" / "tensor24_files.py"), *map(str, paths)]
     done = subprocess.run(tool, capture_output=True, text=True)
     assert done.returncode == 1 and UNIT in done.stdout, done.stdout + done.stderr
+
+
+def test_a_half_speed_train_is_no_square_nor_held_untied_gripped_and_driven_on_the_force_path():
+    """Yes: each half-speed train beside the click world's clocks no square, not the held hand, untied, gripped, its rows its
+    gears, its drive's teeth 1 (the force's path); the click world's clocks read as they were.
+    No: the twist keeps both trains' characters, so they are untied by their speed; a mix wrapping onto the held hand's is no hand."""
+    labels, dims, reads = vocabulary(MADE[0], *MADE[-2:])
+    lifts, spins = reads[-1], [{"name": "spin", "kinds": k, "part": p} for k, p in (COSETS, CLASSES)]
+    trains = loading.trains_of(*entries([*CLICKS, *spins], labels), dims, reads)
+    flags = [getattr(trains, flag).tolist() for flag in ("square", "held", "tied", "gripped", "half")]
+    assert flags == [
+        [0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 1, 0, 0],
+        [1, 1, 0, 1, 1, 1, 1],
+        [0, 0, 0, 0, 0, 1, 1],
+    ]
+    assert trains.size[-len(spins) :].tolist() == list(lifts.gears)  # each one's rows its gears
+    universe = json.loads(PATHS[0].read_text(encoding="utf-8"))
+    (*_, drive, _), *_ = loading.geared(universe, trains, star(AXES))
+    spun = range(trains.first[-len(spins)], trains.size.sum())
+    assert set(drive[list(spun), 0].tolist()) == {1}  # T_d = 1 on the half-speed rows
+    a2 = lifts.characters[labels.index("A2"), ..., :1]  # the sign kind's character on the 48
+    for kinds, part in (COSETS, CLASSES):
+        character = part * lifts.characters[[labels.index(k) for k in kinds]].sum(axis=0)
+        assert (character * a2 == character).all()  # kept under the twist
+    (hand,) = loading.trains_of(
+        *entries([{"name": "x", "kinds": ["E1/2", "E5/2"], "part": 1}], labels), dims, reads
+    ).held
+    assert hand == 0  # its kinds wrap onto A1 and A2, at the factor 0
