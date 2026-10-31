@@ -281,7 +281,7 @@ is listed in sections 6 and 12.
   (5^5, 0), the exchange (p5) at the root plus 400: lays aimed at a root (line 102; the end physicist's m10). The books,
   the oddness and the run back hold on every window, on lay (B) too, and need no such lay; the energy readings of
   section 4 on those lays rest on that aim, but for the free tied train's, which split4 (d) reads again at n = 5^10 + 1,
-  off every square, the hand still at (5^5, 0), one count below its rest by construction: 0 under the split and -248
+  off every square, the hand still at (5^5, 0), |k|^2 one below n by construction: 0 under the split and -248
   permille under the middle form, as at the root, so the reading does not need the exact aim (the eighth text, on the
   end mathematician's free_offroot). On 575973a20's pair world frame 6's held hand was laid (1, 0), turning a quarter a
   round; frame 6 had no rest there (its own frame: |k|^2 laid by the seed, not picked by a law, with no least size, k =
@@ -424,11 +424,10 @@ is listed in sections 6 and 12.
   mathematician's split4_no_world.py), so in the exchange that returns, on its lay aimed at the root plus 400 and
   resting on that aim (2.4), the split books the held train's transfer within 29 permille of the background form's at
   every round; for the free tied train over a still held hand the held train books 0 on the mean under the split and
-  -248 permille under the middle form at n = 5^10 + 1, off every square, the hand one count below its rest (-249 on the
-  lay at the root), board readings; the middle form refused as the road on that reading alone, and kept, with the
-  background form, as a lawful form; where the hat is laid, n is its constant, a law. What 575973a20's pair world read
-  (the room's lines, the background form as what the act booked in the room, n as the seed's |k|^2) is withdrawn at
-  36fbfbbde (section 12).
+  -248 permille under the middle form at n = 5^10 + 1, off every square, |k|^2 one below n (-249 on the lay at the
+  root), board readings; the middle form refused as the road on that reading alone, and kept, with the background form,
+  as a lawful form; where the hat is laid, n is its constant, a law. What 575973a20's pair world read (the room's lines,
+  the background form as what the act booked in the room, n as the seed's |k|^2) is withdrawn at 36fbfbbde (section 12).
 - **The hat's road:** the split at the rest, on Big Pic's word (6536112029 item 1), standing as the hat's road
   (6536901666 item 5); its probes run on the board. Its weights: the excursion as one leg, 2/3 and 1/3, a convention for
   the interaction; its scale kappa 6. On the board it is a rule for the books, a clock fact; what it means is owed in
@@ -686,7 +685,7 @@ split4's (d) and lay-(B) (e) reproduce byte for byte on 36fbfbbde with the world
 split4_no_world.py), so in the exchange that returns, on its lay aimed at the root plus 400 and resting on that aim
 (2.4), the split books the held train's transfer within 29 permille of the background form's at every round; for the
 free tied train over a still held hand the held train books 0 on the mean under the split and -248 permille under the
-middle form at n = 5^10 + 1, off every square, the hand one count below its rest (-249 on the lay at the root), board
+middle form at n = 5^10 + 1, off every square, |k|^2 one below n (-249 on the lay at the root), board
 readings; the middle form refused as the road on that reading alone, and kept, with the background form, as a lawful
 form; where the hat is laid, n is its constant, a law. On the re-laid frame 6, n can no longer be read as a held seed's
 |k|^2, since |k|^2 moves. A law is laid there: the held rows' chosen own spring and the tie are both least at k = 0, so
@@ -818,7 +817,8 @@ passing does not read (the end mathematician's m4).
   8,073 of 8,100 places over 300 rounds, the end physicist's act_passing_check; on 575973a20's B4 lay, pair_world's 146
   of 400 rounds, from round 57). Under the split the passing sums to 0, three trains meet, and one tooth per train
   leaves the clicks open. Pair teeth close the split's clicks, not the act's: the teeth absorb at most their range of
-  the running residual, and the act's exceeds it, its books open at 123,066 of tensor24-click's 123,795 click places.
+  the running residual, and the act's exceeds it: on tensor24-click its running residual passes the teeth's whole range,
+  254,057,140, from round 2 (the end mathematician's run on the ninth text).
 - Pair teeth close the clicks for any passing built of pair flows, the background form's included, so the teeth do not
     pick the split; its choice rests on its shares: against the middle form on section 4's readings, against the
   background form on Big Pic's road and 2.3's premise, owed to the click world (sections 2 and 4; the end
@@ -902,9 +902,9 @@ The seventh text (toys-5 057529f60) went to the same end pair. Both reran split_
 at every place on the pair, mesh and click worlds, each run twice byte for byte and the run back exact; the meetings NOT
 SHOWN, each edge passing many quanta a round; NC29b PASSED by both its readers, and writer B builds it on node-edge. His
 numbers are node-live 1919dd64c's, where writer B's 5ecb100f5 re-lays both worlds with the held hand at rest, and there
-this page's split_d.py gives them to the place (the end physicist's rerun: 4,442 click places on tensor24-mesh, 4,212 on
-tensor24-click over 200 rounds, the held train clicking at 4,050); this page's saved outputs are 36fbfbbde's. On both
-heads the edges close the books at every place.
+this page's split_d.py gives them to the place (the end physicist's rerun: 4,442 click places on tensor24-mesh over its
+125 rounds, 4,212 on tensor24-click over 200 rounds, the held train clicking at 4,050); this page's saved outputs are
+36fbfbbde's. On both heads the edges close the books at every place.
 
 **The end mathematician** (NOT PASSED, two blocking items, with minors; his sixth-text items closed):
 1. B1, section 14's "the charge moves wherever the turn leaves the exact quarter turn", false on tensor24-click (his
@@ -971,3 +971,16 @@ its new line equal to the end mathematician's free_offroot; the end physicist al
 **How the ninth text checked itself:** split4.py's label reworded and rerun on 575973a20's src, its output moved in
 that one line's words, every number unchanged; split_d.py unchanged; section 12's and section 6's standing sentences
 read side by side, word for word but their cross-references; the sigma identity checked by hand.
+
+**The end mathematician PASSED the ninth text** (toys-5 3458f67c1), split4 rerun byte for byte on 575973a20's src and
+split_d.py on node-live 1919dd64c; the end physicist had passed the eighth. His notes, none blocking, folded here:
+- "|k|^2 one below n" for "the hand one count below its rest", in 2.4, sections 6 and 12 and split4's label (his n1),
+  split4.txt moved in that label's words alone;
+- the end physicist's 4,442 named as tensor24-mesh's over its own 125 rounds (his n2; 15);
+- the teeth's range set against the act's running residual, which passes it, 254,057,140, from round 2 on
+  tensor24-click, in place of the open click places, which the split's own teeth open too (his n3; 14).
+
+**The Boss's ruling at a three-clock place** (his 6538928924 item 1, on the owner's structure and Big Pic's flag): where
+two clocks alone meet, the passing is the first click, with no draw and no turn, and term 11 reads no choice there;
+where three clocks meet, the passing splits over the triangle and the triangle's turn lands it, the third click
+(THIRD6). The edge teeth of section 14 close each edge's books at such a place too; what lands there is THIRD6's.
