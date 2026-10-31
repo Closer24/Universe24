@@ -27,10 +27,10 @@ def layout(universe: dict[str, Any], shape: list[int], loaded: load.Loaded) -> s
 
 def typed(parts: tuple[Any, ...]) -> state.Layout:
     """The load's eleven parts in the engine's records."""
-    nb, spokes, meshes, grip, gearing, potential, clock, stretch, click, push, mesh = parts
+    nb, spokes, meshes, grip, gearing, (narrow, wide), clock, stretch, click, push, mesh = parts
     records = (
         state.Gearing(*gearing),
-        contract.pushes(*potential),
+        contract.joined(contract.pushes(*narrow), contract.pushes(*wide)),
         state.Plan(*clock),
         state.Read(*stretch),
         state.Click(*click),

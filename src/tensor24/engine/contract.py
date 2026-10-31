@@ -22,6 +22,18 @@ def pushes(factor: Z, legs: tuple[Z, ...]) -> Plan:
     )
 
 
+def joined(narrow: Plan, wide: Plan) -> Plan:
+    """Two plans as one, the narrow's terms first, each reading the unit for the legs it reads fewer of than the wide's (J's two blocks by their legs' count, so no push on the unit is laid: MIN2's item 2)."""
+    legs, factor, target = narrow
+    more, also, onto = wide
+    lacking = np.broadcast_to(0 * legs[:1] - 1, (more.shape[0] - legs.shape[0], legs.shape[1]))
+    return Plan(
+        np.concatenate((np.concatenate((legs, lacking)), more), axis=1),
+        np.concatenate((factor, also)),
+        np.concatenate((target, onto)),
+    )
+
+
 def contract(plan: Plan, readings: Z, gears: Z) -> Z:
     """Every gear's source J in the gears' shape, Python integers on any gears: a gather of each term's legs, their product with the factor first (so a term at the factor 0 multiplies no count), a scattered sum; a spring reads one, a three-leg vertex two, a k-leg monomial's term k - 1."""
     legs, factor, target = plan

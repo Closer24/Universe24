@@ -53,7 +53,11 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     _, row, _, *counts = wave = (0, rows[0] - 1, SITE, WIDE, WIDE + 1, WIDE + 2)
     held, found = loaded(TRAINS, laid := [wave, (len(rows) - 1, rows[-1] - 1, SITE, WIDE + 1, WIDE, 0)])
     a, b, r, rd, k = held.state
-    assert found == [] and all(x.dtype == object for x in held.state) and not held.potential[0].any()
+    assert (
+        found == []
+        and all(x.dtype == object for x in held.state)
+        and not any(f.any() for f, _ in held.potential)
+    )
     sides = (1 + len(frame.spokes(len(SHAPE)))) * len(TRAINS) * len(TRAINS)  # every side at every reach
     assert all(x.shape == (sum(rows), SITES) for x in (a, b, r, rd)) and k.shape == (sides, SITES)
     assert (a[row, SITE], b[row, SITE], r[row, SITE]) == tuple(counts)  # the wave's last row, as laid
@@ -73,7 +77,7 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     held, _ = loaded([*TRAINS, METRIC], chosen={**CHOSEN, "notch": 3})
     (*_, even), zero = loading.laid_out(universe, list(SHAPE), held)[4], int(held.trains.first[-1])
     assert not even[odd := range(zero + 1, zero + 4)].any() and set(np.delete(even, odd).tolist()) == {1}
-    factor, (one, two, *_) = held.potential
+    (factor, (one, two)), _ = held.potential  # the notch, in the two-leg block
     named = set(one[factor != 0].tolist()) | set(two[factor != 0].tolist())  # the square's legs alone
     assert sorted(set(factor.tolist())) == [0, 3, 6] and named <= set(range(zero, zero + 10))
     lit = [
@@ -103,24 +107,39 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     assert loaded(TRAINS)[1] == [f"{named} (no room)"]
 
 
+def monomials(held):
+    """J's potential's monomials, block by block (the two-leg block, then the four-leg), each one's factor and its legs."""
+    return [
+        (f, tuple(legs))
+        for fs, block in held.potential
+        for f, legs in zip(fs, block.T.tolist(), strict=True)
+    ]
+
+
 def shared(held, senses):
-    """Term 11's weights by loops, the edges' naive model: per term of J's plan, leg by leg as contract.pushes lays them, its weight onto every train of its monomial, kappa (L - l) / L where the monomial is live with value legs in two trains or more, L its legs and l its own train's (a position one leg, a held train's positions one leg together), kappa the product of senses and of every such L, each once; and kappa / senses, the key's scale."""
-    factor, legs = held.potential
-    trains = [held.trains[n] for n in range(len(held.trains))]
+    """Term 11's weights by loops, the edges' naive model: per term of J's plan, block by block and leg by leg as contract.pushes lays them, its weight onto every train of its monomial, kappa (L - l) / L where the monomial is live with value legs in two trains or more, L its legs and l its own train's (a position one leg, a held train's positions one leg together), kappa the product of senses and of every such L, each once; and kappa / senses, the key's scale."""
+    trains, listed = [held.trains[n] for n in range(len(held.trains))], monomials(held)
     of = {r: n for n, t in enumerate(trains) for r in range(t.first, t.first + t.rows())}
-    counted = [{} for _ in factor]
-    for m, leg in itertools.product(range(len(factor)), legs):
-        if leg[m] >= 0:
-            n = of[int(leg[m])]
-            counted[m][n] = 1 if held.trains.held[n] else counted[m].get(n, 0) + 1
-    edged = [m for m in range(len(factor)) if factor[m] and len(counted[m]) > 1]
+    sizes = [
+        0,
+        *itertools.accumulate(len(fs) for fs, _ in held.potential),
+    ]  # each block's first monomial
+    terms = [
+        (at + m, j)
+        for (fs, block), at in zip(held.potential, sizes, strict=False)
+        for j in range(len(block))
+        for m in range(len(fs))
+    ]
+    counted = [{} for _ in listed]
+    for (_, legs), count in zip(listed, counted, strict=True):
+        for n in (of[leg] for leg in legs):
+            count[n] = 1 if held.trains.held[n] else count.get(n, 0) + 1
+    edged = {m for m, (f, _) in enumerate(listed) if f and len(counted[m]) > 1}
     kappa = int(np.prod(sorted({senses, *(sum(counted[m].values()) for m in edged)})))
-    weight = np.zeros((len(legs) * len(factor), len(trains)), dtype=object)
-    for (j, leg), m in itertools.product(enumerate(legs), edged):
-        if leg[m] >= 0:
-            total, own = sum(counted[m].values()), counted[m][of[int(leg[m])]]
-            for u in counted[m]:
-                weight[j * len(factor) + m, u] = kappa * (total - own) // total
+    weight = np.zeros((len(terms), len(trains)), dtype=object)
+    for i, (m, j) in enumerate(terms):
+        total, own = sum(counted[m].values()), counted[m][of[listed[m][1][j]]]
+        weight[i, list(counted[m])] = kappa * (total - own) // total if m in edged else 0
     return weight, kappa // senses
 
 
@@ -133,17 +152,16 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_fam
     held, found = loaded(FIVE, chosen=chosen)
     wave, _, hand, giver, taker = (held.trains[n] for n in range(len(FIVE)))
     span = lambda t: range(t.first, t.first + t.rows())  # noqa: E731
-    factor, legs = held.potential
-    kept = [x[factor != 0].tolist() for x in (factor, *legs)]  # the monomials with a factor
-    v = dict(zip(zip(*kept[1:], strict=True), kept[0], strict=True))
+    v = {legs: f for f, legs in monomials(held) if f}  # the monomials with a factor, by their legs
     laid = main.layout({"integers": INTEGERS, "trains": FIVE, "chosen": chosen}, list(SHAPE), held)
     spring, f = chosen["spring"], int(laid.gearing.rest[0, 0]) // INTEGERS["full_rate"]
     flags = (held.trains.held.tolist(), held.trains.tied.tolist(), held.trains.gripped.tolist())
     assert flags == ([0, 0, 1, 0, 0], [0, 0, 0, 1, 1], [1, 1, 0, 1, 1])  # held, tied, gripped
-    assert found == [] and len(v) == len(kept[0]) and all(v[k, k, -1, -1] == spring for k in span(hand))
+    assert found == [] and len(v) == len([f for f, _ in monomials(held) if f])
+    assert all(v[k, k] == spring for k in span(hand))  # the held rows' own spring
     assert all(v[x, x, k, k] == f for x in span(giver) for k in span(hand))  # the tie, hold x f x 1
     both = list(zip(span(giver), span(taker), strict=True))  # the hands' rows, component by component
-    assert all(v[x, y, -1, -1] == 1 and (y, x, -1, -1) not in v for x, y in both)  # the hands' tie, once
+    assert all(v[x, y] == 1 and (y, x) not in v for x, y in both)  # the hands' tie, once
     assert not any(x != y and {x, y} <= set(span(giver)) for x, y, *_ in v)  # the tie off the diagonal
     assert not any(set(leg) & set(span(wave)) for leg in v)  # the wave untied
     assert set(laid.grip[list(span(hand))].ravel().tolist()) == {0}  # the held hand holds no Mesh
@@ -151,8 +169,8 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_fam
     wanted, scale = shared(held, senses := len(frame.spokes(len(SHAPE))) // len(SHAPE))
     of = {r: n for n, t in enumerate(held.trains[n] for n in range(len(FIVE))) for r in span(t)}
     legged = [
-        of.get(int(r), 0) for r in np.stack(legs).reshape(-1)
-    ]  # each term's leg's train, the unit's 0
+        of[int(r)] for _, block in held.potential for r in block.reshape(-1)
+    ]  # each term's leg's train
     assert (
         frame.same([weight], [wanted])
         and train.tolist() == legged
@@ -165,8 +183,8 @@ def test_the_plans_are_laid_from_the_kinds_tables_the_edges_and_the_coupling_fam
     assert edges == {(x, y) for x in tri for y in tri if x != y}  # the triangle, each way
     assert (np.delete(laid.grip, list(span(hand)), axis=0) == laid.grip[0, 0]).all()
     swapped, _ = loaded([*FIVE[:3], *reversed(FIVE[3:])], chosen=chosen)  # the two tied hands swapped
-    pot, same = (swapped.potential[0], *swapped.potential[1]), (factor, *legs)
-    assert all(np.array_equal(x, y) for x, y in zip(pot, same, strict=True))
+    blocks = zip(swapped.potential, held.potential, strict=True)
+    assert all(np.array_equal(x, y) for one, two in blocks for x, y in zip(one, two, strict=True))
     z = np.indices(SHAPE)[-1].reshape(-1).astype(object)  # term 5's push: each site's place along z
     for trains, push in itertools.product(([TRAINS[0], METRIC], [METRIC, TRAINS[0]]), (1, 0)):
         universe = {"integers": INTEGERS, "trains": trains, "chosen": {**CHOSEN, "push": push}}

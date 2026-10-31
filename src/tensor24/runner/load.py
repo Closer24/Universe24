@@ -158,8 +158,8 @@ class Loaded(NamedTuple):
 
     trains: Trains
     potential: tuple[
-        Z, tuple[Z, Z, Z, Z]
-    ]  # J's potential: per monomial its factor and its four legs, the unit (-1) for a leg it lacks
+        tuple[Z, Z], tuple[Z, Z]
+    ]  # J's potential in two blocks by their legs' count, the two-leg block and the four-leg: per monomial its factor and its legs (legs, monomials)
     state: tuple[Z, ...]
     click: tuple[
         Z, Z, Z
@@ -191,18 +191,18 @@ def load(
     senses, _ = carry(len(star(side)), side, 0)  # the Spokes along one axis, its + and its -
     chosen, _, rest = universe["chosen"], *teeth(universe, star(side))
 
-    def potential_at(notch: Z, hold: Z, spring: Z, tie: Z) -> tuple[Z, tuple[Z, Z, Z, Z]]:
-        """J's potential at the strengths given: the notch, the hold, the held hand's own spring and the hands' tie."""
+    def potential_at(notch: Z, hold: Z, spring: Z, tie: Z) -> tuple[tuple[Z, Z], tuple[Z, Z]]:
+        """J's potential at the strengths given, the notch, the hold, the held hand's own spring and the hands' tie, in two blocks by their legs' count (MIN2's item 2): the two-leg block (the notch, the own spring and the hands' tie) and the four-leg block (the tie)."""
         rate = universe["integers"]["full_rate"]
+        own, tied = holding(trains, c, traces, kept, rest, hold, rate, spring)
         return joined(
-            notching(trains, star(side), notch),
-            holding(trains, c, traces, kept, rest, hold, rate, spring),
-            tying(trains, c, traces, kept, tie),
-        )
+            notching(trains, star(side), notch), own, tying(trains, c, traces, kept, tie)
+        ), tied
 
     potential = potential_at(chosen["notch"], chosen["hold"], chosen["spring"], chosen["tie"])
     # the structure's factors, every chosen strength at 1: an edge exists by the structure alone, a chosen 0 its factor
-    structure, _ = potential_at(1, 1, 1, 1)
+    (two, _), (four, _) = potential_at(1, 1, 1, 1)
+    structure = (two, four)
     # term 11 on the edges, every side's key the edge key, at its own Node-clock and across each Spoke
     click = edging(trains, potential, structure, chosen["key"], star(side))
     _, _, key = click
