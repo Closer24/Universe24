@@ -6,6 +6,7 @@ import numpy as np
 src = sys.argv[1]; rounds = int(sys.argv[2]); world_dir = sys.argv[3] if len(sys.argv) > 3 else "tensor24-click"
 sys.path.insert(0, src); sys.path.insert(0, ".")
 import edgeclick as E
+from tensor24.algebra.carry import carry
 from tensor24.engine import kinds, state
 
 def turns():
@@ -16,7 +17,7 @@ def turns():
 
 def turned(m, laid, held, s, shape):
     xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
-    site = np.ravel_multi_index(tuple((m @ xyz) % sides), shape)
+    site = np.ravel_multi_index(tuple(carry(m @ xyz, sides, 0)[1]), shape)
     acting = kinds.kinds(m[None, :, :])
     turn = np.eye(len(laid.gearing.rest), dtype=object)
     for train in held.trains:
@@ -28,7 +29,7 @@ def turned(m, laid, held, s, shape):
     for x, y in zip(there, s, strict=True):
         x[:, site] = y
     there.a[:, site], there.b[:, site] = turn @ s.a, turn @ s.b
-    there.r[:, site] = (turn @ (s.r + s.r + 1) - 1) // 2
+    there.r[:, site] = carry(turn @ (s.r + s.r + 1) - 1, 2, 0)[0]
     return there, site
 
 universe, shape, held, lay, s0, world = E.load_world(src, world_dir)
@@ -38,7 +39,7 @@ for mode in (0, 1):
     ok = 0; ms = []
     for m in turns():
         xyz, sides = np.indices(shape).reshape(3, -1), np.array(shape)[:, None]
-        if np.unique(np.ravel_multi_index(tuple((m @ xyz) % sides), shape)).size == xyz.shape[1]:
+        if np.unique(np.ravel_multi_index(tuple(carry(m @ xyz, sides, 0)[1]), shape)).size == xyz.shape[1]:
             ms.append(m)  # the turns that are symmetries of this board
     for m in ms:
         s1, site = turned(m, lay, held, s0, shape)
