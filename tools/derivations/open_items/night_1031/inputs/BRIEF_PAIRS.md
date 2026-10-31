@@ -598,3 +598,66 @@ Reports: S/miracle_a_math/REPORT.md, S/miracle_a_phys/REPORT.md. Both read MIRAC
 - The Bell test needs a world where places meet across Node-clocks and every setting has a clock: Big Pic's two-ended
   harness, or a test's lay named so. The shipped click world cannot host it (no meeting joins two Node-clocks there),
   and its order reading passes there by structure. Whether a Mesh meeting names a pair is DECODE3f's item, in the batch.
+
+## The Boss's rulings, 09:5x UTC (from UNC2's and MASS2's mathematicians)
+
+- Q11 is now the owner's law (about 09:05): no click reading reads the teeth; case (a) is a counterfactual, named so.
+  The uncertainty principle from two click observables is Big Pic's alone; LIGHT3's lines and echo are his inputs.
+- A reading that fixes a board quantity under a board premise (a steady passing, a known lay) is a board check beside
+  the click reading, never a click reading. A click reading uses the clicks alone, with no board premise.
+- GEN3's statement is cited as "every time-even (real-spring) coupling" keeps 2' and 2'' together; a time-odd real
+  symmetric coupling (P(2') - P(2'')) parts them, GEN5's kind (MASS2's mathematician, DERIVED).
+- Any mass reading reads its whole-beat window from the clicks alone (a clock's own lines' period), and its light
+  source is of a third design, so that a drift shared with the clocks read would show. Masses are Big Pic's (item 11).
+- A test's lay of any board shape (one Node-clock, one site) falls under the 08:5x test's-lay rule: named a test's lay,
+  never shipped, with its reduction from the shipped world derived (for one Node-clock, the alike lay's translation
+  symmetry), not "27 uncoupled copies".
+- Per Big Pic (09:1x): UNC2, NATURE3, ALG2 and MATH4 get their current round and no new one; MIRACLE_A2 and ONELAW4's
+  runs are stopped; their texts go to him as they stand.
+
+## The Boss's rulings, 10:0x UTC (from LIGHT3's physicist, MASS2's physicist and STOP1)
+
+- An observer of the echo needs own meetings: a clock with no own meeting in the whole record has no count (FACE2), so
+  it is no A and no B. The echo rule requires own meetings of A and B, or names per train that it admits clocks with no
+  count.
+- A test's run length (more rounds than a shipped world's ticks, named a test's run, never shipped) may stand as a board
+  check, as a test's lay does (08:5x).
+- Which comparison of what passes tells a laid B from the relay, whether light's speed is a medium's in a plan where
+  light never meets light, and whether a reflector turning about 100 rounds after its take fits C-a: Big Pic's (light
+  and the echo, his item 5). An edge between two medium clocks would be a new element: the owner's only with a
+  derivation.
+- The held hand's state k = 0 (now and before) is one invariant set, reached from no other birth (MASS2's physicist,
+  DERIVED). So "the held hand away from 0" needs no mechanism: it is the held hand's birth off that state. If a value is
+  named, the lawful candidate is the unit, as an initialization number with its weight (it sets every tied train's beat
+  scale). Masses and the mass reading (one Node-clock or two with the swap; M1's calibre for a fast swing) are Big
+  Pic's.
+- STOP1: the stop is no law of the one law. No number is picked, but the term is a law line no file or text gives, and
+  its four choices (the pairing, the held hand's own square, the factor, the reach) decide the worlds' outcomes. It goes
+  to Big Pic as an input on the miracle's path; he says whether the owner is needed.
+
+## The Boss's rulings, 10:1x UTC (from ALG2's physicist, MIRACLE_B2's mathematician and UNC2's physicist)
+
+- "Place" in a text means a Node-clock, a board site, until the owner rules on the click world's place (08:5x).
+  ALG2's X_-1 is renamed "the part": a connected part of the laid structure, a board fact.
+- The cross-Mesh triangles (ALG2 2.6) stay H_1 cycles, carried as first clicks: the owner's "equilateral triangle"
+  case is read as one triangle per Node-clock, each edge on one triangle; if his meaning differs, the item returns.
+- Rule 5 (the record has two levels, lines and sides) withdraws NATURE1's writer item 6 (W in the record apart from the
+  sides). The third click is read only by a reading the first click's record fails: OPEN, Big Pic's.
+- When the cochain act is built, the build carries the law of the build as its own static test: no tooth outside edges
+  and single-Node-clock triangles, and the record's two levels.
+- On the click world, road B's order is the structure's on the as-laid plan only; at the unit strengths (the push and
+  the gradient vertex) it is OPEN, Big Pic's. Road B's walk goes to Big Pic, read on node-live's per-train teeth, its
+  edge-form reading OWED.
+- As built, every click observable is sharp (Q_W, a clock's own count, the sides, the meetings and their order); the
+  only band is the board's hidden passing, which no click reading reads. So the owner's law (the click world works by
+  the uncertainty principle, from the clicks) is not yet met on any shipped world: the starting point for Big Pic.
+- The mesh world's key 3 divides its grain 30,000, so there q = P / 3 exactly: the click record fixes the board's
+  passing there with no tooth read. It stands outside the arrangement and the owner's law, and goes with the key's
+  origin (Big Pic's item 6).
+- Whether births on carried teeth, legible to a steady reader, lie within the seeds' law's room is (C)'s, Big Pic's.
+- MIRACLE_B2 is PASSED by both its readers: road B is an exact, reversible step that keeps the gears as they are, its
+  order from the plan's structure, its identity a board fact checked by construction, the residual gone in its own
+  books only, its held walk 6 to 144 times today's act's with no bound. It goes to Big Pic as an input, with its walk
+  and its edge-form books (OWED). Its physicist's stake for the owner's triangle: if the three edges were equal in
+  strength and kind, no family would be picked by structure and any order would break S_3; it goes to Big Pic with the
+  triangle question.
