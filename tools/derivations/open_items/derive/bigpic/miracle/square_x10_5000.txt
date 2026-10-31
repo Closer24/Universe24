@@ -1,0 +1,12 @@
+road B on node-all, the sides reading the step's own exchange, every two-leg form its own square: rows 26 (held [12, 13]), sites 1, W 6000000000000, the sides' key 50811429000001 x 3, four-leg ties 24
+rounds 5000 (road B); widest count 9 bits; a count first past 32 bits at round none
+the identity (E32's change = the teeth's share) missed in 0 of 5000 rounds
+the books in the clicks (each clock's change = its sides' key x clicks + click teeth's change + its teeth's share) missed at 0 of 25000 clock-rounds
+the act's own passing beside the step's exchange: its running residual at one clock reaches 6 keys
+whole clicks |q| by train: [0, 0, 156, 236, 234]
+  train 2: over the run its energy gained -679 permille of its own at the lay: -87 by its booked exchanges (the clicks), -592 by its teeth's share
+  train 3: over the run its energy gained -55 permille of its own at the lay: -59 by its booked exchanges (the clicks), 4 by its teeth's share
+the walk, the largest held square per 250 rounds: [(250, 144), (500, 121), (750, 100), (1000, 144), (1250, 121), (1500, 196), (1750, 196), (2000, 121), (2250, 81), (2500, 49), (2750, 36), (3000, 36), (3250, 36), (3500, 36), (3750, 121), (4000, 144), (4250, 196), (4500, 144), (4750, 121), (5000, 100)]
+the run back from the end state alone over 5000 rounds, board and click teeth: True
+the 24: the round and its clicks turned alike in 24 of 24 turns over 8 rounds
+exit 0

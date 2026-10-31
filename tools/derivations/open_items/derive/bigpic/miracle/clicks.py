@@ -20,7 +20,8 @@ Readings, each round:
     board and click teeth (the engine's mirror, the same round, the mirror).
 Usage: python3 -I clicks.py <node-all src> <universe> <piece> <setting> [rounds, 600 unless given] [every, 100]
        [engine: the present act instead, for its walk and run back beside road B's; the identity and the books are
-       road B's and are not read then]
+       road B's and are not read then] [square: every two-leg form f x_r x_p read as its own square (f / 2)(x_r + x_p)^2,
+       its own monomials (f / 2) x_r^2 and (f / 2) x_p^2 joined to J's potential (the breakthrough's check)]
 """
 import json
 import sys
@@ -41,11 +42,36 @@ from tensor24.runner.files import sites_of, star  # noqa: E402
 universe, piece, setting = (json.loads(Path(p).read_text(encoding="utf-8")) for p in sys.argv[2:5])
 ROUNDS = int(sys.argv[5]) if len(sys.argv) > 5 else 600
 EVERY = int(sys.argv[6]) if len(sys.argv) > 6 else 100
-ENGINE = len(sys.argv) > 7 and sys.argv[7] == "engine"
+ENGINE = "engine" in sys.argv[7:]
+SQUARE = "square" in sys.argv[7:]  # every two-leg form read as its own square (the breakthrough's check)
 shape = piece["shape"]
 kinds, tables, square, lifted = tmain.made(star(len(shape)))
 loaded, found = loadmod.load(universe, setting, sites_of(shape), kinds, tables, square, lifted)
 assert found == [], found
+if SQUARE:
+    # each two-leg monomial f x_r x_p on two tied rows read as its own square, (f / 2)(x_r + x_p)^2: its own
+    # monomials (f / 2) x_r^2 and (f / 2) x_p^2 join it, so every form of J's potential is a square of its legs' value
+    _, row_of, _, _, _ = plans.rows_of(loaded.trains)
+    held_rows = {r for r in range(len(row_of)) if int(loaded.trains.held[row_of[r]])}
+    f0, legs0 = loaded.potential
+    fs, ls = [int(x) for x in f0], [[int(x) for x in lg] for lg in legs0]
+    for i in range(len(fs)):
+        rows4 = [ls[j][i] for j in range(4)]
+        two = [x for x in rows4 if x >= 0]
+        if fs[i] == 0 or len(two) != 2 or two[0] == two[1] or set(two) & held_rows:
+            continue
+        half_f, odd = carry(fs[i], 2, 0)
+        assert odd == 0, ("a two-leg form with an odd factor", fs[i])
+        for r in two:
+            fs.append(half_f)
+            for j, x in enumerate((r, r, -1, -1)):
+                ls[j].append(x)
+    leg_type = np.asarray(legs0[0]).dtype
+    squared = (np.array(fs, dtype=object), tuple(np.array(lg, dtype=leg_type) for lg in ls))
+    # term 11 on the edges laid again from the squared potential by the loader's own edging (an own monomial joins
+    # no two trains, so it weighs onto no side: its spring stays in its clock)
+    loaded = loaded._replace(potential=squared,
+                             click=loadmod.edging(loaded.trains, squared, universe["chosen"]["key"], star(len(shape))))
 layout = tmain.layout(universe, shape, loaded)
 nb, spokes, meshes, grip0, gearing, plan, clock, stretch, click, push, mesh = layout
 held_t = [int(x) for x in loaded.trains.held].index(1)
@@ -199,7 +225,8 @@ misses_identity, misses_books, widest, run_res, worst_res = 0, 0, 0, 0 * e_lay, 
 sum_share, sum_carried = 0 * e_lay, 0 * e_lay  # each clock's running teeth's share and running booked exchange
 clicks_by = np.zeros(NTR, dtype=object)
 walk, window_max, past32 = [], 0, 0  # past32: the first round a count passes 32 bits
-print(f"road B on node-all, the sides reading the step's own exchange: rows {rows} (held {H.tolist()}), sites"
+print(f"road B on node-all, the sides reading the step's own exchange{', every two-leg form its own square' if SQUARE else ''}:"
+      f" rows {rows} (held {H.tolist()}), sites"
       f" {s.a.shape[-1]}, W {W}, the sides' key {KEY} x {half_kappa}, four-leg ties {len(XG)}", flush=True)
 for n in range(1, ROUNDS + 1):
     s1, q = round_(s)

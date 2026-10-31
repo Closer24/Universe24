@@ -90,3 +90,29 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
   (each own spring above half the tie) and the whole of S_3 come with the present act. With four-leg edges it keeps a
   floor but no exact step of this kind. The click world's mixed triangle is road B's case: its books close, but its
   two-leg edge opens the floor.
+
+## The breakthrough: every two-leg form its own square (the owner's words of 10:11 to 10:37 UTC)
+
+- **The form** (clicks.py's `square` option): each two-leg monomial f x_r x_p on two tied rows is read as its own square,
+  (f / 2)(x_r + x_p)^2. Its own monomials (f / 2) x_r^2 and (f / 2) x_p^2 join J's potential, and term 11's edges are
+  laid again from it by the loader's own edging.
+- **Every form of the potential is then a square of its legs' value:** the spring S x^2, the four-leg tie f (h o)^2,
+  and the hands' tie. In the complex this is the Gram form of the bands' unsigned incidence, |B| T |B|^T / 2, which is
+  non-negative on every structure (DERIVED).
+- **The mass it gives:** each clock gets half the sum of its bands. So the giver and the taker each get exactly half
+  their band, which is David's s_min (6542212052; FLOOR1).
+- **MEASURED on the whole click world**, road B, 5,000 rounds each (square_x1_5000.txt, square_x10_5000.txt,
+  square_x100_5000.txt):
+
+| grain | widest count | a count past 32 bits | the identity | the books in the clicks | the run back | the 24 | the largest held square, of the unit |
+|---|---|---|---|---|---|---|---|
+| lambda 1 | 7 bits | none | 0 misses of 5,000 | 0 misses of 25,000 clock-rounds | exact | 24 of 24 | 4 at round 250, up to 484 by round 4,500 |
+| lambda 10 | 9 bits | none | 0 misses | 0 misses | exact | 24 of 24 | between 0.36 and 1.96 |
+| lambda 100 | 13 bits | none | 0 misses | 0 misses | exact | 24 of 24 | between 1.00 and 1.59 |
+
+- **So the floor comes by itself at every grain read.** Without the square, the click world fell at lambda 100: a count
+  passed 32 bits at round 827 and reached 19,566 bits by round 5,000 (split_bedge_x100_5000.txt).
+- **At the shipped grain the teeth's share still heats the held hand.** Its gain over the run is 90,547 permille:
+  106,622 by its teeth's share and -16,075 by its booked exchanges. It does not fall; this is the walk.
+- **What it does not give:** the band's own value, 96,000 in the file. The square gives each mass as half of its bands,
+  a relation. The value stays a named interim under the owner's "Everything from the structure. Everything."
