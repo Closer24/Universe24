@@ -235,7 +235,22 @@ Usage: python3 -I tooth.py <node-all src> <the click world's universe.json> [rou
 
 Usage: python3 -I turns.py <node-all src> <the click world's universe.json> [rounds]
 
-## The third click's cone, a first stand-alone model (cone.py, cone_5000.txt)
+## The round's cone, a first stand-alone model (cone.py, cone_5000.txt)
+
+- **The THIRD physicist's verdict: NOT PASSED, on two BLOCKING items** (the Boss's 6544032656 item 2; the report at
+  S/bp_cone_phys; the mathematician still reads). Taken whole:
+  - **B1, the cone is the round's stencil, not the third click's.** One edge per round, both ways in time, holds by
+    construction for any local reversible round, so its readings cannot fail, and the third click takes no part in
+    it. No end is laid here: the end is the start's image (the run back is exact), so "fixed by the end" is
+    reversibility, carrying only what the start carries.
+  - **B2, the write's reach was read on a rest whose counts never move:** the hub and the chain stay at 0 in all 5,000
+    rounds. Where the rest moves, its whole state is alike with the writes and without, by the laid symmetry. So the
+    write reaches no clock. The reading "the write's own reach" is struck as MEASURED.
+  - **The Boss's rulings:** the owner's "third click's cone" is read as the cone of a write that the rest read, and
+    stays not shown until such a write exists (write.py, below, is the first); the round's cone is restated as
+    DERIVED by construction for any local act; under 11:52, "no passing between the places" is read on the stencil's
+    cone; the pair's "from the end" waits on an end fixed by the future, not the start's image, and until then the run
+    back is named reversibility.
 
 - **The owner's word of 12:4x UTC to Big Pic** (in Hebrew; in my translation): "... and check whether the cone is
   needed on the board... of the third click... is it a cone to the past and to the future?"
@@ -314,13 +329,17 @@ Usage: python3 -I cone.py <node-all src> <the click world's universe.json> [roun
   - **The whole turn on the joined board:**
     - each clock's books hold, read across the write as the THIRD pair read them, in 3,082 of 12,000;
     - E32 moves at 2,677 of 3,951 writes, and its narrowest is 390 per mille of its widest;
-    - the rest read it: B's clock 3 is apart from the unwritten path in 1,999 rounds;
+    - the rest read it: B's clock 3 is apart from the unwritten path in 1,999 rounds, and the first clicks' records
+      on the join band in 1,974;
     - the run back by the same act is not exact.
   - **The momenta turn:**
     - each clock's books hold across the write in 12,000 of 12,000, by the round's own identity, since no count moves
       at the write;
     - E32 moves at 0 of 3,980 writes;
     - the rest read it: B's clock 3 is apart in 1,999 rounds, and A's clock 0 in 1,990;
+    - **the other clicks record it** (the owner's 13:2x word, "click 3 is not observed alone"): the first clicks'
+      landings on the join band are apart from the unwritten path's in 1,991 of 2,000 rounds, and on B's three edges
+      in 1,999; the join band lands 1,102 net, against -555 unwritten. The split click is not built here;
     - the run back by the same act is not exact, as the condition says;
     - its cost: the momentum moved is booked through each hand's own tooth, not by a side, and E32's narrowest over
       the run is 757 per mille of its widest, against 956 with no write.
@@ -329,11 +348,14 @@ Usage: python3 -I cone.py <node-all src> <the click world's universe.json> [roun
     - under the momenta turn they give 144 distinct ends, one pair of births for each;
     - each triangle's own part of the end takes 144 values, so each hangs on the other triangle's birth too.
 - **So, as a reading:**
-  - a write the rest read is in reach: the momenta turn is read by the rest, keeps each clock's books at every round
-    and E32 at every write, and stands on a joined board;
-  - under it, the end fixes both triangles' choices together. Each triangle's end hangs on the other's choice through
-    the band between them, within the cone: the 13:0x connection between click 3 and click 3, here through the board
-    and the end;
+  - a write the rest read is in reach: the momenta turn is read by the rest and recorded in the first clicks at the
+    places its path reaches, keeps each clock's books at every round and E32 at every write, and stands on a joined
+    board;
+  - under it, an end laid in advance among the 144 reached is met by exactly one pair of births on the grid, and each
+    triangle's own part of the end hangs on the other's birth through the band between them, within the stencil's
+    cone: the 13:0x connection between click 3 and click 3, read here through the board and an end laid among the
+    reached ones. An end laid apart from every reached one is met by no pair. Here the end is still the image of the
+    start and the births; an end fixed by the future is OPEN;
   - what it does not keep is the same act's run back, and the condition shows that no write between rounds that the
     rest read can keep it.
 - **The way left open by the condition, DERIVED and not built:** the third click inside the round, not between rounds.

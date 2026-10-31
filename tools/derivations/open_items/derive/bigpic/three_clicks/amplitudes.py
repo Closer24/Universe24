@@ -1,15 +1,19 @@
-"""The amplitudes in the clicks (the owner's word of 12:4x UTC to Big Pic: "make sure that in the clicks one sees
-the amplitudes of the probabilities seen in nature"). A stand-alone model, a test's lay, not the engine's board.
-Two driver clocks and one detector clock on the board's own gear form, each with the click world's own spring, the
-detector joined to each driver by one two-leg edge at the click world's hands' tie, and no edge between the drivers:
-two paths into one place. Each edge carries the board's own passing (tooth.py's form) into its first-click tooth on
-the edge dial D (the click world's key). The board reads no tooth, so the board runs once per lay, and every birth of
-a grid across the dial is counted on the same passings, each edge by Rule3's carry.
+"""Classical interference of two coherent drives into one detector, its energy counted in quanta of the dial (named
+so on the HALF pair's verdict, the Boss's 6543885489 item 1; first written on the owner's word of 12:4x UTC to Big Pic:
+"make sure that in the clicks one sees the amplitudes of the probabilities seen in nature"). A stand-alone model, a
+test's lay, not the engine's board; the act is linear in the counts, apart from its grain, and nothing here reads a
+probability: each birth's count is the energy passed, fixed to within one by the dial's phase. Two driver clocks and
+one detector clock on the board's own gear form, each with the click world's own spring, the detector joined to each
+driver by one two-leg edge at the click world's hands' tie, and no edge between the drivers: two paths into one place.
+Each edge carries the board's own passing (tooth.py's form) into its first-click tooth on the edge dial D (the click
+world's key). The board reads no tooth, so the board runs once per lay, and every birth of a grid across the dial is
+counted on the same passings, each edge by Rule3's carry.
 Readings, whole numbers and Rule3's carry only:
   - the detector's clicks: its net landings over the window, summed over its two edges and totalled over the births
     (each lay's expected count of clicks, times the births);
-  - the grain: the drivers' swing doubled from the click world's 40, and the first swing at which the detector at rest
-    moves at all;
+  - the grain, a dead zone at rest: the drivers' swing doubled from the click world's 40, and the first swing at which
+    the detector at rest moves at all (by its mechanism near a swing of 1,800: the detector's tooth, its sub-count
+    momentum, must reach half a count a round from the drive's own pushes);
   - the phases, at the sweep's top swing: driver 1 alone, driver 2 alone, both, and both with driver 2 mirrored (the
     round's own exact mirror, counts and tooth), driver 2 laid where its own free swing stands k rounds later; the
     interference term (the clicks of both less the clicks of each alone), and the parallelogram law of a square,
@@ -19,7 +23,14 @@ Readings, whole numbers and Rule3's carry only:
     count, a negative one as the mirror of the positive), the detector's two equal ties reading the setting (1, 1),
     and the hand (m, -n) reading (1, -1); the clicks' share along (1, 1) against the share rule's
     (h . s)^2 / ((h . h)(s . s)), and the two settings' clicks summed against twice the hand's own squares' clicks
-    (Pythagoras: the invariant).
+    (Pythagoras); and the same at an unequal setting, the ties 1 : 2 reading (1, 2) and 2 : 1 with the hand (m, -n)
+    reading (2, -1), a test's lay.
+Checks by construction, named so: the parallelogram law, Pythagoras on the hands (m, 0) and (0, n), the destructive
+zero and the mirrored hand. The share is Malus's law for the energy's projection, laid in the ties: it is not the
+share rule read as a chance (condition (a) stays OPEN). The interference term lags the swings' own overlap by about an
+eighth of a round, which sets its sign at k = 8. Typed numbers: W (the click world's rest teeth, node-all's loader),
+SWING (setting.json's gear 3), SPOKES and SENSES (the star's six spokes and two senses); the drivers' and the
+detector's shared beat is a test's lay.
 Usage: python3 -I amplitudes.py <node-all src> <the click world's universe.json> [rounds] [births] [doublings]
 """
 import json
@@ -42,6 +53,7 @@ D = HALF * KEY
 EDGES = [(0, 2), (1, 2)]  # driver 1 to the detector, driver 2 to the detector
 SWING = 40  # the click world's giver's count (setting.json, gear 3)
 GRID = 4  # the hands' grid: |m|, |n| at most 4
+TIES = [1, 1]  # each edge's tie in units of the hands' tie: the setting the detector reads
 
 
 def split(n, d):
@@ -51,9 +63,9 @@ def split(n, d):
 
 def pushes(a):
     f = [-2 * S * x for x in a]
-    for u, v in EDGES:
-        f[u] += -TIE2 * a[v]
-        f[v] += -TIE2 * a[u]
+    for (u, v), m in zip(EDGES, TIES):
+        f[u] += -TIE2 * m * a[v]
+        f[v] += -TIE2 * m * a[u]
     return f
 
 
@@ -73,7 +85,7 @@ def lw(p, r, u, v):
 
 def passings(b, a, a1):
     """Positive into the edge's lower clock (the driver), so a passing into the detector is negative."""
-    return [HALF * TIE2 * (lw(a, a1, u, v) + lw(b, a, u, v)) for u, v in EDGES]
+    return [HALF * TIE2 * m * (lw(a, a1, u, v) + lw(b, a, u, v)) for (u, v), m in zip(EDGES, TIES)]
 
 
 def mirror(x):
@@ -180,4 +192,23 @@ for m in range(-GRID, GRID + 1):
               f" {pyth}, {pyth_pm} per mille", flush=True)
 print(f"   the widest share apart from the rule: {worst_share} per million; the widest Pythagoras gap: {worst_sum} per"
       f" mille; the mirrored hand alike: {all(K[(m, n)] == K[(-m, -n)] for (m, n) in K)}", flush=True)
+print(f"== an unequal setting, a test's lay: the ties 1 : 2 read (1, 2), and 2 : 1 with the hand (m, -n) read (2, -1)",
+      flush=True)
+worst_unequal = 0
+for m in range(-GRID, GRID + 1):
+    for n in range(-GRID, GRID + 1):
+        if (m, n) == (0, 0) or (n < 0) or (n == 0 and m < 0):
+            continue
+        TIES[:] = [1, 2]
+        along, _ = clicks(at_rest(m * TOP), at_rest(n * TOP))
+        TIES[:] = [2, 1]
+        across, _ = clicks(at_rest(m * TOP), at_rest(-n * TOP))
+        TIES[:] = [1, 1]
+        read = permille(along, along + across, 1000000)
+        rule = permille((m + n + n) * (m + n + n), 5 * (m * m + n * n), 1000000)
+        worst_unequal = max(worst_unequal, abs(read - rule))
+        print(f"   hand ({m}, {n}): along (1, 2) {along}, along (2, -1) {across}; the share along (1, 2) read"
+              f" {read} per million, the share rule's {rule}", flush=True)
+print(f"   the widest share apart from the rule at the unequal setting: {worst_unequal} per million",
+      flush=True)
 print("exit", flush=True)

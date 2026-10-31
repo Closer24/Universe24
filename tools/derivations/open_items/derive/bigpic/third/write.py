@@ -21,8 +21,11 @@ Writes read, at each landing w of each triangle's tau:
   - the momenta turn: the hands' exact momenta P = 2 G (a - b) + s turned by the cycle, w times (mod 3), the counts
     kept, so the teeth alone move: no clock's count or energy moves at the write, and the momentum it moves enters
     each hand through its own tooth at the next round.
-Readings, per write, over the run: each clock's books at every round, read across the write as the THIRD pair read
-them (half_kappa (E_i' - E_i - share_i) = 8 W times its sides' passings, E_i' after the write); E32 at each write;
+Readings, per write, over the run: the first clicks' records (each band's passing on the edge dial D, born at the
+middle) against the unwritten path's, on the join band and on B's edges (the owner's 13:2x word, "click 3 is not
+observed alone"; the split click is not built here); each clock's books at every round, read across the write as
+the THIRD pair read them (half_kappa (E_i' - E_i - share_i) = 8 W times its sides' passings, E_i' after the write);
+E32 at each write;
 E32's widest and narrowest over the run; the other triangle's counts against the unwritten path; the widest count;
 the run back from the end state alone by the same act. Then, under the momenta turn, the ends over a grid of both
 triangles' births: how many distinct ends, how many pairs of births reach each, and how many values each
@@ -134,14 +137,21 @@ def momenta_turn(a, b, s, f, t, w):
     return a, b, s, f
 
 
-def run(a, b, s, fs, taus, rounds, write, log=None):
+def run(a, b, s, fs, taus, rounds, write, log=None, clicks=None):
     a, b, s = list(a), list(b), list(s)
     fs, taus = [list(f) for f in fs], list(taus)
+    k = [born(D)] * len(BANDS)  # each band's first-click tooth on the edge dial
     books = writes = jumps = 0
     e_low = e_high = sum(own(a, b))
     for _ in range(rounds):
         a1, s1 = round_(a, b, s)
         x = passings(b, a, a1, BANDS)
+        if clicks is not None:
+            row = []
+            for e in range(len(BANDS)):
+                q, k[e] = carry(x[e], D, k[e])
+                row.append(q)
+            clicks.append(row)
         e0 = own(a, b)
         share = [4 * W * (a1[i] - b[i]) * (s[i] - s1[i]) for i in range(N)]
         na, nb, ns = a1, list(a), s1
@@ -178,10 +188,11 @@ F0 = [[born(GD)] * 3, [born(GD)] * 3]
 T0 = [born(GD), 0]
 print(f"two triangles of like hands joined by one band (0, 3); {ROUNDS} rounds; the hands' tie {TIE2}, W {W}, each"
       f" triangle's dial G D {GD}; A laid {A0[:3]} now and {B0[:3]} before, B {A0[3:]} and {B0[3:]}", flush=True)
-base = None
+base = base_clicks = None
+JOIN, B_EDGES = len(BANDS) - 1, [3, 4, 5]  # the join band's index, and B's three edges' in BANDS
 for name, write in (("none", None), ("the whole turn", whole_turn), ("the momenta turn", momenta_turn)):
-    log = []
-    end, books, writes, jumps, e_low, e_high = run(A0, B0, [0] * N, F0, T0, ROUNDS, write, log)
+    log, rec = [], []
+    end, books, writes, jumps, e_low, e_high = run(A0, B0, [0] * N, F0, T0, ROUNDS, write, log, rec)
     ma, mb, ms = mirror(end[0], end[1], end[2])
     back, _, _, _, _, _ = run(ma, mb, ms, end[3], end[4], ROUNDS, write)
     ba, bb, bs = mirror(back[0], back[1], back[2])
@@ -191,10 +202,15 @@ for name, write in (("none", None), ("the whole turn", whole_turn), ("the moment
           f" moved at {jumps} of {writes} writes; E32's narrowest {per_mille(e_low, e_high)} per mille of its widest;"
           f" widest count {widest} bits; the run back by the same act exact: {exact}", flush=True)
     if base is None:
-        base = log
+        base, base_clicks = log, rec
     else:
         rest = [sum(1 for x, y in zip(log, base) if x[k] != y[k]) for k in (3, 0)]
         print(f"   B's clock 3 apart from the unwritten path in {rest[0]} rounds, A's clock 0 in {rest[1]}", flush=True)
+        join = sum(1 for x, y in zip(rec, base_clicks) if x[JOIN] != y[JOIN])
+        on_b = sum(1 for x, y in zip(rec, base_clicks) if [x[e] for e in B_EDGES] != [y[e] for e in B_EDGES])
+        print(f"   the first clicks' records against the unwritten path's: the join band's landings apart in {join}"
+              f" rounds, B's three edges' in {on_b}; landed on the join band {sum(r[JOIN] for r in rec)} net, against"
+              f" {sum(r[JOIN] for r in base_clicks)} unwritten", flush=True)
 print(f"== the ends over a grid of {GRID} x {GRID} births of A's and B's taus, {GRID_ROUNDS} rounds", flush=True)
 for name, write in (("none", None), ("the momenta turn", momenta_turn)):
     ends = {}

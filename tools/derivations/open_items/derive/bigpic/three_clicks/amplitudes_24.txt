@@ -68,4 +68,46 @@ two drivers and one detector, each with the click world's spring 100000000; the 
    hand (4, 3): clicks along (1, 1) 32145439360, along (1, -1) 657616841; the share along (1, 1) read 979953 per million, the share rule's 980000; the two settings' sum less twice the hand's own squares' -10030235, 0 per mille
    hand (4, 4): clicks along (1, 1) 41970810770, along (1, -1) 0; the share along (1, 1) read 1000000 per million, the share rule's 1000000; the two settings' sum less twice the hand's own squares' -24562534, -1 per mille
    the widest share apart from the rule: 323 per million; the widest Pythagoras gap: 4 per mille; the mirrored hand alike: True
+== an unequal setting, a test's lay: the ties 1 : 2 read (1, 2), and 2 : 1 with the hand (m, -n) read (2, -1)
+   hand (-4, 1): along (1, 2) 2619373159, along (2, -1) 53125958201; the share along (1, 2) read 46988 per million, the share rule's 47059
+   hand (-4, 2): along (1, 2) 0, along (2, -1) 65576236204; the share along (1, 2) read 0 per million, the share rule's 0
+   hand (-4, 3): along (1, 2) 2619393958, along (2, -1) 79345245692; the share along (1, 2) read 31958 per million, the share rule's 32000
+   hand (-4, 4): along (1, 2) 10498717176, along (2, -1) 94430587099; the share along (1, 2) read 100055 per million, the share rule's 100000
+   hand (-3, 1): along (1, 2) 657604202, along (2, -1) 32145163589; the share along (1, 2) read 20047 per million, the share rule's 20000
+   hand (-3, 2): along (1, 2) 657610956, along (2, -1) 41970392812; the share along (1, 2) read 15427 per million, the share rule's 15385
+   hand (-3, 3): along (1, 2) 5907616938, along (2, -1) 53125884314; the share along (1, 2) read 100072 per million, the share rule's 100000
+   hand (-3, 4): along (1, 2) 16388745826, along (2, -1) 65576121076; the share along (1, 2) read 199948 per million, the share rule's 200000
+   hand (-2, 1): along (1, 2) 0, along (2, -1) 16388799175; the share along (1, 2) read 0 per million, the share rule's 0
+   hand (-2, 2): along (1, 2) 2619400383, along (2, -1) 23608143114; the share along (1, 2) read 99872 per million, the share rule's 100000
+   hand (-2, 3): along (1, 2) 10498705966, along (2, -1) 32145150856; the share along (1, 2) read 246195 per million, the share rule's 246154
+   hand (-2, 4): along (1, 2) 23608173173, along (2, -1) 41970406376; the share along (1, 2) read 359998 per million, the share rule's 360000
+   hand (-1, 1): along (1, 2) 657613680, along (2, -1) 5907649693; the share along (1, 2) read 100166 per million, the share rule's 100000
+   hand (-1, 2): along (1, 2) 5907618593, along (2, -1) 10498766760; the share along (1, 2) read 360080 per million, the share rule's 360000
+   hand (-1, 3): along (1, 2) 16388781944, along (2, -1) 16388778123; the share along (1, 2) read 500000 per million, the share rule's 500000
+   hand (-1, 4): along (1, 2) 32145161352, along (2, -1) 23608063241; the share along (1, 2) read 576561 per million, the share rule's 576471
+   hand (0, 1): along (1, 2) 2619415817, along (2, -1) 657620837; the share along (1, 2) read 799325 per million, the share rule's 800000
+   hand (0, 2): along (1, 2) 10498758825, along (2, -1) 2619417943; the share along (1, 2) read 800321 per million, the share rule's 800000
+   hand (0, 3): along (1, 2) 23608120387, along (2, -1) 5907665825; the share along (1, 2) read 799847 per million, the share rule's 800000
+   hand (0, 4): along (1, 2) 41970531666, along (2, -1) 10498752436; the share along (1, 2) read 799907 per million, the share rule's 800000
+   hand (1, 0): along (1, 2) 657620837, along (2, -1) 2619415817; the share along (1, 2) read 200675 per million, the share rule's 200000
+   hand (1, 1): along (1, 2) 5907649693, along (2, -1) 657613680; the share along (1, 2) read 899834 per million, the share rule's 900000
+   hand (1, 2): along (1, 2) 16388799175, along (2, -1) 0; the share along (1, 2) read 1000000 per million, the share rule's 1000000
+   hand (1, 3): along (1, 2) 32145163589, along (2, -1) 657604202; the share along (1, 2) read 979953 per million, the share rule's 980000
+   hand (1, 4): along (1, 2) 53125958201, along (2, -1) 2619373159; the share along (1, 2) read 953012 per million, the share rule's 952941
+   hand (2, 0): along (1, 2) 2619417943, along (2, -1) 10498758825; the share along (1, 2) read 199679 per million, the share rule's 200000
+   hand (2, 1): along (1, 2) 10498766760, along (2, -1) 5907618593; the share along (1, 2) read 639920 per million, the share rule's 640000
+   hand (2, 2): along (1, 2) 23608143114, along (2, -1) 2619400383; the share along (1, 2) read 900128 per million, the share rule's 900000
+   hand (2, 3): along (1, 2) 41970392812, along (2, -1) 657610956; the share along (1, 2) read 984573 per million, the share rule's 984615
+   hand (2, 4): along (1, 2) 65576236204, along (2, -1) 0; the share along (1, 2) read 1000000 per million, the share rule's 1000000
+   hand (3, 0): along (1, 2) 5907665825, along (2, -1) 23608120387; the share along (1, 2) read 200153 per million, the share rule's 200000
+   hand (3, 1): along (1, 2) 16388778123, along (2, -1) 16388781944; the share along (1, 2) read 500000 per million, the share rule's 500000
+   hand (3, 2): along (1, 2) 32145150856, along (2, -1) 10498705966; the share along (1, 2) read 753805 per million, the share rule's 753846
+   hand (3, 3): along (1, 2) 53125884314, along (2, -1) 5907616938; the share along (1, 2) read 899928 per million, the share rule's 900000
+   hand (3, 4): along (1, 2) 79345245692, along (2, -1) 2619393958; the share along (1, 2) read 968042 per million, the share rule's 968000
+   hand (4, 0): along (1, 2) 10498752436, along (2, -1) 41970531666; the share along (1, 2) read 200093 per million, the share rule's 200000
+   hand (4, 1): along (1, 2) 23608063241, along (2, -1) 32145161352; the share along (1, 2) read 423439 per million, the share rule's 423529
+   hand (4, 2): along (1, 2) 41970406376, along (2, -1) 23608173173; the share along (1, 2) read 640002 per million, the share rule's 640000
+   hand (4, 3): along (1, 2) 65576121076, along (2, -1) 16388745826; the share along (1, 2) read 800052 per million, the share rule's 800000
+   hand (4, 4): along (1, 2) 94430587099, along (2, -1) 10498717176; the share along (1, 2) read 899945 per million, the share rule's 900000
+   the widest share apart from the rule at the unequal setting: 675 per million
 exit

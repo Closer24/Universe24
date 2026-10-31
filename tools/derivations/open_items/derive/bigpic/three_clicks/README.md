@@ -195,7 +195,22 @@ Usage: python3 -I spread.py <src> [RANGE]
 
 Usage: python3 -I onecell.py <src>
 
-## The amplitudes in the clicks, a first stand-alone model (amplitudes.py, amplitudes_24.txt)
+## Classical interference of two coherent drives into one detector, its energy counted in quanta of the dial (amplitudes.py, amplitudes_24.txt)
+
+- **Named so on the HALF pair's verdict** (the Boss's 6543885489 item 1; first written as "the amplitudes in the
+  clicks"): NOT PASSED as a pair until the model is named classical and both part (iii) claims are struck, both done
+  here.
+  - The mathematician PASSED it as the bench's stand-alone model of classical interference of energies, DERIVED from
+    the act and MEASURED as stated. It does not meet condition (a).
+  - The physicist's B1: the clicks are the energy, read classically, and nothing reads a probability. Each birth's
+    count is fixed to within one by the dial's phase (606 or 607 at the grain, never 0 or 1). One driver fed to two
+    detectors lands at both in every birth (256 of 256), about half the energy at each: the classical split, where
+    nature's single quantum clicks at one detector only. The share is Malus's law for the energy's projection, laid in
+    the ties.
+  - The mathematician's reading, DERIVED: a linear board run from its start and read locally is a local model, so
+    readings at two places obey CHSH at most 2. The pair's 5/2 can come only through what the start alone does not
+    fix: the third clicks' choices, which the fixed end binds together. That is the seeds' law (C), OPEN, mine.
+  - Both readers reproduce every number printed.
 
 - **The owner's word of 12:4x UTC to Big Pic** (in Hebrew; in my translation): "Make sure that in the clicks one sees
   the amplitudes of the probabilities seen in nature... it will close everything for you. And check whether the cone
@@ -211,8 +226,9 @@ Usage: python3 -I onecell.py <src>
   - the detector's clicks are its net landings over a window of 24 rounds, summed over its two edges and totalled
     over the births: the lay's expected count of clicks, times the births.
 - **MEASURED:**
-  - **The grain.** At the click world's own swing of 40 the detector at rest never moves, and no click lands. So it
-    stays up to a swing of 1,280. From 2,560 it moves: the widest count is 10, and the clicks are 155,190. Above the
+  - **The grain, a dead zone at rest.** At the click world's own swing of 40 the detector at rest never moves, and no
+    click lands. So it stays up to a swing of 1,280; by its mechanism the threshold is near a swing of 1,800, where the
+    detector's tooth, its sub-count momentum, first reaches half a count a round from the drive's own pushes. From 2,560 it moves: the widest count is 10, and the clicks are 155,190. Above the
     grain each doubling of the swing multiplies the clicks by 3,799 to 4,361 per mille, and by 4,004 at the top
     (163,840). The clicks go as the square of the swing.
   - **The phases** (the top swing, a test's lay; driver 2 laid where its own free swing stands k rounds later). The
@@ -220,7 +236,8 @@ Usage: python3 -I onecell.py <src>
     lone swing's energy form, polar), per mille of the two alone, for k = 0 to 11:
     - 992 / 1,000; 821 / 833; 325 / 389; -257 / -185; -725 / -698; -978 / -977;
     - -929 / -931; -536 / -575; 48 / -27; 575 / 530; 911 / 910; 983 / 987.
-    - The two stand within 75 per mille at every phase.
+    - The two stand within 75 per mille at every phase. The term lags the overlap by about an eighth of a round,
+      which sets its sign at k = 8.
   - **The destructive zero.** Driver 2 laid as the round's exact mirror of driver 1: the detector stays at 0 at every
     round, and no click lands. In phase, both give 3,983 per mille of driver 1 alone (four times, the square of two);
     near half a swing (k = 5), 44 per mille.
@@ -233,16 +250,22 @@ Usage: python3 -I onecell.py <src>
       every one of the 40 hands.
     - The two settings' clicks sum to twice the hand's own squares' clicks within 4 per mille: Pythagoras.
     - The mirrored hand clicks alike, exactly.
-- **So, as a candidate:**
-  - in this model the clicks count the square of the summed amplitudes: a clock's swing is the amplitude, the
-    detector's ties are the setting, and the click count is the energy passed into the detector, its own square, in
-    units of the dial;
-  - the share rule, bellend.py's part (iii), laid there as a rule, is read here from the clicks' own counts;
-  - the two settings' sum is the hand's own square: the invariant, by Pythagoras (the owner's word to David of 12:3x
-    UTC).
+    - At an unequal setting, a test's lay (the ties 1 : 2 reading (1, 2), and 2 : 1 with the hand (m, -n) reading
+      (2, -1)), the share stands within 675 per million of the rule's, in every hand.
+  - **Checks by construction, named so:** the parallelogram law, Pythagoras on the hands (m, 0) and (0, n), the
+    destructive zero and the mirrored hand.
+  - **Typed numbers:** W (the click world's rest teeth), SWING (setting.json's gear 3), SPOKES and SENSES (the star's
+    six spokes and two senses). The drivers' and the detector's shared beat is a test's lay. The act is linear in the
+    counts, apart from its grain.
+- **So, as a reading:** the clicks count the energy passed into the detector, the square of the summed swings, in
+  quanta of the dial: classical interference. The share along a setting is Malus's law for the energy's projection,
+  laid in the ties. Struck, on the HALF pair's verdict: "part (iii) read here from the clicks' own counts" and "part
+  (iii) need not be laid". Condition (a) stays OPEN.
 - **Not shown:**
   - the one-click regime, a click or none per birth at a share below one: it does not arise on a detector at rest
-    here, since below the grain nothing passes, and at the grain each birth lands about 606 times;
+    here, since below the grain nothing passes, and at the grain each birth lands about 606 times. Its test is one
+    source fed to two detectors that clicks at one of them only; whether the regime is reachable on a board whose grain
+    is coarser than its dial is OPEN;
   - the click world's own clicks at its own swing of 40, which is below the grain here;
   - the engine's act;
   - the pair under the 11:52 law with these clicks;
