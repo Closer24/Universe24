@@ -1,6 +1,6 @@
 # The passing for four value legs: the split at the rest, and what its clicks mean (NOT_CLOSED 29)
 
-David, 2026-10-31 (the fifth text, 02:3x UTC), for the night's side list, NOT_CLOSED 29: "the hat needs a lawful
+David, 2026-10-31 (the sixth text, 02:4x UTC), for the night's side list, NOT_CLOSED 29: "the hat needs a lawful
 one-pass passing for monomials of four value legs" (the Boss's #2187 6533115084 item 1, to David and the click's
 deriver, on the architect's measure: with the held hand still under the hat, the held train books the tied spring's
 energy alone, X_held = 2 hold f (k_a . k_b)(|x_a|^2 - |x_b|^2), and B4's pair world opens its books from round 57). It
@@ -38,8 +38,9 @@ alone, every division Rule3's carry, their outputs beside them.
 - **The fourth text** (toys-5 d5745d134) folded them (section 10) and went back to that pair, and both PASSED it, with
   minors and with the lines that rest on frame 6's exact quarter turn named. K = 2 W leaves code by Big Pic's ruling
   (the Boss's 6537340494), and writer D re-lays the held rows' spring off an exact turn.
-- **This text** folds their minors (section 11). Its end pair reads after that re-lay, since the room this page reads
-  rests on the exact turn (section 11).
+- **The fifth text** (toys-5 56da12631) folded their minors (section 11). Writer D's re-lay landed at node-live
+  36fbfbbde: the held rows' own spring is CHOSEN in the universe file, and K = 2 W is gone from code.
+- **This text** reads what the re-lay moved (section 12). Its end pair reads it.
 
 **The finding in one line:** for four value legs the act's passing leaves a residual, -f (e1 - e3); the split at the
 rest closes the books exactly, local, one pass, odd and whole at one scale: a tie's value at the held hand's rest is the
@@ -537,3 +538,41 @@ the usage line (the probes); "in the exchange" in the README row; the scratch-ru
 byte; passing4.py unchanged; on a copy of the run test with "den += 1" added inside the slice, the reader stops with an
 error naming the statement. The text searched again every "no world lays", "convention", "the held hand's rest" and "(a
 . (a+ - b) = 0)".
+
+## 12. Writer D's re-lay, read (the sixth text)
+
+**What landed** (node-live 36fbfbbde, writer D's commit): the held rows' own spring is laid at the strength CHOSEN in
+the universe file under the key "spring", its window 0 < 2 spring < 4 W, on no exact turn; the click and the mesh
+worlds lay it at 10^8, and the run test's pair world takes its own grip at rest, 10^6, written there as den times
+full_rate times full_rate.
+
+**The probes on the new head** (rerun on 36fbfbbde's src):
+- passing4.py: byte for byte its saved output. Its lays are its own, the hat's, and touch no held spring.
+- split4.py: its (b), passing4's three lays, byte for byte (22 lines); at (c), B4's pair world, its world reader stops
+  by name, "not a plain value in the test's world", on the new spring's product. pair_world.py stops the same way at
+  once. That is the reader the fifth text built: it refuses any statement in the test's slice that is not a plain
+  assignment, so it reads no world it cannot read whole. Both probes stand as records of 575973a20, byte for byte
+  there, and re-read no world on the new head.
+
+**What rested on the exact quarter turn, withdrawn as readings of the K = 2 W world:** the room's identity, the split's
+clicks equal to the act's in 56 of 56 rounds at the key times 3; n as the seed's |k|^2 in every round of the room; the
+act booking nothing of the tie to the held train in the room (k_a . k_b = 0); the quarter turn's W_held = 0; t1_seed's
+21 of 21; the room's end at round 57 and the flicker past it; section 1's "frame 6 turns exactly". Off every exact turn
+|k|^2 is not held, and writer D reads the consequence on his world: the held train clicks, and the books open at
+123,066 of 123,795 places of the click world's record from round 1, and in the run test's pair world as well. The room
+was the exact turn's, as this page said.
+
+**What stands:** the finding's algebra, the act's residual -f (e1 - e3) for four value legs and the split at the rest
+closing the books exactly, local, one pass, odd and whole at one scale, on passing4's lays (passing4.py and split4's
+(b), byte for byte on the new head). Where the hat is laid, n is its constant, a law. On the re-laid frame 6, n can no
+longer be read as a held seed's |k|^2, since |k|^2 moves: the split on the click world needs its n from a law, the
+hat's road, OPEN.
+
+**OPEN, named:** the split re-read on writer D's world (the probes' reader taught the new spring's product as a value
+of named integers, or the world laid through the loader), and the room's readings there; the exchange read twice in
+the click world, by Big Pic's methods.
+
+**How the sixth text checked itself:** passing4.py rerun on 36fbfbbde byte for byte; split4.py's first 22 lines
+byte for byte there, the reader's stop named with its own message; writer D's figures quoted from his commit as his,
+not rerun by me. The text searched again every "room", "|k|^2", "quarter turn" and "round 57": outside this section
+each is the fourth and fifth texts' record of 575973a20.
