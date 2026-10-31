@@ -1,0 +1,7 @@
+tensor24: 2 trains; 0 pairs joined by a live term; 0 triangles; 0 sets of four clocks pairwise joined; the widest live term joins 0 trains
+tensor24-click: 5 trains; 3 pairs joined by a live term; 1 triangles; 0 sets of four clocks pairwise joined; the widest live term joins 2 trains
+tensor24-live: 2 trains; 0 pairs joined by a live term; 0 triangles; 0 sets of four clocks pairwise joined; the widest live term joins 0 trains
+tensor24-mesh: 3 trains; 1 pairs joined by a live term; 0 triangles; 0 sets of four clocks pairwise joined; the widest live term joins 2 trains
+tensor24-well: 3 trains; 0 pairs joined by a live term; 0 triangles; 0 sets of four clocks pairwise joined; the widest live term joins 1 trains
+four clocks pairwise joined: the 3-cell's boundary on the four faces [-1, 1, -1, 1] books [0, 0, 0, 0, 0, 0] on the six edges and [0, 0, 0, 0] on the four clocks' lines (C d_3 = 0)
+exit 0
