@@ -103,3 +103,25 @@ def test_a_half_speed_train_is_no_square_nor_held_untied_gripped_and_driven_on_t
         *entries([{"name": "x", "kinds": ["E1/2", "E5/2"], "part": 1}], labels), dims, reads
     ).held
     assert hand == 0  # its kinds wrap onto A1 and A2, at the factor 0
+
+
+def test_a_half_speed_trains_rows_are_its_cosets_each_gear_on_its_cosets_row():
+    """Yes: a gear at each component of each half-speed train laid on its coset's row, the train's first and that index, the
+    last coset's within the train's rows and every other train's rows untouched.
+    No: a component one past the last coset is refused by name, off the train's rows, and laid nowhere."""
+    labels, dims, reads = vocabulary(MADE[0], *MADE[-2:])
+    spins = [{"name": f"spin {n}", "kinds": k, "part": p} for n, (k, p) in enumerate((COSETS, CLASSES))]
+    trains, sites = loading.trains_of(*entries([*CLICKS, *spins], labels), dims, reads), 1
+    for t, gears in zip(range(len(CLICKS), len(CLICKS) + len(spins)), reads[-1].gears, strict=True):
+        laid = [
+            [t, c, 0, c + 1, -c - 1, 0] for c in range(gears)
+        ]  # each coset's gear, its counts its index's
+        (a, b, *_), found = loading.lay(laid, trains, sites, 0)
+        rows = range(trains.first[t], trains.first[t] + gears)
+        assert found == [] and a[list(rows), 0].tolist() == [c + 1 for c in range(gears)]
+        assert not a.sum() - a[list(rows)].sum() and (b[list(rows), 0] == -a[list(rows), 0]).all()
+        universe = {"trains": [*CLICKS, *spins]}
+        (line,) = held_departures(universe, {"gears": [[t, gears, 0, 0, 0, 0]]}, (labels, dims, reads))[
+            -1:
+        ]
+        assert line == f"setting.gears[0]: component {gears} off train {t}'s {gears} rows"

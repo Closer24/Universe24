@@ -138,7 +138,7 @@ def trains_of(kind: Z, of: Z, part: Z, dims: tuple[int, ...], reads: tuple[Z, Z,
 
 
 def lay(gears: list[list[int]], trains: Trains, sites: int, birth: Z) -> tuple[tuple[Z, ...], list[str]]:
-    """The setting's gears laid on the trains' rows, every drive's fine tooth at 0 and every train's click tooth at its birth; a board past the machine's arrays, named."""
+    """The setting's gears laid on the trains' rows, every drive's fine tooth at 0 and every train's click tooth at its birth; a half-speed train's rows its cosets, 8 or 24, its train's gears in the heads' or the classes' order (its part times its kinds' dimensions, as the files admit it), so a half-speed gear's component is its coset's index; a board past the machine's arrays, named."""
     rows = trains.size.sum()
     try:
         a = np.zeros((rows, sites), dtype=object)
