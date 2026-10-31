@@ -1,22 +1,30 @@
-# The floor's balance: masses against bands
+# The floor's balance: springs against bands
 
-David, 2026-10-31, 12:3x UTC, the third text (FLOOR1c), on the Boss's #2187 6543226704 item 1 ("David, FLOOR1c goes to
-the same pair"). Status: **FLOOR1c, for the ALG pair through the Boss.** The ALG pair read FLOOR1b (toys-5 4441901f5):
-its mathematician PASSED it, with no BLOCKING item and nine MINOR; its physicist did not, on one BLOCKING item (B1, the
-steady rest) with eight MINOR; so the pair's verdict was NOT PASSED. FLOOR1 (4cfca9ca7) was read before by a hostile
-pair of David's own ("my pair" below: 3 BLOCKING and 17 MINOR; 3 BLOCKING and 9 MINOR) and by the ALG pair. This text
-folds every item in hand, and section 7 says where.
+David, 2026-10-31, 13:5x UTC, the fourth text (FLOOR1d), on the Boss's #2187 6543685420 item 1 ("David: FLOOR1d folds
+both readers' MINOR items, and the same pair checks it item by item"). Status: **FLOOR1d, for the ALG pair item by item
+through the Boss.** The ALG pair PASSED FLOOR1c (toys-5 cfedc44e4): its physicist with no BLOCKING item and six MINOR,
+its mathematician with no BLOCKING item and nine MINOR. Its verdict on FLOOR1b (4441901f5) was NOT PASSED, on the
+physicist's B1 (the steady rest). FLOOR1 (4cfca9ca7) was read before by a hostile pair of David's own ("my pair" below:
+3 BLOCKING and 17 MINOR; 3 BLOCKING and 9 MINOR) and by the ALG pair. This text folds both FLOOR1c reports item by item,
+with the Boss's corrections of 6543685420 items 2 and 3, and section 7 says where.
 
 **The floor is a consequence of the structure: DERIVED given the springs; that the structure gives them rests on the
-square form, a candidate.** Its statement is entered as a derived result, in the Boss's scoped words of 6543226704 item
-3 (replacing his 11:4x wording, after the owner's question "Why a law when the number follows from the structure?"):
+square form, a candidate.** Its statement is entered as a derived result, in the Boss's words of 6543685420 item 2,
+which replace his 12:4x wording: the scope words are the ALG pair's mathematician's (his MINOR 1), and the clause on the
+two forms is the Boss's ruling on the ALG pair's physicist's M2:
 
 > "The floor comes out of the structure's own masses and bands: DERIVED given the masses; that the structure gives them
-> rests on the square form, a candidate. On one band (the click world's giver and taker), exactly half the band gives
-> the edge, and more than half holds the form. On any structure the edge is at -lambda_min(A) t/2. Under the square form
-> a connected group holds by its springs alone exactly when some loop is frustrated; otherwise it sits at the edge with
-> one free swing, held only while a held hand's swing lends. On the board the run's hold is MEASURED on its lays and
-> windows, within the step's law."
+> rests on the square form, a candidate. On one band with equal springs (the click world's giver and taker), exactly
+> half the band gives the edge, and more than half holds the form. On any structure with equal springs and equal bands
+> the edge is at -lambda_min(A) t/2. Under the square form a connected group holds by its springs alone exactly when
+> some loop is frustrated; otherwise it sits at the edge with one free swing. Under the two laid ties a held hand's
+> swing lends that swing c h^2, and holds it only while it lends, not for good; under David's cell it lends it nothing,
+> and the swing is free at its laid step. On the board the run's hold is MEASURED on its lays and windows, within the
+> step's law."
+
+Outside the line's scope (the ALG pair's mathematician's MINOR 1): unequal springs, whose edge is s_1 s_2 = (t/2)^2 with
+s_1, s_2 >= 0 and whose hold is s_1 s_2 > (t/2)^2 with s_1, s_2 > 0, so that one spring may sit below half (2.1); and a
+band to a held hand, where V >= -(t - 2s)^2 / (4c) at every s >= 0 (2.3's counterexample).
 
 This text states those cases as facts in that form and derives them. The structural line they follow from is Big Pic's
 candidate square form (6542519437 item 6): every form of the law is the square of its own cell's value, so each clock's
@@ -33,47 +41,62 @@ structure. Everything." (10:34, to the Boss); "Why does the law change anything 
 alone?" (11:10, to the Boss); "Maybe it's exactly half then..?" (11:1x); "Why a law when the number follows from the
 structure?" (11:1x). Those without an addressee were to David.
 
+Since FLOOR1b, to the Boss: "Only the third click writes to the board and chooses... it is the important one." (12:23);
+"The clicks' floor, from their structure alone..." (12:25), and "That is what I meant." (12:27), which confirms the
+Boss's reading of 12:25: the floor that keeps the run comes from the clicks' own structure alone, the third click's
+triangle; "In fact the first 2 clicks represent the initial conditions of the universe; the third, the choices that
+change the universe from the path without the choices... Does that make sense?" (12:28). Section 4 reads this text
+against them.
+
 Letters, as on Big Pic's equil.py (bigpic-3clicks 9771a49a4, the click world's own numbers):
 - **W:** the inertia, the rest teeth, 6 grips (load.teeth): 600,000,000.
-- **S:** the held hand's own spring, the grip at rest, den Gamma^2: 100,000,000.
+- **S:** the held hand's own spring, 100,000,000, the grip den Gamma^2 in value. On the probe's src (node-all 9d75a4904)
+  the click world's file chooses it (its "chosen" row: spring 100000000, hold 1, tie 96000, key 50811429); the loader's
+  route to it is node-short's (the Boss's 11:3x ruling).
 - **s:** a clock's own spring, a stiffness. In a field reading it is the mass term (a mass squared), which the owner's
   word names the mass; the board sentences here say spring, and the owner's words stay whole.
 - **t:** the two-leg band between two clocks (the hands' tie, 96,000).
 - **c:** the four-leg tie's factor, hold f, with hold 1 and f = W div Gamma (plans.holding): 60,000.
 - **h:** the held hand's count.
-- **The key:** the click world's key, 50,811,429, set from a run, with its middle 25,405,714 (node-key's). No line here
-  reads it, since equil.py reads no click.
+- **The key:** the click world's key, 50,811,429, set from a run and an interim (below), with its middle 25,405,714
+  (node-key's). No line here reads it, since equil.py reads no click.
 
 A clock's potential terms are s x^2, t x_i x_j and c x_i^2 x_j^2, as his pushes -2 s a_i, -t a_j and -2 c a_i a_j^2 say,
 and a swing's beat squared is 2 s / W. **Interims:** under the strengths line (law line 1,970: every strength from the
-structure, none laid, searched or chosen) the band 96,000 and hold 1 are named interims; the band's route is the one
-cell's 2 f h^2 (CELLS1), and f = W div Gamma is a rule of the grain. Every number here that rests on the band is interim
-too (section 2.2).
+structure, none laid, searched or chosen) the band 96,000, hold 1 and the key 50,811,429 are named interims. A candidate
+route for the band is the one cell's 2 f h^2 (CELLS1, a first text that my pair did not pass; CELLS1b is with the
+MIRACLE pair), and the move from 96,000 to it is a change of the act, the owner's (the Boss's 12:2x ruling); f = W div
+Gamma is a rule of the grain. Every number here that rests on the band is interim too (section 2.2).
 
 **The finding in one line:** on the click world's triangle the band adds t/2 to the giver's and the taker's together
-swing and takes t/2 from their opposite swing, and the held hand lends both c h^2. So, with t > 0, the potential is
-bounded below exactly when s >= t/2 (unequal springs: s_1, s_2 >= 0 and s_1 s_2 >= (t/2)^2), and the springs alone hold
-the form exactly when s > t/2 (s_1, s_2 > 0 and s_1 s_2 > (t/2)^2), with S > 0: the floor's edge and the hold. At
-exactly half the opposite swing is free, held only while what the held hand lends holds it; with the hand at 0 it
-drifts, which the board shows exactly (|g - u| = 8,000 + 2r). On a pair the whole-number edges are the divisor pairs of
-(t/2)^2, a count that depends on the unit. For equal springs and bands on a network within section 2.3's scope the edge
-is at s = -lambda_min(A) t/2. Under the square form which case holds is the structure's: a single band gives the edge,
-and an odd loop of plain bands, a triangle first, gives more than half, by Harary's balance of each loop's parity
-against its reversals.
+swing and takes t/2 from their opposite swing, and under the two laid ties the held hand lends both c h^2. So, with
+t > 0, the potential is bounded below exactly when s >= t/2 (unequal springs: s_1, s_2 >= 0 and s_1 s_2 >= (t/2)^2), and
+the springs alone hold the form exactly when s > t/2 (s_1, s_2 > 0 and s_1 s_2 > (t/2)^2), with S > 0: the floor's edge
+and the hold. At exactly half the opposite swing is free: under the two laid ties it is held only while the held hand's
+swing lends, and not for good, and under the cell (a candidate) it is lent nothing; with the hand at 0 it drifts, which
+the board shows exactly (|g - u| = 8,000 + 2r). On a pair the whole-number edges are the divisor pairs of (t/2)^2, a
+count that depends on the unit. For equal springs and bands on a network within section 2.3's scope the edge is at
+s = -lambda_min(A) t/2. Under the square form which case holds is the structure's: a single band gives the edge, and an
+odd loop of plain bands, a triangle first, gives more than half, by Harary's balance of each loop's parity against its
+reversals.
 
 ## 1. In clocks
 
 - **Two clocks on one band.** Swinging together, the band pulls each back by half its strength more; swinging opposite,
   it pushes each on by half its strength. A clock's own spring s is a stiffness (the owner's word names it the mass).
 - **The held hand lends a spring.** Through its four-leg tie with each it lends c h^2 to the giver and to the taker
-  alike: more when it swings wide, nothing when it passes 0.
-- **The opposite swing keeps s - t/2 + c h^2.** Three cases follow, each a fact of the structure's form:
+  alike: more when it swings wide, nothing when it passes 0. That is under the two laid ties. Under the cell (CELLS1b
+  2.2, a candidate change of the act) the band is the cell's own 2 c h^2 and moves with the held hand, so on the
+  opposite swing the lend and the band's pull cancel at every h (2.1).
+- **The opposite swing keeps s - t/2 + c h^2** under the two laid ties. Three cases follow, each a fact of the
+  structure's form:
   - **more than half (s > t/2):** the springs alone hold the form, whatever the held hand does. On the board the run
-    holds on the lays and windows of section 5, within the step's law: a wide held hand fells it even at s = t (the
-    ALG pair's mathematician: held lays from 90 up fall at lambda 100);
+    holds on the lays and windows of section 5, within the step's law: a wide held hand fells it even at s = t (the ALG
+    pair's mathematician: at lambda 100 the held lays read from 90 to 400 fall while 20 to 80 hold over 5,000 rounds,
+    and at lambda 1 a held lay of 20 already fells s = t, at round 2,751);
   - **exactly half (s = t/2), the floor's edge:** the potential is bounded below, but the opposite swing keeps no spring
-    of its own. It is held only while what the held hand lends holds it. With the hand at 0 it drifts at its own speed,
-    and a positive lend does not hold it for good (the ALG pair's E4 and E6c, section 2.5);
+    of its own. It is free: under the two laid ties held only while the held hand's swing lends, and not for good (the
+    ALG pair's E4 and E6c, section 2.5); under the cell lent nothing. With the hand at 0 it drifts at its own speed;
   - **less than half:** no floor, since the potential falls without bound along the opposite swing with the held hand at
     0. With the hand resting at 0 the pair runs away; with a swinging hand it shows no fall only over the windows read,
     while the lend holds it (section 4).
@@ -84,7 +107,8 @@ against its reversals.
 
 ### 2.1 The pair: the edge and the hold
 
-- The click world's triangle with an own spring s on the giver (g) and the taker (u):
+- The click world's triangle with an own spring s on the giver (g) and the taker (u), under the two laid ties and the
+  laid band:
   V(g, u, h) = s g^2 + s u^2 + t g u + c h^2 (g^2 + u^2) + S h^2 = [g u] M(h) [g u]^T + S h^2, with
   M(h) = M(0) + c h^2 I and M(0) = [[s, t/2], [t/2, s]]. Here t > 0 (the file's 96,000); for t < 0 the soft swing is the
   together one and |t| replaces t. Below, t is not 0.
@@ -104,6 +128,10 @@ against its reversals.
 - **At the edge the free swing keeps no spring of its own:** its spring is the lend c h^2 alone. On g = o, u = -o the
   push -2 s g - t u is -(2 s - t) o, exactly 0 at s = t/2 in whole numbers, so with the held hand at 0 a moving free
   swing drifts at constant speed.
+- **Under the cell** (CELLS1b 2.2, a candidate change of the act): the two ties and the band are one square,
+  c (h (g + u))^2, so the band is 2 c h^2 and moves with h. Then M(h) = (s + c h^2) I + c h^2 X: the together swing
+  holds s + 2 c h^2 and the opposite swing s alone, at every h. At s = 0 the opposite swing is free at every h, and at
+  h = 0 both swings are free (held_cells.txt: the square on u = -g is 0).
 
 ### 2.2 The whole-number edges on a pair, and the interims
 
@@ -167,10 +195,11 @@ against its reversals.
   143-146): an even loop carries an even number of reversed bands, and an odd loop an odd number. Then the group sits at
   the floor's edge with one free swing, and a group with no loop always does. It holds by its springs alone exactly when
   some loop's parity and reversal disagree: frustration.
-- **So:** the click world's single giver-taker band gives the edge, s = t/2, its free swing the opposite swing, held by
-  the lend alone. The equilateral triangle of plain two-leg bands gives each clock t, more than half: its swings summing
-  to 0 hold t/2 each and its common swing 2t. The plain triangle is the smallest frustrated loop. A reversed odd loop
-  sits at the edge, and a reversed even loop holds.
+- **So:** the click world's single giver-taker band gives the edge, s = t/2, its free swing the opposite swing: free,
+  held only while the held hand's swing lends and not for good under the two laid ties (2.5), and lent nothing under the
+  cell (2.1). The equilateral triangle of plain two-leg bands gives each clock t, more than half: its swings summing to
+  0 hold t/2 each and its common swing 2t. The plain triangle is the smallest frustrated loop. With one band reversed,
+  an odd loop sits at the edge and an even loop holds; an even loop with every band reversed sits at the edge.
 - **The ring rule** (ring_balance.py, exact, rings of 3 to 10 clocks): under the square form a ring's form is
   (t/2)(2 I + A). Then det(A + 2I) = 0 exactly when parity and reversal agree (an even ring with no band reversed, an
   odd ring with one), and 4 otherwise, as the periodic transfer form det(A + 2I) = 2 - 2 (-1)^n sigma says (sigma the
@@ -186,7 +215,8 @@ against its reversals.
 
 - **The owner's word to David at 11:1x:** "Maybe it's exactly half then..?"
 - **At exactly half (s = t/2) the opposite swing keeps no spring of its own:** its spring is the held hand's lend alone,
-  c h^2. With the held hand resting at 0 it drifts (2.1; section 5's rows with the hand at 0; the ALG pair's edge).
+  c h^2, under the two laid ties, and 0 under the cell (2.1). With the held hand resting at 0 it drifts (2.1; section
+  5's rows with the hand at 0; the ALG pair's edge).
 - **A positive lend does not hold the pair for good.** FLOOR1b's "the pair is held exactly while that lend stays
   positive" is withdrawn (the ALG pair's mathematician): the ALG pair's E4 falls at round 106,411 on a lay the files
   allow, with the held hand swinging, and its E6c drifts to |g - u| = 74,671,136, both reproduced by him on FLOOR1b's
@@ -195,19 +225,34 @@ against its reversals.
   V = hat (|k|^2 - n)^2). What stands of it:
   - **the algebra at a rest (DERIVED):** with the hand still at |k|^2 = n the lend is c n, and at s = t/2 the pair's
     form [[t/2 + c n, t/2], [t/2, t/2 + c n]] is positive definite; a steady rest would ask s > t/2 - c n;
-  - **whether a rest exists:** beside the held hand's own spring S, a nonzero rest exists exactly when
-    2 hat n > S + c (g^2 + u^2) (the ALG pair's physicist, B1);
-  - **G3's two bounds:** the frozen guide, 20 hat R^2 below 4 W, necessary at the rest and not sufficient; and the bound
-    measured over long runs for swings that reach the top, 20 hat n at most W. G3 also finds the angle "neutral, not
-    stable", with the free turn's linear drift and the edge's rounding drift;
-  - **under the measured bound** 2 hat n is at most W / 10 = 60,000,000, below S = 100,000,000, so no rest exists beside
-    S on the click world (MEASURED by the ALG pair's physicist: 0 of 40 rests at the bound's largest hat, with or
-    without the shipped lend);
-  - **under the frozen guide** a rest exists at the pair's rest for hat n above S/2 and below 6S/5, and it closes as the
-    pair widens, about 41 to 48 units on the click world: a narrow window, a local hold below the hat's height (the ALG
-    pair's mathematician's Q3; the Boss's 6543226704 item 2).
-- **Withdrawn:** FLOOR1b's "on the click world's numbers with n = 1, c n = 60,000 > t/2 = 48,000, so even s = 0 would
-  hold the pair for a still held hand" (David's 6543168386 item 6).
+  - **whether a rest exists:** write A = S + c (g^2 + u^2), the held hand's own spring with the pair's lend. A nonzero
+    rest exists exactly when 2 hat n > A (the ALG pair's physicist, B1), at |k|^2 = n - A / (2 hat);
+  - **G3's two bounds, as G3 reads them** (the ALG pair's mathematician's MINOR 2): the frozen bound is a guide, "only
+    its form at the rest, 2 SUM_6 g + 8 hat n < 4 W, being necessary (for the linearization there), and it is not
+    sufficient" (G3's g there the grips of six Meshes, none on the Mesh-less held hand), and its form 20 hat R^2 below
+    4 W is the stiffness at the far turn of a hand that rolls from the top, not the rest's; the measured bound, 20 hat n
+    at most W, is "the window for swings that reach the top", measured Mesh-less at R = 244 and 3,125 only and failing
+    at small R (4 to 40), the frame's lower bound on R OPEN. G3 also finds the angle "neutral, not stable", with the
+    free turn's linear drift and the edge's rounding drift;
+  - **the window at the rest** (DERIVED by the ALG pair's mathematician; the Boss's 6543685420 item 3): the stiffness at
+    the rest is 4 (2 hat n - A), so the guide's form at the rest asks 2 hat n < A + W, and with the rest's existence
+    A < 2 hat n < A + W. At the pair's rest, where A = S and W = 6 S, that is S/2 < hat n < 7S/2. Both ends rise with A,
+    so the window does not close as the pair widens. The far turn of a hand that rolls from the top, at
+    |k|^2 = 2n - A / hat with stiffness 20 hat n - 10 A, gives A/2 < hat n < A/2 + W/5: a band of width 6S/5 at every A,
+    which does not close either;
+  - **what stands:** whatever the window, a rest beside S holds the free swing only locally, below its height
+    (2 hat n - A)^2 / (4 hat) above the rest, the swing being flat at hat n^2 along h = 0 (the ALG pair's
+    mathematician's). None of this binds road B's dialed held hand.
+- **Withdrawn:**
+  - FLOOR1c's "no rest exists beside S on the click world" under G3's measured bound, and section 6's "none under the
+    measured one": that bound is for swings that reach the top, and a hand held still at its rest makes none. The ALG
+    pair's physicist's 0 of 40 at the bound's largest hat checks the condition 2 hat n > S at 2 hat n = W / 10 and tests
+    no rest inside G3's window;
+  - FLOOR1c's window "for hat n above S/2 and below 6S/5", which "closes as the pair widens, about 41 to 48 units": it
+    added S and the lend to the hat-alone far turn at 2n, or took 20 hat n < 4 W with no S (the ALG pair's mathematician
+    withdrew his FLOOR1b Q3 claim, and the Boss his 12:4x line, 6543685420 item 3);
+  - FLOOR1b's "on the click world's numbers with n = 1, c n = 60,000 > t/2 = 48,000, so even s = 0 would hold the pair
+    for a still held hand" (David's 6543168386 item 6).
 - **Under Big Pic's "no hat"** (6543103691 item 7, agreed in the Boss's 6543120369 item 4) the question rests. Which
   window would bind a hat on road B, where the held hand is dialed, is Big Pic's. The steady-rest clause stays out of
   the floor line.
@@ -242,18 +287,25 @@ against its reversals.
     against the mean lend's 0.0111 from that window's held square of 0.19 (the control reads 0.1886 for rounds 251 to
     500). It is clean at lambda 1000, where s = 0 falls at round 4,373 with the giver at minus the taker (68,878,921
     against 68,879,006 units);
-  - its growth past 32 bits is the explicit step outside its law: at round 818 the returning swing kicks the held count
-    to 371.97 units (Big Pic's 37,197^2), 2 c h^2 / W reaches 27.7, above 4, the pair grows about 25.6-fold a round with
-    a sign flip each round, the held dial is below 0 from round 823, and the giver and the taker are no longer opposite
-    (6.04e8 against -3.21e8);
-  - its rounds, by the probe at fall bits 8 to 20 (the ALG pair's mathematician's item): a count passes 8 bits past the
-    giver's lay at round 824, 10 to 14 bits past it at 825, 16 and 18 at 826, and 20 at 827, the probe's fall line.
+  - its growth past 32 bits is the explicit step outside its law: the returning swing kicks the held count from 51.13
+    units at round 818 to 371.27 at round 823 and 371.97 from round 824 (Big Pic's 37,197^2), where 2 c h^2 / W reaches
+    27.7, above 4; the pair grows about 25.6-fold a round with a sign flip each round, the held dial is below 0 from
+    round 823, and the giver and the taker are no longer opposite (6.04e8 against -3.21e8);
+  - its rounds, by the probe at fall bits 8 to 20 (the ALG pair's mathematician's item; the rows frozen in
+    floor_balance.txt): a count passes 8 bits past the giver's lay at round 824, 10 to 14 bits past it at 825, 16 and 18
+    at 826, and 20 at 827, the probe's fall line.
 
 ## 4. Toward the clicks
 
 - **Only board counts are read here.** The guiding line of 10:37 has two halves: the board fixed from start to end, and
-  the clicks choosing the path. This text reads the first half alone, board counts, and no click is read (the probe's
-  own line). The second half, what the clicks read at the edge and above, is OPEN and Big Pic's.
+  the third click choosing the path (the owner's 12:23 word, "Only the third click writes to the board and chooses", and
+  the Boss's ruling on it). This text reads the first half alone: every row is the board's run with no click writing,
+  "the path without the choices" of the owner's 12:28 word, and no click is read (the probe's own line). The second
+  half, what the clicks read at the edge and above, is OPEN and Big Pic's.
+- **The floor that keeps the run** (the owner's 12:25 word, his 12:27 confirming the Boss's reading of it): the board's
+  own form gives the click world's free swing no lasting hold under the two laid ties, and none at all under the cell
+  (2.1, 2.5). So the floor that keeps the run is the clicks' own structure's to give, the third click's triangle: Big
+  Pic's check, OPEN. Until it is made, the floor line is the board's floor, not the clicks'.
 - **The passing at the edge, by grain** (section 5, the giver's count at the round of the taker's largest count):
   - lambda 1000: whole, the taker at 40.164 units (round 2,227) while the giver is at 0.138;
   - lambda 100: partial, the taker at 46.77 (round 4,537) with the giver at -7.02. The 46 above the lay's 40 is the
@@ -296,10 +348,15 @@ against its reversals.
 - **The shipped fall:** the held hand's plain spring has its rest at 0, so its swing passes 0 and the lend with it. At
   the shipped lay the mean lend, about 0.6 c = 36,000, is below t/2 = 48,000 at s = 0, and the pair falls: at round 827
   at lambda 100, 4,373 at lambda 1000, 1,371 at lambda 10^5 and 1,409 at lambda 10^6. At lambda 1 and 10 the walk's heat
-  keeps it from falling over 5,000 rounds; at lambda 1 it falls at round 9,581.
-- **A wide held hand fells the run even above half:** held lays from 90 up fall at lambda 100 at s = t (MEASURED, the
-  ALG pair's mathematician). So the hold above half is the form's, DERIVED, and the board's run is MEASURED, within the
-  step's law.
+  keeps it from falling over 5,000 rounds; at lambda 1 it falls at round 9,581. Beside the triangle's fall stand
+  node-all's own on its whole click world: the shipped runner's round 3,752 at lambda 1, and under road B on node-all's
+  act round 9,582, a count past 32 bits (the MIRACLE physicist's, 12:2x, the model equal to the act in 38 of 38
+  windows). The probe's lambda 1 control falls at round 9,581 at 20 bits past the giver's lay and at round 9,582 at 26,
+  a count past 32 bits: one fall, read at two widths (the ALG pair's mathematician's; both rows in section 5).
+- **A wide held hand fells the run even above half:** at s = t and lambda 100 the held lays read from 90 to 400 fall
+  while 20 to 80 hold over 5,000 rounds, and at lambda 1 a held lay of 20 already fells s = t, at round 2,751 (MEASURED,
+  the ALG pair's mathematician). So the hold above half is the form's, DERIVED, and the board's run is MEASURED, within
+  the step's law.
 - **The steady rest** is set aside (2.5).
 
 ## 5. Measured (floor_balance.txt, by the probe's copy)
@@ -315,11 +372,24 @@ Its inputs, frozen with the text by path and sum:
 - Big Pic's equil.py, tools/derivations/open_items/derive/bigpic/miracle/equil.py at bigpic-3clicks 9771a49a4, sha256
   0c4c936d3e816efd59d1d6226b6b5fd72a6c9ea53a114d302b7eb776183c2e4e;
 - node-all 9d75a4904's src, as `git archive 9d75a4904 src`, sha256
-  0881d3f006498bc5aed250e538a935ca9658a7eac6e51af3e47821d99a983757 (the tree 83c9e3ebd1240d8d77daa02559bbb61f3c9bdc18).
+  0881d3f006498bc5aed250e538a935ca9658a7eac6e51af3e47821d99a983757 (the tree 83c9e3ebd1240d8d77daa02559bbb61f3c9bdc18);
+- the control's references, Big Pic's tools/derivations/open_items/derive/bigpic/miracle/split_bedge_x100_5000.txt,
+  sha256 8df8487912006c91fa292955fd570cf6892f799fdadb23bded4a81a98824cd9b, and equil_5000.txt beside it, sha256
+  70075548a66bde99b3307558023de904ea12acdb817c0b010cbe7b9388b22565, alike at bigpic-3clicks 2a839f25f and 9771a49a4.
+
+Cited beside the probe: held_cells.py and its output held_cells.txt (CELLS1b's probe in the same folder, sha256
+d61f991040c8c4984d5a9f75570c35df36fc072d1b0713af4b85b30dc9afbc44 and
+f763bbdd7ee607d43c2ca52d1e1e88c5303e6c67f7775b90dfdc9e10270c658a), for the letters' grain rules (W = 6 grips, f = W div
+Gamma = 60,000, S = the grip), for the cell's square on the opposite swing, 0 (2.1), and for the hat's least at k = 0 at
+the measured bound's top, hat n = W / 20, where the condition 2 hat n > S fails (2.5). Its row labelled "G3's frozen
+guide ... at its edge" (hat n = W / 5) is a point inside 2.5's window at the rest; its label's reading goes to CELLS1c.
 
 - **The control,** as shipped (s = 0, held lay 1, lambda 100): the largest held square per 250 rounds 12,996, 8,464 and
   33,489 counts^2 (means 5,672, 1,886 and 8,300), then the fall at round 827: Big Pic's whole click world's walk
   (split_bedge_x100_5000.txt), read on his triangle alone.
+- **The fall's rounds by fall bits,** the control run to its fall: a count passes 8 bits past the giver's lay at round
+  824; 10, 12 and 14 bits at 825; 16 and 18 at 826; 20 at 827. At lambda 1 the control falls at round 9,581 at 20 bits
+  and at round 9,582 at 26 bits, a count past 32 bits.
 - **The held hand as shipped (held lay 1), 5,000 rounds:**
   - lambda 100: 1/4, 3/10 and 3/8 of t/2 fall (rounds 2,813, 4,841 and 4,136); 2/5, 9/20, 1/2, 9/10, 99/100 and 1 show
     no fall over 5,000 rounds; 11/10 and 2 hold;
@@ -348,9 +418,10 @@ Its inputs, frozen with the text by path and sum:
   held hand at 0 and the pair's difference moving, |g - u| = 8,000 + 2r (reproduced above); on a lay the files allow
   (the held hand swinging, the difference moving, lambda 100) a fall at round 106,411; at lambda 10 the held swing
   drains to 0 by round 60,000 and the pair then drifts; at 11/10 and 2 times t/2 the same lays hold.
-- **The ALG pair's mathematician's rows** on FLOOR1b's own probe (S/floor1b_mat, cited as his): E4's fall at round
-  106,411 and E6c's |g - u| = 74,671,136 reproduced; a wide held hand fells the run at s = t, held lays from 90 up at
-  lambda 100.
+- **The ALG pair's mathematician's rows** on FLOOR1b's own probe (S/floor1b_math, cited as his): E4's fall at round
+  106,411 and E6c's |g - u| = 74,671,136 reproduced; a wide held hand fells the run at s = t: at lambda 100 the held
+  lays read from 90 to 400 fall while 20 to 80 hold over 5,000 rounds, and at lambda 1 a held lay of 20 falls at round
+  2,751.
 - In every row with no fall, the identity is exact in every round and the run back is exact; every fallen row keeps the
   identity to its fall.
 
@@ -368,21 +439,26 @@ Its inputs, frozen with the text by path and sum:
 - **DERIVED (2.4):** under the square form the bound on every structure, the edge exactly on the groups whose loops all
   balance (Harary, cited) and the hold on the frustrated ones; the ring rule, checked on rings of 3 to 10 clocks with
   its closed form.
-- **Set aside (2.5):** the steady rest. Its algebra at a rest is DERIVED; whether a rest exists beside S rests on G3's
-  two bounds (none under the measured one, a narrow local window under the frozen guide); under "no hat" the question
-  rests.
+- **Set aside (2.5):** the steady rest. Its algebra at a rest is DERIVED. A rest beside S needs A < 2 hat n < A + W at
+  the rest (S/2 < hat n < 7S/2 at the pair's rest), a window that does not close as the pair widens, and it holds only
+  locally, below its height (DERIVED by the ALG pair's mathematician). G3's measured bound is for swings that reach the
+  top and excludes no still rest. Under "no hat" the question rests.
 - **MEASURED:** section 5; the readers' and the ALG pair's rows cited as theirs.
-- **The floor's statement:** entered as a derived result in the Boss's scoped words (6543226704 item 3): DERIVED given
-  the springs; that the structure gives them rests on the square form, a candidate law line once its pair passes it
-  and the owner approves.
+- **The floor's statement:** entered as a derived result in the Boss's words (6543685420 item 2), which name its scope
+  and both forms: DERIVED given the springs; that the structure gives them rests on the square form, a candidate law
+  line once its pair passes it and the owner approves.
 - **OPEN:**
   - which own springs and bands the one algebra gives, and so which case holds where: Big Pic's check (under the square
     form a single band gives the edge and an odd loop of plain bands more than half);
+  - whether the third click's triangle gives the floor that keeps the run (the owner's 12:25 and 12:27 words): Big Pic's
+    check;
   - what the clicks read at the edge and above, the guiding line's second half: Big Pic's;
   - whether the run keeps every held dial >= 0 and its swings resolved, and the walk (section 3);
   - which window would bind a hat on road B, where the held hand is dialed, should a hat return (2.5): Big Pic's;
-  - the interims: the band 96,000 and hold 1, and with them 48,000, the counts 315 and 2,139, and the edges of no fall
-    below the balance;
+  - whether node-all's tied trains meet 2.3's scope: on the signed-permutation kinds the lend is diagonal by Schur's
+    lemma, while a kind-E train lends off the diagonal, outside the scope (the ALG pair's mathematician's);
+  - the interims: the band 96,000, hold 1 and the key 50,811,429, and with the band 48,000, the counts 315 and 2,139,
+    and the edges of no fall below the balance;
   - any mass of nature, and any physics from these board readings.
 
 ## 7. How this text checked itself, and where each item is folded
@@ -396,9 +472,14 @@ Its inputs, frozen with the text by path and sum:
     my pair's mathematician's check of every network of up to seven clocks;
   - 2.4 by ring_balance.py (exact determinants by Bareiss's elimination, every division the carry's with its remainder
     checked 0, only the two shifts tested), on rings of 3 to 10 clocks, plain and with one band reversed;
-  - 2.5 by the linear form at the rest and the rest's condition, with the Boss's and the ALG pair's readings cited; no
-    board run;
-  - the fall's rounds in section 3 by the probe at fall bits 8 to 20;
+  - 2.5 by the linear form at the rest, the rest's condition, and the stiffness at the rest, 4 (2 hat n - A), and at the
+    far turn, 20 hat n - 10 A, written out and checked in whole numbers at (A, hat, n) = (100, 50, 3): the rest at
+    |k|^2 = 2 with stiffness 800, the far turn at |k|^2 = 4 with stiffness 2,000, and the height 200, as the ALG pair's
+    mathematician's rest_check.py gives; no board run;
+  - the letters' grain rules and 2.1's cell bullet by held_cells.py, rerun unchanged byte for byte (section 5);
+  - the fall's rounds in sections 3 and 4 by the probe at fall bits 8 to 20 and, at lambda 1, at 20 and 26, the rows
+    frozen in floor_balance.txt; the held count at rounds 818, 823 and 824 by the probe run to those rounds (5,113,
+    37,127 and -37,197 counts at lambda 100);
   - section 5 by the probe's copy; its control reproduces Big Pic's three held squares and his round of the fall, and
     every FLOOR1 row reproduces, now with the added fields.
 - **My pair's mathematician's items (FLOOR1):** B1, the networks in the finding line, folded in the finding line and
@@ -432,7 +513,21 @@ Its inputs, frozen with the text by path and sum:
     sections 1, 4 and 5; "held exactly while that lend stays positive" withdrawn in 2.5; the header's DERIVED made
     conditional on the square form, in the header and section 6; the frustrated loop as an odd loop of plain bands, in
     the finding line and section 6; the fall from round 818 to 824 in section 3; each mathematician named by his pair,
-    throughout; the freeze's inputs by path and sum, in section 5. The report's other two are owed by the Boss's
-    inputs pack;
+    throughout; the freeze's inputs by path and sum, in section 5. The report's other two, his MINOR 2 (the statement's
+    scope) and 3 (the steady rest), were ruled at 12:4x and are folded through the floor line and 2.5;
   - the Boss's corrections: G3's window (6543226704 item 2) in 2.5; the scoped floor line (item 3) in the header and
     section 6; no hat (Big Pic's 6543103691 item 7, agreed) in the header, 2.5 and section 6.
+- **The ALG pair's items on FLOOR1c** (both readers PASSED it):
+  - the physicist's M1 ("held by the lend alone") in 2.4, with its kin in the finding line and section 1; M2 (the form
+    of the edge clause) in the floor line, the finding line, section 1 and 2.1's last bullet; M3 (the owner's words of
+    12:23, 12:25 with 12:27, and 12:28) in the owner's words and section 4; M4 (held_cells.py cited) in sections 5 and
+    7; M5 (the fall-bits rows) in section 5 and floor_balance.txt; M6 (the key among the interims, and the title) in the
+    letters and the title;
+  - the mathematician's MINOR 1 (the scope words) in the floor line and the paragraph after it; MINOR 2 (G3's two bounds
+    and the window) in 2.5 and section 6; MINOR 3 (the band's route a candidate; S chosen by the file on node-all) in
+    the letters; MINOR 4 (the owner's words since FLOOR1b) in the owner's words, section 4 and section 6; MINOR 5 ("with
+    one band reversed") in 2.4; MINOR 6 (the sentence at round 818) in section 3; MINOR 7 (node-all's falls; the trains
+    and 2.3's scope) in sections 4, 5 and 6; MINOR 8 (the control's references by path and sum) in section 5; MINOR 9
+    (S/floor1b_math, the lays read, the README's row, the two items named) in sections 1, 4, 5 and 7 and the README;
+  - the Boss's corrections of 6543685420: item 2 (the floor line) in the header and section 6; item 3 (the window at the
+    rest) in 2.5 and section 6; item 4 (my clash with FLOOR1c) met by the floor line's two forms.
