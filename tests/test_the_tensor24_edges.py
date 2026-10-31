@@ -17,7 +17,9 @@ from tensor24.runner.rewind import rewind
 from tests import frame
 
 ROOT = Path(__file__).resolve().parents[1]
-KEY = 1000003  # the test's key, odd and above 1, so that the teeth move (the readers' B2 and B3); never a world's
+# odd and above 1, so the teeth move (the readers' B2 and B3); never a world's: the mesh world's key 3 divides every
+# passing there (their gcd 30000, AUDIT2's C), so no tooth of a shipped world moves; a finer key is the owner's batch
+KEY = 1000003
 ROUNDS = 25  # the mesh world's rounds past its first Mesh click, round 20 on its lay
 CUBE = [3, 3, 3]  # a cube in memory
 

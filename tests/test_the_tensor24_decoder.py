@@ -358,16 +358,14 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
 
 
 def test_the_click_world_reads_the_books_no_own_count_and_no_cone_where_none_could_be_outside(tmp_path):
-    """Yes: q summing to 0 at every place, the books SHOWN; D6 and D7 not read; at round 2, the lay's reach, no line
+    """Yes: q summing to 0 at every place, the books SHOWN; at round 2, the lay's reach, no line
     could stand outside the cone, not read. No: a quantum across a Mesh two Meshes from the lay at round 1, the cone
     NOT SHOWN, its books closed at both places; a line with no q, not read; no click line: NO CLICK, refusal last."""
     # a ring of five sites, its setting laying one gear, at site 0
     lay = json.dumps({"version": 1, "ticks": 6, "gears": [[0, 0, 0, 1, 0, 0]]})
     ring = {**H, "sides": [5, 1, 1], "files": [{"name": "setting.json", "text": lay}]}
     world = shadow.shadow(read([ring, *met(1 + 1, 1 + 1), E], tmp_path))  # two Meshes from the lay
-    d6, d7 = world[shadow.DURATION]["cause"], world[shadow.TWINS]["cause"]
-    assert [v["kind"] for v in world.values()] == ["SHOWN", "NOT READ", "NOT READ", "NOT READ"]
-    assert d6 == shadow.NO_COUNT and d7 == shadow.AT_NODE
+    assert [v["kind"] for v in world.values()] == ["SHOWN", "NOT READ"]
     give = {**TOOK, "sides": [], "across": [[0, 1 + 1, 1, 3, 0]]}
     apart = [
         give,

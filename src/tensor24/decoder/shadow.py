@@ -1,7 +1,7 @@
 """Clock: the board's physics read in its shadow, the click world (the owner's law of 23:4x UTC), as the clocks' meetings (the owner's word of 00:3x UTC): each event one quantum passing from one clock to another at one place, with no time axis but the events' order and each clock's count, and space read only by light's echo; the record's header and its click lines are read, nothing of the board's state, so no claim stands on a board reading alone.
 Algebra: whole counts and sums: at every place, a round and a Node-clock with click lines, the sum of q over the trains, each side across a Mesh booked at both its places, and each line's q, a meeting one give of q -1 and one take of q +1 on one edge, a side and its mirror, the lines of q 0 that carried on no side dropped; per clock, a site and a train, its meetings counted and its given, taken and net; the cone one Mesh a round, the Meshes the shorter way round each side by Rule3's carry (measure.meshes), the lay's reach the most of them from a site to its nearest laid site; no float, no root and no search.
-Board: the record's header (its sides, its train cards, and its setting file, setting.json by its name, read for its gears, each a site on the board with its counts and its tooth, the sites laid those with a count or a tooth not 0) and its click lines, each a round, a site, a train and its q, with its edge sides in its site and across a Mesh; nothing of the board's state, no slot, plan or act.
-Clicks: seven readings, each read SHOWN, or NOT SHOWN with its first counterexample named, or NOT READ with its cause named, or NO CLICK, the owner's phrase, where the record holds no click line, before any other cause: shadow's four, the books at each click (row 15's first reading on clicks.py's counts, in row 15's order), a duration as a clock's own count (D6) and the twins (D7), not read, the act holding no clock's own count and every clock standing at its Node-clock, and the cone check by click (D8 on measure.past), not read where no line could stand outside the lay's cone; and the click board's three, the meetings, each clock's line of meetings, the order counted with no duration, and space by light's echo (reading 7), not read while no rule tells light's click lines from the others.
+Board: the record's header (its sides, its train cards, and its setting file, the last of its files in the run's order, read for its gears, each a site on the board with its counts and its tooth, the sites laid those with a count or a tooth not 0) and its click lines, each a round, a site, a train and its q, with its edge sides in its site and across a Mesh; nothing of the board's state, no slot, plan or act.
+Clicks: four readings, each read SHOWN, or NOT SHOWN with its first counterexample named, or NOT READ with its cause named, or NO CLICK, the owner's phrase, where the record holds no click line, before any other cause: the books at each click (row 15's first reading on clicks.py's counts, in row 15's order) and the cone check by click (D8 on measure.past), not read where no line could stand outside the lay's cone; and the click board's two, the meetings and each clock's line of meetings, the order counted with no duration. Owed and not built, so no verdict is typed for them: a duration as a clock's own count (D6) and the twins (D7), the act holding no clock's own count, and space by light's echo (reading 7), no rule yet telling light's click lines from the others.
 """
 
 import json
@@ -14,20 +14,11 @@ from tensor24.record import schema
 
 ABSENT = "NO CLICK"
 NO_LINE = "the record holds no click line: not in the click world"
-NO_COUNT = "the act holds no clock's own count and the record writes none; the click teeth are the books' remainders"
-AT_NODE = "every clock stands at its Node-clock: a clock is (site, train), so no two clocks meet twice by two paths"
-NO_ECHO = (
-    "light's echo is not read: no rule yet tells light's click lines from the others (reading 7, owed)"
-)
 ORDER = "the order counted, no duration"
-SETTING = "setting.json"  # the setting file, by the name the record's header gives it
 BOOKS = "the books at each click"
-DURATION = "a duration as a clock's own count (D6)"
-TWINS = "the twins (D7)"
 CONE = "the cone check by click (D8)"
 MEETINGS = "the meetings"
 LINES = "each clock's line of meetings"
-ECHO = "space by light's echo between clocks (reading 7)"
 Verdict = dict[str, Any]
 Clock = tuple[int, int]  # a site and a train: one clock of the record, its own line of events
 
@@ -197,45 +188,21 @@ def clock_lines(record: Record) -> Verdict:
     return measure.verdict("SHOWN", cause, clocks=clocks)
 
 
-def not_read(record: Record, cause: str) -> Verdict:
-    """NO CLICK, the owner's phrase, on a record that holds no click line, before any other cause; else NOT READ with the cause named."""
-    if not clicks.listed(record):
-        return measure.verdict(ABSENT, NO_LINE)
-    return measure.verdict("NOT READ", cause)
-
-
-def duration(record: Record) -> Verdict:
-    """A duration only as a clock's own count (D6): not read, the act holding no clock's own count, so the record writes none, the click teeth the books' remainders."""
-    return not_read(record, NO_COUNT)
-
-
-def twins(record: Record) -> Verdict:
-    """The twins (D7), two clocks that meet twice by two paths: not read, every clock standing at its Node-clock, so no two clocks meet twice by two paths."""
-    return not_read(record, AT_NODE)
-
-
-def echo(record: Record) -> Verdict:
-    """Space by light's echo between clocks (reading 7, owed), computed on the record: NO CLICK on a record of no click line, else NOT READ, no rule yet telling light's click lines from the others."""
-    return not_read(record, NO_ECHO)
-
-
 def laid(record: Record, sides: list[int], size: int) -> tuple[set[int], str]:
-    """The sites the setting file lays, found by its name, a gear there with a count or a tooth not 0 (the runner's six whole numbers: train, component, site, the counts a and b, the tooth r), each gear's site on the board; or why it is not read."""
-    files = [
-        f for f in record.header.get("files", []) if isinstance(f, dict) and f.get("name") == SETTING
-    ]
+    """The sites the setting file lays, read by its place, the last of the header's files in the run's order (universe, piece, setting), a gear there with a count or a tooth not 0 (the runner's six whole numbers: train, component, site, the counts a and b, the tooth r), each gear's site on the board; or why it is not read."""
+    files = [f for f in record.header.get("files", []) if isinstance(f, dict)]
     if not files:
-        return set(), f"the header holds no setting file {SETTING}"
-    text = files[0].get("text")
+        return set(), "the header holds no files"
+    text = files[-1].get("text")
     try:
         held = json.loads(text) if isinstance(text, str) else None
     except ValueError, RecursionError:
         held = None
     if not isinstance(held, dict):
-        return set(), f"the setting file {SETTING} is no JSON object"
+        return set(), "the setting file is no JSON object"
     gears = held.get("gears")
     if not (isinstance(gears, list) and gears):
-        return set(), f"the setting file {SETTING} holds no gears"
+        return set(), "the setting file holds no gears"
     sites: set[int] = set()
     for n, gear in enumerate(gears, start=1):
         match gear:
@@ -285,10 +252,10 @@ def cone(record: Record) -> Verdict:
 
 
 def shadow(record: Record) -> dict[str, Verdict]:
-    """The click world's four readings, each its verdict, NO CLICK in each on a record that holds no click line."""
-    return {BOOKS: books(record), DURATION: duration(record), TWINS: twins(record), CONE: cone(record)}
+    """The click world's two readings on the record, the books and the cone, each its verdict, NO CLICK in each on a record that holds no click line."""
+    return {BOOKS: books(record), CONE: cone(record)}
 
 
 def click_board(record: Record) -> dict[str, Verdict]:
-    """The click board read as the clocks' meetings (the owner's word of 00:3x UTC): the meetings, each clock's line of meetings and light's echo, each its verdict, NO CLICK in each on a record that holds no click line."""
-    return {MEETINGS: meetings(record), LINES: clock_lines(record), ECHO: echo(record)}
+    """The click board read as the clocks' meetings (the owner's word of 00:3x UTC): the meetings and each clock's line of meetings, each its verdict, NO CLICK in each on a record that holds no click line."""
+    return {MEETINGS: meetings(record), LINES: clock_lines(record)}

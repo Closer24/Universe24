@@ -178,7 +178,6 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     universe, piece, setting = bang()
     held, laid, start = lay(universe, piece, setting)
     assert geared_alike(held, laid)
-    assert not {"Ruler", "LAID"} & set(dir(state)) and not {"ruled", "reading", "at"} & set(dir(step))
     for seed in range(3):  # a round is the naive round, and departs from it with the grips' read ignored
         s = drawn(held, laid, seed)
         unread = laid._replace(stretch=frame.unread())

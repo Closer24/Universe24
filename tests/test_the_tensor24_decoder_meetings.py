@@ -1,5 +1,5 @@
 """Tensor24's decoder, its click-board file: the click board read as the clocks' meetings (FRAMES.md 13b), the meetings,
-each clock's line of meetings and light's echo, and the fourth code reader's fold of the click world's four readings,
+and each clock's line of meetings, and the fourth code reader's fold of the click world's readings,
 each with its yes, its no and the mutant it catches."""
 
 import json
@@ -17,9 +17,6 @@ CARDS = [{"index": t, "label": label, **CARD} for t, label in enumerate("abc")]
 END = {"kind": "end", "rounds": 9, "undone": 0, "exact": 1}
 # the owner's phrase
 NONE = {"kind": "NO CLICK", "cause": "the record holds no click line: not in the click world"}
-ECHO = (
-    "light's echo is not read: no rule yet tells light's click lines from the others (reading 7, owed)"
-)
 REFUSAL = "the record holds no click line, so no claim"  # the tool's refusal line, its opening
 
 
@@ -70,14 +67,13 @@ def tool(tmp_path):
     return subprocess.run(run, capture_output=True, text=True, check=True).stdout
 
 
-def test_the_meetings_are_one_give_and_one_take_at_a_place_and_light_is_not_read_by_echo(tmp_path):
-    """Yes: a give and a take at each of two places, the meetings SHOWN, light's echo NOT READ. No: q -2 and +2 at a place,
-    and +1, +1 and -2, each NOT SHOWN though the books close (the sum alone shows both); a record of no click line
-    NO CLICK in each of the seven readings called alone, the owner's phrase whole (echo NO CLICK on lines fails)."""
+def test_the_meetings_are_one_give_and_one_take_at_a_place(tmp_path):
+    """Yes: a give and a take at each of two places, the meetings SHOWN. No: q -2 and +2 at a place, and +1, +1 and -2,
+    each NOT SHOWN though the books close (the sum alone shows both); a record of no click line NO CLICK in each of the
+    four readings called alone, the owner's phrase whole."""
     yes = read(tmp_path, *edges(1, 0, (0, 1, 1)), *edges(1 + 1, 0, (1 + 1, 1, 1)))
     met = "one give and one take of one quantum at 2 of 2 places: 1 from train 0 to train 1, 1 from train 2 to train 1"
     assert shadow.meetings(yes)["kind"] == "SHOWN" and shadow.meetings(yes)["cause"] == met
-    assert shadow.echo(yes) == {"kind": "NOT READ", "cause": ECHO}
     three = edges(1, 0, (1 + 1, 0, 1), (1 + 1, 1, 1))
     for lines, held in (
         (edges(1, 0, (0, 1, 1 + 1)), "q [-2, 2] of the trains [0, 1]"),
@@ -88,8 +84,7 @@ def test_the_meetings_are_one_give_and_one_take_at_a_place_and_light_is_not_read
         assert shadow.books(no)["kind"] == "SHOWN"
         assert (shadow.meetings(no)["kind"], shadow.meetings(no)["cause"]) == ("NOT SHOWN", odd)
     empty = read(tmp_path)
-    readings = [shadow.books, shadow.duration, shadow.twins, shadow.cone]
-    for reading in [*readings, shadow.meetings, shadow.clock_lines, shadow.echo]:
+    for reading in (shadow.books, shadow.cone, shadow.meetings, shadow.clock_lines):
         assert reading(empty) == NONE
 
 
@@ -130,11 +125,13 @@ def test_a_meeting_is_an_edge_side_and_its_mirror_the_silent_clock_aside(tmp_pat
 SEVEN = head((7, 1, 1), ((0, 0, 2, 1, 0, 0), (1, 0, 5, 0, 0, 3), (0, 0, 6, 0, 0, 0)))
 
 
-def test_the_cone_reads_the_lines_that_could_stand_outside_it_and_the_setting_by_its_name(tmp_path):
+def test_the_cone_reads_the_lines_that_could_stand_outside_it_and_the_setting_by_its_place(tmp_path):
     """No: a ring of seven laid at sites 2 and 5 (site 6's gear all 0), a line one Mesh from site 5 alone and one outside
-    both, NOT SHOWN, and a lay of no site; yes, the first line alone, SHOWN; not read: no line could stand outside, at a
-    laid site or at or past round 2, the lay's reach, or every site laid; a setting not read, each cause named."""
-    far = shadow.cone(read(tmp_path, *across(1, (0, 0), (4, 1)), header=SEVEN))
+    both, NOT SHOWN, and a lay of no site; yes, the first line alone, SHOWN, the setting read by its place whatever its
+    name (AUDIT2's A8); not read: no line could stand outside, at a laid site, past the lay's reach or every site laid."""
+    apart, files = across(1, (0, 0), (4, 1)), [{**SEVEN["files"][0], "name": "w.1.json"}]  # another name
+    far = shadow.cone(read(tmp_path, *apart, header=SEVEN))
+    assert shadow.cone(read(tmp_path, *apart, header={**SEVEN, "files": files})) == far
     outside = "the click line at round 1, site 0 stands outside the lay's cone: 1 of the 2 lines that could stand"
     assert (far["kind"], far["cause"]) == ("NOT SHOWN", f"{outside} outside it, of 2 lines")
     near = shadow.cone(read(tmp_path, *edges(1, 4, (0, 1, 1)), header=SEVEN))
@@ -152,13 +149,13 @@ def test_the_cone_reads_the_lines_that_could_stand_outside_it_and_the_setting_by
     for header, lines, cause in (
         (SEVEN, two, f"{laid}: no line could stand outside the lay's cone"),
         (pair, spaced, every),
-        (head(name="lay.json"), one, "the header holds no setting file setting.json"),
-        (head(text="{"), one, "the setting file setting.json is no JSON object"),
-        (head(gears=()), one, "the setting file setting.json holds no gears"),
+        ({**head(), "files": []}, one, "the header holds no files"),
+        (head(text="{"), one, "the setting file is no JSON object"),
+        (head(gears=()), one, "the setting file holds no gears"),
         (off, one, "the setting's gear 1 names site 7, off the board of sides [5, 1, 1]"),
         (below, one, "the setting's gear 1 names site -3, off the board of sides [5, 1, 1]"),
         (head(gears=((0, 0, 0),)), one, "the setting's gear 1 names no site and counts"),
-        (head(text="[" * 10**7), one, "the setting file setting.json is no JSON object"),
+        (head(text="[" * 10**7), one, "the setting file is no JSON object"),
         (head(sides=()), one, "the header's sides make no board"),
     ):
         verdict = shadow.cone(read(tmp_path, *lines, header=header))

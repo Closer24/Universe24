@@ -4,8 +4,8 @@ sides in its site and across a Mesh: the lines listed in the schema's order and
 counted per train and per Node-clock (the lines, the given, the taken and the net),
 and the places (a round and a Node-clock) where the sum of q over the trains is not 0, counted; then the click world's
 block (decoder/shadow.py, the owner's law of 23:4x UTC: the physics read in the board's shadow, no claim on a board
-reading alone): the books at each click, D6 and D7, and the cone check by click, then the click board's three (the
-owner's word of 00:3x UTC: the clocks' meetings), the meetings, each clock's line of meetings and light's echo, each
+reading alone): the books at each click and the cone check by click, then the click board's two (the owner's word
+of 00:3x UTC: the clocks' meetings), the meetings and each clock's line of meetings, each
 read SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK where the record holds no click line, with its cause, every train
 card's lines, given, taken and net beside the books, every clock's meetings counted with no duration and its books
 beside its line, and one refusal line where the record holds no click line. Nothing is raised: a record or a
