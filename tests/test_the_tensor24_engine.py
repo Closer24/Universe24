@@ -45,9 +45,10 @@ def unclicked(terms=0, key=1, trains=1):
     return Click(weight, np.zeros(terms, dtype=np.intp), keys, 0 * onto.astype(object), onto)
 
 
-def varied(rng, least=1, clocked=False, cubed=False):
+def varied(rng, least=1, clocked=False, cubed=False, pushed=False):
     """A layout parted at every gear, Mesh and site: the grips, the teeth at rest, s, T_k and T_d each a divisor from `least`, J's terms
-    on the value legs (the plan) and with a difference or the force among the legs (the Mesh plan), and where clocked two drawn rows read into every other gear's teeth (the two read none) and the grips' read."""
+    on the value legs (the plan) and with a difference or the force among the legs (the Mesh plan), and where clocked two drawn rows read into every other gear's teeth (the two read none) and the grips' read;
+    where pushed, term 5's push in plans.pushing's form, each term (one, two, unit) on the push's readings, the six stretches per row and the momenta in and out of every row, at a drawn factor onto a drawn row."""
     nb = frame.board(SHAPE)
     n, every = nb.shape[1], np.arange(ROWS, dtype=np.intp)
     teeth, s = draw(rng, least, 20, (ROWS, n)), draw(rng, -3, 4, (ROWS, n))
@@ -68,8 +69,13 @@ def varied(rng, least=1, clocked=False, cubed=False):
     legs = np.where(index == PLANES * ROWS, -1, index)  # the unit as -1, the last row of any readings
     plan = Plan(legs[:, valued], factor[valued], target[valued])
     mesh = Plan(index[:, ~valued], factor[~valued], target[~valued])
-    grip = draw(rng, -3, 4, (ROWS, len(SHAPE) * n))
-    reads = (clock, stretch, unclicked(len(plan.factor)), empty(), mesh)  # the reads, no click, no push
+    grip, push = draw(rng, -3, 4, (ROWS, len(SHAPE) * n)), empty()
+    # drawn last, where pushed: the stretches and the momenta in and out, the unit as -1, the readings' last
+    if pushed:
+        pairs = rng.integers(0, (len(nb) + 2) * ROWS, (2, TERMS))
+        held, onto = np.vstack((pairs, 0 * pairs[:1] - 1)), rng.integers(0, ROWS, TERMS)
+        push = Plan(held, draw(rng, -9, 10, TERMS), onto)
+    reads = (clock, stretch, unclicked(len(plan.factor)), push, mesh)  # the reads, no click
     return Layout(nb, frame.spokes(len(SHAPE)), frame.meshes_of(nb), grip, gearing, plan, *reads)
 
 
@@ -84,8 +90,8 @@ def world(rng, layout, rows=ROWS):
 
 
 def naive(layout, s):
-    """The act site by site with loops and plain integers: the readings, J term by term from both plans, the drive, the push, the momentum on the edge split at the next edge's dial, the 00 count first; the click of no term keeps its tooth."""
-    nb, _, _, grip, gearing, plan, clock, stretch, _, _, mesh = layout
+    """The act site by site with loops and plain integers: the readings, J term by term from both plans and term 5's, the drive, the push, the momentum on the edge split at the next edge's dial, the 00 count first; the click of no term keeps its tooth."""
+    nb, _, _, grip, gearing, plan, clock, stretch, _, five, mesh = layout  # five: term 5's plan
     rest, s_, kick, drive, _ = (np.broadcast_to(x, s.a.shape).tolist() for x in gearing)
     monomials = [
         t
@@ -95,6 +101,7 @@ def naive(layout, s):
     a, b, r, rd, k = (x.tolist() for x in s)
     rows, n, axes, gs, sp = len(a), len(a[0]), range(len(SHAPE)), range(len(a)), range(len(nb))
     terms = list(zip(clock.legs.T.tolist(), clock.factor.tolist(), clock.target.tolist(), strict=True))
+    fifth = list(zip(five.legs.T.tolist(), five.factor.tolist(), five.target.tolist(), strict=True))
 
     def teeth(
         x, g, i
@@ -119,6 +126,15 @@ def naive(layout, s):
         source, read = [0] * rows, readings + force + [1]  # the unit, the readings' last row
         for legs, factor, target in monomials:
             source[target] += factor * int(np.prod([read[leg] for leg in legs], dtype=object))
+        # term 5 on the first push, s F + K at the drive's quotient of J1 alone: the six stretches, the momenta in and
+        # out in whole turns of the rest dial by the centred split, the momentum out at that push, and the unit
+        m = [2 * (w[g][i] + wb[g][i]) * (a[g][i] - b[g][i]) + r[g][i] for g in gs]
+        kicked = [(source[g] + rd[g][i]) // drive[g][i] for g in gs]  # the drive's quotient of J1 alone
+        out = [m[g] + 4 * s_[g][i] * (force[g] + kick[g][i] * kicked[g]) for g in gs]
+        strain = [a[g][j] - a[g][i] for j in around for g in gs]
+        strain += [frame.split(x[g], 2 * rest[g][i])[0] for x in (m, out) for g in gs] + [1]
+        for (one, two, unit), factor, target in fifth:
+            source[target] += factor * strain[one] * strain[two] * strain[unit]
         moment, count = [0] * rows, [0] * rows
         for g in gs:
             q, new[3][g][i] = divmod(source[g] + rd[g][i], drive[g][i])
@@ -253,10 +269,11 @@ def test_j_is_minus_the_gradient_of_its_potential_and_pushes_no_row_its_legs_do_
 
 
 def test_the_act_is_its_naive_model_on_the_edge_local_pure_and_turned_by_the_24():
-    """Yes: at three drawn layouts, clocked, the grips read and J of three readings, each stepped on two worlds, the act is its naive
-    model on the edge, the 00 count first and the half-open split, the click of no term keeping its tooth with no click, and the trains'
+    """Yes: at three drawn layouts, clocked, the grips read, J of three readings and term 5's push, each stepped on two worlds, the act is its
+    naive model on the edge, the 00 count first and the half-open split, the click of no term keeping its tooth with no click, and the trains'
     order and the 24's turns are nothing to it. No: it reads nothing past one Mesh's reach, keeps no state, and reads no clock by its place."""
-    layouts = [(rng, varied(rng, clocked=True, cubed=True)) for rng in map(np.random.default_rng, SEEDS)]
+    rngs = [np.random.default_rng(seed) for seed in SEEDS]
+    layouts = [(rng, varied(rng, clocked=True, cubed=True, pushed=True)) for rng in rngs]
     states = [(layout, world(rng, layout)) for rng, layout in layouts for _ in "st"]
     assert all(frame.same(step.tick(layout, s), naive(layout, s)) for layout, s in states)
     assert holding(PROPERTIES)  # G1's B2 and the cut's X1 mutants
