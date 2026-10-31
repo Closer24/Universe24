@@ -1,7 +1,7 @@
 """Clock: n/a: the decoder's guard on the edges between clocks, read from the record alone.
 Algebra: per line holding sides, its sides' q summed to its q; per edge at a place, its two sides' q summing to 0 and their teeth to the key less 1, before and after (the owner's word of 03:4x UTC: every transfer between two clocks carried on one pair of complementary teeth, each edge closing, so the place closes).
 Board: n/a: no board is read; the key is the train card's, the edge key, and the teeth are the edge's, as written.
-Clicks: a click line of schema 1.4 holds its sides, one per edge side of its train that carried at its round and Node-clock, in the other trains' order, [u, q, tooth before, tooth after]: the other train, the side's q and its tooth, the far end's the key less 1 less it; one line serves the three clicks, told apart by the sides a place holds and never by a label; a line that breaks a rule of the edges is refused, its cause named.
+Clicks: a click line of schema 1.4 holds its sides, one per edge side of its train at its round and Node-clock once any side there carries, q 0 among them (DECODE3's rule, writer B's line), in the other trains' order, [u, q, tooth before, tooth after]: the other train, the side's q and its tooth, the far end's the key less 1 less it; one line serves the three clicks, told apart by the sides a place holds and never by a label; a line that breaks a rule of the edges is refused, its cause named.
 """
 
 from typing import Any
@@ -23,15 +23,14 @@ def formed(side: Any) -> bool:
 
 
 def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
-    """The first rule of its own one line's sides break: a tooth beside them or none, one off its form or at q 0, one naming the line's own train or a train no card names, their trains out of order or one twice, their q not summing to the line's, or a tooth outside [0, K)."""
+    """The first rule of its own one line's sides break: a tooth beside them or none, one off its form, one naming the line's own train or a train no card names, their trains out of order or one twice, their q not summing to the line's, or a tooth outside [0, K)."""
     t, sides, key = e.get("train"), e["sides"], keys.get(e.get("train"))
     if "tooth" in e or not isinstance(sides, list) or not sides:
         return f"line {n} holds a tooth beside its sides, or no sides"
     if not all(map(formed, sides)):
         return f"line {n}'s sides have not the form [u, q, tooth before, tooth after]"
     us, total = [side[0] for side in sides], sum(side[1] for side in sides)
-    found = [f"line {n}'s side to train {side[0]} holds q 0" for side in sides if side[1] == 0]
-    found += [f"line {n}'s side names its own train {t}"] if t in us else []
+    found = [f"line {n}'s side names its own train {t}"] if t in us else []
     found += [f"line {n}'s side names train {u}, which no train card names" for u in us if u not in keys]
     found += (
         [f"line {n}'s sides stand out of their trains' order or name one twice"]

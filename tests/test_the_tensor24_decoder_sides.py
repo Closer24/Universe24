@@ -41,7 +41,6 @@ REFUSED = [
     ([{**GIVE, "tooth": [3, 6]}, *TAKE], "line 2 holds a tooth beside its sides, or no sides"),
     ([{**GIVE, "sides": []}, *TAKE], "line 2 holds a tooth beside its sides, or no sides"),
     ([{**GIVE, "sides": [[1, -1, 3]]}, *TAKE], OFF),
-    ([line(0, (1, 0, 3, 3), (2, -1, 2, 5)), *TAKE], "line 2's side to train 1 holds q 0"),
     ([line(0, (0, -1, 3, 6))], "line 2's side names its own train 0"),
     ([line(0, (5, -1, 3, 6))], "line 2's side names train 5, which no train card names"),
     (
@@ -69,10 +68,18 @@ REFUSED = [
 def test_each_edge_closes_at_its_place_and_each_line_breaking_a_rule_of_the_sides_is_refused_by_name(
     tmp_path,
 ):
-    """Yes: a place where three clocks meet, its giver's line and its two takers' lines with their teeth, reads in order.
-    No: each record of REFUSED, by its own cause, and each read with no cause without the guard (GUARDS less paired)."""
+    """Yes: a place where three clocks meet, its giver's line and its two takers' with their teeth, reads in order, and
+    so does one with a side at q 0 beside its partner. No: each record of REFUSED by its own cause, and none without
+    the guard."""
     record, cause = read([GIVE, *TAKE], tmp_path)
     assert cause == "" and record is not None and record.of("click") == [GIVE, *TAKE]
+    # the edge 0-2 listed at q 0, not carried, beside the edges 0-1 and 2-1 that carried
+    still = [
+        line(0, (1, -1, 3, 6), (2, 0, 2, 2)),
+        line(1, (0, 1, 3, 0), (2, 1, 1, 4)),
+        line(2, (0, 0, 4, 4), (1, -1, 5, 2)),
+    ]
+    assert read(still, tmp_path)[1] == ""
     for events, wanted in REFUSED:
         assert read(events, tmp_path)[1] == wanted
         assert read(events, tmp_path, records.GUARDS[:-1])[1] == ""
