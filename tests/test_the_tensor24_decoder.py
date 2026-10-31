@@ -68,7 +68,6 @@ UNPLACED, ORDER = (
     "the events stand out of the schema's order",
 )
 TWICE = "line 2's whole click books at the click and again at its ends"
-ENDS = "line 2's whole click's ends number {}, where the schema holds both or none"
 KEYED = '{"kind": "rate", "round": 1, "round": 1, "site": 0}'
 NAN = '{"kind": "rate", "round": 1, "site": 0, "count": 1, "k": NaN}'
 # ten million deep, past any stack: 3.14.9 on CI reads a hundred thousand, 3.14.6 about forty thousand
@@ -143,8 +142,6 @@ BROKEN = {  # each broken record's lines, the guard without which it would be re
         TWICE,
     ),
     "a pair booked again in its laid": ([H, {**PAIR, "laid": [holding(1, (0, 9))]}, E], "booked", TWICE),
-    "a click with one end": ([H, click(1, 0, ends=ENDED[:1]), E], "booked", ENDS.format(1)),
-    "a click with three ends": ([H, click(1, 0, ends=[*ENDED, ENDED[1]]), E], "booked", ENDS.format(3)),
     "the events out of order": ([H, click(1 + 1, 0), click(1, 0), E], "ordered", ORDER),
 }
 

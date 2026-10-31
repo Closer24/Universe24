@@ -16,8 +16,9 @@
 # at least 1, and the wind a positive form), where a click line's q (schema 1.3) is the carry's quotient signed, a
 # give below 0 and a take above it (the Boss's decision of 2026-10-30), never 0; a click line's train has a card, its
 # teeth stand from 0 and below that card's key, and it stands once at its round, site and train (the first hostile
-# code reader's M10); a whole click that takes at both ends books in its two ends alone, its own taken and laid empty,
-# and one that takes at one end holds no end (G3); the events keep the schema's order (round, kind, site, train). A
+# code reader's M10); a whole click that takes at both ends books in its two ends alone, its own taken and laid empty
+# (G3), its ends' count the schema's, both or none, read by no rule as no run writes whole clicks; the events keep the
+# schema's order (round, kind, site, train). A
 # field may stand absent where its writer lacks it: a reading that needs it reads not read, the cause named. A record
 # that breaks a rule is not read, and the cause is named in ASCII: a field's name and a kind as Python's ascii()
 # writes them, so a line feed or a lone surrogate in a name stands escaped, and a board by its sides, never their
@@ -303,10 +304,6 @@ def booked(lines: Lines) -> str:
         ends = click.get("ends")
         if ends and (click.get("taken") or click.get("laid")):
             return f"line {n}'s whole click books at the click and again at its ends"
-        if ends and len(ends[1:]) != 1:  # both ends: its first and the one other end of its Mesh
-            return (
-                f"line {n}'s whole click's ends number {len(ends)}, where the schema holds both or none"
-            )
     return ""
 
 
