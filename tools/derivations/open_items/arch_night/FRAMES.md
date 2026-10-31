@@ -428,3 +428,84 @@ line. The Boss approves each after the fact; the owner plays with the strengths 
 - Choice: the hand per quantum, because it is the one escape FAMILIES4's theorem leaves (no threshold, no stored
   hand, no cap) and Big Pic checked its board in whole numbers; the alternatives (a declared cap, a stored hand, a
   local pairing read as Pauli) are refused by the law and by the physicist's readings.
+
+## 13. The basic click decoder: the board's physics read in its shadow, the click world [FRAME; PLAN C5, writer C, tonight; the owner's build order of 23:5x UTC]
+
+- The owner's word (his answer 3, the Boss's #2187 6536002736): "Build a basic decoder on the clicks that knows how to
+  show the physics there", under his law of 23:4x UTC (the click world is dimension three, the board's shadow; the
+  physics is checked there, "with the tools we know, to convert it to the shadow") and his answer 4 (no claim of
+  physics stands on a board reading alone; every claim is checked twice in the click world). So nothing new is built:
+  every reading below is a tool the decoder already holds, ported from schema 1.2 to 1.3 where it was written for 1.2.
+- What it reads: the schema 1.3 record, its header (the three files verbatim with their digests, the sides, the kinds
+  with their characters, the train cards with key and square flag), its click lines {round, site, train, q, tooth} and
+  its end (rounds, digest, undone, exact); and, where one is given, the ledger's Count lines, which carry no reading
+  tonight (D6 says why). Nothing of the board's state: no gear's count, no slot, no plan and no act are read.
+- Its verdicts, one per reading: SHOWN; NOT SHOWN, its first counterexample named; NOT READ, the record unable to
+  carry the reading, its cause named; NOT IN THE CLICK WORLD, the record holding no click line, so the reading has
+  nothing to stand on. A record with no click line reads NOT IN THE CLICK WORLD on every reading, before any other
+  cause.
+- The readings:
+  - 1. The books at each click: row 15's first reading (decoder/books.py), ported from 1.2's whole click and its
+    holdings to 1.3's click line, on decoder/clicks.py's counts as built. At every place, a round and a Node-clock
+    with a click line, the sum of q over the trains: SHOWN where it is 0 at every place, NOT SHOWN naming the first
+    place (round, site) and its sum. Beside it, per train and per Node-clock, its lines, given, taken and net
+    (clicks.counted). Row 15's second reading, the wind over every train in the ledger, has no 1.3 line, and row 15
+    keeps printing NOT READ by name as it does today.
+  - 2. A duration only as a clock's own count (D6, decoder/measure.py): NOT READ on 1.3, with this cause. 1.2's clock
+    (K4: the lay that made it named on each whole click, its face the teeth from that lay) left with the whole click.
+    Schema 1.3 names no clock: its click line holds no lay and no face, and the ledger's Count lines hold every
+    train's now counts with no train named a clock. The square's 00 slot there is the clock's depth (its dial W = rest
+    + k0 c00), and a count of proper time from it needs N = sqrt(rest / W), a root, refused. A train's half beats read
+    as a clock would name the clock by hand, a declaration the decoder does not make. What would carry D6: a clock
+    named on the record (a field of a later minor), or a clock named by character (a frame for the owner).
+  - 3. The twins (D7, decoder/measure.py): NOT READ on 1.3, by D6's cause (no clock on the record); and no shipped
+    world holds two clocks that meet twice by two paths (the click world's Node-clocks stand still).
+  - 4. The cone check by click (D8, decoder/measure.py), ported from 1.2's takes, refusals and settings to 1.3's click
+    lines, on measure.past and measure.meshes as built (one Mesh a round, the shorter way round each side, Rule3's
+    carry). Every click line's event (round t, site x) stands inside the cone of the lay, that is past(sides, (0, y),
+    (t, x)) for a site y on which the header's setting file lays a gear with a count or a tooth not 0, or inside the
+    cone of an earlier click, past(sides, (t', y), (t, x)) for a line at (t', y) with t' < t. SHOWN where every line
+    stands inside; NOT SHOWN naming the first line outside both. The lay's cone is checked first and the earlier
+    clicks only for a line outside it, so a world laid at every site reads in one pass.
+- What it refuses: every claim of physics for which the record holds no click line is named NOT IN THE CLICK WORLD,
+  and nothing is shown for it: light's speed (the live world), the well and its deeper clock (the well world), gamma
+  and the books' form (term 5), the clock's beat (term 13), light on matter (the mesh world). For a record with no
+  click line the tool prints one refusal line saying so, these claims named in the sentence: a constant of the tool's
+  text, no reading. No reading is invented for one claim. The 1.2 readings (rows 15 and 46, measure.py's 1.2 cone
+  check and twins) print as they do today, NOT READ by name on a 1.3 record.
+- Where it lives: decoder/shadow.py, new, with its four layers' docstring and within record_code_shape's 400 lines:
+  shadow(record) returns the four verdicts, each built as measure.verdict builds one (kind, cause, the readings it
+  stands on). clicks.py, books.py, bangs.py and measure.py are unchanged; measure.past and measure.meshes are reused.
+  tools/tensor24_decode.py prints a block, "the click world (the owner's law of 23:4x UTC)", after the basic listing:
+  the four verdicts, and the refusal line where the record holds no click line. Its command line is unchanged.
+- Its tests: in tests/test_the_tensor24_decoder.py (writer C's), one test in main's cut style on 1.3 records built in
+  memory, each reading's yes and its no:
+  - the books SHOWN at places whose q sum to 0, and NOT SHOWN at one that does not, laid with two places in one round
+    whose sums cancel across the sites, so the mutant that sums per round fails it;
+  - the cone SHOWN for a click exactly t Meshes from the lay (the mutant with a strict bound fails it), SHOWN for a
+    click inside an earlier click's cone but outside the lay's (the mutant that reads the lay alone fails it), and NOT
+    SHOWN for one outside both;
+  - D6 and D7 NOT READ with their causes (the mutant that shows either fails it); a record with no click line NOT IN
+    THE CLICK WORLD on all four, with the refusal line.
+  Each mutant is named in the commit message with the test failing on it, as the decoder's tests have been, and no
+  mutant table stands in the file. The room: the decoder's test file stands at 572 lines against main's ROOM of 600,
+  so its ROOM may rise to 600 with no rise against main; past 600, the writer names the lines for the owner's list
+  (M8).
+- The laws it keeps: whole numbers; Rule3's carry the one division (measure.meshes uses it); no float, root, sine or
+  search; no number beyond 0 and 1 in src (the verdict words and the claims' names are strings); paths by joinpath;
+  ASCII; the gate at 0 refusals and the full check exit 0.
+- What it shows at 996df846f, as I expect it, for the writer and the reader to test against the records:
+
+| World | Rounds | Click lines | The books | D6 | D7 | D8 |
+|---|---|---|---|---|---|---|
+| tensor24 | 10 | 0 | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD, and the refusal line |
+| tensor24-live | 100 | 0 | NOT IN THE CLICK WORLD (light's speed among the refused) | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD, and the refusal line |
+| tensor24-well | 128 | 0 | NOT IN THE CLICK WORLD (the well, gamma and the books' form among the refused) | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD, and the refusal line |
+| tensor24-mesh | 125 | 0 | NOT IN THE CLICK WORLD (light on matter among the refused) | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD | NOT IN THE CLICK WORLD, and the refusal line |
+| tensor24-click | 5000 | 4,212 at 2,106 places | SHOWN: the sum of q 0 at 2,106 of 2,106 places; train 2 (the held hand) 0 lines; train 3 (the giver) 2,106 lines, given 1,107, taken 999, net -108; train 4 (the taker) 2,106 lines, given 999, taken 1,107, net 108 | NOT READ (schema 1.3 names no clock) | NOT READ (D6's cause) | SHOWN: all 4,212 lines inside the lay's cone, every site laid |
+
+- Replaced by: the decoder's readings 1 to 10 (Animate's, with G5) when the clicks close; a clock on the record, for
+  D6 and D7.
+- Choice: the four readings, because each is a tool the decoder holds and each stands on the record's click lines and
+  header alone. The alternatives are a reading of the ledger's counts as physics (a board reading, under the owner's
+  ban) and a clock named by place or by hand (a declaration); both are refused.

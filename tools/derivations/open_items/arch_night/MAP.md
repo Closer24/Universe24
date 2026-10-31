@@ -5,8 +5,13 @@ must be looked at on the level of the click world, and the click world is dimens
 board world ... the transformation to the click world must be done, and the physics checked there ... with the tools
 we know, to convert it to the shadow." So every MEASURED line here (light's speed, the well, the clock's beat, gamma,
 the books, the five worlds' measures) is a board reading until its click-world check stands, by the tools we know: the
-decoder's readings and the measurement's rules D6 to D8; and the decoder is basic tonight. The status words stand as
-written until Sofer gives the wording; the map follows it then.
+decoder's readings and the measurement's rules D6 to D8; and the decoder is basic tonight. His answer 4 (23:5x UTC,
+the Boss's #2187 6536002736): "Correct. There must be a ban on it, and a check twice on everyone, including the
+writer's": the ban, no claim of physics stands on a board reading alone, in any text, post, document or report; the
+double check, every claim of physics checked twice in the click world, by two independent readings, for everyone,
+Sofer's own entries included. The basic click decoder is built for it tonight (FRAMES.md 13, PLAN C5). Sofer enters
+the law; the files follow his wording. The status words stand as written until Sofer gives the wording; the map
+follows it then.
 
 The architect, 2026-10-30, 18:5x UTC, for the Boss. The owner's words of tonight frame it: standing code of the whole
 system by morning; what is not sure goes in as a FRAME, the Boss approving after the fact; the laws of locality,
@@ -93,7 +98,7 @@ says what the record and the ledger carry of the part, which is all the decoder 
 | Node-clock (the act) | BUILT/live on the edge; terms by status in section 3 | engine/step.py, mesh.py, contract.py, kinds.py, state.py; algebra/carry.py | one act per gear per round: the pull, the drive, the kick, the momentum carried on the edge and split at the next edge, the metric's push, the notch, the click | nothing directly: the ledger's counts and the record's click lines |
 | Runner | BUILT/live (promise on the edge, the window, the click lines: B4 a9f8a440a; the promise naming teeth below 1 as teeth: 484fb8d72) | runner/run.py, rounds.py, rewind.py; tools/tensor24_run.py | counts the rounds from outside, reads the promise and the window before each round, writes the record and the ledger, runs back | the record (header, click lines, end) and the ledger |
 | Record | BUILT/live at schema 1.3 (C1 b10d7d008; written by B4); MINOR = len(ADDED) named open (9ccbc6481; the owner's list) | record/schema.py | the boundary: header, click lines, end; the ledger beside it | everything it reads |
-| Decoder | built on records made in memory; the BASIC part BUILT/live (C2 6b77872dc; the owner's word: only that tonight), refusing by name the click lines schema 1.3 rules out (9ccbc6481) | decoder/records.py, books.py, bangs.py, measure.py; tools/tensor24_decode.py | reads the record and the ledger from outside; tonight: reads schema 1.3's click lines and lists them, no verdict | n/a |
+| Decoder | built on records made in memory; the BASIC part BUILT/live (C2 6b77872dc), refusing by name the click lines schema 1.3 rules out (9ccbc6481); the basic click decoder to build tonight (PLAN C5, FRAMES.md 13: the owner's build order of 23:5x UTC, the books at each click and D6 to D8 ported to 1.3) | decoder/records.py, books.py, bangs.py, measure.py; tools/tensor24_decode.py | reads the record and the ledger from outside; tonight: reads schema 1.3's click lines and lists them, no verdict | n/a |
 | Visualizer | owed (Animate's) | none | draws what the decoder reads | n/a |
 | Guards | BUILT | docs/ALGEBRA.md, tools/check.py, tests_shape.py, record_code_shape.py, documents_gates.py, the gate scribe_scan.py (+ selftest), scribe_law_check.py | refuse a push that breaks a law; the tests, one per generic part and the whole once; the 24's twisted action (a negated row's two teeth flipped) BUILT in the engine's test (A2 f72067cdf: 24 of 24 under the push with the clock moving, 21 of 24 failing with the teeth kept) | n/a |
 
@@ -170,7 +175,7 @@ click lives there); nothing in code tonight.
 |---|---|---|---|
 | Schema 1.3 | BUILT/live (C1 b10d7d008; the run writes it, B4 a9f8a440a) | the header: each train card gains "key" and "square"; each kind its "characters" on the 24; "couplings", "classes" and "draw" retired; the click line: {"kind": "whole", "round", "site", "train", "q", "tooth": [k, k+]} | all |
 | The ledger | BUILT/live | Count lines, one per round, Node-clock and train | all |
-| Decoder, the basic part | BUILT/live (C2 6b77872dc; the owner's word: only something basic) | records.read accepts 1.3 (a click's q may be below 0: a give); the tool lists the click lines and counts them per train and per round, with no verdict; the old rows (15, 46, D6 to D8) stay as they are and read NOT READ by name on a 1.3 record | the click lines |
+| Decoder, the basic part | BUILT/live (C2 6b77872dc; the owner's word: only something basic); C5 tonight, the basic click decoder (FRAMES.md 13): the owner's "build a basic decoder on the clicks that knows how to show the physics there" | records.read accepts 1.3 (a click's q may be below 0: a give); the tool lists the click lines and counts them per train and per round, with no verdict; the old rows (15, 46, D6 to D8) stay as they are and read NOT READ by name on a 1.3 record | the click lines |
 | Decoder, the readings 1 to 10 | out of tonight's build (the clicks are not closed) | nothing | n/a |
 
 ## 5. The worlds (examples/)

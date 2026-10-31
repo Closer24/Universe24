@@ -62,8 +62,8 @@ exact, digests 540e503cad44, cfef203d5dd5, 05586b5db17f and 00fd62494c9a, every 
 4,212 click lines at 2,106 places, the books 0 (the sum of q over the trains not 0 at 0 places), the held train (2)
 with 0 lines, the giver (3) at (2106, 1107, 999, -108) and the taker (4) at (2106, 999, 1107, 108), digest
 f351582ede39, its record and ledger byte-identical to the earlier run's; so all five worlds are measured at the
-candidate's sha. Now: a third hostile code reader on 87f88322d..996df846f, then the candidate (the road to main
-below).
+candidate's sha. Now: a third hostile code reader on 87f88322d..996df846f; C5, the basic click decoder (writer C, the
+owner's build order of 23:5x UTC; FRAMES.md 13), then its reader; then the candidate (the road to main below).
 
 The second hostile code reader read f72067cdf..87f88322d (scratchpad/hcr2/REPORT.md: no BLOCKING, seven MINOR). DONE:
 - A (7dcb31607): his 6, A's part, state.py's docstrings saying what the loader lays.
@@ -302,6 +302,31 @@ the clock deeper where the matter is.
   rows (which read NOT READ by name on a 1.3 record, their causes the cause lines they already have).
 - Test (decoder): the counts on the in-memory record; the tool prints them and raises nothing.
 
+### Commit C5 (C; tonight, after the code already read): the basic click decoder (FRAMES.md 13)
+
+- The owner's word (his answer 3 of 23:5x UTC, the Boss's #2187 6536002736): "Build a basic decoder on the clicks that
+  knows how to show the physics there"; under his law of 23:4x UTC (the click world the board's shadow, the physics
+  checked there with the tools we know) and his answer 4 (the ban on a claim of physics standing on a board reading
+  alone, and every claim checked twice in the click world, for everyone).
+- The writer: C. The change, as FRAMES.md 13 has it: decoder/shadow.py, new, with four readings on the 1.3 record (the
+  books at each click, row 15's first reading ported; D6 and D7, NOT READ on 1.3 with their causes; D8, the cone check
+  by click ported), each SHOWN, NOT SHOWN, NOT READ or NOT IN THE CLICK WORLD; tools/tensor24_decode.py printing them
+  in a block after the basic listing, and the refusal line on a record with no click line; clicks.py, books.py,
+  bangs.py and measure.py unchanged, measure.past and measure.meshes reused. Nothing new: every reading is a tool the
+  decoder holds.
+- The test: in tests/test_the_tensor24_decoder.py, each reading's yes and no, each mutant named in the commit message
+  with the test failing on it; the ROOM may rise from 572 to main's 600, and past 600 the lines go to the owner's list
+  (M8).
+- The measure: the tool run on the five worlds' records at 996df846f, each output against FRAMES.md 13's table, in the
+  commit message: the click world's books SHOWN (0 of 2,106 places, the giver 2,106, 1,107, 999, -108, the taker
+  2,106, 999, 1,107, 108, the held train 0 lines), D8 SHOWN, D6 and D7 NOT READ; the other four NOT IN THE CLICK WORLD
+  on every reading, with the refusal line.
+- The checks: the gate at 0 refusals, the full check exit 0, record_code_shape on the new module.
+- The reader after it: a hostile code reader on 996df846f..C5 (the diff, the laws, the five outputs against the
+  table); his folds by C.
+- The road: C5 rides into the candidate after the code already read: the candidate becomes C5's head once its reader
+  passes it, the third reader's reading of 87f88322d..996df846f standing for the rest.
+
 ### Commit B3 (B; after B2 and B4): the click world, examples/tensor24-click/
 
 DONE at 21:43 UTC: pushed as e8161f301 (FRAMES.md 6 has its numbers). As built, against the text below: the tie and A
@@ -418,10 +443,11 @@ calibre condition).
 
 ## The road to main at the end (ready for the candidate)
 
-- The candidate: node-live's final head 996df846f (the first and second readers' folds DONE; a third reader on
-  87f88322d..996df846f now, his folds if any before the sha goes). main has not moved since 2bcf315b6 unless the Boss
-  says so, so the candidate fast-forwards. The Boss pushes it to tensor24-review; the writer reads the sha for faking
-  and posts the approval; main moves, no force.
+- The candidate: node-live's head 996df846f (the first and second readers' folds DONE; a third reader on
+  87f88322d..996df846f now, his folds if any before the sha goes), then C5, the basic click decoder, once its own
+  reader passes it (it rides in after the code already read). main has not moved since 2bcf315b6 unless the Boss says
+  so, so the candidate fast-forwards. The Boss pushes it to tensor24-review; the writer reads the sha for faking and
+  posts the approval; main moves, no force.
 - The checks at the candidate's sha: `CHECK_BASE=origin/main python tools/check.py --full` exit 0; the hook's gate 0
   refusals, its notes listed (the KEYS notes for key, push, notch, hold, tie and mesh; B2's INDICATORs; the load
   test's PINs) for Sofer; the five worlds run by the run tool, each run back exact (tensor24, live, well, click,
@@ -486,6 +512,8 @@ calibre condition).
 | 02-04 | folds from the hostile reader | folds; README | the hostile reader's list over the whole diff |
 | 04-05 | the candidate's sha to the Boss; NOT_CLOSED.md current | | the report |
 
-At 22:2x UTC the work of the rows to 02:00 is DONE but the whole: every commit pushed by 87f88322d, the first hostile
-code reader's items folded; left for 22:2x to 05:00: the second hostile code reader's folds, writer C's whole (the five
-worlds' records and the checklist), NOT_CLOSED.md current, and the candidate's sha to the Boss with the owner's list.
+At 00:0x UTC one commit is added to the night, C5, the basic click decoder (FRAMES.md 13), the owner's build order of
+23:5x UTC, for writer C, its reader after it. At 22:2x UTC the work of the rows to 02:00 is DONE but the whole: every
+commit pushed by 87f88322d, the first hostile code reader's items folded; left for 22:2x to 05:00: the second hostile
+code reader's folds, writer C's whole (the five worlds' records and the checklist), NOT_CLOSED.md current, and the
+candidate's sha to the Boss with the owner's list.
