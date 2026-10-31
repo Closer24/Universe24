@@ -25,8 +25,8 @@ K = s T_k q_d; the push s F + K; the momentum P = 2 D_in (a - b) + tooth, which 
     under the mirror is its target row's (the mirror theorem's hypotheses); when J5 reads the row it pushes, its parity
     still its target row's, the back tick of a round, run from the exact mirrored state, can fail only if that round's
     forward tick or the back tick itself crosses (the momentum J5 reads lies in another turn of the rest dial than an
-    exact run's), at T_d 1 as at any other; here the two runs that read the pushed row cross and fail, at T_d 7 and at
-    T_d 1: the condition is the act's, not the drive's.
+    exact run's), at T_d 1 as at any other; here the two runs that read the pushed row fail, at T_d 7 and at T_d 1, their
+    crossings counted by the physicist's p7 (b): the condition is the act's, not the drive's.
 
 Usage: python3 -I term7_drive.py <src of node-live at f72067cdf> (about 90 s)
 """

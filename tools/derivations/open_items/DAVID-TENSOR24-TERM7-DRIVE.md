@@ -1,31 +1,31 @@
 # Term 7, the drive: one carry of the source at the drive's teeth, forced by the books, a finer dial for the source
 
-David, 2026-10-31 (the fifth text, 02:3x UTC), on the owner's word of 11:1x UTC (derive what the Node-clock needs to
-close; everything to stand with a hostile mathematician and a hostile physicist), for the architecture document's term 7
-("the drive: one wheel carries the coupling's push for every row; q_d, r_d+ = carry(J, T_d, r_d); none of its own: the
-clicks do not come from the drive; Rule3's carry at T_d; BUILT at T_d = 1; DERIVED (G3), to confirm under the owner's
-rule of 13:0x (section 6)") and for the night's side list, NOT_CLOSED 14: at T_d = 1 the drive is the identity, q_d = J
-and r_d = 0 always, so term 7's DERIVED rested on a no-op (g3_math item 13), and what closes it is a probe with r_d
-moving. It reads the act on node-live f72067cdf: engine/step.py's drive, kick, act and mirror, the drive's tooth
-State.rd within [0, T_d), the drive's teeth Gearing.drive and the kick's Gearing.kick per row. The probe is
-derive/david_open/node/term7_drive.py (about 90 s), its output beside it, whole numbers alone, every division Rule3's
-carry. The first text (toys-5 3175fdeca) went to a new hostile pair, who refused it: the mathematician on three items
-and twelve minors, the physicist on two and eleven; their items and Big Pic's word (6535643629) are folded in section 8.
-The second text (toys-5 4cbece813) went back to them: the physicist PASSED it with nine minors, and the mathematician
-refused it on one clause, the measure of 2.7's crossing in the back tick, with eleven minors. Big Pic's word (6536221174
-item 4: the fold stands; the clause is the exact form of the condition, and the drive still adds none) is folded here
-with their items (section 7); section 9 says how the text checked itself. The text has no click-world reading (section
-4). The third text (toys-5 003eec498) went back to the mathematician, who PASSED it with four minors, folded here
-(section 7); both readers have now passed, and a new pair reads at the end. The end pair read it at toys-5 9db804a9c and
-refused it: the mathematician on two items, Claim 2 stated without the parity hypothesis its proof uses, and the finer
-dial restated without the stretch at 1, with seventeen minors; the physicist on one, sections 4 and 5 saying what the
-clicks read where no click is read and the probe's world cannot click, with twelve minors. Big Pic upheld the
-physicist's (6537154788 item 6). Under the owner's pace (the Boss's 6537101472) the three are mends of a hypothesis, a
-clause and a label, folded here (section 10). The fourth text (toys-5 56da12631) went back to the end pair: the
-physicist PASSED it with eight wording notes, and the mathematician refused it on one restatement, section 1's finer
-dial without "at standing teeth" and the kick at 1 (his B3, there since the first text), with minors. B3 restates the
-finding short of the hypotheses the finding states, a wording, so under the owner's pace it comes straight back to the
-deriver: folded here with every minor and note (section 11).
+David, 2026-10-31 (the fifth text, 02:2x UTC, its end pair's wordings folded at 02:3x), on the owner's word of 11:1x UTC
+(derive what the Node-clock needs to close; everything to stand with a hostile mathematician and a hostile physicist),
+for the architecture document's term 7 ("the drive: one wheel carries the coupling's push for every row; q_d, r_d+ =
+carry(J, T_d, r_d); none of its own: the clicks do not come from the drive; Rule3's carry at T_d; BUILT at T_d = 1;
+DERIVED (G3), to confirm under the owner's rule of 13:0x (section 6)") and for the night's side list, NOT_CLOSED 14: at
+T_d = 1 the drive is the identity, q_d = J and r_d = 0 always, so term 7's DERIVED rested on a no-op (g3_math item 13),
+and what closes it is a probe with r_d moving. It reads the act on node-live f72067cdf: engine/step.py's drive, kick,
+act and mirror, the drive's tooth State.rd within [0, T_d), the drive's teeth Gearing.drive and the kick's Gearing.kick
+per row. The probe is derive/david_open/node/term7_drive.py (about 90 s), its output beside it, whole numbers alone,
+every division Rule3's carry. The first text (toys-5 3175fdeca) went to a new hostile pair, who refused it: the
+mathematician on three items and twelve minors, the physicist on two and eleven; their items and Big Pic's word
+(6535643629) are folded in section 8. The second text (toys-5 4cbece813) went back to them: the physicist PASSED it with
+nine minors, and the mathematician refused it on one clause, the measure of 2.7's crossing in the back tick, with eleven
+minors. Big Pic's word (6536221174 item 4: the fold stands; the clause is the exact form of the condition, and the drive
+still adds none) is folded here with their items (section 7); section 9 says how the text checked itself. The text has
+no click-world reading (section 4). The third text (toys-5 003eec498) went back to the mathematician, who PASSED it with
+four minors, folded here (section 7); both readers have now passed, and a new pair reads at the end. The end pair read
+it at toys-5 9db804a9c and refused it: the mathematician on two items, Claim 2 stated without the parity hypothesis its
+proof uses, and the finer dial restated without the stretch at 1, with seventeen minors; the physicist on one, sections
+4 and 5 saying what the clicks read where no click is read and the probe's world cannot click, with twelve minors. Big
+Pic upheld the physicist's (6537154788 item 6). Under the owner's pace (the Boss's 6537101472) the three are mends of a
+hypothesis, a clause and a label, folded here (section 10). The fourth text (toys-5 56da12631) went back to the end
+pair: the physicist PASSED it with eight wording notes, and the mathematician refused it on one restatement, section 1's
+finer dial without "at standing teeth" and the kick at 1 (his B3, there since the first text), with minors. B3 restates
+the finding short of the hypotheses the finding states, a wording, so under the owner's pace it comes straight back to
+the deriver: folded here with every minor and note (section 11).
 
 **The finding in one line:** the drive is Rule3's carry of the row's source at the drive's teeth, and nothing else could
 be: the books and Rule3's range for the tooth force it.
@@ -373,12 +373,13 @@ Let carry(J, T, r) = (q, r+), with 0 <= r < T.
   - A key passed between rows is then one quantum of that energy, since the passing closes in it at every site-round,
     and both remedies open the books at unequal drives. So, among the alternatives named, the books force the choice
     (the end mathematician's m15).
-  - Read in a gear's own energy, one key is s T_k / T_d of the gear's quantum (the physicist's ratio). A two-leg
-    vertex across rows at equal rest teeth and s = T_k = 1 reads, in its square, c^2 over the product of the two rows'
-    drives (the physicist's 1e, his p5); a vertex of any number of legs, each a gear row read in its counts, reads in
-    its square c^2 over the product of its legs' T_d W / (s T_k), with no root (the physicist; the end physicist's m5
-    and his fifth note, the end mathematician's m14). His s4 lays a giver at drive 1 and a taker at drive 4, and again
-    at drive 9, each beside a twin at drives 1 and 1 whose coupling's square is c^2 over the taker's drive: in each
+  - Read in a gear's own energy, one key is s T_k / T_d of the gear's quantum (the physicist's ratio). A two-leg vertex
+    across rows at equal rest teeth and s = T_k = 1 reads, in its square and in units of the common rest teeth, c^2 over
+    the product of the two rows' drives (the physicist's 1e, his p5); a vertex of any number of legs, each a gear row
+    read in its counts, reads in its square c^2 over the product of its legs' T_d W / (s T_k), with no root (the
+    physicist; the end physicist's m5 and his fifth note, the end mathematician's m14). His s4 lays a giver at drive 1
+    and a taker at drive 4, and again at drive 9, each beside a twin at drives 1 and 1 whose coupling's square is c^2
+    over the taker's drive and whose taker's spring is the taker's over its drive (200, from 800 and 1,800): in each
     pair the two exact recurrences peak at the same round, 955 at the drive 4 and 1,461 at the drive 9.
   - It is a reading, not a step: the act keeps each gear's counts and its whole c, with no root.
   - The night's clicking worlds lay their trains at T_d = 1 (B4's pair world); B6's dial sits on the square's rows,
@@ -484,8 +485,8 @@ board readings; section 5's status says so.
   the drive adds none.
 - The odd rows: J5's mirror parity must match its target row's, any source's condition for a run back. [The second
   text's comparison with nature's field here is struck in the fifth text: as worded it was false, probe (g)'s first J5
-  reading velocities and returning, odd in them; the end physicist's seventh note.] The odd read row's case is proved in
-  2.7.
+  reading velocities, even in them, and returning, while the rule holds for a force odd in them; the end physicist's
+  seventh note and both end readers on the fifth text.] The odd read row's case is proved in 2.7.
 - 2.5: the hypothesis stated, a J that reads no pull, with the grips-on runs and the offset c.
 - Section 4: the key's inertia across rows is the canonical one, forced by the books, a reading and not a step.
 
@@ -652,3 +653,10 @@ substance.
   s2b_blocks, s4_geomean).
 - **What the text searched again:** every "finer", "count for count", "back tick of a round", "wrong parity",
   "without the division", "nature", "magnetic" and "drifts": each carries its hypotheses or is gone.
+
+**The end pair's verdicts on the fifth text** (their reports on 10bf1e15c): both PASSED, the mathematician rederiving
+the rounding terms from the gear's step and the physicist rerunning term7_drive.py on f72067cdf byte for byte. Their
+wordings folded: section 8's struck line, the J5 of probe (g) even in the velocities and the rule a force odd in them
+(both); the two-leg vertex's square in units of the common rest teeth (the mathematician); s4's twin with the taker's
+spring over its drive (the physicist); probe (g)'s docstring, its runs failing and their crossings the physicist's p7
+(b) (the mathematician).
