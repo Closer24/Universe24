@@ -279,7 +279,7 @@ def ordered(lines: Lines) -> str:
 
 
 def crossed(lines: Lines) -> str:
-    """The end's across against the record, where the end holds one: every place it names on the board, and every side across a Mesh a click line names standing among its entries (a writer's line, the ninth code reader's REPORT1 MINOR 2); a click line naming no whole train is the sides' guard's to name (sides.paired), so it is read here by its train alone where it holds one, and nothing is raised (the ninth code reader's B1 on node-fold)."""
+    """The end's across against the record, where the end holds one: every place it names on the board, and every side across a Mesh a click line names standing among its entries (a writer's line, the ninth code reader's REPORT1 MINOR 2); a click line naming no whole train is the sides' guard's to name (sides.paired), so it is read here by its train alone where it holds one, and nothing is raised (the ninth code reader's B1 on node-fold). Its reach, named until the fuller guard queued for the round after node-fold (the Boss's ruling of 08:5x UTC; the ninth code reader's MINOR 1 on node-fold): an end with no across key skips it, so a record whose click lines carry sides across a Mesh reads with its end's across deleted; and it reads only that each side across a Mesh has an entry for its pair of trains (t, u), never the partner place that entry lists per Node-clock, so a record with two sites swapped in every line and every side across a Mesh reads, though each side moved then joins two clocks that are no Mesh's neighbours."""
     end = lines[-1] if isinstance(lines[-1], dict) else {}
     if "across" not in end:
         return ""
