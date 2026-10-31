@@ -370,7 +370,7 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
 
 def test_the_click_world_reads_the_books_no_own_count_and_no_cone_where_none_could_be_outside(tmp_path):
     """Yes: q summing to 0 at every place, the books SHOWN; D6 and D7 not read, the act holding no clock's own count and
-    every 1.3 clock at its Node-clock; at round 2, the ring's diameter, no line could stand outside the cone, not read.
+    every 1.3 clock at its Node-clock; at round 2, the lay's reach, no line could stand outside the cone, not read.
     No: a round's two places cancelling, books NOT SHOWN; no q, not read; cone NOT SHOWN; no click line: NO CLICK, refusal last."""
     # a ring of five sites, its setting laying one gear, at site 0
     lay = json.dumps({"version": 1, "ticks": 6, "gears": [[0, 0, 0, 1, 0, 0]]})

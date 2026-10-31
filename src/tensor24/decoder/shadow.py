@@ -1,5 +1,5 @@
 """Clock: the board's physics read in its shadow, the click world (the owner's law of 23:4x UTC), as the clocks' meetings (the owner's word of 00:3x UTC): each event one quantum passing from one clock to another at one place, with no time axis but the events' order and each clock's count, and space read only by light's echo; the record's header and its click lines are read, nothing of the board's state, so no claim stands on a board reading alone.
-Algebra: whole counts and sums: at every place, a round and a Node-clock with click lines, the sum of q over the trains and each line's q, a meeting one give of q -1 and one take of q +1; per clock, a site and a train, its meetings counted and its given, taken and net; the cone one Mesh a round, the Meshes the shorter way round each side by Rule3's carry (measure.meshes), the board's diameter the most of them from site 0; no float, no root and no search.
+Algebra: whole counts and sums: at every place, a round and a Node-clock with click lines, the sum of q over the trains and each line's q, a meeting one give of q -1 and one take of q +1; per clock, a site and a train, its meetings counted and its given, taken and net; the cone one Mesh a round, the Meshes the shorter way round each side by Rule3's carry (measure.meshes), the lay's reach the most of them from a site to its nearest laid site; no float, no root and no search.
 Board: schema 1.3's header (its sides, its train cards, and its setting file, setting.json by its name, read for its gears, each a site on the board with its counts and its tooth, the sites laid those with a count or a tooth not 0) and its click lines, each a round, a site, a train and its q; nothing of the board's state, no slot, plan or act.
 Clicks: seven readings, each read SHOWN, or NOT SHOWN with its first counterexample named, or NOT READ with its cause named, or NO CLICK, the owner's phrase, where the record holds no click line, before any other cause: shadow's four, the books at each click (row 15's first reading on clicks.py's counts, in row 15's order), a duration as a clock's own count (D6) and the twins (D7), not read, the act holding no clock's own count and every 1.3 clock standing at its Node-clock, and the cone check by click (D8 on measure.past), not read where no line could stand outside the lay's cone; and the click board's three, the meetings, each clock's line of meetings, the order counted with no duration, and space by light's echo (reading 7), not read while no rule tells light's click lines from the others.
 """
@@ -210,7 +210,7 @@ def laid(record: Record, sides: list[int], size: int) -> tuple[set[int], str]:
 
 
 def cone(record: Record) -> Verdict:
-    """The cone check by click (D8), on 1.3's click lines and measure.past: every line's event (t, x) inside the lay's cone, past((0, y), (t, x)) for a site y the setting lays, read on the lines that could stand outside it, a line at no laid site and before the board's diameter in rounds, NOT READ where none could; the lay's cone alone, since measure.meshes obeys the triangle inequality (a line inside an earlier click's cone, that click inside the lay's, is inside the lay's, and the first line outside the lay's cone is outside every earlier click's) and the clicks as built report a passing and push nothing back into the gears, so the lay is the one cause on the board and its cone the whole causal past."""
+    """The cone check by click (D8), on 1.3's click lines and measure.past: every line's event (t, x) inside the lay's cone, past((0, y), (t, x)) for a site y the setting lays, read on the lines that could stand outside it, a line at no laid site and before the lay's reach in rounds (the most Meshes from a site to its nearest laid site), NOT READ where none could; the lay's cone alone, since measure.meshes obeys the triangle inequality (a line inside an earlier click's cone, that click inside the lay's, is inside the lay's, and the first line outside the lay's cone is outside every earlier click's) and the clicks as built report a passing and push nothing back into the gears, so the lay is the one cause on the board and its cone the whole causal past."""
     lines = clicks.listed(record)
     if not lines:
         return measure.verdict(ABSENT, NO_LINE)
@@ -221,15 +221,15 @@ def cone(record: Record) -> Verdict:
     lay, unread = laid(record, sides, size)
     if unread:
         return measure.verdict("NOT READ", unread)
-    diameter = max(measure.meshes(sides, 0, site) for site in range(size))
+    reach = max(min(measure.meshes(sides, y, x) for y in lay) for x in range(size)) if lay else 0
     events = [(line["round"], line["site"]) for line in lines]
-    could = [(t, x) for t, x in events if x not in lay and (t < diameter or not lay)]
+    could = [(t, x) for t, x in events if x not in lay and (t < reach or not lay)]
     readings = {"lines": len(lines), "laid": len(lay), "could": len(could)}
     if not could and len(lay) == size:
         cause = f"the lay's cone covers the board's {size} sites from round 0, before the first click line at round {events[0][0]}: no line could stand outside it"
         return measure.verdict("NOT READ", cause, **readings)
     if not could:
-        cause = f"every click line stands at a laid site ({len(lay)} of the board's {size}) or at or past round {diameter}, the board's diameter: no line could stand outside the lay's cone"
+        cause = f"every click line stands at a laid site ({len(lay)} of the board's {size}) or at or past round {reach}, the lay's reach, the most Meshes from a site to its nearest laid site: no line could stand outside the lay's cone"
         return measure.verdict("NOT READ", cause, **readings)
     outside = [e for e in could if not any(measure.past(sides, (0, y), e) for y in lay)]
     if outside:
