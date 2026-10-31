@@ -1,1 +1,1 @@
-"""The decoder: the rows read from a finished record alone, with the ledger beside it (Animate's, apart from the engine)."""
+"""The decoder: a finished record read alone, its click lines listed, counted and read in the click world, with the ledger beside it (Animate's, apart from the engine)."""

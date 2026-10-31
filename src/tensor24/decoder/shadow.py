@@ -161,12 +161,12 @@ def not_read(record: Record, cause: str) -> Verdict:
 
 
 def duration(record: Record) -> Verdict:
-    """A duration only as a clock's own count (D6, measure.faces and elapsed on 1.2's whole clicks): not read on 1.3, the act holding no clock's own count, so 1.3 writes none, the click tooth the books' remainder."""
+    """A duration only as a clock's own count (D6): not read on 1.3, the act holding no clock's own count, so 1.3 writes none, the click tooth the books' remainder."""
     return not_read(record, NO_COUNT)
 
 
 def twins(record: Record) -> Verdict:
-    """The twins (D7, measure.twins on 1.2's clocks): not read on 1.3, every clock standing at its Node-clock, so no two clocks meet twice by two paths."""
+    """The twins (D7), two clocks that meet twice by two paths: not read on 1.3, every clock standing at its Node-clock, so no two clocks meet twice by two paths."""
     return not_read(record, AT_NODE)
 
 
@@ -210,7 +210,7 @@ def laid(record: Record, sides: list[int], size: int) -> tuple[set[int], str]:
 
 
 def cone(record: Record) -> Verdict:
-    """The cone check by click (D8, measure.cone_check on 1.2's takes), on 1.3's click lines and measure.past: every line's event (t, x) inside the lay's cone, past((0, y), (t, x)) for a site y the setting lays, read on the lines that could stand outside it, a line at no laid site and before the board's diameter in rounds, NOT READ where none could; the lay's cone alone, since measure.meshes obeys the triangle inequality (a line inside an earlier click's cone, that click inside the lay's, is inside the lay's, and the first line outside the lay's cone is outside every earlier click's) and the clicks as built report a passing and push nothing back into the gears, so the lay is the one cause on the board and its cone the whole causal past."""
+    """The cone check by click (D8), on 1.3's click lines and measure.past: every line's event (t, x) inside the lay's cone, past((0, y), (t, x)) for a site y the setting lays, read on the lines that could stand outside it, a line at no laid site and before the board's diameter in rounds, NOT READ where none could; the lay's cone alone, since measure.meshes obeys the triangle inequality (a line inside an earlier click's cone, that click inside the lay's, is inside the lay's, and the first line outside the lay's cone is outside every earlier click's) and the clicks as built report a passing and push nothing back into the gears, so the lay is the one cause on the board and its cone the whole causal past."""
     lines = clicks.listed(record)
     if not lines:
         return measure.verdict(ABSENT, NO_LINE)
@@ -241,7 +241,7 @@ def cone(record: Record) -> Verdict:
 
 
 def shadow(record: Record) -> dict[str, Verdict]:
-    """The click world's four readings, each a tool the decoder holds ported to 1.3, each its verdict, NO CLICK in each on a record that holds no click line."""
+    """The click world's four readings, each its verdict, NO CLICK in each on a record that holds no click line."""
     return {BOOKS: books(record), DURATION: duration(record), TWINS: twins(record), CONE: cone(record)}
 
 

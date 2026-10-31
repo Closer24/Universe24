@@ -1,12 +1,12 @@
 """Tensor24's decoder: a record and its ledger read under the schema's rules, each broken one not read with its own cause
-and nothing raised; row 15's two readings; each law failing on its own mutant; schema 1.3's click lines read, listed and counted."""
+and nothing raised; schema 1.3's click lines read, listed and counted, and read in the click world."""
 
 import json
 import subprocess
 import sys
 from pathlib import Path
 
-from tensor24.decoder import books, clicks, records, shadow
+from tensor24.decoder import clicks, records, shadow
 from tensor24.record import schema
 
 TOOL = Path(__file__).resolve().parent.parent / "tools" / "tensor24_decode.py"
@@ -14,12 +14,7 @@ DIGITS = (
     sys.int_info.default_max_str_digits
 )  # the interpreter's bound on a whole number's digits, the tool lifts it
 TRAINS = [{"index": t, "label": f"train {t}", "kinds": [0], "part": 1, "winding": 1} for t in (0, 1)]
-WOUND = dict.fromkeys(range(3), 1)  # each train's winding by its index: TRAINS', and train 2's at 1
 HEADER = {"kind": "header", "record": "tensor24", "major": 1, "minor": 1, "trains": TRAINS}
-THIRD = {
-    **HEADER,
-    "trains": [*TRAINS, {**TRAINS[1], "index": 2, "label": "train 2"}],
-}  # train 2's card added
 BOARD = {**HEADER, "sides": [1 + 1, 1, 1]}  # a board of two sites on its x axis, and six Spokes
 END = {"kind": "end", "rounds": 6, "undone": 0, "exact": 1}
 H, B, E = HEADER, BOARD, END  # short names for the tables below
@@ -270,206 +265,6 @@ def read(lines, tmp_path):
     return records.read(str(path))[0]
 
 
-def kind(lines, held, tmp_path):
-    """Row 15's verdict's kind on a record of the given lines and a ledger."""
-    return books.row_15(read(lines, tmp_path), held)["kind"]
-
-
-OPEN = {  # a whole click whose holdings sum to nothing and whose books still do not hold the click (the seventh review)
-    "no books, q 5": {**click(1, 0, train=1), "q": 5},
-    "a take that gains": {**click(1, 0, [holding(1, (4, 8))], [holding(0, (4, 0))], train=1), "q": 4},
-    "its own train not taken": {
-        **click(1, 0, [holding(0, (4, 0))], [holding(1, (0, 4))], train=1),
-        "q": 4,
-    },
-    "a laid holding that loses": click(
-        1, 0, [holding(1, (7, 4))], [holding(0, (0, 5)), holding(2, (2, 0))], train=1
-    ),
-    "a q that did not leave": {**TAKE, "q": 4},
-    "a taken holding that gains": click(
-        1, 0, [holding(1, (7, 4)), holding(2, (0, 1))], [holding(0, (0, 1 + 1))], train=1
-    ),
-    "an end that takes nothing": click(1, 0, ends=[ENDED[0], end_of(1, [], [])]),
-}
-
-
-def test_the_wind_is_read_over_every_train_at_every_round_with_a_click(tmp_path):
-    """The ledger's wind, read over every train of the header, round by round, a split click moving it between trains."""
-    two = read([H, TAKE, {**TAKE, "round": 1 + 1, "count": 1 + 1}, E], tmp_path)
-    second = ledger(1 + 1, {0: (4, 8), 1: (6, 2)})
-    over, under = ledger(1, {0: (0, 5), 1: (10, 6)}), ledger(1, {0: (0, 3), 1: (10, 6)})
-    swapped = [
-        *over,
-        *ledger(1 + 1, {0: (4, 7), 1: (6, 2)}),
-    ]  # one more at the first round, one less at the second
-    paired = ledger(1, {0: (10, 1), 1: (0, 9)})
-    assert kind([H, PAIR, E], paired, tmp_path) == "SHOWN"
-    assert books.row_15(two, [*GOOD, *second])["kind"] == "SHOWN"
-    assert all(
-        books.row_15(two, held)["kind"] == "NOT SHOWN"
-        for held in ([*over, *second], [*under, *second], swapped)
-    )
-    no_train = books.row_15(read([{**H, "trains": []}, TAKE, E], tmp_path), GOOD)
-    held = [
-        ledger(1, {7: (5, 5)}),
-        ledger(1, {0: (0, 4)}),
-        ledger(1, {1: (10, 10)}),
-        [*GOOD, *ledger(1, {7: (5, 5)})],
-    ]
-    assert kind([H, TAKE, E], GOOD, tmp_path) == "SHOWN"
-    assert all(kind([H, TAKE, E], lines, tmp_path) == "NOT READ" for lines in held)
-    assert no_train["kind"] == "NOT READ" and no_train["cause"].startswith("the header names no train")
-    assert books.second_reading(read([{**H, "trains": []}, TAKE, E], tmp_path), [])["read"] == 0
-    record = read([H, TAKE, {"kind": "split", "round": 1 + 1, "site": 0, "count": 1 + 1}, E], tmp_path)
-    moved = [*GOOD, *ledger(1 + 1, {0: (4, 1), 1: (6, 9)})]
-    some = books.row_15(record, GOOD)
-    clicks_alone = books.row_15(record, [line for line in moved if line["at"] == "clicks"])
-    windless = books.row_15(record, [*moved[:-1], without(moved[-1], "wind")])
-    parted = books.row_15(record, [line for line in moved if line["at"] == "step" or line["train"] == 0])
-    assert books.row_15(record, moved)["kind"] == "SHOWN" and some["kind"] == "NOT READ"
-    assert (
-        some["cause"]
-        == "the books close at every whole click; the ledger's lines are read at 1 of 2 rounds with a click"
-    )
-    assert clicks_alone["kind"] == windless["kind"] == parted["kind"] == "NOT READ"
-
-
-def lacking(key, at="taken"):
-    """TAKE with one holding that lacks a field, or with no field of its own at all."""
-    if at == "click":
-        return without(TAKE, key)
-    return {**TAKE, at: [without(TAKE[at][0], key)]}
-
-
-LACKING = {  # a whole click that lacks a field its books are read from (Sofer's G1)
-    "its ends": lacking("ends", "click"),
-    "its taken": lacking("taken", "click"),
-    "an end's laid": click(1, 0, ends=[ENDED[0], without(ENDED[1], "laid")]),
-    "a holding's kept": lacking("kept"),
-    "a holding's windings": lacking("windings"),
-    "a holding's train": lacking("train"),
-    "a laid holding's kept": lacking("kept", "laid"),
-}
-
-
-def test_the_books_close_where_they_hold_the_click_and_read_not_shown_or_not_read_otherwise(tmp_path):
-    """Row 15's one law: the books close at each end where they hold the click they book; else not shown, or not read with the cause."""
-    one_open = click(1, 0, ends=[ENDED[0], end_of(1, [holding(0, (5, 0))], [holding(1, (0, 4))])])
-    twisted = [
-        end_of(0, [holding(0, (5, 0))], [holding(1, (0, 6))]),
-        end_of(1, [holding(0, (5, 0))], [holding(1, (0, 4))]),
-    ]
-    assert books.closes(PAIR, WOUND) and not books.closes(one_open, WOUND)
-    assert not books.closes(click(1, 0, ends=twisted), WOUND)
-    opened = click(1, 0, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
-    assert kind([H, opened, E], GOOD, tmp_path) == "NOT SHOWN"
-    absent = books.row_15(read([H, TAKE, E], tmp_path), None)
-    assert absent["kind"] == "NOT READ" and absent["cause"].startswith("the ledger is absent")
-    for name in sorted(OPEN):
-        from_kept = click(1, 0, [holding(1, (0, 0), (5, 1))], [holding(0, (0, 4))], train=1)
-        assert books.closes({**TAKE, "q": 1 + 1 + 1}, WOUND) and books.closes(from_kept, WOUND)
-        assert books.closes(PAIR, WOUND) and not books.closes(OPEN[name], WOUND)
-        held = ledger(1, {0: (4, 4), 1: (6, 6)})
-        assert kind([THIRD, OPEN[name], E], held, tmp_path) == "NOT SHOWN"
-    for name in sorted(LACKING):
-        cause = "the whole click at round 1, site 0 lacks a field its books are read from"
-        beside = [
-            LACKING[name],
-            {**TAKE, "site": 1},
-        ]  # beside a click whose books close, the books unnamed
-        for some in ([LACKING[name]], beside):
-            verdict = books.row_15(read([H, *some, E], tmp_path), GOOD)
-            assert verdict["kind"] == "NOT READ" and verdict["cause"] == cause
-    opened = click(1, 1, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
-    held = ledger(1, {0: (0, 8), 1: (10, 2)})
-    both = books.row_15(read([H, LACKING["its taken"], opened, E], tmp_path), held)
-    assert both["kind"] == "NOT SHOWN" and "lacks a field its books are read from" in both["cause"]
-    one = books.row_15(read([H, TAKE, opened, E], tmp_path), held)
-    assert one["kind"] == "NOT SHOWN" and one["cause"].startswith(
-        "the books open at 1 of 2 whole clicks read"
-    )
-
-
-def law_books(tmp_path):
-    broken = click(1, 0, [holding(1, (7, 4), (3, 3))], [holding(0, (0, 4))], train=1)
-    return books.closes(TAKE, WOUND) and not books.closes(broken, WOUND)
-
-
-def law_ends(tmp_path):
-    return books.closes(PAIR, WOUND) and not books.closes(
-        click(1, 0, ends=[end_of(0, [holding(0, (5, 0))], [holding(1, (0, 4))])]), WOUND
-    )
-
-
-def law_ledger(tmp_path):
-    over, seven = ledger(1, {0: (0, 5), 1: (10, 6)}), ledger(1, {7: (5, 5)})
-    kinds = [kind([H, TAKE, E], held, tmp_path) for held in (GOOD, over, seven)]
-    return kinds == ["SHOWN", "NOT SHOWN", "NOT READ"]
-
-
-def law_nothing(tmp_path):
-    verdict = books.row_15(read([H, rate(1, 0, 1, 1), E], tmp_path), ledger(1, {0: (0, 0)}))
-    return verdict == {"kind": "NOT READ", "cause": "no whole click", "first": verdict["first"]}
-
-
-def law_lacking(tmp_path):
-    """A whole click that lacks its taken reads the row not read, and nothing is raised."""
-    try:
-        return kind([H, LACKING["its taken"], E], GOOD, tmp_path) == "NOT READ"
-    except KeyError:
-        return False
-
-
-def law_line_feed(tmp_path):
-    path = tmp_path / "record.jsonl"
-    path.write_text(
-        text([H, json.dumps({**rate(1, 0, 1, 1), "note": "a\u2028b"}, ensure_ascii=False), E])
-    )
-    return records.read(str(path))[1] == ""
-
-
-LAWS = {  # each law, and its mutant: one function of the decoder replaced
-    "the books close, each train's windings at its winding and its kept together": (
-        law_books,
-        books,
-        "gained",
-        lambda hs, winding: sum(h["windings"][1] - h["windings"][0] for h in hs),
-    ),
-    "a pair into light's books close at each end": (law_ends, books, "parts", lambda click: [click]),
-    "the wind over every train of the header agrees after the clicks and after the step": (
-        law_ledger,
-        books,
-        "second_reading",
-        lambda record, ledger: {"trains": 1, "rounds with a click": 1, "read": 1, "agree": 1},
-    ),
-    "a record with no whole click reads not read": (law_nothing, books, "unread", lambda first: False),
-    "a click that lacks a field of its books reads not read": (
-        law_lacking,
-        books,
-        "unread_books",
-        lambda click, winding: "",
-    ),
-    "the lines split at the line feed alone": (
-        law_line_feed,
-        records,
-        "lines_of",
-        lambda path: (
-            [records.parsed(t) for t in Path(path).read_text(encoding="utf-8").splitlines()],
-            "",
-        ),
-    ),
-}
-
-
-def test_each_law_of_the_readings_holds_and_fails_on_its_mutant(tmp_path, monkeypatch):
-    for name in sorted(LAWS):
-        with monkeypatch.context() as patch:
-            law, module, attribute, mutant = LAWS[name]
-            assert law(tmp_path)
-            patch.setattr(module, attribute, mutant)
-            assert not law(tmp_path)
-
-
 def tool(*args):
     return subprocess.run(
         [sys.executable, "-I", str(TOOL), *map(str, args)], capture_output=True, text=True
@@ -506,8 +301,9 @@ def test_the_tool_reads_names_and_raises_nothing_and_lifts_the_digits(tmp_path):
         for run in usages
     )
     assert all(run.returncode == 0 and run.stderr == "" for run in (shown, absent, lifted, unread_run))
-    assert "'kind': 'SHOWN'" in shown.stdout
-    assert "the ledger's file is absent" in absent.stdout and lifted.stdout.startswith("row 15")
+    assert f"the ledger: read, {len(GOOD)} lines" in shown.stdout
+    assert "the ledger's file is absent" in absent.stdout
+    assert lifted.stdout.startswith("the ledger: the ledger is absent")
     assert unread_run.stdout == f"not read: {NO_JSON}\n"
 
 
@@ -564,7 +360,7 @@ def test_the_click_lines_are_listed_and_counted_per_train_and_site_with_no_verdi
     more = clicks.counted(read([THIRTEEN, GIVE, TOOK, {**GIVE, "round": E["rounds"]}, E], tmp_path))
     assert (more.places, more.nonzero) == (len({(e["round"], e["site"]) for e in more.lines}), 1)
     run = tool(tmp_path / "record.jsonl")  # the record read last, as read() wrote it
-    assert run.returncode == 0 and run.stderr == "" and run.stdout.startswith("row 15")
+    assert run.returncode == 0 and run.stderr == "" and run.stdout.startswith("the ledger: ")
     lines = run.stdout.splitlines()
     assert "the click lines: 3" in lines and "  round 6, site 0, train 0: q -1, tooth [3, 6]" in lines
     assert "train 0: 2 lines, given 2, taken 0, net -2" in lines

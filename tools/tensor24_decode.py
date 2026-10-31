@@ -1,18 +1,15 @@
 """The decoder's tool (Animate's): one record of the schema read, with its ledger beside it where one is named, and its
-readings printed: row 15's verdict with its two readings, row 46's with its two, the ledger read or the cause it is
-not, the measurement's rules (the cone check by click and the twin reading), and the basic part on schema 1.3's click
-lines: the lines listed in the schema's order and counted per train and per Node-clock (the lines, the given, the
-taken and the net), and the places (a round and a Node-clock) where the sum of q over the trains is not 0, counted;
-then the click world's block (decoder/shadow.py, the owner's law of 23:4x UTC: the physics read in the board's shadow,
-no claim on a board reading alone): the books at each click, D6 and D7, and the cone check by click, then the click
-board's three (the owner's word of 00:3x UTC: the clocks' meetings), the meetings, each clock's line of meetings and
-light's echo, each read SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK where the record holds no click line, with its
-cause, every train card's lines, given, taken and net beside the books, every clock's meetings counted with no
-duration and its books beside its line, and one refusal line where the record holds no click of either kind, no click
-line and no whole click.
-Nothing is raised: a record or a ledger that is not read is named with its cause, and the rows that need it read NOT
-READ. The interpreter's bound on a whole number's digits is lifted, since the schema's numbers are whole numbers of
-any width.
+readings printed: the ledger read or the cause it is not, and the basic part on schema 1.3's click lines: the lines
+listed in the schema's order and counted per train and per Node-clock (the lines, the given, the taken and the net),
+and the places (a round and a Node-clock) where the sum of q over the trains is not 0, counted; then the click world's
+block (decoder/shadow.py, the owner's law of 23:4x UTC: the physics read in the board's shadow, no claim on a board
+reading alone): the books at each click, D6 and D7, and the cone check by click, then the click board's three (the
+owner's word of 00:3x UTC: the clocks' meetings), the meetings, each clock's line of meetings and light's echo, each
+read SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK where the record holds no click line, with its cause, every train
+card's lines, given, taken and net beside the books, every clock's meetings counted with no duration and its books
+beside its line, and one refusal line where the record holds no click of either kind, no click line and no whole
+click. Nothing is raised: a record or a ledger that is not read is named with its cause. The interpreter's bound on a
+whole number's digits is lifted, since the schema's numbers are whole numbers of any width.
 
 Usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]
 """
@@ -23,7 +20,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from tensor24.decoder import bangs, books, clicks, measure, records, shadow  # noqa: E402
+from tensor24.decoder import clicks, records, shadow  # noqa: E402
 
 # the claims of physics the record carries no click line for, refused by name (a constant of the tool's text, no reading)
 REFUSAL = (
@@ -83,11 +80,7 @@ def main(argv: list[str]) -> int:
         print(f"not read: {cause}")
         return 0
     ledger, why = records.read_ledger(held.ledger) if held.ledger else (None, "the ledger is absent")
-    print(f"row 15: {books.row_15(record, ledger, why)}")
-    print(f"row 46: {bangs.row_46(record, ledger, why)}")
     print(f"the ledger: {why if ledger is None else f'read, {len(ledger)} lines'}")
-    print(f"the cone check (D8): {measure.cone_check(record)}")
-    print(f"the twin reading (D7): {measure.twins(record)}")
     printed(clicks.counted(record))
     world(record)
     return 0
