@@ -75,6 +75,9 @@ class Header:
     width: int
 
 
+SIDE = ("u", "q", "before", "after")  # a 1.4 click line's side, [u, q_tu, k_before, k_after], in order
+
+
 @dataclass(frozen=True)
 class Click:
     """A click line: at a round and a Node-clock, a train's click tooth carried q whole keys, a give below 0 and a take above it, its tooth before and after."""

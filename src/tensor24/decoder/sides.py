@@ -6,6 +6,8 @@ Clicks: a click line of schema 1.4 holds its sides, one per edge side of its tra
 
 from typing import Any
 
+from tensor24.record import schema
+
 Line = dict[str, Any]
 Lines = list[Line | str]
 Side = list[Any]  # [u, q, tooth before, tooth after]
@@ -18,8 +20,8 @@ def whole(value: Any) -> bool:
 
 
 def formed(side: Any) -> bool:
-    """A side of the form [u, q, tooth before, tooth after], each entry whole."""
-    return isinstance(side, list) and len(side[1:][1:][1:]) == 1 and all(map(whole, side))
+    """A side of the form [u, q, tooth before, tooth after], the schema's fields (schema.SIDE), each entry whole."""
+    return isinstance(side, list) and len(side) == len(schema.SIDE) and all(map(whole, side))
 
 
 def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
@@ -40,7 +42,7 @@ def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
     found += [f"line {n}'s sides sum to {total}, not its q {e.get('q')}"] if total != e.get("q") else []
     found += (
         [f"line {n} holds a side's tooth outside [0, {key})"]
-        if any(k < 0 or k >= key for side in sides for k in side[1:][1:])
+        if any(k < 0 or k >= key for _, _, before, after in sides for k in (before, after))
         else []
     )
     return found[0] if found else ""
@@ -49,13 +51,14 @@ def sided(n: int, e: Line, keys: dict[Any, Any]) -> str:
 def mirrored(n: int, e: Line, sides: dict[Place, Side], keys: dict[Any, Any]) -> str:
     """The first rule its sides break against their partners at their place: a partner absent, the two q not summing to 0, or the two teeth not summing to the key less 1, before or after."""
     key = keys.get(e["train"], 0)  # the edge key, the train card's
-    for side in e["sides"]:
-        u, partner = side[0], sides.get((e["round"], e["site"], side[0], e["train"]))
+    for u, q, before, after in e["sides"]:
+        partner = sides.get((e["round"], e["site"], u, e["train"]))
         if partner is None:
             return f"line {n}'s side to train {u} has no partner at its place"
-        if side[1] + partner[1] != 0:
-            return f"line {n}'s side to train {u} and its partner hold q {side[1]} and {partner[1]}, not 0 summed"
-        if any(a + b != key - 1 for a, b in zip(side[1:][1:], partner[1:][1:], strict=True)):
+        _, far, far_before, far_after = partner
+        if q + far != 0:
+            return f"line {n}'s side to train {u} and its partner hold q {q} and {far}, not 0 summed"
+        if before + far_before != key - 1 or after + far_after != key - 1:
             return f"line {n}'s side to train {u} and its partner hold teeth not summing to the key less 1, {key - 1}"
     return ""
 

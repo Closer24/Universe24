@@ -62,6 +62,10 @@ REFUSED = [
         [GIVE, line(1, (0, 1, 3, 1)), TAKE[1]],
         "line 2's side to train 1 and its partner hold teeth not summing to the key less 1, 6",
     ),
+    (
+        [GIVE, line(1, (0, 1, 2, 0)), TAKE[1]],
+        "line 2's side to train 1 and its partner hold teeth not summing to the key less 1, 6",
+    ),
 ]
 
 
