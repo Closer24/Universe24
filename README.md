@@ -33,7 +33,7 @@ python -I tools/tensor24_decode.py record.jsonl            # the decoder's readi
 python tools/check.py                                      # the gates and the affected tests; --full runs the whole suite
 ```
 
-A world is three files (`examples/tensor24/`): the universe (the integers den, full_rate and width, the free strengths CHOSEN by name as whole numbers, key, push, notch, hold, tie and mesh, and the families: a name, its kinds, its part, its pinion), the piece (the board's three sides) and the setting (the gears laid, one row each, and the number of ticks); no file declares a particle, a mass or a coupling by name, since which trains are held or tied is found by their character. Five worlds ship in `examples/`, each laid by a generator kept in the repo (the bang, a travelling light, a well, a click world and a mesh world).
+A world is three files (`examples/tensor24/`): the universe (the integers den, full_rate and width, the free strengths CHOSEN by name as whole numbers, key, push, notch, hold, tie and mesh, and the families: a name, its kinds, its part, its pinion), the piece (the board's three sides) and the setting (the gears laid, one row each, and the number of ticks); no file declares a particle, a mass or a coupling by name, since which trains are held or tied is found by their character. Five worlds ship in `examples/`, each laid by a generator kept in the repo (the bang, the board's wave laid at rest, a lump making a well, a click world and a mesh world).
 
 ## The documents
 
