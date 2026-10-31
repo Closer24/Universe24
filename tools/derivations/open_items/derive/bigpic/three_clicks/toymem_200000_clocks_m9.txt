@@ -1,0 +1,7 @@
+ mode 7 with the shears' quotients booked:
+   clock 2's line: 87708 rounds with a click (net 72000 quanta); after one the next 27160 against 38463 independent; after two in a row a third 14154 against 11910
+   clock 3's line: 66761 rounds with a click (net 12000 quanta); after one the next 32143 against 22285 independent; after two in a row a third 12695 against 10729
+   clock 4's line: 94405 rounds with a click (net -84000 quanta); after one the next 29303 against 44561 independent; after two in a row a third 12693 against 13831
+   edge (2, 3): 36865 clicks; after one click the next 84272 against 6795 independent; after two in a row a third 54737 against 15533; lives' variance over mean squared 348 per mille, the geometric law's 816
+   edge (3, 4): 48865 clicks; after one click the next 85564 against 11938 independent; after two in a row a third 55820 against 20905; lives' variance over mean squared 348 per mille, the geometric law's 756
+   edge (2, 4): 35135 clicks; after one click the next 85040 against 6172 independent; after two in a row a third 55472 against 14939; lives' variance over mean squared 349 per mille, the geometric law's 825
