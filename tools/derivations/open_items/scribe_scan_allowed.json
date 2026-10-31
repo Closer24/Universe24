@@ -873,22 +873,6 @@
  },
  {
   "rule": "DECLARE",
-  "file": "tools/derivations/open_items/derive/david_open/ladder/l2_ladder_on_the_act.py",
-  "detail": "coupling row [0, 0, 0, GRAD, 0, 0, 0, GRAD, 1, 0, 0, 1]",
-  "count": 1,
-  "word": "the coupling rows David's two probes lay (his own breaches by name, 6497338785, item 2), standing since 05:31 UTC before the rule read a row written as a list: frozen until he redoes them on the generic form (the owner's word of 12:5x: no trains, no exceptions in code)",
-  "row": "399"
- },
- {
-  "rule": "DECLARE",
-  "file": "tools/derivations/open_items/derive/david_open/ladder/l2_ladder_on_the_act.py",
-  "detail": "coupling row [0, 0, 0, GRAD, 1, 0, 0, VALUE, 2, 0, 0, 1]",
-  "count": 1,
-  "word": "the coupling rows David's two probes lay (his own breaches by name, 6497338785, item 2), standing since 05:31 UTC before the rule read a row written as a list: frozen until he redoes them on the generic form (the owner's word of 12:5x: no trains, no exceptions in code)",
-  "row": "399"
- },
- {
-  "rule": "DECLARE",
   "file": "tests/test_the_tensor24_files.py",
   "detail": "train call light -1",
   "count": 1,
