@@ -100,6 +100,26 @@ So the freedom is in the member's births, and the board, its start and its end a
 - **The click world's open direction** (miracle/README.md) is the exchange-odd mode of its two like hands, the giver
   and the taker. Their pair form [[c h^2, t/2], [t/2, c h^2]] has its lower value, c h^2 - t/2, on (1, -1) (DERIVED).
 
+## Three like hands: the floor by itself (the owner's words of 10:11 to 11:10 UTC; FLOOR1's pairs; David's Harary rule)
+
+- **node-all's own rule** (plans.tying): the hands' tie bands every two distinct tied trains of one part. A train is tied
+  when its character is kept under the sign kind's twist and it is not the held hand, as the giver and the taker
+  (T1, T2) are.
+- **So the click world's two tied hands make one band.** Under the square form that is an even structure, at the
+  floor's edge, with one free swing (FLOOR1).
+- **Three tied hands of one part would be banded pairwise by the same rule:** a plain triangle of bands, a frustrated
+  loop. Under the square form every swing then holds a spring: each hand gets t, the two swings that sum to 0 hold t/2
+  each, and the common swing 2t (DERIVED; Harary's balance).
+- **MEASURED** (frustration.py, frustration_20000.txt): the click world's band as its own square, no own spring laid and
+  no held hand (FLOOR1's clean test of the edge), the hands' difference moving, 20,000 rounds:
+  - two hands on one band: the free swing drifts linearly, the largest count 4,040 at round 4,000 and 20,040 at round
+    20,000;
+  - three hands on a plain triangle: the largest count at most 88 over the run;
+  - the identity and the run back exact in both.
+- **So three like hands are the fewest whose floor holds by itself,** and their bands are the equilateral triangle of
+  two-leg edges, on which the third click's charge is kept (above). Whether the structure lays a third tied hand is
+  OPEN: the click world as laid has two.
+
 ## The twin and the turn, read against the one tooth
 
 - With one tooth, every check that THIRD9 read with its pair holds on the equilateral triangle:

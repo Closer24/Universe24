@@ -1,0 +1,6 @@
+bands of the click world's hands' tie 96000, each its own square (t/2 = 48000 on each hand); W 600000000; no own spring laid and no held hand
+== two tied hands, one band (an even structure: the floor's edge): the lay [40, -40] now, [39, -39] before; 20000 rounds
+   the identity held in 20000 of 20000 rounds; the largest count every 4,000 rounds: [(4000, 4040), (8000, 8040), (12000, 12040), (16000, 16040), (20000, 20040)]; the run back exact: True
+== three tied hands, a plain triangle of bands (a frustrated loop): the lay [40, -40, 0] now, [39, -39, 0] before; 20000 rounds
+   the identity held in 20000 of 20000 rounds; the largest count every 4,000 rounds: [(4000, 88), (8000, 88), (12000, 63), (16000, 15), (20000, 33)]; the run back exact: True
+exit
