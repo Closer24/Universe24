@@ -1,6 +1,7 @@
 """The decoder's tool (Animate's): one record of the schema read, with its ledger beside it where one is named, and its
-readings printed: the ledger read or the cause it is not, and the basic part on schema 1.3's click lines: the lines
-listed in the schema's order and counted per train and per Node-clock (the lines, the given, the taken and the net),
+readings printed: the ledger read or the cause it is not, and the basic part on the click lines, each with its edge
+sides in its site and across a Mesh (schema 1.4) or its tooth (1.3): the lines listed in the schema's order and
+counted per train and per Node-clock (the lines, the given, the taken and the net),
 and the places (a round and a Node-clock) where the sum of q over the trains is not 0, counted; then the click world's
 block (decoder/shadow.py, the owner's law of 23:4x UTC: the physics read in the board's shadow, no claim on a board
 reading alone): the books at each click, D6 and D7, and the cone check by click, then the click board's three (the
@@ -34,7 +35,12 @@ def printed(held: clicks.Counted) -> None:
     print(f"the click lines: {len(held.lines)}")
     for line in held.lines:
         where = f"round {line['round']}, site {line['site']}, train {line.get('train')}"
-        print(f"  {where}: q {line.get('q')}, tooth {line.get('tooth')}")
+        carry = (
+            f"sides {line.get('sides', [])}, across {line.get('across', [])}"
+            if "sides" in line or "across" in line
+            else f"tooth {line.get('tooth')}"
+        )
+        print(f"  {where}: q {line.get('q')}, {carry}")
     for name, tallies in (("train", held.trains), ("site", held.sites)):
         for at, tally in tallies.items():
             print(

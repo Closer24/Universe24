@@ -100,6 +100,30 @@ def test_each_clock_line_counts_its_meetings_with_no_duration_and_its_books_besi
     assert (lone["kind"], lone["cause"]) == ("NOT SHOWN", one) and lone["clocks"][(0, 0)][0] == 0
 
 
+def joined(site, train, sides, across=()):
+    """A schema 1.4 click line at round 1: its edge sides [u, q, before, after], across [u, place, q, ...]."""
+    q = sum(side[1] for side in sides) + sum(side[2] for side in across)
+    return dict(kind="click", round=1, site=site, train=train, q=q, sides=sides, across=[*across])
+
+
+def test_a_meeting_on_schema_1_4_is_an_edge_side_and_its_mirror_the_silent_clock_aside(tmp_path):
+    """Yes: one quantum on the edge 0-1, train 2 listed at q 0: met, each clock's line met, the sides printed (1.3's
+    reading: not met, tooth None). No: a clock at q 0 on two edges; q -1 and +1 at two places beside sides across a Mesh."""
+    yes = [joined(0, 0, [[1, -1, 3, 6], [2, 0, 3, 3]]), joined(0, 1, [[0, 1, 3, 0], [2, 0, 3, 3]])]
+    record = read(tmp_path, *yes, joined(0, 2, [[0, 0, 3, 3], [1, 0, 3, 3]]))
+    assert [shadow.meetings(record)[k] for k in ("kind", "ways")] == ["SHOWN", {(0, 1): 1}]
+    lines = shadow.clock_lines(record)
+    assert lines["kind"] == "SHOWN" and sorted(lines["clocks"]) == [(0, 0), (0, 1)]
+    assert "train 2: q 0, sides [[0, 0, 3, 3], [1, 0, 3, 3]], across []" in tool(tmp_path)
+    via = [[[1, 0, 3, 3], [2, -1, 3, 6]], [[0, 0, 3, 3], [2, 1, 3, 0]], [[0, 1, 3, 0], [1, -1, 3, 6]]]
+    give = joined(0, 0, [[1, -2, 3, 6]], [[0, 1, 1, 2, 5]])
+    take = joined(0, 1, [[0, 2, 3, 0]], [[1, 1, -1, 2, 5]])
+    far = joined(1, 0, [], [[0, 0, -1, 4, 1]]), joined(1, 1, [], [[1, 0, 1, 4, 1]])
+    for held, n in ([joined(0, t, sides) for t, sides in enumerate(via)], 1), ([give, take, *far], 2):
+        verdict, lines = shadow.meetings(record := read(tmp_path, *held)), shadow.clock_lines(record)
+        assert verdict["cause"].endswith(f"at {n} of {n} places") and len(lines["clocks"]) == len(held)
+
+
 # a ring of seven, gears at sites 2 and 5 (site 5's laid by its tooth alone) and site 6 (all 0, not laid)
 SEVEN = head((7, 1, 1), ((0, 0, 2, 1, 0, 0), (1, 0, 5, 0, 0, 3), (0, 0, 6, 0, 0, 0)))
 
