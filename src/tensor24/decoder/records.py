@@ -288,7 +288,7 @@ def clicked(lines: Lines) -> str:
         low, high = [k for k in teeth if k < 0], [k for k in teeth if whole(key) and k >= key]
         if whole(train) and train not in keys:
             return f"line {n} names train {train}, which no train card names"
-        if e.get("q") == 0:
+        if e.get("q") == 0 and "sides" not in e:
             return f"line {n} holds the click's q 0, a tooth that carried no key"
         if low:
             return f"line {n} holds the tooth {low[0]}, below 0"

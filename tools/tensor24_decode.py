@@ -8,19 +8,25 @@ owner's word of 00:3x UTC: the clocks' meetings), the meetings, each clock's lin
 read SHOWN, or NOT SHOWN, or NOT READ, or NO CLICK where the record holds no click line, with its cause, every train
 card's lines, given, taken and net beside the books, every clock's meetings counted with no duration and its books
 beside its line, and one refusal line where the record holds no click of either kind, no click line and no whole
-click. Nothing is raised: a record or a ledger that is not read is named with its cause. The interpreter's bound on a
-whole number's digits is lifted, since the schema's numbers are whole numbers of any width.
+click; before it, the three clicks' block on schema 1.4's sides (decoder/three.py, DECODE3 on its readers' folds): the
+structure per place, which side lands, R2 within one record on the readings file's past ladder, the passings and the
+split's weights as a check against the board's passing, and the checks on two records named beside: R1 (--twin, the
+lay run again), R2's two-record form (--apart, a lay one hidden unit apart) and the swap (--swap, the lay with the
+--trains exchanged). Nothing is raised: a record or a ledger that is not read is named with its cause. The
+interpreter's bound on a whole number's digits is lifted, since the schema's numbers are whole numbers of any width.
 
-Usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]
+Usage: python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>] [--readings <.json>] [--twin <record>]
+       [--apart <record>] [--swap <record> --trains <t> <u>]
 """
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
-from tensor24.decoder import clicks, records, shadow  # noqa: E402
+from tensor24.decoder import clicks, records, shadow, three  # noqa: E402
 
 # the claims of physics the record carries no click line for, refused by name (a constant of the tool's text, no reading)
 REFUSAL = (
@@ -66,6 +72,31 @@ def world(record: records.Record) -> None:
         print(f"  {REFUSAL}")
 
 
+def chosen(path: str | None) -> object:
+    """The reading parameters from the readings file, a JSON object, or None where none is named or it is not read."""
+    try:
+        return json.loads(Path(path).read_text(encoding="utf-8")) if path else None
+    except OSError, ValueError, RecursionError:
+        return None
+
+
+def thirds(record: records.Record, held: argparse.Namespace) -> None:
+    """The three clicks' block: three's readings on the record, then each check on two records whose second is named, the second not read named with its cause, and the readings owed."""
+    print("the three clicks (DECODE3, by the structure of each place, never a label):")
+    found = three.readings(record, chosen(held.readings))
+    for name, path, check in (
+        (three.RUN_TWICE, held.twin, three.twice),
+        (three.APART, held.apart, three.apart),
+        (three.SWAP, held.swap, lambda a, b: three.swapped(a, b, held.trains or [])),
+    ):
+        other, why = records.read(path) if path else (None, "")
+        found |= {name: check(record, other)} if other else {}
+        found |= {name: {"kind": "NOT READ", "cause": f"the second record {why}"}} if why else {}
+    for name, verdict in found.items():
+        print(f"  {name}: {verdict['kind']}: {verdict['cause']}")
+    print(f"  {three.OWED}")
+
+
 def main(argv: list[str]) -> int:
     """Read the record and its ledger, print the readings and the click lines, and return 0; a usage error is argparse's."""
     parser = argparse.ArgumentParser(
@@ -73,6 +104,15 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument("record")
     parser.add_argument("ledger", nargs="?")
+    parser.add_argument(
+        "--readings", help="the reading parameters: R2's past ladder, its count, the parts"
+    )
+    parser.add_argument("--twin", help="a record of the same lay, run again (R1's check)")
+    parser.add_argument(
+        "--apart", help="a record of a lay one hidden unit apart (R2's two-record check)"
+    )
+    parser.add_argument("--swap", help="a record of the lay with the trains named by --trains exchanged")
+    parser.add_argument("--trains", type=int, nargs="+", help="the trains the swap exchanged")
     held = parser.parse_args(argv[1:])
     sys.set_int_max_str_digits(0)
     record, cause = records.read(held.record)
@@ -82,6 +122,7 @@ def main(argv: list[str]) -> int:
     ledger, why = records.read_ledger(held.ledger) if held.ledger else (None, "the ledger is absent")
     print(f"the ledger: {why if ledger is None else f'read, {len(ledger)} lines'}")
     printed(clicks.counted(record))
+    thirds(record, held)
     world(record)
     return 0
 
