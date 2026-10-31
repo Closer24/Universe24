@@ -102,11 +102,20 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
   laid again from it by the loader's own edging.
 - **Every form of the potential is then a square of its legs' value:** the spring S x^2, the four-leg tie f (h o)^2,
   and the hands' tie. In the complex this is the Gram form of the bands' unsigned incidence, |B| T |B|^T / 2, which is
-  non-negative on every structure (DERIVED).
+  non-negative on every structure whose bands are non-negative (DERIVED).
+- **What the MIRACLE pair's mathematician adds** (the Boss's 6542967796 item 4; the mathematics PASSED, every rerun byte
+  for byte; NOT PASSED on one mechanical item, the renames above, now carried into the printout and the records):
+  - **The square form adds own springs,** so it is a candidate law line, not a re-reading of the shipped potential.
+  - **Its sign convention:** a band of sign s gives (x_r - s x_p)^2. A positive band is then a sum square, and the sign
+    comes from the structure.
+  - **Harary's rule, exactly:** the bands hold a floor by themselves if and only if every connected component of the
+    band graph holds a frustrated loop and every clock lies on a band of such a component. The mathematician's
+    determinants: a triangle 4; a triangle with a separate band 0; a triangle with a bandless clock 0.
+  - **The square option** is laid here per term with case (c); a build lays it by structure.
 - **The mass it gives:** each clock gets half the sum of its bands. So the giver and the taker each get exactly half
   their band, which is David's s_min (6542212052; FLOOR1).
-- **MEASURED on the whole click world**, road B, 5,000 rounds each (square_x1_5000.txt, square_x10_5000.txt,
-  square_x100_5000.txt):
+- **MEASURED on click1** (the click world's one Node-clock), road B, 5,000 rounds each (square_x1_5000.txt,
+  square_x10_5000.txt, square_x100_5000.txt):
 
 | grain | widest count | a count past 32 bits | the identity | the sides' books, by construction | the run back | the 24 | the largest held square, of the unit |
 |---|---|---|---|---|---|---|---|

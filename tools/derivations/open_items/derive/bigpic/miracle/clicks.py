@@ -11,9 +11,10 @@ edges' own dials W(a) + W(a') + g_e, g_e = SUM f o(start) o(end) over the monomi
 Every side carries its passing at the edge key by Rule3's carry into its own click tooth, as the act does.
 Readings, each round:
   - the identity: E32 = 32 W E changes by exactly the teeth's share (a check by construction, MIRACLE_B2 4.1);
-  - the books in the clicks: each clock's (train's) change of E32 times kappa / two equals 8 W times what its sides
-    carried (the key times its clicks plus its click teeth's change) plus its teeth's share times kappa / two, at every
-    clock and round: the residual closed in the clicks, not in a probe's books;
+  - the sides' books, a check by construction read through the teeth (the MIRACLE pair's B1; first named "the books in
+    the clicks"): each clock's (train's) change of E32 times kappa / two equals 8 W times what its sides carried (the
+    key times its clicks plus its click teeth's change) plus its teeth's share times kappa / two, at every clock and
+    round;
   - beside it, the act's own passing on the same window (the two-leg work form on every term): its running residual at
     one clock, in keys;
   - the whole clicks by train; the walk (the largest held square per window); the run back from the end state alone,
@@ -266,11 +267,12 @@ kres, _ = carry(worst_res, key_e32, 0)
 print(f"rounds {ROUNDS} ({'the present act' if ENGINE else 'road B'}); widest count {widest} bits; a count first past"
       f" 32 bits at round {past32 or 'none'}", flush=True)
 if ENGINE:
-    print("the identity, the books in the clicks and the clicks by train: not read under the present act (road B's)",
+    print("the identity, the sides' books and the clicks by train: not read under the present act (road B's)",
           flush=True)
 else:
     print(f"the identity (E32's change = the teeth's share) missed in {misses_identity} of {ROUNDS} rounds", flush=True)
-    print(f"the books in the clicks (each clock's change = its sides' key x clicks + click teeth's change + its teeth's"
+    print(f"the sides' books, by construction (each clock's change = its sides' key x clicks + click teeth's change"
+          f" + its teeth's"
           f" share) missed at {misses_books} of {ROUNDS * NTR * s.a.shape[-1]} clock-rounds", flush=True)
     print(f"the act's own passing beside the step's exchange: its running residual at one clock reaches {kres} keys",
           flush=True)

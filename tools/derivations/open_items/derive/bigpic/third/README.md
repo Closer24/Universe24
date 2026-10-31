@@ -119,12 +119,15 @@ OPEN.
 - **Three tied hands of one part would be banded pairwise by the same rule:** a plain triangle of bands, a frustrated
   loop. Under the square form every swing then holds a spring: each hand gets t, the two swings that sum to 0 hold t/2
   each, and the common swing 2t (DERIVED; Harary's balance).
-- **MEASURED** (frustration.py, frustration_20000.txt): the click world's band as its own square, no own spring laid and
-  no held hand (FLOOR1's clean test of the edge), the hands' difference moving, 20,000 rounds:
+- **MEASURED** (frustration.py, frustration_20000.txt; a test's lay in a stand-alone model, the MIRACLE pair's
+  mathematician): the click world's band as its own square, no own spring laid and no held hand (FLOOR1's clean test of
+  the edge), the hands' difference moving, 20,000 rounds:
   - two hands on one band: the free swing drifts linearly, the largest count 4,040 at round 4,000 and 20,040 at round
     20,000;
   - three hands on a plain triangle: the largest count at most 88 over the run;
   - the identity and the run back exact in both.
+- **The mathematician's reading:** "three like hands are the fewest that hold by themselves" is a theorem under the square
+  form with bands alone, and David's 2 : 1 : 1 gives whole beats only at n = 3.
 - **So three like hands are the fewest whose floor holds by itself,** and their bands are the equilateral triangle of
   two-leg edges, on which the third click's charge is kept (above). Whether the structure lays a third tied hand is
   OPEN: the click world as laid has two.

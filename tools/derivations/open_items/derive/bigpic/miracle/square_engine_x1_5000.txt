@@ -1,6 +1,6 @@
 the present act on node-all, every two-leg form its own square: rows 26 (held [12, 13]), sites 1, W 600000000, the sides' key 50811429 x 3, four-leg ties 24
 rounds 5000 (the present act); widest count 6 bits; a count first past 32 bits at round none
-the identity, the books in the clicks and the clicks by train: not read under the present act (road B's)
+the identity, the sides' books and the clicks by train: not read under the present act (road B's)
 the walk, the largest held square per 250 rounds: [(250, 9), (500, 4), (750, 4), (1000, 1), (1250, 1), (1500, 1), (1750, 4), (2000, 25), (2250, 25), (2500, 25), (2750, 36), (3000, 36), (3250, 121), (3500, 196), (3750, 64), (4000, 36), (4250, 25), (4500, 100), (4750, 324), (5000, 400)]
 the run back from the end state alone over 5000 rounds, board and click teeth: True
 the 24: the round and its clicks turned alike in 24 of 24 turns over 8 rounds

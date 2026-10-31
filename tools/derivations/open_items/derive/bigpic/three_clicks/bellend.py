@@ -4,7 +4,9 @@ David of 09:4x to 09:5x, "is it not possible to say that it is from the past and
 meeting's weight, 6541948938). Road (C)'s end form, read exactly in whole numbers and Rule3's carry, by counting every
 seed: no draw and no stand-in stream. In (C)'s form (the Boss's ruling on the HALF pair, 6542866096 item 2): the hand
 and the fixing end are fixed in advance, and the far click chooses by its own seeds. The hand's dependence on the
-fixing end's setting is a laid measure, with its source OPEN.
+fixing end's setting is a laid measure. Under the owner's law of 11:52 UTC ("The connection between two places comes,
+for certain, from the start and from the end"), its source is the start and the end fixed together in advance; its
+form, road (C)'s seeds' law, is OPEN.
 
 The pair's one hand is born once at the source and carried, unchanged, to its two wings (the pair world, PICTURE.md).
 Each wing has its own setting, a direction of the triangle's own plane (the plane across the axis (1, 1, 1) of three

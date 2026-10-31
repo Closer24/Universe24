@@ -81,9 +81,17 @@ Every coupling at its table's entry 1; copy a world into `examples/` to run.
   stream.
   - **In (C)'s form** (the HALF pair: NOT PASSED; the Boss's rulings, 6542866096 item 2): the hand and the fixing end
     are fixed in advance, and the far click chooses by its own seeds.
-  - **The hand's dependence on the fixing end's setting is a laid measure, with its source OPEN.** As first stated, the
-    end click wrote the board's hand, against the law of the path (the physicist's B1). Read lawfully, the dependence
-    is laid by statement, and its start twin writes the same joint law.
+  - **The hand's dependence on the fixing end's setting is a laid measure.** As first stated, the end click wrote the
+    board's hand, against the law of the path (the physicist's B1). Read lawfully, the dependence is laid by statement,
+    and its start twin writes the same joint law.
+  - **Under the owner's laws of 11:47 and 11:52 UTC** (the Boss's 6542967796 and 6543015767): "A click is forbidden to
+    write on the board", and "The connection between two places comes, for certain, from the start and from the end."
+    - The laid measure's source is the law itself: the start and the end, fixed together in advance. Each click only
+      chooses its place's reading.
+    - Its form, road (C)'s seeds' law, stays OPEN and mine. It must come from the structure, never from the target: a
+      seed rule chosen so that S comes out above 2 is a pick (the 08:4x rule).
+    - OPEN beside it: the weight between the start and the end (the owner's 10:10 question), and a mark in the clicks
+      that tells a law of both ends from a law of the start alone.
   - The law has three parts, and the pair's one hand runs from the birth to both wings:
   - (i) one wing's click fixes the hand: clicking +1 it leaves the hand along its setting, clicking -1 across it;
   - (ii) the board runs that end back to the birth;
