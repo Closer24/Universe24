@@ -1,0 +1,3 @@
+takers 1 | run back exact: True | shares 1.000 against the squares' 1.000 | first taker's lives var/mean^2 0.000 | the same click past, one hidden unit apart: a later click differs in 0 of 200
+takers 2 | run back exact: True | shares 0.360, 0.640 against the squares' 0.360, 0.640 | first taker's lives var/mean^2 0.977 | the same click past, one hidden unit apart: a later click differs in 200 of 200
+takers 3 | run back exact: True | shares 0.139, 0.311, 0.551 against the squares' 0.138, 0.310, 0.552 | first taker's lives var/mean^2 0.927 | the same click past, one hidden unit apart: a later click differs in 200 of 200

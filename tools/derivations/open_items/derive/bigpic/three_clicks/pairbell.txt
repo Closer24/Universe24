@@ -1,0 +1,11 @@
+dial 13^6 = 4826809 | rounds 400000 | run back to the lay: True
+CHSH from the click counts: 2.8277 | the hand's own value 2.8284 (exact 13651918/4826809) | the local bound 2
+   settings (0, 1) pairs 99098 E 0.7029
+   settings (0, 3) pairs 100332 E -0.7164
+   settings (2, 1) pairs 100053 E 0.7058
+   settings (2, 3) pairs 100517 E 0.7027
+   Alice's +1 share with Bob's setting 1t: 0.4997 (199151)
+   Alice's +1 share with Bob's setting 3t: 0.5010 (200849)
+   Bob's +1 share with Alice's setting 0t: 0.4984 (199430)
+   Bob's +1 share with Alice's setting 2t: 0.4987 (200570)
+the local road, a shared past with each place on its own: CHSH 2.0000

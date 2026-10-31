@@ -1,0 +1,3 @@
+the turn's matrix (columns from ga, ab, gb): [[2, 1, -1], [1, 1, 0], [-1, -1, 1]] det 1 | eigenvalue moduli: [np.float64(0.5636), np.float64(0.5636), np.float64(3.1479)]
+turned | lays apart by one hidden unit: a click differs in 200 of 200 pairs; first difference at round 30 (median), after the same click past | rounds 1000 to 3000 differing: 0.0393 (independent takes would give 0.0392)
+carried | lays apart by one hidden unit: a click differs in 0 of 200 pairs;  | rounds 1000 to 3000 differing: 0.0000 (independent takes would give 0.0392)

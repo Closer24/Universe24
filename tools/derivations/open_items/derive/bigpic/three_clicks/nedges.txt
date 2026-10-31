@@ -1,0 +1,12 @@
+edges 3 | det 1 | largest eigenvalue modulus 3.148, smallest 0.564
+  taker a p 0.179 | after 2 in a row 2301 of 12938 (independent 2322); after 3 in a row 539 of 2301 (independent 413); after 4 in a row 142 of 539 (independent 97)
+  taker b p 0.320 | after 2 in a row 12953 of 40789 (independent 13065); after 3 in a row 4063 of 12953 (independent 4149); after 4 in a row 1280 of 4063 (independent 1301)
+edges 4 | det 1 | largest eigenvalue modulus 3.630, smallest 0.450
+  taker a p 0.180 | after 2 in a row 2360 of 13027 (independent 2347); after 3 in a row 417 of 2360 (independent 425); after 4 in a row 70 of 417 (independent 75)
+  taker b p 0.320 | after 2 in a row 13183 of 41024 (independent 13129); after 3 in a row 4237 of 13183 (independent 4219); after 4 in a row 1348 of 4237 (independent 1356)
+edges 5 | det 1 | largest eigenvalue modulus 4.080, smallest 0.495
+  taker a p 0.180 | after 2 in a row 2297 of 12981 (independent 2335); after 3 in a row 397 of 2297 (independent 413); after 4 in a row 61 of 397 (independent 71)
+  taker b p 0.319 | after 2 in a row 13090 of 40880 (independent 13051); after 3 in a row 4149 of 13090 (independent 4179); after 4 in a row 1310 of 4149 (independent 1325)
+edges 6 | det 1 | largest eigenvalue modulus 4.506, smallest 0.468
+  taker a p 0.180 | after 2 in a row 2364 of 12943 (independent 2333); after 3 in a row 443 of 2364 (independent 426); after 4 in a row 89 of 443 (independent 80)
+  taker b p 0.321 | after 2 in a row 13336 of 41247 (independent 13242); after 3 in a row 4350 of 13336 (independent 4282); after 4 in a row 1364 of 4350 (independent 1397)
