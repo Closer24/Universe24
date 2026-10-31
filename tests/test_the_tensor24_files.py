@@ -221,11 +221,6 @@ def edits():
             lambda u: u["integers"].update(key=1),
             "universe.integers: the key 'key' is not in the format",
         ),
-        "couplings, which no file declares": (
-            "universe",
-            lambda u: u.update(couplings=[]),
-            "universe: the key 'couplings' is not in the format: no file declares a coupling",
-        ),
         "a side at 0": ("piece", lambda p: p.update(shape=[0, 4, 4]), "piece.shape: one side per axis"),
         "a side that is a float": (
             "piece",

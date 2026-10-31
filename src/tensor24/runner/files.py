@@ -18,7 +18,7 @@ from tensor24.runner.board import board
 # A kind among the 24's, a kind's whole basis and a gear's component within its train's rows are read against the
 # engine's kinds once they are made (held_departures). The fine tooth within its teeth is the round's promise, read by
 # the runner from outside before every round (run.promises). No file declares a coupling: the coupling family's one
-# plan lays the terms at G3, so a universe's couplings are refused by name (RETIRED).
+# plan lays the terms at G3, so a universe's couplings are a key not in the format.
 
 NAMES = ("universe", "piece", "setting")
 VERSION = 1
@@ -32,10 +32,6 @@ OPERANDS = (
 GEAR = ("train", "component", "site", "a", "b", "r")
 # the keys a file may leave out; the pinion's key is its own rule's
 OPTIONAL = ("gears",)
-# the keys that left the format, each refused with the reason it left
-RETIRED = {
-    "couplings": "no file declares a coupling; the coupling family's one plan lays the terms at G3"
-}
 
 
 def whole(value: Any) -> TypeGuard[int]:
@@ -50,7 +46,6 @@ class Rule(NamedTuple):
     wants: str
 
 
-WHOLE = Rule(whole, "a whole number")
 ONE = Rule(lambda v: whole(v) and v >= 1, "a whole number of at least 1")
 NONE_BELOW = Rule(lambda v: whole(v) and v >= 0, "a whole number of at least 0")
 
@@ -167,12 +162,7 @@ def checked(where: str, held: Any, form: Any) -> list[str]:
     if isinstance(form, dict):
         if not isinstance(held, dict):
             return [f"{where}: a mapping, not {type(held).__name__}"]
-        found = [
-            f"{where}: the key {key!r} is not in the format"
-            + (f": {RETIRED[key]}" if key in RETIRED else "")
-            for key in held
-            if key not in form
-        ]
+        found = [f"{where}: the key {key!r} is not in the format" for key in held if key not in form]
         return found + [
             line
             for key, inner in form.items()

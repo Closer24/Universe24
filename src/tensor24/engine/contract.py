@@ -1,5 +1,5 @@
 """Clock: a vertex couples a Node-clock's gears: each term of one potential pushes every one of its legs by the others.
-Algebra: each monomial f x_1 ... x_k, of any number k of legs, pushes each leg by -f times the other k - 1, the unit for a leg it lacks, summed into J; read is the clocks' linear read.
+Algebra: each monomial f x_1 ... x_k, of any number k of legs, pushes each leg by -f times the other k - 1, the unit for a leg it lacks, summed into J.
 Board: at every Node-clock alike, on its own readings at the now slot: the value, the three gradients, the force, then the unit.
 Clicks: the rest beat a spring gives is read as a mass; the strengths are open (G3).
 """
@@ -7,7 +7,7 @@ Clicks: the rest beat a spring gives is read as a mass; the strengths are open (
 import numpy as np
 
 from tensor24.algebra.carry import Z
-from tensor24.engine.state import Plan, Read
+from tensor24.engine.state import Plan
 
 
 def pushes(factor: Z, legs: tuple[Z, ...]) -> Plan:
@@ -30,11 +30,3 @@ def contract(plan: Plan, readings: Z, gears: Z) -> Z:
     first = factor[None, :, None] + 0 * readings[-1:, None]  # the factor at every site, before the legs
     np.add.at(source, target, np.prod(np.concatenate((first, readings[legs])), axis=0))
     return source[:-1]
-
-
-def read(plan: Read, gears: Z) -> Z:
-    """What a linear read lands on every gear, in the gears' shape: a gather of the now counts, a product, a scattered sum."""
-    first, factor, target = plan
-    landed = np.zeros_like(gears, dtype=object)
-    np.add.at(landed, target, factor[:, None] * gears[first])
-    return landed
