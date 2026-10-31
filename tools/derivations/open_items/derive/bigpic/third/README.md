@@ -170,3 +170,47 @@ OPEN.
 - **Road (C)'s births on the one tooth:** tau's birth, read from the seeds' law.
 
 Usage: python3 -I tooth.py <node-all src> <the click world's universe.json> [rounds]
+
+## The third click that writes and chooses, a first stand-alone model (turns.py, turns_5000.txt)
+
+- **The owner's words of 12:23 to 12:28 UTC** (the Boss's 6543327690, 6543337835 and 6543366692): "Only the third click
+  writes to the board and chooses... it is the important one"; "The clicks' floor, from their structure alone..."; "the
+  first 2 clicks represent the initial conditions of the universe; the third, the choices that change the universe
+  from the path without the choices".
+- **The model** (a test's lay in a stand-alone model, not the engine's board):
+  - three like hands on one triangle of bands, each band its own square at the click world's hands' tie, with no own
+    spring and no held hand: the frustrated loop that holds a floor by itself;
+  - the engine's gear form, whole numbers and Rule3's carry only;
+  - the triangle's one tooth tau carries the bands' circulation, as tooth.py's member does.
+- **The write:** at each landing w, the third click turns the three hands' whole state, with the triangle's edge
+  teeth, by the cycle (0 1 2) taken w times.
+  - The turn is a symmetry of the triangle's law, so the round commutes with it.
+  - The circulation is kept by it, and so are every clock's books and the energy.
+  - B C = 0 leaves no other write that keeps a clock's books (third/README.md, OPEN above).
+- **MEASURED, 5,000 rounds, two lays, tau born at four places:**
+  - E32's change equals the teeth's share in 5,000 of 5,000 rounds, the turns included.
+  - **The floor holds by the structure alone:** the widest count is 12 bits laid turning and 7 bits laid with the
+    hands' difference moving.
+  - **The three states, taken as a set, are the unwritten path's at every round**, for every birth. So the end is
+    fixed as the like hands' state, and the writes change only which hand holds which state.
+  - **The writes are seen in the lines:** laid turning, a clock's own count differs from the unwritten path in 3,327
+    to 3,384 of 5,000 rounds, by birth. So the births choose the path.
+  - **The labelled end** is the unwritten end turned by the net landings modulo 3. Laid turning, the net is 17,575
+    at every birth, so the net turn is 1: the end as labelled differs from the unwritten end, and no birth here keeps
+    it. It equals the unwritten end only where the net is a multiple of 3, a condition the start and the end fix
+    together.
+  - **The run back from the end state alone is exact,** the writes part of the state, at every birth on both lays.
+  - **Laid with the hands' difference moving,** the circulation is 0: no landing, no write, the path the unwritten one.
+- **So, as a candidate:**
+  - the third click writes by turning its triangle of like hands;
+  - the floor is the triangle's own, from the structure;
+  - the end stays fixed as a state of like hands, with the choices in the labels along the path.
+- **Not shown:**
+  - the click world's own triangle, which is no triangle of like hands;
+  - a swap, the odd move, which reverses the circulation and the owner's Pauli lead would ask;
+  - the lines read as clicks, not as counts;
+  - whether a turn of like hands is the write the owner means;
+  - the engine's act;
+  - any physics.
+
+Usage: python3 -I turns.py <node-all src> <the click world's universe.json> [rounds]
