@@ -91,12 +91,17 @@ def renamed(make, shape, rng):
     s = e.world(rng, shape, 3)
     out = flat(e.step(nb, s))
 
+    def rows(
+        xs,
+    ):  # the gears' arrays, a row per train; the click teeth, a tooth per side and none per row, apart
+        return [len(x) == 3 and name != "k" for name, x in zip(State._fields, xs, strict=True)]
+
     def ordered(xs, o):
-        return [x[o] if len(x) == 3 else x for x in xs]
+        return [x[o] if row else x for x, row in zip(xs, rows(xs), strict=True)]
 
     orders = map(list, itertools.permutations(range(3)))
     alike = all(same(flat(e.step(nb, tuple(ordered(s, o)))), ordered(out, o)) for o in orders)
-    inert = tuple(np.concatenate([x, 0 * x]) if len(x) == 3 else x for x in s)
+    inert = tuple(np.concatenate([x, 0 * x]) if row else x for x, row in zip(s, rows(s), strict=True))
     return alike and same([p[:3] for p in flat(e.step(nb, inert))], [p[:3] for p in out])
 
 
@@ -229,8 +234,17 @@ def turned_by(m, laid, held, s, shape):
 
 
 def opposed(clicks, teeth, key, trains):
-    """Every edge's two sides at its own Node-clock, (t, u) at t trains + u and (u, t): their quotients summing to 0, their teeth to key - 1."""
-    q, k = (x[: trains * trains].reshape(trains, trains, -1) for x in (clicks, teeth))
+    """Every edge's two sides at its own Node-clock, (t, u) and (u, t), held off the diagonal row by row (the diagonal read at its birth
+    and q 0, as it passes nothing): their quotients summing to 0, their teeth to key - 1."""
+
+    def square(x, still):
+        rows = x[: trains * trains - trains].reshape(trains - 1, trains, -1)
+        rows = np.concatenate((rows, still + 0 * x[:1][None].repeat(trains - 1, 0)), axis=1).reshape(
+            -1, x.shape[-1]
+        )
+        return np.concatenate((still + 0 * x[:1], rows)).reshape(trains, trains, -1)
+
+    q, k = square(clicks, 0), square(teeth, (key - 1) // 2)
     return not (q + q.swapaxes(0, 1)).any() and not (k + k.swapaxes(0, 1) + 1 - key).any()
 
 

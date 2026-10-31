@@ -88,13 +88,14 @@ def edging(
     weight = (share * edged)[None, :] * (total[None, :] - mine) * value
     scale, _ = carry(kappa, senses, 0)
     weighed, legged, size = weight[:, :, None] * present[None, :, :], train * value, len(narrow)
-    # the terms as J's plan lays them: the two-leg block's legs alone, then every leg of the four-leg block
+    # the terms as J's plan lays them: the two-leg block's legs alone, then every leg of the four-leg block; and every
+    # side's key, the own sides off the diagonal (which passes nothing: cause (a)) and the Mesh's at their + ends
     return (
         np.concatenate(
             (weighed[: len(two), :size].reshape(-1, count), weighed[:, size:].reshape(-1, count))
         ),
         np.concatenate((legged[: len(two), :size].reshape(-1), legged[:, size:].reshape(-1))),
-        np.full(((1 + d) * count * count, 1), key * scale, dtype=object),
+        np.full(((1 + d) * count * count - count, 1), key * scale, dtype=object),
     )
 
 

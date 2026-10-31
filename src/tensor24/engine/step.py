@@ -81,7 +81,7 @@ def valued(x: Z) -> Z:
 
 
 def passing(click: Click, plan: Plan, b: Z, a: Z, a1: Z) -> Z:
-    """Every edge side's passing (t, u) in the click teeth's shape, at t trains + u: the work of each term of J's plan on the value legs over the round's window, W_i = J_i(a) (a+ - b), its push at the now slot on its leg's move from the before slot to the next (David's split in the work form), weighed onto each other train of its monomial and summed into its leg's train, the side (t, u) passing the weighed work on t's legs less that on u's, a take where it is above 0, so P(u, t) = -P(t, u), the diagonal 0; a gather of each term's readings, a product, a scattered sum. The passing is a record: it reads the gears and moves none, so every count, promise and runaway is the board's whatever it passes; the window reversed, (a+, a, b) on the mirrored counts, negates every W_i, so P is odd under the mirror."""
+    """Every edge side's passing (t, u) off the diagonal, in the click teeth's shape, row by row (the sides (t, u), u not t, at t (trains - 1) + u less 1 where u stands after t: the diagonal passes nothing, cause (a)): the work of each term of J's plan on the value legs over the round's window, W_i = J_i(a) (a+ - b), its push at the now slot on its leg's move from the before slot to the next (David's split in the work form), weighed onto each other train of its monomial and summed into its leg's train, the side (t, u) passing the weighed work on t's legs less that on u's, a take where it is above 0, so P(u, t) = -P(t, u), the diagonal 0; a gather of each term's readings, a product, a scattered sum. The passing is a record: it reads the gears and moves none, so every count, promise and runaway is the board's whatever it passes; the window reversed, (a+, a, b) on the mirrored counts, negates every W_i, so P is odd under the mirror."""
     legs, factor, target = plan
     weight, train, _, _, _ = click
     va, vb, va1 = valued(a), valued(b), valued(a1)
@@ -90,7 +90,10 @@ def passing(click: Click, plan: Plan, b: Z, a: Z, a1: Z) -> Z:
     trains = weight.shape[-1]
     given = np.zeros((trains, trains, a.shape[-1]), dtype=object)
     np.add.at(given, train, weight[:, :, None] * work[:, None, :])
-    return (given - given.swapaxes(0, 1)).reshape(trains * trains, a.shape[-1])
+    sides = (given - given.swapaxes(0, 1)).reshape(trains * trains, a.shape[-1])
+    # the diagonal (t, t) passes nothing on every layout, a side less itself (cause (a)): the sides off it alone, in
+    # their order, by the shape (the square's first side and every trains + 1-th after it are its diagonal)
+    return sides[1:].reshape(trains - 1, trains + 1, a.shape[-1])[:, :trains].reshape(-1, a.shape[-1])
 
 
 def crossing(click: Click, nb: Z, b: Z, a: Z, a1: Z) -> Z:

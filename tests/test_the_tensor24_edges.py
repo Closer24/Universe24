@@ -57,12 +57,12 @@ def faces(laid, held):
 
 def back(laid, s, far=None):
     """The state with every side read back at every Spoke, as the record's writer reads it (run.sided; D1 holds each Mesh edge at its + end), or by far."""
-    return s._replace(k=run.faced(laid, s.k, far)) if far else run.sided(laid, s)
+    return s._replace(k=run.faced(laid, s.k, far, 0)) if far else run.sided(laid, s)
 
 
 def closed(laid, held, q, s, far=None):
     """Every Mesh edge's two ends read back, (Spoke, t, u) at a site and (its opposite, u, t) across it: q negated, the teeth summing to key - 1."""
-    (view, opposite), q, k = faces(laid, held), run.faced(laid, q, np.negative), back(laid, s, far).k
+    (view, opposite), q, k = faces(laid, held), run.faced(laid, q, np.negative, 0), back(laid, s, far).k
     far = np.take_along_axis(view(q)[opposite].swapaxes(1, 2), laid.nb[:, None, None, :], axis=-1)
     teeth = np.take_along_axis(view(k)[opposite].swapaxes(1, 2), laid.nb[:, None, None, :], axis=-1)
     return not (view(q) + far).any() and not (view(k) + teeth + 1 - laid.click.key[0, 0]).any()
@@ -70,12 +70,13 @@ def closed(laid, held, q, s, far=None):
 
 def spun(m, laid, held, s, shape, far=None):
     """The state turned by m (frame.turned_by), every Mesh tooth read back, moved on to the turned Spoke with its site and held again at the
-    + Spoke of each axis (D1: where m sends a + Spoke to a - one, the trains swapped and the tooth flipped, or a click negated by far)."""
+    + Spoke of each axis (D1: where m sends a + Spoke to a - one, the trains swapped and the tooth flipped, or a click negated by far), the own sides off the diagonal."""
     there, (view, _) = frame.turned_by(m, laid, held, back(laid, s, far), shape), faces(laid, held)
     to = [laid.spokes.tolist().index((m @ np.array(e)).tolist()) for e in laid.spokes.tolist()]
-    moved, own = there.k.copy(), len(held.trains) ** 2
+    moved, t = there.k.copy(), len(held.trains)
     view(moved)[to] = view(there.k)
-    return there._replace(k=np.concatenate((moved[:own], view(moved)[::2].reshape(-1, moved.shape[-1]))))
+    own = moved[1 : t * t].reshape(t - 1, t + 1, -1)[:, :t].reshape(-1, moved.shape[-1])
+    return there._replace(k=np.concatenate((own, view(moved)[::2].reshape(-1, moved.shape[-1]))))
 
 
 def test_the_mesh_edges_are_the_mesh_contraction_one_coupling_at_both_ends_with_every_edges_books_closed():
@@ -84,7 +85,8 @@ def test_the_mesh_edges_are_the_mesh_contraction_one_coupling_at_both_ends_with_
     restarted at the teeth's birth misses, and the far end read back unflipped (D1's mutant) opens the books."""
     held, laid, start, _ = world()
     _, _, key, across, _ = laid.click
-    scale, own, s, moved, nb = key[0, 0] // KEY, len(held.trains) ** 2, start, False, laid.nb
+    t = len(held.trains)  # the own sides, off the diagonal, then the Mesh's
+    scale, own, s, moved, nb = key[0, 0] // KEY, t * t - t, start, False, laid.nb
     assert across.any()
     for _ in range(ROUNDS):
         _, flat = step.readings(laid, s.a, mesh.stretches(laid, s.a))
@@ -108,8 +110,7 @@ def test_the_mesh_edges_turn_with_the_lines_8_turns_and_a_cubes_24():
         for _ in range(ROUNDS):
             s, q = step.act(laid, s)
         out, q = step.act(laid, s)
-        own = len(held.trains) * len(held.trains)
-        assert q[own:].any()  # the Mesh edges carry in the turned round
+        assert faces(laid, held)[0](run.faced(laid, q, np.negative, 0)).any()  # the Mesh edges carry
         for m in [m for m in frame.turns() if kept(m)]:
             moved, p = step.act(laid, spun(m, laid, held, s, shape))
             assert frame.same(moved, spun(m, laid, held, out, shape))

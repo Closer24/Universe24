@@ -42,7 +42,7 @@ def unclicked(terms=0, key=1, trains=1):
         np.zeros((terms, trains), dtype=object),
         np.arange(axes, dtype=np.intp)[:, None, None],
     )
-    keys = key + np.zeros(((1 + axes) * sides, 1), dtype=object)
+    keys = key + np.zeros(((1 + axes) * sides - trains, 1), dtype=object)  # no own diagonal (cause (a))
     return Click(weight, np.zeros(terms, dtype=np.intp), keys, 0 * onto.astype(object), onto)
 
 
@@ -267,21 +267,16 @@ def test_the_act_is_its_naive_model_on_the_edge_local_pure_and_turned_by_the_24(
 
 
 def test_the_click_tooth_carries_the_pairs_passing_and_the_mirror_keeps_it():
-    """Yes: a line hand and a hand at rest tied at one Node-clock click on their edge's two sides with quotients summing to 0 and teeth to
-    key - 1 in every round, the diagonal's never, run back by the same act on the mirrored state with the quotients negated. No: a lone hand with its spring clicks nowhere, its tooth at its birth; and the click tooth flipped under the mirror instead of kept does not return the teeth (FRAMES 4's no, which A1 struck on an identity that fails: -n + (d - 1 - r') is not -q d + (d - 1 - r) in general)."""
+    """Yes: a line hand and a hand at rest tied at one Node-clock click on their edge's two sides, the own sides the state holds (the diagonal, passing nothing, held nowhere: cause (a)), with quotients summing to 0 and teeth to
+    key - 1 in every round, run back by the same act on the mirrored state with the quotients negated. No: a lone hand, whose one own side is its diagonal, holds no own side and clicks nowhere, its teeth at their birth; and the click tooth flipped under the mirror instead of kept does not return the teeth (FRAMES 4's no, which A1 struck on an identity that fails: -n + (d - 1 - r') is not -q d + (d - 1 - r) in general)."""
     layout, s = pair(1 << 10)
     steps = list(rounds(step.act, layout, s, BEATS))
     states, clicks = [s, *(t for t, _ in steps)], [q for _, q in steps]
-    hands = layout.click.weight.shape[-1]
-    diagonal = slice(None, hands * hands, hands + 1)  # the sides (t, t) at their own Node-clock
-    given, taken = (
-        np.array([q[side] for q in clicks]) for side in (1, hands)
-    )  # the sides (0, 1) and (1, 0)
-    assert given.any() and frame.same([given], [-taken]) and not any(q[diagonal].any() for q in clicks)
-    assert all(
-        int((t.k[1] + t.k[hands]).sum()) == KEY - 1 and frame.same([t.k[diagonal]], [s.k[diagonal]])
-        for t in states
-    )
+    hands, axes = layout.click.weight.shape[-1], frame.spokes().shape[-1]
+    own = hands * hands - hands  # the own sides held, (0, 1) and (1, 0), then the Mesh's at their + ends
+    given, taken = (np.array([q[side] for q in clicks]) for side in (0, 1))
+    assert given.any() and frame.same([given], [-taken]) and len(s.k) == own + axes * hands * hands
+    assert all(frame.opposed(q, t.k, KEY, hands) for q, t in zip(clicks, states[1:], strict=True))
     backs = [step.act(layout, step.mirror(layout, s1)) for s1 in states[1:]]
     assert all(frame.same(step.mirror(layout, m), t) for (m, _), t in zip(backs, states, strict=False))
     assert all(frame.same([q], [-r]) for (_, q), r in zip(backs, clicks, strict=True))
@@ -289,7 +284,9 @@ def test_the_click_tooth_carries_the_pairs_passing_and_the_mirror_keeps_it():
     assert not all(frame.same([KEY - 1 - f.k], [t.k]) for f, t in zip(flips, states, strict=False))
     lone, t = pair(0, hands=1)
     quiet = list(rounds(step.act, lone, t, BEATS))
-    assert frame.same([quiet[-1][0].k], [t.k]) and not any(q.any() for _, q in quiet)
+    assert (
+        frame.same([quiet[-1][0].k], [t.k]) and not any(q.any() for _, q in quiet) and len(t.k) == axes
+    )
 
 
 def test_the_metric_is_pushed_by_the_stretches_and_the_momenta_in_the_books_form():
@@ -354,7 +351,9 @@ def test_the_run_back_is_exact_where_every_tooth_stands_within_its_edges_dial_an
     steps = list(zip(states, states[1:], strict=False))  # J(a) (a+ - a), the window's forward half alone
     teeth = list(
         itertools.accumulate(
-            steps, lambda k, w: half(w[0].a, w[1].a, k), initial=u.k[: len(tied.click.weight[0]) ** 2]
+            steps,
+            lambda k, w: half(w[0].a, w[1].a, k),
+            initial=u.k[: (n := len(tied.click.weight[0])) * n - n],
         )
     )
     mirrored = [

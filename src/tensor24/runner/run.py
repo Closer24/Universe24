@@ -128,21 +128,27 @@ def crossed(click: Any, trains: int, senses: int) -> list[tuple[int, int, int]]:
     return sorted(found)
 
 
-def faced(layout: Any, x: Any, far: Callable[[Any], Any]) -> Any:
-    """Every edge side at every reach read back from the sides the act holds (D1), in the shape of every Spoke's: the own Node-clock's and each axis's + Spoke's as held, and its - Spoke's, the next in the star's order, its partner's, the + side with the trains swapped at the Node-clock across the - Spoke, by far: D - 1 - k for a tooth, -q for a click (the pair law, by the carry from the two births)."""
+def faced(layout: Any, x: Any, far: Callable[[Any], Any], still: Any) -> Any:
+    """Every edge side at every reach read back from the sides the act holds, in the shape of every Spoke's: its own Node-clock's off the diagonal as held and the diagonal at still (its birth for a tooth, 0 for a click: it passes nothing, cause (a)); each axis's + Spoke's as held, and its - Spoke's, the next in the star's order, its partner's, the + side with the trains swapped at the Node-clock across the - Spoke, by far: D - 1 - k for a tooth, -q for a click (D1's pair law, by the carry from the two births)."""
     trains, (n, d) = layout.click.weight.shape[-1], layout.spokes.shape
     senses, _ = carry(n, d, 0)
-    own, sites = trains * trains, x.shape[-1]
+    own, sites = trains * trains - trains, x.shape[-1]
+    # the diagonal read back between the sides off it: the square's first side, and one after every trains sides
+    diagonal = 0 * x[:1] + still
+    beside = np.broadcast_to(diagonal, (trains - 1, 1, sites))
+    rows = np.concatenate((x[:own].reshape(trains - 1, trains, sites), beside), axis=1)
+    inner = np.concatenate((diagonal, rows.reshape(-1, sites)))
     plus = x[own:].reshape(d, trains, trains, sites)
     swapped = np.einsum("jtux->jutx", plus)  # each + side with its two trains swapped, the partner's
     back = far(np.take_along_axis(swapped, layout.nb[1::senses][:, None, None, :], axis=-1))
-    return np.concatenate((x[:own], np.stack((plus, back), axis=1).reshape(-1, sites)))
+    return np.concatenate((inner, np.stack((plus, back), axis=1).reshape(-1, sites)))
 
 
 def sided(layout: Any, s: Any) -> Any:
-    """The state with every edge side at every reach read back (faced), the far end's tooth D - 1 - k: the state the record's lines and its digest read."""
-    key = layout.click.key[0, 0]
-    return s._replace(k=faced(layout, s.k, lambda k: key - 1 - k))
+    """The state with every edge side at every reach read back (faced), the far end's tooth D - 1 - k and the own diagonal at the birth: the state the record's lines and its digest read."""
+    key, (n, d) = layout.click.key[0, 0], layout.spokes.shape
+    birth, _ = carry(key - 1, carry(n, d, 0)[0], 0)
+    return s._replace(k=faced(layout, s.k, lambda k: key - 1 - k, birth))
 
 
 def meeting(partners: list[list[int]]) -> list[int]:
@@ -312,7 +318,8 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
         for at, (end, clicks) in enumerate(rounds(engine.act, layout, start, ticks), start=1):
             counted.writelines(json.dumps(line) + "\n" for line in counts(at, end, loaded.trains))
             whole = sided(layout, end)
-            events += clicked(at, read_, whole, faced(layout, clicks, np.negative), partners, layout.nb)
+            quotients = faced(layout, clicks, np.negative, 0)  # every side's, the diagonal's 0
+            events += clicked(at, read_, whole, quotients, partners, layout.nb)
             read_ = whole
             # the promises of the round that reads this state, read from outside: every kept tooth within its
             # teeth, the grips within the window, and every count within the width; the end state, which no round

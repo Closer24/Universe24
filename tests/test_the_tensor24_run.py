@@ -128,7 +128,7 @@ def orders_alike():
         place = [held.trains[n] for n in trains]
         rows = np.concatenate([np.arange(t.first, t.first + t.rows()) for t in place])
         gears = [np.broadcast_to(x, s.a.shape)[rows] for x in laid.gearing]
-        sides = [t * len(order) + u for t, u in itertools.product(trains, trains)]  # the file's sides
+        sides = [t * (len(order) - 1) + u - (u > t) for t, u in itertools.permutations(trains, 2)]
         runs.append([*gears, *(x[rows] for x in s[:-1]), s.k[sides]])
     return all(frame.same(each, runs[0]) for each in runs[1:]) and (runs[0][-len(s)] != 0).any()
 
@@ -295,7 +295,7 @@ def test_the_edge_teeth_close_every_edges_books_run_back_and_turn_with_the_24_an
         passed = step.passing(
             laid.click, laid.plan, s.b, s.a, out.a
         )  # each train's sum of its sides, alone
-        given, alone = carry(passed.reshape(trains, trains, -1).sum(axis=1), key, alone)
+        given, alone = carry(passed.reshape(trains, trains - 1, -1).sum(axis=1), key, alone)
         s, opened = out, opened or given.sum(axis=0).any()
     assert opened and frame.same(rewind(step.untick, laid, s, ALONE), start)
     click = [read(ROOT / "examples" / "tensor24-click" / f"{name}.json") for name in NAMES]

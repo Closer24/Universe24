@@ -16,7 +16,7 @@ class State(NamedTuple):
     b: Z
     r: Z  # the tooth of the edge between the two slots, within [-D, D), D = W(b) + W(a): what the momentum's split leaves
     rd: Z  # the drive's fine tooth, within [0, T_d): the remainder its carry keeps, as r is the gear's
-    k: Z  # ((1 + axes) x trains x trains, sites): every edge side's click tooth, its own Node-clock's and each Mesh edge's at its + end, across the + Spoke of each axis (D1: the far end's D - 1 - k), within [0, key), born at (key - 1) div 2
+    k: Z  # ((1 + axes) x trains x trains - trains, sites): every edge side's click tooth, its own Node-clock's off the diagonal (the diagonal passes nothing: cause (a)) and each Mesh edge's at its + end, across the + Spoke of each axis (D1: the far end's D - 1 - k), within [0, key), born at (key - 1) div 2
 
 
 class Plan(NamedTuple):
@@ -42,7 +42,7 @@ class Click(NamedTuple):
 
     weight: Z  # (terms, trains): the leg's share of its monomial's flow, kappa (L - l) / L, onto each other train of the monomial
     train: Z  # (terms,): the train of the leg the term pushes, the side's first train
-    # ((1 + axes) x trains x trains, 1): the key each side (t, u) at each reach carries its passing at, odd
+    # ((1 + axes) x trains x trains - trains, 1): the key each side (t, u) at each reach carries its passing at, odd
     key: Z
     across: Z  # (axes, rows, rows): the Mesh edge's coupling of row r here with row p across the axis's + Spoke, times kappa / two
     onto: Z  # (axes, rows, rows): the side (axis trains + t) trains + u that the pair books on, t r's train, u p's

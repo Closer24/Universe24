@@ -59,7 +59,7 @@ def test_the_load_lays_the_board_and_every_gear_on_its_trains_rows_and_names_eac
     a, b, r, rd, k = held.state
     assert found == [] and all(x.dtype == object for x in held.state)
     assert not any(f.any() for f, _ in held.potential)  # no term of J but at the factor 0
-    sides = (1 + len(SHAPE)) * len(TRAINS) * len(TRAINS)  # every side, a Mesh edge's at its + end
+    sides = (1 + len(SHAPE)) * len(TRAINS) * len(TRAINS) - len(TRAINS)  # a Mesh edge's at its + end
     assert all(x.shape == (sum(rows), SITES) for x in (a, b, r, rd)) and k.shape == (sides, SITES)
     assert (a[row, SITE], b[row, SITE], r[row, SITE]) == tuple(counts)  # the wave's last row, as laid
     assert (a[-1, SITE], b[-1, SITE]) == (WIDE + 1, WIDE) and not k.any()  # the last train's last row
