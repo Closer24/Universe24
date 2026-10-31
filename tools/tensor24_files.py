@@ -3,7 +3,7 @@ kind, part and site referred to there, and no coupling; then each refusal of the
 eight, a kind with no whole basis outside the four-vector's square, a train of a half-speed kind, admitted or not, a
 component off its train's rows).
 
-Usage: `python tools/tensor24_files.py [universe piece setting]` prints every departure (the examples by default)
+Usage: `python tools/tensor24_files.py [universe piece setting]` prints every departure (the click world by default)
 and exits 1 if there is one; files that are not three are argparse's usage error. The fine tooth within its teeth is
 the run's promise, read before every round where the teeth are.
 """
@@ -19,7 +19,7 @@ from tensor24.main import made  # noqa: E402
 from tensor24.runner.files import NAMES, departures, held_departures, sites_of, vocabulary  # noqa: E402
 from tensor24.runner.load import load, star  # noqa: E402
 
-EXAMPLES = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24")
+EXAMPLES = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24-click")
 
 
 def loaded(universe: Path, piece: Path, setting: Path) -> list[str]:
@@ -35,12 +35,12 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description="Tensor24's three files checked and loaded.")
     for name in NAMES:
         parser.add_argument(
-            name, nargs="?", type=Path, help=f"the {name} file, or none of the three for the examples"
+            name, nargs="?", type=Path, help=f"the {name} file, or none of the three for the click world"
         )
     held = vars(parser.parse_args(argv))
     given = [held[name] for name in NAMES]
     if any(given) and not all(given):
-        parser.error("the three files, or none for the examples")
+        parser.error("the three files, or none for the click world")
     files = [path or EXAMPLES / f"{name}.json" for name, path in zip(NAMES, given, strict=True)]
     found = departures(*files)
     found = found or loaded(*files)

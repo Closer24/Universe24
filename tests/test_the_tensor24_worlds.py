@@ -1,4 +1,4 @@
-"""Tensor24's shipped worlds beside our bang, each run its first rounds out and back (to its first click, if any): the run
+"""Tensor24's shipped worlds, each run its first rounds out and back (to its first click, if any): the run
 back exact, the digest, the click lines and their digest the run tool wrote in tensor24_prefixes.jsonl (prefixes/write.py),
 never typed here, every edge's books at 0, the record read by the decoder's reader; its no, the setting moved by one count."""
 
@@ -59,8 +59,8 @@ def test_each_world_runs_its_first_rounds_out_and_back_to_the_digest_the_run_wro
     """Yes: the world's own three files at the written rounds run out and back exact to the written digest and click
     lines, the record read with no cause. No: its setting with its first gear's count one more runs out and back exact,
     at the written no rounds, to another digest than the world's own there, which is written too."""
-    folders = sorted(f.name for f in (ROOT / "examples").glob("*/") if f.name != "tensor24")
-    assert [x["world"] for x in WRITTEN] == folders  # every world but our bang's is written
+    folders = sorted(f.name for f in (ROOT / "examples").glob("*/"))
+    assert [x["world"] for x in WRITTEN] == folders  # every world is written
     found, end, clicks, lines, cause = ran(written, written["rounds"], 0, tmp_path)
     assert found == [] and cause == "" and end == {k: written[k] for k in end}
     assert (clicks, lines) == (written["clicks"], written["lines"])

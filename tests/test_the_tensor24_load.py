@@ -2,8 +2,6 @@
 with its 0i rows odd, the chosen strengths read, each refusal named, the round's promise at the edges of its dial, and the plans laid from the kinds' tables and the star, term 5's push in the books' form among them."""
 
 import itertools
-import json
-from pathlib import Path
 
 import numpy as np
 
@@ -15,8 +13,7 @@ from tensor24.runner.files import held_departures, sites_of, vocabulary
 from tensor24.runner.run import promises
 from tests import frame
 
-UNIVERSE = Path(__file__).resolve().parents[1] / "examples" / "tensor24" / "universe.json"
-INTEGERS = json.loads(UNIVERSE.read_text(encoding="utf-8"))["integers"]
+INTEGERS = frame.strengthless()["universe"]["integers"]  # the test's lay's
 SHAPE = (3, 4, 5)  # a board of sides that differ, so no two axes are taken for each other
 SITES = sites_of(SHAPE)
 NAMES, PARTS = "wave spin axial stress potential field".split(), (2, 1, 1, 1, 2, 1)
@@ -26,7 +23,7 @@ SQUARE, LIKE = ("A1", "T1", "A1", "E", "T2"), ("T1", "T1", "T1", "A1")  # the sq
 METRIC = {"name": "metric", "kinds": list(SQUARE), "part": 1}
 HAND, PAIR = {"name": "held", "kinds": ["A1", "A2"], "part": 1}, {"kinds": ["T1", "T2"], "part": 1}
 FIVE = [TRAINS[0], METRIC, HAND, {"name": "giver", **PAIR}, {"name": "taker", **PAIR}]  # the click world
-CHOSEN = {"key": 1, "push": 0, "notch": 0, "hold": 0, "spring": 0, "tie": 0, "mesh": 0}  # the file's
+CHOSEN = frame.strengthless()["universe"]["chosen"]  # every strength 0 and the key 1, the test's lay's
 SITE, WIDE = 3, 1 << 70  # where the gears are laid, and their counts, past 64 bits
 MADE = main.made(loading.star(len(SHAPE)))  # the kinds, tables and square by main.py's one joint
 

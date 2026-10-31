@@ -12,7 +12,7 @@ from tensor24.main import made
 from tensor24.runner.files import vocabulary
 from tensor24.runner.load import star
 
-PIECE = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24", "piece.json")
+PIECE = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24-click", "piece.json")
 # Hamilton's table written out, "x y z sign" for x y = sign z on the unit's axis and i, j, k: i i = j j = k k = i j k = -1
 WRITTEN = "000+ 110- 220- 330- 011+ 101+ 231+ 321- 022+ 132- 202+ 312+ 033+ 123+ 213- 303+"
 TABLE = [(int(x), int(y), int(z), int(sign + "1")) for x, y, z, sign in WRITTEN.split()]

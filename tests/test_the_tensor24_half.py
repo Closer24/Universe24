@@ -2,7 +2,6 @@
 the load's reading of them, their rows their cosets, a test world in memory turned by the lifts and the board's turns, and
 the hand on the three axes split into its three doublets under the 24 whole units."""
 
-import json
 import subprocess
 import sys
 from pathlib import Path
@@ -15,12 +14,11 @@ from tensor24.engine import kinds as engine
 from tensor24.engine import state, step
 from tensor24.runner import load as loading
 from tensor24.runner import plans
-from tensor24.runner.files import NAMES, entries, held_departures, sites_of, star, vocabulary
+from tensor24.runner.files import entries, held_departures, sites_of, star, vocabulary
 from tests import frame
 
 ROOT = Path(__file__).resolve().parents[1]
-PATHS = [ROOT / "examples" / "tensor24" / f"{name}.json" for name in NAMES]
-AXES = len(json.loads(PATHS[1].read_text(encoding="utf-8"))["shape"])  # the piece's board
+AXES = len(frame.strengthless()["piece"]["shape"])  # the test's lay's board
 MADE = main.made(star(AXES))
 COSETS, HAND = (
     (["G3/2"], 2),
@@ -73,11 +71,11 @@ def test_the_files_admit_the_two_half_speed_trains_alone_and_refuse_both_in_a_fi
         False,
         True,
     ] and "no whole basis" in lines[0]
-    universe = json.loads(PATHS[0].read_text(encoding="utf-8"))
-    (kinds, part), den = COSETS, universe["integers"]["den"]  # the pinion den, the seed's
+    files = frame.strengthless()
+    (kinds, part), universe = COSETS, files["universe"]
+    den = universe["integers"]["den"]  # the pinion den, the seed's
     universe["trains"].append({"name": "spin", "kinds": kinds, "part": part, "pinion": den})
-    paths, record = [tmp_path / "universe.json", *PATHS[1:]], tmp_path / "spin.jsonl"
-    paths[0].write_text(json.dumps(universe), encoding="utf-8")
+    paths, record = frame.written(tmp_path, files), tmp_path / "spin.jsonl"
     at = len(universe["trains"]) - 1
     assert main.ran(paths, record) == [f"universe.trains[{at}].kinds: {kinds} at part {part}: {UNIT}"]
     assert not record.exists()
@@ -101,7 +99,7 @@ def test_a_half_speed_train_is_no_square_nor_held_untied_gripped_and_driven_on_t
         [1, 1, 0, 1, 1, 1, 1],
     ]
     assert trains.size[-len(spins) :].tolist() == list(lifts.gears)  # each one's rows its gears
-    universe = json.loads(PATHS[0].read_text(encoding="utf-8"))
+    universe = frame.strengthless()["universe"]
     (*_, drive, _), *_ = loading.geared(universe, trains, star(AXES))
     spun = range(trains.first[-len(spins)], trains.size.sum())
     assert set(drive[list(spun), 0].tolist()) == {1}  # T_d = 1 on the half-speed rows
@@ -139,8 +137,8 @@ def test_a_half_speed_trains_rows_are_its_cosets_each_gear_on_its_cosets_row():
 
 
 def laid(trains, chosen, integers=None, shape=(2, 1, 1)):
-    """A test world in memory, laid through load.load as the run lays it, at the example universe's integers or others."""
-    universe = json.loads(PATHS[0].read_text(encoding="utf-8"))
+    """A test world in memory, laid through load.load as the run lays it, at the test's lay's integers or others."""
+    universe = frame.strengthless()["universe"]
     integers = {**universe["integers"], **(integers or {})}
     universe = {
         **universe,

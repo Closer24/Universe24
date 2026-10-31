@@ -1,8 +1,10 @@
 # The examples
 
-Tensor24's three files under `examples/tensor24/`, the first of the five worlds the engine runs; the live, the well,
-the click and the mesh worlds below are four more folders of the same three files. The old engine's worlds, records
-and pages left the tree with it on the owner's word of 2026-10-30, 09:3x UTC; git's history keeps them.
+Tensor24's worlds, each a folder of the same three files: the click world (`examples/tensor24-click/`) and the mesh
+world (`examples/tensor24-mesh/`) below. The three worlds that wrote no click line by their structure, our bang, the
+live world and the well world, left the tree on the owner's word of 2026-10-31, about 09:30 UTC ("out"), and the old
+engine's worlds, records and pages left it with that engine on his word of 2026-10-30, 09:3x UTC; git's history keeps
+them.
 
 | File | What it holds |
 | --- | --- |
@@ -10,12 +12,11 @@ and pages left the tree with it on the owner's word of 2026-10-30, 09:3x UTC; gi
 | `piece.json` | The board's shape, the Node-clocks along each axis. |
 | `setting.json` | The run's ticks and the gears laid at the start. |
 
-Check and load them: `python -I tools/tensor24_files.py` (the examples by default). Run them to a record and its
-ledger: `python -I tools/tensor24_run.py examples/tensor24/universe.json examples/tensor24/piece.json
-examples/tensor24/setting.json <record .jsonl>`. Read the record: `python -I tools/tensor24_decode.py <record .jsonl>
-[<ledger .jsonl>]`.
+Check and load them: `python -I tools/tensor24_files.py` (the click world by default). Run a world to a record and
+its ledger: `python -I tools/tensor24_run.py <universe .json> <piece .json> <setting .json> <record .jsonl>`, each
+world's own line below. Read the record: `python -I tools/tensor24_decode.py <record .jsonl> [<ledger .jsonl>]`.
 
-## The strengths, each OPEN, and the worlds that write no click
+## The strengths, each OPEN
 
 The owner's law: choosing a strength is forbidden, and no strength, dial or factor is picked for an outcome (03:5x UTC).
 Every strength below stands in a shipped file as it was laid, each OPEN with how it came, for the owner's batch (AUDIT2
@@ -26,101 +27,12 @@ A1, Sofer's form 4 list; the Boss's ruling of 07:5x UTC); until he rules none mo
 - the click world's key, 50811429: set from a run (the code-clean auditor's C7), its window an odd whole up to the
   giver's swing over its first beat read at the key 1, about 13 keys in that beat, OPEN;
 - the click world's tie, 96000: the rule first tried (it runs away, the run's stop at round 3752 below), OPEN;
-- the well world's notch, 120000: twice the 60000 it was at the dial 1, picked so the notch rides the same dial, OPEN;
 - the springs of the click and the mesh worlds, 10^8: the file's den Gamma^2 by a stated rule (the grip at rest, the
-  Mesh's own strength), a frame and no search, OPEN as the frame is;
-- the well world's square train, its 00, xx, yy and zz slots laid at the mean of an earlier run's rounds 65 to 128, a
-  lay tuned to a result, OPEN.
-
-Three of the five worlds write no click line by their structure, NO CLICK in every reading of the decoder: our bang
-(`tensor24`), the live world and the well world lay no monomial whose value legs stand in two trains and no Mesh plan,
-so they hold no edge, the edge key is 1, every click tooth stands at 0 in [0, 1) and no tooth can carry. They stay
-shipped as board-only worlds (the Boss's ruling of 07:5x UTC); laying an edge or a key on them is the world-maker's
-initialization, the owner's batch.
-
-## The live world
-
-`examples/tensor24-live/` is a second folder of the same three files, a world that shows something: the A1 train's
-first component laid as a pulse along z by `tools/derivations/open_items/derive/boss/live_lay/lay.py` from the universe
-and the piece (its account in `lay.txt` beside it), 2^28 (64 - d^2)^2 at the distance d below 8 from z = 10, its peak
-at 2^40 counts (far above one notch), laid at rest, its before its now, so that the act alone sets how it moves: it
-splits into two halves of about half its peak (498 permille each at round 20) that run apart along z on the board of 3
-by 3 by 40, about 8 Meshes in 20 rounds, meet at its far side, z = 30, near round 50, and meet again at z = 10 at round
-100, where the pair makes 967 permille of the laid peak (a board reading off the run's ledger, no claim of physics);
-the square train stands at 0, a standing clock, so the act is exact and the run back returns the start bit for bit.
-Run it as the one bang: `python -I tools/tensor24_run.py examples/tensor24-live/universe.json
-examples/tensor24-live/piece.json examples/tensor24-live/setting.json <record .jsonl>`; the ledger beside the record
-holds the counts of the board's wave at every Node-clock and round, the pulse's two halves running along z. The clocks' wells and the grips' slackening are the well world's
-below (terms 5 and 9, drafted); the clicks are owed to term 11 (drafted, no vertex laid in these worlds; the click world
-below lays one); the window of the wave, the six Spokes' grips summed within [0, senses W] (2 W, the senses of an axis
-counted from the star), is read by the runner.
-
-## The well world
-
-`examples/tensor24-well/` is a third folder of the same three files, a world with a lump that spreads. Its setting is
-laid by `tools/derivations/open_items/derive/boss/well_lay/lay.py` from the universe and the piece, in whole numbers by
-a polynomial lump and the act itself, with no mode of the ring, no circular function and no construction that finds
-one, no root, no search and no table, Rule3's carry the one division (its account stands in `lay.txt` beside it): the
-board 18 by 6 by 6 at small teeth (den 1, full_rate 1000: the grip 10^6, the rest teeth 6 10^6, so that the well is a
-visible part of W), three trains. The first part of the board's wave is laid at rest (now = before, the tooth 0) as one lump about
-(0, 0, 0), the pulse's polynomial bump turned round its centre: 12000 (9 - r^2)^2 div 81 where r^2, the squared
-distance from the centre summed over the three axes around their rings, is below 9 (12000, 9481, 7259, 5333, 3703,
-2370, 1333 and 148 at r^2 = 0 to 6 and 8, at 93 Node-clocks); its second part is laid at 0. The lump is no mode of the
-board's pull, so the act moves it as it will, and it spreads; read on the board (`lay.txt`, line 4): within 16 rounds
-its centre's count falls from 12000 to 431 and 955 permille of its squares leave its laid support; its waves cross the
-ring and partly come back, 286 permille of them within the support at round 80 (the centre at -5756) and 177 at round
-128; its squares stand alike on its two sides along x at every window, so it spreads and does not move as a whole.
-The square train is pushed by term 5 in the books' form at push 1, the books closed (push 0 is no gravity; any other
-value would open the books by that factor, and the files' format refuses it by name): each slot read by a gear is
-pushed by minus the act's own energy's derivative by it, taken at fixed momentum, the momentum being what a clock keeps
-as its teeth move (dH / dW = -v^2 / 2 there, so the 00 slot is pushed by + k0 v^2 / 2, a deeper and slower clock where
-the sourcing trains' rows move; at fixed velocity the derivative would read + v^2 / 2 and push the wrong way). The 00 slot is pushed
-by k0 = Spokes x senses = 12, the factor the clock reads it at, times the momenta in and out of every row the push
-does not land on, and each ii slot by minus its axis's two Meshes' stretches squared, both halved by the drive's dial 2
-on the 00 and ii rows with the remainder kept in the fine tooth; the 0i and jk slots are read by nothing and pushed by
-nothing. The push reads the momenta in whole turns of the rest dial, a count a round at the rest teeth by the centred
-split, so a row gliding below half a count a round pushes the 00 slot by nothing: here the strides of the board's wave reach 5580
-counts a round, the pulse's 96 and the square train's own 50 (`measure.py` and `measure.txt` beside `lay.py`). The form's
-price as built: the 00 push leaves out the square's own 00 and ii rows, whose momentum out the act reads before the
-push's own kick (a pushed row's stride, which no plan may read for the mirror to swap every stride it reads), so the
-square train's own kinetic share of the books, its self-stress (OPEN in G2), is not paid into the 00 slot: over the run the
-ii rows' momenta in and out sum to 446149 against the sourcing rows' 19388914470, 23 parts per million (`lay.txt`). The
-square train is held by term 9's notch at h 120000 (OPEN, above), twice the 60000 it was at the dial 1, as the notch's
-monomials on the 00 and ii rows ride the same dial (the board's mean swings about its rest with a beat of about 31
-rounds); its 00, xx, yy and zz slots, read from the piece's shape, are laid at the mean (Rule3's carry) of a first run
-from 0 over its rounds 65 to 128 by the same generator, so that the square train starts near the mean the lump gives it and
-not at 0 (the Node-clock has no damping). The third train, `pulse`, is a small pulse along x about x = 9, the ring's
-far side from the lump, alike at every y and z, 500 (16 - u^2)^2 div 256 at the distance u from its centre (95, 281,
-439, 500, 439, 281, 95), laid at rest, its before its now, so that the act alone sets how it moves: it splits into two
-halves that run apart along x, about 7 Meshes in 16 rounds, meet in the lump at x = 0 and again at x = 9 (`lay.txt`,
-line 5; a board reading, no claim of physics). Run it as the one bang: `python -I tools/tensor24_run.py
-examples/tensor24-well/universe.json examples/tensor24-well/piece.json examples/tensor24-well/setting.json <record
-.jsonl>` (128 rounds out and back in about two minutes and a half; the ledger is about 20 MB, three lines a Node-clock
-a round; the run back returns the lay bit for bit). In the ledger, train 0's two counts are the lump's parts, train
-1's first count the 00 slot (W = rest + 12 c00) and its fifth to seventh the xx, yy and zz slots, and train 2's one
-count the pulse.
-
-Its readings are a spreading lump's, read on the board (`measure.txt`), and none of them is a standing well's: term
-5's sign, read from 0 with the square train's gears taken out, the 00 slot's mean over the lump's laid support against the
-void's, 1 and 0 at round 2, 11 and 0 at round 4, 25 and 3 at round 8 and 17 and 11 at round 16: the clock deepens
-first where the lump's rows move, before its waves spread it; the depth, in time's mean over rounds 65 to 128 of
-the laid world, the 00 slot 7 at the lump's centre, 4 over its laid support and 5 over the void, 4 to 12 over the
-board (along x through (y, z) = (0, 0): 7, 6, 5, 5, 6, 7, 8, 8, 7, 6, 7, 8, 8, 7, 6, 5, 5, 6), so N^2 = rest / W is
-999986 parts per million at the centre and 999990 over the void, a well that is real but spread nearly flat over the
-board by the lump's own waves, and the ii slots -3 to -2; and the pulse through it, its squares' mean distance from its
-laid centre at push 1 and at push 0 (the square train standing at 0) apart by at most 6 hundredths of a Mesh over the run,
-either way, below the lattice's resolution. OPEN here, by name: the 00 row's own law (the edge text's section 4,
-derive/boss/edge/EDGE2.md on the Boss's derivation branch): the 00 row's teeth stand at rest, the acyclic cut, so its
-own waves run on the rest cone while the board's wave and every other slot run on the well's, c^2 = grip / W: at the last round
-every other row's dial reads 5999736 to 6000396 where the 00 row's reads 6000000, a second cone 999956 to 1000066
-parts per million of the first. OPEN on this world: term 13's frozen clock (`derive/boss/frozen_edge`, the night's
-PLAN A3), which reads a test clock's beat against a standing well; the lump spreads, so no well stands here to read it
-against (its `probe.txt` reads the standing mode this world was laid on before), and frame 11's standing well waits on
-a lawful steady source.
+  Mesh's own strength), a frame and no search, OPEN as the frame is.
 
 ## The click world
 
-`examples/tensor24-click/` is a fourth folder of the same three files, a world whose clicks fall: term 6's coupling
+`examples/tensor24-click/` is a folder of the same three files, a world whose clicks fall: term 6's coupling
 family in its frame (the held train found by its character and Mesh-less, the tied trains found by theirs) and term
 11's whole click, on a cube of 3 at den 1 and full_rate 10000 (the rest teeth 6 10^8, f = rest div Gamma = 60000).
 Its setting is laid by `tools/derivations/open_items/derive/boss/click_lay/lay.py` from the universe and the piece, in
@@ -177,14 +89,14 @@ the Mesh's edges (`runner/plans.py`'s `crossing`), at the mesh 0 of this world b
 
 ## The mesh world
 
-`examples/tensor24-mesh/` is a fifth folder of the same three files, a world where the board's wave reaches a tied hand through
+`examples/tensor24-mesh/` is a second folder of the same three files, a world where the board's wave reaches a tied hand through
 the Mesh: the gradient vertex (FRAMES.md 7), laid by `runner/plans.py`'s `meshing` at the mesh (OPEN, above), V = mesh x SUM_i
 M_i D_i L between the first part L of the board's wave and a tied hand's T1 rows M_i, as one potential's two pushes (each M_i's row
 pushed by -mesh D_i L and the wave's row by +mesh D_i M_i; A1 x T1 has no A1 channel at the value legs, so the board's
 wave reaches a vector hand through the Mesh alone, and the held hand, Mesh-less, takes none). Its setting is laid by
 `tools/derivations/open_items/derive/boss/mesh_lay/lay.py` from the universe and the piece (its account in `lay.txt`
 beside it): a ring of 180 Node-clocks along x, one across y and z, at den 1 and full_rate 10000 (the rest teeth 6 10^8,
-the grip 10^8, f = 60000); three trains: the A1 train (part 2, the board's wave), its first part the well world's pulse (95, 281, 439, 500,
+the grip 10^8, f = 60000); three trains: the A1 train (part 2, the board's wave), its first part a pulse (95, 281, 439, 500,
 439, 281, 95 about x = 20), laid at rest, its before its now, so that the act alone sets how it moves; the held hand
 (A1, A2) at rest at (1, 0), its before its now (no angle aimed; the sixth code reader's minor 1, the audit's N3), every
 edge tooth at the dial's middle, its own spring at 10^8 (OPEN, above) by the click world's rule, the grip at rest (the world's

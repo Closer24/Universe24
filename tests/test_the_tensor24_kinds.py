@@ -10,7 +10,7 @@ from tensor24.engine import kinds
 from tensor24.main import made as joint
 from tensor24.runner.load import star, tables
 
-PIECE = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24", "piece.json")
+PIECE = Path(__file__).resolve().parents[1].joinpath("examples", "tensor24-click", "piece.json")
 
 
 def forms(held, matrix, keep):

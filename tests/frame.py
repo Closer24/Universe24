@@ -1,5 +1,6 @@
 """The plan's property tests for any engine of Tensor24: locality, purity, rename, the 24's images and the run back;
-the board, its Spokes and its Meshes they are read on, and the half-open split on the edge's dial."""
+the board, its Spokes and its Meshes they are read on, the half-open split on the edge's dial, and a test's lay of the
+three files with no strength chosen, never a shipped world."""
 
 import hashlib
 import importlib
@@ -16,6 +17,7 @@ import numpy as np
 
 from tensor24.engine import kinds
 from tensor24.engine.state import Plan, Read, State
+from tensor24.runner.files import NAMES
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -270,3 +272,41 @@ def dense(read, rows, landed):
     m = np.zeros((landed, rows), dtype=object)
     np.add.at(m, (read.target, first), read.factor)
     return m
+
+
+def strengthless():
+    """A test's lay, never a shipped world: the board's wave and the square on a 4 x 4 x 4 board, every strength 0 and the
+    key 1, no monomial joining the two (no edge, so no click line), one wave gear moving at site 0, 10 ticks; by name."""
+    den = 1  # every pinion den, the seed's
+    trains = [{"name": "wave", "kinds": ["A1"], "part": 2, "pinion": den}]
+    trains += [{"name": "square", "kinds": ["A1", "T1", "A1", "E", "T2"], "part": 1, "pinion": den}]
+    chosen = {"key": 1, "push": 0, "notch": 0, "hold": 0, "spring": 0, "tie": 0, "mesh": 0}
+    integers = {"den": den, "full_rate": 1000, "width": 128}
+    universe = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
+    setting = {"version": 1, "ticks": 10, "gears": [[0, 0, 0, 1, 0, 0]]}
+    return {"universe": universe, "piece": {"version": 1, "shape": [4, 4, 4]}, "setting": setting}
+
+
+def pair_world():
+    """A pair world of one Node-clock, NOT_CLOSED 37's (the first hostile code reader's M3; the seventh's rulings: the held hand at rest,
+    and no assert that it runs away), its three files: the held hand (1, 0), its before its now, its spring CHOSEN at the grip at rest, den
+    Gamma^2, the giver at its turning point at 14 and the taker at rest, at Gamma 1000, the hands' tie 9600 and the key 614401 odd."""
+    den = 1  # every pinion den, the seed's
+    hand = {"name": "held", "kinds": ["A1", "A2"], "part": 1, "pinion": den}
+    pair = {"kinds": ["T1", "T2"], "part": 1, "pinion": den}
+    trains = [hand, {"name": "giver", **pair}, {"name": "taker", **pair}]
+    integers = {"den": den, "full_rate": 1000, "width": 128}
+    grip = den * integers["full_rate"] * integers["full_rate"]  # the grip at rest, the spring's rule
+    chosen = {"key": 614401, "push": 0, "notch": 0, "hold": 1, "spring": grip, "tie": 9600, "mesh": 0}
+    world = {"version": 1, "integers": integers, "chosen": chosen, "trains": trains}
+    gears = [[0, 0, 0, 1, 1, 0], [1, 0, 0, 14, 14, 0]]  # the held hand at rest, as every pulse
+    laid_ = {"version": 1, "ticks": 1260, "gears": gears}
+    return {"universe": world, "piece": {"version": 1, "shape": [1, 1, 1]}, "setting": laid_}
+
+
+def written(folder, files):
+    """The three files written as JSON in the folder under their names: their paths, in the files' order."""
+    folder.mkdir(parents=True, exist_ok=True)
+    for name in NAMES:
+        folder.joinpath(f"{name}.json").write_text(json.dumps(files[name]), encoding="utf-8")
+    return [folder / f"{name}.json" for name in NAMES]

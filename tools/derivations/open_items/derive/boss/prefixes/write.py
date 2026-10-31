@@ -1,6 +1,6 @@
 """The shipped worlds' first rounds, for tests/test_the_tensor24_worlds.py (the Boss's code writer, 2026-10-31, on the
-pruner's finding that only our bang's run was guarded by a test, and the sixth code reader's minor 4): every example
-folder but our bang's, its own three files run out and back by the run tool's own function, main.ran, to its first click
+pruner's finding that one world's run alone was guarded by a test, and the sixth code reader's minor 4): every example
+folder, its own three files run out and back by the run tool's own function, main.ran, to its first click
 round so that the test pins its clicks and their edges' books, PREFIX rounds where it has none; each record's end line written as the run
 wrote it, with the world's name, its count of click lines and their digest, the no case's PREFIX rounds and the
 world's own digest at them, to tests/tensor24_prefixes.jsonl; no digest is typed
@@ -28,7 +28,6 @@ from tensor24 import main  # noqa: E402
 from tensor24.runner.files import NAMES  # noqa: E402
 
 PREFIX = 4  # the rounds each world runs out and back, a few seconds each, and every no case's rounds
-BANG = "tensor24"  # our bang's folder, which the run test runs whole
 REACH = 200  # the window of rounds in which each world's first click is read
 
 
@@ -49,7 +48,7 @@ def ran(world, rounds, scratch):
 
 
 def write():
-    worlds = sorted(f.name for f in ROOT.joinpath("examples").glob("*/") if f.name != BANG)
+    worlds = sorted(f.name for f in ROOT.joinpath("examples").glob("*/"))
     written = []
     with tempfile.TemporaryDirectory() as scratch:
         for world in worlds:
