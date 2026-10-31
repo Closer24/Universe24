@@ -131,7 +131,7 @@ def numbers(root: Path = ROOT) -> list[str]:
 
 
 def derived() -> list[str]:
-    """The departures of gate (3): a table number its script does not return to the digits named; a rule's `arguments`, where it has them, are the table's own inputs passed to the function (a run's reading among them, which no derivation module holds)."""
+    """The departures of gate (3): a table number its script does not return exactly, in whole numbers (a quotient a pair of whole numbers, a tuple or a list, compared as the table's list); a rule's `arguments`, where it has them, are the table's own inputs passed to the function (a run's reading among them, which no derivation module holds)."""
     table, departures = json.loads(NUMBERS.read_text(encoding="utf-8")), []
     for entry in (e for e in table if "derivation" in e):
         rule: dict[str, Any] = entry["derivation"]
@@ -140,11 +140,10 @@ def derived() -> list[str]:
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
         found = getattr(module, rule["function"])(*rule.get("arguments", []))
-        values = [round(float(v), rule["digits"]) for v in found]
-        expected = [round(float(v), rule["digits"]) for v in rule["expected"]]
-        if values != expected:
+        values = [list(v) if isinstance(v, (list, tuple)) else v for v in found]
+        if values != rule["expected"]:
             departures.append(
-                f"{entry['name']}: {rule['module']}:{rule['function']} returns {values}, the table holds {expected}"
+                f"{entry['name']}: {rule['module']}:{rule['function']} returns {values}, the table holds {rule['expected']}"
             )
     return departures
 
