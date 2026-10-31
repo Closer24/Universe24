@@ -110,8 +110,16 @@ stepping first by the engine's own gear, a dialed side on dials polarized over t
 | lambda 10 | 9 bits | none | 0 misses | 0 misses | exact | 24 of 24 | between 0.36 and 1.96 |
 | lambda 100 | 13 bits | none | 0 misses | 0 misses | exact | 24 of 24 | between 1.00 and 1.59 |
 
-- **So the floor comes by itself at every grain read.** Without the square, the click world fell at lambda 100: a count
-  passed 32 bits at round 827 and reached 19,566 bits by round 5,000 (split_bedge_x100_5000.txt).
+- **No count passed 32 bits in 5,000 rounds at any grain read.** Without the square, the click world fell at lambda 100:
+  a count passed 32 bits at round 827 and reached 19,566 bits by round 5,000 (split_bedge_x100_5000.txt).
+- **But this is the floor's edge, read in a 5,000-round window, not a floor that holds** (FLOOR1, NOT PASSED by both of
+  its pairs; the Boss's 6542602796; David's 6542547300 and 6542620339).
+  - On the click world's single giver-taker band, the square gives each hand exactly half the band. The opposite swing
+    then has no spring of its own and is held only by the held hand's lend.
+  - Over longer runs it drifts, or falls: at round 106,411 at lambda 100 on a lay the files allow.
+  - Under the square form the floor holds by itself exactly on a structure with a frustrated loop, a loop whose parity
+    and reversal disagree (Harary's balance; DERIVED). The plain triangle of bands is the smallest. A single band, or an
+    even ring, sits at the edge.
 - **Under the present act with the square form** (square_engine_x1_5000.txt, square_engine_x100_5000.txt): the widest
   count is 6 bits at lambda 1 and 12 bits at lambda 100, with no count past 32 bits. The run back is exact and the 24
   hold 24 of 24. The identity and the books are road B's, and are not read under the present act.
