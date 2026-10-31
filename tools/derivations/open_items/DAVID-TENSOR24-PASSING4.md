@@ -1,6 +1,6 @@
 # The passing for four value legs: the split at the rest, and what its clicks mean (NOT_CLOSED 29)
 
-David, 2026-10-31 (the seventh text, 03:4x UTC), for the night's side list, NOT_CLOSED 29: "the hat needs a lawful
+David, 2026-10-31 (the eighth text, 04:0x UTC), for the night's side list, NOT_CLOSED 29: "the hat needs a lawful
 one-pass passing for monomials of four value legs" (the Boss's #2187 6533115084 item 1, to David and the click's
 deriver, on the architect's measure: with the held hand still under the hat, the held train books the tied spring's
 energy alone, X_held = 2 hold f (k_a . k_b)(|x_a|^2 - |x_b|^2), and B4's pair world opens its books from round 57). It
@@ -45,8 +45,15 @@ alone, every division Rule3's carry, their outputs beside them.
 - **The sixth text** (toys-5 e84c0ad1f) read what the re-lay moved (section 12) and went to a new end pair, the end
   mathematician and the end physicist, who refused it on wordings, two items each, with minors; no probe needs to
   change. This text folds them (section 13) and, on the owner's top priority (the Boss's 6537974556), reads the split on
-  writer D's two worlds (section 14), where its clicks close at every place by a pair of teeth for every pair of
-  trains, born complementary: the rule the owner gave at 03:4x (the Boss's 6538533310 item 1).
+  writer D's two worlds (section 14). There its passing sums to 0 at every place, and its clicks, carried by a pair of
+  teeth born complementary for every pair of trains (the rule the owner gave at 03:4x, the Boss's 6538533310 item 1),
+  close at every place by that carry's identity, by construction.
+- **The seventh text** (toys-5 057529f60) went to the same end pair, who refused it: the physicist on one item (off the
+  exact turn the act's own passing opens the books before any tooth carries it), the mathematician on two (Big Pic's
+  charge said to move wherever the turn leaves the exact quarter turn; the middle form's refusal resting on a lay
+  aimed at a root), with minors. This text folds them (section 15), split4 (d) reading the free tied train again off
+  every square, and cites the Boss's measurer's build of the edge form in a copy of the act (NC29b), PASSED by both
+  its readers.
 
 **The finding in one line:** for four value legs the act's passing leaves a residual, -f (e1 - e3); the split at the
 rest closes the books exactly, local, one pass, odd and whole at one scale: the tie's value at the rest, c n P, is the
@@ -134,7 +141,8 @@ facts. Where the held hand moves less than a count a round (lay (C)) it misses a
   a round (frame 6's turn on 575973a20, which no shipped world lays at 36fbfbbde), the tie's pushes on the hand do no
   work, and the held train takes no click from the tie (2.4). A hand that keeps its size but turns by two unequal steps
   is booked the window's work of the tie's radial push: on passing4's terms the end mathematician's rest_case.py, on
-  36fbfbbde's src, steps the hand from (3125, 0) through (1875, 2500) to (0, 3125), at its rest at all three slots and
+  36fbfbbde's src, a counterexample whose lay is aimed at the circle's whole points, steps the hand from (3125, 0)
+  through (1875, 2500) to (0, 3125), at its rest at all three slots and
   the tied train still, and the split books -46,875,000,000,000 to the held train where the act and the background form
   book 0. The hat has a rest; frame 6 on 575973a20 had none, its size laid by the seed with no law that picks it, so
   there the split's "rest" was the size the seed laid, which frame 6 turned exactly, as the physicist's T1 says
@@ -271,16 +279,18 @@ facts. Where the held hand moves less than a count a round (lay (C)) it misses a
   a perfect square, and lays (A) and (C), the free tied train (r7) and the one-scale lay (r2) lay the hand at its root
   (5^5, 0), the exchange (p5) at the root plus 400: lays aimed at a root (line 102; the end physicist's m10). The books,
   the oddness and the run back hold on every window, on lay (B) too, and need no such lay; the energy readings of
-  section 4 on those lays rest on that aim. On 575973a20's pair world frame 6's held hand was laid (1, 0), turning a
-  quarter a round; frame 6 had no rest there (its own frame: |k|^2 laid by the seed, not picked by a law, with no least
-  size, k = 0 a fixed point and the radial direction flat), so n was the seed's |k|^2, 1 as laid and in every round of
-  the room (split4 (c)), read from the laid state: a board reading with no rest and no law behind it (the physicist's
-  T1). The universe's hold 1 is the tie's strength, not the hand's size (his m3). **His case** (t1_seed): the hand
-  seeded at (1, 1) with before (1, -1), |k|^2 = 2, which frame 6 turned exactly, its room ending at round 22: with n
-  read from the board (2) the split's lines equal the act's in 21 of 21 rounds; with n = 1 in 1 of 21, the held train
-  firing 437 clicks where the act fires none. These readings of frame 6 are 575973a20's
-  (575973a20, K = 2 W; withdrawn at 36fbfbbde, section 12); on the re-laid frame 6 the split's n is OPEN (section 12).
-  The tie groups are found where the held character is (load.trains_of), the background form's flag.
+  section 4 on those lays rest on that aim, but for the free tied train's, which split4 (d) reads again at n = 5^10 + 1,
+  off every square, the hand still at (5^5, 0): 0 under the split and -248 permille under the middle form, as at the
+  root (the eighth text, on the end mathematician's free_offroot). On 575973a20's pair world frame 6's held hand was
+  laid (1, 0), turning a quarter a round; frame 6 had no rest there (its own frame: |k|^2 laid by the seed, not picked
+  by a law, with no least size, k = 0 a fixed point and the radial direction flat), so n was the seed's |k|^2, 1 as laid
+  and in every round of the room (split4 (c)), read from the laid state: a board reading with no rest and no law behind
+  it (the physicist's T1). The universe's hold 1 is the tie's strength, not the hand's size (his m3). **His case**
+  (t1_seed): the hand seeded at (1, 1) with before (1, -1), |k|^2 = 2, which frame 6 turned exactly, its room ending at
+  round 22: with n read from the board (2) the split's lines equal the act's in 21 of 21 rounds; with n = 1 in 1 of 21,
+  the held train firing 437 clicks where the act fires none. These readings of frame 6 are 575973a20's (575973a20, K = 2
+  W; withdrawn at 36fbfbbde, section 12); on the re-laid frame 6 the split's n is OPEN (section 12). The tie groups are
+  found where the held character is (load.trains_of), the background form's flag.
 
 ## 3. On the board
 
@@ -371,10 +381,13 @@ facts. Where the held hand moves less than a count a round (lay (C)) it misses a
 - **passing4.py** (node-live 575973a20, also byte for byte on f72067cdf; four Mesh-less Node-clocks, 400 rounds; the
   held hand (k1, k2) under the hat 1 at n = 5^10, the tie 3, the tied train's own spring n, teeth 2000 n):
 
-| lay | books open: act / middle / background | held passing not 0: act / middle / background | windows where the size
-moved | |---|---|---|---| | (A) the hand laid at the hat's rest (it moves in every round) | 1,600 / 0 / 0 | 1,600 /
-1,600 / 1,565 | 1,565 | | (B) the size laid off its rest | 1,600 / 0 / 0 | 1,600 / 1,599 / 1,582 | 1,583 | | (C) a stiff
-hat 10^4, teeth 10^6 n | 1,598 / 0 / 0 | 1,598 / 1,598 / 365 | 365 |
+  | lay | books open: act / middle / background | held passing not 0: act / middle / background | size moved |
+  |---|---|---|---|
+  | (A) the hand laid at the hat's rest (it moves in every round) | 1,600 / 0 / 0 | 1,600 / 1,600 / 1,565 | 1,565 |
+  | (B) the size laid off its rest | 1,600 / 0 / 0 | 1,600 / 1,599 / 1,582 | 1,583 |
+  | (C) a stiff hat 10^4, teeth 10^6 n | 1,598 / 0 / 0 | 1,598 / 1,598 / 365 | 365 |
+
+  The last column counts the windows where the size moved.
 
   Every form is odd under the window's reversal in 1,600 of 1,600 windows of every lay. The background form's held
   passing is non-zero only in windows where the size moved; in (B) one such window has P(now) = 0 and books 0 (1,582 of
@@ -406,10 +419,11 @@ hat 10^4, teeth 10^6 n | 1,598 / 0 / 0 | 1,598 / 1,598 / 365 | 365 |
   (passing4.py and split4 (b), byte for byte on 36fbfbbde), whole at kappa 6 with the key times 3 (exercised by
   split4 (d)'s r2 lay, since passing4's lays hold no two-leg monomial between trains), and its click tooth's run back
   (split4 (e) on lay (B)); split4's (d) and lay-(B) (e) reproduce byte for byte on 36fbfbbde with the world part cut
-  (the end mathematician's split4_no_world.py), so in the exchange that returns the split books the held train's
-  transfer within 29 permille of the background form's at every round, and for the free tied train over a still held
-  hand the held train books 0 on the mean under the split and -249 permille under the middle form, board readings on
-  lays aimed at a root (2.4); the middle form refused as the road on that -249 alone, and kept, with the background
+  (the end mathematician's split4_no_world.py), so in the exchange that returns, on its lay aimed at the root plus
+  400 and resting on that aim (2.4), the split books the held train's transfer within 29 permille of the background
+  form's at every round; for the free tied train over a still held hand the held train books 0 on the mean under the
+  split and -248 permille under the middle form at n = 5^10 + 1, off every square (-249 on the lay at the root), board
+  readings; the middle form refused as the road on that reading alone, and kept, with the background
   form, as a lawful form; where the hat is laid, n is its constant, a law. What 575973a20's pair world read (the room's
   lines, the background form as what the act booked in the room, n as the seed's |k|^2) is withdrawn at 36fbfbbde
   (section 12).
@@ -741,38 +755,45 @@ figure was added outside a probe's output, a named reader's run or an approved f
 ## 14. The split at the rest on writer D's worlds (the seventh text; the owner's top priority)
 
 **The ask** (the Boss's 6537974556, on the owner's word of 02:5x): apply the split at the rest to writer D's world,
-the click world's universe on node-live 36fbfbbde, its held rows' own spring CHOSEN at 10^8 (K = W / 3, on no exact
-turn); the target, the books closed again at every place of the click world.
+the example world tensor24-click on node-live 36fbfbbde, its held rows' own spring CHOSEN at 10^8 (K = W / 3, on no
+exact turn); the target, the books closed again at every place of tensor24-click.
 
 **The probe:** derive/david_open/node/split_d.py, its outputs split_d_click.txt and split_d_mesh.txt beside it, whole
-numbers alone, every division Rule3's carry, on 36fbfbbde's src with its own examples (the click world's 5,000 rounds
+numbers alone, every division Rule3's carry, on 36fbfbbde's src with its own examples (tensor24-click's 5,000 rounds
 in about 8 minutes). Each world is its three files through the loader; the trains, the held rows, the monomials and
 the key are the loader's, and nothing is typed. Each round the real act steps the board, and at every Node-clock the
 probe books, per train, the act's own clicks and the split at the rest (section 2's work form at kappa 6, at n = 0
 and at the laid n, |k|^2 = 1 at every Node-clock), the split's clicks carried two ways at the key times 3: by each
 train's own tooth, as the act carries its passing, and by one tooth per pair of trains the split joins.
 
-**Measured on the click world** (27 Node-clocks, 5,000 rounds; trains 0 to 4, the held train 2 on rows 12 and 13;
+**Measured on tensor24-click** (27 Node-clocks, 5,000 rounds; trains 0 to 4, the held train 2 on rows 12 and 13;
 value-leg monomials: own 2, two-leg between trains 6, tie groups 12 at the factor 60,000):
 - the act as built: a click at 123,795 of 135,000 places, the books open at 123,066 of them, the held train clicking
   at 73,980: writer D's decoder figures, to the place;
-- the two-leg law: the work form at kappa 2 equals the act's X in 32,400 of 32,400 cases over the first 200 rounds;
-- the split's passing, summed over the trains: 0 at every one of the 135,000 places, at both n;
+- the two-leg law: the work form at kappa 2 equals the probe's own reading of the act's X (World.act_x, as split4
+  (a) reads it; step.passing itself is not called) in 32,400 of 32,400 cases over the first 200 rounds;
+- the split's passing, summed over the trains: 0 at every one of the 135,000 places, at both n, an identity of the
+  form (each monomial's shares sum to 1, section 2) that the probe checks in code;
 - the split's clicks by each train's own tooth: the books open at 42,741 of 123,984 click places at n = 0 and at
   45,441 of 123,687 at the laid n; three trains click at once at 87,129 and 86,724 of the click places and one train
   alone at 2,619 and 2,295, and the teeth's sum is off its birth sum at 28,782 and 30,807 places;
 - the split's clicks by one tooth per pair (the pairs (2, 3), (2, 4) and (3, 4), a tooth for each at every
-  Node-clock): the split's passing is the sum of its pair flows at every place (0 places off, at both n), so each pair
-  carries one flow; its clicks fall at 122,256 places at n = 0 and at 122,391 at the laid n, the held train clicking at
+  Node-clock): the split's passing regrouped by pairs, its pair flows summing back to it at every place (0 places
+  off, at both n), an identity of the regrouping that the probe checks in code, not a measure, so each pair carries
+  one flow; its clicks fall at 122,256 places at n = 0 and at 122,391 at the laid n, the held train clicking at
   121,635 and 121,878, and the books close at all of them. That 0 is the pair carry's identity (derived below), not a
   second measure: the probe books each pair's quotient to its two trains with opposite signs, as the identity gives
   the complementary tooth;
-- Big Pic's check (his 6538018966): the held pair's charge moves at 74,358 of 135,000 places.
+- Big Pic's check (his 6538018966), its first part: the held pair's Casoratian over its two held rows, sigma =
+  a_1 b_2 - a_2 b_1 (his "charge"), moves at 74,358 of 135,000 places and stands at the other 60,642; its whole change
+  set against the passing is OPEN.
 
-**Measured on the mesh world** (180 Node-clocks, 125 rounds, key 1): the act as built opens the books at 6,193 of
+**Measured on tensor24-mesh** (180 Node-clocks, 125 rounds, key 1): the act as built opens the books at 6,193 of
 6,193 click places, the held train clicking at 4,610 (writer D's figures, to the place); the split closes them at every
-place, at n = 0 (5,515 click places) and at the laid n (5,403), by each train's own tooth (measured: the teeth's sum
-never leaves its birth sum) and by the pair's, since its one pair of trains (1, 2) is all it joins.
+place, at n = 0 (5,515 click places) and at the laid n (5,403), by each train's own tooth (the teeth's sum never
+leaves its birth sum, the single pair's identity, checked in code) and by the pair's, since its one pair of trains
+(1, 2) is all it joins. The closed books there say nothing of the energy the gradient vertex moves through a plan the
+passing does not read (the end mathematician's m4).
 
 **Derived:**
 - The split's passing sums to 0 over the trains at every place, at any constant n: per monomial its shares alpha sum
@@ -787,10 +808,15 @@ never leaves its birth sum) and by the pair's, since its one pair of trains (1, 
 - By each train's own tooth the clicks need not close. The passings summing to 0, the clicks summed over the trains,
   times K, are the teeth's sum before the round less after it, so they are 0 exactly where the teeth's sum stands.
   Where the split joins one pair alone, the two trains' own teeth are that pair's tooth and its flip, and the pair
-  carry above closes the books at every click (the mesh world, the pair (1, 2)). Where it joins three trains, each
+  carry above closes the books at every click (tensor24-mesh, the pair (1, 2)). Where it joins three trains, each
   train's tooth rounds the sum of its flows with the other two, and the three roundings need not cancel. The exact
   quarter turn kept the held train passing nothing, so in the pair world's room each click was one pair's exchange,
-  (held, giver, taker) = (0, 1, -1) (section 5); off it, three trains meet, and that is the room's end in the clicks.
+  (held, giver, taker) = (0, 1, -1) (section 5). Off it the act's own passing leaves its residual and opens the books
+  before any tooth carries it (pair_world, 146 of 400 rounds, the first at round 57). Under the split the passing sums
+  to 0, three trains meet, and one tooth per train leaves the clicks open. Pair teeth close the split's clicks, not
+  the act's: no arrangement of teeth closes a passing that does not sum to 0.
+- Pair teeth close the clicks for any passing built of pair flows, the background form's included, so the teeth do not
+  pick the split; its choice rests on its shares (sections 2 and 4; the end mathematician's m3).
 
 **So, for the build** (the Boss's 6537974556 item 2): the split's passing is local (one Node-clock's before, now and
 next counts), one pass, whole at kappa 6 and odd (section 2), and closes the passing's books at every place of writer
@@ -811,14 +837,16 @@ excursion). Writer D's world lays no hat, and its own spring and tie are least a
 scale with term 11: kappa 6 is three times term 11's two-leg kappa 2, so the key is carried times 3, for the owner's
 word (section 6).
 
-**The held hand need not rest:** the split reads a constant n, not a still hand. On writer D's world the hand turns at
-K = W / 3 and its charge moves, and the passing's books close all the same; the cost Big Pic names for a hand at rest
-(the giver's beat swinging at twice the held beat) does not arise from the split. Writer B's re-lay is read when it
+**The held hand need not rest:** the split reads a constant n, not a still hand. On writer D's world the hand turns at K
+= W / 3 and its Casoratian sigma moves, and the passing's books close all the same; the cost Big Pic names for a hand at
+rest (the giver's beat swinging at twice the held beat) does not arise from the split. Writer B's re-lay is read when it
 lands.
 
-**Big Pic's check, as read:** the charge moves wherever the turn leaves the exact quarter turn, the mechanism of the
-room's end he names (6538018966 item 4). Its whole change set against the held train's flow is a reading owed: the
-charge is the step's Casoratian and the flow is the books' passing, not one quantity (OPEN).
+**Big Pic's check, as read (its first part):** sigma moves at 74,358 of the 135,000 places of a world on no exact turn
+and stands at the other 60,642, as it stands at every exact quarter turn and at any purely radial step, by the
+algebra. The mechanism he names for the room's end (6538018966 item 4) is not tested here, since this world has no
+exact turn to set beside it. Its whole change set against the held train's flow is a reading owed:
+sigma is the step's Casoratian and the flow is the books' passing, not one quantity (OPEN).
 
 **In the clicks:** closed books on the board are a clock fact. The decoder's reading of them (C5's books at every
 click, read twice, by Big Pic's methods) needs the split built with its pair teeth, the owner's rule: owed. The run
@@ -829,4 +857,65 @@ would fail as written once the split is built, by design.
 run, every figure of the first run's forms equal between the two; the act-as-built lines equal to writer D's commit
 figures on both worlds, to the place; the pair carry's identity checked by hand above, and the per-pair books' 0 named
 as that identity's, not as a measure; the probe reads no world the loader does not lay and types no train, row or
-number.
+number of the world (kappa 6, the key's factor 3, the two-leg check's 200 rounds and n = 0 are the probe's own).
+
+## 15. The seventh text's end pair, folded (the eighth text)
+
+The seventh text (toys-5 057529f60) went to the same end pair. Both reran split_d.py byte for byte on both worlds.
+
+**The end physicist** (NOT PASSED, one blocking item, with minors; his sixth-text items closed but m6 and m8):
+1. B1, section 14's "off it, three trains meet, and that is the room's end in the clicks", false for the act: off the
+   exact turn the act's own passing leaves its residual and opens the books before any tooth carries it (his
+   act_passing_check: on tensor24-click over 300 rounds the act's passing sums to non-zero at 8,073 of 8,100 places,
+   and at all 6,750 places where the act's clicks leave the books open). Folded: the sentence now says that off the
+   turn the act's passing opens the books before any tooth, that under the split three trains meet and one tooth per
+   train leaves the clicks open, and that pair teeth close the split's clicks, not the act's (14).
+2. His minors:
+   - m1, "charge", a physics noun on the board: glossed at first use as the held pair's Casoratian sigma, Big Pic's
+     "charge", and named sigma after (14);
+   - m2, "the click world" naming the example world: tensor24-click and tensor24-mesh by name (14);
+   - m3, Big Pic's check read in its first part only, and "moves wherever the turn leaves the exact quarter turn"
+     false as written: labelled its first part, sigma standing at the other 60,642 places, the mechanism not tested on
+     a world with no exact turn (14);
+   - m4, the pair flows summing back to the split's passing: named an identity of the regrouping, checked in code (14);
+   - m5, the two-leg check compares the probe's own two formulas: said, step.passing not called (14);
+   - m6, "types no train, row or number": "no number of the world", the probe's own named (14);
+   - m7, readers' figures from runs outside the tree, and rest_case's lay aimed at the circle's whole points: the lay
+     named a counterexample's (1); the readers' runs stay quoted as theirs, by name, as records of readings;
+   - m8, section 5's passing4 table, merged into a paragraph by the seventh text's reflow: restored as rows (5);
+   - m9, the header's pair teeth presented as a reading: the header now says the clicks close by the carry's
+     identity, by construction (the header).
+
+**The Boss's measurer** (his 6538624637 and 6538685839): the edge form built in a copy of step.act on node-live
+1919dd64c (NC29b), each edge two teeth born complementary by the loader's rule, one carry over (P, -P): C5's books
+SHOWN at every place on the pair, mesh and click worlds, each run twice byte for byte and the run back exact; the
+meetings NOT SHOWN, each edge passing many quanta a round; NC29b PASSED by both its readers, and writer B builds it
+on node-edge. His numbers and this page's probe agree: closed at every place by the edges.
+
+**The end mathematician** (NOT PASSED, two blocking items, with minors; his sixth-text items closed):
+1. B1, section 14's "the charge moves wherever the turn leaves the exact quarter turn", false on tensor24-click (his
+   charge_check: no exact quarter-turn step in 300 rounds, and sigma stands at 4,104 of 8,100 places). Folded: the
+   count stated, sigma standing at the other 60,642 places, as at every exact quarter turn and any purely radial step,
+   and "wherever" gone (14).
+2. B2, section 6 standing readings that section 2 names as resting on lays aimed at a root, the middle form refused on
+   the -249 of the free tied train laid at its root. Folded: split4 (d) reads the free tied train again at
+   n = 5^10 + 1, off every square, the hand still at (5^5, 0), as his free_offroot does: background 0 (-7 to 7),
+   middle -248 (-500 to 5), split 0 (-5 to 4); the refusal now rests on that reading, and the exchange's 29 permille
+   is scoped to its lay's aim (2; 6). split4.txt gains that one line; every other line is byte for byte the sixth
+   text's.
+3. His minors:
+   - m1, three identities listed as measured (the split's passing summing to 0, the pair flows summing back to it,
+     the single pair's teeth keeping their birth sum): each labelled an identity checked in code (14);
+   - m2, the two-leg check against the probe's own formulas: as the physicist's m5 (14);
+   - m3, pair teeth close the clicks for any passing built of pair flows: said, the split's choice resting on its
+     shares (14);
+   - m4, tensor24-mesh's gradient vertex moving energy through a plan the passing does not read: the closed books
+     there scoped (14);
+   - m5 and m6, as the physicist's m1 and B1 (14).
+
+**How the eighth text checked itself:** split4.py, its one line added, rerun on node-live 575973a20's src in 10 s,
+twice, its output byte for byte the sixth text's but for the new line, which equals the end mathematician's
+free_offroot figures; split_d.py unchanged. The text searched again every "charge", "click world", "mesh world",
+"measured", "wherever" and "-249": outside quotations and the records of earlier texts, each is now sigma glossed as
+Big Pic's word, an example world by name, a measure of the act or of the per-train carry, an identity named so, or the
+reading at the root beside the one off every square.

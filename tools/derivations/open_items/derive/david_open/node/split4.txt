@@ -40,6 +40,7 @@
   lay (C) site 3: background 419; middle 419; work middle 418; split 419 (the hand's own excursion 13584016034066250000000000000)
   the decay, 3,000 rounds: the held train's booked transfer at the end, permille of its starting excess: background -44, middle -24, split -45; the split against the background differs by at most 29 (round 2206), by -4 on the mean over rounds 1,800 to 2,200; the middle against the background by at most 514
   the free particle at x0 2,000 over a nearly still vacuum (|k|^2 - n at most 99744): the vacuum's booked energy, permille of the particle's c n x0^2, its mean over rounds 201 to 1,200 and its range: background 0 (-7 to 7); middle -249 (-500 to 4); split 0 (-5 to 5)
+  the same free tied train at n = 5^10 + 1, off every square, the hand still at (5^5, 0), so no lay is aimed at a root: the held train's booked energy, permille of c n x0^2, its mean over rounds 201 to 1,200 and its range: background 0 (-7 to 7); middle -248 (-500 to 5); split 0 (-5 to 4)
   one scale, x laid at 1,000, y at rest at 0, 400 rounds: x's split energy against its passing, worst miss 9 permille of its excursion
   one scale, x laid at 2,000, y at -500, 400 rounds: x's split energy against its passing, worst miss 2 permille of its excursion
 (e) the click tooth's run back under the split: carried forward over the windows, kept at the end as the mirror keeps it, and carried back over the reversed windows (b, a, a+) -> (a+, a, b) in reverse order

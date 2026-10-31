@@ -24,8 +24,8 @@ Sections:
 (c) B4's pair world through the real loader and act: n read from the frame, the books, the clicks per train at the
     key times 3 against the act's at the key, in the run test's 30 ticks, in the room (rounds 1 to 56) and past it;
 (d) the energy each form books: the decay (the physicist's p5 lay), the free particle over a still vacuum (his r7),
-    a train holding both a tie and a two-leg spring (his r2), and lays (A) and (C) over the held hand's own
-    excursion (his r1), each in units 96 W E;
+    the same free tied train at n = 5^10 + 1, off every square (the eighth text), a train holding both a tie and a
+    two-leg spring (his r2), and lays (A) and (C) over the held hand's own excursion (his r1), each in units 96 W E;
 (e) the click tooth's run back under the split, on lay (B) and on the pair world: the tooth kept at the end, as the
     mirror keeps it, and carried back over the reversed windows returns to its birth.
 
@@ -645,6 +645,35 @@ for nr, rnd in enumerate(fhist):
 print(f"  the free particle at x0 2,000 over a nearly still vacuum (|k|^2 - n at most {kmax}): the vacuum's booked"
       f" energy, permille of the particle's c n x0^2, its mean over rounds 201 to 1,200 and its range: "
       + "; ".join(f"{k} {ppm(tot[k], energy * cnt)} ({ppm(lo[k], energy)} to {ppm(hi[k], energy)})" for k in cum))
+
+# the same free tied train with n off every square, n = 5^10 + 1, the hand still laid at (5^5, 0): no lay aimed at a
+# root (the end mathematician's free_offroot, the eighth text)
+N1 = N + 1
+W21 = 2000 * N1
+f1terms = hat_terms(HELD, 400, N1) + [(1, (2, 2, r, r)) for r in HELD]
+f1world = World(f1terms, [0, 0, 1], HELD, N1)
+f1hist = run_meshless(f1terms, 3, fa, fa.copy(), 1200, W21)
+energy1 = 96 * W21 * (1 * N1 * 2000 * 2000)
+cum = {"background": 0, "middle": 0, "split": 0}
+tot = {k: 0 for k in cum}
+lo = {k: 0 for k in cum}
+hi = {k: 0 for k in cum}
+cnt = 0
+for nr, rnd in enumerate(f1hist):
+    b, a, a1, _ = rnd[0]
+    fw = forms_of(f1world, b, a, a1)
+    for k in cum:
+        cum[k] += fw[k][0]
+        booked = BOOK[k] * W21 * cum[k]
+        lo[k] = min(lo[k], booked)
+        hi[k] = max(hi[k], booked)
+        if nr + 1 > 200:
+            tot[k] += booked
+    if nr + 1 > 200:
+        cnt += 1
+print("  the same free tied train at n = 5^10 + 1, off every square, the hand still at (5^5, 0), so no lay is aimed at"
+      " a root: the held train's booked energy, permille of c n x0^2, its mean over rounds 201 to 1,200 and its range: "
+      + "; ".join(f"{k} {ppm(tot[k], energy1 * cnt)} ({ppm(lo[k], energy1)} to {ppm(hi[k], energy1)})" for k in cum))
 
 # a train holding both the tie and a two-leg spring: x (row 2) and y (row 3), each with the tie and its own spring n,
 # and f x y between them; x's cumulative passing against its split energy
