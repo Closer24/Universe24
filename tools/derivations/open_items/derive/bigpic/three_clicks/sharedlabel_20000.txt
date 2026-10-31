@@ -1,0 +1,9 @@
+two triangles sharing edge 12, clocks 0 and 1 swapped: 20000 rounds, 33231 sides with a click; sides not the relabelled side: 0
+two triangles sharing edge 12, clocks 0 and 1 swapped, a hidden unit in triangle 0: 20000 rounds, 33425 sides with a click; sides not the relabelled side: 0
+two triangles sharing edge 12, the four clocks turned round: 20000 rounds, 33231 sides with a click; sides not the relabelled side: 0
+two triangles sharing edge 12, the four clocks turned round, a hidden unit in triangle 0: 20000 rounds, 33425 sides with a click; sides not the relabelled side: 0
+four clocks pairwise joined, clocks 0 and 1 swapped: 20000 rounds, 42759 sides with a click; sides not the relabelled side: 0
+four clocks pairwise joined, clocks 0 and 1 swapped, a hidden unit in triangle 0: 20000 rounds, 46787 sides with a click; sides not the relabelled side: 0
+four clocks pairwise joined, the four clocks turned round: 20000 rounds, 42759 sides with a click; sides not the relabelled side: 0
+four clocks pairwise joined, the four clocks turned round, a hidden unit in triangle 0: 20000 rounds, 46787 sides with a click; sides not the relabelled side: 0
+exit 0
