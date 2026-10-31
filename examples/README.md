@@ -15,6 +15,29 @@ ledger: `python -I tools/tensor24_run.py examples/tensor24/universe.json example
 examples/tensor24/setting.json <record .jsonl>`. Read the record: `python -I tools/tensor24_decode.py <record .jsonl>
 [<ledger .jsonl>]`.
 
+## The strengths, each OPEN, and the worlds that write no click
+
+The owner's law: choosing a strength is forbidden, and no strength, dial or factor is picked for an outcome (03:5x UTC).
+Every strength below stands in a shipped file as it was laid, each OPEN with how it came, for the owner's batch (AUDIT2
+A1, Sofer's form 4 list; the Boss's ruling of 07:5x UTC); until he rules none moves, and none is the act's choice:
+- the mesh world's mesh, 250000: searched in a window for an outcome (at 200000 and 240000 the tied hand never moves in
+  125 rounds, at 350000 it moves at 128 Node-clocks, so 250000 was taken), a value found by search, Forbidden by the
+  law and OPEN;
+- the click world's key, 50811429: set from a run (the code-clean auditor's C7), its window an odd whole up to the
+  giver's swing over its first beat read at the key 1, about 13 keys in that beat, OPEN;
+- the click world's tie, 96000: the rule first tried (it runs away, the run's stop at round 3752 below), OPEN;
+- the well world's notch, 120000: twice the 60000 it was at the dial 1, picked so the notch rides the same dial, OPEN;
+- the springs of the click and the mesh worlds, 10^8: the file's den Gamma^2 by a stated rule (the grip at rest, the
+  Mesh's own strength), a frame and no search, OPEN as the frame is;
+- the well world's square train, its 00, xx, yy and zz slots laid at the mean of an earlier run's rounds 65 to 128, a
+  lay tuned to a result, OPEN.
+
+Three of the five worlds write no click line by their structure, NO CLICK in every reading of the decoder: our bang
+(`tensor24`), the live world and the well world lay no monomial whose value legs stand in two trains and no Mesh plan,
+so they hold no edge, the edge key is 1, every click tooth stands at 0 in [0, 1) and no tooth can carry. They stay
+shipped as board-only worlds (the Boss's ruling of 07:5x UTC); laying an edge or a key on them is the world-maker's
+initialization, the owner's batch.
+
 ## The live world
 
 `examples/tensor24-live/` is a second folder of the same three files, a world that shows something: the A1 train's
@@ -62,7 +85,7 @@ price as built: the 00 push leaves out the square's own 00 and ii rows, whose mo
 push's own kick (a pushed row's stride, which no plan may read for the mirror to swap every stride it reads), so the
 square train's own kinetic share of the books, its self-stress (OPEN in G2), is not paid into the 00 slot: over the run the
 ii rows' momenta in and out sum to 446149 against the sourcing rows' 19388914470, 23 parts per million (`lay.txt`). The
-square train is held by term 9's notch at the CHOSEN h 120000, twice the 60000 it was at the dial 1, as the notch's
+square train is held by term 9's notch at h 120000 (OPEN, above), twice the 60000 it was at the dial 1, as the notch's
 monomials on the 00 and ii rows ride the same dial (the board's mean swings about its rest with a beat of about 31
 rounds); its 00, xx, yy and zz slots, read from the piece's shape, are laid at the mean (Rule3's carry) of a first run
 from 0 over its rounds 65 to 128 by the same generator, so that the square train starts near the mean the lump gives it and
@@ -104,14 +127,14 @@ Its setting is laid by `tools/derivations/open_items/derive/boss/click_lay/lay.p
 whole numbers by the act itself (its account in `lay.txt` beside it). Five trains: the A1 train (part 2, the board's wave) and the square train
 at 0, push 0 and notch 0; the held hand (A1, A2) laid at rest at (1, 0) at every Node-clock, its before its now, no
 angle aimed (the sixth code reader's minor 1, the audit's N3), every edge tooth at the dial's middle, s = 0, the
-format's default, and its own spring CHOSEN at 10^8 by the rule: the grip at rest, den Gamma^2, the Mesh's own
+format's default, and its own spring at 10^8 (OPEN, above) by the rule: the grip at rest, den Gamma^2, the Mesh's own
 strength, which the held hand does not hold (its stiffness 2 spring = 2 10^8, a third of W = 6 10^8, inside the held
 hand's window 0 < 2 spring < 4 W and on no exact turn, W, 2 W or 3 W; the world's tie, 96000, the rule first tried,
 runs away, its counts past 4300 digits by round 1734); and two tied hands (T1, T2), tied to the held hand's square at
 hold 1 (the tied spring 2 hold f = 120000; the giver alone beats in 428 rounds on this lay) and to each other by the
 hands' tie at 96000: the giver laid as a line hand at its turning point, a = b = (40, 0, 0) on its T1 rows at every
 Node-clock, and the taker at 0. Every Node-clock is laid alike, so the Meshes pull nothing between like sites and each
-runs as the one Node-clock the generator reads. The key is CHOSEN in the universe file, 50811429, and the lay computes
+runs as the one Node-clock the generator reads. The key stands in the universe file, 50811429 (OPEN, above), and the lay computes
 none (the audit's C7): its window is an odd whole from 1 to the largest swing of the giver's course of S (its passing,
 the two-round energy change) over its first beat, read off the act at the key 1, where the click is S itself, on this
 lay a swing of 687744000, so that about 13 keys pass in that beat (a chosen unit of wind below the quantum; Planck's
@@ -155,7 +178,7 @@ the Mesh's edges (`runner/plans.py`'s `crossing`), at the mesh 0 of this world b
 ## The mesh world
 
 `examples/tensor24-mesh/` is a fifth folder of the same three files, a world where the board's wave reaches a tied hand through
-the Mesh: the gradient vertex (FRAMES.md 7), laid by `runner/plans.py`'s `meshing` at the CHOSEN mesh, V = mesh x SUM_i
+the Mesh: the gradient vertex (FRAMES.md 7), laid by `runner/plans.py`'s `meshing` at the mesh (OPEN, above), V = mesh x SUM_i
 M_i D_i L between the first part L of the board's wave and a tied hand's T1 rows M_i, as one potential's two pushes (each M_i's row
 pushed by -mesh D_i L and the wave's row by +mesh D_i M_i; A1 x T1 has no A1 channel at the value legs, so the board's
 wave reaches a vector hand through the Mesh alone, and the held hand, Mesh-less, takes none). Its setting is laid by
@@ -164,7 +187,7 @@ beside it): a ring of 180 Node-clocks along x, one across y and z, at den 1 and 
 the grip 10^8, f = 60000); three trains: the A1 train (part 2, the board's wave), its first part the well world's pulse (95, 281, 439, 500,
 439, 281, 95 about x = 20), laid at rest, its before its now, so that the act alone sets how it moves; the held hand
 (A1, A2) at rest at (1, 0), its before its now (no angle aimed; the sixth code reader's minor 1, the audit's N3), every
-edge tooth at the dial's middle, its own spring CHOSEN at 10^8 by the click world's rule, the grip at rest (the world's
+edge tooth at the dial's middle, its own spring at 10^8 (OPEN, above) by the click world's rule, the grip at rest (the world's
 tie is 0, outside the window); and a tied hand (T1, T2) at rest
 at every Node-clock, tied to the held hand's square at hold 1 (the tied spring 120000); push 0, notch 0, tie 0, mesh
 250000 (its ground state needs mesh^2 below grip x 2 hold f / 2 = 6 10^12, and it is 625 10^8), 125 ticks.
@@ -172,7 +195,7 @@ at every Node-clock, tied to the held hand's square at hold 1 (the tied spring 1
 The pulse laid at rest splits into two halves that run apart along the ring, each about half its peak (254 of 500 at
 round 25, 232 at round 125), about 10 Meshes in 25 rounds: at rounds 25, 50, 75, 100 and 125 at x = 30, 40, 50, 60 and
 70 ahead and at x = 10, 0, 170, 160 and 150 behind (read off the run's ledger; a board reading, no claim of physics).
-The strengths are chosen by the act, as the click world's are, so that the world stays inside the room, hold
+The strengths were picked, as the click world's were, and stand OPEN (above): so that the world stays inside the room, hold
 |x_tied|^2 below Gamma div 4 = 2500, for its whole run, and so that the tied hand moves at all: the edge moves a count
 only where a momentum reaches half a count a round, and at mesh 200000 and at 240000 the tied hand never moves in the
 125 rounds, while at 350000 it moves at 128 Node-clocks inside the room (at most 900; `lay.txt`, the window about the
