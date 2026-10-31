@@ -24,7 +24,7 @@ WRITTEN = [
 def ran(written, rounds, change, tmp_path):
     """The world's own files at the rounds, its first gear's count moved by the change: its departures, the end line, its click
     lines' count and digest (SHA-256, a line feed between two), the reader's cause; each line schema.Click's fields but the 1.3 tooth,
-    its q its sides' sum (writer C's pin), each side (t, u) beside (u, t) at its place, q negated, each tooth key - 1 less the other."""
+    its q its sides' sum (writer C's pin), each side (t, u) beside (u, t) at its place, q negated, each tooth dial - 1 less the other."""
     *paths, setting = [ROOT / "examples" / written["world"] / f"{name}.json" for name in NAMES]
     held, record = json.loads(setting.read_text(encoding="utf-8")), tmp_path / f"{rounds}.{change}.jsonl"
     held["ticks"], held["gears"][0][3] = rounds, held["gears"][0][3] + change
@@ -38,14 +38,17 @@ def ran(written, rounds, change, tmp_path):
         list(line) == fields and line["q"] == sum(side[1] for side in line["sides"])
         for line in map(json.loads, clicks)
     )
-    lined, (card, *_) = [json.loads(x) for x in clicks], json.loads(text[0])["trains"]
+    lined, head = [json.loads(x) for x in clicks], json.loads(text[0])
     sides = {
         (x["round"], x["site"], x["train"], u): (q, b, a) for x in lined for u, q, b, a in x["sides"]
     }
-    k = card["key"] - 1  # every side's key, the edge key, less 1
+    k = head["dial"] - 1  # the edge dial, every card's key, less 1: two teeth born at its half
+    assert {t["key"] for t in head["trains"]} == {k + 1} and head["birth"] + head["birth"] == k
     assert all(
         sides.get((r, x, u, t)) == (-q, k - b, k - a) for (r, x, t, u), (q, b, a) in sides.items()
     )
+    ends = {(t, u): ns for t, u, ns in json.loads(text[-1])["teeth"]}  # the end's teeth, complementary
+    assert all(n + m == k for (t, u), ns in ends.items() for n, m in zip(ns, ends[u, t], strict=True))
     return found, json.loads(text[-1]), len(clicks), lines, records.read(str(record))[1]
 
 

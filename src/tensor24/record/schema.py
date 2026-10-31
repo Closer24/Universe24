@@ -21,9 +21,11 @@ ADDED = (
     " (a give below 0, a take above it) and its tooth before and after; the train card's key and square flag and the"
     " kind card's characters, its trace on each of the 24 turns; the couplings, the classes, the draw and the kind"
     " card's T T retired, no run writing them",
-    "the click line's sides, one per edge side of its train that carried at the round and Node-clock, in the other train's"
-    " order: that train u, the side's q and its tooth before and after, the line's q the sum of its sides'; the train"
-    " card's key the edge key, every side's; the line's tooth retired, read on 1.3 records alone",
+    "the click line's sides: wherever an edge side carried at a round and Node-clock, every clock joined to it writes its"
+    " line with every edge side of its clock in the other train's order, q 0 included: that train u, the side's q, its"
+    " tooth as the round's carry reads it and after, the line's q the sum of its sides'; the train card's key the edge"
+    " key, every side's; the header's dial, that key, and birth, every side's tooth at its birth; the end's teeth, every"
+    " edge side's at the run's end; the line's tooth retired, read on 1.3 records alone (DECODE3, writer C's yes)",
 )
 MINOR = len(ADDED)
 
@@ -76,11 +78,13 @@ class Header:
     trains: tuple[Train, ...]
     operands: tuple[str, ...]  # the readings, in order, as the loader names them
     width: int
+    dial: int  # 1.4: the edge dial D, every edge side's key, read from the layout
+    birth: int  # 1.4: every edge side's tooth at its birth, (D - 1) div senses, as the load lays it
 
 
 @dataclass(frozen=True)
 class Click:
-    """A click line: at a round and a Node-clock, a train's click carried q whole keys, a give below 0 and a take above it; a 1.4 line holds sides and no tooth: each edge side that carried, [u, q_tu, k_before, k_after] in u's order, q the sum of their q, k the train's own tooth on the edge with train u, within [0, K) at the card's edge key K; a 1.3 line holds tooth and no sides, its one tooth before and after."""
+    """A click line: at a round and a Node-clock, a train's click carried q whole keys, a give below 0 and a take above it; a 1.4 line holds sides and no tooth: every edge side of its clock, [u, q_tu, k_before, k_after] in u's order, q_tu 0 included, q the sum of their q, k the train's own tooth on the edge with train u, within [0, K) at the card's edge key K, k_before as the round's carry reads it (the round's start on term 11's edges; after the round's turn where one comes), so x = K q_tu + k_after - k_before is the side's passing; a 1.3 line holds tooth and no sides, its one tooth before and after."""
 
     round: int
     site: int
@@ -206,6 +210,9 @@ class End:
     digest: str
     undone: int
     exact: int
+    teeth: tuple[
+        tuple[int, int, tuple[int, ...]], ...
+    ]  # 1.4: per edge side (t, u), its tooth at every Node-clock at the end
 
 
 @dataclass(frozen=True)

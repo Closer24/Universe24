@@ -204,7 +204,7 @@ def test_our_bang_is_laid_by_one_formula_steps_alike_in_every_order_and_turn_and
     ]
     assert got.header["sides"] == piece["shape"] and got.header["runner"] == "synchronous"
     ticks = setting["ticks"]
-    end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1)
+    end = dict(kind="end", rounds=ticks, digest=got.end["digest"], undone=ticks, exact=1, teeth=[])
     assert got.end == end and got.events == []  # no rate line, and the wave alone never clicks
     card = {k: [t[k] for t in got.header["trains"]] for k in ("label", "winding", "key", "square")}
     assert card["label"] == [t["name"] for t in universe["trains"]] and card["square"] == [0, 1]
