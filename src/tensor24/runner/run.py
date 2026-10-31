@@ -1,7 +1,7 @@
 """Clock: the run from the three files to the record: every Node-clock steps every round, then all the rounds run back.
 Algebra: the act iterated; before each round the promise, every tooth within its edge's dial of both slots' teeth, the wave's window, the Spokes' grips within the teeth per sense, and the width, every count of both slots within the universe's width, are read; the start returns bit for bit.
 Board: the files checked and loaded, the rounds run, the rewind checked, the record and its ledger written.
-Clicks: it writes what the act gives: the record's header (schema 3.0: each kind's characters on the 24, each train's key, the edge key, and its square flag, and the edge dial), its click lines and its end, and the ledger beside them; wherever an edge side carried in a round, a click line for every train joined to it at that Node-clock, q the sum of its sides' quotients signed (a give below 0, a take above it), and every edge side of its train, the other train and the side's q, 0 included (DECODE3), and in across each Mesh side that carried, the other train, the partner's place and the side's q; the end's across, every Mesh edge side's partner place; no tooth, no birth and no end tooth (the owner's word on Q11, "out entirely"): the teeth are the board's; the forward run's lines alone (the run back negates the quotients and writes none).
+Clicks: it writes what the act gives: the record's header (schema 3.0: each kind's characters on the 24, each train's key, the edge key, and its square flag, and the edge dial), its click lines and its end, and the ledger beside them; wherever an edge side carried in a round, a click line for every train joined to it at that Node-clock, q the sum of its sides' quotients signed (a give below 0, a take above it), and every edge side of its train, the other train and the side's q, 0 included (DECODE3), and in across each Mesh side that carried, the other train, the partner's place and the side's q; the end's edges, every own edge side's two trains, and its across, every Mesh edge side's partner place; no tooth, no birth and no end tooth (the owner's word on Q11, "out entirely"): the teeth are the board's; the forward run's lines alone (the run back negates the quotients and writes none).
 """
 
 import dataclasses
@@ -270,7 +270,9 @@ def run(engine: Engine, paths: list[Path], record: Path) -> list[str]:
             "digest": digest(stated(end)),
             "undone": ticks,
             "exact": exact,
-            # each Mesh edge side (Spoke, t, u), its partner's place across the Spoke at every Node-clock
+            # each edge side (t, u) at its own Node-clock; each Mesh edge side (Spoke, t, u), its partner's place
+            # across the Spoke at every Node-clock: the structure's edges, no tooth
+            "edges": [[t, u] for t, us in enumerate(partners) for u in us],
             "across": [[t, u, layout.nb[x].tolist()] for x, t, u in edges],
         },
     ]

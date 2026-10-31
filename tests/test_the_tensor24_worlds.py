@@ -39,7 +39,7 @@ def ran(written, rounds, change, tmp_path):
     clicks = [x for x in text if json.loads(x)["kind"] == "click"]
     lines = hashlib.sha256("\n".join(clicks).encode("utf-8")).hexdigest()
     fields = ["kind", *(f.name for f in dataclasses.fields(schema.Click))]
-    lined, head = [json.loads(x) for x in clicks], json.loads(text[0])
+    lined, head, end = [json.loads(x) for x in clicks], json.loads(text[0]), json.loads(text[-1])
     key, trains = head["dial"], len(head["trains"])  # the edge dial, every card's key
     assert {t["key"] for t in head["trains"]} == {key}
     # q the sum over a line's own Node-clock's sides and its Mesh sides; each side beside its mirror at the partner's place
@@ -50,9 +50,11 @@ def ran(written, rounds, change, tmp_path):
         for s in x["sides"] + x["across"]
     }
     assert all(met.get((r, p, u, t, x)) == -q for (r, x, t, u, p), q in met.items())
-    # every own side's tooth and its mirror's summing to key - 1 at the run's end, read on the board's own end state
+    # each own side a line names on an edge the end lists; each own tooth and its mirror's summing to key - 1 at the end,
+    # on the board's own end state (its Mesh half held by the edges test's closed(), and after node-min's D1 by construction)
+    assert {(x["train"], s[0]) for x in lined for s in x["sides"]} <= {(t, u) for t, u in end["edges"]}
     assert frame.opposed(0 * read[0].k, read[0].k, key, trains)
-    return found, json.loads(text[-1]), len(clicks), lines, records.read(str(record))[1]
+    return found, end, len(clicks), lines, records.read(str(record))[1]
 
 
 @pytest.mark.parametrize("written", WRITTEN, ids=[x["world"] for x in WRITTEN])
