@@ -1,0 +1,12 @@
+grain: Gamma 10000, den 1; grip 100000000, W 600000000, f = W div Gamma = 60000, S = the grip 100000000
+click world: f (h (g + u))^2 minus the two laid ties = {(2, 1, 1): 120000}  (the band on h^2 g u: 2 f = 120000)
+  the square equals the ties plus 2 f h^2 g u exactly: True
+  the square on the opposite swing u = -g: 0 (the cell holds g + u alone)
+  its value with every dial at 0: 0
+mesh world: f (h (M + D L))^2 = the tie + the vertex 2 f h^2 M D L + the medium f h^2 (D L)^2 exactly: True (the vertex at h^2 = 1: 120000)
+  its value with every dial at 0: 0
+the held spring S |k|^2: its value with every dial at 0: 0
+the hat's cell |k|^2 - n squared: its value with every dial at 0: 1 = n^2
+G3's window at its top: hat n = W div 20 = 30000000, hat = 30000000; 2 hat n = 60000000 against S = 100000000: S is at least 2 hat n, so the least of S x + hat (x - n)^2 over x = |k|^2 is at x = 0
+  the vacuum's least per Node-clock beside S: hat n^2 = 30000000 (W div 20 times n: 30000000)
+  in place of S, the hat at the unit k = (1, 0, 0, 0): hat (|k|^2 - n)^2 = 0 (0 exactly where n is 1, the norm of the 24's units: the least 0 on the rest |k|^2 = n)
