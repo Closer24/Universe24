@@ -371,3 +371,47 @@ Usage: python3 -I cone.py <node-all src> <the click world's universe.json> [roun
   - any physics.
 
 Usage: python3 -I write.py <node-all src> <the click world's universe.json> [rounds] [grid] [grid rounds]
+
+## The write inside the round, a first stand-alone model (twist.py, twist_3000.txt)
+
+- **The ask** (the Boss's 6544072212 item 4 and 6544481574 item 3): a write the rest read, with its own inverse in the
+  round's mirrored order. This is the way write.py's condition leaves open.
+- **The model** (a test's lay in a stand-alone model, not the engine's board):
+  - the click world's triangle: the giver, the taker and the held hand, each a clock of three axes (the star's i, j
+    and k), each axis on the gear form with its own tooth and the click world's own spring;
+  - the held hand tied to the giver and to the taker, and the band between the giver and the taker, every edge a
+    two-leg coupling at the hands' tie;
+  - all three laid along i, the taker and the held hand where the giver's own free swing stands 3 and 6 rounds on.
+- **The write:** the band couples the giver's axes to the taker's axes turned by P^N, with P the turn of the three
+  axes (i to j to k, the order-3 unit's conjugation) and N the triangle's landed count.
+  - tau carries the circulation of the untwisted passings, split into its two half-windows: (b, a) before the round
+    and (a, a+) after it.
+  - The round reads N after the first half, at its own centre. The run back, the same round from the mirror, reads the
+    same N at the same centre, so the run back is exact by construction.
+  - Within a round the band is a whole bilinear coupling, so each clock's books keep the board's own identity.
+- **MEASURED, 3,000 rounds, tau born at two places:**
+  - the run back by the same act is exact, with the write and without it;
+  - each clock's books within the round hold in 9,000 of 9,000, with the write and without it;
+  - the landings number 12,333 to 12,363, and N ends at -8,111 or -8,121 by birth;
+  - **the rest read it:** the band's first clicks are apart from the unwritten path's in 2,459 to 2,461 rounds, and
+    the band lands -3,428 or -3,437 net, against -10,283 unwritten. At one birth the giver's counts are apart in 322
+    rounds and the giver's tie's first clicks in 212. The held hand's counts and the taker's tie's clicks are not
+    reached in the window;
+  - **its cost:** E32 moves between rounds at 1,995 and 2,006 of 3,000, where N moves and the band's cross term
+    turns at fixed counts. E32's narrowest is 904 per mille of its widest, with the write and without it.
+- **So, as a reading (CANDIDATE):**
+  - the write inside the round keeps what a write between rounds cannot (write.py's condition): the same act's run
+    back, each clock's books within the round, and the rest reading it in the other clicks' records;
+  - its energy, moved when N moves, is not booked by a passing here. It is the write's cost, named, and the open item;
+  - the births choose the path: the two births land different counts, and the paths part.
+- **The exact clock is rigid** (DERIVED by hand on the polynomial, not run): turning giant.py's band by the order-3
+  unit moves the loop's flux, and the determinant of K becomes 2 cos(flux) - 1 for its solution. At a third of a turn
+  that is -2, so K has a negative eigenvalue and the step grows. The one solution carries no such write.
+- **Not shown:**
+  - the write's energy booked by a passing;
+  - the held hand reached, since the ties are weak and it sits near the dead zone;
+  - the sum over triangles meeting a fixed end;
+  - the split click;
+  - any physics.
+
+Usage: python3 -I twist.py <node-all src> <the click world's universe.json> [rounds]
