@@ -74,3 +74,9 @@ python -m universe24 --resume final.json --steps 10 --audit
 מוסיפים קובץ JSON חדש לתיקיית `examples/`, משנים רק את הזרע, צלע הקובייה, הסימנים הקבועים ומספר הצעדים. **לא מוסיפים קוד שמחליף את Rule3**. מצבי הכנה מיוחדים של גלאים ושעונים נחשבים חלק מהזרע בלבד.
 
 לפני שינויים במנוע יש לקרוא את [AGENTS.md](../AGENTS.md) ואת [CONTRIBUTING.md](../CONTRIBUTING.md).
+
+## מחבר וציטוט
+
+**Alon Gonen** מצוין כיוזם פרויקט המחקר Universe24. תרומות של מפתחים וחוקרים אחרים לקוד או לתוצאות מסוימות יצוינו בנפרד.
+
+ציטוט מוצע: **Alon Gonen, *Universe24* (software), GitHub: https://github.com/Closer24/Universe24**. הקובץ [CITATION.cff](../CITATION.cff) מגדיר את הציטוט בפורמט הנתמך על ידי GitHub. למחקר שנדרש לשחזור, יש לכלול גם את מזהה ה־commit המדויק. הציטוט אינו מעיד שהמודל אומת כתאוריה פיזיקלית.

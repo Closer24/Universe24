@@ -100,3 +100,9 @@ See [Research status and acceptance criteria](docs/RESEARCH_STATUS.md) before in
 Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md) before changing any code. Proposals that alter the mathematical primitive or topology must be identified as **separate model variants**, not silently merged into Rule3.
 
 Licensed under the repository's [MIT License](LICENSE).
+
+## Author and citation
+
+**Alon Gonen** is credited as the originator of the Universe24 research project. This repository records the current computational implementation; contributions to particular files or later research should be credited separately.
+
+If you use or discuss the Universe24 code, cite **Alon Gonen, *Universe24* (software), GitHub: https://github.com/Closer24/Universe24**. See [CITATION.cff](CITATION.cff) for the machine-readable citation. Cite a specific commit SHA when reproducibility matters. This citation does not imply that the proposed physical interpretation has been established.
