@@ -1,10 +1,28 @@
 # Universe24
 
-**Universe24** is an open-source reference implementation for investigating a reversible, integer-valued cellular automaton built from one local update law, **Rule3**, and a fixed signed coupling derived from the binary octahedral group (`2O`).
+**Could reality be built from integers?** Universe24 is a research project initiated by **Alon Gonen** to investigate whether one simple, local, reversible rule could underlie the complexity of physical reality.
+
+This repository provides the **MIT-licensed reference engine for one specific mathematical candidate**: an integer-valued cellular automaton with **Rule3**, 48 group-labelled channels per site and a fixed signed spatial coupling. **The broader scientific proposal and the present code are not the same thing.**
 
 > **Research status:** This repository is a mathematical and computational research prototype, **not a validated physical theory**. No derivation of photons, atoms, quantum measurement, physical energy, angular momentum, gravity, or the Born rule is claimed.
 
-**[מדריך בעברית](docs/README.he.md)** · [Quickstart](docs/QUICKSTART.md) · [Mathematical model](docs/MODEL.md) · [Architecture](docs/ARCHITECTURE.md) · [Experiments](docs/EXPERIMENTS.md) · [Click observations](docs/OBSERVATION.md) · [Research status](docs/RESEARCH_STATUS.md) · [Contributor rules](AGENTS.md)
+**Start here:** [Full research proposal (Google Docs)](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit?usp=drivesdk) · [Research proposal: concise guide](docs/RESEARCH_PROPOSAL.md) · [מדריך בעברית](docs/README.he.md) · [Quickstart](docs/QUICKSTART.md) · [Mathematical model](docs/MODEL.md) · [Architecture](docs/ARCHITECTURE.md) · [Experiments](docs/EXPERIMENTS.md) · [Click observations](docs/OBSERVATION.md) · [Research status](docs/RESEARCH_STATUS.md) · [Contributor rules](AGENTS.md)
+
+## The research question — beyond this code
+
+The premise being tested is that **space, time, waves, matter and observed measurement events might be emergent behaviors of exact integer states**, rather than separately programmed kinds of objects. Each elementary node would obey the **same local law**; different initial patterns and interactions would produce different large-scale phenomena.
+
+The project works in **two directions**: derive requirements from known physics and measured detector events, then build explicit candidate dynamics and compare their predictions with those requirements. A central research question is whether internal recurrent patterns could act as clocks and whether interactions could produce persistent, exclusive detector records — without adding a detector-specific command.
+
+The broader proposal also asks whether coherent interference, entanglement, physical conservation laws, stable matter and spacetime geometry can be recovered. It investigates, but does **not assert**, a possible relationship between realized histories and *structured complexity*. These are **open research goals**, not features already implemented in the engine.
+
+**Three distinctions for new readers:**
+
+1. **Proposal ≠ established physics.** The [living scientific document](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit?usp=drivesdk) describes postulates, competing hypotheses, earlier variants and quantitative targets.
+2. **Mathematical candidate ≠ all proposed mechanisms.** The code implements the single-board, six-spatial-neighbor Rule3 candidate. The historical Clockwork G and alternative H9a are comparisons, not hidden extra stages.
+3. **Arithmetic event ≠ physical detector click.** The three external remainder classes are bookkeeping on completed transitions. The engine has **no built-in history chooser or cancellation gate**.
+
+For the full framing, what is derived and what remains open, read the [concise proposal summary](docs/RESEARCH_PROPOSAL.md) before the technical sections below. The Google Doc may require access permissions from its owner.
 
 ## The entire model in brief
 
@@ -93,7 +111,7 @@ CONTRIBUTING.md       safe modification and review process
 - Mathematical reversibility, finite cube symmetry and balance identities do not establish physical conservation of energy/angular momentum or quantum measurement.
 - Candidate detector selection, autonomous cancellation, robust protected records, physical time and empirical predictions remain open research.
 
-See [Research status and acceptance criteria](docs/RESEARCH_STATUS.md) before interpreting numerical patterns as physics.
+See [Research status and acceptance criteria](docs/RESEARCH_STATUS.md) before interpreting numerical patterns as physics. For the wider scientific agenda, including its ten foundational postulates, experimental benchmarks and the conditional complexity-selection idea, see [the research summary](docs/RESEARCH_PROPOSAL.md) and [the full Google Doc](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit?usp=drivesdk).
 
 ## Collaboration and license
 
