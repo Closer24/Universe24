@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "universe24"
+version = "0.1.0"
+description = "Exact single-board Rule3 automaton on a periodic cube with 2O coupling"
+requires-python = ">=3.11"
+dependencies = []
+readme = "README.md"
+
+[project.scripts]
+universe24 = "universe24.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["universe24*"]
