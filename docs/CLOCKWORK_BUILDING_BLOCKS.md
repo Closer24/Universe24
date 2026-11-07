@@ -21,6 +21,13 @@ integer update. Select any guide site to see both channel triples and the exact
 identity `2u+r = 6ell+r_next`. The memory timelines include record reset and
 later clicks. The file works offline and has no external resources.
 
+[Open the replay file](../research/building_blocks/evidence/clockwork.html) ·
+[View the animation](../research/building_blocks/evidence/animation/clockwork-animation.gif) ·
+[Publication summary](../research/building_blocks/evidence/publication_summary.json) ·
+[Browser validation](../research/building_blocks/evidence/browser/report.json).
+
+![Exact counter and remainder replay](../research/building_blocks/evidence/animation/clockwork-poster.png)
+
 From the repository root:
 
 ```bash

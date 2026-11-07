@@ -1,0 +1,75 @@
+{
+  "schema_version": "u24-clockwork-browser-check-v1",
+  "input_sha256": "6e32a49cc5fd7ba801c326ccc2bc7b13c4ad518426c1354679a6f78f2cd191c8",
+  "playwright_version": "1.56.1",
+  "scope": "Rendering and replay controls; no new dynamics or physical validation",
+  "passed": true,
+  "checks": [
+    {
+      "name": "All seven scenarios load, scrub and reset",
+      "passed": true,
+      "scenario_titles": [
+        "One signal starts two clock-records",
+        "Larger cube, same preparation",
+        "New guide length: two receivers",
+        "No source: every device stays still",
+        "Source without a prepared guide",
+        "Unarmed site: delayed activation",
+        "Clock starts, fixed memory readout fails"
+      ]
+    },
+    {
+      "name": "Receiver 6 at t=6 displays the exact counters, gears and Rule3 identity",
+      "passed": true
+    },
+    {
+      "name": "Forward, backward, playback speed, play and pause operate on recorded frames",
+      "passed": true
+    },
+    {
+      "name": "Failed gap-control criterion stays visible when delayed activation reaches receiver 12 at t=32",
+      "passed": true
+    },
+    {
+      "name": "Odd-remainder control shows an active counter clock with the fixed memory bit still zero",
+      "passed": true
+    },
+    {
+      "name": "No-source preparation remains at rest at t=20 while remainder gears remain visible",
+      "passed": true
+    },
+    {
+      "name": "Desktop 1440px has no body overflow",
+      "passed": true,
+      "body": 1440,
+      "document": 1440,
+      "viewport": 1440
+    },
+    {
+      "name": "Mobile 390px has no body overflow",
+      "passed": true,
+      "body": 390,
+      "document": 390,
+      "viewport": 390
+    },
+    {
+      "name": "Narrow mobile 360px has no body overflow",
+      "passed": true,
+      "body": 360,
+      "document": 360,
+      "viewport": 360
+    },
+    {
+      "name": "No JavaScript errors, console errors or external resource requests",
+      "passed": true
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [],
+  "external_requests": [],
+  "screenshots": [
+    "desktop.png",
+    "mobile.png"
+  ],
+  "browser_version": "141.0.7390.37"
+}
