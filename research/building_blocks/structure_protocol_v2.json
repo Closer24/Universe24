@@ -1,0 +1,30 @@
+{
+  "protocol_id": "U24-STRUCTURES-v2-HALO",
+  "question": "Do isolated and adjacent prepared clock motifs retain their complete recurrent state in a fixed radius-one halo on fresh cube sizes and counter phases?",
+  "registration": "Written after v1 exposed retained-state halos and before v2 cases were computed; no v1 result is revised.",
+  "engine_baseline": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "sides": [31, 37],
+  "steps": 42,
+  "first_return_search": 14,
+  "fixed_signs": "All eight triples in {-1,+1}^3, chosen once before each trajectory.",
+  "initial_preparation": {
+    "positions": "One site at (L//2,L//2,L//2), or that site and its +x neighbor.",
+    "background": [0, 0, 2],
+    "channel0_counter_phases": [[-1, -1], [-1, 1], [1, 1], [1, -1]],
+    "channel0_remainder": 0,
+    "channel14": "Negate channel0 a,b and use remainder4.",
+    "halo": "Starts at background; is never injected or corrected during evolution.",
+    "rng": null
+  },
+  "observations": {
+    "halo": "Every nonbackground address lies within toroidal Manhattan distance <=1 of an initially prepared motif site, including every retained remainder.",
+    "recurrence": "First full-state equality to initial state at t=1,...,14, then repeated equality S(t)=S(t+p) for every sampled pair through t42.",
+    "interaction": "For each adjacent motif, first target-triple difference from the matching separately evolved isolated motif; no independent factorization is inferred from a single equality.",
+    "boundary": "Minimum distance of any active spatial coordinate to a cube face over all sampled states. A positive distance excludes use of a wrapped port by active values in the sampled transitions.",
+    "inverse": "All one-step inverses and full final-to-initial rewind must be exact."
+  },
+  "acceptance": "A finite recurrent oscillator cluster passes if full recurrence <=14 and the predeclared complete-state halo bound hold through42. This does not certify physical binding, motion, source-created attachment or spontaneous emergence.",
+  "failure": "A finite counterexample rejects the stated motif/phase/tensor halo or recurrence criterion. Budget exhaustion is inconclusive.",
+  "budget": {"cpu_seconds": 120, "max_sparse_channels": 20000},
+  "next_decisive_test": "Prospectively test a signal-created cluster with inert source-absent control and a full-state postarrival interface that includes the source/guide wake."
+}

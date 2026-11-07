@@ -1,0 +1,1 @@
+{"completed_steps":56,"coupling_fingerprint":"44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77","experiment":{"background":[0,0,2],"coupling_signs":[1,1,1],"seed_changes":[{"channel":0,"position":[63,75,75],"state":[0,1,2]},{"channel":14,"position":[63,75,75],"state":[0,-1,2]}],"side":151,"steps":0},"format":"universe24-checkpoint-v1"}
