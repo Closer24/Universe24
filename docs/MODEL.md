@@ -40,3 +40,9 @@ For a completed transition define `ell=b'+a`; an illustrative arithmetic event i
 ## Scientific status
 
 Mathematical inversion and discrete symmetry are established by the construction. The existing signed account `Q=sum(6(b-a)+r-background.r)` is generally not conserved by frustrated signed connections; local residual identities remain valid. This is not physical energy. Nor are physical clicks, electromagnetism, angular momentum, the Born rule, exclusivity, autonomous time, or gravity derived.
+
+## Combined spatial reflections
+
+The same fixed coupling also admits all 24 orientation-reversing cubic maps when accompanied by a signed permutation of the 48 channels and the exact remainder map `J(a,b,r)=(-a,-b,4-r+2*(r mod 2))`. With directional matrices `P[d]` and signed channel matrix `F_M`, the condition is `P[M*d] F_M = F_M P[d]`; it implies `W T_M = T_M W` for the complete state.
+
+For the selected x-plane lift and signs `(1,-1,1)`, `T_M^2=J_all Z` and `T_M^4=I`, where `Z` permutes channels by the central element of `2O`. This is not an order-two full-state mirror or an established physical parity representation. The 48 labels still cover 24 proper rotations, not 24 rotations plus 24 mirrors. See [the exact proof, scope and reproduction commands](REFLECTION_AUDIT.md). The transformation compares preparations; it adds no evolution step.
