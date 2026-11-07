@@ -208,6 +208,8 @@ For a complete command reference and a minimal seed example, see [Quickstart](do
 
 **Before the run:** the single cube side `L`; one of eight fixed body-axis sign combinations (`[+1,+1,+1]` reproduces the positive reference coupling); the initial values of the channels; and the number of reference steps.
 
+The implemented body actions remain fixed at `(0,1,3)`. [Algebraic degrees of freedom and coupling families](docs/COUPLING_FAMILIES.md) separates the state and preparation choices from a broader axial-action candidate: 512 labeled port tensors, or 4096 labeled signed tensors before equivalence classification. That broader family is documented mathematically; it is not available in the current engine or configuration.
+
 **During the run:** no experiment code may change Rule3, coupling signs, graph topology, node state, or scheduling semantics. Every evolution step is computed only by the generic engine.
 
 **Outside the run:** observers may count and classify arithmetic transitions, inspect states, export event logs, and check the mathematical inverse and balance identities. Observations do not feed back into the state.

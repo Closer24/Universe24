@@ -49,6 +49,8 @@ All channels read one old snapshot. The retained remainder permits exact full-st
 
 For exact tensor definitions and mathematical qualifications, see [MODEL.md](MODEL.md). For immutable execution and read-only observation, see [ARCHITECTURE.md](ARCHITECTURE.md).
 
+The current engine fixes the body-action exponents at `(0,1,3)` and permits eight sign triples. [Algebraic degrees of freedom and coupling families](COUPLING_FAMILIES.md), corresponding to Appendix A6b of the living proposal, distinguishes initial-state coordinates and one fixed global tensor from a broader axial-action candidate. Its 512 port tensors and 4096 signed tensors are labeled counts before equivalence classification, not implemented alternatives or physically validated models. The current candidate and its evidence retain their existing scope.
+
 ## 4. The merged ideas
 
 The present proposal makes three structural unifications:
