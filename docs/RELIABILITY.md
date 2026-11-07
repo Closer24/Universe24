@@ -1,6 +1,6 @@
 # Reliability and reproducibility — protocol U24-RELIABILITY-v1
 
-[עברית](RELIABILITY.he.md). This work implements the approved reliability plan.
+This work implements the approved reliability plan.
 It is based directly on `ed1556e202eb0f3cc60342c75d44012c2eeb71c3`, independently
 of draft PR #1. It changes no file under `universe24/`, no coupling, no click
 semantics, and no fundamental law. Tests and research oracles are not additional

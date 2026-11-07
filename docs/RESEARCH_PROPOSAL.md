@@ -88,7 +88,7 @@ To reproduce a run, record the **Git commit SHA, side `L`, fixed signs, complete
 
 ## 8. How to read and contribute
 
-1. Start with the [main README](../README.md) for the model and commands; the [Hebrew guide](README.he.md) is also available.
+1. Start with the [main README](../README.md) for the model and commands.
 2. Read the [full scientific proposal](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit?usp=drivesdk) for detailed postulates P1–P10, hypotheses H1–H17, objectives, mathematical appendix and sources.
 3. Check [MODEL.md](MODEL.md), [OBSERVATION.md](OBSERVATION.md) and [RESEARCH_STATUS.md](RESEARCH_STATUS.md) before drawing scientific conclusions.
 4. Run the [Quickstart](QUICKSTART.md), then read [AGENTS.md](../AGENTS.md) before editing any implementation.

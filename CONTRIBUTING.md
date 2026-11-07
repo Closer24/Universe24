@@ -25,7 +25,7 @@ A scientifically interesting but incompatible rule is welcome only as an **expli
 3. Run `python -m unittest discover -s tests -v`.
 4. Test exact one-step and multi-step inverse, all six spatial ports, signed coupling reciprocity, arithmetic with negative/large integers, and observer independence where applicable.
 5. Explain whether a change affects the **law**, **static coupling**, **seed**, **external observation**, or **only documentation**.
-6. Update the appropriate docs and report known scientific limitations.
+6. Update the appropriate docs and report known scientific limitations. All project documentation must be written in English.
 
 ## What belongs where?
 
@@ -45,8 +45,7 @@ Document numerical seed, `L`, signs, steps, code version and a full-state checkp
 Run the clean-source [reliability bundle](docs/RELIABILITY.md) before proposing
 changes. It includes all unittest regressions and independently reconstructed
 algebra/routing/evolution. Preserve protocol and source identities, explicit
-negative outcomes, and first-difference artifacts. See the
-[Hebrew instructions](docs/RELIABILITY.he.md) for the same acceptance contract.
+negative outcomes, and first-difference artifacts.
 Research reference code must not import production algebra or coupling tables.
 Do not update expected output to hide a failed comparison. Any necessary change
 to the core or click semantics requires a separate explicit review. All code
