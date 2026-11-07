@@ -1,0 +1,766 @@
+{
+  "format": "universe24-message-presenter-smoke-v1",
+  "passed": true,
+  "scope": "Unchanged application JavaScript and native Canvas2D with explicit geometry. DOM options and synthetic event handlers tested. No actual browser CSS, native pointer hit testing, Safari, iPad or attachment preview execution claim.",
+  "source_sha256": "83bbfe22eb0351049406c1f37109dd078284928b22d3dbae46a80120c89080b9",
+  "dependencies": {
+    "node": "v24.22.1",
+    "jsdom": "26.1.0",
+    "canvas": "0.1.80"
+  },
+  "bundles": [
+    {
+      "input": "research/message_mechanism/evidence/baseline_v1/The_Presenter.html",
+      "input_sha256": "94924e38fe523851d835e4b253051e0821977fda97b0e55b4787a667d094ce9b",
+      "selector_entries": [
+        {
+          "id": "packet-r04-on",
+          "title": "Compact packet / receiver: packet-r04-on",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "packet-r42-on",
+          "title": "Compact packet / receiver: packet-r42-on",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "packet-r22-on",
+          "title": "Compact packet / receiver: packet-r22-on",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "packet-r42-off",
+          "title": "Compact packet / receiver: packet-r42-off",
+          "hidden": false,
+          "disabled": false
+        }
+      ],
+      "checks": [
+        {
+          "experiment": "packet-r04-on",
+          "frames": 25,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "b4b0b1462ccd32aa422209bd185c6809588fcb0722d978cbe371cd3309f6a9b5"
+        },
+        {
+          "experiment": "packet-r42-on",
+          "frames": 25,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "84729d8d80b0a2809993fc5dc4850e330a784b47920d513ef045f5fb609b7041"
+        },
+        {
+          "experiment": "packet-r22-on",
+          "frames": 25,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "8bf8170acebb4efbedbe62e63350365faafc0df5ee7e48f0b520d97f0c049ace"
+        },
+        {
+          "experiment": "packet-r42-off",
+          "frames": 25,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "5bf4c1dea55c5198411ad99ac26f5285766907e44e2ef96f819859be382155eb"
+        }
+      ],
+      "play_and_pause": true,
+      "errors": [],
+      "canvas_image": "bundle-1-whole-cube.png",
+      "canvas_image_sha256": "7c39eaff6e0665c67ad70bdcd0c02eb324c8893a8ec7eadc32aeda47f42a1e07",
+      "canvas_image_scope": "Actual native Canvas2D composited over its declared CSS navy; no browser layout screenshot"
+    },
+    {
+      "input": "research/message_mechanism/evidence/discovery_v1/The_Presenter.html",
+      "input_sha256": "65a6df74bebf9a2512ca1d3a3fb2b4f4c4a903ad24309ab97fb90e7e08bb82d1",
+      "selector_entries": [
+        {
+          "id": "row3-054-on",
+          "title": "Passive converter discovery: row3-054-on",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "row3-054-off",
+          "title": "Passive converter discovery: row3-054-off",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "side47-018-on",
+          "title": "Passive converter discovery: side47-018-on",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "side47-018-off",
+          "title": "Passive converter discovery: side47-018-off",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "side46-018-on",
+          "title": "Passive converter discovery: side46-018-on",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "side46-018-off",
+          "title": "Passive converter discovery: side46-018-off",
+          "hidden": false,
+          "disabled": false
+        }
+      ],
+      "checks": [
+        {
+          "experiment": "row3-054-on",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "4290f019d8d7ffc5e420411b0fbde3b9f0ccf4583b97a8ebba4aded3bf2ff20d"
+        },
+        {
+          "experiment": "row3-054-off",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "777b74b8c44c9a97e3968bb15acbc1828154951432bb9e6b4d7420b2ce3f28a2"
+        },
+        {
+          "experiment": "side47-018-on",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "08b2b47a3ec946f94e4a0c72c956219b492665a58bba42340221c268c2a9992f"
+        },
+        {
+          "experiment": "side47-018-off",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "9d760bcb6c402cdd9fecd8c7d6f17dad270eeeef7c9120aaa7245f00346a6da9"
+        },
+        {
+          "experiment": "side46-018-on",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "0a3516ae2200b71aafef846c693aafd0bdb406de6a06a47af8668f95c829052d"
+        },
+        {
+          "experiment": "side46-018-off",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "beacaf8df98a9c825214169347149ce30f7bada9f5635bdc8a7f52acef661fab"
+        }
+      ],
+      "play_and_pause": true,
+      "errors": [],
+      "canvas_image": "bundle-2-whole-cube.png",
+      "canvas_image_sha256": "9ba8d8fd9cd5a0c5c52deb9186b4fa57e0c7eee81bd0a08d5ac4b2adf5d79140",
+      "canvas_image_scope": "Actual native Canvas2D composited over its declared CSS navy; no browser layout screenshot"
+    },
+    {
+      "input": "research/message_mechanism/interaction_evidence/interaction_presenter.html",
+      "input_sha256": "089face22b5dfffe3921454be989e518a7d37b879dd4a72c6c0a716afd6c8929",
+      "selector_entries": [
+        {
+          "id": "seam-0-4-delay-0-00",
+          "title": "Opposing packets 00: seam (0,4), simultaneous arrival",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "seam-0-4-delay-0-10",
+          "title": "Opposing packets 10: seam (0,4), simultaneous arrival",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "seam-0-4-delay-0-01",
+          "title": "Opposing packets 01: seam (0,4), simultaneous arrival",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "seam-0-4-delay-0-11",
+          "title": "Opposing packets 11: seam (0,4), simultaneous arrival",
+          "hidden": false,
+          "disabled": false
+        }
+      ],
+      "checks": [
+        {
+          "experiment": "seam-0-4-delay-0-00",
+          "frames": 33,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "468e811869488c58e2080ba432917f8db3c80cc169f65bad3ee04d6cc64fc998"
+        },
+        {
+          "experiment": "seam-0-4-delay-0-10",
+          "frames": 33,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "2b0c2bcd1fcab68dd2323d213a3fc8cb122cf51592da87ba133dfa6974db1385"
+        },
+        {
+          "experiment": "seam-0-4-delay-0-01",
+          "frames": 33,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "1b11608d4f616cd67a0980ac8d3c19268b10eed3b9cbcffcaa307a2f13b4b3f4"
+        },
+        {
+          "experiment": "seam-0-4-delay-0-11",
+          "frames": 33,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "b58537acf11eee27abee5d6a9c669df02add0099ab6a1206bf077dcf3d3b503b"
+        }
+      ],
+      "play_and_pause": true,
+      "errors": [],
+      "canvas_image": "bundle-3-whole-cube.png",
+      "canvas_image_sha256": "8c9f76f23f64461b94b2854cca7745768be9d8b1991664169eb8da0464f24c63",
+      "canvas_image_scope": "Actual native Canvas2D composited over its declared CSS navy; no browser layout screenshot"
+    }
+  ]
+}

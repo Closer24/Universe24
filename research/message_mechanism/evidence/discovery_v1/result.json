@@ -1,0 +1,1463 @@
+{
+  "all_screened_step_inverses_equal": true,
+  "best_per_family": {
+    "row3": {
+      "all_step_inverses_equal": true,
+      "assessment": {
+        "accepted": false,
+        "accepted_write_state": null,
+        "all48_C": [
+          {
+            "channel": 0,
+            "ell": 1,
+            "step": 19
+          },
+          {
+            "channel": 14,
+            "ell": -1,
+            "step": 19
+          },
+          {
+            "channel": 0,
+            "ell": -1,
+            "step": 21
+          },
+          {
+            "channel": 14,
+            "ell": 1,
+            "step": 21
+          },
+          {
+            "channel": 14,
+            "ell": 1,
+            "step": 23
+          },
+          {
+            "channel": 0,
+            "ell": 1,
+            "step": 25
+          },
+          {
+            "channel": 14,
+            "ell": -2,
+            "step": 25
+          },
+          {
+            "channel": 0,
+            "ell": -1,
+            "step": 27
+          },
+          {
+            "channel": 14,
+            "ell": 2,
+            "step": 27
+          },
+          {
+            "channel": 14,
+            "ell": 1,
+            "step": 29
+          },
+          {
+            "channel": 14,
+            "ell": -4,
+            "step": 31
+          },
+          {
+            "channel": 14,
+            "ell": 2,
+            "step": 33
+          },
+          {
+            "channel": 14,
+            "ell": 1,
+            "step": 35
+          },
+          {
+            "channel": 14,
+            "ell": -3,
+            "step": 37
+          },
+          {
+            "channel": 14,
+            "ell": 3,
+            "step": 39
+          }
+        ],
+        "best_target_start": 17,
+        "final_input_area": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          4,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_receiver_C": {
+          "channel": 0,
+          "ell": 1,
+          "step": 19
+        },
+        "maximum_quiet_target_states_before_C": 2,
+        "pair_actual_inputs": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            -1,
+            2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            -3
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            -5
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            5
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            -11
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            -9
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            9
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            -3
+          ]
+        ],
+        "remainder_pairs": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ]
+        ]
+      },
+      "case": {
+        "family": "row3",
+        "id": "row3-054",
+        "row_pairs": [
+          [
+            45,
+            [
+              0,
+              0
+            ]
+          ],
+          [
+            46,
+            [
+              4,
+              0
+            ]
+          ],
+          [
+            47,
+            [
+              0,
+              0
+            ]
+          ]
+        ]
+      },
+      "final_state_sha256": "e06433974d72a0821b757716317f53eea0fe094ee21698cd8f752d1ff660178b",
+      "max_stored_channels": 398,
+      "spec_sha256": "1056d69afe8bfe1973c0397e536db0d0c023d76ec40048030fbbc6678a4ef965",
+      "status": "completed"
+    },
+    "side46": {
+      "all_step_inverses_equal": true,
+      "assessment": {
+        "accepted": false,
+        "accepted_write_state": null,
+        "all48_C": [
+          {
+            "channel": 0,
+            "ell": 1,
+            "step": 15
+          },
+          {
+            "channel": 0,
+            "ell": -1,
+            "step": 17
+          },
+          {
+            "channel": 0,
+            "ell": 1,
+            "step": 21
+          },
+          {
+            "channel": 0,
+            "ell": -1,
+            "step": 23
+          }
+        ],
+        "best_target_start": 13,
+        "final_input_area": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_receiver_C": {
+          "channel": 0,
+          "ell": 1,
+          "step": 15
+        },
+        "maximum_quiet_target_states_before_C": 2,
+        "pair_actual_inputs": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            -1,
+            1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "remainder_pairs": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      "case": {
+        "family": "side46",
+        "id": "side46-018",
+        "row_pairs": [
+          [
+            47,
+            [
+              0,
+              4
+            ]
+          ]
+        ],
+        "side_pair": [
+          0,
+          0
+        ],
+        "side_x": 46
+      },
+      "final_state_sha256": "12cb42e274dcf8eaa8444aa93707317fd7e903143942511be10ef74a1eb946f8",
+      "max_stored_channels": 299,
+      "spec_sha256": "84dd89436b0a7d17af1d28d4a419c3fb4ffe5169b848c6a011eeaa286d9dc129",
+      "status": "completed"
+    },
+    "side47": {
+      "all_step_inverses_equal": true,
+      "assessment": {
+        "accepted": false,
+        "accepted_write_state": null,
+        "all48_C": [],
+        "best_target_start": 13,
+        "final_input_area": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "first_receiver_C": null,
+        "maximum_quiet_target_states_before_C": 2,
+        "pair_actual_inputs": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            -1,
+            1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            -2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            -1,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "remainder_pairs": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            4
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      "case": {
+        "family": "side47",
+        "id": "side47-018",
+        "row_pairs": [
+          [
+            47,
+            [
+              0,
+              4
+            ]
+          ]
+        ],
+        "side_pair": [
+          0,
+          0
+        ],
+        "side_x": 47
+      },
+      "final_state_sha256": "d46cb5a4a3b3413167cadabd755a428383643b8651493511ce4ca442ca515313",
+      "max_stored_channels": 299,
+      "spec_sha256": "e1c316c48f962602d1cfc1510f7b413d56a738a6918f22296bfd1545da2a441b",
+      "status": "completed"
+    }
+  },
+  "candidate_count": 891,
+  "cpu_seconds": 82.09751257799999,
+  "discovery_acceptances": [],
+  "format": "universe24-message-discovery-result-v1",
+  "ledger_sha256": "6d71a2c694f42ebbb70eb4671696a31dde0c4e0c58ededb53e7fbf53d60ec554",
+  "physical_light_or_quantum_measurement_established": false,
+  "planned_candidate_count": 891,
+  "protocol_sha256": "53691277c609f7b1edbba3d31e0a24d0dbf65c9804e08661095754fa1ad0caa6",
+  "retained_records": [
+    {
+      "full_rewind_equal": true,
+      "id": "row3-000-on",
+      "record": "records/row3-000-on.json.gz",
+      "record_sha256": "cadba125a66b35d5ff2e2e50e5750b1db0433284d8338fa54d1280ee1f746789",
+      "stationary": false
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "row3-000-off",
+      "record": "records/row3-000-off.json.gz",
+      "record_sha256": "bd3ba3478ebd2aa931ee24c38482b3b14673076184d1905ab418b1bbcf237e84",
+      "stationary": true
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "side47-000-on",
+      "record": "records/side47-000-on.json.gz",
+      "record_sha256": "60621a6a918795d90565055460f82944e8f34678fd6d155bc70eb758f8fb7834",
+      "stationary": false
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "side47-000-off",
+      "record": "records/side47-000-off.json.gz",
+      "record_sha256": "9f9b0c4271efa4ee67e32f4866c45467e42a52d7576fc375737659090bcdaca6",
+      "stationary": true
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "side46-000-on",
+      "record": "records/side46-000-on.json.gz",
+      "record_sha256": "fc21bdd2ec18fa9385d204f98bb59f6a16ed993ba8e38029b417868c39ee92c6",
+      "stationary": false
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "side46-000-off",
+      "record": "records/side46-000-off.json.gz",
+      "record_sha256": "bb11f70cc3f553610b8f8082efe0291c1d67abcd032d86a50c94ff07f970f8d1",
+      "stationary": true
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "row3-054-on",
+      "record": "records/row3-054-on.json.gz",
+      "record_sha256": "3e6e1198ead56a95827e658b7d605fdbc2df225a19be33fb3cfeb91b912696a7",
+      "stationary": false
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "row3-054-off",
+      "record": "records/row3-054-off.json.gz",
+      "record_sha256": "c77de37722dcc91bdaab668f8fac7e2a9d2bd6952b158318060baac460189d21",
+      "stationary": true
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "side47-018-on",
+      "record": "records/side47-018-on.json.gz",
+      "record_sha256": "46f8adb430dd49e8c18feee759a4ae64a6953e52285f8bcbb6d63c5c5b5a7bdb",
+      "stationary": false
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "side47-018-off",
+      "record": "records/side47-018-off.json.gz",
+      "record_sha256": "86748468e69b81fffc3516cddb7f512b919f444727c5962211014c5a511303b2",
+      "stationary": true
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "side46-018-on",
+      "record": "records/side46-018-on.json.gz",
+      "record_sha256": "e39a5c8ab594c802b9672921e6c8364384b8e9f3b157bba045efe8c6cb391fee",
+      "stationary": false
+    },
+    {
+      "full_rewind_equal": true,
+      "id": "side46-018-off",
+      "record": "records/side46-018-off.json.gz",
+      "record_sha256": "9b1b9147a4a5f97dd3ece97f84e36ecd482267c3424cd9a293ab1a822107c42f",
+      "stationary": true
+    }
+  ],
+  "status_counts": {
+    "completed": 891
+  },
+  "validated_new_component": false,
+  "wall_seconds": 82.38609798100515
+}

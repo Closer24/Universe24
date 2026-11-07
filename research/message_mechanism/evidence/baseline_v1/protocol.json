@@ -1,0 +1,16 @@
+{
+  "format": "universe24-message-interface-protocol-v1",
+  "status": "Prospective baseline; frozen before any new trajectory",
+  "question": "Can the existing compact translating packet write a quiet changed remainder record at one receiver defect for at least eight subsequent updates?",
+  "base_commit": "0d4c4805be67b0efc42e084416ff2204529a1e07",
+  "board": {"side": 129, "background": [0, 0, 2], "body_signs": [1, 1, 1]},
+  "steps": 24,
+  "apparatus": {"guide_pair": [0, 4], "source": [32, 64, 64], "receiver": [48, 64, 64], "source_socket_x": [32, 33, 34, 35], "receiver_channel_pair": [0, 14], "receiver_remainders": [0, 2, 4]},
+  "sampling": "Exact enumeration of all nine ordered even receiver remainder pairs crossed with source present and absent; no random seed",
+  "receiver": {"initial_counters": "All 48 channels have a=b=0", "first_arrival_update": 13, "target_pair": "((initial_r0-2) modulo 6, (initial_r14+2) modulo 6)", "other_target_remainders": "Every channel except0 and14 retains its initial remainder2; target is the complete48-channel local state", "pending_states_inclusive": [13, 21], "required_subsequent_quiet_updates": 8},
+  "observers": {"arithmetic_C": "ell=next.b+old.a; C iff ell != 0 and the complete local triple changes", "scope": "All 48 receiver channels, fixed before evolution", "actual_inputs": "Retain all 48 input sums and all six signed neighbor terms at every saved state", "input_area": "Exact cumulative actual input for each receiver channel through every update"},
+  "acceptance": {"pending": "Source present; target differs from initial pair; exact target at every state13..21; all48 receiver counters zero at every state0..21; no receiver C in updates1..21", "null": "Source absent; complete board remains its exact initial state for all24 updates", "translation_control": "The source-present receiver pair(0,4) yields exact complete-state +x translation at every update; this is an implementation/control result, not pending acceptance", "validity": "Every full recording rewinds exactly; immutable tensor, source and protocol fingerprints; all18 cases retained", "negative": "Every failed predicate is reported with its first violating state/update; no retuning after data", "continuation": "A separately registered discovery stage may optimize initial converter preparations; its candidates require a new frozen validation stage"},
+  "budget": {"max_engine_runs": 18, "max_cpu_seconds": 60, "max_wall_seconds": 600, "max_output_bytes": 2147483648},
+  "presenter_cases": ["packet-r04-on", "packet-r42-on", "packet-r22-on", "packet-r42-off"],
+  "contract": "One full48-channel board; unchanged Rule3 num=den=1; fixed +++ coupling; initial conditions only; no runtime mutation, selection, injection, cancellation operation or detector feedback; light and approval are research labels, not established physical interpretations"
+}
