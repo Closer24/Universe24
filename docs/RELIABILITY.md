@@ -178,3 +178,37 @@ checkpoint/event continuation, the expected negative Q result, reflection report
 agreement and deterministic repeat agreement. A concrete unexplained mismatch
 blocks acceptance. Next research direction remains the initiator's decision;
 this task supplies an auditable basis for it.
+
+In a restricted environment Python may fall back to the checkout for temporary
+files. The bundle runner explicitly places test scratch files under its output
+directory so temporary inputs cannot dirty source and block a clean rerun.
+
+### Known serialization limit — separate observed negative result
+
+A [reproducible diagnostic](../research/reliability/known_limits/serialization_probe.py)
+constructs a counter `10**5000`. On local Python 3.12.14 with the default integer
+string-conversion limit 4300, construction and exact forward/inverse succeed,
+but `json.dumps(checkpoint_data(...))` raises `ValueError`. The
+[recorded result](../research/reliability/known_limits/serialization_result.json)
+retains the exact generator, source hashes and runtime limit. Reproduce with
+`python -m research.reliability.known_limits.serialization_probe`.
+
+Thus the complete mathematical state domain is wider than the default JSON I/O
+domain. This is outside the registered 100-digit checkpoint cases, and is not
+hidden by their success. No guard was disabled and no core/CLI change was made.
+The minimal engineering follow-up is an explicitly reviewed I/O policy: bounded
+accepted counter size or a deliberate conversion-limit policy with resource
+bounds. It need not alter Rule3; the choice remains a separate decision. Python
+configurations with a different/disabled limit may give a different diagnostic
+outcome, which is why the actual limit is recorded. Reliability acceptance is
+bounded and is not approval of unrestricted serialization of every valid state.
+
+## Recorded acceptance
+
+The [acceptance summary](../research/reliability/acceptance_summary.json) and
+[complete evidence](../research/reliability/evidence/) preserve the final local
+clean-source run: all 43 tests passed in a bundle taking approximately 66 seconds,
+with identical deterministic experiment evidence on a separate rerun. The core
+file hashes remain equal to the pinned baseline. The initial implementation also
+passed GitHub CI on Python 3.11 and 3.12; the PR's latest checks are authoritative
+for its final head. The serialization limitation above remains open and explicit.

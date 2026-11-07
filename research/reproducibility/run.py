@@ -99,7 +99,10 @@ def negative_claim():
 
 
 def suite_run(output, deadline):
-    env = dict(os.environ, U24_COUNTEREXAMPLE_DIR=str(output / 'counterexamples'))
+    scratch = output / 'test-scratch'
+    scratch.mkdir()
+    env = dict(os.environ, U24_COUNTEREXAMPLE_DIR=str(output / 'counterexamples'),
+               TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch))
     proc = subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', 'tests', '-v'],
                           cwd=ROOT, env=env, capture_output=True, text=True,
                           timeout=max(0.01, deadline - time.monotonic()))
