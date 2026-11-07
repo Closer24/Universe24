@@ -1,0 +1,49 @@
+name: Clockwork evidence and replay
+on:
+  pull_request:
+  push:
+    branches: ['research/clockwork-building-blocks-2026-11-07']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reproduce-and-view:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Regenerate the frozen scientific test and preserve its failed control
+        run: |
+          python - <<'PY'
+          import subprocess,sys
+          process=subprocess.run([sys.executable,'-m','research.building_blocks.run','--output','runs/clockwork'])
+          if process.returncode != 1:
+              raise SystemExit('Expected the preserved no-transfer prediction to fail; inspect changed evidence')
+          PY
+          python -m research.building_blocks.verify_bundle --bundle runs/clockwork
+      - name: Reproduce all five bounded studies including negative results
+        run: python -m research.building_blocks.reproduce_studies --output runs/study-repeats
+      - name: Install the isolated browser-test dependency
+        run: |
+          npm install --prefix runs/browser-deps --no-audit --no-fund --ignore-scripts playwright@1.56.1
+          node runs/browser-deps/node_modules/playwright/cli.js install --with-deps chromium
+      - name: Exercise exact replay controls and capture desktop/mobile evidence
+        env:
+          NODE_PATH: ${{ github.workspace }}/runs/browser-deps/node_modules
+        run: node research/clockwork/browser_check.cjs runs/clockwork/clockwork.html runs/browser-check
+      - name: Preserve results and browser captures
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: clockwork-evidence
+          path: |
+            runs/clockwork/
+            runs/study-repeats/
+            runs/browser-check/
+          if-no-files-found: warn
+          retention-days: 30

@@ -24,6 +24,10 @@ def source_hashes():
     paths = []
     for folder in ('universe24', 'research/reference', 'research/reproducibility', 'tests'):
         paths.extend((ROOT / folder).rglob('*.py'))
+    paths.extend((ROOT / 'research/building_blocks').glob('*.py'))
+    paths.extend((ROOT / 'research/building_blocks').glob('*protocol*.json'))
+    paths.append(ROOT / 'research/clockwork/viewer.html')
+    paths.append(ROOT / '.github/workflows/clockwork.yml')
     paths.extend((ROOT / 'research/schemas').glob('*.json'))
     paths.extend((ROOT / 'research/reproducibility').glob('*.json'))
     paths.extend((ROOT / 'examples').glob('*.json'))

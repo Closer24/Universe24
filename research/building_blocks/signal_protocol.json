@@ -1,0 +1,48 @@
+{
+  "protocol_id": "U24-SIGNAL-FAMILY-v1",
+  "registration": "Written before this study's computation; within-session registration, not an external timestamped preregistration.",
+  "question": "Which fixed existing signed tensors and source phases support the prepared activation guide, and do a bounded set of unprepared seeds exactly translate?",
+  "engine_baseline": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "allowed_changes": ["initial channel triples", "one of eight preselected existing body-sign tensors"],
+  "dynamics": "Unchanged Engine.advance; no intervention during trajectories.",
+  "guide": {
+    "lengths": [24, 28],
+    "side": 151,
+    "origin": [60, 75, 75],
+    "channels": [0, 14],
+    "background": [0, 0, 2],
+    "source_ab": [[0, 1], [1, 0], [0, -1], [-1, 0], [0, 2], [0, -2]],
+    "source_remainder": 2,
+    "opposite_source": "channel 14 has negated a,b with r=2",
+    "receiver_pair": [[0, 0, 4], [0, 0, 0]],
+    "steps": "N+12",
+    "signs": "All lexicographically ordered triples in {-1,+1}^3",
+    "detectors": [6, 12],
+    "readouts": {
+      "arrival": "First t>=0 with channel-0 b != 0 at each receiver j=1..N",
+      "memory": "M_j=1 iff (r0,r14)=(0,4)",
+      "click": "A sampled 0-to-1 edge of the same local M_j",
+      "active_front_family": "all first arrivals equal j+delay for one common delay in {0,1}",
+      "unit_front_reference": "for source_ab=[0,1] and signs=[1,1,1], arrival_j=j",
+      "full_inverse": "Each step rewinds exactly and final complete trajectory rewinds to initial."
+    },
+    "controls": "For each tensor, N24 with no source, no guide, or receiver pair j=3 omitted; source_ab=[0,1].",
+    "boundary": "Side 151 and origin [60,75,75] give no causal boundary crossing through the longest 40-update run."
+  },
+  "compact_search": {
+    "side": 61,
+    "origin": [30, 30, 30],
+    "steps": 12,
+    "signs": "All eight existing sign triples",
+    "motifs": ["single_b1", "single_b2", "opposite_b1", "opposite_b2", "clock_pair"],
+    "translation_set": "All nonzero coordinate-axis shifts of lengths 1 or 2 (12 shifts), periodic full-state equality including remainders",
+    "success": "At t=1..12 the entire nonempty retained state equals the initial state translated by one registered nonzero shift; support count must also match.",
+    "failure": "No certificate in this finite motif/sign/time/shift domain; not a no-go theorem.",
+    "background": [0, 0, 2]
+  },
+  "random_seed": null,
+  "cpu_seconds_ceiling": 120,
+  "sparse_support_ceiling": 20000,
+  "budget_policy": "Any exceeded limit is inconclusive; retain completed cases and report exact incomplete case. No failure counts inferred for unexecuted cases.",
+  "provenance": "Store protocol and script SHA-256, all engine source SHA-256, fixed coupling fingerprints, complete deterministic preparation generators and initial/final state digests."
+}
