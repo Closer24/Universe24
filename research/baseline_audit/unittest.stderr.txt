@@ -1,0 +1,20 @@
+test_exact_state_covariance_and_mirror_failure (test_reflection_audit.ReflectionAuditTests.test_exact_state_covariance_and_mirror_failure) ... ok
+test_improper_maps_need_signs_for_current_coupling (test_reflection_audit.ReflectionAuditTests.test_improper_maps_need_signs_for_current_coupling) ... ok
+test_mirror_square_and_fourth_power (test_reflection_audit.ReflectionAuditTests.test_mirror_square_and_fourth_power) ... ok
+test_scalar_sign_reversal_retains_every_remainder (test_reflection_audit.ReflectionAuditTests.test_scalar_sign_reversal_retains_every_remainder) ... ok
+test_search_has_positive_rotation_controls (test_reflection_audit.ReflectionAuditTests.test_search_has_positive_rotation_controls) ... ok
+test_signed_reflections_full_state_and_all_weights (test_reflection_audit.ReflectionAuditTests.test_signed_reflections_full_state_and_all_weights) ... ok
+test_weighted_rotation_covariance (test_reflection_audit.ReflectionAuditTests.test_weighted_rotation_covariance) ... ok
+test_config_data_only (test_universe24.ModelTests.test_config_data_only) ... ok
+test_coupling (test_universe24.ModelTests.test_coupling) ... ok
+test_cube_six_distinct (test_universe24.ModelTests.test_cube_six_distinct) ... ok
+test_group (test_universe24.ModelTests.test_group) ... ok
+test_immutable_state (test_universe24.ModelTests.test_immutable_state) ... ok
+test_pure_observation (test_universe24.ModelTests.test_pure_observation) ... ok
+test_scalar_exact_inverse (test_universe24.ModelTests.test_scalar_exact_inverse) ... ok
+test_spatial_only_and_equal_snapshots (test_universe24.ModelTests.test_spatial_only_and_equal_snapshots) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 13.994s
+
+OK

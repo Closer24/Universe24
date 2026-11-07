@@ -1,0 +1,16 @@
+{
+  "protocol_id": "U24-SCM-v2",
+  "protocol_sha256": "84597768df1aa3909cd8facb91ba4700f7c2c1df38956c374778322b953c99e8",
+  "source_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+  "runner_sha256": "14d32cd61efb78d250086c60132629c3c12f8dfeb78b3434673596958c166c10",
+  "shared_runner_sha256": "8fa386d27ca3cbcc83640c82ea5c895b47de2221df23ddb2f563874e885e9248",
+  "python": "3.12.14",
+  "cpu_seconds": 0.12522022,
+  "wall_seconds": 0.1252831169986166,
+  "forward_steps": 120,
+  "one_step_inverse_calls": 120,
+  "trajectory_inverse_calls": 120,
+  "size_trace_exact": true,
+  "all_pass": true
+}

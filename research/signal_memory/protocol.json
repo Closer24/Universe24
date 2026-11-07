@@ -1,0 +1,27 @@
+{
+  "protocol_id": "U24-SCM-v1",
+  "source_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "registered_before_execution": true,
+  "candidate": "positive-reference body signs [1,1,1], unchanged Rule3",
+  "preparation": "x-axis guide j=1..N: channel0=(0,0,4), channel14=(0,0,0); source j=0: channel0=(0,1,2), channel14=(0,-1,2); all other triples (0,0,2)",
+  "signal": "activation front with first nonzero b at successive prepared receivers at t=j; not a localized translating full-state packet",
+  "clock": "receiver projection (a,b) at channel0 cycles (0,1),(1,0),(0,-1),(-1,0) after arrival while record lasts; channel14 has negative counters",
+  "memory": "local bit M=1 iff receiver channel0.r=0 and channel14.r=4; M=0 otherwise; no log used as memory",
+  "click": "read-only rising edge M(t-1)=0 and M(t)=1",
+  "expected_record_window": "j <= t < 2*(N+1)-j for even N",
+  "minimum_record_ticks": 32,
+  "cases": [
+    {"id":"base_N18_L101", "N":18,"L":101,"j":2,"steps":40,"control":"none"},
+    {"id":"size_N18_L121", "N":18,"L":121,"j":2,"steps":40,"control":"none"},
+    {"id":"holdout_N20_L121", "N":20,"L":121,"j":4,"steps":44,"control":"none"},
+    {"id":"no_source", "N":18,"L":101,"j":2,"steps":40,"control":"no_source"},
+    {"id":"source_only", "N":18,"L":101,"j":2,"steps":40,"control":"source_only"},
+    {"id":"gap_before_receiver", "N":18,"L":101,"j":4,"steps":40,"control":"gap"},
+    {"id":"odd_remainder_perturbation", "N":18,"L":101,"j":2,"steps":40,"control":"r_plus_one"}
+  ],
+  "controls": {"gap":"remove prepared pair at j=3 before run", "r_plus_one":"change receiver j=2 channel0 initial r from4 to5 before run"},
+  "success": "all unperturbed guide cases match first arrival, projected clock and full local memory window, each including >=32 consecutive record ticks; no-source/source-only/gap controls have no target click; all full-state inverse audits exact",
+  "failure": "report every mismatch; perturbation failure limits robustness rather than falsifying ideal seed result",
+  "budget": {"cpu_seconds":120,"wall_seconds":300,"max_forward_steps":284,"max_explicit_cells":100000,"random_seed":null},
+  "readout_frozen": true
+}

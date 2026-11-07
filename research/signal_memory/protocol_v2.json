@@ -1,0 +1,16 @@
+{
+  "protocol_id": "U24-SCM-v2",
+  "parent_protocol": "U24-SCM-v1",
+  "registered_before_execution": true,
+  "reason": "v1 imposed zero memory for all later samples and failed on an autonomous second activation at t40. A11 claims only the FIRST record window. Keep v1 evidence, use new N22 preparations for confirmation; preserve the exact same observer.",
+  "source_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "memory": "M=1 iff target channel0.r=0 and channel14.r=4",
+  "click": "read-only rising edge of M",
+  "clock": "same four counter pairs as v1, with channel14 negative",
+  "success": "first arrival t=j for every guide receiver; M=0 for t<j, M=1 throughout j<=t<2(N+1)-j, reset M=0 at t=2(N+1)-j; >=32 record ticks; exact period4 projected clock inside this window; full inverses; translated complete trajectories equal across L; no assertion of absence of later clicks",
+  "cases": [
+    {"id":"confirm_N22_L141", "N":22,"L":141,"j":6,"steps":60,"control":"none"},
+    {"id":"confirm_N22_L161", "N":22,"L":161,"j":6,"steps":60,"control":"none"}
+  ],
+  "budget": {"cpu_seconds":120,"wall_seconds":300,"max_forward_steps":120,"max_explicit_cells":100000,"random_seed":null}
+}

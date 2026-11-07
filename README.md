@@ -1,5 +1,7 @@
 # Universe24
 
+
+Research baseline and first prepared signal–clock–record experiment (2026-11-07): [project plan](docs/PROJECT_PLAN.md), [claims and evidence](docs/CLAIMS.md), [experiment and limitations](docs/SIGNAL_MEMORY_EXPERIMENT.md), [decisions](docs/DECISIONS.md), [סיכום בעברית](docs/STATUS.he.md).
 **Could reality be built from integers?** Universe24 is a research project initiated by **Alon Gonen** to investigate whether one simple, local, reversible rule could underlie the complexity of physical reality.
 
 This repository provides the **MIT-licensed reference engine for one specific mathematical candidate**: an integer-valued cellular automaton with **Rule3**, 48 group-labelled channels per site and a fixed signed spatial coupling. **The broader scientific proposal and the present code are not the same thing.**
