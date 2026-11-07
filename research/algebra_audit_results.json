@@ -1,0 +1,193 @@
+{
+  "source_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "source_identity_note": "Pinned reviewed commit; hashes below identify actual executed files.",
+  "source_sha256": {
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3",
+    "research/algebra_audit.py": "d0e7a4e121e546b2cc1df0e81e61c4b50701eb4d80d39938f6b74676bd22dc96"
+  },
+  "python_version": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "status": "passed",
+  "counts": {
+    "scalar_cases": 2250,
+    "dense_channel_comparisons": 10368,
+    "full_state_roundtrips": 16,
+    "signed_Q_identities": 8
+  },
+  "scalar_domain": {
+    "a": [
+      -2,
+      2
+    ],
+    "b": [
+      -2,
+      2
+    ],
+    "r": [
+      0,
+      5
+    ],
+    "u": [
+      -7,
+      7
+    ]
+  },
+  "ensemble": {
+    "generator": "Python random.Random",
+    "seed": 241107,
+    "sign_order": "itertools.product((-1,1),repeat=3)",
+    "address_order": "itertools.product(range(3),repeat=3), then g=0..47",
+    "draw_order": "a=randint(-4,4), b=randint(-4,4), r=randrange(6)",
+    "rng_reseed_between_cases": false,
+    "side": 3,
+    "steps": 1,
+    "boundary": "periodic",
+    "background": [
+      0,
+      0,
+      2
+    ]
+  },
+  "cases": [
+    {
+      "signs": [
+        -1,
+        -1,
+        -1
+      ],
+      "coupling_fingerprint": "339ee62d9f51f38c51b382dc0135553401c3f305ee922ac57d9d2f1fda927fb7",
+      "initial_state_sha256": "7ffc11dabf6a757d5360cf2f430d53bd03d9582e295a08366fd1a0fbd9194168",
+      "final_state_sha256": "a45679e24c4a4f0d6ece2ba52ea24eeb8bc35f4a9154e6822a320fdf0546eb10",
+      "account_change": 2688
+    },
+    {
+      "signs": [
+        -1,
+        -1,
+        1
+      ],
+      "coupling_fingerprint": "39e17ca30c79cc32793f8a8944cdcb75543ccb0d51e8fffa55cb1551d97d5812",
+      "initial_state_sha256": "50658c833f35241a3468c8e969b270d098052d88e81caa645792099e41d7079a",
+      "final_state_sha256": "3c9677f111d365323778bba982e5c01d4a4212f204e395ace51d9a40a1fd42c0",
+      "account_change": 1424
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        -1
+      ],
+      "coupling_fingerprint": "864809715e2c72e5a6d617a49ecc2783a8593a2fa60de8b0de2023a5a5fb9285",
+      "initial_state_sha256": "b2559ae2350f30cc32d4562da26a3aea8c8871ae795dedacacdd603b50a2500a",
+      "final_state_sha256": "e18d7d96e1922eca1e192a0c11da9aa7e7f258faf25eac5047bac7c5f0f1e791",
+      "account_change": 1040
+    },
+    {
+      "signs": [
+        -1,
+        1,
+        1
+      ],
+      "coupling_fingerprint": "ed62c8b4f77d90ad1848022c209221ccd90b90a36223e093512ce26b00209ea7",
+      "initial_state_sha256": "7396d3cadb7affd45131d3cf0acff6cceb0e6e7626b2e58244ee561097d29a71",
+      "final_state_sha256": "b4a8e7e3114de906e911168d4508aef64d897f71cbcb8e5dba95ce8f44153448",
+      "account_change": 2120
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        -1
+      ],
+      "coupling_fingerprint": "a260ace949a08d37c23d6f43ba3ff0bb70aeca199c69e2a81dfd579022425ba9",
+      "initial_state_sha256": "37fc88f1a5eaccb3ec3680c0dcb68d69774317526da55ac9870976b42054027f",
+      "final_state_sha256": "ec9e448d219d6fe18f27202ff47284544d6ea65980d5c9121f5f2249f8f1e0c9",
+      "account_change": -592
+    },
+    {
+      "signs": [
+        1,
+        -1,
+        1
+      ],
+      "coupling_fingerprint": "9a984921623f24368a844e860510ca08aeab1a878b1d79e3fba495823ab909ca",
+      "initial_state_sha256": "f1340b385b35aa56a827c36fa45105ef761c361ad8edf12626f09ceee6f54533",
+      "final_state_sha256": "6e7d4b947abaa14e9f40e8067c494b3289c9fdd2d6dde8f46ac5f40145765514",
+      "account_change": 1472
+    },
+    {
+      "signs": [
+        1,
+        1,
+        -1
+      ],
+      "coupling_fingerprint": "9b1e2f543aaf26065bf0e93b0f84b68c36942c6fd127d69f642f2ff8cd4825a2",
+      "initial_state_sha256": "3f41955343d6166e02cbe852799c6002d3b00377a7e944cc07155ea49b55337f",
+      "final_state_sha256": "a5571ae902a98861e924aee0a80146a6ba4a439a626351adda9ca9018839c169",
+      "account_change": -280
+    },
+    {
+      "signs": [
+        1,
+        1,
+        1
+      ],
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "initial_state_sha256": "a1a7f21004a340198e21563fbe012e21a7b12a56ce19d1a5f942344f7dc811fe",
+      "final_state_sha256": "f1bc06a1ef65e4ed8ef56eaeb13c7b5b445b940bc2c5f8d64c8da5f4ccfb570c",
+      "account_change": 0
+    }
+  ],
+  "signed_Q_counterexample": {
+    "side": 3,
+    "signs": [
+      1,
+      -1,
+      1
+    ],
+    "background": [
+      0,
+      0,
+      2
+    ],
+    "steps": 1,
+    "initial_deviations": [
+      [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    ],
+    "account_change": -8
+  },
+  "uniform_drift": {
+    "side": 3,
+    "signs": [
+      1,
+      1,
+      1
+    ],
+    "initial_all_channels": [
+      0,
+      1,
+      0
+    ],
+    "steps": 10,
+    "formula": "(a,b,r)=(t,t+1,0)",
+    "passed": true
+  },
+  "scope": "Finite implementation checks, not proof over all states or physical validation."
+}

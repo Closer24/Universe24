@@ -1,0 +1,26 @@
+base_N18_L101 [2, 40] False True
+size_N18_L121 [2, 40] False True
+holdout_N20_L121 [4] True True
+no_source [] False False
+source_only [] False False
+gap_before_receiver [] False False
+odd_remainder_perturbation [] False True
+{
+  "protocol_id": "U24-SCM-v1",
+  "protocol_sha256": "4435a4b6611675f63107bc171ef32adde85e90ad98c127d30a0da6619a2bec4a",
+  "source_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+  "python": "3.12.14",
+  "random_seed": null,
+  "preparation_generator": "run.py:prepare",
+  "runner_sha256": "8fa386d27ca3cbcc83640c82ea5c895b47de2221df23ddb2f563874e885e9248",
+  "forward_steps": 284,
+  "one_step_inverse_calls": 284,
+  "trajectory_inverse_calls": 284,
+  "cpu_seconds": 0.180459341,
+  "wall_seconds": 0.1807812560000457,
+  "size_trace_exact": true,
+  "all_inverse": true,
+  "ideal_cases_pass": false,
+  "negative_controls_pass": true
+}

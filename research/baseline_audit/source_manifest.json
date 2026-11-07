@@ -1,0 +1,198 @@
+{
+  "upstream_repository": "https://github.com/Closer24/Universe24",
+  "source_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "source_tree": "fe5b84261d6573b24f80b1f795df14e5182dfa5d",
+  "materialization": "36 source blobs verified against Git blob SHA-1; local snapshot commit is not the upstream commit",
+  "source_blob_count": 36,
+  "source_blobs": [
+    {
+      "path": ".gitignore",
+      "git_blob_sha": "3666fd8388d8ffcca7f2f4a47daa0d26b71d0b14",
+      "sha256": "19c5fdbc3cc63b202169f8828d78c08ddb306ff9ad5cd56984b4f8e9c3298d6b"
+    },
+    {
+      "path": "AGENTS.md",
+      "git_blob_sha": "c8e95e5581e107b4e641e6c0295d139fda59b2f7",
+      "sha256": "15904b11a6fba682700e6001958149e18382f3eecd723e42fbc0dd32c000a47b"
+    },
+    {
+      "path": "CITATION.cff",
+      "git_blob_sha": "e269117b5fbd01ca0d3affa97b95981c608e18aa",
+      "sha256": "b061389b56e680549e3d16896d6f9b4aaa47a277c9205cd03aef4472f48f7ff3"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "git_blob_sha": "8720ff483d45df69f52b6af693e045e8411e1ee4",
+      "sha256": "a0e40879793adf1fa302f9d2fe510fa6e9b61d2e4bc2d1713790e526aaa03363"
+    },
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "383c54d13a1d98af372a608aac4cac83632f00f7",
+      "sha256": "de1ab455ae6db06be5bba1e3e95c5bf0cc51df39db01da1088340994c3f953e9"
+    },
+    {
+      "path": "README.md",
+      "git_blob_sha": "cfd277cc7bfb5448d56c0ca2e4de94592f2a29bb",
+      "sha256": "663ff83d7633161657aa440ecf99c2b65497962aefd00ed5846364b892d21548"
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "git_blob_sha": "96a327cf19dd998d15e8f503490eafee2d7c873d",
+      "sha256": "e64e6c47dc288360a5d82403a5a1ccb5a3d283a644b8343cd44076ba8ebff281"
+    },
+    {
+      "path": "docs/EXPERIMENTS.md",
+      "git_blob_sha": "ab4d8021ea4df75f807a3f574c4ce5fb6e122318",
+      "sha256": "ca5fe375a272eff8e98eb4df215d57e6566710ef1edd2fd93550244ab3b00b08"
+    },
+    {
+      "path": "docs/MODEL.md",
+      "git_blob_sha": "4844187ff62c32fdc25bb6365f098c4bfd11e62d",
+      "sha256": "7cd622ca52689eda4b3093ac711bb7f9174b35f3638e4aaa98b6e41bae4d265e"
+    },
+    {
+      "path": "docs/OBSERVATION.md",
+      "git_blob_sha": "100650050d7237a81f7e986c0928d41e43729a92",
+      "sha256": "5b1804ee742926226812b919a8b5481cdd89dbd700e2ebd477fe1ac489716144"
+    },
+    {
+      "path": "docs/QUICKSTART.md",
+      "git_blob_sha": "dd4e01b2c34981ad4124a910c069057a97556137",
+      "sha256": "593de82f55311b0f3f371699850afaa85aa0e262f7a52fc540cfd6faeaa5d5f2"
+    },
+    {
+      "path": "docs/README.he.md",
+      "git_blob_sha": "bdf5261b0a0ed21bdee70f28eeb996306e9ed8f1",
+      "sha256": "97c7567fd609b9d2fa4ac2bb824f3e8b8b78a5aa3adf2e1b2649f073862ed883"
+    },
+    {
+      "path": "docs/REFLECTION_AUDIT.md",
+      "git_blob_sha": "25bc17c79e2671da63f19665a36623c2e1a78916",
+      "sha256": "41dd6111fd621206f75e6a540cb7248999ceeacaa42e18e78023977fa9979626"
+    },
+    {
+      "path": "docs/RESEARCH_PROPOSAL.md",
+      "git_blob_sha": "e8bebc5bfb9630aa061cc03ffbb8ca5ed5f24a4c",
+      "sha256": "bdff296f62e5334e0d40c29ec7776121899a15130a36ddaea31e8de94c1fab84"
+    },
+    {
+      "path": "docs/RESEARCH_STATUS.md",
+      "git_blob_sha": "b14e63e018768d90cb800c49bc6d46806d9a6359",
+      "sha256": "c2d2f8ec3617238bb64d2357b2421b8a26b7b355db51d1209cea3814ff44bedb"
+    },
+    {
+      "path": "examples/clock.json",
+      "git_blob_sha": "33f7b1df54509f59e1f5897c5c4f6a5d6eb9c57d",
+      "sha256": "e8ccb192028f4672e2aa1c8becb797d6b6a750d682b53fa493a56722f338aa1c"
+    },
+    {
+      "path": "examples/impulse.json",
+      "git_blob_sha": "146e543b5175bac566abd64714827ccc53e4565a",
+      "sha256": "674960e7d6f4c137fedb48ba26dacfa2e674c0e0cf83f76a5aac74163e232b1f"
+    },
+    {
+      "path": "examples/signed_impulse.json",
+      "git_blob_sha": "b5f1dc49ca712294c2a95855c08f57b520d65e22",
+      "sha256": "de00216b79fd2ee6270f5c8ae3bfa14a1f1ba50ebd0bda8dc267fd85188aa36a"
+    },
+    {
+      "path": "pyproject.toml",
+      "git_blob_sha": "544190e0642f757957045076d0b25a79cd7afcdb",
+      "sha256": "b9db2ec34950bb15fc97d2974956f8bf03cedff3383b3739a0318f3ce98383bd"
+    },
+    {
+      "path": "research/reflection_audit.py",
+      "git_blob_sha": "ad827e52d7bbe0b391085c9cc10192ab0e3ab7bd",
+      "sha256": "5daf5a369d082f8e1a3a788e78d17ed2792ec4d29d81d5ae005cb26cbdb34ba7"
+    },
+    {
+      "path": "research/reflection_audit_results.json",
+      "git_blob_sha": "f51d3319881c3640346f88620a2ead391588438d",
+      "sha256": "d3bcc3871a43836b003b02c672df9d0970c2243b2aab4409b3670883479dc402"
+    },
+    {
+      "path": "tests/test_reflection_audit.py",
+      "git_blob_sha": "8f1630049da4d20d73c723f357697763976d041a",
+      "sha256": "a4663b671a3f936dbc5e315a266f0c5439438d8b9120ee255ef4d546229b42f9"
+    },
+    {
+      "path": "tests/test_universe24.py",
+      "git_blob_sha": "4f0436255393682fab7de3de3394fede8a648da9",
+      "sha256": "70a35a4c347d636fda14a7a7abf0a7728eec51cefc42fe8a561eb97a7c8c9b52"
+    },
+    {
+      "path": "universe24/__init__.py",
+      "git_blob_sha": "bbc7c6c8a090046900443c3e3acafc1b6f4edcbf",
+      "sha256": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7"
+    },
+    {
+      "path": "universe24/__main__.py",
+      "git_blob_sha": "8b4a4239561247d4ac8fea1c96a3dce14b600b28",
+      "sha256": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e"
+    },
+    {
+      "path": "universe24/core/__init__.py",
+      "git_blob_sha": "30a11a21f915417029d2aa28c829eca325211fc0",
+      "sha256": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f"
+    },
+    {
+      "path": "universe24/core/coupling.py",
+      "git_blob_sha": "16d959466bd31bbcf292b6c0e1e3f4f78f748900",
+      "sha256": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489"
+    },
+    {
+      "path": "universe24/core/engine.py",
+      "git_blob_sha": "2493378dd0b692491bca78c0250433189c96258d",
+      "sha256": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938"
+    },
+    {
+      "path": "universe24/core/group_2o.py",
+      "git_blob_sha": "16c4ae73de6b8208696196bf68517de2bd8548c8",
+      "sha256": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055"
+    },
+    {
+      "path": "universe24/core/rule3.py",
+      "git_blob_sha": "dd2a7cdd34200aeb73aba64d02f6cccbfb32afe5",
+      "sha256": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555"
+    },
+    {
+      "path": "universe24/core/state.py",
+      "git_blob_sha": "3d706224eef1ec158f78623efa453bc39b0afe30",
+      "sha256": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0"
+    },
+    {
+      "path": "universe24/experiments/__init__.py",
+      "git_blob_sha": "da1a700771fd8b17b19550682c327eae1c0e2d43",
+      "sha256": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22"
+    },
+    {
+      "path": "universe24/experiments/config.py",
+      "git_blob_sha": "f1a577414deed55a28f128624e3427111c41b158",
+      "sha256": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926"
+    },
+    {
+      "path": "universe24/observation/__init__.py",
+      "git_blob_sha": "f02ff0c897ad2d21aaf7f394e930d061ccdcf8e1",
+      "sha256": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb"
+    },
+    {
+      "path": "universe24/observation/clicks.py",
+      "git_blob_sha": "56cfa222aadb1f8d29ccce6628877f3bea2865ce",
+      "sha256": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced"
+    },
+    {
+      "path": "universe24/observation/diagnostics.py",
+      "git_blob_sha": "223412019d10f2f88e1bcc7036b82b3808858905",
+      "sha256": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+    }
+  ],
+  "document": {
+    "url": "https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI",
+    "modified_time": "2026-11-07T01:37:38.239Z",
+    "retrieved_date": "2026-11-07",
+    "normalized_text_sha256": "db209ebabc9a238e451f8be9127eef4ffc712a77bc3a37a4f2b3a8fea07768a0",
+    "normalization": "UTF-8 with original BOM, CRLF converted to LF, terminal LF retained",
+    "revision_id": null,
+    "scope": "live document snapshot; modification timestamp and digest, not an immutable Drive revision"
+  }
+}

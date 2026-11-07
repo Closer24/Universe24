@@ -1,0 +1,55 @@
+{
+  "source_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "checks": [
+    {
+      "name": "final_unittest",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "wall_seconds": 13.901646807004
+    },
+    {
+      "name": "final_signal_v1",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "research/signal_memory/run.py"
+      ],
+      "returncode": 0,
+      "wall_seconds": 0.237256078995415
+    },
+    {
+      "name": "final_signal_v2",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "research/signal_memory/confirm.py"
+      ],
+      "returncode": 0,
+      "wall_seconds": 0.17604487200151198
+    }
+  ],
+  "v1_expected_failure_preserved": true,
+  "v2_bounded_record_pass": true,
+  "all_core_files_unchanged": [
+    "universe24/__init__.py",
+    "universe24/__main__.py",
+    "universe24/core/__init__.py",
+    "universe24/core/coupling.py",
+    "universe24/core/engine.py",
+    "universe24/core/group_2o.py",
+    "universe24/core/rule3.py",
+    "universe24/core/state.py",
+    "universe24/experiments/__init__.py",
+    "universe24/experiments/config.py",
+    "universe24/observation/__init__.py",
+    "universe24/observation/clicks.py",
+    "universe24/observation/diagnostics.py"
+  ],
+  "interpretation": "Finite prepared first-record window only; no robustness or physical measurement claim."
+}

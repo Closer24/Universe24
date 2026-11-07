@@ -1,0 +1,34 @@
+{
+  "kind": "posthoc_information_location_diagnostic_not_observer_change",
+  "t": 37,
+  "local_target_matches_no_source": false,
+  "full_states_distinct": true,
+  "witness_address": [
+    40,
+    50,
+    50,
+    0
+  ],
+  "signal_state": [
+    0,
+    0,
+    4
+  ],
+  "no_source_state": [
+    0,
+    0,
+    2
+  ],
+  "different_channels": 104,
+  "target_channel0_at_t37": [
+    -2,
+    0,
+    4
+  ],
+  "target_channel14_at_t37": [
+    2,
+    0,
+    0
+  ],
+  "interpretation": "Memory bit is zero, but local counters and remote remainder state still retain distinctions."
+}
