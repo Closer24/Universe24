@@ -1,0 +1,2001 @@
+{
+  "accepted_phase_count": 0,
+  "all_full_rewinds_equal": true,
+  "base_commit": "5894510ada12d22f17a70f93a41ec311aef13265",
+  "cases": [
+    {
+      "I": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "controls": {
+        "right_phase": 0,
+        "source_mask": [
+          false,
+          false
+        ]
+      },
+      "events": [],
+      "first_paired_input": null,
+      "frames": 33,
+      "full_rewind_equal": true,
+      "id": "approval-phase0-00",
+      "maximum_pending_before_first_C": 0,
+      "maximum_pending_run": 0,
+      "node_C_times": [],
+      "pending_times": [],
+      "record": "records/approval-phase0-00.json.gz",
+      "record_holds8_after_first_C": false,
+      "record_sha256": "ef38555d7318cc206a15c0a9710661bae00a74161c88b0fc0957ecc8c539fb21",
+      "record_times": [],
+      "remainder_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "stationary_full_board": true
+    },
+    {
+      "I": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        4,
+        4,
+        1,
+        1,
+        1,
+        1,
+        9
+      ],
+      "controls": {
+        "right_phase": 0,
+        "source_mask": [
+          true,
+          false
+        ]
+      },
+      "events": [
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 10
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 12
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 16
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 18
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 22
+        },
+        {
+          "channel": 0,
+          "ell": 1,
+          "step": 24
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 24
+        },
+        {
+          "channel": 0,
+          "ell": -1,
+          "step": 26
+        },
+        {
+          "channel": 0,
+          "ell": -1,
+          "step": 28
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 28
+        },
+        {
+          "channel": 0,
+          "ell": 2,
+          "step": 30
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 30
+        },
+        {
+          "channel": 0,
+          "ell": -2,
+          "step": 32
+        }
+      ],
+      "first_paired_input": {
+        "input": [
+          1,
+          -1
+        ],
+        "update": 8
+      },
+      "frames": 33,
+      "full_rewind_equal": true,
+      "id": "approval-phase0-10",
+      "maximum_pending_before_first_C": 2,
+      "maximum_pending_run": 2,
+      "node_C_times": [
+        10,
+        12,
+        16,
+        18,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "pending_times": [
+        8,
+        9,
+        20,
+        21
+      ],
+      "record": "records/approval-phase0-10.json.gz",
+      "record_holds8_after_first_C": false,
+      "record_sha256": "6bd959d81e53f03e988c3c21c339412a3e8b7626a6cbc43e7497329dba1fb782",
+      "record_times": [],
+      "remainder_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "stationary_full_board": false
+    },
+    {
+      "I": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "controls": {
+        "right_phase": 0,
+        "source_mask": [
+          false,
+          true
+        ]
+      },
+      "events": [
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 18
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 20
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 24
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 26
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 30
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 32
+        }
+      ],
+      "first_paired_input": {
+        "input": [
+          1,
+          -1
+        ],
+        "update": 16
+      },
+      "frames": 33,
+      "full_rewind_equal": true,
+      "id": "approval-phase0-01",
+      "maximum_pending_before_first_C": 2,
+      "maximum_pending_run": 2,
+      "node_C_times": [
+        18,
+        20,
+        24,
+        26,
+        30,
+        32
+      ],
+      "pending_times": [
+        16,
+        17,
+        28,
+        29
+      ],
+      "record": "records/approval-phase0-01.json.gz",
+      "record_holds8_after_first_C": false,
+      "record_sha256": "2d76ef60337d3462262f0e882c66e8628223fd9dfea9145de6bee7c4a2739a5a",
+      "record_times": [],
+      "remainder_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "stationary_full_board": false
+    },
+    {
+      "I": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "controls": {
+        "right_phase": 0,
+        "source_mask": [
+          true,
+          true
+        ]
+      },
+      "events": [
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 10
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 12
+        },
+        {
+          "channel": 0,
+          "ell": 1,
+          "step": 16
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 16
+        },
+        {
+          "channel": 0,
+          "ell": -1,
+          "step": 18
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 18
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 22
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 24
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 28
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 30
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 32
+        }
+      ],
+      "first_paired_input": {
+        "input": [
+          1,
+          -1
+        ],
+        "update": 8
+      },
+      "frames": 33,
+      "full_rewind_equal": true,
+      "id": "approval-phase0-11",
+      "maximum_pending_before_first_C": 2,
+      "maximum_pending_run": 2,
+      "node_C_times": [
+        10,
+        12,
+        16,
+        18,
+        22,
+        24,
+        28,
+        30,
+        32
+      ],
+      "pending_times": [
+        8,
+        9
+      ],
+      "record": "records/approval-phase0-11.json.gz",
+      "record_holds8_after_first_C": false,
+      "record_sha256": "1267dce46155b6881a3a8b32b36ce8b0a32debb082d9d498463ab500635c945d",
+      "record_times": [],
+      "remainder_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          4,
+          4
+        ],
+        [
+          0,
+          4
+        ]
+      ],
+      "stationary_full_board": false
+    },
+    {
+      "I": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "controls": {
+        "right_phase": 1,
+        "source_mask": [
+          false,
+          false
+        ]
+      },
+      "events": [],
+      "first_paired_input": null,
+      "frames": 33,
+      "full_rewind_equal": true,
+      "id": "approval-phase1-00",
+      "maximum_pending_before_first_C": 0,
+      "maximum_pending_run": 0,
+      "node_C_times": [],
+      "pending_times": [],
+      "record": "records/approval-phase1-00.json.gz",
+      "record_holds8_after_first_C": false,
+      "record_sha256": "7eea8dd2f9c93c5b092d6de88882bc0a8e215e422a0bcdd0ee9a821402330495",
+      "record_times": [],
+      "remainder_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "stationary_full_board": true
+    },
+    {
+      "I": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        4,
+        4,
+        1,
+        1,
+        1,
+        1,
+        9
+      ],
+      "controls": {
+        "right_phase": 1,
+        "source_mask": [
+          true,
+          false
+        ]
+      },
+      "events": [
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 10
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 12
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 16
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 18
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 22
+        },
+        {
+          "channel": 0,
+          "ell": 1,
+          "step": 24
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 24
+        },
+        {
+          "channel": 0,
+          "ell": -1,
+          "step": 26
+        },
+        {
+          "channel": 0,
+          "ell": -1,
+          "step": 28
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 28
+        },
+        {
+          "channel": 0,
+          "ell": 2,
+          "step": 30
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 30
+        },
+        {
+          "channel": 0,
+          "ell": -2,
+          "step": 32
+        }
+      ],
+      "first_paired_input": {
+        "input": [
+          1,
+          -1
+        ],
+        "update": 8
+      },
+      "frames": 33,
+      "full_rewind_equal": true,
+      "id": "approval-phase1-10",
+      "maximum_pending_before_first_C": 2,
+      "maximum_pending_run": 2,
+      "node_C_times": [
+        10,
+        12,
+        16,
+        18,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "pending_times": [
+        8,
+        9,
+        20,
+        21
+      ],
+      "record": "records/approval-phase1-10.json.gz",
+      "record_holds8_after_first_C": false,
+      "record_sha256": "586b3647a2521b42f3aec1e3c9d2816f5a3b5eb3f9052f404acebdecec8bc90e",
+      "record_times": [],
+      "remainder_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "stationary_full_board": false
+    },
+    {
+      "I": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "controls": {
+        "right_phase": 1,
+        "source_mask": [
+          false,
+          true
+        ]
+      },
+      "events": [],
+      "first_paired_input": null,
+      "frames": 33,
+      "full_rewind_equal": true,
+      "id": "approval-phase1-01",
+      "maximum_pending_before_first_C": 0,
+      "maximum_pending_run": 0,
+      "node_C_times": [],
+      "pending_times": [],
+      "record": "records/approval-phase1-01.json.gz",
+      "record_holds8_after_first_C": false,
+      "record_sha256": "4bd9b99f863796da98a97c71de403b66fdc36606f063371645bd06abd8eb8bdd",
+      "record_times": [],
+      "remainder_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "stationary_full_board": false
+    },
+    {
+      "I": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        4,
+        4,
+        1,
+        1,
+        1,
+        1,
+        9
+      ],
+      "controls": {
+        "right_phase": 1,
+        "source_mask": [
+          true,
+          true
+        ]
+      },
+      "events": [
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 10
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 12
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 16
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 18
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 22
+        },
+        {
+          "channel": 0,
+          "ell": 1,
+          "step": 24
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 24
+        },
+        {
+          "channel": 0,
+          "ell": -1,
+          "step": 26
+        },
+        {
+          "channel": 0,
+          "ell": -1,
+          "step": 28
+        },
+        {
+          "channel": 14,
+          "ell": 1,
+          "step": 28
+        },
+        {
+          "channel": 0,
+          "ell": 2,
+          "step": 30
+        },
+        {
+          "channel": 14,
+          "ell": -1,
+          "step": 30
+        },
+        {
+          "channel": 0,
+          "ell": -2,
+          "step": 32
+        }
+      ],
+      "first_paired_input": {
+        "input": [
+          1,
+          -1
+        ],
+        "update": 8
+      },
+      "frames": 33,
+      "full_rewind_equal": true,
+      "id": "approval-phase1-11",
+      "maximum_pending_before_first_C": 2,
+      "maximum_pending_run": 2,
+      "node_C_times": [
+        10,
+        12,
+        16,
+        18,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "pending_times": [
+        8,
+        9,
+        20,
+        21
+      ],
+      "record": "records/approval-phase1-11.json.gz",
+      "record_holds8_after_first_C": false,
+      "record_sha256": "d1388deb00fbf2ce540afa71f44685a791e3aebfdf9ad0b40a57be3568939a08",
+      "record_times": [],
+      "remainder_pairs": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "stationary_full_board": false
+    }
+  ],
+  "complete_states": 264,
+  "cpu_seconds": 1.047377633,
+  "engine_runs": 8,
+  "forward_inverse_transitions": 256,
+  "phase_results": [
+    {
+      "accepted": false,
+      "checks": {
+        "joint_exactly_one_C_in_window": false,
+        "joint_pending4_before_C": false,
+        "joint_record_holds8": false,
+        "left_only_no_C_through32": false,
+        "left_only_pending4": false,
+        "null_stationary_no_C": true,
+        "right_only_no_C_through32": false
+      },
+      "right_initial_ab": [
+        0,
+        1
+      ],
+      "right_phase": 0
+    },
+    {
+      "accepted": false,
+      "checks": {
+        "joint_exactly_one_C_in_window": false,
+        "joint_pending4_before_C": false,
+        "joint_record_holds8": false,
+        "left_only_no_C_through32": false,
+        "left_only_pending4": false,
+        "null_stationary_no_C": true,
+        "right_only_no_C_through32": true
+      },
+      "right_initial_ab": [
+        0,
+        -1
+      ],
+      "right_phase": 1
+    }
+  ],
+  "physical_entanglement_established": false,
+  "protocol_sha256": "395b6fd14ec252330234b2db4f1c843c9453c547b43e3cfa0a4b40a003229063",
+  "schema": "universe24-autonomous-approval-result-v1",
+  "scope": "Two initially prepared signals test an autonomous coincidence interface. They are not an internally computed route approval, quantum entanglement or an external runtime gate. Conditional scalar algebra alone does not establish the required actual input waveform.",
+  "seconds": 1.1534735869936412,
+  "source_sha256": {
+    "research/components/__init__.py": "bc3c504533e052ea7dfee41483df25ee7ecc3bd30aba70fb52ed2d6f245afd4a",
+    "research/components/compose.py": "463f960fe44533310e98528d3f85b611101fa661c70ce18beed3ac72885ed496",
+    "research/components/recipes.py": "99a199109782b9115e06c67517a948d904a2659ffbeedadc92bb0606d653a0bc",
+    "research/components/spec.py": "1bb4bb06eaddebd0bb0d0287a6fc846900396b6fbcd00ec61cd28917f8e778d4",
+    "research/experiments/run.py": "2a9361b777f4eff1192cc5911d7521e3a6c81342e9e119dabff9d6e5941e679d",
+    "research/light_approval/approval_probe.py": "b220a8e7c7e140dc3d71c3cb2329048305407b2d7523cbce54e7a97507987990",
+    "research/light_approval/compute.py": "c3e610f14c9860f56a40f138b734dd659944bf360ef5c9a8dc7ca553bf147c9a",
+    "research/presenter/build.py": "0845fecd843702d1e2387a0955a4fb9a92b195e2bcab390c957171a4a2528ad8",
+    "research/presenter/demo.py": "5ffbaf1036d39574dfc7ae3d981632cd9c290d35e01b162098d510bcb2c90585",
+    "research/presenter/export.py": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc",
+    "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+    "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+    "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+    "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+    "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+  }
+}
