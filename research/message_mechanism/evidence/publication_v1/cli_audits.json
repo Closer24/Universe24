@@ -1,0 +1,28 @@
+[
+  {
+    "command": [
+      "python",
+      "-m",
+      "universe24",
+      "--config",
+      "examples/impulse.json",
+      "--audit"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"side\": 9,\n  \"nodes\": 729,\n  \"channels_per_node\": 48,\n  \"completed_steps\": 12,\n  \"stored_deviations\": 1,\n  \"body_signs\": [\n    1,\n    1,\n    1\n  ],\n  \"coupling_fingerprint\": \"44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77\",\n  \"initial_signed_account\": 12,\n  \"final_signed_account\": 12,\n  \"logged_arithmetic_events\": 0,\n  \"audited\": true\n}\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "python",
+      "-m",
+      "universe24",
+      "--config",
+      "examples/signed_impulse.json",
+      "--audit"
+    ],
+    "exit_code": 0,
+    "stdout": "{\n  \"side\": 9,\n  \"nodes\": 729,\n  \"channels_per_node\": 48,\n  \"completed_steps\": 12,\n  \"stored_deviations\": 1,\n  \"body_signs\": [\n    1,\n    -1,\n    1\n  ],\n  \"coupling_fingerprint\": \"9a984921623f24368a844e860510ca08aeab1a878b1d79e3fba495823ab909ca\",\n  \"initial_signed_account\": 12,\n  \"final_signed_account\": 12,\n  \"logged_arithmetic_events\": 0,\n  \"audited\": true\n}\n",
+    "stderr": ""
+  }
+]

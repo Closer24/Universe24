@@ -1,0 +1,20 @@
+{
+  "format": "universe24-message-discovery-protocol-v1",
+  "status": "Discovery search over initial preparations; not a holdout validation",
+  "question": "Can a stationary remainder-only converter turn the compact bipolar packet into an eight-update quiet pending receiver record?",
+  "base_commit": "0d4c4805be67b0efc42e084416ff2204529a1e07",
+  "board": {"side": 129, "background": [0, 0, 2], "body_signs": [1, 1, 1]},
+  "steps": 40,
+  "source": [32, 64, 64], "receiver": [48, 64, 64], "receiver_remainders": [4, 2],
+  "guide_pair": [0, 4], "even_remainders": [0, 2, 4],
+  "families": [
+    {"id": "row3", "description": "All729 combinations of the nine ordered even pairs at row x45,46,47; only initial remainders change", "count": 729},
+    {"id": "side47", "description": "All81 combinations of row x47 pair and transverse pair at(47,65,64), channels tensor.ports[2][0] and tensor.ports[2][14]", "count": 81},
+    {"id": "side46", "description": "All81 combinations of row x47 pair and transverse pair at(46,65,64), same registered channel selection", "count": 81}
+  ],
+  "search_order": "Families in listed order; lexicographic pairs from(0,0) through(4,4), deterministic enumeration; no random seed",
+  "acceptance": {"write_window_inclusive": [13, 24], "target_pair": [2, 4], "other46_target_remainders": 2, "quiet_subsequent_updates": 8, "pending": "There exists t in13..24 with exact full48 target state at all states t..t+8; all48 counters zero and no guardedC from initial state through t+8. Target changes initial receiverpair(4,2) to(2,4).", "C": "ell=next.b+old.a; ell nonzero and local triple changes", "outside_receiver": "Converter and other nodes may produce C and retain information; every actual port remains present", "scope": "Acceptance is a discovery candidate only, requiring separately frozen new-preparation validation; it is not yet approval, cancellation, path preference or a quantum mechanism"},
+  "evidence": {"every_candidate": "Complete initial spec reproducible from case; full48 receiver states and actual input sums; full-state final digest, per-step inverse equality, and predetermined predicates in compact ledger", "retained_full_records": "All accepted candidates plus first candidate and longest quiet pending prefix per family; source-off matched controls for every retained candidate; any output-budget exhaustion is explicit and prevents component acceptance", "presenter": "At most six selected complete recordings; first best row, first best side, first accepted when present, with matched source-off controls; observer unchanged", "null_theorem": "Every source-off candidate starts with all counters zero. Thus every actual input and quotient is zero and all remainders stay fixed; verify full source-off recordings for retained cases"},
+  "budget": {"max_candidates": 891, "max_recording_replays": 128, "max_cpu_seconds": 600, "max_wall_seconds": 1200, "max_output_bytes": 2147483648, "max_stored_channels_per_state": 50000},
+  "contract": "Fixed +++ coupling and unchanged Rule3; initial preparations only. Every update is reference Engine.advance on the full state; observers never feed back; no removal of a branch, counter, remainder or trajectory. A resource-aborted candidate is inconclusive, never a pass."
+}
