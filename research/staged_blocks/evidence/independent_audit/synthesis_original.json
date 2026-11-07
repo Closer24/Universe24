@@ -1,0 +1,29 @@
+{
+  "audit_cpu_seconds": 19.231842094,
+  "cpu_overrun_seconds": 0,
+  "excluded_registered_family": false,
+  "independent_unsat_proof_certificate_checked": false,
+  "kind": "synthesis",
+  "passed": true,
+  "producer_cpu_seconds": 597.182276529,
+  "protocol_sha256": "70d4fee4bdabaa902897d257a50db024370585bccda388bf3d51f3f2af3bdd98",
+  "query": {
+    "assertions_checked": 78478,
+    "assertions_requiring_exact_arithmetic_normalization": 590,
+    "encoded_channel_updates": 24776,
+    "encoding": "original-remainder",
+    "independent_unsat_proof_certificate_checked": false,
+    "passed": true,
+    "query_sha256": "b5a7e921118155e020e0c0122108970839e847e9d6e126adb009a3ac9c07747b",
+    "scope": "Every saved assertion equals an independently constructed exact matrix-derived Rule3, domain, receiver or stationary-control assertion; solver correctness is a separate assumption.",
+    "search_performed": false,
+    "solver_version": "4.15.4"
+  },
+  "registered_cpu_limit": 600,
+  "registered_sources_verified": true,
+  "scientific_acceptance": false,
+  "scope": "Submitted equations independently audited; both bounded solver timeouts are inconclusive. No witness, exclusion or physical conclusion follows.",
+  "solver_answer": "unknown",
+  "status": "inconclusive_solver",
+  "witnesses": 0
+}

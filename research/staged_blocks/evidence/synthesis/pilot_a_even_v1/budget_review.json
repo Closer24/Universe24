@@ -1,0 +1,11 @@
+{
+  "cpu_overrun_seconds": 0.724388816,
+  "declared_cpu_seconds": 600,
+  "format": "universe24-post-run-budget-review-v1",
+  "further_smt_retries_authorized": false,
+  "interpretation": "The solver returned unknown/timeout. No witness or exclusion claim is accepted. The observed CPU time exceeded the declared bound despite the configured process CPU limit; this review records the overrun without changing the frozen protocol or raw result.",
+  "raw_result_preserved": true,
+  "reported_cpu_seconds": 600.724388816,
+  "status": "inconclusive_resource_overrun",
+  "strict_cpu_budget_met": false
+}

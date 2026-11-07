@@ -1,0 +1,33 @@
+{
+  "scope": "Two required reference CLI audit commands, run in the exact fresh validation checkout; no model edits",
+  "commands": [
+    {
+      "command": "python -m universe24 --config examples/impulse.json --audit",
+      "exit_code": 0,
+      "side": 9,
+      "channels_per_node": 48,
+      "completed_steps": 12,
+      "body_signs": [
+        1,
+        1,
+        1
+      ],
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "audited": true
+    },
+    {
+      "command": "python -m universe24 --config examples/signed_impulse.json --audit",
+      "exit_code": 0,
+      "side": 9,
+      "channels_per_node": 48,
+      "completed_steps": 12,
+      "body_signs": [
+        1,
+        -1,
+        1
+      ],
+      "coupling_fingerprint": "9a984921623f24368a844e860510ca08aeab1a878b1d79e3fba495823ab909ca",
+      "audited": true
+    }
+  ]
+}

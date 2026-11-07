@@ -1,0 +1,101 @@
+{
+  "bundle_bytes": 8171753,
+  "bundle_sha256": "1e28bd2bd6e9bc91b6eb020598e7c67dbe53b0c905328d7e865762dfb691e38f",
+  "experiments": [
+    {
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "final_state_sha256": "1b7d97b9ecfe40df4d9070fa32d37988603c99677621a35f2d58bd7313c9cd02",
+      "frames": 41,
+      "id": "bridge-L129-d0-00",
+      "initial_state_sha256": "1b7d97b9ecfe40df4d9070fa32d37988603c99677621a35f2d58bd7313c9cd02",
+      "verified_transitions": 40
+    },
+    {
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "final_state_sha256": "44a7dbdf8c189648fed84267aaa53911c2e2c3b83ea0acd3a3ebdb74527993d5",
+      "frames": 41,
+      "id": "bridge-L129-d0-10",
+      "initial_state_sha256": "ecac0d9258c7934f6de556c3deaa97e1fffd7f0fb32fcddb55bccd47e6125930",
+      "verified_transitions": 40
+    },
+    {
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "final_state_sha256": "2de97924a5bd16d8dff72cb7c00a9f06c46cb08f84f4f2150d0913fc185ca6b3",
+      "frames": 41,
+      "id": "bridge-L129-d0-01",
+      "initial_state_sha256": "521a5a94183362c8753658df4a2c6605573e0c0ab0e24f0808c3a02a46f02a8a",
+      "verified_transitions": 40
+    },
+    {
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "final_state_sha256": "8689a3969153323bef23be6e3f42d966c26a20d2e73093c4e6ad0c04d29b7319",
+      "frames": 41,
+      "id": "bridge-L129-d0-11",
+      "initial_state_sha256": "8ccd2dbf508c1aff1d7dfb4e8c649adc7a60e09dd8a6847e07e91f319243aa6e",
+      "verified_transitions": 40
+    },
+    {
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "final_state_sha256": "78e42f250ecbbd8e43fe380a857b264919a9965d1dff24ab3cb7c9b9a7e8d43a",
+      "frames": 41,
+      "id": "bridge-L161-d3-00",
+      "initial_state_sha256": "78e42f250ecbbd8e43fe380a857b264919a9965d1dff24ab3cb7c9b9a7e8d43a",
+      "verified_transitions": 40
+    },
+    {
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "final_state_sha256": "a84d6e37f072b9993eb8ff74262a3bd55c56deedbfa506a6e5758ea32a586249",
+      "frames": 41,
+      "id": "bridge-L161-d3-10",
+      "initial_state_sha256": "128b6d5fea4480f0a740cd46b23ee9d89873a85879eb5e28091bde2efca6efb4",
+      "verified_transitions": 40
+    },
+    {
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "final_state_sha256": "bc7f9457f3cc71dfaedd901d22597a21bea758914bacadd58542c2c82574b8db",
+      "frames": 41,
+      "id": "bridge-L161-d3-01",
+      "initial_state_sha256": "eb29ccdf576a1580e5055589388789c13dd2f87a60af3c45d751160f89bf86c1",
+      "verified_transitions": 40
+    },
+    {
+      "coupling_fingerprint": "44b672d96111e71a145a2a74cc93c83d41d917140e979186c308a5ecd52c6f77",
+      "final_state_sha256": "bf2db30dfd82e0e5e1281a1398bd51011d707e70a53d3442698095e2ec8729fd",
+      "frames": 41,
+      "id": "bridge-L161-d3-11",
+      "initial_state_sha256": "b67211f71927150cd012db841e16d05d2103b3ee88cee4646f5bcccd23a6f999",
+      "verified_transitions": 40
+    }
+  ],
+  "external_resource_tags": 0,
+  "format": "universe24-presenter-build-v1",
+  "html_bytes": 8277191,
+  "html_sha256": "9ffbf590d814e2aca16108ce79eadbe30467bd6eaf4476f93c8393e21311df05",
+  "network_audit": "Requires the separate browser acceptance report; not inferred from static packaging",
+  "overwrites_existing_files": false,
+  "scope": "Read-only replay; complete states verified with the Python sources identified here",
+  "source_sha256": {
+    "research/presenter/app.js": "92e840516199699acd6202949607e79e2a11799f30a2c0bea998fa86afbfbacc",
+    "research/presenter/build.py": "0845fecd843702d1e2387a0955a4fb9a92b195e2bcab390c957171a4a2528ad8",
+    "research/presenter/data.js": "242039094253561e38610ccaa85566155b2f9ad3c598a72b565b032985cd8ea9",
+    "research/presenter/index.html": "910562c8d88318df4525a040f0658e6b0f3bcba82fb7ea699d28868b357b068a",
+    "research/presenter/startup.js": "94e137cd433fb69379d4348d540cc6eeb1d8bb91087a1c6958704302ef3e3d88",
+    "research/presenter/style.css": "a9c447c5e9eb615730d80d9145ea35fd3b21d4e7d4c739da4d8ba7c44e004423"
+  },
+  "verifier_source_sha256": {
+    "research/presenter/export.py": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc",
+    "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+    "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+    "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+    "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+    "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+  }
+}

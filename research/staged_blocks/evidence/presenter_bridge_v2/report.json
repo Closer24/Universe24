@@ -1,0 +1,3109 @@
+{
+  "format": "universe24-staged-presenter-smoke-v1",
+  "passed": true,
+  "scope": "Unchanged application JavaScript and native Canvas2D with explicit geometry. DOM options and synthetic event handlers tested. No actual browser CSS, native pointer hit testing, Safari, iPad or attachment preview execution claim.",
+  "source_sha256": "951d41d8201965d718ad08f9f03bb149a5f0ccbb16251101bcb6bd3756e2ba91",
+  "dependencies": {
+    "node": "v24.22.1",
+    "jsdom": "26.1.0",
+    "canvas": "0.1.80"
+  },
+  "bundles": [
+    {
+      "input": "research/staged_blocks/evidence/bridge_presenter_v1/The_Presenter.html",
+      "input_sha256": "9ffbf590d814e2aca16108ce79eadbe30467bd6eaf4476f93c8393e21311df05",
+      "selector_entries": [
+        {
+          "id": "bridge-L129-d0-00",
+          "title": "Two-lane pause bridge: bridge-L129-d0-00",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "bridge-L129-d0-10",
+          "title": "Two-lane pause bridge: bridge-L129-d0-10",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "bridge-L129-d0-01",
+          "title": "Two-lane pause bridge: bridge-L129-d0-01",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "bridge-L129-d0-11",
+          "title": "Two-lane pause bridge: bridge-L129-d0-11",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "bridge-L161-d3-00",
+          "title": "Two-lane pause bridge: bridge-L161-d3-00",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "bridge-L161-d3-10",
+          "title": "Two-lane pause bridge: bridge-L161-d3-10",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "bridge-L161-d3-01",
+          "title": "Two-lane pause bridge: bridge-L161-d3-01",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "bridge-L161-d3-11",
+          "title": "Two-lane pause bridge: bridge-L161-d3-11",
+          "hidden": false,
+          "disabled": false
+        }
+      ],
+      "checks": [
+        {
+          "experiment": "bridge-L129-d0-00",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 0,
+          "inspected_C_classes": [],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "1a8b512ccf3260ec97cd7ecfeaadcbbe3e2648625de1e557dd932fbdaea989bf"
+        },
+        {
+          "experiment": "bridge-L129-d0-10",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 4869,
+          "inspected_C_classes": [
+            1,
+            2,
+            0
+          ],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "f076d9deb5bceb5d744d88fd57a3aba96f45f485820940934f5e4eb656c4c39a"
+        },
+        {
+          "experiment": "bridge-L129-d0-01",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 5424,
+          "inspected_C_classes": [
+            1,
+            2,
+            0
+          ],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "5f7bdac6954222f685caae25790abd1dd2c495495eccce61fe9a3fc0273703a6"
+        },
+        {
+          "experiment": "bridge-L129-d0-11",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 322,
+          "inspected_C_classes": [
+            1,
+            2
+          ],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "f0f0c6ed66c53ee0a9e9e4220af8b3bd15eb59d0d5eb14f1b3c56bea1890832a"
+        },
+        {
+          "experiment": "bridge-L161-d3-00",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 0,
+          "inspected_C_classes": [],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "c892840e5557d7c2c62a86426c819166e6df68fe9d545d471083ff77e6dc6d6e"
+        },
+        {
+          "experiment": "bridge-L161-d3-10",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 4850,
+          "inspected_C_classes": [
+            1,
+            2,
+            0
+          ],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "0ec0e920349eb893178d5097874863e2a7dc0a4eeade1eb26793098003335872"
+        },
+        {
+          "experiment": "bridge-L161-d3-01",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 5411,
+          "inspected_C_classes": [
+            1,
+            2,
+            0
+          ],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "9c5bdb195eec4f7d4a0ed97d52d50fdbee354562601523fab54088f8703e564f"
+        },
+        {
+          "experiment": "bridge-L161-d3-11",
+          "frames": 41,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 322,
+          "inspected_C_classes": [
+            1,
+            2
+          ],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "fa10758e5315d6af08be27e8cae49a8373e8e55fab2faebed70a7713519fa383"
+        }
+      ],
+      "play_and_pause": true,
+      "errors": [],
+      "canvas_image": "bundle-1-whole-cube.png",
+      "canvas_image_sha256": "2864f178971e92e1f4ef28aafb2e79bad5486cbb8d08288323d4d052fc62251c",
+      "canvas_image_scope": "Actual native Canvas2D composited over its declared CSS navy; no browser layout screenshot",
+      "additional_images": [],
+      "animations": [
+        {
+          "experiment": "bridge-L129-d0-11",
+          "name": "two-lane-driven-pause",
+          "caption": "Scheduled two-lane stop/wait/restart. The center node is constant; opposing incoming terms cancel during the wait. This is not an autonomous isolated memory or computed approval.",
+          "source_record": "research/staged_blocks/evidence/pause_bridge_v1/records/bridge-L129-d0-11.json.gz",
+          "source_record_sha256": "919b6a7b6c3ba7e6bab9d0bfca75abfc990919560c61233440bc187dec4d49a3",
+          "panels": [
+            {
+              "port": "apparatus.clock",
+              "index": 0,
+              "label": "Clock channel 2: stop / wait / restart",
+              "show_inputs": true,
+              "address": [
+                64,
+                65,
+                64,
+                2
+              ]
+            },
+            {
+              "port": "apparatus.lower_incoming",
+              "index": 0,
+              "label": "Lower-lane input channel 0",
+              "address": [
+                64,
+                64,
+                64,
+                0
+              ]
+            },
+            {
+              "port": "apparatus.upper_incoming",
+              "index": 0,
+              "label": "Upper-lane input channel 6",
+              "address": [
+                64,
+                66,
+                64,
+                6
+              ]
+            }
+          ],
+          "frames": [
+            {
+              "file": "two-lane-driven-pause-frames/frame-0000.png",
+              "frame": 0,
+              "step": 0,
+              "state_sha256": "8ccd2dbf508c1aff1d7dfb4e8c649adc7a60e09dd8a6847e07e91f319243aa6e",
+              "png_sha256": "f7d7673a9b3c19a3b886c10f369462c3a50f0866eb3ddeb810a32e19d30bfd3b",
+              "raw_arithmetic_C": null,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0001.png",
+              "frame": 1,
+              "step": 1,
+              "state_sha256": "60156e16737c6dacb48a90ee3c0e456b25240fd208dac1574be90a2f457ddf3b",
+              "png_sha256": "42633da8bb42b041e820d626848d3905d126758f2c7f5f06ba39c129c3ff22a5",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 0
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0002.png",
+              "frame": 2,
+              "step": 2,
+              "state_sha256": "f7697dd83dbad3a8365a6f1298c1ecef4ee58713bea7aa9265ca86590a3d429d",
+              "png_sha256": "21159f20a341d588e6a0aff3104a0ad391e86346097969db247391123dc11984",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 1
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0003.png",
+              "frame": 3,
+              "step": 3,
+              "state_sha256": "91e36b52b5410ef8e2633756abb18da4929e64185176ebedcffd6ef5be51e1b4",
+              "png_sha256": "e152481895f0ec3a7302e2fd4da7abda8618d8084fbdb1783867e2b19783a106",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 2
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0004.png",
+              "frame": 4,
+              "step": 4,
+              "state_sha256": "0cc117f7b78994c01c7841a32d8010defe4e74e3761938e92bb0649eb2c4651a",
+              "png_sha256": "baad3b7fa2492afa600eb5fb895896eef22413d59baf5bfa64134a0520ac6cd0",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 3
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0005.png",
+              "frame": 5,
+              "step": 5,
+              "state_sha256": "ddaa2f72158a67539b8954bc77cbe0f5634c8c41b2f7c76744844e5810ce75fa",
+              "png_sha256": "67c92e2fa4149752c46dcc9eb26bbf6fab0c485ed816b575f836cad02a588a92",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 4
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0006.png",
+              "frame": 6,
+              "step": 6,
+              "state_sha256": "f31bb203b6ea9074f7a8faf08215f09ff67cb2042eda8ae0980bcdfed6e54bff",
+              "png_sha256": "9444dbcc536e40f11f45a6d5b954b65bc2684783462323b77a43d6a5d462fb27",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 5
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0007.png",
+              "frame": 7,
+              "step": 7,
+              "state_sha256": "35bd7c86522e05bdc23ba78b35f80e873d667d9ddec1d106995b097072ebb3b4",
+              "png_sha256": "c6a24e4ce5f078e401a4fe83e04cd65847f7b323e64977727cba2c9dd6987869",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 6
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0008.png",
+              "frame": 8,
+              "step": 8,
+              "state_sha256": "35468f42b68abee616fcb266d745caa7b9b996432d772c2eed27578a686d6f00",
+              "png_sha256": "029d3f11507c52bb0c9ba0041ebb734ec005efbb5ad713d1efb7fe939d4295a1",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 7
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0009.png",
+              "frame": 9,
+              "step": 9,
+              "state_sha256": "64b0b33d5064b1d7bf6d033bbd0a95527f9f825bb26c9e5d9db75928353f66ea",
+              "png_sha256": "536c24da073b7919a523d7f7f3b6896943e34c6711bd524f4a90cf106402b290",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 8
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0010.png",
+              "frame": 10,
+              "step": 10,
+              "state_sha256": "aa83fe4999a8826a3f1a075a9ca2bc67a2c7f19008a7049349a85d86d5a4d61d",
+              "png_sha256": "201c4e422ac15cf908b741591cf2752b1ca278817f0f57273b1fd3116bff3822",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 9
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0011.png",
+              "frame": 11,
+              "step": 11,
+              "state_sha256": "eafaaafac9c62eeb049a11668399f803e348f84ebf244da5f9db3f13f027347f",
+              "png_sha256": "d12d0eb841caa4a08b9a16996d1ddeaf52df2f5e51d50dfd9662372897e745c9",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 10
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0012.png",
+              "frame": 12,
+              "step": 12,
+              "state_sha256": "98e91e327614cb75b91c4461e445fde461b666ab2c48a120be2480e32968a357",
+              "png_sha256": "382c886dc4c640534a5f4b943ff3e641e5532d00653dfc1d5bb87f8e2f89b580",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 11
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0013.png",
+              "frame": 13,
+              "step": 13,
+              "state_sha256": "e3af7b9bc98ddeac9b2be426ce0b863bc0afbc2a5faa56f0c83c07c95733d413",
+              "png_sha256": "3350c5d84471fbc4be56a7782e43e1cb2af076b84616ed94263a166692d6fc63",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 12
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "4",
+                  "raw_C": 1,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0014.png",
+              "frame": 14,
+              "step": 14,
+              "state_sha256": "35c435b6bffaa8c7cf257d1350668c2091107130d116f1ea04ee52bfbd21d213",
+              "png_sha256": "c05688644f3acbc6bd6a7276f3d4fde9094762352b81f35e036784b406ff9756",
+              "raw_arithmetic_C": 9,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": 2,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "-1",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 13
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0015.png",
+              "frame": 15,
+              "step": 15,
+              "state_sha256": "f78566eda7d3d08e974104f999a29a12691bc08cea1eb64ee9938c567772d395",
+              "png_sha256": "bcf1e7745bc7d3c2de60189c11aba7afbcad17c95e0bd03fec3f3294e8d98659",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 14
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "4",
+                  "raw_C": 2,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0016.png",
+              "frame": 16,
+              "step": 16,
+              "state_sha256": "58227c81042c9e1b1f563ad50aa025c807ccb7a65ec923ad05d98b51ff9a715a",
+              "png_sha256": "89d2299b91b139c626d158198c73e68d47a97bf060f1d43d98d902db9be350f4",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "-1",
+                    "1",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 15
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0017.png",
+              "frame": 17,
+              "step": 17,
+              "state_sha256": "231b4a42e9a6d7b9165be1999c532964dbee3ee0fc0b23bd3413033b02adcf1e",
+              "png_sha256": "557e8b032f634a69eac98c35fc01d65eec1ac50265cc81c8c8b8a5383ec4aee6",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 16
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0018.png",
+              "frame": 18,
+              "step": 18,
+              "state_sha256": "b5abf0ec1e731cc6b49dcb4ff6992e2c272527ec08b80407eac6306f63d9a31c",
+              "png_sha256": "4fee087f37621cfeaafc92d2033f88f54d7b795a19d0cd61741652353ff79f1a",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "1",
+                    "-1",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 17
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0019.png",
+              "frame": 19,
+              "step": 19,
+              "state_sha256": "326d64c8c9af23dde869671dac89db7dda83e0c78dd14c57755a39632b7e5b21",
+              "png_sha256": "2118ace85db4784c292ca45b7f7a07ed6f2c6e4815fae2c69652ba24eb1d0bcf",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 18
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0020.png",
+              "frame": 20,
+              "step": 20,
+              "state_sha256": "3d74f559f834faebbbff533cda1669b4a874ca168264b6ad45920b0af848455d",
+              "png_sha256": "47ad535fa07ac060ac9a5298d3ba69d043db1ba8beead8995a1b439c896dceee",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "-1",
+                    "1",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 19
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0021.png",
+              "frame": 21,
+              "step": 21,
+              "state_sha256": "53b6d1f362497d704a2f8b558ebb60144861f218d83233edf088761891446828",
+              "png_sha256": "d13e5356e603cb7248060ea5ee8465ed5783150277d973acf773b4d4dfcb0899",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 20
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0022.png",
+              "frame": 22,
+              "step": 22,
+              "state_sha256": "26fc4ecc8e7ec3d6f246d8d7a26434f28ba53bb7f3b79ce28ed42a6b40b9da0b",
+              "png_sha256": "2d0cce0b2aafc1bbf2a31b9e906a426d0fa7aec3694e0ca0e992a6542c4a4677",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "1",
+                    "-1",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 21
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0023.png",
+              "frame": 23,
+              "step": 23,
+              "state_sha256": "a2660c326da7cc1633c3f1971bc26355b60cf47f23099019f63cc34beb7ecd67",
+              "png_sha256": "8b415e8674bbf0a9e44eeab12a8e1157ed7d5b51bfb1bd0a0d3837015e1cf9f2",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 22
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": 1,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0024.png",
+              "frame": 24,
+              "step": 24,
+              "state_sha256": "cfa599bbfbf9d8a75a6f24f8ce8a0a1ef7692f9b3da522dae2562b59e56d0c74",
+              "png_sha256": "194efaa52344376e808d3ba9a6bd7218c80a5d46d1a46bed2262ad4bd99addab",
+              "raw_arithmetic_C": 9,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": 1,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "1",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 23
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0025.png",
+              "frame": 25,
+              "step": 25,
+              "state_sha256": "91ff744bfd039739e416cd5a54deaf944447e2ec00e2ed884821fae21f6604cc",
+              "png_sha256": "111c50c7462d11d3d39da1c4d45de60fbd8c1c2492232eb7d3c434983cfb3719",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 24
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": 2,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0026.png",
+              "frame": 26,
+              "step": 26,
+              "state_sha256": "87c7875ca55e689796ac6a8feec0c8c895efaf71019d8c4ddb74978934c33782",
+              "png_sha256": "e1c5de95310fd6a0698071e9f2e69e41735aa7bb352adb8a800175ffb0191aa3",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 25
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0027.png",
+              "frame": 27,
+              "step": 27,
+              "state_sha256": "244ba724a53e77607c16a580cccc00e8cd6eb05ded29efcd0e1616c498f71e42",
+              "png_sha256": "3571e2d711c191b7fc04ea6e07076b48c8316bcb82829c8558d199d89ac1e258",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 26
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0028.png",
+              "frame": 28,
+              "step": 28,
+              "state_sha256": "665817676362e5fae58af87ab56056a3e5c394d68a78f01402396aef92b5026e",
+              "png_sha256": "0212751d3854aafc3eababcb394da4a87349dfa131340bc1be5c515e680cce36",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 27
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0029.png",
+              "frame": 29,
+              "step": 29,
+              "state_sha256": "203c9c5ef1aff63c23b1a8004b4fb5fd7efbb5bd1ed26d07ea909e80c92d0697",
+              "png_sha256": "134e991d33944d71903977c3a2d5016e0b87a9c44882114b9a4cb5d4edd0907a",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 28
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0030.png",
+              "frame": 30,
+              "step": 30,
+              "state_sha256": "84e343cf3a0aed648694d640fcb9444f3b8d8bf9d5eee38d0a3d8a532ef43c17",
+              "png_sha256": "0a2a020a0fdbf545cecee9d2ca2463ca25a94459c4827aac6ee84585d15b9301",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 29
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0031.png",
+              "frame": 31,
+              "step": 31,
+              "state_sha256": "99309dfa4f44536715d88be7eba5e6026e1c20d321ca281530a6e2e2e5c4509e",
+              "png_sha256": "26d49cafbb055a7dfc390db28720088997f437b46065dadd747c44e72ca2c303",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 30
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0032.png",
+              "frame": 32,
+              "step": 32,
+              "state_sha256": "3a5d69bc737fb2f2f701b68d693c0a7200e521d43b6354a42a7c52972a027633",
+              "png_sha256": "4db14dd05c26e55715740feae4859ee84e3066be8178a4ad46a8c75ab94b6bdc",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 31
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0033.png",
+              "frame": 33,
+              "step": 33,
+              "state_sha256": "f78c04546c6173650cfeb6b4837f754086e7a934d21f8243af773e77d6401273",
+              "png_sha256": "1fbbbedaed19bfdb771f6963c984bd882810a6c35f92057e34f4d6ea855db715",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 32
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0034.png",
+              "frame": 34,
+              "step": 34,
+              "state_sha256": "e9545ea7895d17fdc85e052e28003fd9f6c6819f008de7579308ac2df6016d46",
+              "png_sha256": "3b6db30343d20b6bfccd7937802205fe0a74461284d725210abf9bb5512ba7b6",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 33
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0035.png",
+              "frame": 35,
+              "step": 35,
+              "state_sha256": "b8c8ab09ac2af41ee8430c01c65274abd045591274c37ad0715a1c097a34aa41",
+              "png_sha256": "d718af1ef10ecf4105e37aa71eb5e29894ad9eba5e50b234e1dd78369f07713c",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 34
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0036.png",
+              "frame": 36,
+              "step": 36,
+              "state_sha256": "dace8fb4a77664cb3ec8bc82ec1b7c02eec8ee203e31ef9d904d1d8e99f5aeeb",
+              "png_sha256": "73c5571585007e59a4f26df17b432a81b14c655c7527304dbdbf29440106daa6",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 35
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0037.png",
+              "frame": 37,
+              "step": 37,
+              "state_sha256": "328ce8c264c69e7c58b451dc7df2ceb7df215b7be58035b0a705068de1be7ea5",
+              "png_sha256": "7fedb0e04937df0b29fd73db44f57c7f32aa9a622f15b38bb51fbdf42c8fba6b",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 36
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0038.png",
+              "frame": 38,
+              "step": 38,
+              "state_sha256": "ea8fe9b7234c8f5fa8bcbfa92648a51b14cd123edc85ccced6c68149fa84ec72",
+              "png_sha256": "1b37d2bdff63ff14932f6e09727e51f55cd23d52007a5718fec3fc955e23d541",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 37
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0039.png",
+              "frame": 39,
+              "step": 39,
+              "state_sha256": "70c7ee5f85acc3216ecfe29f8557598679183f30d75c7db28a89a9948db09f5d",
+              "png_sha256": "98c1fc36374f7576c6e4e51594e2a53549a8106a9e1afaf4bd38320beb13e47f",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 38
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            },
+            {
+              "file": "two-lane-driven-pause-frames/frame-0040.png",
+              "frame": 40,
+              "step": 40,
+              "state_sha256": "8689a3969153323bef23be6e3f42d966c26a20d2e73093c4e6ad0c04d29b7319",
+              "png_sha256": "9b450b44d6293f37f2f72d44963aca523462bec52f4f6ab403af53a4b287cab2",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "apparatus.clock",
+                  "address": [
+                    64,
+                    65,
+                    64,
+                    2
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": [
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0",
+                    "0"
+                  ],
+                  "input_terms_source_step": 39
+                },
+                {
+                  "port": "apparatus.lower_incoming",
+                  "address": [
+                    64,
+                    64,
+                    64,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                },
+                {
+                  "port": "apparatus.upper_incoming",
+                  "address": [
+                    64,
+                    66,
+                    64,
+                    6
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null,
+                  "six_signed_input_terms": null,
+                  "input_terms_source_step": null
+                }
+              ],
+              "comparison": null
+            }
+          ],
+          "scope": "Every image is one saved native state rendered by unchanged Presenter Canvas2D with an emulated viewport; no interpolated states or new evolution; replay restarts after the final state"
+        }
+      ]
+    }
+  ],
+  "animation_plan": {
+    "path": "research/staged_blocks/bridge_animations.json",
+    "sha256": "211fcef9a49621ed17c6c5987f9c01dd04c74a150b43b2422255694dfc71b0c2"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "format": "universe24-staged-transmission-protocol-v1",
+  "status": "Prospective validation; frozen before all64 new trajectories",
+  "question": "Does the prepared clock state enable or suppress exact forward transmission of the same guided carrier at unseen delays and board sizes, under unchanged Rule3?",
+  "discovery": "Existing base g0/r0/phase2 at delay0 has an exact forward carrier at states24..27 only in11. Base g0/r0/phase0 has that carrier only in10. These motivate two distinct prospective families; the original discovery is not counted as validation.",
+  "family": {"board_sides": [137, 193], "packet_delays": [4, 5, 8, 9], "controls": ["00", "10", "01", "11"], "families": ["enable", "aligned_suppress"], "cases": 64},
+  "board": {"background": [0, 0, 2], "body_signs": [1, 1, 1]},
+  "steps": 40,
+  "seed": null,
+  "geometry": "Let c=L//2. Complete periodic X-row guide(0,4) at y=z=c. Packet origin(c-16-delay,c,c), existing GuidedPacketSource with all four core sites and retained halo. Clock center(c,c+1,c), channel ports[+Y][0], remainder0. Forward outlet packet-origin coordinate c+8; backward outlet c-8. No compensation patch and no added reference clock.",
+  "phase": {"enable": "Initial p=(2-delay) modulo4, so delayed encounter matches discovery phase2. Registered delays give p2,p1,p2,p1; their clock-off guide-facing remainder is2.", "aligned_suppress": "Initial p=(-delay) modulo4, so delayed encounter matches discovery phase0. Registered delays give p0,p3,p0,p3; their clock-off guide-facing remainder is0. This is a negative control for11-only enabling, with a separate suppression prediction, not an assumed absence of transmission."},
+  "preparation": "Reuse interactions.case_spec for the guide-compatible complete clock phase, with guide target channel0 and clock remainder0. All controls retain identical full initial remainders, guide, phase and halo. Packet-off zeroes only original packet counters; clock-off zeroes only the designated clock-center counters. Every state is fixed before runtime.",
+  "controls": {"00": "Packet absent, clock counters absent", "10": "Packet present, clock counters absent", "01": "Packet absent, prepared clock present", "11": "Packet and prepared clock present"},
+  "carrier": "Use the existing complete packet_matches predicate: exact equality of all48 channels in a6x3x3 spatial box to GuidedPacketSource plus its surrounding guide, including the complete retained transverse halo. Forward speed is+1 site per update. Backward comparison uses the existing full-state T(a,b,r)=(-b,-a,r) template. No amplitude-only or center-channel match qualifies.",
+  "readouts": {
+    "incoming": "At states delay+4 through delay+7, compare packet origin source_x+t and speed+1. All four complete local matches must hold in10 and11; none may occur in00 or01.",
+    "forward_fixed": "At states24+delay through27+delay, compare origins c+8,c+9,c+10,c+11. All four matches are required for forward_fixed=true.",
+    "forward_prediction": {"enable": {"00": false, "10": false, "01": false, "11": true}, "aligned_suppress": {"00": false, "10": true, "01": false, "11": false}},
+    "descriptive_scan": "Independently retain every four-consecutive-state full carrier match starting at states18..37 at either predeclared outlet. A shifted/late match never rescues the fixed-time prediction. For a predicted absent carrier, any full match in this scan invalidates the claimed horizon-wide absence.",
+    "backward": "No backward full-template carrier may appear in the registered18..37 scan in any control. This excludes this exact carrier template in this window, not every possible outgoing disturbance.",
+    "diagnostics": "Retain every full-board C0/C1/C2 event, all336 clock-region triples, exact clock-center inputs and boundary terms, and full48 clock-node input sums with all six signed contributions at every update. None affects evolution.",
+    "information": "All four complete final states must remain distinct. Report full-state differences between11 and10, including differences outside the observed outgoing packet box. No absent local carrier is interpreted as erased information."
+  },
+  "acceptance": "Complete all64 runs. Every group must preserve matched initial remainders, exact source-mask counter changes, static00, complete-board period4 for01, all incoming predictions, the appropriate fixed-time forward pattern, no unexpected scan matches for predicted-absent masks, no backward carrier, no active boundary contact and exact full-state inverse. Both enabling and aligned-suppression families must match their own predictions; report every counterexample without a subset-only success claim.",
+  "no_wrap": "Every initially nonzero counter is more than40 face steps from a periodic boundary in both registered sizes. Verify no active counter touches any boundary through40. The periodic guide's stationary remainders are retained.",
+  "budget": {"max_cases": 64, "max_cpu_seconds": 180, "max_wall_seconds": 600, "max_recorded_bytes": 52428800, "max_cells_per_record": 500000, "max_seconds_per_record": 60},
+  "retention": "All complete gzip recordings and all controls are retained. Stop before a new complete four-control group if the budget is exhausted; report every unrun case. No incomplete group can pass. Preserve frozen source/protocol hashes and exact preparations.",
+  "presenter_selection": [{"family": "enable", "side": 137, "delay": 4}, {"family": "aligned_suppress", "side": 193, "delay": 9}],
+  "scope": "Prepared state-dependent transmission control of a mathematical guided carrier. This is not a splitter, incoming-written controller, approval or release of stored information, physical light, complexity selection or quantum collapse. The coupling and Rule3 remain unchanged; there is no runtime switch."
+}

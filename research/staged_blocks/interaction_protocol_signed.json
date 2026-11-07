@@ -1,0 +1,28 @@
+{
+  "format": "universe24-staged-signed-comparison-protocol-v1",
+  "status": "Frozen before any signed-comparison trajectory",
+  "question": "Does replacing the fixed +++ tensor by fixed +-+ change a controlled packet/clock encounter, after separately checking valid carrier and clock preparations?",
+  "discovery": "The completed +++ interaction grid found conditional C events but no registered (I,r) memory. This comparison tests the user's sign-pattern suggestion. It is separate from the later same-board phase-memory validation.",
+  "tensor_choices": [[1, 1, 1], [1, -1, 1]],
+  "seed_methods": {
+    "same_seed": "Use exactly the complete +++ initial triples, including every packet and clock halo, under either fixed tensor. Invalid singleton transport or clock behavior must be reported and prevents a cancellation claim.",
+    "tensor_aware": "Use the existing GuidedPacketSource formula with the run's signed weights. For the side clock, choose initial b=q equal to the reciprocal guide-facing weight, so q*w_guide=+1; prepare every halo remainder using its actual signed weight and the full four-cycle phase. This is a new initial preparation, not a claimed global gauge transformation."
+  },
+  "geometry": {"side": 129, "steps": 40, "row_y": 64, "row_z": 64, "packet_x": 48, "clock_x": 64, "clock_y": 65, "clock_z": 64, "guide_target_channel": 0, "forward_outlet_x": 72, "backward_outlet_x": 56},
+  "family": {"clock_remainders": [0, 4], "clock_phases": [0, 1, 2, 3], "controls": ["00", "10", "01", "11"], "interaction_cases": 128, "carrier_checks": "Both seed methods, both tensors, and both directions on a pristine complete guide: eight independent full-state eight-update translation checks.", "carrier_cases": 8, "total_cases": 136},
+  "controls": "First bit controls only packet initial counters; second controls only target clock initial counters. Every control group retains identical complete remainders. No reference clock is added here.",
+  "singleton_gates": "An interaction cancellation claim is eligible only when the corresponding pristine forward carrier passes exact full-state translation and the clock-only whole board has period four. A quiet outlet caused by a broken incoming carrier is not interaction cancellation.",
+  "readouts": {
+    "reuse": "Use the original interaction protocol's full 336-channel region, individual external incoming terms, all-world C log, eight-update isolated (I,r) retention definition, and entire-horizon excess-event activation diagnostic without changing them.",
+    "signed_carrier_template": "For outgoing matching, use all actual signed packet halo values. T(a,b,r)=(-b,-a,r) supplies the backward template on the same guide. Require the same four consecutive local translations as the original protocol.",
+    "outlet_window": [20, 40],
+    "strict_forward_cancellation": "After singleton gates pass, at least one forward-outlet channel has nonzero counters in 10 during the fixed window, all 48 forward-outlet channels have zero counters throughout that window in 00 and 01, and all 48 remain zero throughout in 11. Complete output histories and all C are retained. This is local silence, not state deletion.",
+    "carrier_suppression": "Record a valid forward carrier in 10 and no matching forward carrier in 11 separately from full outlet silence. A distorted packet is not automatically a canceled signal.",
+    "phase_or_release": "No new phase-memory, physical comparator, capture, approval or release claim is made by this comparison."
+  },
+  "no_wrap": "All active preparations are at least forty lattice steps from boundaries; record every full state and reject any active boundary contact during the observation horizon.",
+  "budget": {"max_cpu_seconds": 180, "max_recorded_bytes": 20971520, "max_cases": 136},
+  "retention": "Retain all pristine carrier records and every completed four-control group with complete states, initial triples, actual inputs, all events and inverse checks. If the budget is reached, stop at a group boundary and report the unrun parameters.",
+  "presenter_selection": "All four controls for tensor-aware seeds, r=0, phase=1, under each of the two tensors: eight selected experiments fixed before this comparison.",
+  "gauge_scope": "The algebra audit found a local six-edge sign obstruction between +++ and +-+. No checkerboard or other diagonal sign gauge equivalence is assumed. Even when a restricted preparation behaves equivalently, this does not prove global tensor equivalence."
+}

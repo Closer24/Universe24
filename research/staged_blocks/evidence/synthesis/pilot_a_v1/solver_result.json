@@ -1,0 +1,7 @@
+{
+  "answer": "unknown",
+  "encoded_channel_updates": 24776,
+  "query_sha256": "b5a7e921118155e020e0c0122108970839e847e9d6e126adb009a3ac9c07747b",
+  "statistics": "(:added-eqs                   771\n :arith-bound-propagations-lp 1827\n :arith-branch                294\n :arith-conflicts             21\n :arith-cube-calls            105\n :arith-dio-calls             8\n :arith-fixed-eqs             771\n :arith-gcd-calls             413\n :arith-gomory-cuts           162\n :arith-hnf-calls             105\n :arith-lower                 51802\n :arith-make-feasible         1663\n :arith-max-columns           75170\n :arith-max-rows              25592\n :arith-patches               422\n :arith-upper                 53094\n :conflicts                   24\n :decisions                   1020\n :del-clause                  3397\n :final-checks                423\n :max-memory                  1961.11\n :memory                      697.16\n :minimized-lits              1\n :mk-bool-var                 103082\n :mk-clause                   3853\n :num-allocs                  3233165817846.00\n :num-checks                  1\n :propagations                3465\n :rlimit-count                16099490\n :time                        572.61)",
+  "version": "4.15.4"
+}

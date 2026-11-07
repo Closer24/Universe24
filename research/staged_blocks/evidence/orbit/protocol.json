@@ -1,0 +1,23 @@
+{
+  "format": "universe24-staged-orbit-protocol-v1",
+  "question": "Does each registered isolated initial counter/halo preparation follow the exact whole-board period-four formula under unchanged Rule3?",
+  "model": "universe24-2O-body-013-v1",
+  "specification": "docs/MODEL.md",
+  "scope": "Prepared clock candidate; incoming-signal capture, waiting approval and directed release are not acceptance claims.",
+  "steps": 8,
+  "sides": [3, 5, 9],
+  "domain": {"channels": "all 48", "body_signs": "all eight triples", "center_remainders": "0..5", "counter_pairs": "all 13 integer pairs with |a|+|b|<=2", "phases": [0, 1, 2, 3]},
+  "families": [
+    {"name": "labels", "count": 384, "enumeration": "All eight sign triples lexicographically times channels0..47; vector=index mod13, r=index mod6, phase=index mod4, side=index mod3; boundary-crossing placement (0,L-1,channel modL)."},
+    {"name": "values", "count": 312, "enumeration": "All13 vectors lexicographically times r0..5 times phase0..3; L5 centered, channel=index mod48, alternating+++,+-+."},
+    {"name": "off", "count": 24, "enumeration": "Unit(1,0) clock, all4phases and6centerremainders; remove only initialcenter counters, preserve allhalo remainders."},
+    {"name": "disturbance", "count": 24, "enumeration": "L9 centeredunitclock channel0 +++, eachsixhalo recipient independently receives initialr shift±2 mod6 or initialb shift±1. No runtime disturbance."}
+  ],
+  "readouts": {"formula": "Every retained full state equals the independently stated analytic phase formula; all other addresses remain background.", "period": "Minimal return4 for nonzero installedcounters;1 for absent orzero counters.", "events": "Every guarded C in every address, including outside the protectedregion, is retained.", "control": "Sourceoff fullstate remains stationary with identicalinitialremainders.", "disturbance": "Report firstformula mismatch, allC and allnoncenter counters; no assumption ofrobustness and no retuning."},
+  "success": "All720 unperturbed/control cases satisfy the fixed full-state formula, period and zeroC predicates, with complete inverse recovery.",
+  "failure": "Any unperturbed mismatch is an implementation/proof blocker; publish the completecounterexample. Disturbance failures are finite limits, not a blanket impossibility claim.",
+  "continuation": "Only after isolated validation, test samecandidate in declared compositions and actualincoming-signal controls under separate protocols.",
+  "budget": {"cpu_seconds": 180, "max_runs": 744, "steps_per_run": 8},
+  "seed": null,
+  "observation_policy": "Read-only; no observer callback or supplied waveform changes a runningboard. Conditionalinput calculations are mathematical tests only."
+}

@@ -1,0 +1,16 @@
+{
+  "accepted": false,
+  "cpu_seconds": 597.182276529,
+  "evidence_bytes_before_final_summary": 2072334,
+  "format": "universe24-staged-synthesis-result-v1",
+  "peak_resident_bytes": 1995116544,
+  "physical_light_or_approval_established": false,
+  "pilot": "A",
+  "protocol_sha256": "70d4fee4bdabaa902897d257a50db024370585bccda388bf3d51f3f2af3bdd98",
+  "reason": "timeout",
+  "records": [],
+  "scope": "Only the frozen22-remainder apparatus family, fixed complete tensor, source and horizon12",
+  "sources_unchanged": true,
+  "status": "inconclusive_solver",
+  "wall_seconds": 597.8885721219995
+}

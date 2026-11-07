@@ -1,0 +1,2821 @@
+{
+  "format": "universe24-staged-presenter-smoke-v1",
+  "passed": true,
+  "scope": "Unchanged application JavaScript and native Canvas2D with explicit geometry. DOM options and synthetic event handlers tested. No actual browser CSS, native pointer hit testing, Safari, iPad or attachment preview execution claim.",
+  "source_sha256": "7055d4b9d5655ad61b930db8503ab686ed935aa563a9d2e9c29e7248e50077da",
+  "dependencies": {
+    "node": "v24.22.1",
+    "jsdom": "26.1.0",
+    "canvas": "0.1.80"
+  },
+  "bundles": [
+    {
+      "input": "research/staged_blocks/evidence/composition/The_Presenter.html",
+      "input_sha256": "a921f21cfd31c24086b900b548f76ccd9186735109be6d74e378b8f6f10cbc6f",
+      "selector_entries": [
+        {
+          "id": "four-blocks-isolated-on",
+          "title": "Four blocks: isolated, carrier present",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "four-blocks-isolated-off",
+          "title": "Four blocks: isolated, carrier absent",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "four-blocks-connected-on",
+          "title": "Four blocks: connected, carrier present",
+          "hidden": false,
+          "disabled": false
+        },
+        {
+          "id": "four-blocks-connected-off",
+          "title": "Four blocks: connected, carrier absent",
+          "hidden": false,
+          "disabled": false
+        }
+      ],
+      "checks": [
+        {
+          "experiment": "four-blocks-isolated-on",
+          "frames": 25,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 96,
+          "inspected_C_classes": [
+            1,
+            2
+          ],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "467b64235fb2bbf5e3b9af24c89992ae3249133eac7b5ef43f19da8465cb0fab"
+        },
+        {
+          "experiment": "four-blocks-isolated-off",
+          "frames": 25,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 0,
+          "inspected_C_classes": [],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "dafdaaa06b56f81666b547a3f4785fd226440e3fbaaea54792f40c9625471a62"
+        },
+        {
+          "experiment": "four-blocks-connected-on",
+          "frames": 25,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 116,
+          "inspected_C_classes": [
+            1,
+            2,
+            0
+          ],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "ec2ffff1576ad87e7af6bcfeebaf6e2e42a9f8159ea4f47843fa7145e50dc097"
+        },
+        {
+          "experiment": "four-blocks-connected-off",
+          "frames": 25,
+          "all48_channels": true,
+          "all_saved_steps_and_hashes": true,
+          "raw_arithmetic_events": 0,
+          "inspected_C_classes": [],
+          "raw_C_labels_preserved": true,
+          "stepping": true,
+          "synthetic_drag_rotation": true,
+          "reset_whole_cube": true,
+          "eight_corners_inside": true,
+          "corners": [
+            {
+              "x": 374.18305040356864,
+              "y": 489.64425757406343
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 612.8
+            },
+            {
+              "x": 374.18305040356864,
+              "y": 143.22353717077092
+            },
+            {
+              "x": 603.7873106212543,
+              "y": 266.37927959670753
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 396.02072040329244
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 519.1764628292291
+            },
+            {
+              "x": 676.2126893787457,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 905.8169495964314,
+              "y": 172.75574242593657
+            }
+          ],
+          "retained_state_sha256": "8c5c0ad4b0817da5b971269701425cba2680952f55b7dca54e1c63f81ca1345a"
+        }
+      ],
+      "play_and_pause": true,
+      "errors": [],
+      "canvas_image": "bundle-1-whole-cube.png",
+      "canvas_image_sha256": "03611f4ab2478a5b1928c45c06bfe8e80365c77d7791929def31a76c08bd8984",
+      "canvas_image_scope": "Actual native Canvas2D composited over its declared CSS navy; no browser layout screenshot",
+      "additional_images": [
+        {
+          "experiment": "four-blocks-isolated-on",
+          "frame": 0,
+          "name": "four-block-overview.png",
+          "caption": "Four initial preparations on the complete cube: guided carrier, guide, prepared clock and passive record.",
+          "step": 0,
+          "state_sha256": "676ce7c52314d5d1c180e6fc6d5f333b7c0b0ce6d77527b0eee39d1d12bb196b",
+          "image_sha256": "03611f4ab2478a5b1928c45c06bfe8e80365c77d7791929def31a76c08bd8984",
+          "scope": "Static native Canvas2D rendering of a recorded state; explicit geometry; not browser layout or interactive playback"
+        },
+        {
+          "experiment": "four-blocks-connected-on",
+          "frame": 10,
+          "name": "carrier-receiver-interaction.png",
+          "caption": "Recorded state 10: the incoming carrier has changed the connected receiver; the strict pending-memory criterion did not pass.",
+          "step": 10,
+          "state_sha256": "f54cf5eaaa81e94aaa3434434652b2d99cbb8a8d69691bad733e2b536a7cdd54",
+          "image_sha256": "e7186b1f7c2e5ffb473aff06c32565792b1710e2016e53684d1156e3c12387ad",
+          "scope": "Static native Canvas2D rendering of a recorded state; explicit geometry; not browser layout or interactive playback"
+        }
+      ],
+      "animations": [
+        {
+          "experiment": "four-blocks-isolated-on",
+          "name": "four-blocks-isolated",
+          "caption": "Recorded coexistence: the prepared clock rotates without being activated by the separate carrier.",
+          "source_record": "research/staged_blocks/evidence/composition/records/four-blocks-isolated-on.json.gz",
+          "source_record_sha256": "06c4e221bbbad69a198d20583829d7f53dfdabfd038b4a3d7872e3b030f4d0d5",
+          "panels": [
+            {
+              "port": "clock.center",
+              "index": 0,
+              "label": "Prepared clock: runs without the carrier",
+              "address": [
+                16,
+                24,
+                16,
+                0
+              ]
+            },
+            {
+              "port": "memory.memory",
+              "index": 0,
+              "label": "Receiver channel 0",
+              "address": [
+                16,
+                16,
+                24,
+                0
+              ]
+            },
+            {
+              "port": "memory.memory",
+              "index": 1,
+              "label": "Receiver channel 14",
+              "address": [
+                16,
+                16,
+                24,
+                14
+              ]
+            }
+          ],
+          "frames": [
+            {
+              "file": "four-blocks-isolated-frames/frame-0000.png",
+              "frame": 0,
+              "step": 0,
+              "state_sha256": "676ce7c52314d5d1c180e6fc6d5f333b7c0b0ce6d77527b0eee39d1d12bb196b",
+              "png_sha256": "c29fa229a37a316520c5a76d40c85fdaefb4fa994fd64147c9361d28b40f3beb",
+              "raw_arithmetic_C": null,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0001.png",
+              "frame": 1,
+              "step": 1,
+              "state_sha256": "f9bda56c465b59172c919b5601da0f559eac158cccc6d98f4eaacbb6f735a216",
+              "png_sha256": "45d72e821b4efa4ba96b38127b1fdfb7fdb9413b5451997ff6e9692c23211200",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0002.png",
+              "frame": 2,
+              "step": 2,
+              "state_sha256": "908197a713af36d92b2ddeb2eff777cfc94a241e7473cc5be26894acd314698e",
+              "png_sha256": "1795f991fae02e284e40299e4b4de5483e5d279f18bc15f807579a3dd522b83c",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0003.png",
+              "frame": 3,
+              "step": 3,
+              "state_sha256": "5b6ce88401e561f8980920a5a53927df9b827a53fa927044a0ee517ac1f1ab35",
+              "png_sha256": "835b7f73cc47659cd08b0e6ba264af9b5ce56aa45fe6f908bb343aa31f933785",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0004.png",
+              "frame": 4,
+              "step": 4,
+              "state_sha256": "33e8d7209118d491d2d5a301d36025dfc7a90930dc59a8cb7dd6c1b7664cd0e0",
+              "png_sha256": "9400427458b7530bfdf51db1777c61effdebc01bac9ef17ccf3055ca3b844ea8",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0005.png",
+              "frame": 5,
+              "step": 5,
+              "state_sha256": "20d73462c7f0becbf37fce1d6cae4655ad46e4246ebf0538b561caeb575dc6ad",
+              "png_sha256": "41faaa7de354e10e43fd8e55078e125a34afbdc564c1f4f4aeb635666ffaaeda",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0006.png",
+              "frame": 6,
+              "step": 6,
+              "state_sha256": "7d8ab211268c2b6d2724d550e1c189e1f621ebea7c03d5d59b11bea1829f7f27",
+              "png_sha256": "5e17fef6a441131f999e6bab9e403981cc61842922c7940b3a1a4e6a12436084",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0007.png",
+              "frame": 7,
+              "step": 7,
+              "state_sha256": "6ce7fd4c811bc4aeff6c4de2e017403da72365aca1a4a045c2d7e7549b964f90",
+              "png_sha256": "52bfcd82a2bca867e1d167b9bd9a4796beed6d4ba9a097b41c93b8478022d8d1",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0008.png",
+              "frame": 8,
+              "step": 8,
+              "state_sha256": "4ae1425f43edaab64b3c08007cd737d620a2bd52fab1545ecf614f15263a3e00",
+              "png_sha256": "0fe786a6692b1d094467b644517e80167728830b90dfd4aae66cf4ecc57409f1",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0009.png",
+              "frame": 9,
+              "step": 9,
+              "state_sha256": "f53663a5ee691a2eb02eb17055bac49a18fb38a2b254c28147194683454bbed6",
+              "png_sha256": "697e31fd3bd8c1e40bb08f915c18972e0bb06cc117bbe5e4342d675011e7d9e5",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0010.png",
+              "frame": 10,
+              "step": 10,
+              "state_sha256": "5019226e52591676ef9ce6d9d0bf6cf599910d198e6495f2b7def9aba0a695ec",
+              "png_sha256": "6bfdcd3fa1dffd6e5960712a529b1378e25b3d04b6b63f90b1c5e51af37fa2b3",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0011.png",
+              "frame": 11,
+              "step": 11,
+              "state_sha256": "e40921a637cb4fb3cd4dd090ea500ce4bb4fa5cf50034e52451d7e31fc10a87b",
+              "png_sha256": "3a6c382d89ad699482958be5768dfec33fe01fb0d7da9f3293b0cff7eef70578",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0012.png",
+              "frame": 12,
+              "step": 12,
+              "state_sha256": "c3692edabe67f80122f572b54ecdc555be015e74144bcedb890583726ede1b62",
+              "png_sha256": "4c70600c6ffbbb4265b1d0ea2802a16a68ec326d672f89fdd5cd14bee323c17e",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0013.png",
+              "frame": 13,
+              "step": 13,
+              "state_sha256": "8de82da08c088f5771b49f22c98ec77c6fd67e98b4081e0da2901d05db4cf173",
+              "png_sha256": "2084b4ec839577e817a184f4caa6fd5d779448cd881148473a752fe1797ed7cd",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0014.png",
+              "frame": 14,
+              "step": 14,
+              "state_sha256": "3bbfe54ce4d723a9cd27d26ab25e3a8c093d4c403ccc1f18fc44cf413dc2f23f",
+              "png_sha256": "12d79a3737e6f16b81a080f63cb0656c256e8af9ab973c98241060d70bead340",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0015.png",
+              "frame": 15,
+              "step": 15,
+              "state_sha256": "33e853fb4b9c74843076ebbc3e82250e54dbac6e89753732fa3c0b19d17a0ad1",
+              "png_sha256": "9a47f09350d6d1373c73e27a629050180def7183a3e2b292e9299cfeeb681de2",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0016.png",
+              "frame": 16,
+              "step": 16,
+              "state_sha256": "f9d76f06667cec6e4cb2b0997e7aed765c94525daa8fd4c97249ffe83511cd43",
+              "png_sha256": "9efcc23877ff3d2b194b3da3778eab92c9a8bd317bfd99828f7f0e5e640c8c0d",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0017.png",
+              "frame": 17,
+              "step": 17,
+              "state_sha256": "c8205685b261ba6a0c66f275be6edc3daebd29961dbed5c9a581b39c6cc0c67f",
+              "png_sha256": "9503379de20ab1ebf6f4306d0dafb42f8e1e1df202e42b86f02626c7f0115629",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0018.png",
+              "frame": 18,
+              "step": 18,
+              "state_sha256": "4dcb0668bc7aaedb2097577d7b02a887c5c263676250a70a464a2aff09849b5d",
+              "png_sha256": "b6f6c7b07be0598a41dbe2ef5f7568e3e328b4347c341dfdeb95ab3a15fcce10",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0019.png",
+              "frame": 19,
+              "step": 19,
+              "state_sha256": "725037c8d2ebc0270a96d5c1b40cdec8d80480130e197488880a59a3333165b4",
+              "png_sha256": "d7109a12ba6839a91e42f0e1620fce1a09eff8efbce0705e38c501b36cf5822f",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0020.png",
+              "frame": 20,
+              "step": 20,
+              "state_sha256": "a62669a265b2da4bf7d26ba0e2fdce800bbc43f4409f8c7f6cc4c65120450bbe",
+              "png_sha256": "e79fd85ad4609e3c4b12ea7aa4b02a75fe55f63b1220b500d64a3f81f88d9beb",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0021.png",
+              "frame": 21,
+              "step": 21,
+              "state_sha256": "7eeaee50f237ab2ca1912df1142347a8c6ad152cf87f41d46032fa489096b93b",
+              "png_sha256": "17b01d60c7d78e00cea30767c8b98172cffa314fa8c5a3c2f1434cb34b6eeb14",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0022.png",
+              "frame": 22,
+              "step": 22,
+              "state_sha256": "83e0fd1f72f2c30ca61f44070863abb7d5cd2b387e63a2225ec5b0ff22d310cb",
+              "png_sha256": "618dc40ee55c9b37b1f16292faa160699de48c9fbfb527a3448abbead1868be2",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0023.png",
+              "frame": 23,
+              "step": 23,
+              "state_sha256": "f4aede567cff08058d3abd1ffb41dd6a94bbebeb0357f440d09ec350f61be36b",
+              "png_sha256": "28cff19ea98d8ea70acf664ef1f8835c1a469891c8d123d8a4539e391f020deb",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-isolated-frames/frame-0024.png",
+              "frame": 24,
+              "step": 24,
+              "state_sha256": "b24af991d542038c3beab457baf2ef08e99616b22a723ec9a8aa341dbf558390",
+              "png_sha256": "f1ddd4eb88cc804c92c1e34e780b3e54ad3bc289c91f300db7a717a7594db7e6",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    16,
+                    24,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            }
+          ],
+          "scope": "Every image is one saved native state rendered by unchanged Presenter Canvas2D with an emulated viewport; no interpolated states or new evolution; replay restarts after the final state"
+        },
+        {
+          "experiment": "four-blocks-connected-on",
+          "name": "four-blocks-connected",
+          "caption": "Recorded carrier/receiver interaction; the strict pending-memory criterion fails. Raw arithmetic C is separate from clock rotation.",
+          "source_record": "research/staged_blocks/evidence/composition/records/four-blocks-connected-on.json.gz",
+          "source_record_sha256": "4b1a3586918d5861c83d280fdaa9e97d1aa224e3ac00a133787a8af9c83bf1d9",
+          "panels": [
+            {
+              "port": "clock.center",
+              "index": 0,
+              "label": "Prepared clock: runs without the carrier",
+              "address": [
+                16,
+                24,
+                16,
+                0
+              ]
+            },
+            {
+              "port": "memory.memory",
+              "index": 0,
+              "label": "Receiver channel 0",
+              "address": [
+                16,
+                8,
+                16,
+                0
+              ]
+            },
+            {
+              "port": "memory.memory",
+              "index": 1,
+              "label": "Receiver channel 14",
+              "address": [
+                16,
+                8,
+                16,
+                14
+              ]
+            }
+          ],
+          "frames": [
+            {
+              "file": "four-blocks-connected-frames/frame-0000.png",
+              "frame": 0,
+              "step": 0,
+              "state_sha256": "f6df916de7b9fd543e69710aab73844bdbc85ea8c22112200fe7a367a089886e",
+              "png_sha256": "670e6f3cdcb9ca062517b2e90fe9754ed37aab43d1771eca84078155ea7d4473",
+              "raw_arithmetic_C": null,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0001.png",
+              "frame": 1,
+              "step": 1,
+              "state_sha256": "f1be2e3ff03b2c6e64dcc146ae1541e74a9f5c7a9fd798c154ca06ae353cb67e",
+              "png_sha256": "0a863279dde5b231296e0adac2379857adc6cd0131414186abe4a3ae5be289f0",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0002.png",
+              "frame": 2,
+              "step": 2,
+              "state_sha256": "0c0e8ed4bec5e53e329bc476c3c028dd0bb486fe426adb3db9a460b8a228e771",
+              "png_sha256": "172bdcad03dd3fe976d09f599c9b70ea131690c9686a86374a8d5b0417fce6a3",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0003.png",
+              "frame": 3,
+              "step": 3,
+              "state_sha256": "d9dae2c79f7ce288d14fe0e4c0a041b58cd89204d91a65ac0f04d8662d430a92",
+              "png_sha256": "6007becc1632c125d1f3a33a3091b8db36b445f11f2284a2bea8103edd67cc2f",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0004.png",
+              "frame": 4,
+              "step": 4,
+              "state_sha256": "bed6aa22d5a8f148fc7215c0f1c3a0e14152e4bfc6d026949a2817189535c09e",
+              "png_sha256": "ee8260800861edab8a90a53eb598f06f6f4538820cf0e0820550a0cedbc8e7ba",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0005.png",
+              "frame": 5,
+              "step": 5,
+              "state_sha256": "94fb971206ae3f4ac802e836a37a35db40928a9cf943d43b3a6652004dc7bca5",
+              "png_sha256": "78108a4a00a093ec60d741772f361423b3fbde0deeb61e0fc47b4cd6a858c255",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0006.png",
+              "frame": 6,
+              "step": 6,
+              "state_sha256": "ef5e763fc8c06170126ef14810c3f53c0b6491a00ef637b6f1028384242e9d24",
+              "png_sha256": "ecba362505c8c02d264366ad2a2b39d7aaf2d1cc1e911e01c2f9477c50606194",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0007.png",
+              "frame": 7,
+              "step": 7,
+              "state_sha256": "7287ec928094fe66a9c0c2779851ccbf409d0a0ee64cddc1424ef0831aaaa3a6",
+              "png_sha256": "2358d3ace32fb14f0fdd51d20bd87742e663060104c55d5d1e99aad8ed255e52",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0008.png",
+              "frame": 8,
+              "step": 8,
+              "state_sha256": "1746203ff587c697d76f6079c9f4595f5223ae39b1785370e7e845aa66910b98",
+              "png_sha256": "ec7d554792af76f38fb56890bf4e5d8d3cc2358ab96dbc8ab5d26ca76acf34b2",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0009.png",
+              "frame": 9,
+              "step": 9,
+              "state_sha256": "5016c3ea5487de79d0821113358c22a4fa515b63ea8ffb853713b6440222fca4",
+              "png_sha256": "49a47dee47ac4bab47888fe32b33052b18584c762affa0e37e447b96ede9dcb7",
+              "raw_arithmetic_C": 2,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0010.png",
+              "frame": 10,
+              "step": 10,
+              "state_sha256": "f54cf5eaaa81e94aaa3434434652b2d99cbb8a8d69691bad733e2b536a7cdd54",
+              "png_sha256": "69cb5974966a7592df8f58d75c74991e8533471849d7de94ce303c9b890d290c",
+              "raw_arithmetic_C": 4,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0011.png",
+              "frame": 11,
+              "step": 11,
+              "state_sha256": "14a6c10167f082d0ed4058ac35f0e44f6da6011a469b614e02107ebb35e50d26",
+              "png_sha256": "94897e2396a31bc82c39ad9e6e37ff926c0715eca7fa2b8e8a877425839f4625",
+              "raw_arithmetic_C": 3,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "0",
+                  "raw_C": 2
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0012.png",
+              "frame": 12,
+              "step": 12,
+              "state_sha256": "a7e3ed73759312e3997dee30189ee5eb56720f9ba0dcbffd1a5803451e3412a5",
+              "png_sha256": "d3412b88abe9baf27e5449aee1532512ebcf2603b62e7246645aff8181b201e8",
+              "raw_arithmetic_C": 0,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0013.png",
+              "frame": 13,
+              "step": 13,
+              "state_sha256": "4c1bb85678cd988cad5719331f3fe70e5b51d563bf4364a07638064342ef1ef3",
+              "png_sha256": "ed067d112b476bad0e4539503f50f27adec9b227fc228262eef4cbe0a684fdd6",
+              "raw_arithmetic_C": 3,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-2",
+                  "r": "2",
+                  "raw_C": 1
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0014.png",
+              "frame": 14,
+              "step": 14,
+              "state_sha256": "c7b78b351d12e4c1e8d0ea21ea752fef5fea2c2789f98caab936e201a20d6b1a",
+              "png_sha256": "df7cdffca8643b734582b77d1213d610875491e4187a0b5f1145aecbebe229b9",
+              "raw_arithmetic_C": 5,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "-2",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0015.png",
+              "frame": 15,
+              "step": 15,
+              "state_sha256": "523b91a7867b8b3bca2e30a933f66934b1da1abd86b85b9551ab593739d9ee35",
+              "png_sha256": "5fb22f9f6db76a58e4e35bbfa2d62920e5f060a18cad90679baea59675b6a35f",
+              "raw_arithmetic_C": 3,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "2",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0016.png",
+              "frame": 16,
+              "step": 16,
+              "state_sha256": "a98011ba465da07f17e8bf9ccc8c42476bfbe99a15127204caed61709249c7ef",
+              "png_sha256": "1bc5f19d5fae9bf85b92c267c690db34f3130972e46db2ba4e41a27d2a5d0020",
+              "raw_arithmetic_C": 6,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "2",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0017.png",
+              "frame": 17,
+              "step": 17,
+              "state_sha256": "fb51568b8cac107bdd06f2265fa4f016a0768cf997bdc1b0b50ed1bb71755352",
+              "png_sha256": "c75f414c423a04e7657b091cbab47190a849cdd5e850727d10bc204e8bfe8d3b",
+              "raw_arithmetic_C": 7,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "0",
+                  "raw_C": 2
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0018.png",
+              "frame": 18,
+              "step": 18,
+              "state_sha256": "d27c4ee21c7be1a8f7adf361f731cc231092e92cf28c473be0c108574e35d8b5",
+              "png_sha256": "721ef7bbd888092bece81f972fbe6010574ad7af7f3f869f6603203cbb9f0169",
+              "raw_arithmetic_C": 6,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "0",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0019.png",
+              "frame": 19,
+              "step": 19,
+              "state_sha256": "9be355acbb35acceef329e26a5422d9d2fcb2235ebf1de9c55e88e87693b051c",
+              "png_sha256": "6abcd02002a925a6186742dfb927e1f547630f53620e3cf2d1e9d59852ff7935",
+              "raw_arithmetic_C": 7,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": 1
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0020.png",
+              "frame": 20,
+              "step": 20,
+              "state_sha256": "37bd7f57d2ca63c44f4394902d19a5620277cf4b75e6de59fbcac7da41d43098",
+              "png_sha256": "487cb8e6e5049b9eff5499501b1ccbf05e9e052f8a74bffd634a492bcd6568c5",
+              "raw_arithmetic_C": 7,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0021.png",
+              "frame": 21,
+              "step": 21,
+              "state_sha256": "d5ad3b3904fe028fcf5fcddc43892f868da7f5076a97d167fab3341e8c50e57f",
+              "png_sha256": "ebaaed78e2b2a4182195a27f57f012658694c207ff750ed41268e4504d08e117",
+              "raw_arithmetic_C": 7,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "-1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0022.png",
+              "frame": 22,
+              "step": 22,
+              "state_sha256": "0b1fc095c1b7a3d623a61080ee94255c4797dfa809d23fa9b21084af767592b2",
+              "png_sha256": "3d8ee8f477430f502316e537c83e92c176a4eb1990431507f2d96c001bdcdd76",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "-1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0023.png",
+              "frame": 23,
+              "step": 23,
+              "state_sha256": "d73d6dbbfefe3a58957a4ff8449b0fffae4c1b25e53ff41f9529b3a29fe8a1fa",
+              "png_sha256": "40e58c07c0cce42225f29298f8cacd138f7e8f0f2affb4ac579df55ef7bc0ea6",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "1",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            },
+            {
+              "file": "four-blocks-connected-frames/frame-0024.png",
+              "frame": 24,
+              "step": 24,
+              "state_sha256": "54ff49ea058ba6553d264f7e322a39c0c465439904be137e23347eaa4f6331ba",
+              "png_sha256": "88d2baf246680d0a0703e175b7e026d7c49f45e25bebccf98cc1f7804ebca659",
+              "raw_arithmetic_C": 8,
+              "panels": [
+                {
+                  "port": "clock.center",
+                  "address": [
+                    16,
+                    24,
+                    16,
+                    0
+                  ],
+                  "a": "1",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    0
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "4",
+                  "raw_C": null
+                },
+                {
+                  "port": "memory.memory",
+                  "address": [
+                    16,
+                    8,
+                    16,
+                    14
+                  ],
+                  "a": "0",
+                  "b": "0",
+                  "r": "2",
+                  "raw_C": null
+                }
+              ]
+            }
+          ],
+          "scope": "Every image is one saved native state rendered by unchanged Presenter Canvas2D with an emulated viewport; no interpolated states or new evolution; replay restarts after the final state"
+        }
+      ]
+    }
+  ],
+  "image_plan": {
+    "path": "research/staged_blocks/presenter_images.json",
+    "sha256": "b3f326ac005410bc4419880e8747c6c731d8e9ba2a99b56c86f0c0d0f83f7f95"
+  },
+  "animation_plan": {
+    "path": "research/staged_blocks/presenter_animations.json",
+    "sha256": "09ea75fa1b64c78b0a8e94e5674292706ce07f828c71d46dfc79ed3ba526d60f"
+  }
+}
