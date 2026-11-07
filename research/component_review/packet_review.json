@@ -1,0 +1,152 @@
+{
+  "all_complete_states_and_events_checked": true,
+  "boundary_scope": "Intentionally periodic whole-row guide; wrap and periodL are part of the construction.",
+  "cases": [
+    {
+      "all_board_guarded_events": 20,
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "exact_full_state_translation": true,
+      "first_return": 5,
+      "forward_and_inverse_passed": true,
+      "frames": 6,
+      "initial_halo_derived_from_independent_receiver_relation": true,
+      "initial_state_sha256": "695759a9350c8289c3cee0705aab29228ae2eb83688ee7469e4450e2f1f8b825",
+      "path": "research/component_studies/confirmation_packet_evidence_v1/cases/guided-packet-L5-s1/states.jsonl",
+      "present": true,
+      "side": 5,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary_null": false,
+      "trace_sha256": "9d596808dafbc39b06688e9d09f405985dae39ab5e1dfb9c3e21ac29682eddc5",
+      "transitions": 5
+    },
+    {
+      "all_board_guarded_events": 0,
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "exact_full_state_translation": false,
+      "first_return": 1,
+      "forward_and_inverse_passed": true,
+      "frames": 6,
+      "initial_halo_derived_from_independent_receiver_relation": true,
+      "initial_state_sha256": "6d610c1a7381adb7f904990c78affa7e68ca30be9ee7438c3eb5c974c8e95463",
+      "path": "research/component_studies/confirmation_packet_evidence_v1/cases/guided-packet-L5-s0/states.jsonl",
+      "present": false,
+      "side": 5,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary_null": true,
+      "trace_sha256": "9cde16c0a0d139656fe9236c99e839f90ba73924e67382e2371b6f200d892f8f",
+      "transitions": 5
+    },
+    {
+      "all_board_guarded_events": 68,
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "exact_full_state_translation": true,
+      "first_return": 17,
+      "forward_and_inverse_passed": true,
+      "frames": 18,
+      "initial_halo_derived_from_independent_receiver_relation": true,
+      "initial_state_sha256": "79be4fe9f918be98def271d2ca9176b785601f1b22792dc6638b461f806686f1",
+      "path": "research/component_studies/confirmation_packet_evidence_v1/cases/guided-packet-L17-s1/states.jsonl",
+      "present": true,
+      "side": 17,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary_null": false,
+      "trace_sha256": "d84e5b29994dc4db153c6d81e3c17cd9aa11bff16aab00b50c49f120ece44227",
+      "transitions": 17
+    },
+    {
+      "all_board_guarded_events": 0,
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "exact_full_state_translation": false,
+      "first_return": 1,
+      "forward_and_inverse_passed": true,
+      "frames": 18,
+      "initial_halo_derived_from_independent_receiver_relation": true,
+      "initial_state_sha256": "f1fb06586d393f0d4984b14f24bea16934dc204bf72cdd808f6a9e2f5c5c9962",
+      "path": "research/component_studies/confirmation_packet_evidence_v1/cases/guided-packet-L17-s0/states.jsonl",
+      "present": false,
+      "side": 17,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary_null": true,
+      "trace_sha256": "d9c94a4fab79a046b4b546191be998c95f4837e3aa3472e2459fe142a6ab3c4e",
+      "transitions": 17
+    },
+    {
+      "all_board_guarded_events": 124,
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "exact_full_state_translation": true,
+      "first_return": 31,
+      "forward_and_inverse_passed": true,
+      "frames": 32,
+      "initial_halo_derived_from_independent_receiver_relation": true,
+      "initial_state_sha256": "fc0bb552f347b68bd1943626fe847ed99f251babbe709bcdb066d6f79f3d6936",
+      "path": "research/component_studies/confirmation_packet_evidence_v1/cases/guided-packet-L31-s1/states.jsonl",
+      "present": true,
+      "side": 31,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary_null": false,
+      "trace_sha256": "4720394b2ad9268db6248c3af604fdbdd058d687362dc53bcb0234c3909dce06",
+      "transitions": 31
+    },
+    {
+      "all_board_guarded_events": 0,
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "exact_full_state_translation": false,
+      "first_return": 1,
+      "forward_and_inverse_passed": true,
+      "frames": 32,
+      "initial_halo_derived_from_independent_receiver_relation": true,
+      "initial_state_sha256": "1b552f136b324629b2d3e9d9d71d0399b3ab3b286e175908a4a903a0af970110",
+      "path": "research/component_studies/confirmation_packet_evidence_v1/cases/guided-packet-L31-s0/states.jsonl",
+      "present": false,
+      "side": 31,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary_null": true,
+      "trace_sha256": "c7e3853a62e1649ed2bf18488c06ed5d5e77762e09305ef63baa205540adb8b6",
+      "transitions": 31
+    }
+  ],
+  "cpu_seconds": 1.345695439,
+  "evidence_result_sha256": "faced6de550eb80dd33812638226e9e6c823b4d544470ce9254ace94d7d6db1b",
+  "finite_checked_sides": [
+    5,
+    17,
+    31
+  ],
+  "format": "universe24-independent-guided-packet-review-v1",
+  "forward_and_inverse_transitions": 106,
+  "frames": 112,
+  "passed": true,
+  "physical_light_claim": false,
+  "proof_review": "The fixed+++ prepared guide and halo obey exact translation for all L>=5; see packet_proof_review.md for the direct local algebra and induction. The six trace checks alone are not that theorem.",
+  "runs": 6,
+  "silent_waiting_memory_claim": false,
+  "source_sha256": {
+    "/workspace/scratch/1966445260ce/Universe24-presenter/research/component_review/audit.py": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+    "/workspace/scratch/1966445260ce/Universe24-presenter/research/component_review/review_packet.py": "cd91e9751324f5b1688e01f02375fa5c69dd58717e4bdc8bddead943065c505f"
+  },
+  "source_snapshot_hashes_verified": true
+}

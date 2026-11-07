@@ -1,0 +1,110 @@
+{
+  "case_id": "confirmation-buffer-040",
+  "cases": [
+    {
+      "R_times": [],
+      "all_48_receiver_C_times": [],
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "ba1d4e80e1afb1ab4c5153e3a3e0c94f16f79ac8720dabd20cf9ec9454505c6d",
+      "path": "research/component_studies/confirmation_buffer_evidence_v1/cases/confirmation-buffer-040-s00/states.jsonl",
+      "source_mask": "00",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "997f9a33a5b8f58748cf5234830226f0817aba0561ac2757215820b51c36d5d5",
+      "transitions": 40
+    },
+    {
+      "R_times": [
+        30,
+        32,
+        34,
+        36,
+        38,
+        40
+      ],
+      "all_48_receiver_C_times": [
+        32,
+        34,
+        40
+      ],
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "9614e4e707839f0ec8598557ab771badfdc8a14fb506900a9f64b0862a83ab0b",
+      "path": "research/component_studies/confirmation_buffer_evidence_v1/cases/confirmation-buffer-040-s10/states.jsonl",
+      "source_mask": "10",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "dda2243704cce68131302ad16637b57b1c1fe355fa70b608971d3f4df939ee62",
+      "transitions": 40
+    },
+    {
+      "R_times": [],
+      "all_48_receiver_C_times": [],
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "e5ab63de370d51a2a932399fe5b4047ebb87344117765b2208d340539190509f",
+      "path": "research/component_studies/confirmation_buffer_evidence_v1/cases/confirmation-buffer-040-s01/states.jsonl",
+      "source_mask": "01",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "4490424dbcba36e417a6f84dd457fe98fac7f942379c09f963608a54fadd473c",
+      "transitions": 40
+    },
+    {
+      "R_times": [
+        30,
+        32,
+        34,
+        36,
+        38,
+        40
+      ],
+      "all_48_receiver_C_times": [
+        32,
+        34,
+        40
+      ],
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "16268e8657a307718d196da7f904e9dd71168a2ae609bf0d4ca6070443f3aa63",
+      "path": "research/component_studies/confirmation_buffer_evidence_v1/cases/confirmation-buffer-040-s11/states.jsonl",
+      "source_mask": "11",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "50185f737cf147f53afc11e05235297005525602dacbc459e0dd9dbaaf8c67f5",
+      "transitions": 40
+    }
+  ],
+  "evidence_result_sha256": "525f6dcc36a5917804f0bd0b723ae2f83eecf17b5112a3f275ef1934d24978c7",
+  "format": "universe24-independent-buffer-review-v1",
+  "frames": 164,
+  "independently_replayed_runs": 4,
+  "passed": true,
+  "reported_accepted_cases": 0,
+  "reported_cases": 81,
+  "reported_runs": 324,
+  "scope": "Four complete controls independently prepared, replayed, inverted and observed. The324-run negative count is the inspected study result, not an independent full324-run replay.",
+  "source_sha256": {
+    "/workspace/scratch/1966445260ce/Universe24-presenter/research/component_review/audit.py": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+    "/workspace/scratch/1966445260ce/Universe24-presenter/research/component_review/review_buffer.py": "7540a4792770c93f5d8291abbf2261ef47867a45f003aff65a7a14e0ea026ef9"
+  },
+  "source_snapshot_hashes_verified": true,
+  "transitions": 160
+}

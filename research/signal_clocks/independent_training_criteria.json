@@ -1,0 +1,12 @@
+{
+  "candidates": 576,
+  "cpu_seconds": 0.224533353,
+  "guarded_candidates": 0,
+  "local_trajectory_views": 2304,
+  "local_transition_views": 73728,
+  "passed": true,
+  "record_candidates": 0,
+  "scope": "All saved detector recurrences and criterion decisions; full search states were not retained.",
+  "search_results_sha256": "1f0954fff3cd2e6a400fb4936045f2f8fdba5a1353ec0c5745f18c59c6d90d86",
+  "unique_engine_audited_trajectories": 900
+}

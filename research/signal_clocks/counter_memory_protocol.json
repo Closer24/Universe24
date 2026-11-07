@@ -1,0 +1,124 @@
+{
+  "format": "universe24-counter-memory-confirmation-v1",
+  "protocol_id": "U24-COUNTER-MEMORY-CONFIRM-v1",
+  "status": "frozen_before_fresh_runs",
+  "question": "Can a phase-conditioned two-arrival receiver retain three distinct exact counter magnitudes while its remainder bit toggles back?",
+  "discovery_boundary": "I=a*a+b*b was noticed after endpoint-064; it was not the old remainder-only acceptance readout. This is a new prospective experiment on unseen preparations, with original failures retained.",
+  "model": {
+    "num": 1,
+    "den": 1,
+    "channels": 48,
+    "spatial_inputs": 6,
+    "body_actions": [
+      0,
+      1,
+      3
+    ],
+    "body_signs": [
+      1,
+      1,
+      1
+    ],
+    "fixed_coupling": true,
+    "initial_state_only": true
+  },
+  "preparation": {
+    "side": 221,
+    "origin": [
+      110,
+      110,
+      110
+    ],
+    "background": [
+      0,
+      0,
+      2
+    ],
+    "distance_pairs": [
+      [
+        20,
+        28
+      ],
+      [
+        20,
+        32
+      ]
+    ],
+    "sources": "At origin+(-d1,0,0) and origin+(d2,0,0); each channel0=(0,1,2), channel14=(0,-1,2).",
+    "guide": "Only strictly between endpoints: channel0=(0,0,4), channel14=(0,0,0). All other channels are background.",
+    "detector": "Origin channels0,14, initial remainders(4,0), counterszero.",
+    "source_masks": [
+      [
+        false,
+        false
+      ],
+      [
+        true,
+        false
+      ],
+      [
+        false,
+        true
+      ],
+      [
+        true,
+        true
+      ]
+    ],
+    "source_removal": "Zero only initial source counters; keep all remainders and other preparation identical.",
+    "horizon": 48,
+    "initial_boundary_margin_at_least": 78,
+    "run_count": 8
+  },
+  "observer": {
+    "M": "(r0,r14), all changes reported as passive R events.",
+    "C": "Unchanged arithmetic guard ell!=0 and changed full triple, kind=u mod3; retain each channel event.",
+    "C_bank": "At least one detector C in that update; retain all coincident per-channel events.",
+    "I": "For each detector channel independently, I_g(t)=a_g(t)^2+b_g(t)^2, computed exactly.",
+    "internal_record": "J=(r0,r14,I0,I14), a passive function of existing state; no added counter.",
+    "identity": "I_next-I=ell^2-2*a*ell. It is invariant at zero input but not a general conservation law or physical energy.",
+    "phase_scope": "The two registered gaps are8 and12; no arbitrary phase or indefinite monotonicity claim."
+  },
+  "predictions": {
+    "neither": "Whole board stationary, M=(4,0), I0=I14=0 throughout; no detector R/C.",
+    "source1_only": "One coincident R/C-bearing update at d1; M=(4,0) before and(0,4) fromd1 through48; each I=0 before and1 fromd1 through48.",
+    "source2_only": "Same single-event behavior at d2.",
+    "both": "Exactly two R/C-bearing updates at d1 andd2+2; M=(4,0) then(0,4) then(4,0); each I=0 befored1,1 fromd1 throughd2+1,4 fromd2+2 through48.",
+    "no_extra_events": "Every extra detector R, C or I change outside these two updates fails the corresponding prediction.",
+    "timing_status": "Prospective empirical timing prediction supported by earlier distinct preparations; no general timing theorem."
+  },
+  "acceptance": {
+    "per_geometry": "All four source masks satisfy the complete fixed predictions, exact incident input/source-counterfactual checks, quiet intervals, no-wrap bound and full-state audits.",
+    "overall": "Both new geometries pass; retain all failed checks if either fails.",
+    "quiet_intervals": "Same exact old-state convention as toggle protocol: [d1-4,d1-2], [d1,d1+3], [d2+2,d2+5] for both sources; corresponding fixed pre/post ranges for each single source. Require both net inputs zero there.",
+    "event_causality": "At each actual predicted event, nonzero net input in at least one detector channel and exact input-vector difference from the matching source-absent run.",
+    "arrival_diagnostics": "Retain earliest second-source input-vector difference and first net difference separately from nominal geometric arrival and record time; no invented detector latency."
+  },
+  "verification": {
+    "all8_complete_trajectories": true,
+    "one_step_full_inverse": true,
+    "complete_rewind": true,
+    "initial_boundary_margin_greater_than_horizon": true,
+    "exact_large_integers": true,
+    "protocol_and_source_hashes": true
+  },
+  "budget": {
+    "cpu_seconds": 60,
+    "wall_seconds": 180,
+    "maximum_runs": 8,
+    "stored_channel_cap": 20000,
+    "exhaustion": "Inconclusive; retain completed runs and stop reason."
+  },
+  "interpretation": {
+    "positive": "Finite phase-conditioned signal/record component with three distinct local counter-magnitude levels and source-absence controls.",
+    "not_claimed": [
+      "physical light",
+      "physical energy conservation",
+      "arbitrarily long memory",
+      "arbitrary phase robustness",
+      "indefinitely reusable counter",
+      "old remainder-only milestone acceptance",
+      "autonomous quantum selection"
+    ]
+  }
+}

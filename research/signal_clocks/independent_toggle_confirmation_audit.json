@@ -1,0 +1,269 @@
+{
+  "cases": [
+    {
+      "arithmetic_event_times": [],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-24-s00",
+      "record_event_times": [],
+      "states_sha256": "47ae92c69dbea520010ab8a2237d9ce1c532a89067a755f46d9051d041bc3028"
+    },
+    {
+      "arithmetic_event_times": [
+        16
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-24-s10",
+      "record_event_times": [
+        16
+      ],
+      "states_sha256": "d4b332b0b5642dd3957c4a089a8a25fdba2fe70b88d5f8dc4506fbfe466ac7a3"
+    },
+    {
+      "arithmetic_event_times": [
+        24
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-24-s01",
+      "record_event_times": [
+        24
+      ],
+      "states_sha256": "ca75a883807e0d1737d61ae24e2a744e4f82703e7685d04b56581862ff729667"
+    },
+    {
+      "arithmetic_event_times": [
+        16,
+        26
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-24-s11",
+      "record_event_times": [
+        16,
+        26
+      ],
+      "states_sha256": "8f915a92c6f461ea16a8c751db662762210869c061046a9f471a3ef8f7c91825"
+    },
+    {
+      "arithmetic_event_times": [],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-28-s00",
+      "record_event_times": [],
+      "states_sha256": "207a277423809963f3c76bd817b2c64cae20bc21d5535a3ff4a2102d60dc16cb"
+    },
+    {
+      "arithmetic_event_times": [
+        16
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-28-s10",
+      "record_event_times": [
+        16
+      ],
+      "states_sha256": "f66153c7800a347543acd8016ef6736e0204ee1f228a6afe273e204fd256ab20"
+    },
+    {
+      "arithmetic_event_times": [
+        28
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-28-s01",
+      "record_event_times": [
+        28
+      ],
+      "states_sha256": "cf00794b817a0c8c68abab1c0de7004151fe66a0140bf36f3dfdd0acb5d69dfd"
+    },
+    {
+      "arithmetic_event_times": [
+        16,
+        30
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-28-s11",
+      "record_event_times": [
+        16,
+        30
+      ],
+      "states_sha256": "8402302317bae4cb8b9ed7e4114076cf700a002044efc75cc962da55c17bf6d5"
+    },
+    {
+      "arithmetic_event_times": [],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-26-s00",
+      "record_event_times": [],
+      "states_sha256": "2d985285533a1a984c6627ab0d886703dbb868936e40c30c877eace99deb2c31"
+    },
+    {
+      "arithmetic_event_times": [
+        16
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-26-s10",
+      "record_event_times": [
+        16
+      ],
+      "states_sha256": "1728f711cecf99947dc21d92414631daeeaeca1649a9a53c94b4858f02e0ae30"
+    },
+    {
+      "arithmetic_event_times": [
+        26
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-26-s01",
+      "record_event_times": [
+        26
+      ],
+      "states_sha256": "993263d43c669fa50fa6d1204e2060d326e5ceed19fe6cd083cc2471e2ad2547"
+    },
+    {
+      "arithmetic_event_times": [
+        16,
+        28
+      ],
+      "frames": 41,
+      "independent_full_state_transitions": 40,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/toggle_confirmation/cases/toggle-16-26-s11",
+      "record_event_times": [
+        16,
+        28
+      ],
+      "states_sha256": "45d1d4d3fceeda79bb1ae6ce92aa5f321a8abf7e9f75690fb72a2e9cc2292669"
+    }
+  ],
+  "cpu_seconds": 2.437155591,
+  "groups": [
+    {
+      "distance_pair": [
+        16,
+        24
+      ],
+      "passed": true,
+      "posthoc_counter_magnitude_diagnostic": {
+        "change_times": [
+          16,
+          26
+        ],
+        "definition": "a*a+b*b separately at each detector channel; not energy.",
+        "levels_at_initial_and_two_ticks": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "not_a_preregistered_acceptance_rule": true
+      },
+      "second_source_first_input_term_difference_old_step": 25,
+      "second_source_first_net_difference_old_step": 25,
+      "terms_at_naive_arrival_same_as_source1_only": true,
+      "ticks": [
+        16,
+        26
+      ]
+    },
+    {
+      "distance_pair": [
+        16,
+        28
+      ],
+      "passed": true,
+      "posthoc_counter_magnitude_diagnostic": {
+        "change_times": [
+          16,
+          30
+        ],
+        "definition": "a*a+b*b separately at each detector channel; not energy.",
+        "levels_at_initial_and_two_ticks": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            4,
+            4
+          ]
+        ],
+        "not_a_preregistered_acceptance_rule": true
+      },
+      "second_source_first_input_term_difference_old_step": 29,
+      "second_source_first_net_difference_old_step": 29,
+      "terms_at_naive_arrival_same_as_source1_only": true,
+      "ticks": [
+        16,
+        30
+      ]
+    },
+    {
+      "distance_pair": [
+        16,
+        26
+      ],
+      "passed": true,
+      "posthoc_counter_magnitude_diagnostic": {
+        "change_times": [
+          16,
+          28
+        ],
+        "definition": "a*a+b*b separately at each detector channel; not energy.",
+        "levels_at_initial_and_two_ticks": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "not_a_preregistered_acceptance_rule": true
+      },
+      "second_source_first_input_term_difference_old_step": 27,
+      "second_source_first_net_difference_old_step": 27,
+      "terms_at_naive_arrival_same_as_source1_only": true,
+      "ticks": [
+        16,
+        28
+      ]
+    }
+  ],
+  "independent_full_state_transitions": 480,
+  "passed": true,
+  "result_sha256": "79c94cfa602ee67f8f636651849c85598176838e9e1defd26b1ad6d7a139d55a",
+  "scope": "Fresh two-symbol toggle confirmation; original three-symbol protocol remains failed."
+}

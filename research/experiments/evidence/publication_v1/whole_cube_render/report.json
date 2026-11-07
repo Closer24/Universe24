@@ -1,0 +1,6108 @@
+{
+  "format": "universe24-signal-clock-canvas-v1",
+  "passed": true,
+  "scope": "Actual unchanged Presenter app in jsdom with native Canvas2D and explicit geometry; no browser CSS, responsive-layout, accessibility or native pointer claim",
+  "input_sha256": "83111cd9245206842c81eed316ae29e8aa9612184496979ea0b10fd5aab093b9",
+  "plan_sha256": "c3469fc82a8614a8c796fc621dee1e212f50a4a9121a1b791e816dfc314d807a",
+  "source_sha256": "e6f2134494d8b92474e34861e7c523d2abe2a08c283f71ed317f24a4b7d1cf14",
+  "dependencies": {
+    "node": "v24.22.1",
+    "jsdom": "26.1.0",
+    "canvas": "0.1.80"
+  },
+  "verification_mode": "animation_only",
+  "images": [
+    {
+      "file": "sequence-01/detail.png",
+      "sha256": "e7628f0671e2a63b34fb60feadd4be6a814e4f9415c0aa1383a868bfb6701ab7",
+      "experiment": "four-component-memory-11",
+      "frame": 0,
+      "step": 0,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": -0.65,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-000.png",
+      "sha256": "5826da1ad1a1120c0c0bbf04bd5e87212ebb762cd7a971acefe2d84536495690",
+      "experiment": "four-component-memory-11",
+      "frame": 0,
+      "step": 0,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": -0.53,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-001.png",
+      "sha256": "60804efda68864697175f493d434a8391aa23e87ea6073ef34130c6ad20a7c4a",
+      "experiment": "four-component-memory-11",
+      "frame": 1,
+      "step": 1,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": -0.41000000000000003,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-002.png",
+      "sha256": "f4c0b81718b5b8064cd8ef2e51dda534db12c863c994fbb0c208e244a965d34f",
+      "experiment": "four-component-memory-11",
+      "frame": 2,
+      "step": 2,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": -0.29000000000000004,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-003.png",
+      "sha256": "258aa53d76fbd62dfdcd2ef5f4ac4caaeffadd429dc6d350aa3b95b680408be1",
+      "experiment": "four-component-memory-11",
+      "frame": 3,
+      "step": 3,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": -0.17000000000000004,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-004.png",
+      "sha256": "797b9875b100671a38b767cb899fffb3183117df17e8cb67b7b3c95c7fb96e7e",
+      "experiment": "four-component-memory-11",
+      "frame": 4,
+      "step": 4,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": -0.050000000000000044,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-005.png",
+      "sha256": "85fb807f989546efe62b752b6eb826d95663634b69e69d1f18156b5641b3183a",
+      "experiment": "four-component-memory-11",
+      "frame": 5,
+      "step": 5,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 0.06999999999999995,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-006.png",
+      "sha256": "258f86634369bdf83b26fe74b0519bb1a162ec98e6b8f5da53388f4dd321ff87",
+      "experiment": "four-component-memory-11",
+      "frame": 6,
+      "step": 6,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 0.18999999999999995,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-007.png",
+      "sha256": "de8c20664c03d9eb987d05de46b7cc5370379822f15e93e6f93552283d173e6d",
+      "experiment": "four-component-memory-11",
+      "frame": 7,
+      "step": 7,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 0.30999999999999994,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-008.png",
+      "sha256": "6a157ca53bea4b357509ca2cc6a28af757e8cd2d5b77d4431728795e6ce8d75e",
+      "experiment": "four-component-memory-11",
+      "frame": 8,
+      "step": 8,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 0.42999999999999994,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-009.png",
+      "sha256": "df6da81b7911be519a60fb2ea6bffb5e257187a9174cf31a45d282104fc06268",
+      "experiment": "four-component-memory-11",
+      "frame": 9,
+      "step": 9,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 0.5499999999999999,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-010.png",
+      "sha256": "aceff8b3f5b0236329b06290e232ec34b21a379fb81e90ad06a527722afedae9",
+      "experiment": "four-component-memory-11",
+      "frame": 10,
+      "step": 10,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 0.6699999999999999,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-011.png",
+      "sha256": "7cfa39bab38b742a1380a2d3738b9dcc002f22a9bb53a6490b2184386302acec",
+      "experiment": "four-component-memory-11",
+      "frame": 11,
+      "step": 11,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 0.7899999999999999,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-012.png",
+      "sha256": "e9c08c74a6922af081685d2f790deee2c8ae8bf354655a3544ab4d51ca17bfae",
+      "experiment": "four-component-memory-11",
+      "frame": 12,
+      "step": 12,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 0.9099999999999999,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-013.png",
+      "sha256": "ed7f9e7da3cad39e384c3fef5b85e9889333846439abd29ed6a8fdad45d74c98",
+      "experiment": "four-component-memory-11",
+      "frame": 13,
+      "step": 13,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.0299999999999998,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-014.png",
+      "sha256": "cac769afcaa1226eb11ee95db73279253a1ab24c8209fea73c0547012430456b",
+      "experiment": "four-component-memory-11",
+      "frame": 14,
+      "step": 14,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.15,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-015.png",
+      "sha256": "08ab9168f0c54b0c259f6e7cb43b7482cb6a086040262cf8654bde27a616903d",
+      "experiment": "four-component-memory-11",
+      "frame": 15,
+      "step": 15,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.27,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-016.png",
+      "sha256": "66b54814de6276a843edae2498ffffd9e2c7feb38647ecf413a40c6f83908beb",
+      "experiment": "four-component-memory-11",
+      "frame": 16,
+      "step": 16,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.3900000000000001,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-017.png",
+      "sha256": "20b2d53d4c31b2f73908e93958a21dc9ece128b9549eae15f942a2b2314da438",
+      "experiment": "four-component-memory-11",
+      "frame": 17,
+      "step": 17,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.5100000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-018.png",
+      "sha256": "9db475ae2da58dba56c76248d071b8e63997667adad6c759dec6e2f71eb5b205",
+      "experiment": "four-component-memory-11",
+      "frame": 18,
+      "step": 18,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.6300000000000003,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-019.png",
+      "sha256": "2d46e84eaf37d85d8e523ee9fbd6fabbe49b6ec004bbfb3484464eec70cd12d6",
+      "experiment": "four-component-memory-11",
+      "frame": 19,
+      "step": 19,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.7500000000000004,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-020.png",
+      "sha256": "46b8db04322f19c3bfa65628904ac9f0c7b8f077bb3cb8d9cb0b5102e1735ab5",
+      "experiment": "four-component-memory-11",
+      "frame": 20,
+      "step": 20,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.8700000000000006,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": true
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-021.png",
+      "sha256": "fc77d469ce6f1ade3c5c999096f35deaf26ebcb66116b0549c1fd0c7cf8f31f5",
+      "experiment": "four-component-memory-11",
+      "frame": 21,
+      "step": 21,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 1.9900000000000007,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-022.png",
+      "sha256": "5d9385b473ab7fa1d101f4df7e1c327a773e2d819590e994ed93a1f23c1cd4c5",
+      "experiment": "four-component-memory-11",
+      "frame": 22,
+      "step": 22,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 2.1100000000000008,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": true
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-023.png",
+      "sha256": "46d4d217bf34f3982da5431582a7b2e8ded6d324ea07ccea3e4a199bd5cdee64",
+      "experiment": "four-component-memory-11",
+      "frame": 23,
+      "step": 23,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 2.230000000000001,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-024.png",
+      "sha256": "3dfc0b6319c53fdae247ffcb8814be57b0a295a1cdfde4e4f586c0bf28d84afd",
+      "experiment": "four-component-memory-11",
+      "frame": 24,
+      "step": 24,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 2.350000000000001,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": true
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-025.png",
+      "sha256": "005d7789a923fc0f066eeccb51136d3b333f0682ce7cb6dedbb500ac0ed010f9",
+      "experiment": "four-component-memory-11",
+      "frame": 25,
+      "step": 25,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 2.470000000000001,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-026.png",
+      "sha256": "cc4652b1caa0f52c80cfb7df42777f19b85b92f7b69306f91112264f87320ce1",
+      "experiment": "four-component-memory-11",
+      "frame": 26,
+      "step": 26,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 2.590000000000001,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": true
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-027.png",
+      "sha256": "db59029cfe662783ccd9d4a10b5cb39da16d88cd9d8fa5b18024da351f3f132e",
+      "experiment": "four-component-memory-11",
+      "frame": 27,
+      "step": 27,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 2.7100000000000013,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-028.png",
+      "sha256": "0f2ca3d4734b167800a61277cc38467ed89f5dc6b975892eb25c6e1bb5105a26",
+      "experiment": "four-component-memory-11",
+      "frame": 28,
+      "step": 28,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 2.8300000000000014,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": true
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-029.png",
+      "sha256": "e1c9ec3f91760bd061e2486fe4d43e3d3c66e7ba78ad8fb2d446db4e367cf1eb",
+      "experiment": "four-component-memory-11",
+      "frame": 29,
+      "step": 29,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 2.9500000000000015,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": false
+        },
+        {
+          "id": "memory-0-4",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-030.png",
+      "sha256": "24ae037e2a7a1de5c3d51cf050614e312ca71a7943c29dcabdfed28be6091fe1",
+      "experiment": "four-component-memory-11",
+      "frame": 30,
+      "step": 30,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 3.0700000000000016,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-031.png",
+      "sha256": "42ad6bb2545aed8987506bca3b26cab0eec86655bb40dec5b9bfd691c7480e72",
+      "experiment": "four-component-memory-11",
+      "frame": 31,
+      "step": 31,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 3.1900000000000017,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-032.png",
+      "sha256": "1edc8772ec6d6608952ac9f61d18003a4864778f44c444ce48ce6f170d6e042d",
+      "experiment": "four-component-memory-11",
+      "frame": 32,
+      "step": 32,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 3.310000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": true
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-033.png",
+      "sha256": "ed13c926b4021f4d93fe10ee9847b8694481106006df36c5748be29316730926",
+      "experiment": "four-component-memory-11",
+      "frame": 33,
+      "step": 33,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 3.430000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-034.png",
+      "sha256": "4afc5839cc29e57f9e4472820cf4ce6c35406b58bc8b2e3a40435752db4d48c0",
+      "experiment": "four-component-memory-11",
+      "frame": 34,
+      "step": 34,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 3.550000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-035.png",
+      "sha256": "3ef387bedde40da2e88a951cbfc809999c00a512f871fddd5326ad21e0e3bf70",
+      "experiment": "four-component-memory-11",
+      "frame": 35,
+      "step": 35,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 3.670000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-036.png",
+      "sha256": "f3492c4e1033893e2122cbbab38d6ed1c29c946ac7c6fd01e04587fefda81bde",
+      "experiment": "four-component-memory-11",
+      "frame": 36,
+      "step": 36,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 3.7900000000000023,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": true
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-037.png",
+      "sha256": "0a9c37b09bf7f10be72105a1229d614cbf6d23630443eac4519dbe8b61bc14b0",
+      "experiment": "four-component-memory-11",
+      "frame": 37,
+      "step": 37,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 3.9100000000000024,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-038.png",
+      "sha256": "6d4a10cce2d8d8c265b2044ea09c231859bb2be08dbc7b040a40e2da05eb7804",
+      "experiment": "four-component-memory-11",
+      "frame": 38,
+      "step": 38,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.030000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-039.png",
+      "sha256": "486aa493ac3e98b3a21d361e95115144b12c40545be02d21d268f4433dccaba9",
+      "experiment": "four-component-memory-11",
+      "frame": 39,
+      "step": 39,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.150000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-040.png",
+      "sha256": "312ec26bd9be75ed96bfb5a49dcd79ffc8f5ab382636a0e37da57713026840b5",
+      "experiment": "four-component-memory-11",
+      "frame": 40,
+      "step": 40,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.270000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": true
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-041.png",
+      "sha256": "896b032a687ffda473f9dea2e20a6525605ff002409ebbe4ca1f9cc92ac3aa76",
+      "experiment": "four-component-memory-11",
+      "frame": 41,
+      "step": 41,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.390000000000002,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-042.png",
+      "sha256": "03fdd92dfa9179fd2ef91c92c108febe0223466d5f86936d89a3c45d7c17faa7",
+      "experiment": "four-component-memory-11",
+      "frame": 42,
+      "step": 42,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.5100000000000025,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-043.png",
+      "sha256": "de5e11480d92ffb9254a89860ed3575cda213d3200453af5596dde788eff0a05",
+      "experiment": "four-component-memory-11",
+      "frame": 43,
+      "step": 43,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.630000000000003,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-044.png",
+      "sha256": "de3611ba0aff91873d68eaedf01a033277f91c6418e2e07aa4846e2e2e9504c0",
+      "experiment": "four-component-memory-11",
+      "frame": 44,
+      "step": 44,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.750000000000003,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": true
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-045.png",
+      "sha256": "4f69560c57afda4f33b7f2664b8b280e92fd7fb6d0a18fb28987eaa0a7de5fe6",
+      "experiment": "four-component-memory-11",
+      "frame": 45,
+      "step": 45,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.870000000000003,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-046.png",
+      "sha256": "c1bdae0ec89d43e5f99023cf8fc4272bfdcab17646bec67fc88be428d56f2b15",
+      "experiment": "four-component-memory-11",
+      "frame": 46,
+      "step": 46,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 4.990000000000003,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-047.png",
+      "sha256": "e04cf1ae266bd49119c69e19e0017b9a5382e6b0d8062d683e949f848b34e42e",
+      "experiment": "four-component-memory-11",
+      "frame": 47,
+      "step": 47,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 5.110000000000003,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": false
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": true
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    },
+    {
+      "file": "sequence-01/frame-048.png",
+      "sha256": "5e14d8c2e32b31a43a3eecbb787b3b8e8802ffcd8b0018ab42add98740ee538c",
+      "experiment": "four-component-memory-11",
+      "frame": 48,
+      "step": 48,
+      "channel": 0,
+      "selection": {
+        "position": [
+          110,
+          110,
+          110
+        ],
+        "channel": 0
+      },
+      "field_filter": "all",
+      "projection": "iso",
+      "camera": {
+        "yaw": 5.230000000000003,
+        "pitch": 0.42,
+        "zoom": 1,
+        "center": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "readouts": [
+        {
+          "id": "memory-4-0",
+          "value": true
+        },
+        {
+          "id": "memory-0-4",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-1",
+          "value": false
+        },
+        {
+          "id": "counter-phase--1-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--1",
+          "value": false
+        },
+        {
+          "id": "counter-phase-2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0-2",
+          "value": true
+        },
+        {
+          "id": "counter-phase--2-0",
+          "value": false
+        },
+        {
+          "id": "counter-phase-0--2",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "sequences": [
+    {
+      "experiment": "four-component-memory-11",
+      "first_frame": 0,
+      "last_frame": 48,
+      "fps": 4,
+      "file": "sequence-01/recorded-clocks.gif",
+      "sha256": "6b199e0d2b0c83725a39ea6a1ab6ee96163c2034ca0d867be7ddfc2e48b731c5",
+      "source": "Actual Presenter Canvas2D output from consecutive saved states",
+      "state_tensor_readout_sha256": "8a22da9e3ded774b5db4f298b8186504232cd679d1cf445a8da38113585447c1",
+      "camera_framing": "whole-cube",
+      "rotation_steps_per_frame": 1,
+      "cube_bounds": [
+        {
+          "frame": 0,
+          "camera": {
+            "yaw": -0.53,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 378.06041984404817,
+              "y": 478.10366843896554
+            },
+            {
+              "x": 571.6075664690909,
+              "y": 612.8
+            },
+            {
+              "x": 378.06041984404817,
+              "y": 128.5208721962144
+            },
+            {
+              "x": 571.6075664690909,
+              "y": 263.2172037572489
+            },
+            {
+              "x": 708.3924335309091,
+              "y": 399.18279624275107
+            },
+            {
+              "x": 901.9395801559518,
+              "y": 533.8791278037855
+            },
+            {
+              "x": 708.3924335309091,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 901.9395801559518,
+              "y": 184.29633156103444
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 1,
+          "camera": {
+            "yaw": -0.41000000000000003,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 384.40415187429187,
+              "y": 467.5056853389011
+            },
+            {
+              "x": 539.2731258732078,
+              "y": 612.8
+            },
+            {
+              "x": 384.40415187429187,
+              "y": 112.74944300266876
+            },
+            {
+              "x": 539.2731258732078,
+              "y": 258.0437576637676
+            },
+            {
+              "x": 740.7268741267922,
+              "y": 404.35624233623236
+            },
+            {
+              "x": 895.5958481257081,
+              "y": 549.6505569973313
+            },
+            {
+              "x": 740.7268741267922,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 895.5958481257081,
+              "y": 194.89431466109886
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 2,
+          "camera": {
+            "yaw": -0.29000000000000004,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 393.3371079450089,
+              "y": 457.8733485410749
+            },
+            {
+              "x": 506.7176318011928,
+              "y": 612.8
+            },
+            {
+              "x": 393.3371079450089,
+              "y": 95.83209377572894
+            },
+            {
+              "x": 506.7176318011928,
+              "y": 250.75874523465404
+            },
+            {
+              "x": 773.2823681988073,
+              "y": 411.64125476534593
+            },
+            {
+              "x": 886.6628920549911,
+              "y": 566.567906224271
+            },
+            {
+              "x": 773.2823681988073,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 886.6628920549911,
+              "y": 204.52665145892507
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 3,
+          "camera": {
+            "yaw": -0.17000000000000004,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 405.0343553053923,
+              "y": 449.25433386091925
+            },
+            {
+              "x": 473.88293813996256,
+              "y": 612.8
+            },
+            {
+              "x": 405.0343553053923,
+              "y": 77.67372932913369
+            },
+            {
+              "x": 473.88293813996256,
+              "y": 241.2193954682145
+            },
+            {
+              "x": 806.1170618600374,
+              "y": 421.1806045317855
+            },
+            {
+              "x": 874.9656446946077,
+              "y": 584.7262706708663
+            },
+            {
+              "x": 806.1170618600374,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 874.9656446946077,
+              "y": 213.14566613908073
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 4,
+          "camera": {
+            "yaw": -0.050000000000000044,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 419.7285372899457,
+              "y": 441.72490705021926
+            },
+            {
+              "x": 440.7234372305254,
+              "y": 612.8
+            },
+            {
+              "x": 419.7285372899457,
+              "y": 58.16088991171108
+            },
+            {
+              "x": 440.7234372305254,
+              "y": 229.23598286149183
+            },
+            {
+              "x": 839.2765627694746,
+              "y": 433.16401713850814
+            },
+            {
+              "x": 860.2714627100543,
+              "y": 604.239110088289
+            },
+            {
+              "x": 839.2765627694746,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 860.2714627100543,
+              "y": 220.67509294978072
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 5,
+          "camera": {
+            "yaw": 0.06999999999999995,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 446.27400691229167,
+              "y": 430.98746664394986
+            },
+            {
+              "x": 417.05962901521383,
+              "y": 600.8875320328341
+            },
+            {
+              "x": 446.27400691229167,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 417.05962901521383,
+              "y": 219.5000653888842
+            },
+            {
+              "x": 862.9403709847861,
+              "y": 442.8999346111158
+            },
+            {
+              "x": 833.7259930877083,
+              "y": 612.8
+            },
+            {
+              "x": 862.9403709847861,
+              "y": 61.51246796716595
+            },
+            {
+              "x": 833.7259930877083,
+              "y": 231.41253335605012
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 6,
+          "camera": {
+            "yaw": 0.18999999999999995,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 479.37690354452724,
+              "y": 419.4267278634685
+            },
+            {
+              "x": 402.88373395999565,
+              "y": 581.6091105142489
+            },
+            {
+              "x": 479.37690354452724,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 402.88373395999565,
+              "y": 211.78238265078033
+            },
+            {
+              "x": 877.1162660400043,
+              "y": 450.61761734921964
+            },
+            {
+              "x": 800.6230964554727,
+              "y": 612.8
+            },
+            {
+              "x": 877.1162660400043,
+              "y": 80.79088948575114
+            },
+            {
+              "x": 800.6230964554727,
+              "y": 242.97327213653148
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 7,
+          "camera": {
+            "yaw": 0.30999999999999994,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 512.161494535717,
+              "y": 410.2749449255548
+            },
+            {
+              "x": 391.66172497255627,
+              "y": 563.6649593693518
+            },
+            {
+              "x": 512.161494535717,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 391.66172497255627,
+              "y": 202.99001444379698
+            },
+            {
+              "x": 888.3382750274437,
+              "y": 459.40998555620297
+            },
+            {
+              "x": 767.838505464283,
+              "y": 612.8
+            },
+            {
+              "x": 888.3382750274437,
+              "y": 98.73504063064823
+            },
+            {
+              "x": 767.838505464283,
+              "y": 252.1250550744452
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 8,
+          "camera": {
+            "yaw": 0.42999999999999994,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 544.6758402958533,
+              "y": 403.350577841096
+            },
+            {
+              "x": 383.1709958784241,
+              "y": 546.9447114690337
+            },
+            {
+              "x": 544.6758402958533,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 383.1709958784241,
+              "y": 193.19413362793762
+            },
+            {
+              "x": 896.829004121576,
+              "y": 469.20586637206236
+            },
+            {
+              "x": 735.3241597041467,
+              "y": 612.8
+            },
+            {
+              "x": 896.829004121576,
+              "y": 115.45528853096627
+            },
+            {
+              "x": 735.3241597041467,
+              "y": 259.04942215890395
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 9,
+          "camera": {
+            "yaw": 0.5499999999999999,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 576.979719991648,
+              "y": 398.51822052718893
+            },
+            {
+              "x": 377.245510366467,
+              "y": 531.356288191741
+            },
+            {
+              "x": 576.979719991648,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 377.245510366467,
+              "y": 182.43806766455202
+            },
+            {
+              "x": 902.754489633533,
+              "y": 479.96193233544795
+            },
+            {
+              "x": 703.020280008352,
+              "y": 612.8
+            },
+            {
+              "x": 902.754489633533,
+              "y": 131.04371180825893
+            },
+            {
+              "x": 703.020280008352,
+              "y": 263.88177947281105
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 10,
+          "camera": {
+            "yaw": 0.6699999999999999,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 609.1405230385353,
+              "y": 395.6844369897628
+            },
+            {
+              "x": 373.7706962738261,
+              "y": 516.8254928018696
+            },
+            {
+              "x": 609.1405230385353,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 373.7706962738261,
+              "y": 170.7410558121068
+            },
+            {
+              "x": 906.2293037261738,
+              "y": 491.6589441878932
+            },
+            {
+              "x": 670.8594769614647,
+              "y": 612.8
+            },
+            {
+              "x": 906.2293037261738,
+              "y": 145.57450719813036
+            },
+            {
+              "x": 670.8594769614647,
+              "y": 266.7155630102372
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 11,
+          "camera": {
+            "yaw": 0.7899999999999999,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 641.2301721722578,
+              "y": 394.79485782245035
+            },
+            {
+              "x": 372.6798852834055,
+              "y": 503.29581334892407
+            },
+            {
+              "x": 641.2301721722578,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 372.6798852834055,
+              "y": 158.10095552647368
+            },
+            {
+              "x": 907.3201147165945,
+              "y": 504.2990444735263
+            },
+            {
+              "x": 638.7698278277422,
+              "y": 612.8
+            },
+            {
+              "x": 907.3201147165945,
+              "y": 159.1041866510759
+            },
+            {
+              "x": 638.7698278277422,
+              "y": 267.6051421775496
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 12,
+          "camera": {
+            "yaw": 0.9099999999999999,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 673.3226712133302,
+              "y": 395.8324815131842
+            },
+            {
+              "x": 373.95222996880625,
+              "y": 490.7285732454895
+            },
+            {
+              "x": 673.3226712133302,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 373.95222996880625,
+              "y": 144.4960917323053
+            },
+            {
+              "x": 906.0477700311937,
+              "y": 517.9039082676946
+            },
+            {
+              "x": 606.6773287866698,
+              "y": 612.8
+            },
+            {
+              "x": 906.0477700311937,
+              "y": 171.6714267545105
+            },
+            {
+              "x": 606.6773287866698,
+              "y": 266.5675184868158
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 13,
+          "camera": {
+            "yaw": 1.0299999999999998,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 705.4919427335388,
+              "y": 398.8171420681464
+            },
+            {
+              "x": 377.6120509894168,
+              "y": 479.10354679329396
+            },
+            {
+              "x": 705.4919427335388,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 377.6120509894168,
+              "y": 129.88640472514757
+            },
+            {
+              "x": 902.3879490105833,
+              "y": 532.5135952748524
+            },
+            {
+              "x": 574.5080572664612,
+              "y": 612.8
+            },
+            {
+              "x": 902.3879490105833,
+              "y": 183.29645320670605
+            },
+            {
+              "x": 574.5080572664612,
+              "y": 263.5828579318536
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 14,
+          "camera": {
+            "yaw": 1.15,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 737.8096543631955,
+              "y": 403.8061300308511
+            },
+            {
+              "x": 383.7295985903067,
+              "y": 468.42015603868896
+            },
+            {
+              "x": 737.8096543631955,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 383.7295985903067,
+              "y": 114.21402600783793
+            },
+            {
+              "x": 896.2704014096932,
+              "y": 548.1859739921621
+            },
+            {
+              "x": 542.1903456368045,
+              "y": 612.8
+            },
+            {
+              "x": 896.2704014096932,
+              "y": 193.97984396131102
+            },
+            {
+              "x": 542.1903456368045,
+              "y": 258.5938699691489
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 15,
+          "camera": {
+            "yaw": 1.27,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 770.3427311633826,
+              "y": 410.8959819311326
+            },
+            {
+              "x": 392.4232468427106,
+              "y": 458.69937985336367
+            },
+            {
+              "x": 770.3427311633826,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 392.4232468427106,
+              "y": 97.40339792223102
+            },
+            {
+              "x": 887.5767531572894,
+              "y": 564.996602077769
+            },
+            {
+              "x": 509.6572688366174,
+              "y": 612.8
+            },
+            {
+              "x": 887.5767531572894,
+              "y": 203.70062014663628
+            },
+            {
+              "x": 509.6572688366174,
+              "y": 251.50401806886734
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 16,
+          "camera": {
+            "yaw": 1.3900000000000001,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 803.1502151816749,
+              "y": 420.2254783559712
+            },
+            {
+              "x": 403.86316990885905,
+              "y": 449.9865335187395
+            },
+            {
+              "x": 803.1502151816749,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 403.86316990885905,
+              "y": 79.36105516276831
+            },
+            {
+              "x": 876.136830091141,
+              "y": 583.0389448372316
+            },
+            {
+              "x": 476.8497848183252,
+              "y": 612.8
+            },
+            {
+              "x": 876.136830091141,
+              "y": 212.41346648126049
+            },
+            {
+              "x": 476.8497848183252,
+              "y": 242.17452164402877
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 17,
+          "camera": {
+            "yaw": 1.5100000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 836.2790579885062,
+              "y": 431.97990686463174
+            },
+            {
+              "x": 418.2765692717238,
+              "y": 442.35511582081693
+            },
+            {
+              "x": 836.2790579885062,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 418.2765692717238,
+              "y": 59.97520895618521
+            },
+            {
+              "x": 861.7234307282762,
+              "y": 602.4247910438148
+            },
+            {
+              "x": 443.7209420114938,
+              "y": 612.8
+            },
+            {
+              "x": 861.7234307282762,
+              "y": 220.04488417918304
+            },
+            {
+              "x": 443.7209420114938,
+              "y": 230.42009313536823
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 18,
+          "camera": {
+            "yaw": 1.6300000000000003,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 861.5109033779974,
+              "y": 442.26154331586633
+            },
+            {
+              "x": 443.2789355534484,
+              "y": 432.15322736190626
+            },
+            {
+              "x": 861.5109033779974,
+              "y": 59.70831595396004
+            },
+            {
+              "x": 443.2789355534484,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 836.7210644465516,
+              "y": 612.8
+            },
+            {
+              "x": 418.48909662200265,
+              "y": 602.6916840460399
+            },
+            {
+              "x": 836.7210644465516,
+              "y": 230.24677263809372
+            },
+            {
+              "x": 418.48909662200265,
+              "y": 220.13845668413364
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 19,
+          "camera": {
+            "yaw": 1.7500000000000004,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 875.9655742834947,
+              "y": 449.87797024440624
+            },
+            {
+              "x": 476.41228623622953,
+              "y": 420.36514104740115
+            },
+            {
+              "x": 875.9655742834947,
+              "y": 79.11282919700511
+            },
+            {
+              "x": 476.41228623622953,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 803.5877137637705,
+              "y": 612.8
+            },
+            {
+              "x": 404.0344257165053,
+              "y": 583.2871708029949
+            },
+            {
+              "x": 803.5877137637705,
+              "y": 242.03485895259885
+            },
+            {
+              "x": 404.0344257165053,
+              "y": 212.52202975559373
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 20,
+          "camera": {
+            "yaw": 1.8700000000000006,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 887.4433409375603,
+              "y": 458.57701243775267
+            },
+            {
+              "x": 509.22376028657266,
+              "y": 411.0047823854535
+            },
+            {
+              "x": 887.4433409375603,
+              "y": 97.1722300522992
+            },
+            {
+              "x": 509.22376028657266,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 770.7762397134273,
+              "y": 612.8
+            },
+            {
+              "x": 392.55665906243973,
+              "y": 565.2277699477008
+            },
+            {
+              "x": 770.7762397134273,
+              "y": 251.39521761454648
+            },
+            {
+              "x": 392.55665906243973,
+              "y": 203.8229875622473
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 21,
+          "camera": {
+            "yaw": 1.9900000000000007,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 896.1722040840139,
+              "y": 468.2847655714323
+            },
+            {
+              "x": 541.7601139849886,
+              "y": 403.8862120028677
+            },
+            {
+              "x": 896.1722040840139,
+              "y": 113.99855356856457
+            },
+            {
+              "x": 541.7601139849886,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 738.2398860150114,
+              "y": 612.8
+            },
+            {
+              "x": 383.8277959159862,
+              "y": 548.4014464314354
+            },
+            {
+              "x": 738.2398860150114,
+              "y": 258.5137879971323
+            },
+            {
+              "x": 383.8277959159862,
+              "y": 194.1152344285677
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 22,
+          "camera": {
+            "yaw": 2.1100000000000008,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 902.323057018628,
+              "y": 478.9555681109281
+            },
+            {
+              "x": 574.0802593544847,
+              "y": 398.8700628442256
+            },
+            {
+              "x": 902.323057018628,
+              "y": 129.68550526670256
+            },
+            {
+              "x": 574.0802593544847,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 705.9197406455153,
+              "y": 612.8
+            },
+            {
+              "x": 377.676942981372,
+              "y": 532.7144947332974
+            },
+            {
+              "x": 705.9197406455153,
+              "y": 263.5299371557744
+            },
+            {
+              "x": 377.676942981372,
+              "y": 183.44443188907186
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 23,
+          "camera": {
+            "yaw": 2.230000000000001,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 906.0149338877295,
+              "y": 490.56813851468314
+            },
+            {
+              "x": 606.2510392575165,
+              "y": 395.8592600746556
+            },
+            {
+              "x": 906.0149338877295,
+              "y": 144.30887844002746
+            },
+            {
+              "x": 606.2510392575165,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 673.7489607424835,
+              "y": 612.8
+            },
+            {
+              "x": 373.98506611227043,
+              "y": 518.0911215599725
+            },
+            {
+              "x": 673.7489607424835,
+              "y": 266.5407399253444
+            },
+            {
+              "x": 373.98506611227043,
+              "y": 171.83186148531686
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 24,
+          "camera": {
+            "yaw": 2.350000000000001,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 907.3187060618902,
+              "y": 503.1227828689559
+            },
+            {
+              "x": 638.3440757168006,
+              "y": 394.79600660981123
+            },
+            {
+              "x": 907.3187060618902,
+              "y": 157.92677625914462
+            },
+            {
+              "x": 638.3440757168006,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 641.6559242831994,
+              "y": 612.8
+            },
+            {
+              "x": 372.68129393810983,
+              "y": 504.47322374085536
+            },
+            {
+              "x": 641.6559242831994,
+              "y": 267.60399339018875
+            },
+            {
+              "x": 372.68129393810983,
+              "y": 159.2772171310441
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 25,
+          "camera": {
+            "yaw": 2.470000000000001,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 906.2592956634483,
+              "y": 516.6394753638583
+            },
+            {
+              "x": 670.4332759633636,
+              "y": 395.6599779379006
+            },
+            {
+              "x": 906.2592956634483,
+              "y": 170.5794974259578
+            },
+            {
+              "x": 670.4332759633636,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 609.5667240366364,
+              "y": 612.8
+            },
+            {
+              "x": 373.7407043365518,
+              "y": 491.82050257404217
+            },
+            {
+              "x": 609.5667240366364,
+              "y": 266.7400220620994
+            },
+            {
+              "x": 373.7407043365518,
+              "y": 145.7605246361416
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 26,
+          "camera": {
+            "yaw": 2.590000000000001,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 902.8164558863082,
+              "y": 531.1566528894685
+            },
+            {
+              "x": 702.5926565994165,
+              "y": 398.4676857525768
+            },
+            {
+              "x": 902.8164558863082,
+              "y": 182.28896713689176
+            },
+            {
+              "x": 702.5926565994165,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 577.4073434005835,
+              "y": 612.8
+            },
+            {
+              "x": 377.18354411369177,
+              "y": 480.1110328631082
+            },
+            {
+              "x": 577.4073434005835,
+              "y": 263.93231424742316
+            },
+            {
+              "x": 377.18354411369177,
+              "y": 131.2433471105314
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 27,
+          "camera": {
+            "yaw": 2.7100000000000013,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 896.9241369901704,
+              "y": 546.7305925730143
+            },
+            {
+              "x": 734.8941830521569,
+              "y": 403.2729949978981
+            },
+            {
+              "x": 896.9241369901704,
+              "y": 193.05759757511623
+            },
+            {
+              "x": 734.8941830521569,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 545.1058169478431,
+              "y": 612.8
+            },
+            {
+              "x": 383.07586300982956,
+              "y": 469.34240242488374
+            },
+            {
+              "x": 545.1058169478431,
+              "y": 259.1270050021019
+            },
+            {
+              "x": 383.07586300982956,
+              "y": 115.66940742698566
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 28,
+          "camera": {
+            "yaw": 2.8300000000000014,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 888.4684225738682,
+              "y": 563.4352557766299
+            },
+            {
+              "x": 767.405323264043,
+              "y": 410.16880688056557
+            },
+            {
+              "x": 888.4684225738682,
+              "y": 202.86644889606438
+            },
+            {
+              "x": 767.405323264043,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 512.594676735957,
+              "y": 612.8
+            },
+            {
+              "x": 391.5315774261318,
+              "y": 459.53355110393557
+            },
+            {
+              "x": 512.594676735957,
+              "y": 252.2311931194344
+            },
+            {
+              "x": 391.5315774261318,
+              "y": 98.96474422337002
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 29,
+          "camera": {
+            "yaw": 2.9500000000000015,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 877.2839892977544,
+              "y": 581.3624814159738
+            },
+            {
+              "x": 800.1859815136755,
+              "y": 419.28994604033096
+            },
+            {
+              "x": 877.2839892977544,
+              "y": 211.67253537564278
+            },
+            {
+              "x": 800.1859815136755,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 479.81401848632447,
+              "y": 612.8
+            },
+            {
+              "x": 402.7160107022456,
+              "y": 450.7274646243572
+            },
+            {
+              "x": 479.81401848632447,
+              "y": 243.11005395966902
+            },
+            {
+              "x": 402.7160107022456,
+              "y": 81.03751858402623
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 30,
+          "camera": {
+            "yaw": 3.0700000000000016,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 863.1490221545421,
+              "y": 600.6223908795665
+            },
+            {
+              "x": 833.284406719032,
+              "y": 430.8173072529277
+            },
+            {
+              "x": 863.1490221545421,
+              "y": 219.40508362663883
+            },
+            {
+              "x": 833.284406719032,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 446.71559328096805,
+              "y": 612.8
+            },
+            {
+              "x": 416.8509778454579,
+              "y": 442.99491637336115
+            },
+            {
+              "x": 446.71559328096805,
+              "y": 231.58269274707226
+            },
+            {
+              "x": 416.8509778454579,
+              "y": 61.77760912043345
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 31,
+          "camera": {
+            "yaw": 3.1900000000000017,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 839.71899127606,
+              "y": 612.8
+            },
+            {
+              "x": 860.055024220171,
+              "y": 441.6327572586218
+            },
+            {
+              "x": 839.71899127606,
+              "y": 229.05947274810325
+            },
+            {
+              "x": 860.055024220171,
+              "y": 57.892230006725015
+            },
+            {
+              "x": 419.94497577982895,
+              "y": 604.5077699932749
+            },
+            {
+              "x": 440.2810087239399,
+              "y": 433.34052725189673
+            },
+            {
+              "x": 419.94497577982895,
+              "y": 220.7672427413782
+            },
+            {
+              "x": 440.2810087239399,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 32,
+          "camera": {
+            "yaw": 3.310000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 806.5549483339639,
+              "y": 612.8
+            },
+            {
+              "x": 874.7908286576918,
+              "y": 449.14706414033725
+            },
+            {
+              "x": 806.5549483339639,
+              "y": 241.07682933538464
+            },
+            {
+              "x": 874.7908286576918,
+              "y": 77.42389347572188
+            },
+            {
+              "x": 405.2091713423082,
+              "y": 584.9761065242781
+            },
+            {
+              "x": 473.4450516660361,
+              "y": 421.3231706646153
+            },
+            {
+              "x": 405.2091713423082,
+              "y": 213.25293585966273
+            },
+            {
+              "x": 473.4450516660361,
+              "y": 49.60000000000002
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 33,
+          "camera": {
+            "yaw": 3.430000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 773.7162089140621,
+              "y": 612.8
+            },
+            {
+              "x": 886.5261939375594,
+              "y": 457.7521855407632
+            },
+            {
+              "x": 773.7162089140621,
+              "y": 250.6472650620613
+            },
+            {
+              "x": 886.5261939375594,
+              "y": 95.59945060282453
+            },
+            {
+              "x": 393.47380606244064,
+              "y": 566.8005493971755
+            },
+            {
+              "x": 506.2837910859379,
+              "y": 411.75273493793867
+            },
+            {
+              "x": 393.47380606244064,
+              "y": 204.64781445923677
+            },
+            {
+              "x": 506.2837910859379,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 34,
+          "camera": {
+            "yaw": 3.550000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 741.1573676348285,
+              "y": 612.8
+            },
+            {
+              "x": 895.4945709254483,
+              "y": 467.3714439480875
+            },
+            {
+              "x": 741.1573676348285,
+              "y": 257.9611639896426
+            },
+            {
+              "x": 895.4945709254483,
+              "y": 112.53260793773012
+            },
+            {
+              "x": 384.50542907455167,
+              "y": 549.8673920622698
+            },
+            {
+              "x": 538.8426323651715,
+              "y": 404.43883601035736
+            },
+            {
+              "x": 384.50542907455167,
+              "y": 195.02855605191246
+            },
+            {
+              "x": 538.8426323651715,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 35,
+          "camera": {
+            "yaw": 3.670000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 708.8204134602731,
+              "y": 612.8
+            },
+            {
+              "x": 901.8717523368539,
+              "y": 477.95681265131293
+            },
+            {
+              "x": 708.8204134602731,
+              "y": 263.1618887527583
+            },
+            {
+              "x": 901.8717523368539,
+              "y": 128.31870140407125
+            },
+            {
+              "x": 378.12824766314606,
+              "y": 534.0812985959287
+            },
+            {
+              "x": 571.1795865397269,
+              "y": 399.2381112472417
+            },
+            {
+              "x": 378.12824766314606,
+              "y": 184.44318734868702
+            },
+            {
+              "x": 571.1795865397269,
+              "y": 49.60000000000002
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 36,
+          "camera": {
+            "yaw": 3.7900000000000023,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 676.6390753183009,
+              "y": 612.8
+            },
+            {
+              "x": 905.781264173638,
+              "y": 489.48494535433804
+            },
+            {
+              "x": 676.6390753183009,
+              "y": 266.3501773883758
+            },
+            {
+              "x": 905.781264173638,
+              "y": 143.0351227427138
+            },
+            {
+              "x": 374.21873582636204,
+              "y": 519.3648772572861
+            },
+            {
+              "x": 603.3609246816991,
+              "y": 396.04982261162417
+            },
+            {
+              "x": 374.21873582636204,
+              "y": 172.91505464566197
+            },
+            {
+              "x": 603.3609246816991,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 37,
+          "camera": {
+            "yaw": 3.9100000000000024,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 644.5420518626879,
+              "y": 612.8
+            },
+            {
+              "x": 907.2981987430677,
+              "y": 501.9542962531699
+            },
+            {
+              "x": 644.5420518626879,
+              "y": 267.58726924296064
+            },
+            {
+              "x": 907.2981987430677,
+              "y": 156.74156549613065
+            },
+            {
+              "x": 372.7018012569323,
+              "y": 505.65843450386933
+            },
+            {
+              "x": 635.4579481373121,
+              "y": 394.81273075703933
+            },
+            {
+              "x": 372.7018012569323,
+              "y": 160.44570374683005
+            },
+            {
+              "x": 635.4579481373121,
+              "y": 49.60000000000002
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 38,
+          "camera": {
+            "yaw": 4.030000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 612.4555498646391,
+              "y": 612.8
+            },
+            {
+              "x": 906.4515591667849,
+              "y": 515.3831289821944
+            },
+            {
+              "x": 612.4555498646391,
+              "y": 266.8968169685541
+            },
+            {
+              "x": 906.4515591667849,
+              "y": 169.47994595074852
+            },
+            {
+              "x": 373.54844083321507,
+              "y": 492.92005404925146
+            },
+            {
+              "x": 667.5444501353609,
+              "y": 395.5031830314459
+            },
+            {
+              "x": 373.54844083321507,
+              "y": 147.01687101780556
+            },
+            {
+              "x": 667.5444501353609,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 39,
+          "camera": {
+            "yaw": 4.150000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 580.3054759816566,
+              "y": 612.8
+            },
+            {
+              "x": 903.225167370571,
+              "y": 529.8082526551899
+            },
+            {
+              "x": 580.3054759816566,
+              "y": 264.2656270074104
+            },
+            {
+              "x": 903.225167370571,
+              "y": 181.27387966260028
+            },
+            {
+              "x": 376.77483262942906,
+              "y": 481.1261203373997
+            },
+            {
+              "x": 699.6945240183434,
+              "y": 398.1343729925896
+            },
+            {
+              "x": 376.77483262942906,
+              "y": 132.5917473448101
+            },
+            {
+              "x": 699.6945240183434,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 40,
+          "camera": {
+            "yaw": 4.270000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 548.0195865711145,
+              "y": 612.8
+            },
+            {
+              "x": 897.557157446279,
+              "y": 545.2843518433392
+            },
+            {
+              "x": 548.0195865711145,
+              "y": 259.6432464180595
+            },
+            {
+              "x": 897.557157446279,
+              "y": 192.1275982613987
+            },
+            {
+              "x": 382.44284255372105,
+              "y": 470.2724017386013
+            },
+            {
+              "x": 731.9804134288855,
+              "y": 402.7567535819405
+            },
+            {
+              "x": 382.44284255372105,
+              "y": 117.1156481566608
+            },
+            {
+              "x": 731.9804134288855,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 41,
+          "camera": {
+            "yaw": 4.390000000000002,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 515.5298953609786,
+              "y": 612.8
+            },
+            {
+              "x": 889.3380420533401,
+              "y": 561.8837932673233
+            },
+            {
+              "x": 515.5298953609786,
+              "y": 252.94038598531225
+            },
+            {
+              "x": 889.3380420533401,
+              "y": 202.0241792526356
+            },
+            {
+              "x": 390.66195794665987,
+              "y": 460.3758207473644
+            },
+            {
+              "x": 764.4701046390214,
+              "y": 409.45961401468776
+            },
+            {
+              "x": 390.66195794665987,
+              "y": 100.51620673267664
+            },
+            {
+              "x": 764.4701046390214,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 42,
+          "camera": {
+            "yaw": 4.5100000000000025,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 482.7756686167527,
+              "y": 612.8
+            },
+            {
+              "x": 878.4073075647455,
+              "y": 579.696792851508
+            },
+            {
+              "x": 482.7756686167527,
+              "y": 244.0261434906258
+            },
+            {
+              "x": 878.4073075647455,
+              "y": 210.92293634213382
+            },
+            {
+              "x": 401.59269243525455,
+              "y": 451.47706365786615
+            },
+            {
+              "x": 797.2243313832473,
+              "y": 418.37385650937415
+            },
+            {
+              "x": 401.59269243525455,
+              "y": 82.70320714849197
+            },
+            {
+              "x": 797.2243313832473,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 43,
+          "camera": {
+            "yaw": 4.630000000000003,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 449.70740526939517,
+              "y": 612.8
+            },
+            {
+              "x": 864.5484712693988,
+              "y": 598.8318082625888
+            },
+            {
+              "x": 449.70740526939517,
+              "y": 232.7239727572878
+            },
+            {
+              "x": 864.5484712693988,
+              "y": 218.7557810198765
+            },
+            {
+              "x": 415.45152873060124,
+              "y": 443.64421898012347
+            },
+            {
+              "x": 830.2925947306048,
+              "y": 429.67602724271217
+            },
+            {
+              "x": 415.45152873060124,
+              "y": 63.56819173741127
+            },
+            {
+              "x": 830.2925947306048,
+              "y": 49.599999999999966
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 44,
+          "camera": {
+            "yaw": 4.750000000000003,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 421.4275061939936,
+              "y": 606.3358926358023
+            },
+            {
+              "x": 842.7197858847377,
+              "y": 612.8
+            },
+            {
+              "x": 421.4275061939936,
+              "y": 221.3863308371969
+            },
+            {
+              "x": 842.7197858847377,
+              "y": 227.85043820139447
+            },
+            {
+              "x": 437.2802141152623,
+              "y": 434.5495617986055
+            },
+            {
+              "x": 858.5724938060064,
+              "y": 441.01366916280307
+            },
+            {
+              "x": 437.2802141152623,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 858.5724938060064,
+              "y": 56.06410736419758
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 45,
+          "camera": {
+            "yaw": 4.870000000000003,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 406.4081608731897,
+              "y": 586.6760066463619
+            },
+            {
+              "x": 809.5248283178402,
+              "y": 612.8
+            },
+            {
+              "x": 406.4081608731897,
+              "y": 213.97503495309476
+            },
+            {
+              "x": 809.5248283178402,
+              "y": 240.0990283067328
+            },
+            {
+              "x": 470.47517168215984,
+              "y": 422.3009716932672
+            },
+            {
+              "x": 873.5918391268103,
+              "y": 448.4249650469052
+            },
+            {
+              "x": 470.47517168215984,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 873.5918391268103,
+              "y": 75.72399335363804
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 46,
+          "camera": {
+            "yaw": 4.990000000000003,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 394.4133119916825,
+              "y": 568.3833731489675
+            },
+            {
+              "x": 776.6584520360477,
+              "y": 612.8
+            },
+            {
+              "x": 394.4133119916825,
+              "y": 205.4644514843092
+            },
+            {
+              "x": 776.6584520360477,
+              "y": 249.88107833534167
+            },
+            {
+              "x": 503.3415479639523,
+              "y": 412.5189216646583
+            },
+            {
+              "x": 885.5866880083174,
+              "y": 456.9355485156908
+            },
+            {
+              "x": 503.3415479639523,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 885.5866880083174,
+              "y": 94.0166268510325
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 47,
+          "camera": {
+            "yaw": 5.110000000000003,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 385.2040018108622,
+              "y": 551.3426106021222
+            },
+            {
+              "x": 744.0766507469293,
+              "y": 612.8
+            },
+            {
+              "x": 385.2040018108622,
+              "y": 195.93407392085876
+            },
+            {
+              "x": 744.0766507469293,
+              "y": 257.39146331873644
+            },
+            {
+              "x": 535.9233492530707,
+              "y": 405.00853668126354
+            },
+            {
+              "x": 894.7959981891378,
+              "y": 466.46592607914124
+            },
+            {
+              "x": 535.9233492530707,
+              "y": 49.60000000000002
+            },
+            {
+              "x": 894.7959981891378,
+              "y": 111.05738939787767
+            }
+          ],
+          "all_eight_inside": true
+        },
+        {
+          "frame": 48,
+          "camera": {
+            "yaw": 5.230000000000003,
+            "pitch": 0.42,
+            "zoom": 1,
+            "center": [
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          "corners": [
+            {
+              "x": 378.59949460057965,
+              "y": 535.456749097861
+            },
+            {
+              "x": 711.722349212852,
+              "y": 612.8
+            },
+            {
+              "x": 378.59949460057965,
+              "y": 185.43432612119753
+            },
+            {
+              "x": 711.722349212852,
+              "y": 262.7775770233365
+            },
+            {
+              "x": 568.277650787148,
+              "y": 399.6224229766635
+            },
+            {
+              "x": 901.4005053994204,
+              "y": 476.9656738788025
+            },
+            {
+              "x": 568.277650787148,
+              "y": 49.599999999999966
+            },
+            {
+              "x": 901.4005053994204,
+              "y": 126.943250902139
+            }
+          ],
+          "all_eight_inside": true
+        }
+      ],
+      "command": [
+        "ffmpeg",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-threads",
+        "1",
+        "-filter_threads",
+        "1",
+        "-framerate",
+        "4",
+        "-i",
+        "/workspace/scratch/1966445260ce/Universe24-components-publication/research/experiments/evidence/publication_v1/whole_cube_render/sequence-01/frame-%03d.png",
+        "-filter_complex",
+        "scale=960:-1:flags=lanczos,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=3",
+        "-loop",
+        "0",
+        "/workspace/scratch/1966445260ce/Universe24-components-publication/research/experiments/evidence/publication_v1/whole_cube_render/sequence-01/recorded-clocks.gif"
+      ]
+    }
+  ],
+  "checks": [],
+  "errors": [],
+  "parent_cpu_seconds": 12.652831,
+  "wall_seconds": 10.963,
+  "wall_limit_seconds": 180
+}

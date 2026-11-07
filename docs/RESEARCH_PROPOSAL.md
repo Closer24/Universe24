@@ -5,7 +5,7 @@
 **Project initiator:** Alon Gonen  
 **Full, evolving proposal:** [Universe24 — Could a Simple Automaton Be the Logic Behind Nature?](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit?usp=drivesdk)  
 **Reference implementation:** [Universe24 on GitHub](https://github.com/Closer24/Universe24)  
-**Summary alignment:** 6 November 2026; this is a readable orientation to the Google Doc, not an independent revised theory or an exact copy of every appendix.
+**Summary alignment:** baseline summary from 6 November 2026; the existing H16 discussion and methodological framing were checked against the Google Doc on 7 November 2026. This is a readable orientation, not an independent revised theory or an exact copy of every appendix.
 
 > **Status:** This is a research proposal. The proposed integer automaton has a precise, testable mathematical implementation, but it has **not** been shown to reproduce the established laws of physics. The Google Doc is the primary evolving proposal; this summary is a guide for new readers. Access to the Google Doc is controlled by its owner.
 
@@ -14,6 +14,8 @@
 Universe24 asks whether diverse physical phenomena could emerge from **a single elementary local mechanism operating on exactly stored integers**. Instead of prescribing distinct microscopic algorithms for photons, electrons, atoms, clocks and detectors, the project proposes examining whether different **collective patterns of the same underlying dynamics** could account for them.
 
 The intended distinction is between **underlying board states** (the complete integer dynamics) and **observed clicks** (declared, experimentally interpretable records of interactions). A click is not necessarily an oscillator tick or an arithmetic carry. It would become a physical detector outcome only after deriving a detector mechanism and comparing it quantitatively with measurements.
+
+Universe24 combines science with the philosophy of science. Its methodological position is that the central question requires both: conceptual analysis clarifies what counts as a physical explanation, a clock, a measurement and a recorded outcome; mathematical derivation, reproducible computation and comparison with physical observations test the proposed account. The idea that nature favors greater joint structured complexity is a guiding philosophical conjecture to formulate and test, not an established law or a proven consequence of Rule3.
 
 The research method works in both directions: derive constraints from existing physical experiments, then run a fixed candidate model and test its measurable predictions. A visual resemblance or an internally conserved number is insufficient.
 
@@ -63,7 +65,15 @@ Write `r = 2*theta + epsilon`, with `theta in {0,1,2}` and invariant parity `eps
 
 These labels are **three arithmetic classes**, not three independently derived physical click species. `C2` does **not** inherently choose a winner. The source document proposes testing whether interactions with a prepared detector could create robust records and prevent later competing confirmations while preserving complete-state reversibility. No general robust mechanism has been established in this repository.
 
-The document also contains hypothesis **H16**, concerning a possible relationship between observed joint histories and a pre-specified measure of *structured complexity*. Such a criterion requires a real measure, admissible alternatives, a comparison domain and a tie policy. It is not a license to add an external optimizer or retroactively erase realized events. A completely specified deterministic initial state has one trajectory.
+The document already contains **H16**, a candidate explanatory postulate: observed joint click histories might be the records of admissible full joint histories that maximize a pre-specified measure of *joint structured complexity*. This is a research hypothesis about possible observed behavior, not an established law or an additional engine instruction. Complexity must be defined explicitly and distinguished from entropy, disorder, periodicity and mere component count.
+
+A finite test must register the metric, alternative routes or histories, causal comparison domain, observation window, detector/click definition, controls and tie policy before inspecting its outcomes. One testable version predicts that a uniquely largest calibrated score yields the sole observed outlet confirmation among eligible, matched alternatives. Ties and cases with no unique maximum must follow the registered policy. This conditional finite prediction does not claim a universal success rate or an instantaneous comparison of inaccessible parts of the board.
+
+A completely specified initial state and fixed tensor have one deterministic trajectory. The metric is a read-only observable; it cannot choose the next state, change couplings during a run, delete a path or erase recorded events. Any effective competition must emerge from ordinary local Rule3 evolution. Apparent disappearance at an outlet must be reconciled with information retained in the complete invertible state, including the counters, remainders and environment. The [causal and recurrence constraints](SIGNAL_CLOCK_COMPLEXITY.md#exact-constraints-and-counterexamples) limit possible interpretations of a universal maximum or growth principle.
+
+The registered `C_pair` test supplied **10 eligible arrival-matched comparisons, zero higher-score-only outcomes and 10 counterexamples**: six favored the lower-score route and four left both outlets quiet. This refutes that defined finite-family prediction. It does not establish that every possible structured-complexity measure fails, and changing the metric later cannot turn the original result into a success. The [protocol, result and limits](PATH_SELECTION_BLOCK.md#registered-selection-study) remain unchanged; a different metric requires a new prospective study.
+
+The source's existing H16c/H16d discussion and its effective-collapse research target connect the idea to entanglement, detector clicks, interference and probabilities. That **quantum connection is an additional conjecture**, not a deduction from the maximum criterion or from the three arithmetic C classes. It requires a derived preparation/recording mechanism and quantitative tests of interference, Born probabilities, Bell/CHSH assumptions and no-signalling. A canceled signal or a single outlet record is not by itself quantum collapse. These physical tests remain open.
 
 ## 6. How the project would be tested against physics
 
@@ -95,4 +105,4 @@ To reproduce a run, record the **Git commit SHA, side `L`, fixed signs, complete
 
 **Credit:** Alon Gonen, *Universe24*. See [CITATION.cff](../CITATION.cff) for the repository citation. A research statement about the proposal and a software citation should not be mistaken for empirical validation.
 
-**Access note:** This repository is currently private. A reader needs GitHub repository access; the Google Doc may separately require document sharing permissions.
+**Access note:** The Google Doc may require document sharing permissions.

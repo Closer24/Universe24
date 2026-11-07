@@ -1,0 +1,44 @@
+{
+  "format": "universe24-confirmation-search-protocol-v1",
+  "protocol_id": "U24-CONFIRMATION-DISCOVERY-001",
+  "status": "frozen_before_search",
+  "question": "Can two initially prepared independent signals create a retained silent waiting record and then one authentic receiver-node confirmation event?",
+  "model": {"num": 1, "den": 1, "channels": 48, "spatial_inputs": 6, "body_actions": [0, 1, 3], "body_signs": [1, 1, 1], "background": [0, 0, 2], "fixed_after_initialization": true},
+  "family": {
+    "side": 201,
+    "extent": 32,
+    "steps": 40,
+    "target_remainders": [2, 4],
+    "guide_modes": ["between_sources", "full_segment"],
+    "geometries": ["opposed", "co_directed"],
+    "distance_pairs": [[8, 16], [8, 18], [10, 18], [10, 20]],
+    "source_phases": [[0, 1], [0, -1]],
+    "source_masks": [[false, false], [true, false], [false, true], [true, true]],
+    "cases": 64,
+    "runs": 256,
+    "random_seed": null,
+    "enumeration": "guide mode, geometry, distance pair, first phase, second phase; every listed case retained"
+  },
+  "fixed_observers": {
+    "memory": "M=(r0,r14) at the centered receiver; every change is an R event, not necessarily C",
+    "receiver_C": "All 48 receiver channels, existing guard ell!=0 and changed triple, individual events retained; C_bank groups a common step without discarding constituent events",
+    "waiting": "M=(4,2), receiver channels0/14 counters all zero, retained for at least4completeupdates before secondR; zero detector net input in every intervening update excluding the second arrival transition",
+    "initial_memory": [2, 4],
+    "waiting_memory": [4, 2],
+    "confirmed_memory": [0, 0],
+    "first_window": "[d1,d1+1]",
+    "second_window": "[d2,d2+3]",
+    "single_window": "[di,di+1]",
+    "arrival_evidence": "Report first six-term and net-input difference between both and each single-source control; these are observations, not nominal distance assertions"
+  },
+  "acceptance": {
+    "neither": "Whole board stationary throughH; zero receiver-node C",
+    "each_single": "Exactly one R in its fixed window, M:(2,4)->(4,2), then retained throughH; no C in any of48receiverchannels",
+    "both": "Exactly two R with M:(2,4)->(4,2)->(0,0) in their fixed windows; pending interval>=4completeupdates; all receiver-node C occurs at secondR and at leastone authenticC occurs there; no other receiverCthroughH",
+    "causal_controls": "First both-run detector input differs from source2-only; second differs from source1-only; both have nonzero incoming counter terms and nonzero detector net input",
+    "audit": "Every full-state one-step inverse and complete rewind succeeds; initialboundarymargin>H; allfullstatesretained"
+  },
+  "budget": {"cpu_seconds": 180, "wall_seconds": 300, "max_stored_channels": 20000, "max_preparations": 1000, "maximum_horizon": 64},
+  "decisions": {"success": "At leastonecasepassesallfourcontrols; discovery only pending prospective fresh confirmation", "failure": "All64completedcases fail; finite family negative result", "budget_exhausted": "Inconclusive incomplete search; retain allcompletedtracesandfailure", "next": "Freeze new distances/geometry and matchingcontrols before independent prospective confirmation via generic component runner"},
+  "scope": "Two-arrival confirmation/coincidence only. Other board nodes may click. Neither unique-path approval nor physical light/time/quantum selection is established. No runtime signal injection, observer gating, reset, path erasure or coupling change."
+}

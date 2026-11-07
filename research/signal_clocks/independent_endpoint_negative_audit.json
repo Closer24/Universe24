@@ -1,0 +1,75 @@
+{
+  "cases": [
+    {
+      "arithmetic_event_times": [],
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/endpoint_records/cases/endpoint-000-s00",
+      "record_event_times": [],
+      "states_sha256": "4c9398b8b51ddf203cd464015b26539d8c2f91999b1385e4f21aeac82f942f9e"
+    },
+    {
+      "arithmetic_event_times": [
+        20
+      ],
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/endpoint_records/cases/endpoint-000-s01",
+      "record_event_times": [
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "states_sha256": "87c4cc7eb94f7495adc4fee50462de009c0fac6f753e120b9b17dd25878dddfc"
+    },
+    {
+      "arithmetic_event_times": [
+        12
+      ],
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/endpoint_records/cases/endpoint-000-s10",
+      "record_event_times": [
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "states_sha256": "615a006f2fbaea1ee85b0938fc22026a7ddff8fdde703bb0f05b306b532cd03c"
+    },
+    {
+      "arithmetic_event_times": [
+        12,
+        20,
+        22
+      ],
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/endpoint_records/cases/endpoint-000-s11",
+      "record_event_times": [
+        12,
+        14,
+        16,
+        18,
+        22
+      ],
+      "states_sha256": "806ee2ee3cfc2b0424e14ca4610de996624756284dfabb94dc760067ea920715"
+    }
+  ],
+  "format": "universe24-independent-endpoint-negative-audit-v1"
+}

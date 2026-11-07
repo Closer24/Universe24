@@ -1,0 +1,532 @@
+{
+  "artifact": {
+    "build_manifest_path": "research/presenter/demo/The_Presenter.html.manifest.json",
+    "build_manifest_sha256": "4a1dfa83109c52173ee5bb3eb9b5cc77ca4255cb945fc04f2e5d99f53ce48627",
+    "bytes": 666498,
+    "demo_ids_occurring_in_generic_app_source": [],
+    "embedded_complete_bundle_matches_input": true,
+    "experiments": [
+      {
+        "frames": 13,
+        "id": "positive-impulse",
+        "transitions": 12
+      },
+      {
+        "frames": 5,
+        "id": "signed-boundary",
+        "transitions": 4
+      },
+      {
+        "frames": 21,
+        "id": "adjacent-clocks",
+        "transitions": 20
+      },
+      {
+        "frames": 57,
+        "id": "prepared-guide",
+        "transitions": 56
+      },
+      {
+        "frames": 5,
+        "id": "stationary-remainders",
+        "transitions": 4
+      },
+      {
+        "frames": 3,
+        "id": "large-integer-demo",
+        "transitions": 2
+      }
+    ],
+    "external_resource_attributes": [],
+    "manifest_html_hash_matches": true,
+    "manifest_source_matches": {
+      "research/presenter/app.js": true,
+      "research/presenter/build.py": true,
+      "research/presenter/data.js": true,
+      "research/presenter/export.py": true,
+      "research/presenter/index.html": true,
+      "research/presenter/style.css": true,
+      "universe24/__init__.py": true,
+      "universe24/__main__.py": true,
+      "universe24/core/__init__.py": true,
+      "universe24/core/coupling.py": true,
+      "universe24/core/engine.py": true,
+      "universe24/core/group_2o.py": true,
+      "universe24/core/rule3.py": true,
+      "universe24/core/state.py": true,
+      "universe24/experiments/__init__.py": true,
+      "universe24/experiments/config.py": true,
+      "universe24/observation/__init__.py": true,
+      "universe24/observation/clicks.py": true,
+      "universe24/observation/diagnostics.py": true
+    },
+    "optional_details_initially_hidden": true,
+    "path": "research/presenter/demo/The_Presenter.html",
+    "sha256": "3e3ddb0d86c5e05d8bc07fbbe2f939cf32da75f86d6605759074542556e9657e"
+  },
+  "browser": {
+    "checks_executed": 0,
+    "environment_cause": "Not established; a restricted environment was investigated.",
+    "failure": {
+      "message": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /workspace/scratch/1966445260ce/browser-temp/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/workspace/scratch/1966445260ce/browser-temp/playwright_chromiumdev_profile-BiqVvZ --remote-debugging-pipe --no-startup-window\n<launched> pid=15\nCall log:\n\u001b[2m  - <launching> /workspace/scratch/1966445260ce/browser-temp/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/workspace/scratch/1966445260ce/browser-temp/playwright_chromiumdev_profile-BiqVvZ --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=15\u001b[22m\n\u001b[2m  - [pid=15] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=15] <kill>\u001b[22m\n\u001b[2m  - [pid=15] <will force kill>\u001b[22m\n\u001b[2m  - [pid=15] <process did exit: exitCode=null, signal=SIGTRAP>\u001b[22m\n\u001b[2m  - [pid=15] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=15] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=15] <gracefully close end>\u001b[22m\n",
+      "name": "Error",
+      "stack": "browserType.launch: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> /workspace/scratch/1966445260ce/browser-temp/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/workspace/scratch/1966445260ce/browser-temp/playwright_chromiumdev_profile-BiqVvZ --remote-debugging-pipe --no-startup-window\n<launched> pid=15\nCall log:\n\u001b[2m  - <launching> /workspace/scratch/1966445260ce/browser-temp/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/workspace/scratch/1966445260ce/browser-temp/playwright_chromiumdev_profile-BiqVvZ --remote-debugging-pipe --no-startup-window\u001b[22m\n\u001b[2m  - <launched> pid=15\u001b[22m\n\u001b[2m  - [pid=15] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=15] <kill>\u001b[22m\n\u001b[2m  - [pid=15] <will force kill>\u001b[22m\n\u001b[2m  - [pid=15] <process did exit: exitCode=null, signal=SIGTRAP>\u001b[22m\n\u001b[2m  - [pid=15] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=15] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=15] <gracefully close end>\u001b[22m\n\n    at main (/workspace/scratch/1966445260ce/Universe24-presenter/research/presenter/browser_checks.cjs:188:30)\n    at Object.<anonymous> (/workspace/scratch/1966445260ce/Universe24-presenter/research/presenter/browser_checks.cjs:447:30)"
+    },
+    "fixture_hashes_match": true,
+    "input_matches_final_html": true,
+    "limitation": "Local Chromium failed at startup with SIGTRAP. No successful real-browser run. DOM/native Canvas2D evidence is not browser CSS, responsive layout, accessibility or real pointer-hit-testing validation.",
+    "passed": false,
+    "report_path": "research/presenter/evidence/browser-unavailable/report.json",
+    "report_sha256": "1b57f5df4a957a1ed67eb240ae5d2c1c06b31c1487de794887ee957435798251",
+    "status": "browser_launch_failed",
+    "test_source_matches": true
+  },
+  "commands": [
+    {
+      "combined_output": "test_all_zero_counters_are_static_for_all_signed_tensors (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_all_zero_counters_are_static_for_all_signed_tensors) ... ok\ntest_full_guide_and_controls_match_independent_matrix_gather (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_full_guide_and_controls_match_independent_matrix_gather) ... ok\ntest_initial_gap_can_leak_later_in_the_registered_long_run (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_initial_gap_can_leak_later_in_the_registered_long_run) ... ok\ntest_parity_and_missing_receiver_are_real_failures_of_fixed_interface (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_parity_and_missing_receiver_are_real_failures_of_fixed_interface) ... ok\ntest_record_window_and_signal_started_clock_do_not_claim_power_flow (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_record_window_and_signal_started_clock_do_not_claim_power_flow) ... ok\ntest_registered_preparations_and_readouts_match_independent_definitions (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_registered_preparations_and_readouts_match_independent_definitions) ... ok\ntest_short_run_cannot_certify_unsampled_retention_window (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_short_run_cannot_certify_unsampled_retention_window) ... ok\ntest_verifier_rejects_corrupted_display_and_geometry (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_verifier_rejects_corrupted_display_and_geometry) ... ok\ntest_verifier_rejects_corrupted_full_state_and_missing_source_identity (test_building_blocks_review.BuildingBlocksIndependentReviewTests.test_verifier_rejects_corrupted_full_state_and_missing_source_identity) ... ok\ntest_cli_never_overwrites_inputs_or_existing_outputs (test_checkpoint_roundtrip.CheckpointRoundtripTests.test_cli_never_overwrites_inputs_or_existing_outputs) ... ok\ntest_cli_split_runs_match_continuous_state_and_absolute_events (test_checkpoint_roundtrip.CheckpointRoundtripTests.test_cli_split_runs_match_continuous_state_and_absolute_events)\nEight sign triples, two splits, seven updates: 16 split runs. ... ok\ntest_malformed_checkpoints_are_rejected (test_checkpoint_roundtrip.CheckpointRoundtripTests.test_malformed_checkpoints_are_rejected) ... ok\ntest_malformed_initial_config_is_rejected (test_checkpoint_roundtrip.CheckpointRoundtripTests.test_malformed_initial_config_is_rejected) ... ok\ntest_serialization_all_signs_backgrounds_and_large_integers (test_checkpoint_roundtrip.CheckpointRoundtripTests.test_serialization_all_signs_backgrounds_and_large_integers) ... ok\ntest_zero_step_resume_preserves_complete_checkpoint (test_checkpoint_roundtrip.CheckpointRoundtripTests.test_zero_step_resume_preserves_complete_checkpoint) ... ok\ntest_four_fault_classes_are_detected_by_complete_state_comparison (test_fault_detection.FaultDetectionTests.test_four_fault_classes_are_detected_by_complete_state_comparison) ... ok\ntest_cli_events_and_audit_do_not_change_final_state (test_observation_contract.ObservationContractTests.test_cli_events_and_audit_do_not_change_final_state) ... ok\ntest_observation_rejects_incompatible_states_and_invalid_step (test_observation_contract.ObservationContractTests.test_observation_rejects_incompatible_states_and_invalid_step) ... ok\ntest_observers_and_audits_cannot_mutate_states (test_observation_contract.ObservationContractTests.test_observers_and_audits_cannot_mutate_states) ... ok\ntest_readout_guards_hide_changes_and_stationary_nonzero_quotients (test_observation_contract.ObservationContractTests.test_readout_guards_hide_changes_and_stationary_nonzero_quotients) ... ok\ntest_scalar_classifier_matches_declared_input_formula (test_observation_contract.ObservationContractTests.test_scalar_classifier_matches_declared_input_formula)\n1134 actual transitions, including all remainder/input classes. ... ok\ntest_5001_digit_counters_roundtrip_without_changing_global_guard (test_presenter_export.PresenterExportTests.test_5001_digit_counters_roundtrip_without_changing_global_guard) ... ok\ntest_arbitrary_channel_positions_remainders_and_signed_tensor_are_complete (test_presenter_export.PresenterExportTests.test_arbitrary_channel_positions_remainders_and_signed_tensor_are_complete) ... ok\ntest_cli_config_and_checkpoint_continuation_preserve_absolute_steps (test_presenter_export.PresenterExportTests.test_cli_config_and_checkpoint_continuation_preserve_absolute_steps) ... ok\ntest_complete_native_trace_and_snapshot_import_reject_corruption_and_gaps (test_presenter_export.PresenterExportTests.test_complete_native_trace_and_snapshot_import_reject_corruption_and_gaps) ... ok\ntest_explicit_limits_reject_whole_run_and_writer_never_overwrites (test_presenter_export.PresenterExportTests.test_explicit_limits_reject_whole_run_and_writer_never_overwrites) ... ok\ntest_native_5001_digit_json_literal_and_duplicate_key_rejection (test_presenter_export.PresenterExportTests.test_native_5001_digit_json_literal_and_duplicate_key_rejection) ... ok\ntest_passive_readouts_are_data_declarations_and_snapshot_hash_has_no_time (test_presenter_export.PresenterExportTests.test_passive_readouts_are_data_declarations_and_snapshot_hash_has_no_time) ... ok\ntest_all_channels_signs_and_backgrounds_match_matrix_oracle (test_presenter_review.PresenterIndependentReviewTests.test_all_channels_signs_and_backgrounds_match_matrix_oracle) ... ok\ntest_arbitrary_size_counter_export_preserves_exact_integer_and_guard (test_presenter_review.PresenterIndependentReviewTests.test_arbitrary_size_counter_export_preserves_exact_integer_and_guard) ... ok\ntest_browser_data_rechecks_fresh_captures_without_precision_or_hidden_state_loss (test_presenter_review.PresenterIndependentReviewTests.test_browser_data_rechecks_fresh_captures_without_precision_or_hidden_state_loss) ... ok\ntest_browser_import_scope_rejects_unknown_model_fields_and_false_audit (test_presenter_review.PresenterIndependentReviewTests.test_browser_import_scope_rejects_unknown_model_fields_and_false_audit) ... ok\ntest_fixed_observation_and_view_do_not_change_or_alias_trajectory (test_presenter_review.PresenterIndependentReviewTests.test_fixed_observation_and_view_do_not_change_or_alias_trajectory) ... ok\ntest_full_trace_rejects_hidden_remainder_corruption_and_missing_update (test_presenter_review.PresenterIndependentReviewTests.test_full_trace_rejects_hidden_remainder_corruption_and_missing_update) ... ok\ntest_native_huge_snapshot_is_lossless_and_not_a_transition_claim (test_presenter_review.PresenterIndependentReviewTests.test_native_huge_snapshot_is_lossless_and_not_a_transition_claim) ... ok\ntest_packaged_html_preserves_unseen_data_and_pins_verification_sources (test_presenter_review.PresenterIndependentReviewTests.test_packaged_html_preserves_unseen_data_and_pins_verification_sources) ... ok\ntest_reference_core_hashes_remain_pinned (test_presenter_review.PresenterIndependentReviewTests.test_reference_core_hashes_remain_pinned) ... ok\ntest_resource_limits_reject_incomplete_capture_and_trace (test_presenter_review.PresenterIndependentReviewTests.test_resource_limits_reject_incomplete_capture_and_trace) ... ok\ntest_self_consistent_hash_does_not_hide_invalid_complete_transition (test_presenter_review.PresenterIndependentReviewTests.test_self_consistent_hash_does_not_hide_invalid_complete_transition) ... ok\ntest_all_coupling_choices (test_reference_algebra.ReferenceAlgebraTests.test_all_coupling_choices) ... ok\ntest_all_products_inverses_and_rotations (test_reference_algebra.ReferenceAlgebraTests.test_all_products_inverses_and_rotations) ... ok\ntest_closed_form_and_label_anchors (test_reference_algebra.ReferenceAlgebraTests.test_closed_form_and_label_anchors) ... ok\ntest_hand_derived_rule3_anchors (test_reference_algebra.ReferenceAlgebraTests.test_hand_derived_rule3_anchors) ... ok\ntest_reference_has_no_production_import (test_reference_algebra.ReferenceAlgebraTests.test_reference_has_no_production_import) ... ok\ntest_scalar_both_directions_and_all_remainders (test_reference_algebra.ReferenceAlgebraTests.test_scalar_both_directions_and_all_remainders) ... ok\ntest_96_full_state_trajectories (test_reference_evolution.ReferenceEvolutionTests.test_96_full_state_trajectories) ... ok\ntest_all_background_remainders (test_reference_evolution.ReferenceEvolutionTests.test_all_background_remainders) ... ok\ntest_coordinate_boundaries_and_iteration_order (test_reference_evolution.ReferenceEvolutionTests.test_coordinate_boundaries_and_iteration_order) ... ok\ntest_size_independence_inside_nonwrapping_cone (test_reference_evolution.ReferenceEvolutionTests.test_size_independence_inside_nonwrapping_cone) ... ok\ntest_exact_state_covariance_and_mirror_failure (test_reflection_audit.ReflectionAuditTests.test_exact_state_covariance_and_mirror_failure) ... ok\ntest_improper_maps_need_signs_for_current_coupling (test_reflection_audit.ReflectionAuditTests.test_improper_maps_need_signs_for_current_coupling) ... ok\ntest_mirror_square_and_fourth_power (test_reflection_audit.ReflectionAuditTests.test_mirror_square_and_fourth_power) ... ok\ntest_scalar_sign_reversal_retains_every_remainder (test_reflection_audit.ReflectionAuditTests.test_scalar_sign_reversal_retains_every_remainder) ... ok\ntest_search_has_positive_rotation_controls (test_reflection_audit.ReflectionAuditTests.test_search_has_positive_rotation_controls) ... ok\ntest_signed_reflections_full_state_and_all_weights (test_reflection_audit.ReflectionAuditTests.test_signed_reflections_full_state_and_all_weights) ... ok\ntest_weighted_rotation_covariance (test_reflection_audit.ReflectionAuditTests.test_weighted_rotation_covariance) ... ok\ntest_bundle_comparison_preserves_source_identity (test_reproducibility.ReproducibilityTests.test_bundle_comparison_preserves_source_identity) ... ok\ntest_exact_comparison_reports_structure_and_large_integers (test_reproducibility.ReproducibilityTests.test_exact_comparison_reports_structure_and_large_integers) ... ok\ntest_frozen_example_periods (test_reproducibility.ReproducibilityTests.test_frozen_example_periods) ... ok\ntest_json_validation_is_explicit_and_no_overwrite (test_reproducibility.ReproducibilityTests.test_json_validation_is_explicit_and_no_overwrite) ... ok\ntest_negative_result_is_not_an_execution_failure (test_reproducibility.ReproducibilityTests.test_negative_result_is_not_an_execution_failure) ... ok\ntest_versioned_protocol_and_engine_pin (test_reproducibility.ReproducibilityTests.test_versioned_protocol_and_engine_pin) ... ok\ntest_config_data_only (test_universe24.ModelTests.test_config_data_only) ... ok\ntest_coupling (test_universe24.ModelTests.test_coupling) ... ok\ntest_cube_six_distinct (test_universe24.ModelTests.test_cube_six_distinct) ... ok\ntest_group (test_universe24.ModelTests.test_group) ... ok\ntest_immutable_state (test_universe24.ModelTests.test_immutable_state) ... ok\ntest_pure_observation (test_universe24.ModelTests.test_pure_observation) ... ok\ntest_scalar_exact_inverse (test_universe24.ModelTests.test_scalar_exact_inverse) ... ok\ntest_spatial_only_and_equal_snapshots (test_universe24.ModelTests.test_spatial_only_and_equal_snapshots) ... ok\n\n----------------------------------------------------------------------\nRan 70 tests in 103.932s\n\nOK\n",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "cpu_seconds": 104.446,
+      "exit_code": 0,
+      "reported_seconds": 103.932,
+      "test_count": 70,
+      "timed_out": false,
+      "wall_limit_seconds": 600,
+      "wall_seconds": 104.114
+    },
+    {
+      "combined_output": "{\"format\":\"universe24-presenter-data-checks-v1\",\"passed\":18,\"generated_experiments\":51,\"verified_transitions\":103,\"limits\":{\"maxBytes\":67108864,\"maxFrames\":10000,\"maxStoredCells\":500000,\"maxExperiments\":64,\"maxCounterDigits\":100000,\"maxReadouts\":256,\"maxClauses\":1024,\"maxDepth\":96},\"checks\":[{\"name\":\"all eight tensors, six remainders and 48 channels validate complete recorded transitions\",\"passed\":true,\"milliseconds\":2704},{\"name\":\"native imports resolve every fixed tensor and keep snapshot scope\",\"passed\":true,\"milliseconds\":51},{\"name\":\"5001-digit counters and native raw integer tokens stay exact\",\"passed\":true,\"milliseconds\":76},{\"name\":\"negative division uses Euclidean remainder and all six signed inputs\",\"passed\":true,\"milliseconds\":173},{\"name\":\"maximum safe cube size wraps exactly at both periodic boundaries\",\"passed\":true,\"milliseconds\":0},{\"name\":\"fixed readout rising edges do not depend on selected coordinates\",\"passed\":true,\"milliseconds\":1},{\"name\":\"stored remainder-only fields and background channels remain accessible\",\"passed\":true,\"milliseconds\":0},{\"name\":\"source state, declared readouts and cached nodes cannot be mutated\",\"passed\":true,\"milliseconds\":1},{\"name\":\"hidden remainder corruption is rejected even with a recomputed hash and passing flags\",\"passed\":true,\"milliseconds\":12},{\"name\":\"omitting an expected nonbackground receiver is detected as full-state corruption\",\"passed\":true,\"milliseconds\":19},{\"name\":\"inserting an unexpected distant remainder fails complete-state validation\",\"passed\":true,\"milliseconds\":11},{\"name\":\"a changed tensor cannot self-authorize through a recomputed fingerprint\",\"passed\":true,\"milliseconds\":10},{\"name\":\"digest, address, order, remainder and consecutive-step violations fail explicitly\",\"passed\":true,\"milliseconds\":64},{\"name\":\"strict parser rejects duplicates, nonfinite values and float integer fields\",\"passed\":true,\"milliseconds\":51},{\"name\":\"native adapters reject unsupported fields, quoted counters and invalid requested steps\",\"passed\":true,\"milliseconds\":22},{\"name\":\"unknown portable semantic fields cannot silently declare a different model\",\"passed\":true,\"milliseconds\":47},{\"name\":\"snapshot audit assertions cannot claim an unrecorded transition\",\"passed\":true,\"milliseconds\":3},{\"name\":\"declared resource bounds reject oversized counters and whole JSONL inputs\",\"passed\":true,\"milliseconds\":5861}]}\n",
+      "command": [
+        "node",
+        "research/presenter/data_checks.cjs"
+      ],
+      "cpu_seconds": 13.777,
+      "exit_code": 0,
+      "report": {
+        "checks": [
+          {
+            "milliseconds": 2704,
+            "name": "all eight tensors, six remainders and 48 channels validate complete recorded transitions",
+            "passed": true
+          },
+          {
+            "milliseconds": 51,
+            "name": "native imports resolve every fixed tensor and keep snapshot scope",
+            "passed": true
+          },
+          {
+            "milliseconds": 76,
+            "name": "5001-digit counters and native raw integer tokens stay exact",
+            "passed": true
+          },
+          {
+            "milliseconds": 173,
+            "name": "negative division uses Euclidean remainder and all six signed inputs",
+            "passed": true
+          },
+          {
+            "milliseconds": 0,
+            "name": "maximum safe cube size wraps exactly at both periodic boundaries",
+            "passed": true
+          },
+          {
+            "milliseconds": 1,
+            "name": "fixed readout rising edges do not depend on selected coordinates",
+            "passed": true
+          },
+          {
+            "milliseconds": 0,
+            "name": "stored remainder-only fields and background channels remain accessible",
+            "passed": true
+          },
+          {
+            "milliseconds": 1,
+            "name": "source state, declared readouts and cached nodes cannot be mutated",
+            "passed": true
+          },
+          {
+            "milliseconds": 12,
+            "name": "hidden remainder corruption is rejected even with a recomputed hash and passing flags",
+            "passed": true
+          },
+          {
+            "milliseconds": 19,
+            "name": "omitting an expected nonbackground receiver is detected as full-state corruption",
+            "passed": true
+          },
+          {
+            "milliseconds": 11,
+            "name": "inserting an unexpected distant remainder fails complete-state validation",
+            "passed": true
+          },
+          {
+            "milliseconds": 10,
+            "name": "a changed tensor cannot self-authorize through a recomputed fingerprint",
+            "passed": true
+          },
+          {
+            "milliseconds": 64,
+            "name": "digest, address, order, remainder and consecutive-step violations fail explicitly",
+            "passed": true
+          },
+          {
+            "milliseconds": 51,
+            "name": "strict parser rejects duplicates, nonfinite values and float integer fields",
+            "passed": true
+          },
+          {
+            "milliseconds": 22,
+            "name": "native adapters reject unsupported fields, quoted counters and invalid requested steps",
+            "passed": true
+          },
+          {
+            "milliseconds": 47,
+            "name": "unknown portable semantic fields cannot silently declare a different model",
+            "passed": true
+          },
+          {
+            "milliseconds": 3,
+            "name": "snapshot audit assertions cannot claim an unrecorded transition",
+            "passed": true
+          },
+          {
+            "milliseconds": 5861,
+            "name": "declared resource bounds reject oversized counters and whole JSONL inputs",
+            "passed": true
+          }
+        ],
+        "format": "universe24-presenter-data-checks-v1",
+        "generated_experiments": 51,
+        "limits": {
+          "maxBytes": 67108864,
+          "maxClauses": 1024,
+          "maxCounterDigits": 100000,
+          "maxDepth": 96,
+          "maxExperiments": 64,
+          "maxFrames": 10000,
+          "maxReadouts": 256,
+          "maxStoredCells": 500000
+        },
+        "passed": 18,
+        "verified_transitions": 103
+      },
+      "timed_out": false,
+      "wall_limit_seconds": 600,
+      "wall_seconds": 12.184
+    }
+  ],
+  "computational_and_artifact_gates_passed": true,
+  "core": {
+    "actual_sha256": {
+      "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+      "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+      "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+      "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+      "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+      "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+      "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+      "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+      "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+      "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+      "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+      "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+      "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+    },
+    "baseline_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+    "file_count": 13,
+    "matches_baseline": true
+  },
+  "dom_native_canvas": {
+    "all_image_hashes_match": true,
+    "errors": [],
+    "fixture_hashes_match": true,
+    "groups": 10,
+    "image_count": 73,
+    "image_hash_matches": {
+      "all-background-snapshot.png": true,
+      "demo-01-final.png": true,
+      "demo-01-initial.png": true,
+      "demo-02-final.png": true,
+      "demo-02-initial.png": true,
+      "demo-03-final.png": true,
+      "demo-03-initial.png": true,
+      "demo-04-final.png": true,
+      "demo-04-initial.png": true,
+      "demo-05-final.png": true,
+      "demo-05-initial.png": true,
+      "demo-06-final.png": true,
+      "demo-06-initial.png": true,
+      "huge-counter.png": true,
+      "long-recording-detail.png": true,
+      "recorded-frames/frame-000.png": true,
+      "recorded-frames/frame-001.png": true,
+      "recorded-frames/frame-002.png": true,
+      "recorded-frames/frame-003.png": true,
+      "recorded-frames/frame-004.png": true,
+      "recorded-frames/frame-005.png": true,
+      "recorded-frames/frame-006.png": true,
+      "recorded-frames/frame-007.png": true,
+      "recorded-frames/frame-008.png": true,
+      "recorded-frames/frame-009.png": true,
+      "recorded-frames/frame-010.png": true,
+      "recorded-frames/frame-011.png": true,
+      "recorded-frames/frame-012.png": true,
+      "recorded-frames/frame-013.png": true,
+      "recorded-frames/frame-014.png": true,
+      "recorded-frames/frame-015.png": true,
+      "recorded-frames/frame-016.png": true,
+      "recorded-frames/frame-017.png": true,
+      "recorded-frames/frame-018.png": true,
+      "recorded-frames/frame-019.png": true,
+      "recorded-frames/frame-020.png": true,
+      "recorded-frames/frame-021.png": true,
+      "recorded-frames/frame-022.png": true,
+      "recorded-frames/frame-023.png": true,
+      "recorded-frames/frame-024.png": true,
+      "recorded-frames/frame-025.png": true,
+      "recorded-frames/frame-026.png": true,
+      "recorded-frames/frame-027.png": true,
+      "recorded-frames/frame-028.png": true,
+      "recorded-frames/frame-029.png": true,
+      "recorded-frames/frame-030.png": true,
+      "recorded-frames/frame-031.png": true,
+      "recorded-frames/frame-032.png": true,
+      "recorded-frames/frame-033.png": true,
+      "recorded-frames/frame-034.png": true,
+      "recorded-frames/frame-035.png": true,
+      "recorded-frames/frame-036.png": true,
+      "recorded-frames/frame-037.png": true,
+      "recorded-frames/frame-038.png": true,
+      "recorded-frames/frame-039.png": true,
+      "recorded-frames/frame-040.png": true,
+      "recorded-frames/frame-041.png": true,
+      "recorded-frames/frame-042.png": true,
+      "recorded-frames/frame-043.png": true,
+      "recorded-frames/frame-044.png": true,
+      "recorded-frames/frame-045.png": true,
+      "recorded-frames/frame-046.png": true,
+      "recorded-frames/frame-047.png": true,
+      "recorded-frames/frame-048.png": true,
+      "recorded-frames/frame-049.png": true,
+      "recorded-frames/frame-050.png": true,
+      "recorded-frames/frame-051.png": true,
+      "recorded-frames/frame-052.png": true,
+      "recorded-frames/frame-053.png": true,
+      "recorded-frames/frame-054.png": true,
+      "recorded-frames/frame-055.png": true,
+      "recorded-frames/frame-056.png": true,
+      "unseen-rotated.png": true
+    },
+    "input_matches_final_html": true,
+    "passed": true,
+    "recorded_animation": {
+      "command": [
+        "ffmpeg",
+        "-hide_banner",
+        "-loglevel",
+        "error",
+        "-framerate",
+        "6",
+        "-i",
+        "/workspace/scratch/1966445260ce/Universe24-presenter/research/presenter/evidence/dom-native-canvas/recorded-frames/frame-%03d.png",
+        "-filter_complex",
+        "scale=960:-1:flags=lanczos,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=3",
+        "-loop",
+        "0",
+        "/workspace/scratch/1966445260ce/Universe24-presenter/research/presenter/evidence/dom-native-canvas/recorded-experiment.gif"
+      ],
+      "file": "recorded-experiment.gif",
+      "frames_per_second": 6,
+      "sha256": "676e7a27cd820c12abeba7705911ce3d12589f30671584ca9e1b1f9ae171ef5d",
+      "source": "Actual application Canvas2D output; recorded states only",
+      "source_folder": "recorded-frames"
+    },
+    "recorded_animation_hash_matches": true,
+    "report_path": "research/presenter/evidence/dom-native-canvas/report.json",
+    "report_sha256": "56e84b5c775a49cb2f37e9a94204117c0c328ad3c43078c18efa5525b8cbfd7f",
+    "scope": "Actual application scripts in jsdom with native Canvas2D; explicit geometry emulation. PNGs composite the actual canvas on its declared solid CSS --navy background. No browser CSS layout, accessibility, hit-testing, responsive-layout, or full-page screenshot claim.",
+    "test_source_matches": {
+      "dom_checks": true,
+      "independent_helpers": true
+    }
+  },
+  "format": "universe24-presenter-independent-verification-v1",
+  "independent_review": {
+    "background_remainders": 6,
+    "body_sign_choices": 8,
+    "camera_mutation_review": "Source inspection and final DOM harness verify that camera, center, selection and playback are separate from immutable frames, tensor and readouts.",
+    "channels_per_node": 48,
+    "counter_decimal_digits_tested": 5001,
+    "exact_address_frame_comparisons": 189216,
+    "fresh_python_to_node_experiments": 49,
+    "matrix_oracle_cases": 48,
+    "python_tests": 11,
+    "reference_updates_per_case": 2,
+    "strict_import_rejection_cases": 9,
+    "tampered_hidden_remainder_with_recomputed_hash_rejected": true
+  },
+  "prior_attempts": [
+    {
+      "assertion_failure_observed": false,
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "limitation": "Buffered output was not persisted by the interrupted wrapper; no test count is claimed for this attempt.",
+      "passed": false,
+      "status": "timeout",
+      "wall_limit_seconds": 120
+    }
+  ],
+  "remaining_limits": [
+    "Default data/resource caps apply; no partial trajectories accepted.",
+    "Finite matrix-oracle and adversarial tests are not a proof for every possible state or implementation behavior.",
+    "Clock angle and spatial projection are approximate graphics; exact integers and remainder are preserved.",
+    "A rendered clock or record is not evidence of physical light, particles, quantum collapse or gravity."
+  ],
+  "repository": {
+    "branch": "research/the-presenter-2026-11-07",
+    "cleaned_inactive_test_directories": [
+      {
+        "files": {
+          "events.jsonl": "b7b54d1ed8cbf6b7ca23ba6f142d3340b5b8fba53c81c29951331dfeae322298",
+          "out.json": "748a4c8b11e7a7f49605fdd6e50dc5d41c2abf51aaefb805bc2e6c8c5aad22cc",
+          "seed.json": "9f8ebdf299ba4e0528746f6cb9799ca8afc6bb20badd3a34609775a4e0d674bd"
+        },
+        "path": "tmp96jk4ovx",
+        "reason": "Inactive files match named baseline checkpoint/observation test outputs; cleaned after final suite completed."
+      },
+      {
+        "files": {
+          "seed.json": "a044b6559f577fa1eb92964059bbac1619409f60028cf58946b1f916733a1597"
+        },
+        "path": "tmpze9eyecd",
+        "reason": "Inactive files match named baseline checkpoint/observation test outputs; cleaned after final suite completed."
+      },
+      {
+        "files": {
+          "events.jsonl": "b7b54d1ed8cbf6b7ca23ba6f142d3340b5b8fba53c81c29951331dfeae322298",
+          "out.json": "748a4c8b11e7a7f49605fdd6e50dc5d41c2abf51aaefb805bc2e6c8c5aad22cc",
+          "seed.json": "9f8ebdf299ba4e0528746f6cb9799ca8afc6bb20badd3a34609775a4e0d674bd"
+        },
+        "path": "tmpjsm65h34",
+        "reason": "Inactive files match named baseline checkpoint/observation test outputs; cleaned after final suite completed."
+      },
+      {
+        "files": {
+          "final-False.json": "fc4aaacbd559f9cfced271fead2f17f6ed40e9f23dd0fdfb0ecacf0cb3f6ab1c",
+          "seed.json": "6725f48aac98461bf7081ad4b27b40a0cf13180b95cf8128a035dbbd919c069a"
+        },
+        "path": "tmpklyiwc_f",
+        "reason": "Inactive files match named baseline checkpoint/observation test outputs; cleaned after final suite completed."
+      }
+    ],
+    "commit_created": false,
+    "deployment_performed": false,
+    "head": "3ea3bd64a12bc706eb3f953645b50bea9ad21b29",
+    "merge_performed": false,
+    "pull_request_created": false,
+    "push_performed": false,
+    "working_tree_status": " M README.md\n?? docs/PRESENTER.md\n?? docs/PRESENTER_ALGEBRA.md\n?? docs/PRESENTER_REVIEW.md\n?? research/presenter/\n?? tests/test_presenter_export.py\n?? tests/test_presenter_review.py\n"
+  },
+  "scope": "Finite computational and source review of the generic read-only Presenter; no physical validation or formal proof of all implementations.",
+  "source_matches_current": true,
+  "source_sha256": {
+    "research/presenter/app.js": "b278ca686b5fdf2264ea94498378508b2a639b1a3fdcdcb452ccf5ba894bb93e",
+    "research/presenter/browser_checks.cjs": "b8c5b3cdd19897bca8e9d1ddc5a41925ddb0fbc5d82bded30de05457adb2d80d",
+    "research/presenter/build.py": "667fab66b75726bb3291bc55a14a77cd51c9dddefdb311fe960200287cd00b6f",
+    "research/presenter/data.js": "242039094253561e38610ccaa85566155b2f9ad3c598a72b565b032985cd8ea9",
+    "research/presenter/data_checks.cjs": "82dc29ab01cbee67586e37671e28344efc5c5433dc065c91cefb5a3f428f9a1f",
+    "research/presenter/demo.py": "5ffbaf1036d39574dfc7ae3d981632cd9c290d35e01b162098d510bcb2c90585",
+    "research/presenter/dom_checks.cjs": "d76aa21484dc7f2d3de4e402c03f6f8c9de06bc71a79913fe5aaec590f26440a",
+    "research/presenter/export.py": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc",
+    "research/presenter/index.html": "7a9b3acc9d6e672a00f2a3abd3ace4bad138549db9d7149d13cebd2e95974840",
+    "research/presenter/style.css": "48fd8a517c22d4ffc78dd22a5af35308c159dc0dedf195fecbc0bdbc7c72e5cc",
+    "tests/test_building_blocks_review.py": "585b14274e40f0275d5231353b23f30a3d0b320287ddc810dec7390f4fff4645",
+    "tests/test_checkpoint_roundtrip.py": "73e4b5c2e2d32a3e3f3568f431d4a8ebba04cb0a019ac8e67620727aa01ad8ce",
+    "tests/test_fault_detection.py": "9081151ec13239b4e1cf505708d0f8be2053c448b61f66a008d4dc88b1d71f95",
+    "tests/test_observation_contract.py": "9cb286dd2360540bd5813cf3d14841a40bc459f14210e125b171bb7a1079a367",
+    "tests/test_presenter_export.py": "cbea28b849a1923657ba840584b9150b03dec2adccafdafb07e907fde8fa72e4",
+    "tests/test_presenter_review.py": "a708bdc284dee846caa28c591909c5813d28765ee3cf90d08d02f72e5dfcfa37",
+    "tests/test_reference_algebra.py": "9525e366bf017957f384c8b2ffa235f7ffe0ae7544fa878c42fbc726d9429f96",
+    "tests/test_reference_evolution.py": "c93aed15e98f2ab8aaa8ce29b787032d7c8873d0207b4d251eed6b8657a56ae9",
+    "tests/test_reflection_audit.py": "a4663b671a3f936dbc5e315a266f0c5439438d8b9120ee255ef4d546229b42f9",
+    "tests/test_reproducibility.py": "551ab0c10724cc1dc012f5b220202a0a375dd8d2bfd40c6b9749a71a2f4f3df6",
+    "tests/test_universe24.py": "70a35a4c347d636fda14a7a7abf0a7728eec51cefc42fe8a561eb97a7c8c9b52",
+    "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+    "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+    "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+    "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+    "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+  },
+  "source_unchanged_during_checks": true,
+  "status": "verified_with_browser_validation_unavailable",
+  "syntax_checks": [
+    {
+      "command": [
+        "node",
+        "--check",
+        "research/presenter/app.js"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "research/presenter/data.js"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "research/presenter/data_checks.cjs"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "research/presenter/browser_checks.cjs"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "research/presenter/dom_checks.cjs"
+      ],
+      "exit_code": 0,
+      "stderr": ""
+    }
+  ],
+  "timestamp_utc": "2026-11-07T05:59:20.822484+00:00"
+}

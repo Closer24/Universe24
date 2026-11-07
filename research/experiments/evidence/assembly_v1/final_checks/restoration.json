@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "recordings": 1234,
+  "checks": [
+    "Check-only verified1234 archives without writing native files",
+    "Fresh-directory restoration matched all1234 original byte hashes",
+    "Identical existing recordings retained",
+    "Existing conflicting file rejected without overwrite",
+    "Destination outside repository research root rejected",
+    "Corrupt compressed recording rejected before restoration"
+  ],
+  "wall_seconds": 5.322074457999406,
+  "source_sha256": "f6059e00f8f28af8ab9fa1118deb5e9905e842dccfb56e87c0a44305c2ab6aaf"
+}

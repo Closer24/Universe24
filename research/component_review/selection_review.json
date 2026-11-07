@@ -1,0 +1,467 @@
+{
+  "competitive_comparisons": 16,
+  "cpu_seconds": 5.1896524369999995,
+  "eligible_cases": [
+    {
+      "both_isolated_functional": true,
+      "competitive_component": true,
+      "higher_only": false,
+      "higher_side": 1,
+      "id": "joint-p0-OR-NO",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "0",
+        "1/60"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": -1
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": true,
+      "higher_only": false,
+      "higher_side": 1,
+      "id": "joint-p0-OR-RO",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "0",
+        "1/80"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": -1
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": true,
+      "higher_only": false,
+      "higher_side": 1,
+      "id": "joint-p0-OR-RR",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "0",
+        "1/80"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": -1
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": true,
+      "higher_only": false,
+      "higher_side": -1,
+      "id": "joint-p0-NO-OR",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "1/60",
+        "0"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": 1
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": false,
+      "higher_only": false,
+      "higher_side": -1,
+      "id": "joint-p0-NO-RO",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "1/60",
+        "1/80"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": null
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": false,
+      "higher_only": false,
+      "higher_side": -1,
+      "id": "joint-p0-NO-RR",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "1/60",
+        "1/80"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": null
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": true,
+      "higher_only": false,
+      "higher_side": -1,
+      "id": "joint-p0-RO-OR",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "1/80",
+        "0"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": 1
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": false,
+      "higher_only": false,
+      "higher_side": 1,
+      "id": "joint-p0-RO-NO",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "1/80",
+        "1/60"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": null
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": true,
+      "higher_only": false,
+      "higher_side": -1,
+      "id": "joint-p0-RR-OR",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "1/80",
+        "0"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": 1
+    },
+    {
+      "both_isolated_functional": true,
+      "competitive_component": false,
+      "higher_only": false,
+      "higher_side": 1,
+      "id": "joint-p0-RR-NO",
+      "matched_arrivals": true,
+      "null_stationary": true,
+      "primary_eligible": true,
+      "scores": [
+        "1/80",
+        "1/60"
+      ],
+      "unequal_scores": true,
+      "unique_outlet_side": null
+    }
+  ],
+  "eligible_comparisons": 10,
+  "eligible_counterexamples": 10,
+  "evidence_result_sha256": "87e2280fd74057750941378fbedafa1f1a8366e79bcf462585e0a1a7d1a9fa0e",
+  "format": "universe24-independent-selection-review-v1",
+  "full_oracle_replayed_runs": 20,
+  "full_oracle_replayed_transitions": 725,
+  "full_replays": [
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "d8629a95974ec8d31a51d8dfe6e9d86e4e397a2480e21cb7a1c4609f70e20a16",
+      "path": "research/component_studies/selection_evidence_v1/cases/iso-p0-L-OO-base/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "58e7ad91880f6fed843638bf3d1e3c7ac677e999868666c3b22cedfb30f5f09d",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 16,
+      "initial_state_sha256": "f246142d3b461af999a5a435fd053b4b6ee1df260ae69a37ef7221627d93b6b5",
+      "path": "research/component_studies/selection_evidence_v1/cases/iso-p0-L-OO-i/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "9d2ab90a8d23adb09c77704fcf23969136745c2375924df55962c886a7ad19f0",
+      "transitions": 15
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 16,
+      "initial_state_sha256": "6892228e724389800ec2d2ab78f52819b073b1be05f1d2925870f1502d5f18f9",
+      "path": "research/component_studies/selection_evidence_v1/cases/iso-p0-L-OO-ij/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "d337d1ab332cc8d321fe7649a68b63227d2b9d9e37779f9aa3fcebcd4be34014",
+      "transitions": 15
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 16,
+      "initial_state_sha256": "8b9a9d80822abb8aabe38e47619f2740298ce29d73e7e22643c9e4cbc5d7aaa6",
+      "path": "research/component_studies/selection_evidence_v1/cases/iso-p0-L-OO-j/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "8e86d6705aeb7efc70e9fd679114a5dbd8b8e469be3b82a1434b277de1e29163",
+      "transitions": 15
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "6892228e724389800ec2d2ab78f52819b073b1be05f1d2925870f1502d5f18f9",
+      "path": "research/component_studies/selection_evidence_v1/cases/iso-p0-L-RR-base/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "2bb1f00ecee4c49181a868e5e3633116729d232f74ff473d92d67519df51668e",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "2d604c7bbe29aff7a3997f2e94e4202af914bca7a1a1b7fb246504ea5db8a5d5",
+      "path": "research/component_studies/selection_evidence_v1/cases/iso-p0-R-OO-base/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "0cd2d9fba00324decb746219c26eb379c429a9d9d7baf901379764f83c7d753d",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "32133333c5d9ab0c2b61f39c511f1b7587ac07034dc9c3d1f5dd6b65424dd422",
+      "path": "research/component_studies/selection_evidence_v1/cases/iso-p0-R-RR-base/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "4764ef3858c6248425ab33e28a78f00b7ecccf3d057e5495a1f1b93ade59d23f",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "b91f18be1cb47b7810cebdc92efc8f2a0b88e9646f77c2686b49ce313ac04cf1",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-NO-OR/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "bd0387a23b6bd0735770cdf3d2a1ece3dc11b4ea48da6ad9a1d933aef8bd9c8d",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "becd4aaaecafffae00b73be5e6f5fd2e6a07637ecf27ab8d69128e20cc2e3d10",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-NO-RO/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "a68c0e43ab0809f4f431fb88b1566f4061c1a04ce6901bb5fcc9a6e24bb24ee9",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "b6be7c8a93049730653a319d216a0125c9dd15708c0779b6fc2c0ed82ca04a43",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-NO-RR/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "c6d276b000cc073bc3d8404ecbc504d5e9b618a4dfa0987bcc4778cfdbe6e397",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "a89c00c14ca6bfaa455121aeae834a78ec37d3494126cf1beea2eaf061cc3c24",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-OO-RR/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "73f719bed103e3550537edbdeb56fb87c793e881269adb4896f0e0fb302929f6",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "a37246e8d92e05166003092af555979fcf858746bb9afcafb5d2261b7d278d34",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-OR-NO/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "45a7a6eee71d830a9bb112ce32cd6f4c4b5551fbee69065da073ac838782ef0d",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "fe728482ea77779cb62bd5ff552f77ce8a703abcd4c33450269864d73584423e",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-OR-RO/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "646a62d468bbdd1887e793b012716a3576920ab2ede41fcee7d42c046be89909",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "7ba3803990d77e4d6b414942c7f6f2fb299a34e0cac938739dd2d6d7774490ef",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-OR-RR/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "d8106c45e37180bc7d7324a1a75e4f603705ce608ae8cd530cadc3fe47da7e82",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "1d57fa23b1babfce8d1ebd8ff4e063c09d885c5ca77dcca47c68229b6ded1164",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-RO-NO/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "57eab144d67493498570e1ef5139de47320465c3ad9bb0261632e57b4785fa2a",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "6dde5daed9c19dc236c1307b3c71ca12ffdd583e348c75b2ce5014d761e37741",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-RO-OR/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "177ade37d9a754faa8c24d66ff7a9febd81032c91da325e7ffd14783c5edcccc",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "1130c181db358ed8e8d8d96ee2c6c3cf91c592102de84c1d2f481cd57035f61d",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-RR-NO/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "d4fa7e0085588d602924b26de195e86edd81fc5c87feca4959556d284b355e21",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "f8d1763ee602dd25ddbb71e15121a5aea52411fbb6b7bb9a73adf43dce7af02f",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-RR-OO/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "327c3129a808ca21645a539fb1aea0dd3fdab9b7187d7ac73f1c4a252b13ff60",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "809470262f19dc1cb3e465788b10558127f74a8875aa6d176a5fe6b6894d8229",
+      "path": "research/component_studies/selection_evidence_v1/cases/joint-p0-RR-OR/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "53ea63caa1c8fcc923ce292feb5240285d9850a33b3316a380bc2233833ae412",
+      "transitions": 40
+    },
+    {
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 41,
+      "initial_state_sha256": "9e0f21a5bb5d82f333823026aaa4fc400a31eb7a54ff59c013410c590f55523f",
+      "path": "research/component_studies/selection_evidence_v1/cases/null-OO-RR/states.jsonl.gz",
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "trace_sha256": "5858f1a7c4528e10f408426e3d99df24683365060fb0da41277cf5e0ac67bf5d",
+      "transitions": 40
+    }
+  ],
+  "independent_calibration_scores": 18,
+  "independent_joint_classifications": 243,
+  "passed": true,
+  "recorded_frames_observed": 16362,
+  "recorded_runs_observed_independently": 432,
+  "scope": "All observations and243 classifications independently recomputed;20 selected full trajectories replayed. This refutes the registered finite-family C_pair prediction and certifies no robust selector or physical complexity law.",
+  "score_freeze_review": "Saved calibration file/hash verified; retained source performs its write before joint cases. Files alone are not an external timestamp service.",
+  "selected_for_holdout": null,
+  "source_sha256": {
+    "/workspace/scratch/1966445260ce/Universe24-presenter/research/component_review/audit.py": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+    "/workspace/scratch/1966445260ce/Universe24-presenter/research/component_review/review_selection.py": "644f087de95ddfd94d8faaa67d638dc0d96de7bf5a90c952f0d1fb81e209404d"
+  },
+  "source_snapshot_hashes_verified": true
+}

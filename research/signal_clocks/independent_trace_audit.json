@@ -1,0 +1,111 @@
+{
+  "cases": [
+    {
+      "path": "research/signal_clocks/evidence/records/cases/candidate-000-s00",
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "record_event_times": [],
+      "arithmetic_event_times": [],
+      "states_sha256": "84f173a5c64bf0736ffad5684f6b3b89d1fc9b37314f1a899be1970ec6f13503",
+      "passed": true
+    },
+    {
+      "path": "research/signal_clocks/evidence/records/cases/candidate-000-s01",
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "record_event_times": [
+        14,
+        16,
+        18,
+        20,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "arithmetic_event_times": [
+        14,
+        18,
+        20,
+        24,
+        26,
+        30,
+        32
+      ],
+      "states_sha256": "3ebc0c064ea1dfee0694ba1ed22bd5c38beaea7aa0459f640a92612e42849bc5",
+      "passed": true
+    },
+    {
+      "path": "research/signal_clocks/evidence/records/cases/candidate-000-s10",
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "record_event_times": [
+        6,
+        8,
+        10,
+        12,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "arithmetic_event_times": [
+        6,
+        10,
+        12,
+        16,
+        18,
+        22,
+        24,
+        28,
+        30
+      ],
+      "states_sha256": "bb54040a6fe5c08a8bf5056952afe1db1c20ec4170547e2bce3a6d4af415ac18",
+      "passed": true
+    },
+    {
+      "path": "research/signal_clocks/evidence/records/cases/candidate-000-s11",
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "record_event_times": [
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32
+      ],
+      "arithmetic_event_times": [
+        6,
+        10,
+        12,
+        16,
+        18,
+        22,
+        24,
+        28,
+        30,
+        32
+      ],
+      "states_sha256": "abf1e4e63f5069062ceec406309f8bb048af8d979ce946a38305dfd72e03666c",
+      "passed": true
+    }
+  ],
+  "cpu_seconds": 1.7376166880000001,
+  "format": "universe24-signal-clock-independent-trace-audit-v1",
+  "scope": "Four retained complete native traces; exact matrix gather, detector observations, source controls and full inverse checks."
+}
