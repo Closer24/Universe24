@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "frames": 49,
+  "dimensions": [
+    960,
+    540
+  ],
+  "sha256": "be13735319b4a0df2ad892c1d58aa26be61a9ade7ccef53f55a9f7896270067c",
+  "bytes": 952779,
+  "all_frames_decoded": true,
+  "source": "Unchanged generic Presenter, actual saved full states, four-component-memory-11"
+}

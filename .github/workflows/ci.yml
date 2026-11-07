@@ -22,7 +22,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - name: Exact tests and evidence bundle
-        run: python -m research.reproducibility.run --output runs/first
+        run: |
+          python -m research.experiments.materialize_evidence
+          python -m research.reproducibility.run --output runs/first
       - name: Independent rerun of deterministic experiment outputs
         run: |
           python -m research.reproducibility.run --output runs/second --skip-tests

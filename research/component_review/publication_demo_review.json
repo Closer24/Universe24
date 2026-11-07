@@ -1,0 +1,249 @@
+{
+  "format": "universe24-publication-demo-independent-review-v1",
+  "passed": true,
+  "source_tree_base_commit": "0cc775d11b28211e119f294928e285a2e15e0b1b",
+  "four_data_only_placements": true,
+  "source_controls_change_only_declared_initial_counters": true,
+  "runs": 4,
+  "frames": 196,
+  "independent_forward_inverse_transitions": 192,
+  "cases": [
+    {
+      "mask": "11",
+      "spec": "research/experiments/evidence/publication_v1/four_component_demo/cases/000/spec.json",
+      "spec_sha256": "483928069b71e6f1d562ab57f9594cc8cd82d873c95f18d44ed022062a923988",
+      "portable_sha256": "e44b12f649d0d9e9b1410e8f922550cce81d0b8d4a19e1f6e905d1071191d403",
+      "historical_trace_sha256": "492df4969134dcadb07bd593ef9249f1fcbc23f9967999e928e24fdfc48c8392",
+      "frames": 49,
+      "independent_forward_inverse_transitions": 48,
+      "all_full_states_match_historical": true,
+      "all_48_receiver_C_times": [
+        20,
+        30
+      ],
+      "all_48_receiver_R_times": [
+        20,
+        30
+      ],
+      "events": [
+        {
+          "step": 20,
+          "channels": [
+            0,
+            14
+          ],
+          "quotients": [
+            1,
+            -1
+          ],
+          "actual_old_input_pair": [
+            1,
+            -1
+          ],
+          "pair_after": [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              -1,
+              4
+            ]
+          ]
+        },
+        {
+          "step": 30,
+          "channels": [
+            0,
+            14
+          ],
+          "quotients": [
+            -1,
+            1
+          ],
+          "actual_old_input_pair": [
+            -1,
+            1
+          ],
+          "pair_after": [
+            [
+              0,
+              -2,
+              4
+            ],
+            [
+              0,
+              2,
+              0
+            ]
+          ]
+        }
+      ],
+      "per_channel_I_intervals": [
+        [
+          0,
+          20,
+          0
+        ],
+        [
+          20,
+          30,
+          1
+        ],
+        [
+          30,
+          49,
+          4
+        ]
+      ],
+      "other_46_receiver_channels_stay_background": true,
+      "source_hashes_match_executed_candidate": true
+    },
+    {
+      "mask": "00",
+      "spec": "research/experiments/evidence/publication_v1/four_component_demo/cases/001/spec.json",
+      "spec_sha256": "393a9cf311a8f1baa76be9e09418e6b8c1562b123fa8a3b1c03067229d83eddc",
+      "portable_sha256": "8d4988af4cf486f9b4a0c3a173b6249e9400a3efebbf2237c55228da8b4a6940",
+      "historical_trace_sha256": "494bec10bfbdbadd88c26904118dc2db1854e4e7376bf096476f6aa62c293ec9",
+      "frames": 49,
+      "independent_forward_inverse_transitions": 48,
+      "all_full_states_match_historical": true,
+      "all_48_receiver_C_times": [],
+      "all_48_receiver_R_times": [],
+      "events": [],
+      "per_channel_I_intervals": [
+        [
+          0,
+          49,
+          0
+        ]
+      ],
+      "other_46_receiver_channels_stay_background": true,
+      "source_hashes_match_executed_candidate": true
+    },
+    {
+      "mask": "10",
+      "spec": "research/experiments/evidence/publication_v1/four_component_demo/cases/002/spec.json",
+      "spec_sha256": "436053c6cccbb1936870e2a06ab5122aa21797c5903910fa7f6b299393f69172",
+      "portable_sha256": "98fb89ea2529008ee7cccf1b095051d03d5843dcdedf50bcc56dd51ec9b59e90",
+      "historical_trace_sha256": "3564417cb96004fc148cdfd352c1a1e176cd25616b341434e51c36b8a805e0a0",
+      "frames": 49,
+      "independent_forward_inverse_transitions": 48,
+      "all_full_states_match_historical": true,
+      "all_48_receiver_C_times": [
+        20
+      ],
+      "all_48_receiver_R_times": [
+        20
+      ],
+      "events": [
+        {
+          "step": 20,
+          "channels": [
+            0,
+            14
+          ],
+          "quotients": [
+            1,
+            -1
+          ],
+          "actual_old_input_pair": [
+            1,
+            -1
+          ],
+          "pair_after": [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              -1,
+              4
+            ]
+          ]
+        }
+      ],
+      "per_channel_I_intervals": [
+        [
+          0,
+          20,
+          0
+        ],
+        [
+          20,
+          49,
+          1
+        ]
+      ],
+      "other_46_receiver_channels_stay_background": true,
+      "source_hashes_match_executed_candidate": true
+    },
+    {
+      "mask": "01",
+      "spec": "research/experiments/evidence/publication_v1/four_component_demo/cases/003/spec.json",
+      "spec_sha256": "13f5cb1e1a9bd651ce30c04a324e82647a5629dee5214a31f27b52b7323382ee",
+      "portable_sha256": "15c6eebb40f2926390483e198963f2ed6db851151ce3500ad0b389d671bcdcfa",
+      "historical_trace_sha256": "66cec96bbfa0f1984c739f804197f2eb762e32d45fb015ba774e1d6f0315ba9d",
+      "frames": 49,
+      "independent_forward_inverse_transitions": 48,
+      "all_full_states_match_historical": true,
+      "all_48_receiver_C_times": [
+        28
+      ],
+      "all_48_receiver_R_times": [
+        28
+      ],
+      "events": [
+        {
+          "step": 28,
+          "channels": [
+            0,
+            14
+          ],
+          "quotients": [
+            1,
+            -1
+          ],
+          "actual_old_input_pair": [
+            1,
+            -1
+          ],
+          "pair_after": [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              -1,
+              4
+            ]
+          ]
+        }
+      ],
+      "per_channel_I_intervals": [
+        [
+          0,
+          28,
+          0
+        ],
+        [
+          28,
+          49,
+          1
+        ]
+      ],
+      "other_46_receiver_channels_stay_background": true,
+      "source_hashes_match_executed_candidate": true
+    }
+  ],
+  "cpu_seconds": 1.983851192,
+  "oracle": "Independent exact-matrix gather updater in research/component_review/audit.py; no production routing table or scalar forward used.",
+  "oracle_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+  "scope": "Finite counter-memory demonstration under fixed +++ coupling, side221, steps0..48. Counters rotate between arrivals while I and remainder memory remain fixed. Not a highest-complexity selector, internally generated unique-path approval, strict silent-waiting latch, or established physical light."
+}

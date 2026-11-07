@@ -1,0 +1,49 @@
+{
+  "carry_table": [
+    {
+      "mixed": 0,
+      "q": [
+        0,
+        0,
+        0
+      ],
+      "theta": 0
+    },
+    {
+      "mixed": 1,
+      "q": [
+        0,
+        0,
+        1
+      ],
+      "theta": 1
+    },
+    {
+      "mixed": -1,
+      "q": [
+        0,
+        1,
+        1
+      ],
+      "theta": 2
+    }
+  ],
+  "elapsed_cpu_seconds": 0.001376,
+  "event_indices": [
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2
+  ],
+  "format": "universe24-complexity-math-check-v1",
+  "passed": true,
+  "permutation_score_checks": 1944,
+  "scope": "Finite checks supplement exact proofs; no full-board routing or physical-light claim",
+  "source_sha256": "acc998e4a927fc4610f2349782db786ecfa21a55d631b07635b64f842f14ba54",
+  "three_channel_quiet_record_capacity": 27
+}

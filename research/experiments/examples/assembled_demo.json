@@ -1,0 +1,1539 @@
+{
+  "experiments": [
+    {
+      "board": {
+        "background": [
+          0,
+          0,
+          2
+        ],
+        "body_signs": [
+          1,
+          1,
+          1
+        ],
+        "side": 221
+      },
+      "components": [
+        {
+          "at": [
+            110,
+            110,
+            110
+          ],
+          "name": "guide",
+          "params": {
+            "sockets": [
+              -20,
+              28,
+              0
+            ],
+            "start": -20,
+            "stop": 28
+          },
+          "recipe": "GuideSegment"
+        },
+        {
+          "at": [
+            110,
+            110,
+            110
+          ],
+          "name": "receiver",
+          "params": {
+            "remainders": [
+              4,
+              0
+            ]
+          },
+          "recipe": "Receiver"
+        },
+        {
+          "at": [
+            90,
+            110,
+            110
+          ],
+          "name": "source-1",
+          "params": {
+            "a": 0,
+            "b": 1,
+            "present": true
+          },
+          "recipe": "SignalSource"
+        },
+        {
+          "at": [
+            138,
+            110,
+            110
+          ],
+          "name": "source-2",
+          "params": {
+            "a": 0,
+            "b": 1,
+            "present": true
+          },
+          "recipe": "SignalSource"
+        }
+      ],
+      "controls": {
+        "initial_source_mask": [
+          true,
+          true
+        ]
+      },
+      "description": "Initial signal sources, an armed guide and a local clock/memory receiver, assembled from generic data recipes. Full states are replayed; these signals are not established physical light.",
+      "detectors": [
+        "receiver.memory"
+      ],
+      "format": "universe24-assembly-experiment-v1",
+      "id": "assembled-memory-11",
+      "provenance": {
+        "data_adapter": "signal_case_spec",
+        "legacy_case": {
+          "body_signs": [
+            1,
+            1,
+            1
+          ],
+          "extent": 40,
+          "guide_mode": "between_sources",
+          "id": "memory20-28",
+          "side": 221,
+          "source_ab": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source_offsets": [
+            -20,
+            28
+          ],
+          "steps": 48,
+          "target_remainders": [
+            4,
+            0
+          ]
+        }
+      },
+      "question": "Does the generic assembly exactly reproduce the registered two-arrival memory and its source controls?",
+      "readouts": [
+        {
+          "clauses": [
+            {
+              "component": "r",
+              "equals": "4",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "r",
+              "equals": "0",
+              "index": 1,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "memory-4-0",
+          "kind": "all_equal",
+          "label": "Memory remainders (4, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "r",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "r",
+              "equals": "4",
+              "index": 1,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "memory-0-4",
+          "kind": "all_equal",
+          "label": "Memory remainders (0, 4)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-0",
+          "kind": "all_equal",
+          "label": "I=0, counter phase (0, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "1",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-1-0",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (1, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "1",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-1",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (0, 1)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "-1",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase--1-0",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (-1, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "-1",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0--1",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (0, -1)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "2",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-2-0",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (2, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "2",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-2",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (0, 2)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "-2",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase--2-0",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (-2, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "-2",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0--2",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (0, -2)"
+        }
+      ],
+      "steps": 48,
+      "title": "Signal, guide, clock and memory \u00b7 Both initial signals",
+      "view": {
+        "port": "receiver.memory"
+      }
+    },
+    {
+      "board": {
+        "background": [
+          0,
+          0,
+          2
+        ],
+        "body_signs": [
+          1,
+          1,
+          1
+        ],
+        "side": 221
+      },
+      "components": [
+        {
+          "at": [
+            110,
+            110,
+            110
+          ],
+          "name": "guide",
+          "params": {
+            "sockets": [
+              -20,
+              28,
+              0
+            ],
+            "start": -20,
+            "stop": 28
+          },
+          "recipe": "GuideSegment"
+        },
+        {
+          "at": [
+            110,
+            110,
+            110
+          ],
+          "name": "receiver",
+          "params": {
+            "remainders": [
+              4,
+              0
+            ]
+          },
+          "recipe": "Receiver"
+        },
+        {
+          "at": [
+            90,
+            110,
+            110
+          ],
+          "name": "source-1",
+          "params": {
+            "a": 0,
+            "b": 1,
+            "present": false
+          },
+          "recipe": "SignalSource"
+        },
+        {
+          "at": [
+            138,
+            110,
+            110
+          ],
+          "name": "source-2",
+          "params": {
+            "a": 0,
+            "b": 1,
+            "present": false
+          },
+          "recipe": "SignalSource"
+        }
+      ],
+      "controls": {
+        "initial_source_mask": [
+          false,
+          false
+        ]
+      },
+      "description": "Initial signal sources, an armed guide and a local clock/memory receiver, assembled from generic data recipes. Full states are replayed; these signals are not established physical light.",
+      "detectors": [
+        "receiver.memory"
+      ],
+      "format": "universe24-assembly-experiment-v1",
+      "id": "assembled-memory-00",
+      "provenance": {
+        "data_adapter": "signal_case_spec",
+        "legacy_case": {
+          "body_signs": [
+            1,
+            1,
+            1
+          ],
+          "extent": 40,
+          "guide_mode": "between_sources",
+          "id": "memory20-28",
+          "side": 221,
+          "source_ab": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source_offsets": [
+            -20,
+            28
+          ],
+          "steps": 48,
+          "target_remainders": [
+            4,
+            0
+          ]
+        }
+      },
+      "question": "Does the generic assembly exactly reproduce the registered two-arrival memory and its source controls?",
+      "readouts": [
+        {
+          "clauses": [
+            {
+              "component": "r",
+              "equals": "4",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "r",
+              "equals": "0",
+              "index": 1,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "memory-4-0",
+          "kind": "all_equal",
+          "label": "Memory remainders (4, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "r",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "r",
+              "equals": "4",
+              "index": 1,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "memory-0-4",
+          "kind": "all_equal",
+          "label": "Memory remainders (0, 4)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-0",
+          "kind": "all_equal",
+          "label": "I=0, counter phase (0, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "1",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-1-0",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (1, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "1",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-1",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (0, 1)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "-1",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase--1-0",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (-1, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "-1",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0--1",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (0, -1)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "2",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-2-0",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (2, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "2",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-2",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (0, 2)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "-2",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase--2-0",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (-2, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "-2",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0--2",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (0, -2)"
+        }
+      ],
+      "steps": 48,
+      "title": "Signal, guide, clock and memory \u00b7 No initial signals",
+      "view": {
+        "port": "receiver.memory"
+      }
+    },
+    {
+      "board": {
+        "background": [
+          0,
+          0,
+          2
+        ],
+        "body_signs": [
+          1,
+          1,
+          1
+        ],
+        "side": 221
+      },
+      "components": [
+        {
+          "at": [
+            110,
+            110,
+            110
+          ],
+          "name": "guide",
+          "params": {
+            "sockets": [
+              -20,
+              28,
+              0
+            ],
+            "start": -20,
+            "stop": 28
+          },
+          "recipe": "GuideSegment"
+        },
+        {
+          "at": [
+            110,
+            110,
+            110
+          ],
+          "name": "receiver",
+          "params": {
+            "remainders": [
+              4,
+              0
+            ]
+          },
+          "recipe": "Receiver"
+        },
+        {
+          "at": [
+            90,
+            110,
+            110
+          ],
+          "name": "source-1",
+          "params": {
+            "a": 0,
+            "b": 1,
+            "present": true
+          },
+          "recipe": "SignalSource"
+        },
+        {
+          "at": [
+            138,
+            110,
+            110
+          ],
+          "name": "source-2",
+          "params": {
+            "a": 0,
+            "b": 1,
+            "present": false
+          },
+          "recipe": "SignalSource"
+        }
+      ],
+      "controls": {
+        "initial_source_mask": [
+          true,
+          false
+        ]
+      },
+      "description": "Initial signal sources, an armed guide and a local clock/memory receiver, assembled from generic data recipes. Full states are replayed; these signals are not established physical light.",
+      "detectors": [
+        "receiver.memory"
+      ],
+      "format": "universe24-assembly-experiment-v1",
+      "id": "assembled-memory-10",
+      "provenance": {
+        "data_adapter": "signal_case_spec",
+        "legacy_case": {
+          "body_signs": [
+            1,
+            1,
+            1
+          ],
+          "extent": 40,
+          "guide_mode": "between_sources",
+          "id": "memory20-28",
+          "side": 221,
+          "source_ab": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source_offsets": [
+            -20,
+            28
+          ],
+          "steps": 48,
+          "target_remainders": [
+            4,
+            0
+          ]
+        }
+      },
+      "question": "Does the generic assembly exactly reproduce the registered two-arrival memory and its source controls?",
+      "readouts": [
+        {
+          "clauses": [
+            {
+              "component": "r",
+              "equals": "4",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "r",
+              "equals": "0",
+              "index": 1,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "memory-4-0",
+          "kind": "all_equal",
+          "label": "Memory remainders (4, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "r",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "r",
+              "equals": "4",
+              "index": 1,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "memory-0-4",
+          "kind": "all_equal",
+          "label": "Memory remainders (0, 4)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-0",
+          "kind": "all_equal",
+          "label": "I=0, counter phase (0, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "1",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-1-0",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (1, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "1",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-1",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (0, 1)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "-1",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase--1-0",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (-1, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "-1",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0--1",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (0, -1)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "2",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-2-0",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (2, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "2",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-2",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (0, 2)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "-2",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase--2-0",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (-2, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "-2",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0--2",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (0, -2)"
+        }
+      ],
+      "steps": 48,
+      "title": "Signal, guide, clock and memory \u00b7 First initial signal only",
+      "view": {
+        "port": "receiver.memory"
+      }
+    },
+    {
+      "board": {
+        "background": [
+          0,
+          0,
+          2
+        ],
+        "body_signs": [
+          1,
+          1,
+          1
+        ],
+        "side": 221
+      },
+      "components": [
+        {
+          "at": [
+            110,
+            110,
+            110
+          ],
+          "name": "guide",
+          "params": {
+            "sockets": [
+              -20,
+              28,
+              0
+            ],
+            "start": -20,
+            "stop": 28
+          },
+          "recipe": "GuideSegment"
+        },
+        {
+          "at": [
+            110,
+            110,
+            110
+          ],
+          "name": "receiver",
+          "params": {
+            "remainders": [
+              4,
+              0
+            ]
+          },
+          "recipe": "Receiver"
+        },
+        {
+          "at": [
+            90,
+            110,
+            110
+          ],
+          "name": "source-1",
+          "params": {
+            "a": 0,
+            "b": 1,
+            "present": false
+          },
+          "recipe": "SignalSource"
+        },
+        {
+          "at": [
+            138,
+            110,
+            110
+          ],
+          "name": "source-2",
+          "params": {
+            "a": 0,
+            "b": 1,
+            "present": true
+          },
+          "recipe": "SignalSource"
+        }
+      ],
+      "controls": {
+        "initial_source_mask": [
+          false,
+          true
+        ]
+      },
+      "description": "Initial signal sources, an armed guide and a local clock/memory receiver, assembled from generic data recipes. Full states are replayed; these signals are not established physical light.",
+      "detectors": [
+        "receiver.memory"
+      ],
+      "format": "universe24-assembly-experiment-v1",
+      "id": "assembled-memory-01",
+      "provenance": {
+        "data_adapter": "signal_case_spec",
+        "legacy_case": {
+          "body_signs": [
+            1,
+            1,
+            1
+          ],
+          "extent": 40,
+          "guide_mode": "between_sources",
+          "id": "memory20-28",
+          "side": 221,
+          "source_ab": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "source_offsets": [
+            -20,
+            28
+          ],
+          "steps": 48,
+          "target_remainders": [
+            4,
+            0
+          ]
+        }
+      },
+      "question": "Does the generic assembly exactly reproduce the registered two-arrival memory and its source controls?",
+      "readouts": [
+        {
+          "clauses": [
+            {
+              "component": "r",
+              "equals": "4",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "r",
+              "equals": "0",
+              "index": 1,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "memory-4-0",
+          "kind": "all_equal",
+          "label": "Memory remainders (4, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "r",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "r",
+              "equals": "4",
+              "index": 1,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "memory-0-4",
+          "kind": "all_equal",
+          "label": "Memory remainders (0, 4)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-0",
+          "kind": "all_equal",
+          "label": "I=0, counter phase (0, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "1",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-1-0",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (1, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "1",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-1",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (0, 1)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "-1",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase--1-0",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (-1, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "-1",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0--1",
+          "kind": "all_equal",
+          "label": "I=1, counter phase (0, -1)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "2",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-2-0",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (2, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "2",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0-2",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (0, 2)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "-2",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase--2-0",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (-2, 0)"
+        },
+        {
+          "clauses": [
+            {
+              "component": "a",
+              "equals": "0",
+              "index": 0,
+              "port": "receiver.memory"
+            },
+            {
+              "component": "b",
+              "equals": "-2",
+              "index": 0,
+              "port": "receiver.memory"
+            }
+          ],
+          "id": "counter-phase-0--2",
+          "kind": "all_equal",
+          "label": "I=4, counter phase (0, -2)"
+        }
+      ],
+      "steps": 48,
+      "title": "Signal, guide, clock and memory \u00b7 Second initial signal only",
+      "view": {
+        "port": "receiver.memory"
+      }
+    },
+    {
+      "board": {
+        "background": [
+          0,
+          0,
+          2
+        ],
+        "body_signs": [
+          1,
+          1,
+          1
+        ],
+        "side": 101
+      },
+      "components": [
+        {
+          "at": [
+            50,
+            50,
+            50
+          ],
+          "name": "source",
+          "params": {
+            "present": true
+          },
+          "recipe": "SignalSource"
+        },
+        {
+          "at": [
+            50,
+            50,
+            50
+          ],
+          "name": "left",
+          "params": {
+            "direction": -1,
+            "variant": "O"
+          },
+          "recipe": "PairedArm"
+        },
+        {
+          "at": [
+            50,
+            50,
+            50
+          ],
+          "name": "right",
+          "params": {
+            "direction": 1,
+            "variant": "N"
+          },
+          "recipe": "PairedArm"
+        }
+      ],
+      "controls": {
+        "initial_source_present": true,
+        "isolated_side": null
+      },
+      "description": "A preloaded paired signal source and independently prepared transfer arms. One shared tensor; path labels do not change evolution. Blocking is a finite complete-state outlet comparison.",
+      "detectors": [
+        "source.signal",
+        "left.outlet",
+        "right.outlet"
+      ],
+      "format": "universe24-assembly-experiment-v1",
+      "id": "assembled-transfer-1",
+      "provenance": {
+        "data_adapter": "paired_case_spec",
+        "legacy_case": {
+          "id": "assembled-transfer-1",
+          "side": 101,
+          "source_present": true,
+          "steps": 40,
+          "variants": [
+            "O",
+            "N"
+          ]
+        }
+      },
+      "question": "Does one prepared source transmit through O while all48outlettriples behind N match the no-source control through40?",
+      "steps": 40,
+      "title": "Prepared transfer \u00b7 open left, neutral right \u00b7 signal present",
+      "view": {
+        "port": "source.signal"
+      }
+    },
+    {
+      "board": {
+        "background": [
+          0,
+          0,
+          2
+        ],
+        "body_signs": [
+          1,
+          1,
+          1
+        ],
+        "side": 101
+      },
+      "components": [
+        {
+          "at": [
+            50,
+            50,
+            50
+          ],
+          "name": "source",
+          "params": {
+            "present": false
+          },
+          "recipe": "SignalSource"
+        },
+        {
+          "at": [
+            50,
+            50,
+            50
+          ],
+          "name": "left",
+          "params": {
+            "direction": -1,
+            "variant": "O"
+          },
+          "recipe": "PairedArm"
+        },
+        {
+          "at": [
+            50,
+            50,
+            50
+          ],
+          "name": "right",
+          "params": {
+            "direction": 1,
+            "variant": "N"
+          },
+          "recipe": "PairedArm"
+        }
+      ],
+      "controls": {
+        "initial_source_present": false,
+        "isolated_side": null
+      },
+      "description": "A preloaded paired signal source and independently prepared transfer arms. One shared tensor; path labels do not change evolution. Blocking is a finite complete-state outlet comparison.",
+      "detectors": [
+        "source.signal",
+        "left.outlet",
+        "right.outlet"
+      ],
+      "format": "universe24-assembly-experiment-v1",
+      "id": "assembled-transfer-0",
+      "provenance": {
+        "data_adapter": "paired_case_spec",
+        "legacy_case": {
+          "id": "assembled-transfer-0",
+          "side": 101,
+          "source_present": false,
+          "steps": 40,
+          "variants": [
+            "O",
+            "N"
+          ]
+        }
+      },
+      "question": "Does one prepared source transmit through O while all48outlettriples behind N match the no-source control through40?",
+      "steps": 40,
+      "title": "Prepared transfer \u00b7 open left, neutral right \u00b7 no signal",
+      "view": {
+        "port": "source.signal"
+      }
+    }
+  ],
+  "format": "universe24-component-study-v1",
+  "protocol": "Exact data-only reconstruction of retained preparations; no new scientific acceptance claim.",
+  "title": "The Presenter \u00b7 Generic component assemblies"
+}

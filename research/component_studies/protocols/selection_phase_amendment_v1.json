@@ -1,0 +1,36 @@
+{
+  "format": "universe24-component-protocol-amendment-v1",
+  "amendment_id": "U24-SELECTION-PHASE-AMENDMENT-v1",
+  "status": "registered_after_selection_v1_before_fresh_phase_followup",
+  "base_contract": "component_contract_v1.json",
+  "base_contract_sha256": "31f716ac70f9a48ea80991ec01e3565f904293c1736eb773aeccce12c61fd3a7",
+  "prior_result": "../selection_evidence_v1/result.json",
+  "prior_status": "Completed432runs; ten matched-arrival unequal-score eligible comparisons, all ten counterexamples to higher-score-only prediction. No all-three-phase candidate; the original28-run holdout gate stays closed.",
+  "selected_component": {
+    "patterns": ["OR", "NO"],
+    "selection_basis": "First pair in the frozen pattern order with phase(0,1)competition in both swaps and matched isolated arrival triples.",
+    "prior_arrival_triples": [[10,10,10],[10,10,10]],
+    "prior_scores": {"OR": "0", "NO": "1/60"},
+    "prior_winner": "OR, the lower-score route; retain as a direct counterexample to the declared complexity prediction."
+  },
+  "new_questions": [
+    "Does this narrower phase-conditioned competitive interface survive fresh arm lengths?",
+    "Can changing only the initially supplied source vector switch the unique outlet while both routes remain individually functional under each compared input?"
+  ],
+  "fresh_geometries": [
+    {"side":129,"arm_length":8,"steps":48,"outlet_window":[8,48]},
+    {"side":161,"arm_length":10,"steps":56,"outlet_window":[10,56]}
+  ],
+  "source_vectors": [[0,1],[1,0],[0,-1],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0]],
+  "cases": "Per geometry: four joint pattern pairs(OR/NO,NO/OR,OR/OR,NO/NO)times12sourcevectors; both isolated directions for both patterns times12vectors; four joint no-source controls. Total200trajectories.",
+  "primary_fresh_prediction": "At source(0,1), OR alone has a guarded outlet C and transmission in both swaps; NO's entire48-channel outlet equals its null baseline throughout the fixed window. Both isolated patterns must be functional.",
+  "input_control_acceptance": "The apparatus is identical between compared runs except initial source counters; each route must be independently functional under both inputs, one joint outlet uniquely responds for each input, the winner reverses, and the result survives swapping the two spatial arms.",
+  "phase_only_precision": "A phase-only claim additionally requires equal a*a+b*b for the two source vectors. A flip between unequal amplitudes is input-controlled, not phase-only.",
+  "unchanged_requirements": "Current+++tensor, soleRule3, complete48-channel output comparisons, every channelC retained, source-null and isolated controls, allfulltrajectories, exact full inverses/rewinds, and no-wrap margins.",
+  "budget": {"additional_cpu_seconds":90,"shared_selection_cpu_seconds":240,"maximum_total_initial_preparations":1000,"fresh_trajectories":200,"maximum_stored_channels":20000},
+  "decisions": {
+    "positive": "Only the declared phase-conditioned competition or input-control component is supported. The failed higher-C_pair prediction remains failed.",
+    "negative": "Retain failed fresh predictions and all input outcomes; no score change, silent case removal or retrospective reopening of the old gate.",
+    "joined_trial": "A subsequent route/receiver/confirmation-source assembly needs its own frozen complete preparation and four-source-mask criteria before execution. It cannot inherit unique-path approval from standalone outcomes."
+  }
+}

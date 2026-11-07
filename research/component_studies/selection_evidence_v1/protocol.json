@@ -1,0 +1,95 @@
+{
+  "format": "universe24-component-selection-protocol-v1",
+  "protocol_id": "U24-PAIRED-COOPERATION-SELECTION-v1",
+  "status": "frozen_before_new_calibration_and_joint_runs",
+  "question": "Do two individually functional, arrival-matched paths compete so that only the path with greater independently calibrated two-site nonadditivity reaches its outlet?",
+  "prior_evidence": "The original 54-run K prediction failed. The earlier homogeneous O/R paired apparatus showed finite competition but O arrived at step 6 and R at step 10 in isolation. Neither result is relabeled as success here.",
+  "model": {
+    "body_actions": [0, 1, 3],
+    "body_signs": [1, 1, 1],
+    "num": 1,
+    "den": 1,
+    "channels_per_node": 48,
+    "spatial_neighbors": 6,
+    "fixed_coupling": true,
+    "initial_preparations_only": true,
+    "forward_operation": "Engine.advance only; observers never return evolution instructions."
+  },
+  "geometry": {
+    "side": 101,
+    "origin": [50, 50, 50],
+    "background": [0, 0, 2],
+    "arm_length": 6,
+    "directions": [-1, 1],
+    "variable_sites": [2, 3],
+    "signal_channels": [0, 14],
+    "ordinary_pair": [4, 0],
+    "outlets": "Complete 48-channel nodes at origin +/- (6,0,0).",
+    "initial_boundary_margin": 44,
+    "horizon": 40
+  },
+  "family": {
+    "pair_states": {"O": [4, 0], "N": [2, 2], "R": [0, 4]},
+    "ordered_patterns": ["OO", "ON", "OR", "NO", "NN", "NR", "RO", "RN", "RR"],
+    "pattern_meaning": "First letter is the remainder pair at arm site 2; second is site 3. All apparatus counters are zero.",
+    "source_phases": [[0, 1], [1, 0], [0, -1]],
+    "source": "At the origin channel0=(a,b,2), channel14=(-a,-b,2). The source-absent control replaces both counters with zero at t=0.",
+    "isolation": "Omit all six sites of the other arm, leaving background at every channel there.",
+    "registered_joint_candidates": 243,
+    "registered_trajectories": 432,
+    "trajectory_breakdown": {"calibration_base_isolated": 18, "calibration_perturbed_isolated": 54, "other_phase_isolated": 36, "joint_no_source": 81, "joint_source_present": 243}
+  },
+  "cooperation_metric": {
+    "name": "C_pair",
+    "meaning": "Calibrated two-site nonadditivity/cooperation; not entropy, order, general complexity, energy or a physical selection law.",
+    "calibration_phase": [0, 1],
+    "calibration_sides": [-1, 1],
+    "fixed_vector": "Outlet b values ordered by time 6..15 inclusive then channel 0..47; exactly 480 integer coordinates.",
+    "perturbations": "At a declared site replace r0 by (r0+2) mod6 and r14 by 4-r0_new; all counters remain zero. Evaluate no perturbation, site2 only, site3 only, and both.",
+    "mixed_vector": "D = Y_both - Y_site2 - Y_site3 + Y_none",
+    "primary_score": "C_pair = number of nonzero exact coordinates of D divided by 480, stored as an exact rational.",
+    "secondary_binary_diagnostic": "K_pair = 1 if D has any nonzero coordinate else 0; never substitutes for the primary score.",
+    "freeze": "Save all calibration vectors and scores, with hashes, before executing any joint source-present case. Scores stay fixed for every phase and later holdout."
+  },
+  "observers": {
+    "window": [6, 40],
+    "all_outlet_channels": true,
+    "transmission": "At least one nonzero outlet b difference from the matching source-absent baseline in the fixed window.",
+    "C": "Existing classify(before,after): ell=after.b+before.a is nonzero and the complete local triple changes. Preserve every per-channel C event and bank its times only for summaries.",
+    "strong_quiet": "All 48 complete (a,b,r) outlet triples equal the matching source-absent baseline at every sampled state 6..40.",
+    "arrival_tuple": "For each isolated outlet, record first full-triple change, first nonzero b difference, and first genuine C-bank time, all over states/updates 1..40.",
+    "retained_information": "Retain complete board checkpoints, full inverses, and addresses elsewhere that differ from the null state even when an outlet is quiet.",
+    "record_scope": "A click event and a persistent internal memory record are distinct. Outlet event histories are passive evidence, not newly stored board variables."
+  },
+  "acceptance": {
+    "isolated_functional": "Both corresponding isolated paths have b transmission and at least one genuine C event in 6..40 under the same source phase.",
+    "primary_eligible": "Both isolated paths functional, unequal exact C_pair scores, equal complete isolated arrival tuples, equal geometric length and source phase.",
+    "primary_prediction": "For every eligible comparison, the greater-C_pair outlet transmits and has genuine C, while the lesser-C_pair outlet is strongly quiet throughout6..40.",
+    "primary_failure": "One eligible counterexample refutes the finite-family prediction; preserve all other outcomes.",
+    "no_eligible": "Inconclusive: the registered family provides no arrival-matched unequal-score functional comparison. Never report a vacuous pass.",
+    "unmatched_arrivals": "Report descriptively as prepared competition only, even if the higher-score path wins.",
+    "controls": "Retain all ordered pairs including equal-pattern ties, all source phases, both isolated directions, and all joint source-absent states. Swapped joint pairs are mandatory.",
+    "exploratory_component": "A finite competing-route component requires both isolated paths functional and exactly one joint outlet transmitting with genuine C while the other is strongly quiet, in both spatial swaps. This is a separate claim from complexity preference.",
+    "strong_candidate_selection": "Select the first unordered pair in declared pattern order whose two spatial swaps satisfy primary prediction and primary eligibility for all three source phases. If none exists, report none.",
+    "competitive_candidate_selection": "Separately select the first unordered pair in declared pattern order whose two spatial swaps satisfy exploratory_component for all three source phases. If none exists, report none. No score or observation redefinition is allowed."
+  },
+  "confirmation_plan": {
+    "execution_gate": "Run only after a selected candidate exists and the generic component library is available. No custom evolution engine.",
+    "single_candidate_policy": "Confirm exactly one pair: prefer the strong_candidate if present; otherwise use the competitive_candidate. If neither exists, do not execute holdout runs. The two candidate selections never authorize two holdout batches.",
+    "fresh_geometry": {"side": 129, "arm_length": 8, "variable_sites": [2, 3], "horizon": 48},
+    "observer_window": [8, 48],
+    "score": "Retain the frozen training C_pair scores; do not recalibrate after holdout outcomes.",
+    "cases": "Both swaps and both same-pattern ties, all three source phases; four matching no-source controls; both isolated sides for both selected patterns and all three phases: 28 trajectories.",
+    "acceptance": "Same predicates with the declared new window; label finite geometry confirmation. Primary complexity evidence still requires matched isolated arrival tuples."
+  },
+  "budget": {
+    "cpu_seconds": 240,
+    "wall_seconds": 600,
+    "maximum_search_candidates": 1000,
+    "maximum_trajectories_including_confirmation": 460,
+    "maximum_stored_channels": 20000,
+    "maximum_horizon": 48,
+    "exhaustion": "Stop and retain completed prefix, interruption point and resource accounting. Incomplete studies are inconclusive, not failed completed predictions. No automatic budget extension."
+  },
+  "publication_scope": "No physical-light, quantum-collapse, information-erasure, global complexity preference or autonomous joined selector-to-confirmation receiver claim. The next composition requires its own protocol and controls."
+}

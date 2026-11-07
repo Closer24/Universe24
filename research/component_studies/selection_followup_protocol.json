@@ -1,0 +1,44 @@
+{
+  "format": "universe24-component-selection-followup-v1",
+  "protocol_id": "U24-PHASE-CONDITIONED-COMPETITION-v1",
+  "status": "frozen_after_selection_v1_training_before_new_geometry_runs",
+  "prior_protocol_sha256": "f0e567b851221bf091b685bb2169175e199558dc40f8f2d41fb5e0aab55689ac",
+  "prior_result": "The 432-run study refuted its C_pair prediction in all10 eligible comparisons and selected no all-phase candidate. Its original holdout gate remains closed.",
+  "new_question": "Does the phase-conditioned OR/NO prepared competition survive two fresh arm lengths, and can another initially supplied input reverse the unique outlet on the same apparatus?",
+  "training_selection": "Choose OR/NO, the first pair in the original pattern order with phase(0,1) isolated arrival tuples matched, both isolated paths functional, and a unique OR outlet under both spatial swaps. This is explicitly a new narrower claim after inspecting training results.",
+  "model": {"body_actions": [0,1,3], "body_signs": [1,1,1], "num": 1, "den": 1, "channels": 48, "spatial_neighbors": 6, "initial_preparations_only": true},
+  "preparation": {
+    "patterns": ["OR", "NO"],
+    "pair_states": {"O": [4,0], "N": [2,2], "R": [0,4]},
+    "variable_sites": [2,3],
+    "ordinary_pair": [4,0],
+    "apparatus_counters": "All zero; pattern letters give pairs at sites2 and3 independently.",
+    "source": "One generic SignalSource at origin with channel0=(a,b,2), channel14=(-a,-b,2), prepared before the first update.",
+    "background": [0,0,2],
+    "geometries": [{"side":129,"arm_length":8,"steps":48,"window":[8,48]}, {"side":161,"arm_length":10,"steps":56,"window":[10,56]}],
+    "ordered_inputs": [[0,1],[1,0],[0,-1],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0]],
+    "all_joint_pairs": [["OR","OR"],["OR","NO"],["NO","OR"],["NO","NO"]],
+    "cases_per_geometry": "48 source-present joint cases, four joint no-source controls, and48 isolated cases (two patterns times two sides times12 inputs).",
+    "registered_trajectories": 200
+  },
+  "observations": {
+    "outlets": "All48 complete channel triples at origin +/- arm_length, at every sample in that geometry's fixed window.",
+    "functional": "Both nonzero b difference from null and at least one genuine existing guarded C event in the fixed window.",
+    "quiet": "All48 complete(a,b,r) triples equal null at every sample in the fixed window.",
+    "arrival_tuple": "First full-triple difference, first nonzero b and first guarded C, recorded fromstep1 throughhorizon.",
+    "no_erasure": "Retain complete states and exact inverse verification; a quiet outlet does not erase full-state information."
+  },
+  "primary_prediction": {
+    "input": [0,1],
+    "required": "At each fresh geometry, both isolated patterns are functional; joint OR/NO has only its OR outlet functional and its NO outletquiet; jointNO/OR reverses the physical side while retainingORwinner; allnullboardsstationary. Equal-pattern ties are recorded and not claimed exclusive.",
+    "scope": "Finite prepared competition under the specified input and geometry. It neither repairs the failed C_pair prediction nor establishes phase-independent operation or a written-memory router."
+  },
+  "input_flip_question": {
+    "comparison": "Within one fixed geometry and unchanged OR/NO apparatus, compare pairs of the declared source inputs. Both isolated patterns must be functional under each input, each joint must have exactly one functional outlet and one quiet outlet, and the winning pattern must reverse between inputs and covary under both spatial swaps.",
+    "phase_only": "Call a flip phase-controlled only when the two source inputs have equal a*a+b*b; otherwise call it input-controlled across amplitudes.",
+    "cross_geometry": "Report which pairs reproduce at both fresh geometries; do not select new inputs after results."
+  },
+  "execution": {"generic_component_assembly": true, "generic_runner": "research.experiments.run.run_experiment", "no_runtime_gate_or_selector": true, "full_state_records": true, "frozen_case_manifest_before_first_run": true},
+  "budget": {"additional_cpu_seconds": 90, "wall_seconds": 600, "maximum_stored_channels": 20000, "maximum_trajectories": 200, "maximum_horizon": 56, "cumulative_cpu_ceiling": 240, "cumulative_preparation_ceiling": 1000, "prior_cpu_seconds": 14.657535609, "prior_trajectories": 432, "exhaustion": "Retain completed prefix and report incomplete, with no silent extension."},
+  "joined_scope": "No selected-path-to-waiting-receiver success is asserted. A joined trial requires a separate frozen preparation and controls."
+}

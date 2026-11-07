@@ -8,3 +8,15 @@ dist/
 coverage.xml
 .coverage
 runs/
+
+# Large, byte-exact research evidence is restored from the pinned archive.
+# Selected summaries and demonstrations are explicitly tracked for review.
+research/component_studies/*_evidence_v1/
+research/signal_clocks/evidence/
+research/presenter/demo/
+research/presenter/evidence/
+research/experiments/evidence/
+research/component_review/source/
+
+# Optional reconstructed original archive; exact transport parts are tracked.
+research/artifacts/Universe24_Components.zip

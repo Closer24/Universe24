@@ -1,0 +1,176 @@
+{
+  "format": "universe24-component-delivery-receipt-v1",
+  "passed": true,
+  "scope": "Generic assembly and complete local evidence delivery; scientific hypothesis verdicts remain separate.",
+  "branch": "research/generic-component-assembly-2026-11-07",
+  "base_commit": "3ea3bd64a12bc706eb3f953645b50bea9ad21b29",
+  "local_uncommitted_work_preserved": true,
+  "remote_writes": false,
+  "core_changed": false,
+  "generic_presenter_changed": false,
+  "artifacts": {
+    "main_html": {
+      "path": "research/experiments/evidence/assembly_v1/selected_examples/The_Presenter.html",
+      "bytes": 3074073,
+      "sha256": "56147959f7a99d75b5526b1b93b2397f24d45d1ae68b279d0328b34cc9b8f514"
+    },
+    "packet_gif": {
+      "path": "research/experiments/evidence/assembly_v1/presenter_render/sequence-01/recorded-clocks.gif",
+      "bytes": 187567,
+      "sha256": "842643ab70bcef5b7cad18c8b43f302c717a3183634d3e3d8b9e0a40ca51e507"
+    },
+    "complete_index": {
+      "path": "research/experiments/evidence/assembly_v1/complete_collection/index.html",
+      "bytes": 10039,
+      "sha256": "14ea7a4572e1ff87a06a5cb4aaab2ad75f0506bb0d3ce15bf569dda6e962e6d6"
+    },
+    "complete_manifest": {
+      "path": "research/experiments/evidence/assembly_v1/complete_collection/manifest.json",
+      "bytes": 789149,
+      "sha256": "10c19b0257e509e91d2fd11c03d522cc2ddf2f9797bb27fb609b04b4f95da400"
+    },
+    "archive": {
+      "path": "research/experiments/evidence/assembly_v1/delivery/Universe24_Components.zip",
+      "bytes": 44029448,
+      "sha256": "696ae53fe6fb76cd08ff0cfe6544f25d0063c68256c4e49293b9bfd3d2baa5e7"
+    },
+    "usage": {
+      "path": "docs/COMPONENTS.md",
+      "bytes": 12677,
+      "sha256": "a12fab75131aba15acd21bc0af7ef0e9308a4c642bc40360eb1b4aa79e353a46"
+    },
+    "research_results": {
+      "path": "docs/COMPONENT_RESULTS.md",
+      "bytes": 15305,
+      "sha256": "315f05e0f90e866af408531260d16b9463bc4610834c3d76c058dd1b682cec96"
+    },
+    "independent_review": {
+      "path": "docs/COMPONENT_REVIEW.md",
+      "bytes": 8535,
+      "sha256": "9af5a8f4766a384a16e5e06fadffeef358baa77f57d3c2e8bfba160f8733f393"
+    }
+  },
+  "selected_examples": {
+    "experiments": 24,
+    "full_states": 946,
+    "generic_reproductions_compared_to_original": 18,
+    "compared_full_states": 668,
+    "all_complete_states_equal": true
+  },
+  "complete_collection": {
+    "experiments": 1234,
+    "full_states": 51638,
+    "parts": 24,
+    "max_cases_per_part": 64,
+    "max_stored_cells_per_part": 399220,
+    "groups": [
+      {
+        "id": "waiting-v1",
+        "experiments": 256,
+        "states": 10496
+      },
+      {
+        "id": "waiting-v2",
+        "experiments": 324,
+        "states": 13284
+      },
+      {
+        "id": "selection-v1",
+        "experiments": 432,
+        "states": 16362
+      },
+      {
+        "id": "guided-packet",
+        "experiments": 6,
+        "states": 112
+      },
+      {
+        "id": "selection-followup",
+        "experiments": 200,
+        "states": 10600
+      },
+      {
+        "id": "route-receiver",
+        "experiments": 16,
+        "states": 784
+      }
+    ]
+  },
+  "software_verification": {
+    "suite": {
+      "expected": 120,
+      "tests_run": 120,
+      "successful": true,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "wall_seconds": 96.69320172899825
+    },
+    "history_preserved_files": 61,
+    "core_preserved_files": 13,
+    "historical_migration_experiments": 44,
+    "historical_migration_states": 1868,
+    "historical_inverse_transitions": 1824,
+    "presenter_dom_native_canvas_cases": 24,
+    "real_browser_ipad_verified": false,
+    "restoration": {
+      "passed": true,
+      "recordings": 1234,
+      "checks": [
+        "Check-only verified1234 archives without writing native files",
+        "Fresh-directory restoration matched all1234 original byte hashes",
+        "Identical existing recordings retained",
+        "Existing conflicting file rejected without overwrite",
+        "Destination outside repository research root rejected",
+        "Corrupt compressed recording rejected before restoration"
+      ],
+      "wall_seconds": 5.322074457999406,
+      "source_sha256": "f6059e00f8f28af8ab9fa1118deb5e9905e842dccfb56e87c0a44305c2ab6aaf"
+    },
+    "extracted_source_portability": {
+      "passed": true,
+      "copied_source_files": 6068,
+      "inherited_pythonpath_removed": true,
+      "imports_resolved_inside_extracted_repository": true,
+      "git_metadata_absent": true,
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "research.experiments.run",
+        "--spec",
+        "research/experiments/examples/guided_packet.json",
+        "--output",
+        "runs/portable-guided-packet"
+      ],
+      "experiments": 1,
+      "frames": 18,
+      "all_complete_states_equal_original": true,
+      "presenter_created": true,
+      "wall_seconds": 3.651874230999965
+    },
+    "archive": {
+      "passed": true,
+      "file": "research/experiments/evidence/assembly_v1/delivery/Universe24_Components.zip",
+      "sha256": "696ae53fe6fb76cd08ff0cfe6544f25d0063c68256c4e49293b9bfd3d2baa5e7",
+      "archive_bytes": 44029448,
+      "included_files": 7340,
+      "included_raw_bytes": 394689631,
+      "all_crc_and_sha256_verified": true,
+      "wall_seconds": 11.121595996999531
+    }
+  },
+  "scientific_status": {
+    "guided_packet": "Exact guided-translation construction for L>=5; six recorded controls at L=5,17,31 passed; not vacuum light.",
+    "phase_conditioned_route_competition": "Declared OR/NO competition confirmed at lengths8/10 with fixed input(0,1), including spatial swaps/null/isolated controls.",
+    "higher_cooperation_prediction": "Failed all10 eligible comparisons.",
+    "strict_waiting_confirmation": "No accepted candidate among145 preparations/580 controls.",
+    "actual_route_receiver": "First winning receiver C at12;19 C-bearing updates through48 and candidate record lost at14. Strict one-click retention failed."
+  },
+  "remaining_limitations": [
+    "Physical light, quantum collapse and observed time direction are not derived.",
+    "The packet needs its declared prepared periodic guide and retained halo.",
+    "Assembly validity does not certify arbitrary functional composition.",
+    "iPad attachment JavaScript behavior and native browser layout are unverified."
+  ],
+  "next_decisive_question": "Can an initial-data pulse converter transform the repeated route output into a single receiver event with persistent record, using the same fixed rule and tensor? No further study was run in this delivery."
+}

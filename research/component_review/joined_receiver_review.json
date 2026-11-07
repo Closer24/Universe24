@@ -1,0 +1,961 @@
+{
+  "all_48_receiver_events_and_six_input_terms_recomputed": true,
+  "all_native_portable_states_equal": true,
+  "all_sources_match_frozen_batch": true,
+  "cases": [
+    {
+      "case": {
+        "id": "receiver-iso-L-NO-s0",
+        "isolated_side": -1,
+        "kind": "isolated",
+        "patterns": [
+          "NO",
+          "NO"
+        ],
+        "source_present": false
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "d02d430f63cc2f07975eecc8253b28b49306dc7858b320d7dd647a7daadb2a16",
+      "passed": true,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-iso-L-NO-s0/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": true,
+      "trace_sha256": "bf56a68b187b1184ee047538680660715b18abfb373be23a177a6f0101c64634",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-iso-L-NO-s1",
+        "isolated_side": -1,
+        "kind": "isolated",
+        "patterns": [
+          "NO",
+          "NO"
+        ],
+        "source_present": true
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "2ad337ccd82fbf46bbad5e6c8a8a4cf018c228561ef3f6a5b2abd520b8e415b3",
+      "passed": false,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-iso-L-NO-s1/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48
+          ],
+          "first_C": 12,
+          "first_C_in_window": true,
+          "first_old_input_pair": [
+            1,
+            -1
+          ],
+          "first_record_failure_step": 14,
+          "full_48_channel_quiet": false,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": false,
+      "trace_sha256": "44b5fc0b6f407d2f57d46039ce9cb122c3ecbd6d33241c19a01bb9dab224d191",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-iso-L-OR-s0",
+        "isolated_side": -1,
+        "kind": "isolated",
+        "patterns": [
+          "OR",
+          "OR"
+        ],
+        "source_present": false
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "cc7610581da8d77b2831db932c46c77c8b1974f44f3d60c1d4c2ba777158ae5d",
+      "passed": true,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-iso-L-OR-s0/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": true,
+      "trace_sha256": "72948a0146472a6b06a515aadf10d763698d02b73d8571e5708e4718b8238055",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-iso-L-OR-s1",
+        "isolated_side": -1,
+        "kind": "isolated",
+        "patterns": [
+          "OR",
+          "OR"
+        ],
+        "source_present": true
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "4c8ff26f5e95b29bc022e2b81a084ca3ac51f0da9c0f73081d694d2472ffcbb9",
+      "passed": false,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-iso-L-OR-s1/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48
+          ],
+          "first_C": 12,
+          "first_C_in_window": true,
+          "first_old_input_pair": [
+            1,
+            -1
+          ],
+          "first_record_failure_step": 14,
+          "full_48_channel_quiet": false,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": false,
+      "trace_sha256": "352f95fb07d5b51b286f0c34e8aeb8e3b04c06ac51b7808a69a53cb84e87989d",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-iso-R-NO-s0",
+        "isolated_side": 1,
+        "kind": "isolated",
+        "patterns": [
+          "NO",
+          "NO"
+        ],
+        "source_present": false
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "3939c7db2b79e73c0f66770adabc86d02e9b6394401203e85381c9c7820432f1",
+      "passed": true,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-iso-R-NO-s0/states.jsonl.gz",
+      "receivers": {
+        "1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": true,
+      "trace_sha256": "b1952e0bb13b263fd66b739c29c12ff9eaf23cdf05798cff3d641ca547cbb119",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-iso-R-NO-s1",
+        "isolated_side": 1,
+        "kind": "isolated",
+        "patterns": [
+          "NO",
+          "NO"
+        ],
+        "source_present": true
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "f44653700309a2a313e81e6bb28e2309838b4c60c387e4e556ae6cb1ee3b00e3",
+      "passed": false,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-iso-R-NO-s1/states.jsonl.gz",
+      "receivers": {
+        "1": {
+          "C_bank_times": [
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48
+          ],
+          "first_C": 12,
+          "first_C_in_window": true,
+          "first_old_input_pair": [
+            1,
+            -1
+          ],
+          "first_record_failure_step": 14,
+          "full_48_channel_quiet": false,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": false,
+      "trace_sha256": "6b3946569018b0d9946a6ed9b64b34fe6be0014e100f7992651843602964f6ec",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-iso-R-OR-s0",
+        "isolated_side": 1,
+        "kind": "isolated",
+        "patterns": [
+          "OR",
+          "OR"
+        ],
+        "source_present": false
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "d3d9209c81310fbd3e75737e10f032bc98f3fae4a932f8e7687ab8f2324ec2a7",
+      "passed": true,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-iso-R-OR-s0/states.jsonl.gz",
+      "receivers": {
+        "1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": true,
+      "trace_sha256": "06ed2a33f88ca00c6ef36d6ebfdaf471efede43c1ad3f1cd24b1f4bce67531fd",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-iso-R-OR-s1",
+        "isolated_side": 1,
+        "kind": "isolated",
+        "patterns": [
+          "OR",
+          "OR"
+        ],
+        "source_present": true
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "f9784901b59ad31af40a7e785ba5cc14fc35f19a57be27e19edacbd4d5455b89",
+      "passed": false,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-iso-R-OR-s1/states.jsonl.gz",
+      "receivers": {
+        "1": {
+          "C_bank_times": [
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48
+          ],
+          "first_C": 12,
+          "first_C_in_window": true,
+          "first_old_input_pair": [
+            1,
+            -1
+          ],
+          "first_record_failure_step": 14,
+          "full_48_channel_quiet": false,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": false,
+      "trace_sha256": "027a0a83cb53cb48eae73d409a6b8c01a86b27a4cf399dae8b9bfec5400a3374",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-joint-NO-NO-s0",
+        "kind": "joint",
+        "patterns": [
+          "NO",
+          "NO"
+        ],
+        "source_present": false
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "ce2c13968223a65a5df54edea9f52ed2ee39c14998f7e14fa5c553d4648c1bb5",
+      "passed": true,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-joint-NO-NO-s0/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        },
+        "1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": true,
+      "trace_sha256": "db45ec6cdcdb1096326b24eabcaf10a401fb0077f12355d6ca7a9d9b98a3babe",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-joint-NO-NO-s1",
+        "kind": "joint",
+        "patterns": [
+          "NO",
+          "NO"
+        ],
+        "source_present": true
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "34d13bdf5304b704929774e329b2a69a835cfec0da02e0737e9380f46222e6e7",
+      "passed": null,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-joint-NO-NO-s1/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        },
+        "1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": false,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": false,
+      "trace_sha256": "a3e1a4d586af982db31bd6ea1f43a5cfa182c926e1c7bfcf1b80592f7061e1db",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-joint-NO-OR-s0",
+        "kind": "joint",
+        "patterns": [
+          "NO",
+          "OR"
+        ],
+        "source_present": false
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "a677ba838df9d4db7b240c4f3a0f3477702373a660d87a704bf964fd9c9a49d6",
+      "passed": true,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-joint-NO-OR-s0/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        },
+        "1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": true,
+      "trace_sha256": "53b763daedf6f94397f98561a9cefac63c8369b40bcd7bedfee05c42051e0715",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-joint-NO-OR-s1",
+        "kind": "joint",
+        "patterns": [
+          "NO",
+          "OR"
+        ],
+        "source_present": true
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "e9347d63556a5281536f4211ee2aa6e2bff71f9ca3bd85b2a6df31cb296684a3",
+      "passed": false,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-joint-NO-OR-s1/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        },
+        "1": {
+          "C_bank_times": [
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48
+          ],
+          "first_C": 12,
+          "first_C_in_window": true,
+          "first_old_input_pair": [
+            1,
+            -1
+          ],
+          "first_record_failure_step": 14,
+          "full_48_channel_quiet": false,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": false,
+      "trace_sha256": "c3dfc33b585176433cbf29930c307bda200a92a2b52236f5751d64ee93fa8d8d",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-joint-OR-NO-s0",
+        "kind": "joint",
+        "patterns": [
+          "OR",
+          "NO"
+        ],
+        "source_present": false
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "f84bc856bb8ad5d5eadd3720b6e60213bcfa62aee05f0f7096d2db378830a901",
+      "passed": true,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-joint-OR-NO-s0/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        },
+        "1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": true,
+      "trace_sha256": "09200878854c78d402ad952948452c4008b8a9600ad89d0b1b90c93adb15746c",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-joint-OR-NO-s1",
+        "kind": "joint",
+        "patterns": [
+          "OR",
+          "NO"
+        ],
+        "source_present": true
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "25c656f197466071817c42345cec0316c9648457caa98be02230e9d10f5c246f",
+      "passed": false,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-joint-OR-NO-s1/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48
+          ],
+          "first_C": 12,
+          "first_C_in_window": true,
+          "first_old_input_pair": [
+            1,
+            -1
+          ],
+          "first_record_failure_step": 14,
+          "full_48_channel_quiet": false,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        },
+        "1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "NO",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": false,
+      "trace_sha256": "1754f4a63386fe2884a48776003863595861a7dc32d910f549fdb64542b81601",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-joint-OR-OR-s0",
+        "kind": "joint",
+        "patterns": [
+          "OR",
+          "OR"
+        ],
+        "source_present": false
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "5288e4ebd2e8ae92fd61d67d8d5c762c5400c6194a98dbfa890c4d88089b6f9d",
+      "passed": true,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-joint-OR-OR-s0/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        },
+        "1": {
+          "C_bank_times": [],
+          "first_C": null,
+          "first_C_in_window": false,
+          "first_old_input_pair": null,
+          "first_record_failure_step": null,
+          "full_48_channel_quiet": true,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": true,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": true,
+      "trace_sha256": "dcb569fe2ac293d9a3cb8e1de865d8b46b88413d03e395e5fa3694923c208cf5",
+      "transitions": 48
+    },
+    {
+      "case": {
+        "id": "receiver-joint-OR-OR-s1",
+        "kind": "joint",
+        "patterns": [
+          "OR",
+          "OR"
+        ],
+        "source_present": true
+      },
+      "coupling_signs": [
+        1,
+        1,
+        1
+      ],
+      "forward_and_inverse_passed": true,
+      "frames": 49,
+      "initial_state_sha256": "66ab00f70a26e2b3325974385a2abb2d0c198ff049b19c780b589d20bc833e9f",
+      "passed": null,
+      "path": "research/component_studies/selection_receiver_evidence_v1/cases/receiver-joint-OR-OR-s1/states.jsonl.gz",
+      "receivers": {
+        "-1": {
+          "C_bank_times": [
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48
+          ],
+          "first_C": 12,
+          "first_C_in_window": true,
+          "first_old_input_pair": [
+            1,
+            -1
+          ],
+          "first_record_failure_step": 14,
+          "full_48_channel_quiet": false,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        },
+        "1": {
+          "C_bank_times": [
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30,
+            32,
+            34,
+            36,
+            38,
+            40,
+            42,
+            44,
+            46,
+            48
+          ],
+          "first_C": 12,
+          "first_C_in_window": true,
+          "first_old_input_pair": [
+            1,
+            -1
+          ],
+          "first_record_failure_step": 14,
+          "full_48_channel_quiet": false,
+          "legacy_combined_one_C_and_window": false,
+          "pattern": "OR",
+          "single_click_retaining_success": false
+        }
+      },
+      "required": false,
+      "source_sha256": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+      "stationary": false,
+      "trace_sha256": "5ab0000d30bac16c5a0fdc67496c031f0eed4d82f3220a1fd30eeb7d634e9cdf",
+      "transitions": 48
+    }
+  ],
+  "cpu_seconds": 3.532850179,
+  "diagnostic_caveat": "Frozen event_in_declared_window also requires exactly one C. Its false value does not mean the first C was late. The actual failures are repeated clicks and record loss.",
+  "evidence_result_sha256": "d8c21608313ad70df313cc5b6ddb4cb57102f864d5fb981944ea38f443c298bc",
+  "failure_witness": {
+    "C_bearing_updates": 19,
+    "C_times": [
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32,
+      34,
+      36,
+      38,
+      40,
+      42,
+      44,
+      46,
+      48
+    ],
+    "first_C": 12,
+    "first_C_in_window": true,
+    "old_step_11_input_pair": [
+      1,
+      -1
+    ],
+    "record_first_lost": 14
+  },
+  "format": "universe24-independent-joined-receiver-review-v1",
+  "frames": 784,
+  "independent_forward_inverse_transitions": 768,
+  "joined_component_passed": false,
+  "loser_complete_48_channel_nodes_quiet_in_both_mixed_swaps": true,
+  "null_cases_passed": 8,
+  "passed": true,
+  "required_source_cases_failed": 6,
+  "runs": 16,
+  "scope": "One initially supplied central source and an initially prepared waiting receiver; no autonomous prior waiting-state write or internally computed uniqueness approval was tested.",
+  "source_sha256": {
+    "/workspace/scratch/1966445260ce/Universe24-presenter/research/component_review/audit.py": "ef1f224478283e109d95a4cae5cab14724ef2e371ef13c5ed2d8ac9905225b42",
+    "/workspace/scratch/1966445260ce/Universe24-presenter/research/component_review/review_joined.py": "d6a8c5b1c3314b506dee90c4825ad25b9ec1caf5b9466d386479053518bcad2b"
+  },
+  "source_snapshot_files_verified": 22,
+  "source_versions": 1
+}

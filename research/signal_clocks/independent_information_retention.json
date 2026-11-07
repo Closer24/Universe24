@@ -1,0 +1,143 @@
+{
+  "cases": [
+    {
+      "blocked_all_48_triples_equal": true,
+      "blocked_outlet": [
+        56,
+        50,
+        50
+      ],
+      "control_trace_sha256": "97d57664dba4f1c7fba6cc7a50f115c949f324e30bffd857f541563a292aaf43",
+      "full_state_different_addresses": 40,
+      "id": "paired-O-N",
+      "step": 40,
+      "trace_sha256": "c9cbcdcdf69ce60e4c001b299f94e7eb44533c6f60d02a22bb850e9522f9a223",
+      "witnesses": [
+        {
+          "address": [
+            50,
+            50,
+            50,
+            0
+          ],
+          "source_absent": [
+            0,
+            0,
+            2
+          ],
+          "source_present": [
+            0,
+            -1,
+            2
+          ]
+        },
+        {
+          "address": [
+            50,
+            50,
+            50,
+            14
+          ],
+          "source_absent": [
+            0,
+            0,
+            2
+          ],
+          "source_present": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "address": [
+            51,
+            50,
+            50,
+            0
+          ],
+          "source_absent": [
+            0,
+            0,
+            4
+          ],
+          "source_present": [
+            -1,
+            0,
+            0
+          ]
+        }
+      ]
+    },
+    {
+      "blocked_all_48_triples_equal": true,
+      "blocked_outlet": [
+        44,
+        50,
+        50
+      ],
+      "control_trace_sha256": "d6b75f1926e4773c8c62eabd22818210c2c4853f4d9ffbb2ba614788e4d72d77",
+      "full_state_different_addresses": 40,
+      "id": "paired-N-O",
+      "step": 40,
+      "trace_sha256": "0b4ed4ecab32b1da28438d58f3f8df2ed3d9295bd9cc11f87c22bfc6cff3b571",
+      "witnesses": [
+        {
+          "address": [
+            50,
+            50,
+            50,
+            0
+          ],
+          "source_absent": [
+            0,
+            0,
+            2
+          ],
+          "source_present": [
+            0,
+            -1,
+            2
+          ]
+        },
+        {
+          "address": [
+            50,
+            50,
+            50,
+            14
+          ],
+          "source_absent": [
+            0,
+            0,
+            2
+          ],
+          "source_present": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "address": [
+            49,
+            50,
+            50,
+            0
+          ],
+          "source_absent": [
+            0,
+            0,
+            4
+          ],
+          "source_present": [
+            -1,
+            0,
+            0
+          ]
+        }
+      ]
+    }
+  ],
+  "scope": "Read-only differences of already audited complete states; no new dynamics or criterion. Source-present and source-absent histories remain distinct outside an unchanged blocked outlet."
+}

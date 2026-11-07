@@ -1,0 +1,24 @@
+{
+  "cases": [
+    {
+      "arithmetic_event_times": [],
+      "frames": 17,
+      "independent_full_state_transitions": 16,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/period_control/cases/period-four-positive",
+      "record_event_times": [],
+      "states_sha256": "e06cbf8ed44075212d5f2da61cb4f056c78ab4f2b0d943b46a822605696be961"
+    },
+    {
+      "arithmetic_event_times": [],
+      "frames": 17,
+      "independent_full_state_transitions": 16,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/period_control/cases/period-four-signed",
+      "record_event_times": [],
+      "states_sha256": "76a9aa5bfc8d036d1f466a3294a60b8416dae3d346334efcf33cc248880805b5"
+    }
+  ],
+  "format": "universe24-independent-period-control-audit-v1",
+  "scope": "Fullstate period4 and zero global carry on the two displayed controls."
+}

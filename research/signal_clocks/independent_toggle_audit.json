@@ -1,0 +1,57 @@
+{
+  "cases": [
+    {
+      "arithmetic_event_times": [],
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/endpoint_toggle/cases/endpoint-064-s00",
+      "record_event_times": [],
+      "states_sha256": "82cfcbfc6330d1591be6610cf13ec6b27ac073540e1da048e8763cd49437af55"
+    },
+    {
+      "arithmetic_event_times": [
+        20
+      ],
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/endpoint_toggle/cases/endpoint-064-s01",
+      "record_event_times": [
+        20
+      ],
+      "states_sha256": "155b22c247125e502a88a656d9a0cba6dd3c9ebc3b9c02e5e462770ce182f4fb"
+    },
+    {
+      "arithmetic_event_times": [
+        12
+      ],
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/endpoint_toggle/cases/endpoint-064-s10",
+      "record_event_times": [
+        12
+      ],
+      "states_sha256": "d5fef31d00e42ce4c136f45579671fe24ef805e4edf0fbf8bbef233ea4732b59"
+    },
+    {
+      "arithmetic_event_times": [
+        12,
+        22
+      ],
+      "frames": 33,
+      "independent_full_state_transitions": 32,
+      "passed": true,
+      "path": "research/signal_clocks/evidence/endpoint_toggle/cases/endpoint-064-s11",
+      "record_event_times": [
+        12,
+        22
+      ],
+      "states_sha256": "20c12ca8277ba8e41b57369fd8a8d03375d3eca5ebd9f2dad44b049441153311"
+    }
+  ],
+  "cpu_seconds": 1.4548297970000001,
+  "format": "universe24-independent-exploratory-toggle-audit-v1",
+  "scope": "Post-search selected observation; original waiting milestone remains failed."
+}
