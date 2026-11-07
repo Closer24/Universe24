@@ -59,3 +59,14 @@ For reproducible publications, include: commit SHA, `side`, all body signs, comp
 ## Performance
 
 The state is sparse around a fixed background, but spatial influence can spread to new channels over time. Memory cost can therefore grow toward the entire cube (`48 L³` channels, each with three stored numbers), with additional overhead from Python's arbitrary-precision integers. The engine is an exact reference implementation, not a high-performance solver optimized for very large universes.
+
+## Reliability bundles
+
+For pinned source identities, an independent matrix/dense reference, complete-state
+regressions and never-overwritten experiment bundles, see
+[RELIABILITY.md](RELIABILITY.md).
+Run `python -m research.reproducibility.run --output runs/first` from a clean
+checkout. A `bundle_only` rerun does not claim the full suite was executed.
+The runner preserves a scientific negative result separately from an execution
+failure. Review and version changes to protocols/expected results explicitly;
+never regenerate a failing expectation simply to make CI pass.

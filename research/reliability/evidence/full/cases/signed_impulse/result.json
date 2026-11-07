@@ -1,0 +1,10 @@
+{
+  "id": "signed_impulse",
+  "steps": 12,
+  "first_full_state_return": 6,
+  "expected_first_return": 6,
+  "final_equals_initial": true,
+  "arithmetic_event_count": 28,
+  "full_state_inverse_pass": true,
+  "pass": true
+}

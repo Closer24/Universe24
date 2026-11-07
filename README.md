@@ -6,7 +6,7 @@ This repository provides the **MIT-licensed reference engine for one specific ma
 
 > **Research status:** This repository is a mathematical and computational research prototype, **not a validated physical theory**. No derivation of photons, atoms, quantum measurement, physical energy, angular momentum, gravity, or the Born rule is claimed.
 
-**Start here:** [Full research proposal (Google Docs)](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit?usp=drivesdk) · [Research proposal: concise guide](docs/RESEARCH_PROPOSAL.md) · [מדריך בעברית](docs/README.he.md) · [Quickstart](docs/QUICKSTART.md) · [Mathematical model](docs/MODEL.md) · [Architecture](docs/ARCHITECTURE.md) · [Experiments](docs/EXPERIMENTS.md) · [Click observations](docs/OBSERVATION.md) · [Research status](docs/RESEARCH_STATUS.md) · [Contributor rules](AGENTS.md)
+**Start here:** [Full research proposal (Google Docs)](https://docs.google.com/document/d/1NDPfeFj9vldgb0RMSSvx2lBSmOo__E-F3t2cZwfjOjI/edit?usp=drivesdk) · [Research proposal: concise guide](docs/RESEARCH_PROPOSAL.md) · [Quickstart](docs/QUICKSTART.md) · [Mathematical model](docs/MODEL.md) · [Architecture](docs/ARCHITECTURE.md) · [Experiments](docs/EXPERIMENTS.md) · [Click observations](docs/OBSERVATION.md) · [Research status](docs/RESEARCH_STATUS.md) · [Reliability](docs/RELIABILITY.md) · [Contributor rules](AGENTS.md)
 
 ## The research question — beyond this code
 

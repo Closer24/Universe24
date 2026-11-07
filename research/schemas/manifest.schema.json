@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Universe24 manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "protocol_sha256": {
+      "type": "string",
+      "pattern": "[0-9a-f]{64}"
+    },
+    "engine_commit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checkout_commit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "working_tree_dirty": {
+      "type": "boolean"
+    },
+    "source_sha256": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "[0-9a-f]{64}"
+      }
+    },
+    "python": {
+      "type": "string",
+      "minLength": 1
+    },
+    "platform": {
+      "type": "string",
+      "minLength": 1
+    },
+    "command": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "coupling_fingerprints": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "[0-9a-f]{64}"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "protocol_sha256",
+    "engine_commit",
+    "checkout_commit",
+    "working_tree_dirty",
+    "source_sha256",
+    "python",
+    "platform",
+    "command",
+    "coupling_fingerprints"
+  ]
+}
