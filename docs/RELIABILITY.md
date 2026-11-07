@@ -99,6 +99,13 @@ only when those source hashes and deterministic evidence agree.
 
 ## Bundle contract
 
+The reference [model specification](MODEL.md) is byte-pinned by the frozen
+protocol. Keep explanatory scope extensions in [candidate guides](COUPLING_FAMILIES.md)
+and their README/proposal links; even an added cross-reference inside the frozen
+specification changes its digest. The release integration check caught such a
+documentation-only mismatch after PR #4, and the duplicate cross-reference was
+removed without changing the protocol, expected results or engine.
+
 The frozen [protocol](../research/reproducibility/protocol.json) records the
 question, observation, baseline and specification digest, cases, success
 criterion and budget. [`research/schemas/`](../research/schemas/) contains v1
