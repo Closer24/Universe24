@@ -1,0 +1,17 @@
+{
+  "format": "universe24-signal-clock-render-v1",
+  "html_sha256": "41f7bdeecf1e878fa92d16381eb45def9dbd2e8114cfe099a61810e79ce8345a",
+  "wall_seconds": 120,
+  "verify_all_cases": true,
+  "gif_width": 960,
+  "sequences": [
+    {
+      "experiment": "shared-0-00",
+      "first_frame": 0,
+      "last_frame": 16,
+      "framing": "whole-cube",
+      "rotation_steps_per_frame": 1,
+      "fps": 3
+    }
+  ]
+}

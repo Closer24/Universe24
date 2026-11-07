@@ -1,0 +1,1121 @@
+{
+  "base_commit": "5894510ada12d22f17a70f93a41ec311aef13265",
+  "planned_cases": [
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-0-00",
+      "phases": [
+        0,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-0-01",
+      "phases": [
+        0,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-0-10",
+      "phases": [
+        0,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-0-11",
+      "phases": [
+        0,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-1-00",
+      "phases": [
+        1,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-1-01",
+      "phases": [
+        1,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-1-10",
+      "phases": [
+        1,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-1-11",
+      "phases": [
+        1,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-2-00",
+      "phases": [
+        2,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-2-01",
+      "phases": [
+        2,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-2-10",
+      "phases": [
+        2,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-2-11",
+      "phases": [
+        2,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-3-00",
+      "phases": [
+        3,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-3-01",
+      "phases": [
+        3,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-3-10",
+      "phases": [
+        3,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "shared_phase",
+      "id": "shared-3-11",
+      "phases": [
+        3,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-0-00",
+      "phases": [
+        0,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-0-01",
+      "phases": [
+        0,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-0-10",
+      "phases": [
+        0,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-0-11",
+      "phases": [
+        0,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-1-00",
+      "phases": [
+        0,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-1-01",
+      "phases": [
+        0,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-1-10",
+      "phases": [
+        0,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-1-11",
+      "phases": [
+        0,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-2-00",
+      "phases": [
+        0,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-2-01",
+      "phases": [
+        0,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-2-10",
+      "phases": [
+        0,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-2-11",
+      "phases": [
+        0,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-3-00",
+      "phases": [
+        0,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-3-01",
+      "phases": [
+        0,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-3-10",
+      "phases": [
+        0,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-0-3-11",
+      "phases": [
+        0,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-0-00",
+      "phases": [
+        1,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-0-01",
+      "phases": [
+        1,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-0-10",
+      "phases": [
+        1,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-0-11",
+      "phases": [
+        1,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-1-00",
+      "phases": [
+        1,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-1-01",
+      "phases": [
+        1,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-1-10",
+      "phases": [
+        1,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-1-11",
+      "phases": [
+        1,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-2-00",
+      "phases": [
+        1,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-2-01",
+      "phases": [
+        1,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-2-10",
+      "phases": [
+        1,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-2-11",
+      "phases": [
+        1,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-3-00",
+      "phases": [
+        1,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-3-01",
+      "phases": [
+        1,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-3-10",
+      "phases": [
+        1,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-1-3-11",
+      "phases": [
+        1,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-0-00",
+      "phases": [
+        2,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-0-01",
+      "phases": [
+        2,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-0-10",
+      "phases": [
+        2,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-0-11",
+      "phases": [
+        2,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-1-00",
+      "phases": [
+        2,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-1-01",
+      "phases": [
+        2,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-1-10",
+      "phases": [
+        2,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-1-11",
+      "phases": [
+        2,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-2-00",
+      "phases": [
+        2,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-2-01",
+      "phases": [
+        2,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-2-10",
+      "phases": [
+        2,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-2-11",
+      "phases": [
+        2,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-3-00",
+      "phases": [
+        2,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-3-01",
+      "phases": [
+        2,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-3-10",
+      "phases": [
+        2,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-2-3-11",
+      "phases": [
+        2,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-0-00",
+      "phases": [
+        3,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-0-01",
+      "phases": [
+        3,
+        0
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-0-10",
+      "phases": [
+        3,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-0-11",
+      "phases": [
+        3,
+        0
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-1-00",
+      "phases": [
+        3,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-1-01",
+      "phases": [
+        3,
+        1
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-1-10",
+      "phases": [
+        3,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-1-11",
+      "phases": [
+        3,
+        1
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-2-00",
+      "phases": [
+        3,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-2-01",
+      "phases": [
+        3,
+        2
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-2-10",
+      "phases": [
+        3,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-2-11",
+      "phases": [
+        3,
+        2
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-3-00",
+      "phases": [
+        3,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-3-01",
+      "phases": [
+        3,
+        3
+      ],
+      "present": true,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-3-10",
+      "phases": [
+        3,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "independent_phases",
+      "id": "independent-3-3-11",
+      "phases": [
+        3,
+        3
+      ],
+      "present": true,
+      "settings": [
+        1,
+        1
+      ]
+    },
+    {
+      "ensemble": "null",
+      "id": "null-00",
+      "phases": [
+        0,
+        0
+      ],
+      "present": false,
+      "settings": [
+        0,
+        0
+      ]
+    },
+    {
+      "ensemble": "null",
+      "id": "null-01",
+      "phases": [
+        0,
+        0
+      ],
+      "present": false,
+      "settings": [
+        0,
+        1
+      ]
+    },
+    {
+      "ensemble": "null",
+      "id": "null-10",
+      "phases": [
+        0,
+        0
+      ],
+      "present": false,
+      "settings": [
+        1,
+        0
+      ]
+    },
+    {
+      "ensemble": "null",
+      "id": "null-11",
+      "phases": [
+        0,
+        0
+      ],
+      "present": false,
+      "settings": [
+        1,
+        1
+      ]
+    }
+  ],
+  "protocol_sha256": "3c95321cce84de5bec0da1942f27a32d7d25250b68410c3da979203bad2c3e9d",
+  "source_sha256": {
+    "research/components/__init__.py": "bc3c504533e052ea7dfee41483df25ee7ecc3bd30aba70fb52ed2d6f245afd4a",
+    "research/components/compose.py": "463f960fe44533310e98528d3f85b611101fa661c70ce18beed3ac72885ed496",
+    "research/components/recipes.py": "99a199109782b9115e06c67517a948d904a2659ffbeedadc92bb0606d653a0bc",
+    "research/components/spec.py": "1bb4bb06eaddebd0bb0d0287a6fc846900396b6fbcd00ec61cd28917f8e778d4",
+    "research/light_approval/compute.py": "c3e610f14c9860f56a40f138b734dd659944bf360ef5c9a8dc7ca553bf147c9a",
+    "research/presenter/build.py": "0845fecd843702d1e2387a0955a4fb9a92b195e2bcab390c957171a4a2528ad8",
+    "research/presenter/demo.py": "5ffbaf1036d39574dfc7ae3d981632cd9c290d35e01b162098d510bcb2c90585",
+    "research/presenter/export.py": "2168f532626c13170ca0791e7d896dac96c638ad6f2b704ee7e359d4ef6681cc",
+    "universe24/__init__.py": "fdce7c34f1c57d4601ddb445b0c46889418630cc175551b3cddcb56f0e8393b7",
+    "universe24/__main__.py": "157a90dd1a31ded840ac00e991d31c187b3e1c8ba72de3048deddb0b2ffc425e",
+    "universe24/core/__init__.py": "54b4904eead9518f5c5b7a40681c709eb45f1a9ea6588e0bce69338d17ac144f",
+    "universe24/core/coupling.py": "4d822203dbb75bd5192c4fddcbf8e2ffbab6c46c2a55cb19f101bcecaa4f6489",
+    "universe24/core/engine.py": "4ee34937e2d82d68aa3414dd0fbe71f4e01cc075753c7a638d10667afceaa938",
+    "universe24/core/group_2o.py": "3f0475445dfc65042651a68036835e375003a86873fc202b8e904fdf470fb055",
+    "universe24/core/rule3.py": "216e2490e7a9f683db1a8918dc46c7aa11213aaf0409a13ddf7f1850f7b88555",
+    "universe24/core/state.py": "6581559406158af6febe1f5763901915e4e6287ee9ebabe34a3db9186b8c45f0",
+    "universe24/experiments/__init__.py": "073f5497951a49f85e4ef6d348dade004167959fe7f023c4837e4e24dbae7e22",
+    "universe24/experiments/config.py": "8ce7828a3a2d677e0234d76fcb91dd493f216892f0e57182c246b36ef6efb926",
+    "universe24/observation/__init__.py": "86f59ebf4ecd61b9a5fa8071b93b0ebdb89ec489268b9d09c30130981f3678cb",
+    "universe24/observation/clicks.py": "cd14589241086d0b00adae1819ae8e230ad1b1a221714d84a6bf698e2424cced",
+    "universe24/observation/diagnostics.py": "ea4ab16b615333bbb2f1293fd4dd45c99c29dac5cf9206cc3b3245ed6a73b6c3"
+  }
+}
