@@ -178,7 +178,7 @@ zero-counter channels with another remainder are still retained.
 Requirements: **Python 3.11+**. Running from the repository requires **no third-party Python packages**.
 
 ```bash
-git clone --branch research/generic-components-2026-11-07 https://github.com/Closer24/Universe24.git
+git clone https://github.com/Closer24/Universe24.git
 cd Universe24
 
 python -m research.experiments.materialize_evidence
@@ -186,10 +186,10 @@ python -m unittest discover -s tests -v
 python -m universe24 --config examples/impulse.json --audit
 ```
 
-The explicit branch selects this unmerged component proposal. It is stacked
-on clockwork PR #3, which is stacked on reliability PR #2. None is merged
-by this publication, and coupling-documentation PR #4 remains separate.
-The default `main` branch does not yet contain the new component commands.
+The default `main` branch includes the component library, Presenter and
+reproducibility tools. Reliability PR #2, clockwork PR #3, coupling-documentation
+PR #4 and generic-component PR #5 have been merged. The original research
+branches and immutable evidence references remain available.
 The materializer restores declared, hash-checked evidence from the included
 archive for the full tests and historical audits; it never replaces live code.
 
