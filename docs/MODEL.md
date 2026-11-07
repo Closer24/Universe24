@@ -20,8 +20,6 @@ Choose three signs `s_x,s_y,s_z in {-1,+1}` before any execution, applying the s
 
 Its fixed tensor has entries `P[d,g,h] = s_u` if `h=g B_u`, and `0` otherwise. All six matrices are signed permutations: each row/column has one nonzero entry and `P[-d]=P[d]^T`. Under proper cube rotations, the channel labels and spatial directions covary.
 
-This is the implemented `(0,1,3)` body-action family with eight sign choices. [Coupling families and degrees of freedom](COUPLING_FAMILIES.md) defines a broader axial-action candidate and proves its stated algebraic properties. It does not change this specification or extend the implementation; the reflection results below concern the present fixed family.
-
 ## Unique forward law
 
 ```text
