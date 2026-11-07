@@ -92,9 +92,11 @@ For each surviving permutation, choose sigma_0=+1 and propagate the second
 identity. A conflicting sign would reject the candidate. All eight surviving
 support permutations admit consistent signs for every tested coupling choice.
 
-`reflection_audit_results.json` saves an explicit x-mirror permutation and all
+[`research/reflection_audit_results.json`](../research/reflection_audit_results.json)
+saves an explicit x-mirror permutation and all
 48 signs, together with the summary for all improper maps and coupling signs.
-The implementation uses exact integers throughout.
+The audit writes this file alongside its research script, regardless of the
+working directory. The implementation uses exact integers throughout.
 
 ## Applying the mirror twice
 

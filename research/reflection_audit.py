@@ -169,7 +169,8 @@ def main():
                              'order':4},
             'naive_mirror_counterexample':naive_counterexample(),
             'limitation':'Combined lifted symmetry; not an involution of full retained state and not a proved physical parity representation.'}
-    Path('reflection_audit_results.json').write_text(json.dumps(result,indent=2)+'\n')
+    Path(__file__).with_name('reflection_audit_results.json').write_text(
+        json.dumps(result,indent=2)+'\n', encoding='utf-8')
     print('Rotations PASS. All 24 improper maps admit signed lifts, for all 8 coupling choices. Mirror lift order: 4.')
 
 
