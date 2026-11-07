@@ -39,3 +39,15 @@ A scientifically interesting but incompatible rule is welcome only as an **expli
 Do not describe a local oscillation as an atom, a pulse as a photon, an arithmetic event as an observed quantum measurement, or an exact balance identity as physical energy conservation without the relevant derivations and quantitative tests.
 
 Document numerical seed, `L`, signs, steps, code version and a full-state checkpoint if appropriate. Event logs alone are insufficient to reconstruct full microscopic states.
+
+## Reliability gate
+
+Run the clean-source [reliability bundle](docs/RELIABILITY.md) before proposing
+changes. It includes all unittest regressions and independently reconstructed
+algebra/routing/evolution. Preserve protocol and source identities, explicit
+negative outcomes, and first-difference artifacts. See the
+[Hebrew instructions](docs/RELIABILITY.he.md) for the same acceptance contract.
+Research reference code must not import production algebra or coupling tables.
+Do not update expected output to hide a failed comparison. Any necessary change
+to the core or click semantics requires a separate explicit review. All code
+changes belong on a branch and in a PR; merging requires the initiator's approval.

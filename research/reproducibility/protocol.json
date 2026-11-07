@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "protocol_id": "U24-RELIABILITY-v1",
+  "question": "Does an independently reconstructed exact model agree with the unchanged pinned engine, and can its evidence be reproduced?",
+  "base_engine_commit": "ed1556e202eb0f3cc60342c75d44012c2eeb71c3",
+  "specification_sha256": "7cd622ca52689eda4b3093ac711bb7f9174b35f3638e4aaa98b6e41bae4d265e",
+  "observation": "Exact full a,b,r equality; first full-state return; signed Q account; existing passive arithmetic clicks only. No physical interpretation.",
+  "success": "All implementation tests, independent comparisons and checkpoints pass; declared example periods match; negative Q claim is refuted by the fixed witness.",
+  "negative_claim": "Universal conservation of the same total Q for every sign triple is false.",
+  "budget_wall_seconds": 600,
+  "cases": [
+    {
+      "id": "positive_impulse",
+      "config": "examples/impulse.json",
+      "expected_first_return": 6,
+      "expected_steps": 12
+    },
+    {
+      "id": "signed_impulse",
+      "config": "examples/signed_impulse.json",
+      "expected_first_return": 6,
+      "expected_steps": 12
+    },
+    {
+      "id": "clock",
+      "config": "examples/clock.json",
+      "expected_first_return": 4,
+      "expected_steps": 16
+    }
+  ]
+}
