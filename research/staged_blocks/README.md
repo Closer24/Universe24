@@ -142,3 +142,17 @@ The stage catalog is a research checklist with explicit evidence domains. Its ba
 Research evidence belongs under this package; regression checks belong under `tests/`. The engine and Presenter implementations remain shared and unchanged. See the [research report](../../docs/STAGED_BLOCKS.md) for measured outcomes, limitations and the next decision, and the [algorithm review](../algorithm_analogues/README.md) for the source-backed architectural proposals.
 
 The [light-bridge hypothesis](light_bridge_hypothesis.md) separates mathematical board carriers from observed photons and states the tests needed for an invariant-light-speed interpretation. The claim that light is the sole observable invariant remains a hypothesis; it is not an accepted result of these demonstrations.
+
+## Validation of this release
+
+The [validation receipt](evidence/release_validation/receipt.json) records 202 passing tests with zero skips in the pinned optional-solver environment, two reference CLI audits, the complete independent certificate and the final 56-recording Presenter smoke. The collection's saved `audit_status=not_run` predates that certificate and remains unchanged for provenance. Verification success does not convert rejected behavior criteria or solver timeouts into positive components.
+
+Replay the published audit without generating new experiments:
+
+```bash
+.venv-research/bin/python -m research.staged_blocks.run audit \
+  --manifest research/staged_blocks/evidence/final_collection/audit_manifest.json \
+  --output runs/staged-audit.json --max-cpu-seconds 600
+```
+
+Run `python -m research.experiments.materialize_evidence` first in a fresh checkout to restore the pinned historical evidence required by the full repository test suite.
