@@ -1,0 +1,261 @@
+{
+  "base_commit": "b552f90dd8e19f836424411019dccd573c10fa6c",
+  "claim_limit": "Audit pass means correspondence to the frozen definitions and complete records, not success of every scientific target or proof of physical reality.",
+  "cpu_budget_seconds": 30.0,
+  "cpu_seconds": 1.84388946,
+  "format": "universe24-staged-independent-audit-v1",
+  "independent_auditor_sha256": "d711dd6a2e1ef89c13b4a31844d97b8dba71b3133215db87dbb096ca3bbcf7ab",
+  "logical_processors": 9,
+  "machine": "x86_64",
+  "manifest_sha256": "3dbee19cd1b538bf6fbb85bb057bf2632dcd4448efe1bb0e95ab3f5e4f709951",
+  "passed": true,
+  "peak_resident_bytes": 33914880,
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+  "python_version": "3.12.14",
+  "studies": [
+    {
+      "audit_cpu_seconds": 1.839142307,
+      "both_source_controls_preserve_clock_and_all_remainders": true,
+      "clock_complete336_region_minimal_period": 4,
+      "complete_states": 100,
+      "connected_strict_pending_accepted": false,
+      "forward_transitions": 96,
+      "full_recordings_independently_replayed": 4,
+      "full_reverse_traversals": 4,
+      "id": "catalog_reviewed",
+      "incoming_capture_established": false,
+      "independent_initial_recipe_composition": true,
+      "inverse_transitions": 96,
+      "isolated_coexistence": true,
+      "kind": "composition",
+      "manifest_checked_files": {
+        "../composition_catalog_v2/protocol.json": "c709b7fd3f741185632f05ce2f7050be2454c1f71e68d025200a2e2bf65ace57",
+        "../composition_catalog_v2/records/four-blocks-connected-off.json.gz": "ec19edd6277abdb4cb145136132bbc865883e06a6a6557c9f845c2177785c677",
+        "../composition_catalog_v2/records/four-blocks-connected-on.json.gz": "1707c4ac8924cececb5942ade6ac6ea5412d0d8d7e84d09b5e18ada5e88bc9e2",
+        "../composition_catalog_v2/records/four-blocks-isolated-off.json.gz": "50c716a99d2e094e06d59b2ace755ffef5c6790ce2faa41e81f362540903edb1",
+        "../composition_catalog_v2/records/four-blocks-isolated-on.json.gz": "29fcef5461ad7402868dfb31eeeca7cc49742524e292527308276b4e7cbe41f0",
+        "../composition_catalog_v2/result.json": "74cce2813e8d7c2c8429f95d2e9674964d4f91546487bcf7add20b3eef467d50"
+      },
+      "passed": true,
+      "protocol_sha256": "3b47d20ab17498c67501f7428a553ddc5593db9c851fc70c25d975ada28962d1",
+      "receiver_source_effect_times": {
+        "connected": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "isolated": []
+      },
+      "records": [
+        {
+          "first_receiver_change": null,
+          "id": "four-blocks-isolated-on",
+          "matrix_replay": {
+            "boundary_counter_hits": [],
+            "final_state_sha256": "b03293e2cdf9205ef5ce64ae2185226e8dad3091f7391eebf1c1c6e74bbeaf75",
+            "forward_transitions": 24,
+            "full_rewind_equal": true,
+            "initial_state_sha256": "4625e4586fd59308f3555bac63a07727093c22269c0db04d3f203779ac052557",
+            "inverse_transitions": 24,
+            "observations": {
+              "carrier.front": {
+                "C_by_kind": {
+                  "1": 1,
+                  "2": 1
+                },
+                "C_events": 2,
+                "R_change_times": [
+                  2
+                ],
+                "addresses": 2
+              },
+              "clock.center": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 1
+              },
+              "memory.node": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 48
+              }
+            },
+            "passed": true,
+            "states": 25,
+            "whole_board_C_by_kind": {
+              "1": 48,
+              "2": 48
+            },
+            "whole_board_C_count": 96,
+            "whole_board_C_sha256": "f5921da01058e37b507ca0d373f70444cd2acc52b1a7c1e049b992f789976144",
+            "whole_board_R_change_count": 552,
+            "whole_board_R_sha256": "b56b05209da7c13e93661bc519d9cf3ee471b05cee2d80204acfdd2fa0d5be1a"
+          },
+          "minimal_clock_period": 4,
+          "record_sha256": "29fcef5461ad7402868dfb31eeeca7cc49742524e292527308276b4e7cbe41f0",
+          "strict_pending_accepted": false
+        },
+        {
+          "first_receiver_change": null,
+          "id": "four-blocks-isolated-off",
+          "matrix_replay": {
+            "boundary_counter_hits": [],
+            "final_state_sha256": "b87fb325ce25221317ddab770772205390c3f545e44f1e3724e7ebd08053ab00",
+            "forward_transitions": 24,
+            "full_rewind_equal": true,
+            "initial_state_sha256": "b87fb325ce25221317ddab770772205390c3f545e44f1e3724e7ebd08053ab00",
+            "inverse_transitions": 24,
+            "observations": {
+              "carrier.front": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 2
+              },
+              "clock.center": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 1
+              },
+              "memory.node": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 48
+              }
+            },
+            "passed": true,
+            "states": 25,
+            "whole_board_C_by_kind": {},
+            "whole_board_C_count": 0,
+            "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "whole_board_R_change_count": 72,
+            "whole_board_R_sha256": "45780444d6720528cd7f9ba4650b94713e64c5a9a032fd5e4354b6513c8d0cf9"
+          },
+          "minimal_clock_period": 4,
+          "record_sha256": "50c716a99d2e094e06d59b2ace755ffef5c6790ce2faa41e81f362540903edb1",
+          "strict_pending_accepted": false
+        },
+        {
+          "first_receiver_change": 9,
+          "id": "four-blocks-connected-on",
+          "matrix_replay": {
+            "boundary_counter_hits": [],
+            "final_state_sha256": "106812a6a2d0fbdf9e94fdc34c9cbdff339869dc0ef843173aa393948487e288",
+            "forward_transitions": 24,
+            "full_rewind_equal": true,
+            "initial_state_sha256": "c6dd2786e046f0f3608246c5e98a9e4792f819697f07e8259cae1aface0820f1",
+            "inverse_transitions": 24,
+            "observations": {
+              "carrier.front": {
+                "C_by_kind": {
+                  "1": 2,
+                  "2": 2
+                },
+                "C_events": 4,
+                "R_change_times": [
+                  2,
+                  22
+                ],
+                "addresses": 2
+              },
+              "clock.center": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 1
+              },
+              "memory.node": {
+                "C_by_kind": {
+                  "1": 2,
+                  "2": 2
+                },
+                "C_events": 4,
+                "R_change_times": [
+                  9,
+                  11,
+                  13,
+                  15,
+                  17,
+                  19,
+                  21
+                ],
+                "addresses": 48
+              }
+            },
+            "passed": true,
+            "states": 25,
+            "whole_board_C_by_kind": {
+              "0": 2,
+              "1": 57,
+              "2": 57
+            },
+            "whole_board_C_count": 116,
+            "whole_board_C_sha256": "f4c7401ea94241518c589dc163ed8fada888019a8ba945f0a8d99603555b056c",
+            "whole_board_R_change_count": 660,
+            "whole_board_R_sha256": "c74ecf7e496b90024defb6ee9bc1c9117a4089a61fc98d27d14874fe1ed84055"
+          },
+          "minimal_clock_period": 4,
+          "record_sha256": "1707c4ac8924cececb5942ade6ac6ea5412d0d8d7e84d09b5e18ada5e88bc9e2",
+          "strict_pending_accepted": false
+        },
+        {
+          "first_receiver_change": null,
+          "id": "four-blocks-connected-off",
+          "matrix_replay": {
+            "boundary_counter_hits": [],
+            "final_state_sha256": "9a34ff839093b16b463e12eca0e7a58c39e429cb59eee8e2a7ad3bdb8b47a7a0",
+            "forward_transitions": 24,
+            "full_rewind_equal": true,
+            "initial_state_sha256": "9a34ff839093b16b463e12eca0e7a58c39e429cb59eee8e2a7ad3bdb8b47a7a0",
+            "inverse_transitions": 24,
+            "observations": {
+              "carrier.front": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 2
+              },
+              "clock.center": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 1
+              },
+              "memory.node": {
+                "C_by_kind": {},
+                "C_events": 0,
+                "R_change_times": [],
+                "addresses": 48
+              }
+            },
+            "passed": true,
+            "states": 25,
+            "whole_board_C_by_kind": {},
+            "whole_board_C_count": 0,
+            "whole_board_C_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "whole_board_R_change_count": 72,
+            "whole_board_R_sha256": "45780444d6720528cd7f9ba4650b94713e64c5a9a032fd5e4354b6513c8d0cf9"
+          },
+          "minimal_clock_period": 4,
+          "record_sha256": "ec19edd6277abdb4cb145136132bbc865883e06a6a6557c9f845c2177785c677",
+          "strict_pending_accepted": false
+        }
+      ],
+      "scientific_stage_gates_checked": true
+    }
+  ],
+  "wall_seconds": 1.8479423289973056
+}

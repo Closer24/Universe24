@@ -1,0 +1,36 @@
+{
+  "format": "universe24-staged-independent-audit-manifest-v1",
+  "base_commit": "b552f90dd8e19f836424411019dccd573c10fa6c",
+  "studies": [
+    {
+      "id": "catalog_reviewed",
+      "kind": "composition",
+      "protocol": {
+        "path": "../composition_catalog_v2/protocol.json",
+        "sha256": "c709b7fd3f741185632f05ce2f7050be2454c1f71e68d025200a2e2bf65ace57"
+      },
+      "result": {
+        "path": "../composition_catalog_v2/result.json",
+        "sha256": "74cce2813e8d7c2c8429f95d2e9674964d4f91546487bcf7add20b3eef467d50"
+      },
+      "records": [
+        {
+          "path": "../composition_catalog_v2/records/four-blocks-connected-off.json.gz",
+          "sha256": "ec19edd6277abdb4cb145136132bbc865883e06a6a6557c9f845c2177785c677"
+        },
+        {
+          "path": "../composition_catalog_v2/records/four-blocks-connected-on.json.gz",
+          "sha256": "1707c4ac8924cececb5942ade6ac6ea5412d0d8d7e84d09b5e18ada5e88bc9e2"
+        },
+        {
+          "path": "../composition_catalog_v2/records/four-blocks-isolated-off.json.gz",
+          "sha256": "50c716a99d2e094e06d59b2ace755ffef5c6790ce2faa41e81f362540903edb1"
+        },
+        {
+          "path": "../composition_catalog_v2/records/four-blocks-isolated-on.json.gz",
+          "sha256": "29fcef5461ad7402868dfb31eeeca7cc49742524e292527308276b4e7cbe41f0"
+        }
+      ]
+    }
+  ]
+}

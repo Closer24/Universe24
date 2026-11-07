@@ -1,0 +1,45 @@
+[
+  {
+    "experiment": "bridge-L129-d0-11",
+    "name": "two-lane-driven-pause",
+    "caption": "Scheduled two-lane stop/wait/restart. The center node is constant; opposing incoming terms cancel during the wait. This is not an autonomous isolated memory or computed approval.",
+    "source_record": "research/staged_blocks/evidence/pause_bridge_v1/records/bridge-L129-d0-11.json.gz",
+    "source_record_sha256": "919b6a7b6c3ba7e6bab9d0bfca75abfc990919560c61233440bc187dec4d49a3",
+    "panels": [
+      {
+        "port": "apparatus.clock",
+        "index": 0,
+        "label": "Clock channel 2: stop / wait / restart",
+        "show_inputs": true,
+        "address": [
+          64,
+          65,
+          64,
+          2
+        ]
+      },
+      {
+        "port": "apparatus.lower_incoming",
+        "index": 0,
+        "label": "Lower-lane input channel 0",
+        "address": [
+          64,
+          64,
+          64,
+          0
+        ]
+      },
+      {
+        "port": "apparatus.upper_incoming",
+        "index": 0,
+        "label": "Upper-lane input channel 6",
+        "address": [
+          64,
+          66,
+          64,
+          6
+        ]
+      }
+    ]
+  }
+]

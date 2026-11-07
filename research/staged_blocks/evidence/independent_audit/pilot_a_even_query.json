@@ -1,0 +1,14 @@
+{
+  "assertions_checked": 78500,
+  "assertions_requiring_exact_arithmetic_normalization": 590,
+  "cpu_seconds": 18.796433796,
+  "encoded_channel_updates": 24776,
+  "encoding": "even-remainder-bijection",
+  "independent_unsat_proof_certificate_checked": false,
+  "passed": true,
+  "protocol_sha256": "d1b5419701fbdc79be883ad6c8ff4add55dbcd737f4f20e717ac369c07b0a85b",
+  "query_sha256": "75974df13e2c5ca134c4f907f6e150f928867d9924eabe8e90d588e1732fddb9",
+  "scope": "Every saved assertion equals an independently constructed exact matrix-derived Rule3, domain, receiver or stationary-control assertion; solver correctness is a separate assumption.",
+  "search_performed": false,
+  "solver_version": "4.15.4"
+}

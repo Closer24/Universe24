@@ -1,0 +1,14 @@
+[
+  {
+    "experiment": "four-blocks-isolated-on",
+    "frame": 0,
+    "name": "four-block-overview.png",
+    "caption": "Four initial preparations on the complete cube: guided carrier, guide, prepared clock and passive record."
+  },
+  {
+    "experiment": "four-blocks-connected-on",
+    "frame": 10,
+    "name": "carrier-receiver-interaction.png",
+    "caption": "Recorded state 10: the incoming carrier has changed the connected receiver; the strict pending-memory criterion did not pass."
+  }
+]

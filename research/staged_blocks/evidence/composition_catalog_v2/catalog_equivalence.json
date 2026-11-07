@@ -1,0 +1,49 @@
+{
+  "format": "universe24-reviewed-catalog-state-equivalence-v1",
+  "original_catalog_sha256": "d21f910c66a66908d35d7fd2c6768082e97a472eb10dd36736ff47bd85259e89",
+  "original_catalog_snapshot": "research/staged_blocks/evidence/catalog_history/stages_before_reviewed_promotion.json",
+  "original_directory": "research/staged_blocks/evidence/composition",
+  "original_recordings_preserved": true,
+  "records": [
+    {
+      "all_frames_equal": true,
+      "all_state_hashes_equal": true,
+      "assessment_equal": true,
+      "id": "four-blocks-isolated-on",
+      "original_record_sha256": "06c4e221bbbad69a198d20583829d7f53dfdabfd038b4a3d7872e3b030f4d0d5",
+      "reviewed_catalog_record_sha256": "29fcef5461ad7402868dfb31eeeca7cc49742524e292527308276b4e7cbe41f0",
+      "states": 25
+    },
+    {
+      "all_frames_equal": true,
+      "all_state_hashes_equal": true,
+      "assessment_equal": true,
+      "id": "four-blocks-isolated-off",
+      "original_record_sha256": "d21586385c8a948b71b27374fb3fa63bec4df10fdf0a528726061bcb99ae94d4",
+      "reviewed_catalog_record_sha256": "50c716a99d2e094e06d59b2ace755ffef5c6790ce2faa41e81f362540903edb1",
+      "states": 25
+    },
+    {
+      "all_frames_equal": true,
+      "all_state_hashes_equal": true,
+      "assessment_equal": true,
+      "id": "four-blocks-connected-on",
+      "original_record_sha256": "4b1a3586918d5861c83d280fdaa9e97d1aa224e3ac00a133787a8af9c83bf1d9",
+      "reviewed_catalog_record_sha256": "1707c4ac8924cececb5942ade6ac6ea5412d0d8d7e84d09b5e18ada5e88bc9e2",
+      "states": 25
+    },
+    {
+      "all_frames_equal": true,
+      "all_state_hashes_equal": true,
+      "assessment_equal": true,
+      "id": "four-blocks-connected-off",
+      "original_record_sha256": "5c7b5d16d619dece4e225039a4cd80467191293542552a4c1538caebfa8f5007",
+      "reviewed_catalog_record_sha256": "ec19edd6277abdb4cb145136132bbc865883e06a6a6557c9f845c2177785c677",
+      "states": 25
+    }
+  ],
+  "reviewed_catalog_directory": "research/staged_blocks/evidence/composition_catalog_v2",
+  "reviewed_catalog_sha256": "0b755698ad563f8793e3f80931b6e8c802012badf8ded2c0025a5aee22a88c5f",
+  "scientific_metadata_changed_only": true,
+  "total_matching_complete_states": 100
+}

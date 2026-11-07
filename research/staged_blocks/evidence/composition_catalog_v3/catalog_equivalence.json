@@ -1,0 +1,52 @@
+{
+  "catalog_history": [
+    {
+      "path": "research/staged_blocks/evidence/catalog_history/stages_before_reviewed_promotion.json",
+      "sha256": "d21f910c66a66908d35d7fd2c6768082e97a472eb10dd36736ff47bd85259e89"
+    },
+    {
+      "path": "research/staged_blocks/evidence/catalog_history/stages_before_phase_promotion.json",
+      "sha256": "0b755698ad563f8793e3f80931b6e8c802012badf8ded2c0025a5aee22a88c5f"
+    }
+  ],
+  "current_catalog_sha256": "3ad5f8c3f72bf212fd7151ff09bfa9944e654a107100024acd2e97f22190f533",
+  "current_directory": "research/staged_blocks/evidence/composition_catalog_v3",
+  "format": "universe24-reviewed-catalog-state-equivalence-v1",
+  "original_directory": "research/staged_blocks/evidence/composition",
+  "original_recordings_preserved": true,
+  "records": [
+    {
+      "all_complete_frames_equal": true,
+      "assessments_equal": true,
+      "current_record_sha256": "587e3249f31a63c11dc6d91f66437bd10df653d9b3de3a9f6c34c04d5aa34431",
+      "id": "four-blocks-isolated-on",
+      "original_record_sha256": "06c4e221bbbad69a198d20583829d7f53dfdabfd038b4a3d7872e3b030f4d0d5",
+      "states": 25
+    },
+    {
+      "all_complete_frames_equal": true,
+      "assessments_equal": true,
+      "current_record_sha256": "c5da0a211331376eb2ca2598d7371f4ece500bc89bf3537b73f24901f5e379ef",
+      "id": "four-blocks-isolated-off",
+      "original_record_sha256": "d21586385c8a948b71b27374fb3fa63bec4df10fdf0a528726061bcb99ae94d4",
+      "states": 25
+    },
+    {
+      "all_complete_frames_equal": true,
+      "assessments_equal": true,
+      "current_record_sha256": "370b1b0d318cbfa2839813fee5bdc7aa3ba8a8eff6b8bbe03b406918520120b4",
+      "id": "four-blocks-connected-on",
+      "original_record_sha256": "4b1a3586918d5861c83d280fdaa9e97d1aa224e3ac00a133787a8af9c83bf1d9",
+      "states": 25
+    },
+    {
+      "all_complete_frames_equal": true,
+      "assessments_equal": true,
+      "current_record_sha256": "cda64a5046d8e16c3c9d320f9bfba41fefe49fb4fc0c93d835a19915f11e0bd6",
+      "id": "four-blocks-connected-off",
+      "original_record_sha256": "5c7b5d16d619dece4e225039a4cd80467191293542552a4c1538caebfa8f5007",
+      "states": 25
+    }
+  ],
+  "total_matching_complete_states": 100
+}

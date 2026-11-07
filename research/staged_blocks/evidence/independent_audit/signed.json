@@ -1,0 +1,3755 @@
+{
+  "all_world_C_events_checked": true,
+  "carrier_checks": [
+    {
+      "body_signs": [
+        1,
+        1,
+        1
+      ],
+      "complete_translation_equal": true,
+      "direction": 1,
+      "seed_method": "same_seed",
+      "state_equal_by_step": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "body_signs": [
+        1,
+        1,
+        1
+      ],
+      "complete_translation_equal": true,
+      "direction": -1,
+      "seed_method": "same_seed",
+      "state_equal_by_step": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "body_signs": [
+        1,
+        -1,
+        1
+      ],
+      "complete_translation_equal": false,
+      "direction": 1,
+      "seed_method": "same_seed",
+      "state_equal_by_step": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "body_signs": [
+        1,
+        -1,
+        1
+      ],
+      "complete_translation_equal": false,
+      "direction": -1,
+      "seed_method": "same_seed",
+      "state_equal_by_step": [
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "body_signs": [
+        1,
+        1,
+        1
+      ],
+      "complete_translation_equal": true,
+      "direction": 1,
+      "seed_method": "tensor_aware",
+      "state_equal_by_step": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "body_signs": [
+        1,
+        1,
+        1
+      ],
+      "complete_translation_equal": true,
+      "direction": -1,
+      "seed_method": "tensor_aware",
+      "state_equal_by_step": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "body_signs": [
+        1,
+        -1,
+        1
+      ],
+      "complete_translation_equal": true,
+      "direction": 1,
+      "seed_method": "tensor_aware",
+      "state_equal_by_step": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "body_signs": [
+        1,
+        -1,
+        1
+      ],
+      "complete_translation_equal": true,
+      "direction": -1,
+      "seed_method": "tensor_aware",
+      "state_equal_by_step": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "complete_states": 5320,
+  "cpu_seconds": 36.828347364,
+  "forward_carrier_suppression_groups": 12,
+  "forward_transitions": 5184,
+  "four_source_controls_preserve_every_remainder": true,
+  "full_recordings_independently_replayed": 136,
+  "full_reverse_traversals": 136,
+  "groups": [
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 242,
+        "11": 154
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 4,
+        "11": 0
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": -1,
+        "component": "b",
+        "linear_controls": -2,
+        "step": 14
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "f62934840910b5a464ec24ca81963cb375f036a694b7bc71b0f6e849230dad46",
+        "01": "66bf6029d7e869762ab62ae6701e428e6284230f4fb4c804a9c3ea14c5b0c66e",
+        "10": "22876206bae2e3fe9774f0e56457370273768e6b8b7eae507b8cd7b5a445b95b",
+        "11": "060c0643baa6e9dceba77d24e11a74d91a5621d309749dc3df65e4f47293654a"
+      },
+      "id": "signed-same_seed-ppp-r0-p0",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 306
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 15
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "4bcdc78e25fa7b18c5793ffd80f447fa396c07ccdfb2326fdceec123154c49d9",
+        "01": "4c55ad2bc232d3bd605e88470857887838e7c02175b0dd487e35742dcace6aff",
+        "10": "a8e01b2516088773dcc6e5ce6b137731d008dda3d048f28c6ac724657d773894",
+        "11": "a50c5b2bb9e965e807db72e48bb28c2cdda82ea8a3bafde24adf12d03c07a6f3"
+      },
+      "id": "signed-same_seed-ppp-r0-p1",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 162
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 14
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "4bcdc78e25fa7b18c5793ffd80f447fa396c07ccdfb2326fdceec123154c49d9",
+        "01": "7136ad7a244297c908d9dd9c8ae3153d82a688cc4a82d98e2592967edd02a1ae",
+        "10": "a8e01b2516088773dcc6e5ce6b137731d008dda3d048f28c6ac724657d773894",
+        "11": "8a130ab1e25b5e645a1c4a47b9d013a61b0649f7915ccf169d350bf8fd47e81c"
+      },
+      "id": "signed-same_seed-ppp-r0-p2",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ]
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 242,
+        "11": 304
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 4,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": -1,
+        "step": 15
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "f62934840910b5a464ec24ca81963cb375f036a694b7bc71b0f6e849230dad46",
+        "01": "def8d8242c616a7f3e07dafb35dca3965063987133f43809c4282b2eee1c5746",
+        "10": "22876206bae2e3fe9774f0e56457370273768e6b8b7eae507b8cd7b5a445b95b",
+        "11": "b8902d49920a80e9f4204de4632fe170ff8986e29ce84dc9dd1f2958bd1a62ed"
+      },
+      "id": "signed-same_seed-ppp-r0-p3",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 160,
+        "11": 154
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 0
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": null,
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "1dfa391adaf99348cb3c27a7a440dadc0cc6bc6aa6125ce9ac452b8e70686865",
+        "01": "9b54ecf2603aba096f4e4f66c101595860f89f9bf3d4b85c1f895a5185d0b95e",
+        "10": "8a77d7d7172e92c450f7d5aac87f79d1c939cd7246763dde2e6b5d73eead32dd",
+        "11": "4a199200c3e90f15a658f276dfb71906bbcfc3bcd340ee6a166e06feaacd58cc"
+      },
+      "id": "signed-same_seed-ppp-r4-p0",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 336
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": -1,
+        "step": 17
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "53d4b1832506c8fb370db3a07b1002875e6b9b3a364d6dcb446fe4d4edfe7a27",
+        "01": "a05be34154d49bb82844cc1ab5dbd3cc422b7657444e583012fbc66595c1144b",
+        "10": "5e8d50b2b45c831ccad48a8b699c7afa14848ee64be46ec6d9d5bdd9836e81f3",
+        "11": "67f0b04f48b0325010ada3d2e161c2df2c9d2dda1e6d5bdb69e1656419f8fc42"
+      },
+      "id": "signed-same_seed-ppp-r4-p1",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 248
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": -1,
+        "step": 16
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "53d4b1832506c8fb370db3a07b1002875e6b9b3a364d6dcb446fe4d4edfe7a27",
+        "01": "a136ff44add1cf5a19915a37b6c9e7d828bca4d6cb53c5fcec17ffadd0c1b8b0",
+        "10": "5e8d50b2b45c831ccad48a8b699c7afa14848ee64be46ec6d9d5bdd9836e81f3",
+        "11": "e683adde3aa5ccf398d31f69d8bebf311aa0ea7ec4db584b1f644567ff4b3f42"
+      },
+      "id": "signed-same_seed-ppp-r4-p2",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          -1,
+          1
+        ],
+        [
+          2,
+          1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 160,
+        "11": 252
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 1,
+        "component": "b",
+        "linear_controls": 0,
+        "step": 16
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "1dfa391adaf99348cb3c27a7a440dadc0cc6bc6aa6125ce9ac452b8e70686865",
+        "01": "a3801fb6b0ffdc438fb8e585744e7d5d7b6607dab0a61955330a1f39ec5e3e70",
+        "10": "8a77d7d7172e92c450f7d5aac87f79d1c939cd7246763dde2e6b5d73eead32dd",
+        "11": "42816746e5c8ead71e04585aae25e207131bb2021fef2e12c8f33d72fef450b9"
+      },
+      "id": "signed-same_seed-ppp-r4-p3",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 494,
+        "10": 168,
+        "11": 221
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 0
+      },
+      "clock_only_full_state_period4": false,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": null,
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "f62934840910b5a464ec24ca81963cb375f036a694b7bc71b0f6e849230dad46",
+        "01": "de478a07d27bdd95a849b6b6f46b2547bfbec0886900757cee95a6f83a55ec36",
+        "10": "4ae062d7089193bdc9752dfcfab5b5119a82764c2df9a41e781080679841312a",
+        "11": "d080911fdde5e22981bc74d18e0766360c049c103f3672c177b6cb2845e67bff"
+      },
+      "id": "signed-same_seed-pmp-r0-p0",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": false,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": false,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 26,
+        "10": 192,
+        "11": 424
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 13,
+        "10": 0,
+        "11": 20
+      },
+      "clock_only_full_state_period4": false,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 17
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "4bcdc78e25fa7b18c5793ffd80f447fa396c07ccdfb2326fdceec123154c49d9",
+        "01": "3a34c0052d9624670d57c70eb7a4245ae28dd50647a44c52923c110f24fee485",
+        "10": "da40cb9fb316e3e3c86949f1c74b5c8bb1e2f74ad21b7fc05334a29a950bdc62",
+        "11": "052a76002863710768a58599c65c0d6e2e035a88114d81178f7cd0dd2118092c"
+      },
+      "id": "signed-same_seed-pmp-r0-p1",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          0,
+          -2,
+          1
+        ],
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          1,
+          -1,
+          3
+        ],
+        [
+          1,
+          2,
+          2
+        ],
+        [
+          2,
+          1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": false,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": false,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 27,
+        "10": 192,
+        "11": 366
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 14,
+        "10": 0,
+        "11": 13
+      },
+      "clock_only_full_state_period4": false,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 16
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "4bcdc78e25fa7b18c5793ffd80f447fa396c07ccdfb2326fdceec123154c49d9",
+        "01": "3443359fb1cf8f4ccd2e49fc707bcad7c263e822131792d389ffaf463e71d27f",
+        "10": "da40cb9fb316e3e3c86949f1c74b5c8bb1e2f74ad21b7fc05334a29a950bdc62",
+        "11": "13178b74395ff5d1cc2c6a90629bbdd23d347c94392830fd6a1a7fa84e49fc8f"
+      },
+      "id": "signed-same_seed-pmp-r0-p2",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          0,
+          -1,
+          1
+        ],
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          -1,
+          1
+        ],
+        [
+          2,
+          -2,
+          1
+        ],
+        [
+          2,
+          1,
+          2
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": false,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": false,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 455,
+        "10": 168,
+        "11": 581
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 0
+      },
+      "clock_only_full_state_period4": false,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": null,
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "f62934840910b5a464ec24ca81963cb375f036a694b7bc71b0f6e849230dad46",
+        "01": "46bb1c670eea4bbedb73e4be4a70904d0ba3497f51f529f858fa8cd22d7c508e",
+        "10": "4ae062d7089193bdc9752dfcfab5b5119a82764c2df9a41e781080679841312a",
+        "11": "36ce27f45dfcafedc74481fed8a66c143816acca4fb97b5220d3d5b7eb92cb6a"
+      },
+      "id": "signed-same_seed-pmp-r0-p3",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": false,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": false,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 814,
+        "10": 252,
+        "11": 582
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 14,
+        "10": 4,
+        "11": 14
+      },
+      "clock_only_full_state_period4": false,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 14
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30,
+          33,
+          34,
+          35,
+          36,
+          39,
+          40
+        ],
+        "10": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30,
+          33,
+          34,
+          35,
+          36,
+          39,
+          40
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "1dfa391adaf99348cb3c27a7a440dadc0cc6bc6aa6125ce9ac452b8e70686865",
+        "01": "56ac00c7b0b14e854e785b066eac96cbc550dac35b025011339ce9ea7403c8e6",
+        "10": "f4d5e804ed83cf6c75a4a9c338a5cd5f5d651ad15369bef459e352bc3aabda24",
+        "11": "4173de2197ae8905a28cd6315dbea19026e0dde9f5a08e05fdd6d0d3d80cd68a"
+      },
+      "id": "signed-same_seed-pmp-r4-p0",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ]
+      },
+      "pristine_forward_carrier_valid": false,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": false,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 24,
+        "10": 192,
+        "11": 216
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 8,
+        "10": 0,
+        "11": 8
+      },
+      "clock_only_full_state_period4": false,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": null,
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "53d4b1832506c8fb370db3a07b1002875e6b9b3a364d6dcb446fe4d4edfe7a27",
+        "01": "a05be34154d49bb82844cc1ab5dbd3cc422b7657444e583012fbc66595c1144b",
+        "10": "bb2e796abf262c56b0b237e1eb6744007df33546db6fca863f5422f4dd790ecb",
+        "11": "bd6cab4e4202e9c273f35ad2c682afab7967bd15bbe5a5fbd85aca0b72c57fdb"
+      },
+      "id": "signed-same_seed-pmp-r4-p1",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": false,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": false,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 24,
+        "10": 192,
+        "11": 216
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 8,
+        "10": 0,
+        "11": 8
+      },
+      "clock_only_full_state_period4": false,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": null,
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "53d4b1832506c8fb370db3a07b1002875e6b9b3a364d6dcb446fe4d4edfe7a27",
+        "01": "a136ff44add1cf5a19915a37b6c9e7d828bca4d6cb53c5fcec17ffadd0c1b8b0",
+        "10": "bb2e796abf262c56b0b237e1eb6744007df33546db6fca863f5422f4dd790ecb",
+        "11": "ea5eaf727b7d70cd18f8074535bd8006428b907238b31f6444244cbabbd7b5aa"
+      },
+      "id": "signed-same_seed-pmp-r4-p2",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": false,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": false,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 757,
+        "10": 252,
+        "11": 752
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 13,
+        "10": 4,
+        "11": 13
+      },
+      "clock_only_full_state_period4": false,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 14
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          34,
+          35,
+          36,
+          37,
+          40
+        ],
+        "10": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          28,
+          29,
+          30,
+          31,
+          34,
+          35,
+          36,
+          37,
+          40
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "1dfa391adaf99348cb3c27a7a440dadc0cc6bc6aa6125ce9ac452b8e70686865",
+        "01": "41f763394da8619e3a6e06bbdacf02a3e1af787a6da397096769c8301596f1c2",
+        "10": "f4d5e804ed83cf6c75a4a9c338a5cd5f5d651ad15369bef459e352bc3aabda24",
+        "11": "37cfe349ddd32bc797cbe4d893e35aae0f60ea705a8a97b592be588295637649"
+      },
+      "id": "signed-same_seed-pmp-r4-p3",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": false,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": false,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 242,
+        "11": 154
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 4,
+        "11": 0
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": -1,
+        "component": "b",
+        "linear_controls": -2,
+        "step": 14
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "f62934840910b5a464ec24ca81963cb375f036a694b7bc71b0f6e849230dad46",
+        "01": "66bf6029d7e869762ab62ae6701e428e6284230f4fb4c804a9c3ea14c5b0c66e",
+        "10": "22876206bae2e3fe9774f0e56457370273768e6b8b7eae507b8cd7b5a445b95b",
+        "11": "060c0643baa6e9dceba77d24e11a74d91a5621d309749dc3df65e4f47293654a"
+      },
+      "id": "signed-tensor_aware-ppp-r0-p0",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 306
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 15
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "4bcdc78e25fa7b18c5793ffd80f447fa396c07ccdfb2326fdceec123154c49d9",
+        "01": "4c55ad2bc232d3bd605e88470857887838e7c02175b0dd487e35742dcace6aff",
+        "10": "a8e01b2516088773dcc6e5ce6b137731d008dda3d048f28c6ac724657d773894",
+        "11": "a50c5b2bb9e965e807db72e48bb28c2cdda82ea8a3bafde24adf12d03c07a6f3"
+      },
+      "id": "signed-tensor_aware-ppp-r0-p1",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 162
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 14
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "4bcdc78e25fa7b18c5793ffd80f447fa396c07ccdfb2326fdceec123154c49d9",
+        "01": "7136ad7a244297c908d9dd9c8ae3153d82a688cc4a82d98e2592967edd02a1ae",
+        "10": "a8e01b2516088773dcc6e5ce6b137731d008dda3d048f28c6ac724657d773894",
+        "11": "8a130ab1e25b5e645a1c4a47b9d013a61b0649f7915ccf169d350bf8fd47e81c"
+      },
+      "id": "signed-tensor_aware-ppp-r0-p2",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ]
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 242,
+        "11": 304
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 4,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": -1,
+        "step": 15
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "f62934840910b5a464ec24ca81963cb375f036a694b7bc71b0f6e849230dad46",
+        "01": "def8d8242c616a7f3e07dafb35dca3965063987133f43809c4282b2eee1c5746",
+        "10": "22876206bae2e3fe9774f0e56457370273768e6b8b7eae507b8cd7b5a445b95b",
+        "11": "b8902d49920a80e9f4204de4632fe170ff8986e29ce84dc9dd1f2958bd1a62ed"
+      },
+      "id": "signed-tensor_aware-ppp-r0-p3",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 160,
+        "11": 154
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 0
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": null,
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "1dfa391adaf99348cb3c27a7a440dadc0cc6bc6aa6125ce9ac452b8e70686865",
+        "01": "9b54ecf2603aba096f4e4f66c101595860f89f9bf3d4b85c1f895a5185d0b95e",
+        "10": "8a77d7d7172e92c450f7d5aac87f79d1c939cd7246763dde2e6b5d73eead32dd",
+        "11": "4a199200c3e90f15a658f276dfb71906bbcfc3bcd340ee6a166e06feaacd58cc"
+      },
+      "id": "signed-tensor_aware-ppp-r4-p0",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 336
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": -1,
+        "step": 17
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "53d4b1832506c8fb370db3a07b1002875e6b9b3a364d6dcb446fe4d4edfe7a27",
+        "01": "a05be34154d49bb82844cc1ab5dbd3cc422b7657444e583012fbc66595c1144b",
+        "10": "5e8d50b2b45c831ccad48a8b699c7afa14848ee64be46ec6d9d5bdd9836e81f3",
+        "11": "67f0b04f48b0325010ada3d2e161c2df2c9d2dda1e6d5bdb69e1656419f8fc42"
+      },
+      "id": "signed-tensor_aware-ppp-r4-p1",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 248
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": -1,
+        "step": 16
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "53d4b1832506c8fb370db3a07b1002875e6b9b3a364d6dcb446fe4d4edfe7a27",
+        "01": "a136ff44add1cf5a19915a37b6c9e7d828bca4d6cb53c5fcec17ffadd0c1b8b0",
+        "10": "5e8d50b2b45c831ccad48a8b699c7afa14848ee64be46ec6d9d5bdd9836e81f3",
+        "11": "e683adde3aa5ccf398d31f69d8bebf311aa0ea7ec4db584b1f644567ff4b3f42"
+      },
+      "id": "signed-tensor_aware-ppp-r4-p2",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          -1,
+          1
+        ],
+        [
+          2,
+          1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 160,
+        "11": 252
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 1,
+        "component": "b",
+        "linear_controls": 0,
+        "step": 16
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "1dfa391adaf99348cb3c27a7a440dadc0cc6bc6aa6125ce9ac452b8e70686865",
+        "01": "a3801fb6b0ffdc438fb8e585744e7d5d7b6607dab0a61955330a1f39ec5e3e70",
+        "10": "8a77d7d7172e92c450f7d5aac87f79d1c939cd7246763dde2e6b5d73eead32dd",
+        "11": "42816746e5c8ead71e04585aae25e207131bb2021fef2e12c8f33d72fef450b9"
+      },
+      "id": "signed-tensor_aware-ppp-r4-p3",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 160,
+        "11": 154
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 0
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": null,
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "0fe909b50fdfd2b7530aff1e3206f2ad920b0b4d762410eb09e1898132b35571",
+        "01": "299219fd1d462dbe496304e47bb2491a9c1fbad0d9f5ebbeab5effd540e80acb",
+        "10": "9a5bfb8e5305ddc50588cf52f3ad321a3c6bcbfbcd86db2b7be5e85f0476d63c",
+        "11": "562831a11522506baebe74c08f3d3fc8b3a671f961a20e2e7187dce0fe7494f1"
+      },
+      "id": "signed-tensor_aware-pmp-r0-p0",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 336
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 17
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "7b47bc6409e0f529ee08ea8374c5ba1da616741b021e18a4a3481adca34c67ce",
+        "01": "aba707039c1f237e511b66c70d68f00192b7ef34e3a1727e84743f38f76cdd94",
+        "10": "af116c9393a9399b345157dd87d280d7252a0eafa7bf6307c60e5be80e6fb26a",
+        "11": "380a6a2bc1ad306666edc29f83aed79e71aa70b16063bc4a01ad3c0a83015fd4"
+      },
+      "id": "signed-tensor_aware-pmp-r0-p1",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 248
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 16
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "7b47bc6409e0f529ee08ea8374c5ba1da616741b021e18a4a3481adca34c67ce",
+        "01": "5963719ea5a32742336bc26bf4c4eb14b29dd7459f584121a2e68b6a1659ba71",
+        "10": "af116c9393a9399b345157dd87d280d7252a0eafa7bf6307c60e5be80e6fb26a",
+        "11": "214eae61a8864a69707f2e005aaae955955207aa98f096d7c18987c56183492c"
+      },
+      "id": "signed-tensor_aware-pmp-r0-p2",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          -1,
+          1
+        ],
+        [
+          2,
+          1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 160,
+        "11": 252
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": -1,
+        "component": "b",
+        "linear_controls": 0,
+        "step": 16
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "0fe909b50fdfd2b7530aff1e3206f2ad920b0b4d762410eb09e1898132b35571",
+        "01": "71774401ec7ce578fc56a0590a2020d5b07f99647c06fcc246847438fbf10de6",
+        "10": "9a5bfb8e5305ddc50588cf52f3ad321a3c6bcbfbcd86db2b7be5e85f0476d63c",
+        "11": "f2ed39891c6157ab2d350f4db497c92e1ec2d94de7cf8124d6d454a4b14d04ac"
+      },
+      "id": "signed-tensor_aware-pmp-r0-p3",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 242,
+        "11": 154
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 4,
+        "11": 0
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": 1,
+        "component": "b",
+        "linear_controls": 2,
+        "step": 14
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "db53b74363d9c1e81b8fc479fa6d78b9c7db7cacc50339c472790dc01cf6d427",
+        "01": "02e73009636ee74b4504625b5ba4f77fb7b0d48809347ba9afde9ef278214312",
+        "10": "fa4912abe60854169e921bde6f462db45dd8c67748fc6c108e9a23672964dea1",
+        "11": "fe25954bb79660680d8cd02053b2a745f5ce46d11544cfc4ac2a8a3e3cc857b4"
+      },
+      "id": "signed-tensor_aware-pmp-r4-p0",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 306
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": -1,
+        "step": 15
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "2f9932af9a6a3866be49dd97b41e493feea93da24dfa88633441eb654a5bdca5",
+        "01": "b31b5f935315382fe307dbd42a9b2af1f4f2cbd4266a672ac380f10e873d81b0",
+        "10": "2d0e0b020c62c54e46a89b250fda917a2142cd3b03bf71103da30521eb87016d",
+        "11": "e9e37212cdab70f18f3cb8157b84fcc967683e116d5dda6ca5b394d5c3b2fdb9"
+      },
+      "id": "signed-tensor_aware-pmp-r4-p1",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 154,
+        "11": 162
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 0,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": true,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": -1,
+        "step": 14
+      },
+      "forward_carrier_suppression": false,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "2f9932af9a6a3866be49dd97b41e493feea93da24dfa88633441eb654a5bdca5",
+        "01": "48b7426dac870b8bb23c66446dd2e139be0b55c3ff8500a1713a835d93cb0eb1",
+        "10": "2d0e0b020c62c54e46a89b250fda917a2142cd3b03bf71103da30521eb87016d",
+        "11": "d4665178c2813cc65f8c48fb6d9c271c3d610d4ec9a2855e6282c98b574e7dee"
+      },
+      "id": "signed-tensor_aware-pmp-r4-p2",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          -1,
+          1
+        ]
+      ],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [],
+        "11": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ]
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    },
+    {
+      "all_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 242,
+        "11": 304
+      },
+      "center_C_counts": {
+        "00": 0,
+        "01": 0,
+        "10": 4,
+        "11": 2
+      },
+      "clock_only_full_state_period4": true,
+      "controlled_activation": false,
+      "first_nonlinear_center_counter": {
+        "actual": 0,
+        "component": "b",
+        "linear_controls": 1,
+        "step": 15
+      },
+      "forward_carrier_suppression": true,
+      "forward_outlet_active": {
+        "00": [],
+        "01": [],
+        "10": [
+          21,
+          22,
+          23,
+          24,
+          27,
+          28,
+          29,
+          30
+        ],
+        "11": [
+          21,
+          22,
+          23,
+          24
+        ]
+      },
+      "full_state_final_hashes": {
+        "00": "db53b74363d9c1e81b8fc479fa6d78b9c7db7cacc50339c472790dc01cf6d427",
+        "01": "fc1e8529ebefe2f802bab16605307e4c95ee81de272629bc8f568754185f940a",
+        "10": "fa4912abe60854169e921bde6f462db45dd8c67748fc6c108e9a23672964dea1",
+        "11": "b54b5c940b829f725a34e3821a4787135c98ed5f84bd44dd35bbae0e56bf88a8"
+      },
+      "id": "signed-tensor_aware-pmp-r4-p3",
+      "matched_initial_remainders": true,
+      "novel_center_C_signatures": [],
+      "null_static": true,
+      "outgoing_carriers": {
+        "00": [],
+        "01": [],
+        "10": [
+          {
+            "direction": 1,
+            "full_local_template_equal": true,
+            "outlet_x": 72,
+            "start": 24,
+            "through": 27
+          }
+        ],
+        "11": []
+      },
+      "pristine_forward_carrier_valid": true,
+      "release_established": false,
+      "retained_records": [],
+      "singleton_gates_passed": true,
+      "strict_forward_cancellation": false
+    }
+  ],
+  "hardware": "Linux-6.18.57-x86_64-with-glibc2.39",
+  "inverse_transitions": 5184,
+  "kind": "interaction_signed",
+  "passed": true,
+  "protocol_sha256": "2ec8edac07fa5595fc0f490ce7c717b73d999e7df03cb624b0e01a84b5d090a2",
+  "records": [
+    {
+      "all_C_count": 32,
+      "forward_inverse_transitions": 8,
+      "full_rewind_equal": true,
+      "id": "carrier-same_seed-ppp-1",
+      "record_sha256": "c4d08b5ff5b899fb95ad1813730ea2fb817dada9898d09be59aaa1198eaf4243",
+      "states": 9
+    },
+    {
+      "all_C_count": 32,
+      "forward_inverse_transitions": 8,
+      "full_rewind_equal": true,
+      "id": "carrier-same_seed-ppp--1",
+      "record_sha256": "dea0fef91fba886af82360da4383608c600b6a2c2606d129e19d5f9eff0542e6",
+      "states": 9
+    },
+    {
+      "all_C_count": 40,
+      "forward_inverse_transitions": 8,
+      "full_rewind_equal": true,
+      "id": "carrier-same_seed-pmp-1",
+      "record_sha256": "1f87b3a5ce55284018609967075bb01d88b455896cd24508eaf4aff9e3df79bf",
+      "states": 9
+    },
+    {
+      "all_C_count": 40,
+      "forward_inverse_transitions": 8,
+      "full_rewind_equal": true,
+      "id": "carrier-same_seed-pmp--1",
+      "record_sha256": "3c30366284c4e65c600585378f3967f0a221d796d58c3c92c94e1d6dc395c953",
+      "states": 9
+    },
+    {
+      "all_C_count": 32,
+      "forward_inverse_transitions": 8,
+      "full_rewind_equal": true,
+      "id": "carrier-tensor_aware-ppp-1",
+      "record_sha256": "321240ea4aea15896f5a82885cf061a4b7c3f536a32448daca79cb324ab84f6f",
+      "states": 9
+    },
+    {
+      "all_C_count": 32,
+      "forward_inverse_transitions": 8,
+      "full_rewind_equal": true,
+      "id": "carrier-tensor_aware-ppp--1",
+      "record_sha256": "a289334a780d1ad9008b43c8d14ea4d7cf4bdcff520014f0645ad127127972fc",
+      "states": 9
+    },
+    {
+      "all_C_count": 32,
+      "forward_inverse_transitions": 8,
+      "full_rewind_equal": true,
+      "id": "carrier-tensor_aware-pmp-1",
+      "record_sha256": "86fd12da7bb09c4da7240d0b83c85bfe245d7ec10ff65dca7fe7963f6c876bfa",
+      "states": 9
+    },
+    {
+      "all_C_count": 32,
+      "forward_inverse_transitions": 8,
+      "full_rewind_equal": true,
+      "id": "carrier-tensor_aware-pmp--1",
+      "record_sha256": "8a0792adec1cc0ddadd5dd8874ad57d8c2ced653b6f054a88cfd50b58e2f7f29",
+      "states": 9
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p0-00",
+      "record_sha256": "bcc0f4711cc0e12bbaf2184898eeed41986b915218f324b66393feb06a683531",
+      "states": 41
+    },
+    {
+      "all_C_count": 242,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p0-10",
+      "record_sha256": "78c57a3dfcf8b65a74edfd2f41087cb4b0cffaf8e5c51239103558bde61d0225",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p0-01",
+      "record_sha256": "ec0604b425f814e974c9a120eb2299417f65f46fe727bcee9777942f7fea2df5",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p0-11",
+      "record_sha256": "c37cff59d2ec57c380dc72c46dbc948b291d4c901a015f5b67135c916d1934dc",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p1-00",
+      "record_sha256": "37f4cdb6b1ec1516ebc0f6183d32dea45efe218ecb1960192c42a31be73b1cd0",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p1-10",
+      "record_sha256": "9cdb836e6c352facd5c6d798aa199e60da978fa0eb17b63b299a481a8dd5e912",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p1-01",
+      "record_sha256": "61f8cbe4aaadde8c3511990b4ba31c66390db310b2e89ee848d69e66dbca6c0c",
+      "states": 41
+    },
+    {
+      "all_C_count": 306,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p1-11",
+      "record_sha256": "c1ebd0321226c06dcde827f41eac57a597b062f59235bb4e3812d772fa6c6e70",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p2-00",
+      "record_sha256": "92fecc726e0da38fdac00af9d0888a1774e49845d098c30e70d3d012e5521721",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p2-10",
+      "record_sha256": "54d24b30ab54f02f27a63badae1a6efcb79b64840f1bc8eae8d353ff24713232",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p2-01",
+      "record_sha256": "d4a8b7d0006f134a5e34dfcff7d6970ff0c949872d0316be9c7bd999dae7c4d3",
+      "states": 41
+    },
+    {
+      "all_C_count": 162,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p2-11",
+      "record_sha256": "8c9b4b4f4359c6fb18420c427221d52505e9dcec18066899b02a2c34a683cfb9",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p3-00",
+      "record_sha256": "43e944667b15fd1daa5d2af7660fcc43c2a44efb392c10d62f18d4ca15da2cbc",
+      "states": 41
+    },
+    {
+      "all_C_count": 242,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p3-10",
+      "record_sha256": "225383c9c10402d7c9cfff32e396caa1ea2739fdcaf21d60aee27fc0f98ce973",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p3-01",
+      "record_sha256": "8f24746e74e57afae9f251d8994fcf26704ac4090d50eb323238554f23f5616b",
+      "states": 41
+    },
+    {
+      "all_C_count": 304,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r0-p3-11",
+      "record_sha256": "aead2bf1bd3b986b037d74e9cae7f5189f404ed2faa249a2c773c9fa6b09c4b2",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p0-00",
+      "record_sha256": "3cfba20cdd04a54dbf4588a4a9e051a076b680083ec366724d66c52602791b4b",
+      "states": 41
+    },
+    {
+      "all_C_count": 160,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p0-10",
+      "record_sha256": "77e481fb8c24cfdea2a3a5647529dbb0eed501c8c132e83f1e3da170fcda50e5",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p0-01",
+      "record_sha256": "b54ef46d7e46777957b3db8083e4ebeeb1eb5b12effd15f3456f9102927e56a8",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p0-11",
+      "record_sha256": "6c32e8994b455f01bd4f20b3567c031f54b2f03634a84e100f0d88926a6d685c",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p1-00",
+      "record_sha256": "14563096a75675d00a0d9cfb410fd8c76954214282633c07944885a5a007f72e",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p1-10",
+      "record_sha256": "fcdbfa655546a8fa42ee24d3d80d9a3aac7787b06df2032c55ef2dc3031eaa31",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p1-01",
+      "record_sha256": "0cca66760caf3912564836d134d7e8d91e132c67f7ad4d647c23cc027bf04f95",
+      "states": 41
+    },
+    {
+      "all_C_count": 336,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p1-11",
+      "record_sha256": "6df8252033222d8c174b1f110b2f936b3455dd283ec9773a53fc74b97049a891",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p2-00",
+      "record_sha256": "ed12b4b2a1060d6ca25a2d42d10cea804559d4896d819fb0015aeff8e4c3dfd0",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p2-10",
+      "record_sha256": "6d67bf61ebb6d0959d615d8539907f0d7cd14bceee79063993abe48cde9f9829",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p2-01",
+      "record_sha256": "e3413758ad3c452ef26d4bb463bc050a1a1b789147e94afc8b549c94e5bc2ce8",
+      "states": 41
+    },
+    {
+      "all_C_count": 248,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p2-11",
+      "record_sha256": "b77677d371bf465238053d111da68c152c7cd431f5153525cdf838307ee77495",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p3-00",
+      "record_sha256": "ab2362c32bd52404b6160b66c13e2448225932eccd1cfacf726a027fee618d34",
+      "states": 41
+    },
+    {
+      "all_C_count": 160,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p3-10",
+      "record_sha256": "3e2d5bca74adc0eef086540f3e754089fe39966dc8825674eab28e9d43e5599f",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p3-01",
+      "record_sha256": "28caed0996447694437027686d4258e35377c3ab94e8e484dd3e4b45261960c6",
+      "states": 41
+    },
+    {
+      "all_C_count": 252,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-ppp-r4-p3-11",
+      "record_sha256": "3f34ac433d8e21f8f15f2ae2b377426c6dca0c04a3a8c8e3ed41f0c7cbba9004",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p0-00",
+      "record_sha256": "972b085ea195b949324bbe6c528c6ed27e0cb3f4a35d3f8adb327dc3e4e759ef",
+      "states": 41
+    },
+    {
+      "all_C_count": 168,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p0-10",
+      "record_sha256": "82344113138170122808d821b71f04dbefd4b3becf8b83cd1151068fe1504214",
+      "states": 41
+    },
+    {
+      "all_C_count": 494,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p0-01",
+      "record_sha256": "3d5d8ada116a0e17faf131905feb637cf97ebde017aba9886bc81dd884c33f6d",
+      "states": 41
+    },
+    {
+      "all_C_count": 221,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p0-11",
+      "record_sha256": "82cfc593d0f16d849ce2474e6c8d2aa82d6c06b8a39c101f4c718a454d113165",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p1-00",
+      "record_sha256": "c3be47b557467a679838ac73e6c4616000b8a19a7a5c8da3d3b8e6195b0d3979",
+      "states": 41
+    },
+    {
+      "all_C_count": 192,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p1-10",
+      "record_sha256": "2b8b7dd847f014c9c56ffdfc2ae86e4e4c43917a0812984e469541a90fa064f6",
+      "states": 41
+    },
+    {
+      "all_C_count": 26,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p1-01",
+      "record_sha256": "413308d5af6cee9c5d1db2bc3d7b98918dac0465f651fb4b2cf347131b2cd899",
+      "states": 41
+    },
+    {
+      "all_C_count": 424,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p1-11",
+      "record_sha256": "ffbcdf769558f7a2219fdbb328e2e95214a903410d45ed01fba532c87b4d9d7a",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p2-00",
+      "record_sha256": "d8c6314d982de72a8d94dd1d45b2bdb6834a6d31815f96bb211d6842267290bc",
+      "states": 41
+    },
+    {
+      "all_C_count": 192,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p2-10",
+      "record_sha256": "e07c49087b37f7979a5555c82a2639033abdb71ab56d076af5fdadee46db1f8d",
+      "states": 41
+    },
+    {
+      "all_C_count": 27,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p2-01",
+      "record_sha256": "21007ce0810ffe9b3335f88220f95dbf301be99366be0b595f8c9dc06c2360dd",
+      "states": 41
+    },
+    {
+      "all_C_count": 366,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p2-11",
+      "record_sha256": "9e3919c75830956ee0a5d53f0155d5f88c68180d4e333e833e5ff3fcb3f80137",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p3-00",
+      "record_sha256": "28aa8499576a37cf94d2cb90b99d88c0f2ed3d91f0619b607cbb4fb741895a5d",
+      "states": 41
+    },
+    {
+      "all_C_count": 168,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p3-10",
+      "record_sha256": "f72f5b6e0ced04a85207fd3ac61c0c4812b804c5304c652e88cacbc274744f6a",
+      "states": 41
+    },
+    {
+      "all_C_count": 455,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p3-01",
+      "record_sha256": "94451ef60f328f5dbb6662ce01f600d1610677f2e175e701185217f4d748c3b5",
+      "states": 41
+    },
+    {
+      "all_C_count": 581,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r0-p3-11",
+      "record_sha256": "b3190e06b497d79b2e1f1227092c72714d5df50f4f72a2f53e6dcaa17e39ba72",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p0-00",
+      "record_sha256": "3ad59ade8f0691045af28104b4f04c70ee8aa4ae31acc37688458cb5e4898266",
+      "states": 41
+    },
+    {
+      "all_C_count": 252,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p0-10",
+      "record_sha256": "a8d97d701bd8e048e6675aceca07cd32b9f889d8f72589cccf33a7cf6f7869c4",
+      "states": 41
+    },
+    {
+      "all_C_count": 814,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p0-01",
+      "record_sha256": "50bce780d1daf52da6ad815936d35722ebc655a8d39677ac3df49251dcc03a9e",
+      "states": 41
+    },
+    {
+      "all_C_count": 582,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p0-11",
+      "record_sha256": "f486c34a13718273b2a520a2ece41322145ece8fd4cf9cf44a1b37e10b635667",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p1-00",
+      "record_sha256": "14606947c82a967a2aba2fc212942045efdd56c090b2deb80e2715238f871844",
+      "states": 41
+    },
+    {
+      "all_C_count": 192,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p1-10",
+      "record_sha256": "03838b796880850ae0a61862ef751da3a607ae858f31283b95c764d96cb74269",
+      "states": 41
+    },
+    {
+      "all_C_count": 24,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p1-01",
+      "record_sha256": "97d315b173183993fcc4efad7f2829a298cd33d725e86cefe0f2a9033ebec3b1",
+      "states": 41
+    },
+    {
+      "all_C_count": 216,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p1-11",
+      "record_sha256": "a0e0d885ff8752b705615229bcd2d0acbb9717f26bc11e023adc9629b8ab2875",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p2-00",
+      "record_sha256": "cb2541209b632a0ffd07303b3901cd45cb349d34062227d6dd01eae6a2dd4728",
+      "states": 41
+    },
+    {
+      "all_C_count": 192,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p2-10",
+      "record_sha256": "b2eae11f56ae683faac49080463c4b19d8413b8e3d92eb304f9cabfc2f93012b",
+      "states": 41
+    },
+    {
+      "all_C_count": 24,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p2-01",
+      "record_sha256": "1a16a97c790612b65ff845de93306cf9f437aa55ae0eedd627543536794517da",
+      "states": 41
+    },
+    {
+      "all_C_count": 216,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p2-11",
+      "record_sha256": "e07cf8055c50b22a545432ca506ef272b15dbbf82f132b1d4fcfd4cefa512fbc",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p3-00",
+      "record_sha256": "b9a8983b8f229ef3532c006fbd0afa03b1a61168cb1abfc88e8ef98cd02d6198",
+      "states": 41
+    },
+    {
+      "all_C_count": 252,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p3-10",
+      "record_sha256": "e315c3c51b495853565e608ba7e18eeceef0064d7916b2f9e7b62ac47c8f164c",
+      "states": 41
+    },
+    {
+      "all_C_count": 757,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p3-01",
+      "record_sha256": "6a8820bb6bc69fa6a9c89b9f97cb661d82f146e8612c00c06f7abbd45656e7bf",
+      "states": 41
+    },
+    {
+      "all_C_count": 752,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-same_seed-pmp-r4-p3-11",
+      "record_sha256": "4d30b5588477a3b4f124057f574c184c3ddd5a39d2b086b7253e93979b42346a",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p0-00",
+      "record_sha256": "8f965fae5e533c73da26ad95784ab8237fb2ad2fe4d75f13fedcc857eff0d24c",
+      "states": 41
+    },
+    {
+      "all_C_count": 242,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p0-10",
+      "record_sha256": "95ff8173847fb063e3ba53261d7fc27559c298c1a55a7460128c97cca2a9bbe5",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p0-01",
+      "record_sha256": "b25cb6b44e5df13de835e50a49001f244fac89a6b3c3162bf0813382c7a06630",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p0-11",
+      "record_sha256": "3311baebf45f803996e821871ac9ebcc511f45cde60cf07d75a7a99c4df478a8",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p1-00",
+      "record_sha256": "1e45252f63cbee0145c245f93e5d8d924ebed9e6797fbb1f31645a890a7b4c65",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p1-10",
+      "record_sha256": "6c8e51a6d8d672a1c2f33f3094cb362484b2e28016b8ea025bfe0b084a035b15",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p1-01",
+      "record_sha256": "3631e6a7030980f8672f3a9d83cfc58960292b352c1f6e5c48ab6968a04d73bf",
+      "states": 41
+    },
+    {
+      "all_C_count": 306,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p1-11",
+      "record_sha256": "71f146ff18a6f28ab617310cefcbac61dedab3a9b300f363277c48291e604dfa",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p2-00",
+      "record_sha256": "cddb890fc887e53b8acd1112d621484ad49e1030a937dc9d3f7984c28aad3e7d",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p2-10",
+      "record_sha256": "5a0cd98bb081023275fe115a967cf1d45e270779aad29f3f6cbd020f55f23869",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p2-01",
+      "record_sha256": "6778177fe580f08d6d1d1dd7ac3c96e2a841480c92c2659b605bfb18671f613f",
+      "states": 41
+    },
+    {
+      "all_C_count": 162,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p2-11",
+      "record_sha256": "f5ef94c32a62908bea460813ab1c78cf4259c0593696fd1785acf7d9c4f9ede5",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p3-00",
+      "record_sha256": "334b295edaf39704c1365ac9ca460a76840f5e07d03abb1f3f00853300f6f052",
+      "states": 41
+    },
+    {
+      "all_C_count": 242,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p3-10",
+      "record_sha256": "ae4f576688a935907e78a2fcf922947c8bed9f637ec74fd900b69b81dfd6ab7f",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p3-01",
+      "record_sha256": "f64659c9576c158250a612885c878f3f73402aab7d755949236171a2d7966586",
+      "states": 41
+    },
+    {
+      "all_C_count": 304,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r0-p3-11",
+      "record_sha256": "4863e322e8c93aac89d1caa0a0dd2406fcd2a073722ca72a747998c51a9553ae",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p0-00",
+      "record_sha256": "f1826750b9b20dd58fe970ab51e0468b7c7d6dd22e9c1cc5fdb6cbc3386ee057",
+      "states": 41
+    },
+    {
+      "all_C_count": 160,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p0-10",
+      "record_sha256": "70ccbdee44b7c3c1c674644f8993fc2f4ba1dde527363a3872b45fe78e65c1db",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p0-01",
+      "record_sha256": "b22f32b242778d0e8899048965e21ef709bd0c3313985c099987651f2993c3e6",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p0-11",
+      "record_sha256": "a9fc4a0684f34469bdb49130e87c1946bf38561ab48548dc4c071af7c754451c",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p1-00",
+      "record_sha256": "b47ba7c95bac0805d9ec583712c81de65d2ae8ba1940a23e50e2bae4625d8b29",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p1-10",
+      "record_sha256": "7044cc0c1bab2801d1b093be37df397e409d09765a8ca4ac1d09cebf081b4319",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p1-01",
+      "record_sha256": "2fb3ea0d4470a4eae2ce65f7fa8503f5c6c720139e78542d43ba3afcf6d564b7",
+      "states": 41
+    },
+    {
+      "all_C_count": 336,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p1-11",
+      "record_sha256": "eae07289222534aaf153d6a76bece832e27b0f27cbbd3a1a011d9c0d7dc6cf3b",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p2-00",
+      "record_sha256": "521675eb061ec7a2ca32a708452371de033467c59722c4227b5b7791cea83d54",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p2-10",
+      "record_sha256": "5c807a93e208b51d626da643c1e1807031d064c2efdfd21445f5c1c01c0a83f6",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p2-01",
+      "record_sha256": "bc9d9355fb608f5540d777d875ed8882f71262762a0839171a7ac38992588b4d",
+      "states": 41
+    },
+    {
+      "all_C_count": 248,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p2-11",
+      "record_sha256": "ea1993bf8103858d34a10bbbdbca2a4ab17e4224c5966f33899bdbcd04af01f9",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p3-00",
+      "record_sha256": "22f6201b5b5a855673a20a910a660000256ccb770ae5185e681406dcb5f42ebd",
+      "states": 41
+    },
+    {
+      "all_C_count": 160,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p3-10",
+      "record_sha256": "70c5afddd59c6646852dccd0f05a7f8dcee1b0ac024f94dac9d0acca92d4cee5",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p3-01",
+      "record_sha256": "3885a227c9d001dff63894b54383888e9965ac08164448cad4b739d9745f1859",
+      "states": 41
+    },
+    {
+      "all_C_count": 252,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-ppp-r4-p3-11",
+      "record_sha256": "8d88075044b8a01b29a159b42c8d858996c86fbe4b969c06e2788f5f98cbf334",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p0-00",
+      "record_sha256": "db0d6c408030dcfc61bd37740c436465d0949ae27185876a625a2d66a6740f39",
+      "states": 41
+    },
+    {
+      "all_C_count": 160,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p0-10",
+      "record_sha256": "34cc87ac061589663a3cbed3b41c784ecd4a953d4d4d343824168cb5bcb0b86b",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p0-01",
+      "record_sha256": "456b8efa63c36aa782f2f4b1afd89d37194eeb35945b3369ddb091b980c52b8c",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p0-11",
+      "record_sha256": "067d0e96f97d072395b02f0419256bd33051f2a18c719c1ba7e52db10133501d",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p1-00",
+      "record_sha256": "48d36581cfa3edb794d1ddc2a64da19103c9b82b43702ac474e3b24f340b38d2",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p1-10",
+      "record_sha256": "5e77d5a8107e61ee5a3cea067a8196ed3387935876889991bf20306e88dc4ee0",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p1-01",
+      "record_sha256": "65df95543a753023bd26409551e33bcdf096afdeb63107b1e0fff6f11b20d9aa",
+      "states": 41
+    },
+    {
+      "all_C_count": 336,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p1-11",
+      "record_sha256": "58e0633af0a0edacb605a3a2e76927eea43469ab8f34a11a632cbeae253121f0",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p2-00",
+      "record_sha256": "bca496eb06e49d34a1c1092ff4da7f319fed39161cfcd8496854a31a634e408d",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p2-10",
+      "record_sha256": "954ddfbc22b939bbb7023ad3f600175a449a91c422b035713b89306ee75deb0d",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p2-01",
+      "record_sha256": "c730846fe0abacafe498d6198dd4dc1242a449aa6b78c6b05f9b292fff965fa2",
+      "states": 41
+    },
+    {
+      "all_C_count": 248,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p2-11",
+      "record_sha256": "7dc5cf5207833575d6883acfc1697ae79d286adc57828564ebc5c1183deb66b1",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p3-00",
+      "record_sha256": "6546973bcd5f85e9f4a7fdd533cb14574b7e0a5a74439c00682809277729d304",
+      "states": 41
+    },
+    {
+      "all_C_count": 160,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p3-10",
+      "record_sha256": "048084bcff8b7b9861f85d6b2b154cef115b657c0d85e5dcf54058250d790a0c",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p3-01",
+      "record_sha256": "a55177f5f2ac1020e3c998a7043dc0bf3c548d30312ebb2cced5a63d25063d09",
+      "states": 41
+    },
+    {
+      "all_C_count": 252,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r0-p3-11",
+      "record_sha256": "fbb93ed2ed01f3397f3c8d6421fa7c96b8fc779d700dc2b5e15e1cedc63eb597",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p0-00",
+      "record_sha256": "a9a6f1995005e34bfcb2be6442a54a0b868229d6017ffed66c3f4532b0aa612e",
+      "states": 41
+    },
+    {
+      "all_C_count": 242,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p0-10",
+      "record_sha256": "3ff2ab49533d9b9a0e6a472e487cddd04ffbf7a64b0bc53254a57aaeb476c779",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p0-01",
+      "record_sha256": "6a97eaaaa035f530cb7fdf6569ac3647e4e08395c0bc4256d947226348ebf4cb",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p0-11",
+      "record_sha256": "16d6e7741a5b3bfe62a8495e2b71e5a5a90d1a0efb413c25d7bd7f2cb5bdf098",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p1-00",
+      "record_sha256": "682b72afc0dab318290202c1188785f0e339200fb59ba7cbd0665cc63d83930a",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p1-10",
+      "record_sha256": "6e11d9bca02b5dd2f3222904a5af72b28b154f0273535a1264846a2410c57c33",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p1-01",
+      "record_sha256": "140726bbc36cc1ce55ea1a87bcc2b9ae58380a86f9b74790b37d114813dad3f6",
+      "states": 41
+    },
+    {
+      "all_C_count": 306,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p1-11",
+      "record_sha256": "3320169e560f008594bfddb3a8736367feef82c0d57a37a23db490ebea26b2f0",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p2-00",
+      "record_sha256": "3e0d886918ebee6a2177a826f80165af0b0578277b6f58a56e71c899f9d447b6",
+      "states": 41
+    },
+    {
+      "all_C_count": 154,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p2-10",
+      "record_sha256": "64fb17eedcb08420ac963c9020b6a95658eb36e6b83b5e278fb922ad12463f4f",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p2-01",
+      "record_sha256": "282077da4d89e6171b067f8e63beeb5a32226f28d99511a717ff1b0b5d485560",
+      "states": 41
+    },
+    {
+      "all_C_count": 162,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p2-11",
+      "record_sha256": "4928023c1025adaf69cef03c83e11046f1781fa02c2c1932b657d927a563286b",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p3-00",
+      "record_sha256": "3d2bb2dc25800663e622a8779945e566b0ec7ca44331882edb55411f4c7c1dd7",
+      "states": 41
+    },
+    {
+      "all_C_count": 242,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p3-10",
+      "record_sha256": "83c445c0ceed8c7dcacf9518724f08430fcbfaa27e04b13299bc01c56da6a437",
+      "states": 41
+    },
+    {
+      "all_C_count": 0,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p3-01",
+      "record_sha256": "2e24282bbd0c67179f7900d4812c3283cf4a8f8cde8a05559c59efc1d6e2cffd",
+      "states": 41
+    },
+    {
+      "all_C_count": 304,
+      "forward_inverse_transitions": 40,
+      "full_rewind_equal": true,
+      "id": "signed-tensor_aware-pmp-r4-p3-11",
+      "record_sha256": "fe589b8264ada2126991395b87ed23462f99fd0fa74a098c103e87f05af5e2ab",
+      "states": 41
+    }
+  ],
+  "retained_record_groups": 0,
+  "scope": "Every signed comparison and eight pristine controls; failed singleton transport cannot count as interaction cancellation. Local silence is not full-state deletion.",
+  "singleton_eligible_groups": 24,
+  "strict_forward_cancellation_groups": 0
+}

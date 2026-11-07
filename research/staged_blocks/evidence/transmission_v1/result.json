@@ -1,0 +1,3216 @@
+{
+  "accepted": true,
+  "all_full_state_inverses": true,
+  "cases": [
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d4",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d4-00",
+      "record": "records/transmission-enable-L137-d4-00.json.gz",
+      "record_gzip_sha256": "043846dd60318c7724ea556f584010e5bbc673899cb818f629b74246801f2f95"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d4",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d4-10",
+      "record": "records/transmission-enable-L137-d4-10.json.gz",
+      "record_gzip_sha256": "8c116e793668e90d34c00b02c76e86e7ccdd7f4bb535b0b6fd6db816d22a5243"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d4",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d4-01",
+      "record": "records/transmission-enable-L137-d4-01.json.gz",
+      "record_gzip_sha256": "a2d2ff0eb8d4652564df2547986b9c18c4e9a148b201d41cbf948c66cb905c8b"
+    },
+    {
+      "all_C_count": 162,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d4",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d4-11",
+      "record": "records/transmission-enable-L137-d4-11.json.gz",
+      "record_gzip_sha256": "81c8554634f131833f920a3722ee3dc49d36d364bcd92786a0c85ebc4f62be29"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d5",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d5-00",
+      "record": "records/transmission-enable-L137-d5-00.json.gz",
+      "record_gzip_sha256": "985a8f00c92358c6ac6ed11d805e8c7155fd2ac4169e3dc7f9b83053b8142d7b"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d5",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d5-10",
+      "record": "records/transmission-enable-L137-d5-10.json.gz",
+      "record_gzip_sha256": "54a0bc3ce3cf20bea012c502f0fa8965e671a41d3d9eacb25c44a7f9b5d38e99"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d5",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d5-01",
+      "record": "records/transmission-enable-L137-d5-01.json.gz",
+      "record_gzip_sha256": "0f8d514a84cffbd46f9a046ca9a202c86aa153ba9cb41a977e6023d0e3970eb2"
+    },
+    {
+      "all_C_count": 162,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d5",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d5-11",
+      "record": "records/transmission-enable-L137-d5-11.json.gz",
+      "record_gzip_sha256": "e42e2ebdc6c4e7cc255ffdac21296dbbaf374fac7f114ad8b5571269468fd30f"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d8",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d8-00",
+      "record": "records/transmission-enable-L137-d8-00.json.gz",
+      "record_gzip_sha256": "17d623c83da37359768e0fe818a42cc4cd2b0669f987d0277a452403343cdb4d"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d8",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d8-10",
+      "record": "records/transmission-enable-L137-d8-10.json.gz",
+      "record_gzip_sha256": "79d7eaa78bc6bb231c0256985d4f244a30ca656a7c579fabaa46f567ea87f4ba"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d8",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d8-01",
+      "record": "records/transmission-enable-L137-d8-01.json.gz",
+      "record_gzip_sha256": "9fc2f7b54c96905d4a8439fc3368d5e66f9d3d4c613704c31ab48e92267efcf8"
+    },
+    {
+      "all_C_count": 162,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d8",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d8-11",
+      "record": "records/transmission-enable-L137-d8-11.json.gz",
+      "record_gzip_sha256": "dd874a1b909257a6a48d95dff453920810d9841d9210038193d45ebfd3c940f0"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d9",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d9-00",
+      "record": "records/transmission-enable-L137-d9-00.json.gz",
+      "record_gzip_sha256": "fb32a728c65e206172e95fc45b82e11564ac0f42a4045e6ba125d9f7dfe95f2a"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d9",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d9-10",
+      "record": "records/transmission-enable-L137-d9-10.json.gz",
+      "record_gzip_sha256": "be9783cc5442be41d3a37df62d711607c67b3025d1465b278ecc3ef954229e7c"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d9",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d9-01",
+      "record": "records/transmission-enable-L137-d9-01.json.gz",
+      "record_gzip_sha256": "47a5a9aafc89ddec0cce74265416b6d2f8a5f62e17d30524ff6f15e3dfc174fe"
+    },
+    {
+      "all_C_count": 162,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d9",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L137-d9-11",
+      "record": "records/transmission-enable-L137-d9-11.json.gz",
+      "record_gzip_sha256": "bd62c9a6382ca0113cd080a44358cae2936ff476d79a8521f9a2b61d1b3338f3"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d4",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d4-00",
+      "record": "records/transmission-enable-L193-d4-00.json.gz",
+      "record_gzip_sha256": "ac64d69599733db75214d635ff196481b982b3f9eac362531719aa03d27d3a9c"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d4",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d4-10",
+      "record": "records/transmission-enable-L193-d4-10.json.gz",
+      "record_gzip_sha256": "63edb2bdf599fafb61a2cd3851efb2a63b18e31cfeecd08973d3dc925c4a32de"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d4",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d4-01",
+      "record": "records/transmission-enable-L193-d4-01.json.gz",
+      "record_gzip_sha256": "833d443bd5f1fa086a6a4accd94e212577480628c685666db101acb74d224f2f"
+    },
+    {
+      "all_C_count": 162,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d4",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d4-11",
+      "record": "records/transmission-enable-L193-d4-11.json.gz",
+      "record_gzip_sha256": "743d88c74d099f58d444fac89781ce96502cd758168aab113d0b3996eeab0205"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d5",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d5-00",
+      "record": "records/transmission-enable-L193-d5-00.json.gz",
+      "record_gzip_sha256": "041eb3a7fabbd040573093aa21791a688465095476b1184ed38db3d659792e63"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d5",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d5-10",
+      "record": "records/transmission-enable-L193-d5-10.json.gz",
+      "record_gzip_sha256": "f03ea3335e5403a8bbe4b85c084c9326c21fc20079faa57b5f21c20cb8c26437"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d5",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d5-01",
+      "record": "records/transmission-enable-L193-d5-01.json.gz",
+      "record_gzip_sha256": "e79caf916f722a33d137dbea4f00909a61bfc88de1f9d3520da9648d960ec991"
+    },
+    {
+      "all_C_count": 162,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d5",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d5-11",
+      "record": "records/transmission-enable-L193-d5-11.json.gz",
+      "record_gzip_sha256": "b9a9c11986417475bb61b4b7d0df28f571f0612ef58fd351be2c9ccfc2721562"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d8",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d8-00",
+      "record": "records/transmission-enable-L193-d8-00.json.gz",
+      "record_gzip_sha256": "1e66198d7f3df5b0ab57e127a12c17b90ebcd5677b27620abeba756e5a3c5f8b"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d8",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d8-10",
+      "record": "records/transmission-enable-L193-d8-10.json.gz",
+      "record_gzip_sha256": "c25b153642fd74bd5f050044c13e36f6e663b9ea35b48d35646548aa60e9ecfe"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d8",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d8-01",
+      "record": "records/transmission-enable-L193-d8-01.json.gz",
+      "record_gzip_sha256": "eb5dd576802b4c9571149b5a65b926edba7b213f2dd6882a8a47d8854ba421a0"
+    },
+    {
+      "all_C_count": 162,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d8",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d8-11",
+      "record": "records/transmission-enable-L193-d8-11.json.gz",
+      "record_gzip_sha256": "6317d07f686d11f89d3ccece84a81ad3511aee0050686bc32e1dee183049daa7"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d9",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d9-00",
+      "record": "records/transmission-enable-L193-d9-00.json.gz",
+      "record_gzip_sha256": "e45604874a5a80b3198b03259e10ab209888eadb9ed04f4ab6831e4cc4faefd2"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d9",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d9-10",
+      "record": "records/transmission-enable-L193-d9-10.json.gz",
+      "record_gzip_sha256": "09dbe9f1a5060969e1c95d166a65798d28e20c50fc3d93b7efd11cd288948b39"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d9",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d9-01",
+      "record": "records/transmission-enable-L193-d9-01.json.gz",
+      "record_gzip_sha256": "5e4d36693fe572180f68a4618fdb2260c30ce802e7391f6c43f18347f4fe2bca"
+    },
+    {
+      "all_C_count": 162,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d9",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-enable-L193-d9-11",
+      "record": "records/transmission-enable-L193-d9-11.json.gz",
+      "record_gzip_sha256": "9f1c8a6dee1a7b63331683a408d5aa3d08cf95f86e74317e1baa7ae2f7c9676b"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d4",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d4-00",
+      "record": "records/transmission-aligned_suppress-L137-d4-00.json.gz",
+      "record_gzip_sha256": "8c0829c4f18b98bbafebfe320565b0f3e6c2150afe30495be6d2539289a3aaf4"
+    },
+    {
+      "all_C_count": 226,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d4",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d4-10",
+      "record": "records/transmission-aligned_suppress-L137-d4-10.json.gz",
+      "record_gzip_sha256": "cd321931470a47c2c9b0fb9feddf1e0267e1f9abf3d7dd1db3cef4b2e9561210"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d4",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d4-01",
+      "record": "records/transmission-aligned_suppress-L137-d4-01.json.gz",
+      "record_gzip_sha256": "fd82b82a53b7412f2a6d22c5030bb5ff11dbf19e279b5ca4592991b180b7b8d0"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d4",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d4-11",
+      "record": "records/transmission-aligned_suppress-L137-d4-11.json.gz",
+      "record_gzip_sha256": "64664bc341843048843ab0534047bdf6a3d9907870bb717fcefe0ee05ae4dcbf"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d5",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d5-00",
+      "record": "records/transmission-aligned_suppress-L137-d5-00.json.gz",
+      "record_gzip_sha256": "37ea9ba578bd9c20fcd7d70fee0e11897ce4463a5bff562fee528fbe51372d11"
+    },
+    {
+      "all_C_count": 222,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d5",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d5-10",
+      "record": "records/transmission-aligned_suppress-L137-d5-10.json.gz",
+      "record_gzip_sha256": "9a8d37658edfb34dcd0f6e7c6c6f372c767583805e2cb61660bade18136abc88"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d5",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d5-01",
+      "record": "records/transmission-aligned_suppress-L137-d5-01.json.gz",
+      "record_gzip_sha256": "eeef79c208110948501c7d819ed171ed5c55ff1611eff14cdddfce55c0401996"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d5",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d5-11",
+      "record": "records/transmission-aligned_suppress-L137-d5-11.json.gz",
+      "record_gzip_sha256": "9faec3c881f53088ef38eef2e721742062506b063bea4a5b3bea6ba84497708d"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d8",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d8-00",
+      "record": "records/transmission-aligned_suppress-L137-d8-00.json.gz",
+      "record_gzip_sha256": "7ba444c42caf622d47bf3f21e929abb668a9cc313da3689e7dd30c801b77e96c"
+    },
+    {
+      "all_C_count": 210,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d8",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d8-10",
+      "record": "records/transmission-aligned_suppress-L137-d8-10.json.gz",
+      "record_gzip_sha256": "0166b198d30e0ed6b901c360c3d03bf096f825ceea56b0e61dc558e8a2755a5c"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d8",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d8-01",
+      "record": "records/transmission-aligned_suppress-L137-d8-01.json.gz",
+      "record_gzip_sha256": "3c756f1a8d1923106be807b33a736434f973968f508d1383d44642c2d28e2a16"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d8",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d8-11",
+      "record": "records/transmission-aligned_suppress-L137-d8-11.json.gz",
+      "record_gzip_sha256": "15d972e002393829ed075d5420faf4de968d72160a521b5c9e13b5ccf8d74848"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d9",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d9-00",
+      "record": "records/transmission-aligned_suppress-L137-d9-00.json.gz",
+      "record_gzip_sha256": "24845138a7ce2f633eff5532909d0654f8b4c195a7ca800bd29d40bd33910fd3"
+    },
+    {
+      "all_C_count": 206,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d9",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d9-10",
+      "record": "records/transmission-aligned_suppress-L137-d9-10.json.gz",
+      "record_gzip_sha256": "9b001663040e6a875f5757680fb848dd816bf27774c2ec0daa7008399b49c892"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d9",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d9-01",
+      "record": "records/transmission-aligned_suppress-L137-d9-01.json.gz",
+      "record_gzip_sha256": "9e510d91b88aa7cbdc802f3089a36b58c1b2ce02ede05337bc9cf2465bc84342"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d9",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L137-d9-11",
+      "record": "records/transmission-aligned_suppress-L137-d9-11.json.gz",
+      "record_gzip_sha256": "ac070a20ec68a7a606cffdc43e11666341a0d44e1835e7ca1a4e2a55e7be7670"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d4",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d4-00",
+      "record": "records/transmission-aligned_suppress-L193-d4-00.json.gz",
+      "record_gzip_sha256": "24794f2f89f53bc99f1823dcd7906c813095139d8247fac745cd9f0676f4974e"
+    },
+    {
+      "all_C_count": 226,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d4",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d4-10",
+      "record": "records/transmission-aligned_suppress-L193-d4-10.json.gz",
+      "record_gzip_sha256": "5e9af79225ca0ec7e0207551739913a55f1ef43b089a050d30898afda0ff0d16"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d4",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d4-01",
+      "record": "records/transmission-aligned_suppress-L193-d4-01.json.gz",
+      "record_gzip_sha256": "23b2c15370c3b6e930cb1a25671d7402267982a08d0521acab11cc8187612a4a"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d4",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d4-11",
+      "record": "records/transmission-aligned_suppress-L193-d4-11.json.gz",
+      "record_gzip_sha256": "ba7c9e72a28baf3253e09d0f68bc436bbca8482dbf950205febd5d4616911ed5"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d5",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d5-00",
+      "record": "records/transmission-aligned_suppress-L193-d5-00.json.gz",
+      "record_gzip_sha256": "43f81fd234fa95e3f9a3770d5f05772d3a6f9e85de373c4a33fedd879223eeab"
+    },
+    {
+      "all_C_count": 222,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d5",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d5-10",
+      "record": "records/transmission-aligned_suppress-L193-d5-10.json.gz",
+      "record_gzip_sha256": "430e3c34460860695fc0574e5e2b1b160e4c686e8940fc58c889d3ba6b78c216"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d5",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d5-01",
+      "record": "records/transmission-aligned_suppress-L193-d5-01.json.gz",
+      "record_gzip_sha256": "9555ed2395dfc4396fb36d1ab6e8b227a5309381334cab10d27c1661afb5ef98"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d5",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d5-11",
+      "record": "records/transmission-aligned_suppress-L193-d5-11.json.gz",
+      "record_gzip_sha256": "5b695915cc44f883105935dbb685d9d9071747df26564819255c0f4bb67c0c30"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d8",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d8-00",
+      "record": "records/transmission-aligned_suppress-L193-d8-00.json.gz",
+      "record_gzip_sha256": "ebb075bd854c825cb3c4b24bd799a03760c44092250d05ca84fac10c86a8823f"
+    },
+    {
+      "all_C_count": 210,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d8",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d8-10",
+      "record": "records/transmission-aligned_suppress-L193-d8-10.json.gz",
+      "record_gzip_sha256": "6af5b9be9b15f081709f0b304038d841de99c12507583b0cecb7b0757af2858a"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d8",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d8-01",
+      "record": "records/transmission-aligned_suppress-L193-d8-01.json.gz",
+      "record_gzip_sha256": "b3243c121c91e6a9f5710cd800df02cd769d52146e74949fcea4212fbc8c8803"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d8",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d8-11",
+      "record": "records/transmission-aligned_suppress-L193-d8-11.json.gz",
+      "record_gzip_sha256": "22f18b5f347cc44eb4bc98fb357c5e2aac38a35fe11b5ae03f324090858948db"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "00",
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d9",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d9-00",
+      "record": "records/transmission-aligned_suppress-L193-d9-00.json.gz",
+      "record_gzip_sha256": "19dbc998bdd69fa220fca23409aedbdbb81a4c998c8888eedbd34b79765df22e"
+    },
+    {
+      "all_C_count": 206,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "10",
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d9",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": true,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d9-10",
+      "record": "records/transmission-aligned_suppress-L193-d9-10.json.gz",
+      "record_gzip_sha256": "3ee3af14ea7a70607bc5de3aa9d20144b23976592b683ef6e6a6ccb6df49a964"
+    },
+    {
+      "all_C_count": 0,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "01",
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d9",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d9-01",
+      "record": "records/transmission-aligned_suppress-L193-d9-01.json.gz",
+      "record_gzip_sha256": "f3e19365f88ea5bfcb60abf0060185a809e28da54cbc601d9631737183c3da7d"
+    },
+    {
+      "all_C_count": 154,
+      "case": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "control": "11",
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d9",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "fixed_forward": false,
+      "frames": 41,
+      "full_state_inverse": true,
+      "id": "transmission-aligned_suppress-L193-d9-11",
+      "record": "records/transmission-aligned_suppress-L193-d9-11.json.gz",
+      "record_gzip_sha256": "815f16007b511f6a31ec844032cf68500e645a6f2b8f39e31db6935296d7dd1c"
+    }
+  ],
+  "completed_cases": 64,
+  "cpu_seconds": 36.817931062,
+  "displayed_experiments": 8,
+  "family_results": {
+    "aligned_suppress": {
+      "groups": 8,
+      "passed": 8
+    },
+    "enable": {
+      "groups": 8,
+      "passed": 8
+    }
+  },
+  "format": "universe24-staged-transmission-result-v1",
+  "groups": [
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 31,
+      "clock_control_final_differences_outside_outlet_region": 31,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 162,
+          "backward_scan": [],
+          "center_C_count": 2,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 76,
+              "start": 28,
+              "through": 31
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "bfbd40b4380ab25491f63644a0c642bbb6d441f2a510116b6a4cf0573467f3a9",
+        "01": "b051617c52e60e09a0281ac7de0c1dfcfd0adcac08c4fe2e0460fa10234ad713",
+        "10": "46452fd43e80e72d1201fcaa66ebd576f81a0f637d63952cb3050abc4d34aa4f",
+        "11": "9af9c9bd6332b65d057633c27c8a9e5d99cbc3df241eeaa1831faf75b1b4006e"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d4",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 31,
+      "clock_control_final_differences_outside_outlet_region": 31,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 162,
+          "backward_scan": [],
+          "center_C_count": 2,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 76,
+              "start": 29,
+              "through": 32
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "16c102ea2d744dfe5e4c37ada3d2504355f8061b2e69305cc9617e51e9ff3850",
+        "01": "976ccf8910b2895257d2e3a3e8eff53d367fa7fae1b241ca0680ce8c335caf8e",
+        "10": "58352964dea1811236b659c1e613f50aecda15280ab9c097fc4c0feb4baae766",
+        "11": "37f0b1768e1fcc260c57d54dde9f4490bd4bdd55471379358bd11b9c5d14b395"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d5",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 31,
+      "clock_control_final_differences_outside_outlet_region": 31,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 162,
+          "backward_scan": [],
+          "center_C_count": 2,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 76,
+              "start": 32,
+              "through": 35
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "0e5584faeefa3da73b376c71b7b69044883b1ec4da6ef67b00a80949075f4680",
+        "01": "ceed9cd378f045026748c11591dd7d4611481d3083c72aff1f2b8385d7260418",
+        "10": "1c4691089550d352a2e7af27042a11f759e64a7338dbc0a4909477ef5b37df20",
+        "11": "87b4b80095327c499bfac3db6e3f9cdacf5c8f0e70a10d01762b23b7fbce0283"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d8",
+        "phase": 2,
+        "side": 137,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 31,
+      "clock_control_final_differences_outside_outlet_region": 30,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 162,
+          "backward_scan": [],
+          "center_C_count": 2,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 76,
+              "start": 33,
+              "through": 36
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "b73298c0bb5f44afa2d3f330a88f56fb94670d5be6b0875111914308b0459394",
+        "01": "3cf6d341da55e87b9c13621013aac9ebf43d1ec5bcf77b767d7719f0b33243e7",
+        "10": "f9288744c608d30e6182268161f6de243eb9d99011c56153b75c47b93a949bdc",
+        "11": "e231e229f6667338a97205826b16375774f34469171d38ed1ee08981134a24b1"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L137-d9",
+        "phase": 1,
+        "side": 137,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 31,
+      "clock_control_final_differences_outside_outlet_region": 31,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 162,
+          "backward_scan": [],
+          "center_C_count": 2,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 104,
+              "start": 28,
+              "through": 31
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "23ddaef3e9771608c78d710ae8615d830708e546bb464b9226564eb2918d094f",
+        "01": "f47f9e8c12342723039c642256be369ff6202c256918df308f7ab347a179daec",
+        "10": "91e2bcad0269150add5c812910050bc6298d44e3b3e89b560e21200c82796958",
+        "11": "1936ae343e8299dd1bf7a82363d4094495502c583b01cf2f5bf2ea4adad967f3"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 4,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d4",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 31,
+      "clock_control_final_differences_outside_outlet_region": 31,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 162,
+          "backward_scan": [],
+          "center_C_count": 2,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 104,
+              "start": 29,
+              "through": 32
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "3e732f66ae09236d578649f433527a55a6b4d0ad5f1d0bc693575db8b3974891",
+        "01": "5fde4e848034c736cb9c88e5d11a3ef4b3be4cd4b70f29b290876164a96b2d70",
+        "10": "1a9894cff8879cfe23306f2859687ac78bb7dd7ddf78ba7ce5067795a5cc7cce",
+        "11": "7148aab23642c63dd8ff36174867b31a911161488c530b2b90e9a6f6fca38709"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 5,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d5",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 31,
+      "clock_control_final_differences_outside_outlet_region": 31,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 162,
+          "backward_scan": [],
+          "center_C_count": 2,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 104,
+              "start": 32,
+              "through": 35
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "1dad3ae7ff4f20975f9582dc7acfc29368ae4133129e16ff2783fe5813054369",
+        "01": "8ebd0a90edb5e587539cf1ba621468f984ca0a5bfbc28a784eba8d571e4767b8",
+        "10": "64efdda4c0c247f26ad65f53d9044adf36b46bc028df51993237a08ec485523b",
+        "11": "003cbad250b08d0f5863f4cf14e8763d0a78e11f1105887744d862338d2a6847"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 8,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d8",
+        "phase": 2,
+        "side": 193,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 31,
+      "clock_control_final_differences_outside_outlet_region": 30,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 162,
+          "backward_scan": [],
+          "center_C_count": 2,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 104,
+              "start": 33,
+              "through": 36
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "0c1180257217759a426ff01ff3502e4c9b4a5e6b957dfefd7c5be77e5d8244d5",
+        "01": "1fc591fe99e3705afa75ab8251fb6976af162a4fd0565014f5bb0cb4b5cb19af",
+        "10": "f96602a03d12234de37135f75b3bbe687093f8efec53bddb8d1c48cea24d49a9",
+        "11": "eb349d2e47ae7fcae6e320fcc57e141476e8e8fa6ff05fb0c720bee28a29a9fa"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 9,
+        "family": "enable",
+        "guide_target_channel": 0,
+        "id": "transmission-enable-L193-d9",
+        "phase": 1,
+        "side": 193,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 49,
+      "clock_control_final_differences_outside_outlet_region": 43,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 226,
+          "backward_scan": [],
+          "center_C_count": 4,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 76,
+              "start": 28,
+              "through": 31
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "ffb599ab16f283e3d7edb27d771ab85563101a8e8025d058fcd3781617f1dab3",
+        "01": "fcea1d7ee2ff5852014a42528f0227ac6152590c4b9beeb53a5b4324772fb259",
+        "10": "5f1b0c25eed56a57ab2d8897aaf574855ec79307c22cb97b2337ad1858b673be",
+        "11": "4c56a57e52058f59e0144c23f8647aadeb7b5a648a2bd5c743c9ed821e95a073"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d4",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 49,
+      "clock_control_final_differences_outside_outlet_region": 38,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 222,
+          "backward_scan": [],
+          "center_C_count": 4,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 76,
+              "start": 29,
+              "through": 32
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "a09329d8c0d2f71e9fbe7f2e228b27d04ffbba8a1d2d71567744355ada3110e1",
+        "01": "26b15210e6973634112d41930306a86b927b66b5cebc2c626db718283e976fc3",
+        "10": "8433b4a87304e01b2a8a3233db7cdcb2cd38ca6c3ca540f2646819f3a4a07980",
+        "11": "e7dfd8df860d000e541723358197264354668b26ff3e92df0adef57d315af328"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d5",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 49,
+      "clock_control_final_differences_outside_outlet_region": 37,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 210,
+          "backward_scan": [],
+          "center_C_count": 4,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 76,
+              "start": 32,
+              "through": 35
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "4728101228c2d583ad6a4df996e460a77931024d507aa9d5ca07bb1b6b7cc70b",
+        "01": "74201fc719b958e250da72f19123ccc65c15632bb80722633ee80b6edc22adad",
+        "10": "3d6430c8c6c0ae4281d6ac9284b4b47e8583dfa789082516385c80978980fbe7",
+        "11": "e7aa4164d5713bc36f4d908fd697282142cf277f5355ce0859587ddee833ca2e"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d8",
+        "phase": 0,
+        "side": 137,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 49,
+      "clock_control_final_differences_outside_outlet_region": 36,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 206,
+          "backward_scan": [],
+          "center_C_count": 4,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 76,
+              "start": 33,
+              "through": 36
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "ebb27290219398607864c1cd854f2951695a8788ea682e0c5d432adec02ce468",
+        "01": "bb3e78119794af79d558adf1d124a3ee0551fb994331ce2f75167ee074d5ba41",
+        "10": "27c1735527506da679d7dd1a6f873cf1a45af2163183d798a7c0b40e61430e89",
+        "11": "3bb558015f5e53595cc92cfd630ce97839125b4c56b6c2436095d7a3418db508"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L137-d9",
+        "phase": 3,
+        "side": 137,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 49,
+      "clock_control_final_differences_outside_outlet_region": 43,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 226,
+          "backward_scan": [],
+          "center_C_count": 4,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 104,
+              "start": 28,
+              "through": 31
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "026a88f55021b9f2bf861b7af80efd88d82cf9a016badd1d1bd2ff93768c306b",
+        "01": "ff8e998678f7d9f007143d9a168c8c45264177ee0f5044dfde97c78b9d05595a",
+        "10": "1cb8bba386bef7ce4367580c13c1de8c1c4935148d9eaa70045810306caa93d2",
+        "11": "046f29d7361daa9169bcd95c3f0a37014075f5e4504ffe6ec3004823c3b1ab3a"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 4,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d4",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 49,
+      "clock_control_final_differences_outside_outlet_region": 38,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 222,
+          "backward_scan": [],
+          "center_C_count": 4,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 104,
+              "start": 29,
+              "through": 32
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "54ae3e12ce33c216d2244e72b8f9a4c3aec041c341439bbaac202311b1688e03",
+        "01": "b62427245254facf40d6eff0c333f7b6e45b463cbe7529a479cfdb8afd3b35b7",
+        "10": "16fc0f4f42a79cb09bff0bb26aa57ffec335ed3b6be500cc432de0af94cb2674",
+        "11": "bc8303a55687bd768d5aa4bdd7d12885c6441c75a39ca8ddcd953c0217c972c6"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 5,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d5",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 49,
+      "clock_control_final_differences_outside_outlet_region": 37,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 210,
+          "backward_scan": [],
+          "center_C_count": 4,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 104,
+              "start": 32,
+              "through": 35
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "4c61f152f444d2b98cd3d7227f15d3bd4c0ed062d1304af4480a318bd7ddfeff",
+        "01": "9e57fcd76230eb41dbf7a00d1beb32b3d015d67c5d2af4886cc6d85f67d56c56",
+        "10": "2cd5d8df75d4d9e607d948bba29af4a157ce95c8891ad350d11bc578f9b73797",
+        "11": "38e7dd255d1e67940a093856aac1b4912556864d8df096a21d6f55b04f4a10c9"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 8,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d8",
+        "phase": 0,
+        "side": 193,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    },
+    {
+      "checks": {
+        "all_control_predictions": true,
+        "clock_only_full_period4": true,
+        "four_final_states_distinct": true,
+        "matched_initial_remainders": true,
+        "null_static": true,
+        "source_counter_masks_disjoint": true,
+        "source_counter_masks_exact": true
+      },
+      "clock_control_final_differences": 49,
+      "clock_control_final_differences_outside_outlet_region": 36,
+      "controls": {
+        "00": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "01": {
+          "all_C_count": 0,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        },
+        "10": {
+          "all_C_count": 206,
+          "backward_scan": [],
+          "center_C_count": 4,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": true,
+          "forward_scan": [
+            {
+              "direction": 1,
+              "full_local_template_equal": true,
+              "outlet_x": 104,
+              "start": 33,
+              "through": 36
+            }
+          ],
+          "observed_forward": true,
+          "passed": true
+        },
+        "11": {
+          "all_C_count": 154,
+          "backward_scan": [],
+          "center_C_count": 0,
+          "checks": {
+            "fixed_forward_prediction": true,
+            "full_state_inverse": true,
+            "incoming_prediction": true,
+            "initial_boundary_margin": true,
+            "no_active_boundary": true,
+            "no_backward_carrier": true,
+            "no_unexpected_late_forward": true
+          },
+          "expected_forward": false,
+          "forward_scan": [],
+          "observed_forward": false,
+          "passed": true
+        }
+      },
+      "effective_coupler_supported": true,
+      "full_state_final_hashes": {
+        "00": "627dbf9d7b54ee5e93ab45ca33348c564dfce725e3e5f475404dadc6195eb364",
+        "01": "7c7411d3472e3fb9d66f023a38128e111af466b241f92239ba3404eea2a7049a",
+        "10": "294e13f80105ea9f5959dc60180174391ff9f8a0893d05feb5438602cf86be0f",
+        "11": "aabb3658a461e4e340160ce90819cfff1a024932506fa715513b09034f9626b8"
+      },
+      "geometry": {
+        "clock_remainder": 0,
+        "compensation_direction": null,
+        "delay": 9,
+        "family": "aligned_suppress",
+        "guide_target_channel": 0,
+        "id": "transmission-aligned_suppress-L193-d9",
+        "phase": 3,
+        "side": 193,
+        "stage": "base"
+      },
+      "passed": true,
+      "splitter_or_payload_release_established": false
+    }
+  ],
+  "not_run_groups": [],
+  "passed_groups": 16,
+  "protocol_sha256": "5ecb50a57920ce4ba2c730ecd418dabc588aaafd61315cb38b76bef1ef57d18d",
+  "registered_cases": 64,
+  "scope": "Prepared state-dependent transmission control of a mathematical guided carrier. This is not a splitter, incoming-written controller, approval or release of stored information, physical light, complexity selection or quantum collapse. The coupling and Rule3 remain unchanged; there is no runtime switch.",
+  "sources_unchanged": true,
+  "splitter_or_payload_release_established": false,
+  "status": "completed",
+  "stop_reason": null,
+  "wall_seconds": 38.11927005699545
+}

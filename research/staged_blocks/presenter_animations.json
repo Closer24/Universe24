@@ -1,0 +1,86 @@
+[
+  {
+    "experiment": "four-blocks-isolated-on",
+    "name": "four-blocks-isolated",
+    "caption": "Recorded coexistence: the prepared clock rotates without being activated by the separate carrier.",
+    "source_record": "research/staged_blocks/evidence/composition/records/four-blocks-isolated-on.json.gz",
+    "source_record_sha256": "06c4e221bbbad69a198d20583829d7f53dfdabfd038b4a3d7872e3b030f4d0d5",
+    "panels": [
+      {
+        "port": "clock.center",
+        "index": 0,
+        "label": "Prepared clock: runs without the carrier",
+        "address": [
+          16,
+          24,
+          16,
+          0
+        ]
+      },
+      {
+        "port": "memory.memory",
+        "index": 0,
+        "label": "Receiver channel 0",
+        "address": [
+          16,
+          16,
+          24,
+          0
+        ]
+      },
+      {
+        "port": "memory.memory",
+        "index": 1,
+        "label": "Receiver channel 14",
+        "address": [
+          16,
+          16,
+          24,
+          14
+        ]
+      }
+    ]
+  },
+  {
+    "experiment": "four-blocks-connected-on",
+    "name": "four-blocks-connected",
+    "caption": "Recorded carrier/receiver interaction; the strict pending-memory criterion fails. Raw arithmetic C is separate from clock rotation.",
+    "source_record": "research/staged_blocks/evidence/composition/records/four-blocks-connected-on.json.gz",
+    "source_record_sha256": "4b1a3586918d5861c83d280fdaa9e97d1aa224e3ac00a133787a8af9c83bf1d9",
+    "panels": [
+      {
+        "port": "clock.center",
+        "index": 0,
+        "label": "Prepared clock: runs without the carrier",
+        "address": [
+          16,
+          24,
+          16,
+          0
+        ]
+      },
+      {
+        "port": "memory.memory",
+        "index": 0,
+        "label": "Receiver channel 0",
+        "address": [
+          16,
+          8,
+          16,
+          0
+        ]
+      },
+      {
+        "port": "memory.memory",
+        "index": 1,
+        "label": "Receiver channel 14",
+        "address": [
+          16,
+          8,
+          16,
+          14
+        ]
+      }
+    ]
+  }
+]

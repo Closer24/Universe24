@@ -1,0 +1,136 @@
+{
+  "acceptance": "All 256 cases must complete and invert exactly; every reference protection and matched-control check must pass. All 64 four-control groups must match the prediction, with 48 changed-phase groups and 16 already aligned groups. Report partial passes and counterexamples without relaxing this criterion.",
+  "budget": {
+    "max_cases": 256,
+    "max_cpu_seconds": 300,
+    "max_recorded_bytes": 20971520
+  },
+  "claim": "A pass supports finite prepared-clock synchronization and relative-phase storage. The D/X observer is passive. This is not a local physical comparator, detector, unconditional presence latch, capture, approval or release mechanism; no photon or Born-rule claim follows. Different input phases remain recoverable in the full reversible board.",
+  "controls": {
+    "00": "Reference only; target clock and packet absent",
+    "01": "Reference and target clock; packet absent",
+    "10": "Reference and packet; target clock absent",
+    "11": "Reference, target clock and packet"
+  },
+  "discovery": "The completed +++ 336-case interaction study found no accepted (I,r) memory. Post-analysis, base g0/r0 and r4 at delay 0 left the joint target (0,1,r) at t=40 for all four initial phases. This new study registers a different phase observer and unseen delays and size; it does not relabel the original results.",
+  "family": {
+    "board_sides": [
+      129,
+      161
+    ],
+    "cases": 256,
+    "clock_phases": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "clock_remainders": [
+      0,
+      4
+    ],
+    "controls": [
+      "00",
+      "10",
+      "01",
+      "11"
+    ],
+    "packet_delays": [
+      1,
+      2,
+      3,
+      5
+    ]
+  },
+  "format": "universe24-staged-phase-memory-protocol-v1",
+  "geometry": "Let c=L//2. The guide is the complete X row at Y=Z=c. GuidedPacketSource starts at X=c-16-delay. The target clock is at (c,c+1,c), channel ports[+Y][0], using the previous guide-compatible base preparation with no compensation patch. The reference is at (c,c+24,c+24), channel 0, initial (a,b,r)=(0,1,2); all six directly connected halo channels start at (0,0,2), and all other protected channels have the background state.",
+  "hold": {
+    "states_inclusive": [
+      32,
+      40
+    ],
+    "target_isolation": "Every external signed incoming term to all 336 target channels must be zero during updates 33..40. Actual target input and quotient must be zero. The entire target region repeats after four updates within states 32..40. Only the designated target clock may have nonzero counters, with I=1 and its initial remainder. The full reference region is independently verified throughout.",
+    "target_region": "All 336 triples at the target center and six face-neighbor nodes.",
+    "updates": 8
+  },
+  "matching": "At each L, r, phase and delay, all four controls retain identical full remainders and guide preparation. Only declared packet and target-clock counters are removed; the reference is always unchanged.",
+  "model": {
+    "background": [
+      0,
+      0,
+      2
+    ],
+    "body_signs": [
+      1,
+      1,
+      1
+    ],
+    "initial_only": true,
+    "single_rule": "Unchanged reference Rule3, num=den=1"
+  },
+  "observer": {
+    "D": "a_target*a_reference+b_target*b_reference",
+    "X": "a_target*b_reference-b_target*a_reference",
+    "all_C": "Record every complete-board C0/C1/C2 event and the actual target and reference inputs and quotients. Explicitly check zero quotients; do not infer them from absence of C.",
+    "alphabet": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    "prediction": "For control 11 throughout states 32..40, target=R^(t-delay)(0,1) and reference=R^t(0,1), so (D,X)=alphabet[(-delay)%4], independently of the initial target phase. For 01, (D,X)=alphabet[phase]. For 00 and 10, target counters remain zero during the hold, so (D,X)=(0,0).",
+    "rotation": "R(a,b)=(b,-a). Under zero quotients for both clocks, D and X are invariant, and D*D+X*X=I_target*I_reference.",
+    "write": "A retained changed phase requires the joint hold and prediction to pass, and its (D,X) must differ from 01 throughout the hold. The already aligned phase (-delay)%4 is expected to remain unchanged and does not encode presence. Exactly three of the four initial phases per L, r and delay should store a change."
+  },
+  "presenter_selection": "All four controls for L=129, r=0, phase=0, delay=1, and all four controls for L=161, r=4, phase=3, delay=5. The selection is fixed before validation.",
+  "question": "Does a transported packet synchronize an existing local unit orbit to its arrival phase, leaving a relative-phase record against an untouched reference orbit on the same Rule3 board?",
+  "reference": {
+    "always_present_in_all_controls": true,
+    "expected_phase_cycle": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        -1,
+        0
+      ]
+    ],
+    "halo_remainder_cycle": [
+      2,
+      4,
+      4,
+      2
+    ],
+    "initial_counters": [
+      0,
+      1
+    ],
+    "initial_remainder": 2,
+    "isolation": "Require minimum toroidal Manhattan distance from every initial non-reference active-counter address to every reference protected node greater than 40, and from the reference active center to every target protected node greater than 40. Verify the complete reference region against its isolated formula at all 41 states; each external incoming term must separately be zero.",
+    "protected_region": "All 48 channels at the reference center and its six face-neighbor nodes."
+  },
+  "retention": "Retain all complete gzip wrapper recordings, both full region traces, every C, actual inputs, preparations, registration and per-case/group verdicts. Stop at a complete four-control group boundary if a budget would be exceeded and report all unrun parameters.",
+  "status": "Frozen before every new phase-validation trajectory",
+  "steps": 40
+}
