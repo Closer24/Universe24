@@ -99,6 +99,10 @@ interaction remains unverified. See [Presenter help](docs/PRESENTER.md).
 - [Exact global patterns](research/invariant_families_v1/README.md) yield effective
   ratios 1, 1/2 and 2/3 under the unchanged rule; 48 native runs and four overlap
   controls were independently replayed. They are not localized particles.
+- [Clock and gravity status](docs/GRAVITY_STATUS.md) separates the restricted
+  two-preparation `4/5` recurrence-rate result, exact collective activity and
+  continuity identities, and an autonomous guided clock link from the still
+  unproved physical metric and Einstein dynamics.
 - Autonomous complexity preference, unique retained approval, physical light,
   mass, forces and quantum measurement remain unproved. Failed controls remain
   in the [research record](research/README.md).
